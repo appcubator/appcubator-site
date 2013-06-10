@@ -121,7 +121,7 @@ class Deployment(models.Model):
     if "DJANGO_SETTINGS_MODULE" in child_env:
       del child_env["DJANGO_SETTINGS_MODULE"]
     # Hack to make syncdb work.
-    child_env["PATH"] = "/var/www/v1factory/venv/bin:" + child_env["PATH"]
+    child_env["PATH"] = "/var/www/appcubator/venv/bin:" + child_env["PATH"]
 
     # COPY THE CODE TO THE RIGHT DIRECTORY
     logger.info("Removing existing app code.")
@@ -151,8 +151,8 @@ class Deployment(models.Model):
 
       # try to delete github repo
       repo_name = self.u_name
-      assert repo_name != 'v1factory'
-      r = requests.delete("https://api.github.com/repos/v1factory/%s" % repo_name, auth=('v1factory', 'obscurepassword321'))
+      assert repo_name.lower().strip() != 'appcubator'
+      r = requests.delete("https://api.github.com/repos/v1factory/%s" % repo_name, auth=('appcubator', 'obscurepassword321'))
 
       # try to restart server
       ret_code = subprocess.call(["sudo", "/var/www/v1factory/reload_apache.sh"])

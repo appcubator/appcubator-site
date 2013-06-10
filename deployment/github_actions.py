@@ -12,7 +12,7 @@ def create_github_repo(name):
   post_data['has_wiki'] = False
   post_data['has_downloads'] = False
 
-  r = requests.post("https://api.github.com/user/repos", data=simplejson.dumps(post_data), auth=('v1factory', 'obscurepassword321'))
+  r = requests.post("https://api.github.com/user/repos", data=simplejson.dumps(post_data), auth=('appcubator', 'obscurepassword321'))
   if r.status_code == 201:
     repo_info = simplejson.loads(r.content)
     return repo_info
@@ -20,7 +20,7 @@ def create_github_repo(name):
     raise Exception(r.content)
 
 def add_me_as_collaborator(name):
-  r = requests.put("https://api.github.com/repos/v1factory/%s/collaborators/ksikka" % name, auth=('v1factory', 'obscurepassword321'))
+  r = requests.put("https://api.github.com/repos/appcubator/%s/collaborators/ksikka" % name, auth=('appcubator', 'obscurepassword321'))
   if r.status_code != 204:
     raise Exception(r.content)
 
@@ -41,7 +41,7 @@ def create(name, cwd, add_ksikka=False):
     repo_info = create_github_repo(name)
   except Exception, e:
     print "COULD NOT CREATE GITHUB REPO: %s" % str(e)
-    repo_info = {'ssh_url': 'git@github.com:v1factory/%s.git' % name}
+    repo_info = {'ssh_url': 'git@github.com:appcubator/%s.git' % name}
     print ""
     print repo_info
     print ""
