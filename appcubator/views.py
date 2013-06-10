@@ -179,7 +179,7 @@ def less_sheet(request, app_id, isMobile=False):
     app = get_object_or_404(App, id=app_id, owner=request.user)
     uie_state = app.uie_state
     if isMobile:
-        uie_state = app.mobile_uie.state
+        uie_state = app.mobile_uie_state
     page_context = {'uie_state': uie_state,
                     'isMobile': isMobile,
                     'app_id': app_id}
