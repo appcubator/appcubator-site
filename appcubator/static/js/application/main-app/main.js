@@ -6,6 +6,7 @@ require.config({
     "jquery.flexslider" : "../../libs/jquery/jquery.flexslider-min",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
+    "heyoffline": "../../libs/heyoffline",
     "iui" : "../../libs/iui/iui",
     "comp": "../../libs/iui/comp",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
@@ -31,6 +32,9 @@ require.config({
     "underscore": {
       exports: "_"
     },
+    "heyoffline": {
+      exports: "Heyoffline"
+    },
     "backbone": {
       exports: "Backbone",
       deps: ["underscore", "jquery"]
@@ -54,6 +58,7 @@ require([
   "app/RouteLogger",
   "editor/KeyDispatcher",
   "editor/MouseDispatcher",
+  "heyoffline",
   "backbone",
   "bootstrap",
   "iui",
@@ -65,7 +70,8 @@ function (AppModel,
           AppRouter,
           RouteLogger,
           KeyDispatcher,
-          MouseDispatcher) {
+          MouseDispatcher,
+          Heyoffline) {
 
   v1State = new Backbone.Model();
   v1State = new AppModel(appState);
@@ -109,7 +115,10 @@ function (AppModel,
     prevScrollPos = scrollTop;
   });
 
-    $scrollBtn.on('click', function() {
-      $('html,body').animate({scrollTop:0},100, "linear");
-    });
+  $scrollBtn.on('click', function() {
+    $('html,body').animate({scrollTop:0},100, "linear");
+  });
+
+  // heyoffline config
+  new Heyoffline();
 });
