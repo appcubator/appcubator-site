@@ -130,10 +130,6 @@ function(SimpleModalView, LoginModalView) {
       $('.IN-widget').children().first().children().first().trigger('click');
     });
 
-    $('#login-btn').on('click', function() {
-      new LoginModalView();
-    });
-
     iui.loadCSS('prettyCheckable');
     $('input[type=checkbox]').prettyCheckable();
     $('input[type=radio]').prettyCheckable();
