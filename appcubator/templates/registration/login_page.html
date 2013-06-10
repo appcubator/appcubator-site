@@ -1,0 +1,40 @@
+{% extends "infra-html.html" %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/website.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
+<!--     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+ -->
+{% endblock %}
+{% block topbar %}
+{% include "infra-topbar-out.html" %}
+{% endblock %}
+
+
+{% block page %}
+<div class="row hoff8">
+  <div class="container centered">
+    <div class="">
+      <div class="">
+        <h2 class="hoff5">Login</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="container centered hoff2">
+    {% if form.errors %}
+      <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+    <form class="login-page hoff1" method="post" action="{% url django.contrib.auth.views.login %}">
+      {% csrf_token %}
+      <input id="id_username" class="span12" type="text" name="username" placeholder="Username..." maxlength="30"><br>
+      <input type="password" class="span12 hoff1" name="password" placeholder="Password..." id="id_password"><br>
+      <br>
+      <input class="btn" type="submit" value="Login"/>
+      <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
+    </form>
+  </div>
+</div>
+{% endblock %}
+

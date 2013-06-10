@@ -1,0 +1,156 @@
+{% extends "infra-html.html" %}
+
+{% block css %}
+    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+      api_key: t0q97cjtk5kf
+      scope: r_basicprofile r_emailaddress
+    </script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
+<!--     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+ -->
+{% endblock %}
+{% block topbar %}
+{% include "infra-topbar-out.html" %}
+{% endblock %}
+{% block page %}
+<div class="well">
+  <div class="container">
+    <div class="span64">
+      <div class="hi28">
+        <div class="span33 hoff4" style="color:#0f2d40;">
+          <h2 class="hoff2">Easiest way to build web and mobile applications.</h2>
+          <p class="motto">You can turn your idea into a working application at a <strong>low cost</strong> and <strong>quick turnaround</strong>.</p>
+          <div class="btn btn-green hoff1" id="request">Request a Beta Invite</div>
+          <script type="in/Login"></script>
+        </div>
+        <div class="span28 hi18 hoff7 offset3 video-pane">
+          <div class="site-trackstudent"></div>
+          <div class="mobile-trackstudent"></div>
+          <div id="bluebuttonihopenooneclicks" class="btn btn-blue">See What Others Have Built <img src="{{ STATIC_URL }}img/right-arrow.png"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="steps">
+  <div class="row hi16 desc-cont" id="cont-1">
+    <div class="container hoff4">
+      <div class="description span40">
+        <h3>Start Getting Users</h3>
+        <span class="">
+          We set up everything about a user authentication system for you. Just tick a few checkboxes and you have all the integrations with Facebook, Twitter and LinkedIn.
+        </span>
+      </div>
+      <div class="image span16">
+      </div>
+    </div>
+  </div>
+  <div class="row hi16 hoff12 desc-cont" id="cont-2">
+    <div class="container hoff4">
+      <div class="image span16">
+      </div>
+      <div class="description span40">
+        <h3>Database</h3>
+        <span class="">Use Excel to define, upload, and store your app’s data.</span>
+      </div>
+    </div>
+  </div>
+  <div class="row hi16 hoff12 desc-cont" id="cont-3">
+    <div class="container hoff4">
+      <div class="description span40">
+        <h3>Beautiful Themes</h3>
+        <span class="">Make your site look good without trying. Choose from our unique themes or just use your existing design.</span>
+      </div>
+      <div class="image span16">
+      </div>
+    </div>
+  </div>
+  <div class="row hi16 hoff12 desc-cont" id="cont-4">
+    <div class="container hoff4">
+      <div class="image span16">
+      </div>
+      <div class="description span40">
+        <h3>One-click Deployment</h3>
+        <span class="">One click and it’s live, at the domain of your choice.</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer hoff12" style="position:static;">
+    <div class="container">
+      <h2 class="span34 offset8">Have more questions? Ask us!</h2>
+      <img src="{{ STATIC_URL}}img/mascot.png" width="180">
+    </div>
+    <hr>
+  </div>
+<div class="bg-cover">
+</div>
+</div>
+
+<script type="html/template" id="login-form-template">
+<div class="login pad1 pull-right" style="height:45px; margin-top: 10px; opacity:1.0;">
+  <div class="span8  hi14">
+    <span class="pad1"><strong>User Login</strong><br><i class="micro"> (forgot password?)</i></span>
+  </div>
+  <div class="span20 hi14">
+          <span class="login span24 offset1">
+            {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+            {% endif %}
+            <form class="" method="post" action="{% url django.contrib.auth.views.login %}">
+                {% csrf_token %}
+       
+                <input id="id_username" type="text" name="username" placeholder="Username..." maxlength="30">
+                <br>
+                <input type="password" name="password" placeholder="Password..." id="id_password">
+                <br>
+                <input class="btn" type="submit" value="Login"/>
+                <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
+            </form>
+          </span>
+  </div>
+</div>
+</script>
+{% endblock %}
+
+{% block js %}
+<script src="{{ STATIC_URL }}js/libs/jquery/jquery.js"></script>
+<script type="text/javascript">
+// var cur = 1;
+// $(window).on('scroll', function(e) {
+//   var docViewTop    = $(window).scrollTop();
+//   var docViewBottom = docViewTop + $(window).height();
+
+//   // console.log($('#cont-2').offset().top - docViewTop);
+//   if($('#cont-1').offset().top - docViewTop < 120 & cur != 1) {
+//     $('.bg-cover').hide().css("background-image", "url({{ STATIC_URL }}img/bg-1.png)");
+//     cur = 1;
+//   }
+
+//   if($('#cont-2').offset().top - docViewTop < 120 & cur != 2) {
+//     cur = 2;
+//     $('.bg-cover').hide().css("background-image", "url({{ STATIC_URL }}img/bg-2.png)").fadeIn(50);
+//   }
+
+//   if($('#cont-3').offset().top - docViewTop < 120 & cur != 3) {
+//     $('.bg-cover').css("background-image", "url({{ STATIC_URL }}img/bg-3.png)");
+//     cur = 3;
+//   }
+
+//   if($('#cont-4').offset().top - docViewTop < 120 & cur != 4) {
+//     $('.bg-cover').css("background-image", "url({{ STATIC_URL }}img/bg-4.png)");
+//     cur = 4; 
+//   }
+
+//   if($('#cont-5').offset().top - docViewTop < 120 & cur != 5) {
+//     $('.bg-cover').css("background-image", "url({{ STATIC_URL }}img/bg-5.png)");
+//     cur = 5;
+//   }
+
+//   if($('#cont-6').offset().top - docViewTop < 120 & cur != 6) {
+//     $('.bg-cover').css("background-image", "url({{ STATIC_URL }}img/bg-6.png)");
+//     cur = 6;
+//   }
+// })
+</script>
+{% endblock %}

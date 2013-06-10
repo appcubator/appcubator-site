@@ -1,0 +1,33 @@
+{% extends "infra-html.html" %}
+
+{% block css %}
+{% endblock %}
+
+{% block topbar %}
+{% include "infra-topbar-plain.html" %}
+{% endblock %}
+
+{% block page %}
+<div class="container hoff3">
+  <h2 class="hoff5 span52">Start a New App</h2>
+  <div class="hoff2 span32">
+      <form method="post" action="{% url views.app_new %}">
+      {% csrf_token %}
+      <h4 class="span12 hoff1">Name of the app</h4>
+      <input class="span16 hoff1" name="name" type="text" placeholder="Easy App" value="{{old_name}}"><hr>
+      {% if errors %}{{ errors.message_dict.name.0 }}{% endif %}
+      <input id="guid-btn" type='submit'class="span16 hoff2 btn btn-blue offset12" type="submit" value="Let Racoon guide me!"><br>
+      <input type='submit' class="span16 hoff1 btn hi3 offset12" value="Start Building My App »">
+      </form>
+  </div>
+  <div class="mascot hoff2 span24 hi16 offset4" id="mascot">
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{{ STATIC_URL }}js/libs/jquery/jquery.min.js"></script>
+<script src="{{ STATIC_URL }}js/libs/bootstrap/bootstrap.js"></script>
+<script data-main="{{ STATIC_URL }}js/application/external-pages/apps-new-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+
+{% endblock %}

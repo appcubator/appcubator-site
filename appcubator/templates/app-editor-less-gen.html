@@ -1,0 +1,154 @@
+{% load less %}
+
+{{  uie_state.fonts|safe }}
+
+{% inlineless %}
+
+{% if deploy %}
+body {
+{% else %}
+.fdededfcbcbcd {
+{% endif %}
+
+  /* * * * * * * * * * *
+     Base CSS
+  * * * * * * * * * * */
+  {{  uie_state.basecss|safe }}
+
+
+
+  /* * * * * * * * * * *
+     Buttons
+  * * * * * * * * * * */
+
+  {% for b in  uie_state.buttons %}
+
+  {{b.tagName|safe}}.{{b.class_name|safe}} { 
+  {{b.style|safe}}
+  }
+
+  {% endfor %}
+
+  /* * * * * * * * * * *
+     Images
+  * * * * * * * * * * */
+
+  {% for i in  uie_state.images %}
+
+  {{i.tagName|safe}}.{{i.class_name|safe}} { 
+  {{i.style|safe}}
+  }
+
+  {% endfor %}
+
+  /* * * * * * * * * * *
+     Headers
+  * * * * * * * * * * */
+
+  {% for ht in  uie_state.headerTexts %}
+
+  {{ht.tagName|safe}}.{{ht.class_name|safe}} { 
+  {{ht.style|safe}}
+  }
+
+  {% endfor %}
+
+  /* * * * * * * * * * *
+     Text
+  * * * * * * * * * * */
+
+  {% for t in  uie_state.texts %}
+
+  {{t.tagName|safe}}.{{t.class_name|safe}} { 
+  {{t.style|safe}}
+  }
+
+  {% endfor %}
+
+
+  /* * * * * * * * * * *
+     Links
+  * * * * * * * * * * */
+
+  {% for l in  uie_state.links %}
+
+  {{l.tagName|safe}}.{{l.class_name|safe}} { 
+  {{l.style|safe}}
+  }
+
+  {% endfor %}
+
+  /* * * * * * * * * * *
+     Text Input
+  * * * * * * * * * * */
+
+  {% for ti in  uie_state.textInputs %}
+
+  {{ti.tagName|safe}}.{{ti.class_name|safe}} { 
+  {{ti.style|safe}}
+  }
+
+  {% endfor %}
+
+  /* * * * * * * * * * *
+     Passwords
+  * * * * * * * * * * */
+
+  {% for p in  uie_state.passwords %}
+
+  {{p.tagName|safe}}.{{p.class_name|safe}} { 
+  {{p.style|safe}}
+  }
+
+  {% endfor %}
+
+  /* * * * * * * * * * *
+     Text Areas
+  * * * * * * * * * * */
+
+  {% for ta in uie_state.textAreas %}
+
+  {{ta.tagName|safe}}.{{ta.class_name|safe}} { 
+  {{ta.style|safe}}
+  }
+
+  {% endfor %}
+
+  /* * * * * * * * * * *
+     Lines
+  * * * * * * * * * * */
+
+  {% for l in uie_state.lines %}
+
+  {{l.tagName|safe}}.{{l.class_name|safe}} { 
+  {{l.style|safe}}
+  }
+
+  {% endfor %}
+
+  /* * * * * * * * * * *
+     Dropdowns
+  * * * * * * * * * * */
+
+  {% for d in uie_state.dropdowns %}
+
+  {{d.tagName|safe}}.{{d.class_name|safe}} { 
+  {{d.style|safe}}
+  }
+
+  {% endfor %}
+
+  /* * * * * * * * * * *
+     Boxes
+  * * * * * * * * * * */
+
+  {% for b in uie_state.boxes %}
+
+  {{b.tagName|safe}}.{{b.class_name|safe}} { 
+  {{b.style|safe}}
+  }
+
+  {% endfor %}
+}
+
+{% endinlineless %}

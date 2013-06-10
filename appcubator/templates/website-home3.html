@@ -1,0 +1,125 @@
+{% extends "infra-html.html" %}
+
+{% block css %}
+<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+api_key: t0q97cjtk5kf
+scope: r_basicprofile r_emailaddress
+</script>
+<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
+{% endblock %}
+{% block page %}
+
+<div class="left-panel">
+  <div id="box-container">
+    <div id="cube" class="">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <h1>Appcubator</h1>
+  <div class="bottom-panel" id="bottom-panel">
+    <div class="buttons">
+      <div class="btn btn-blue hoff1" id="request">Join the Beta Program</div>
+      <div class="btn btn-green hoff1" id="member">Already a Member?</div>
+    </div>
+    <span class="login" id="login-form">
+      {% if form.errors %}
+      <p>Your username and password didn't match. Please try again.</p>
+      {% endif %}
+      <form class="" method="post" action="{% url django.contrib.auth.views.login %}">
+        {% csrf_token %}
+
+        <input id="id_username" type="text" name="username" placeholder="Username..." maxlength="30">
+        <br>
+        <input type="password" name="password" placeholder="Password..." id="id_password">
+        <br>
+        <input class="btn" type="submit" value="Login »"/>
+        <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
+      </form>
+    </span>
+  </div>
+</div>
+<div class="fixed-bg" id="background-img"></div>
+<div class="sliding-panel">
+  <div class="slide1">
+    <div class="large-text">
+      Easiest way to build web and mobile applications.
+    </div>
+    <div class="sub-text">
+      No code. No hassle. Just your creativity.
+    </div>
+    <div class="gray-bg">
+      More Info <span class="icon-down"></span>
+    </div>
+  </div>
+  <div class="slide2 slide">
+<!--     <div class="image"></div>
+ -->    <span>
+      <span class="title">What can I build?</span>
+      <p>What you see is exactly what you get.</p>
+    </span>
+  </div>
+  <div class="slide3 slide">
+<!--     <div class="image"></div>
+ -->    <span>
+      <span class="title">Who is it for?</span>
+      <p>What you see is exactly what you get.</p>
+    </span>
+  </div>
+  <div class="slide4 slide">
+<!--     <div class="image"></div>
+ -->    <span>
+      <span class="title">How does it work?</span>
+      <p>What you see is exactly what you get.</p>
+    </span>
+  </div>
+  <div class="slide5 slide">
+    <ul class="pricing">
+      <li class="free">
+        <span class="title">Free to build</span>
+        Sign up for free and build your app for as long as you want.
+      </li>
+      <li class="mobile">
+        <span class="title">Mobile</span>
+        <span class="price">$11 /mo</span>
+      </li>
+      <li class="web">
+        <span class="title">Web</span>
+        <span class="price">$11 /mo</span>
+      </li>
+      <li class="session">
+        <span class="title">Head Start</span>
+        <span class="price">$160</span>
+      </li>
+    </ul>
+  </div>
+  <div class="slide-last">
+    <form class="sign-up-form">
+      <div class="left-side">
+        <input type="text" placeholder="Full Name">
+        <input type="text" placeholder="Email">
+        <input type="text" placeholder="Company">
+        <hr>
+        <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
+        <div class="btn btn-blue btn-linkedin">Fill With LinkedIn</div>
+      </div>
+      <div class="right-side">
+        <textarea placeholder="Technical Description of your application. This is for us attain feasibility of the project and direct you well."></textarea>
+        <input type="checkbox" id="consulting-interest" data-label="I'm also interested in the starting session.">
+        <div class="btn btn-blue">Sign Me Up »</div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script data-main="{{ STATIC_URL }}js/application/external-pages/home-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+{% endblock %}

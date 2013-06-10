@@ -1,0 +1,126 @@
+<script type="text/template" id="tutorial-intro">
+  <p>Hi {{ user.first_name }}!</p>
+
+  <p>This tutorial, consisting of short slides, aims to help you understand the basics of using v1Factory. Please read through them once before you start and ask us any questions you have.</p>
+
+  <p>Through out your experiences, you can refer back to this guide by clicking the question marks on the right side of the pages or next to elements. They will bring you to the right slide!</p>
+
+  <div class="images">
+  <img height="50" class="img-polaroid" src="{{ STATIC_URL }}img/tutorial/q-mark1.png">
+  <img height="50" class="img-polaroid" src="{{ STATIC_URL }}img/tutorial/q-mark2.png">
+  </div>
+  <p>By the end of it, you'll have a live, working application, and you will even be able to download the code written for you! We expect this tutorial to take ~15 minutes.</p>
+</script>
+
+
+<script type="text/template" id="tutorial-overview">
+  <p><strong>"What's an application?"</strong>, you might ask. We want to give you an overview of how things work on a running applcation, no matter how big or small it is.</p>
+  <p>A web application like a restaurant. There are many different parts to it, such as:</p>
+  <ul>
+    <li>The presentation: How things look is an important part of any business. If things look good and elegant, it's likely that you will have more customers and a better business.</li>
+    <li>Storage: You need to store things, such as the food, somewhere in your restaurant so that you can serve them when it's the time.</li>
+    <li>Customer Input: You need to learn what your customers want so that you can serve the right thing.</li>
+  </ul>
+
+</script>
+
+<script type="text/template" id="tutorial-app_info">
+<p>
+This page helps set up the basics of the application.
+</p>
+<ul>
+  <li><strong>Domain;</strong> You can register your domain address here and your app will show up on these domains. v1Factory gives you a test domain by default.</li>
+  <li><strong>Descript;</strong> This information will be added as meta-data to your pages and increase the visibility of your site on Google.</li>
+  <li><strong>Keywords;</strong> Adding descriptive keywords will increase your SEO. Try to refrain from generic words, and try to add as specific words as possible.</li>
+
+</script>
+
+<script type="text/template" id="tutorial-data_storage">
+<p>Your application has a database to store information about everything and retrieve them back. You can think of it as the compilation of multiple Excel sheets. It's important to classify information well and put them into the right Excel sheets for using them easily.</p>
+</script>
+
+<script type="text/template" id="tutorial-data_storage-entity">
+  <p>You can think of an entity as an Excel spreadsheet. If you want to show a list of documents, for example, you need to have a `Document` entity. Any type of important informatino that is central to your application should have an entity likewise. Photo, Tweet, Post, Game are some very popular samples.
+    <br  />
+    After you identify important entities in your app, you should add their properties, just like the columns on an Excel table.
+    <br  />
+    Users are also entities, but they have exceptional properties.
+
+  </p>
+
+</script>
+
+<script type="text/template" id="tutorial-data_storage-user">
+  <p>User is an entity, and it's central to your application. Therefore, we provided a lot of the user functionality by default. </p>
+  <p>You can add new properties to it and also choose the authentication types from the checkboxes at the bottom.</p>
+</script>
+
+<script type="text/template" id="tutorial-data_storage-sample">
+  <p>If you're creating a blog website, you would want to store blog data in a spreadsheet.
+  Create a spreadsheet called "Posts". You would have a column for the title and one for the content.</p>
+</script>
+
+<script type="text/template" id="tutorial-data_storage-upload">
+  <p>You can download the data from your database in the form of an excel spreadsheet, and upload
+  an excel sheet to populate the database.</p>
+</script>
+
+
+<script type="text/template" id="tutorial-themes_design">
+  <p>You can choose from our beautiful themes and all the styles will be available when you go to the Editor. Different themes will give your site a different feel - ie, modern, antiquated, childish, or professional.</p>
+  <p>In the future, we are planning to support this feature with a designer market place so that you can find people to design for your specific needs.</p>
+
+</script>
+
+<script type="text/template" id="tutorial-themes_design-existingdesign">
+  <p>If you already have some design, we would like to help you. Please e-mail us at team@appcubator.com and we will translate it into a private Appcubator theme for you.</p>
+</script>
+
+<script type="text/template" id="tutorial-pages">
+  <p>The pages screen is where you can add and organize pages for your application. You can have as many as you want. For example, you can make a profile page for your users. We creat the Homepage and a registration page for you by default.</p>
+</script>
+
+<script type="text/template" id="tutorial-pages-context">
+  <p>Some pages live at a URL you can clearly define, like "yoursite.com/registration_page".
+  Other pages are different though, because they have some data in the URL, which tells
+  the website how to fill the page with content. For example, "yoursite.com/post/5" tells your site
+  to show the page, filled with the data from the post with an ID of 5. You can do this by selecting "Post id"
+  from the drop down on the URL screen *.</p>
+
+  <p>Rule of thumb: When you say "this is a page for a post" or "this is a page for a user profile", you
+  know you need an ID in the url to tell the site which post or user profile it should use to fill the page with data.</p>
+</script>
+<script type="text/template" id="tutorial-editor">
+  <p>When you click "edit page" on the pages, you will be able to use the Editor to modify your pages.
+  You can drag elements from the right panel onto the page. Then, you can resize the container for that element,
+  change the content, etc.</p>
+</script>
+<script type="text/template" id="tutorial-editor-lists">
+  <p>Text and links are very basic elements, but there are times when you want to drop a table or a dynamic list of elements.
+  You may, for example, want to drop a list of apartment listings onto the page. If you already have a spreadsheet for apartment listings
+  set up (see the Data and storage section), you'll see a "List of Apartment_listings" button on the panel.
+  When you drop that onto the page, you'll be shown a window where you can edit how the list of apartments will look,
+  and you can even filter down the list of apartments that are shown, ie show only the listings that belong
+  to the currently logged in user.</p>
+</script>
+<script type="text/template" id="tutorial-editor-forms">
+  <p>When you drop a form onto the page, a similar thing will happen, and you'll be able to edit the form fields,
+  and contol what happens when the user submits the form.</p>
+</script>
+
+<script type="text/template" id="feedback-form-page">
+<form method="POST" action="#" class="feedback-form" id="feedback-form">
+<p>Thank you for checking Appcubator out! Your feedback is very valuable for us.</p>
+<label>What did you like about Appcubator?</label>
+<textarea id="like-appcubator">
+</textarea>
+<label>What did you dislike about Appcubator? And which parts seemed overly complicated?</label>
+<textarea id="dislike-appcubator">
+</textarea>
+<label>We know that we have a lot more features to integrate into Appcubator such as the payments. What features do you think would be the most useful?</label>
+<textarea id="features-appcubator">
+</textarea>
+<br  />
+<input type="submit" class="btn btn-blue" value="Send Feedback Form!">
+</form>
+</script>

@@ -1,0 +1,201 @@
+{% extends "infra-html.html" %}
+
+{% block css %}
+    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+      api_key: t0q97cjtk5kf
+      scope: r_basicprofile r_emailaddress
+    </script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
+<!--     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+ -->
+<!--  <link rel="stylesheet" href="https://raw.github.com/woothemes/FlexSlider/master/flexslider.css" type="text/css">
+ -->
+ <link href='http://fonts.googleapis.com/css?family=Merriweather:400,700' rel='stylesheet' type='text/css'>
+
+    <style>
+      .step {
+        font-family: 'Merriweather', serif;
+        color: #444444;
+        font-weight: 400;
+      }
+
+      h3 { 
+        font-family: 'Merriweather', serif;
+        font-weight: 700;
+      }
+      .flexslider {
+        display: block;
+        position: absolute;
+        margin-top: 0px;
+        width: 100%;
+        height: 100%;
+      }
+
+      .flexslider .slides {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding-bottom: 200px;
+        padding-top: 70px;
+      }
+
+      .flexslider .slides img {
+        height: 100%;
+      }
+
+      .flex-control-nav.flex-control-paging {
+        position: fixed;
+        bottom: 0;
+        height: 200px;
+        width: 100%;
+        background-image: -webkit-linear-gradient(#f3f3f3,#efefef);
+        box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid rgba(0, 0, 0, 0.3);
+        text-align: center;
+        padding-top: 14px;
+      }
+
+      .flex-control-nav.flex-control-paging li {
+        display: inline-block;
+        color: transparent;
+      }
+      .flex-control-nav.flex-control-paging a {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+        background-color: #ccc;
+        margin-left: 6px;
+        margin-right: 6px;
+        cursor: pointer;
+      }
+
+      .flex-control-nav.flex-control-paging a.flex-active {
+        background-color: #0f2d40;
+      }
+
+      .flex-direction-nav {
+        position: fixed;
+        top: 46%;
+        width: 100%;
+      }
+
+      .flex-direction-nav li { 
+        display: inline-block;
+        background-image: url("{{ STATIC_URL }}/img/flexi-nav.png");
+        height: 27px;
+        width: 27px;
+        background-size: auto 100%;
+        color: transparent;
+        margin-left: 40px;
+        margin-right: 40px;
+      }
+
+      .flex-direction-nav li:last-child {
+        background-position: right center;
+        float: right;
+      }
+
+      .footer {
+        position: fixed;
+      }
+
+      .step {
+        position: fixed;
+        width: 100%;
+        bottom: 20px;
+        height: 130px;
+        z-index: 1;
+        text-align: left;
+        padding-left: 140px;
+      }
+    </style>
+{% endblock %}
+{% block topbar %}
+{% include "infra-topbar-out.html" %}
+{% endblock %}
+{% block page %}
+<div class="">
+
+  <div class="flexslider">
+    <ul class="slides">
+      <li>
+        <img src="{{STATIC_URL}}img/tutorial/tut1.png" />
+        <div class="step">
+          <h3>Go to Data & Forms Page</h3>
+          <p>This page contains information about the data you want to store, and forms you would like to display to your users.</p>
+        </div>
+      </li>
+      <li>
+        <img src="{{STATIC_URL}}img/tutorial/tut2.png" />
+        <div class="step">
+          <h3>Choose how you want to authenticate users</h3>
+          <p>When you check the boxes, corresponding authentication buttons will be available on the editor. </p>
+        </div>
+      </li>
+      <li>
+        <img src="{{STATIC_URL}}img/tutorial/tut3.png" />
+        <div class="step">
+          <h3>Create a Tweet Entity</h3>
+          <p>You need to identify the type of data you would like to store on your database, and create `entities` accordingly.</p>
+        </div>
+      </li>
+      <li>
+        <img src="{{STATIC_URL}}img/tutorial/tut3.png" />
+        <div class="step">
+          <h3>Add `Content` field</h3>
+          <p>You need to add the fields belonging to this entity. Fields can have different types such as text, number, image and date. Since tweets just consist of text, we will pick "Text" as the type and make it required.</p>
+        </div>
+      </li>
+      <li>
+        <img src="{{STATIC_URL}}img/tutorial/tut3.png" />
+        <div class="step">
+          <h3>Create a "Create Tweet" form</h3>
+          <p>This will also show up on your UI editor.</p>
+        </div>
+      </li>
+      <li>
+        <img src="{{STATIC_URL}}img/tutorial/tut3.png" />
+        <div class="step">
+          <h3>Go to Themes Page and Choose One from the Gallery</h3>
+          <p>We will be adding many more of these soon. We also would like to help you if you already have designs by translating them into private themes.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+</div>
+<script type="html/template" id="login-form-template">
+<div class="login pad1">
+  <div>
+    <span class="pad1"><strong>User Login</strong></span>
+  </div>
+  <div class="span20">
+    <span class="login span24">
+      {% if form.errors %}
+      <p>Your username and password didn't match. Please try again.</p>
+      {% endif %}
+      <form class="" method="post" action="{% url django.contrib.auth.views.login %}">
+        {% csrf_token %}
+        <input id="id_username" type="text" class="username" name="username" placeholder="Username..." maxlength="30">
+        <input type="password" name="password" placeholder="Password..." id="id_password"><br>
+        <input class="btn" type="submit" value="Login"/><i class="small"> (forgot password?)</i>
+        <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
+      </form>
+    </span>
+  </div>
+</div>
+</script>
+{% endblock %}
+
+{% block js %}
+<script src="{{ STATIC_URL }}js/libs/jquery/jquery.js"></script>
+<script src="https://raw.github.com/woothemes/FlexSlider/master/jquery.flexslider-min.js"></script>
+<script type="text/javascript" charset="utf-8">
+  $(window).load(function() {
+    $('.flexslider').flexslider();
+  });
+</script>
+{% endblock %}

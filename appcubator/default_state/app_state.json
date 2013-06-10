@@ -1,0 +1,120 @@
+{
+    "info": {
+        "keywords": "",
+        "description": ""
+    },
+    "users": [
+        {
+            "name": "User",
+            "fields": [
+            ]
+        }
+    ],
+    "emails": [
+        {
+            "content": "Dear {{User.First_Name}},\n\nThanks for signing up!\n\n- {{AppName}} Team",
+            "name": "Welcome Email",
+            "subject": "Thanks for Signing up!"
+        }
+    ],
+    "tables": [
+        {
+            "name": "Tweet",
+            "fields": [
+                {
+                    "name": "Content",
+                    "required": true,
+                    "type": "text"
+                },
+                {
+                    "name": "User",
+                    "type": "fk",
+                    "entity_name": "User",
+                    "related_name": "Tweets"
+                }
+            ]
+        }
+    ],
+    "pages": [
+        {
+            "url": {
+                "urlparts": []
+            },
+            "navbar": {
+                "isFixed": true,
+                "brandName": null,
+                "isHidden": false,
+                "links": [
+                    {
+                        "url": "internal://Homepage",
+                        "title": "Homepage"
+                    },
+                    {
+                        "url": "internal://Registration Page",
+                        "title": "Registration Page"
+                    }
+                ]
+            },
+            "footer": {
+                "isFixed": true,
+                "customText": "Add custom footer text here",
+                "isHidden": false,
+                "links": [
+                    {
+                        "url": "internal://Homepage",
+                        "title": "Homepage"
+                    },
+                    {
+                        "url": "internal://Registration Page",
+                        "title": "Registration Page"
+                    }
+                ]
+            },
+            "uielements": [],
+            "name": "Homepage",
+            "access_level": "all"
+        },
+        {
+            "navbar": {
+                "isFixed": true,
+                "brandName": null,
+                "isHidden": false,
+                "links": [
+                    {
+                        "url": "internal://Homepage",
+                        "title": "Homepage"
+                    },
+                    {
+                        "url": "internal://Registration Page",
+                        "title": "Registration Page"
+                    }
+                ]
+            },
+            "footer": {
+                "isFixed": true,
+                "customText": "Add custom footer text here",
+                "isHidden": false,
+                "links": [
+                    {
+                        "url": "internal://Homepage",
+                        "title": "Homepage"
+                    },
+                    {
+                        "url": "internal://Registration Page",
+                        "title": "Registration Page"
+                    }
+                ]
+            },
+            "url": {
+                "urlparts": [
+                    "registration"
+                ]
+            },
+            "uielements": [],
+            "name": "Registration Page",
+            "access_level": "all"
+        }
+    ],
+    "mobilePages" : [],
+    "name": "thisisirrelevant"
+}

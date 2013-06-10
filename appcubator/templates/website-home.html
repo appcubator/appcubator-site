@@ -1,0 +1,109 @@
+{% extends "infra-html.html" %}
+
+{% block css %}
+    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+      api_key: t0q97cjtk5kf
+      scope: r_basicprofile r_emailaddress
+    </script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
+<!--     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+ -->
+{% endblock %}
+{% block topbar %}
+{% include "infra-topbar-out.html" %}
+{% endblock %}
+{% block page %}
+<div class="well">
+  <div class="container">
+    <div class="span64">
+      <div class="hi28">
+        <div class="span32 offset1 hoff6" style="color:#0f2d40;">
+          <p class="motto"> Turn your idea into a<br>working site or app at a<br><strong>low cost</strong> and <strong>quick turnaround</strong>.</p>
+          <h2 class="hoff2">Realize Your Ideas.</h2>
+          <div class="btn btn-green hoff1" id="request">Request a Beta Invite</div>
+          <script type="in/Login"></script>
+        </div>
+        <div class="span28 hi18 hoff7 offset3 video-pane">
+          <div class="site-trackstudent"></div>
+          <div id="bluebuttonihopenooneclicks" class="btn btn-blue">See What Others Have Built <img src="{{ STATIC_URL }}img/right-arrow.png"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row meta">
+    <div class="hi24 hoff1 span64">
+      <div class="span14 card">
+        <div class="hi12 users">
+        <div class="logo">
+          <span class="engine1"></span>
+          <span class="engine2"></span>
+          <span class="engine3"></span>
+        </div>
+        </div>
+      </div>
+      <div class="span22 green-1 card">
+        <div class="hi12 users">
+          <p class=" hoff1 hi3">
+            <span class="mtxt bold">Build.</span>
+          </p>
+          <p class="">
+            <span class="small">Use our visual editor to build your app<br>or hire a developer. Facebook, Twitter and LinkedIn integration is built in.</span>
+          </p>
+        </div>
+      </div>
+      <div class="span14 green-2 card">
+        <div class="hi12 publish">
+          <p class=" hoff1 hi3">
+           <span class="mtxt bold">Launch.</span>
+          </p>
+          <p class="">
+            <span class="small">Make your site or app public and get users immediately.</span>
+          </p>
+        </div>
+      </div>
+      <div class="span14 green-3 card">
+        <div class="hi12 metrics">
+          <p class=" hoff1 hi3">
+            <span class="mtxt bold">Watch.</span>
+          </p>
+          <p class="">
+            <span class="small">Monitor your user traction and watch key metrics.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="html/template" id="login-form-template">
+<div class="login pad1 pull-right" style="height:45px; margin-top: 10px; opacity:1.0;">
+  <div class="span8  hi14">
+    <span class="pad1"><strong>User Login</strong><br><i class="micro"> (forgot password?)</i></span>
+  </div>
+  <div class="span18 hi14">
+          <span class="login span24 offset1">
+            {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+            {% endif %}
+            <form class="" method="post" action="{% url django.contrib.auth.views.login %}">
+                {% csrf_token %}
+
+                <input id="id_username" type="text" name="username" placeholder="Username..." maxlength="30">
+                <br>
+                <input type="password" name="password" placeholder="Password..." id="id_password">
+                <br>
+                <input class="btn" type="submit" value="Login"/>
+                <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
+            </form>
+          </span>
+  </div>
+</div>
+</script>
+
+{% endblock %}
+
+{% block js %}
+<script data-main="{{ STATIC_URL }}js/application/external-pages/home-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "infra-html.html" %}
+{% block css %}
+<link type="text/css" href="/app/{{ app_id}}/uiestate.less" rel="stylesheet"/>
+{% endblock %}
+
+{% block topbar %}
+{% include "infra-topbar-app.html" %}
+{% endblock %}
+
+{% block page %}
+  <span class="span6 save-btn" id="save"></span>
+  <span class="span6 qm-btn" id="tutorial">?</span>
+  <span class="span6 scrollUp-btn hidden" id="scrollUp"></span>
+
+  <div class="container hoff6" id="main-container"></div>
+  {% include "app-page-templates.html" %}
+  {% endblock %}
+
+  {% block js %}
+  <script type="text/javascript">
+    var appId = {{ app_id }};
+    var appState = {{ app.state_json|safe }};
+    var uieState = {{ app.uie_state_json|safe }};
+    var mobileUieState = {{ app.mobile_uie_state_json|safe }};
+    var statics = {{ statics|safe }};
+    var themes = {{ themes|safe }};
+    var mobileThemes = {{ mobile_themes|safe }};
+    var GRID_WIDTH = 80;
+    var GRID_HEIGHT = 15;
+
+  </script>
+  <script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+
+{% endblock %}

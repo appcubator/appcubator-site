@@ -1,0 +1,350 @@
+<script type="text/template" id="app-main-page">
+    <div class="row hoff2 span58">
+      <h2 class="span48 pheader">{{ app.name }}</h2>
+      <div class="pane deploy-pane span10 hi3 right">
+        <div class="hi3 span10 deploy" id="deploy"><h4 class="hoff1 offset3">Deploy</h4></div>
+      </div>
+      <hr class="span58 pheader">
+    </div>
+    <div class="row hoff1 span58 notice">
+      <h3 class="hoff1">Thank you for joining Appcubator Private Beta program!</h3>
+      <div> You just need to complete the following steps to claim your free domain.</div>
+      <ul>
+        <li><input type="checkbox" disabled checked>Create a simple app.</li>
+
+        <li><input type="checkbox" id="tutorial-check" disabled>Read through the <a class="tutorial" href="#">tutorial</a>.</li>
+        <li><input type="checkbox" id="feedback-check" disabled>Fill the <a class="feedback" href="#">feedback form</a>.</li>
+      </ul>
+    </div>
+    <div class="span58 hoff1 hoff2">
+        <a class="pane hi11 span13 menu-app-info" id="app-info" href="/app/{{ app.id }}/info/">
+          <img src="{{ STATIC_URL }}img/info.png">
+          <div class="hoff1 offset1 offsetr1">
+          <h3>Domain & SEO</h3>
+          </div>
+        </a>
+        <a class="pane hi11 span13 menu-app-entities offset2" id="data-storage" href="/app/{{ app.id }}/entities/">
+          <img src="{{ STATIC_URL }}img/entities.png">
+          <div class="hoff1 offset1 offsetr1">
+          <h3>Tables</h3>
+          </div>
+        </a>
+        <a class="pane hi11 span13 offset2 menu-app-themes" id="themes" href="/app/{{ app.id }}/gallery/">
+          <img src="{{ STATIC_URL }}img/design.png">
+          <div class="hoff1 offset1 offsetr1">
+          <h3>Design & Themes</h3>
+          </div>
+        </a>
+        <a class="pane hi11 span13 offset2 menu-app-pages" id="pages" href="/app/{{ app.id }}/pages/">
+          <img src="{{ STATIC_URL }}img/page.png">
+          <div class="hoff1 offset1 offsetr1">
+          <h3>Pages</h3>
+          </div>
+        </a>
+        <hr class="span58 hoff2">
+    </div>
+
+    <div class="span58">
+      <div class="row hoff1 analytics">
+        <h3>Analytics</h3>
+        <img class="span58 analytics-demo hoff1" src="{{ STATIC_URL }}img/analytics.png">
+      </div>
+    </div>
+    <div class="span52 offset11 hoff4 hi4"></div>
+</script>
+
+<script type="text/template" id="app-info-page">
+<div class="container">
+  <div class="row hoff1">
+    <div class="span58">
+      <h2 class="pheader">Domain & SEO</h2>
+      <hr class="hoff2">
+      <div class="hoff2 span12">
+        <div class="navigator">
+          <ul class="left-nav" data-spy="affix" data-offset-top="150">
+            <li><a href="#domain-settings">Domain Settings</a></li>
+            <li><a href="#seo-optimizations">SEO Optimizations</a></li>
+            <li><a href="#danger-zone">Danger Zone</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="hoff2 span40 offset2">
+        <div class="span40 domains w-pane pb2" id="domain-settings">
+          <h3 class="span36 offset2 hoff1">Domain Settings</h3>
+          <hr class="span40">
+          <div class="span36 offset2 hi6">
+            <h4>Current subdomain:</h4>
+            <div class="hoff1"><a href="{{ app.url }}" target="_blank">{{ app.subdomain }}.appcubator.com</a></div>
+          </div>
+          <hr class="span40">
+          <div class="span36 offset2 hi6">
+            <h4>Change subdomain</h4>
+            <form class="register-subdomain-form hoff1 hi7">
+              <p class="span18"><input type="text" class="span10 register-subdomain-input" placeholder="Your subdomain"/><span style="line-height:50px">.appcubator.com</span></p>
+              <a class="register-subdomain-button btn span13" style="display:none;">Claim subdomain</a>
+            </form>
+          </div>
+          <hr class="span40">
+          <div class="span36 offset2 hoff1">
+            <h4>Custom Domains</h4>
+            <a href="#">No registered domains right now. </a>
+            <br  /><a href="#" class="btn" id="register-new-domain">Register a new domain</a>
+            <form class="register-domain-form" style="display:none;">
+              <input type="text" placeholder="Type the domain name..." class="span18 hi3 register-domain-input">
+              <a class="register-domain-button btn span10" style="display:none;">Register</a>
+            </form>
+          </div>
+        </div>
+
+        <div class="w-pane span40 hoff4 pb2" id="seo-optimizations">
+          <h3 class="span36 offset2 hoff1">SEO Optimizations</h3>
+          <hr class="span40">
+          <div class="hoff2 span36 offset2">
+            <h3 class="span36">Description</h3>
+            <textarea class="span26 hi6" id="app-description" placeholder="Description of the application..."><%= description %></textarea>
+          </div>
+          <hr class="span40">
+          <div class="hoff2 span36 offset2">
+            <h3 class="span36">Keywords</h3>
+            <textarea class="span26 hi6" id="app-keywords" placeholder="Keywords..."><%= keywords %></textarea>
+          </div>
+        </div>
+
+        <div class="w-pane span40 hoff4 pb2" id="danger-zone">
+          <h3 class="span36 offset2 hoff1">Danger Zone</h3>
+          <hr class="span40">
+          <a class="btn btn-danger hoff1 span8 offset2" id="delete">Delete App</a>
+        </div>
+      </div>
+      <div class="hi8 span40"></div>
+
+    </div>
+  </div>
+</div>
+</script>
+
+<script type="text/template" id="entities-page">
+<div class="container hoff2" id="entities-page">
+  <div class="span58">
+    <h2 class="pheader">User Tables</h2>
+    <input class="right hoff2" id="add-role-form" style="display: none; height: 45px" placeholder="User Role Name:">
+    <div class="button right" id="add-role">
+      <span class="add-icon"></span><span>Add User Role</span>
+    </div>
+  </div>
+  <hr class="span58 pheader">
+  <div class="span58 hoff1" id="users">
+    <div id="user-entity"></div>
+  </div>
+  <div class="span58" style="height: 45px;"></div>
+  <div class="span58 hoff2">
+    <h2 class="pheader">Tables</h2>
+    <input class="right" id="add-entity-form" style="display: none; height: 45px" placeholder="Table Name:">
+    <div class="button right" id="add-entity">
+      <span class="add-icon"></span><span>Add Table</span>
+    </div>
+    <hr class="span58 hoff1">
+  </div>
+  <div class="span58" id="tables"></div>
+  <div class="span58" style="height: 50px;"></div>
+  <div class="span58hoff2">
+    <h2 class="pheader">Relations</h2>
+    <hr class="span58 hoff1">
+  </div>
+  <div class="span58" id="relations"></div>
+  <div class="span58" style="height: 45px;"></div>
+</div>
+</script>
+
+<script type="text/template" id="pages-page">
+<div class="span58 hoff2">
+    <div id="web-section">
+      <h2 class="pheader">Pages</h2>
+      <hr class="span58 pheader">
+      <div class="" id="list-pages">
+      </div>
+      <div class="add-box create-page span18 pane hi22" id="create-page-box">
+        <div class="box-button span18 hoff2">
+          <img src="/static/img/add.png" class="span3 add-img">
+          <h2 class="offset1">Create a New Page</h2>
+        </div>
+        <form class="page-view span18 hi21 offsetr1 create-form" style="display:none;">
+          <div class="hoff2">
+            <input type="text" class="page-name span12 offset2" placeholder="Page Name">
+          </div>
+          <div class="row offset1 hi6"></div>
+        </form>
+      </div>
+    </div>
+    <div id="mobile-section" class="hoff2 span58">
+      <h2 class="header">Mobile Pages</h2>
+      <hr class="span58">
+      <div class="" id="list-mobile-pages">
+      </div>
+      <div class="add-box create-page span18 pane hi22" id="create-mobile-page-box">
+        <div class="box-button span18 hoff2">
+          <img src="/static/img/add.png" class="span3 add-img">
+          <h2 class="offset1">Create a New Page</h2>
+        </div>
+        <form class="page-view span18 hi21 offsetr1 pane create-form" style="display:none;">
+          <div class="hoff2">
+            <input type="text" class="page-name span12 offset2" placeholder="Page Name">
+          </div>
+          <div class="row offset1 hi6"></div>
+        </form>
+      </div>
+    </div>
+</div>
+</script>
+
+
+<script type="text/template" id="editor-page">
+ <div class="loading-gif" id="loading-gif"></div>
+
+  <!-- Top Menu -->
+  <div class="section-select">
+    <a href="{% url views.app_page app.id %}" class="menu-button home">
+    </a><div class="menu-button pages"><ul id="page-list"></ul>
+    </div><div class="menu-button save" id="save">
+      <span>Save</span>
+    </div><div class="menu-button run" id="deploy"><span>Test Run</span>
+    </div><div class="menu-button help"></div>
+  </div>
+
+  <!-- Inside-Page -->
+  <div class="page-container">
+    <div class="page-wrapper" id="page-wrapper">
+      <div class="url-bar">http://yourapp.com</div>
+      <div class="page full container fdededfcbcbcd" id="page">
+        <!-- Navbar -->
+        <div class="navbar" id="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
+              <ul class="nav" id="items">
+              </ul>
+              <button class="edit-navbar btn btn-small btn-inverse pull-right">Edit Navbar</button>
+            </div>
+          </div>
+        </div>
+        <!-- Navbar Ends-->
+        <div class="container editing" id="full-container"></div>
+        <div class="editing" id="elements-container"></div>
+        <!-- Footer -->
+        <div class="navbar" id="footer">
+            <div class="container">
+              <ul class="nav pull-left" id="links">
+              </ul>
+              <p id="customText" class="pull-left muted"></p>
+              <button class="edit-footer btn btn-small btn-inverse pull-right">Edit Footer</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!-- Footer Ends-->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Right Gallery Panel -->
+  <div id="top-panel-bb" class="right-panel">
+    <div class="top-panel-title">
+      <span>UI Elements</span>
+    </div>
+    <div class="search-panel">
+      <span class="search-icon"></span><input type="text" class="search" placeholder="Search Elements...">
+    </div><div class="item-gallery section" id="item-gallery">
+      <div class="elements-list" id="elements-list">
+        <ul id='all-list' class="list"></ul>
+      </div>
+    </div>
+  </div>
+
+</script>
+
+<script type="text/template" id="mobile-editor-page">
+ <div class="loading-gif" id="loading-gif"></div>
+
+  <!-- Top Menu -->
+  <div class="section-select">
+    <a href="{% url views.app_page app.id %}" class="menu-button home">
+    </a><div class="menu-button pages"><ul id="page-list"></ul>
+    </div><div class="menu-button save" id="save">
+      <span>Save</span>
+    </div><div class="menu-button run" id="deploy"><span>Test Run</span>
+    </div><div class="menu-button help"></div>
+  </div>
+
+  <!-- Inside-Page -->
+  <div class="page-container">
+    <div class="mobile-page-wrapper" id="page-wrapper">
+      <div class="url-bar">http://yourapp.com</div>
+      <div class="page full container fdededfcbcbcd" id="page">
+        <!-- Navbar -->
+        <header class="bar-title">
+          <a class="button" href="#">
+            Left
+          </a>
+          <h1 class="title">Title</h1>
+          <a class="button" href="#">
+            Right
+          </a>
+        </header>
+        <!-- Navbar Ends-->
+        <ul class="editing" id="elements-container">
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Gallery Panel -->
+  <div id="top-panel-bb" class="right-panel">
+    <div class="top-panel-title">
+      <span>UI Elements</span>
+    </div>
+    <div class="search-panel">
+      <span class="search-icon"></span><input type="text" class="search" placeholder="Search Elements...">
+    </div><div class="item-gallery section" id="item-gallery">
+      <div class="elements-list" id="elements-list">
+        <ul id='all-list' class="list"></ul>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="emails-page">
+  <div class="span58 hoff2">
+    <h2 class="pheader">Emails</h2>
+    <hr class="pheader">
+    <div class="span58 hoff1">
+      <div class="left-bar span12">
+        <ul id="email-list" class="left-nav"></ul>
+        <!--<a id="create-email" class="btn btn-primary btn-small">
+          <span style="font-size: 14px">+</span> Create Email
+        </a>-->
+      </div>
+      <div class="right-bar span40 offset4">
+        <form>
+          <div class="control-group">
+          <label class="control-label">Email Name</label>
+            <input type="text" id="edit-name" class="name input-block-level">
+          </div>
+          <div class="control-group">
+            <label class="control-label">Subject</label>
+            <input type="text" id="edit-subject" class="subject input-block-level">
+          </div>
+          <div class="control-group">
+            <label class="control-label">Message</label>
+            <textarea class="content input-block-level" id="edit-content" style="height: 300px; overflow: scroll"></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</script>
+<script type="text/template" id="themes-page">
+  <div class="span58 hoff1">
+    <h2 class="pheader">Themes</h2>
+    <hr class="span58 pheader">
+  </div>
+</script>

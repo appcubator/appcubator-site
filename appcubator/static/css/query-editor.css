@@ -1,0 +1,71 @@
+.modal.query-modal {
+  padding: 0!important;
+  height: 600px;
+  overflow-y:scroll;
+  padding-bottom: 50px;
+}
+
+.modal.query-modal .sections-container {
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.modal.query-modal h1 {
+  background-image: linear-gradient(to bottom, #fdfdfd, #eaeaea);
+  background-color: #fcfcfc;
+  margin: 0;
+  height: 52px;
+  padding: 16px;
+  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  color: #666;
+  border-bottom: 1px solid #ccc;
+}
+
+.modal.query-modal small {
+  font-size: 10px;
+  font-style: italic;
+  padding: 10px;
+  display: inline-block;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+}
+
+.modal.query-modal .bottom-sect {
+  text-align: right;
+  position: absolute;
+  height: 50px;
+  bottom: 0;
+  width: 100%;
+  background-color: #efefef;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.modal.query-modal .sect {
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #efefef;
+}
+
+.modal.query-modal p {
+  margin-bottom: 6px;
+}
+
+.modal.query-modal input {
+  border-width: 1px !important;
+}
+
+.modal.query-modal label {
+  margin-top: 0px;
+  padding: 4px;
+}
+
+.modal.query-modal label input[type="checkbox"], .modal.query-modal label input[type="radio"] {
+  margin-top: -4px;
+  margin-right: 4px;
+}
+
+.modal.query-modal label input[type="text"] {
+  width: 40px;
+  margin-top: 4px;
+}

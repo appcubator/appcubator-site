@@ -1,0 +1,24 @@
+/*
+ * All OpenType features and all extended glyphs have been removed.
+ 
+ * The fonts included in this stylesheet are subject to the End User License you purchased
+ * from Yellow Design Studio. The fonts are protected under domestic and international trademark and 
+ * copyright law. You are prohibited from modifying, reverse engineering, duplicating, or
+ * distributing this font software.
+
+ * (c) 2012 Yellow Design Studio. www.yellowdesignstudio.com
+ 
+ */
+
+@font-face {
+    font-family: 'verb_mediumitalic';
+    src: url('VerbMedium-Italic-webfont.eot');
+    src: url('VerbMedium-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('VerbMedium-Italic-webfont.woff') format('woff'),
+         url('VerbMedium-Italic-webfont.ttf') format('truetype'),
+         url('VerbMedium-Italic-webfont.svg#verb_mediumitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+

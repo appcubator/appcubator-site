@@ -1,0 +1,90 @@
+{% extends "infra-html.html" %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/reset.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-website.css">
+{% endblock %}
+
+{% block topbar %}
+{% include "infra-topbar-plain.html" %}
+{% endblock %}
+
+{% block page %}
+<div class="container hoff5">
+  <div class="row hoff1">
+    <div class="span11 offsetr1">
+    </div>
+    <div class="span36">
+      <h3 class="">Profile Info</h3><br  />
+      <form action="/account/" method="POST">
+        <h4 class="">Name</h4><br  />
+        <input type="text" class="span8 hoff1" placeholder="First Name" name="first_name" value="{{ user.first_name }}">
+        <input type="text" class="span8 hoff1" placeholder="Last Name" name="last_name" value="{{ user.last_name }}"><br  />
+        <div class="span8 form-error field-name-first_name"></div>
+        <div class="span8 form-error field-name-last_name"></div><br />
+        <h4 class="">Email</h4><br  />
+        <input type="text" class="span16 hoff1" placeholder="Email" name="email" value="{{ user.email }}"><br  />
+        <div class="span16 form-error field-name-email"></div><br />
+        <input type="submit" class="btn" value="Save Changes">
+      </form>
+      <hr>
+      <div class="hoff1">
+        <h3 class="">Password</h3><br  />
+        <form action="/account/set_password/" method="POST">
+          <input type="password" class="span16 hoff1" name="password1" placeholder="New Password..."><br />
+          <div class="span16 form-error field-name-password1"></div><br />
+          <input type="password" class="span16" name="password2" placeholder="Confirm Password..."><br />
+          <div class="span16 form-error field-name-password2"></div><br />
+          <input type="submit" class="btn" value="Change Password">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery/jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/libs/underscore-amd/underscore.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/libs/iui/iui-nonamd.js"></script>
+
+<script type="text/javascript">
+// ajaxify forms @ksikka
+$(document).ready(function() {
+  $('form').each(function(ind, node) {
+
+    $(node).submit(function(e) {
+      var self = this;
+      var ajax_info = {
+        type : $(node).attr('method'),
+        url  : $(node).attr('action'),
+        data : $(node).serialize(),
+        success : function(data, statusStr, xhr) {
+          if (typeof(data.redirect_to) !== 'undefined') {
+            location.href = data.redirect_to;
+          } else {
+            _.each(data, function(val, key, ind) {
+              if(key==='__all__') {
+                $(self).find('.form-error.field-all').html(val.join('<br />'));
+              } else {
+                $(self).find('.form-error.field-name-'+key).html(val.join('<br />'));
+              }
+            });
+          }
+        }
+      };
+      $.ajax(ajax_info);
+      $(self).find('.form-error').html("");
+
+      return false;
+
+    });
+
+  });
+
+
+
+
+});
+</script>
+{% endblock %}

@@ -1,0 +1,112 @@
+[
+  {
+    "pk": "1",
+    "model": "v1factory.UIElement",
+    "fields": {
+      "class_name": "alpha",
+      "html": "<%= text %>",
+      "tagname" : "a",
+      "css": "",
+      "name": "Link"
+    }
+  },
+  {
+    "pk": "2",
+    "model": "v1factory.UIElement",
+    "fields": {
+      "class_name": "beta",
+      "html": "<%= text %>",
+      "tagname": "p",
+      "css": "",
+      "name": "Block Text"
+    }
+  },
+  {
+    "pk": "3",
+    "model": "v1factory.UIElement",
+    "fields": {
+      "class_name": "gamma",
+      "html": "",
+      "css": "",
+      "tagname": "img",
+      "name": "Image"
+    }
+  },
+  {
+    "pk": "4",
+    "model": "v1factory.UIElement",
+    "fields": {
+      "class_name": "hello",
+      "html": "<%= text %>",
+      "css": "",
+      "name": "Title",
+      "tagname": "h1"
+    }
+  },
+  {
+    "pk": "5",
+    "model": "v1factory.UIElement",
+    "fields": {
+      "class_name": "whatsup",
+      "html": "<%= text %>",
+      "css": "",
+      "tagname": "h2",
+      "name": "Heading"
+    }
+  },
+  {
+    "pk": "6",
+    "model": "v1factory.UIElement",
+    "fields": {
+      "class_name": "yolo",
+      "html": "<%= text %>",
+      "css": "",
+      "name": "Subheading",
+      "tagname": "h3"
+    }
+  },
+  {
+    "pk": "7",
+    "model": "v1factory.UIElement",
+    "fields": {
+      "class_name": "ilter",
+      "html": "<%= text %>",
+      "css": "",
+      "tagname": "div",
+      "name": "Container"
+    }
+  },
+  {
+    "pk": "8",
+    "model": "v1factory.UIElement",
+    "fields": {
+      "class_name": "karan",
+      "html": "",
+      "tagname": "input",
+      "css": "",
+      "name": "One-line textfield"
+    }
+  },
+  {
+    "pk": "9",
+    "model": "v1factory.UIElement",
+    "fields": {
+      "class_name": "zoo",
+      "html": "",
+      "css": "",
+      "tagname": "textarea",
+      "name": "Paragraph textfield"
+    }
+  },
+  {
+    "pk": "10",
+    "model": "v1factory.UIElement",
+    "fields": {
+      "class_name": "zebra",
+      "html": "",
+      "tagname": "button",
+      "css": "background-image:  -webkit-linear-gradient(top, #1d87c8, #12458c); color:white; border-radius: 4px; padding:4px",
+      "name": "Button"
+    }
+  }
+]

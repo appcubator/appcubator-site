@@ -1,0 +1,60 @@
+.normal-dialogue {
+  padding:0;
+  padding-top: 50px;  
+  position: relative;
+  font-size: 16px;
+}
+.normal-dialogue p {
+  padding: 20px;
+}
+
+.normal-dialogue .bottom-sect {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  background-color: #eee;
+  border-top: 1px solid #ddd;
+  bottom: 0;
+}
+
+.normal-dialogue a {
+  margin-top: 20px;
+  color: #0f2d40;
+  font-weight: bold;
+}
+
+.normal-dialogue .bottom-sect .btn.done {
+  float: right;
+}
+
+.error-dialogue {
+  padding:0;
+  padding-top: 50px;  
+  position: relative;
+  font-size: 16px;
+}
+
+.error-dialogue p {
+  padding: 20px;
+}
+
+.error-dialogue .bottom-sect {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  background-color: #ee9999;
+  border-top: 1px solid #ff8888;
+  bottom: 0;
+}
+
+.error-dialogue a {
+  margin-top: 20px;
+  color: #0f2d40;
+  font-weight: bold;
+}
+
+.error-dialogue .bottom-sect .btn.done {
+  float: right;
+}

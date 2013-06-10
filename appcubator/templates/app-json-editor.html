@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+    <title>Edit App</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jsoneditor/app.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jsoneditor/jsoneditor.css">
+    <script type="text/javascript" src="{{ STATIC_URL }}jsoneditor/jsoneditor.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}jsoneditor/ace-min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/libs/iui/iui-nonamd.js"></script>
+    
+</head>
+
+<body>
+
+<div id="header">
+    <!--
+    <a href="http://jsoneditoronline.org" class="header">
+        <img alt="JSON Editor Online" title="JSON Editor Online" src="img/logo.png" id="logo">
+    </a>-->
+
+    <div id="menu">
+        <ul>
+            <li>
+                <a id="save" title="Save file to disk">Save</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<div id="auto">
+    <div id="contents">
+        <div id="codeEditor"></div>
+
+        <div id="splitter">
+            <div id="buttons">
+                <div>
+                    <button id="toTree" class="convert" title="Copy code to tree editor">
+                        <div class="convert-right"></div>
+                    </button>
+                </div>
+                <div>
+                    <button id="toCode" class="convert" title="Copy tree to code editor">
+                        <div class="convert-left"></div>
+                    </button>
+                </div>
+            </div>
+            <div id="drag">
+            </div>
+        </div>
+
+        <div id="treeEditor"></div>
+
+    </div>
+</div>
+
+<div id="appstatecontainer" style="display:none">
+</div>
+
+<script type="text/javascript" src="{{ STATIC_URL }}jsoneditor/app.js"></script>
+<script type="text/javascript">
+    var APPSTATE = {{ app.state_json|safe }};
+    var app_id = {{ app_id }}
+    app.load();
+    app.resize();
+</script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}jsoneditor/jsonlint.js"></script>
+
+</body>
+</html>

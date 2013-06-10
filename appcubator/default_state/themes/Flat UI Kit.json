@@ -1,0 +1,471 @@
+{
+    "buttons": [
+        {
+            "style": "height: 44px;",
+            "isSingle": true,
+            "content_attribs": {
+                "value": "Button1"
+            },
+            "hoverStyle": "",
+            "class_name": "btn",
+            "content": null,
+            "tagName": "input",
+            "activeStyle": "",
+            "cons_attribs": {
+                "type": "submit"
+            }
+        },
+        {
+            "style": "border: none;\ncolor: white;\nfont-size: 16.5px;\ntext-decoration: none;\ntext-shadow: none;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;\n-webkit-transition: 0.25s;\n-moz-transition: 0.25s;\n-o-transition: 0.25s;\ntransition: 0.25s;\n-webkit-backface-visibility: hidden;\nbackground-color: #1abc9c;\nbackground-image: none;\nheight: 44px;\nborder-radius: 6px;\nfont-weight: bold;",
+            "isSingle": true,
+            "content_attribs": {
+                "value": "Button1"
+            },
+            "hoverStyle": "",
+            "class_name": "btn-info",
+            "content": null,
+            "tagName": "input",
+            "activeStyle": "",
+            "cons_attribs": {
+                "tagType": "submit"
+            }
+        },
+        {
+            "style": "border: none;\nbackground: #34495e;\ncolor: white;\nfont-size: 16.5px;\ntext-decoration: none;\ntext-shadow: none;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;\n-webkit-transition: 0.25s;\n-moz-transition: 0.25s;\n-o-transition: 0.25s;\ntransition: 0.25s;\n-webkit-backface-visibility: hidden;\nbackground-color: #e74c3c;\nborder-radius: 6px;\nheight:44px;\nfont-weight: bold;",
+            "isSingle": true,
+            "content_attribs": {
+                "value": "Button1"
+            },
+            "hoverStyle": "  color: #000;\n  background-color: #bd362f;\n  *background-color: #a9302a;",
+            "class_name": "btn-warning",
+            "content": null,
+            "tagName": "input",
+            "activeStyle": "",
+            "cons_attribs": {
+                "tagType": "submit"
+            }
+        },
+        {
+            "style": "border: none;\nbackground: #34495e;\ncolor: white;\nfont-size: 16.5px;\ntext-decoration: none;\ntext-shadow: none;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;\n-webkit-transition: 0.25s;\n-moz-transition: 0.25s;\n-o-transition: 0.25s;\ntransition: 0.25s;\n-webkit-backface-visibility: hidden;\nheight: 44px;\nborder-radius: 6px;\nfont-weight: bold;",
+            "isSingle": true,
+            "cons_attribs": {
+                "type": "submit"
+            },
+            "hoverStyle": "",
+            "class_name": "facebook-btn",
+            "content": null,
+            "activeStyle": "",
+            "content_attribs": {
+                "value": "Button1"
+            },
+            "tagName": "input"
+        },
+        {
+            "style": "border: none;\nbackground: #71c5ef;\ncolor: white;\nfont-size: 16.5px;\ntext-decoration: none;\ntext-shadow: none;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;\n-webkit-transition: 0.25s;\n-moz-transition: 0.25s;\n-o-transition: 0.25s;\ntransition: 0.25s;\n-webkit-backface-visibility: hidden;\nheight: 44px;\nborder-radius: 6px;\nfont-weight: bold;",
+            "isSingle": true,
+            "cons_attribs": {
+                "type": "submit"
+            },
+            "hoverStyle": "",
+            "class_name": "linkedin-btn",
+            "content": null,
+            "activeStyle": "",
+            "content_attribs": {
+                "value": "Button1"
+            },
+            "tagName": "input"
+        }
+    ],
+    "passwords": [
+        {
+            "style": "border-width: 1px;",
+            "isSingle": true,
+            "content_attribs": {
+                "placeholder": "Default placeholder..."
+            },
+            "hoverStyle": "",
+            "class_name": "password-1",
+            "content": null,
+            "tagName": "input",
+            "activeStyle": "",
+            "cons_attribs": {
+                "tagType": "password"
+            }
+        }
+    ],
+    "links": [
+        {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {
+                "href": "{{homepage}}"
+            },
+            "hoverStyle": "",
+            "class_name": "link-1",
+            "content": "Default Link...",
+            "tagName": "a",
+            "activeStyle": ""
+        },
+        {
+            "style": "color:#49afcd;",
+            "isSingle": false,
+            "content_attribs": {
+                "href": "{{homepage}}"
+            },
+            "hoverStyle": "",
+            "class_name": "blue-link",
+            "content": "Default Link...",
+            "tagName": "a",
+            "activeStyle": ""
+        }
+    ],
+    "button": [
+        {
+            "style": "  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n",
+            "isSingle": true,
+            "content_attribs": {
+                "value": "Button1"
+            },
+            "hoverStyle": "",
+            "class_name": "btn-1",
+            "content": null,
+            "tagName": "input",
+            "activeStyle": "",
+            "cons_attribs": {
+                "type": "submit"
+            }
+        },
+        {
+            "style": "  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n  background-color: #006dcc;\n  *background-color: #0044cc;\n  background-image: -moz-linear-gradient(top, #0088cc, #0044cc);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));\n  background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);\n  background-image: -o-linear-gradient(top, #0088cc, #0044cc);\n  background-image: linear-gradient(to bottom, #0088cc, #0044cc);\n  background-repeat: repeat-x;\n  border-color: #0044cc #0044cc #002a80;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\nborder-",
+            "isSingle": true,
+            "content_attribs": {
+                "value": "Button1"
+            },
+            "hoverStyle": "",
+            "class_name": "btn-2",
+            "content": null,
+            "tagName": "input",
+            "activeStyle": "",
+            "cons_attribs": {
+                "tagType": "submit"
+            }
+        },
+        {
+            "style": "  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n  background-color: #da4f49;\n  *background-color: #bd362f;\n  background-image: -moz-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#bd362f));\n  background-image: -webkit-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: -o-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);\n  background-repeat: repeat-x;\n  border-color: #bd362f #bd362f #802420;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b', endColorstr='#ffbd362f', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);",
+            "isSingle": true,
+            "content_attribs": {
+                "value": "Button1"
+            },
+            "hoverStyle": "  color: #000;\n  background-color: #bd362f;\n  *background-color: #a9302a;",
+            "class_name": "btn-3",
+            "content": null,
+            "tagName": "input",
+            "activeStyle": "",
+            "cons_attribs": {
+                "tagType": "submit"
+            }
+        }
+    ],
+    "fonts": " @import url(\"http://fonts.googleapis.com/css?family=Lato:400,700,900,400italic\");\n",
+    "lines": [
+        {
+            "style": "border-color:#49afcd;",
+            "isSingle": true,
+            "cons_attribs": {
+            },
+            "hoverStyle": "",
+            "class_name": "line-1",
+            "content": null,
+            "tagName": "hr",
+            "activeStyle": ""
+        },
+        {
+            "style": "border-color:#ccc;",
+            "isSingle": true,
+            "cons_attribs": {
+            },
+            "hoverStyle": "",
+            "class_name": "line2",
+            "content": null,
+            "tagName": "hr",
+            "activeStyle": ""
+        },
+        {
+            "style": "",
+            "isSingle": true,
+            "cons_attribs": {
+            },
+            "hoverStyle": "",
+            "class_name": "lin3",
+            "content": null,
+            "tagName": "hr",
+            "activeStyle": ""
+        }
+    ],
+    "textAreas": [
+        {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": null,
+            "hoverStyle": "",
+            "class_name": "default",
+            "content": "Default Text Area...",
+            "tagName": "textarea",
+            "activeStyle": ""
+        }
+    ],
+    "texts": [
+        {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": null,
+            "hoverStyle": "",
+            "class_name": "txt",
+            "content": "Default text!",
+            "tagName": "span",
+            "activeStyle": ""
+        },
+        {
+            "style": "font-size:10px;",
+            "isSingle": false,
+            "content_attribs": null,
+            "hoverStyle": "",
+            "class_name": "small-txt",
+            "content": "Default text!",
+            "tagName": "span",
+            "activeStyle": ""
+        }
+    ],
+    "boxes": [
+        {
+            "style": "background-color:#ccc;",
+            "isSingle": false,
+            "cons_attribs": {
+                "style": "border:1px solud #333;"
+            },
+            "hoverStyle": "",
+            "class_name": "box-1",
+            "content": null,
+            "tagName": "div",
+            "activeStyle": ""
+        },
+        {
+            "style": "  padding: 19px;\n  background-color: #f5f5f5;\n  border: 1px solid #e3e3e3;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);",
+            "isSingle": false,
+            "cons_attribs": {
+                "style": "border:1px solud #333;"
+            },
+            "hoverStyle": "",
+            "class_name": "box-2",
+            "content": null,
+            "tagName": "div",
+            "activeStyle": ""
+        }
+    ],
+    "headerTexts": [
+        {
+            "style": "font-size: 32px;\nfont-weight: bold;",
+            "isSingle": false,
+            "content_attribs": null,
+            "hoverStyle": "",
+            "class_name": "header-1",
+            "content": "Default header!",
+            "tagName": "h1",
+            "activeStyle": ""
+        },
+        {
+            "style": "font-size: 26px;\nfont-weight: bold;",
+            "isSingle": false,
+            "content_attribs": null,
+            "hoverStyle": "",
+            "class_name": "header-2",
+            "content": "Default header!",
+            "tagName": "h1",
+            "activeStyle": ""
+        },
+        {
+            "style": "line-height: 28px;\ntext-transform: uppercase;\ncolor: #313131;\nfont-family: 'Open Sans', sans-serif;\nfont-weight: 800;",
+            "isSingle": false,
+            "tagName": "h1",
+            "hoverStyle": "",
+            "class_name": "big",
+            "content": "Default header!",
+            "content_attribs": null,
+            "activeStyle": ""
+        },
+        {
+            "style": "font-size: 90px;\nfont-weight: 900;\nletter-spacing: -2px;\nline-height: 100px;\ncolor: #34495e;\nfont-family: \"Lato\", sans-serif;",
+            "isSingle": false,
+            "tagName": "h1",
+            "hoverStyle": "",
+            "class_name": "very-large",
+            "content": "Default header!",
+            "content_attribs": null,
+            "activeStyle": ""
+        }
+    ],
+    "basecss": "clearfix {\n  *zoom: 1;\n}\n\n.clearfix:before,\n.clearfix:after {\n  display: table;\n  line-height: 0;\n  content: \"\";\n}\n\n.clearfix:after {\n  clear: both;\n}\nn\n\n.hide-text {\n  font: 0/0 a;\n  color: transparent;\n  text-shadow: none;\n  background-color: transparent;\n  border: 0;\n}\n\n.input-block-level {\n  display: block;\n  width: 100%;\n  min-height: 30px;\n  -webkit-box-sizing: border-box;\n     -moz-box-sizing: border-box;\n          box-sizing: border-box;\n}\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nnav,\nsection {\n  display: block;\n}\n\naudio,\ncanvas,\nvideo {\n  display: inline-block;\n  *display: inline;\n  *zoom: 1;\n}\n\naudio:not([controls]) {\n  display: none;\n}\n\nhtml {\n  font-size: 100%;\n  -webkit-text-size-adjust: 100%;\n      -ms-text-size-adjust: 100%;\n}\n\na:focus {\n  outline: thin dotted #333;\n  outline: 5px auto -webkit-focus-ring-color;\n  outline-offset: -2px;\n}\n\na:hover,\na:active {\n  outline: 0;\n}\n\nsub,\nsup {\n  position: relative;\n  font-size: 75%;\n  line-height: 0;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nimg {\n  width: auto\\9;\n  height: auto;\n  max-width: 100%;\n  vertical-align: middle;\n  border: 0;\n  -ms-interpolation-mode: bicubic;\n}\n\nbutton,\ninput,\nselect,\ntextarea {\n  margin: 0;\n  font-size: 100%;\n  vertical-align: middle;\n}\n\nbutton,\ninput {\n  *overflow: visible;\n  line-height: normal;\n}\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  padding: 0;\n  border: 0;\n}\n\nbutton,\nhtml input[type=\"button\"],\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  cursor: pointer;\n  -webkit-appearance: button;\n}\n\nlabel,\nselect,\nbutton,\ninput[type=\"button\"],\ninput[type=\"reset\"],\ninput[type=\"submit\"],\ninput[type=\"radio\"],\ninput[type=\"checkbox\"] {\n  cursor: pointer;\n}\n\ninput[type=\"search\"] {\n  -webkit-box-sizing: content-box;\n     -moz-box-sizing: content-box;\n          box-sizing: content-box;\n  -webkit-appearance: textfield;\n}\n\ninput[type=\"search\"]::-webkit-search-decoration,\ninput[type=\"search\"]::-webkit-search-cancel-button {\n  -webkit-appearance: none;\n}\n\ntextarea {\n  overflow: auto;\n  vertical-align: top;\n}\n\n\n font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  color: #333333;\n  background-color: #ffffff;\n\n\na {\n  color: #0088cc;\n  text-decoration: none;\n}\n\na:hover,\na:focus {\n  color: #005580;\n  text-decoration: underline;\n } input { border-width:1px; }\n \n \n @import url(\"http://fonts.googleapis.com/css?family=Lato:400,700,900,400italic\");\n@font-face {\n  font-family: \"Flat-UI-Icons-16\";\n  src: url(\"../fonts/Flat-UI-Icons-16.eot\");\n  src: url(\"../fonts/Flat-UI-Icons-16.eot?#iefix\") format(\"embedded-opentype\"), url(\"../fonts/Flat-UI-Icons-16.woff\") format(\"woff\"), url(\"../fonts/Flat-UI-Icons-16.ttf\") format(\"truetype\"), url(\"../fonts/Flat-UI-Icons-16.svg#Flat-UI-Icons-16\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal; }\n\n/* Use the following CSS code if you want to use data attributes for inserting your icons */\n[data-icon]:before {\n  font-family: \"Flat-UI-Icons-16\";\n  content: attr(data-icon);\n  speak: none;\n  font-weight: normal;\n  line-height: 1;\n  -webkit-font-smoothing: antialiased; }\n\n/* Use the following CSS code if you want to have a class per icon */\n/*Instead of a list of all class selectors,\n *you can use the generic selector below, but it's slower:\n *[class*=\"fui-\"]:before { */\n.fui-volume-16:before, .fui-video-16:before, .fui-time-16:before, .fui-settings-16:before, .fui-plus-16:before, .fui-new-16:before, .fui-menu-16:before, .fui-man-16:before, .fui-mail-16:before, .fui-lock-16:before, .fui-location-16:before, .fui-heart-16:before, .fui-eye-16:before, .fui-cross-16:before, .fui-cmd-16:before, .fui-checkround-16:before, .fui-checkmark-16:before, .fui-camera-16:before, .fui-calendar-16:before, .fui-bubble-16:before {\n  font-family: \"Flat-UI-Icons-16\";\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  line-height: 1;\n  -webkit-font-smoothing: antialiased; }\n\n.fui-volume-16:before {\n  content: \"\\e000\"; }\n\n.fui-video-16:before {\n  content: \"\\e001\"; }\n\n.fui-time-16:before {\n  content: \"\\e002\"; }\n\n.fui-settings-16:before {\n  content: \"\\e003\"; }\n\n.fui-plus-16:before {\n  content: \"\\e004\"; }\n\n.fui-new-16:before {\n  content: \"\\e005\"; }\n\n.fui-menu-16:before {\n  content: \"\\e006\"; }\n\n.fui-man-16:before {\n  content: \"\\e007\"; }\n\n.fui-mail-16:before {\n  content: \"\\e008\"; }\n\n.fui-lock-16:before {\n  content: \"\\e009\"; }\n\n.fui-location-16:before {\n  content: \"\\e00a\"; }\n\n.fui-heart-16:before {\n  content: \"\\e00b\"; }\n\n.fui-eye-16:before {\n  content: \"\\e00c\"; }\n\n.fui-cross-16:before {\n  content: \"\\e00d\"; }\n\n.fui-cmd-16:before {\n  content: \"\\e00e\"; }\n\n.fui-checkround-16:before {\n  content: \"\\e00f\"; }\n\n.fui-checkmark-16:before {\n  content: \"\\e010\"; }\n\n.fui-camera-16:before {\n  content: \"\\e011\"; }\n\n.fui-calendar-16:before {\n  content: \"\\e012\"; }\n\n.fui-bubble-16:before {\n  content: \"\\e013\"; }\n\n@font-face {\n  font-family: \"Flat-UI-Icons-24\";\n  src: url(\"../fonts/Flat-UI-Icons-24.eot\");\n  src: url(\"../fonts/Flat-UI-Icons-24.eot?#iefix\") format(\"embedded-opentype\"), url(\"../fonts/Flat-UI-Icons-24.woff\") format(\"woff\"), url(\"../fonts/Flat-UI-Icons-24.ttf\") format(\"truetype\"), url(\"../fonts/Flat-UI-Icons-24.svg#Flat-UI-Icons-24\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal; }\n\n/* Use the following CSS code if you want to use data attributes for inserting your icons */\n[data-icon]:before {\n  font-family: \"Flat-UI-Icons-24\";\n  content: attr(data-icon);\n  speak: none;\n  font-weight: normal;\n  line-height: 1;\n  -webkit-font-smoothing: antialiased; }\n\n/* Use the following CSS code if you want to have a class per icon */\n/*Instead of a list of all class selectors,\n *you can use the generic selector below, but it's slower:\n *[class*=\"fui-\"]:before { */\n.fui-video-24:before, .fui-time-24:before, .fui-settings-24:before, .fui-plus-24:before, .fui-new-24:before, .fui-menu-24:before, .fui-man-24:before, .fui-mail-24:before, .fui-lock-24:before, .fui-location-24:before, .fui-heart-24:before, .fui-eye-24:before, .fui-cross-24:before, .fui-cmd-24:before, .fui-checkround-24:before, .fui-checkmark-24:before, .fui-calendar-24:before, .fui-bubble-24:before, .fui-volume-24:before, .fui-camera-24:before {\n  font-family: \"Flat-UI-Icons-24\";\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  line-height: 1;\n  -webkit-font-smoothing: antialiased; }\n\n.fui-video-24:before {\n  content: \"\\e000\"; }\n\n.fui-time-24:before {\n  content: \"\\e001\"; }\n\n.fui-settings-24:before {\n  content: \"\\e002\"; }\n\n.fui-plus-24:before {\n  content: \"\\e003\"; }\n\n.fui-new-24:before {\n  content: \"\\e005\"; }\n\n.fui-menu-24:before {\n  content: \"\\e006\"; }\n\n.fui-man-24:before {\n  content: \"\\e007\"; }\n\n.fui-mail-24:before {\n  content: \"\\e008\"; }\n\n.fui-lock-24:before {\n  content: \"\\e009\"; }\n\n.fui-location-24:before {\n  content: \"\\e00a\"; }\n\n.fui-heart-24:before {\n  content: \"\\e00b\"; }\n\n.fui-eye-24:before {\n  content: \"\\e00c\"; }\n\n.fui-cross-24:before {\n  content: \"\\e00d\"; }\n\n.fui-cmd-24:before {\n  content: \"\\e00e\"; }\n\n.fui-checkround-24:before {\n  content: \"\\e00f\"; }\n\n.fui-checkmark-24:before {\n  content: \"\\e010\"; }\n\n.fui-calendar-24:before {\n  content: \"\\e011\"; }\n\n.fui-bubble-24:before {\n  content: \"\\e012\"; }\n\n.fui-volume-24:before {\n  content: \"\\e013\"; }\n\n.fui-camera-24:before {\n  content: \"\\e004\"; }\n\n  color: #34495e;\n  font: 14px/1.231 \"Lato\", sans-serif;\n\na {\n  color: #1abc9c;\n  text-decoration: underline;\n  -webkit-transition: 0.25s;\n  -moz-transition: 0.25s;\n  -o-transition: 0.25s;\n  transition: 0.25s;\n  -webkit-backface-visibility: hidden; }\n  a:hover {\n    color: #2ecc71;\n    text-decoration: none; }\n\nh1 {\n  font-size: 32px;\n  font-weight: 900; }\n\nh2 {\n  font-size: 26px;\n  font-weight: 700;\n  margin-bottom: 2px; }\n\nh3 {\n  font-size: 24px;\n  font-weight: 700;\n  margin-bottom: 4px;\n  margin-top: 2px; }\n\nh4 {\n  font-size: 18px;\n  font-weight: 500;\n  margin-top: 4px; }\n\nh5 {\n  font-size: 16px;\n  font-weight: 500;\n  text-transform: uppercase; }\n\nh6 {\n  font-size: 13px;\n  font-weight: 500;\n  text-transform: uppercase; }\n\n.btn {\n  border: none;\n  background: #34495e;\n  color: white;\n  font-size: 16.5px;\n  text-decoration: none;\n  text-shadow: none;\n  -webkit-box-shadow: none;\n  -moz-box-shadow: none;\n  box-shadow: none;\n  -webkit-transition: 0.25s;\n  -moz-transition: 0.25s;\n  -o-transition: 0.25s;\n  transition: 0.25s;\n  -webkit-backface-visibility: hidden; }\n  .btn:hover, .btn:focus {\n    background-color: #4e6d8d;\n    color: white;\n    -webkit-transition: 0.25s;\n    -moz-transition: 0.25s;\n    -o-transition: 0.25s;\n    transition: 0.25s;\n    -webkit-backface-visibility: hidden; }\n  .btn:active, .btn.active {\n    background-color: #2c3e50;\n    color: rgba(255, 255, 255, 0.75);\n    -webkit-box-shadow: none;\n    -moz-box-shadow: none;\n    box-shadow: none; }\n  .btn.disabled, .btn[disabled] {\n    background-color: #95a5a6;\n    color: white; }\n  .btn.btn-large {\n    padding-bottom: 12px;\n    padding-top: 13px; }\n  .btn.btn-primary {\n    background-color: #1abc9c; }\n    .btn.btn-primary:hover, .btn.btn-primary:focus {\n      background-color: #2fe2bf; }\n    .btn.btn-primary:active, .btn.btn-primary.active {\n      background-color: #16a085; }\n  .btn.btn-info {\n    background-color: #3498db; }\n    .btn.btn-info:hover, .btn.btn-info:focus {\n      background-color: #5dade2; }\n    .btn.btn-info:active, .btn.btn-info.active {\n      background-color: #2383c4; }\n  .btn.btn-danger {\n    background-color: #e74c3c; }\n    .btn.btn-danger:hover, .btn.btn-danger:focus {\n      background-color: #ec7063; }\n    .btn.btn-danger:active, .btn.btn-danger.active {\n      background-color: #dc2d1b; }\n  .btn.btn-success {\n    background-color: #2ecc71; }\n    .btn.btn-success:hover, .btn.btn-success:focus {\n      background-color: #55d98d; }\n    .btn.btn-success:active, .btn.btn-success.active {\n      background-color: #27ad60; }\n  .btn.btn-warning {\n    background-color: #f1c40f; }\n    .btn.btn-warning:hover, .btn.btn-warning:focus {\n      background-color: #f4d03f; }\n    .btn.btn-warning:active, .btn.btn-warning.active {\n      background-color: #cea70c; }\n  .btn-toolbar .btn {\n    font-size: 18px;\n    padding: 10px 14px 9px; }\n    .btn-toolbar .btn:first-child {\n      -webkit-border-radius: 6px 0 0 6px;\n      -moz-border-radius: 6px 0 0 6px;\n      border-radius: 6px 0 0 6px; }\n    .btn-toolbar .btn:last-child {\n      -webkit-border-radius: 0 6px 6px 0;\n      -moz-border-radius: 0 6px 6px 0;\n      border-radius: 0 6px 6px 0; }\n\n.btn-toolbar .btn.active {\n  color: white; }\n\n.demo-headline {\n  padding: 73px 0 110px;\n  text-align: center; }\n\n.demo-logo {\n  font-size: 90px;\n  font-weight: 900;\n  letter-spacing: -2px;\n  line-height: 100px; }\n  .demo-logo .logo {\n    background: url(\"../images/demo/logo-mask.png\") center 0 no-repeat;\n    background-size: 256px 186px;\n    height: 186px;\n    margin: 0 auto 26px;\n    overflow: hidden;\n    text-indent: -9999em;\n    width: 256px; }\n  .demo-logo small {\n    color: rgba(52, 73, 94, 0.3);\n    display: block;\n    font-size: 22px;\n    font-weight: 700;\n    letter-spacing: -1px;\n    padding-top: 5px; }\n\n.demo-row {\n  margin-bottom: 20px; }\n\n.demo-panel-title {\n  margin-bottom: 20px;\n  padding-top: 20px; }\n  .demo-panel-title small {\n    color: #bfc1c3;\n    font-size: inherit;\n    font-weight: 400; }\n\n.demo-navigation {\n  margin-bottom: -4px;\n  margin-top: -10px; }\n\n.demo-pager {\n  margin-top: -10px; }\n\n.demo-tooltips {\n  height: 126px; }\n  .demo-tooltips .tooltip {\n    left: -8px !important;\n    position: relative !important;\n    top: -8px !important; }\n\n.demo-headings {\n  margin-bottom: 12px; }\n\n.demo-tiles {\n  margin-bottom: 46px; }\n\n.demo-icons {\n  margin-bottom: 115px; }\n\n.demo-icons-24 {\n  font-size: 24px;\n  margin-bottom: 38px;\n  position: relative; }\n  .demo-icons-24 span {\n    margin: 0 0 0 18px; }\n    .demo-icons-24 span:first-child {\n      margin-left: 0; }\n\n.demo-icons-16 {\n  font-size: 16px;\n  margin: 0 0 38px 5px;\n  position: relative; }\n  .demo-icons-16 span {\n    margin: 0 0 0 28px; }\n    .demo-icons-16 span:first-child {\n      margin-left: 0; }\n\n.demo-icons-tooltip {\n  bottom: 0;\n  color: #b9c8d8;\n  font-size: 12px;\n  left: 100%;\n  margin-left: 0 !important;\n  position: absolute;\n  width: 80px; }\n\n.demo-illustrations {\n  margin-bottom: 45px; }\n  .demo-illustrations img {\n    height: 100px;\n    margin-left: 35px;\n    width: 100px;\n    vertical-align: bottom; }\n    .demo-illustrations img.big-illustration {\n      height: 111px;\n      width: 112px; }\n    .demo-illustrations img:first-child {\n      margin-left: 0; }\n\n.demo-samples {\n  margin-bottom: 46px; }\n\n.demo-video {\n  border-radius: 6px;\n  padding-top: 95px; }\n\n.demo-download-section {\n  float: none;\n  margin: 0 auto;\n  padding: 60px 0 90px 20px;\n  text-align: center; }\n  .demo-download-section [class*='fui-'] {\n    margin: 3px 0 -3px; }\n\n.demo-download {\n  background-color: #e8edf2;\n  border-radius: 50%;\n  height: 120px;\n  margin: 0 auto 32px;\n  padding: 40px 28px 30px 32px;\n  text-align: center;\n  width: 130px; }\n  .demo-download img {\n    height: 104px;\n    width: 82px; }\n\n.demo-download-text {\n  font-size: 15px;\n  padding: 20px 0;\n  text-align: center; }\n\n.demo-text-box a:hover {\n  color: #1abc9c; }\n\n.demo-browser {\n  background: #2c3e50 url(\"../images/demo/browser.png\") 0 0 no-repeat;\n  background-size: 659px 42px;\n  border-radius: 0 0 6px 6px;\n  color: white;\n  margin: 0 41px 140px 0;\n  padding-top: 42px; }\n\n.demo-browser-side {\n  float: left;\n  padding: 22px 20px;\n  width: 111px; }\n  .demo-browser-side > h5 {\n    margin-bottom: 3px;\n    text-transform: none; }\n  .demo-browser-side > h6 {\n    font-size: 11px;\n    font-weight: 300;\n    line-height: 18px;\n    margin-top: 3px;\n    text-transform: none; }\n\n.demo-browser-author {\n  background: url(\"../images/demo/browser-author.jpg\") center center no-repeat;\n  border: 3px solid white;\n  display: block;\n  height: 84px;\n  margin: 0 auto;\n  width: 84px;\n  -webkit-border-radius: 50%;\n  -moz-border-radius: 50%;\n  border-radius: 50%; }\n\n.demo-browser-action {\n  padding: 30px 0 12px; }\n  .demo-browser-action > .btn {\n    padding: 9px 0 10px 11px;\n    text-align: left;\n    -webkit-border-radius: 3px;\n    -moz-border-radius: 3px;\n    border-radius: 3px; }\n    .demo-browser-action > .btn:before {\n      color: white;\n      content: \"\\e004\";\n      font-size: 16px;\n      font-family: \"Flat-UI-Icons-16\";\n      font-weight: 300;\n      margin-right: 12px;\n      position: relative;\n      top: 1px;\n      -webkit-font-smoothing: antialiased; }\n\n.demo-browser-content {\n  background-color: #34495e;\n  border-radius: 0 0 6px;\n  overflow: hidden;\n  padding: 21px 0 0 20px; }\n  .demo-browser-content > img {\n    border: 6px solid white;\n    float: left;\n    margin: 0 15px 20px 0;\n    width: 134px; }\n\n.navbar {\n  font-size: 18px; }\n  .navbar .brand {\n    color: #1abc9c;\n    font-size: inherit;\n    font-weight: 700;\n    padding-bottom: 16px;\n    padding-top: 15px; }\n  .navbar .nav > li:hover > ul {\n    top: 100%; }\n  .navbar .nav > li > ul {\n    padding-top: 13px;\n    top: 80%;\n    background-color: white\\9; }\n    .navbar .nav > li > ul:before {\n      content: \"\";\n      border-style: solid;\n      border-width: 0 9px 9px 9px;\n      border-color: transparent transparent #34495e transparent;\n      height: 0px;\n      position: absolute;\n      left: 15px;\n      top: 5px;\n      width: 0px;\n      -webkit-transform: rotate(360deg); }\n    .navbar .nav > li > ul li:hover ul {\n      opacity: 1;\n      -webkit-transform: scale(1, 1);\n      display: block\\9; }\n    .navbar .nav > li > ul li ul {\n      left: 100%; }\n  .navbar .nav > li > a {\n    padding: 14px 15px 17px; }\n    .navbar .nav > li > a:hover {\n      color: #1abc9c; }\n  .navbar .nav li {\n    position: relative; }\n    .navbar .nav li:hover > ul {\n      opacity: 1;\n      z-index: 100;\n      -webkit-transform: scale(1, 1);\n      display: block\\9; }\n  .navbar .nav ul {\n    border-radius: 4px;\n    left: 15px;\n    list-style-type: none;\n    margin-left: 0;\n    opacity: 0;\n    position: absolute;\n    top: 0;\n    width: 234px;\n    z-index: -100;\n    -webkit-transform: scale(1, 0.99);\n    -webkit-transform-origin: 0 0;\n    display: none\\9;\n    -webkit-transition: 0.3s ease-out;\n    -moz-transition: 0.3s ease-out;\n    -o-transition: 0.3s ease-out;\n    transition: 0.3s ease-out;\n    -webkit-backface-visibility: hidden; }\n    .navbar .nav ul ul {\n      left: 95%;\n      padding-left: 5px; }\n    .navbar .nav ul li {\n      background-color: #34495e;\n      padding: 0 3px 3px; }\n      .navbar .nav ul li:first-child {\n        border-radius: 4px 4px 0 0;\n        padding-top: 3px; }\n      .navbar .nav ul li:last-child {\n        border-radius: 0 0 4px 4px; }\n      .navbar .nav ul li.active > a, .navbar .nav ul li.active > a:hover {\n        background-color: #1abc9c;\n        color: white; }\n    .navbar .nav ul a {\n      border-radius: 2px;\n      color: white;\n      display: block;\n      font-size: 14px;\n      padding: 6px 9px;\n      text-decoration: none; }\n      .navbar .nav ul a:hover {\n        background-color: #1abc9c; }\n\n.navbar-inner {\n  border: none;\n  padding-left: 4px;\n  padding-right: 4px;\n  -webkit-border-radius: 6px;\n  -moz-border-radius: 6px;\n  border-radius: 6px;\n  background-image: none;\n  background-color: #fafafa;\n }\n\n.navbar-inverse .navbar-inner {\n  background: #34495e; }\n.navbar-inverse .nav > li > a {\n  color: white; }\n.navbar-inverse .nav .active > a, .navbar-inverse .nav .active > a:hover, .navbar-inverse .nav .active > a:focus {\n  background-color: transparent;\n  color: #1abc9c;\n  -webkit-box-shadow: none;\n  -moz-box-shadow: none;\n  box-shadow: none; }\n\n.navbar-unread {\n  background-color: #e74c3c;\n  border-radius: 30px;\n  color: white;\n  display: none;\n  font-size: 12px;\n  font-weight: 500;\n  line-height: 18px;\n  min-width: 8px;\n  padding: 0 5px;\n  position: absolute;\n  right: -7px;\n  text-align: center;\n  text-shadow: none;\n  top: 8px;\n  z-index: 10; }\n  .active .navbar-unread {\n    display: block; }\n\n.dk_container {\n  cursor: pointer;\n  font-size: 14px;\n  margin-bottom: 10px;\n  outline: none; }\n\n.dk_toggle {\n  background-color: #1abc9c;\n  color: white;\n  border-radius: 6px;\n  overflow: hidden;\n  padding: 11px 45px 11px 13px;\n  text-decoration: none;\n  white-space: nowrap;\n  -webkit-transition: 0.25s;\n  -moz-transition: 0.25s;\n  -o-transition: 0.25s;\n  transition: 0.25s;\n  -webkit-backface-visibility: hidden; }\n  .dk_toggle:hover, .dk_toggle:focus, .dk_focus .dk_toggle {\n    background-color: #2fe2bf;\n    color: white;\n    outline: none; }\n  .dk_toggle:active {\n    background-color: #16a085;\n    outline: none; }\n    .dk_toggle:active .select-icon {\n      border-left-color: transparent; }\n\n.select-icon {\n  background: #1abc9c url(\"../images/select/toggle.png\") no-repeat right center;\n  border-left: 2px solid rgba(52, 73, 94, 0.15);\n  border-radius: 0 6px 6px 0;\n  height: 100%;\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 42px;\n  -webkit-transition: 0.25s;\n  -moz-transition: 0.25s;\n  -o-transition: 0.25s;\n  transition: 0.25s;\n  -webkit-backface-visibility: hidden; }\n\n.dk_open {\n  z-index: 10; }\n  .dk_open .dk_toggle {\n    background-color: #1abc9c; }\n    .dk_open .dk_toggle .select-icon {\n      background-color: #16a085;\n      border-left-color: transparent; }\n\n.dk_options {\n  padding-top: 14px; }\n  .dk_options:before {\n    content: \"\";\n    border-style: solid;\n    border-width: 0 9px 9px 9px;\n    border-color: transparent transparent #34495e transparent;\n    height: 0px;\n    position: absolute;\n    left: 15px;\n    top: 5px;\n    width: 0px;\n    -webkit-transform: rotate(360deg); }\n  .dk_options:before {\n    left: auto;\n    right: 12px; }\n  .dk_options li {\n    padding-bottom: 3px; }\n  .dk_options a {\n    border-radius: 3px;\n    color: white;\n    display: block;\n    padding: 5px 9px;\n    text-decoration: none; }\n    .dk_options a:hover {\n      background-color: #1abc9c; }\n\n.dk_option_current a {\n  background-color: #1abc9c; }\n\n.dk_options_inner {\n  background-color: #34495e;\n  border-radius: 5px;\n  margin: 0;\n  max-height: 244px;\n  padding: 3px 3px 0; }\n\n.dk_touch .dk_options {\n  max-height: 250px; }\n\n.dk_container {\n  display: none;\n  position: relative;\n  vertical-align: middle; }\n  .dk_container.dk_shown {\n    display: inline-block;\n    zoom: 1;\n    *display: inline; }\n  .dk_container[class*=\"span\"] {\n    float: none;\n    margin-left: 0; }\n\n.dk_toggle {\n  display: block;\n  position: relative; }\n\n.dk_open {\n  position: relative; }\n  .dk_open .dk_options {\n    margin-top: -1px;\n    opacity: 1;\n    z-index: 10;\n    display: block\\9; }\n  .dk_open .dk_label {\n    color: inherit; }\n\n.dk_options {\n  margin-top: -21px;\n  position: absolute;\n  left: 0;\n  opacity: 0;\n  width: 220px;\n  z-index: -100;\n  display: none\\9;\n  -webkit-transition: 0.3s ease-out;\n  -moz-transition: 0.3s ease-out;\n  -o-transition: 0.3s ease-out;\n  transition: 0.3s ease-out;\n  -webkit-backface-visibility: hidden; }\n  .select-right .dk_options {\n    left: auto;\n    right: 0; }\n  .dk_options a {\n    display: block; }\n\n.dk_options_inner {\n  overflow: auto;\n  outline: none;\n  position: relative; }\n\n.dk_touch .dk_options {\n  overflow: hidden; }\n.dk_touch .dk_options_inner {\n  max-height: none;\n  overflow: visible; }\n\n.dk_fouc select {\n  position: relative;\n  top: -99999em;\n  visibility: hidden; }\n\ntextarea,\ninput[type=\"text\"],\ninput[type=\"password\"],\ninput[type=\"datetime\"],\ninput[type=\"datetime-local\"],\ninput[type=\"date\"],\ninput[type=\"month\"],\ninput[type=\"time\"],\ninput[type=\"week\"],\ninput[type=\"number\"],\ninput[type=\"email\"],\ninput[type=\"url\"],\ninput[type=\"search\"],\ninput[type=\"tel\"],\ninput[type=\"color\"],\n.uneditable-input {\n  border: 2px solid #dce4ec;\n  color: #34495e;\n  font-family: \"Lato\", sans-serif;\n  font-size: 14px;\n  padding: 8px 0 9px 10px;\n  text-indent: 1px;\n  -webkit-border-radius: 6px;\n  -moz-border-radius: 6px;\n  border-radius: 6px;\n  -webkit-box-shadow: none;\n  -moz-box-shadow: none;\n  box-shadow: none; }\n  textarea:-moz-placeholder,\n  input[type=\"text\"]:-moz-placeholder,\n  input[type=\"password\"]:-moz-placeholder,\n  input[type=\"datetime\"]:-moz-placeholder,\n  input[type=\"datetime-local\"]:-moz-placeholder,\n  input[type=\"date\"]:-moz-placeholder,\n  input[type=\"month\"]:-moz-placeholder,\n  input[type=\"time\"]:-moz-placeholder,\n  input[type=\"week\"]:-moz-placeholder,\n  input[type=\"number\"]:-moz-placeholder,\n  input[type=\"email\"]:-moz-placeholder,\n  input[type=\"url\"]:-moz-placeholder,\n  input[type=\"search\"]:-moz-placeholder,\n  input[type=\"tel\"]:-moz-placeholder,\n  input[type=\"color\"]:-moz-placeholder,\n  .uneditable-input:-moz-placeholder {\n    color: #acb6c0; }\n  textarea::-webkit-input-placeholder,\n  input[type=\"text\"]::-webkit-input-placeholder,\n  input[type=\"password\"]::-webkit-input-placeholder,\n  input[type=\"datetime\"]::-webkit-input-placeholder,\n  input[type=\"datetime-local\"]::-webkit-input-placeholder,\n  input[type=\"date\"]::-webkit-input-placeholder,\n  input[type=\"month\"]::-webkit-input-placeholder,\n  input[type=\"time\"]::-webkit-input-placeholder,\n  input[type=\"week\"]::-webkit-input-placeholder,\n  input[type=\"number\"]::-webkit-input-placeholder,\n  input[type=\"email\"]::-webkit-input-placeholder,\n  input[type=\"url\"]::-webkit-input-placeholder,\n  input[type=\"search\"]::-webkit-input-placeholder,\n  input[type=\"tel\"]::-webkit-input-placeholder,\n  input[type=\"color\"]::-webkit-input-placeholder,\n  .uneditable-input::-webkit-input-placeholder {\n    color: #acb6c0; }\n  textarea.placeholder,\n  input[type=\"text\"].placeholder,\n  input[type=\"password\"].placeholder,\n  input[type=\"datetime\"].placeholder,\n  input[type=\"datetime-local\"].placeholder,\n  input[type=\"date\"].placeholder,\n  input[type=\"month\"].placeholder,\n  input[type=\"time\"].placeholder,\n  input[type=\"week\"].placeholder,\n  input[type=\"number\"].placeholder,\n  input[type=\"email\"].placeholder,\n  input[type=\"url\"].placeholder,\n  input[type=\"search\"].placeholder,\n  input[type=\"tel\"].placeholder,\n  input[type=\"color\"].placeholder,\n  .uneditable-input.placeholder {\n    color: #acb6c0; }\n  textarea:focus,\n  input[type=\"text\"]:focus,\n  input[type=\"password\"]:focus,\n  input[type=\"datetime\"]:focus,\n  input[type=\"datetime-local\"]:focus,\n  input[type=\"date\"]:focus,\n  input[type=\"month\"]:focus,\n  input[type=\"time\"]:focus,\n  input[type=\"week\"]:focus,\n  input[type=\"number\"]:focus,\n  input[type=\"email\"]:focus,\n  input[type=\"url\"]:focus,\n  input[type=\"search\"]:focus,\n  input[type=\"tel\"]:focus,\n  input[type=\"color\"]:focus,\n  .uneditable-input:focus {\n    border-color: #1abc9c;\n    -webkit-box-shadow: none;\n    -moz-box-shadow: none;\n    box-shadow: none; }\n  .control-group.error textarea, .control-group.error\n  input[type=\"text\"], .control-group.error\n  input[type=\"password\"], .control-group.error\n  input[type=\"datetime\"], .control-group.error\n  input[type=\"datetime-local\"], .control-group.error\n  input[type=\"date\"], .control-group.error\n  input[type=\"month\"], .control-group.error\n  input[type=\"time\"], .control-group.error\n  input[type=\"week\"], .control-group.error\n  input[type=\"number\"], .control-group.error\n  input[type=\"email\"], .control-group.error\n  input[type=\"url\"], .control-group.error\n  input[type=\"search\"], .control-group.error\n  input[type=\"tel\"], .control-group.error\n  input[type=\"color\"], .control-group.error\n  .uneditable-input {\n    border-color: #e74c3c;\n    color: #e74c3c;\n    -webkit-box-shadow: none;\n    -moz-box-shadow: none;\n    box-shadow: none; }\n    .control-group.error textarea:focus, .control-group.error\n    input[type=\"text\"]:focus, .control-group.error\n    input[type=\"password\"]:focus, .control-group.error\n    input[type=\"datetime\"]:focus, .control-group.error\n    input[type=\"datetime-local\"]:focus, .control-group.error\n    input[type=\"date\"]:focus, .control-group.error\n    input[type=\"month\"]:focus, .control-group.error\n    input[type=\"time\"]:focus, .control-group.error\n    input[type=\"week\"]:focus, .control-group.error\n    input[type=\"number\"]:focus, .control-group.error\n    input[type=\"email\"]:focus, .control-group.error\n    input[type=\"url\"]:focus, .control-group.error\n    input[type=\"search\"]:focus, .control-group.error\n    input[type=\"tel\"]:focus, .control-group.error\n    input[type=\"color\"]:focus, .control-group.error\n    .uneditable-input:focus {\n      -webkit-box-shadow: none;\n      -moz-box-shadow: none;\n      box-shadow: none; }\n  .control-group.success textarea, .control-group.success\n  input[type=\"text\"], .control-group.success\n  input[type=\"password\"], .control-group.success\n  input[type=\"datetime\"], .control-group.success\n  input[type=\"datetime-local\"], .control-group.success\n  input[type=\"date\"], .control-group.success\n  input[type=\"month\"], .control-group.success\n  input[type=\"time\"], .control-group.success\n  input[type=\"week\"], .control-group.success\n  input[type=\"number\"], .control-group.success\n  input[type=\"email\"], .control-group.success\n  input[type=\"url\"], .control-group.success\n  input[type=\"search\"], .control-group.success\n  input[type=\"tel\"], .control-group.success\n  input[type=\"color\"], .control-group.success\n  .uneditable-input {\n    border-color: #2ecc71;\n    color: #2ecc71;\n    -webkit-box-shadow: none;\n    -moz-box-shadow: none;\n    box-shadow: none; }\n    .control-group.success textarea:focus, .control-group.success\n    input[type=\"text\"]:focus, .control-group.success\n    input[type=\"password\"]:focus, .control-group.success\n    input[type=\"datetime\"]:focus, .control-group.success\n    input[type=\"datetime-local\"]:focus, .control-group.success\n    input[type=\"date\"]:focus, .control-group.success\n    input[type=\"month\"]:focus, .control-group.success\n    input[type=\"time\"]:focus, .control-group.success\n    input[type=\"week\"]:focus, .control-group.success\n    input[type=\"number\"]:focus, .control-group.success\n    input[type=\"email\"]:focus, .control-group.success\n    input[type=\"url\"]:focus, .control-group.success\n    input[type=\"search\"]:focus, .control-group.success\n    input[type=\"tel\"]:focus, .control-group.success\n    input[type=\"color\"]:focus, .control-group.success\n    .uneditable-input:focus {\n      -webkit-box-shadow: none;\n      -moz-box-shadow: none;\n      box-shadow: none; }\n  .control-group.warning textarea, .control-group.warning\n  input[type=\"text\"], .control-group.warning\n  input[type=\"password\"], .control-group.warning\n  input[type=\"datetime\"], .control-group.warning\n  input[type=\"datetime-local\"], .control-group.warning\n  input[type=\"date\"], .control-group.warning\n  input[type=\"month\"], .control-group.warning\n  input[type=\"time\"], .control-group.warning\n  input[type=\"week\"], .control-group.warning\n  input[type=\"number\"], .control-group.warning\n  input[type=\"email\"], .control-group.warning\n  input[type=\"url\"], .control-group.warning\n  input[type=\"search\"], .control-group.warning\n  input[type=\"tel\"], .control-group.warning\n  input[type=\"color\"], .control-group.warning\n  .uneditable-input {\n    border-color: #f1c40f;\n    color: #f1c40f;\n    -webkit-box-shadow: none;\n    -moz-box-shadow: none;\n    box-shadow: none; }\n    .control-group.warning textarea:focus, .control-group.warning\n    input[type=\"text\"]:focus, .control-group.warning\n    input[type=\"password\"]:focus, .control-group.warning\n    input[type=\"datetime\"]:focus, .control-group.warning\n    input[type=\"datetime-local\"]:focus, .control-group.warning\n    input[type=\"date\"]:focus, .control-group.warning\n    input[type=\"month\"]:focus, .control-group.warning\n    input[type=\"time\"]:focus, .control-group.warning\n    input[type=\"week\"]:focus, .control-group.warning\n    input[type=\"number\"]:focus, .control-group.warning\n    input[type=\"email\"]:focus, .control-group.warning\n    input[type=\"url\"]:focus, .control-group.warning\n    input[type=\"search\"]:focus, .control-group.warning\n    input[type=\"tel\"]:focus, .control-group.warning\n    input[type=\"color\"]:focus, .control-group.warning\n    .uneditable-input:focus {\n      -webkit-box-shadow: none;\n      -moz-box-shadow: none;\n      box-shadow: none; }\n  .control-group.info textarea, .control-group.info\n  input[type=\"text\"], .control-group.info\n  input[type=\"password\"], .control-group.info\n  input[type=\"datetime\"], .control-group.info\n  input[type=\"datetime-local\"], .control-group.info\n  input[type=\"date\"], .control-group.info\n  input[type=\"month\"], .control-group.info\n  input[type=\"time\"], .control-group.info\n  input[type=\"week\"], .control-group.info\n  input[type=\"number\"], .control-group.info\n  input[type=\"email\"], .control-group.info\n  input[type=\"url\"], .control-group.info\n  input[type=\"search\"], .control-group.info\n  input[type=\"tel\"], .control-group.info\n  input[type=\"color\"], .control-group.info\n  .uneditable-input {\n    border-color: #3498db;\n    color: #3498db;\n    -webkit-box-shadow: none;\n    -moz-box-shadow: none;\n    box-shadow: none; }\n    .control-group.info textarea:focus, .control-group.info\n    input[type=\"text\"]:focus, .control-group.info\n    input[type=\"password\"]:focus, .control-group.info\n    input[type=\"datetime\"]:focus, .control-group.info\n    input[type=\"datetime-local\"]:focus, .control-group.info\n    input[type=\"date\"]:focus, .control-group.info\n    input[type=\"month\"]:focus, .control-group.info\n    input[type=\"time\"]:focus, .control-group.info\n    input[type=\"week\"]:focus, .control-group.info\n    input[type=\"number\"]:focus, .control-group.info\n    input[type=\"email\"]:focus, .control-group.info\n    input[type=\"url\"]:focus, .control-group.info\n    input[type=\"search\"]:focus, .control-group.info\n    input[type=\"tel\"]:focus, .control-group.info\n    input[type=\"color\"]:focus, .control-group.info\n    .uneditable-input:focus {\n      -webkit-box-shadow: none;\n      -moz-box-shadow: none;\n      box-shadow: none; }\n\ninput[disabled],\ninput[readonly],\ntextarea[disabled],\ntextarea[readonly] {\n  background-color: #eaeded;\n  border-color: transparent;\n  color: #cad2d3;\n  cursor: default; }\n\n.checkbox,\n.radio {\n  margin-bottom: 12px;\n  padding-left: 32px;\n  position: relative;\n  -webkit-transition: 0.25s;\n  -moz-transition: 0.25s;\n  -o-transition: 0.25s;\n  transition: 0.25s;\n  -webkit-backface-visibility: hidden; }\n  .checkbox:hover,\n  .radio:hover {\n    color: #1abc9c; }\n  .checkbox input,\n  .radio input {\n    outline: none !important;\n    opacity: 0;\n    filter: alpha(opacity=0);\n    zoom: 1; }\n  .checkbox.checked .icon,\n  .radio.checked .icon {\n    background-position: -60px -30px;\n    opacity: 1;\n    display: block\\9; }\n  .checkbox.checked .icon-to-fade,\n  .radio.checked .icon-to-fade {\n    opacity: 0;\n    display: none\\9; }\n  .checkbox.disabled,\n  .radio.disabled {\n    color: #d7dddd;\n    cursor: default; }\n    .checkbox.disabled .icon,\n    .radio.disabled .icon {\n      opacity: 0;\n      display: none\\9; }\n    .checkbox.disabled .icon-to-fade,\n    .radio.disabled .icon-to-fade {\n      background-position: -30px -60px;\n      opacity: 1;\n      display: block\\9; }\n    .checkbox.disabled.checked .icon,\n    .radio.disabled.checked .icon {\n      background-position: 0 -90px;\n      opacity: 1;\n      display: block\\9; }\n    .checkbox.disabled.checked .icon-to-fade,\n    .radio.disabled.checked .icon-to-fade {\n      opacity: 0;\n      display: none\\9; }\n  .checkbox .icon,\n  .checkbox .icon-to-fade,\n  .radio .icon,\n  .radio .icon-to-fade {\n    background: url(\"../images/checkbox.png\") -90px 0 no-repeat;\n    display: block;\n    height: 20px;\n    left: 0;\n    opacity: 1;\n    position: absolute;\n    top: -1px;\n    width: 20px;\n    -webkit-transition: opacity 0.1s linear;\n    -moz-transition: opacity 0.1s linear;\n    -o-transition: opacity 0.1s linear;\n    transition: opacity 0.1s linear;\n    -webkit-backface-visibility: hidden; }\n  .checkbox .icon,\n  .radio .icon {\n    opacity: 0;\n    top: 0;\n    z-index: 2;\n    display: none\\9; }\n\n.radio .icon,\n.radio .icon-to-fade {\n  background-image: url(\"../images/radio.png\"); }\n\n.toggle {\n  background-color: #34495e;\n  border-radius: 60px;\n  color: white;\n  height: 29px;\n  margin: 0 12px 12px 0;\n  overflow: hidden;\n  *zoom: 1;\n  display: inline-block;\n  zoom: 1;\n  *display: inline;\n  -webkit-transition: 0.25s;\n  -moz-transition: 0.25s;\n  -o-transition: 0.25s;\n  transition: 0.25s;\n  -webkit-backface-visibility: hidden; }\n  .toggle:before, .toggle:after {\n    display: table;\n    content: \"\"; }\n  .toggle:after {\n    clear: both; }\n  .toggle.toggle-off {\n    background-color: #cbd2d8; }\n    .toggle.toggle-off .toggle-radio {\n      background-image: url(\"../images/toggle/icon-off.png\");\n      background-position: 0 0;\n      color: white;\n      left: 0;\n      margin-left: 0.5px;\n      margin-right: -13px;\n      z-index: 1; }\n      .toggle.toggle-off .toggle-radio:first-child {\n        left: -120%; }\n  .toggle .toggle-radio {\n    background: url(\"../images/toggle/icon-on.png\") right top no-repeat;\n    color: #1abc9c;\n    display: block;\n    font-weight: 700;\n    height: 21px;\n    left: 120%;\n    margin-left: -13px;\n    padding: 5px 32px 3px;\n    position: relative;\n    text-align: center;\n    z-index: 2;\n    -webkit-transition: 0.25s;\n    -moz-transition: 0.25s;\n    -o-transition: 0.25s;\n    transition: 0.25s;\n    -webkit-backface-visibility: hidden; }\n    .toggle .toggle-radio:first-child {\n      margin-bottom: -29px;\n      left: 0; }\n  .toggle input {\n    display: none;\n    position: absolute;\n    outline: none !important;\n    display: block\\9;\n    opacity: 0.01;\n    filter: alpha(opacity=1);\n    zoom: 1; }\n  .toggle.toggle-icon {\n    border-radius: 6px 7px 7px 6px; }\n    .toggle.toggle-icon.toggle-off {\n      border-radius: 7px 6px 6px 7px; }\n      .toggle.toggle-icon.toggle-off .toggle-radio {\n        background-image: url(\"../images/toggle/block-off.png\");\n        background-position: 0 0; }\n    .toggle.toggle-icon .toggle-radio {\n      background-image: url(\"../images/toggle/block-on.png\");\n      background-position: 62px 0;\n      border-radius: 6px;\n      min-width: 27px;\n      text-align: right; }\n      .toggle.toggle-icon .toggle-radio:first-child {\n        text-align: left; }\n\n.tagsinput {\n  background: white;\n  border: 2px solid #1abc9c;\n  border-radius: 6px;\n  height: 100px;\n  padding: 6px 1px 1px 6px;\n  overflow-y: auto;\n  text-align: left; }\n  .tagsinput .tag {\n    border-radius: 4px;\n    background: #1abc9c;\n    color: white;\n    cursor: pointer;\n    margin-right: 5px;\n    margin-bottom: 5px;\n    overflow: hidden;\n    padding: 6px 13px 6px 19px;\n    position: relative;\n    vertical-align: middle;\n    display: inline-block;\n    zoom: 1;\n    *display: inline;\n    -webkit-transition: 0.14s linear;\n    -moz-transition: 0.14s linear;\n    -o-transition: 0.14s linear;\n    transition: 0.14s linear;\n    -webkit-backface-visibility: hidden; }\n    .tagsinput .tag:hover {\n      background-color: #16a085;\n      padding-left: 12px;\n      padding-right: 20px; }\n      .tagsinput .tag:hover .tagsinput-remove-link {\n        color: white;\n        opacity: 1;\n        display: block\\9; }\n  .tagsinput input {\n    background: transparent;\n    border: none;\n    color: #34495e;\n    font-family: \"Lato\", sans-serif;\n    font-size: 14px;\n    margin: 0px;\n    padding: 0 0 0 5px;\n    outline: 0;\n    margin-right: 5px;\n    margin-bottom: 5px;\n    width: 12px; }\n\n.tagsinput-remove-link {\n  bottom: 0;\n  color: white;\n  cursor: pointer;\n  font-size: 12px;\n  opacity: 0;\n  padding: 9px 7px 3px 0;\n  position: absolute;\n  right: 0;\n  text-align: right;\n  text-decoration: none;\n  top: 0;\n  width: 100%;\n  z-index: 2;\n  display: none\\9; }\n  .tagsinput-remove-link:before {\n    color: white; }\n\n.tagsinput-add-container {\n  vertical-align: middle;\n  display: inline-block;\n  zoom: 1;\n  *display: inline; }\n\n.tagsinput-add {\n  background-color: #bbc3cb;\n  border-radius: 3px;\n  color: white;\n  cursor: pointer;\n  margin-bottom: 5px;\n  padding: 6px 9px;\n  display: inline-block;\n  zoom: 1;\n  *display: inline;\n  -webkit-transition: 0.25s;\n  -moz-transition: 0.25s;\n  -o-transition: 0.25s;\n  transition: 0.25s;\n  -webkit-backface-visibility: hidden; }\n  .tagsinput-add:hover {\n    background-color: #1abc9c; }\n\n.tags_clear {\n  clear: both;\n  width: 100%;\n  height: 0px; }\n\n.not_valid {\n  background: #fbd8db !important;\n  color: #90111a !important; }\n\n.progress, .ui-slider {\n  background: #e8edf2;\n  border-radius: 32px;\n  height: 12px;\n  -webkit-box-shadow: none;\n  -moz-box-shadow: none;\n  box-shadow: none; }\n  .progress .bar, .ui-slider .bar {\n    background: #1abc9c;\n    -webkit-box-shadow: none !important;\n    -moz-box-shadow: none !important;\n    box-shadow: none !important;  }\n  .progress .bar-success, .ui-slider .bar-success {\n    background-color: #2ecc71; }\n  .progress .bar-warning, .ui-slider .bar-warning {\n    background-color: #f1c40f; }\n  .progress .bar-danger, .ui-slider .bar-danger {\n    background-color: #e74c3c; }\n  .progress .bar-info, .ui-slider .bar-info {\n    background-color: #3498db; }\n\n.ui-slider {\n  margin-bottom: 20px;\n  position: relative; }\n\n.ui-slider-handle {\n  background-color: #16a085;\n  border-radius: 50%;\n  cursor: pointer;\n  height: 18px;\n  margin-left: -9px;\n  position: absolute;\n  top: -3px;\n  width: 18px;\n  z-index: 2;\n  -webkit-transition: background 0.25s;\n  -moz-transition: background 0.25s;\n  -o-transition: background 0.25s;\n  transition: background 0.25s;\n  -webkit-backface-visibility: hidden; }\n  .ui-slider-handle[style*='100'] {\n    margin-left: -15px; }\n  .ui-slider-handle:hover, .ui-slider-handle:focus {\n    background-color: #2fe2bf;\n    outline: none; }\n  .ui-slider-handle:active {\n    background-color: #16a085; }\n\n.ui-slider-range {\n  background-color: #1abc9c;\n  border-radius: 30px 0 0 30px;\n  display: block;\n  height: 100%;\n  position: absolute;\n  z-index: 1; }\n\n.ui-slider-segment {\n  background-color: #d6dbe0;\n  border-radius: 50%;\n  float: left;\n  height: 6px;\n  margin: 3px -6px 0 25%;\n  width: 6px; }\n\n.pager {\n  background-color: #34495e;\n  border-radius: 6px;\n  color: white;\n  font-size: 16px;\n  font-weight: 700;\n  display: inline-block;\n  zoom: 1;\n  *display: inline; }\n  .pager li:first-child > a, .pager li:first-child > span {\n    border-left: none;\n    padding-left: 20px;\n    -webkit-border-radius: 6px 0 0 6px;\n    -moz-border-radius: 6px 0 0 6px;\n    border-radius: 6px 0 0 6px; }\n    .pager li:first-child > a img, .pager li:first-child > span img {\n      margin-left: 0;\n      margin-right: 13px;\n      margin-left: 0 \\9;\n      margin-right: 9px \\9; }\n  .pager li.pager-center {\n    padding: 9px 18px 10px;\n    padding-left: 0;\n    padding-right: 0;\n    display: inline-block;\n    zoom: 1;\n    *display: inline; }\n  .pager li.previous img, .pager li.next img {\n    height: 14px;\n    margin: -1px 0 0 13px;\n    margin-left: 9px \\9;\n    vertical-align: middle; }\n  .pager li > a, .pager li > span {\n    background: none;\n    border: none;\n    border-left: 2px solid #2c3e50;\n    color: white;\n    padding: 9px 18px 10px;\n    padding-left: 7px;\n    text-decoration: none;\n    white-space: nowrap;\n    -webkit-border-radius: 0 6px 6px 0;\n    -moz-border-radius: 0 6px 6px 0;\n    border-radius: 0 6px 6px 0; }\n    .pager li > a:hover, .pager li > a:focus, .pager li > span:hover, .pager li > span:focus {\n      background-color: #4e6d8d; }\n    .pager li > a:active, .pager li > span:active {\n      background-color: #2c3e50; }\n\n.pagination ul {\n  background: #d7dce0;\n  -webkit-border-radius: 6px;\n  -moz-border-radius: 6px;\n  border-radius: 6px;\n  -webkit-box-shadow: none;\n  -moz-box-shadow: none;\n  box-shadow: none; }\n  .pagination ul > li:first-child {\n    -webkit-border-radius: 6px 0 0 6px;\n    -moz-border-radius: 6px 0 0 6px;\n    border-radius: 6px 0 0 6px; }\n  .pagination ul > li:last-child {\n    -webkit-border-radius: 0 6px 6px 0;\n    -moz-border-radius: 0 6px 6px 0;\n    border-radius: 0 6px 6px 0; }\n  .pagination ul > li.previous > a, .pagination ul > li.previous > span, .pagination ul > li.next > a, .pagination ul > li.next > span {\n    background: transparent;\n    border: none;\n    border-right: 2px solid white !important;\n    margin: 0 9px 0 0;\n    padding: 11px 17px 12px 17px;\n    -webkit-border-radius: 6px 0 0 6px;\n    -moz-border-radius: 6px 0 0 6px;\n    border-radius: 6px 0 0 6px;\n    -webkit-box-shadow: none !important;\n    -moz-box-shadow: none !important;\n    box-shadow: none !important; }\n  .pagination ul > li.next > a, .pagination ul > li.next > span {\n    border-left: 2px solid white !important;\n    margin-left: 9px;\n    margin-right: 0;\n    -webkit-border-radius: 0 6px 6px 0;\n    -moz-border-radius: 0 6px 6px 0;\n    border-radius: 0 6px 6px 0; }\n  .pagination ul > li.active > a, .pagination ul > li.active > span {\n    background-color: white;\n    border-color: white;\n    border-width: 2px;\n    color: #d7dce0;\n    margin: 10px 5px 9px; }\n    .pagination ul > li.active > a:hover, .pagination ul > li.active > a:focus, .pagination ul > li.active > span:hover, .pagination ul > li.active > span:focus {\n      background-color: white;\n      border-color: white;\n      color: #d7dce0;\n      -webkit-box-shadow: none;\n      -moz-box-shadow: none;\n      box-shadow: none; }\n  .pagination ul > li > a, .pagination ul > li > span {\n    background: white;\n    border: 5px solid #d7dce0;\n    border-radius: 50px;\n    color: white;\n    line-height: 16px;\n    margin: 7px 2px 6px;\n    padding: 0 4px;\n    -webkit-transition: background 0.2s ease-out, border-color 0s ease-out, color 0.2s ease-out;\n    -moz-transition: background 0.2s ease-out, border-color 0s ease-out, color 0.2s ease-out;\n    -o-transition: background 0.2s ease-out, border-color 0s ease-out, color 0.2s ease-out;\n    transition: background 0.2s ease-out, border-color 0s ease-out, color 0.2s ease-out;\n    -webkit-backface-visibility: hidden; }\n    .pagination ul > li > a:hover, .pagination ul > li > a :focus, .pagination ul > li > span:hover, .pagination ul > li > span :focus {\n      background-color: #1abc9c;\n      border-color: #1abc9c;\n      color: white;\n      -webkit-transition: background 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out;\n      -moz-transition: background 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out;\n      -o-transition: background 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out;\n      transition: background 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out;\n      -webkit-backface-visibility: hidden; }\n    .pagination ul > li > a:active, .pagination ul > li > span:active {\n      background-color: #16a085;\n      border-color: #16a085; }\n  .pagination ul img {\n    height: 14px;\n    margin-top: -1px;\n    vertical-align: middle;\n    width: 13px; }\n\n.share {\n  background-color: #ecf0f5;\n  border-radius: 6px;\n  position: relative; }\n  .share:before {\n    content: \"\";\n    border-style: solid;\n    border-width: 0 9px 9px 9px;\n    border-color: transparent transparent #ecf0f5 transparent;\n    height: 0px;\n    position: absolute;\n    left: 23px;\n    top: -9px;\n    width: 0px;\n    -webkit-transform: rotate(360deg); }\n  .share ul {\n    list-style-type: none;\n    margin: 0;\n    padding: 15px; }\n  .share li {\n    padding-top: 11px;\n    *zoom: 1; }\n    .share li:before, .share li:after {\n      display: table;\n      content: \"\"; }\n    .share li:after {\n      clear: both; }\n    .share li:first-child {\n      padding-top: 0; }\n  .share .toggle {\n    float: right;\n    margin: 0; }\n  .share .btn {\n    -webkit-border-radius: 0 0 6px 6px;\n    -moz-border-radius: 0 0 6px 6px;\n    border-radius: 0 0 6px 6px; }\n\n.share-label {\n  float: left;\n  font-size: 15px;\n  padding-top: 5px;\n  width: 50%; }\n\n.tooltip {\n  font-size: 13px; }\n  .tooltip.in {\n    opacity: 1;\n    filter: alpha(opacity=100);\n    zoom: 1; }\n  .tooltip.top {\n    padding-bottom: 9px; }\n    .tooltip.top .tooltip-arrow {\n      border-top-color: #34495e;\n      border-width: 9px 9px 0;\n      bottom: 0;\n      margin-left: -9px; }\n  .tooltip.right .tooltip-arrow {\n    border-right-color: #34495e;\n    border-width: 9px 9px 9px 0;\n    margin-top: -9px;\n    left: -3px; }\n  .tooltip.bottom {\n    padding-top: 8px; }\n    .tooltip.bottom .tooltip-arrow {\n      border-bottom-color: #34495e;\n      border-width: 0 9px 9px;\n      margin-left: -9px;\n      top: -1px; }\n  .tooltip.left .tooltip-arrow {\n    border-right-color: #34495e;\n    border-width: 9px 9px 9px 0;\n    margin-top: -3px;\n    top: -3px; }\n\n.tooltip-inner {\n  background-color: #34495e;\n  line-height: 18px;\n  padding: 12px 12px;\n  text-align: center;\n  width: 183px;\n  -webkit-border-radius: 6px;\n  -moz-border-radius: 6px;\n  border-radius: 6px; }\n\n.palette {\n  color: white;\n  margin: 0;\n  padding: 15px;\n  text-transform: uppercase; }\n  .palette dt {\n    display: block;\n    font-weight: 500;\n    opacity: 0.8; }\n  .palette dd {\n    font-weight: 200;\n    margin-left: 0;\n    opacity: 0.8; }\n\n.palette-firm {\n  background-color: #1abc9c; }\n\n.palette-firm-dark {\n  background-color: #16a085; }\n\n.palette-success {\n  background-color: #2ecc71; }\n\n.palette-success-dark {\n  background-color: #27ad60; }\n\n.palette-info {\n  background-color: #3498db; }\n\n.palette-info-dark {\n  background-color: #2383c4; }\n\n.palette-warning {\n  background-color: #f1c40f; }\n\n.palette-warning-dark {\n  background-color: #cea70c; }\n\n.palette-danger {\n  background-color: #e74c3c; }\n\n.palette-danger-dark {\n  background-color: #dc2d1b; }\n\n.palette-night {\n  background-color: #34495e; }\n\n.palette-night-dark {\n  background-color: #2c3e50; }\n\n.palette-bright {\n  background-color: #f1c40f; }\n\n.palette-bright-dark {\n  background-color: #cea70c; }\n\n.palette-success-dark {\n  background-color: #27ae60; }\n\n.palette-info-dark {\n  background-color: #2980b9; }\n\n.palette-bright-dark {\n  background-color: #f39c12; }\n\n.palette-amethyst {\n  background-color: #9b59b6; }\n\n.palette-wisteria {\n  background-color: #8e44ad; }\n\n.palette-carrot {\n  background-color: #e67e22; }\n\n.palette-pumpkin {\n  background-color: #d35400; }\n\n.palette-alizarin {\n  background-color: #e74c3c; }\n\n.palette-pomegranate {\n  background-color: #c0392b; }\n\n.palette-clouds {\n  background-color: #ecf0f1;\n  color: #bdc3c7; }\n\n.palette-silver {\n  background-color: #bdc3c7; }\n\n.palette-concrete {\n  background-color: #95a5a6; }\n\n.palette-asbestos {\n  background-color: #7f8c8d; }\n\n.palette-paragraph {\n  color: #7f8c8d;\n  font-size: 12px;\n  line-height: 17px; }\n  .palette-paragraph span {\n    color: #bdc3c7; }\n\n.palette-headline {\n  color: #7f8c8d;\n  font-weight: 700;\n  margin-top: -5px; }\n\n.tile {\n  background-color: #ecf0f5;\n  border-radius: 6px;\n  padding: 14px;\n  position: relative;\n  text-align: center; }\n  .tile.tile-hot:before {\n    background: url(\"../images/tile/ribbon.png\") 0 0 no-repeat;\n    background-size: 82px 82px;\n    content: \"\";\n    height: 82px;\n    position: absolute;\n    right: -4px;\n    top: -4px;\n    width: 82px; }\n  .tile p {\n    font-size: 15px;\n    margin-bottom: 33px; }\n\n.tile-image {\n  height: 100px;\n  margin: 31px 0 27px;\n  vertical-align: bottom; }\n  .tile-image.big-illustration {\n    height: 111px;\n    margin-top: 20px;\n    width: 112px; }\n\n.tile-title {\n  font-size: 20px;\n  margin: 0; }\n\n.todo {\n  background-color: #2c3e50;\n  border-radius: 8px 8px 6px 6px;\n  color: #6285a8;\n  margin-bottom: 20px; }\n  .todo ul {\n    margin: 0;\n    list-style-type: none; }\n  .todo li {\n    background: #34495e url(\"../images/todo/todo.png\") 92% center no-repeat;\n    background-size: 20px 20px;\n    cursor: pointer;\n    margin-top: 2px;\n    padding: 18px 42px 17px 25px;\n    position: relative;\n    -webkit-transition: 0.25s;\n    -moz-transition: 0.25s;\n    -o-transition: 0.25s;\n    transition: 0.25s;\n    -webkit-backface-visibility: hidden; }\n    .todo li:first-child {\n      margin-top: 0; }\n    .todo li:last-child {\n      border-radius: 0 0 6px 6px;\n      padding-bottom: 18px; }\n    .todo li.todo-done {\n      background: transparent url(\"../images/todo/done.png\") 92% center no-repeat;\n      background-size: 20px 20px;\n      color: #1abc9c; }\n      .todo li.todo-done .todo-name {\n        color: #1abc9c; }\n\n.todo-search {\n  background: #1abc9c url(\"../images/todo/search.png\") 92% center no-repeat;\n  background-size: 16px 16px;\n  border-radius: 6px 6px 0 0;\n  color: #34495e;\n  padding: 19px 25px 20px; }\n\ninput.todo-search-field {\n  background: none;\n  border: none;\n  color: #34495e;\n  font-size: 19px;\n  font-weight: 700;\n  margin: 0;\n  line-height: 23px;\n  padding: 5px 0;\n  text-indent: 0;\n  -webkit-box-shadow: none;\n  -moz-box-shadow: none;\n  box-shadow: none; }\n  input.todo-search-field:-moz-placeholder {\n    color: #34495e; }\n  input.todo-search-field::-webkit-input-placeholder {\n    color: #34495e; }\n  input.todo-search-field.placeholder {\n    color: #34495e; }\n\n.todo-icon {\n  float: left;\n  font-size: 24px;\n  padding: 11px 22px 0 0; }\n\n.todo-content {\n  padding-top: 1px;\n  overflow: hidden; }\n\n.todo-name {\n  color: white;\n  font-size: 17px;\n  margin: 1px 0 3px; }\n\nfooter {\n  background-color: #eceff1;\n  color: #bdc1c5;\n  font-size: 15px;\n  padding: 0; }\n  footer a {\n    color: #a1a4a7;\n    font-weight: 700; }\n  footer p {\n    font-size: 15px;\n    line-height: 20px; }\n\n.footer-title {\n  margin: 0 0 22px;\n  padding-top: 21px; }\n\n.footer-brand {\n  display: block;\n  margin-bottom: 26px;\n  width: 220px; }\n  .footer-brand img {\n    width: 216px; }\n\n.footer-banner {\n  background-color: #1abc9c;\n  color: #cff3ec;\n  margin-left: 42px;\n  min-height: 286px;\n  padding: 0 30px 30px; }\n  .footer-banner .footer-title {\n    color: white; }\n  .footer-banner a {\n    color: #cff3ec;\n    text-decoration: underline; }\n    .footer-banner a:hover {\n      text-decoration: none; }\n  .footer-banner ul {\n    list-style-type: none;\n    margin: 0 0 26px; }\n    .footer-banner ul li {\n      border-top: 1px solid #1bc6a5;\n      line-height: 19px;\n      padding: 6px 0; }\n      .footer-banner ul li:first-child {\n        border-top: none;\n        padding-top: 1px; }\n\n.video-js {\n  background-color: #34495e;\n  border-radius: 6px 6px 0 0;\n  margin-top: -95px;\n  position: relative;\n  padding: 0;\n  font-size: 10px;\n  vertical-align: middle; }\n  .video-js .vjs-tech {\n    border-radius: 6px 6px 0 0;\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%; }\n  .video-js:-moz-full-screen {\n    position: absolute; }\n\n.vjs-full-window {\n  padding: 0;\n  margin: 0;\n  height: 100%;\n  overflow-y: auto; }\n\n.video-js.vjs-fullscreen {\n  position: fixed;\n  overflow: hidden;\n  z-index: 1000;\n  left: 0;\n  top: 0;\n  bottom: 0;\n  right: 0;\n  width: 100% !important;\n  height: 100% !important;\n  _position: absolute; }\n.video-js:-webkit-full-screen {\n  width: 100% !important;\n  height: 100% !important; }\n\n.vjs-poster {\n  margin: 0 auto;\n  padding: 0;\n  cursor: pointer;\n  position: relative;\n  width: 100%;\n  max-height: 100%; }\n\n.video-js .vjs-text-track-display {\n  text-align: center;\n  position: absolute;\n  bottom: 4em;\n  left: 1em;\n  right: 1em;\n  font-family: \"Lato\", sans-serif; }\n.video-js .vjs-text-track {\n  display: none;\n  color: white;\n  font-size: 1.4em;\n  text-align: center;\n  margin-bottom: 0.1em;\n  background: black;\n  background: rgba(0, 0, 0, 0.5); }\n.video-js .vjs-subtitles {\n  color: white; }\n.video-js .vjs-captions {\n  color: #ffcc66; }\n\n.vjs-tt-cue {\n  display: block; }\n\n.vjs-fade-in {\n  visibility: visible !important;\n  opacity: 1 !important;\n  -webkit-transition: visibility 0s linear 0s, opacity 0.3s linear;\n  -moz-transition: visibility 0s linear 0s, opacity 0.3s linear;\n  -o-transition: visibility 0s linear 0s, opacity 0.3s linear;\n  transition: visibility 0s linear 0s, opacity 0.3s linear;\n  -webkit-backface-visibility: hidden; }\n\n.vjs-fade-out {\n  visibility: hidden !important;\n  opacity: 0 !important;\n  -webkit-transition: visibility 0s linear 1.5s, opacity 1.5s linear;\n  -moz-transition: visibility 0s linear 1.5s, opacity 1.5s linear;\n  -o-transition: visibility 0s linear 1.5s, opacity 1.5s linear;\n  transition: visibility 0s linear 1.5s, opacity 1.5s linear;\n  -webkit-backface-visibility: hidden; }\n\n.vjs-controls {\n  border-radius: 0 0 6px 6px;\n  position: absolute;\n  bottom: -47px;\n  left: 0;\n  right: 0;\n  margin: 0;\n  padding: 0;\n  height: 47px;\n  color: white;\n  background: #2c3e50; }\n  .vjs-controls.vjs-fade-out {\n    visibility: visible !important;\n    opacity: 1 !important; }\n\n.vjs-control {\n  background-position: center center;\n  background-repeat: no-repeat;\n  position: relative;\n  float: left;\n  text-align: center;\n  margin: 0;\n  padding: 0;\n  height: 18px;\n  width: 18px; }\n  .vjs-control:focus {\n    outline: 0; }\n  .vjs-control div {\n    background-position: center center;\n    background-repeat: no-repeat; }\n\n.vjs-control-text {\n  border: 0;\n  clip: rect(0 0 0 0);\n  height: 1px;\n  margin: -1px;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  width: 1px; }\n\n.vjs-play-control {\n  cursor: pointer !important;\n  height: 47px;\n  left: 0;\n  position: absolute;\n  top: 0;\n  width: 58px; }\n\n.vjs-paused .vjs-play-control {\n  background: url(\"../images/video/play.png\") center -31px no-repeat;\n  background-size: 16px 64px; }\n  .vjs-paused .vjs-play-control:hover div {\n    opacity: 0; }\n  .vjs-paused .vjs-play-control div {\n    background: url(\"../images/video/play.png\") center 15px no-repeat;\n    background-size: 16px 64px;\n    height: 47px;\n    -webkit-transition: opacity 0.25s;\n    -moz-transition: opacity 0.25s;\n    -o-transition: opacity 0.25s;\n    transition: opacity 0.25s;\n    -webkit-backface-visibility: hidden; }\n\n.vjs-playing .vjs-play-control {\n  background: url(\"../images/video/pause.png\") center -31px no-repeat;\n  background-size: 15px 64px; }\n  .vjs-playing .vjs-play-control:hover div {\n    opacity: 0; }\n  .vjs-playing .vjs-play-control div {\n    background: url(\"../images/video/pause.png\") center 15px no-repeat;\n    background-size: 15px 64px;\n    height: 47px;\n    -webkit-transition: opacity 0.25s;\n    -moz-transition: opacity 0.25s;\n    -o-transition: opacity 0.25s;\n    transition: opacity 0.25s;\n    -webkit-backface-visibility: hidden; }\n\n.vjs-rewind-control {\n  width: 5em;\n  cursor: pointer !important; }\n  .vjs-rewind-control div {\n    width: 19px;\n    height: 16px;\n    background: url(\"video-js.png\");\n    margin: 0.5em auto 0; }\n\n.vjs-mute-control {\n  background: url(\"../images/video/volume-full.png\") center -48px no-repeat;\n  background-size: 16px 64px;\n  cursor: pointer !important;\n  position: absolute;\n  right: 51px;\n  top: 14px; }\n  .vjs-mute-control:hover div, .vjs-mute-control:focus div {\n    opacity: 0; }\n  .vjs-mute-control.vjs-vol-0,\n  .vjs-mute-control.vjs-vol-0 div {\n    background-image: url(\"../images/video/volume-off.png\"); }\n  .vjs-mute-control div {\n    background: #2c3e50 url(\"../images/video/volume-full.png\") no-repeat center 2px;\n    background-size: 16px 64px;\n    height: 18px;\n    -webkit-transition: opacity 0.25s;\n    -moz-transition: opacity 0.25s;\n    -o-transition: opacity 0.25s;\n    transition: opacity 0.25s;\n    -webkit-backface-visibility: hidden; }\n\n.vjs-volume-control,\n.vjs-volume-level,\n.vjs-volume-handle,\n.vjs-volume-bar {\n  display: none; }\n\n.vjs-progress-control {\n  border-radius: 32px;\n  position: absolute;\n  left: 60px;\n  right: 180px;\n  height: 12px;\n  width: auto;\n  top: 18px;\n  background: #eff2f6; }\n\n.vjs-progress-holder {\n  position: relative;\n  cursor: pointer !important;\n  padding: 0;\n  margin: 0;\n  height: 12px; }\n\n.vjs-play-progress, .vjs-load-progress {\n  border-radius: 32px;\n  position: absolute;\n  display: block;\n  height: 12px;\n  margin: 0;\n  padding: 0;\n  left: 0;\n  top: 0; }\n\n.vjs-play-progress {\n  background: #1abc9c;\n  left: -1px; }\n\n.vjs-load-progress {\n  background: #d6dbe0;\n  border-radius: 32px 0 0 32px; }\n  .vjs-load-progress[style*='100%'], .vjs-load-progress[style*='99%'] {\n    border-radius: 32px; }\n\n.vjs-seek-handle {\n  background-color: #16a085;\n  border-radius: 50%;\n  position: absolute;\n  width: 18px;\n  height: 18px;\n  margin: -3px 0 0 1px;\n  left: 0;\n  top: 0;\n  -webkit-transition: background-color 0.25s;\n  -moz-transition: background-color 0.25s;\n  -o-transition: background-color 0.25s;\n  transition: background-color 0.25s;\n  -webkit-backface-visibility: hidden; }\n  .vjs-seek-handle[style*='95.'] {\n    margin-left: 3px; }\n  .vjs-seek-handle[style='left: 0%;'] {\n    margin-left: -2px; }\n  .vjs-seek-handle:hover, .vjs-seek-handle:focus {\n    background-color: #138d75; }\n  .vjs-seek-handle:active {\n    background-color: #117e69; }\n\n.vjs-time-controls {\n  position: absolute;\n  height: 20px;\n  width: 50px;\n  top: 16px;\n  font: 300 13px \"Lato\", sans-serif; }\n\n.vjs-current-time {\n  right: 128px;\n  text-align: right; }\n\n.vjs-duration {\n  color: #667687;\n  right: 69px;\n  text-align: left; }\n\n.vjs-remaining-time {\n  display: none; }\n\n.vjs-time-divider {\n  color: #667687;\n  font-size: 14px;\n  position: absolute;\n  right: 121px;\n  top: 15px; }\n\n.vjs-secondary-controls {\n  float: right; }\n\n.vjs-fullscreen-control {\n  background-image: url(\"../images/video/fullscreen.png\");\n  background-position: center -47px;\n  background-size: 15px 64px;\n  cursor: pointer !important;\n  position: absolute;\n  right: 17px;\n  top: 13px; }\n  .vjs-fullscreen-control:hover div, .vjs-fullscreen-control:focus div {\n    opacity: 0; }\n  .vjs-fullscreen-control div {\n    height: 18px;\n    background: url(\"../images/video/fullscreen.png\") no-repeat center 2px;\n    background-size: 15px 64px;\n    -webkit-transition: opacity 0.25s;\n    -moz-transition: opacity 0.25s;\n    -o-transition: opacity 0.25s;\n    transition: opacity 0.25s;\n    -webkit-backface-visibility: hidden; }\n\n.vjs-menu-button {\n  display: none !important; }\n\n@-webkit-keyframes sharp {\n  0% {\n    background: #e74c3c;\n    border-radius: 10px;\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    transform: rotate(0deg); }\n\n  50% {\n    background: #ebedee;\n    border-radius: 0;\n    -webkit-transform: rotate(180deg);\n    -moz-transform: rotate(180deg);\n    -ms-transform: rotate(180deg);\n    -o-transform: rotate(180deg);\n    transform: rotate(180deg); }\n\n  100% {\n    background: #e74c3c;\n    border-radius: 10px;\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    transform: rotate(360deg); } }\n\n@-moz-keyframes sharp {\n  0% {\n    background: #e74c3c;\n    border-radius: 10px;\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    transform: rotate(0deg); }\n\n  50% {\n    background: #ebedee;\n    border-radius: 0;\n    -webkit-transform: rotate(180deg);\n    -moz-transform: rotate(180deg);\n    -ms-transform: rotate(180deg);\n    -o-transform: rotate(180deg);\n    transform: rotate(180deg); }\n\n  100% {\n    background: #e74c3c;\n    border-radius: 10px;\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    transform: rotate(360deg); } }\n\n@-o-keyframes sharp {\n  0% {\n    background: #e74c3c;\n    border-radius: 10px;\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    transform: rotate(0deg); }\n\n  50% {\n    background: #ebedee;\n    border-radius: 0;\n    -webkit-transform: rotate(180deg);\n    -moz-transform: rotate(180deg);\n    -ms-transform: rotate(180deg);\n    -o-transform: rotate(180deg);\n    transform: rotate(180deg); }\n\n  100% {\n    background: #e74c3c;\n    border-radius: 10px;\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    transform: rotate(360deg); } }\n\n@keyframes sharp {\n  0% {\n    background: #e74c3c;\n    border-radius: 10px;\n    -webkit-transform: rotate(0deg);\n    -moz-transform: rotate(0deg);\n    -ms-transform: rotate(0deg);\n    -o-transform: rotate(0deg);\n    transform: rotate(0deg); }\n\n  50% {\n    background: #ebedee;\n    border-radius: 0;\n    -webkit-transform: rotate(180deg);\n    -moz-transform: rotate(180deg);\n    -ms-transform: rotate(180deg);\n    -o-transform: rotate(180deg);\n    transform: rotate(180deg); }\n\n  100% {\n    background: #e74c3c;\n    border-radius: 10px;\n    -webkit-transform: rotate(360deg);\n    -moz-transform: rotate(360deg);\n    -ms-transform: rotate(360deg);\n    -o-transform: rotate(360deg);\n    transform: rotate(360deg); } }\n\n.vjs-loading-spinner {\n  background: #ebedee;\n  border-radius: 10px;\n  display: none;\n  height: 16px;\n  left: 50%;\n  margin: -8px 0 0 -8px;\n  position: absolute;\n  top: 50%;\n  width: 16px;\n  -webkit-animation: sharp 2s ease infinite;\n  -moz-animation: sharp 2s ease infinite;\n  -o-animation: sharp 2s ease infinite;\n  animation: sharp 2s ease infinite; }\n\n.login {\n  background: url(\"../images/login/imac.png\") 0 0 no-repeat;\n  background-size: 940px 778px;\n  color: white;\n  margin-bottom: 77px;\n  padding: 38px 38px 267px;\n  position: relative; }\n\n.login-screen {\n  background-color: #1abc9c;\n  min-height: 317px;\n  padding: 123px 199px 33px 306px; }\n\n.login-icon {\n  left: 200px;\n  position: absolute;\n  top: 160px;\n  width: 96px; }\n  .login-icon > img {\n    display: block;\n    margin-bottom: 6px;\n    width: 100%; }\n  .login-icon > h4 {\n    font-size: 17px;\n    font-weight: 200;\n    line-height: 34px;\n    opacity: 0.95; }\n    .login-icon > h4 small {\n      color: inherit;\n      display: block;\n      font-size: inherit;\n      font-weight: 700; }\n\n.login-form {\n  background-color: #eceff1;\n  border-radius: 6px;\n  padding: 24px 23px 20px;\n  position: relative; }\n  .login-form:before {\n    content: \"\";\n    border-style: solid;\n    border-width: 12px 12px 12px 0;\n    border-color: transparent #eceff1 transparent transparent;\n    height: 0px;\n    position: absolute;\n    left: -12px;\n    top: 35px;\n    width: 0;\n    -webkit-transform: rotate(360deg); }\n  .login-form .control-group {\n    margin-bottom: 6px;\n    position: relative; }\n  .login-form .login-field {\n    border-color: transparent;\n    font-size: 17px;\n    padding-bottom: 11px;\n    padding-top: 11px;\n    text-indent: 3px;\n    width: 299px; }\n    .login-form .login-field:focus + .login-field-icon {\n      color: #1abc9c; }\n  .login-form .login-field-icon {\n    color: #bfc9ca;\n    font-size: 16px;\n    position: absolute;\n    right: 13px;\n    top: 14px;\n    -webkit-transition: 0.25s;\n    -moz-transition: 0.25s;\n    -o-transition: 0.25s;\n    transition: 0.25s;\n    -webkit-backface-visibility: hidden; }\n\n.login-link {\n  color: #bfc9ca;\n  display: block;\n  font-size: 13px;\n  margin-top: 15px;\n  text-align: center; }\n\n\n.ptn, .pvn, .pan {\n  padding-top: 0; }\n\n.ptx, .pvx, .pax {\n  padding-top: 3px; }\n\n.pts, .pvs, .pas {\n  padding-top: 5px; }\n\n.ptm, .pvm, .pam {\n  padding-top: 10px; }\n\n.ptl, .pvl, .pal {\n  padding-top: 20px; }\n\n.prn, .phn, .pan {\n  padding-right: 0; }\n\n.prx, .phx, .pax {\n  padding-right: 3px; }\n\n.prs, .phs, .pas {\n  padding-right: 5px; }\n\n.prm, .phm, .pam {\n  padding-right: 10px; }\n\n.prl, .phl, .pal {\n  padding-right: 20px; }\n\n.pbn, .pvn, .pan {\n  padding-bottom: 0; }\n\n.pbx, .pvx, .pax {\n  padding-bottom: 3px; }\n\n.pbs, .pvs, .pas {\n  padding-bottom: 5px; }\n\n.pbm, .pvm, .pam {\n  padding-bottom: 10px; }\n\n.pbl, .pvl, .pal {\n  padding-bottom: 20px; }\n\n.pln, .phn, .pan {\n  padding-left: 0; }\n\n.plx, .phx, .pax {\n  padding-left: 3px; }\n\n.pls, .phs, .pas {\n  padding-left: 5px; }\n\n.plm, .phm, .pam {\n  padding-left: 10px; }\n\n.pll, .phl, .pal {\n  padding-left: 20px; }\n\n.mtn, .mvn, .man {\n  margin-top: 0px; }\n\n.mtx, .mvx, .max {\n  margin-top: 3px; }\n\n.mts, .mvs, .mas {\n  margin-top: 5px; }\n\n.mtm, .mvm, .mam {\n  margin-top: 10px; }\n\n.mtl, .mvl, .mal {\n  margin-top: 20px; }\n\n.mrn, .mhn, .man {\n  margin-right: 0px; }\n\n.mrx, .mhx, .max {\n  margin-right: 3px; }\n\n.mrs, .mhs, .mas {\n  margin-right: 5px; }\n\n.mrm, .mhm, .mam {\n  margin-right: 10px; }\n\n.mrl, .mhl, .mal {\n  margin-right: 20px; }\n\n.mbn, .mvn, .man {\n  margin-bottom: 0px; }\n\n.mbx, .mvx, .max {\n  margin-bottom: 3px; }\n\n.mbs, .mvs, .mas {\n  margin-bottom: 5px; }\n\n.mbm, .mvm, .mam {\n  margin-bottom: 10px; }\n\n.mbl, .mvl, .mal {\n  margin-bottom: 20px; }\n\n.mln, .mhn, .man {\n  margin-left: 0px; }\n\n.mlx, .mhx, .max {\n  margin-left: 3px; }\n\n.mls, .mhs, .mas {\n  margin-left: 5px; }\n\n.mlm, .mhm, .mam {\n  margin-left: 10px; }\n\n.mll, .mhl, .mal {\n  margin-left: 20px; }\n\n.facebook-btn {\n    display: inline-block;\n    border: none;\n    background: #34495e;\n    color: white;\n    font-size: 16.5px;\n    text-decoration: none;\n    text-shadow: none;\n    -webkit-box-shadow: none;\n    -moz-box-shadow: none;\n    box-shadow: none;\n    -webkit-transition: 0.25s;\n    -moz-transition: 0.25s;\n    -o-transition: 0.25s;\n    transition: 0.25s;\n    -webkit-backface-visibility: hidden;\n    height: 44px;\n    border-radius: 4px;\n    font-weight: bold;\n    padding-bottom: 3px;\n    padding-left: 6px;\n    padding-right: 6px;\n    padding-top: 2px;\n    min-width:170px;\n    padding-top: 12px;\n}\n\n.linkedin-btn {\n    border: none;\n    background: #71c5ef;\n    color: white;\n    font-size: 16.5px;\n    text-decoration: none;\n    text-shadow: none;\n    -webkit-box-shadow: none;\n    -moz-box-shadow: none;\n    box-shadow: none;\n    -webkit-transition: 0.25s;\n    -moz-transition: 0.25s;\n    -o-transition: 0.25s;\n    transition: 0.25s;\n    -webkit-backface-visibility: hidden;\n    height: 44px;\n    border-radius: 4px;\n    font-weight: bold;\n    padding-bottom: 3px;\n    padding-left: 6px;\n    padding-right: 6px;\n    padding-top: 2px;\n    min-width:170px;\n    padding-top: 12px;\n}\n\n.btn {\n    min-width:170px;\n}\n \nform input[type=\"text\"], form input[type=\"password\"], form textarea {\n    height:36px;\n    margin-bottom: 10px;\n    width: 100%;\n}\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n ",
+    "images": [
+        {
+            "style": "border-radius: 6px;\nwidth: 100%;",
+            "isSingle": true,
+            "content_attribs": {
+                "src": "/static/img/placeholder.png"
+            },
+            "hoverStyle": "",
+            "class_name": "img-width-fixed",
+            "content": null,
+            "tagName": "img",
+            "activeStyle": ""
+        },
+        {
+            "style": "border-radius: 6px;\nheight: 280px;",
+            "isSingle": true,
+            "content_attribs": {
+                "src": "/static/img/placeholder.png"
+            },
+            "hoverStyle": "",
+            "class_name": "img-height-fixed",
+            "content": null,
+            "tagName": "img",
+            "activeStyle": ""
+        }
+    ],
+    "dropdowns": [
+        {
+            "attribs": null,
+            "style": "",
+            "isSingle": false,
+            "hoverStyle": "",
+            "class_name": "default-dropdown",
+            "content": "<option>Option 1</option>",
+            "tagName": "select",
+            "activeStyle": ""
+        }
+    ],
+    "textInputs": [
+        {
+            "style": "border: 2px solid #dce4ec;\ncolor: #34495e;\nfont-family: \"Lato\", sans-serif;\nfont-size: 14px;\npadding: 8px 0 9px 10px;\ntext-indent: 1px;\n-webkit-border-radius: 6px;\n-moz-border-radius: 6px;\nborder-radius: 6px;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;",
+            "isSingle": true,
+            "content_attribs": {
+                "placeholder": "Default placeholder..."
+            },
+            "hoverStyle": "",
+            "class_name": "inpt-1",
+            "content": null,
+            "tagName": "input",
+            "activeStyle": "",
+            "cons_attribs": {
+                "tagType": "text"
+            }
+        },
+        {
+            "style": "border: 2px solid #dce4ec;\ncolor: #34495e;\nfont-family: \"Lato\", sans-serif;\nfont-size: 14px;\npadding: 8px 0 9px 10px;\ntext-indent: 1px;\n-webkit-border-radius: 6px;\n-moz-border-radius: 6px;\nborder-radius: 6px;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;\nborder-color: #e74c3c;\ncolor: #e74c3c;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;",
+            "isSingle": true,
+            "content_attribs": {
+                "placeholder": "Default placeholder..."
+            },
+            "hoverStyle": "",
+            "class_name": "inpt-error",
+            "content": null,
+            "tagName": "input",
+            "activeStyle": "",
+            "cons_attribs": {
+                "tagType": "text"
+            }
+        },
+        {
+            "style": "  font-size: 14px;\n  font-weight: normal;\n  line-height: 20px;\n  height:32px;\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  background-color: #ffffff;\n  border: 1px solid #cccccc !important;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;\n     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;\n       -o-transition: border linear 0.2s, box-shadow linear 0.2s;\n          transition: border linear 0.2s, box-shadow linear 0.2s;\nborder-color: #468847 !important;",
+            "isSingle": true,
+            "cons_attribs": {
+                "type": "text"
+            },
+            "hoverStyle": "",
+            "class_name": "input-green",
+            "content": null,
+            "activeStyle": "",
+            "content_attribs": {
+                "placeholder": "Default placeholder..."
+            },
+            "tagName": "input"
+        }
+    ],
+    "pages": [
+        {
+            "design_props": [
+                {
+                    "type": "background-image",
+                    "value": "/static/img/sample_bg.png"
+                },
+                {
+                    "type": "background-color",
+                    "value": "#fff"
+                },
+                {
+                    "type": "text-color",
+                    "value": "#000"
+                },
+                {
+                    "type": "text-size",
+                    "value": "12px"
+                },
+                {
+                    "type": "text-family",
+                    "value": "\"Helvetica Neue\", Helvetica, \"Lucida Grande\""
+                },
+                {
+                    "type": "header-color",
+                    "value": "#666"
+                },
+                {
+                    "type": "header-size",
+                    "value": "16px"
+                },
+                {
+                    "type": "header-family",
+                    "value": "\"Helvetica Neue\", Helvetica, \"Lucida Grande\""
+                }
+            ],
+            "uielements": [],
+            "name": "Sample Page 1"
+        },
+        {
+            "design_props": [
+                {
+                    "type": "background-image",
+                    "value": "/static/img/sample_bg.png"
+                },
+                {
+                    "type": "background-color",
+                    "value": "#fff"
+                },
+                {
+                    "type": "text-color",
+                    "value": "#000"
+                },
+                {
+                    "type": "text-size",
+                    "value": "12px"
+                },
+                {
+                    "type": "text-family",
+                    "value": "\"Helvetica Neue\", Helvetica, \"Lucida Grande\""
+                },
+                {
+                    "type": "header-color",
+                    "value": "#666"
+                },
+                {
+                    "type": "header-size",
+                    "value": "16px"
+                },
+                {
+                    "type": "header-family",
+                    "value": "\"Helvetica Neue\", Helvetica, \"Lucida Grande\""
+                }
+            ],
+            "uielements": [],
+            "name": "Sample Page 2"
+        }
+    ]
+}

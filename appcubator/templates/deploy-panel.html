@@ -1,0 +1,109 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title> v1 Factory | {{ title }}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Le styles -->
+<link href="../static/css/reset.css" rel="stylesheet">
+<link href="../static/css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   font-weight: 300;
+}
+</style>
+</head>
+<body>
+  <div class="container hoff3">
+    <h1>Deployments</h1>
+  </div>
+  <ul class="hoff3">
+    {% for d in deployments %}
+    <li class="container" id="container-{{d.id}}">
+      <div class="span10">
+        <input id="subdomain-{{d.id}}" type="text" placeholder="subdomain" value="{{ d.subdomain }}" />
+        <p>Last Modified: {{ d.updated_on }}</p>
+        <p>Created: {{ d.created_on }}</p>
+      </div>
+      <textarea id="appstate-{{d.id}}" placeholder="appstate" class="span32 hi15 offset2">{{ d.app_state_json }}</textarea>
+      <input type="submit" class=" deploy btn btn-primary" id="deploy-{{d.id}}"value="Deploy">
+    </li>
+    {% endfor %}
+    <li class="container" id="container-X">
+      <div class="span10">
+        <input type="text" placeholder="subdomain">
+        <p>Last Modified: </p>
+        <p>Created: </p>
+      </div>
+      <textarea id="appstate-X" placeholder="appstate" class="span32 hi15 offset2"></textarea>
+      <input type="submit" class=" deploy btn btn-primary" id="deploy-x"value="Deploy">
+    </li>
+  </ul>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery/jquery.js"></script>
+  <script>
+    function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+
+       var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    $(function () {
+      /* adds csrftoke to every ajax request we send */
+      $.ajaxSetup({
+        crossDomain: false, // obviates need for sameOrigin test
+        beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type)) {
+            var token = getCookie('csrftoken');
+            xhr.setRequestHeader("X-CSRFToken", token);
+          }
+        }
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    $('.deploy').on('click', function(e) {
+      var appId = String(e.target.id).replace('deploy-','');
+      var appState = $('#appstate-' + appId).val();
+      var subdomain = $('#subdomain-' + appId).val();
+      var appStateJSON ='';
+
+      try {
+        appStateJSON = jQuery.parseJSON(appState);
+        $('#container-' + appId).removeClass('error');
+        $.ajax({
+          type: "POST",
+          url: '/deploy/hosted/',
+          data: { subdomain: subdomain, app_json: JSON.stringify(appStateJSON)},
+          complete: function(r) {
+            console.log(r.responseText);
+          },
+          dataType: "JSON"
+        });
+      }
+      catch(err) {
+        alert(err);
+        $('#container-' + appId).addClass('error')
+      }
+    });
+  </script>
+</body>
+</html>

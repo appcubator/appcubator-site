@@ -1,0 +1,97 @@
+define([
+  'collections/EmailCollection',
+  'models/EmailModel',
+  'app/EmailView'
+],
+function(EmailCollection, EmailModel, EmailView) {
+
+  var EmailsView = Backbone.View.extend({
+    events: {
+      //'click #create-email' : 'createEmail',
+      'click #email-list li#create-email': 'createEmail',
+      'click #email-list li.email-list-item': 'clickedEmail',
+      'click #save-emails'               : 'saveEmails'
+    },
+
+    initialize: function() {
+      _.bindAll(this);
+
+      this.collection = new EmailCollection(appState.emails||[]);
+      this.listenTo(this.collection, 'all', this.renderEmailList);
+
+      //setup emailView, populate with first email (new email if none)
+      var firstEmail;
+      if(this.collection.length > 0) {
+        firstEmail = this.collection.at(0);
+      }
+      else {
+        firstEmail = this.collection.create({});
+      }
+      this.emailView = new EmailView({ model: firstEmail });
+
+      this.render();
+
+      this.listenTo(this.emailView, 'change:model', this.showActiveEmail);
+    },
+
+    render: function() {
+      var self = this;
+
+      this.el.innerHTML = _.template(iui.getHTML('emails-page'), {});
+      this.listView = this.$el.find('#email-list');
+      this.renderEmailList();
+
+      this.emailView.setElement(this.$el.find('form')).render();
+      return this;
+    },
+
+    renderEmailList: function() {
+      var self = this;
+      this.listView.empty();
+      _(this.collection.models).each(function(email){
+        self.appendEmail(email);
+      });
+
+      // append 'create email' btn to list
+      this.listView.append('<li id="create-email"><strong>+ Create Email</strong></li>')
+    },
+
+    clickedEmail: function(e) {
+      var cid = e.currentTarget.dataset.cid;
+      var emailModel = this.collection.get(cid);
+      this.emailView.setModel(emailModel);
+      this.target.classList.add('active');
+    },
+
+    createEmail: function(e) {
+      var email = new EmailModel();
+      this.collection.add(email);
+      this.emailView.setModel(email);
+    },
+
+    appendEmail: function(email) {
+      this.listView.append('<li class="email-list-item" data-cid="' + email.cid + '">' + email.get('name') + '</li>');
+    },
+
+    saveEmails: function(e) {
+      appState.emails = this.collection.toJSON();
+
+      $.ajax({
+        type: "POST",
+        url: '/app/'+appId+'/state/',
+        data: JSON.stringify(v1State),
+        success: function() {},
+        dataType: "JSON"
+      });
+    },
+
+    showActiveEmail: function(model) {
+      console.log(model);
+      console.log(this.emailView.model);
+      this.listView.find('li').removeClass('active')
+                   .filter('[data-cid="'+this.emailView.model.cid+'"]').addClass('active');
+    }
+  });
+
+  return EmailsView;
+});

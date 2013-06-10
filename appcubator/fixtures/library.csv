@@ -1,0 +1,11 @@
+model,pk,name ,html,css,type,class_name
+v1factory.UIElement,1,a,"<a href=""#"">a link</a>",,link,alpha
+v1factory.UIElement,2,p,<p>text</p>,,paragraph,beta
+v1factory.UIElement,3,img,"<img src=""http://www.mediatehawaii.org/wp-content/uploads/placeholder.jpg"" />",,image,gamma
+v1factory.UIElement,4,h1,<h1>Title</h1>,,heading,hello
+v1factory.UIElement,5,h2,<h2>Heading</h2>,,heading,whatsup
+v1factory.UIElement,6,h3,<h3>Subheading</h3>,,heading,yolo
+v1factory.UIElement,7,container (div),<div>Container</div>,,container,ilter
+v1factory.UIElement,8,text input field,"<input type=""text"" />",,input,karan
+v1factory.UIElement,9,textarea,<textarea rows=4 cols=50 />,,input,zoo
+v1factory.UIElement,10,submit button,"<input type=""submit"" value=""Submit"" />",,input,zebra

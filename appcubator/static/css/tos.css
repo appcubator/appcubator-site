@@ -1,0 +1,35 @@
+body {
+  font-size: 12px;
+  margin-top: 90px;
+}
+
+.guidelines {
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 20px;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.guidelines ul {
+  list-style: circle;
+}
+
+.guidelines li {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.terms {
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+p {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.terms h4 {
+  font-weight: bold;
+  font-size: 14px;
+  display: block;
+}

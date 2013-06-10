@@ -1,0 +1,120 @@
+{% extends "infra-html.html" %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/website.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
+<!--     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+ -->
+{% endblock %}
+{% block topbar %}
+{% include "infra-topbar-out.html" %}
+{% endblock %}
+{% block page %}
+
+<div class="row hoff4">
+  <div class="container">
+    <div class="offset18">
+      <div class="hi91">
+        
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="span14">
+    <h2 class="hoff2 span14 pull-right">Sign Up</h2>
+    <img class="span12 hoff2" src="{{ STATIC_URL}}img/mascot.png" width="180">
+  </div>
+  <div class="sign-up-container span46 hoff1">
+    <form method="POST" class="span46 offset6" action="{% url v1factory.base_views.signup %}">
+        <div class="row hoff1">
+          <h4>Username</h4><br  />
+          <input class="span10" name="username" type="text">
+          <div class="form-error field-name-username"></div>
+        </div>
+        <div class="row hoff1">
+          <div class="span13">
+            <h4>Password</h4>
+            <input class="span10" name="password1" type="password"><br>
+            <div class="form-error field-name-password1"></div>
+          </div>
+        </div>
+      <div class="row hoff1">
+          <div class="span13">
+            <h4>Confirm Password</h4>
+            <input class="span10" name="password2" type="password"><br>
+            <div class="form-error field-name-password2"></div>
+          </div>
+      </div>
+      
+      <div class="row hoff1">
+        <div class="span13">
+          <h4>First Name</h4>
+          <input class="span10" name="first_name" type="text"><br>
+          <div class="form-error field-name-first_name"></div>
+        </div>
+      </div>
+      <div class="row hoff1">
+        <div class="span13">
+          <h4>Last Name</h4>
+          <input class="span10" name="last_name" type="text"><br>
+          <div class="form-error field-name-last_name"></div>
+        </div>
+      </div>
+      <div class="row hoff1">
+        <h4>Email Address</h4><br  />
+        <input class="span10" name="email" type="text"><br>
+        <div class="form-error field-name-email"></div>
+      </div>
+
+      <div class="row hoff1">
+        <h4>Beta Secret</h4><br  />
+        <input class="span10" name="betasecret" type="password"><br>
+        <div class="form-error field-name-betasecret"></div>
+      </div>
+      {% csrf_token %}
+      <input type="checkbox" name="tos" id="tos"><label for="tos">I have read the <a href="/termsofservice/">Terms of Service</a> and agree.</label>
+      <input class="span16 hoff1 btn btn-blue" type="submit" value="Join the Private Beta">
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://documentcloud.github.io/underscore/underscore-min.js"></script>
+<script>
+$(document).ready(function() {
+
+  $('form').each(function(ind, node) {
+
+    $(node).submit(function(e) {
+      var self = this;
+      var ajax_info = {
+        type : $(node).attr('method'),
+        url  : $(node).attr('action'),
+        data : $(node).serialize(),
+        success : function(data, statusStr, xhr) {
+          if (typeof(data.redirect_to) !== 'undefined') {
+            location.href = data.redirect_to;
+          } else {
+            _.each(data, function(val, key, ind) {
+              if(key==='__all__') {
+                $(self).find('.form-error.field-all').html(val.join('<br />'));
+              } else {
+                $(self).find('.form-error.field-name-'+key).html(val.join('<br />'));
+              }
+            });
+          }
+        }
+      };
+      $.ajax(ajax_info);
+      $(self).find('.form-error').html("");
+
+      return false;
+
+    });
+  });
+});
+</script>
+{% endblock %}

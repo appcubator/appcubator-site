@@ -1,0 +1,33 @@
+<VirtualHost *:80>
+	ServerName v1factory.com
+	ServerAdmin founders@v1factory.com
+
+	WSGIScriptAlias / /var/www/v1factory/prod_wsgi.py
+	WSGIDaemonProcess v1factory.com python-path=/var/www/v1factory:/var/www/v1factory/venv/lib/python2.7/site-packages
+	WSGIProcessGroup v1factory.com
+
+	<Directory /var/www/v1factory>
+	<Files prod_wsgi.py>
+	Order deny,allow
+	Allow from all
+	</Files>
+	</Directory>
+	
+	Alias /static/ /var/www/v1factory/v1factory/dist_static/
+	<Directory /var/www/v1factory/v1factory/static/>
+	Order deny,allow
+	Allow from all
+	</Directory>
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel warn
+
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+  ErrorDocument 503 /var/www/v1factory/v1factory/static/503.html
+
+</VirtualHost>
+

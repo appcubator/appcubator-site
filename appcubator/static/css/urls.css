@@ -1,0 +1,58 @@
+.url {
+  margin-top: 14px;
+  margin-left: 14px;
+}
+
+.slash {
+  font-weight: bold;
+  font-size: 30px;
+  margin-right: 8px;
+  margin-left: 8px;
+  height: 32px;
+  vertical-align: middle;
+}
+
+select.id {
+  width: 100px;
+  height: 32px;
+  margin: 0;
+}
+
+.add-page-form {
+  display: inline-block;
+  margin:0;
+}
+select.page, input.page-name-input {
+  width: 140px;
+  height: 32px;
+  margin: 0;
+}
+
+select.url-part {
+  width: 80px;
+}
+
+input.url-part {
+  width: 120px;
+}
+
+div.pages {
+  margin: 0;
+  margin-top: 14px;
+  vertical-align: middle;
+}
+
+div.pages.arrow {
+  font-size: 32px;
+  font-weight: bold;
+  height: 32px;
+  margin-top: 18px;
+}
+
+.cross {
+  font-weight: bold;
+  font-size: 24px;
+  cursor: pointer;
+  margin-top: 8px;
+  margin-right: 12px;
+}
