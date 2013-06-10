@@ -1,10 +1,8 @@
 define([
   'designer-app/UIElementListView',
-  'models/PageDesignModel',
   'iui',
   'designer-app/ThemeTemplates'
-],function(UIElementListView,
-           PageDesignModel) {
+],function(UIElementListView) {
 
   var UIElementAttributesModel = Backbone.Model.extend({ });
 
@@ -58,7 +56,7 @@ define([
       var boxView        = new UIElementListView(this.model.get('boxes'), 'box');
       iui.get('box-cont').appendChild(boxView.el);
 
-      this.model.get('pages').bind('add', this.renderPage);
+      //this.model.get('pages').bind('add', this.renderPage);
     },
 
     render: function() {
@@ -69,9 +67,9 @@ define([
       this.editor.setValue(this.model.get('basecss'));
 
       $('#fonts-editor').val(this.model.get('fonts'));
-      _(this.model.get('pages').models).each(function(page, ind) {
+      /*_(this.model.get('pages').models).each(function(page, ind) {
         self.renderPage(page, ind);
-      });
+      });*/
 
       _(statics).each(function(file) {
         iui.get('statics-cont').innerHTML += '<img width="100" src="'+ file.url +'">' + file.name;
@@ -95,7 +93,8 @@ define([
       // width: 1125px;
 
       var currentCSS = this.editor.getValue();
-
+      //console.log(currentCSS);
+/*
       var bodyRegExp = /body \{([^\}]+)\}/g;
       var marginRegExp = /margin:([^;]+);/g;
       var heightRegExp = /height:([^;]+);/g;
@@ -119,7 +118,7 @@ define([
 
 
       currentCSS = currentCSS.replace(initBodyTag, newBodyTag);
-
+*/
       this.model.set('basecss', currentCSS);
     },
 
@@ -128,7 +127,7 @@ define([
     },
 
     renderPage: function(page, ind) {
-      var pages = iui.get('pages-list');
+      /*var pages = iui.get('pages-list');
       var cInd = ind;
       if(ind === null) {
         cInd = (this.model.get('pages').models.length);
@@ -137,7 +136,7 @@ define([
         cInd = cInd.models.length -1;
       }
 
-      pages.innerHTML += '<li><a href="/theme/'+ themeId +'/editor/' + cInd +'">' + page.get('name') + '</a></li>';
+      pages.innerHTML += '<li><a href="/theme/'+ themeId +'/editor/' + cInd +'">' + page.get('name') + '</a></li>';*/
     },
 
     expandSection: function(e) {
@@ -153,10 +152,10 @@ define([
 
     pageCreateSubmitted: function(e) {
       e.preventDefault();
-      var name =  $('.create-page-name').val();
+      var name =  $('.create-page-name').val();/*
       var newPage = new PageDesignModel({name: name});
       $('.create-page-name').val('');
-      this.model.get('pages').add(newPage);
+      this.model.get('pages').add(newPage);*/
       $('.create-page-form').hide();
       $('#create-page').fadeIn();
     },

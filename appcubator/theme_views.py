@@ -12,6 +12,9 @@ import requests
 import traceback
 import datetime
 
+def JSONResponse(data, *args, **kwargs):
+  return HttpResponse(simplejson.dumps(data), *args, mimetype="application/json", **kwargs)
+
 from django.forms import ModelForm
 class ThemeStaticFileForm(ModelForm):
   class Meta:

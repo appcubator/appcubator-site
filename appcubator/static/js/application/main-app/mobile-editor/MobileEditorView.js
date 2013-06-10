@@ -68,7 +68,7 @@ function( PageModel,
 
       iui.loadCSS(this.css);
 
-      iui.loadCSS('ratchet');
+      //iui.loadCSS('ratchet');
       iui.loadCSS('bootstrap-editor');
       iui.loadCSS('jquery-ui');
 
