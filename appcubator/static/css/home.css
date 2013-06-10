@@ -449,24 +449,26 @@ h3 {
   margin-top: 10px;
 }
 
+.slide3 {
+  margin-right: 60px;
+  margin-left: 60px;
+}
+
 .pricing {
-  width: 700px;
   color: #222;
   margin-top: 60px;
   display: inline-block;
-  height: 160px;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
 }
 
 .pricing li {
-  display: inline-block;
-  height: 100%;
-  vertical-align: top;
-  padding: 5px;
-  padding-top: 16px;
+  display: block;
+  padding: 60px 80px;
+  background-image: -webkit-linear-gradient(top, #fafafa,#ffffff 25%);
   text-align: left;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
+  border-bottom: 1px solid #ddd;
 }
 
 .pricing li .title {
@@ -474,17 +476,21 @@ h3 {
   font-size: 18px;
 }
 
+.pricing li .price {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  float: right;
+}
 .pricing .free {
-  width: 260px;
 }
 
 .pricing .mobile,
 .pricing .web {
-  width: 140px;
 }
 
 .pricing .session {
-  width: 140px;
 }
 
 .gray-bg {
