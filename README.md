@@ -22,12 +22,23 @@ virtualenv --distribute venv
 pip install -r requirements.txt
 ```
 
-3. Tell django which settings to use (set and forget)
+3. Install Appcubator-codegen
 ```
-export DJANGO_SETTINGS_MODULE=v1factory.settings.dev
+pip install git+ssh://git@github.com/appcubator/appcubator-codegen.git
 ```
 
-4. Go
+4. Make manage.py executable
 ```
-python manage.py runserver 0.0.0.0:8000
+chmod +x manage.py
+```
+
+5. Setup the database
+```
+./manage.py syncdb --noinput
+./manage.py migrate
+```
+
+6. Go
+```
+./manage.py runserver
 ```
