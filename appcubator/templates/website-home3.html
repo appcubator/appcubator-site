@@ -11,7 +11,29 @@ scope: r_basicprofile r_emailaddress
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
 {% endblock %}
 {% block page %}
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '379124615521841',                    // App ID from the app dashboard
+      channelUrl : '//www.appcubator.com/channel.html',  // Channel file for x-domain comms
+      status     : true,                                 // Check Facebook Login status
+      xfbml      : true                                  // Look for social plugins on the page
+    });
 
+    // Additional initialization code such as adding Event Listeners goes here
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 <div class="left-panel">
   <div id="box-container">
     <div id="cube" class="">
@@ -60,42 +82,42 @@ scope: r_basicprofile r_emailaddress
     </div>
   </div>
   <div class="slide2 slide">
-<!--     <div class="image"></div>
- -->    <span>
-      <span class="title">What can I build?</span>
-      <p>What you see is exactly what you get.</p>
-    </span>
-  </div>
-  <div class="slide3 slide">
-<!--     <div class="image"></div>
- -->    <span>
-      <span class="title">Who is it for?</span>
-      <p>What you see is exactly what you get.</p>
-    </span>
-  </div>
-  <div class="slide4 slide">
-<!--     <div class="image"></div>
- -->    <span>
-      <span class="title">How does it work?</span>
-      <p>What you see is exactly what you get.</p>
-    </span>
+    <div class="row">
+      <span>
+        <span class="title">What can I build?</span>
+        <p>Almost anything you use daily on the web. This includes marketplaces, Airbnb type sites, online ordering apps or social networks.</p>
+        <p class="small">Unfortunately, games or flash based technologies are not supported.
+        </span>
+      </div>
+      <div class="row">
+        <span>
+          <span class="title">Who is it for?</span>
+          <p>It is for everyone. If you can use Powerpoint and Excel, you can use Appcubator. It is designed with non-technical people in mind but we would like add special features for designers and developers soon.</p>
+        </span>
+      </div>
+      <div class="row">
+       <span>
+        <span class="title">How is it possible?</span>
+        <p>We did most of the heavy lifting for you and integrated all the components of popular apps out there for you. You just need to define what information you would like to save and then go build your what you have in mind through a powerful drag'n'drop interface.</p>
+      </span>
+    </div>
   </div>
   <div class="slide5 slide">
     <ul class="pricing">
       <li class="free">
-        <span class="title">Free to build</span>
-        Sign up for free and build your app for as long as you want.
+        <span class="title">Building your App</span>
+        <p>It's free to sign up, explore and build your app for as long as you want.</p>
+        <span class="pricing">Free</span>
+
       </li>
       <li class="mobile">
-        <span class="title">Mobile</span>
-        <span class="price">$11 /mo</span>
-      </li>
-      <li class="web">
-        <span class="title">Web</span>
+        <span class="title">Hosting</span>
+        <p>It's free to sign up, explore and build your app for as long as you want.</p>
         <span class="price">$11 /mo</span>
       </li>
       <li class="session">
         <span class="title">Head Start</span>
+        <p>It's free to sign up, explore and build your app for as long as you want.</p>
         <span class="price">$160</span>
       </li>
     </ul>
@@ -103,9 +125,10 @@ scope: r_basicprofile r_emailaddress
   <div class="slide-last">
     <form class="sign-up-form">
       <div class="left-side">
-        <input type="text" placeholder="Full Name">
-        <input type="text" placeholder="Email">
-        <input type="text" placeholder="Company">
+        <input type="text" id="inp-name" placeholder="Full Name">
+        <input type="text" id="inp-email" placeholder="Email">
+        <input type="text" id="inp-company" placeholder="Company">
+        <input type="hidden" id="inp-extra">
         <hr>
         <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
         <div class="btn btn-blue btn-linkedin">Fill With LinkedIn</div>
