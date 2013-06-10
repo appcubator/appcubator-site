@@ -5003,13 +5003,12 @@ hr.vert {
     -webkit-transition: all 0.6s; /* Safari and Chrome */
     -o-transition: all 0.6s; /* Opera */
     background-size: 44% auto;
-    margin-top: 10px;
     border-top: 1px solid rgba(0, 0, 0, 0.08);
     -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 
   .hidden {
-    top: 250px;
+    top: 320px;
     opacity: 0;
   }
 
@@ -5222,7 +5221,7 @@ hr.vert {
     border-top-left-radius: 4px;
     box-shadow: 0 1px 0 rgba(0,0,0,0.1),0 2px 3px rgba(0,0,0,0.05);
   }
- 
+
   .dropdown-menu li.header.top {
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
