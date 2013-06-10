@@ -23,3 +23,4 @@ DATABASES = {
         'NAME': os.path.join(PROJECT_ROOT_PATH, 'tempdb'),
     }
 }
+WSGI_APPLICATION = 'wsgi.staging_wsgi.application'

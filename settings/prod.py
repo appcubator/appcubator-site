@@ -33,3 +33,4 @@ DATABASES = {
        'PORT': 3306
    }
 }
+WSGI_APPLICATION = 'wsgi.prod_wsgi.application'
