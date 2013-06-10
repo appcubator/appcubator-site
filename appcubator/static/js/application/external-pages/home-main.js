@@ -105,21 +105,28 @@ function(SimpleModalView, LoginModalView) {
 
     function onLinkedInLogin() {
       IN.API.Profile("me")
-        .fields(["id", "firstName", "lastName", "publicProfileUrl", "emailAddress", "headline"])
+        .fields(["id", "firstName", "lastName", "publicProfileUrl", "emailAddress", "headline", "three-current-positions"])
         .result(login_callback)
         .error(function(err) {
           alert(err);
         });
     }
     function login_callback(result) {
-      var realresult = result.values[0];
-        $.post('/connect_with/', realresult, function(data){
-          new SimpleModalView({ text: "Thanks for expressing interest, "+realresult.firstName+", we will reach out to you soon."});
-        });
+      console.log(result);
+      var fullProfile = result.values[0];
+      var fullName = fullProfile.firstName + " " + fullProfile.lastName;
+      var emailAddress = fullProfile.emailAddress;
+      if(fullProfile.threeCurrentPositions["_total"] > 0) {
+        var company = fullProfile.threeCurrentPositions.values[0].company.name || "";
+      }
+      // fill in form fields
+      document.getElementById('inp-name').value = fullName;
+      document.getElementById('inp-email').value = emailAddress;
+      document.getElementById('inp-company').value = company;
     }
 
     $('.IN-widget').hide();
-    $('#request').on('click', function() {
+    $('.btn-linkedin').on('click', function() {
       $('.IN-widget').children().first().children().first().trigger('click');
     });
 
