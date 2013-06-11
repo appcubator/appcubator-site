@@ -37,7 +37,7 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
       var self = this;
       this.widgetsContainer = document.getElementById('elements-container');
       this.widgetsContainer.innerHTML = '';
-      _(self.widgetsCollection.models).each(function(widget) {
+      self.widgetsCollection.each(function(widget) {
         self.placeUIElement(widget);
       });
       this.widgetSelectorView.setElement(this.widgetsContainer).render();

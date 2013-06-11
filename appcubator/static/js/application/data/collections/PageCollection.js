@@ -8,7 +8,7 @@ function(PageModel) {
 
     getContextFreePages: function() {
       var pagesList = [];
-      _(this.models).each(function(page) {
+      this.each(function(page) {
         if(!_.some(page.get('url').get('urlparts'), function(part) { return (/\{\{([^\}]+)\}\}/g).test(part); })) {
           pagesList.push(page.get('name'));
         }
@@ -19,7 +19,7 @@ function(PageModel) {
 
     getPagesWithEntityName: function(entityName) {
       var pagesList = [];
-      _(this.models).each(function(page) {
+      this.each(function(page) {
         if(_.contains(page.get('url').get('urlparts'), '{{' + entityName + '}}')) {
           pagesList.push(page.get('name'));
         }
@@ -30,7 +30,7 @@ function(PageModel) {
 
     isUnique: function(pageName) {
       isUnique = true;
-      _(this.models).each(function(page) {
+      this.each(function(page) {
         if(page.get('name') === pageName) isUnique = false;
       });
       return isUnique;

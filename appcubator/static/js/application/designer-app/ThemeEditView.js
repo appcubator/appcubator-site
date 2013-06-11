@@ -67,7 +67,7 @@ define([
       this.editor.setValue(this.model.get('basecss'));
 
       $('#fonts-editor').val(this.model.get('fonts'));
-      /*_(this.model.get('pages').models).each(function(page, ind) {
+      /*this.model.get('pages').each(function(page, ind) {
         self.renderPage(page, ind);
       });*/
 

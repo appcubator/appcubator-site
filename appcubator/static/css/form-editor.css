@@ -469,3 +469,16 @@ label.header {
 .details-panel .select-view ul {
   width: 220px;
 }
+
+.details-panel .new-field-form {
+  width: 220px;
+  margin-left: 20px;
+  margin-top: 10px;
+  padding: 20px;
+  background-color: rgba(25, 142, 58, 0.3);
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.details-panel .new-field-form .btn {
+  margin-top: 12px;
+}

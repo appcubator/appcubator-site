@@ -26,7 +26,6 @@
   text-align: left;
   padding-top: 10px;
   padding-left: 4px;
-  margin-top: 18px;
 }
 
 .theme-gallery li {
@@ -35,20 +34,37 @@
   cursor: pointer;
   border-radius: 6px;
   position: relative;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.theme-gallery li img {
+  width: 100%;
+  display: inline-block;
+  border-radius: 6px;
+  height: 260px;
+}
+
+.theme-gallery li h2 {
+  margin-top: 30px;
 }
 
 .details {
   display: none;
   position: absolute;
-  left: 0px;
-  height: 130px;
-  width: 195px;
+  left: 15px;
+  top: 15px;
+  height: 260px;
+  width: 390px;
   background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
   text-align: center;
-  padding-top: 60px;
   font-size: 18px;
   font-weight: bold;
+  border-radius: 6px;
+  line-height: 260px;
 }
 
 .theme-gallery li:hover .details{

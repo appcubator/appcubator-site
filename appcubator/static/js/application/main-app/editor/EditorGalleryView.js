@@ -64,7 +64,7 @@ function(ElementCollection,
       li.innerHTML = 'Design Elements';
       $(this.allList).append(li);
 
-      _(collection.models).each(function(element) {
+      collection.each(function(element) {
         if(element.get('className') == "buttons" ||
            element.get('className') == "textInputs" ||
            element.get('className') == "textAreas" ||
@@ -166,7 +166,7 @@ function(ElementCollection,
                               '<span class="wide-text"><%= entity_name %> List</span>',
                               '</li>'].join('\n');
 
-      _(v1State.get('tables').models).each(function(entityModel) {
+      v1State.get('tables').each(function(entityModel) {
         var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
         $(self.allList).append(_.template(tempCreateFormLi, context));
         $(self.allList).append(_.template(tempTableLi, context));
@@ -197,13 +197,13 @@ function(ElementCollection,
                         '</li>'].join('\n');
 
 
-      _(g_contextCollection.models).each(function(entity) {
+      g_contextCollection.each(function(entity) {
         var entityName = entity.get('name');
         var entityId = entity.cid;
         var context = {entity_id : entityId, entity_name : entityName};
         //$(self.allList).append(_.template(tempLiForm, context));
 
-        _(entity.get('fields').models).each(function(field) {
+        entity.get('fields').each(function(field) {
           var context = { entity_id : entityId, entity_name : entityName,
                           field_id : field.cid, field_name: field.get('name') };
 

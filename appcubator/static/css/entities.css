@@ -637,3 +637,26 @@ table tr:hover td {
 .relation-pane .select-view li:first-child {
   border-top-color: transparent;
 }
+
+.icon-fk,
+.icon-o2o,
+.icon-m2m {
+  display: inline-block;
+  height: 140px;
+  width: 140px;
+  margin-left: 10px;
+  background-repeat: no-repeat;
+  float: left;
+  background-image: url(../img/relation-icons.png);
+}
+
+.icon-fk {
+  background-position: -140px 0;
+}
+
+.icon-o2o {
+}
+
+.icon-m2m {
+  background-position: -280px 0;
+}

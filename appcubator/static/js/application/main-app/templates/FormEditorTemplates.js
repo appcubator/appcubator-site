@@ -159,6 +159,23 @@ FormEditorTemplates.displayTypes = [
   '<% }) %>'
 ].join('\n');
 
+FormEditorTemplates.newField = [
+'<form class="new-field-form">',
+  '<label><b>Name of the field</b><br>',
+  '<input class="new-field-name" type="text" placeholder="Field name...">',
+  '</label>',
+  '<label><b>Type of the Field</b><br>',
+    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="text" checked="true">Text</label>',
+    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="number">Number</label>',
+    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="email">Email</label>',
+    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="image">Image</label>',
+    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="date">Date</label>',
+    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="file">File</label>',
+  '</label>',
+  '<input type="submit" class="btn" value="Done">',
+'</form>'
+].join('\n');
+
 FormEditorTemplates.details = [
   '<label><b>Label</b><br>',
   '<input class="field-label-input" id="field-label-<%= field.cid %>" type="text" placeholder="Field Label..." value="<%= field.get(\'label\') %>">',

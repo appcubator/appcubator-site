@@ -4,8 +4,7 @@ define([
   'models/FooterModel',
   'models/ContainerWidgetModel',
   'models/WidgetModel',
-  'collections/WidgetCollection',
-  'backbone'
+  'collections/WidgetCollection'
 ],
 function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, WidgetCollection) {
 
@@ -37,7 +36,7 @@ function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, 
     getHeight: function() {
       var height  = 0;
 
-      _(this.get('uielements').models).each(function(uielement) {
+      this.get('uielements').each(function(uielement) {
         var layout = uielement.get('layout');
         var bottom = layout.get('top') + layout.get('height');
         if(bottom > height) { height = bottom; }
