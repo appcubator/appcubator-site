@@ -17,7 +17,7 @@ define([
         fields = _.union(fields, model.get('fields').models);
       });
       fields = _.uniq(fields, function(obj) { return obj.attributes.name; });
-
+      fields = _.union(fields, ["Username", "First Name", "Last Name", "Email"]);
       return fields;
     }
 

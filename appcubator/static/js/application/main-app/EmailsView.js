@@ -28,9 +28,6 @@ function(EmailCollection, EmailModel, EmailView) {
         firstEmail = this.collection.create({});
       }
       this.emailView = new EmailView({ model: firstEmail });
-
-      this.render();
-
       this.listenTo(this.emailView, 'change:model', this.showActiveEmail);
     },
 
@@ -40,7 +37,7 @@ function(EmailCollection, EmailModel, EmailView) {
       this.el.innerHTML = _.template(iui.getHTML('emails-page'), {});
       this.listView = this.$el.find('#email-list');
       this.renderEmailList();
-
+      this.renderVariableList();
       this.emailView.setElement(this.$el.find('form')).render();
       return this;
     },
@@ -53,7 +50,21 @@ function(EmailCollection, EmailModel, EmailView) {
       });
 
       // append 'create email' btn to list
-      this.listView.append('<li id="create-email"><strong>+ Create Email</strong></li>')
+      this.listView.append('<li id="create-email"><strong>+ Create Email</strong></li>');
+
+      return this;
+    },
+
+    renderVariableList: function() {
+      var vars = v1State.get('users').getCommonProps();
+      var list = document.getElementById('variables-list');
+      _(vars).each(function(variable) {
+        var li = document.createElement('li');
+        li.innerHTML = "CurrentUser." + variable;
+        list.appendChild(li);
+      });
+
+      return this;
     },
 
     clickedEmail: function(e) {
@@ -86,8 +97,6 @@ function(EmailCollection, EmailModel, EmailView) {
     },
 
     showActiveEmail: function(model) {
-      console.log(model);
-      console.log(this.emailView.model);
       this.listView.find('li').removeClass('active')
                    .filter('[data-cid="'+this.emailView.model.cid+'"]').addClass('active');
     }
