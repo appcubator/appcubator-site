@@ -23,7 +23,6 @@ function( WidgetContainerView,
     },
 
     initialize: function(widgetModel) {
-
       WidgetContainerView.__super__.initialize.call(this, widgetModel);
       _.bindAll(this);
 

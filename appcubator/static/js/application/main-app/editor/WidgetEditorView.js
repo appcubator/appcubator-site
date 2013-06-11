@@ -59,7 +59,7 @@ function(WidgetContentEditor,
         }
 
         if(action == "imageslider") {
-          this.el.appendChild(slidesElem);
+          this.el.appendChild(this.renderImageSliderButton());
         }
 
         if(action == "table") {
@@ -135,9 +135,9 @@ function(WidgetContentEditor,
     },
 
     renderImageSliderButton: function() {
-      var li       = document.createElement('li');
-      li.className = 'option-button edit-slides-button';
-      li.innerHTML = 'Edit Slides';
+      var li       = document.createElement('div');
+      li.className = 'edit-slides-button';
+      li.innerHTML = '<span id="" class="option-button tt" style="width:230px; display: inline-block;"><strong>Edit Slides</strong></span>';
       return li;
     },
 
