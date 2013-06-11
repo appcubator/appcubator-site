@@ -41,7 +41,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         //this.renderAddWeb();
       }
       else {
-        _(this.collection.models).each(function(model) {
+        this.collection.each(function(model) {
           self.appendPage(model, false);
         });
       }
@@ -51,7 +51,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         //this.renderAddMobile();
       }
       else {
-        _(this.mobileCollection.models).each(function(model) {
+        this.mobileCollection.each(function(model) {
           self.appendPage(model, true);
         });
       }

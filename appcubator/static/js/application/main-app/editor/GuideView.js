@@ -32,7 +32,7 @@ function(WidgetModel) {
 
     render: function() {
       var self = this;
-      _(self.widgetsCollection.models).each(function(widget) {
+      self.widgetsCollection.each(function(widget) {
         var layout = widget.get('layout');
         self.placeHorizontal(layout.get('top'));
         self.placeHorizontal((layout.get('top') + layout.get('height')));

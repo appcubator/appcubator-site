@@ -58,7 +58,7 @@ function( TableQueryView,
         this.formModel.bind('change', this.reRender);
         this.formModel.get('fields').bind('remove', this.reRender);
         this.formModel.get('fields').bind('add', this.reRender);
-        _(this.formModel.get('fields').models).each(function(model){ model.bind('change', self.reRender); });
+        this.formModel.get('fields').each(function(model){ model.bind('change', self.reRender); });
       }
     },
 
@@ -132,12 +132,12 @@ function( TableQueryView,
 
     renderElements : function() {
       var self  =this;
-      _(this.model.get('data').get('container_info').get('uielements').models).each(function(widgetModel) {
+      this.model.get('data').get('container_info').get('uielements').each(function(widgetModel) {
         self.placeWidget(widgetModel);
       });
 
       if(this.model.get('data').get('container_info').has('form')) {
-        _(this.formModel.get('fields').models).each(function(field) {
+        this.formModel.get('fields').each(function(field) {
           self.placeFormElement(field);
         });
       }

@@ -68,7 +68,7 @@ function(EditorGalleryView, ElementCollection) {
       var context = {entity_id : entityId, entity_name : entityName};
       //$(self.allList).append(_.template(tempLiForm, context));
 
-      _(self.entity.get('fields').models).each(function(field) {
+      self.entity.get('fields').each(function(field) {
         var context = { entity_id : entityId, entity_name : entityName,
                         field_id : field.cid, field_name: field.get('name') };
         $(self.allList).append(_.template(tempLi, context));

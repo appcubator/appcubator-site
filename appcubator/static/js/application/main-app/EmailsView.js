@@ -45,7 +45,7 @@ function(EmailCollection, EmailModel, EmailView) {
     renderEmailList: function() {
       var self = this;
       this.listView.empty();
-      _(this.collection.models).each(function(email){
+      this.collection.each(function(email){
         self.appendEmail(email);
       });
 

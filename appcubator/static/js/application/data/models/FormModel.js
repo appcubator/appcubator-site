@@ -33,7 +33,7 @@ function(FormFieldCollection, ActionCollection) {
 
     fillWithProps: function(entity) {
       var self = this;
-      _(entity.get('fields').models).each(function(fieldModel) {
+      entity.get('fields').each(function(fieldModel) {
 
         var type = fieldModel.get('type');
         var formFieldModel = { name: fieldModel.get('name'),

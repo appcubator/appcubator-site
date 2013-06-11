@@ -89,7 +89,7 @@ function(FormFieldModel, TutorialView) {
 
     renderActions: function() {
       var self = this;
-      _(this.model.get('actions').models).each(function(action) {
+      this.model.get('actions').each(function(action) {
         self.$el.find('.current-actions').append('<li id="action-'+action.cid +'" class="current-action">'+action.getNL()+'<div class="remove-from-list"></div></li>');
       });
     },

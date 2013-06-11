@@ -35,7 +35,7 @@ function(UIElementView, UIElementModel) {
       this.elems = div;
       this.el.appendChild(this.elems);
 
-      _(this.collection.models).each(function(uieModel) {
+      this.collection.each(function(uieModel) {
         uieModel.id = self.collection.length;
         self.appendUIE(uieModel);
       });

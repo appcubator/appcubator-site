@@ -55,7 +55,7 @@ function() {
       this.widgetEditorView = new WidgetEditorView();
       this.widgetEditorView.isMobile = self.isMobile;
 
-      _(this.widgetsCollection.models).each(self.bindWidget);
+      this.widgetsCollection.each(self.bindWidget);
       this.doKeyBindings();
     },
 

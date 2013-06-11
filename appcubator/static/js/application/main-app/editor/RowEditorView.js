@@ -31,7 +31,7 @@ function(WidgetView,
 
       this.widgetSelectorView = new WidgetSelectorView(this.widgetsCollection);
 
-      _(self.widgetsCollection.models).each(function(widgetModel) {
+      self.widgetsCollection.each(function(widgetModel) {
         widgetModel.set('context', self.entity.get('name'));
         self.placeWidget(widgetModel);
       });
