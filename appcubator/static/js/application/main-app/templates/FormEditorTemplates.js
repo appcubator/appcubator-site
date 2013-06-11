@@ -14,7 +14,7 @@ var FieldTypes = {
 
 
 FormEditorTemplates.field = [
-'<li id="field-<%= field.cid %>" class="field-li-item sortable li-<%= field.get(\'displayType\')%>"><label class="header"><%= field.get(\'label\') %></label><span class="form-item">',
+'<li id="field-<%= field.cid %>" class="field-li-item sortable li-<%= field.get(\'displayType\')%>"><label class="header"><%= field.get(\'label\') %> <% if(field.get(\'required\')) { %>*<% } %></label><span class="form-item">',
   '<% if(field.get(\'displayType\') == "single-line-text") { %>',
     FieldTypes['single-line-text'],
   '<% } %>',
@@ -164,7 +164,11 @@ FormEditorTemplates.details = [
   '<input class="field-label-input" id="field-label-<%= field.cid %>" type="text" placeholder="Field Label..." value="<%= field.get(\'label\') %>">',
   '</label>',
   '<label><b>Placeholder</b><br>',
-  '<input class="field-placeholder-input" type="text" id="field-placeholder-<%= field.cid %>" placeholder="Fild Placeholder..." value="<%= field.get(\'placeholder\') %>">',
+  '<input class="field-placeholder-input" type="text" id="field-placeholder-<%= field.cid %>" placeholder="Field Placeholder..." value="<%= field.get(\'placeholder\') %>">',
+  '</label>',
+  '<label><b>Required</b><br>',
+  '<label for="required" class="radio"><input type="radio" name="required" id="required" value="yes" checked="<%= field.get(\'required\') %>">Yes</label>',
+  '<label for="not-required" class="radio"><input type="radio" name="required" id="not-required" value="no" >No</label>',
   '</label>',
   '<label><b>Display Type</b>',
     '<ul class="field-types">',

@@ -22,6 +22,7 @@ function(FormFieldModel, TutorialView) {
       'keydown .field-placeholder-input' : 'changedPlaceholder',
       'keydown input.field-label-input'  : 'changedLabel',
       'keyup   .field-placeholder-input' : 'changedPlaceholder',
+      'change input[name=required]'      : 'changedRequired',
       'keyup   input.field-label-input'  : 'changedLabel',
       'keyup  .options-input'            : 'changedOptions',
       'change .form-type-select'         : 'changedFormAction',
@@ -157,6 +158,7 @@ function(FormFieldModel, TutorialView) {
       this.selected.bind('change:placeholder', this.reRenderDisplayType);
       this.selected.bind('change:options', this.reRenderDisplayType);
       this.selected.bind('change:label', this.reRenderLabel);
+      this.selected.bind('change:required', this.reRenderDisplayType);
 
       this.$el.find('.details-panel').hide();
 
@@ -213,6 +215,13 @@ function(FormFieldModel, TutorialView) {
 
     changedPlaceholder: function(e) {
       this.selected.set('placeholder', e.target.value);
+      e.stopPropagation();
+    },
+
+    changedRequired: function(e) {
+      var required = (e.target.value === "yes") ? true : false;
+      this.selected.set('required', required);
+      console.log(v1State.toJSON());
       e.stopPropagation();
     },
 

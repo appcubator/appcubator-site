@@ -10,6 +10,7 @@ function() {
       if(bone.type) { this.set('type', bone.type); }
       this.set('label', (bone.label||bone.name));
       this.set('placeholder', (bone.placeholder||bone.name));
+      this.set('required', (bone.required || false));
     },
 
     toJSON: function() {
