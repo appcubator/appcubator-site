@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 import django.contrib.auth.views
-import base_views, views, theme_views
+import base_views, views, theme_views, log_views
 import django.views.generic.base
 
 # from django.contrib import admin
@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^tutorial/$',                 base_views.tutorial),
     url(r'^ping/$',                     base_views.ping),
     url(r'^whatisthis/$',               base_views.marketing),
+    url(r'^signup_form/$',              base_views.signup_new_customer),
     url(r'^backend/',                   include('app_builder.urls')),
 )
 
@@ -66,17 +67,17 @@ urlpatterns += patterns('appcubator.views',
     # special json editor route
     url(r'^app/(\d+)/editor/\d+/debug/$', 'app_json_editor'), # this serves all the app pages
 
-    # route logging
-    url(r'^app/(\d+)/log/routes/', 'log_route'),
 
     # the rest
     url(r'^app/(\d+)/', 'app_page'), # this serves all the app pages
 
-    # tutorial and logging
+    url(r'^sendhostedemail/$', 'send_hosted_email'),
+)
+
+urlpatterns += patterns('appcubator.log_views',
+    url(r'^app/(\d+)/log/routes/', 'log_route'),
     url(r'^log/slide/$', 'log_slide'),
     url(r'^log/feedback/$', 'log_feedback'),
-
-    url(r'^sendhostedemail/$', 'send_hosted_email'),
 )
 
 urlpatterns += patterns('appcubator.theme_views',
