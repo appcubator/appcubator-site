@@ -3266,6 +3266,9 @@ li.model span.title {
 .pages ul li.new-page {
   background-image: url('../img/plus.png');
 }
+.pages ul li.new-page input {
+  width: 95%;
+}
 
 .pages:hover ul {
   max-height: 400px;
