@@ -24,11 +24,11 @@ function(ThemeDisplayView) {
       self.listView.className = 'theme-gallery';
 
       var template = [
-        '<li class="span28 theme hoff3 offsetr1" class="theme-item" id="theme-<%= id %>">',
-          '<img src="<%= image %>" class="span13">',
+        '<li class="span28 theme hoff1 offsetr1" class="theme-item" id="theme-<%= id %>">',
+          '<img src="<%= image %>">',
           '<div class="details">Click to See Details</div>',
-          '<h2 class="offset2 span12"><%= name %></h2>',
-          '<div class="offset2 span12">Designed by <%= designer %></div>',
+          '<h2><%= name %></h2>',
+          '<div class="designed-by">Designed by <%= designer %></div>',
         '</li>'
       ].join('\n');
 
