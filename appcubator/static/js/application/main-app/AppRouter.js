@@ -46,7 +46,6 @@ define([
 		tutorialDirectory: [0],
 
 		initialize: function() {
-			var self = this;
 			$('#save').on('click', this.save);
 			$('#tutorial').on('click', this.showTutorial);
       keyDispatcher.key('⌘+s, ctrl+s', this.save);

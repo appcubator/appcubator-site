@@ -28,13 +28,12 @@ function(Backbone) {
     },
 
     render : function(text) {
-      var self = this;
       this.el.innerHTML = ['<div class="dragndrop">',
                             '<form enctype="multipart/form-data" method="post" class="upload-form" action="/app/'+ appId +'/entities/userxl/">'+
                                   '<span>Drag and drop the excel file you would like to upload, or click to pick your file</span>',
                                   '<div style="display:none;"><input type="file" id="pick-file" name="file_name" value="Upload"/></div>',
-                                  '<input type="hidden" name="entity_name" value="'+ self.name+'">',
-                                  '<input type="hidden" name="fields" value=\''+ JSON.stringify(self.fields) +'\'>',
+                                  '<input type="hidden" name="entity_name" value="'+ this.name+'">',
+                                  '<input type="hidden" name="fields" value=\''+ JSON.stringify(this.fields) +'\'>',
                                   '<div type="submit" class="btn pick-btn">Pick File</div>',
                            '</form></div>'].join('\n');
       return this;

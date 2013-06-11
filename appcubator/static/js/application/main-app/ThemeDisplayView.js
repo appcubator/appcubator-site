@@ -27,17 +27,17 @@ function() {
     },
 
     loadTheme: function() {
-      var self = this;
       var url = '/app/'+appId+'/uiestate/';
       var newState = uieState;
-      if(self.info.web_or_mobile == "M") {
+      if(this.info.web_or_mobile == "M") {
         url = '/app/'+appId+'/mobile_uiestate/';
-        newState = _.extend(mobileUieState, self.theme);
+        newState = _.extend(mobileUieState, this.theme);
       }
       else {
-        newState = _.extend(uieState, self.theme);
+        newState = _.extend(uieState, this.theme);
       }
 
+      var self = this;
       $.ajax({
         type: "POST",
         url: url,

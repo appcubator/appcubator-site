@@ -7,10 +7,9 @@ function(ActionModel) {
     model: ActionModel,
 
     removePageRedirect: function() {
-      var self = this;
       this.each(function(model) {
-        if(model.get('type') == "redirect") { self.remove(model); }
-      });
+        if(model.get('type') == "redirect") { this.remove(model); }
+      }, this);
     },
 
     addRedirect: function(pageModel) {

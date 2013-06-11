@@ -39,8 +39,6 @@ function( FieldModel,
     },
 
     render: function() {
-      var self = this;
-      //this.renderNav();
       this.renderTables();
       return this;
     },
