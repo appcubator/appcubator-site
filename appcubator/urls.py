@@ -8,13 +8,11 @@ import django.views.generic.base
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', base_views.homepage),
+    url(r'^$',                          base_views.homepage),
     url(r'^login/$',                    django.contrib.auth.views.login, {'template_name' : 'registration/login_page.html'}),
     url(r'^logout/$',                   django.contrib.auth.views.logout, {"next_page":"/"}),
     url(r'^connect_with/$',             base_views.get_linkedin),
     url(r'^signup/$',                   base_views.signup),
-    url(r'^beta/$',                     base_views.highland_view),
-    url(r'^upcoming/$',                 base_views.new_new_view),
     url(r'^termsofservice/$',           base_views.terms_of_service),
     url(r'^faq/$',                      base_views.faq),
     url(r'^account/$',                  base_views.account),
@@ -100,6 +98,7 @@ urlpatterns += patterns('',
 )
 
 # production (hosted) deployments
+"""
 if settings.PRODUCTION:
   urlpatterns += patterns('deployment.views',
       url(r'^deployment/$', 'list_deployments'), # list the deployments and their statuses
@@ -107,6 +106,7 @@ if settings.PRODUCTION:
       url(r'^deployment/push/$', 'deploy_code'), # push the new code into the directory
       url(r'^deployment/delete/$', 'delete_deployment'), # push the new code into the directory
   )
+  """
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 

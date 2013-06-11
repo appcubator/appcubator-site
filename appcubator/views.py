@@ -12,7 +12,6 @@ from models import DomainRegistration
 
 from app_builder.analyzer import App as AnalyzedApp
 from app_builder.utils import get_xl_data, add_xl_data, get_model_data
-from deployment.models import Deployment
 
 import requests
 import traceback

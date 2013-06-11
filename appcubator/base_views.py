@@ -133,25 +133,6 @@ def signup(request):
     else:
       return HttpResponse(simplejson.dumps({ k : v for k,v in form.errors.items() }), mimetype="application/json")
 
-
-def highland_view(request):
-  page_context = {}
-  page_context["title"] = "Homepage"
-  return render(request, 'website-home2.html', page_context)
-
-def new_new_view(request):
-  page_context = {}
-  page_context["title"] = "Homepage"
-  return render(request, 'website-home3.html', page_context)
-
-def startx_video(request):
-  return redirect('https://www.youtube.com/watch?v=9ECQ8ZIfJvQ')
-
-def thiel_view(request):
-  page_context = {}
-  page_context["title"] = "Homepage"
-  return render(request, 'thiel.html', page_context)
-
 def terms_of_service(request):
   page_context = {}
   page_context["title"] = "Homepage"

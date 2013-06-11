@@ -1,107 +1,151 @@
-{% extends "infra-html.html" %}
+{% extends "infra-out-html.html" %}
 
 {% block css %}
-    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
-      api_key: t0q97cjtk5kf
-      scope: r_basicprofile r_emailaddress
-    </script>
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
-<!--     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
- -->
-{% endblock %}
-{% block topbar %}
-{% include "infra-topbar-out.html" %}
+<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+api_key: t0q97cjtk5kf
+scope: r_fullprofile r_emailaddress
+</script>
+<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
 {% endblock %}
 {% block page %}
-<div class="well">
-  <div class="container">
-    <div class="span64">
-      <div class="hi28">
-        <div class="span32 offset1 hoff6" style="color:#0f2d40;">
-          <p class="motto"> Turn your idea into a<br>working site or app at a<br><strong>low cost</strong> and <strong>quick turnaround</strong>.</p>
-          <h2 class="hoff2">Realize Your Ideas.</h2>
-          <div class="btn btn-green hoff1" id="request">Request a Beta Invite</div>
-          <script type="in/Login"></script>
-        </div>
-        <div class="span28 hi18 hoff7 offset3 video-pane">
-          <div class="site-trackstudent"></div>
-          <div id="bluebuttonihopenooneclicks" class="btn btn-blue">See What Others Have Built <img src="{{ STATIC_URL }}img/right-arrow.png"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container">
-  <div class="row meta">
-    <div class="hi24 hoff1 span64">
-      <div class="span14 card">
-        <div class="hi12 users">
-        <div class="logo">
-          <span class="engine1"></span>
-          <span class="engine2"></span>
-          <span class="engine3"></span>
-        </div>
-        </div>
-      </div>
-      <div class="span22 green-1 card">
-        <div class="hi12 users">
-          <p class=" hoff1 hi3">
-            <span class="mtxt bold">Build.</span>
-          </p>
-          <p class="">
-            <span class="small">Use our visual editor to build your app<br>or hire a developer. Facebook, Twitter and LinkedIn integration is built in.</span>
-          </p>
-        </div>
-      </div>
-      <div class="span14 green-2 card">
-        <div class="hi12 publish">
-          <p class=" hoff1 hi3">
-           <span class="mtxt bold">Launch.</span>
-          </p>
-          <p class="">
-            <span class="small">Make your site or app public and get users immediately.</span>
-          </p>
-        </div>
-      </div>
-      <div class="span14 green-3 card">
-        <div class="hi12 metrics">
-          <p class=" hoff1 hi3">
-            <span class="mtxt bold">Watch.</span>
-          </p>
-          <p class="">
-            <span class="small">Monitor your user traction and watch key metrics.</span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<script type="html/template" id="login-form-template">
-<div class="login pad1 pull-right" style="height:45px; margin-top: 10px; opacity:1.0;">
-  <div class="span8  hi14">
-    <span class="pad1"><strong>User Login</strong><br><i class="micro"> (forgot password?)</i></span>
-  </div>
-  <div class="span18 hi14">
-          <span class="login span24 offset1">
-            {% if form.errors %}
-            <p>Your username and password didn't match. Please try again.</p>
-            {% endif %}
-            <form class="" method="post" action="{% url django.contrib.auth.views.login %}">
-                {% csrf_token %}
-
-                <input id="id_username" type="text" name="username" placeholder="Username..." maxlength="30">
-                <br>
-                <input type="password" name="password" placeholder="Password..." id="id_password">
-                <br>
-                <input class="btn" type="submit" value="Login"/>
-                <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
-            </form>
-          </span>
-  </div>
-</div>
+<div id="fb-root"></div>
+<script>
 </script>
+<div class="left-panel">
+  <div id="box-container">
+    <div id="cube" class="">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <h1>Appcubator</h1>
+  <div class="bottom-panel" id="bottom-panel">
+    <div class="buttons">
+      <div class="btn btn-blue hoff1 slide-signup" id="request">Join the Beta Program</div>
+      <div class="btn btn-green hoff1" id="member">Already a Member?</div>
+    </div>
+    <span class="login" id="login-form">
+      {% if form.errors %}
+      <p>Your username and password didn't match. Please try again.</p>
+      {% endif %}
+      <form class="" method="post" action="{% url django.contrib.auth.views.login %}">
+        {% csrf_token %}
 
+        <input id="id_username" type="text" name="username" placeholder="Username..." maxlength="30">
+        <br>
+        <input type="password" name="password" placeholder="Password..." id="id_password">
+        <br>
+        <input class="btn" type="submit" value="Login »"/>
+        <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
+      </form>
+    </span>
+  </div>
+</div>
+
+<div class="fixed-bg" id="bg4"></div>
+<div class="fixed-bg" id="bg3"></div>
+<div class="fixed-bg" id="bg2"></div>
+<div class="fixed-bg" id="bg1"></div>
+
+<div class="sliding-panel">
+  <div class="slide1">
+    <div class="large-text">
+      Easiest way to build web and mobile applications.
+    </div>
+    <div class="sub-text">
+      No code. No hassle. Just your creativity.
+    </div>
+    <div class="gray-bg  slide-info">
+      More Info <span class="icon-down"></span>
+    </div>
+  </div>
+  <div class="slide2 slide">
+    <div class="explanation">
+      <div class="row">
+        <span>
+          <span class="title">What can I build?</span>
+          <p>Almost anything you use daily on the web. This includes marketplaces, Airbnb type sites, online ordering apps or social networks.</p>
+          <p class="small">Unfortunately, games or flash based technologies are not supported.</p>
+        </span>
+      </div>
+      <div class="row">
+        <span>
+          <span class="title">Who is it for?</span>
+          <p>It is for everyone. If you can use Powerpoint and Excel, you can use Appcubator. It is designed with non-technical people in mind but we would like add special features for designers and developers soon.</p>
+        </span>
+      </div>
+      <div class="row">
+        <span>
+          <span class="title">How is it possible?</span>
+          <p>We did most of the heavy lifting for you and integrated all the components of popular apps out there for you. You just need to define what information you would like to save and then go build your what you have in mind through a powerful drag'n'drop interface.</p>
+        </span>
+      </div>
+    </div>
+    <div class="gray-bg slide-pricing">
+      Pricing <span class="icon-down"></span>
+    </div>
+  </div>
+  <div class="slide3 slide">
+    <ul class="pricing">
+      <li class="free">
+        <span class="title">Building your App</span>
+        <span class="content">
+          <p>It's free to sign up, explore and build your app for as long as you want.</p>
+          <p class="includes"> Includes 24 hour support, unlimited *.appcubator.com domains, design themes and service integrations.</p>
+        </span>
+        <span class="price">Free</span>
+      </li>
+      <li class="mobile">
+        <span class="title">Production</span>
+        <span class="content">
+          <p>It's free to sign up, explore and build your app for as long as you want.</p>
+          <p class="includes"> Includes 24 hour support, analytics to your site, more scalable infrastructure, custom domain and branding as well as everything on the free plan.</p>
+        </span>
+        <span class="price"><i class="small">$</i>11<i class="small">/mo</i></span>
+      </li>
+      <li class="session">
+        <span class="title">Head Start</span>
+        <span class="content">
+          <p>Short on time? we are happy to help you. You can set up a starting session with someone from our team where we will build most, if not all of your app and teach you how to use Appcubator for further iterations.</p>
+          <p class="includes"> Includes ~2 hours private video call or Skype session with someone from Appcubator team.</p>
+        </span>
+        <span class="price"><i class="small">$</i>160</span>
+      </li>
+    </ul>
+    <div class="gray-bg slide-signup">
+      Sign Up<span class="icon-down"></span>
+    </div>
+  </div>
+  <div class="slide-last">
+    <form class="sign-up-form">
+      <div class="left-side">
+        <input type="text" id="inp-name" placeholder="Full Name">
+        <input type="text" id="inp-email" placeholder="Email">
+        <input type="text" id="inp-company" placeholder="Company">
+        <input type="hidden" id="inp-extra">
+        <hr>
+        <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
+        <div class="btn btn-blue btn-linkedin">Fill With LinkedIn</div>
+        <script type="IN/Login"></script>
+      </div>
+      <div class="right-side">
+        <textarea placeholder="Technical Description of your application. This is for us attain feasibility of the project and direct you well."></textarea>
+        <input type="checkbox" id="consulting-interest" data-label="I'm also interested in the starting session.">
+        <div class="btn btn-blue" id="sign-up">Sign Me Up »</div>
+      </div>
+    </form>
+  </div>
+  <div class="footer">
+   <span>Appcubator © 2013</span> • <a href="/aboutus">About Us</a> • <a href="/termsofservice">Privacy</a>
+  </div>
+</div>
 {% endblock %}
 
 {% block js %}
