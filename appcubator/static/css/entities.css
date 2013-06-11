@@ -529,6 +529,17 @@ table tr:hover td {
   background-image: url(../img/right-gradient.png);
 }
 
+.description .left-arrow {
+  position: absolute;
+  left: 0px;
+  top: 5px;
+  height: 150px;
+  width: 30px;
+  text-align: left;
+  display: inline-block;
+  background-image: url(../img/left-gradient.png);
+}
+
 .button {
   font-family: 'verb_regularbold';
   color: #0f2d40;
