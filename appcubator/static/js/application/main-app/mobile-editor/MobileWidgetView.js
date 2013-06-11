@@ -42,24 +42,7 @@ function(WidgetView) {
 
     initialize: function(widgetModel){
       var self = this;
-      _.bindAll(this, 'render',
-                      'renderElement',
-                      'select',
-                      'changedWidth',
-                      'changedHeight',
-                      'changedValue',
-                      'changedTop',
-                      'changedLeft',
-                      'changedText',
-                      'changedType',
-                      'changedStyle',
-                      'changedSource',
-                      'toggleFull',
-                      'staticsAdded',
-                      'isMouseOn',
-                      'mousedown',
-                      'switchEditModeOn',
-                      'switchEditModeOff');
+      _.bindAll(this);
 
       this.model = widgetModel;
 

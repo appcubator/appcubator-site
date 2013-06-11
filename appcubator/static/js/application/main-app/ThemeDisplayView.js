@@ -12,7 +12,7 @@ function() {
     theme: null,
 
     initialize: function(data) {
-      _.bindAll(this, 'render', 'loadTheme');
+      _.bindAll(this);
 
       this.info  = data.themeInfo;
       this.theme = data.theme;
@@ -58,7 +58,6 @@ function() {
               url: '/app/'+appId+'/static/',
               data: JSON.stringify(static_file),
               success: function(data) {
-                console.log(data);
               }
             });
           });

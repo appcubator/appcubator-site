@@ -17,13 +17,7 @@ function(WidgetClassPickerView, FormEditorView) {
     },
 
     initialize: function(widgetModel){
-      _.bindAll(this, 'render',
-                      'clear',
-                      'changeAlignment',
-                      'changePadding',
-                      'showToolTip',
-                      'hideToolTip',
-                      'deleteWidget');
+      _.bindAll(this);
 
       this.model = widgetModel;
       this.render();
@@ -57,12 +51,10 @@ function(WidgetClassPickerView, FormEditorView) {
       }
       else {
         if($(e.target).hasClass('selected')) {
-          console.log('fifteen!');
           this.model.get('layout').set('r_padding', 15);
           this.model.get('layout').set('l_padding', 15);
         }
         else {
-          console.log('zero!');
           this.model.get('layout').set('r_padding', 0);
           this.model.get('layout').set('l_padding', 0);
         }

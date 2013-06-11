@@ -226,7 +226,6 @@ function(FormFieldModel, TutorialView) {
     changedRequired: function(e) {
       var required = (e.target.value === "yes") ? true : false;
       this.selected.set('required', required);
-      console.log(v1State.toJSON());
       e.stopPropagation();
     },
 

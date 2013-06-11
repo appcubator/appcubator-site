@@ -12,12 +12,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
     el: document.body,
 
     initialize: function() {
-      _.bindAll(this, 'render',
-                      'renderAddMobile',
-                      'renderAddWeb',
-                      'createPage',
-                      'createMobilePage',
-                      'appendPage');
+      _.bindAll(this);
 
       var self = this;
       this.collection = v1State.get('pages');

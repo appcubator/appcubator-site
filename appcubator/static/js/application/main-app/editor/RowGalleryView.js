@@ -24,7 +24,7 @@ function(EditorGalleryView, ElementCollection) {
       this.widgetsCollection = this.row.get('uielements');
       this.editorContext = "loop";
 
-      _.bindAll(this, 'render', 'dropped', 'renderContextEntity');
+      _.bindAll(this);
       this.allList = this.el;
 
       RowGalleryView.__super__.initialize.call(this, rowModel.get('uielements'));

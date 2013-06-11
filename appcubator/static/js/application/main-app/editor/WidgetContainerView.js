@@ -29,12 +29,7 @@ function( TableQueryView,
     initialize: function(widgetModel) {
       WidgetContainerView.__super__.initialize.call(this, widgetModel);
       var self = this;
-      _.bindAll(this, 'render',
-                      'reRender',
-                      'placeWidget',
-                      'placeFormElement',
-                      'renderElements',
-                      'showDetails');
+      _.bindAll(this);
 
       this.model.get('data').get('container_info').get('uielements').bind("add", this.placeWidget);
 

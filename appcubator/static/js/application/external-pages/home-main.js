@@ -2,15 +2,9 @@ require.config({
   paths: {
     "jquery" : "../../libs/jquery/jquery",
     "underscore" : "../../libs/underscore-amd/underscore",
-    // "backbone" : "../../libs/backbone-amd/backbone",
     "iui" : "../../libs/iui/iui",
-    // "comp": "../../libs/iui/comp",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "app" : "../",
-    // "editor" : "./../editor",
-    // "dicts" : "../../dicts",
-    // "mixins" : "../../mixins",
-    // "key" : "../../libs/keymaster/keymaster",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable"
   },
 
@@ -25,7 +19,6 @@ require.config({
 
 });
 
-console.log(require.config.paths);
 require([
   'prettyCheckable'
 ],
@@ -137,7 +130,6 @@ function() {
         });
     }
     function login_callback(result) {
-      console.log(result);
       var fullProfile = result.values[0];
       var fullName = fullProfile.firstName + " " + fullProfile.lastName;
       var emailAddress = fullProfile.emailAddress;

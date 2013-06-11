@@ -71,9 +71,7 @@ function(){
     },
 
     renderStyleTags: function(e) {
-      console.log('rendier');
       var styleTag = document.getElementById(this.model.cid + '-' + 'style');
-      console.log(styleTag);
       styleTag.innerHTML = '.' +this.model.get('class_name') + '{' + this.model.get('style')  + '}';
       var hoverTag = document.getElementById(this.model.cid + '-' + 'hover-style');
       hoverTag.innerHTML = '.' +this.model.get('class_name') + ':hover {' + this.model.get('hoverStyle')  + '}';
@@ -82,7 +80,6 @@ function(){
     },
 
     classNameChaged: function(e) {
-      console.log(e.target);
       this.model.set('class_name', e.target.value);
     }
 

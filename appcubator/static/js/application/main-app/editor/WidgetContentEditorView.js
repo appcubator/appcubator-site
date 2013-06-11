@@ -18,17 +18,7 @@ function(SelectView) {
     },
 
     initialize: function(widgetModel){
-      _.bindAll(this, 'render',
-                      'clear',
-                      'inputChanged',
-                      'toggleBold',
-                      'changeFont',
-                      'changeSrc',
-                      'changeHref',
-                      'changedContent',
-                      'renderFontPicker',
-                      'renderTextEditing',
-                      'addExternalLink');
+      _.bindAll(this);
 
       this.model = widgetModel;
       this.hrefOptions = this.model.getListOfPages();
@@ -74,12 +64,6 @@ function(SelectView) {
         href = href.replace('internal://', '');
       }
 
-      // html         = _.template(temp, { val : href,
-      //                                   hash: hash,
-      //                                   listOfPages: listOfPages,
-      //                                   external: external});
-
-      console.log(href);
       this.hrefLi.innerHTML = '';
       this.hrefLi.appendChild(new comp().div('Links To').classN('header-div').el);
       var selecView = new SelectView(listOfPages, href);
@@ -206,7 +190,6 @@ function(SelectView) {
 
     changeSrc: function(inp) {
       var self = this;
-      console.log(inp);
 
       if(inp.val == 'new-image') {
         iui.openFilePick(self.staticsAdded, self, appId);
@@ -219,7 +202,6 @@ function(SelectView) {
 
     changeHref: function(inp) {
       var self = this;
-      console.log(inp);
       var target = inp;
       if(target == "External Link") {
         self.hrefLi.innerHTML = '<form id="external-link-form"><input id="external-link-input" type="text" placeholder="http://"></form>';

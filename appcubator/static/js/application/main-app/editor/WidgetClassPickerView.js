@@ -16,13 +16,7 @@ function(SelectView) {
     },
 
     initialize: function(widgetModel){
-      _.bindAll(this, 'render',
-                      'expand',
-                      'shrink',
-                      'select',
-                      'show',
-                      'hide',
-                      'hovered');
+      _.bindAll(this);
 
       this.model = widgetModel;
       this.list = _.map(uieState[this.model.get('data').get('nodeType')], function(obj) { return obj.class_name; });

@@ -18,12 +18,7 @@ function(WidgetEditorView) {
     },
 
     initialize: function(){
-      _.bindAll(this, 'render',
-                      'mouseup',
-                      'mousedown',
-                      'mousemove',
-                      'setZero',
-                      'getPageTopLeft');
+      _.bindAll(this);
     },
 
     mousedown: function(e) {

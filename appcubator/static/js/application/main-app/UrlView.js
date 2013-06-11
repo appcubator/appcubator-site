@@ -15,11 +15,7 @@ function() {
 
     initialize: function(urlModel){
       var self = this;
-      _.bindAll(this, 'urlPartChanged',
-                      'pageChanged',
-                      'urlRemoved',
-                      'lastEntityChanged',
-                      'lastTextChanged');
+      _.bindAll(this);
 
       this.model = urlModel;
       if(!this.model.get('urlparts')) {

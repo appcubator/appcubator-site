@@ -13,8 +13,7 @@ function() {
     },
 
     initialize: function(widgetModel){
-      _.bindAll(this, 'render',
-                      'clear');
+      _.bindAll(this);
 
       this.model = widgetModel;
       this.render();

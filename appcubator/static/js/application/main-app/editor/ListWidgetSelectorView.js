@@ -20,32 +20,7 @@ function() {
     },
 
     initialize: function(widgetsCollection){
-      _.bindAll(this, 'render',
-                      'clear',
-                      'setLayout',
-                      'widgetHover',
-                      'widgetUnhover',
-                      'newSelected',
-                      'resizing',
-                      'resized',
-                      'moving',
-                      'moved',
-                      'bindWidget',
-                      'mousedown',
-                      'mouseup',
-                      'deselect',
-                      'hideNode',
-                      'doKeyBindings',
-                      'moveSelectedDown',
-                      'moveSelectedUp',
-                      'moveSelectedLeft',
-                      'moveSelectedRight',
-                      'deleteSelected',
-                      'hoverClicked',
-                      'clickedPage',
-                      'isMouseOn',
-                      'stoppedEditing',
-                      'unbindAll');
+      _.bindAll(this);
 
       var self = this;
 
