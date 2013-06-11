@@ -353,7 +353,8 @@ def app_deploy(request, app_id):
         'user_name': request.user.username,
         'date_joined': str(request.user.date_joined)
     }
-    result = app.deploy(d_user)
+    #result = app.deploy(d_user)
+    result = app.deploy()
     status = 500 if 'errors' in result else 200
     return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 

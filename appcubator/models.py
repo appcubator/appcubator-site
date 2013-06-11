@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
-import os.path
+import tarfile
+import os, os.path
 import re
 import requests
 import simplejson
@@ -63,6 +64,8 @@ class App(models.Model):
     _state_json = models.TextField(blank=True, default=get_default_app_state)
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
     _mobile_uie_state_json = models.TextField(blank=True, default=get_default_mobile_uie_state)
+
+    deployment_id = models.IntegerField(blank=True, null=True, default=None)
 
     def save(self, *args, **kwargs):
         if self.subdomain == "":
@@ -152,7 +155,7 @@ class App(models.Model):
             u['page_name'], u['urlparts']) for u in self.state['urls']]))
         return summary
 
-    def write_to_tmpdir(self, d_user):
+    def write_to_tmpdir(self):
         from app_builder.analyzer import App as AnalyzedApp
         from app_builder.controller import create_codes
         from app_builder.coder import Coder, write_to_fs
@@ -191,6 +194,64 @@ class App(models.Model):
         css_string = t.render(context)
         return css_string
 
+    def get_deploy_data(self):
+        post_data = {
+            "u_name": self.u_name(),
+            "subdomain": self.subdomain,
+            "app_json": self.state_json,
+            "deploy_secret": "v1factory rocks!"
+        }
+        return post_data
+
+    def deploy(self, retry_on_404=True):
+        tmpdir = self.write_to_tmpdir()
+        contents = os.listdir(tmpdir)
+        # tar it up
+        t = tarfile.open(os.path.join(tmpdir, 'payload.tar'), 'w')
+        try:
+            for fname in contents:
+                t.add(os.path.join(tmpdir, fname))
+            t.close()
+            f = open(os.path.join(tmpdir, 'payload.tar'), "r")
+
+            # send the whole shibam to deployment server
+            files = {'file':f}
+            tmp_url = "http://requestb.in/zmtin3zm"
+            post_data = self.get_deploy_data()
+            if self.deployment_id is None:
+                #r = requests.put("http://staging.appcubator.com/deployment/", data=post_data, files=files)
+                r = requests.put(tmp_url, data=post_data, files=files)
+            else:
+                #r = requests.post("http://staging.appcubator.com/deployment/%s/" % self.deployment_id, data=post_data, files=files)
+                r = requests.post(tmp_url % self.deployment_id, data=post_data, files=files)
+
+        finally:
+            f.close()
+            os.remove(os.path.join(tmpdir, 'payload.tar'))
+
+        if r.status_code == 200:
+            result = {}
+            response_content = r.json()
+            try:
+                self.deployment_id = response_content['deployment_id']
+                self.save()
+            except KeyError:
+                pass
+            if 'errors' in response_content:
+                result['errors'] = response_content['errors']
+            result['site_url'] = "http://%s.appcubator.com" % self.subdomain
+            result['github_url'] = self.github_url()
+            return result
+
+        elif r.status_code == 404:
+            assert retry_on_404
+            self.deployment_id = None
+            self.save()
+            return self.deploy(retry_on_404=False)
+
+        else:
+            raise Exception(r.content)
+    """
     def deploy(self, d_user):
         # this will post the data to appcubator.com
         post_data = {
@@ -219,6 +280,7 @@ class App(models.Model):
             return result
         else:
             raise Exception(r.content)
+            """
 
     def deploy_test(self):
         return "do the funky chicken"

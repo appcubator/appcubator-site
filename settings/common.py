@@ -108,7 +108,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'appcubator',
-    'deployment',
     'south',
     'djcelery',
     'kombu.transport.django',
