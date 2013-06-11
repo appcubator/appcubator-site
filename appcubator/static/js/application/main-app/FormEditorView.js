@@ -28,14 +28,14 @@ function(FormFieldModel, TutorialView) {
       'change .form-type-select'         : 'changedFormAction',
       'change .belongs-to'               : 'changedBelongsTo',
       'change .field-connection'         : 'addField',
-      'submit .new-value-form'           : 'addNewField',
       'click .done-btn'                  : 'closeModal',
       'click .delete-field'              : 'deleteField',
       'click .q-mark'                    : 'showTutorial',
       'click li.action'                  : 'actionClicked',
       'click li.current-action'          : 'currentActionClicked',
       'click .add-field-button'          : 'clickedAddField',
-      'click .new-field-option'          : 'newFormField'
+      'click .new-field-option'          : 'newFormField',
+      'submit .new-field-form'           : 'addNewField'
     },
 
     initialize: function(formModel, entityModel, callback) {
@@ -112,6 +112,11 @@ function(FormFieldModel, TutorialView) {
     newFormField: function(e) {
       var self = this;
       if(e.target.checked) {
+
+        if(e.target.id == "tablefield-new") {
+          this.renderNewFieldForm();
+          return;
+        }
 
         var cid = e.target.id.replace('tablefield-', '');
         var fieldModel = self.entity.get('fields').get(cid);
@@ -309,8 +314,10 @@ function(FormFieldModel, TutorialView) {
       var self = this;
       e.preventDefault();
 
-      var name = this.$el.find('.new-field-inp').val();
-      var fieldModel = self.entity.get('fields').push({name: name});
+      var name = this.$el.find('.new-field-name').val();
+      var type = $('input:radio[name=field-type]').val();
+
+      var fieldModel = self.entity.get('fields').push({name: name, type: type});
       var formFieldModel = new FormFieldModel({name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
 
       if(fieldModel.get('type') == "email") {
@@ -375,8 +382,13 @@ function(FormFieldModel, TutorialView) {
       this.entity.get('fields').each(function(field) {
         html += '<li><input type="radio" class="new-field-option" name="tablefields" id="tablefield-'+field.cid+'"><label for="tablefield-'+field.cid+'">'+ field.get('name') +'</label></li>';
       });
+      html += '<li><input type="radio" class="new-field-option" name="tablefields" id="tablefield-new"><label for="tablefield-new">Create A New Field</label></li>';
       html += '</ul>';
       this.$el.find('.details-panel').append(html);
+    },
+
+    renderNewFieldForm: function() {
+      this.$el.find('.details-panel').html(_.template(FormEditorTemplates.newField, {}));
     }
 
   });

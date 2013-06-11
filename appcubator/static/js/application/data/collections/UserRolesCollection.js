@@ -1,7 +1,8 @@
 define([
 	'models/UserTableModel',
+  'models/FieldModel',
   'collections/TableCollection'
-], function(UserTableModel, TableCollection) {
+], function(UserTableModel, FieldModel, TableCollection) {
 
   var UserRolesCollection = TableCollection.extend({
 		model: UserTableModel,
@@ -17,7 +18,12 @@ define([
         fields = _.union(fields, model.get('fields').models);
       });
       fields = _.uniq(fields, function(obj) { return obj.attributes.name; });
-      fields = _.union(fields, ["Username", "First Name", "Last Name", "Email"]);
+      fields = _.union(fields, [
+                                 new FieldModel({ name: "Username"}),
+                                 new FieldModel({ name: "First Name"}),
+                                 new FieldModel({ name: "Last Name"}),
+                                 new FieldModel({ name: "Email"})
+                               ]);
       return fields;
     }
 

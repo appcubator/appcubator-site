@@ -60,7 +60,7 @@ function(EmailCollection, EmailModel, EmailView) {
       var list = document.getElementById('variables-list');
       _(vars).each(function(variable) {
         var li = document.createElement('li');
-        li.innerHTML = "CurrentUser." + variable;
+        li.innerHTML = "CurrentUser." + variable.get('name');
         list.appendChild(li);
       });
 
