@@ -156,9 +156,9 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     adjustTableWidth: function() {
-      var width = (this.model.get('fields').length + 3) * 94;
+      var width = (this.model.get('fields').length + 7) * 94;
       this.width = width;
-      this.$el.find('.tbl').css('width', width);
+      this.$el.find('.tbl').width(width);
       if(width > 870 && !this.hasArrow) {
         this.hasArrow = true;
         var div = document.createElement('div');

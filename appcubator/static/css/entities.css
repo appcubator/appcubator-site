@@ -135,6 +135,7 @@ input[type="checkbox"] {
 
 
 .tbl {
+  min-width: 830px;
 }
 
 .tbl-wrapper {

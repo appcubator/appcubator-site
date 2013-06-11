@@ -18,18 +18,6 @@ function(TableModel, FieldModel, FormCollection, FieldsCollection, Backbone) {
       var fieldCollection = new FieldsCollection();
       if(bone) fieldCollection.add(bone.fields);
 
-      fieldCollection.push({
-                        name: "First Name",
-                        required: true,
-                        type: "text"
-                    });
-
-      fieldCollection.push({
-                        name: "Last Name",
-                        required: true,
-                        type: "text"
-                    });
-
       this.set('fields', fieldCollection);
     },
 
