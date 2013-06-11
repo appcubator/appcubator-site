@@ -5880,3 +5880,7 @@ hr.pheader {
   margin-top: 14px;
   margin-bottom: 0px;
 }
+
+.editor-page [class*="bar-"] {
+  position: absolute !important;
+}

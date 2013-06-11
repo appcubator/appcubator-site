@@ -195,7 +195,9 @@ define([
         type: "POST",
         url: '/theme/'+themeId+'/edit/',
         data: { uie_state : JSON.stringify(json) },
-        success: function() { },
+        success: function(data) {
+          console.log(data);
+        },
         dataType: "JSON"
       });
     }

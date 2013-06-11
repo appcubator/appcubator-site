@@ -25,6 +25,8 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       'click .edit-form'           : 'clickedEditForm',
       'mouseover .right-arrow'     : 'slideRight',
       'mousemove .right-arrow'     : 'slideRight',
+      'mouseover .left-arrow'      : 'slideLeft',
+      'mousemove .left-arrow'      : 'slideLeft',
       'click     .right-arrow'     : 'slideRight',
       'click .type-field'          : 'typeClicked'
     },
@@ -168,6 +170,22 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     slideRight: function() {
       var left = this.$el.find('.tbl-wrapper').scrollLeft();
       this.$el.find('.tbl-wrapper').scrollLeft(left + 6);
+      if(!this.hasLeftArrow) {
+        var div = document.createElement('div');
+        div.className = 'left-arrow';
+        this.$el.find('.description').append(div);
+        this.hasLeftArrow = true;
+      }
+    },
+
+    slideLeft: function() {
+      var tblWrapper = this.$el.find('.tbl-wrapper')
+      var left = tblWrapper.scrollLeft();
+      tblWrapper.scrollLeft(left - 6);
+      if(tblWrapper.scrollLeft() == 0) {
+        this.$el.find('.left-arrow').remove();
+        this.hasLeftArrow = false;
+      }
     },
 
     typeClicked: function(e) {
