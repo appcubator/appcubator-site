@@ -75,6 +75,8 @@ function(SelectView) {
         fieldObj.name = iui.get('relation-name-' + this.table1.cid).value;
         fieldObj.type = "o2o",
         fieldObj.related_name = iui.get('relation-name-'+this.table2.cid).value;
+        fieldObj.entity_name = this.table2.get('name');
+
         this.table1.get('fields').push(fieldObj);
       }
 
@@ -82,6 +84,8 @@ function(SelectView) {
         fieldObj.name = iui.get('relation-name-' + this.table1.cid).value;
         fieldObj.type = "fk";
         fieldObj.related_name = iui.get('relation-name-' + this.table2.cid).value;
+        fieldObj.entity_name = this.table2.get('name');
+
         this.table1.get('fields').push(fieldObj);
       }
 
@@ -89,6 +93,8 @@ function(SelectView) {
         fieldObj.name = iui.get('relation-name-' + this.table2.cid).value;
         fieldObj.type = "fk";
         fieldObj.related_name = iui.get('relation-name-' + this.table1.cid).value;
+         fieldObj.entity_name = this.table1.get('name');
+
         this.table2.get('fields').push(fieldObj);
       }
 
@@ -96,6 +102,8 @@ function(SelectView) {
         fieldObj.name = iui.get('relation-name-' + this.table2.cid).value;
         fieldObj.type = "m2m";
         fieldObj.related_name = iui.get('relation-name-' + this.table1.cid).value;
+        fieldObj.entity_name = this.table2.get('name');
+
         this.table1.get('fields').push(fieldObj);
       }
 

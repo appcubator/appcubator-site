@@ -4,8 +4,7 @@ define([
   'models/FooterModel',
   'models/ContainerWidgetModel',
   'models/WidgetModel',
-  'collections/WidgetCollection',
-  'backbone'
+  'collections/WidgetCollection'
 ],
 function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, WidgetCollection) {
 
