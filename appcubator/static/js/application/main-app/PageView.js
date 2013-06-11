@@ -20,12 +20,7 @@ function(UrlView, SimpleModalView) {
     },
 
     initialize: function(pageModel, ind, isMobile) {
-      _.bindAll(this, 'render',
-                      'renderMenu',
-                      'renderUrl',
-                      'goToEditor',
-                      'accessLevelChanged',
-                      'deletePage');
+      _.bindAll(this);
 
       this.model = pageModel;
       this.ind = ind;

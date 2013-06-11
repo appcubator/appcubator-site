@@ -17,10 +17,7 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
     },
 
     initialize: function(widgetsCollection) {
-      _.bindAll(this, 'render',
-                      'placeWidget',
-                      'placeContainer',
-                      'placeUIElement');
+      _.bindAll(this);
 
       var self = this;
 

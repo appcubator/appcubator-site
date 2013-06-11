@@ -14,14 +14,7 @@ function(WidgetModel) {
     show: false,
 
     initialize: function(widgetsCollection) {
-      _.bindAll(this, 'render',
-                      'placeHorizontal',
-                      'placeVertical',
-                      'showAll',
-                      'hideAll',
-                      'toggleGuides',
-                      'showVertical',
-                      'showHorizontal');
+      _.bindAll(this);
 
       var self = this;
 

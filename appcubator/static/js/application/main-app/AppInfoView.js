@@ -23,13 +23,7 @@ function(SimpleModalView) {
 
     initialize: function() {
 
-      _.bindAll(this, 'render',
-                      'changeName',
-                      'changeDescription',
-                      'changeKeywords',
-                      'showDomainRegistrationForm',
-                      'deleteApp',
-                      'checkForDomain');
+      _.bindAll(this);
 
       this.model = v1State.get('info');
 

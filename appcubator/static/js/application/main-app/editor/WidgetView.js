@@ -42,24 +42,7 @@ define([
 
     initialize: function(widgetModel, isFreeMove){
       var self = this;
-      _.bindAll(this, 'render',
-                      'renderElement',
-                      'select',
-                      'changedWidth',
-                      'changedHeight',
-                      'changedValue',
-                      'changedTop',
-                      'changedLeft',
-                      'changedText',
-                      'changedType',
-                      'changedStyle',
-                      'changedSource',
-                      'toggleFull',
-                      'staticsAdded',
-                      'isMouseOn',
-                      'mousedown',
-                      'switchEditModeOn',
-                      'switchEditModeOff');
+      _.bindAll(this);
 
       this.model = widgetModel;
 
@@ -188,7 +171,6 @@ define([
     },
 
     changedTop: function(a) {
-      console.log((this.positionVerticalGrid||GRID_HEIGHT));
       this.setTop((this.positionVerticalGrid||GRID_HEIGHT) * (this.model.get('layout').get('top')));
     },
 

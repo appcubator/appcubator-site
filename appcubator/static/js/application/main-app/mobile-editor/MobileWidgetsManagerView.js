@@ -26,11 +26,7 @@ function(WidgetsManagerView,
     },
 
     initialize: function(widgetsCollection) {
-      _.bindAll(this, 'render',
-                      'placeWidget',
-                      'placeContainer',
-                      'placeUIElement',
-                      'positionChanged');
+      _.bindAll(this);
 
       var self = this;
 

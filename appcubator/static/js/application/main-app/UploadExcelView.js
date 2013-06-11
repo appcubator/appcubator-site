@@ -17,7 +17,7 @@ function(Backbone) {
     },
 
     initialize: function(entityModel) {
-      _.bindAll(this, 'render', 'setUpDragnDrop', 'openFileInput', 'filePicked');
+      _.bindAll(this);
 
       this.entity = entityModel;
       this.name = entityModel.get('name');

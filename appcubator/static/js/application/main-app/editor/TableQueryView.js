@@ -17,12 +17,7 @@ function() {
       'click .done-btn'             : 'closeModal'
     },
     initialize: function(widgetModel, containerType) {
-      _.bindAll(this, 'fieldsToDisplayChanged',
-                      'belongsToUserChanged',
-                      'nmrRowsChanged',
-                      'nmrRowsNumberChanged',
-                      'getNLdescription',
-                      'changeDescription');
+      _.bindAll(this);
 
       iui.loadCSS(this.css);
       this.widgetModel = widgetModel;

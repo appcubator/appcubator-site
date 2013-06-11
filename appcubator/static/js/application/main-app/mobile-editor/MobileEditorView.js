@@ -49,20 +49,7 @@ function( PageModel,
     },
 
     initialize: function(options) {
-      _.bindAll(this, 'render',
-                      'openNavbarEditor',
-                      'copy',
-                      'paste',
-                      'help',
-                      'renderUrlBar',
-                      'getContextEntities',
-                      'clickedUrl',
-                      'createPage',
-                      'save',
-                      'deploy',
-                      'renderDeployResponse',
-                      'clickedGoToPage',
-                      'setupPageHeight');
+      _.bindAll(this);
 
       if(options && options.pageId) pageId = options.pageId;
 

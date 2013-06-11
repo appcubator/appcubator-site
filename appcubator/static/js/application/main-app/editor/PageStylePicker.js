@@ -12,8 +12,7 @@ function() {
     },
 
     initialize: function(widgetsCollection){
-      _.bindAll(this, 'render',
-                      'selected');
+      _.bindAll(this);
 
       this.collection = widgetsCollection;
       this.render();

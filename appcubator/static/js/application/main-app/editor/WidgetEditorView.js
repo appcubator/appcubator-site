@@ -33,18 +33,7 @@ function(WidgetContentEditor,
     },
 
     initialize: function(){
-      _.bindAll(this, 'render',
-                      'clear',
-                      'openStylePicker',
-                      'openSlideEditor',
-                      'openQueryEditor',
-                      'openRowEditor',
-                      'openFormEditor',
-                      'setModel',
-                      'clickedDelete',
-                      'classChanged',
-                      'hideSubviews',
-                      'showSubviews');
+      _.bindAll(this);
 
       iui.loadCSS(this.css);
       var self = this;

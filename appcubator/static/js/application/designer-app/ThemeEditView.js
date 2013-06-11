@@ -93,7 +93,6 @@ define([
       // width: 1125px;
 
       var currentCSS = this.editor.getValue();
-      //console.log(currentCSS);
 /*
       var bodyRegExp = /body \{([^\}]+)\}/g;
       var marginRegExp = /margin:([^;]+);/g;
@@ -176,8 +175,6 @@ define([
     save: function() {
       var json = _.clone(this.model.attributes);
 
-      console.log(this.model.get('links').toJSON());
-
       json["buttons"]     = this.model.get('buttons').toJSON();
       json["images"]      = this.model.get('images').toJSON();
       json["headerTexts"]= this.model.get('headerTexts').toJSON();
@@ -190,7 +187,6 @@ define([
       json["dropdowns"]   = this.model.get('dropdowns').toJSON();
       json["boxes"]      = this.model.get('boxes').toJSON();
 
-      console.log(json);
       $.ajax({
         type: "POST",
         url: '/theme/'+themeId+'/edit/',

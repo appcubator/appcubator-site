@@ -14,11 +14,7 @@ function(WidgetView,
     },
 
     initialize: function(rowModel, entityModel){
-      _.bindAll(this, 'render',
-                      'placeWidget',
-                      'removedWidget',
-                      'resizing',
-                      'keydown');
+      _.bindAll(this);
       var self = this;
 
       this.rowModel = rowModel;
