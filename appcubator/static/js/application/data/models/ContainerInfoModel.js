@@ -77,8 +77,8 @@ function(WidgetCollection,
       }
       else if(action == "imageslider") {
         self.set('slides', new SlideCollection());
-        self.get('slides').push(new SlideModel());
-        self.get('slides').push(new SlideModel());
+        self.get('slides').push(new SlideModel({image : '/static/img/placeholder-slide1.png'}));
+        self.get('slides').push(new SlideModel({image : '/static/img/placeholder-slide2.png'}));
       }
       else if(action == "twitterfeed") {
         self.set('username', "icanberk");
@@ -94,7 +94,7 @@ function(WidgetCollection,
     toJSON: function() {
       var json = _.clone(this.attributes);
       json.uielements = this.get('uielements').toJSON();
-
+      if(json.slides) json.slides = json.slides.toJSON();
       if(json.form) json.form = json.form.toJSON();
       if(json.query) json.query = this.get('query').toJSON();
       if(this.has('row')) json.row = this.get('row').toJSON();
