@@ -47,7 +47,6 @@ function(WidgetCollection,
     },
 
     setUpNew: function(bone) {
-      var self = this;
       var action = bone.action;
 
       if(bone.action == "signup") {
@@ -56,11 +55,11 @@ function(WidgetCollection,
         _(constantContainers[bone.action]).each(function(element){
           elementDefault = uieState[element.type][0];
           element = _.extend(elementDefault, element);
-          self.get('uielements').push(element);
-        });
+          this.get('uielements').push(element);
+        }, this);
       }
       else if(action == "create") {
-        self.get('form').fillWithProps(this.get('entity'));
+        this.get('form').fillWithProps(this.get('entity'));
       }
       else if(action == 'table') {
         this.set('query', new QueryModel({}, this.get('entity')));
@@ -68,20 +67,20 @@ function(WidgetCollection,
       else if(action == 'show') {
         var queryModel = new QueryModel({}, this.get('entity'));
         var rowModel   = new RowModel({});
-        self.set('query', queryModel);
-        self.set('row', rowModel);
+        this.set('query', queryModel);
+        this.set('row', rowModel);
       }
       else if(action == 'table-gal') {
         var queryM = new QueryModel({}, this.get('entity'));
-        self.set('query', queryM);
+        this.set('query', queryM);
       }
       else if(action == "imageslider") {
-        self.set('slides', new SlideCollection());
-        self.get('slides').push(new SlideModel({image : '/static/img/placeholder-slide1.png'}));
-        self.get('slides').push(new SlideModel({image : '/static/img/placeholder-slide2.png'}));
+        this.set('slides', new SlideCollection());
+        this.get('slides').push(new SlideModel({image : '/static/img/placeholder-slide1.png'}));
+        this.get('slides').push(new SlideModel({image : '/static/img/placeholder-slide2.png'}));
       }
       else if(action == "twitterfeed") {
-        self.set('username', "icanberk");
+        this.set('username', "icanberk");
       }
       else if(action == "facebookshare") {
         //nothing to set as of now

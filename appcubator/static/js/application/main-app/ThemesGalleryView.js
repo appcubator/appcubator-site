@@ -17,11 +17,10 @@ function(ThemeDisplayView) {
     },
 
     render: function() {
-      var self = this;
       this.$el.html(_.template(iui.getHTML('themes-page'), {}));
 
-      self.listView = document.createElement('ul');
-      self.listView.className = 'theme-gallery';
+      this.listView = document.createElement('ul');
+      this.listView.className = 'theme-gallery';
 
       var template = [
         '<li class="span28 theme hoff1 offsetr1" class="theme-item" id="theme-<%= id %>">',
@@ -34,14 +33,14 @@ function(ThemeDisplayView) {
 
 
       _(themes).each(function(theme) {
-        self.listView.innerHTML += _.template(template, theme);
-      });
+        this.listView.innerHTML += _.template(template, theme);
+      }, this);
 
       _(mobileThemes).each(function(theme) {
-        self.listView.innerHTML += _.template(template, theme);
-      });
+        this.listView.innerHTML += _.template(template, theme);
+      }, this);
 
-      $(self.el).append(self.listView);
+      $(this.el).append(this.listView);
 
       return this;
     },

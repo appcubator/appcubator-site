@@ -32,7 +32,6 @@ function(FormFieldCollection, ActionCollection) {
     },
 
     fillWithProps: function(entity) {
-      var self = this;
       entity.get('fields').each(function(fieldModel) {
 
         var type = fieldModel.get('type');
@@ -45,9 +44,9 @@ function(FormFieldCollection, ActionCollection) {
         if(type == "image") { formFieldModel.displayType = "image-uploader"; }
         if(type == "date") { formFieldModel.displayType = "date-picker"; }
 
-        var ind = self.get('fields').models.length - 1;
-        self.get('fields').push(formFieldModel, {at: ind});
-      });
+        var ind = this.get('fields').models.length - 1;
+        this.get('fields').push(formFieldModel, {at: ind});
+      }, this);
     },
 
     getRelationalActions: function(pageModel) {

@@ -39,7 +39,6 @@ function(TableCollection,
       },
 
       render : function() {
-        var self = this;
         this.$el.html(_.template(iui.getHTML('entities-page'), {}));
         this.renderTables();
         this.renderRelations();

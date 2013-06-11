@@ -14,7 +14,6 @@ function() {
     },
 
     initialize: function(urlModel){
-      var self = this;
       _.bindAll(this);
 
       this.model = urlModel;

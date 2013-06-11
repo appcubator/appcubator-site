@@ -157,6 +157,43 @@ function() {
 
     $('input[type=checkbox]').prettyCheckable();
     $('input[type=radio]').prettyCheckable();
+
+    $('#sign-up-form').on('submit', function(e) {
+      e.preventDefault();
+
+      obj = {};
+      obj.name = $("#inp-name").val();
+      obj.email = $("#inp-email").val();
+      obj.company = $("#inp-company").val();
+      obj.extra = $("#inp-extra").val();
+      obj.interest = $('#inp-interest').prop('checked');
+      obj.description = $('#inp-description').val();
+
+      var isFilled = true;
+
+      for (var key in obj) {
+        var val = obj[key];
+        if(val === "") {
+          isFilled = false;
+          $("#inp-" + key).addClass('required-border');
+        }
+        else {
+          $("#inp-" + key).removeClass('required-border');
+        }
+      }
+
+      if(isFilled) {
+         $.ajax({
+          url: "/signup_form/",
+          type: "POST",
+          data: obj,
+          dataType: "JSON"
+        });
+
+        $('#sign-up-form').hide();
+        $('.thanks-for-signing').fadeIn();
+      }
+    });
   };
 
   $(document).ready(new HomeMain());

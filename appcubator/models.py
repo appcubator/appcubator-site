@@ -524,17 +524,21 @@ class RouteLog(models.Model):
     app_id = models.IntegerField()
     page_name = models.TextField()
 
-def temp_fix_hr():
-    """hr may have a span12 class in the uiestate. this fixes that
-    May 10, 2013"""
-    for a in App.objects.all():
-        try:
-            u = a.uie_state
-            for l in u['lines']:
-                if l['cons_attribs']['class'] == u"span12":
-                    del l['cons_attribs']['class']
-                    print "fix"
-            a._uie_state_json = simplejson.dumps(u)
-            a.save()
-        except Exception:
-            print "does not seem to be bootstrap"
+
+class Customer(models.Model):
+    user_id = models.IntegerField(blank=True)
+    name = models.TextField()
+    email = models.EmailField(max_length=75)
+    company = models.TextField()
+    consulting = models.BooleanField(default=False)
+    extra_info = models.TextField()
+    project_description = models.TextField()
+    sign_up_date = models.DateTimeField(auto_now_add=True)
+    sign_up_fee = models.IntegerField()
+    sent_welcome_email = models.BooleanField(default=False)
+
+    @classmethod
+    def create_first_time(cls, name, email, company, extra_info, description, sign_up_fee, consulting):
+        customer = cls(user_id=0, name=name, email=email, company=company, consulting=consulting,
+                       extra_info=extra_info, project_description=description, sign_up_fee=sign_up_fee)
+        customer.save()

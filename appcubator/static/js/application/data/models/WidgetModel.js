@@ -10,7 +10,6 @@ function(DataModel, LayoutModel) {
     selected: false,
 
     initialize: function(bone, isNew) {
-      var self = this;
       _.bindAll(this, 'isFullWidth');
 
       this.set('type', bone.type||'');

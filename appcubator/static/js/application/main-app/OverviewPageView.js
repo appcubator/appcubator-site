@@ -29,8 +29,6 @@ function(SimpleModalView) {
     },
 
     checkTutorialProgress: function() {
-      var self = this;
-
       $.ajax({
         type: "POST",
         url: '/log/slide/',

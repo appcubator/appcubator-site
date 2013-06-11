@@ -22,15 +22,14 @@ function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, 
       this.set('navbar', new NavbarModel(bone.navbar||{}));
       this.set('footer', new FooterModel(bone.footer||{}));
       this.set('uielements', new WidgetCollection());
-      var self = this;
       _(bone.uielements).each(function(uielement) {
         if(uielement.container_info) {
-          self.get('uielements').push(new ContainerWidgetModel(uielement));
+          this.get('uielements').push(new ContainerWidgetModel(uielement));
         }
         else {
-          self.get('uielements').push(new WidgetModel(uielement));
+          this.get('uielements').push(new WidgetModel(uielement));
         }
-      });
+      }, this);
     },
 
     getHeight: function() {

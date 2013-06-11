@@ -63,11 +63,9 @@ function(FormFieldModel, TutorialView) {
     },
 
     render : function(text) {
-      var self = this;
-
       var temp_context = {};
-      temp_context.form = self.model;
-      temp_context.entity = self.entity;
+      temp_context.form = this.model;
+      temp_context.entity = this.entity;
       temp_context.pages = v1State.get('pages').models;
       temp_context.emails = ["Email 1", "Email 2"];
       temp_context.possibleEntities = _.map(appState.users.fields, function(field) { return "CurrentUser." + field.name; });
@@ -88,29 +86,26 @@ function(FormFieldModel, TutorialView) {
     },
 
     renderActions: function() {
-      var self = this;
       this.model.get('actions').each(function(action) {
-        self.$el.find('.current-actions').append('<li id="action-'+action.cid +'" class="current-action">'+action.getNL()+'<div class="remove-from-list"></div></li>');
-      });
+        this.$el.find('.current-actions').append('<li id="action-'+action.cid +'" class="current-action">'+action.getNL()+'<div class="remove-from-list"></div></li>');
+      }, this);
     },
 
     renderFields: function() {
-      var self = this;
       var length = this.model.get('fields').length;
       this.model.get('fields').each(function(field, ind) {
         if(ind == (length - 1)) return;
         var html = _.template(FormEditorTemplates.field, { field: field, value : ''});
-        self.$el.find('.form-fields-list').append(html);
-      });
+        this.$el.find('.form-fields-list').append(html);
+      }, this);
     },
 
     reRenderFields: function() {
-      self.$el.find('.form-fields-list').html('');
+      this.$el.find('.form-fields-list').html('');
       this.renderFields();
     },
 
     newFormField: function(e) {
-      var self = this;
       if(e.target.checked) {
 
         if(e.target.id == "tablefield-new") {
@@ -119,7 +114,7 @@ function(FormFieldModel, TutorialView) {
         }
 
         var cid = e.target.id.replace('tablefield-', '');
-        var fieldModel = self.entity.get('fields').get(cid);
+        var fieldModel = this.entity.get('fields').get(cid);
         var formFieldModel = new FormFieldModel({name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
 
 
@@ -142,7 +137,6 @@ function(FormFieldModel, TutorialView) {
     },
 
     fieldAdded: function(fieldModel) {
-      var self = this;
       var html = _.template(FormEditorTemplates.field, { field: fieldModel, value: ''});
       this.$el.find('.form-fields-list').append(html);
       this.selectedNew(fieldModel);
@@ -187,10 +181,8 @@ function(FormFieldModel, TutorialView) {
     },
 
     reRenderDisplayType: function() {
-      var self = this;
       var field = this.selected;
       $('#field-'+ field.cid).find('.form-item').html(_.template(FieldTypes[field.get('displayType')], {field: field, value: ""}));
-      //this.$el.find('#field-' + field.cid).html('<label>' + field.get('label') + '<br>' + _.template(FieldTypes[field.get('displayType')], {field: field, value: ""}) + '</label>');
     },
 
     reRenderLabel: function() {
@@ -284,10 +276,9 @@ function(FormFieldModel, TutorialView) {
         return;
       }
 
-      var self = this;
       var cid = e.target.value.replace('field-', '');
 
-      var fieldModel = self.entity.get('fields').get(cid);
+      var fieldModel = this.entity.get('fields').get(cid);
       var formFieldModel = new FormFieldModel({name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
 
       if(fieldModel.get('type') == "email") {
@@ -310,13 +301,12 @@ function(FormFieldModel, TutorialView) {
     },
 
     addNewField: function(e) {
-      var self = this;
       e.preventDefault();
 
       var name = this.$el.find('.new-field-name').val();
       var type = $('input:radio[name=field-type]').val();
 
-      var fieldModel = self.entity.get('fields').push({name: name, type: type});
+      var fieldModel = this.entity.get('fields').push({name: name, type: type});
       var formFieldModel = new FormFieldModel({name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
 
       if(fieldModel.get('type') == "email") {

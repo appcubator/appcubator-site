@@ -32,8 +32,6 @@ function(EmailCollection, EmailModel, EmailView) {
     },
 
     render: function() {
-      var self = this;
-
       this.el.innerHTML = _.template(iui.getHTML('emails-page'), {});
       this.listView = this.$el.find('#email-list');
       this.renderEmailList();
@@ -43,11 +41,10 @@ function(EmailCollection, EmailModel, EmailView) {
     },
 
     renderEmailList: function() {
-      var self = this;
       this.listView.empty();
       this.collection.each(function(email){
-        self.appendEmail(email);
-      });
+        this.appendEmail(email);
+      }, this);
 
       // append 'create email' btn to list
       this.listView.append('<li id="create-email"><strong>+ Create Email</strong></li>');

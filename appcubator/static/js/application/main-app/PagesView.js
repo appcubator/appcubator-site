@@ -14,20 +14,17 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
     initialize: function() {
       _.bindAll(this);
 
-      var self = this;
       this.collection = v1State.get('pages');
-      this.collection.bind('add', function(model) { self.appendPage(model, false); });
+      this.collection.bind('add', function(model) { this.appendPage(model, false); }, this);
 
       this.mobileCollection = v1State.get('mobilePages');
-      this.mobileCollection.bind('add', function(model) { self.appendPage(model, true); });
+      this.mobileCollection.bind('add', function(model) { this.appendPage(model, true); }, this);
 
       this.title = "Pages";
     },
 
     render: function() {
-      var self = this;
-
-      self.$el.html(_.template(iui.getHTML('pages-page'), {}));
+      this.$el.html(_.template(iui.getHTML('pages-page'), {}));
       this.listView = document.getElementById('list-pages');
       this.mobileListView = document.getElementById('list-mobile-pages');
 
@@ -37,8 +34,8 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
       }
       else {
         this.collection.each(function(model) {
-          self.appendPage(model, false);
-        });
+          this.appendPage(model, false);
+        }, this);
       }
 
       if(this.mobileCollection.length === 0) {
@@ -47,8 +44,8 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
       }
       else {
         this.mobileCollection.each(function(model) {
-          self.appendPage(model, true);
-        });
+          this.appendPage(model, true);
+        }, this);
       }
 
       var createBox = new Backbone.NameBox({el: document.getElementById('create-page-box')});
