@@ -1,34 +1,22 @@
 require.config({
   paths: {
     "jquery" : "../../libs/jquery/jquery",
-    "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
     "underscore" : "../../libs/underscore-amd/underscore",
-    "backbone" : "../../libs/backbone-amd/backbone",
+    // "backbone" : "../../libs/backbone-amd/backbone",
     "iui" : "../../libs/iui/iui",
-    "comp": "../../libs/iui/comp",
+    // "comp": "../../libs/iui/comp",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "app" : "../",
-    "editor" : "./../editor",
-    "dicts" : "../../dicts",
-    "mixins" : "../../mixins",
-    "key" : "../../libs/keymaster/keymaster",
+    // "editor" : "./../editor",
+    // "dicts" : "../../dicts",
+    // "mixins" : "../../mixins",
+    // "key" : "../../libs/keymaster/keymaster",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable"
   },
 
   shim: {
-    "jquery-ui": {
-      exports: "$",
-      deps: ['jquery']
-    },
     "underscore": {
       exports: "_"
-    },
-    "backbone": {
-      exports: "Backbone",
-      deps: ["underscore", "jquery"]
-    },
-    "bootstrap" : {
-      deps: ["jquery"]
     },
     "prettyCheckable" : {
       deps: ["jquery"]
@@ -37,19 +25,27 @@ require.config({
 
 });
 
+console.log(require.config.paths);
 require([
-  'mixins/SimpleModalView',
-  'app/main-app/LoginModalView',
   'prettyCheckable'
 ],
-function(SimpleModalView, LoginModalView) {
+function() {
 
   var HomeMain = function() {
 
     var xTrans = -30;
     var yTrans = 45;
-    var pageHeight = $(window).height();
+
+    var infoHeight = $('.slide2').offset().top;
+    var pricingHeight = $('.slide3').offset().top + 40;
+    var signupHeight = $('.slide-last').offset().top - 40;
+
     var bg = 1;
+
+
+    $('#bg2').css('background-image', 'url(/static/img/bg3.jpg)');
+    $('#bg3').css('background-image', 'url(/static/img/bg4.jpg)');
+    $('#bg4').css('background-image', 'url(/static/img/bg-signup.jpg)');
 
     $(window).on('scroll', function(e) {
       var newValue = $(window).scrollTop();
@@ -61,15 +57,38 @@ function(SimpleModalView, LoginModalView) {
           "MozTransform":str
       });
 
-      if(newValue > pageHeight && bg ==1) {
+      var animating = false;
+      if(newValue < infoHeight && bg != 1 && !animating) {
+        $('#bg1').show();
+        bg = 1;
+      }
+      else if(newValue > infoHeight && newValue < pricingHeight && bg !=2 && !animating) {
+        animating = true;
+        $('#bg2').show();
+        $('#bg1').fadeOut(function() {
+          animating = false;
+        });
+
         bg = 2;
-        $('#background-img').css('background-image', 'url(/static/img/bg3.jpg)');
+      }
+      else if(newValue > pricingHeight && newValue < signupHeight && bg !=3 && !animating) {
+        animating = true;
+        $('#bg3').show();
+        $('#bg2').fadeOut(function() {
+          animating = false;
+        });
+        bg = 3;
+      }
+      else if(newValue > signupHeight && bg !=4 && !animating) {
+        animating = true;
+        $('#bg4').show();
+        $('#bg3').fadeOut(function() {
+          animating = false;
+        });
+        bg = 4;
       }
 
-      if(newValue < pageHeight && bg == 2) {
-        bg = 1;
-        $('#background-img').css('background-image', 'url(/static/img/bg2.jpg)');
-      }
+
 
     });
 
@@ -97,8 +116,14 @@ function(SimpleModalView, LoginModalView) {
       });
     });
 
-    $('#request').on('click', function(e) {
-      $('html, body').animate({ scrollTop: $(document).height()-$(window).height() }, 'slow');
+    $('.slide-info').on('click', function(e) {
+      $('html, body').animate({ scrollTop: infoHeight }, 'slow');
+    });
+    $('.slide-pricing').on('click', function(e) {
+      $('html, body').animate({ scrollTop: pricingHeight }, 'slow');
+    });
+    $('.slide-signup').on('click', function(e) {
+      $('html, body').animate({ scrollTop: signupHeight + 40 }, 'slow');
     });
 
     IN.Event.on(IN, "auth", function(){ onLinkedInLogin(); });
@@ -130,10 +155,18 @@ function(SimpleModalView, LoginModalView) {
       $('.IN-widget').children().first().children().first().trigger('click');
     });
 
-    iui.loadCSS('prettyCheckable');
+    var css = 'prettyCheckable';
+    var cssFile = document.createElement('link');
+    cssFile.setAttribute('type', 'text/css');
+    cssFile.setAttribute('href', '/static/css/' + css + '.css');
+    cssFile.setAttribute('rel', 'stylesheet');
+    cssFile.id = 'css-' + css;
+    document.getElementsByTagName('head')[0].appendChild(cssFile);
+
     $('input[type=checkbox]').prettyCheckable();
     $('input[type=radio]').prettyCheckable();
   };
 
-  new HomeMain();
+  $(document).ready(new HomeMain());
+
 });

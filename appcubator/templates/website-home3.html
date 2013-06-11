@@ -1,4 +1,4 @@
-{% extends "infra-html.html" %}
+{% extends "infra-out-html.html" %}
 
 {% block css %}
 <script type="text/javascript" src="http://platform.linkedin.com/in.js">
@@ -13,26 +13,6 @@ scope: r_fullprofile r_emailaddress
 {% block page %}
 <div id="fb-root"></div>
 <script>
-  window.fbAsyncInit = function() {
-    // init the FB JS SDK
-    FB.init({
-      appId      : '379124615521841',                    // App ID from the app dashboard
-      channelUrl : '//www.appcubator.com/channel.html',  // Channel file for x-domain comms
-      status     : true,                                 // Check Facebook Login status
-      xfbml      : true                                  // Look for social plugins on the page
-    });
-
-    // Additional initialization code such as adding Event Listeners goes here
-  };
-
-  // Load the SDK asynchronously
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/all.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
 </script>
 <div class="left-panel">
   <div id="box-container">
@@ -48,7 +28,7 @@ scope: r_fullprofile r_emailaddress
   <h1>Appcubator</h1>
   <div class="bottom-panel" id="bottom-panel">
     <div class="buttons">
-      <div class="btn btn-blue hoff1" id="request">Join the Beta Program</div>
+      <div class="btn btn-blue hoff1 slide-signup" id="request">Join the Beta Program</div>
       <div class="btn btn-green hoff1" id="member">Already a Member?</div>
     </div>
     <span class="login" id="login-form">
@@ -68,7 +48,12 @@ scope: r_fullprofile r_emailaddress
     </span>
   </div>
 </div>
-<div class="fixed-bg" id="background-img"></div>
+
+<div class="fixed-bg" id="bg4"></div>
+<div class="fixed-bg" id="bg3"></div>
+<div class="fixed-bg" id="bg2"></div>
+<div class="fixed-bg" id="bg1"></div>
+
 <div class="sliding-panel">
   <div class="slide1">
     <div class="large-text">
@@ -77,7 +62,7 @@ scope: r_fullprofile r_emailaddress
     <div class="sub-text">
       No code. No hassle. Just your creativity.
     </div>
-    <div class="gray-bg">
+    <div class="gray-bg  slide-info">
       More Info <span class="icon-down"></span>
     </div>
   </div>
@@ -85,9 +70,9 @@ scope: r_fullprofile r_emailaddress
     <div class="explanation">
       <div class="row">
         <span>
-        <span class="title">What can I build?</span>
-        <p>Almost anything you use daily on the web. This includes marketplaces, Airbnb type sites, online ordering apps or social networks.</p>
-        <p class="small">Unfortunately, games or flash based technologies are not supported.
+          <span class="title">What can I build?</span>
+          <p>Almost anything you use daily on the web. This includes marketplaces, Airbnb type sites, online ordering apps or social networks.</p>
+          <p class="small">Unfortunately, games or flash based technologies are not supported.</p>
         </span>
       </div>
       <div class="row">
@@ -103,7 +88,7 @@ scope: r_fullprofile r_emailaddress
         </span>
       </div>
     </div>
-    <div class="gray-bg">
+    <div class="gray-bg slide-pricing">
       Pricing <span class="icon-down"></span>
     </div>
   </div>
@@ -128,12 +113,13 @@ scope: r_fullprofile r_emailaddress
       <li class="session">
         <span class="title">Head Start</span>
         <span class="content">
-        <p>It's free to sign up, explore and build your app for as long as you want.</p>
+          <p>Short on time? we are happy to help you. You can set up a starting session with someone from our team where we will build most, if not all of your app and teach you how to use Appcubator for further iterations.</p>
+          <p class="includes"> Includes ~2 hours private video call or Skype session with someone from Appcubator team.</p>
         </span>
         <span class="price"><i class="small">$</i>160</span>
       </li>
     </ul>
-    <div class="gray-bg">
+    <div class="gray-bg slide-signup">
       Sign Up<span class="icon-down"></span>
     </div>
   </div>
@@ -152,9 +138,11 @@ scope: r_fullprofile r_emailaddress
       <div class="right-side">
         <textarea placeholder="Technical Description of your application. This is for us attain feasibility of the project and direct you well."></textarea>
         <input type="checkbox" id="consulting-interest" data-label="I'm also interested in the starting session.">
-        <div class="btn btn-blue">Sign Me Up »</div>
+        <div class="btn btn-blue" id="sign-up">Sign Me Up »</div>
       </div>
     </form>
+  </div>
+  <div class="footer">
   </div>
 </div>
 {% endblock %}
