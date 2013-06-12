@@ -71,7 +71,7 @@ function(EmailCollection, EmailModel, EmailView) {
       var cid = e.currentTarget.dataset.cid;
       var emailModel = this.collection.get(cid);
       this.emailView.setModel(emailModel);
-      this.target.classList.add('active');
+      e.target.classList.add('active');
     },
 
     createEmail: function(e) {
