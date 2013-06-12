@@ -1,8 +1,8 @@
 ({
   appDir: "../",
-  baseUrl: "js/app/",
+  baseUrl: "../static/js/application/main-app/",
   dir: "../../dist_static",
-  mainConfigFile:"../js/app/main.js",
+  mainConfigFile:"../js/application/main-app/main.js",
   name: "main",
   optimizeCss: "standard"
 })
