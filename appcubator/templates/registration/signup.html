@@ -27,50 +27,31 @@
   </div>
   <div class="sign-up-container span46 hoff1">
     <form method="POST" class="span46 offset6" action="{% url appcubator.base_views.signup %}">
-        <div class="row hoff1">
-          <h4>Username</h4><br  />
-          <input class="span10" name="username" type="text">
-          <div class="form-error field-name-username"></div>
+      <div class="row hoff1">
+        <div class="span13">
+          <h4>Name</h4>
+          <input class="span10" name="name" type="text"><br>
+          <div class="form-error field-name-first_name"></div>
         </div>
-        <div class="row hoff1">
-          <div class="span13">
-            <h4>Password</h4>
-            <input class="span10" name="password1" type="password"><br>
-            <div class="form-error field-name-password1"></div>
-          </div>
+      </div>     
+      <div class="row hoff1">
+        <h4>Email Address</h4><br  />
+        <input class="span10" name="email" type="text"><br>
+        <div class="form-error field-name-email"></div>
+      </div>
+      <div class="row hoff1">
+        <div class="span13">
+          <h4>Password</h4>
+          <input class="span10" name="password1" type="password"><br>
+          <div class="form-error field-name-password1"></div>
         </div>
+      </div>
       <div class="row hoff1">
           <div class="span13">
             <h4>Confirm Password</h4>
             <input class="span10" name="password2" type="password"><br>
             <div class="form-error field-name-password2"></div>
           </div>
-      </div>
-
-      <div class="row hoff1">
-        <div class="span13">
-          <h4>First Name</h4>
-          <input class="span10" name="first_name" type="text"><br>
-          <div class="form-error field-name-first_name"></div>
-        </div>
-      </div>
-      <div class="row hoff1">
-        <div class="span13">
-          <h4>Last Name</h4>
-          <input class="span10" name="last_name" type="text"><br>
-          <div class="form-error field-name-last_name"></div>
-        </div>
-      </div>
-      <div class="row hoff1">
-        <h4>Email Address</h4><br  />
-        <input class="span10" name="email" type="text"><br>
-        <div class="form-error field-name-email"></div>
-      </div>
-
-      <div class="row hoff1">
-        <h4>Beta Secret</h4><br  />
-        <input class="span10" name="betasecret" type="password"><br>
-        <div class="form-error field-name-betasecret"></div>
       </div>
       {% csrf_token %}
       <input type="checkbox" name="tos" id="tos"><label for="tos">I have read the <a href="/termsofservice/">Terms of Service</a> and agree.</label>
