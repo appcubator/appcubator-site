@@ -18,15 +18,13 @@ function(SimpleModalView) {
 
       'keyup .register-domain-input' : 'checkForDomain',
       'click #register-new-domain' : 'showDomainRegistrationForm',
-      'click .register-domain-button' : 'registerDomain',
+      'click .register-domain-button' : 'registerDomain'
     },
 
     initialize: function() {
-
       _.bindAll(this);
 
       this.model = v1State.get('info');
-
       this.title = "Domain & SEO";
     },
 
@@ -39,7 +37,6 @@ function(SimpleModalView) {
       this.el.innerHTML = _.template(iui.getHTML('app-info-page'), page_context);
 
       this.$nav = $('.navigator .left-nav');
-      $('body').scrollspy('refresh');
 
       // make left nav links scroll page
       this.$nav.find('a').click(function() {
@@ -49,8 +46,11 @@ function(SimpleModalView) {
         return false;
       });
       this.$nav.find('li').click(function() {
-        this.children[0].click()
+        this.children[0].click();
       });
+
+      $('.left-nav').affix({offset: 150});
+      return this;
     },
 
     changeName : function(e) {
