@@ -180,6 +180,9 @@ class App(models.Model):
                 u_name = "dev-" + u_name
         return u_name
 
+    def hostname(self):
+        return "%s.appcubator.com" % self.subdomain
+
     def url(self):
         return "http://%s.appcubator.com/" % self.subdomain
 
@@ -197,7 +200,7 @@ class App(models.Model):
     def get_deploy_data(self):
         post_data = {
             "u_name": self.u_name(),
-            "subdomain": self.subdomain,
+            "subdomain": self.hostname(),
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
@@ -216,14 +219,11 @@ class App(models.Model):
 
             # send the whole shibam to deployment server
             files = {'file':f}
-            tmp_url = "http://requestb.in/zmtin3zm"
             post_data = self.get_deploy_data()
             if self.deployment_id is None:
-                #r = requests.put("http://staging.appcubator.com/deployment/", data=post_data, files=files)
-                r = requests.put(tmp_url, data=post_data, files=files)
+                r = requests.post("http://staging.appcubator.com/deployment/", data=post_data, files=files)
             else:
-                #r = requests.post("http://staging.appcubator.com/deployment/%s/" % self.deployment_id, data=post_data, files=files)
-                r = requests.post(tmp_url % self.deployment_id, data=post_data, files=files)
+                r = requests.post("http://staging.appcubator.com/deployment/%s/" % self.deployment_id, data=post_data, files=files)
 
         finally:
             f.close()
