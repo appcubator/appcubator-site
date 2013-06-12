@@ -213,7 +213,7 @@ class App(models.Model):
         t = tarfile.open(os.path.join(tmpdir, 'payload.tar'), 'w')
         try:
             for fname in contents:
-                t.add(os.path.join(tmpdir, fname))
+                t.add(os.path.join(tmpdir, fname), arcname=fname)
             t.close()
             f = open(os.path.join(tmpdir, 'payload.tar'), "r")
 
