@@ -189,11 +189,18 @@ class App(models.Model):
     def github_url(self):
         return "https://github.com/appcubator/" + self.u_name()
 
-    def css(self, deploy=True):
+    def css(self, deploy=True, mobile=False):
         """Use uiestate, less, and django templates to generate a string of the CSS"""
         from django.template import Context, loader
         t = loader.get_template('app-editor-less-gen.html')
-        context = Context({"app": self, "deploy": deploy})
+
+        uie_state = self.uie_state
+        if mobile:
+            uie_state = self.mobile_uie_state
+
+        context = Context({'uie_state': uie_state,
+                           'isMobile': mobile,
+                           'deploy': deploy})
         css_string = t.render(context)
         return css_string
 

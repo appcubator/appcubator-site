@@ -182,14 +182,8 @@ def mobile_uie_state(request, app_id):
 def less_sheet(request, app_id, isMobile=False):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id, owner=request.user)
-    uie_state = app.uie_state
-    if isMobile:
-        uie_state = app.mobile_uie_state
-    page_context = {'uie_state': uie_state,
-                    'isMobile': isMobile,
-                    'app_id': app_id}
-    add_statics_to_context(page_context, app)
-    return render_to_response('app-editor-less-gen.html', page_context, mimetype='text/css')
+    css_string = app.css(deploy=False, mobile=isMobile)
+    return HttpResponse(css_string, mimetype='text/css')
 
 @csrf_exempt
 def mobile_less_sheet(request, app_id):
