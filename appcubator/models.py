@@ -68,8 +68,7 @@ class App(models.Model):
     deployment_id = models.IntegerField(blank=True, null=True, default=None)
 
     def save(self, *args, **kwargs):
-        if self.subdomain == "":
-            self.subdomain = self.u_name()
+        self.subdomain = self.u_name()
         return super(App, self).save(*args, **kwargs)
 
     def clean(self):
@@ -172,7 +171,8 @@ class App(models.Model):
     def u_name(self):
         """Used to be the way we generate subdomains, but now it's just a function
         that almost always returns a unique name for this app"""
-        u_name = self.owner.username.lower() + "-" + self.name.replace(
+        cleaned_username = self.owner.username.split('@')[0] if self.owner.username.find('@') != -1 else self.owner.username
+        u_name = cleaned_username.lower() + "-" + self.name.replace(
             " ", "-").lower()
         if not settings.PRODUCTION or settings.STAGING:
             u_name = u_name + '.staging'
