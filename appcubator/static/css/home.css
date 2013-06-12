@@ -336,7 +336,8 @@ h3 {
   text-align: center;
   vertical-align: middle;
   text-shadow: black 0 1px 1px;
-  width: 540px;
+  max-width: 540px;
+  width: 100%;
 }
 
 .sliding-panel .sub-text {
@@ -814,3 +815,139 @@ img.logo {
 .required-border {
   border: 1px solid red !important;
 }
+
+
+@media (max-width: 680px) {
+  .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+    width: 100%;
+    padding-left: 10px;
+  }
+
+  .well {
+    padding: 0;
+  }
+  .container {
+    width: 100%;
+  }
+
+  .container h2 {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
+  }
+
+  .container img {
+  }
+
+  .video-pane {
+    display: none;
+  }
+
+  .span64 {
+    width: 100%;
+  }
+
+  .hero-text {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+  }
+
+  .hero-text h2 {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  .hero-text .motto {
+    font-size: 18px;
+    width: 100%;
+    line-height: 24px;
+    margin-top: 20px;
+  }
+
+  .img-circle.img-polaroid {
+    width: 200px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -100px;
+  }
+
+  .image.span20 {
+    width: 100%;
+    text-align: center;
+  }
+  .row.desc-cont {
+    height: 300px;
+    margin-top: 60px;
+    position: relative;
+  }
+
+  .description {
+    width: 100%;
+    position: absolute;
+    top: 130px;
+    left: 0;
+    margin-left: 0;
+    padding-left: 30px;
+  }
+
+  .bottom {
+    text-align: center;
+    float: none;
+  }
+
+  .bottom .arrow {
+    display: none;
+  }
+  .bottom .mascot {
+    float: none;
+  }
+
+  .footer h2 {
+    font-size: 18px;
+  }
+
+  .left-panel {
+    height: 120px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .left-panel h1 {
+    display: inline-block;
+    font-size: 24px;
+    width: auto;
+    vertical-align: top;
+    margin-left: 20px;
+    line-height: 120px;
+    margin-top: 0;
+  }
+
+  .sliding-panel {
+    padding-left: 0;
+    padding-top: 40px;
+  }
+
+  .slide2, .slide3 {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+
+  .slide2 .row, .pricing li {
+    padding: 30px 30px;
+  }
+
+  .slide2 .row .title {
+    font-size: 26px;
+  }
+  .pricing .content {
+    margin-right: 0;
+  }
+
+}
+
