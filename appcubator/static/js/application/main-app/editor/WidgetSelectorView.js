@@ -12,7 +12,7 @@ function() {
 
     events : {
       'click #hover-div'     : 'hoverClicked',
-      'dblclick #select-div' : 'doubleClicked',
+      'click #select-div'    : 'doubleClicked',
       'mousedown #hover-div' : 'mousedown',
       'mousedown #select-div': 'mousedown',
       'mouseup #hover-div'   : 'mouseup',
@@ -295,9 +295,9 @@ function() {
     },
 
     doubleClicked: function(e) {
-      // this.selectedEl.trigger('startEditing');
-      // this.selectedEl.bind('stopEditing', this.stoppedEditing);
-      // this.hideNode(this.selectDiv);
+      this.selectedEl.trigger('startEditing');
+      this.selectedEl.bind('stopEditing', this.stoppedEditing);
+      this.hideNode(this.selectDiv);
     },
 
     stoppedEditing: function() {

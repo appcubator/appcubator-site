@@ -67,7 +67,7 @@ define([
       this.model.bind("startEditing", this.switchEditModeOn, this);
       this.model.bind("deselected",   this.switchEditModeOff, this);
 
-      keyDispatcher.key('shift+enter', this.switchEditModeOff);
+      keyDispatcher.key('command+enter', this.switchEditModeOff);
     },
 
     render: function() {
@@ -244,14 +244,18 @@ define([
     },
 
     switchEditModeOn: function() {
-      this.editMode = true;
-      var el = $(this.el.firstChild);
-      this.el.firstChild.style.zIndex = 2003;
-      this.$el.addClass('textediting');
-      el.attr('contenteditable', 'true');
-      el.focus();
-      el.selectText();
-      keyDispatcher.textEditing = true;
+
+      if(this.model.get('data').get('content')) {
+        this.editMode = true;
+        var el = $(this.el.firstChild);
+        this.el.firstChild.style.zIndex = 2003;
+        this.$el.addClass('textediting');
+        el.attr('contenteditable', 'true');
+        el.focus();
+        el.selectText();
+        keyDispatcher.textEditing = true;
+      }
+
     },
 
     switchEditModeOff: function(e) {
