@@ -2869,6 +2869,7 @@ a.badge:hover {
   font-weight: bold;
   text-align: center;
   color: #000;
+  display: block;
 }
 
 
@@ -3265,6 +3266,9 @@ li.model span.title {
 .pages ul li.new-page {
   background-image: url('../img/plus.png');
 }
+.pages ul li.new-page input {
+  width: 95%;
+}
 
 .pages:hover ul {
   max-height: 400px;
@@ -3658,17 +3662,26 @@ ul.list {
 .image-slider-editor ul {
   list-style: none;
 }
-
+.image-slider-editor li {
+  margin-bottom: 10px;
+}
+.image-slider-editor img {
+  margin-bottom: 10px;
+  width: 150px;
+  height: 150px;
+}
 .image-slider-editor span {
   display: block;
   list-style: none;
   border-bottom: 1px solid #eee;
-  padding: 10px;
 }
 
-.image-slider-editor img {
-  height: 140px;
-  display: inline-block;
+
+/* image slideer */
+.image-slider-editor textarea {
+  margin: 0px auto;
+  padding: 0px;
+  height: 50px;
 }
 
 #hover-div,

@@ -29,7 +29,7 @@ function(Backbone) {
         this.el.innerHTML += this.txt;
       }
       if(!this.$el.find('form').length) {
-        this.el.innerHTML +="<form style='display:none;'><input type='text' placehodler='Name...'></form>";
+        this.el.innerHTML +="<form style='display:none;'><input type='text' placeholder='Name...'></form>";
       }
       return this;
     },

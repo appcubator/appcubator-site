@@ -5720,7 +5720,7 @@ hr.pheader {
   margin-bottom: 0px;
 }
 
-.editor-page [class*="bar-"] {
+.editor-page [class*="bar-title"], .editor-page [class*="bar-tab"] {
   position: absolute !important;
 }
 

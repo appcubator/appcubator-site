@@ -344,3 +344,21 @@ Templates.twitterfeedTemp = [
 '</script>'].join('\n');
 
 Templates.facebookshareTemp = ['<img src="/static/img/fb-share-sample.png" width="300" >'].join('\n');
+
+Templates.sliderEditorTemp = [
+  '<h2>Image Slider Editor</h2>',
+  '<div class="row">',
+  '<ul class="slider-images hoff1"></ul>',
+  '</div>'
+].join('\n');
+
+Templates.sliderImageEditorTemp = [
+  '<li id="image-editor-<%= cid %>" class="span10 offset1">',
+    '<div class="thumbnail">',
+      //'<img src="<%= image %>>',
+      '<img src="<%= image %>">',
+      '<p><textarea type="text" class="text" id="edit-<%= cid %>"><%= text %></textarea></p>',
+      '<span class="btn btn-danger btn-small remove" id="remove-<%= cid %>">Remove</span>',
+    '</div>',
+  '</li>'
+].join('\n');
