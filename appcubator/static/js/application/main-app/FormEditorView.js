@@ -46,11 +46,11 @@ function(FormFieldModel, TutorialView) {
       this.model = formModel;
       this.entity = entityModel;
 
-      this.model.get('fields').bind('add', this.fieldAdded);
-      this.model.get('fields').bind('remove', this.fieldRemoved);
-      this.model.get('actions').bind('add', this.actionAdded);
-      this.model.get('actions').bind('remove', this.actionRemoved);
-      this.model.bind('change:action', this.reRenderFields);
+      this.listenTo(this.model.get('fields'), 'add', this.fieldAdded);
+      this.listenTo(this.model.get('fields'), 'remove', this.fieldRemoved);
+      this.listenTo(this.model.get('actions'), 'add', this.actionAdded);
+      this.listenTo(this.model.get('actions'), 'remove', this.actionRemoved);
+      this.listenTo(this.model, 'change:action', this.reRenderFields);
 
       this.possibleActions =  this.model.getRelationalActions(v1State.getCurrentPage());
 
@@ -153,11 +153,11 @@ function(FormFieldModel, TutorialView) {
       var html = _.template(FormEditorTemplates.details, {field : fieldModel});
 
       this.selected = fieldModel;
-      this.selected.bind('change:displayType', this.reRenderDisplayType);
-      this.selected.bind('change:placeholder', this.reRenderDisplayType);
-      this.selected.bind('change:options', this.reRenderDisplayType);
-      this.selected.bind('change:label', this.reRenderLabel);
-      this.selected.bind('change:required', this.reRenderDisplayType);
+      this.listenTo(this.selected, 'change:displayType', this.reRenderDisplayType);
+      this.listenTo(this.selected, 'change:placeholder', this.reRenderDisplayType);
+      this.listenTo(this.selected, 'change:options', this.reRenderDisplayType);
+      this.listenTo(this.selected, 'change:label', this.reRenderLabel);
+      this.listenTo(this.selected, 'change:required', this.reRenderDisplayType);
 
       this.$el.find('.details-panel').hide();
 

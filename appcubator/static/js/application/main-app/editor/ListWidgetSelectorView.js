@@ -25,7 +25,7 @@ function() {
       var self = this;
 
       this.widgetsCollection    = widgetsCollection;
-      this.widgetsCollection.bind('add', this.bindWidget);
+      this.listenTo(this.widgetsCollection, 'add', this.bindWidget);
       var WidgetEditorView = require('editor/WidgetEditorView');
       this.widgetEditorView = new WidgetEditorView();
       this.widgetEditorView.isMobile = self.isMobile;
@@ -84,28 +84,28 @@ function() {
     bindWidget: function(widget) {
       var self = this;
 
-      widget.bind('remove', function() {
-        self.deselect();
+      this.listenTo(widget, 'remove', function() {
+        this.deselect
       });
 
-      widget.bind('hovered', function() {
+      this.listenTo(widget, 'hovered', function() {
         self.widgetHover(widget);
       });
 
-      widget.on('unhovered', function() {
+      this.listenTo(widget, 'unhovered', function() {
         self.widgetUnhover(widget);
       });
 
-      widget.on('selected', function() {
+      this.listenTo(widget, 'selected', function() {
         self.widgetUnhover(widget);
         self.newSelected(widget);
       });
 
-      widget.on('deselect', function() {
-        self.deselect();
+      this.listenTo(widget, 'deselect', function() {
+        this.deselect();
       });
 
-      widget.on('editModeOn', function() {
+      this.listenTo(widget, 'editModeOn', function() {
         self.unbindAll();
       });
     },
@@ -116,9 +116,7 @@ function() {
         self.bindWidget(widget);
       });
 
-      widget.unbind('hovered');
-      widget.unbind('unhovered');
-      widget.unbind('selected');
+      this.stopListening(widget, ['hovered, unhovered, selected']);
 
       this.selectDiv.style.height = 0;
       this.selectDiv.style.width = 0;
@@ -154,12 +152,12 @@ function() {
       }
 
       if(this.selectedEl) {
-        widgetModel.get('layout').unbind('change', self.setLayout);
+        this.stopListening(widgetModel.get('layout'), 'change', self.setLayout);
       }
 
       this.deselect();
       this.selectedEl = widgetModel;
-      widgetModel.get('layout').bind('change', function() {
+      this.listenTo(widgetModel.get('layout'), 'change', function() {
         self.setLayout(self.selectDiv, widgetModel);
       });
       this.setLayout(this.selectDiv, widgetModel);

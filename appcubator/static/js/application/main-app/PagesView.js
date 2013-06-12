@@ -15,10 +15,10 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
       _.bindAll(this);
 
       this.collection = v1State.get('pages');
-      this.collection.bind('add', function(model) { this.appendPage(model, false); }, this);
+      this.listenTo(this.collection, 'add', function(model) { this.appendPage(model, false); });
 
       this.mobileCollection = v1State.get('mobilePages');
-      this.mobileCollection.bind('add', function(model) { this.appendPage(model, true); }, this);
+      this.listenTo(this.mobileCollection, 'add', function(model) { this.appendPage(model, true); });
 
       this.title = "Pages";
     },

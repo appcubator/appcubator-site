@@ -21,7 +21,7 @@ function(WidgetView,
       this.entity = entityModel;
 
       this.widgetsCollection = rowModel.get('uielements');
-      this.widgetsCollection.bind('add', this.placeWidget);
+      this.listenTo(this.widgetsCollection, 'add', this.placeWidget);
 
       this.render();
 

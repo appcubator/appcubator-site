@@ -39,7 +39,7 @@ function(SelectView) {
       });
 
       var selectRelationsView = new SelectView(options, null, true);
-      selectRelationsView.bind('change', this.relationSelected);
+      this.listenTo( selectRelationsView, 'change', this.relationSelected);
       this.el.appendChild(selectRelationsView.el);
       selectRelationsView.expand();
     },
