@@ -1,31 +1,17 @@
 define([
-	  "mixins/SimpleModalView",
-	  "mixins/ErrorModalView",
-	  "tutorial/TutorialView",
-	  "app/AppInfoView",
-	  "app/EntitiesView",
-	  "app/ThemesGalleryView",
-	  "app/PagesView",
-	  "app/OverviewPageView",
-	  "editor/EditorView",
-	  "mobile-editor/MobileEditorView",
-	  "app/EmailsView",
-	  "mixins/SimpleDialogueView",
-	  "mixins/ErrorDialogueView",
-	  "backbone",
-	  "bootstrap",
-	  "iui",
-	  "comp"
+		"mixins/SimpleModalView",
+		"mixins/ErrorModalView",
+		"tutorial/TutorialView",
+		"app/EmailsView",
+		"mixins/SimpleDialogueView",
+		"mixins/ErrorDialogueView",
+		"backbone",
+		"bootstrap",
+		"iui",
+		"comp"
 ], function(SimpleModalView,
           ErrorModalView,
           TutorialView,
-          InfoView,
-          EntitiesView,
-          ThemesGalleryView,
-          PagesView,
-          OverviewPageView,
-          EditorView,
-          MobileEditorView,
           EmailsView,
           SimpleDialogueView,
           ErrorDialogueView) {
@@ -52,71 +38,94 @@ define([
 		},
 
 		index: function () {
-			AppRouter.tutorialDirectory = [0];
-			this.changePage(OverviewPageView, {}, function() {
-				return;
+			var self = this;
+			require(['app/OverviewPageView'], function(OverviewPageView){
+				AppRouter.tutorialDirectory = [0];
+				self.changePage(OverviewPageView, {}, function() {
+					return;
+				});
 			});
 		},
 
 		showInfoPage: function() {
-			AppRouter.tutorialDirectory = [2];
-			this.changePage(InfoView, {}, function() {
-				$('.menu-app-info').addClass('active');
+			var self = this;
+			require(['app/InfoView'], function(InfoView){
+				AppRouter.tutorialDirectory = [2];
+				self.changePage(InfoView, {}, function() {
+					$('.menu-app-info').addClass('active');
+				});
 			});
 		},
 
 		showEntitiesPage: function() {
-			AppRouter.tutorialDirectory = [3];
-			this.changePage(EntitiesView, {}, function() {
-				$('.menu-app-entities').addClass('active');
+			var self = this;
+			require(['app/EntitiesView'], function(EntitiesView){
+				AppRouter.tutorialDirectory = [3];
+				self.changePage(EntitiesView, {}, function() {
+					$('.menu-app-entities').addClass('active');
+				});
 			});
 		},
 
 		showThemesPage: function() {
+			var self = this;
 			AppRouter.tutorialDirectory = [4];
-			this.changePage(ThemesGalleryView, {}, function() {
-				$('.menu-app-themes').addClass('active');
+			require(['app/ThemesGalleryView'], function(ThemesGalleryView){
+				self.changePage(ThemesGalleryView, {}, function() {
+					$('.menu-app-themes').addClass('active');
+				});
 			});
 		},
 
 		showPagesPage: function() {
-			$('.page').fadeIn();
-			AppRouter.tutorialDirectory = [5];
-			this.changePage(PagesView, {}, function() {
-				$('.menu-app-pages').addClass('active');
+			var self = this;
+			AppRouter.tutorialDirectory = [4];
+			require(['app/PagesView'], function(PagesView){
+				$('.page').fadeIn();
+				AppRouter.tutorialDirectory = [5];
+				self.changePage(PagesView, {}, function() {
+					$('.menu-app-pages').addClass('active');
+				});
 			});
 		},
 
 		showEditor: function(appId, pageId) {
-			$('.page').fadeOut();
-			AppRouter.tutorialDirectory = [5];
+			var self = this;
+			AppRouter.tutorialDirectory = [4];
+			require(['editor/EditorView'], function(EditorView){
 
-			if(AppRouter.view) AppRouter.view.remove();
-			var cleanDiv = document.createElement('div');
-			cleanDiv.className = "clean-div editor-page";
-			$(document.body).append(cleanDiv);
+				$('.page').fadeOut();
+				AppRouter.tutorialDirectory = [5];
 
-			AppRouter.view  = new EditorView({pageId: pageId});
-			AppRouter.view.setElement(cleanDiv).render();
+				if(AppRouter.view) AppRouter.view.remove();
+				var cleanDiv = document.createElement('div');
+				cleanDiv.className = "clean-div editor-page";
+				$(document.body).append(cleanDiv);
 
-			olark('api.box.hide');
-			this.changeTitle(AppRouter.view.title);
+				AppRouter.view  = new EditorView({pageId: pageId});
+				AppRouter.view.setElement(cleanDiv).render();
+
+				olark('api.box.hide');
+				self.changeTitle(AppRouter.view.title);
+			});
 		},
 
 		showMobileEditor: function(appId, pageId) {
+			var self = this;
 			$('.page').fadeOut();
 			AppRouter.tutorialDirectory = [5];
+			require(['editor/MobileEditorView'], function(MobileEditorView){
+				if(AppRouter.view) AppRouter.view.remove();
+				var cleanDiv = document.createElement('div');
+				cleanDiv.className = "clean-div editor-page";
+				$(document.body).append(cleanDiv);
 
-			if(AppRouter.view) AppRouter.view.remove();
-			var cleanDiv = document.createElement('div');
-			cleanDiv.className = "clean-div editor-page";
-			$(document.body).append(cleanDiv);
+				AppRouter.view  = new MobileEditorView({pageId: pageId});
+				AppRouter.view.setElement(cleanDiv).render();
 
-			AppRouter.view  = new MobileEditorView({pageId: pageId});
-			AppRouter.view.setElement(cleanDiv).render();
-
-			olark('api.box.hide');
-			this.changeTitle(AppRouter.view.title);
+				olark('api.box.hide');
+				self.changeTitle(AppRouter.view.title);
+			});
 		},
 
 		showEmailsPage: function() {
