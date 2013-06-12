@@ -10,7 +10,8 @@ function(EmailCollection, EmailModel, EmailView) {
       //'click #create-email' : 'createEmail',
       'click #email-list li#create-email': 'createEmail',
       'click #email-list li.email-list-item': 'clickedEmail',
-      'click #save-emails'               : 'saveEmails'
+      'click #save-emails'               : 'saveEmails',
+      'dragstart #variables-list li': 'setupDrag',
     },
 
     initialize: function() {
@@ -37,6 +38,7 @@ function(EmailCollection, EmailModel, EmailView) {
       this.renderEmailList();
       this.renderVariableList();
       this.emailView.setElement(this.$el.find('form')).render();
+
       return this;
     },
 
@@ -57,6 +59,7 @@ function(EmailCollection, EmailModel, EmailView) {
       var list = document.getElementById('variables-list');
       _(vars).each(function(variable) {
         var li = document.createElement('li');
+        li.setAttribute('draggable', 'true');
         li.innerHTML = "CurrentUser." + variable.get('name');
         list.appendChild(li);
       });
@@ -96,7 +99,12 @@ function(EmailCollection, EmailModel, EmailView) {
     showActiveEmail: function(model) {
       this.listView.find('li').removeClass('active')
                    .filter('[data-cid="'+this.emailView.model.cid+'"]').addClass('active');
+    },
+
+    setupDrag: function(e) {
+      e.dataTransfer.setData('text/plain', "  {{" + e.target.innerText + "}} ");
     }
+
   });
 
   return EmailsView;

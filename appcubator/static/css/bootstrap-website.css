@@ -8,6 +8,16 @@
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
 
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
  article,
  aside,
  details,
@@ -5749,4 +5759,5 @@ hr.pheader {
   width: 100%;
   border-radius: 4px;
   margin-top: 4px;
+  cursor: move;
 }
