@@ -7,6 +7,7 @@ from django.contrib.auth import forms as auth_forms, authenticate, login
 from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import simplejson
+from copy import deepcopy
 
 from models import Customer
 
@@ -43,20 +44,9 @@ def get_linkedin(request):
 
 class MyUserCreationForm(auth_forms.UserCreationForm):
     """Creates a user"""
-    betasecret = forms.CharField()
 
     class Meta(auth_forms.UserCreationForm.Meta):
         fields = ('username', 'first_name', 'last_name', 'email')
-
-    def clean_betasecret(self):
-        bs = self.cleaned_data['betasecret']
-        if bs not in ['v1key']:
-            raise forms.ValidationError("Incorrect beta secret")
-
-    def clean_username(self):
-        if not re.search(r'^[a-zA-Z0-9_]+$', self.cleaned_data['username']):
-            raise forms.ValidationError("Username must be alphanumeric.")
-        return super(MyUserCreationForm, self).clean_username()
 
     def __init__(self, *args, **kwargs):
         super(MyUserCreationForm, self).__init__(*args, **kwargs)
@@ -127,13 +117,17 @@ def tutorial(request):
 def signup(request):
     if request.method == "GET":
       return render(request, "registration/signup.html")
-
     else:
-        form = MyUserCreationForm(request.POST)
+        req = {}
+        req = deepcopy(request.POST)
+        req["username"] = request.POST["email"]
+        req["first_name"] = request.POST["name"].split(" ")[0]
+        req["last_name"] = request.POST["name"].split(" ")[-1]
+        form = MyUserCreationForm(req)
         if form.is_valid():
             user = form.save()
-            new_user = authenticate(username=request.POST['username'],
-                                    password=request.POST['password1'])
+            new_user = authenticate(username=req['email'],
+                                    password=req['password1'])
             login(request, new_user)
             return HttpResponse(simplejson.dumps({'redirect_to': '/'}), mimetype="application/json")
         else:

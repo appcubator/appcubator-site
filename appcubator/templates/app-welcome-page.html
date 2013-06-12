@@ -1,0 +1,32 @@
+{% extends "infra-html.html" %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/welcome.css">
+{% endblock %}
+
+{% block topbar %}
+{% include "infra-topbar-plain.html" %}
+{% endblock %}
+
+{% block page %}
+<div class="fixed-bg">
+  <div class="intro container">
+    <img class="welcome" src="{{ STATIC_URL }}img/welcome-marker.png">
+    <p>We are happy to see you using Appcubator and would like to help you get started as smoothly as possible. How would you like to proceed?</p>
+    <ul>
+      <li>Take a quick tour</li>
+      <li>Start reading Appcubator tutorials</li>
+      <li>Walkthrough building a Twitter app</li>
+      <li>Just start building an application</li>
+    </ul>
+  </div>
+  <div class="question-cont"><img src="{{ STATIC_URL }}img/question-market.png"></div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{{ STATIC_URL }}js/libs/jquery/jquery.min.js"></script>
+<script src="{{ STATIC_URL }}js/libs/bootstrap/bootstrap.js"></script>
+<script data-main="{{ STATIC_URL }}js/application/external-pages/apps-new-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+
+{% endblock %}

@@ -27,9 +27,15 @@ def add_statics_to_context(context, app):
 @login_required
 def app_list(request):
     if request.user.apps.count() == 0:
-        return redirect(app_new)
+        return redirect(app_welcome)
     else:
         return redirect(app_page, request.user.apps.all()[0].id)
+
+
+@login_required
+def app_welcome(request):
+    if request.method == 'GET':
+        return render(request, 'app-welcome-page.html')
 
 
 @login_required
