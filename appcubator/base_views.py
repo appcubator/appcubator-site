@@ -46,7 +46,7 @@ class MyUserCreationForm(auth_forms.UserCreationForm):
     """Creates a user"""
 
     class Meta(auth_forms.UserCreationForm.Meta):
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email')
 
     def __init__(self, *args, **kwargs):
         super(MyUserCreationForm, self).__init__(*args, **kwargs)
@@ -126,8 +126,8 @@ def signup(request):
         form = MyUserCreationForm(req)
         if form.is_valid():
             user = form.save()
-            new_user = authenticate(username=request.POST['email'],
-                                    password=request.POST['password1'])
+            new_user = authenticate(username=req['email'],
+                                    password=req['password1'])
             login(request, new_user)
             return HttpResponse(simplejson.dumps({'redirect_to': '/'}), mimetype="application/json")
         else:
