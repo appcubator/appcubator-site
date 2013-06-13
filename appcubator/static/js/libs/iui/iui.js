@@ -202,6 +202,66 @@ define(['jquery-ui'], function() {
           cssFile.id = 'css-' + css;
           document.getElementsByTagName('head')[0].appendChild(cssFile);
         }
+    },
+
+    isMouseOn: function(pageX, pageY, element) {
+      var self = this;
+
+      mouseX = pageX;
+      mouseY = pageY;
+      var div = $(element);
+      divTop = div.offset().top;
+      divLeft = div.offset().left;
+      divRight = divLeft + div.width();
+      divBottom = divTop + div.height();
+      if(mouseX >= divLeft && mouseX <= divRight && mouseY >= divTop && mouseY <= divBottom) {
+        return true;
+      }
+      return false;
+    },
+
+    isRectangleIntersectElement: function(a1x, a1y, a2x, a2y, elem) {
+      var div = $(elem);
+      var divTop = div.offset().top;
+      var divLeft = div.offset().left;
+      var divRight = divLeft + div.width();
+      var divBottom = divTop + div.height();
+
+      return this.isRectanglesIntersect(a1x, a1y, a2x, a2y, divLeft, divTop, divRight, divBottom);
+    },
+
+    isRectanglesIntersect: function(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
+
+      var minAx = ax1;
+      var minAy = ay1;
+      var maxAx = ax1;
+      var maxAy = ay1;
+      var minBx = bx1;
+      var minBy = by1;
+      var maxBx = bx1;
+      var maxBy = by1;
+
+      if(ax1 < ax2) { maxAx = ax2; }
+      else { minAx = ax2; }
+      if(ay1 < ay2) { maxAy = ay2; }
+      else { minAy = ay2; }
+
+      if(bx1 < bx2) { maxBx = bx2; }
+      else { minAx = ax2; }
+      if(by1 < by2) { maxBy = by2; }
+      else { minBy = by2; }
+
+      return this.rectanglesIntersect(minAx,  minAy, maxAx, maxAy, minBx, minBy, maxBx, maxBy);
+
+    },
+
+    rectanglesIntersect: function(minAx,  minAy, maxAx, maxAy, minBx, minBy, maxBx, maxBy) {
+      var aLeftOfB = maxAx < minBx;
+      var aRightOfB = minAx > maxBx;
+      var aAboveB = minAy > maxBy;
+      var aBelowB = maxAy < minBy;
+
+      return !( aLeftOfB || aRightOfB || aAboveB || aBelowB );
     }
 
   };

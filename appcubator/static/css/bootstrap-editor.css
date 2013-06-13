@@ -3861,3 +3861,7 @@ ul.list {
   display: inline-block;
   margin-top: 10px;
 }
+
+.red-border {
+  border: 2px solid red;
+}

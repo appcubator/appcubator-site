@@ -310,9 +310,9 @@ function() {
       mouseX = e.pageX;
       mouseY = e.pageY;
       var div = $('#widget-wrapper-' + this.selectedEl.cid);
-      divTop = div.offset().top,
-      divLeft = div.offset().left,
-      divRight = divLeft + div.width(),
+      divTop = div.offset().top;
+      divLeft = div.offset().left;
+      divRight = divLeft + div.width();
       divBottom = divTop + div.height();
       if(mouseX >= divLeft && mouseX <= divRight && mouseY >= divTop && mouseY <= divBottom) {
         return true;
