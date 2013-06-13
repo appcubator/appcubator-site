@@ -9,6 +9,8 @@ from django.conf import settings
 from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts
 from email.sendgrid_email import send_email
 from models import DomainRegistration
+from models import get_default_uie_state, get_default_mobile_uie_state
+from models import get_default_app_state, get_default_theme_state
 
 from app_builder.analyzer import App as AnalyzedApp
 from app_builder.utils import get_xl_data, add_xl_data, get_model_data
@@ -35,7 +37,23 @@ def app_list(request):
 @login_required
 def app_welcome(request):
     if request.method == 'GET':
-        return render(request, 'app-welcome-page.html')
+        themes = UITheme.get_web_themes()
+        themes = [t.to_dict() for t in themes]
+        mobile_themes = UITheme.get_mobile_themes()
+        mobile_themes = [t.to_dict() for t in mobile_themes]
+        default_data = {
+            'app' : { 'id': 0},
+            'default_state': get_default_app_state(),
+            'title': 'My First App',
+            'default_mobile_uie_state': get_default_mobile_uie_state(),
+            'default_uie_state': get_default_app_state(),
+            'themes': simplejson.dumps(list(themes)),
+            'mobile_themes': simplejson.dumps(list(mobile_themes)),
+            'apps': request.user.apps.all(),
+            'statics': simplejson.dumps([]),
+            'user': request.user
+        }
+        return render(request, 'app-welcome-page.html', default_data)
 
 
 @login_required
@@ -67,6 +85,10 @@ def app_new_racoon(request):
 @login_required
 def app_page(request, app_id):
     app_id = long(app_id)
+    # id of 0 is reserved for sample app
+    if(app_id == 0):
+        return redirect(app_welcome)
+
     app = get_object_or_404(App, id=app_id, owner=request.user)
 
     themes = UITheme.get_web_themes()

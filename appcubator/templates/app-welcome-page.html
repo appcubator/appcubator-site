@@ -5,28 +5,54 @@
 {% endblock %}
 
 {% block topbar %}
-{% include "infra-topbar-plain.html" %}
+{% include "infra-topbar-app.html" %}
 {% endblock %}
 
 {% block page %}
 <div class="fixed-bg">
-  <div class="intro container">
-    <img class="welcome" src="{{ STATIC_URL }}img/welcome-marker.png">
-    <p>We are happy to see you using Appcubator and would like to help you get started as smoothly as possible. How would you like to proceed?</p>
-    <ul>
-      <li>Take a quick tour</li>
-      <li>Start reading Appcubator tutorials</li>
-      <li>Walkthrough building a Twitter app</li>
-      <li>Just start building an application</li>
-    </ul>
+  <div class="row">
+    <div class="span36 offset8 intro">
+      <img class="welcome" src="{{ STATIC_URL }}img/welcome-marker.png">
+      <p class="lead">We are happy to see you using Appcubator and would like to help you get started as smoothly as possible. How would you like to proceed?</p>
+    </div>
+  </div>
+  <div class="row hoff1 span48 offset8">
+    <a href="#" class="pane btn span22 quick-tour">Take a quick tour</a>
+    <a href="#" class="pane btn span22 offset2 show-tutorials">Start reading Appcubator tutorials</a>
+  </div>
+  <div class="row hoff1 span48 offset8">
+    <a href="#" class="pane btn span22 twitter-guide">Walkthrough building a Twitter app</a>
+    <a href="/app/new/" class="pane btn span22 offset2">Just start building an application</a>
   </div>
   <div class="question-cont"><img src="{{ STATIC_URL }}img/question-market.png"></div>
 </div>
+<span class="span6 save-btn" id="save"></span>
+  <span class="span6 qm-btn" id="tutorial">?</span>
+  <span class="span6 scrollUp-btn hidden" id="scrollUp"></span>
+
+  <div class="container hoff6" id="main-container"></div>
+    {% include "app-page-templates.html" %}
 {% endblock %}
 
 {% block js %}
 <script src="{{ STATIC_URL }}js/libs/jquery/jquery.min.js"></script>
 <script src="{{ STATIC_URL }}js/libs/bootstrap/bootstrap.js"></script>
-<script data-main="{{ STATIC_URL }}js/application/external-pages/apps-new-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+<script type="text/javascript">
+    var appId = 0;
+    var appState = {{ default_state|safe }};
+    var uieState = {{ default_uie_state|safe }};
+    var mobileUieState = {{ default_mobile_uie_state|safe }};
+    var statics = {{ statics|safe }};
+    var themes = {{ themes|safe }};
+    var mobileThemes = {{ mobile_themes|safe }};
+    var GRID_WIDTH = 80;
+    var GRID_HEIGHT = 15;
+</script>
+<script data-main="{{ STATIC_URL }}js/application/external-pages/app-welcome-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
 
+
+  });
+</script>
 {% endblock %}

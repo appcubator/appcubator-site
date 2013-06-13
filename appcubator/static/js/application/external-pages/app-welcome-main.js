@@ -86,10 +86,11 @@ function (AppModel,
 
     v1 = {};
     v1 = new AppRouter();
-    window.v1 = v1;
     routeLogger = new RouteLogger({router: v1});
 
     Backbone.history.start({pushState: true});
+
+    v1.navigate('/app/0/', {trigger: true});
 
     // handle all click events for routing
     $(document).on('click', 'a[rel!="external"]', function(e) {
@@ -124,5 +125,21 @@ function (AppModel,
 
     // heyoffline config
     new Heyoffline();
+  });
+
+  $('.fixed-bg').click(function(e) {
+    $('.fixed-bg').hide();
+  });
+
+  $('.fixed-bg .quick-guide').click(function(e) {
+    /*...*/
+  });
+
+  $('.fixed-bg .show-tutorials').click(function(e) {
+    /*...*/
+  });
+
+  $('.fixed-bg .twitter-guide').click(function(e) {
+    /*...*/
   });
 });
