@@ -293,7 +293,10 @@ function(ElementCollection,
       }
       else if (/(current-user)/.exec(className)) {
         var field_id = String(id).replace('current-user-','');
-        field = v1State.get('users').get('fields').get(field_id);
+        field = _(v1State.get('pages').models[pageId].getFields()).find(function(fieldModel) {
+          return (fieldModel.cid == field_id);
+        });
+        //field = v1State.get('users').getCommonProps().get('fields').get(field_id);
 
         entity = v1State.get('users');
         content =  '{{CurrentUser.'+field.get('name')+'}}';

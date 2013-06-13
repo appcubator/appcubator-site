@@ -115,7 +115,7 @@ function(FormFieldModel, TutorialView) {
 
         var cid = e.target.id.replace('tablefield-', '');
         var fieldModel = this.entity.get('fields').get(cid);
-        var formFieldModel = new FormFieldModel({name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
+        var formFieldModel = new FormFieldModel({field_name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
 
 
         if(fieldModel.get('type') == "email") {
@@ -307,7 +307,7 @@ function(FormFieldModel, TutorialView) {
       var type = $('input:radio[name=field-type]').val();
 
       var fieldModel = this.entity.get('fields').push({name: name, type: type});
-      var formFieldModel = new FormFieldModel({name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
+      var formFieldModel = new FormFieldModel({field_name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
 
       if(fieldModel.get('type') == "email") {
         formFieldModel.set('displayType', "email-text");

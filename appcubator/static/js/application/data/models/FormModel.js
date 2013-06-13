@@ -35,7 +35,7 @@ function(FormFieldCollection, ActionCollection) {
       entity.get('fields').each(function(fieldModel) {
 
         var type = fieldModel.get('type');
-        var formFieldModel = { name: fieldModel.get('name'),
+        var formFieldModel = { field_name: fieldModel.get('field_name'),
                                displayType: "single-line-text",
                                type: type };
 
