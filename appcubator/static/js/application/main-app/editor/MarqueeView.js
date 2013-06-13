@@ -1,24 +1,24 @@
 define([
   'editor/WidgetEditorView',
+  'editor/MultiSelectorView',
   'mixins/BackboneUI',
   'iui'
 ],
-function(WidgetEditorView) {
+function(WidgetEditorView,
+         MultiSelectorView) {
 
   var WidgetSelectorView = Backbone.UIView.extend({
     className : 'marquee-view',
     tagName : 'div',
     isDrawing: false,
-    origin: {
-      x: 0, y: 0
-    },
 
-    events : {
-
-    },
+    origin: { x: 0, y: 0 },
+    clientOrigin: { x: 0, y: 0 },
+    events : { },
 
     initialize: function(){
       _.bindAll(this);
+      this.multiSelectorView = new MultiSelectorView();
     },
 
     mousedown: function(e) {
@@ -44,11 +44,22 @@ function(WidgetEditorView) {
       this.origin.x = coorX;
       this.origin.y = coorY;
 
+      this.clientOrigin.x = e.clientX;
+      this.clientOrigin.y = e.clientY;
     },
 
     mouseup: function(e) {
+      var Xcor = e.clientX;
+      var Ycor = e.clientY;
+      var arr = v1State.getCurrentPage().get('uielements').filter(function(widget){
+        var elem = document.getElementById('widget-wrapper-' + widget.cid);
+        return iui.isRectangleIntersectElement(this.clientOrigin.x, this.clientOrigin.y, Xcor, Ycor, elem);
+      }, this);
+
       this.isDrawing = false;
       this.setZero();
+
+      this.multiSelectorView.setContents(arr);
     },
 
     mousemove: function(e) {
@@ -70,6 +81,7 @@ function(WidgetEditorView) {
       var diffWidth = Math.abs(this.origin.x - coorX);
       var diffHeight = Math.abs(this.origin.y - coorY);
 
+      this.iterateWidgets(this.clientOrigin.x, this.clientOrigin.y, e.clientX, e.clientY);
 
       this.setWidth(diffWidth);
       if(distWidth == diffWidth) {
@@ -89,20 +101,43 @@ function(WidgetEditorView) {
 
     },
 
+    iterateWidgets: function(Xorigin, Yorigin, Xcor, Ycor) {
+
+      this.currentPage = v1State.getCurrentPage();
+      if(Xcor%3>=1 & Ycor%3>=1) return;
+
+      this.currentPage.get('uielements').each(function(widget){
+        var elem = document.getElementById('widget-wrapper-'+ widget.cid);
+        if(iui.isRectangleIntersectElement(Xorigin, Yorigin, Xcor, Ycor, elem)) {
+          $(elem).addClass('red-border');
+        }
+        else {
+          $(elem).removeClass('red-border');
+        }
+      });
+
+    },
+
     setZero: function() {
       this.$el.hide();
       this.setWidth(0);
       this.setHeight(0);
+
+      v1State.getCurrentPage().get('uielements').each(function(widget){
+        var elem = document.getElementById('widget-wrapper-'+ widget.cid);
+        $(elem).removeClass('red-border');
+      });
     },
 
     render: function() {
-      // window.addEventListener('mouseup', this.mouseup);
-      // document.getElementById('page').addEventListener('mousedown', this.mousedown);
-      // document.getElementById('page').addEventListener('mousemove', this.mousemove);
+      window.addEventListener('mouseup', this.mouseup);
+      document.getElementById('page').addEventListener('mousedown', this.mousedown);
+      document.getElementById('page').addEventListener('mousemove', this.mousemove);
       this.el.className = 'marquee-view';
       this.el.id = 'marquee-view';
       this.container = document.getElementById('elements-container');
       this.setZero();
+      this.multiSelectorView.render();
       return this;
     },
 
