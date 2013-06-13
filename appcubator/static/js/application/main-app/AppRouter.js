@@ -19,7 +19,6 @@ define([
 		var AppRouter = Backbone.Router.extend({
 
 		routes: {
-			"app/:appid/(:tutorial/)"          : "index",
 			"app/:appid/info/(:tutorial/)"     : "showInfoPage",
 			"app/:appid/entities/(:tutorial/)" : "showEntitiesPage",
 			"app/:appid/gallery/(:tutorial/)"  : "showThemesPage",
@@ -27,7 +26,8 @@ define([
 			"app/:appid/editor/:pageid/" : "showEditor",
 			"app/:appid/mobile-editor/:pageid/" : "showMobileEditor",
 			"app/:appid/emails/(:tutorial/)"    : "showEmailsPage",
-			"app/:appid/*"			: "index"
+			"app/:appid/(:tutorial/)"          : "index",
+			//"app/:appid/*"			: "index"
 		},
 
 		tutorialDirectory: [0],
@@ -40,7 +40,7 @@ define([
 				self.showTutorial();
 				window.history.pushState(null, null, window.location.href.concat("tutorial/"));
 			});
-      keyDispatcher.key('⌘+s, ctrl+s', this.save);
+      		keyDispatcher.key('⌘+s, ctrl+s', this.save);
 		},
 
 		index: function (appId, tutorial) {

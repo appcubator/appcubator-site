@@ -109,9 +109,32 @@ function( PageModel,
       this.galleryEditor.render();
       this.widgetsManager.render();
       this.navbar.render();
+      console.log(this.navbar.model);
       this.setupPageHeight();
 
+      this.setupSnap();
+
       $('#loading-gif').fadeOut().remove();
+    },
+
+    setupSnap: function() {
+      var self = this;
+      this.snapper = new Snap({
+        element: this.$('.snap-content')[0],
+        touchToDrag: true
+      });
+      this.snapper.on('start', function() {
+        console.log(self.snapper.state());
+      });
+      this.$('a.menu').click(function(e) {
+        if(self.snapper.state().state == "left") {
+          self.snapper.close();
+        }
+        else {
+          self.snapper.open('left');
+        }
+        return false;
+      });
     },
 
     openNavbarEditor: function(e) {

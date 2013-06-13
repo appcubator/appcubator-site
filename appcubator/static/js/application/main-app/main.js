@@ -19,7 +19,7 @@ require.config({
     "answer" : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
     "list" : "../../libs/list",
-    "snap" : "../../libs/snap",
+    "snap" : "../../libs/snap.min",
     "models" : "../data/models",
     "collections" : "../data/collections",
     "tutorial" : "../tutorial"
