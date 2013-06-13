@@ -109,7 +109,6 @@ function( PageModel,
       this.galleryEditor.render();
       this.widgetsManager.render();
       this.navbar.render();
-      console.log(this.navbar.model);
       this.setupPageHeight();
 
       this.setupSnap();
@@ -121,13 +120,12 @@ function( PageModel,
       var self = this;
       this.snapper = new Snap({
         element: this.$('.snap-content')[0],
-        touchToDrag: true
-      });
-      this.snapper.on('start', function() {
-        console.log(self.snapper.state());
+        touchToDrag: true,
+        maxPosition: '150px',
+        disable: 'right'
       });
       this.$('a.menu').click(function(e) {
-        if(self.snapper.state().state == "left") {
+        if(document.body.classList.contains('snapjs-left')) {
           self.snapper.close();
         }
         else {

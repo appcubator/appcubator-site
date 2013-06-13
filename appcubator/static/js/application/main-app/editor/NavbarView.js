@@ -26,7 +26,7 @@ function(NavbarEditorView) {
     render: function() {
       var self = this;
       this.setElement(document.getElementById('navbar'));
-
+      console.log(this.model.toJSON());
       if(this.model.get('brandName')) {
         this.$el.find('#brand-name').html(this.model.get('brandName'));
       }
