@@ -19,6 +19,7 @@ require.config({
     "answer" : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
     "list" : "../../libs/list",
+    "snap" : "../../libs/snap",
     "models" : "../data/models",
     "collections" : "../data/collections",
     "tutorial" : "../tutorial"
@@ -44,6 +45,9 @@ require.config({
     },
     "answer" : {
       deps: ["../../libs/answer/lib/natural", "underscore", "jquery"]
+    },
+    "snap": {
+      exports: "Snap"
     }
   }
 

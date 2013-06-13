@@ -16,7 +16,8 @@ define([
   'tutorial/TutorialView',
   'mixins/BackboneNameBox',
   'editor/editor-templates',
-  'jquery-ui'
+  'jquery-ui',
+  'snap'
 ],
 function( PageModel,
           TableCollection,
