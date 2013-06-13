@@ -16,6 +16,35 @@ DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
     __file__), os.path.normpath("default_state"))
 
 
+# ADDITIONAL USER DATA CAN BE STORED HERE
+class ExtraUserData(models.Model):
+    user = models.OneToOneField(User, related_name="extradata")
+    noob = models.IntegerField(default=1)
+
+    # RUN THIS TO FIX AN OLD DATABASE
+    @classmethod
+    def fix_all_user_profiles(cls):
+        for u in User.objects.all():
+            try:
+                u.extradata
+            except cls.DoesNotExist, e:
+                cls(user=u, noob=0).save()
+
+from django.db.models.signals import post_save
+
+# AUTOMATICALLY CREATE EXTRADATA ON USER CREATION
+def create_user_profile(sender, instance, created, **kwargs):
+    """
+    Create user profile for new users at save user time, if it doesn't already exist
+    """
+    try:
+        instance.extradata
+    except ExtraUserData.DoesNotExist, e:
+        ExtraUserData(user=instance).save()
+
+post_save.connect(create_user_profile, sender=User)
+
+
 def get_default_data(filename):
     f = open(os.path.join(DEFAULT_STATE_DIR, filename))
     s = f.read()

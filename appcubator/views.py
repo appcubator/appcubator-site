@@ -27,33 +27,30 @@ def add_statics_to_context(context, app):
 
 
 @login_required
-def app_list(request):
-    if request.user.apps.count() == 0:
-        return redirect(app_welcome)
-    else:
-        return redirect(app_page, request.user.apps.all()[0].id)
-
-
-@login_required
+@require_GET
 def app_welcome(request):
-    if request.method == 'GET':
-        themes = UITheme.get_web_themes()
-        themes = [t.to_dict() for t in themes]
-        mobile_themes = UITheme.get_mobile_themes()
-        mobile_themes = [t.to_dict() for t in mobile_themes]
-        default_data = {
-            'app' : { 'id': 0},
-            'default_state': get_default_app_state(),
-            'title': 'My First App',
-            'default_mobile_uie_state': get_default_mobile_uie_state(),
-            'default_uie_state': get_default_app_state(),
-            'themes': simplejson.dumps(list(themes)),
-            'mobile_themes': simplejson.dumps(list(mobile_themes)),
-            'apps': request.user.apps.all(),
-            'statics': simplejson.dumps([]),
-            'user': request.user
-        }
-        return render(request, 'app-welcome-page.html', default_data)
+    if not request.user.extradata.noob:
+        if request.user.apps.count() == 0:
+            return redirect(app_new)
+        else:
+            return redirect(app_page, request.user.apps.all()[0].id)
+    themes = UITheme.get_web_themes()
+    themes = [t.to_dict() for t in themes]
+    mobile_themes = UITheme.get_mobile_themes()
+    mobile_themes = [t.to_dict() for t in mobile_themes]
+    default_data = {
+        'app' : { 'id': 0},
+        'default_state': get_default_app_state(),
+        'title': 'My First App',
+        'default_mobile_uie_state': get_default_mobile_uie_state(),
+        'default_uie_state': get_default_app_state(),
+        'themes': simplejson.dumps(list(themes)),
+        'mobile_themes': simplejson.dumps(list(mobile_themes)),
+        'apps': request.user.apps.all(),
+        'statics': simplejson.dumps([]),
+        'user': request.user
+    }
+    return render(request, 'app-welcome-page.html', default_data)
 
 
 @login_required
