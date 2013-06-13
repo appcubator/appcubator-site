@@ -73,20 +73,20 @@ function (AppModel,
           MouseDispatcher,
           Heyoffline) {
 
+
+  v1State = new Backbone.Model();
+  v1State = new AppModel(appState);
+  v1State.set('pages', new PageCollection(appState.pages||[]));
+  v1State.set('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
+
+  g_guides = {};
+  keyDispatcher  = new KeyDispatcher();
+  mouseDispatcher  = new MouseDispatcher();
+
+  v1 = {};
+  v1 = new AppRouter();
+  routeLogger = new RouteLogger({router: v1});
   $(document).ready(function() {
-
-    v1State = new Backbone.Model();
-    v1State = new AppModel(appState);
-    v1State.set('pages', new PageCollection(appState.pages||[]));
-    v1State.set('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
-
-    g_guides = {};
-    keyDispatcher  = new KeyDispatcher();
-    mouseDispatcher  = new MouseDispatcher();
-
-    v1 = {};
-    v1 = new AppRouter();
-    routeLogger = new RouteLogger({router: v1});
 
     Backbone.history.start({pushState: true});
 
@@ -128,7 +128,7 @@ function (AppModel,
   });
 
   $('.fixed-bg').click(function(e) {
-    $('.fixed-bg').hide();
+    $('.fixed-bg').fadeOut();
   });
 
   $('.fixed-bg .quick-guide').click(function(e) {
@@ -136,7 +136,7 @@ function (AppModel,
   });
 
   $('.fixed-bg .show-tutorials').click(function(e) {
-    v1.navigate('app/0/tutorial/0', {trigger: true});
+    v1.navigate('app/0/tutorial/', {trigger: true});
   });
 
   $('.fixed-bg .twitter-guide').click(function(e) {
@@ -145,5 +145,5 @@ function (AppModel,
   });
   $('.fixed-bg .newapp').click(function(e) {
     e.stopPropagation();
-  })
+  });
 });
