@@ -17,15 +17,15 @@
     <h2 class="hi4 span40">Current Themes</h2>
     <ul id="themes-list">
       {% for theme in themes %}
-      <li class="hoff1 span40">
-        <a href="/theme/{{ theme.pk }}/" class="span40">
-          <div class="span8">
+      <li class="hoff1 span10">
+        <a href="/theme/{{ theme.pk }}/">
+          <h3>{{ theme.name }}</h3>
+          <div>
             <img src="{{theme.image}}">
           </div>
-          <span class="span24 hoff1 offset2">{{ theme.name }}</span>
-          <form class="span8 hoff1" method="POST" action="/theme/{{theme.pk}}/delete/">
+          <form class="hoff1" method="POST" action="/theme/{{theme.pk}}/delete/">
             {% csrf_token %}
-            <input type="submit"  class="btn btn-warning" value="Delete">
+            <input type="submit"  class="btn btn-danger" value="Delete">
           </form>
         </a>
       </li>

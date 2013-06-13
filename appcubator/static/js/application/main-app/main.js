@@ -20,6 +20,7 @@ require.config({
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
     "list" : "../../libs/list",
     "snap" : "../../libs/snap.min",
+    "tourist": "../../libs/tourist.min",
     "models" : "../data/models",
     "collections" : "../data/collections",
     "tutorial" : "../tutorial"
@@ -48,6 +49,9 @@ require.config({
     },
     "snap": {
       exports: "Snap"
+    },
+    "tourist": {
+      exports: "Tourist"
     }
   }
 

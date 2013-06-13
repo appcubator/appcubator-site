@@ -5710,3 +5710,15 @@ hr.pheader {
   margin-top: 4px;
   cursor: move;
 }
+
+#themes-list {
+  list-style: none;
+}
+#themes-list li {
+  border-radius: 5px;
+  background: #eee;
+  padding: 15px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}

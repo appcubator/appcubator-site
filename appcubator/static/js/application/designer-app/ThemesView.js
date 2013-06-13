@@ -20,7 +20,6 @@ function(Backbone) {
                        'createMobileTheme',
                        'createFormSubmitted',
                        'createMobileFormSubmitted');
-
       this.render();
     },
 
