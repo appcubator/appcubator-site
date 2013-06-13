@@ -10,14 +10,13 @@
 
 .entity-pane .title {
   display: block;
-  line-height: 30px;
-/*  background-color: rgba(200, 200, 200, 0.4);
-*/
-  color: #000;
+  line-height: 24px;
+  background-color: rgba(90, 90, 90, 0.1);
   font-weight: bold;
   padding-left: 30px;
   padding-top: 2px;
-  box-shadow: inset 0 2px 2px 0px rgba(180, 180, 180, 0.8);
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 
 .sub-title {
@@ -413,10 +412,11 @@ table tr:hover td {
 }
 .right-icon span {
   vertical-align: top;
+  line-height: 75px;
 }
 
 .right-icon .icon {
-  margin-top: 8px;
+  margin-top: 15px;
 }
 
 .column {
@@ -587,7 +587,7 @@ table tr:hover td {
 
 .related-fields {
   padding-left: 8px;
-  padding-top: 20px;
+  padding-top: 12px;
 }
 
 .related-fields .related-tag {
@@ -595,6 +595,7 @@ table tr:hover td {
   font-size: 12px;
   background-color: rgba(30, 30, 30, 0.6);
   color:#fff;
+  border: 1px solid #333;
   border-radius: 3px;
   padding: 0 4px;
   cursor: pointer;
