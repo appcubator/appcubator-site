@@ -19,65 +19,82 @@ define([
 		var AppRouter = Backbone.Router.extend({
 
 		routes: {
-			"app/:appid/"          : "index",
-			"app/:appid/info/"     : "showInfoPage",
-			"app/:appid/entities/" : "showEntitiesPage",
-			"app/:appid/gallery/"  : "showThemesPage",
-			"app/:appid/pages/"    : "showPagesPage",
+			"app/:appid/(:tutorial/)"          : "index",
+			"app/:appid/info/(:tutorial/)"     : "showInfoPage",
+			"app/:appid/entities/(:tutorial/)" : "showEntitiesPage",
+			"app/:appid/gallery/(:tutorial/)"  : "showThemesPage",
+			"app/:appid/pages/(:tutorial/)"    : "showPagesPage",
 			"app/:appid/editor/:pageid/" : "showEditor",
 			"app/:appid/mobile-editor/:pageid/" : "showMobileEditor",
-			"app/:appid/emails/"    : "showEmailsPage"
+			"app/:appid/emails/(:tutorial/)"    : "showEmailsPage",
+			"app/:appid/*"			: "index"
 		},
 
 		tutorialDirectory: [0],
 
 		initialize: function() {
+			var self = this;
+			_.bindAll(this);
 			$('#save').on('click', this.save);
-			$('#tutorial').on('click', this.showTutorial);
+			$('#tutorial').on('click', function(e) {
+				self.showTutorial();
+				window.history.pushState(null, null, window.location.href.concat("tutorial/"));
+			});
       keyDispatcher.key('⌘+s, ctrl+s', this.save);
 		},
 
-		index: function () {
+		index: function (appId, tutorial) {
 			var self = this;
 			require(['app/OverviewPageView'], function(OverviewPageView){
 				AppRouter.tutorialDirectory = [0];
 				self.changePage(OverviewPageView, {}, function() {
-					return;
+					if(tutorial) {
+						self.showTutorial();
+					}
 				});
 			});
 		},
 
-		showInfoPage: function() {
+		showInfoPage: function(appId, tutorial) {
 			var self = this;
-			require(['app/InfoView'], function(InfoView){
+			require(['app/AppInfoView'], function(InfoView){
 				AppRouter.tutorialDirectory = [2];
 				self.changePage(InfoView, {}, function() {
 					$('.menu-app-info').addClass('active');
+					if(tutorial) {
+						self.showTutorial();
+					}
 				});
 			});
 		},
 
-		showEntitiesPage: function() {
+		showEntitiesPage: function(appId, tutorial) {
 			var self = this;
 			require(['app/EntitiesView'], function(EntitiesView){
 				AppRouter.tutorialDirectory = [3];
 				self.changePage(EntitiesView, {}, function() {
 					$('.menu-app-entities').addClass('active');
+					if(tutorial) {
+						self.showTutorial();
+					}
 				});
 			});
 		},
 
-		showThemesPage: function() {
+		showThemesPage: function(appId, tutorial) {
 			var self = this;
 			AppRouter.tutorialDirectory = [4];
 			require(['app/ThemesGalleryView'], function(ThemesGalleryView){
 				self.changePage(ThemesGalleryView, {}, function() {
 					$('.menu-app-themes').addClass('active');
+					if(tutorial) {
+						self.showTutorial();
+					}
 				});
 			});
 		},
 
-		showPagesPage: function() {
+		showPagesPage: function(appId, tutorial) {
 			var self = this;
 			AppRouter.tutorialDirectory = [4];
 			require(['app/PagesView'], function(PagesView){
@@ -85,6 +102,9 @@ define([
 				AppRouter.tutorialDirectory = [5];
 				self.changePage(PagesView, {}, function() {
 					$('.menu-app-pages').addClass('active');
+					if(tutorial) {
+						self.showTutorial();
+					}
 				});
 			});
 		},
@@ -114,7 +134,7 @@ define([
 			var self = this;
 			$('.page').fadeOut();
 			AppRouter.tutorialDirectory = [5];
-			require(['editor/MobileEditorView'], function(MobileEditorView){
+			require(['mobile-editor/MobileEditorView'], function(MobileEditorView){
 				if(AppRouter.view) AppRouter.view.remove();
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
@@ -128,10 +148,13 @@ define([
 			});
 		},
 
-		showEmailsPage: function() {
+		showEmailsPage: function(appId, tutorial) {
 			AppRouter.tutorialDirectory = [6];
 			this.changePage(EmailsView, {}, function() {
 				$('.menu-app-emails').addClass('active');
+				if(tutorial) {
+					self.showTutorial();
+				}
 			});
 		},
 
@@ -209,8 +232,8 @@ define([
 			e.preventDefault();
 		},
 
-		showTutorial: function(e, inp) {
-			if(!inp) inp = AppRouter.tutorialDirectory;
+		showTutorial: function(dir) {
+			var inp = (dir) ? [dir] : AppRouter.tutorialDirectory;
 			tutorial = new TutorialView(inp);
 		},
 

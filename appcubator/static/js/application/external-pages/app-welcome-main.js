@@ -73,22 +73,24 @@ function (AppModel,
           MouseDispatcher,
           Heyoffline) {
 
+
+  v1State = new Backbone.Model();
+  v1State = new AppModel(appState);
+  v1State.set('pages', new PageCollection(appState.pages||[]));
+  v1State.set('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
+
+  g_guides = {};
+  keyDispatcher  = new KeyDispatcher();
+  mouseDispatcher  = new MouseDispatcher();
+
+  v1 = {};
+  v1 = new AppRouter();
+  routeLogger = new RouteLogger({router: v1});
   $(document).ready(function() {
 
-    v1State = new Backbone.Model();
-    v1State = new AppModel(appState);
-    v1State.set('pages', new PageCollection(appState.pages||[]));
-    v1State.set('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
-
-    g_guides = {};
-    keyDispatcher  = new KeyDispatcher();
-    mouseDispatcher  = new MouseDispatcher();
-
-    v1 = {};
-    v1 = new AppRouter();
-    routeLogger = new RouteLogger({router: v1});
-
     Backbone.history.start({pushState: true});
+
+    v1.navigate('/app/0/', {trigger: true});
 
     // handle all click events for routing
     $(document).on('click', 'a[rel!="external"]', function(e) {
@@ -123,5 +125,25 @@ function (AppModel,
 
     // heyoffline config
     new Heyoffline();
+  });
+
+  $('.fixed-bg').click(function(e) {
+    $('.fixed-bg').fadeOut();
+  });
+
+  $('.fixed-bg .quick-guide').click(function(e) {
+    return false;
+  });
+
+  $('.fixed-bg .show-tutorials').click(function(e) {
+    v1.navigate('app/0/tutorial/', {trigger: true});
+  });
+
+  $('.fixed-bg .twitter-guide').click(function(e) {
+    /*...*/
+    e.stopPropagation();
+  });
+  $('.fixed-bg .newapp').click(function(e) {
+    e.stopPropagation();
   });
 });

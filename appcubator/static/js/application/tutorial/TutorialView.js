@@ -160,7 +160,6 @@ function() {
         if(addr[1]) {
           obj = obj.contents[addr[1]];
         }
-
         this.showSlide(obj, addr);
       }
 
@@ -336,6 +335,7 @@ function() {
     closeModal: function() {
       this.remove();
       this.stopListening();
+      window.history.pushState(null, null, window.location.href.replace("tutorial/",""));
     },
 
     menuScrolled: function(e) {
