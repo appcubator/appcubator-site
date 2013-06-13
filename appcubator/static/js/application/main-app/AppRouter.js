@@ -183,13 +183,18 @@ define([
 		},
 
 		save: function(e) {
-			iui.startAjaxLoading();
+			$('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
 			appState = v1State.toJSON();
 			$.ajax({
 					type: "POST",
 					url: '/app/'+appId+'/state/force/',
 					data: JSON.stringify(appState),
-					complete: function() { iui.stopAjaxLoading("Saved"); },
+          success: function() {
+            $('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
+            setTimeout(function(){
+            $('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
+            },1000);
+          },
 					error: function(data) {
 						if(data.responseText == "ok") return;
 						var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
