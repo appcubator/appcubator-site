@@ -9,6 +9,7 @@ import django.views.generic.base
 
 urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
+    url(r'^aboutus/$',                  base_views.aboutus),
     url(r'^login/$',                    django.contrib.auth.views.login, {'template_name' : 'registration/login_page.html'}),
     url(r'^logout/$',                   django.contrib.auth.views.logout, {"next_page":"/"}),
     url(r'^connect_with/$',             base_views.get_linkedin),

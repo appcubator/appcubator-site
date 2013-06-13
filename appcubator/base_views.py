@@ -56,6 +56,17 @@ class MyUserCreationForm(auth_forms.UserCreationForm):
 
 
 @require_GET
+def aboutus(request):
+    if request.user.is_authenticated():
+        return redirect('/app')
+
+    page_context = {}
+    page_context["title"] = "About Us"
+
+    return render(request, 'website-aboutus.html', page_context)
+
+
+@require_GET
 def homepage(request):
     if request.user.is_authenticated():
         return redirect('/app')
