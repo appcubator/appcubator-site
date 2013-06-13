@@ -6,6 +6,15 @@ define([
 
   var UserRolesCollection = TableCollection.extend({
 		model: UserTableModel,
+    predefinedFields: [],
+
+    initialize: function() {
+      this.predefinedFields.push(new FieldModel({ name: "Username"}));
+      this.predefinedFields.push(new FieldModel({ name: "First Name"}));
+      this.predefinedFields.push(new FieldModel({ name: "Last Name"}));
+      this.predefinedFields.push(new FieldModel({ name: "Email"}));
+
+    },
 
     getUserTableWithName: function(tableNameStr) {
       var table = this.where({name : tableNameStr })[0];
@@ -17,13 +26,10 @@ define([
       this.each(function(model) {
         fields = _.union(fields, model.get('fields').models);
       });
+
+
       fields = _.uniq(fields, function(obj) { return obj.attributes.name; });
-      fields = _.union(fields, [
-                                 new FieldModel({ name: "Username"}),
-                                 new FieldModel({ name: "First Name"}),
-                                 new FieldModel({ name: "Last Name"}),
-                                 new FieldModel({ name: "Email"})
-                               ]);
+      fields = _.union(fields, this.predefinedFields);
       return fields;
     }
 
