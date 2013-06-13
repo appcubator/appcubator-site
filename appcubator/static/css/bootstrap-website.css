@@ -4855,13 +4855,14 @@ hr.vert {
     margin-left: 420px;
     height: 60px;
     width: 60px;
+    line-height: 60px;
     border-radius: 4px;
     cursor: pointer;
+    text-align: center;
     background-image: none;
     background-color: #000;
     opacity: 0.6;
     text-shadow: none;
-    background-image: url(../img/save.png);
     background-repeat: no-repeat;
     background-position: center;
     display: inline-block;
