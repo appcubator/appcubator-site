@@ -94,7 +94,7 @@ function (AppModel,
 
     // handle all click events for routing
     $(document).on('click', 'a[rel!="external"]', function(e) {
-      var href = e.currentTarget.getAttribute('href');
+      var href = e.currentTarget.getAttribute('href') || "";
       // if internal link, navigate with router
       if(href.indexOf('/app/'+appId+'/') == 0) {
         v1.navigate(href, {trigger: true});
@@ -132,14 +132,18 @@ function (AppModel,
   });
 
   $('.fixed-bg .quick-guide').click(function(e) {
-    /*...*/
+    return false;
   });
 
   $('.fixed-bg .show-tutorials').click(function(e) {
-    /*...*/
+    v1.navigate('app/0/tutorial/0', {trigger: true});
   });
 
   $('.fixed-bg .twitter-guide').click(function(e) {
     /*...*/
+    e.stopPropagation();
   });
+  $('.fixed-bg .newapp').click(function(e) {
+    e.stopPropagation();
+  })
 });

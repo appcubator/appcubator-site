@@ -336,6 +336,7 @@ function() {
     closeModal: function() {
       this.remove();
       this.stopListening();
+      window.history.back();
     },
 
     menuScrolled: function(e) {

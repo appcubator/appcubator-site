@@ -26,14 +26,21 @@ define([
 			"app/:appid/pages/"    : "showPagesPage",
 			"app/:appid/editor/:pageid/" : "showEditor",
 			"app/:appid/mobile-editor/:pageid/" : "showMobileEditor",
-			"app/:appid/emails/"    : "showEmailsPage"
+			"app/:appid/emails/"    : "showEmailsPage",
+			"app/:appid/tutorial/(:dir)": "showTutorial",
+			"app/:appid/*"			: "index"
 		},
 
 		tutorialDirectory: [0],
 
 		initialize: function() {
+			var self = this;
+			_.bindAll(this);
 			$('#save').on('click', this.save);
-			$('#tutorial').on('click', this.showTutorial);
+			$('#tutorial').on('click', function(e) {
+				self.showTutorial();
+				self.navigate('app/'+appId+'/tutorial/');
+			});
       keyDispatcher.key('⌘+s, ctrl+s', this.save);
 		},
 
@@ -209,8 +216,17 @@ define([
 			e.preventDefault();
 		},
 
-		showTutorial: function(e, inp) {
-			if(!inp) inp = AppRouter.tutorialDirectory;
+		showTutorial: function(appId, dir) {
+			if(!AppRouter.view) {
+				this.index();
+			}
+			var inp = [0];
+			if(dir) {
+				inp = [dir];
+			}
+			else {
+				inp = AppRouter.tutorialDirectory;
+			}
 			tutorial = new TutorialView(inp);
 		},
 

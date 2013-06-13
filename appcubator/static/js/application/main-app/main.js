@@ -2,7 +2,6 @@ require.config({
   paths: {
     "jquery" : "../../libs/jquery/jquery",
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
-    "xrayquire" : "../../libs/xrayquire",
     "jquery.filedrop" : "../../libs/jquery/jquery.filedrop",
     "jquery.flexslider" : "../../libs/jquery/jquery.flexslider-min",
     "underscore" : "../../libs/underscore-amd/underscore",
@@ -87,14 +86,13 @@ function (AppModel,
 
     v1 = {};
     v1 = new AppRouter();
-    window.v1 = v1;
     routeLogger = new RouteLogger({router: v1});
 
     Backbone.history.start({pushState: true});
 
     // handle all click events for routing
     $(document).on('click', 'a[rel!="external"]', function(e) {
-      var href = e.currentTarget.getAttribute('href');
+      var href = e.currentTarget.getAttribute('href') || "";
       // if internal link, navigate with router
       if(href.indexOf('/app/'+appId+'/') == 0) {
         v1.navigate(href, {trigger: true});
@@ -127,5 +125,3 @@ function (AppModel,
     new Heyoffline();
   });
 });
-
-define("main", function(){});
