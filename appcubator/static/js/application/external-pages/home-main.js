@@ -21,7 +21,6 @@ require.config({
 
 require([
   'prettyCheckable',
-  'iui'
 ],
 function() {
 
@@ -195,6 +194,8 @@ function() {
         $('.thanks-for-signing').fadeIn();
       }
     });
+
+    document.addEventListener("touchstart", function(){}, true);
   };
 
   $(document).ready(new HomeMain());
