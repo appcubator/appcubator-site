@@ -87,7 +87,17 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         name: name,
         url: pageUrl,
         navbar: {
-          brandName: v1State.get('name')
+          brandName: v1State.get('name'),
+          links: [
+            {
+              "url": "internal://Homepage",
+              "title": "Homepage"
+            },
+            {
+              "url": "internal://Registration Page",
+              "title": "Registration Page"
+            }
+          ]
         }
       });
       v1.save();

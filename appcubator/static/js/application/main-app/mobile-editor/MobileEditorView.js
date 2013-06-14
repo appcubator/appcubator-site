@@ -121,10 +121,11 @@ function( PageModel,
       this.snapper = new Snap({
         element: this.$('.snap-content')[0],
         touchToDrag: true,
-        maxPosition: '150px',
+        maxPosition: '200px',
         disable: 'right'
       });
-      this.$('a.menu').click(function(e) {
+
+      this.$('.bar-title a.menu').click(function(e) {
         if(document.body.classList.contains('snapjs-left')) {
           self.snapper.close();
         }
