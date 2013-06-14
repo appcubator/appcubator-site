@@ -5722,3 +5722,12 @@ hr.pheader {
   margin-bottom: 10px;
   border: 1px solid #ccc;
 }
+.popover .tour-container {
+  padding: 10px;
+}
+.popover .tour-buttons {
+  min-height: 40px;
+}
+.popover .label {
+  font-weight: normal;
+}
