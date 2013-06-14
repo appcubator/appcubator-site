@@ -214,9 +214,8 @@ function(ElementCollection,
     },
 
     dropped : function(e, ui) {
-      var self = this;
-
       var left = 0; var top = 1;
+
       if(e.type != 'click') {
         left = self.findLeft(e, ui);
         top  = self.findTop(e, ui);
@@ -234,6 +233,11 @@ function(ElementCollection,
 
       var className = targetEl.className;
       var id = targetEl.id;
+
+      this.createElement(widget, className, id);
+    },
+
+    createElement: function(widget, className, id) {
 
       var hash, entityCid, formCid, action;
       var entity, form, field;
@@ -276,12 +280,10 @@ function(ElementCollection,
         widget.data.container_info = {};
         widget.data.container_info.entity = v1State.get('tables').get(cid);
         if(/(entity-create-form)/.exec(className)) {
+          widget.type = "form";
           widget.data.container_info.action = "create";
           widget.data.container_info.form = {};
           widget.data.container_info.form.entity = widget.data.container_info.entity.get('name');
-        }
-        if(/(entity-create-form)/.exec(className)) {
-          //widget.container_info.action = "update";
         }
         if(/(entity-table)/.exec(className)) {
           widget.type = "loop";

@@ -34,6 +34,10 @@ def app_welcome(request):
             return redirect(app_new)
         else:
             return redirect(app_page, request.user.apps.all()[0].id)
+    return redirect(app_noob_page)
+
+
+def app_noob_page(request):
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
     mobile_themes = UITheme.get_mobile_themes()

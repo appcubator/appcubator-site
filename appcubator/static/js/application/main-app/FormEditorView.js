@@ -350,6 +350,7 @@ function(FormFieldModel, TutorialView) {
       var target = e.target;
       if($(target).hasClass('page-redirect')) {
         var pageId = target.id.replace('page-','');
+        console.log(pageId);
         this.model.set('redirect', null);
         this.model.addRedirect(v1State.get('pages').get(pageId));
       }
@@ -366,12 +367,14 @@ function(FormFieldModel, TutorialView) {
     },
 
     actionAdded: function(actionModel) {
+      console.log(actionModel);
       this.$el.find('.current-actions').append('<li id="action-'+actionModel.cid +'" class="current-action">'+actionModel.getNL()+'<div class="remove-from-list"></div></li>');
     },
 
     redirectAdded: function() {
       this.$el.find('.redirect-action').remove();
       var redirect = this.model.get('redirect');
+      console.log(redirect);
       this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">'+redirect.getNL()+'<div class="remove-from-list"></div></li>');
     },
 

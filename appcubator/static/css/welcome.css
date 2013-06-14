@@ -10,7 +10,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.82);
   z-index: 2001;
 }
 
@@ -32,8 +32,9 @@ body {
 
 .intro p {
   color: #fff;
-  width: 500px;
+  width: 560px;
   margin-top: 30px;
+  font-size: 18px;
 }
 
 .pane.btn {
@@ -42,5 +43,45 @@ body {
   height: 100px;
   display: table-cell;
   vertical-align: middle;
+}
+
+
+.welcome-icon {
+  height: 140px;
+  width: 140px;
+  border: 3px solid #fff;
+  display: inline-block;
+  vertical-align: top;
+  color: #fff;
+  border-radius: 6px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  text-align: center;
+}
+.welcome-icon img {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.welcome-icon p {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+a.welcome-icon:visited,
+a.welcome-icon:hover {
+  color: #fff;
+}
+.welcome-icon p {
+  display: block;
+}
+
+.question-cont p {
+  position: fixed;
+  width: 130px;
+  color: #fff;
+  margin: 0;
+  bottom: 90px;
 }
 

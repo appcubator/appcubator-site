@@ -13,18 +13,34 @@
   <div class="row">
     <div class="span36 offset8 intro">
       <img class="welcome" src="{{ STATIC_URL }}img/welcome-marker.png">
-      <p class="lead">We are happy to see you using Appcubator and would like to help you get started as smoothly as possible. How would you like to proceed?</p>
+      <p>We are happy to see you using Appcubator and would like to help you get started as smoothly as possible.</p>
+      <p>How would you like to proceed?</p>
     </div>
   </div>
-  <div class="row hoff1 span48 offset8">
-    <a class="pane btn span22 quick-tour">Take a quick tour</a>
-    <a class="pane btn span22 offset2 show-tutorials">Start reading Appcubator tutorials</a>
+  <div class="row hoff2 span48 offset8">
+    <a class="welcome-icon quick-tour">
+      <img src="{{ STATIC_URL }}img/quick-tour.png">
+      <p>Take a Quick Tour</p>
+    </a>
+    <a class="welcome-icon walkthrough-twitter">
+      <img src="{{ STATIC_URL }}img/walkthrough-twitter.png">
+      <p>Walkthrough Building Twitter</p>
+    </a>
   </div>
-  <div class="row hoff1 span48 offset8">
-    <a class="pane btn span22 twitter-guide">Walkthrough building a Twitter app</a>
-    <a href="/app/new/" class="pane btn span22 offset2 newapp">Just start building an application</a>
+  <div class="row span48 offset8">
+    <a class="welcome-icon read-tutorials">
+      <img src="{{ STATIC_URL }}img/read-tutorial.png">
+      <p>Read Tutorials</p>
+    </a>
+    <a href="/app/new/" class="welcome-icon start-building">
+      <img src="{{ STATIC_URL }}img/start-building.png">
+      <p>Start Building</p>
+    </a>
   </div>
-  <div class="question-cont"><img src="{{ STATIC_URL }}img/question-market.png"></div>
+  <div class="question-cont">
+    <img src="{{ STATIC_URL }}img/question-market.png">
+    <p>Yes, there is a real person here :)</p>
+  </div>
 </div>
 <span class="span6 save-btn" id="save"></span>
   <span class="span6 qm-btn" id="tutorial">?</span>
