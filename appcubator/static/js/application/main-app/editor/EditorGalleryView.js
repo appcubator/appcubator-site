@@ -263,9 +263,11 @@ function(ElementCollection,
 
         content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+'}}';
 
-        widget.data         = _.extend(widget, uieState[self.getFieldType(field)][0]);
+        widget.data         = _.extend(widget.data, uieState[self.getFieldType(field)][0]);
         widget.data.content =  content;
+        widget.type = "node";
         var widgetModel = new WidgetModel(widget);
+        console.log(widgetModel);
         this.widgetsCollection.push(widgetModel);
       }
       else if(/(entity)/.exec(className)) {

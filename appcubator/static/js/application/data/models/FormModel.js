@@ -84,7 +84,7 @@ function(FormFieldCollection, ActionCollection, ActionModel) {
     addRedirect: function(pageModel) {
       this.set('redirect', new ActionModel({
         type : "redirect",
-        pageName : pageModel.get('name')
+        page_name : pageModel.get('name')
       }));
     },
 
@@ -92,6 +92,8 @@ function(FormFieldCollection, ActionCollection, ActionModel) {
       var json = _.clone(this.attributes);
       json.name = json.name || "";
       json.fields = this.get('fields').toJSON();
+      console.log(json);
+      if(json.redirect) json.redirect = json.redirect.toJSON();
       return json;
     }
 
