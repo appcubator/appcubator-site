@@ -18,7 +18,7 @@ def pull_prod():
 
 @hosts('v1factory@staging.appcubator.com')
 def pull_staging():
-  code_dir = '/var/www/v1factory'
+  code_dir = '/var/www/appcubator-site'
   with cd(code_dir):
     run("git pull")
     run("touch config/uwsgi.ini")
