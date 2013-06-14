@@ -5,7 +5,7 @@ var constantContainers = {
     entity: "User",
     fields: [
                     {
-                        "name": "",
+                        "field_name": "",
                         "placeholder": "Login w/ Facebook",
                         "label": "",
                         "displayType": "button",
@@ -20,7 +20,7 @@ var constantContainers = {
     entity: "User",
     fields : [
       {
-                        "name": "",
+                        "field_name": "",
                         "placeholder": "Login w/ Twitter",
                         "label": "",
                         "displayType": "button",
@@ -35,7 +35,7 @@ var constantContainers = {
     entity: "User",
     fields : [
       {
-                        "name": "",
+                        "field_name": "",
                         "placeholder": "Login w/ LinkedIn",
                         "label": "",
                         "displayType": "button",
@@ -50,7 +50,7 @@ var constantContainers = {
     entity: "User",
     fields : [
                     {
-                        "name": "username",
+                        "field_name": "username",
                         "placeholder": "Username",
                         "label": "Username",
                         "displayType": "single-line-text",
@@ -66,12 +66,10 @@ var constantContainers = {
                         "options": []
                     },
                     {
-                        "name": "",
                         "placeholder": "Login",
                         "label": "Login",
                         "displayType": "button",
-                        "type": "button",
-                        "options": []
+                        "type": "button"
                     }
     ]
   },
@@ -80,7 +78,7 @@ var constantContainers = {
     "entity": "User",
     "fields": [
                     {
-                        "name": "username",
+                        "field_name": "username",
                         "placeholder": "Username",
                         "label": "Username",
                         "displayType": "single-line-text",
@@ -104,7 +102,7 @@ var constantContainers = {
                         "options": []
                     },
                     {
-                        "name": "email",
+                        "field_name": "Email",
                         "placeholder": "Email Address",
                         "label": "Email Address",
                         "displayType": "email-text",
@@ -112,12 +110,10 @@ var constantContainers = {
                         "options": []
                     },
                     {
-                        "name": "Sign Up",
-                        "placeholder": "",
-                        "label": "Sign Up!",
+                        "field_name": "Sign Up",
+                        "placeholder": "Sign Up",
                         "displayType": "button",
-                        "type": "button",
-                        "options": []
+                        "type": "button"
                     }
               ],
     "goto": "internal://Homepage",

@@ -1,8 +1,9 @@
 define([
   'collections/FormFieldCollection',
-  'collections/ActionCollection'
+  'collections/ActionCollection',
+  'models/ActionModel'
 ],
-function(FormFieldCollection, ActionCollection) {
+function(FormFieldCollection, ActionCollection, ActionModel) {
 
   var FormModel = Backbone.Model.extend({
     initialize: function(bone) {
@@ -12,19 +13,20 @@ function(FormFieldCollection, ActionCollection) {
       this.set('action', bone.action||"create");
       this.set('actions', new ActionCollection(bone.actions || []));
       this.set('belongsTo', bone.belongsTo||null);
+      this.set('redirect', null);
+      if(bone.redirect) {
+        this.set('redirect', new ActionModel(bone.redirect));
+      }
       this.set('entity', bone.entity);
 
-      if(bone.fields) {
-        this.get('fields').add(bone.fields);
-      }
+
+      if(bone.fields) { this.get('fields').add(bone.fields); }
+
       else {
         var field = {
-                        "name": "Submit",
                         "type" : "button",
-                        "label" : " ",
                         "displayType": "button",
-                        "placeholder": "Submit",
-                        "options": []
+                        "placeholder": "Submit"
                     };
 
         this.get('fields').push(field);
@@ -33,11 +35,12 @@ function(FormFieldCollection, ActionCollection) {
 
     fillWithProps: function(entity) {
       entity.get('fields').each(function(fieldModel) {
-
         var type = fieldModel.get('type');
-        var formFieldModel = { field_name: fieldModel.get('field_name'),
+        var formFieldModel = { field_name: fieldModel.get('name'),
                                displayType: "single-line-text",
-                               type: type };
+                               type: type,
+                               label: fieldModel.get('name'),
+                               placeholder: fieldModel.get('name') };
 
         if(type == "fk"||type == "m2m"||type == "o2o") { return; }
         if(type == "email") { formFieldModel.displayType = "email-text"; }
@@ -50,7 +53,9 @@ function(FormFieldCollection, ActionCollection) {
     },
 
     getRelationalActions: function(pageModel) {
-      var entity = this.get('entity');
+
+      if(this.get('action') == "login" || this.get('action') == "signup") return [];
+      var entity = v1State.get('tables').getTableWithName(this.get('entity'));
       var possibleActions = [];
       var userFields = pageModel.getFields();
 
@@ -76,13 +81,17 @@ function(FormFieldCollection, ActionCollection) {
       return possibleActions;
     },
 
+    addRedirect: function(pageModel) {
+      this.set('redirect', new ActionModel({
+        type : "redirect",
+        pageName : pageModel.get('name')
+      }));
+    },
+
     toJSON: function() {
       var json = _.clone(this.attributes);
       json.name = json.name || "";
       json.fields = this.get('fields').toJSON();
-      if(json.entity.attributes) {
-        json.entity = json.entity.get('name');
-      }
       return json;
     }
 
