@@ -140,14 +140,9 @@ function (AppModel,
     require(['app/QuickTour'], function(QuickTour) {
       window.QuickTour = QuickTour;
       QuickTour.start();
-      document.onkeypress = function(e) {
-        if (e.keyCode == 13) {
-          QuickTour.next();
-        }
-        else {
-          QuickTour.stop(false);
-        }
-      }
+      $(document).one('keypress', function(e) {
+        QuickTour.stop(false);
+      });
     });
   });
 

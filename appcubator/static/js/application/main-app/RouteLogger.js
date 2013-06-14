@@ -20,6 +20,7 @@ function() {
   RouteLogger.prototype.logRoute = function(router, route, params) {
     var appID = route[0];
     var pageName = this.pageNames[router];
+    return; //temporarily prevent route logging
     if(pageName) {
       $.ajax({
         type: 'POST',
