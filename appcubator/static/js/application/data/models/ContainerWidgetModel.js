@@ -15,7 +15,6 @@ function(WidgetModel) {
     toJSON : function() {
       var json = _.clone(this.attributes);
 
-      json.type   = "form";
       json.layout = this.get('layout').toJSON();
       json.data   = this.get('data').toJSON();
 

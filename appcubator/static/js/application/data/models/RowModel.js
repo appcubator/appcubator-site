@@ -17,6 +17,14 @@ define([
         var widget = new WidgetModel(element);
         this.get('uielements').add(widget);
       }, this);
+    },
+
+    toJSON: function() {
+      console.log(this);
+      var json  = _.clone(this.attributes);
+      json.uielements = json.uielements.toJSON();
+
+      return json;
     }
 
   });

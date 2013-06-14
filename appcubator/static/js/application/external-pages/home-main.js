@@ -20,7 +20,8 @@ require.config({
 });
 
 require([
-  'prettyCheckable'
+  'prettyCheckable',
+  'iui'
 ],
 function() {
 

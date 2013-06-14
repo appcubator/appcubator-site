@@ -26,7 +26,7 @@ function() {
     render: function() {
       var temp = UrlTemplate.mainTemplate;
       var html = _.template(temp, { 'urls': this.model.get('urlparts'),
-                                    'entities': appState.entities,
+                                    'entities': appState.tables,
                                     'pages': appState.pages,
                                     'page_name': this.model.get('page_name') });
 
