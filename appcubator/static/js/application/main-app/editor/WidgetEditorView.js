@@ -53,9 +53,10 @@ function(WidgetContentEditor,
       if(this.model.get('data').has('container_info')) {
         action = this.model.get('data').get('container_info').get('action');
 
-        if(action == "authentication") {
+        if(action == "authentication" || action == "login" || action == "signup") {
           this.layoutEditor = new WidgetLayoutEditor(this.model);
           this.el.appendChild(this.layoutEditor.el);
+          this.el.appendChild(this.renderEditForm());
         }
 
         if(action == "imageslider") {

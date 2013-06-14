@@ -276,15 +276,17 @@ function(ElementCollection,
         if(/(entity-create-form)/.exec(className)) {
           widget.data.container_info.action = "create";
           widget.data.container_info.form = {};
-          widget.data.container_info.form.entity = widget.data.container_info.entity;
+          widget.data.container_info.form.entity = widget.data.container_info.entity.get('name');
         }
         if(/(entity-create-form)/.exec(className)) {
           //widget.container_info.action = "update";
         }
         if(/(entity-table)/.exec(className)) {
+          widget.type = "loop";
           widget.data.container_info.action = "table";
         }
         if(/(entity-list)/.exec(className)) {
+          widget.type = "loop";
           widget.data.container_info.action = "show";
         }
 
