@@ -164,6 +164,8 @@ def app_save_state(request, app, require_valid=True):
             a = AnalyzedApp.create_from_dict(app.state)
         except Exception, e:
             import django.utils.html
+            if isinstance(e.message, basestring):
+                e.message = [e.message]
             errors = [django.utils.html.escape(s) for s in e.message]
             return (400, errors)
         else:
