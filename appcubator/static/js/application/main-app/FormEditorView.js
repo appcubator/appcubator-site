@@ -38,18 +38,23 @@ function(FormFieldModel, TutorialView) {
       'submit .new-field-form'           : 'addNewField'
     },
 
-    initialize: function(formModel, entityModel, callback) {
+    initialize: function(formModel, entity, callback) {
       _.bindAll(this);
 
       iui.loadCSS(this.css);
 
       this.model = formModel;
-      this.entity = entityModel;
+      this.entity = entity;
+
+      if(entity != "User") {
+        this.entityModel = v1State.get('tables').getTableWithName(entity);
+      }
 
       this.listenTo(this.model.get('fields'), 'add', this.fieldAdded);
       this.listenTo(this.model.get('fields'), 'remove', this.fieldRemoved);
       this.listenTo(this.model.get('actions'), 'add', this.actionAdded);
       this.listenTo(this.model.get('actions'), 'remove', this.actionRemoved);
+      this.listenTo(this.model, 'change:redirect', this.redirectAdded);
       this.listenTo(this.model, 'change:action', this.reRenderFields);
 
       this.possibleActions =  this.model.getRelationalActions(v1State.getCurrentPage());
@@ -65,7 +70,6 @@ function(FormFieldModel, TutorialView) {
     render : function(text) {
       var temp_context = {};
       temp_context.form = this.model;
-      temp_context.entity = this.entity;
       temp_context.pages = v1State.get('pages').models;
       temp_context.emails = ["Email 1", "Email 2"];
       temp_context.possibleEntities = _.map(appState.users.fields, function(field) { return "CurrentUser." + field.name; });
@@ -89,6 +93,11 @@ function(FormFieldModel, TutorialView) {
       this.model.get('actions').each(function(action) {
         this.$el.find('.current-actions').append('<li id="action-'+action.cid +'" class="current-action">'+action.getNL()+'<div class="remove-from-list"></div></li>');
       }, this);
+
+      var redirect = this.model.get('redirect');
+      if(redirect) {
+        this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">'+redirect.getNL()+'<div class="remove-from-list"></div></li>');
+      }
     },
 
     renderFields: function() {
@@ -114,7 +123,7 @@ function(FormFieldModel, TutorialView) {
         }
 
         var cid = e.target.id.replace('tablefield-', '');
-        var fieldModel = this.entity.get('fields').get(cid);
+        var fieldModel = this.entityModel.get('fields').get(cid);
         var formFieldModel = new FormFieldModel({field_name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
 
 
@@ -251,7 +260,7 @@ function(FormFieldModel, TutorialView) {
       var page_name = String(e.target.id||e.target.parentNode.id).replace('_', ' ');
       var page_id = String(e.target.id).replace(' ','_');
       var page_val = 'internal://' + page_name;
-      this.model.set('goto', page_val);
+      this.model.set('redirect', page_val);
       //$(e.target).remove();
       this.$el.find('#'+ page_name).remove();
       this.$el.find('.current-actions').html('');
@@ -278,7 +287,7 @@ function(FormFieldModel, TutorialView) {
 
       var cid = e.target.value.replace('field-', '');
 
-      var fieldModel = this.entity.get('fields').get(cid);
+      var fieldModel = this.entityModel.get('fields').get(cid);
       var formFieldModel = new FormFieldModel({name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
 
       if(fieldModel.get('type') == "email") {
@@ -341,8 +350,8 @@ function(FormFieldModel, TutorialView) {
       var target = e.target;
       if($(target).hasClass('page-redirect')) {
         var pageId = target.id.replace('page-','');
-        this.model.get('actions').removePageRedirect();
-        this.model.get('actions').addRedirect(v1State.get('pages').get(pageId));
+        this.model.set('redirect', null);
+        this.model.addRedirect(v1State.get('pages').get(pageId));
       }
       else {
         var ind = e.target.id.replace('action-','');
@@ -360,6 +369,12 @@ function(FormFieldModel, TutorialView) {
       this.$el.find('.current-actions').append('<li id="action-'+actionModel.cid +'" class="current-action">'+actionModel.getNL()+'<div class="remove-from-list"></div></li>');
     },
 
+    redirectAdded: function() {
+      this.$el.find('.redirect-action').remove();
+      var redirect = this.model.get('redirect');
+      this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">'+redirect.getNL()+'<div class="remove-from-list"></div></li>');
+    },
+
     actionRemoved: function(actionModel) {
       this.$el.find('#action-' + actionModel.cid).remove();
     },
@@ -368,7 +383,7 @@ function(FormFieldModel, TutorialView) {
       this.selected = null;
       this.$el.find('.details-panel').html('Select the corresponding field.');
       var html = '<ul class="table-fields-list" class="new-field-tablefields">';
-      this.entity.get('fields').each(function(field) {
+      this.entityModel.get('fields').each(function(field) {
         html += '<li><input type="radio" class="new-field-option" name="tablefields" id="tablefield-'+field.cid+'"><label for="tablefield-'+field.cid+'">'+ field.get('name') +'</label></li>';
       });
       html += '<li><input type="radio" class="new-field-option" name="tablefields" id="tablefield-new"><label for="tablefield-new">Create A New Field</label></li>';
