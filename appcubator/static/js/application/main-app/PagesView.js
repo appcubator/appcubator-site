@@ -83,7 +83,13 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         new ErrorDialogueView({text: 'Page name should be unique.'});
         return;
       }
-      this.mobileCollection.add({ name: name, url: pageUrl});
+      this.mobileCollection.add({
+        name: name,
+        url: pageUrl,
+        navbar: {
+          brandName: v1State.get('name')
+        }
+      });
       v1.save();
     },
 

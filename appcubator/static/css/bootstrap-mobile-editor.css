@@ -5,6 +5,7 @@
   background-repeat: no-repeat;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
 }
 
 .mobile-page-wrapper .url-bar {
