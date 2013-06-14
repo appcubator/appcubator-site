@@ -18,6 +18,7 @@ require.config({
     "key" : "../../libs/keymaster/keymaster",
     "answer" : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
+    "tourist": "../../libs/tourist.min",
     "list" : "../../libs/list",
     "models" : "../data/models",
     "collections" : "../data/collections",
@@ -44,6 +45,10 @@ require.config({
     },
     "answer" : {
       deps: ["../../libs/answer/lib/natural", "underscore", "jquery"]
+    },
+    "tourist": {
+      exports: "Tourist",
+      deps: ["jquery", "backbone", "bootstrap"]
     }
   }
 
@@ -131,8 +136,19 @@ function (AppModel,
     $('.fixed-bg').fadeOut();
   });
 
-  $('.fixed-bg .quick-guide').click(function(e) {
-    return false;
+  $('.fixed-bg .quick-tour').click(function(e) {
+    require(['app/QuickTour'], function(QuickTour) {
+      window.QuickTour = QuickTour;
+      QuickTour.start();
+      document.onkeypress = function(e) {
+        if (e.keyCode == 13) {
+          QuickTour.next();
+        }
+        else {
+          QuickTour.stop(false);
+        }
+      }
+    });
   });
 
   $('.fixed-bg .show-tutorials').click(function(e) {

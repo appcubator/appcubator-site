@@ -51,7 +51,8 @@ require.config({
       exports: "Snap"
     },
     "tourist": {
-      exports: "Tourist"
+      exports: "Tourist",
+      deps: ["jquery", "backbone"]
     }
   }
 
