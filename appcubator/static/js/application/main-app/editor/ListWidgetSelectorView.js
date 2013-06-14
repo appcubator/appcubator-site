@@ -125,8 +125,8 @@ function() {
 
     setLayout: function(node, widgetModel) {
       $(node).show();
-      node.style.width  = ((widgetModel.get('layout').get('width') * 80) + 4) + 'px';
-      node.style.height = ((widgetModel.get('layout').get('height') * 15) + 4) + 'px';
+      node.style.width  = ((widgetModel.get('layout').get('width') * 1) + 4) + 'px';
+      node.style.height = ((widgetModel.get('layout').get('height') * 1) + 4) + 'px';
       node.style.left   = ((widgetModel.get('layout').get('left') * 1) - 2) + 'px';
       node.style.top    = ((widgetModel.get('layout').get('top') * 1) - 2) + 'px';
       return node;
@@ -175,8 +175,8 @@ function() {
     resized: function(e, ui) {
       var left = Math.round((ui.position.left / 1));
       var top  = Math.round((ui.position.top  / 1));
-      var deltaHeight = Math.round((ui.size.height + 6) / GRID_HEIGHT);
-      var deltaWidth = Math.round((ui.size.width + 2) / GRID_WIDTH);
+      var deltaHeight = Math.round((ui.size.height + 6));
+      var deltaWidth = Math.round((ui.size.width + 2));
       var elem = iui.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = '';
       elem.style.height = '';

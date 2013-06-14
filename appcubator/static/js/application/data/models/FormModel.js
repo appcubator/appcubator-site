@@ -82,6 +82,7 @@ function(FormFieldCollection, ActionCollection, ActionModel) {
     },
 
     addRedirect: function(pageModel) {
+      console.log(pageModel);
       this.set('redirect', new ActionModel({
         type : "redirect",
         page_name : pageModel.get('name')

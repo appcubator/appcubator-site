@@ -10,7 +10,7 @@ function() {
 
     getNL: function() {
       if(this.get('type') == "redirect") {
-        return "Go to " + this.get('pageName');
+        return "Go to " + this.get('page_name');
       }
 
       if(this.get('type') == "relation") {

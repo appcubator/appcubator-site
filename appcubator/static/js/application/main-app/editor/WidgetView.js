@@ -75,10 +75,13 @@ define([
       var height = this.model.get('layout').get('height');
 
       // if(this.model.get('type') == 'box') {this.el.style.zIndex = 0;}
-      this.setTop((this.positionHorizontalGrid||GRID_HEIGHT) * (this.model.get('layout').get('top')));
+      this.setTop((this.positionVerticalGrid||GRID_HEIGHT) * (this.model.get('layout').get('top')));
       this.setLeft((this.positionHorizontalGrid||GRID_WIDTH) * (this.model.get('layout').get('left')));
-      this.setHeight(height * GRID_HEIGHT);
-      this.el.className += " span" + width;
+      this.setHeight(height * (this.positionVerticalGrid||GRID_HEIGHT));
+
+      if(this.positionHorizontalGrid) this.setWidth(width * this.positionVerticalGrid);
+      else this.el.className += " span" + width;
+
       this.el.style.textAlign = this.model.get('layout').get('alignment');
 
       if(this.model.get('layout').has('l_padding')) {
@@ -128,7 +131,9 @@ define([
     changedWidth: function(a) {
       this.el.style.width = '';
       this.el.className = 'selected widget-wrapper ';
-      this.el.className += 'span' + this.model.get('layout').get('width');
+      var width = this.model.get('layout').get('width');
+      if(this.positionHorizontalGrid) this.setWidth(width * this.positionVerticalGrid);
+      else this.el.className += " span" + width;
       //this.setLeft(GRID_WIDTH * (this.model.get('layout').get('left')));
     },
 
@@ -167,7 +172,7 @@ define([
     },
 
     changedHeight: function(a) {
-      this.setHeight(this.model.get('layout').get('height') * GRID_HEIGHT);
+      this.setHeight(this.model.get('layout').get('height') * (this.positionVerticalGrid||GRID_HEIGHT));
     },
 
     changedTop: function(a) {
