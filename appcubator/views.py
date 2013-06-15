@@ -29,12 +29,19 @@ def add_statics_to_context(context, app):
 @login_required
 @require_GET
 def app_welcome(request):
-    if not request.user.extradata.noob:
-        if request.user.apps.count() == 0:
-            return redirect(app_new)
-        else:
+    if request.user.extradata.noob:
+        # case for turning noob mode off
+        if request.user.apps.count() > 0:
+            e = request.user.extradata
+            e.noob = 0
+            e.save()
             return redirect(app_page, request.user.apps.all()[0].id)
-    return redirect(app_noob_page)
+        return redirect(app_noob_page)
+
+    if request.user.apps.count() == 0:
+        return redirect(app_new)
+    else:
+        return redirect(app_page, request.user.apps.all()[0].id)
 
 
 def app_noob_page(request):
