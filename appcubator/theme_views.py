@@ -81,8 +81,7 @@ def theme_new_web(request):
 def theme_new_mobile(request):
   if request.method=="POST":
     name = request.POST['name']
-    theme = UITheme(name=name, designer=request.user, web_or_mobile='M')
-    theme.save()
+    theme = UITheme.create_mobile_theme(name, request.user)
     return HttpResponse(simplejson.dumps(theme.to_dict()), mimetype="application/json")
 
 

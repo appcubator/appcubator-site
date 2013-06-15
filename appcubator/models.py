@@ -397,6 +397,13 @@ class UITheme(models.Model):
 
     uie_state = property(get_state, set_state)
 
+    @classmethod
+    def create_mobile_theme(cls, name, user):
+        theme = cls(name=name, designer=user, web_or_mobile='M')
+        theme._uie_state_json = get_default_mobile_uie_state()
+        theme.save()
+        return theme
+
     def to_dict(self):
         try:
             designer = User.objects.get(pk=self.designer_id).username,

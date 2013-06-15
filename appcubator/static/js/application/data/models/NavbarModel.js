@@ -22,12 +22,6 @@ function(LinkCollection) {
       return this.get('links');
     },
 
-    //create a duplicate of the first link
-    createNewLink: function() {
-      var firstLink = this.get('links').models[0].toJSON();
-      this.get('links').add(firstLink);
-    },
-
     toJSON : function() {
       var json = _.clone(this.attributes);
       json.links = this.get('links').toJSON();
