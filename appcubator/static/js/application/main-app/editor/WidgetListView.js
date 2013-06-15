@@ -1,7 +1,7 @@
 define([
   'editor/WidgetContainerView',
   'editor/WidgetView',
-  'editor/ListWidgetSelectorView',
+  'editor/list-editor/ListWidgetSelectorView',
   'dicts/constant-containers',
   'editor/editor-templates'
 ],
@@ -33,6 +33,7 @@ function( WidgetContainerView,
 
       var action = this.model.get('data').get('container_info').get('action');
 
+      this.entityModel = this.model.get('data').get('container_info').get('entity');
       this.model.bind('highlight', this.highlightFirstRow);
       this.widgetSelectorView = new ListWidgetSelectorView(this.model.get('data').get('container_info').get('row').get('uielements'));
       this.rowBindings();
@@ -69,8 +70,9 @@ function( WidgetContainerView,
       this.editorRow = editorRow;
 
       row.get('uielements').map(function(widgetModel) {
-        self.placeWidget(widgetModel);
-      });
+        widgetModel.setupLoopContext(this.entityModel);
+        this.placeWidget(widgetModel);
+      }, this);
       this.widgetSelectorView.setElement(this.el).render();
 
       this.el.appendChild(editorRow);
@@ -99,6 +101,7 @@ function( WidgetContainerView,
     },
 
     placeWidget: function(widgetModel) {
+      widgetModel.setupLoopContext(this.entityModel);
       var widgetView = new WidgetView(widgetModel, true);
       this.editorRow.appendChild(widgetView.render().el);
       widgetModel.get('layout').bind('change', this.renderShadowElements);

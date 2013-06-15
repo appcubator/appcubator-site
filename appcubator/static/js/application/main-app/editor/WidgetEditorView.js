@@ -3,7 +3,7 @@ define([
   'editor/WidgetLayoutEditorView',
   'editor/ImageSliderEditorView',
   'editor/WidgetClassPickerView',
-  'editor/RowGalleryView',
+  'editor/list-editor/RowGalleryView',
   'editor/form-editor/FormEditorView',
   'mixins/BackboneUI',
   'iui'

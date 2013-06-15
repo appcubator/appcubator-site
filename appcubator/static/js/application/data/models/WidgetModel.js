@@ -64,10 +64,16 @@ function(DataModel, LayoutModel) {
           context: 'page.' + entity
         });
       });
+
+      return this;
     },
 
-    setupLoopContext: function() {
-
+    setupLoopContext: function(entityModel) {
+      this.get('context').push({
+        entity: entityModel.get('name'),
+        context: 'loop.' + entityModel.get('name')
+      });
+      return this;
     },
 
     getListOfPages: function() {
@@ -82,11 +88,12 @@ function(DataModel, LayoutModel) {
       });
 
       this.get('context').each(function(context) {
+
         var listOfPages = v1State.get('pages').getPagesWithEntityName(context.get('entity'));
         _(listOfPages).each(function(pageName) {
           listOfLinks.push({
             name: pageName,
-            val: "internal://" + pageName + '?' + context.get('entity') + '=' + context.get('context')
+            val: "internal://" + pageName + '/?' + context.get('entity') + '=' + context.get('context')
           });
         });
       });
