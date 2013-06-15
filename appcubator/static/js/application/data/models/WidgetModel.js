@@ -26,16 +26,6 @@ function(DataModel, LayoutModel) {
       }
     },
 
-    toJSON : function() {
-      var json = _.clone(this.attributes);
-      json = _.omit(json, 'selected', 'deletable');
-
-      json.data = this.get('data').toJSON();
-      json.layout  = this.get('layout').toJSON();
-
-      return json;
-    },
-
     isFullWidth: function() {
       return this.get('layout').get('isFull') === true;
     },
@@ -107,8 +97,17 @@ function(DataModel, LayoutModel) {
       });
 
       return listOfLinks;
-    }
+    },
 
+    toJSON : function() {
+      var json = _.clone(this.attributes);
+      json = _.omit(json, 'selected', 'deletable', 'context');
+
+      json.data = this.get('data').toJSON();
+      json.layout  = this.get('layout').toJSON();
+
+      return json;
+    }
   });
 
   return WidgetModel;
