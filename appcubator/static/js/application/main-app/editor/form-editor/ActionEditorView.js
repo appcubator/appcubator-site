@@ -13,8 +13,8 @@ function(FormFieldModel, TutorialView) {
     className: 'form-action-editor',
 
     events: {
-      'click li.action'                  : 'actionClicked',
-      'click li.current-action'          : 'currentActionClicked'
+      'click li.goto-action'         : 'gotoActionClicked',
+      'click li.current-action'      : 'currentActionClicked'
     },
 
     initialize: function(formModel, entityModel) {
@@ -23,58 +23,50 @@ function(FormFieldModel, TutorialView) {
       this.model = formModel;
       this.entityM = entityModel;
 
+      //var listOfPages = this.model.getListOfPages();
+
       this.listenTo(this.model.get('actions'), 'add', this.actionAdded);
       this.listenTo(this.model.get('actions'), 'remove', this.actionRemoved);
-      this.listenTo(this.model, 'change:redirect', this.redirectAdded);
+      this.listenTo(this.model, 'change:goto', this.changedGoto);
 
       this.possibleActions =  this.model.getRelationalActions(v1State.getCurrentPage());
     },
 
     render : function(text) {
-      console.log(FormEditorTemplates.actionPane);
       this.el.innerHTML = _.template(FormEditorTemplates.actionPane, {});
+
+      this.renderRelations();
+      this.renderGotos();
+
       this.model.get('actions').each(function(action) {
         this.$el.find('.current-actions').append('<li id="action-'+action.cid +'" class="current-action">'+action.getNL()+'<div class="remove-from-list"></div></li>');
       }, this);
 
-      var redirect = this.model.get('redirect');
-      if(redirect) {
-        this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">'+redirect.getNL()+'<div class="remove-from-list"></div></li>');
-      }
-
       return this;
     },
 
+    renderRelations: function() {
 
-    changedGoto: function(e) {
-      var page_name = String(e.target.id||e.target.parentNode.id).replace('_', ' ');
-      var page_id = String(e.target.id).replace(' ','_');
-      var page_val = 'internal://' + page_name;
-      this.model.set('redirect', page_val);
-      //$(e.target).remove();
-      this.$el.find('#'+ page_name).remove();
-      this.$el.find('.current-actions').html('');
-      this.$el.find('.current-actions').append('<li id="'+page_id +'">Go to '+page_name+'<div class="remove-from-list"></div></li>');
     },
 
-    changedFormAction: function(e) {
-      alert("This should never have happened");
-      this.model.set('action', e.target.value);
+    renderGotos: function() {
+
+      var redirect = this.model.get('redirect');
+      if(redirect) {
+        this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action goto-action">'+redirect.getNL()+'<div class="remove-from-list"></div></li>');
+      }
+
+      v1State.get('pages').each(function(page, ind) {
+        console.log(page);
+        this.$el.find('.goto-list').append('<li id="page-'+page.cid+'" class="current-action goto-action">Go to '+page.get('name')+'<div class="remove-from-list"></div></li>');
+      }, this);
+
     },
 
-    actionClicked: function(e) {
-      var target = e.target;
-      if($(target).hasClass('page-redirect')) {
-        var pageId = target.id.replace('page-','');
-        console.log(pageId);
-        this.model.set('redirect', null);
-        this.model.addRedirect(v1State.get('pages').get(pageId));
-      }
-      else {
-        var ind = e.target.id.replace('action-','');
-        var action = _.clone(this.possibleActions[ind]);
-        this.model.get('actions').push(action);
-      }
+
+    gotoActionClicked: function(e) {
+      var pageCid = e.target.id.replace('page-','');
+      this.model.set('goto', v1State.get('pages').get(pageCid));
     },
 
     currentActionClicked: function(e) {
@@ -83,15 +75,14 @@ function(FormFieldModel, TutorialView) {
     },
 
     actionAdded: function(actionModel) {
-      console.log(actionModel);
       this.$el.find('.current-actions').append('<li id="action-'+actionModel.cid +'" class="current-action">'+actionModel.getNL()+'<div class="remove-from-list"></div></li>');
     },
 
-    redirectAdded: function() {
+    changedGoto: function() {
       this.$el.find('.redirect-action').remove();
-      var redirect = this.model.get('redirect');
+      var redirect = this.model.get('goto');
       console.log(redirect);
-      this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">'+redirect.getNL()+'<div class="remove-from-list"></div></li>');
+      this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">Go to '+redirect.get('name')+'<div class="remove-from-list"></div></li>');
     },
 
     actionRemoved: function(actionModel) {
