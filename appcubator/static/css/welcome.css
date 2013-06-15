@@ -85,3 +85,39 @@ a.welcome-icon:hover {
   bottom: 90px;
 }
 
+.info-text {
+  position: fixed;
+  top: 300px;
+  left: 450px;
+  width: 315px;
+  text-align: left;
+  opacity: 0;
+  -webkit-transition: opacity 0.4s ease-in;
+  -moz-transition: opacity 0.4s ease-in;
+  -o-transition: opacity 0.4s ease-in;
+  transition: opacity 0.4s ease-in;
+}
+
+.info-text .title {
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.quick-tour:hover .info-text {
+  display: block;
+  opacity: 1;
+}
+.read-tutorials:hover .info-text {
+  display: block;
+  opacity: 1;
+}
+.start-building:hover .info-text {
+  display: block;
+  opacity: 1;
+}
+.walkthrough-twitter:hover .info-text {
+  display: block;
+  opacity: 1;
+}
