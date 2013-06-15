@@ -1,9 +1,8 @@
 define([
   'editor/WidgetClassPickerView',
-  'app/FormEditorView',
   'editor/tool-tip-hints'
 ],
-function(WidgetClassPickerView, FormEditorView) {
+function(WidgetClassPickerView) {
 
   var WidgetLayoutEditorView = Backbone.View.extend({
     el     : document.getElementById('layout-editor'),

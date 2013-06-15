@@ -4,7 +4,7 @@ define([
   'editor/ImageSliderEditorView',
   'editor/WidgetClassPickerView',
   'editor/RowGalleryView',
-  'app/FormEditorView',
+  'editor/form-editor/FormEditorView',
   'mixins/BackboneUI',
   'iui'
 ],
