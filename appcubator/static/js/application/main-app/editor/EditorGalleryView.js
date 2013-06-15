@@ -217,8 +217,8 @@ function(ElementCollection,
       var left = 0; var top = 1;
 
       if(e.type != 'click') {
-        left = self.findLeft(e, ui);
-        top  = self.findTop(e, ui);
+        left = this.findLeft(e, ui);
+        top  = this.findTop(e, ui);
       }
 
       var widget = {};
@@ -267,7 +267,7 @@ function(ElementCollection,
 
         content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+'}}';
 
-        widget.data         = _.extend(widget.data, uieState[self.getFieldType(field)][0]);
+        widget.data         = _.extend(widget.data, uieState[this.getFieldType(field)][0]);
         widget.data.content =  content;
         widget.type = "node";
         var widgetModel = new WidgetModel(widget);
@@ -307,7 +307,7 @@ function(ElementCollection,
         entity = v1State.get('users');
         content =  '{{CurrentUser.'+field.get('name')+'}}';
 
-        widget.data         = _.extend(widget, uieState[self.getFieldType(field)][0]);
+        widget.data         = _.extend(widget, uieState[this.getFieldType(field)][0]);
         widget.data.content =  content;
         var widgetModel = new WidgetModel(widget);
         this.widgetsCollection.push(widgetModel);
