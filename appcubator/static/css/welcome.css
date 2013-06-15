@@ -121,3 +121,7 @@ a.welcome-icon:hover {
   display: block;
   opacity: 1;
 }
+
+.notice {
+  display: none;
+}

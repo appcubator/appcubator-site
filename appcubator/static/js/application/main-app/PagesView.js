@@ -64,7 +64,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
     },
 
     createPage: function(name, b) {
-      var pageUrlPart = name.replace(' ', '_');
+      var pageUrlPart = name.replace(/ /g, '_');
       var pageUrl = { urlparts : [pageUrlPart] };
 
       if(!v1State.get('pages').isUnique(name)) {

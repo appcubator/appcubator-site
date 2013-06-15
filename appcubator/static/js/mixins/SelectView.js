@@ -37,12 +37,13 @@ function(Backbone) {
       if(this.currentVal) {
         var currentLi = document.createElement('li');
         currentLi.innerText = this.currentVal;
+        if(self.isNameVal) { currentLi.innerText = this.currentVal.name; }
         currentLi.className = 'selected';
         list.appendChild(currentLi);
       }
 
       _(this.list).each(function(val, ind) {
-        if(val == self.currentVal) return;
+        if(val == self.currentVal || _.isEqual(val, self.currentVal)) return;
         var li = document.createElement('li');
         li.id = 'li-' + self.cid + '-' + ind;
         val = val;

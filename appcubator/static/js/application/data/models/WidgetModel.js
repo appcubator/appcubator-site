@@ -16,7 +16,7 @@ function(DataModel, LayoutModel) {
       this.set('layout', new LayoutModel(this.get('layout')));
       this.set('data', new DataModel(bone.data||{}, isNew));
 
-      this.set('context', bone.context|| null);
+      this.set('context', new Backbone.Collection(bone.context|| []));
     },
 
     remove :function() {
@@ -24,16 +24,6 @@ function(DataModel, LayoutModel) {
       if(this.collection) {
         this.collection.remove(this);
       }
-    },
-
-    toJSON : function() {
-      var json = _.clone(this.attributes);
-      json = _.omit(json, 'selected', 'deletable');
-
-      json.data = this.get('data').toJSON();
-      json.layout  = this.get('layout').toJSON();
-
-      return json;
     },
 
     isFullWidth: function() {
@@ -64,17 +54,60 @@ function(DataModel, LayoutModel) {
       this.get('layout').set('top', this.get('layout').get('top') + 1);
     },
 
+    setupPageContext: function(pageModel) {
+      var entityList = pageModel.getContextEntities();
+      var contextList = this.get('context');
+
+      _(entityList).each(function(entity) {
+        contextList.push({
+          entity: entity,
+          context: 'page.' + entity
+        });
+      });
+    },
+
+    setupLoopContext: function() {
+
+    },
+
     getListOfPages: function() {
       var pagesCollection = v1State.get('pages');
+      var listOfLinks = [];
 
-      if(this.get('context') === null || this.get('context') === "") {
-        return pagesCollection.getContextFreePages();
-      }
+      _(pagesCollection.getContextFreePages()).each(function(page) {
+        listOfLinks.push({
+          name: page,
+          val: "internal://" + page
+        });
+      });
 
-      var listOfLinks = pagesCollection.getPagesWithEntityName(this.get('context'));
+      this.get('context').each(function(context) {
+        var listOfPages = v1State.get('pages').getPagesWithEntityName(context.get('entity'));
+        _(listOfPages).each(function(pageName) {
+          listOfLinks.push({
+            name: pageName,
+            val: "internal://" + pageName + '?' + context.get('entity') + '=' + context.get('context')
+          });
+        });
+      });
+
+      listOfLinks.push({
+        name: 'External Link',
+        val: "External Link"
+      });
+
       return listOfLinks;
-    }
+    },
 
+    toJSON : function() {
+      var json = _.clone(this.attributes);
+      json = _.omit(json, 'selected', 'deletable', 'context');
+
+      json.data = this.get('data').toJSON();
+      json.layout  = this.get('layout').toJSON();
+
+      return json;
+    }
   });
 
   return WidgetModel;

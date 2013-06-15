@@ -123,12 +123,6 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       new UploadExcelView(this.model);
     },
 
-    clickedEditForm: function(e) {
-      var cid = String(e.target.id).replace('edit-', '');
-      var formModel = this.model.get('forms').get(cid);
-      new FormEditorView(formModel, this.model);
-    },
-
     renderRelations: function() {
       var list = this.$el.find('.related-fields');
       var arr = _.union(this.tableRelations, this.userRelations);
@@ -188,10 +182,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     typeClicked: function(e) {
-      console.log(e.target.id);
       var cid = e.target.id.replace('type-row-','');
-      console.log(cid);
-      console.log($('#type-' + cid));
       $('#type-' + cid).click();
       e.preventDefault();
     }

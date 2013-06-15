@@ -3,7 +3,6 @@ define([
   'models/FormModel',
   'app/TableView',
   'app/UserTableView',
-  'app/FormEditorView',
   'app/UploadExcelView',
   'app/ShowDataView',
   'app/templates/TableTemplates',
@@ -13,7 +12,6 @@ function( FieldModel,
           FormModel,
           TableView,
           UserTableView,
-          FormEditorView,
           UploadExcelView,
           ShowDataView) {
 

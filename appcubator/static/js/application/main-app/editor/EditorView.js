@@ -223,7 +223,7 @@ function( PageModel,
       contextEntites = _.map(contextEntites, function(str){ return (/\{\{([^\}]+)\}\}/g.exec(str))[1];});
 
       _(contextEntites).each(function(entityName) {
-        var entity =  v1State.get('entities').getEntityWithName(entityName);
+        var entity =  v1State.get('tables').getTableWithName(entityName);
         g_contextCollection.push(entity);
       });
     },

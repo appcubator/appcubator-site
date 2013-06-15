@@ -70,17 +70,18 @@ FormEditorTemplates.template = [
   '</div>',
   '<div class="add-field-panel"><div class="btn add-field-button"><span class="icon"></span>Add a New Field</div></div>',
   '<div class="action-panel panel">',
-    '<small>Choose options from the list below.</small>',
+  '</div>',
+  '<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>'
+].join('\n');
+
+FormEditorTemplates.actionPane = [
+'<small>Choose options from the list below.</small>',
     '<ul class="current-actions"></ul>',
     '<div class="section-header">Options</div>',
     '<ul class="action goto-list">',
-      FormEditorTemplates.redirectActions,
     '</ul>',
     '<ul class="action relational-list">',
-    FormEditorTemplates.relationalActions,
-    '</ul>',
-  '</div>',
-  '<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>'
+    '</ul>'
 ].join('\n');
 
 var fieldTypesArr = {

@@ -44,6 +44,18 @@ function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, 
       return height;
     },
 
+    doesContainEntityName: function(entityName) {
+      return _.contains(this.get('url').get('urlparts'), '{{' + entityName + '}}');
+    },
+
+    getContextEntities: function() {
+      var entities = [];
+      _(this.get('url').get('urlparts')).each(function(urlPart) {
+        if (/{{([^\}]+)}}/g.exec(urlPart)) entities.push(/\{\{([^\}]+)\}\}/g.exec(urlPart)[1]);
+      });
+      return entities;
+    },
+
     getFields: function() {
       var access = this.get('access_level');
       if(access == "all") { return v1State.get('users').getCommonProps(); }
