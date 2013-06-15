@@ -35,6 +35,7 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
       this.widgetsContainer = document.getElementById('elements-container');
       this.widgetsContainer.innerHTML = '';
       self.widgetsCollection.each(function(widget) {
+        widget.setupPageContext(v1State.getCurrentPage());
         self.placeUIElement(widget);
       });
       this.widgetSelectorView.setElement(this.widgetsContainer).render();
@@ -43,7 +44,6 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
     // this function decides if widget or container
     placeUIElement: function(model) {
       var self = this;
-
       if(model.get('data').has('container_info') && model.get('data').get('container_info').has('row')) {
         self.placeList(model);
       }
@@ -51,6 +51,7 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
         self.placeContainer(model);
       }
       else {
+        model.setupPageContext(v1State.getCurrentPage());
         self.placeWidget(model);
       }
       model.trigger('rendered');

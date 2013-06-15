@@ -20,7 +20,7 @@ function(PageModel) {
     getPagesWithEntityName: function(entityName) {
       var pagesList = [];
       this.each(function(page) {
-        if(_.contains(page.get('url').get('urlparts'), '{{' + entityName + '}}')) {
+        if(page.doesContainEntityName(entityName)){
           pagesList.push(page.get('name'));
         }
       });

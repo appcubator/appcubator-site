@@ -21,8 +21,6 @@ function(SelectView) {
       _.bindAll(this);
 
       this.model = widgetModel;
-      this.hrefOptions = this.model.getListOfPages();
-      this.hrefOptions.push("External Link");
       this.render();
     },
 
@@ -51,9 +49,7 @@ function(SelectView) {
         this.hrefLi = document.createElement('li');
       }
 
-      var hash     = 'content_attribs' + '-' + 'href';
-      var temp         = Templates.tempHrefSelect;
-      var listOfPages  = this.hrefOptions;
+      var listOfPages = this.model.getListOfPages();
       var href = this.model.get('data').get('content_attribs').get('href');
 
       var external;
@@ -61,12 +57,15 @@ function(SelectView) {
         external = href;
       }
       else {
-        href = href.replace('internal://', '');
+        href = {
+          name: href.replace('internal://', ''),
+          val: href
+        };
       }
 
       this.hrefLi.innerHTML = '';
       this.hrefLi.appendChild(new comp().div('Links To').classN('header-div').el);
-      var selecView = new SelectView(listOfPages, href);
+      var selecView = new SelectView(listOfPages, href, true);
       selecView.bind('change', this.changeHref, this);
       this.hrefLi.appendChild(selecView.el);
 

@@ -182,10 +182,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     typeClicked: function(e) {
-      console.log(e.target.id);
       var cid = e.target.id.replace('type-row-','');
-      console.log(cid);
-      console.log($('#type-' + cid));
       $('#type-' + cid).click();
       e.preventDefault();
     }
