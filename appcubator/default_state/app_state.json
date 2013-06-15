@@ -23,7 +23,6 @@
             "fields": [
                 {
                     "name": "Content",
-                    "required": true,
                     "type": "text"
                 },
                 {
