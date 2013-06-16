@@ -641,6 +641,80 @@
       "user_roles":[
         null
       ]
+    },
+        {
+      "name":"New Tweet",
+      "url":{
+        "urlparts":[
+          "New_Tweet"
+        ]
+      },
+      "access_level":"all",
+      "uielements":[
+        {
+          "layout":{
+            "top":12,
+            "left":3,
+            "height":8,
+            "width":4,
+            "t_padding":0,
+            "b_padding":0,
+            "l_padding":0,
+            "r_padding":0,
+            "alignment":"left"
+          },
+          "data":{
+            "container_info":{
+              "entity":"Tweet",
+              "action":"create",
+              "form":{
+                "entity":"Tweet",
+                "name":"",
+                "fields":[
+                  {
+                    "field_name":"Content",
+                    "displayType":"single-line-text",
+                    "type":"text",
+                    "label":"Content",
+                    "placeholder":"Content",
+                    "required":false
+                  },
+                  {
+                    "type":"button",
+                    "displayType":"button",
+                    "placeholder":"Submit",
+                    "required":false
+                  }
+                ],
+                "action":"create",
+                "actions":[{
+                  "set_fk": "this.user",
+                  "to_object": "CurrentUser"
+                }
+
+                ],
+                "redirect":null,
+                "goto": "internal://My Tweets/"
+              }
+            }
+          },
+          "type": "form"
+        }],
+
+      "navbar":{
+        "brandName":null,
+        "isHidden":false,
+        "isFixed":true,
+        "links":[
+        ]
+      },
+      "footer":{
+        "customText":"Add custom footer text here",
+        "isHidden":false,
+        "isFixed":true,
+        "links":[
+        ]
+      }
     }
   ],
   "name":"twitter"
