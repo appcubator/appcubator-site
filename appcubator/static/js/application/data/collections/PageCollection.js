@@ -17,11 +17,33 @@ function(PageModel) {
       return pagesList;
     },
 
+    getContextFreePageModels: function() {
+      var pagesList = [];
+      this.each(function(page) {
+        if(!_.some(page.get('url').get('urlparts'), function(part) { return (/\{\{([^\}]+)\}\}/g).test(part); })) {
+          pagesList.push(page);
+        }
+      });
+
+      return pagesList;
+    },
+
     getPagesWithEntityName: function(entityName) {
       var pagesList = [];
       this.each(function(page) {
         if(page.doesContainEntityName(entityName)){
           pagesList.push(page.get('name'));
+        }
+      });
+
+      return pagesList;
+    },
+
+    getPageModelsWithEntityName: function(entityName) {
+      var pagesList = [];
+      this.each(function(page) {
+        if(page.doesContainEntityName(entityName)){
+          pagesList.push(page);
         }
       });
 

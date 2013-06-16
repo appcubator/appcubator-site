@@ -12,7 +12,6 @@ function(FormFieldCollection, ActionCollection, ActionModel) {
       this.set('fields', new FormFieldCollection());
       this.set('action', bone.action||"create");
       this.set('actions', new ActionCollection(bone.actions || []));
-      this.set('belongsTo', bone.belongsTo||null);
       this.set('redirect', null);
       if(bone.redirect) {
         this.set('redirect', new ActionModel(bone.redirect));

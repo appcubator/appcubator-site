@@ -22,7 +22,6 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       'click .prop-cross'          : 'clickedPropDelete',
       'click .excel'               : 'clickedUploadExcel',
       'click .show-data'           : 'showData',
-      'click .edit-form'           : 'clickedEditForm',
       'mouseover .right-arrow'     : 'slideRight',
       'mousemove .right-arrow'     : 'slideRight',
       'mouseover .left-arrow'      : 'slideLeft',
@@ -172,10 +171,10 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     slideLeft: function() {
-      var tblWrapper = this.$el.find('.tbl-wrapper')
+      var tblWrapper = this.$el.find('.tbl-wrapper');
       var left = tblWrapper.scrollLeft();
       tblWrapper.scrollLeft(left - 6);
-      if(tblWrapper.scrollLeft() == 0) {
+      if(tblWrapper.scrollLeft() === 0) {
         this.$el.find('.left-arrow').remove();
         this.hasLeftArrow = false;
       }

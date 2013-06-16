@@ -36,17 +36,17 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       'submit .new-field-form'           : 'addNewField'
     },
 
-    initialize: function(formModel, entity, callback) {
+    initialize: function(formModel, entityM, callback) {
       _.bindAll(this);
 
       iui.loadCSS(this.css);
 
       this.model = formModel;
-      this.entity = entity;
+      this.entityModel = entityM;
 
-      if(entity != "User") {
-        this.entityModel = v1State.get('tables').getTableWithName(entity);
-      }
+      // if(entity != "User") {
+      //   this.entityModel = v1State.get('tables').getTableWithName(entity);
+      // }
 
       this.listenTo(this.model.get('fields'), 'add', this.fieldAdded);
       this.listenTo(this.model.get('fields'), 'remove', this.fieldRemoved);
@@ -78,7 +78,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
       this.renderFields();
 
-      console.log(this.$el.find('action-panel'));
       this.actionEditor.setElement(this.$el.find('.action-panel')).render();
 
       $('.form-fields-list').sortable({
@@ -299,7 +298,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       var name = this.$el.find('.new-field-name').val();
       var type = $('input:radio[name=field-type]').val();
 
-      var fieldModel = this.entity.get('fields').push({name: name, type: type});
+      var fieldModel = this.entityModel.get('fields').push({name: name, type: type});
       var formFieldModel = new FormFieldModel({field_name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
 
       if(fieldModel.get('type') == "email") {
