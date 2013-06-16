@@ -22,7 +22,6 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       'click .prop-cross'          : 'clickedPropDelete',
       'click .excel'               : 'clickedUploadExcel',
       'click .show-data'           : 'showData',
-      'click .edit-form'           : 'clickedEditForm',
       'mouseover .right-arrow'     : 'slideRight',
       'mousemove .right-arrow'     : 'slideRight',
       'mouseover .left-arrow'      : 'slideLeft',

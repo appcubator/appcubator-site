@@ -8,7 +8,7 @@ define([
 ],
 function(FormFieldModel, TutorialView) {
 
-  var FormEditorView = Backbone.View.extend({
+  var ActionEditorView = Backbone.View.extend({
     tagName: 'div',
     className: 'form-action-editor',
 
@@ -22,8 +22,6 @@ function(FormFieldModel, TutorialView) {
 
       this.model = formModel;
       this.entityM = entityModel;
-
-      //var listOfPages = this.model.getListOfPages();
 
       this.listenTo(this.model.get('actions'), 'add', this.actionAdded);
       this.listenTo(this.model.get('actions'), 'remove', this.actionRemoved);
@@ -50,14 +48,17 @@ function(FormFieldModel, TutorialView) {
     },
 
     renderGotos: function() {
-
+      var entitiyName = this.entityM.get('name');
       var redirect = this.model.get('redirect');
       if(redirect) {
         this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action goto-action">'+redirect.getNL()+'<div class="remove-from-list"></div></li>');
       }
 
-      v1State.get('pages').each(function(page, ind) {
-        console.log(page);
+      var listOfPages = [];
+      listOfPages = v1State.get('pages').getContextFreePageModels();
+      listOfPages = _.union(listOfPages, v1State.get('pages').getPageModelsWithEntityName(entitiyName));
+
+      _(listOfPages).each(function(page, ind) {
         this.$el.find('.goto-list').append('<li id="page-'+page.cid+'" class="current-action goto-action">Go to '+page.get('name')+'<div class="remove-from-list"></div></li>');
       }, this);
 
@@ -81,7 +82,6 @@ function(FormFieldModel, TutorialView) {
     changedGoto: function() {
       this.$el.find('.redirect-action').remove();
       var redirect = this.model.get('goto');
-      console.log(redirect);
       this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">Go to '+redirect.get('name')+'<div class="remove-from-list"></div></li>');
     },
 
@@ -91,5 +91,5 @@ function(FormFieldModel, TutorialView) {
 
   });
 
-  return FormEditorView;
+  return ActionEditorView;
 });
