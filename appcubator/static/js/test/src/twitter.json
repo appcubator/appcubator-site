@@ -536,8 +536,7 @@
               ],
               "query":{
                 "where": [ {"field_name": "user",
-                            "equal_to": "CurrentUser"},
-                            ],
+                            "equal_to": "CurrentUser"}],
                 "sortAccordingTo":"Date",
                 "numberOfRows":-1
               },
