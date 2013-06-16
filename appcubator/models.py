@@ -20,6 +20,7 @@ DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
 class ExtraUserData(models.Model):
     user = models.OneToOneField(User, related_name="extradata")
     noob = models.IntegerField(default=1)
+    picture_url = models.URLField(max_length=200, default='/static/default_pic.png')
 
     # RUN THIS TO FIX AN OLD DATABASE
     @classmethod
