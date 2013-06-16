@@ -641,8 +641,7 @@
       "user_roles":[
         null
       ]
-    },
-        {
+    },{
       "name":"New Tweet",
       "url":{
         "urlparts":[
@@ -690,10 +689,7 @@
                 "actions":[{
                   "set_fk": "this.user",
                   "to_object": "CurrentUser"
-                }
-
-                ],
-                "redirect":null,
+                }],
                 "goto": "internal://My Tweets/"
               }
             }
