@@ -89,11 +89,11 @@ function( PageModel,
 
       if(!this.el.innerHTML) this.el.innerHTML = iui.getHTML('editor-page');
 
-      iui.get('page-list').innerHTML += '<li>'+appState.pages[pageId].name+'</li>';
+      iui.get('page-list').innerHTML += '<li>'+ v1State.get('pages').models[pageId].get('name') +'</li>';
 
-      _(appState.pages).each(function(page, ind) {
+      v1State.get('pages').each(function(page, ind) {
         if(pageId == ind) return;
-        iui.get('page-list').innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>' + page.name +
+        iui.get('page-list').innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>' + page.get('name') +
                                           '</a></li>';
       });
 

@@ -171,10 +171,10 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     slideLeft: function() {
-      var tblWrapper = this.$el.find('.tbl-wrapper')
+      var tblWrapper = this.$el.find('.tbl-wrapper');
       var left = tblWrapper.scrollLeft();
       tblWrapper.scrollLeft(left - 6);
-      if(tblWrapper.scrollLeft() == 0) {
+      if(tblWrapper.scrollLeft() === 0) {
         this.$el.find('.left-arrow').remove();
         this.hasLeftArrow = false;
       }
