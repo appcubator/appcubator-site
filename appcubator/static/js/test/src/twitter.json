@@ -346,10 +346,7 @@
 
               ],
               "query":{
-                "fieldsToDisplay":[
-
-                ],
-                "belongsToUser":false,
+                "where": [],
                 "sortAccordingTo":"Date",
                 "numberOfRows":-1
               },
@@ -510,39 +507,6 @@
       ]
     },
     {
-      "name":"Tweets",
-      "url":{
-        "urlparts":[
-          "Tweets"
-        ]
-      },
-      "access_level":"all",
-      "uielements":[
-
-      ],
-      "navbar":{
-        "brandName":null,
-        "isHidden":false,
-        "isFixed":true,
-        "links":[
-
-        ]
-      },
-      "footer":{
-        "customText":"Add custom footer text here",
-        "isHidden":false,
-        "isFixed":true,
-        "links":[
-
-        ]
-      },
-      "page_name":"Tweets",
-      "ind":3,
-      "user_roles":[
-        null
-      ]
-    },
-    {
       "name":"My tweets",
       "url":{
         "urlparts":[
@@ -571,10 +535,9 @@
 
               ],
               "query":{
-                "fieldsToDisplay":[
-
-                ],
-                "belongsToUser":false,
+                "where": [ {"field_name": "user",
+                            "equal_to": "CurrentUser"},
+                            ],
                 "sortAccordingTo":"Date",
                 "numberOfRows":-1
               },
