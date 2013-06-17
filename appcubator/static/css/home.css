@@ -1029,7 +1029,7 @@ img.logo {
 }
 
 .slide-aboutus h3 {
-  margin-top: 60px;
+  margin-top: 40px;
   margin-bottom: 12px;
 }
 
@@ -1055,5 +1055,34 @@ img.logo {
 
 .peep .kedar {
   margin-top: -12px;
+}
+
+.person {
+  display: inline-block;
+  height: 180px;
+  text-align: center;
+}
+
+.person p {
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.bio {
+  position: absolute;
+  left: 360px;
+  margin-top: 20px;
+  opacity: 0;
+  background-color: #fff;
+  border-radius: 6px;
+  width: 700px;
+  padding: 16px;
+  text-align: left;
+  transition: opacity 0.2s;
+  -webkit-transition: opacity 0.2s; /* Safari */
+}
+
+.person:hover .bio {
+  opacity: 1;
 }
 

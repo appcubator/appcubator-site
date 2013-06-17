@@ -59,7 +59,12 @@ function(WidgetEditorView,
       this.isDrawing = false;
       this.setZero();
 
-      this.multiSelectorView.setContents(arr);
+      if(arr.length == 1) {
+        arr[0].trigger('selected');
+      }
+      else if(arr.length > 1) {
+        this.multiSelectorView.setContents(arr);
+      }
     },
 
     mousemove: function(e) {
