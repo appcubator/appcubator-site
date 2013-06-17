@@ -19,8 +19,13 @@ function( WidgetContainerView,
       'click'         : 'select',
       'click .delete' : 'remove',
       'mouseover'     : 'hovered',
-      'mouseout'      : 'unhovered'
+      'mouseout'      : 'unhovered',
+      'mousedown .row': 'rowMousedown',
+      'mouseup .row'  : 'rowMouseup'
     },
+
+    rowMousedown: function() { mouseDispatcher.isMousedownActive = true; },
+    rowMouseup:   function() { mouseDispatcher.isMousedownActive = false; },
 
     initialize: function(widgetModel) {
       WidgetContainerView.__super__.initialize.call(this, widgetModel);
@@ -30,6 +35,8 @@ function( WidgetContainerView,
       this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.renderShadowElements);
       this.model.get('data').get('container_info').get('row').get('uielements').bind("remove", this.renderShadowElements);
       this.model.bind('deselected', this.deselected);
+
+      this.model.get('data').get('container_info').get('row').get('layout').bind('change:height', this.renderShadowElements);
 
       var action = this.model.get('data').get('container_info').get('action');
 
@@ -97,7 +104,13 @@ function( WidgetContainerView,
     },
 
     highlightFirstRow: function() {
-      this.$el.find('.row').first().addClass('highlighted');
+      var self = this;
+      $(this.editorRow).resizable({
+        handles: "s",
+        grid: [ 20, 15 ],
+        stop  : self.resized
+      });
+      $(this.editorRow).addClass('highlighted');
     },
 
     placeWidget: function(widgetModel) {
@@ -105,6 +118,14 @@ function( WidgetContainerView,
       var widgetView = new WidgetView(widgetModel, true);
       this.editorRow.appendChild(widgetView.render().el);
       widgetModel.get('layout').bind('change', this.renderShadowElements);
+    },
+
+    resized: function(e, ui) {
+      var deltaHeight = Math.round((ui.size.height + 6) / GRID_HEIGHT);
+      var elem = iui.get('widget-wrapper-' + this.model.cid);
+      elem.style.width = '';
+      elem.style.height = '';
+      this.model.get('data').get('container_info').get('row').get('layout').set('height', deltaHeight);
     },
 
     deselected: function() {

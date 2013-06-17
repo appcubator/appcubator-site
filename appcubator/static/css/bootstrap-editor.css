@@ -152,6 +152,13 @@ textarea {
 
 .row {
   *zoom: 1;
+  overflow: hidden;
+}
+
+.row .ui-resizable-s {
+  background-image: url(../img/dot.png);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .row:before,
