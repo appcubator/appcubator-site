@@ -405,6 +405,7 @@ table tr:hover td {
 
 .right-icon:hover {
   border: 1px solid #dfdfdf;
+  box-shadow: inset 1px 1px 3px #ddd;
 }
 
 .right-icon:active {
