@@ -16,7 +16,7 @@ function(EmailCollection, EmailModel, EmailView) {
     initialize: function() {
       _.bindAll(this);
 
-      this.collection = new EmailCollection(appState.emails||[]);
+      this.collection = v1State.get('emails') || new EmailCollection();
       this.listenTo(this.collection, 'all', this.renderEmailList);
 
       //setup emailView, populate with first email (new email if none)
@@ -36,7 +36,7 @@ function(EmailCollection, EmailModel, EmailView) {
       this.listView = this.$el.find('#email-list');
       this.renderEmailList();
       this.renderVariableList();
-      this.emailView.setElement(this.$el.find('form')).render();
+      this.emailView.setElement(this.$el.find('.right-bar')).render();
 
       return this;
     },
@@ -82,6 +82,7 @@ function(EmailCollection, EmailModel, EmailView) {
     createEmail: function(name) {
       var email = new EmailModel({ name: name });
       this.collection.add(email);
+      console.log(this.collection.toJSON());
       this.emailView.setModel(email);
     },
 

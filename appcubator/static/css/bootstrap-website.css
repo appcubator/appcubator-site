@@ -5685,10 +5685,30 @@ hr.pheader {
 
 .email-paper {
   background-color: #fff;
+  position: relative;
   padding: 12px;
   border-radius: 4px;
   border: 1px solid #ccc;
 }
+
+.email-paper .remove:hover {
+background-color: #c95446;
+color: #fff;
+}
+.email-paper .remove {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 10px;
+  background-color: #eee;
+  color: #aaa;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  padding: 2px 10px;
+  cursor: pointer;
+}
+
 .email-paper label {
   font-weight: bold;
   font-size: 18px;
