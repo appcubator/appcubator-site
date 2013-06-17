@@ -1026,6 +1026,9 @@ img.logo {
   min-height: 100%;
   text-align: left;
   padding: 0px 60px;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-bottom: 80px;
 }
 
 .slide-aboutus h3 {
@@ -1045,6 +1048,11 @@ img.logo {
   vertical-align: top;
 }
 
+.people {
+  position: relative;
+  margin-bottom: 180px;
+}
+
 .peep .karan {
   margin-top: -12px;
 }
@@ -1057,6 +1065,11 @@ img.logo {
   margin-top: -12px;
 }
 
+.peep .sagar {
+  margin-top: 0px;
+}
+
+
 .person {
   display: inline-block;
   height: 180px;
@@ -1068,15 +1081,24 @@ img.logo {
   font-weight: bold;
 }
 
+.quote {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 22px;
+  color: #333;
+  margin-top: 28px;
+}
+
 .bio {
   position: absolute;
-  left: 360px;
+  left: 0px;
   margin-top: 20px;
   opacity: 0;
   background-color: #fff;
   border-radius: 6px;
-  width: 700px;
+  width: 100%;
   padding: 16px;
+  height: 140px;
   text-align: left;
   transition: opacity 0.2s;
   -webkit-transition: opacity 0.2s; /* Safari */

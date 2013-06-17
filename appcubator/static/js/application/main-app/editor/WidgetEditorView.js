@@ -5,6 +5,7 @@ define([
   'editor/WidgetClassPickerView',
   'editor/list-editor/RowGalleryView',
   'editor/form-editor/FormEditorView',
+  'editor/TableQueryView',
   'mixins/BackboneUI',
   'iui'
 ],
@@ -13,7 +14,8 @@ function(WidgetContentEditor,
          ImageSliderEditorView,
          WidgetClassPickerView,
          RowGalleryView,
-         FormEditorView) {
+         FormEditorView,
+         TableQueryView) {
 
   var WidgetEditorView = Backbone.UIView.extend({
     className : 'widget-editor fadeIn',
@@ -124,7 +126,7 @@ function(WidgetContentEditor,
     renderQueryButton: function() {
       var li       = document.createElement('ul');
       li.className = 'query-editor-btn';
-      li.innerHTML += '<span id="edit-query-btn" class="option-button tt" style="width:230px; display: inline-block;"><strong>Edit Query</strong></span>';
+      li.innerHTML += '<span class="option-button tt edit-query-button" style="width:230px; display: inline-block;"><strong>Edit Query</strong></span>';
       return li;
     },
 
