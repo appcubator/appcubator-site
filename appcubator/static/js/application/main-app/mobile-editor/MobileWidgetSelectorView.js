@@ -3,8 +3,7 @@ define([
   'editor/WidgetEditorView',
   'mixins/BackboneUI',
   'iui'
-],
-function( WidgetSelectorView,
+], function (WidgetSelectorView,
           WidgetEditorView) {
 
   var MobileWidgetSelectorView = WidgetSelectorView.extend({
@@ -41,7 +40,7 @@ function( WidgetSelectorView,
       this.hideNode(selectDiv);
       this.el.appendChild(selectDiv);
 
-      $(selectDiv).resizable({
+      /*$(selectDiv).resizable({
         handles: "s",
         containment: "parent",
         resize: self.resizing,
@@ -59,7 +58,7 @@ function( WidgetSelectorView,
         drag: self.moving,
         stop: self.moved,
         snapMode : "outer"
-      });
+      });*/
 
 
       selectDiv.style.zIndex = "2004";
@@ -76,17 +75,26 @@ function( WidgetSelectorView,
       $(node).show();
       var div = $('#widget-wrapper-' + widgetModel.cid);
       divTop = div.offset().top - 166;
+      //var divTop = div.offset().top - 60;
       node.style.width  = '100%';
       node.style.height = ((widgetModel.get('layout').get('height') * 15)) + 'px';
+      //node.style.height = "5px";
       node.style.left   = '0px';
+      //node.style.top    = (divTop + widgetModel.get('layout').get('height')) + 'px';
       node.style.top    = divTop + 'px';
+      $(node).resizable({
+        handles: "s",
+        containment: "parent",
+        resize: self.resizing,
+        stop  : self.resized
+      });
       return node;
     },
 
     widgetHover: function(widgetModel) {
       if(this.selectedEl && widgetModel.cid === this.selectedEl.cid) return;
       this.hoveredEl = widgetModel;
-      //this.setLayout(this.hoverDiv, widgetModel);
+      this.setLayout(this.hoverDiv, widgetModel);
     },
 
     widgetUnhover: function(widgetModel) {
@@ -97,18 +105,20 @@ function( WidgetSelectorView,
 
     newSelected: function(widgetModel) {
       var self = this;
-      if(this.selectedEl && this.selectedEl.cid == widgetModel.cid) return;
-
-      if(this.selectedEl) {
-        //widgetModel.get('layout').unbind('change', self.setLayout);
+      if(this.selectedEl && this.selectedEl.cid == widgetModel.cid) {
+        //this.setLayout(this.selectDiv, widgetModel);
+        return;
       }
-
+      if(this.selectedEl) {
+        widgetModel.get('layout').unbind('change', self.setLayout);
+      }
       this.deselect();
       this.selectedEl = widgetModel;
       widgetModel.get('layout').bind('change', function() {
         self.setLayout(self.selectDiv, widgetModel);
       });
-
+      this.hideNode(this.hoverDiv);
+      //this.setLayout(this.selectDiv, widgetModel);
       document.getElementById('page-wrapper').appendChild(this.widgetEditorView.setModel(widgetModel).render().el);
     },
 
@@ -137,29 +147,23 @@ function( WidgetSelectorView,
 
     moving: function(e, ui) {
       model = this.selectedEl;
+      $('#widget-wrapper-' + widgetModel.cid).trigger('');
       if(e.target.id == "hover-div") { model = this.hoveredEl; }
-
-      g_guides.hideAll();
-      g_guides.showVertical(ui.position.left / GRID_WIDTH);
-      g_guides.showVertical(ui.position.left / GRID_WIDTH + model.get('layout').get('width'));
-      g_guides.showHorizontal(ui.position.top / GRID_HEIGHT);
-      g_guides.showHorizontal(ui.position.top / GRID_HEIGHT + model.get('layout').get('height'));
 
       var elem = iui.get('widget-wrapper-' + model.cid);
       elem.style.top = ui.position.top + 2 + 'px';
       elem.style.left = ui.position.left + 2 + 'px';
+      this.setLayout(e.target, model);
     },
 
     moved: function(e, ui) {
-      g_guides.hideAll();
-
       model = this.selectedEl;
       if(e.target.id == "hover-div") { model = this.hoveredEl; }
 
       var top = Math.round((ui.position.top / GRID_HEIGHT));
-      var left = Math.round((ui.position.left / GRID_WIDTH));
+      //var left = Math.round((ui.position.left / GRID_WIDTH));
       model.get('layout').set('top', top);
-      model.get('layout').set('left', left);
+      //model.get('layout').set('left', left);
       this.setLayout(e.target, model);
     },
 
@@ -174,7 +178,7 @@ function( WidgetSelectorView,
 
     moveSelectedDown: function(e) {
       if(!this.selectedEl) return;
-      if(keyDispatcher.textEditing === true) return;
+      if(keyDispatcher.textEditing && keyDispatcher.textEditing === true) return;
       this.selectedEl.moveDown();
       e.preventDefault();
     },

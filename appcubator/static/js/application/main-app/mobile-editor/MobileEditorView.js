@@ -121,7 +121,8 @@ function( PageModel,
       var self = this;
       this.snapper = new Snap({
         element: this.$('.snap-content')[0],
-        touchToDrag: true,
+        tapToClose: true,
+        touchToDrag: false,
         maxPosition: '200px',
         disable: 'right'
       });
