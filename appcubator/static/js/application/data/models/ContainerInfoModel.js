@@ -49,8 +49,6 @@ function(WidgetCollection,
     setUpNew: function(bone) {
       var action = bone.action;
 
-      console.log(action);
-
       if(bone.action == "signup") {
         this.set('uielements',  new WidgetCollection());
 
