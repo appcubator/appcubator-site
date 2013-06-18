@@ -58,6 +58,15 @@ function(WidgetCollection,
           this.get('uielements').push(element);
         }, this);
       }
+      else if(bone.action == "login") {
+        var routes = this.get('form').get('loginRoutes');
+        v1State.get('users').each(function(table) {
+          routes.push({
+            role: table.get('name'),
+            redirect: null
+          });
+        });
+      }
       else if(action == "create") {
         this.get('form').fillWithProps(this.get('entity'));
       }

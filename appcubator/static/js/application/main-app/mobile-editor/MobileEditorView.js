@@ -62,6 +62,7 @@ function( PageModel,
 
       this.model          = v1State.get('mobilePages').models[pageId];
       v1State.currentPage = this.model;
+      v1State.isMobile    = true;
 
       /* Globals */
       g_contextCollection    = new TableCollection();

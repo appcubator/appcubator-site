@@ -68,7 +68,7 @@ function(Backbone) {
       div.style.left = '50%';
       div.style.marginLeft= '-'+ (this.width/2) +'px';
       div.style.marginTop = '-300px';
-      console.log(this.padding);
+
       div.style.padding = this.padding + 'px';
       div.style.zIndex = 3001;
 

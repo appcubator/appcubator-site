@@ -2237,6 +2237,20 @@ input[type="submit"].btn.btn-mini {
   margin-left: 0;
 }
 
+.modal h3 {
+  background-image: linear-gradient(to bottom, #fdfdfd, #eaeaea);
+  background-color: #fcfcfc;
+  margin: 0;
+  height: 52px;
+  text-shadow: rgb(255, 255, 255) 0 1px 0;
+  color: #666;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  line-height: 52px;
+  width: 100%;
+  padding-left: 10px;
+}
+
 .tooltip {
   position: absolute;
   z-index: 1030;

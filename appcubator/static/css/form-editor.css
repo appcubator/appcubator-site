@@ -482,3 +482,15 @@ label.header {
 .details-panel .new-field-form .btn {
   margin-top: 12px;
 }
+
+.login-route-editor .line { 
+  padding: 10px;
+  height: 50px;
+  line-height: 30px;
+  border-bottom: 1px solid #ccc;
+}
+
+.login-route-editor .line select {
+  float: right;
+  width: 220px;
+}

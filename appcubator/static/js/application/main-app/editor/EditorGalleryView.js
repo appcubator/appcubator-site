@@ -253,7 +253,7 @@ function(ElementCollection,
         widget.data.container_info.form = form;
         widget.data.container_info.form.entity = 'User';
         widget.type = 'form';
-        var widgetContainerModel = new ContainerWidgetModel(widget);
+        var widgetContainerModel = new ContainerWidgetModel(widget, true);
         this.widgetsCollection.push(widgetContainerModel);
 
       }
@@ -270,7 +270,7 @@ function(ElementCollection,
         widget.data         = _.extend(widget.data, uieState[this.getFieldType(field)][0]);
         widget.data.content =  content;
         widget.type = "node";
-        var widgetModel = new WidgetModel(widget);
+        var widgetModel = new WidgetModel(widget, true);
         console.log(widgetModel);
         this.widgetsCollection.push(widgetModel);
       }

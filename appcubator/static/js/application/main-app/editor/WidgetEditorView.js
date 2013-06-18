@@ -5,6 +5,7 @@ define([
   'editor/WidgetClassPickerView',
   'editor/list-editor/RowGalleryView',
   'editor/form-editor/FormEditorView',
+  'editor/form-editor/LoginFormEditorView',
   'editor/TableQueryView',
   'mixins/BackboneUI',
   'iui'
@@ -15,6 +16,7 @@ function(WidgetContentEditor,
          WidgetClassPickerView,
          RowGalleryView,
          FormEditorView,
+         LoginFormEditorView,
          TableQueryView) {
 
   var WidgetEditorView = Backbone.UIView.extend({
@@ -30,6 +32,8 @@ function(WidgetContentEditor,
       'click #edit-row-btn'       : 'openRowEditor',
       'click #edit-form-btn'      : 'openFormEditor',
       'click #pick-style'         : 'openStylePicker',
+      'click .edit-login-form-btn': 'openLoginEditor',
+
       'click .delete-button'      : 'clickedDelete',
       'click'                     : 'clicked'
     },
@@ -55,10 +59,16 @@ function(WidgetContentEditor,
       if(this.model.get('data').has('container_info')) {
         action = this.model.get('data').get('container_info').get('action');
 
-        if(action == "authentication" || action == "login" || action == "signup") {
+        if(action == "login") {
           this.layoutEditor = new WidgetLayoutEditor(this.model);
+          this.el.appendChild(this.renderEditLoginForm());
           this.el.appendChild(this.layoutEditor.el);
+        }
+
+        if(action == "authentication" || action == "signup") {
+          this.layoutEditor = new WidgetLayoutEditor(this.model);
           this.el.appendChild(this.renderEditForm());
+          this.el.appendChild(this.layoutEditor.el);
         }
 
         if(action == "imageslider") {
@@ -123,6 +133,13 @@ function(WidgetContentEditor,
       return li;
     },
 
+    renderEditLoginForm: function(e) {
+      var li       = document.createElement('ul');
+      li.className = 'form-editor-btn';
+      li.innerHTML += '<span class="edit-login-form-btn option-button tt" style="width:194px; display: inline-block;"><strong>Edit Login</strong></span><span id="delete-widget" class="option-button delete-button tt" style="width:34px; margin-left:1px; display: inline-block;"></span>';
+      return li;
+    },
+
     renderQueryButton: function() {
       var li       = document.createElement('ul');
       li.className = 'query-editor-btn';
@@ -152,6 +169,10 @@ function(WidgetContentEditor,
 
     openFormEditor: function() {
       new FormEditorView(this.model.get('data').get('container_info').get('form'), this.model.get('data').get('container_info').get('entity'));
+    },
+
+    openLoginEditor: function() {
+      new LoginFormEditorView(this.model.get('data').get('container_info').get('form'));
     },
 
     openSlideEditor: function() {
