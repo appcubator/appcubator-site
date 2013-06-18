@@ -88,34 +88,11 @@
 
   <!-- include source files here... -->
   <script type="text/javascript" src="../../libs/require.js"></script>
-  <script type="text/javascript">
- 
-    require(
-    [
-    "domReady!",
-    "../spec/editorSpec"
-    ],
-    function( document ){
-     
-    // Set up the HTML reporter - this is reponsible for
-    // aggregating the results reported by Jasmine as the
-    // tests and suites are executed.
-    jasmine.getEnv().addReporter(
-    new jasmine.HtmlReporter()
-    );
-     
-    // Run all the loaded test specs.
-    jasmine.getEnv().execute();
-     
-    }
-    );
-     
-  </script>
   
 </head>
 
 <body class="sample">
-
+<div class="description">Hello Test</div>
 
 </body>
 
@@ -182,4 +159,28 @@
   </div>
 
 </script>
+  <script type="text/javascript">
+ 
+    require(
+    [
+    "../spec/editorSpec",
+    "../lib/console-runner"
+    ],
+    function( document ){
+        // Set up the HTML reporter - this is reponsible for
+        // aggregating the results reported by Jasmine as the
+        // tests and suites are executed.
+        window.consoleReporter = new jasmine.ConsoleReporter();
+        var consoleReporter = window.consoleReporter;
+        jasmine.getEnv().addReporter(consoleReporter);
+        jasmine.getEnv().addReporter(
+        new jasmine.HtmlReporter()
+        );
+
+        // Run all the loaded test specs.
+        jasmine.getEnv().execute();
+
+    });
+     
+  </script>
 </html>
