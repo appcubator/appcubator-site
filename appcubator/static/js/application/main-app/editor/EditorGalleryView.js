@@ -234,7 +234,7 @@ function(ElementCollection,
       var className = targetEl.className;
       var id = targetEl.id;
 
-      this.createElement(widget, className, id);
+      return this.createElement(widget, className, id);
     },
 
     createElement: function(widget, className, id) {
@@ -247,6 +247,8 @@ function(ElementCollection,
         formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
         form = constantContainers[formType];
 
+        console.log(form);
+
         widget.data.container_info = {};
         widget.data.container_info.entity = form.entity;
         widget.data.container_info.action = form.action;
@@ -256,6 +258,7 @@ function(ElementCollection,
         var widgetContainerModel = new ContainerWidgetModel(widget, true);
         this.widgetsCollection.push(widgetContainerModel);
 
+        return widgetContainerModel;
       }
       else if(/(context-entity)/.exec(className)) {
         hash = String(id).replace('context-field-','');
@@ -271,8 +274,10 @@ function(ElementCollection,
         widget.data.content =  content;
         widget.type = "node";
         var widgetModel = new WidgetModel(widget, true);
-        console.log(widgetModel);
+
         this.widgetsCollection.push(widgetModel);
+
+        return widgetModel;
       }
       else if(/(entity)/.exec(className)) {
         cid  = String(id).replace('entity-','');
@@ -296,6 +301,8 @@ function(ElementCollection,
 
         var widgetContainerModel = new ContainerWidgetModel(widget, true);
         this.widgetsCollection.push(widgetContainerModel);
+
+        return widgetContainerModel;
       }
       else if (/(current-user)/.exec(className)) {
         var field_id = String(id).replace('current-user-','');
@@ -311,6 +318,8 @@ function(ElementCollection,
         widget.data.content =  content;
         var widgetModel = new WidgetModel(widget);
         this.widgetsCollection.push(widgetModel);
+
+        return widgetModel;
       }
       else if (/(uielement)/.exec(className)){
         var type    = id.replace('type-','');
@@ -321,7 +330,7 @@ function(ElementCollection,
           widget.data.container_info.action = "imageslider";
           var widgetContainerModel = new ContainerWidgetModel(widget, true);
           this.widgetsCollection.push(widgetContainerModel);
-          return;
+          return widgetContainerModel;
         }
 
         if(type == "twitterfeed") {
@@ -329,7 +338,7 @@ function(ElementCollection,
           widget.data.container_info.action = "twitterfeed";
           var widgetContainerModel = new ContainerWidgetModel(widget, true);
           this.widgetsCollection.push(widgetContainerModel);
-          return;
+          return widgetContainerModel;
         }
 
         if(type == "facebookshare") {
@@ -337,7 +346,7 @@ function(ElementCollection,
           widget.data.container_info.action="facebookshare";
           var widgetContainerModel = new ContainerWidgetModel(widget, true);
           this.widgetsCollection.push(widgetContainerModel);
-          return;
+          return widgetContainerModel;
         }
 
         widget.data.nodeType = type;
@@ -348,9 +357,10 @@ function(ElementCollection,
 
         var model = new WidgetModel(widget, true);
         this.widgetsCollection.push(model);
+        return model;
       }
       else {
-        alert('ufo:' + className);
+        console.error("UFO");
       }
     },
 

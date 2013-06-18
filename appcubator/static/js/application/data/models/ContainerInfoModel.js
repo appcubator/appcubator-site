@@ -49,6 +49,8 @@ function(WidgetCollection,
     setUpNew: function(bone) {
       var action = bone.action;
 
+      console.log(action);
+
       if(bone.action == "signup") {
         this.set('uielements',  new WidgetCollection());
 
@@ -94,8 +96,11 @@ function(WidgetCollection,
       else if(action == "facebookshare") {
         //nothing to set as of now
       }
+      else if(action == "facebook" || action == "twitter" || action == "linkedin") {
+
+      }
       else {
-        alert('UFO!');
+       throw "Action can not be found.";
       }
     },
 
