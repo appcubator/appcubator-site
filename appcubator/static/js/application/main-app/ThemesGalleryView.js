@@ -51,7 +51,6 @@ function(ThemeDisplayView) {
         type: "POST",
         url: '/theme/'+themeId+'/info/',
         success: function(data) {
-          console.log(data);
           new ThemeDisplayView(data, themeId);
         },
         dataType: "JSON"

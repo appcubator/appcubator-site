@@ -25,7 +25,6 @@ function() {
       this.model = widgetModel.get('data').get('container_info').get('query');
       this.entity = widgetModel.get('data').get('container_info').get('entity');
 
-      console.log(this.entity);
       this.render();
 
       this.model.bind('change', this.changeDescription, this);
@@ -80,9 +79,14 @@ function() {
     },
 
     belongsToUserChanged: function(e) {
-      if(e.target.checked) {
-        var bool = (e.target.value == "true"? true : false);
-        this.model.set('belongsToUser', bool);
+      if(e.target.checked && e.target.value == "true") {
+        this.model.get('where').push({
+          "equal_to": "CurrentUser",
+          "field_name": "user"
+        });
+      }
+      else {
+        this.model.get('where').removeClauseWithName('user');
       }
     },
 

@@ -44,6 +44,8 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
     // this function decides if widget or container
     placeUIElement: function(model) {
       var self = this;
+      model.setupPageContext(v1State.getCurrentPage());
+
       if(model.get('data').has('container_info') && model.get('data').get('container_info').has('row')) {
         self.placeList(model);
       }
@@ -51,7 +53,6 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
         self.placeContainer(model);
       }
       else {
-        model.setupPageContext(v1State.getCurrentPage());
         self.placeWidget(model);
       }
       model.trigger('rendered');

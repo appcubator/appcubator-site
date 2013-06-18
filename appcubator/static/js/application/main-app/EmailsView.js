@@ -82,7 +82,6 @@ function(EmailCollection, EmailModel, EmailView) {
     createEmail: function(name) {
       var email = new EmailModel({ name: name });
       this.collection.add(email);
-      console.log(this.collection.toJSON());
       this.emailView.setModel(email);
     },
 
