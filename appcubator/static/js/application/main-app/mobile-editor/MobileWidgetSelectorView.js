@@ -94,7 +94,7 @@ define([
     widgetHover: function(widgetModel) {
       if(this.selectedEl && widgetModel.cid === this.selectedEl.cid) return;
       this.hoveredEl = widgetModel;
-      this.setLayout(this.hoverDiv, widgetModel);
+      //this.setLayout(this.hoverDiv, widgetModel);
     },
 
     widgetUnhover: function(widgetModel) {
