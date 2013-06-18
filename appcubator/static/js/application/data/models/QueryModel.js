@@ -1,4 +1,7 @@
-define(['backbone'], function() {
+define([
+  'collections/WhereCollection',
+  'backbone'
+], function(WhereCollection) {
 
   var QueryModel = Backbone.Model.extend({
 
@@ -7,7 +10,7 @@ define(['backbone'], function() {
       this.set('fieldsToDisplay', bone.fieldsToDisplay||[]);
       this.set('sortAccordingTo', bone.sortAccordingTo||"Date");
       this.set('numberOfRows', bone.numberOfRows||-1);
-      this.set('where', new Backbone.Collection(bone.where||[]));
+      this.set('where', new WhereCollection(bone.where||[]));
     },
 
     toJSON: function () {

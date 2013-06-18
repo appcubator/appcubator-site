@@ -26,7 +26,6 @@ function(SelectView) {
       var arrRelations = _.union(this.userRelations, this.tableRelations);
       _.each(arrRelations, function(relation) {
         var type = relation.get('type');
-        console.log(relation);
         this.el.innerHTML += _.template(TableTemplates.relationalNL[type], relation.toJSON());
       }, this);
 
