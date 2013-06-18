@@ -1,9 +1,4 @@
-# pre-commit.sh
-git stash -q --keep-index
+# run_tests.sh
 
-# Test prospective commit
 phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee appcubator/static/js/test/suits/editor-SpecRunner.html
-echo "RUNNING TESTS YO"
-
-git stash pop -q
 
