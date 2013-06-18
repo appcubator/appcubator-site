@@ -45,9 +45,9 @@ define([
         containment: "parent",
         resize: self.resizing,
         stop  : self.resized
-      });
+      });*/
 
-      $(hoverDiv).draggable({
+      /*$(hoverDiv).draggable({
         drag: self.moving,
         stop: self.moved,
         snapMode : "outer"
@@ -74,20 +74,14 @@ define([
     setLayout: function(node, widgetModel) {
       $(node).show();
       var div = $('#widget-wrapper-' + widgetModel.cid);
-      divTop = div.offset().top - 166;
-      //var divTop = div.offset().top - 60;
+      //divTop = div.offset().top - 166;
+      var divTop = div.offset().top;
       node.style.width  = '100%';
-      node.style.height = ((widgetModel.get('layout').get('height') * 15)) + 'px';
-      //node.style.height = "5px";
+      //node.style.height = ((widgetModel.get('layout').get('height') * 15)) + 'px';
+      node.style.height = "0px";
       node.style.left   = '0px';
-      //node.style.top    = (divTop + widgetModel.get('layout').get('height')) + 'px';
-      node.style.top    = divTop + 'px';
-      $(node).resizable({
-        handles: "s",
-        containment: "parent",
-        resize: self.resizing,
-        stop  : self.resized
-      });
+      node.style.top    = (divTop + widgetModel.get('layout').get('height')) + 'px';
+      //node.style.top    = divTop + 'px';
       return node;
     },
 
@@ -115,19 +109,24 @@ define([
       this.deselect();
       this.selectedEl = widgetModel;
       widgetModel.get('layout').bind('change', function() {
-        self.setLayout(self.selectDiv, widgetModel);
+        //self.setLayout(self.selectDiv, widgetModel);
       });
       this.hideNode(this.hoverDiv);
       //this.setLayout(this.selectDiv, widgetModel);
-      document.getElementById('page-wrapper').appendChild(this.widgetEditorView.setModel(widgetModel).render().el);
+      var div = $('#widget-wrapper-' + widgetModel.cid);
+      div.addClass('selected');
+      var newWidgetEditorView = this.widgetEditorView.setModel(widgetModel).render().el;
+      $(newWidgetEditorView).css('top', div.offset().top)
+        .find('.top-arrow').removeClass('.top-arrow').addClass('left-arrow');
+      document.getElementById('page-wrapper').appendChild(newWidgetEditorView);
     },
 
     resizing: function(e, ui) {
       var elem = iui.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = ui.size.width - 4 + 'px';
-      elem.style.height = ui.size.height - 4 + 'px';
+      elem.style.height += ui.size.height - 4 + 'px';
       elem.style.left = ui.position.left + 2 + 'px';
-      elem.style.top  = ui.position.top + 2 + 'px';
+      elem.style.top  += ui.position.top + 2 + 'px';
     },
 
     resized: function(e, ui) {
@@ -147,17 +146,19 @@ define([
 
     moving: function(e, ui) {
       model = this.selectedEl;
-      $('#widget-wrapper-' + widgetModel.cid).trigger('');
+      $('#widget-wrapper-' + model.cid).trigger(e);
       if(e.target.id == "hover-div") { model = this.hoveredEl; }
 
       var elem = iui.get('widget-wrapper-' + model.cid);
       elem.style.top = ui.position.top + 2 + 'px';
       elem.style.left = ui.position.left + 2 + 'px';
-      this.setLayout(e.target, model);
+
+      //this.setLayout(e.target, model);
     },
 
     moved: function(e, ui) {
       model = this.selectedEl;
+      $('#widget-wrapper-' + model.cid).trigger(e);
       if(e.target.id == "hover-div") { model = this.hoveredEl; }
 
       var top = Math.round((ui.position.top / GRID_HEIGHT));
@@ -171,6 +172,7 @@ define([
       if(this.selectedEl) {
         this.selectedEl.trigger('deselected');
       }
+      this.$('.selected').removeClass('selected');
       this.widgetEditorView.clear();
       this.selectedEl = null;
       this.hideNode(this.selectDiv);

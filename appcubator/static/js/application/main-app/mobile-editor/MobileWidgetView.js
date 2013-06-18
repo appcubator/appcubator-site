@@ -99,7 +99,6 @@ function(WidgetView) {
       this.el.id = 'widget-wrapper-' + this.model.cid;
 
       if(this.model.isFullWidth()) this.switchOnFullWidth();
-
       return this;
     },
 
