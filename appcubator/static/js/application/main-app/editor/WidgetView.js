@@ -277,6 +277,19 @@ define([
       keyDispatcher.textEditing = false;
     },
 
+    autoResize: function() {
+      var node = this.el.firstChild;
+
+      var height= $(node).outerHeight(true);
+      var width = $(node).outerWidth(true);
+
+      var nHeight = Math.ceil(height / GRID_HEIGHT);
+      var nWidth  = Math.ceil(width / GRID_WIDTH);
+
+      this.model.get('layout').set('width', nWidth);
+      this.model.get('layout').set('height', nHeight);
+    },
+
     mousedown: function(e) {
       //e.stopPropagation();
     }
