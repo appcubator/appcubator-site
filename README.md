@@ -42,3 +42,11 @@ chmod +x manage.py
 ```
 ./manage.py runserver
 ```
+
+6. Tests
+```
+ln -s ../../pre-commit.sh .git/hooks/pre-commit
+```
+
+New tests should be added to ./run-tests.sh on the home directory.
+
