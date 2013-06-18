@@ -3,7 +3,7 @@ define([
   'editor/TableQueryView',
   'editor/WidgetView',
   'editor/SubWidgetView',
-  'app/FormEditorView',
+  'editor/form-editor/FormEditorView',
   'dicts/constant-containers',
   'editor/editor-templates',
   'jquery.flexslider'
