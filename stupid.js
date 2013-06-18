@@ -1,1 +1,1 @@
-No it's not stupid. YOLO.
+No it's not stupid. YOWO.
