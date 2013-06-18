@@ -14,6 +14,10 @@ function(AppInfoModel,
          EmailCollection) {
 
   var AppModel = Backbone.Model.extend({
+
+    currentPage: null,
+    isMobile: false,
+
     initialize: function(appState) {
       if(!appState) return;
 
@@ -25,6 +29,15 @@ function(AppInfoModel,
 
     getCurrentPage: function() {
       return this.currentPage;
+    },
+
+    getPages: function () {
+      if(!this.isMobile) {
+        return this.get('pages');
+      }
+      else {
+        return this.get('mobilePages');
+      }
     },
 
     toJSON: function() {

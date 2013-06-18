@@ -1,9 +1,14 @@
 define([
   'collections/FormFieldCollection',
   'collections/ActionCollection',
+  'collections/LoginRouteCollection',
   'models/ActionModel'
 ],
-function(FormFieldCollection, ActionCollection, ActionModel) {
+function(
+  FormFieldCollection,
+  ActionCollection,
+  LoginRouteCollection,
+  ActionModel) {
 
   var FormModel = Backbone.Model.extend({
     initialize: function(bone) {
@@ -13,11 +18,11 @@ function(FormFieldCollection, ActionCollection, ActionModel) {
       this.set('action', bone.action||"create");
       this.set('actions', new ActionCollection(bone.actions || []));
       this.set('redirect', null);
-      if(bone.redirect) {
-        this.set('redirect', new ActionModel(bone.redirect));
-      }
-      this.set('entity', bone.entity);
 
+      if(bone.loginRoutes) { this.set('loginRoutes', new LoginRouteCollection(bone.loginRoutes));}
+      if(bone.redirect) { this.set('redirect', new ActionModel(bone.redirect)); }
+
+      this.set('entity', bone.entity);
 
       if(bone.fields) { this.get('fields').add(bone.fields); }
 
@@ -81,7 +86,6 @@ function(FormFieldCollection, ActionCollection, ActionModel) {
     },
 
     addRedirect: function(pageModel) {
-      console.log(pageModel);
       this.set('redirect', new ActionModel({
         type : "redirect",
         page_name : pageModel.get('name')
@@ -92,7 +96,6 @@ function(FormFieldCollection, ActionCollection, ActionModel) {
       var json = _.clone(this.attributes);
       json.name = json.name || "";
       json.fields = this.get('fields').toJSON();
-      console.log(json);
       if(json.redirect) json.redirect = json.redirect.toJSON();
       return json;
     }

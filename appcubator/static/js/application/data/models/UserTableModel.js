@@ -1,11 +1,10 @@
 define([
   'models/TableModel',
   'models/FieldModel',
-  'collections/FormCollection',
   'collections/FieldsCollection',
   'backbone'
 ],
-function(TableModel, FieldModel, FormCollection, FieldsCollection, Backbone) {
+function(TableModel, FieldModel, FieldsCollection, Backbone) {
 
   var UserTableModel = TableModel.extend({
 

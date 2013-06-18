@@ -71,7 +71,8 @@ var constantContainers = {
                         "displayType": "button",
                         "type": "button"
                     }
-    ]
+    ],
+    loginRoutes: []
   },
   'Sign Up' : {
     "action": "signup",

@@ -195,3 +195,14 @@ FormEditorTemplates.details = [
   '</label>',
   '<label class="options-list"></label>'
 ].join('\n');
+
+FormEditorTemplates.routeTemplate = [
+  '<div class="line">',
+    '<span><strong><%= route.get("role") %></strong> goes to </span>',
+    '<select class="redirect-page" id="redirect-select-<%= route.cid %>">',
+      '<% _(pages).each(function(page) { var selected = ""; if("internal://"+page.name == route.get("redirect")) { selected = "selected"; } %>',
+      '<option value="internal://<%= page.name %>" <%= selected %>><%= page.name %></option>',
+      '<% }); %>',
+    '</select>',
+  '</div>'
+].join('\n');
