@@ -56,7 +56,7 @@ function(WidgetsManagerView,
 
       $( "#elements-container" ).sortable({
         placeholder: "ui-state-highlight",
-        stop: this.positionChanged
+        stop: this.positionChanged,
       });
     },
 

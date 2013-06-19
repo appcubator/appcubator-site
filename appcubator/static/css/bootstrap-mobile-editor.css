@@ -29,9 +29,9 @@
   z-index: 1001;
   display: block;
   width: 100%;
-  overflow: visible;
   background-color: rgba(124, 192, 213, 0.0);
-  overflow: hidden;
+  overflow-x: visible;
+  overflow-y: hidden;
   border: none;
 
   -webkit-touch-callout: none;
@@ -40,6 +40,11 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.m-widget-wrapper.selected {
+  border: 2px solid #71c5ef;
+  z-index: 2004;
 }
 
 .m-widget-wrapper.textediting {
