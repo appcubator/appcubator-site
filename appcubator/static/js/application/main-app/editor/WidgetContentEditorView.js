@@ -32,7 +32,6 @@ function(SelectView) {
         this.model.get('type') != "buttons") {
 
         this.el.appendChild(this.renderFontPicker());
-        this.el.appendChild(this.renderTextEditing());
       }
 
       if(this.model.get('data').get('content_attribs').has('href')) {
@@ -90,12 +89,6 @@ function(SelectView) {
       return li;
     },
 
-    renderTextEditing: function() {
-      var li       = document.createElement('li');
-      li.appendChild(new comp().div('Text').classN('key').el);
-      li.appendChild(new comp().textarea(this.model.get('data').get('content')).id('prop-content').classN('content-editor').el);
-      return li;
-    },
 
     renderFontPicker: function() {
       var li       = document.createElement('li');
