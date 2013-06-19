@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 import django.contrib.auth.views
-import base_views, views, theme_views, log_views
+import base_views, views, theme_views, log_views, test_views
 import django.views.generic.base
 
 # from django.contrib import admin
@@ -95,9 +95,12 @@ urlpatterns += patterns('appcubator.theme_views',
     url(r'^theme/(\d+)/static/$', 'themestaticfiles'), # a GET returns the apps statics, a POST creates a static file entry.
 )
 
+urlpatterns += patterns('appcubator.test_views',
+    url(r'^test/editor/$', 'test_editor'),
+)
+
 urlpatterns += patterns('',
     url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
-    url(r'^test/','django.views.static.serve', {'document_root': '/static/js/test/suits/editor-SpecRunner.html'}),
 )
 
 # production (hosted) deployments

@@ -57,6 +57,18 @@ function( EditorView,
 
   describe( "Authentication Elements", function () {
 
+    var getValidation = function(data, callback) {
+        $.ajax({
+            type: "POST",
+            url: "/backend/validate/",
+            data: { app_state: data},
+            dataType: "json",
+            success: function(data) {
+              console.log(data);
+            }
+        });
+    };
+
     it("Local Login Form", function () {
       var id = "entity-user-Local_Login";
       var className = "login authentication ui-draggable";
@@ -71,9 +83,23 @@ function( EditorView,
       fE.target.className = className;
       fE.target.id = id;
 
+      /* Check if exists */
       var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
       var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
       expect(droppedEl).not.toBe(null);
+
+      /* Check validation */
+      console.log(v1State.toJSON());
+      //var callback = jasmine.createSpy();
+      var obj = _.clone(v1State.toJSON());
+      getValidation(JSON.stringify(v1State.toJSON()), null);
+      // waitsFor(function() {
+      //     return callback.callCount > 0;
+      // });
+      // runs(function() {
+      //   console.log(callback);
+      //     //expect(callback).toHaveBeenCalled();
+      // });
 
     });
 
@@ -152,4 +178,5 @@ function( EditorView,
     });
 
   });
+
 });
