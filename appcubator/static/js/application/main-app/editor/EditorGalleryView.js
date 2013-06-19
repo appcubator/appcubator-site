@@ -322,6 +322,8 @@ function(ElementCollection,
       else if (/(uielement)/.exec(className)){
         var type    = id.replace('type-','');
         widget.data = {};
+        widget.data.nodeType = type;
+        widget.type = "gallery";
 
         if(type == "imageslider") {
           widget.data.container_info = {};
@@ -347,9 +349,8 @@ function(ElementCollection,
           return widgetContainerModel;
         }
 
-        widget.data.nodeType = type;
         widget.data = _.extend(widget.data, uieState[type][0]);
-        widget.type = "node";
+
 
         if(this.entity) { widget.context = this.entity.get('name'); }
 
