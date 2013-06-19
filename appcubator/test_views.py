@@ -17,3 +17,6 @@ import re
 
 def test_editor(request):
     return render(request, 'tests/editor-SpecRunner.html', {})
+
+def test_router(request):
+    return render(request, 'tests/router-SpecRunner.html', {})

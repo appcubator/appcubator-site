@@ -97,6 +97,7 @@ urlpatterns += patterns('appcubator.theme_views',
 
 urlpatterns += patterns('appcubator.test_views',
     url(r'^test/editor/$', 'test_editor'),
+    url(r'^test/router/$', 'test_router'),
 )
 
 urlpatterns += patterns('',
