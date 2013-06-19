@@ -286,6 +286,9 @@ define([
       var nHeight = Math.ceil(height / GRID_HEIGHT);
       var nWidth  = Math.ceil(width / GRID_WIDTH);
 
+      if(!nHeight) nHeight = 2;
+      if(!nWidth)  nWidth = 2;
+
       this.model.get('layout').set('width', nWidth);
       this.model.get('layout').set('height', nHeight);
     },
