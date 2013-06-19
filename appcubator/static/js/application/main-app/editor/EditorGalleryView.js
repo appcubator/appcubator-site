@@ -312,7 +312,8 @@ function(ElementCollection,
         entity = v1State.get('users');
         content =  '{{CurrentUser.'+field.get('name')+'}}';
 
-        widget.data         = _.extend(widget, uieState[this.getFieldType(field)][0]);
+        widget.type         = "node";
+        widget.data         = _.extend(widget.data, uieState[this.getFieldType(field)][0]);
         widget.data.content =  content;
         var widgetModel = new WidgetModel(widget);
         this.widgetsCollection.push(widgetModel);
@@ -323,9 +324,10 @@ function(ElementCollection,
         var type    = id.replace('type-','');
         widget.data = {};
         widget.data.nodeType = type;
-        widget.type = "gallery";
+        widget.type = "node";
 
         if(type == "imageslider") {
+          widget.type = "gallery";
           widget.data.container_info = {};
           widget.data.container_info.action = "imageslider";
           var widgetContainerModel = new ContainerWidgetModel(widget, true);
@@ -334,6 +336,7 @@ function(ElementCollection,
         }
 
         if(type == "twitterfeed") {
+          widget.type = "gallery";
           widget.data.container_info = {};
           widget.data.container_info.action = "twitterfeed";
           var widgetContainerModel = new ContainerWidgetModel(widget, true);
@@ -342,6 +345,7 @@ function(ElementCollection,
         }
 
         if(type == "facebookshare") {
+          widget.type = "gallery";
           widget.data.container_info = {};
           widget.data.container_info.action="facebookshare";
           var widgetContainerModel = new ContainerWidgetModel(widget, true);

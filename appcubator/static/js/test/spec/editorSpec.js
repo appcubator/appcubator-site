@@ -219,4 +219,228 @@ define([
 
     });
 
+    describe("Current User", function () {
+      var className = 'current-user ui-draggable';
+      var id = 'current-user-c4';
+      var galleryElement = document.getElementById(id);
+
+       it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+    });
+
+    describe("Create Form", function () {
+      var className = 'entity-create-form ui-draggable';
+      var id = 'entity-c11';
+      var galleryElement = document.getElementById(id);
+
+       it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+    });
+
+    describe("List", function () {
+      var className = 'entity-list ui-draggable';
+      var id = 'entity-c11';
+      var galleryElement = document.getElementById(id);
+
+       it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+    });
+
+    describe("Image Node", function () {
+      var className = 'uielement images ui-draggable';
+      var id = 'type-images';
+      var galleryElement = document.getElementById(id);
+
+       it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+    });
+
+    describe("Header Node", function () {
+      var className = 'uielement headerTexts ui-draggable';
+      var id = 'type-headerTexts';
+      var galleryElement = document.getElementById(id);
+
+       it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+    });
+
+    describe("Text Node", function () {
+      var className = 'uielement texts ui-draggable';
+      var id = 'type-texts';
+      var galleryElement = document.getElementById(id);
+
+       it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+    });
+
+    describe("Link Node", function () {
+      var className = 'uielement links ui-draggable';
+      var id = 'type-links';
+      var galleryElement = document.getElementById(id);
+
+       it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+    });
+
+    describe("Line Node", function () {
+      var className = 'uielement lines ui-draggable';
+      var id = 'type-lines';
+      var galleryElement = document.getElementById(id);
+
+       it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+    });
+
+    describe("Box Node", function () {
+      var className = 'uielement boxes ui-draggable';
+      var id = 'type-boxes';
+      var galleryElement = document.getElementById(id);
+
+      it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+    });
   });

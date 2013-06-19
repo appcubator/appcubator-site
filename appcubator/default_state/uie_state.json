@@ -14,7 +14,6 @@
         {
             "isSingle": false,
             "content_attribs": null,
-            "hoverStyle": "",
             "class_name": "txt",
             "content": "Default text!",
             "tagName": "span"
@@ -37,7 +36,6 @@
             "content_attribs": {
                 "value": "Button1"
             },
-            "hoverStyle": "",
             "class_name": "btn-1",
             "content": null,
             "tagName": "input",
@@ -51,7 +49,6 @@
         {
             "isSingle": false,
             "content_attribs": null,
-            "hoverStyle": "",
             "class_name": "header-1",
             "content": "Default header!",
             "tagName": "h1",
@@ -65,7 +62,6 @@
             "content_attribs": {
                 "placeholder": "Default placeholder..."
             },
-            "hoverStyle": "",
             "class_name": "password-1",
             "content": null,
             "tagName": "input",
@@ -79,7 +75,6 @@
         {
             "isSingle": false,
             "content_attribs": null,
-            "hoverStyle": "",
             "class_name": "textarea1",
             "content": "Default Text Area...",
             "tagName": "textarea",
@@ -93,7 +88,6 @@
             "cons_attribs": {
                 "style": "border:1px solid #333;"
             },
-            "hoverStyle": "",
             "class_name": "box-1",
             "content": null,
             "tagName": "div",
@@ -104,7 +98,6 @@
         {
             "attribs": null,
             "isSingle": false,
-            "hoverStyle": "",
             "class_name": "default-dropdown",
             "content": "<option>Option 1</option>",
             "tagName": "select"
@@ -140,7 +133,6 @@
             "content_attribs": {
                 "placeholder": "Default placeholder..."
             },
-            "hoverStyle": "",
             "class_name": "inpt-1",
             "tagName": "input",
             "activeStyle": "",
