@@ -88,7 +88,6 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         url: pageUrl,
         navbar: {
           brandName: v1State.get('name'),
-<<<<<<< Updated upstream
           links: [
             {
               "url": "internal://Homepage",
@@ -101,10 +100,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
           ]
         }
       });
-=======
-          links: v1State.get('pages').toJSON()
-        }});
->>>>>>> Stashed changes
+
       v1.save();
     },
 
