@@ -4,41 +4,45 @@
 <head>
   <title>Jasmine Spec Runner</title>
 
-  <link rel="shortcut icon" type="image/png" href="../lib/jasmine-1.3.1/jasmine_favicon.png">
-  <link rel="stylesheet" type="text/css" href="../lib/jasmine-1.3.1/jasmine.css">
-  <script type="text/javascript" src="../lib/jasmine-1.3.1/jasmine.js"></script>
-  <script type="text/javascript" src="../lib/jasmine-1.3.1/jasmine-html.js"></script>
-  <script type="text/javascript" src="../src/appState.js"></script>
-  <script type="text/javascript" src="../src/uieState.js"></script>
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/test/lib/jasmine-1.3.1/jasmine.css">
+
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-editor.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/widget-editor.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/editor-gallery.css">
+
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/lib/jasmine-1.3.1/jasmine.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/lib/jasmine-1.3.1/jasmine-html.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/src/appState.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/src/uieState.js"></script>
 
   <script type="text/javascript">
- 
   var v1State = {};
   var require = {
 
     paths: {
-      "jquery" : "../../libs/jquery/jquery",
-      "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
-      "jquery.filedrop" : "../../libs/jquery/jquery.filedrop",
-      "jquery.flexslider" : "../../libs/jquery/jquery.flexslider-min",
-      "underscore" : "../../libs/underscore-amd/underscore",
-      "backbone" : "../../libs/backbone-amd/backbone",
-      "iui" : "../../libs/iui/iui",
-      "comp": "../../libs/iui/comp",
-      "bootstrap" : "../../libs/bootstrap/bootstrap",
-      "app" : "../../application/main-app",
-      "editor" : "../../application/main-app/editor",
-      "m-editor" : "../../application/main-app/mobile-editor",
-      "dicts" : "../../application/main-app/dicts",
-      "mixins" : "../../mixins",
-      "key" : "../../libs/keymaster/keymaster",
-      "answer" : "../../libs/answer/answer",
-      "prettyCheckable" : "../../libs/jquery/prettyCheckable",
-      "list" : "../../libs/list",
-      "models" : "../../application/data/models",
-      "collections" : "../../application/data/collections",
-      "tutorial" : "../../application/tutorial",
-      "domReady": "../../libs/requirejs/domReady",
+      "jquery" : "{{ STATIC_URL }}js/libs/jquery/jquery",
+      "jquery-ui" : "{{ STATIC_URL }}js/libs/jquery-ui/jquery-ui",
+      "jquery.filedrop" : "{{ STATIC_URL }}js/libs/jquery/jquery.filedrop",
+      "jquery.flexslider" : "{{ STATIC_URL }}js/libs/jquery/jquery.flexslider-min",
+      "underscore" : "{{ STATIC_URL }}js/libs/underscore-amd/underscore",
+      "backbone" : "{{ STATIC_URL }}js/libs/backbone-amd/backbone",
+      "iui" : "{{ STATIC_URL }}js/libs/iui/iui",
+      "comp": "{{ STATIC_URL }}js/libs/iui/comp",
+      "bootstrap" : "{{ STATIC_URL }}js/libs/bootstrap/bootstrap",
+      "app" : "{{ STATIC_URL }}js/application/main-app",
+      "editor" : "{{ STATIC_URL }}js/application/main-app/editor",
+      "m-editor" : "{{ STATIC_URL }}js/application/main-app/mobile-editor",
+      "dicts" : "{{ STATIC_URL }}js/application/main-app/dicts",
+      "mixins" : "{{ STATIC_URL }}js/mixins",
+      "key" : "{{ STATIC_URL }}js/libs/keymaster/keymaster",
+      "answer" : "{{ STATIC_URL }}js/libs/answer/answer",
+      "prettyCheckable" : "{{ STATIC_URL }}js/libs/jquery/prettyCheckable",
+      "list" : "{{ STATIC_URL }}js/libs/list",
+      "models" : "{{ STATIC_URL }}js/application/data/models",
+      "collections" : "{{ STATIC_URL }}js/application/data/collections",
+      "tutorial" : "{{ STATIC_URL }}js/application/tutorial",
+      "domReady": "{{ STATIC_URL }}js/test/libs/requirejs/domReady",
     },
 
     shim: {
@@ -57,7 +61,7 @@
         deps: ["jquery"]
       },
       "answer" : {
-        deps: ["../../libs/answer/lib/natural", "underscore", "jquery"]
+        deps: ["{{ STATIC_URL }}js/libs/answer/lib/natural.js", "underscore", "jquery"]
       }
     }
   };
@@ -65,28 +69,26 @@
   </script>
 
   <!-- include source files here... -->
-  <script type="text/javascript" src="../../libs/require.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL}}js/libs/requirejs/require.js"></script>
   <script type="text/javascript">
  
     require(
     [
-    "domReady!",
-    "../spec/dataSpec"
+    "{{ STATIC_URL }}js/test/lib/console-runner.js",
+    "{{ STATIC_URL }}js/test/spec/dataSpec.js"
     ],
     function( document ){
      
-    // Set up the HTML reporter - this is reponsible for
-    // aggregating the results reported by Jasmine as the
-    // tests and suites are executed.
-    jasmine.getEnv().addReporter(
-    new jasmine.HtmlReporter()
-    );
-     
-    // Run all the loaded test specs.
-    jasmine.getEnv().execute();
-     
-    }
-    );
+        window.consoleReporter = new jasmine.ConsoleReporter();
+        var consoleReporter = window.consoleReporter;
+        jasmine.getEnv().addReporter(consoleReporter);
+        jasmine.getEnv().addReporter(
+        new jasmine.HtmlReporter()
+        );
+
+        // Run all the loaded test specs.
+        jasmine.getEnv().execute();
+    });
      
   </script>
   

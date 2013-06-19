@@ -17,10 +17,10 @@ function(
       this.set('fields', new FormFieldCollection());
       this.set('action', bone.action||"create");
       this.set('actions', new ActionCollection(bone.actions || []));
-      this.set('redirect', null);
+      this.set('goto', "internal://Homepage/");
 
       if(bone.loginRoutes) { this.set('loginRoutes', new LoginRouteCollection(bone.loginRoutes));}
-      if(bone.redirect) { this.set('redirect', new ActionModel(bone.redirect)); }
+      if(bone.goto) { this.set('got', new ActionModel(bone.goto)); }
 
       this.set('entity', bone.entity);
 

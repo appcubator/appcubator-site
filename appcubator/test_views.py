@@ -20,3 +20,6 @@ def test_editor(request):
 
 def test_router(request):
     return render(request, 'tests/router-SpecRunner.html', {})
+
+def test_data(request):
+    return render(request, 'tests/data-SpecRunner.html', {})

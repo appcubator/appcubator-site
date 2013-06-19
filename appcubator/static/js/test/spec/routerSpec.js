@@ -16,7 +16,6 @@ define([
 function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
 
   v1State = new AppModel(appState);
-  console.log(v1State);
 
   keyDispatcher = new KeyDispatcher();
   mouseDispatcher = new MouseDispatcher();
