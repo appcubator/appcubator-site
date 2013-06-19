@@ -168,10 +168,6 @@ define([
 			AppRouter.view.setElement(cleanDiv).render();
 
 			$('.active').removeClass('active');
-			// refresh scrollspy
-      $('[data-spy="scroll"]').each(function() {
-        var $spy = $(this).scrollspy('refresh');
-      });
 			this.changeTitle(AppRouter.view.title);
 			post_render();
 		},
