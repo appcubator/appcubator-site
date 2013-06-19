@@ -73,8 +73,8 @@ function() {
       });
 
 
-      selectDiv.style.zIndex = "2004";
-      hoverDiv.style.zIndex = "2005";
+      selectDiv.style.zIndex = "2005";
+      hoverDiv.style.zIndex = "2004";
       hoverDiv.style.position = "absolute";
       selectDiv.style.position = "absolute";
 
