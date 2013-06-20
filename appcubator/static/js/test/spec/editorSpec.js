@@ -444,4 +444,96 @@ define([
         validateBackend();
       });
     });
+
+    describe('Navbar', function() {
+      var model = v1State.get('pages').at(pageId).get('navbar');
+      var links = model.get('links');
+      var navbar = AppRouter.view.navbar;
+
+      it('renders the brandName', function() {
+        //set brandName to appState name to start
+        var view_brandName = navbar.$('#brand-name').text('thisisirrelevant').text();
+        var model_brandName = model.get('brandName') || v1State.get('name');
+        expect(model_brandName).toEqual(view_brandName);
+      });
+
+      it('updates the brandName', function() {
+        var old_brandname = model.get('brandName') || v1State.get('name');
+        model.set('brandName', "DERPY");
+        var brandName = navbar.$('#brand-name').text();
+        expect(model.get('brandName')).toEqual(brandName);
+      });
+
+      it('renders correct number of elements', function() {
+        var numLinks = links.length;
+        var numListItems = navbar.$('#links li').length;
+        expect(numLinks).toEqual(numListItems);
+      });
+
+      it('adds new links to navbar', function() {
+        var initialLength = $(navbar.el).find('#links li').length;
+        links.add({
+          title: "DERPTASTIC",
+          url: 'http://www.google.com/'
+        });
+        var after = $(navbar.el).find('#links li');
+        var finalLength = after.length;
+        expect(finalLength).toEqual(initialLength + 1);
+        var lastLink = after.last()[0].children[0];
+        expect(lastLink.innerText).toEqual('DERPTASTIC');
+      });
+
+      it('removes links from navbar', function() {
+        var initialLength = $(navbar.el).find('#links li').length;
+        links.remove(links.first());
+        var finalLength = $(navbar.el).find('#links li').length;
+        expect(finalLength).toEqual(initialLength - 1);
+      });
+    });
+
+    describe('Footer', function() {
+      var model = v1State.get('pages').at(pageId).get('footer');
+      var links = model.get('links');
+      var footer = AppRouter.view.footer;
+
+      it('renders the custom text', function() {
+        //set brandName to appState name to start
+        var view_customText = footer.$('#customText').text();
+        var model_customText = model.get('customText') || "Add custom footer text here";
+        expect(model_customText).toEqual(view_customText);
+      });
+
+      it('updates the custom text', function() {
+        var old_customText = model.get('customText') || "Add custom footer text here";
+        model.set('customText', "DERPY");
+        var customText = footer.$('#customText').text();
+        expect(model.get('customText')).toEqual(customText);
+      });
+
+      it('renders correct number of elements', function() {
+        var numLinks = links.length;
+        var numListItems = footer.$('#links li').length;
+        expect(numLinks).toEqual(numListItems);
+      });
+
+      it('adds new links to footer', function() {
+        var initialLength = $(footer.el).find('#links li').length;
+        links.add({
+          title: "DERPTASTIC",
+          url: 'http://www.google.com/'
+        });
+        var after = $(footer.el).find('#links li');
+        var finalLength = after.length;
+        expect(finalLength).toEqual(initialLength + 1);
+        var lastLink = after.last()[0].children[0];
+        expect(lastLink.innerText).toEqual('DERPTASTIC');
+      });
+
+      it('removes links from footer', function() {
+        var initialLength = $(footer.el).find('#links li').length;
+        links.remove(links.first());
+        var finalLength = $(footer.el).find('#links li').length;
+        expect(finalLength).toEqual(initialLength - 1);
+      });
+    });
   });

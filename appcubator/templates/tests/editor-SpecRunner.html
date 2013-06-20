@@ -33,7 +33,7 @@
   </style>
 
   <script type="text/javascript">
- 
+
   var statics = ["image1.png"];
   var v1State = {};
   var require = {
@@ -84,12 +84,12 @@
       }
     }
   };
-   
+
   </script>
 
   <!-- include source files here... -->
   <script type="text/javascript" src="{{ STATIC_URL}}js/libs/requirejs/require.js"></script>
-  
+
 </head>
 
 <body class="sample">
@@ -119,7 +119,7 @@
           <div class="navbar-inner">
             <div class="container">
               <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
-              <ul class="nav" id="items">
+              <ul class="nav" id="links">
               </ul>
               <button class="edit-navbar btn btn-small btn-inverse pull-right">Edit Navbar</button>
             </div>
@@ -160,7 +160,7 @@
 
 </script>
   <script type="text/javascript">
- 
+
     require(
     [
     "{{ STATIC_URL }}js/test/spec/editorSpec.js",
@@ -181,6 +181,6 @@
         jasmine.getEnv().execute();
 
     });
-     
+
   </script>
 </html>
