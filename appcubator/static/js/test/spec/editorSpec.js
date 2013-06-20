@@ -444,4 +444,36 @@ define([
         validateBackend();
       });
     });
+
+    describe('Navbar', function() {
+      var model = v1State.get('pages').at(pageId).get('navbar');
+      var links = model.get('links');
+      var navbar = AppRouter.view.navbar;
+
+      it('renders correct number of elements', function() {
+        var numLinks = links.length;
+        var numListItems = navbar.$('#items li').length;
+        expect(numLinks).toEqual(numListItems);
+      });
+
+      it('adds new links to navbar', function() {
+        var initialLength = $(navbar.el).find('#items li').length;
+        links.add({
+          title: "DERPTASTIC",
+          url: 'http://www.google.com/'
+        });
+        var after = $(navbar.el).find('#items li');
+        var finalLength = after.length;
+        expect(finalLength).toEqual(initialLength + 1);
+        var lastLink = after.last()[0].children[0];
+        expect(lastLink.innerText).toEqual('DERPTASTIC');
+      });
+
+      it('removes links from navbar', function() {
+        var initialLength = $(navbar.el).find('#items li').length;
+        links.remove(links.first());
+        var finalLength = $(navbar.el).find('#items li').length;
+        expect(finalLength).toEqual(initialLength - 1);
+      });
+    });
   });
