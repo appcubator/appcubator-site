@@ -18,7 +18,6 @@ import re
 
 def test_editor(request):
 	#find/create test user
-	print "YO"
 	try:
 		test_user = User.objects.get(username="!@TEST__USER@!")
 	except User.DoesNotExist:

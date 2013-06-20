@@ -20,7 +20,7 @@ function(
 
       if(bone.loginRoutes) { this.set('loginRoutes', new LoginRouteCollection(bone.loginRoutes));}
       if(!bone.goto) { bone.goto = "internal://Homepage"; }
-      if(bone.goto) { this.set('goto', new ActionModel(bone.goto)); }
+      if(bone.goto) { this.set('goto', new ActionModel( { type: "goto", page_name: bone.goto)); }
 
       this.set('entity', bone.entity);
 
