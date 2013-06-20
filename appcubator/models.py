@@ -100,10 +100,11 @@ class App(models.Model):
     def save(self, *args, **kwargs):
         if self.subdomain == '':
             self.reset_subdomain()
+        self.subdomain = self.subdomain.lower()
         return super(App, self).save(*args, **kwargs)
 
     def reset_subdomain(self):
-        self.subdomain = self.u_name()
+        self.subdomain = self.u_name().lower()
 
     def clean(self):
         from django.core.exceptions import ValidationError

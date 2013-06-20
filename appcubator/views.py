@@ -482,7 +482,7 @@ def register_domain(request, domain):
 @login_required
 @csrf_exempt
 def sub_check_availability(request, subdomain):
-    domain_is_available = not App.objects.filter(subdomain=subdomain).exists()
+    domain_is_available = not App.objects.filter(subdomain=subdomain.lower()).exists()
 
     if domain_is_available:
         return JSONResponse(True)

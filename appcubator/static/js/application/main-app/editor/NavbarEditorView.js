@@ -53,9 +53,10 @@ function(LinkEditorView) {
     },
 
     addLinkEditorClicked: function(e) {
+      e.preventDefault();
       this.model.get('links').add();
       var newLink = this.model.get('links').last();
-      this.addLinkEditorView(newLink)
+      this.addLinkEditorView(newLink);
     },
 
     addLinkEditorView: function(linkModel) {
