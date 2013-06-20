@@ -69,7 +69,7 @@ function(FormFieldModel, ActionModel, TutorialView) {
     gotoActionClicked: function(e) {
       var pageCid = e.target.id.replace('page-','');
       this.model.set('goto', new ActionModel({ type: "goto",
-                                               page_name: v1State.get('pages').get(pageCid).get('name') }));
+                                               page_name: "internal://" + v1State.get('pages').get(pageCid).get('name') }));
 
     },
 
@@ -86,7 +86,9 @@ function(FormFieldModel, ActionModel, TutorialView) {
       console.log(this.model.get('goto'));
       this.$el.find('.redirect-action').remove();
       var redirect = this.model.get('goto');
-      this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">Go to '+redirect.get('page_name')+'<div class="remove-from-list"></div></li>');
+      var page_name = redirect.get('page_name').replace('internal://', '');
+
+      this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">Go to '+ page_name +'<div class="remove-from-list"></div></li>');
     },
 
     actionRemoved: function(actionModel) {
