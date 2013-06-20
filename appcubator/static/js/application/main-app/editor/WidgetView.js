@@ -275,7 +275,7 @@ define([
       this.editMode = false;
       this.$el.removeClass('textediting');
       var el = $(this.el.firstChild);
-      val = el.html();
+      val = el[0].innerText;
       this.model.get('data').set('content', val);
       el.attr('contenteditable', 'false');
       keyDispatcher.textEditing = false;
