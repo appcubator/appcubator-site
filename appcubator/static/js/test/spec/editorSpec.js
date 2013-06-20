@@ -15,6 +15,7 @@ define([
   "collections/UserRolesCollection",
   "editor/KeyDispatcher",
   "editor/MouseDispatcher",
+  "comp",
   "backbone"
   ],
   function( EditorView,
