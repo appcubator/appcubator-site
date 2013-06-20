@@ -98,8 +98,12 @@ class App(models.Model):
     deployment_id = models.IntegerField(blank=True, null=True, default=None)
 
     def save(self, *args, **kwargs):
-        self.subdomain = self.u_name()
+        if self.subdomain == '':
+            self.reset_subdomain()
         return super(App, self).save(*args, **kwargs)
+
+    def reset_subdomain(self):
+        self.subdomain = self.u_name()
 
     def clean(self):
         from django.core.exceptions import ValidationError
@@ -265,9 +269,9 @@ class App(models.Model):
             files = {'file':f}
             post_data = self.get_deploy_data()
             if self.deployment_id is None:
-                r = requests.post("http://staging.appcubator.com/deployment/", data=post_data, files=files)
+              r = requests.post("http://staging.appcubator.com/deployment/", data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
             else:
-                r = requests.post("http://staging.appcubator.com/deployment/%s/" % self.deployment_id, data=post_data, files=files)
+                r = requests.post("http://staging.appcubator.com/deployment/%s/" % self.deployment_id, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
 
         finally:
             f.close()
@@ -294,7 +298,7 @@ class App(models.Model):
             return self.deploy(retry_on_404=False)
 
         else:
-            raise Exception(r.content)
+          return {'errors': r.content}
     """
     def deploy(self, d_user):
         # this will post the data to appcubator.com
