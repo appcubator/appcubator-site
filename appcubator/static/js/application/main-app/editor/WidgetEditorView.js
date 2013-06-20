@@ -130,7 +130,7 @@ function(WidgetContentEditor,
     renderButtonWithDeleteButtonandText: function(className, buttonText) {
       var li       = document.createElement('ul');
       //li.className = className;
-      li.innerHTML += '<span class="'+ className +'option-button tt" style="width:194px; display: inline-block;"><strong>'+ buttonText +'</strong></span><span id="delete-widget" class="option-button delete-button tt" style="width:34px; margin-left:1px; display: inline-block;"></span>';
+      li.innerHTML += '<span class="'+ className +'  option-button tt" style="width:194px; display: inline-block;"><strong>'+ buttonText +'</strong></span><span id="delete-widget" class="option-button delete-button tt" style="width:34px; margin-left:1px; display: inline-block;"></span>';
       return li;
     },
 
