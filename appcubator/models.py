@@ -100,6 +100,7 @@ class App(models.Model):
     def save(self, *args, **kwargs):
         if self.subdomain == '':
             self.reset_subdomain()
+        self.subdomain = self.subdomain.lower()
         return super(App, self).save(*args, **kwargs)
 
     def reset_subdomain(self):
