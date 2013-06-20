@@ -18,9 +18,9 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       'click .add-property-button' : 'clickedAddProperty',
       'submit .add-property-form'  : 'formSubmitted',
       'change .attribs'            : 'changedAttribs',
-      'click  .delete'             : 'clickedDelete',
       'click .prop-cross'          : 'clickedPropDelete',
       'click .excel'               : 'clickedUploadExcel',
+      'click .trash'               : 'clickedDelete',
       'click .show-data'           : 'showData',
       'mouseover .right-arrow'     : 'slideRight',
       'mousemove .right-arrow'     : 'slideRight',
@@ -34,7 +34,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     initialize: function(tableModel){
       _.bindAll(this);
       this.model  = tableModel;
-
+      this.listenTo(this.model, 'remove', this.remove);
       this.listenTo(this.model.get('fields'), 'add', this.appendField);
       this.userRoles = v1State.get('users').pluck('name');
       this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));

@@ -100,6 +100,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
           ]
         }
       });
+
       v1.save();
     },
 

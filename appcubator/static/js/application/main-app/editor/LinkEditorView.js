@@ -18,10 +18,10 @@ define([
           this.listenTo(this.model, 'change:url', this.renderUrl, this);
 
           // generate list of link options
-          this.linkOptions = _(appState.pages).map(function(page) {
+          this.linkOptions = _(v1State.getPages().getContextFreePageModels()).map(function(page) {
             return {
-              url: 'internal://' + page.name,
-              title: page.name
+              url: 'internal://' + page.get('name'),
+              title: page.get('name')
             }
           });
 

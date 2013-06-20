@@ -62,6 +62,7 @@ function( PageModel,
 
       this.model          = v1State.get('mobilePages').models[pageId];
       v1State.currentPage = this.model;
+      v1State.isMobile    = true;
 
       /* Globals */
       g_contextCollection    = new TableCollection();
@@ -120,7 +121,8 @@ function( PageModel,
       var self = this;
       this.snapper = new Snap({
         element: this.$('.snap-content')[0],
-        touchToDrag: true,
+        tapToClose: true,
+        touchToDrag: false,
         maxPosition: '200px',
         disable: 'right'
       });

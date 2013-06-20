@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="shortcut icon" type="image/png" href="../lib/jasmine-1.3.1/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/test/lib/jasmine-1.3.1/jasmine.css">
+
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-editor.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/widget-editor.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/editor-gallery.css">
+
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/lib/jasmine-1.3.1/jasmine.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/lib/jasmine-1.3.1/jasmine-html.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/src/appState.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/src/uieState.js"></script>
+
+  <style type="text/css">
+    #HTMLReporter {
+      position: fixed;
+      top: 120px;
+      width: 400px;
+      height: 500px;
+      left: 50%;
+      margin-left: -300px;
+      margin-bottom: 100px;
+      overflow: scroll;
+      background-color: #fff;
+      border: 1px solid #333;
+      z-index: 2006;
+    }
+  </style>
+
+  <script type="text/javascript">
+
+  var v1State = {};
+  var require = {
+
+    paths: {
+      "jquery" : "{{ STATIC_URL }}js/libs/jquery/jquery",
+      "jquery-ui" : "{{ STATIC_URL }}js/libs/jquery-ui/jquery-ui",
+      "jquery.filedrop" : "{{ STATIC_URL }}js/libs/jquery/jquery.filedrop",
+      "jquery.flexslider" : "{{ STATIC_URL }}js/libs/jquery/jquery.flexslider-min",
+      "underscore" : "{{ STATIC_URL }}js/libs/underscore-amd/underscore",
+      "backbone" : "{{ STATIC_URL }}js/libs/backbone-amd/backbone",
+      "iui" : "{{ STATIC_URL }}js/libs/iui/iui",
+      "comp": "{{ STATIC_URL }}js/libs/iui/comp",
+      "bootstrap" : "{{ STATIC_URL }}js/libs/bootstrap/bootstrap",
+      "app" : "{{ STATIC_URL }}js/application/main-app",
+      "editor" : "{{ STATIC_URL }}js/application/main-app/editor",
+      "m-editor" : "{{ STATIC_URL }}js/application/main-app/mobile-editor",
+      "dicts" : "{{ STATIC_URL }}js/application/main-app/dicts",
+      "mixins" : "{{ STATIC_URL }}js/mixins",
+      "key" : "{{ STATIC_URL }}js/libs/keymaster/keymaster",
+      "answer" : "{{ STATIC_URL }}js/libs/answer/answer",
+      "prettyCheckable" : "{{ STATIC_URL }}js/libs/jquery/prettyCheckable",
+      "list" : "{{ STATIC_URL }}js/libs/list",
+      "snap" : "{{ STATIC_URL }}js/libs/snap.min",
+      "models" : "{{ STATIC_URL }}js/application/data/models",
+      "collections" : "{{ STATIC_URL }}js/application/data/collections",
+      "tutorial" : "{{ STATIC_URL }}js/application/tutorial",
+      "domReady": "{{ STATIC_URL }}js/libs/requirejs/domReady",
+    },
+
+    shim: {
+      "jquery-ui": {
+        exports: "$",
+        deps: ['jquery']
+      },
+      "underscore": {
+        exports: "_"
+      },
+      "backbone": {
+        exports: "Backbone",
+        deps: ["underscore", "jquery"]
+      },
+      "bootstrap" : {
+        deps: ["jquery"]
+      },
+      "snap": {
+        exports: "Snap"
+      },
+      "answer" : {
+        deps: ["{{ STATIC_URL }}js/libs/answer/lib/natural.js", "underscore", "jquery"]
+      }
+    }
+  };
+
+  </script>
+
+  <!-- include source files here... -->
+   <script type="text/javascript">
+    var appId = {{ app_id }};
+    var appState = {{ app.state_json|safe }};
+    var uieState = {{ app.uie_state_json|safe }};
+    var mobileUieState = {{ app.mobile_uie_state_json|safe }};
+    var statics = {{ statics|safe }};
+    var themes = {{ themes|safe }};
+    var mobileThemes = {{ mobile_themes|safe }};
+    var GRID_WIDTH = 80;
+    var GRID_HEIGHT = 15;
+
+  </script>
+  <script type="text/javascript" src="{{ STATIC_URL}}js/libs/requirejs/require.js"></script>
+
+</head>
+
+<body class="sample">
+<div class="description">Hello Test</div>
+{% include "app-page-templates.html" %}
+</body>
+
+<script type="text/template" id="editor-page">
+ <div class="loading-gif" id="loading-gif"></div>
+
+  <!-- Top Menu -->
+  <div class="section-select">
+    <a href="" class="menu-button home">
+    </a><div class="menu-button pages"><ul id="page-list"></ul>
+    </div><div class="menu-button save" id="save">
+      <span>Save</span>
+    </div><div class="menu-button run" id="deploy"><span>Test Run</span>
+    </div><div class="menu-button help"></div>
+  </div>
+
+  <!-- Inside-Page -->
+  <div class="page-container">
+    <div class="page-wrapper" id="page-wrapper">
+      <div class="url-bar">http://yourapp.com</div>
+      <div class="page full container fdededfcbcbcd" id="page">
+        <!-- Navbar -->
+        <div class="navbar" id="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
+              <ul class="nav" id="items">
+              </ul>
+              <button class="edit-navbar btn btn-small btn-inverse pull-right">Edit Navbar</button>
+            </div>
+          </div>
+        </div>
+        <!-- Navbar Ends-->
+        <div class="container editing" id="full-container"></div>
+        <div class="editing" id="elements-container"></div>
+        <!-- Footer -->
+        <div class="navbar" id="footer">
+            <div class="container">
+              <ul class="nav pull-left" id="links">
+              </ul>
+              <p id="customText" class="pull-left muted"></p>
+              <button class="edit-footer btn btn-small btn-inverse pull-right">Edit Footer</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!-- Footer Ends-->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Right Gallery Panel -->
+  <div id="top-panel-bb" class="right-panel">
+    <div class="top-panel-title">
+      <span>UI Elements</span>
+    </div>
+    <div class="search-panel">
+      <span class="search-icon"></span><input type="text" class="search" placeholder="Search Elements...">
+    </div><div class="item-gallery section" id="item-gallery">
+      <div class="elements-list" id="elements-list">
+        <ul id='all-list' class="list"></ul>
+      </div>
+    </div>
+  </div>
+
+</script>
+  <script type="text/javascript">
+
+    require(
+    [
+    "{{ STATIC_URL }}js/test/spec/routerSpec.js",
+    "{{ STATIC_URL }}js/test/lib/console-runner.js"
+    ],
+    function( document ){
+        // Set up the HTML reporter - this is reponsible for
+        // aggregating the results reported by Jasmine as the
+        // tests and suites are executed.
+        window.consoleReporter = new jasmine.ConsoleReporter();
+        var consoleReporter = window.consoleReporter;
+        jasmine.getEnv().addReporter(consoleReporter);
+        jasmine.getEnv().addReporter(
+        new jasmine.HtmlReporter()
+        );
+
+        // Run all the loaded test specs.
+        jasmine.getEnv().execute();
+
+    });
+
+  </script>
+</html>

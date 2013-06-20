@@ -29,8 +29,8 @@ define([
     editable : false,
     editMode : false,
     shadowElem : null,
-    positionHorizontalGrid : null,
-    positionVerticalGrid : null,
+    positionHorizontalGrid : 80,
+    positionVerticalGrid : 15,
 
     events: {
       'click'         : 'select',
@@ -40,13 +40,12 @@ define([
       'mousedown'     : 'mousedown'
     },
 
-    initialize: function(widgetModel, isFreeMove){
+    initialize: function(widgetModel){
       var self = this;
       _.bindAll(this);
 
       this.model = widgetModel;
 
-      if(isFreeMove) { this.positionVerticalGrid = 1; this.positionHorizontalGrid = 1; }
       this.model.get('data').bind("change:type", this.changedType, this);
       this.model.get('data').bind("change:class_name", this.changedType, this);
       this.model.bind("remove", this.remove, this);
@@ -70,17 +69,22 @@ define([
       keyDispatcher.key('command+enter', this.switchEditModeOff);
     },
 
+    setFreeMovement: function () {
+      this.positionVerticalGrid = 1;
+      this.positionHorizontalGrid = 1;
+    },
+
     render: function() {
       var width = this.model.get('layout').get('width');
       var height = this.model.get('layout').get('height');
 
       // if(this.model.get('type') == 'box') {this.el.style.zIndex = 0;}
-      this.setTop((this.positionVerticalGrid||GRID_HEIGHT) * (this.model.get('layout').get('top')));
-      this.setLeft((this.positionHorizontalGrid||GRID_WIDTH) * (this.model.get('layout').get('left')));
-      this.setHeight(height * (this.positionVerticalGrid||GRID_HEIGHT));
+      this.setTop((this.positionVerticalGrid) * (this.model.get('layout').get('top')));
+      this.setLeft((this.positionHorizontalGrid) * (this.model.get('layout').get('left')));
+      this.setHeight(height * (this.positionVerticalGrid));
 
-      if(this.positionHorizontalGrid) this.setWidth(width * this.positionVerticalGrid);
-      else this.el.className += " span" + width;
+      if(this.positionHorizontalGrid == 80) this.el.className += " span" + width;
+      else this.setWidth(width * this.positionHorizontalGrid);
 
       this.el.style.textAlign = this.model.get('layout').get('alignment');
 
@@ -132,8 +136,8 @@ define([
       this.el.style.width = '';
       this.el.className = 'selected widget-wrapper ';
       var width = this.model.get('layout').get('width');
-      if(this.positionHorizontalGrid) this.setWidth(width * this.positionVerticalGrid);
-      else this.el.className += " span" + width;
+      if(this.positionHorizontalGrid == 80) this.el.className += " span" + width;
+      else this.setWidth(width * this.positionHorizontalGrid);
       //this.setLeft(GRID_WIDTH * (this.model.get('layout').get('left')));
     },
 
@@ -172,15 +176,15 @@ define([
     },
 
     changedHeight: function(a) {
-      this.setHeight(this.model.get('layout').get('height') * (this.positionVerticalGrid||GRID_HEIGHT));
+      this.setHeight(this.model.get('layout').get('height') * (this.positionVerticalGrid));
     },
 
     changedTop: function(a) {
-      this.setTop((this.positionVerticalGrid||GRID_HEIGHT) * (this.model.get('layout').get('top')));
+      this.setTop((this.positionVerticalGrid) * (this.model.get('layout').get('top')));
     },
 
     changedLeft: function(a) {
-      this.setLeft((this.positionHorizontalGrid||GRID_WIDTH) * (this.model.get('layout').get('left')));
+      this.setLeft((this.positionHorizontalGrid) * (this.model.get('layout').get('left')));
     },
 
     changedText: function(a) {
@@ -275,6 +279,22 @@ define([
       this.model.get('data').set('content', val);
       el.attr('contenteditable', 'false');
       keyDispatcher.textEditing = false;
+    },
+
+    autoResize: function() {
+      var node = this.el.firstChild;
+
+      var height= $(node).outerHeight(true);
+      var width = $(node).outerWidth(true);
+
+      var nHeight = Math.ceil(height / (this.positionVerticalGrid));
+      var nWidth  = Math.ceil(width / (this.positionHorizontalGrid));
+
+      if(!nHeight) nHeight = 2;
+      if(!nWidth)  nWidth = 2;
+
+      this.model.get('layout').set('width', nWidth);
+      this.model.get('layout').set('height', nHeight);
     },
 
     mousedown: function(e) {

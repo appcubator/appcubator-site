@@ -5158,6 +5158,8 @@ hr.vert {
     line-height: 48px;
     height: 48px;
     vertical-align: top;
+    width: 100%;
+    text-align: left;
   }
 
   .nav li.dropd .icon {
@@ -5365,6 +5367,19 @@ hr.vert {
   font-weight: bold;
   text-shadow: #fff 0 1px;
   cursor: pointer;
+}
+
+
+.page-view .context-text {
+  font-size: 12px;
+  color: #bbb;
+  line-height: 15px;
+  display: block;
+  cursor: pointer;
+}
+
+.page-view .context-text:hover {
+  color: #999;
 }
 
 .page-menu .item:hover {
@@ -5685,10 +5700,30 @@ hr.pheader {
 
 .email-paper {
   background-color: #fff;
+  position: relative;
   padding: 12px;
   border-radius: 4px;
   border: 1px solid #ccc;
 }
+
+.email-paper .remove:hover {
+background-color: #c95446;
+color: #fff;
+}
+.email-paper .remove {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 10px;
+  background-color: #eee;
+  color: #aaa;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  padding: 2px 10px;
+  cursor: pointer;
+}
+
 .email-paper label {
   font-weight: bold;
   font-size: 18px;

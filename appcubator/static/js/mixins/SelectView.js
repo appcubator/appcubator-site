@@ -84,7 +84,7 @@ function(Backbone) {
       this.shrink(e);
       if(e.target.className == "selected") return;
       var ind = String(e.target.id).replace('li-' + this.cid + '-', '');
-      this.trigger('change', this.list[ind]);
+      this.trigger('change', this.list[ind].val);
     },
 
     toggle: function(e) {

@@ -405,6 +405,7 @@ table tr:hover td {
 
 .right-icon:hover {
   border: 1px solid #dfdfdf;
+  box-shadow: inset 1px 1px 3px #ddd;
 }
 
 .right-icon:active {
@@ -412,11 +413,11 @@ table tr:hover td {
 }
 .right-icon span {
   vertical-align: top;
-  line-height: 75px;
+  line-height: 60px;
 }
 
 .right-icon .icon {
-  margin-top: 15px;
+  margin-top: 8px;
 }
 
 .column {
@@ -672,4 +673,10 @@ table tr:hover td {
 
 .icon-m2m {
   background-position: -280px 0;
+}
+
+.trash .icon {
+  background-image: url(../img/delete-icon.png);
+  background-repeat: no-repeat;
+  background-size: 40px 35px;
 }

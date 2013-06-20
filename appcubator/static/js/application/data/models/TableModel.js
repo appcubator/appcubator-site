@@ -1,12 +1,10 @@
 define([
   'require',
   'collections/FieldsCollection',
-  'collections/FormCollection',
   'backbone'
 ], function(require) {
 
   var FieldsCollection = require('collections/FieldsCollection');
-  var FormCollection   = require('collections/FormCollection');
   var Backbone         = require('backbone');
 
   var TableModel = Backbone.Model.extend({

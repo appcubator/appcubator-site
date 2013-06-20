@@ -202,8 +202,7 @@ Templates.queryView = [
     '<div class="sect">',
     '<p>How many rows would you like to show?</p>',
     '<label><input type="radio" class="nmr-rows" id="all-rows" name="nmrRows" value="All" <%= c.rAll %>> All</label>',
-    '<label><input type="radio" class="nmr-rows" id="first-rows" name="nmrRows" value="First" <%= c.rFirst %>> First <input type="text" id="first-nmr" value="<%= c.rFirstNmr %>"> rows</label>',
-    '<label><input type="radio" class="nmr-rows" id="last-rows" name="nmrRows" value="Last" <%= c.rLast %>> Last <input type="text" id="last-nmr" value="<%= c.rLastNmr %>"> rows</label>',
+    '<label><input type="radio" class="nmr-rows" id="first-rows" name="nmrRows" value="First" <%= c.rFirst %>> <input type="text" id="first-nmr" value="<%= c.rFirstNmr %>"> rows</label>',
     '</div>',
   '</div>',
   '<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>'
@@ -265,7 +264,7 @@ Templates.tempUIElement = [
 
 
 Templates.tempUIElementSized = [
-  '<div style="position:absolute; left: <% console.log(element); print(element.layout.get(\'left\')*1) %>px; top:<% print(element.layout.get(\'top\')*1) %>px;" class="span<%=element.layout.get(\'width\')%> hi<%=element.layout.get(\'height\')%>">',
+  '<div style="position:absolute; left: <%= element.layout.get(\'left\') %>px; top:<%= element.layout.get(\'top\') %>px; width:<%= element.layout.get(\'width\')%>px; height:<%=element.layout.get(\'height\')%>px;">',
   '<<%= element.data.get(\'tagName\') %>',
   'class = "<%= element.data.get(\'class_name\') %>"',
   '<% if(element.data.get(\'cons_attribs\')) { %>',

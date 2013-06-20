@@ -56,6 +56,33 @@ function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, 
       return entities;
     },
 
+    getContextSentence: function () {
+      var entities = [];
+      _(this.get('url').get('urlparts')).each(function(urlPart) {
+        if (/{{([^\}]+)}}/g.exec(urlPart)) entities.push(/\{\{([^\}]+)\}\}/g.exec(urlPart)[1]);
+      });
+
+      if(entities.length === 0) {
+        return "";
+      }
+      else if(entities.length === 1) {
+        return "Page has a " + entities[0];
+      }
+      else {
+        var str = "Page has ";
+        _(entities).each(function(val, ind) {
+          if(ind == entities.length - 1) {
+            str += "and a " + val;
+          }
+          else {
+            str += "a "+val + " ";
+          }
+        });
+
+        return str;
+      }
+    },
+
     getFields: function() {
       var access = this.get('access_level');
       if(access == "all") { return v1State.get('users').getCommonProps(); }

@@ -1,7 +1,8 @@
 PageTemplates = {};
 
 PageTemplates.tempPage = [
-  '<h3 class="offset2 hoff2"><%= page_name %></h3>',
+  '<h3 class="offset2 hoff1"><%= page_name %></h3>',
+  '<span class="offset2 hi1 context-text edit-url"><%= context_text %></span>',
   '<div class="page-menu">',
     '<a class="edit item" href="#"><i class="icon-edit"></i>Edit Page</a>',
     '<a class="delete item"><i class="icon-delete"></i>Delete Page</a>',

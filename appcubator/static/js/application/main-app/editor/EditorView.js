@@ -56,6 +56,7 @@ function( PageModel,
 
       this.model             = v1State.get('pages').models[pageId];
       v1State.currentPage = this.model;
+      v1State.isMobile = false;
 
       /* Globals */
       g_contextCollection    = new TableCollection();
@@ -132,7 +133,7 @@ function( PageModel,
       console.log(curAppState);
       $.ajax({
         type: "POST",
-        url: '/app/'+appId+'/state/',
+        url: '/app/'+appId+'/state/force/',
         data: JSON.stringify(curAppState),
         complete: function() {
           iui.dontAskBeforeLeave();

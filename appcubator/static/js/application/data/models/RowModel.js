@@ -20,7 +20,6 @@ define([
     },
 
     toJSON: function() {
-      console.log(this);
       var json  = _.clone(this.attributes);
       json.uielements = json.uielements.toJSON();
 

@@ -14,17 +14,30 @@ function(AppInfoModel,
          EmailCollection) {
 
   var AppModel = Backbone.Model.extend({
+
+    currentPage: null,
+    isMobile: false,
+
     initialize: function(appState) {
       if(!appState) return;
 
-      this.set('info', new AppInfoModel(appState.info));
+      this.set('info', new AppInfoModel(appState.info || {}));
       this.set('users', new UserRolesCollection(appState.users||[]));
       this.set('tables', new TableCollection(appState.tables||[]));
-      this.set('emails', new EmailCollection(appState.emails));
+      this.set('emails', new EmailCollection(appState.emails || []));
     },
 
     getCurrentPage: function() {
       return this.currentPage;
+    },
+
+    getPages: function () {
+      if(!this.isMobile) {
+        return this.get('pages');
+      }
+      else {
+        return this.get('mobilePages');
+      }
     },
 
     toJSON: function() {

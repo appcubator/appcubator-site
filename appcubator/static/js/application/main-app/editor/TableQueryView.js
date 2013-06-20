@@ -12,7 +12,7 @@ function() {
       'change .fields-to-display'   : 'fieldsToDisplayChanged',
       'click .belongs-to-user'      : 'belongsToUserChanged',
       'click .nmr-rows'             : 'nmrRowsChanged',
-      'keydown #first-nmr, #last-nmr': 'nmrRowsNumberChanged',
+      'keydown #first-nmr'          : 'nmrRowsNumberChanged',
       'change .sort-by'             : 'sortByChanged',
       'click .done-btn'             : 'closeModal'
     },
@@ -22,8 +22,9 @@ function() {
       iui.loadCSS(this.css);
       this.widgetModel = widgetModel;
       this.containerType = containerType;
-      this.model = widgetModel.get('container_info').get('query');
-      this.entity = widgetModel.get('container_info').get('entity');
+      this.model = widgetModel.get('data').get('container_info').get('query');
+      this.entity = widgetModel.get('data').get('container_info').get('entity');
+
       this.render();
 
       this.model.bind('change', this.changeDescription, this);
@@ -34,18 +35,13 @@ function() {
       var self = this;
 
       var checks = {};
-      var rFirstNmr=5, rLastNmr=5, rAllNmr = 0;
-      var rFirst = '', rLast ='', rAll ='';
+      var rFirstNmr=5; rAllNmr = 0;
+      var rFirst = '', rAll ='';
 
       if(String(this.model.get('numberOfRows')).indexOf('First') != -1) {
         rFirst = 'checked';
         rFirstNmr = (this.model.get('numberOfRows').replace('First-',''));
         if(rFirstNmr === "") rFirstNmr = 5;
-      }
-      else if (String(this.model.get('numberOfRows')).indexOf('Last') != -1) {
-        rLast = 'checked';
-        rLastNmr = (this.model.get('numberOfRows').replace('Last-',''));
-        if(rLastNmr === "") rLastNmr = 5;
       }
       else {
         rAll = 'checked';
@@ -54,14 +50,10 @@ function() {
       checks = {
         rFirstNmr : rFirstNmr,
         rFirst    : rFirst,
-        rLastNmr  : rLastNmr,
-        rLast     : rLast,
         rAll      : rAll,
         rAllNmr   : rAllNmr,
         nLang     : self.getNLdescription()
       };
-
-      console.log(self.containerType);
 
       var contentHTML = _.template(Templates.queryView, {entity: self.entity, query: self.model, c: checks, type: self.containerType });
       this.el.innerHTML = contentHTML;
@@ -87,38 +79,27 @@ function() {
     },
 
     belongsToUserChanged: function(e) {
-      if(e.target.checked) {
-        var bool = (e.target.value == "true"? true : false);
-        this.model.set('belongsToUser', bool);
+      if(e.target.checked && e.target.value == "true") {
+        this.model.get('where').push({
+          "equal_to": "CurrentUser",
+          "field_name": "user"
+        });
+      }
+      else {
+        this.model.get('where').removeClauseWithName('user');
       }
     },
 
     nmrRowsChanged: function(e) {
       if(e.target.checked) {
-        var val = e.target.value;
-
-        if(val == 'First') {
-          val += '-' + iui.get('first-nmr').value;
-        } else if(val == 'Last') {
-          val += '-' + iui.get('last-nmr').value;
-        }
-
+        var val = iui.get('first-nmr').value;
         this.model.set('numberOfRows', val);
       }
     },
 
     nmrRowsNumberChanged: function(e) {
-      var val = '';
-      if(e.target.id == 'first-nmr') {
-        iui.get('first-rows').checked = true;
-        val = 'First-' + e.target.value;
-      }
-      else if (e.target.id == 'last-nmr') {
-        iui.get('last-rows').checked = true;
-        val = 'Last-' + e.target.value;
-      }
-
-      this.model.set('numberOfRows', val);
+      iui.get('first-rows').checked = true;
+      this.model.set('numberOfRows', parseInt(e.target.value,0));
       e.stopPropagation();
     },
 

@@ -8,7 +8,6 @@ scope: r_fullprofile r_emailaddress
 <script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
 <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
 {% endblock %}
 {% block page %}
 <div id="fb-root"></div>
@@ -53,24 +52,67 @@ scope: r_fullprofile r_emailaddress
   <div class="slide-aboutus">
     <h3>About Us</h3>
     <div class="">
-      We're a nice company bla bla. Lorem ipsum bla. We're a nice company bla bla. Lorem ipsum bla. We're a nice company bla bla. Lorem ipsum bla. We're a nice company bla bla. Lorem ipsum bla. We're a nice company bla bla. Lorem ipsum bla. We're a nice company bla bla. Lorem ipsum bla. 
+      <p>Appcubator is designed for entrepreneurs who want to publish custom web applications with no coding skills required. We believe that everyone deserves to connect with their customers using the convenience of a web browser. Our founders Karan Sikka, Ilter Canberk, and Nikhil Khadke have developed a system that with the press of a button develops and deploys the code required for the site. Appcubator provides the ultimate in custom app development as it is the only platform to give the user the code.</p>
+      <p>What are you waiting for? Let us do the coding for you!</p>
+      <p class="quote">Simple things should be simple, complex things should be possible.<br  />- Alan Kay</p>
     </div>
     <h3>Team</h3>
     <div class="people">
-      <div class="peep"><img src="{{ STATIC_URL }}img/pp/ilter.jpg"></div>
-      <div class="peep"><img class="karan" src="{{ STATIC_URL }}img/pp/karan.jpg"></div>
-      <div class="peep"><img class="nikhil" src="{{ STATIC_URL }}img/pp/nikhil.jpg"></div>
-      <div class="peep"><img class="kedar" src="{{ STATIC_URL }}img/pp/kedar.jpg"></div>
-      <div class="peep"><img class="sagar" src="{{ STATIC_URL }}img/pp/ilter.jpg"></div>
+      <div class="person">
+        <div class="peep">
+          <img src="{{ STATIC_URL }}img/pp/ilter.jpg">
+        </div>
+        <p>Ilter Canberk</p>
+        <span class="bio">
+          Ilter works on perfecting the user experience at Appcubator. Previously, Ilter interned at Facebook as a Mobile UI Engineer, where he focused on the Facebook app for iOS 5.0. He studied electrical and computer engineering at Carnegie Mellon University. Ilter is an endorsed coffee aficionado.
+        </span>
+      </div>
+
+      <div class="person">
+        <div class="peep">
+          <img class="karan" src="{{ STATIC_URL }}img/pp/karan.jpg">
+        </div>
+        <p>Karan Sikka</p>
+        <span class="bio">
+          Karan works on the back-end magic at Appcubator. Previously, Karan was a computer programmer at a search engine company called Quixey, where he helped improve search relevance. He studied computer science and computational biology at Carnegie Mellon University. Karan holds the Appcubator team record for pullups.
+        </span>
+      </div>
+      <div class="person">
+        <div class="peep">
+          <img class="nikhil" src="{{ STATIC_URL }}img/pp/nikhil.jpg">
+        </div>
+        <p>Nikhil Khadke</p>
+        <span class="bio">
+          Nikhil works on the back-end magic at Appcubator. Previously, Nikhil worked on large scale system infrastructure projects at Google and Yahoo. Nikhil has a bachelor’s degree in computer science from Carnegie Mellon University and is pursuing a masters of computer science from Stanford University. Nikhil is planning on running tough mudder, our thoughts and prayers are with him.
+        </span>
+      </div>
+
+      <div class="person">
+        <div class="peep">
+          <img class="kedar" src="{{ STATIC_URL }}img/pp/kedar.jpg">
+        </div>
+        <p>Kedar Amladi</p>
+        <span class="bio">
+          Kedar works on the front end design at Appcubator. Previously, Kedar has experience in web development in freelance and startup environments, with expertise in JavaScript and Python. Kedar studied electrical and computer engineering at Carnegie Mellon University. In his spare time, Kedar studies the art of dog breeding.
+        </span>
+      </div>
+
+      <div class="person">
+        <div class="peep">
+          <img class="sagar" src="{{ STATIC_URL }}img/pp/sagar-nochill.jpg">
+        </div>
+        <p>Sagar Rambhia</p>
+        <span class="bio">
+          Sagar is Appcubator’s non-technical hire working on the business model. Previously, Sagar held business roles in startup environments. Sagar studied Biochemistry at Case Western Reserve University and will attend Case Western Reserve University School of Medicine. Sagar is ethnically intrigued with Eastern Asia.
+        </span>
+      </div>
     </div>
-    <div class="bios">
-      Easiest way to build web and mobile applications.
-    </div>
- 
+    <h3>Contact</h3>
+    <div>You can contact us at <strong><a href="#">team@appcubator.com</a></strong></div>
   </div>
   <div class="footer">
    <span>Appcubator © 2013</span> • <a href="/aboutus">About Us</a> • <a href="/termsofservice">Privacy</a>
-  </div>
+ </div>
 </div>
 {% endblock %}
 

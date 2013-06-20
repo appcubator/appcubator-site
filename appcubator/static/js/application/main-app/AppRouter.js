@@ -19,13 +19,13 @@ define([
 		var AppRouter = Backbone.Router.extend({
 
 		routes: {
-			"app/:appid/info/(:tutorial/)"     : "showInfoPage",
-			"app/:appid/entities/(:tutorial/)" : "showEntitiesPage",
-			"app/:appid/gallery/(:tutorial/)"  : "showThemesPage",
-			"app/:appid/pages/(:tutorial/)"    : "showPagesPage",
-			"app/:appid/editor/:pageid/" : "showEditor",
-			"app/:appid/mobile-editor/:pageid/" : "showMobileEditor",
-			"app/:appid/emails/(:tutorial/)"    : "showEmailsPage",
+			"app/:appid/info/(:tutorial/)"     : "info",
+			"app/:appid/entities/(:tutorial/)" : "entities",
+			"app/:appid/gallery/(:tutorial/)"  : "themes",
+			"app/:appid/pages/(:tutorial/)"    : "pages",
+			"app/:appid/editor/:pageid/" : "editor",
+			"app/:appid/mobile-editor/:pageid/" : "mobileEditor",
+			"app/:appid/emails/(:tutorial/)"    : "emails",
 			"app/:appid/(:tutorial/)"          : "index",
 			//"app/:appid/*"			: "index"
 		},
@@ -55,7 +55,7 @@ define([
 			});
 		},
 
-		showInfoPage: function(appId, tutorial) {
+		info: function(appId, tutorial) {
 			var self = this;
 			require(['app/AppInfoView'], function(InfoView){
 				AppRouter.tutorialDirectory = [2];
@@ -68,7 +68,7 @@ define([
 			});
 		},
 
-		showEntitiesPage: function(appId, tutorial) {
+		entities: function(appId, tutorial) {
 			var self = this;
 			require(['app/EntitiesView'], function(EntitiesView){
 				AppRouter.tutorialDirectory = [3];
@@ -81,7 +81,7 @@ define([
 			});
 		},
 
-		showThemesPage: function(appId, tutorial) {
+		themes: function(appId, tutorial) {
 			var self = this;
 			AppRouter.tutorialDirectory = [4];
 			require(['app/ThemesGalleryView'], function(ThemesGalleryView){
@@ -94,7 +94,7 @@ define([
 			});
 		},
 
-		showPagesPage: function(appId, tutorial) {
+		pages: function(appId, tutorial) {
 			var self = this;
 			AppRouter.tutorialDirectory = [4];
 			require(['app/PagesView'], function(PagesView){
@@ -109,7 +109,7 @@ define([
 			});
 		},
 
-		showEditor: function(appId, pageId) {
+		editor: function(appId, pageId) {
 			var self = this;
 			AppRouter.tutorialDirectory = [4];
 			require(['editor/EditorView'], function(EditorView){
@@ -130,11 +130,11 @@ define([
 			});
 		},
 
-		showMobileEditor: function(appId, pageId) {
+		mobileEditor: function(appId, pageId) {
 			var self = this;
 			$('.page').fadeOut();
 			AppRouter.tutorialDirectory = [5];
-			require(['mobile-editor/MobileEditorView'], function(MobileEditorView){
+			require(['m-editor/MobileEditorView'], function(MobileEditorView){
 				if(AppRouter.view) AppRouter.view.remove();
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
@@ -148,7 +148,8 @@ define([
 			});
 		},
 
-		showEmailsPage: function(appId, tutorial) {
+		emails: function(appId, tutorial) {
+			var self = this;
 			AppRouter.tutorialDirectory = [6];
 			this.changePage(EmailsView, {}, function() {
 				$('.menu-app-emails').addClass('active');
@@ -168,10 +169,6 @@ define([
 			AppRouter.view.setElement(cleanDiv).render();
 
 			$('.active').removeClass('active');
-			// refresh scrollspy
-      $('[data-spy="scroll"]').each(function() {
-        var $spy = $(this).scrollspy('refresh');
-      });
 			this.changeTitle(AppRouter.view.title);
 			post_render();
 		},
@@ -209,27 +206,25 @@ define([
 			$('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
 			appState = v1State.toJSON();
 			$.ajax({
-					type: "POST",
-					url: '/app/'+appId+'/state/force/',
-					data: JSON.stringify(appState),
-          success: function() {
-            $('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
-            setTimeout(function(){
-            $('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
-            },1000);
-          },
-					error: function(data) {
-						if(data.responseText == "ok") return;
-						var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-						if(DEBUG) {
-							content = { text: data.responseText };
-						}
-						new ErrorModalView(content);
-					},
-					dataType: "JSON"
+				type: "POST",
+				url: '/app/'+appId+'/state/force/',
+				data: JSON.stringify(appState),
+				success: function() {
+					$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
+					setTimeout(function(){
+						$('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
+					},1000);
+				},
+				error: function(data) {
+					if(data.responseText == "ok") return;
+					var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+					if(DEBUG) {
+						content = { text: data.responseText };
+					}
+					new ErrorModalView(content);
+				},
+				dataType: "JSON"
 			});
-
-			e.preventDefault();
 		},
 
 		showTutorial: function(dir) {
