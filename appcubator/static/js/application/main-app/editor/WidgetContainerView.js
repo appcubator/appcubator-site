@@ -130,12 +130,14 @@ function( TableQueryView,
     },
 
     renderElements : function() {
+
       var self  =this;
       this.model.get('data').get('container_info').get('uielements').each(function(widgetModel) {
         self.placeWidget(widgetModel);
       });
 
       if(this.model.get('data').get('container_info').has('form')) {
+        this.form.innerHTML = '';
         this.formModel.get('fields').each(function(field) {
           self.placeFormElement(field);
         });

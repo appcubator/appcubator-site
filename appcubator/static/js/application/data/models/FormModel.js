@@ -97,7 +97,6 @@ function(
       json.name = json.name || "";
       json.fields = this.get('fields').toJSON();
       json.goto = json.goto.toJSON();
-      if(json.redirect) json.redirect = json.redirect.toJSON();
       return json;
     }
 
