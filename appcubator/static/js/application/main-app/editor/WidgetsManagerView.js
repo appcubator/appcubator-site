@@ -55,7 +55,6 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
       else {
         self.placeWidget(model, isNew);
       }
-      model.trigger('rendered');
     },
 
     placeWidget: function(widgetModel, isNew) {

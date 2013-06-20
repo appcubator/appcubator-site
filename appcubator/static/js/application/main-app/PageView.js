@@ -36,6 +36,7 @@ function(UrlView, SimpleModalView) {
       var page_context = {};
       page_context.page_name = this.model.get('name');
       page_context.ind = this.ind;
+      page_context.context_text = this.model.getContextSentence();
 
       var page = _.template(PageTemplates.tempPage, page_context);
       this.el.innerHTML += page;
@@ -51,7 +52,7 @@ function(UrlView, SimpleModalView) {
       page_context.page_name = this.model.get('name');
       page_context.ind = this.ind;
       page_context.user_roles = v1State.get('users').map(function (userModel) {
-        return userModel.get('role');
+        return userModel.get('name');
       });
 
       var page = _.template(PageTemplates.tempMenu, page_context);

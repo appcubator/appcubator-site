@@ -3184,14 +3184,17 @@ a.badge:hover {
 
 
 #select-div .ui-resizable-handle,
-#select-div .ui-resizable-handle.ui-icon-gripsmall-diagonal-se {
+#select-div .ui-resizable-handle.ui-icon-gripsmall-diagonal-se,
+#list-select-div .ui-resizable-handle,
+#list-select-div .ui-resizable-handle.ui-icon-gripsmall-diagonal-se {
   overflow: visible;
   background-image:url('../img/dot.png');
   background-repeat: no-repeat;
   background-position: center center;
 }
 
-#select-div .ui-resizable-se {
+#select-div .ui-resizable-se,
+#list-select-div .ui-resizable-se {
   width: 9px;
   height: 9px;
   right: -5px;

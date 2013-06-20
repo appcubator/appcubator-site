@@ -28,10 +28,10 @@ function(WidgetContentEditor,
 
     events : {
       'click .edit-slides-button' : 'openSlideEditor',
-      'click .edit-query-button'  : 'openQueryEditor',
-      'click #edit-row-btn'       : 'openRowEditor',
-      'click #edit-form-btn'      : 'openFormEditor',
-      'click #pick-style'         : 'openStylePicker',
+      'click .query-editor-btn'   : 'openQueryEditor',
+      'click .edit-row-btn'       : 'openRowEditor',
+      'click .form-editor-btn'      : 'openFormEditor',
+      'click .pick-style'         : 'openStylePicker',
       'click .edit-login-form-btn': 'openLoginEditor',
 
       'click .delete-button'      : 'clickedDelete',
@@ -61,31 +61,31 @@ function(WidgetContentEditor,
 
         if(action == "login") {
           this.layoutEditor = new WidgetLayoutEditor(this.model);
-          this.el.appendChild(this.renderEditLoginForm());
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-login-form-btn', 'Edit Login'));
           this.el.appendChild(this.layoutEditor.el);
         }
 
         if(action == "authentication" || action == "signup") {
           this.layoutEditor = new WidgetLayoutEditor(this.model);
-          this.el.appendChild(this.renderEditForm());
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
           this.el.appendChild(this.layoutEditor.el);
         }
 
         if(action == "imageslider") {
-          this.el.appendChild(this.renderImageSliderButton());
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-slides-button', 'Edit Slides'));
         }
 
         if(action == "table") {
-          this.el.appendChild(this.renderQueryButton());
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('query-editor-btn', 'Edit Query'));
         }
 
         if(action == "show" || action == "loop") {
-          this.el.appendChild(this.renderRowButton());
-          this.el.appendChild(this.renderQueryButton());
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
+          this.el.appendChild(this.renderButtonWithText('query-editor-btn', 'Edit Query'));
         }
 
         if(action == "create") {
-          this.el.appendChild(this.renderEditForm());
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
         }
       }
       else {
@@ -95,7 +95,7 @@ function(WidgetContentEditor,
         this.widgetClassPickerView.bind('change', this.classChanged);
 
         this.el.appendChild(this.widgetClassPickerView.el);
-        this.el.appendChild(this.renderStyleEditing());
+        this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
         this.el.appendChild(this.layoutEditor.el);
         this.el.appendChild(this.contentEditor.el);
       }
@@ -119,45 +119,18 @@ function(WidgetContentEditor,
       return this;
     },
 
-    renderStyleEditing: function(e) {
-      var li       = document.createElement('div');
-      li.className = 'style-editor';
-      li.innerHTML += '<span id="pick-style" class="option-button tt" style="width:194px; display: inline-block;"><strong>Pick Style</strong></span><span id="delete-widget" class="option-button delete-button tt" style="width:34px; margin-left:1px; display: inline-block;"></span>';
-      return li;
-    },
-
-    renderEditForm: function(e) {
+    renderButtonWithText: function(className, buttonText) {
       var li       = document.createElement('ul');
-      li.className = 'form-editor-btn';
-      li.innerHTML += '<span id="edit-form-btn" class="option-button tt" style="width:194px; display: inline-block;"><strong>Edit Form</strong></span><span id="delete-widget" class="option-button delete-button tt" style="width:34px; margin-left:1px; display: inline-block;"></span>';
+      li.className = className;
+      li.innerHTML += '<span class="option-button tt" style="width:230px; display: inline-block;"><strong>'+ buttonText +'</strong></span>';
       return li;
+
     },
 
-    renderEditLoginForm: function(e) {
+    renderButtonWithDeleteButtonandText: function(className, buttonText) {
       var li       = document.createElement('ul');
-      li.className = 'form-editor-btn';
-      li.innerHTML += '<span class="edit-login-form-btn option-button tt" style="width:194px; display: inline-block;"><strong>Edit Login</strong></span><span id="delete-widget" class="option-button delete-button tt" style="width:34px; margin-left:1px; display: inline-block;"></span>';
-      return li;
-    },
-
-    renderQueryButton: function() {
-      var li       = document.createElement('ul');
-      li.className = 'query-editor-btn';
-      li.innerHTML += '<span class="option-button tt edit-query-button" style="width:230px; display: inline-block;"><strong>Edit Query</strong></span>';
-      return li;
-    },
-
-    renderRowButton: function() {
-      var li       = document.createElement('ul');
-      li.className = 'row-editor-btn';
-      li.innerHTML += '<span id="edit-row-btn" class="option-button tt" style="width:194px; display: inline-block;"><strong>Edit Row</strong></span><span id="delete-widget" class="option-button delete-button tt" style="width:34px; margin-left:1px; display: inline-block;"></span>';
-      return li;
-    },
-
-    renderImageSliderButton: function() {
-      var li       = document.createElement('div');
-      li.className = 'edit-slides-button';
-      li.innerHTML = '<span id="" class="option-button tt" style="width:230px; display: inline-block;"><strong>Edit Slides</strong></span>';
+      //li.className = className;
+      li.innerHTML += '<span class="'+ className +'option-button tt" style="width:194px; display: inline-block;"><strong>'+ buttonText +'</strong></span><span id="delete-widget" class="option-button delete-button tt" style="width:34px; margin-left:1px; display: inline-block;"></span>';
       return li;
     },
 
@@ -189,10 +162,8 @@ function(WidgetContentEditor,
     },
 
     openRowEditor: function() {
-      //widgetModel, queryModel, rowModel
       this.hideSubviews();
 
-      //var row = this.model.get('data').get('container_info').get('row');
       var entity = this.model.get('data').get('container_info').get('entity');
       this.listGalleryView = document.createElement('div');
       this.listGalleryView.className = 'elements-list';

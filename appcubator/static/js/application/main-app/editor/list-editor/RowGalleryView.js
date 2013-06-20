@@ -13,7 +13,6 @@ function(EditorGalleryView, ElementCollection) {
     },
 
     initialize: function(widgetModel){
-
       this.model = widgetModel;
 
       var rowModel = this.model.get('data').get('container_info').get('row');

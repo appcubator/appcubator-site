@@ -25,12 +25,12 @@ function() {
       var self = this;
 
       this.widgetsCollection    = widgetsCollection;
-      this.widgetsCollection.bind('add', this.bindWidget);
+      this.widgetsCollection.bind('add', this.bindWidget, true);
       var WidgetEditorView = require('editor/WidgetEditorView');
       this.widgetEditorView = new WidgetEditorView();
       this.widgetEditorView.isMobile = self.isMobile;
 
-      this.widgetsCollection.each(self.bindWidget);
+      this.widgetsCollection.each(function(widget) { self.bindWidget(widget, false); });
       this.doKeyBindings();
     },
 
@@ -83,7 +83,7 @@ function() {
       return this;
     },
 
-    bindWidget: function(widget) {
+    bindWidget: function(widget, isNew) {
       var self = this;
 
       widget.bind('remove', function() {
@@ -110,6 +110,8 @@ function() {
       widget.on('editModeOn', function() {
         self.unbindAll();
       });
+
+      if(isNew) { widget.trigger('selected'); }
     },
 
     unbindAll: function() {
@@ -137,7 +139,6 @@ function() {
     },
 
     widgetHover: function(widgetModel) {
-      console.log("WIDGET HOVER");
       if(this.selectedEl && widgetModel.cid === this.selectedEl.cid) return;
       this.hoveredEl = widgetModel;
       this.setLayout(this.hoverDiv, widgetModel);
