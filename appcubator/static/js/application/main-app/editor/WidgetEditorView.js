@@ -31,7 +31,7 @@ function(WidgetContentEditor,
       'click .query-editor-btn'   : 'openQueryEditor',
       'click .edit-row-btn'       : 'openRowEditor',
       'click .form-editor-btn'      : 'openFormEditor',
-      'click #pick-style'         : 'openStylePicker',
+      'click .pick-style'         : 'openStylePicker',
       'click .edit-login-form-btn': 'openLoginEditor',
 
       'click .delete-button'      : 'clickedDelete',
@@ -95,7 +95,7 @@ function(WidgetContentEditor,
         this.widgetClassPickerView.bind('change', this.classChanged);
 
         this.el.appendChild(this.widgetClassPickerView.el);
-        this.el.appendChild(this.renderStyleEditing());
+        this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
         this.el.appendChild(this.layoutEditor.el);
         this.el.appendChild(this.contentEditor.el);
       }
