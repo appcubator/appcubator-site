@@ -40,7 +40,7 @@ function(NavbarEditorView) {
       this.model.get('links').each(function(item) {
         htmlString += '<li><a href="#" class="menu-item">' + item.get('title') + '</a></li>';
       });
-      this.$el.find('#items').html(htmlString);
+      this.$el.find('#links').html(htmlString);
     }
   });
 
