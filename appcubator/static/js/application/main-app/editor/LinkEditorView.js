@@ -54,13 +54,16 @@ define([
         renderLinkOptions: function() {
           var self = this;
           var select = this.$el.find('.link-options');
-          //var prevSelected = select[0].selectedIndex;
-          var htmlString = '<option>Choose a Page</option>';
+          var emptyLink = (this.model.get('url') == '') ? " selected " : "";
+          var htmlString = '<option'+emptyLink+'>Choose a Page</option>';
           _(this.linkOptions).each(function(link) {
-            var selected = "";
-            if(link.url === self.model.get('url')) {
-              selected = " selected ";
+            // if the link model doesn't have a URL,
+            // 'Choose a Page' must be selected
+            if(self.model.get('url') === '') {
+              return;
             }
+
+            var selected = (link.url === self.model.get('url')) ? "selected" : "";
             if(self.isInternalLink(link.url)) {
               var pageName = link.url.replace('internal://', '');
               htmlString += '<option value="' + link.url + '"'+selected+'>' + pageName + '</option>';
@@ -72,7 +75,6 @@ define([
           });
           htmlString += '<option value="external">External Link...</option>';
           select.html(htmlString);
-          //select[0].selectedIndex = prevSelected;
         },
 
         pageSelected: function(e) {

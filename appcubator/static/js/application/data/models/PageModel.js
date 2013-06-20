@@ -88,7 +88,7 @@ function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, 
       if(access == "all") { return v1State.get('users').getCommonProps(); }
       if(access == "all-users") { return v1State.get('users').getCommonProps(); }
 
-      var model = v1State.get('users').getUserEntityWithName(access);
+      var model = v1State.get('users').getUserTableWithName(access);
       return model.get('fields');
     },
 
