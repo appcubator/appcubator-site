@@ -98,8 +98,12 @@ class App(models.Model):
     deployment_id = models.IntegerField(blank=True, null=True, default=None)
 
     def save(self, *args, **kwargs):
-        self.subdomain = self.u_name()
+        if self.subdomain == '':
+            self.reset_subdomain()
         return super(App, self).save(*args, **kwargs)
+
+    def reset_subdomain(self):
+        self.subdomain = self.u_name()
 
     def clean(self):
         from django.core.exceptions import ValidationError
