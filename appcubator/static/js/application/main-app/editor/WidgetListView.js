@@ -115,7 +115,9 @@ function( WidgetContainerView,
 
     placeWidget: function(widgetModel, isNew) {
       widgetModel.setupLoopContext(this.entityModel);
-      var widgetView = new WidgetView(widgetModel, true);
+      var widgetView = new WidgetView(widgetModel);
+      widgetView.setFreeMovement();
+
       this.editorRow.appendChild(widgetView.render().el);
       widgetModel.get('layout').bind('change', this.renderShadowElements);
       if(isNew) widgetView.autoResize();

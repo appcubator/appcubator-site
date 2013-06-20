@@ -9,10 +9,8 @@
   height: 100%;
   list-style: none;
   overflow: visible;
-  overflow-y: scroll;
   padding: 0;
   padding-bottom: 90px;
-
   background-color: #2b3545;
   color: #fff;
 }
@@ -75,6 +73,7 @@
 
 .item-gallery {
   width: 200px;
+
   height: 100%;
   right: 0;
   padding: 0;
@@ -85,6 +84,12 @@
   border-radius: 0;
   border: none;
   box-shadow: none;
+}
+
+@-moz-document url-prefix() {
+    .item-gallery {
+        width: 220px;
+    }
 }
 
 .item-gallery ::-webkit-scrollbar {
@@ -102,26 +107,6 @@
     background-color: rgba(255,255,255,0.4);
 }
 
-.interface-elements {
-  width: 100%;
-  overflow:visible;
-  overflow-y:visible;
-  height: 100%;
-  display: block;
-  float: right;
-}
-
-.interface-elements ul {
-  display: block;
-  overflow: visible;
-  overflow-y: scroll;
-  float: left;
-  height: 100%;
-}
-
-.interface-elements ul li {
-  float: left;
-}
 
 .create {
   background-image: url('../img/plus.png');
