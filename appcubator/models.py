@@ -104,7 +104,7 @@ class App(models.Model):
         return super(App, self).save(*args, **kwargs)
 
     def reset_subdomain(self):
-        self.subdomain = self.u_name()
+        self.subdomain = self.u_name().lower()
 
     def clean(self):
         from django.core.exceptions import ValidationError
@@ -230,6 +230,11 @@ class App(models.Model):
 
     def github_url(self):
         return "https://github.com/appcubator/" + self.u_name()
+
+    @property
+    def subdomain(self):
+        return subdomain.lower()
+
 
     def css(self, deploy=True, mobile=False):
         """Use uiestate, less, and django templates to generate a string of the CSS"""
