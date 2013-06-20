@@ -54,21 +54,25 @@ define([
         renderLinkOptions: function() {
           var self = this;
           var select = this.$el.find('.link-options');
-          var prevSelected = select[0].selectedIndex;
+          //var prevSelected = select[0].selectedIndex;
           var htmlString = '<option>Choose a Page</option>';
           _(this.linkOptions).each(function(link) {
+            var selected = "";
+            if(link.url === self.model.get('url')) {
+              selected = " selected ";
+            }
             if(self.isInternalLink(link.url)) {
               var pageName = link.url.replace('internal://', '');
-              htmlString += '<option value="' + link.url + '">' + pageName + '</option>';
+              htmlString += '<option value="' + link.url + '"'+selected+'>' + pageName + '</option>';
             }
             else {
-              htmlString += '<option value="' + link.url + '">' + link.title +'</option>';
+              htmlString += '<option value="' + link.url + '"'+selected+'>' + link.title +'</option>';
             }
 
           });
           htmlString += '<option value="external">External Link...</option>';
           select.html(htmlString);
-          select[0].selectedIndex = prevSelected;
+          //select[0].selectedIndex = prevSelected;
         },
 
         pageSelected: function(e) {

@@ -23,24 +23,24 @@ Templates.tempNode = [
 
 Templates.NavbarEditor = [
   '<h3>Navbar Editor</h3>',
-  '<div class="main-title"><h4>Main Title</h4>',
-  '<input type="text" id="edit-brandname" value="<%= brandName %>"></div>',
-  '<div class="links-title"><h4>Links</h4></div>',
-  '<div class="links-section">',
+  '<form action="">',
+    '<legend for="edit-brandName">Main Title</legend>',
+    '<input type="text" name="edit-brandName" id="edit-brandname" value="<%= brandName %>"></div>',
+    '<legend for="links">Links</legend>',
     '<ul id="link-editors"></ul>',
-    '<div class="well well-small add-link" type="submit">Add Link</div>',
+    '<button class="btn btn-primary btn-small add-link">Add Link</div>',
   '</div>'
 ].join('\n');
 
 Templates.FooterEditor = [
   '<h3>Footer Editor</h3>',
-  '<form>',
+  '<form action="">',
     '<legend for="customText">Custom Footer Text</legend>',
     '<input type="text" id="edit-customText" value="<%= customText %>">',
     '<legend for="links">Links</legend>',
     '<ul id="link-editors"></ul>',
-  '</form>',
-  '<button class="btn btn-primary btn-small add-link" type="submit">Add Link</button>'
+    '<button class="btn btn-primary btn-small add-link">Add Link</button>',
+  '</form>'
 ].join('\n');
 
 Templates.LinkEditor = [

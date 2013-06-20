@@ -5,9 +5,7 @@
   color: #fff;
   background-color: #2b3545;
   text-align: left;
-  padding: 0;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding: 0px;
   background-color: #2b3545;
   border-radius: 4px;
   margin-top: 12px;
@@ -48,7 +46,8 @@
 }
 
 #widget-editor  ul {
-  margin: 0;
+  padding: 4px;
+  margin: 0px;
 }
 
 #widget-editor .form-editor-btn,

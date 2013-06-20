@@ -3782,6 +3782,10 @@ ul.list {
   height: 600px;
 }
 
+#navbar-editor form, #footer-editor form {
+  padding: 15px;
+}
+
 #navbar-editor h3 {
   display: block;
   padding-left: 15px;
