@@ -231,11 +231,6 @@ class App(models.Model):
     def github_url(self):
         return "https://github.com/appcubator/" + self.u_name()
 
-    @property
-    def subdomain(self):
-        return subdomain.lower()
-
-
     def css(self, deploy=True, mobile=False):
         """Use uiestate, less, and django templates to generate a string of the CSS"""
         from django.template import Context, loader
