@@ -17,10 +17,10 @@ function(
       this.set('fields', new FormFieldCollection());
       this.set('action', bone.action||"create");
       this.set('actions', new ActionCollection(bone.actions || []));
-      this.set('goto', "internal://Homepage/");
 
       if(bone.loginRoutes) { this.set('loginRoutes', new LoginRouteCollection(bone.loginRoutes));}
-      if(bone.goto) { this.set('got', new ActionModel(bone.goto)); }
+      if(!bone.goto) { bone.goto = "internal://Homepage"; }
+      if(bone.goto) { this.set('goto', new ActionModel( { type: "goto", page_name: bone.goto)); }
 
       this.set('entity', bone.entity);
 
@@ -96,6 +96,7 @@ function(
       var json = _.clone(this.attributes);
       json.name = json.name || "";
       json.fields = this.get('fields').toJSON();
+      json.goto = json.goto.toJSON();
       if(json.redirect) json.redirect = json.redirect.toJSON();
       return json;
     }

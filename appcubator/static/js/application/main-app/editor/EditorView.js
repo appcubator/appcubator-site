@@ -133,7 +133,7 @@ function( PageModel,
       console.log(curAppState);
       $.ajax({
         type: "POST",
-        url: '/app/'+appId+'/state/force/',
+        url: '/app/'+appId+'/state/',
         data: JSON.stringify(curAppState),
         complete: function() {
           util.dontAskBeforeLeave();
