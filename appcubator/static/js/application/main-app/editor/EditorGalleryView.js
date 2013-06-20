@@ -11,8 +11,8 @@ function(ElementCollection,
          WidgetModel) {
 
   var EditorGalleryView = Backbone.View.extend({
-    el                  : iui.get('top-panel-bb'),
-    allList             : iui.get('all-list'),
+    el                  : util.get('top-panel-bb'),
+    allList             : util.get('all-list'),
     curId               : 'all-elements',
     dragActive          : false,
     css                 : 'editor-gallery',
@@ -31,8 +31,8 @@ function(ElementCollection,
       // All Create Forms, Tables, Lists
       // Context Entity Elements and Update Forms
       var self = this;
-      iui.loadCSS(this.css);
-      this.allList = iui.get('all-list');
+      util.loadCSS(this.css);
+      this.allList = util.get('all-list');
 
       this.renderAuthenticationForms();
       this.renderCurrentUserElements();

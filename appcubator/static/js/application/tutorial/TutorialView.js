@@ -37,7 +37,7 @@ function() {
 
       if(directory) this.addr = directory;
 
-      iui.loadCSS(this.css);
+      util.loadCSS(this.css);
       this.render();
       this.chooseSlide(this.addr, true);
       this.reader = new answer();
@@ -113,7 +113,7 @@ function() {
       var self = this;
       _(dict).each(function(item, ind) {
         if(item.view) {
-          self.reader.read(iui.getHTML(item.view), [ind] ,item.title);
+          self.reader.read(util.getHTML(item.view), [ind] ,item.title);
         }
 
         // if(item.contents) {
@@ -174,7 +174,7 @@ function() {
 
     showSlide: function(obj, addr) {
       var title = '<h2>'+ obj.title + '</h2><div class="main-img '+ obj.view +'" style="background-image:url('+ obj.img +')"></div>';
-      $('.tutorial-content').html(title + '<div class="text-cont">' + iui.getHTML(obj.view) +'</div>');
+      $('.tutorial-content').html(title + '<div class="text-cont">' + util.getHTML(obj.view) +'</div>');
 /*
       $.ajax({
           type: "POST",

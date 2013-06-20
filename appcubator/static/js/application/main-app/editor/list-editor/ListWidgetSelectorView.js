@@ -1,6 +1,6 @@
 define([
   'mixins/BackboneUI',
-  'iui'
+  'util'
 ],
 function() {
 
@@ -165,7 +165,7 @@ function() {
     },
 
     resizing: function(e, ui) {
-      var elem = iui.get('widget-wrapper-' + this.selectedEl.cid);
+      var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = ui.size.width - 4 + 'px';
       elem.style.height = (ui.size.height - 4) + 'px';
       elem.style.left = ui.position.left + 2 + 'px';
@@ -177,7 +177,7 @@ function() {
       var top  = Math.round((ui.position.top  / 1));
       var deltaHeight = Math.round((ui.size.height + 6));
       var deltaWidth = Math.round((ui.size.width + 2));
-      var elem = iui.get('widget-wrapper-' + this.selectedEl.cid);
+      var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = '';
       elem.style.height = '';
       this.selectedEl.get('layout').set('width', deltaWidth);
@@ -190,7 +190,7 @@ function() {
     moving: function(e, ui) {
       model = this.selectedEl;
       if(e.target.id == "list-hover-div") { model = this.hoveredEl; }
-      var elem = iui.get('widget-wrapper-' + model.cid);
+      var elem = util.get('widget-wrapper-' + model.cid);
       elem.style.top = ui.position.top + 2 + 'px';
       elem.style.left = ui.position.left + 2 + 'px';
     },

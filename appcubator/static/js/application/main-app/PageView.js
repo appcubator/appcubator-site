@@ -2,7 +2,7 @@ define([
   'app/UrlView',
   'mixins/SimpleModalView',
   'app/templates/PageTemplates',
-  'iui',
+  'util',
   'backbone'
 ],
 function(UrlView, SimpleModalView) {

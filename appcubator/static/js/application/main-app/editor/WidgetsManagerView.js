@@ -26,8 +26,8 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
 
       this.widgetSelectorView = new WidgetSelectorView(this.widgetsCollection);
 
-      this.widgetsCollection.bind('change', function() { iui.askBeforeLeave(); });
-      this.widgetsCollection.bind('add',  function() { iui.askBeforeLeave(); });
+      this.widgetsCollection.bind('change', function() { util.askBeforeLeave(); });
+      this.widgetsCollection.bind('add',  function() { util.askBeforeLeave(); });
     },
 
     render: function() {
@@ -61,7 +61,7 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
       var curWidget = new WidgetView(widgetModel);
 
       if(!widgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-      else iui.get('full-container').appendChild(curWidget.render().el);
+      else util.get('full-container').appendChild(curWidget.render().el);
 
       if(isNew) curWidget.autoResize();
     },
@@ -69,14 +69,14 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
     placeContainer: function(containerWidgetModel, isNew) {
       var curWidget = new WidgetContainerView(containerWidgetModel);
       if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-      else iui.get('full-container').appendChild(curWidget.render().el);
+      else util.get('full-container').appendChild(curWidget.render().el);
       if(isNew) curWidget.autoResize();
     },
 
     placeList: function(containerWidgetModel, isNew) {
       var curWidget= new WidgetListView(containerWidgetModel);
       if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-      else iui.get('full-container').appendChild(curWidget.render().el);
+      else util.get('full-container').appendChild(curWidget.render().el);
       if(isNew) curWidget.autoResize();
     }
   });

@@ -51,8 +51,8 @@ function( PageModel,
 
       if(options && options.pageId) pageId = options.pageId;
 
-      iui.loadCSS(this.css);
-      iui.loadCSS('jquery-ui');
+      util.loadCSS(this.css);
+      util.loadCSS('jquery-ui');
 
       this.model             = v1State.get('pages').models[pageId];
       v1State.currentPage = this.model;
@@ -88,20 +88,20 @@ function( PageModel,
 
     render: function() {
 
-      if(!this.el.innerHTML) this.el.innerHTML = iui.getHTML('editor-page');
+      if(!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
 
-      iui.get('page-list').innerHTML += '<li>'+ v1State.get('pages').models[pageId].get('name') +'</li>';
+      util.get('page-list').innerHTML += '<li>'+ v1State.get('pages').models[pageId].get('name') +'</li>';
 
       v1State.get('pages').each(function(page, ind) {
         if(pageId == ind) return;
-        iui.get('page-list').innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>' + page.get('name') +
+        util.get('page-list').innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>' + page.get('name') +
                                           '</a></li>';
       });
 
       var createBox = new Backbone.NameBox({tagName: 'li', className:'new-page', txt:'New Page'});
       createBox.on('submit', this.createPage);
 
-      iui.get('page-list').appendChild(createBox.el);
+      util.get('page-list').appendChild(createBox.el);
 
 
       this.marqueeView.render();
@@ -136,7 +136,7 @@ function( PageModel,
         url: '/app/'+appId+'/state/force/',
         data: JSON.stringify(curAppState),
         complete: function() {
-          iui.dontAskBeforeLeave();
+          util.dontAskBeforeLeave();
         },
         success: function() {
           $el.html("<span>Saved</span>").fadeIn();
@@ -182,12 +182,12 @@ function( PageModel,
       if(options.local) url = url + 'local/';
 
       var self = this;
-      iui.get('deploy').innerHTML = '<span>Deploying...</span>';
+      util.get('deploy').innerHTML = '<span>Deploying...</span>';
 
       $.ajax(url, {
         type: "POST",
         complete: function() {
-          iui.get('deploy').innerHTML = '<span>Test Run</span>';
+          util.get('deploy').innerHTML = '<span>Test Run</span>';
         },
         success: function(data) {
           self.renderDeployResponse(true, data, self);
@@ -263,7 +263,7 @@ function( PageModel,
 
     setupPageWrapper: function() {
       var height = window.innerHeight - 10;
-      iui.get('page-wrapper').style.height = height+ 'px';
+      util.get('page-wrapper').style.height = height+ 'px';
       this.$el.find('.page.full').css('height', height - 46);
     },
 

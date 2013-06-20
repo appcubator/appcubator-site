@@ -27,7 +27,6 @@ define([
         fields = this.at(0).get('fields').models;
       }
       this.each(function(model) {
-        console.log(model);
         fields = _.union(fields, model.get('fields').models);
       });
 

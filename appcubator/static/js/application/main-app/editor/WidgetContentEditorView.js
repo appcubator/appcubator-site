@@ -1,6 +1,6 @@
 define([
   'mixins/SelectView',
-  'backbone'
+  'util.filepicker'
 ],
 function(SelectView) {
 
@@ -184,7 +184,7 @@ function(SelectView) {
       var self = this;
 
       if(inp.val == 'new-image') {
-        iui.openFilePick(self.staticsAdded, self, appId);
+        util.filepicker.openFilePick(self.staticsAdded, self, appId);
       }
       else {
         this.model.get('data').get('content_attribs').set('src', inp.val);
@@ -210,7 +210,7 @@ function(SelectView) {
 
     addExternalLink: function(e) {
       e.preventDefault();
-      var page_link = iui.get('external-link-input').value;
+      var page_link = util.get('external-link-input').value;
       this.model.get('data').get('content_attribs').set('href', page_link);
       $('#external-link-form').remove();
       this.hrefOptions.unshift(page_link);

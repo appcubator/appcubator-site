@@ -3,7 +3,7 @@ define([
   'models/EmailModel',
   'app/EmailView',
   'mixins/BackboneNameBox',
-  'iui'
+  'util'
 ],
 function(EmailCollection, EmailModel, EmailView) {
 
@@ -33,7 +33,7 @@ function(EmailCollection, EmailModel, EmailView) {
     },
 
     render: function() {
-      this.el.innerHTML = _.template(iui.getHTML('emails-page'), {});
+      this.el.innerHTML = _.template(util.getHTML('emails-page'), {});
       this.listView = this.$el.find('#email-list');
       this.renderEmailList();
       this.renderVariableList();

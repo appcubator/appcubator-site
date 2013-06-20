@@ -1,6 +1,6 @@
 define([
   'mixins/BackboneModal',
-  'iui'
+  'util.filepicker'
 ],
 function() {
 
@@ -47,7 +47,7 @@ function() {
     },
 
     clickedAddImage: function(e) {
-      iui.openFilePick(this.imageAdded, this, appId);
+      util.filepicker.openFilePick(this.imageAdded, this, appId);
     },
 
     imageAdded: function(files, self) {

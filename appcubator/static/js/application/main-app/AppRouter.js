@@ -7,7 +7,7 @@ define([
 		"mixins/ErrorDialogueView",
 		"backbone",
 		"bootstrap",
-		"iui",
+		"util",
 		"comp"
 ], function(SimpleModalView,
           ErrorModalView,
@@ -174,12 +174,12 @@ define([
 		},
 
 		deploy: function() {
-			iui.startAjaxLoading();
+			util.startAjaxLoading();
 				$.ajax({
 							type: "POST",
 							url: '/app/'+appId+'/deploy/',
 							success: function(data) {
-								iui.stopAjaxLoading();
+								util.stopAjaxLoading();
 								if(data.errors) {
 									var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
 									if(DEBUG) {

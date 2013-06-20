@@ -35,8 +35,8 @@ function(WidgetsManagerView,
 
       this.widgetSelectorView = new MobileWidgetSelectorView(this.widgetsCollection);
 
-      this.widgetsCollection.bind('change', function() { iui.askBeforeLeave(); });
-      this.widgetsCollection.bind('add',  function() { iui.askBeforeLeave(); });
+      this.widgetsCollection.bind('change', function() { util.askBeforeLeave(); });
+      this.widgetsCollection.bind('add',  function() { util.askBeforeLeave(); });
     },
 
     render: function() {
@@ -64,19 +64,19 @@ function(WidgetsManagerView,
       var curWidget = new MobileWidgetView(widgetModel);
 
       if(!widgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.el);
-      else iui.get('full-container').appendChild(curWidget.el);
+      else util.get('full-container').appendChild(curWidget.el);
     },
 
     placeContainer: function(containerWidgetModel) {
       var curWidget= new MobileWidgetContainerView(containerWidgetModel);
       if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.el);
-      else iui.get('full-container').appendChild(curWidget.el);
+      else util.get('full-container').appendChild(curWidget.el);
     },
 
     placeList: function(containerWidgetModel) {
       var curWidget= new WidgetListView(containerWidgetModel);
       if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.el);
-      else iui.get('full-container').appendChild(curWidget.el);
+      else util.get('full-container').appendChild(curWidget.el);
     },
 
     positionChanged: function(e, ui) {

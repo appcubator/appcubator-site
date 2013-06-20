@@ -20,7 +20,7 @@ function(Backbone) {
       Backbone.ModalView.__super__._configure.call(this, options);
       this.backgroundDiv = this.setupModal();
       this.modalWindow = this.setupModalWindow();
-      iui.loadCSS(this.css);
+      util.loadCSS(this.css);
       _.bindAll(this, 'closeModal', 'handleKey');
     },
 
