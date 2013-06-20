@@ -283,8 +283,8 @@ define([
       var height= $(node).outerHeight(true);
       var width = $(node).outerWidth(true);
 
-      var nHeight = Math.ceil(height / GRID_HEIGHT);
-      var nWidth  = Math.ceil(width / GRID_WIDTH);
+      var nHeight = Math.ceil(height / (this.positionVerticalGrid||GRID_HEIGHT));
+      var nWidth  = Math.ceil(width / (this.positionHorizontalGrid||GRID_HEIGHT));
 
       if(!nHeight) nHeight = 2;
       if(!nWidth)  nWidth = 2;

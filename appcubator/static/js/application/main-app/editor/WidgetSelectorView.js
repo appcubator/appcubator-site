@@ -137,7 +137,6 @@ function() {
     },
 
     widgetHover: function(widgetModel) {
-      console.log("WIDGET HOVER");
       if(this.selectedEl && widgetModel.cid === this.selectedEl.cid) return;
       this.hoveredEl = widgetModel;
       this.setLayout(this.hoverDiv, widgetModel);
