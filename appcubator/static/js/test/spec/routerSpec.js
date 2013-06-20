@@ -22,111 +22,231 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
   mouseDispatcher = new MouseDispatcher();
 
   describe( "AppRouter", function () {
-    var router = null;
 
-    afterEach(function() {
-      Backbone.history.stop();
-      router = null;
+    describe("info page", function () {
+      var router = null;
+
+      afterEach(function() {
+        Backbone.history.stop();
+        router = null;
+      });
+
+      it('calls the info page route', function() {
+        spyOn(AppRouter.prototype, 'info');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/info/', {trigger: true});
+
+        expect(router).toBeDefined();
+        expect(AppRouter.prototype.info).toHaveBeenCalled();
+      });
+
+      it('calls the info page tutorial', function() {
+        ///spyOn(AppRouter.prototype, 'showTutorial');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/info/tutorial/', {trigger: true});
+
+        expect(router).toBeDefined();
+        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+      });
     });
 
-    it("routes to the info page", function () {
-      spyOn(AppRouter.prototype, 'info');
-      spyOn(AppRouter.prototype, 'showTutorial');
-      router = new AppRouter();
-      Backbone.history.start({pushState: true});
+    describe("entities", function () {
+      var router = null;
 
-      router.navigate('app/1/info/', {trigger: true});
-      expect(router).toBeDefined();
-      expect(AppRouter.prototype.info).toHaveBeenCalled();
+      afterEach(function() {
+        Backbone.history.stop();
+        router = null;
+      });
 
-      router.navigate('app/1/info/tutorial/', {trigger: true});
-      expect(router).toBeDefined();
-      expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+      it('calls the entities page route', function() {
+        spyOn(AppRouter.prototype, 'entities');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/entities/', {trigger: true});
+
+        expect(router).toBeDefined();
+        expect(AppRouter.prototype.entities).toHaveBeenCalled();
+      });
+
+      it('calls the entities page tutorial', function() {
+        ///spyOn(AppRouter.prototype, 'showTutorial');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/entities/tutorial/', {trigger: true});
+
+        expect(router).toBeDefined();
+        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+      });
     });
 
-    it("routes to the entities", function () {
-      spyOn(AppRouter.prototype, 'entities');
-      router = new AppRouter();
-      Backbone.history.start({pushState: true});
+    describe("theme gallery", function () {
+      var router = null;
 
-      router.navigate('app/1/entities/', {trigger: true});
-      expect(router).toBeDefined();
-      expect(AppRouter.prototype.entities).toHaveBeenCalled();
+      afterEach(function() {
+        Backbone.history.stop();
+        router = null;
+      });
 
-      router.navigate('app/1/entities/tutorial/', {trigger: true});
-      expect(router).toBeDefined();
+      it('calls the themes page route', function() {
+        spyOn(AppRouter.prototype, 'themes');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/gallery/', {trigger: true});
+
+        expect(router).toBeDefined();
+        expect(AppRouter.prototype.themes).toHaveBeenCalled();
+      });
+
+      it('calls the themes page tutorial', function() {
+        ///spyOn(AppRouter.prototype, 'showTutorial');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/themes/tutorial/', {trigger: true});
+
+        expect(router).toBeDefined();
+        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+      });
     });
 
-    it("routes to the theme gallery", function () {
-      spyOn(AppRouter.prototype, 'themes');
-      router = new AppRouter();
-      Backbone.history.start({pushState: true});
+    describe("pages", function () {
+      var router = null;
 
-      router.navigate('app/1/gallery/', {trigger: true});
-      expect(router).toBeDefined();
-      expect(AppRouter.prototype.themes).toHaveBeenCalled();
+      afterEach(function() {
+        Backbone.history.stop();
+        router = null;
+      });
 
-      router.navigate('app/1/gallery/tutorial/', {trigger: true});
-      expect(router).toBeDefined();
+      it('calls the pages page route', function() {
+        spyOn(AppRouter.prototype, 'pages');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/pages/', {trigger: true});
+
+        expect(router).toBeDefined();
+        expect(AppRouter.prototype.pages).toHaveBeenCalled();
+      });
+
+      it('calls the pages page tutorial', function() {
+        ///spyOn(AppRouter.prototype, 'showTutorial');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/pages/tutorial/', {trigger: true});
+
+        expect(router).toBeDefined();
+        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+      });
     });
 
-    it("routes to the pages", function () {
-      spyOn(AppRouter.prototype, 'pages');
-      router = new AppRouter();
-      Backbone.history.start({pushState: true});
+    describe("email page", function () {
+      var router = null;
 
-      router.navigate('app/1/pages/', {trigger: true});
-      expect(router).toBeDefined();
-      expect(AppRouter.prototype.pages).toHaveBeenCalled();
+      afterEach(function() {
+        Backbone.history.stop();
+        router = null;
+      });
 
-      router.navigate('app/1/pages/tutorial/', {trigger: true});
-      expect(router).toBeDefined();
+      it('calls the emails page route', function() {
+        spyOn(AppRouter.prototype, 'emails');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/emails/', {trigger: true});
+
+        expect(router).toBeDefined();
+        expect(AppRouter.prototype.emails).toHaveBeenCalled();
+      });
+
+      it('calls the emails page tutorial', function() {
+        ///spyOn(AppRouter.prototype, 'showTutorial');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/emails/tutorial/', {trigger: true});
+
+        expect(router).toBeDefined();
+        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+      });
     });
 
-    it("routes to the email page", function () {
-      spyOn(AppRouter.prototype, 'emails');
-      router = new AppRouter();
-      Backbone.history.start({pushState: true});
+    describe("index", function () {
+      var router = null;
 
-      router.navigate('app/1/emails/', {trigger: true});
-      expect(router).toBeDefined();
-      expect(AppRouter.prototype.emails).toHaveBeenCalled();
+      afterEach(function() {
+        Backbone.history.stop();
+        router = null;
+      });
 
-      router.navigate('app/1/emails/tutorial/', {trigger: true});
-      expect(router).toBeDefined();
+      it('calls the index page route', function() {
+        spyOn(AppRouter.prototype, 'index');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/', {trigger: true});
+
+        expect(router).toBeDefined();
+        expect(AppRouter.prototype.index).toHaveBeenCalled();
+      });
+
+      it('calls the index page tutorial', function() {
+        ///spyOn(AppRouter.prototype, 'showTutorial');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/tutorial/', {trigger: true});
+
+        expect(router).toBeDefined();
+        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+      });
     });
 
-    it("routes to the index", function () {
-      spyOn(AppRouter.prototype, 'index');
-      router = new AppRouter();
-      Backbone.history.start({pushState: true});
+    describe("editor", function () {
+      var router = null;
 
-      router.navigate('app/1/', {trigger: true});
-      expect(router).toBeDefined();
-      expect(AppRouter.prototype.index).toHaveBeenCalled();
+      afterEach(function() {
+        Backbone.history.stop();
+        router = null;
+      });
 
-      router.navigate('app/1/tutorial/', {trigger: true});
-      expect(router).toBeDefined();
+      it('calls the editor page route', function() {
+        spyOn(AppRouter.prototype, 'editor');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
+
+        router.navigate('app/1/editor/0/', {trigger: true});
+
+        expect(router).toBeDefined();
+        expect(AppRouter.prototype.editor).toHaveBeenCalled();
+      });
     });
 
-    it("routes to the editor", function () {
-      spyOn(AppRouter.prototype, 'editor');
-      router = new AppRouter();
-      Backbone.history.start({pushState: true});
+    describe("mobile editor", function () {
+      var router = null;
 
-      router.navigate('app/1/editor/0/', {trigger: true});
-      expect(router).toBeDefined();
-      expect(AppRouter.prototype.editor).toHaveBeenCalled();
-    });
+      afterEach(function() {
+        Backbone.history.stop();
+        router = null;
+      });
 
-    it("routes to the mobile editor", function () {
-      spyOn(AppRouter.prototype, 'mobileEditor');
-      router = new AppRouter();
-      Backbone.history.start({pushState: true});
+      it('calls the mobile editor page route', function() {
+        spyOn(AppRouter.prototype, 'mobileEditor');
+        router = new AppRouter();
+        Backbone.history.start({pushState: true});
 
-      router.navigate('app/1/mobile-editor/0/', {trigger: true});
-      expect(router).toBeDefined();
-      expect(AppRouter.prototype.mobileEditor).toHaveBeenCalled();
+        router.navigate('app/1/mobile-editor/0/', {trigger: true});
+
+        expect(router).toBeDefined();
+        expect(AppRouter.prototype.mobileEditor).toHaveBeenCalled();
+      });
     });
   });
 });
