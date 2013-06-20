@@ -18,8 +18,15 @@ function() {
       }
 
       return this.get('type');
+    },
+
+    toJSON: function () {
+      var json = _.clone(this.attributes);
+      if(json.type == "goto") { return "internal://" + json.page_name; }
+      return json;
     }
   });
 
   return ActionModel;
 });
+

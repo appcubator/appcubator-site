@@ -1,12 +1,13 @@
 define([
   'models/FormFieldModel',
+  'models/ActionModel',
   'tutorial/TutorialView',
   'app/templates/FormEditorTemplates',
   'mixins/BackboneModal',
   'mixins/SelectView',
   'jquery-ui'
 ],
-function(FormFieldModel, TutorialView) {
+function(FormFieldModel, ActionModel, TutorialView) {
 
   var ActionEditorView = Backbone.View.extend({
     tagName: 'div',
@@ -67,7 +68,9 @@ function(FormFieldModel, TutorialView) {
 
     gotoActionClicked: function(e) {
       var pageCid = e.target.id.replace('page-','');
-      this.model.set('goto', v1State.get('pages').get(pageCid));
+      this.model.set('goto', new ActionModel({ type: "goto",
+                                               page_name: v1State.get('pages').get(pageCid).get('name') }));
+
     },
 
     currentActionClicked: function(e) {
@@ -80,9 +83,10 @@ function(FormFieldModel, TutorialView) {
     },
 
     changedGoto: function() {
+      console.log(this.model.get('goto'));
       this.$el.find('.redirect-action').remove();
       var redirect = this.model.get('goto');
-      this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">Go to '+redirect.get('name')+'<div class="remove-from-list"></div></li>');
+      this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">Go to '+redirect.get('page_name')+'<div class="remove-from-list"></div></li>');
     },
 
     actionRemoved: function(actionModel) {
