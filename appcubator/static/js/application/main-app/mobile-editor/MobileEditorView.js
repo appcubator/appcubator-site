@@ -54,11 +54,11 @@ function( PageModel,
 
       if(options && options.pageId) pageId = options.pageId;
 
-      iui.loadCSS(this.css);
+      util.loadCSS(this.css);
 
-      //iui.loadCSS('ratchet');
-      iui.loadCSS('bootstrap-editor');
-      iui.loadCSS('jquery-ui');
+      //util.loadCSS('ratchet');
+      util.loadCSS('bootstrap-editor');
+      util.loadCSS('jquery-ui');
 
       this.model          = v1State.get('mobilePages').models[pageId];
       v1State.currentPage = this.model;
@@ -90,20 +90,20 @@ function( PageModel,
 
     render: function() {
 
-      if(!this.el.innerHTML) this.el.innerHTML = iui.getHTML('mobile-editor-page');
+      if(!this.el.innerHTML) this.el.innerHTML = util.getHTML('mobile-editor-page');
 
-      iui.get('page-list').innerHTML += '<li>'+appState.mobilePages[pageId].name+'</li>';
+      util.get('page-list').innerHTML += '<li>'+appState.mobilePages[pageId].name+'</li>';
 
       _(appState.pages).each(function(page, ind) {
         if(pageId == ind) return;
-        iui.get('page-list').innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>' + page.name +
+        util.get('page-list').innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>' + page.name +
                                           '</a></li>';
       });
 
       var createBox = new Backbone.NameBox({tagName: 'li', className:'new-page', txt:'New Page'});
       createBox.on('submit', this.createPage);
 
-      iui.get('page-list').appendChild(createBox.el);
+      util.get('page-list').appendChild(createBox.el);
 
 
       this.renderUrlBar();
@@ -155,7 +155,7 @@ function( PageModel,
         url: '/app/'+appId+'/state/',
         data: JSON.stringify(curAppState),
         complete: function() {
-          iui.dontAskBeforeLeave();
+          util.dontAskBeforeLeave();
         },
         success: function() {
           $el.html("<span>Saved</span>").fadeIn();
@@ -201,12 +201,12 @@ function( PageModel,
       if(options.local) url = url + 'local/';
 
       var self = this;
-      iui.get('deploy').innerHTML = '<span>Deploying...</span>';
+      util.get('deploy').innerHTML = '<span>Deploying...</span>';
 
       $.ajax(url, {
         type: "POST",
         complete: function() {
-          iui.get('deploy').innerHTML = '<span>Test Run</span>';
+          util.get('deploy').innerHTML = '<span>Test Run</span>';
         },
         success: function(data) {
           self.renderDeployResponse(true, data, self);

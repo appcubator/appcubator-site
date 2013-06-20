@@ -28,7 +28,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       }
 
       this.render();
-      iui.loadCSS('form-editor');
+      util.loadCSS('form-editor');
 
     },
 

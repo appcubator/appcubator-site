@@ -1,7 +1,7 @@
 define([
   'editor/LinkEditorView',
   'mixins/BackboneModal',
-  'iui'
+  'util'
 ],
 function(LinkEditorView) {
 

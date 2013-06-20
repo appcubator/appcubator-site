@@ -33,7 +33,7 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
       this.renderProperties();
       this.renderRelations();
 
-      iui.loadCSS('prettyCheckable');
+      util.loadCSS('prettyCheckable');
       this.$el.find('input[type=checkbox]').prettyCheckable();
       this.adjustTableWidth();
       return this;

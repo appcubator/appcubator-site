@@ -125,7 +125,7 @@ function( WidgetContainerView,
 
     resized: function(e, ui) {
       var deltaHeight = Math.round((ui.size.height + 6) / GRID_HEIGHT);
-      var elem = iui.get('widget-wrapper-' + this.model.cid);
+      var elem = util.get('widget-wrapper-' + this.model.cid);
       elem.style.width = '';
       elem.style.height = '';
       this.model.get('data').get('container_info').get('row').get('layout').set('height', deltaHeight);

@@ -39,7 +39,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     initialize: function(formModel, entityM, callback) {
       _.bindAll(this);
 
-      iui.loadCSS(this.css);
+      util.loadCSS(this.css);
 
       this.model = formModel;
       this.entityModel = entityM;

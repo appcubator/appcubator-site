@@ -12,7 +12,7 @@ define([
   "editor/KeyDispatcher",
   "editor/MouseDispatcher",
   "backbone",
-  "iui"
+  "util"
 ],
 function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
 

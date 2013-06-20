@@ -4,7 +4,7 @@ require.config({
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
-    "iui" : "../../libs/iui/iui",
+    "util" : "../../libs/util/util",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "designer-app" : "./",
     "editor" : "./editor",

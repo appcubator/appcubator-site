@@ -9,7 +9,7 @@ define([
     predefinedFields: [],
 
     initialize: function() {
-      this.predefinedFields.push(new FieldModel({ name: "Username"}));
+      this.predefinedFields.push(new FieldModel({ name: "username"}));
       this.predefinedFields.push(new FieldModel({ name: "First Name"}));
       this.predefinedFields.push(new FieldModel({ name: "Last Name"}));
       this.predefinedFields.push(new FieldModel({ name: "Email"}));
@@ -27,7 +27,6 @@ define([
         fields = this.at(0).get('fields').models;
       }
       this.each(function(model) {
-        console.log(model);
         fields = _.union(fields, model.get('fields').models);
       });
 
