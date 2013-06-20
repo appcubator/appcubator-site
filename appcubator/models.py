@@ -265,9 +265,9 @@ class App(models.Model):
             files = {'file':f}
             post_data = self.get_deploy_data()
             if self.deployment_id is None:
-                r = requests.post("http://staging.appcubator.com/deployment/", data=post_data, files=files)
+              r = requests.post("http://staging.appcubator.com/deployment/", data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
             else:
-                r = requests.post("http://staging.appcubator.com/deployment/%s/" % self.deployment_id, data=post_data, files=files)
+                r = requests.post("http://staging.appcubator.com/deployment/%s/" % self.deployment_id, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
 
         finally:
             f.close()
@@ -294,7 +294,7 @@ class App(models.Model):
             return self.deploy(retry_on_404=False)
 
         else:
-            raise Exception(r.content)
+          return {'errors': r.content}
     """
     def deploy(self, d_user):
         # this will post the data to appcubator.com
