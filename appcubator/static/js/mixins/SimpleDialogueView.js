@@ -1,7 +1,7 @@
 define([
   'backbone',
   'mixins/BackboneDialogue',
-  'iui'
+  'util'
 ],
 function(Backbone) {
 

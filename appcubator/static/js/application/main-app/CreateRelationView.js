@@ -67,41 +67,41 @@ function(SelectView) {
 
     saveRelationShip: function() {
 
-      var type1 = iui.get('relation-type-'+this.table1.cid).value;
-      var type2 = iui.get('relation-type-'+this.table2.cid).value;
+      var type1 = util.get('relation-type-'+this.table1.cid).value;
+      var type2 = util.get('relation-type-'+this.table2.cid).value;
       var fieldObj = {};
 
       if(type1 == "one" && type2 == "one") {
-        fieldObj.name = iui.get('relation-name-' + this.table1.cid).value;
+        fieldObj.name = util.get('relation-name-' + this.table1.cid).value;
         fieldObj.type = "o2o",
-        fieldObj.related_name = iui.get('relation-name-'+this.table2.cid).value;
+        fieldObj.related_name = util.get('relation-name-'+this.table2.cid).value;
         fieldObj.entity_name = this.table2.get('name');
 
         this.table1.get('fields').push(fieldObj);
       }
 
       if(type1 == "one" && type2 == "many") {
-        fieldObj.name = iui.get('relation-name-' + this.table1.cid).value;
+        fieldObj.name = util.get('relation-name-' + this.table1.cid).value;
         fieldObj.type = "fk";
-        fieldObj.related_name = iui.get('relation-name-' + this.table2.cid).value;
+        fieldObj.related_name = util.get('relation-name-' + this.table2.cid).value;
         fieldObj.entity_name = this.table2.get('name');
 
         this.table1.get('fields').push(fieldObj);
       }
 
       if(type1 == "many" && type2 == "one") {
-        fieldObj.name = iui.get('relation-name-' + this.table2.cid).value;
+        fieldObj.name = util.get('relation-name-' + this.table2.cid).value;
         fieldObj.type = "fk";
-        fieldObj.related_name = iui.get('relation-name-' + this.table1.cid).value;
+        fieldObj.related_name = util.get('relation-name-' + this.table1.cid).value;
          fieldObj.entity_name = this.table1.get('name');
 
         this.table2.get('fields').push(fieldObj);
       }
 
       if(type1 == "many" && type2 == "many") {
-        fieldObj.name = iui.get('relation-name-' + this.table2.cid).value;
+        fieldObj.name = util.get('relation-name-' + this.table2.cid).value;
         fieldObj.type = "m2m";
-        fieldObj.related_name = iui.get('relation-name-' + this.table1.cid).value;
+        fieldObj.related_name = util.get('relation-name-' + this.table1.cid).value;
         fieldObj.entity_name = this.table2.get('name');
 
         this.table1.get('fields').push(fieldObj);

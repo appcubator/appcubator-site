@@ -7,8 +7,9 @@ require.config({
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "heyoffline": "../../libs/heyoffline",
-    "iui" : "../../libs/iui/iui",
-    "comp": "../../libs/iui/comp",
+    "util" : "../../libs/util/util",
+    "util.filepicker" : "../../libs/util/util.filepicker",
+    "comp": "../../libs/util/comp",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "app" : "../main-app",
     "editor" : "../main-app/editor",
@@ -53,6 +54,9 @@ require.config({
     "tourist": {
       exports: "Tourist",
       deps: ["jquery", "backbone"]
+    },
+    "util.filepicker": {
+      exports: "util"
     }
   }
 
@@ -70,7 +74,7 @@ require([
   "heyoffline",
   "backbone",
   "bootstrap",
-  "iui",
+  "util",
   "comp"
 ],
 function (AppModel,

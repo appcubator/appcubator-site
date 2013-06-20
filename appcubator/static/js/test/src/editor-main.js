@@ -6,7 +6,7 @@ require.config({
     "backbone" : "../../libs/backbone-amd/backbone",
     "backboneui" : "../../backbone/BackboneUI",
     "key" : "../../libs/keymaster/keymaster",
-    "iui" : "../../libs/iui/iui",
+    "util" : "../../libs/util/util",
     "app" : "../../app",
     "editor" : "../../app/editor",
     "dicts" : "../../dicts"

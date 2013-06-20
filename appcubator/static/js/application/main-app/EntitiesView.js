@@ -30,7 +30,7 @@ function(TableCollection,
 
       initialize: function() {
         _.bindAll(this);
-        iui.loadCSS(this.css);
+        util.loadCSS(this.css);
         this.tablesView     = new TablesView(v1State.get('tables'), false);
         this.userTablesView = new TablesView(v1State.get('users'), true);
         this.relationsView = new RelationsView();
@@ -39,7 +39,7 @@ function(TableCollection,
       },
 
       render : function() {
-        this.$el.html(_.template(iui.getHTML('entities-page'), {}));
+        this.$el.html(_.template(util.getHTML('entities-page'), {}));
         this.renderTables();
         this.renderRelations();
         return this;
@@ -55,8 +55,8 @@ function(TableCollection,
       },
 
       renderRelations: function() {
-        iui.get('relations').appendChild(this.relationsView.render().el);
-        iui.get('relations').appendChild(this.createRelationView.render().el);
+        util.get('relations').appendChild(this.relationsView.render().el);
+        util.get('relations').appendChild(this.createRelationView.render().el);
       },
 
       clickedAddUserRole: function(e) {

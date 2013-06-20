@@ -1,6 +1,6 @@
 define([
   'mixins/BackboneUI',
-  'iui'
+  'util'
 ],
 function() {
 

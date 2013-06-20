@@ -1,6 +1,6 @@
 define([
   'mixins/BackboneModal',
-  'iui'
+  'util'
 ],
 function() {
 
@@ -19,7 +19,7 @@ function() {
     initialize: function(widgetModel, containerType) {
       _.bindAll(this);
 
-      iui.loadCSS(this.css);
+      util.loadCSS(this.css);
       this.widgetModel = widgetModel;
       this.containerType = containerType;
       this.model = widgetModel.get('data').get('container_info').get('query');
@@ -61,7 +61,7 @@ function() {
     },
 
     changeDescription: function() {
-      iui.get('query-description').innerHTML = this.getNLdescription();
+      util.get('query-description').innerHTML = this.getNLdescription();
     },
 
     fieldsToDisplayChanged: function(e) {
@@ -92,13 +92,13 @@ function() {
 
     nmrRowsChanged: function(e) {
       if(e.target.checked) {
-        var val = iui.get('first-nmr').value;
+        var val = util.get('first-nmr').value;
         this.model.set('numberOfRows', val);
       }
     },
 
     nmrRowsNumberChanged: function(e) {
-      iui.get('first-rows').checked = true;
+      util.get('first-rows').checked = true;
       this.model.set('numberOfRows', parseInt(e.target.value,0));
       e.stopPropagation();
     },

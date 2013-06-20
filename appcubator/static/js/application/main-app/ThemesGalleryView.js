@@ -1,7 +1,7 @@
 define([
   'app/ThemeDisplayView',
   'backbone',
-  'iui'
+  'util'
 ],
 function(ThemeDisplayView) {
 
@@ -12,12 +12,12 @@ function(ThemeDisplayView) {
     },
 
     initialize: function() {
-      iui.loadCSS(this.css);
+      util.loadCSS(this.css);
       this.title = "Themes";
     },
 
     render: function() {
-      this.$el.html(_.template(iui.getHTML('themes-page'), {}));
+      this.$el.html(_.template(util.getHTML('themes-page'), {}));
 
       this.listView = document.createElement('ul');
       this.listView.className = 'theme-gallery';

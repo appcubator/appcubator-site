@@ -1,6 +1,6 @@
 define([
   'designer-app/UIElementListView',
-  'iui',
+  'util',
   'designer-app/ThemeTemplates'
 ],function(UIElementListView) {
 
@@ -34,27 +34,27 @@ define([
       this.render();
 
       var buttonView     = new UIElementListView(this.model.get('buttons'), 'button');
-      iui.get('button-cont').appendChild(buttonView.el);
+      util.get('button-cont').appendChild(buttonView.el);
       var imageView      = new UIElementListView(this.model.get('images'), 'image');
-      iui.get('image-cont').appendChild(imageView.el);
+      util.get('image-cont').appendChild(imageView.el);
       var headerTextView = new UIElementListView(this.model.get('headerTexts'), 'header-text');
-      iui.get('header-text-cont').appendChild(headerTextView.el);
+      util.get('header-text-cont').appendChild(headerTextView.el);
       var textView       = new UIElementListView(this.model.get('texts'), 'text');
-      iui.get('text-cont').appendChild(textView.el);
+      util.get('text-cont').appendChild(textView.el);
       var linkView       = new UIElementListView(this.model.get('links'), 'link');
-      iui.get('link-cont').appendChild(linkView.el);
+      util.get('link-cont').appendChild(linkView.el);
       var textInputView  = new UIElementListView(this.model.get('textInputs'), 'text-input');
-      iui.get('text-input-cont').appendChild(textInputView.el);
+      util.get('text-input-cont').appendChild(textInputView.el);
       var passwordView   = new UIElementListView(this.model.get('passwords'), 'password');
-      iui.get('password-cont').appendChild(passwordView.el);
+      util.get('password-cont').appendChild(passwordView.el);
       var textAreaView   = new UIElementListView(this.model.get('textAreas'), 'text-area');
-      iui.get('text-area-cont').appendChild(textAreaView.el);
+      util.get('text-area-cont').appendChild(textAreaView.el);
       var lineView       = new UIElementListView(this.model.get('lines'), 'line');
-      iui.get('line-cont').appendChild(lineView.el);
+      util.get('line-cont').appendChild(lineView.el);
       var dropdownView   = new UIElementListView(this.model.get('dropdowns'), 'dropdown');
-      iui.get('dropdown-cont').appendChild(dropdownView.el);
+      util.get('dropdown-cont').appendChild(dropdownView.el);
       var boxView        = new UIElementListView(this.model.get('boxes'), 'box');
-      iui.get('box-cont').appendChild(boxView.el);
+      util.get('box-cont').appendChild(boxView.el);
 
       //this.model.get('pages').bind('add', this.renderPage);
     },
@@ -72,7 +72,7 @@ define([
       });*/
 
       _(statics).each(function(file) {
-        iui.get('statics-cont').innerHTML += '<img width="100" src="'+ file.url +'">' + file.name;
+        util.get('statics-cont').innerHTML += '<img width="100" src="'+ file.url +'">' + file.name;
       });
     },
 
@@ -126,7 +126,7 @@ define([
     },
 
     renderPage: function(page, ind) {
-      /*var pages = iui.get('pages-list');
+      /*var pages = util.get('pages-list');
       var cInd = ind;
       if(ind === null) {
         cInd = (this.model.get('pages').models.length);
@@ -161,7 +161,7 @@ define([
 
     uploadStatic: function() {
       var self = this;
-      iui.openThemeFilePick(self.staticsAdded, self, themeId);
+      util.openThemeFilePick(self.staticsAdded, self, themeId);
     },
 
     staticsAdded: function(files, self) {

@@ -27,7 +27,7 @@ define([
     KeyDispatcher,
     MouseDispatcher) {
 
-    iui.loadCSS = function(str) { console.log("Tried to load: "+ str); };
+    util.loadCSS = function(str) { console.log("Tried to load: "+ str); };
 
     v1State = new Backbone.Model();
     v1State = new AppModel(appState);

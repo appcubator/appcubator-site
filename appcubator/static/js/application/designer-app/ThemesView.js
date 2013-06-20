@@ -1,6 +1,6 @@
 define([
   'backbone',
-  'iui'
+  'util'
 ],
 function(Backbone) {
 

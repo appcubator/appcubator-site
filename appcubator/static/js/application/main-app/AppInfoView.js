@@ -34,7 +34,7 @@ function(SimpleModalView) {
       page_context.keywords = this.model.get('keywords');
       page_context.description = this.model.get('description');
 
-      this.el.innerHTML = _.template(iui.getHTML('app-info-page'), page_context);
+      this.el.innerHTML = _.template(util.getHTML('app-info-page'), page_context);
 
       this.$nav = $('.navigator .left-nav');
 
@@ -55,17 +55,17 @@ function(SimpleModalView) {
 
     changeName : function(e) {
       this.model.set('name', e.target.value);
-      iui.askBeforeLeave();
+      util.askBeforeLeave();
     },
 
     changeKeywords: function(e) {
       this.model.set('keywords', e.target.value);
-      iui.askBeforeLeave();
+      util.askBeforeLeave();
     },
 
     changeDescription: function(e) {
       this.model.set('description', e.target.value);
-      iui.askBeforeLeave();
+      util.askBeforeLeave();
     },
 
     deleteApp: function() {
@@ -75,7 +75,7 @@ function(SimpleModalView) {
           type: "POST",
           url: '/app/'+appId+'/delete/',
           complete: function() {
-            iui.onServerReady(function(){window.location.href='/app/'; })
+            util.onServerReady(function(){window.location.href='/app/'; })
           },
           dataType: "JSON"
         });
@@ -102,14 +102,14 @@ function(SimpleModalView) {
         url:'/app/'+appId+'/subdomain/'+subdomain+'/',
         data: {},
         success: function(d){
-          iui.onServerReady(function(){location.reload(true);});
+          util.onServerReady(function(){location.reload(true);});
         },
         error: function() {
-          iui.stopAjaxLoading();
+          util.stopAjaxLoading();
           alert("error: see logs");
         }
       });
-      iui.startAjaxLoading();
+      util.startAjaxLoading();
       $(e.target).hide();
     },
 

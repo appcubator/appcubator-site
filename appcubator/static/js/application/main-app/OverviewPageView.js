@@ -15,13 +15,13 @@ function(SimpleModalView) {
 
     initialize: function() {
       _.bindAll(this);
-      iui.loadCSS(this.css);
+      util.loadCSS(this.css);
       this.title = "The Garage";
     },
 
     render: function() {
       var page_context = {};
-      this.el.innerHTML = _.template(iui.getHTML('app-main-page'), page_context);
+      this.el.innerHTML = _.template(util.getHTML('app-main-page'), page_context);
       this.checkTutorialProgress();
     },
 

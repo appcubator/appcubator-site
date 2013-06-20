@@ -2,7 +2,7 @@ require.config({
   paths: {
     "jquery" : "../../libs/jquery/jquery",
     "underscore" : "../../libs/underscore-amd/underscore",
-    "iui" : "../../libs/iui/iui",
+    "util" : "../../libs/util/util",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "app" : "../",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable"

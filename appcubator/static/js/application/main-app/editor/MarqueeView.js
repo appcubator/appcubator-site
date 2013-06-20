@@ -2,7 +2,7 @@ define([
   'editor/WidgetEditorView',
   'editor/MultiSelectorView',
   'mixins/BackboneUI',
-  'iui'
+  'util'
 ],
 function(WidgetEditorView,
          MultiSelectorView) {
@@ -53,7 +53,7 @@ function(WidgetEditorView,
       var Ycor = e.clientY;
       var arr = v1State.getCurrentPage().get('uielements').filter(function(widget){
         var elem = document.getElementById('widget-wrapper-' + widget.cid);
-        return iui.isRectangleIntersectElement(this.clientOrigin.x, this.clientOrigin.y, Xcor, Ycor, elem);
+        return util.isRectangleIntersectElement(this.clientOrigin.x, this.clientOrigin.y, Xcor, Ycor, elem);
       }, this);
 
       this.isDrawing = false;
@@ -113,7 +113,7 @@ function(WidgetEditorView,
 
       this.currentPage.get('uielements').each(function(widget){
         var elem = document.getElementById('widget-wrapper-'+ widget.cid);
-        if(iui.isRectangleIntersectElement(Xorigin, Yorigin, Xcor, Ycor, elem)) {
+        if(util.isRectangleIntersectElement(Xorigin, Yorigin, Xcor, Ycor, elem)) {
           $(elem).addClass('red-border');
         }
         else {

@@ -1,72 +1,17 @@
-define(['jquery-ui'], function() {
+define(['jquery'], function() {
 
-  var iui = {
+  var util = {
     onServerReady: function(callback) {
       $.ajax('/ping/', {
         type: 'POST',
         success: callback,
         error: function(){
           console.log("Server not ready. Waiting 100ms and trying again.");
-          window.setTimeout(function(){iui.onServerReady(callback)}, 100);
+          window.setTimeout(function(){util.onServerReady(callback); }, 100);
         }
       });
     },
-    openFilePick: function(callback, success, appId) {
-      filepicker.setKey("AAO81GwtTTec7D8nH9SaTz");
-      filepicker.pickMultiple({
-          mimetypes: ['image/*'],
-          container: 'modal',
-          services:['COMPUTER', 'GMAIL', 'DROPBOX', 'INSTAGRAM', 'IMAGE_SEARCH', 'URL', 'FACEBOOK']
-        },
-        function(FPFiles){
-          for (var i = 0; i < FPFiles.length; i++) {
-            var f = FPFiles[i];
-            /* f has the following properties:
-                       url, filename, mimetype, size, isWriteable */
-            $.post('/app/'+ appId +'/static/',{
-              name: f.filename,
-              url:  f.url,
-              type: f.mimetype,
-              error: function(d) {
-                //alert("Something went wrong with the file upload! Data: "+f);
-              }
-            });
-          }
-          callback(FPFiles, success);
-        },
-        function(FPError){
-          console.log(FPError.toString());
-        }
-      );
-    },
-    openThemeFilePick: function(callback, success, themeId) {
-      filepicker.setKey("AAO81GwtTTec7D8nH9SaTz");
-      filepicker.pickMultiple({
-          mimetypes: ['image/*'],
-          container: 'modal',
-          services:['COMPUTER', 'GMAIL', 'DROPBOX', 'INSTAGRAM', 'IMAGE_SEARCH', 'URL', 'FACEBOOK']
-        },
-        function(FPFiles){
-          for (var i = 0; i < FPFiles.length; i++) {
-            var f = FPFiles[i];
-            /* f has the following properties:
-                       url, filename, mimetype, size, isWriteable */
-            $.post('/theme/'+ themeId +'/static/',{
-              name: f.filename,
-              url:  f.url,
-              type: f.mimetype,
-              error: function(d) {
-                //alert("Something went wrong with the file upload! Data: "+f);
-              }
-            });
-          }
-          callback(FPFiles, success);
-        },
-        function(FPError){
-          console.log(FPError.toString());
-        }
-      );
-    },
+
     assert : function(inp) {
       if(!inp) {
         console.trace();
@@ -74,71 +19,25 @@ define(['jquery-ui'], function() {
       }
     },
 
-    resizableAndDraggable: function(el, self) {
-      $(el).resizable({
-        handles: "n, e, s, w, se",
-        resize: self.resized,
-        containment: "parent"
-      });
-
-      $(el).draggable({
-        drag: self.moved,
-        containment: "parent"
-      });
-
-      //this.el.style.position = 'relative';
-      //console.log('yolo');
-      return el;
-    },
-
-    draggable: function(el) {
-      $(el).draggable({
-        grid: [ 30,30 ],
-        drag: self.moved
-      });
-    },
-
-     resizableVertical: function(el, self) {
-      $(el).resizable({
-        handles: "s",
-        stop: self.resized,
-        resize: self.resizing,
-        containment: "parent"
-      });
-
-      return el;
-    },
-
-    resizable: function(el, self) {
-      $(el).resizable({
-        handles: "n, e, s, w, se",
-        stop: self.resized,
-        resize: self.resizing,
-        containment: "parent"
-      });
-
-      return el;
-    },
-
     setCursor: function(node,pos){
       console.log(node);
       var node = (typeof node == "string" ||
-      node instanceof String) ? document.getElementById(node) : node;
-          if(!node){
-              return false;
-          }else if(node.createTextRange){
-              var textRange = node.createTextRange();
-              textRange.collapse(true);
-              textRange.moveEnd(pos);
-              textRange.moveStart(pos);
-              textRange.select();
-              console.log('he');
-              return true;
-          }else if(node.setSelectionRange){
-              node.setSelectionRange(pos,pos);
-              return true;
-          }
-          return false;
+        node instanceof String) ? document.getElementById(node) : node;
+      if(!node){
+        return false;
+      }else if(node.createTextRange){
+        var textRange = node.createTextRange();
+        textRange.collapse(true);
+        textRange.moveEnd(pos);
+        textRange.moveStart(pos);
+        textRange.select();
+        console.log('he');
+        return true;
+      }else if(node.setSelectionRange){
+        node.setSelectionRange(pos,pos);
+        return true;
+      }
+      return false;
     },
 
     get: function(id) {
@@ -194,14 +93,14 @@ define(['jquery-ui'], function() {
     },
 
     loadCSS : function(css) {
-        if(!document.getElementById('css-' + css)) {
-          var cssFile = document.createElement('link');
-          cssFile.setAttribute('type', 'text/css');
-          cssFile.setAttribute('href', '/static/css/' + css + '.css');
-          cssFile.setAttribute('rel', 'stylesheet');
-          cssFile.id = 'css-' + css;
-          document.getElementsByTagName('head')[0].appendChild(cssFile);
-        }
+      if(!document.getElementById('css-' + css)) {
+        var cssFile = document.createElement('link');
+        cssFile.setAttribute('type', 'text/css');
+        cssFile.setAttribute('href', '/static/css/' + css + '.css');
+        cssFile.setAttribute('rel', 'stylesheet');
+        cssFile.id = 'css-' + css;
+        document.getElementsByTagName('head')[0].appendChild(cssFile);
+      }
     },
 
     isMouseOn: function(pageX, pageY, element) {
@@ -312,12 +211,12 @@ define(['jquery-ui'], function() {
 
     document.addEventListener("touchstart", function(){}, true);
 
-  window.iui = iui;
+    window.util = util;
 
-  if (typeof window.define === "function" && window.define.amd) {
-    window.define("iui", [], function() {
-      return window.iui;
-    });
-  }
+    if (typeof window.define === "function" && window.define.amd) {
+      window.define("util", [], function() {
+        return window.util;
+      });
+    }
 
-});
+  });

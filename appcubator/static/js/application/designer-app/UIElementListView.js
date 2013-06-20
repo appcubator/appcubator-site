@@ -1,7 +1,7 @@
 define([
   'designer-app/UIElementView',
   'models/UIElementModel',
-  'iui',
+  'util',
   'designer-app/base-tags',
   'designer-app/ThemeTemplates'
 ],

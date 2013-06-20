@@ -8,7 +8,7 @@ define([
   'editor/form-editor/LoginFormEditorView',
   'editor/TableQueryView',
   'mixins/BackboneUI',
-  'iui'
+  'util'
 ],
 function(WidgetContentEditor,
          WidgetLayoutEditor,
@@ -33,7 +33,6 @@ function(WidgetContentEditor,
       'click .form-editor-btn'      : 'openFormEditor',
       'click .pick-style'         : 'openStylePicker',
       'click .edit-login-form-btn': 'openLoginEditor',
-
       'click .delete-button'      : 'clickedDelete',
       'click'                     : 'clicked'
     },
@@ -41,7 +40,7 @@ function(WidgetContentEditor,
     initialize: function(){
       _.bindAll(this);
 
-      iui.loadCSS(this.css);
+      util.loadCSS(this.css);
       var self = this;
       this.model = null;
     },
