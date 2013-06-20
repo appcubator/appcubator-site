@@ -1,6 +1,6 @@
 define([
   'mixins/SimpleModalView',
-  'templates/MainTemplates'
+  'app/templates/MainTemplates'
 ],
 function(SimpleModalView) {
 

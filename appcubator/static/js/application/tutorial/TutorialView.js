@@ -175,7 +175,7 @@ function() {
     showSlide: function(obj, addr) {
       var title = '<h2>'+ obj.title + '</h2><div class="main-img '+ obj.view +'" style="background-image:url('+ obj.img +')"></div>';
       $('.tutorial-content').html(title + '<div class="text-cont">' + iui.getHTML(obj.view) +'</div>');
-
+/*
       $.ajax({
           type: "POST",
           url: '/log/slide/',
@@ -188,7 +188,7 @@ function() {
           },
           dataType: "JSON"
       });
-
+*/
 
     },
 

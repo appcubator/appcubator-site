@@ -22,8 +22,12 @@ define([
     },
 
     getCommonProps: function() {
-      var fields = this.models[0].get('fields').models;
+      var fields = [];
+      if(this.length > 0) {
+        fields = this.at(0).get('fields').models;
+      }
       this.each(function(model) {
+        console.log(model);
         fields = _.union(fields, model.get('fields').models);
       });
 

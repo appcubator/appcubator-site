@@ -57,6 +57,7 @@
       "answer" : "{{ STATIC_URL }}js/libs/answer/answer",
       "prettyCheckable" : "{{ STATIC_URL }}js/libs/jquery/prettyCheckable",
       "list" : "{{ STATIC_URL }}js/libs/list",
+      "snap" : "{{ STATIC_URL }}js/libs/snap.min",
       "models" : "{{ STATIC_URL }}js/application/data/models",
       "collections" : "{{ STATIC_URL }}js/application/data/collections",
       "tutorial" : "{{ STATIC_URL }}js/application/tutorial",
@@ -78,6 +79,9 @@
       "bootstrap" : {
         deps: ["jquery"]
       },
+      "snap": {
+        exports: "Snap"
+      },
       "answer" : {
         deps: ["{{ STATIC_URL }}js/libs/answer/lib/natural.js", "underscore", "jquery"]
       }
@@ -87,13 +91,25 @@
   </script>
 
   <!-- include source files here... -->
+   <script type="text/javascript">
+    var appId = {{ app_id }};
+    var appState = {{ app.state_json|safe }};
+    var uieState = {{ app.uie_state_json|safe }};
+    var mobileUieState = {{ app.mobile_uie_state_json|safe }};
+    var statics = {{ statics|safe }};
+    var themes = {{ themes|safe }};
+    var mobileThemes = {{ mobile_themes|safe }};
+    var GRID_WIDTH = 80;
+    var GRID_HEIGHT = 15;
+
+  </script>
   <script type="text/javascript" src="{{ STATIC_URL}}js/libs/requirejs/require.js"></script>
 
 </head>
 
 <body class="sample">
 <div class="description">Hello Test</div>
-
+{% include "app-page-templates.html" %}
 </body>
 
 <script type="text/template" id="editor-page">

@@ -3,6 +3,7 @@ define([
   'models/EmailModel',
   'app/EmailView',
   'mixins/BackboneNameBox',
+  'iui'
 ],
 function(EmailCollection, EmailModel, EmailView) {
 
@@ -25,7 +26,7 @@ function(EmailCollection, EmailModel, EmailView) {
         firstEmail = this.collection.at(0);
       }
       else {
-        firstEmail = this.collection.create({});
+        firstEmail = this.collection.add({});
       }
       this.emailView = new EmailView({ model: firstEmail });
       this.listenTo(this.emailView, 'change:model', this.showActiveEmail);
@@ -42,6 +43,10 @@ function(EmailCollection, EmailModel, EmailView) {
     },
 
     renderEmailList: function() {
+      //don't render email list if parent view hasn't been rendered yet
+      if(!this.listView) {
+        return false;
+      }
       this.listView.empty();
       this.collection.each(function(email){
         this.appendEmail(email);
@@ -61,12 +66,12 @@ function(EmailCollection, EmailModel, EmailView) {
 
     renderVariableList: function() {
       var vars = v1State.get('users').getCommonProps();
-      var list = document.getElementById('variables-list');
+      var list = this.$('variables-list');
       _(vars).each(function(variable) {
         var li = document.createElement('li');
         li.setAttribute('draggable', 'true');
         li.innerHTML = "CurrentUser." + variable.get('name');
-        list.appendChild(li);
+        list.append(li);
       });
 
       return this;

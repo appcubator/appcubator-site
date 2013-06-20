@@ -112,6 +112,13 @@ class App(models.Model):
     def set_state(self, val):
         self._state_json = simplejson.dumps(val)
 
+    def set_test_state(self):
+        f = open(os.path.join(DEFAULT_STATE_DIR, "test_state.json"))
+        s = f.read()
+        simplejson.loads(s)
+        f.close()
+        self.set_state(s)
+
     state = property(get_state, set_state)
 
     @property

@@ -46,8 +46,12 @@ function(TableCollection,
       },
 
       renderTables: function() {
-        iui.get('tables').appendChild(this.tablesView.render().el);
-        iui.get('users').appendChild(this.userTablesView.render().el);
+        //don't render tables unless parent view has been rendered
+        if(!this.$el) {
+          return this;
+        }
+        this.$('#tables').append(this.tablesView.render().el);
+        this.$('#users').append(this.userTablesView.render().el);
       },
 
       renderRelations: function() {

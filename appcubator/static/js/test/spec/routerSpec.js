@@ -11,7 +11,8 @@ define([
   "app/AppRouter",
   "editor/KeyDispatcher",
   "editor/MouseDispatcher",
-  "backbone"
+  "backbone",
+  "iui"
 ],
 function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
 
@@ -19,58 +20,67 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
 
   keyDispatcher = new KeyDispatcher();
   mouseDispatcher = new MouseDispatcher();
-  var router = new AppRouter();
 
-  describe( "AppRouter routing functions", function () {
+  describe( "AppRouter", function () {
+
+    beforeEach(function() {
+      this.router = new AppRouter();
+      Backbone.history.start({pushState: true});
+    });
+
+    afterEach(function() {
+      Backbone.history.stop();
+    });
+
     it("routes to the info page", function () {
-      router.navigate('/1/info/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/info/', {trigger: true});
+      expect(this.router).toBeDefined();
 
-      router.navigate('/1/info/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/info/', {trigger: true});
+      expect(this.router).toBeDefined();
     });
     it("routes to the entities", function () {
-      router.navigate('/1/entities/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/entities/', {trigger: true});
+      expect(this.router).toBeDefined();
 
-      router.navigate('/1/entities/tutorial/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/entities/tutorial/', {trigger: true});
+      expect(this.router).toBeDefined();
     });
     it("routes to the theme gallery", function () {
-      router.navigate('/1/gallery/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/gallery/', {trigger: true});
+      expect(this.router).toBeDefined();
 
-      router.navigate('/1/gallery/tutorial/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/gallery/tutorial/', {trigger: true});
+      expect(this.router).toBeDefined();
     });
     it("routes to the pages", function () {
-      router.navigate('/1/pages/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/pages/', {trigger: true});
+      expect(this.router).toBeDefined();
 
-      router.navigate('/1/pages/tutorial/', {trigger: true});
-      expect(router).toBeDefined();
-    });
-    it("routes to the editor", function () {
-      router.navigate('/1/editor/', {trigger: true});
-      expect(router).toBeDefined();
-    });
-    it("routes to the mobile editor", function () {
-      router.navigate('/1/mobile-editor/1/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/pages/tutorial/', {trigger: true});
+      expect(this.router).toBeDefined();
     });
     it("routes to the email page", function () {
-      router.navigate('/1/emails/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/emails/', {trigger: true});
+      expect(this.router).toBeDefined();
 
-      router.navigate('/1/emails/tutorial/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/emails/tutorial/', {trigger: true});
+      expect(this.router).toBeDefined();
     });
     it("routes to the index", function () {
-      router.navigate('/1/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/', {trigger: true});
+      expect(this.router).toBeDefined();
 
-      router.navigate('/1/tutorial/', {trigger: true});
-      expect(router).toBeDefined();
+      this.router.navigate('app/1/tutorial/', {trigger: true});
+      expect(this.router).toBeDefined();
+    });
+    it("routes to the editor", function () {
+      this.router.navigate('app/1/editor/', {trigger: true});
+      expect(this.router).toBeDefined();
+    });
+    it("routes to the mobile editor", function () {
+      this.router.navigate('app/1/mobile-editor/1/', {trigger: true});
+      expect(this.router).toBeDefined();
     });
   });
 });
