@@ -131,6 +131,11 @@ function( WidgetContainerView,
       this.model.get('data').get('container_info').get('row').get('layout').set('height', deltaHeight);
     },
 
+    autoResize: function() {
+      this.model.get('layout').set('width', 7);
+      this.model.get('layout').set('height', 46);
+    },
+
     deselected: function() {
       this.editMode = false;
       this.$el.find('.row').first().removeClass('highlighted');
