@@ -2,11 +2,11 @@ define([
   'collections/TableCollection',
   'models/UserTableModel',
   'models/TableModel',
-  'app/ShowDataView',
-  'app/UserTableView',
-  'app/TablesView',
-  'app/CreateRelationView',
-  'app/RelationsView'
+  'app/entities/ShowDataView',
+  'app/entities/UserTableView',
+  'app/entities/TablesView',
+  'app/entities/CreateRelationView',
+  'app/entities/RelationsView'
 ],
 
 function(TableCollection,

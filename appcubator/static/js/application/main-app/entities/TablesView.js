@@ -1,10 +1,10 @@
 define([
   'models/FieldModel',
   'models/FormModel',
-  'app/TableView',
-  'app/UserTableView',
-  'app/UploadExcelView',
-  'app/ShowDataView',
+  'app/entities/TableView',
+  'app/entities/UserTableView',
+  'app/entities/UploadExcelView',
+  'app/entities/ShowDataView',
   'app/templates/TableTemplates',
   'prettyCheckable'
 ],
