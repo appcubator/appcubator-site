@@ -12,7 +12,7 @@ function(LinkEditorView) {
     events: {
       'click .done-btn' : 'closeModal',
       'click .add-link' : 'addLinkEditorClicked',
-      'keyup #edit-brandname' : 'updateBrandName'
+      'keyup #edit-brandname' : 'updateBrandName',
     },
     initialize: function(model) {
       var self = this;
@@ -53,7 +53,8 @@ function(LinkEditorView) {
     },
 
     addLinkEditorClicked: function(e) {
-      e.preventDefault();
+      console.trace();
+      console.log(e.target);
       this.model.get('links').add();
       var newLink = this.model.get('links').last();
       this.addLinkEditorView(newLink);
@@ -76,6 +77,9 @@ function(LinkEditorView) {
     },
 
     updateBrandName: function(e) {
+      if(e.keyCode == 13) {
+        return false;
+      }
       var newBrandName = e.target.value;
       if(newBrandName) {
         this.model.set('brandName', newBrandName);
@@ -91,6 +95,10 @@ function(LinkEditorView) {
 
       this.rowModel.get('layout').set('width', deltaWidth);
       this.rowModel.get('layout').set('height', deltaHeight);
+    },
+
+    cancelSubmit: function() {
+      return false;
     }
   });
 

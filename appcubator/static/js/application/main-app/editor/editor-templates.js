@@ -23,7 +23,7 @@ Templates.tempNode = [
 
 Templates.NavbarEditor = [
   '<h3>Navbar Editor</h3>',
-  '<form action="">',
+  '<div>',
     '<legend for="edit-brandName">Main Title</legend>',
     '<input type="text" name="edit-brandName" id="edit-brandname" value="<%= brandName %>"></div>',
     '<legend for="links">Links</legend>',
@@ -34,13 +34,13 @@ Templates.NavbarEditor = [
 
 Templates.FooterEditor = [
   '<h3>Footer Editor</h3>',
-  '<form action="">',
+  '<div>',
     '<legend for="customText">Custom Footer Text</legend>',
     '<input type="text" id="edit-customText" value="<%= customText %>">',
     '<legend for="links">Links</legend>',
     '<ul id="link-editors"></ul>',
     '<button class="btn btn-primary btn-small add-link">Add Link</button>',
-  '</form>'
+  '</div>'
 ].join('\n');
 
 Templates.LinkEditor = [

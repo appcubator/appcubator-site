@@ -3780,9 +3780,6 @@ ul.list {
 #navbar-editor, #footer-editor {
   width: 600px;
   height: 600px;
-}
-
-#navbar-editor form, #footer-editor form {
   padding: 15px;
 }
 

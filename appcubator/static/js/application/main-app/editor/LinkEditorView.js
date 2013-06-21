@@ -27,7 +27,7 @@ define([
 
           // if the current link is an external link,
           // we need to add it to the link options
-          if(this.model.get('url').indexOf('internal://') === -1) {
+          if(this.model.get('url') && this.model.get('url').indexOf('internal://') === -1) {
             this.linkOptions.push(this.model.toJSON());
           }
         },
@@ -60,7 +60,7 @@ define([
             // if the link model doesn't have a URL,
             // 'Choose a Page' must be selected
             if(self.model.get('url') === '') {
-              return;
+              //return;
             }
 
             var selected = (link.url === self.model.get('url')) ? "selected" : "";
@@ -103,38 +103,39 @@ define([
               this.model.set(newLink);
               this.linkOptions.push(newLink);
               this.renderLinkOptions();
+              this.$select.hide();
+              this.$urlContainer.show().find('input').focus();
             }
-            this.$select.hide();
-            this.$urlContainer.show().find('input').focus();
           }
 
           // cancel if they chose the first option ('choose an option')
-          else if(selectedIndex == 0) {
+          if(selectedIndex == 0) {
             return false;
           }
-
-          else { }
         },
 
         updateUrl: function(e) {
+          e.stopPropagation();
           // user can't modify internal urls
           if(this.model.get('url').indexOf('internal://') > -1) {
             return false;
           }
 
           // if user hits enter, replace url field with dropdown
-          if(e.keyCode && e.keyCode === 13) {
-            //hide external url, show select box
-            this.$urlContainer.hide();
-            this.$select.show();
+          if(e.keyCode && e.keyCode != 13) {
+            return;
           }
 
+          //hide external url, show select box
+          this.$urlContainer.hide();
+          this.$select.show();
           var newUrl = e.target.value;
           var oldAttrs = this.model.toJSON();
           this.model.set({url: newUrl});
           var newAttrs = _.clone(oldAttrs);
           newAttrs.url = newUrl;
           this.updateLinkOptions(oldAttrs, newAttrs);
+
         },
 
         updateTitle: function(e) {
@@ -144,6 +145,7 @@ define([
           var newAttrs = _.clone(oldAttrs);
           newAttrs.title = newTitle;
           this.updateLinkOptions(oldAttrs, newAttrs);
+          return false;
         },
 
         updateLinkOptions: function(oldAttrs, newAttrs) {
