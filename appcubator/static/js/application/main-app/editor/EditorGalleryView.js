@@ -259,10 +259,10 @@ function(ElementCollection,
 
         if(form.action == "thirdpartylogin") {
           widget.type = "thirdpartyprovider";
-          widget.data.container_info = {};
-          widget.data.container_info.action = form.action;
-          widget.data.container_info.provider = form.provider;
-          widget.data.container_info.content = form.content;
+          widget.data = {};
+          widget.data.action = form.action;
+          widget.data.provider = form.provider;
+          widget.data.content = form.content;
         }
 
         var widgetContainerModel = new ContainerWidgetModel(widget, true);
