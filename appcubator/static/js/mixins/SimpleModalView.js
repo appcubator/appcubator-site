@@ -19,7 +19,7 @@ function(Backbone) {
       }
 
       if(text) {
-        this.el.innerHTML += '<h3>'+text+'</h3>';
+        this.el.innerHTML += '<h4>'+text+'</h4>';
       }
       return this;
     }
