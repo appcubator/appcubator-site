@@ -66,8 +66,9 @@ ul.entity-list {
   display: inline-block;
 }
 
-select {
+.entity-pane select {
   display: inline-block;
+  width: 76px;
   margin: 0;
   padding: 4px 2px;
   text-align: left;
