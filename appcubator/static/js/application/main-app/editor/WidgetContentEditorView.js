@@ -182,13 +182,13 @@ function(SelectView) {
 
     changeSrc: function(inp) {
       var self = this;
-
-      if(inp.val == 'new-image') {
+      console.log(inp);
+      if(inp == 'new-image') {
         util.filepicker.openFilePick(self.staticsAdded, self, appId);
       }
       else {
-        this.model.get('data').get('content_attribs').set('src', inp.val);
-        this.model.get('data').set('content', inp.val);
+        this.model.get('data').get('content_attribs').set('src', inp);
+        this.model.get('data').set('content', inp);
       }
     },
 
