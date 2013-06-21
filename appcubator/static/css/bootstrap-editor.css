@@ -3780,7 +3780,6 @@ ul.list {
 #navbar-editor, #footer-editor {
   width: 600px;
   height: 600px;
-  padding: 15px;
 }
 
 #navbar-editor h3 {
@@ -3788,6 +3787,10 @@ ul.list {
   padding-left: 15px;
   line-height: 60px;
   border-bottom: 1px solid #ccc;
+}
+
+#navbar-editor > div, #footer-editor > div {
+  padding: 15px;
 }
 
 #navbar-editor .main-title {
