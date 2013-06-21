@@ -83,7 +83,6 @@ function(FormFieldModel, ActionModel, TutorialView) {
     },
 
     changedGoto: function() {
-      console.log(this.model.get('goto'));
       this.$el.find('.redirect-action').remove();
       var redirect = this.model.get('goto');
       var page_name = redirect.get('page_name').replace('internal://', '');

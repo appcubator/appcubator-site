@@ -4,9 +4,6 @@ define([
 function(WidgetModel) {
 
   var ContainerWidgetModel = WidgetModel.extend({
-    defaults: {
-      'container_info' : null
-    },
 
     initialize: function(bone, isNew) {
       ContainerWidgetModel.__super__.initialize.call(this, bone, isNew);

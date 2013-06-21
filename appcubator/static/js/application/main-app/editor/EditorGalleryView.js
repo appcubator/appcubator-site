@@ -246,8 +246,8 @@ function(ElementCollection,
         var formType = String(id).replace('entity-user-','');
         formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
         form = constantContainers[formType];
+        var widgetModel;
 
-        console.log(form);
         if(form.action == "login" || form.action == "signup") {
           widget.data.container_info = {};
           widget.data.container_info.entity = form.entity;
@@ -255,19 +255,19 @@ function(ElementCollection,
           widget.data.container_info.form = form;
           widget.data.container_info.form.entity = 'User';
           widget.type = 'form';
+          widgetModel = new ContainerWidgetModel(widgetModel);
         }
 
         if(form.action == "thirdpartylogin") {
-          widget.type = "thirdpartyprovider";
+          widget.type = "thirdpartylogin";
           widget.data = {};
           widget.data.action = form.action;
           widget.data.provider = form.provider;
           widget.data.content = form.content;
+          widgetModel = new ContainerWidgetModel(widget);
         }
 
-        var widgetContainerModel = new ContainerWidgetModel(widget, true);
-
-        this.widgetsCollection.push(widgetContainerModel);
+        this.widgetsCollection.push(widgetModel);
 
         return widgetContainerModel;
       }
