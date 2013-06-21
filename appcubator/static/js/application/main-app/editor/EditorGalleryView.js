@@ -247,7 +247,8 @@ function(ElementCollection,
         formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
         form = constantContainers[formType];
 
-        if(form.action == "local login" || form.action == "signup") {
+        console.log(form);
+        if(form.action == "login" || form.action == "signup") {
           widget.data.container_info = {};
           widget.data.container_info.entity = form.entity;
           widget.data.container_info.action = form.action;
