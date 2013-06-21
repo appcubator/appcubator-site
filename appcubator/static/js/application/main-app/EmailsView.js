@@ -66,7 +66,6 @@ function(EmailCollection, EmailModel, EmailView) {
 
     renderVariableList: function() {
       var vars = v1State.get('users').getCommonProps();
-      console.log(vars);
       var list = this.$('#variables-list');
       _(vars).each(function(variable) {
         var li = document.createElement('li');

@@ -31,7 +31,6 @@ function(ThemeDisplayView) {
         '</li>'
       ].join('\n');
 
-
       _(themes).each(function(theme) {
         this.listView.innerHTML += _.template(template, theme);
       }, this);
