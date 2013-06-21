@@ -54,11 +54,10 @@ function( PageModel,
 
       if(options && options.pageId) pageId = options.pageId;
 
-      util.loadCSS(this.css);
-
       //util.loadCSS('ratchet');
       util.loadCSS('bootstrap-editor');
       util.loadCSS('jquery-ui');
+      util.loadCSS(this.css);
 
       this.model          = v1State.get('mobilePages').models[pageId];
       v1State.currentPage = this.model;
