@@ -46,12 +46,10 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
       var self = this;
       model.setupPageContext(v1State.getCurrentPage());
 
-      console.log(model);
-
       if(model.get('data').has('container_info') && model.get('data').get('container_info').has('row')) {
         self.placeList(model, isNew);
       }
-      else if(model.get('data').has('container_info')) {
+      else if(model.get('data').has('container_info') || model.get('data').get('action') == "thirdpartylogin") {
         self.placeContainer(model, isNew);
       }
       else {

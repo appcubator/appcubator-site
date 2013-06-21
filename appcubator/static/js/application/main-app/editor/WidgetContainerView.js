@@ -102,9 +102,9 @@ function( TableQueryView,
         this.el.appendChild(feedDiv);
       }
 
-      if(this.model.get('data').get('container_info').get('action') == "thirdpartylogin" ) {
+      if(this.model.get('data').get('action') == "thirdpartylogin" ) {
         var thirdPartyBtn = document.createElement('div');
-        thirdPartyBtn.innerHTML = _.template(Templates.thirdPartyLogin, this.model.get('data').get('container_info').toJSON());
+        thirdPartyBtn.innerHTML = _.template(Templates.thirdPartyLogin, this.model.get('data').toJSON());
         this.el.appendChild(thirdPartyBtn);
       }
 
