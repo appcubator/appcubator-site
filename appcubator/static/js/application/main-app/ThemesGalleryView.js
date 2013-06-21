@@ -24,19 +24,24 @@ function(ThemeDisplayView) {
 
       var template = [
         '<li class="span28 theme hoff1 offsetr1" class="theme-item" id="theme-<%= id %>">',
+          '<h2 class="span20"><%= name %></h2>',
+          '<p class="designed-by">Designed by <%= designer %></p>',
           '<img src="<%= image %>">',
           '<div class="details">Click to See Details</div>',
-          '<h2><%= name %></h2>',
-          '<div class="designed-by">Designed by <%= designer %></div>',
         '</li>'
       ].join('\n');
 
-
-      _(themes).each(function(theme) {
+      _(themes).each(function(theme, index) {
+        if(!theme.name) {
+          theme.name = "Mobile Theme " + index;
+        }
         this.listView.innerHTML += _.template(template, theme);
       }, this);
 
-      _(mobileThemes).each(function(theme) {
+      _(mobileThemes).each(function(theme, index) {
+        if(!theme.name) {
+          theme.name = "Mobile Theme " + index;
+        }
         this.listView.innerHTML += _.template(template, theme);
       }, this);
 

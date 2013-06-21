@@ -53,8 +53,6 @@ function(LinkEditorView) {
     },
 
     addLinkEditorClicked: function(e) {
-      console.trace();
-      console.log(e.target);
       this.model.get('links').add();
       var newLink = this.model.get('links').last();
       this.addLinkEditorView(newLink);
