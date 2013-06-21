@@ -65,6 +65,15 @@ define([
       });
     };
 
+    var validateDeleteable = function(model) {
+      var button = document.getElementById('delete-widget');
+      expect(button).not.toBe(null);
+
+      $(button).trigger('click');
+      var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+      expect(droppedEl).toBe(null);
+    };
+
     var validateBackend = function() {
 
       var callback = jasmine.createSpy();
@@ -85,6 +94,7 @@ define([
       var id = "entity-user-Local_Login";
       var className = "login authentication ui-draggable";
       var loginForm = document.getElementById(id);
+      var model;
 
       it("is on gallery.", function () {
         expect(loginForm).not.toBe(null);
@@ -98,7 +108,7 @@ define([
         fE.target.id = id;
 
         /* Check if exists */
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
       });
@@ -108,6 +118,10 @@ define([
         validateBackend();
       });
 
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+
     });
 
     describe("Sign Up Form", function () {
@@ -115,6 +129,7 @@ define([
       var id = "entity-user-Sign_Up";
       var className = "login authentication ui-draggable";
       var galleryElement = document.getElementById(id);
+      var model;
 
       it("is on gallery", function() {
         expect(galleryElement).not.toBe(null);
@@ -128,7 +143,7 @@ define([
         fE.target.className = className;
         fE.target.id = id;
 
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
       });
@@ -137,12 +152,18 @@ define([
         /* Check validation */
         validateBackend();
       });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+
     });
 
     describe("Facebook Login Form", function () {
       var id = "entity-user-facebook";
       var className = "facebook authentication ui-draggable";
       var galleryElement = document.getElementById(id);
+      var model;
 
       it("is on gallery", function() {     /* Check if on gallery */
         expect(galleryElement).not.toBe(null);
@@ -155,7 +176,7 @@ define([
         fE.target.className = className;
         fE.target.id = id;
 
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
 
@@ -165,12 +186,17 @@ define([
         validateBackend();
       });
 
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+
     });
 
     describe("Twitter Login Form", function () {
       var id = "entity-user-twitter";
       var className = "twitter authentication ui-draggable";
       var galleryElement = document.getElementById(id);
+      var model;
 
       it("is on gallery", function() {
         expect(galleryElement).not.toBe(null);
@@ -183,7 +209,7 @@ define([
         fE.target.className = className;
         fE.target.id = id;
 
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
       });
@@ -191,6 +217,11 @@ define([
       it("is valid on the backend", function() {
         validateBackend();
       });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+
     });
 
 
@@ -198,6 +229,7 @@ define([
       var id = "entity-user-linkedin";
       var className = "linkedin authentication ui-draggable";
       var galleryElement = document.getElementById(id);
+      var model;
 
       it("is on gallery", function() {
         expect(galleryElement).not.toBe(null);
@@ -209,13 +241,17 @@ define([
         fE.target.className = className;
         fE.target.id = id;
 
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
       });
 
       it("is valid on the backend", function() {
         validateBackend();
+      });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
       });
 
     });
@@ -224,6 +260,7 @@ define([
       var className = 'current-user ui-draggable';
       var id = 'current-user-c4';
       var galleryElement = document.getElementById(id);
+      var model;
 
        it("is on gallery", function() {
         expect(galleryElement).not.toBe(null);
@@ -235,7 +272,7 @@ define([
         fE.target.className = className;
         fE.target.id = id;
 
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
       });
@@ -243,187 +280,18 @@ define([
       it("is valid on the backend", function() {
         validateBackend();
       });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+
     });
 
     describe("Create Form", function () {
       var className = 'entity-create-form ui-draggable';
       var id = 'entity-c11';
       var galleryElement = document.getElementById(id);
-
-       it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-    });
-
-    describe("List", function () {
-      var className = 'entity-list ui-draggable';
-      var id = 'entity-c11';
-      var galleryElement = document.getElementById(id);
-
-       it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-    });
-
-    describe("Image Node", function () {
-      var className = 'uielement images ui-draggable';
-      var id = 'type-images';
-      var galleryElement = document.getElementById(id);
-
-       it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-    });
-
-    describe("Header Node", function () {
-      var className = 'uielement headerTexts ui-draggable';
-      var id = 'type-headerTexts';
-      var galleryElement = document.getElementById(id);
-
-       it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-    });
-
-    describe("Text Node", function () {
-      var className = 'uielement texts ui-draggable';
-      var id = 'type-texts';
-      var galleryElement = document.getElementById(id);
-
-       it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-    });
-
-    describe("Link Node", function () {
-      var className = 'uielement links ui-draggable';
-      var id = 'type-links';
-      var galleryElement = document.getElementById(id);
-
-       it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-    });
-
-    describe("Line Node", function () {
-      var className = 'uielement lines ui-draggable';
-      var id = 'type-lines';
-      var galleryElement = document.getElementById(id);
-
-       it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-    });
-
-    describe("Box Node", function () {
-      var className = 'uielement boxes ui-draggable';
-      var id = 'type-boxes';
-      var galleryElement = document.getElementById(id);
+      var model;
 
       it("is on gallery", function() {
         expect(galleryElement).not.toBe(null);
@@ -435,7 +303,7 @@ define([
         fE.target.className = className;
         fE.target.id = id;
 
-        var model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
       });
@@ -443,6 +311,225 @@ define([
       it("is valid on the backend", function() {
         validateBackend();
       });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+
+    });
+
+    describe("List", function () {
+      var className = 'entity-list ui-draggable';
+      var id = 'entity-c11';
+      var galleryElement = document.getElementById(id);
+      var model;
+
+      it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+    });
+
+    describe("Image Node", function () {
+      var className = 'uielement images ui-draggable';
+      var id = 'type-images';
+      var galleryElement = document.getElementById(id);
+      var model;
+
+      it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+    });
+
+    describe("Header Node", function () {
+      var className = 'uielement headerTexts ui-draggable';
+      var id = 'type-headerTexts';
+      var galleryElement = document.getElementById(id);
+      var model;
+
+       it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+
+    });
+
+    describe("Text Node", function () {
+      var className = 'uielement texts ui-draggable';
+      var id = 'type-texts';
+      var galleryElement = document.getElementById(id);
+      var model;
+
+       it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+
+    });
+
+    describe("Link Node", function () {
+      var className = 'uielement links ui-draggable';
+      var id = 'type-links';
+      var galleryElement = document.getElementById(id);
+      var model;
+
+      it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+    });
+
+    describe("Line Node", function () {
+      var className = 'uielement lines ui-draggable';
+      var id = 'type-lines';
+      var galleryElement = document.getElementById(id);
+      var model;
+
+       it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+
+    });
+
+    describe("Box Node", function () {
+      var className = 'uielement boxes ui-draggable';
+      var id = 'type-boxes';
+      var galleryElement = document.getElementById(id);
+      var model;
+
+      it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+
     });
 
     describe('Navbar', function() {
