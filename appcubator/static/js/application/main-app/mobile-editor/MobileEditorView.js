@@ -76,7 +76,7 @@ function( PageModel,
       this.navbar  = new NavbarView(this.model.get('navbar'));
       this.urlModel      = this.model.get('url');
 
-      var page = appState.mobilePages[pageId];
+      var page = v1State.get('mobilePages').at(pageId);
 
       var self = this; // for binding deploy to ctrlshiftd
       /* Bindings */

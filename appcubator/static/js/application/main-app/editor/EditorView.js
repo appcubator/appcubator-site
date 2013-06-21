@@ -74,7 +74,7 @@ function( PageModel,
       this.footer  = new FooterView(this.model.get('footer'));
       this.urlModel      = this.model.get('url');
 
-      var page = appState.pages[pageId];
+      var page = v1State.get('pages').at(pageId);
 
       var self = this; // for binding deploy to ctrlshiftd
       /* Bindings */
@@ -237,7 +237,7 @@ function( PageModel,
     createPage: function(name) {
       var pageUrlPart = name.replace(' ', '_');
       var pageUrl = { urlparts : [pageUrlPart] };
-      var pageInd = appState.pages.length;
+      var pageInd = v1State.get('pages').length;
       var pageModel = new PageModel({ name: name, url: pageUrl});
       v1State.get('pages').push(pageModel);
 

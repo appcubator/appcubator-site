@@ -20,7 +20,7 @@ function(NavbarEditorView) {
     },
 
     showNavbarEditor: function() {
-      new NavbarEditorView({ model: this.model });
+      new NavbarEditorView(this.model);
     },
 
     render: function() {

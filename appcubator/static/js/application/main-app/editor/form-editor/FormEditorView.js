@@ -71,7 +71,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       temp_context.form = this.model;
       temp_context.pages = v1State.get('pages').models;
       temp_context.emails = ["Email 1", "Email 2"];
-      temp_context.possibleEntities = _.map(appState.users.fields, function(field) { return "CurrentUser." + field.name; });
+      temp_context.possibleEntities = _.map(v1State.get('users').getCommonProps(), function(field) { return "CurrentUser." + field.name; });
       temp_context.possibleActions =  this.possibleActions;
       var html = _.template(FormEditorTemplates.template, temp_context);
       this.el.innerHTML = html;
