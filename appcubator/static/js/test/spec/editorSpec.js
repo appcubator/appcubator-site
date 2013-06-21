@@ -109,6 +109,7 @@ define([
 
         /* Check if exists */
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        console.log(model);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
       });
