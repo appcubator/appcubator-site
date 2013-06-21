@@ -7,8 +7,8 @@ function() {
     initialize: function(bone) {
       this.set('field_name', bone.field_name);
       if(bone.type) { this.set('type', bone.type); }
-      this.set('label', (bone.label||bone.name));
-      this.set('placeholder', (bone.placeholder||bone.name));
+      this.set('label', (bone.label||bone.name)||"label");
+      this.set('placeholder', (bone.placeholder||bone.name)||"placeholder");
       this.set('required', (bone.required || false));
     },
 

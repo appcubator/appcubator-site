@@ -30,7 +30,8 @@ function(
         var field = {
                         "type" : "button",
                         "displayType": "button",
-                        "placeholder": "Submit"
+                        "placeholder": "Submit",
+                        "label": ""
                     };
 
         this.get('fields').push(field);
