@@ -46,7 +46,7 @@ define([
 		index: function (appId, tutorial) {
 			var self = this;
 			require(['app/OverviewPageView'], function(OverviewPageView){
-				AppRouter.tutorialDirectory = [0];
+				self.tutorialDirectory = [0];
 				self.changePage(OverviewPageView, {}, function() {
 					if(tutorial) {
 						self.showTutorial();
@@ -58,7 +58,7 @@ define([
 		info: function(appId, tutorial) {
 			var self = this;
 			require(['app/AppInfoView'], function(InfoView){
-				AppRouter.tutorialDirectory = [2];
+				self.tutorialDirectory = [2];
 				self.changePage(InfoView, {}, function() {
 					$('.menu-app-info').addClass('active');
 					if(tutorial) {
@@ -71,7 +71,7 @@ define([
 		entities: function(appId, tutorial) {
 			var self = this;
 			require(['app/EntitiesView'], function(EntitiesView){
-				AppRouter.tutorialDirectory = [3];
+				self.tutorialDirectory = [3];
 				self.changePage(EntitiesView, {}, function() {
 					$('.menu-app-entities').addClass('active');
 					if(tutorial) {
@@ -83,7 +83,7 @@ define([
 
 		themes: function(appId, tutorial) {
 			var self = this;
-			AppRouter.tutorialDirectory = [4];
+			self.tutorialDirectory = [4];
 			require(['app/ThemesGalleryView'], function(ThemesGalleryView){
 				self.changePage(ThemesGalleryView, {}, function() {
 					$('.menu-app-themes').addClass('active');
@@ -96,10 +96,10 @@ define([
 
 		pages: function(appId, tutorial) {
 			var self = this;
-			AppRouter.tutorialDirectory = [4];
+			self.tutorialDirectory = [4];
 			require(['app/PagesView'], function(PagesView){
 				$('.page').fadeIn();
-				AppRouter.tutorialDirectory = [5];
+				self.tutorialDirectory = [5];
 				self.changePage(PagesView, {}, function() {
 					$('.menu-app-pages').addClass('active');
 					if(tutorial) {
@@ -111,46 +111,46 @@ define([
 
 		editor: function(appId, pageId) {
 			var self = this;
-			AppRouter.tutorialDirectory = [4];
+			self.tutorialDirectory = [4];
 			require(['editor/EditorView'], function(EditorView){
 
 				$('.page').fadeOut();
-				AppRouter.tutorialDirectory = [5];
+				self.tutorialDirectory = [5];
 
-				if(AppRouter.view) AppRouter.view.remove();
+				if(self.view) self.view.remove();
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
 				$(document.body).append(cleanDiv);
 
-				AppRouter.view  = new EditorView({pageId: pageId});
-				AppRouter.view.setElement(cleanDiv).render();
+				self.view  = new EditorView({pageId: pageId});
+				self.view.setElement(cleanDiv).render();
 
 				olark('api.box.hide');
-				self.changeTitle(AppRouter.view.title);
+				self.changeTitle(self.view.title);
 			});
 		},
 
 		mobileEditor: function(appId, pageId) {
 			var self = this;
 			$('.page').fadeOut();
-			AppRouter.tutorialDirectory = [5];
+			self.tutorialDirectory = [5];
 			require(['m-editor/MobileEditorView'], function(MobileEditorView){
-				if(AppRouter.view) AppRouter.view.remove();
+				if(self.view) self.view.remove();
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
 				$(document.body).append(cleanDiv);
 
-				AppRouter.view  = new MobileEditorView({pageId: pageId});
-				AppRouter.view.setElement(cleanDiv).render();
+				self.view  = new MobileEditorView({pageId: pageId});
+				self.view.setElement(cleanDiv).render();
 
 				olark('api.box.hide');
-				self.changeTitle(AppRouter.view.title);
+				self.changeTitle(self.view.title);
 			});
 		},
 
 		emails: function(appId, tutorial) {
 			var self = this;
-			AppRouter.tutorialDirectory = [6];
+			self.tutorialDirectory = [6];
 			this.changePage(EmailsView, {}, function() {
 				$('.menu-app-emails').addClass('active');
 				if(tutorial) {
@@ -161,15 +161,15 @@ define([
 
 
 		changePage: function(newView, viewOptions, post_render) {
-			if(AppRouter.view) AppRouter.view.remove();
+			if(self.view) self.view.remove();
 			var cleanDiv = document.createElement('div');
 			cleanDiv.className = "clean-div";
 			$('#main-container').append(cleanDiv);
-			AppRouter.view = new newView(viewOptions);
-			AppRouter.view.setElement(cleanDiv).render();
+			self.view = new newView(viewOptions);
+			self.view.setElement(cleanDiv).render();
 
 			$('.active').removeClass('active');
-			this.changeTitle(AppRouter.view.title);
+			this.changeTitle(self.view.title);
 			post_render();
 		},
 
@@ -228,7 +228,7 @@ define([
 		},
 
 		showTutorial: function(dir) {
-			var inp = (dir) ? [dir] : AppRouter.tutorialDirectory;
+			var inp = (dir) ? [dir] : self.tutorialDirectory;
 			tutorial = new TutorialView(inp);
 		},
 

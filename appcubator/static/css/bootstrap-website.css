@@ -5640,7 +5640,7 @@ i.icon-url {
 }
 
 .left-nav {
-  background-color: #666;
+  background-color: #2b3545;
   color: #eee;
   padding: 0px;
   border-radius: 4px;
@@ -5657,6 +5657,11 @@ i.icon-url {
   padding: 10px;
 }
 
+.left-nav li:hover, .left-nav li.active {
+  color: #fff;
+  background-color: #4b5565;
+}
+
 .left-nav li:first-child {
   border-radius: 4px 4px 0 0;
 }
@@ -5666,11 +5671,6 @@ i.icon-url {
 }
 .left-nav li a {
   text-decoration: none;
-}
-
-.left-nav li:hover, .left-nav li.active {
-  color: #fff;
-  background-color: rgba(51, 51, 51, 0.8);
 }
 
 .mw {
