@@ -14,7 +14,7 @@ var constantContainers = {
   'linkedin' : {
     provider: "linkedin",
     action: "thirdpartylogin",
-    content: "Login w/ Twitter",
+    content: "Login w/ LinkedIn",
     goto: ""
   },
   'Local Login': {
