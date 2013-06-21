@@ -3,18 +3,21 @@ var constantContainers = {
     provider: "facebook",
     action: "thirdpartylogin",
     content: "Login w/ Facebook",
+    container_info: {},
     goto: ""
   },
   'twitter' : {
     provider: "twitter",
     action: "thirdpartylogin",
     content: "Login w/ Twitter",
+    container_info: {},
     goto: ""
   },
   'linkedin' : {
     provider: "linkedin",
     action: "thirdpartylogin",
     content: "Login w/ LinkedIn",
+    container_info: {},
     goto: ""
   },
   'Local Login': {

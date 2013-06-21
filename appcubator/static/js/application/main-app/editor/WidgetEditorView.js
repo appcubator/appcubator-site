@@ -57,7 +57,7 @@ function(WidgetContentEditor,
 
       if(this.model.get('data').has('container_info')) {
         action = this.model.get('data').get('container_info').get('action');
-
+        console.log(action);
         if(action == "login" || action == "thirdpartylogin") {
           this.layoutEditor = new WidgetLayoutEditor(this.model);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-login-form-btn', 'Edit Login'));

@@ -12,9 +12,6 @@ function(ContentModel,
       if(bone.container_info) {
         this.set('container_info', new ContainerInfoModel(bone.container_info, isNew));
       }
-      else {
-        this.set('container_info', new ContainerInfoModel({},false));
-      }
     },
 
     toJSON: function() {
