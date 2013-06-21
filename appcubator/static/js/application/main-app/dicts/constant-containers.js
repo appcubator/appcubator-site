@@ -87,7 +87,6 @@ var constantContainers = {
                         "options": []
                     },
                     {
-                        "field_name": "Sign Up",
                         "placeholder": "Sign Up",
                         "displayType": "button",
                         "type": "button"

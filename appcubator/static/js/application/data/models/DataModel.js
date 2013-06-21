@@ -17,6 +17,9 @@ function(ContentModel,
     toJSON: function() {
       var json = _.clone(this.attributes);
 
+      if(json.entity) {
+        json.entity = json.entity.toJSON();
+      }
       if(json.content_attribs) {
         json.content_attribs = this.get('content_attribs').toJSON()||{};
       }

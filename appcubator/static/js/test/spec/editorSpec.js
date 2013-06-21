@@ -127,8 +127,8 @@ define([
 
     describe("Sign Up Form", function () {
 
-      var id = "entity-user-Sign_Up";
-      var className = "login authentication ui-draggable";
+      var id = "entity-user-Admin";
+      var className = "signup authentication ui-draggable";
       var galleryElement = document.getElementById(id);
       var model;
 
@@ -162,7 +162,7 @@ define([
 
     describe("Facebook Login Form", function () {
       var id = "entity-user-facebook";
-      var className = "facebook authentication ui-draggable";
+      var className = "facebook thirdparty authentication ui-draggable";
       var galleryElement = document.getElementById(id);
       var model;
 
@@ -195,7 +195,7 @@ define([
 
     describe("Twitter Login Form", function () {
       var id = "entity-user-twitter";
-      var className = "twitter authentication ui-draggable";
+      var className = "twitter thirdparty authentication ui-draggable";
       var galleryElement = document.getElementById(id);
       var model;
 
@@ -228,7 +228,7 @@ define([
 
     describe("LinkedIn Login Form", function () {
       var id = "entity-user-linkedin";
-      var className = "linkedin authentication ui-draggable";
+      var className = "linkedin thirdparty authentication ui-draggable";
       var galleryElement = document.getElementById(id);
       var model;
 
