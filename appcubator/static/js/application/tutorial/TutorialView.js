@@ -50,7 +50,9 @@ function() {
       this.renderBg();
       this.renderLeftMenu();
       this.renderMainModal();
+      this.el.style.display = "none";
       document.body.appendChild(this.el);
+      this.$el.fadeIn('fast');
       return this;
     },
 
@@ -333,9 +335,12 @@ function() {
     },
 
     closeModal: function() {
-      this.remove();
-      this.stopListening();
-      window.history.pushState(null, null, window.location.href.replace("tutorial/",""));
+      var self = this;
+      this.$el.fadeOut('fast', function() {
+        self.remove();
+        self.stopListening();
+        window.history.pushState(null, null, window.location.href.replace("tutorial/",""));
+      });
     },
 
     menuScrolled: function(e) {
