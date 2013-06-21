@@ -17,6 +17,7 @@
   margin-top: 80px;
   height: 460px;
   min-height: 0;
+  overflow: hidden;
 }
 
 .mobile-page-wrapper #elements-container {

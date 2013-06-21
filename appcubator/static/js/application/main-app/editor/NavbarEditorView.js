@@ -14,12 +14,12 @@ function(LinkEditorView) {
       'click .add-link' : 'addLinkEditorClicked',
       'keyup #edit-brandname' : 'updateBrandName'
     },
-    initialize: function(options) {
+    initialize: function(model) {
       var self = this;
 
       _.bindAll(this);
 
-      this.model  = options.model;
+      this.model  = model;
       this.links = this.model.get('links');
       this.render();
     },

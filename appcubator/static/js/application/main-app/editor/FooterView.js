@@ -20,7 +20,7 @@ function(FooterEditorView) {
     },
 
     showFooterEditor: function() {
-      new FooterEditorView({ model: this.model });
+      new FooterEditorView(this.model);
     },
 
     render: function() {

@@ -54,11 +54,10 @@ function( PageModel,
 
       if(options && options.pageId) pageId = options.pageId;
 
-      util.loadCSS(this.css);
-
       //util.loadCSS('ratchet');
       util.loadCSS('bootstrap-editor');
       util.loadCSS('jquery-ui');
+      util.loadCSS(this.css);
 
       this.model          = v1State.get('mobilePages').models[pageId];
       v1State.currentPage = this.model;
@@ -76,7 +75,7 @@ function( PageModel,
       this.navbar  = new NavbarView(this.model.get('navbar'));
       this.urlModel      = this.model.get('url');
 
-      var page = appState.mobilePages[pageId];
+      var page = v1State.get('mobilePages').at(pageId);
 
       var self = this; // for binding deploy to ctrlshiftd
       /* Bindings */
