@@ -264,6 +264,7 @@ function(ElementCollection,
           widget.data.action = form.action;
           widget.data.provider = form.provider;
           widget.data.content = form.content;
+          widget.data.goto = "internal://Homepage";
           widgetModel = new ContainerWidgetModel(widget);
         }
 
