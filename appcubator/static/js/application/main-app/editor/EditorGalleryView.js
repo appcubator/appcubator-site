@@ -279,14 +279,14 @@ define([
         return widgetModel;
       }
       else if(/(signup)/.exec(className)) {
-        var signupRole = id.replace('entity-user', ''); // "Local_Login" => "Local Login"
+        var signupRole = id.replace('entity-user-', ''); // "Local_Login" => "Local Login"
         form = constantContainers["Sign Up"];
 
         widget.data.container_info = {};
         widget.data.container_info.entity = form.entity;
         widget.data.container_info.action = form.action;
         widget.data.container_info.form = form;
-        widget.data.container_info.form.signupRole = 'User';
+        widget.data.container_info.form.signupRole = signupRole;
         widget.type = 'form';
         var widgetSignupModel = new ContainerWidgetModel(widget);
         this.widgetsCollection.push(widgetSignupModel);
