@@ -264,6 +264,8 @@
 .icon.textAreas { background-position: -570px -25px; }
 .icon.lines { background-position: -640px -25px; }
 .icon.dropdowns { background-position: -710px -25px; }
+.icon.imageslider { background-position: -780px -25px; }
+.icon.facebookshare { background-position: -850px -25px; }
 
 /* current-user */
 .elements-list ul li.current-user {

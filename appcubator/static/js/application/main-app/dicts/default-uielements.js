@@ -64,14 +64,14 @@ var defaultElements = [
     el : "<img class='span24' src='/static/img/placeholder.png'>"
   },
 
-  {
-    text: "Twitter Feed",
-    className : "twitterfeed",
-    el : "<img class='span24' src='/static/img/placeholder.png'>"
-  },
+  // {
+  //   text: "Twitter Feed",
+  //   className : "twitterfeed",
+  //   el : "<img class='span24' src='/static/img/placeholder.png'>"
+  // },
 
   {
-    text: "Facebook Share",
+    text: "FB Share",
     className : "facebookshare",
     el : "<img src='/static/img/fb-share-sample.png'>"
   }
