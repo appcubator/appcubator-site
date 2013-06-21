@@ -1,7 +1,7 @@
 define([
   'models/FieldModel',
-  'app/UploadExcelView',
-  'app/ShowDataView',
+  'app/entities/UploadExcelView',
+  'app/entities/ShowDataView',
   'app/templates/TableTemplates',
   'prettyCheckable'
 ],

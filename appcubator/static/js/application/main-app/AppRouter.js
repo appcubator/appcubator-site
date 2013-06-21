@@ -70,7 +70,7 @@ define([
 
 		entities: function(appId, tutorial) {
 			var self = this;
-			require(['app/EntitiesView'], function(EntitiesView){
+			require(['app/entities/EntitiesView'], function(EntitiesView){
 				self.tutorialDirectory = [3];
 				self.changePage(EntitiesView, {}, function() {
 					$('.menu-app-entities').addClass('active');
