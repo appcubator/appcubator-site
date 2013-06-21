@@ -26,7 +26,7 @@ Templates.NavbarEditor = [
   '<div>',
     '<legend>Main Title</legend>',
     '<input type="text" name="edit-brandName" id="edit-brandname" value="<%= brandName %>">',
-    '<legend>Links</legend>',
+    '<legend class="hoff1">Links</legend>',
     '<ul id="link-editors"></ul>',
     '<button class="btn btn-primary btn-small add-link">Add Link</button>',
   '</div>'
@@ -37,7 +37,7 @@ Templates.FooterEditor = [
   '<div>',
     '<legend>Custom Footer Text</legend>',
     '<input type="text" id="edit-customText" value="<%= customText %>">',
-    '<legend>Links</legend>',
+    '<legend class="hoff1">Links</legend>',
     '<ul id="link-editors"></ul>',
     '<button class="btn btn-primary btn-small add-link">Add Link</button>',
   '</div>'

@@ -3793,10 +3793,8 @@ ul.list {
   padding: 15px;
 }
 
-#navbar-editor .main-title {
-  padding: 10px;
-  padding-left: 15px;
-  border-bottom: 1px solid #ccc;
+#edit-brandname, #edit-customText {
+  margin-left: 15px;
 }
 
 #navbar-editor h4 {
@@ -3818,15 +3816,13 @@ ul.list {
   margin-bottom: 0px;
 }
 
-
 #navbar-editor .links-section {
   overflow: scroll;
   height: 390px;
 }
 
 #link-editors {
-
-  padding: 15px;
+  padding: 0 15px 5px;
 }
 
 #link-editors li.well-small {
