@@ -15,11 +15,11 @@ function(Backbone) {
 
     render : function(img, text) {
       if(img) {
-        this.el.innerHTML += '<img src="/static/img/'+img+'">';
+        this.el.innerHTML += '<img height="300" src="/static/img/'+img+'">';
       }
 
       if(text) {
-        this.el.innerHTML += '<h3>'+text+'</h3>';
+        this.el.innerHTML += '<h4>'+text+'</h4>';
       }
       return this;
     }

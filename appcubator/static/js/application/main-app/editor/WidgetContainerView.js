@@ -102,6 +102,12 @@ function( TableQueryView,
         this.el.appendChild(feedDiv);
       }
 
+      if(this.model.get('data').get('container_info').get('action') == "thirdpartylogin" ) {
+        var thirdPartyBtn = document.createElement('div');
+        thirdPartyBtn.innerHTML = _.template(Templates.thirdPartyLogin, this.model.get('data').get('container_info').toJSON());
+        this.el.appendChild(thirdPartyBtn);
+      }
+
       if(this.model.get('data').get('container_info').has('form')) {
         self.form = document.createElement('form');
         self.el.appendChild(self.form);
@@ -130,12 +136,14 @@ function( TableQueryView,
     },
 
     renderElements : function() {
+
       var self  =this;
       this.model.get('data').get('container_info').get('uielements').each(function(widgetModel) {
         self.placeWidget(widgetModel);
       });
 
       if(this.model.get('data').get('container_info').has('form')) {
+        this.form.innerHTML = '';
         this.formModel.get('fields').each(function(field) {
           self.placeFormElement(field);
         });

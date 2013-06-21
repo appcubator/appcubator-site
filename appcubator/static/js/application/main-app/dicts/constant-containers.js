@@ -1,48 +1,21 @@
 var constantContainers = {
   'facebook' : {
-    name: "facebook",
-    action: "facebook",
-    entity: "User",
-    fields: [
-                    {
-                        "field_name": "",
-                        "placeholder": "Login w/ Facebook",
-                        "label": "",
-                        "displayType": "button",
-                        "type": "button",
-                        "options": []
-                    }
-    ]
+    provider: "facebook",
+    action: "thirdpartylogin",
+    content: "Login w/ Facebook",
+    goto: ""
   },
   'twitter' : {
-    name: "twitter",
-    action: "twitter",
-    entity: "User",
-    fields : [
-      {
-                        "field_name": "",
-                        "placeholder": "Login w/ Twitter",
-                        "label": "",
-                        "displayType": "button",
-                        "type": "button",
-                        "options": []
-      }
-    ]
+    provider: "twitter",
+    action: "thirdpartylogin",
+    content: "Login w/ Twitter",
+    goto: ""
   },
   'linkedin' : {
-    name: "linkedin",
-    action: "linkedin",
-    entity: "User",
-    fields : [
-      {
-                        "field_name": "",
-                        "placeholder": "Login w/ LinkedIn",
-                        "label": "",
-                        "displayType": "button",
-                        "type": "button",
-                        "options": []
-      }
-    ]
+    provider: "linkedin",
+    action: "thirdpartylogin",
+    content: "Login w/ Twitter",
+    goto: ""
   },
   'Local Login': {
     name: "local login",

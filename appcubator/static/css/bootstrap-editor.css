@@ -3891,5 +3891,9 @@ ul.list {
 }
 
 .red-border {
-  border: 2px solid red;
+  background-color: rgba(124, 192, 213, 0.12);
+}
+
+.modal.deploy img {
+  height: 300px;
 }
