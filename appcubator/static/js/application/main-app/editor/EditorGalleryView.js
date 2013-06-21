@@ -5,26 +5,26 @@ define([
   'dicts/default-uielements',
   'dicts/constant-containers',
   'list'
-],
-function(ElementCollection,
-         ContainerWidgetModel,
-         WidgetModel) {
+  ],
+  function(ElementCollection,
+   ContainerWidgetModel,
+   WidgetModel) {
 
-  var EditorGalleryView = Backbone.View.extend({
-    el                  : util.get('top-panel-bb'),
-    allList             : util.get('all-list'),
-    curId               : 'all-elements',
-    dragActive          : false,
-    css                 : 'editor-gallery',
-    events : { },
+    var EditorGalleryView = Backbone.View.extend({
+      el                  : util.get('top-panel-bb'),
+      allList             : util.get('all-list'),
+      curId               : 'all-elements',
+      dragActive          : false,
+      css                 : 'editor-gallery',
+      events : { },
 
-    initialize   : function(widgetsCollection) {
+      initialize   : function(widgetsCollection) {
        _.bindAll(this);
 
-      this.widgetsCollection = widgetsCollection;
-    },
+       this.widgetsCollection = widgetsCollection;
+     },
 
-    render: function() {
+     render: function() {
       // Basic UI Elements
       // Authentication Forms
       // CurrentUser Elements
@@ -66,11 +66,11 @@ function(ElementCollection,
 
       collection.each(function(element) {
         if(element.get('className') == "buttons" ||
-           element.get('className') == "textInputs" ||
-           element.get('className') == "textAreas" ||
-           element.get('className') == "dropdowns") return;
+         element.get('className') == "textInputs" ||
+         element.get('className') == "textAreas" ||
+         element.get('className') == "dropdowns") return;
 
-        self.appendUIElement(element);
+          self.appendUIElement(element);
 
       });
     },
@@ -103,25 +103,28 @@ function(ElementCollection,
       $(this.allList).append(li);
 
       var self = this;
-        var tempLocalLogin = '<li id="entity-user-Local_Login" class="login authentication">'+
-                     '<span class="name">Login Form</span></li>';
-        var tempLocalSignup = '<li id="entity-user-Sign_Up" class="login authentication">'+
-                     '<span class="name">Sign Up</span></li>';
-        $(self.allList).append(tempLocalLogin);
-        $(self.allList).append(tempLocalSignup);
+      var tempLocalLogin = '<li id="entity-user-Local_Login" class="login authentication">'+
+      '<span class="name">Login Form</span></li>';
+      var tempLocalSignup = '<li id="entity-user-<%- signupRole %>" class="signup authentication">'+
+      '<span class="name"><%= signupRole %> Sign Up</span></li>';
+
+      $(self.allList).append(tempLocalLogin);
+      v1State.get('users').each(function(user) {
+        $(self.allList).append(_.template(tempLocalSignup, {signupRole: user.get('name')}));
+      });
 
 
-        var tempFb = '<li id="entity-user-facebook" class="facebook authentication">' +
-                     '<span class="name">Facebook Login Button</span></li>';
-        $(self.allList).append(tempFb);
+      var tempFb = '<li id="entity-user-facebook" class="facebook authentication">' +
+      '<span class="name">Facebook Login Button</span></li>';
+      $(self.allList).append(tempFb);
 
-        var tempTw = '<li id="entity-user-twitter" class="twitter authentication">'+
-                     '<span class="name"> Twitter Button</span></li>';
-        $(self.allList).append(tempTw);
+      var tempTw = '<li id="entity-user-twitter" class="twitter authentication">'+
+      '<span class="name"> Twitter Button</span></li>';
+      $(self.allList).append(tempTw);
 
-        var tempLi = '<li id="entity-user-linkedin" class="linkedin authentication">'+
-                     '<span class="name">LinkedIn Login Button</span></li>';
-        $(self.allList).append(tempLi);
+      var tempLi = '<li id="entity-user-linkedin" class="linkedin authentication">'+
+      '<span class="name">LinkedIn Login Button</span></li>';
+      $(self.allList).append(tempLi);
     },
 
     renderCurrentUserElements: function() {
@@ -132,9 +135,9 @@ function(ElementCollection,
 
       var self = this;
       var tempLi = ['<li class="current-user" id="current-user-<%= id %>">',
-                      '<span class="current-user-icon"></span>',
-                      '<span class="wide-text">Current User <%= field_name %></span>',
-                    '</li>'].join('\n');
+      '<span class="current-user-icon"></span>',
+      '<span class="wide-text">Current User <%= field_name %></span>',
+      '</li>'].join('\n');
 
       _(v1State.get('pages').models[pageId].getFields()).each(function(field) {
         var context = { id : field.cid, field_name : field.get('name') };
@@ -152,19 +155,19 @@ function(ElementCollection,
 
       var self = this;
       var tempCreateFormLi = ['<li class="entity-create-form" id="entity-<%= entity_id %>">',
-                              '<span class="create-form-icon"></span>',
-                              '<span class="wide-text"><%= entity_name %> Create Form</span>',
-                              '</li>'].join('\n');
+      '<span class="create-form-icon"></span>',
+      '<span class="wide-text"><%= entity_name %> Create Form</span>',
+      '</li>'].join('\n');
 
       var tempTableLi      = ['<li class="entity-table" id="entity-<%= entity_id %>">',
-                              '<span class="table-icon"></span>',
-                              '<span class="wide-text"><%= entity_name %> Table</span>',
-                              '</li>'].join('\n');
+      '<span class="table-icon"></span>',
+      '<span class="wide-text"><%= entity_name %> Table</span>',
+      '</li>'].join('\n');
 
       var tempListLi       = ['<li class="entity-list" id="entity-<%= entity_id %>">',
-                              '<span class="list-icon"></span>',
-                              '<span class="wide-text"><%= entity_name %> List</span>',
-                              '</li>'].join('\n');
+      '<span class="list-icon"></span>',
+      '<span class="wide-text"><%= entity_name %> List</span>',
+      '</li>'].join('\n');
 
       v1State.get('tables').each(function(entityModel) {
         var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
@@ -187,14 +190,14 @@ function(ElementCollection,
 
       var self = this;
       var tempLi = ['<li class="context-entity" id="context-field-<%= entity_id %>-<%= field_id %>">',
-                      '<span class="plus-icon"></span>',
-                      '<span class="wide-text"><%= entity_name %> <%= field_name %></span>',
-                    '</li>'].join('\n');
+      '<span class="plus-icon"></span>',
+      '<span class="wide-text"><%= entity_name %> <%= field_name %></span>',
+      '</li>'].join('\n');
 
       var tempLiForm = ['<li class="context-entity-update" id="update-<%= entity_id %>">',
-                          '<span class="form-icon"></span>',
-                          '<span class="wide-text"><%= entity_name %> Update Form</span>',
-                        '</li>'].join('\n');
+      '<span class="form-icon"></span>',
+      '<span class="wide-text"><%= entity_name %> Update Form</span>',
+      '</li>'].join('\n');
 
 
       g_contextCollection.each(function(entity) {
@@ -205,10 +208,10 @@ function(ElementCollection,
 
         entity.get('fields').each(function(field) {
           var context = { entity_id : entityId, entity_name : entityName,
-                          field_id : field.cid, field_name: field.get('name') };
+            field_id : field.cid, field_name: field.get('name') };
 
-          $(self.allList).append(_.template(tempLi, context));
-        });
+            $(self.allList).append(_.template(tempLi, context));
+          });
 
       });
     },
@@ -242,20 +245,22 @@ function(ElementCollection,
       var hash, entityCid, formCid, action;
       var entity, form, field;
 
-      if(/(authentication)/.exec(className)) {
+
+      if(/(login)/.exec(className)) {
         var formType = String(id).replace('entity-user-','');
         formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
         form = constantContainers[formType];
         var widgetModel;
 
-        if(form.action == "login" || form.action == "signup") {
+
+        if(form.action == "login") {
           widget.data.container_info = {};
           widget.data.container_info.entity = form.entity;
           widget.data.container_info.action = form.action;
           widget.data.container_info.form = form;
           widget.data.container_info.form.entity = 'User';
           widget.type = 'form';
-          widgetModel = new ContainerWidgetModel(widgetModel);
+          widgetModel = new ContainerWidgetModel(widget);
         }
 
         if(form.action == "thirdpartylogin") {
@@ -271,7 +276,22 @@ function(ElementCollection,
 
         this.widgetsCollection.push(widgetModel);
 
-        return widgetContainerModel;
+        return widgetModel;
+      }
+      else if(/(signup)/.exec(className)) {
+        var signupRole = id.replace('entity-user', ''); // "Local_Login" => "Local Login"
+        form = constantContainers["Sign Up"];
+
+        widget.data.container_info = {};
+        widget.data.container_info.entity = form.entity;
+        widget.data.container_info.action = form.action;
+        widget.data.container_info.form = form;
+        widget.data.container_info.form.signupRole = 'User';
+        widget.type = 'form';
+        var widgetSignupModel = new ContainerWidgetModel(widget);
+        this.widgetsCollection.push(widgetSignupModel);
+
+        return widgetSignupModel;
       }
       else if(/(context-entity)/.exec(className)) {
         hash = String(id).replace('context-field-','');
@@ -407,11 +427,11 @@ function(ElementCollection,
         case "date":
         case "number":
         case "email":
-          type = "texts";
-          break;
+        type = "texts";
+        break;
         case "image":
-          type = "images";
-          break;
+        type = "images";
+        break;
       }
 
       return type;
@@ -419,5 +439,5 @@ function(ElementCollection,
 
   });
 
-  return EditorGalleryView;
+return EditorGalleryView;
 });

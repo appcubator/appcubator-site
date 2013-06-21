@@ -25,7 +25,6 @@ function() {
     },
 
     setContents: function(arr) {
-      console.log(arr);
       this.contents = arr;
       this.selectAll();
     },
@@ -99,7 +98,6 @@ function() {
 
     selectAll: function() {
       _(this.contents).each(function(widgetModel) {
-        console.log('heyo');
         $('#widget-wrapper-'+widgetModel.cid).addClass('red-border');
       });
     },
