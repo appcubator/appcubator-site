@@ -20,7 +20,7 @@ function(WidgetCollection,
 
   var ContainerInfoModel = Backbone.Model.extend({
     initialize: function(bone, isNew) {
-      _.bindAll(this, 'setUpNew');
+      _.bindAll(this);
 
       this.set('uielements', new WidgetCollection(bone.uielements));
 
@@ -94,7 +94,7 @@ function(WidgetCollection,
       else if(action == "facebookshare") {
         //nothing to set as of now
       }
-      else if(action == "facebook" || action == "twitter" || action == "linkedin") {
+      else if(action == "thirdpartylogin") {
 
       }
       else {

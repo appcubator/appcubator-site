@@ -247,13 +247,25 @@ function(ElementCollection,
         formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
         form = constantContainers[formType];
 
-        widget.data.container_info = {};
-        widget.data.container_info.entity = form.entity;
-        widget.data.container_info.action = form.action;
-        widget.data.container_info.form = form;
-        widget.data.container_info.form.entity = 'User';
-        widget.type = 'form';
+        if(form.action == "local login" || form.action == "signup") {
+          widget.data.container_info = {};
+          widget.data.container_info.entity = form.entity;
+          widget.data.container_info.action = form.action;
+          widget.data.container_info.form = form;
+          widget.data.container_info.form.entity = 'User';
+          widget.type = 'form';
+        }
+
+        if(form.action == "thirdpartylogin") {
+          widget.type = "thirdpartyprovider";
+          widget.data.container_info = {};
+          widget.data.container_info.action = form.action;
+          widget.data.container_info.provider = form.provider;
+          widget.data.container_info.content = form.content;
+        }
+
         var widgetContainerModel = new ContainerWidgetModel(widget, true);
+
         this.widgetsCollection.push(widgetContainerModel);
 
         return widgetContainerModel;

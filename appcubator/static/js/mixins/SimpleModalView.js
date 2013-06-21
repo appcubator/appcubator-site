@@ -15,7 +15,7 @@ function(Backbone) {
 
     render : function(img, text) {
       if(img) {
-        this.el.innerHTML += '<img src="/static/img/'+img+'">';
+        this.el.innerHTML += '<img height="300" src="/static/img/'+img+'">';
       }
 
       if(text) {

@@ -361,3 +361,7 @@ Templates.sliderImageEditorTemp = [
     '</div>',
   '</li>'
 ].join('\n');
+
+Templates.thirdPartyLogin = [
+  '<div class="<%= provider %>-login-btn btn"><%= content %></div>'
+].join('\n');
