@@ -140,7 +140,9 @@ function(WidgetContentEditor,
     },
 
     openFormEditor: function() {
-      new FormEditorView(this.model.get('data').get('container_info').get('form'), this.model.get('data').get('container_info').get('entity'));
+      var entityModel = this.model.get('data').get('container_info').get('entity');
+      if(entityModel == "User") { entityModel =  this.model.get('data').get('entity'); }
+      new FormEditorView(this.model.get('data').get('container_info').get('form'), entityModel);
     },
 
     openLoginEditor: function() {
