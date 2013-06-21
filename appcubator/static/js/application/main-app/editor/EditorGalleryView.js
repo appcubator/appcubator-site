@@ -114,15 +114,15 @@ define([
       });
 
 
-      var tempFb = '<li id="entity-user-facebook" class="facebook authentication">' +
+      var tempFb = '<li id="entity-user-facebook" class="facebook thirdparty authentication">' +
       '<span class="name">Facebook Login Button</span></li>';
       $(self.allList).append(tempFb);
 
-      var tempTw = '<li id="entity-user-twitter" class="twitter authentication">'+
+      var tempTw = '<li id="entity-user-twitter" class="twitter thirdparty authentication">'+
       '<span class="name"> Twitter Button</span></li>';
       $(self.allList).append(tempTw);
 
-      var tempLi = '<li id="entity-user-linkedin" class="linkedin authentication">'+
+      var tempLi = '<li id="entity-user-linkedin" class="linkedin thirdparty authentication">'+
       '<span class="name">LinkedIn Login Button</span></li>';
       $(self.allList).append(tempLi);
     },
@@ -263,16 +263,24 @@ define([
           widgetModel = new ContainerWidgetModel(widget);
         }
 
-        if(form.action == "thirdpartylogin") {
-          widget.type = "thirdpartylogin";
-          widget.data = {};
-          widget.data.action = form.action;
-          widget.data.provider = form.provider;
-          widget.data.content = form.content;
-          widget.data.container_info = {};
-          widget.data.goto = "internal://Homepage";
-          widgetModel = new ContainerWidgetModel(widget);
-        }
+        this.widgetsCollection.push(widgetModel);
+
+        return widgetModel;
+      }
+      else if(/(thirdparty)/.exec(className)) {
+        var formType = String(id).replace('entity-user-','');
+        formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
+        form = constantContainers[formType];
+        var widgetModel;
+        widget.type = "thirdpartylogin";
+        widget.data = {};
+        widget.data.action = form.action;
+        widget.data.provider = form.provider;
+        widget.data.content = form.content;
+        widget.data.container_info = {};
+        widget.data.container_info.action = "thirdpartylogin";
+        widget.data.goto = "internal://Homepage";
+        widgetModel = new ContainerWidgetModel(widget);
 
         this.widgetsCollection.push(widgetModel);
 
