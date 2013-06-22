@@ -8,7 +8,7 @@ function(SelectView) {
     tagName    : 'div',
     collection : null,
     parentName : "",
-    className  : 'span58 relation-pane',
+    className  : 'span58 hoff1 relation-pane',
 
     events : {
 
@@ -22,13 +22,11 @@ function(SelectView) {
     },
 
     render: function() {
-
       var arrRelations = _.union(this.userRelations, this.tableRelations);
       _.each(arrRelations, function(relation) {
         var type = relation.get('type');
         this.el.innerHTML += _.template(TableTemplates.relationalNL[type], relation.toJSON());
       }, this);
-
       return this;
     },
 

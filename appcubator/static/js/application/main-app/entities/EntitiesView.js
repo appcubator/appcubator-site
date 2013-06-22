@@ -25,7 +25,8 @@ function(TableCollection,
         'click #add-role'        : 'clickedAddUserRole',
         'keypress #add-role-form'  : 'createUserRole',
         'click #add-entity'      : 'clickedAddTable',
-        'keypress #add-entity-form': 'createTable'
+        'keypress #add-entity-form': 'createTable',
+        'click #add-relation'     : 'showCreateRelationForm',
       },
 
       initialize: function() {
@@ -55,8 +56,8 @@ function(TableCollection,
       },
 
       renderRelations: function() {
-        util.get('relations').appendChild(this.relationsView.render().el);
         util.get('relations').appendChild(this.createRelationView.render().el);
+        util.get('relations').appendChild(this.relationsView.render().el);
       },
 
       clickedAddUserRole: function(e) {
@@ -100,6 +101,10 @@ function(TableCollection,
         $(e.target).hide();
 
         e.preventDefault();
+      },
+
+      showCreateRelationForm: function() {
+        this.createRelationView.$el.fadeIn('fast');
       }
     });
 

@@ -8,11 +8,12 @@ function(SelectView) {
     tagName    : 'div',
     collection : null,
     parentName : "",
+    id: 'new-relation',
     className  : 'span58 pane relation-pane',
 
     events : {
-      'click .create-relations-btn' : 'renderRelationsOptions',
-      'click .done-relation'        : 'saveRelationShip'
+      'click .done-relation'        : 'saveRelationShip',
+      'click .cancel-relation'       : 'cancel'
     },
 
     initialize: function(){
@@ -20,7 +21,7 @@ function(SelectView) {
     },
 
     render: function() {
-      this.el.innerHTML= '<div class="hi5 create-relations-btn"><span class="icon"></span>Create a Relation</div>';
+      this.renderRelationsOptions();
       return this;
     },
 
@@ -45,7 +46,7 @@ function(SelectView) {
     },
 
     relationSelected: function(answer) {
-      var cids = answer.val.replace('relation-','');
+      var cids = answer.replace('relation-','');
       var cid1 = cids.split('-')[0];
       var cid2 = cids.split('-')[1];
       var table1 = (v1State.get('users').get(cid1)||v1State.get('tables').get(cid1));
@@ -59,7 +60,7 @@ function(SelectView) {
 
       div.innerHTML  = _.template(TableTemplates.NewRelationTemplate, {table1: table1, table2: table2});
       div.innerHTML += _.template(TableTemplates.NewRelationTemplate, {table1: table2, table2: table1});
-      div.innerHTML += '<div class="btn done-relation">Done</div>';
+      div.innerHTML += '<div class="btn btn-info done-relation">Done</div><div class="btn offset1 cancel-relation">Cancel</div>';
 
       this.el.innerHTML = '';
       this.el.appendChild(div);
@@ -108,6 +109,13 @@ function(SelectView) {
       }
 
       this.render();
+    },
+
+    cancel: function(e) {
+      var self= this;
+      this.$el.fadeOut('fast', function() {
+        self.renderRelationsOptions();
+      });
     }
 
   });

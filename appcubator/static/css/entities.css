@@ -625,6 +625,10 @@ table tr:hover td {
   padding: 10px;
 }
 
+.relation-pane#new-relation {
+  display: none;
+}
+
 .relation-pane .edit-relation-div select {
   width: 140px;
 }
@@ -669,10 +673,11 @@ table tr:hover td {
 }
 
 .icon-o2o {
+  background-position: -280px 0;
 }
 
 .icon-m2m {
-  background-position: -280px 0;
+
 }
 
 .trash .icon {
