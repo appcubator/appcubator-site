@@ -14,7 +14,6 @@ function(TableModel) {
     getRelationsWithEntityName: function(tableNameStr) {
       var arrFields = [];
       this.each(function(table) {
-        //if(table.get('name') == tableNameStr) return;
         table.get('fields').each(function(fieldModel) {
           if(fieldModel.has('entity_name') && fieldModel.get('entity_name') == tableNameStr) {
             var obj = fieldModel.toJSON();

@@ -45,11 +45,8 @@ function(SelectView) {
       var cid = relationPane.id.replace('relation-','');
       var owner = relationPane.dataset.owner;
       var entity = relationPane.dataset.entity;
-      console.log('owner: ' + owner);
-      console.log('entity: ' + entity);
       // remove relation field from owner
       if(v1State.get('users').where({name: owner}).length > 0) {
-        console.log(v1State.get('users').where({name: owner})[0]);
         v1State.get('users').where({name: owner})[0].get('fields').remove(cid);
       }
       else if(v1State.get('tables').where({name: owner}).length > 0) {

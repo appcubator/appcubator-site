@@ -120,7 +120,6 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     renderRelations: function() {
-      console.log("YO");
       var userRelations = v1State.get('users').getRelationsWithEntityName(this.model.get('name'));
       var tableRelations = v1State.get('tables').getRelationsWithEntityName(this.model.get('name'));
       var list = this.$el.find('.related-fields').empty();
