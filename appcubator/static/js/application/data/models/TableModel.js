@@ -43,6 +43,11 @@ define([
       return json;
     },
 
+    getFieldsColl: function() {
+      var arr = this.get('fields');
+      return new Backbone.Collection(arr);
+    },
+
     getNormalFields: function() {
       var normalFields = this.get('fields').filter(function(field) { return !field.isRelatedField(); });
       return normalFields;

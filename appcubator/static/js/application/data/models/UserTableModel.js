@@ -20,6 +20,11 @@ function(TableModel, FieldModel, FieldsCollection, Backbone) {
       this.set('fields', fieldCollection);
     },
 
+    getFieldsColl: function() {
+      var arr = _.union(this.get('fields'), v1State.get('users').predefinedFields);
+      return new Backbone.Collection(arr);
+    },
+
     getNormalFields: function() {
       var normalFields = this.get('fields').filter(function(field) { return !field.isRelatedField(); });
       normalFields = _.union(normalFields, v1State.get('users').predefinedFields);
