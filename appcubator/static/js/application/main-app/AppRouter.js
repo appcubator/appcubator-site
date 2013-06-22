@@ -162,7 +162,6 @@ define([
 
 
 		changePage: function(newView, viewOptions, post_render) {
-			console.log(AppRouter.view);
 			if(AppRouter.view) AppRouter.view.remove();
 			var cleanDiv = document.createElement('div');
 			cleanDiv.className = "clean-div";

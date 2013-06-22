@@ -23,7 +23,6 @@ function(
       if(bone.goto) {
         var name = bone.goto.replace('internal://','');
         var parts = name.split('/?');
-        console.log(parts);
         this.set('goto', new ActionModel( { type: "goto", page_name: parts[0], context: parts[1] }));
       }
 

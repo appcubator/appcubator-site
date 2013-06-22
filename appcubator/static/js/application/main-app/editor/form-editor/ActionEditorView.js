@@ -52,7 +52,7 @@ function(FormFieldModel, ActionModel, TutorialView) {
     renderGotos: function() {
       var entitiyName = this.entityM.get('name');
       var redirect = this.model.get('goto');
-      console.log(redirect);
+
       if(redirect) {
         this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action goto-action">Go to '+redirect.get('page_name')+'<div class="remove-from-list"></div></li>');
       }

@@ -22,8 +22,6 @@ define([
         bone = _.findWhere(appState.entities, {name : bone});
       }
 
-      console.trace();
-
       if(bone.name) {
         this.set('name', bone.name||"New Table");
       }
