@@ -33,3 +33,9 @@ p {
   font-size: 14px;
   display: block;
 }
+
+.content-index.container {
+  text-align: left;
+  width: 100%;
+  max-width: 800px;
+}

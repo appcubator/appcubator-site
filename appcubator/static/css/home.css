@@ -294,9 +294,20 @@ h3 {
   margin-top: 30px;
 }
 
+.bottom-panel form {
+  text-align: center;
+}
+
 .bottom-panel .login input {
   width: 232px;
   height: 42px;
+}
+
+
+.bottom-panel .login input[type="text"],
+.bottom-panel .login input[type="password"] {
+  margin-left: 3px;
+  width: 230px;
 }
 
 .buttons .btn {
@@ -1050,7 +1061,7 @@ img.logo {
 
 .people {
   position: relative;
-  margin-bottom: 180px;
+  margin-bottom: 60px;
 }
 
 .peep .karan {
@@ -1066,7 +1077,7 @@ img.logo {
 }
 
 .peep .sagar {
-  margin-top: 0px;
+  margin-top: -12px;
 }
 
 
@@ -1097,6 +1108,7 @@ img.logo {
   background-color: #fff;
   border-radius: 6px;
   width: 100%;
+  margin-top: 12px;
   padding: 16px;
   height: 140px;
   text-align: left;
@@ -1108,3 +1120,27 @@ img.logo {
   opacity: 1;
 }
 
+
+.perm-bio {
+  margin-top: 12px;
+  background-color: #fff;
+  border-radius: 6px;
+  width: 100%;
+  padding: 16px;
+}
+
+.backed-by img {
+  vertical-align: top;
+  margin-right: 20px;
+  height: 70px;
+  margin-top: 10px;
+}
+
+img.startx {
+  height: 100px;
+}
+
+#s-session {
+  color: #0f2d40;
+  font-weight: bold;
+}

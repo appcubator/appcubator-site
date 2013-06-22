@@ -14,40 +14,7 @@ scope: r_fullprofile r_emailaddress
 <div id="fb-root"></div>
 <script>
 </script>
-<div class="left-panel">
-  <div id="box-container">
-    <div id="cube" class="">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-  <h1>Appcubator</h1>
-  <div class="bottom-panel" id="bottom-panel">
-    <div class="buttons">
-      <div class="btn btn-blue hoff1 slide-signup" id="request">Join the Beta Program</div>
-      <div class="btn btn-green hoff1" id="member">Already a Member?</div>
-    </div>
-    <span class="login" id="login-form">
-      {% if form.errors %}
-      <p>Your username and password didn't match. Please try again.</p>
-      {% endif %}
-      <form class="" method="post" action="{% url django.contrib.auth.views.login %}">
-        {% csrf_token %}
-
-        <input id="id_username" type="text" name="username" placeholder="Username..." maxlength="30">
-        <br>
-        <input type="password" name="password" placeholder="Password..." id="id_password">
-        <br>
-        <input class="btn" type="submit" value="Login »"/>
-        <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
-      </form>
-    </span>
-  </div>
-</div>
+{% include "website-leftpanel.html" %}
 
 <div class="fixed-bg" id="bg4"></div>
 <div class="fixed-bg" id="bg3"></div>
@@ -137,7 +104,7 @@ scope: r_fullprofile r_emailaddress
       </div>
       <div class="right-side">
         <textarea name="description" id="inp-description" placeholder="Technical description of your application. This is for us to attain the feasibility of the project to best direct you."></textarea>
-        <input type="checkbox" id="inp-interest" data-label="I'm also interested in the starting session.">
+        <input type="checkbox" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
         <input type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
       </div>
     </form>

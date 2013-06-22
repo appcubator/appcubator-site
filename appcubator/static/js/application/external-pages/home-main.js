@@ -38,7 +38,7 @@ function() {
 
     $('#bg2').css('background-image', 'url(/static/img/bg3.jpg)');
     $('#bg3').css('background-image', 'url(/static/img/bg4.jpg)');
-    $('#bg4').css('background-image', 'url(/static/img/bg-signup.jpg)');
+    $('#bg4').css('background-image', 'url(/static/img/bg4.jpg)');
 
     $(window).on('scroll', function(e) {
       var newValue = $(window).scrollTop();

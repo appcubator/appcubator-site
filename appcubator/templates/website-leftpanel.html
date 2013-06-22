@@ -1,0 +1,36 @@
+<div class="left-panel">
+  <a href="/">
+    <div id="box-container">
+      <div id="cube" class="">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </a>
+  <h1>Appcubator</h1>
+  <div class="bottom-panel" id="bottom-panel">
+    <div class="buttons">
+      <div class="btn btn-blue hoff1 slide-signup" id="request">Join the Beta Program</div>
+      <div class="btn btn-green hoff1" id="member">Already a Member?</div>
+    </div>
+    <span class="login" id="login-form">
+      {% if form.errors %}
+      <p>Your username and password didn't match. Please try again.</p>
+      {% endif %}
+      <form class="" method="post" action="{% url django.contrib.auth.views.login %}">
+        {% csrf_token %}
+
+        <input id="id_username" type="text" name="username" placeholder="Username..." maxlength="30">
+        <br>
+        <input type="password" name="password" placeholder="Password..." id="id_password">
+        <br>
+        <input class="btn" type="submit" value="Login »"/>
+        <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
+      </form>
+    </span>
+  </div>
+</div>
