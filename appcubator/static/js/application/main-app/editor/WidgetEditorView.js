@@ -141,6 +141,9 @@ function(WidgetContentEditor,
 
     openFormEditor: function() {
       var entityModel = this.model.get('data').get('container_info').get('entity');
+      console.log(this.model.get('data').get('container_info'));
+      console.log(this.model);
+      console.log(entityModel);
       if(entityModel == "User") { entityModel =  this.model.get('data').get('entity'); }
       new FormEditorView(this.model.get('data').get('container_info').get('form'), entityModel);
     },

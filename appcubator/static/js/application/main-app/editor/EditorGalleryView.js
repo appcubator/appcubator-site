@@ -292,7 +292,7 @@ define([
 
         widget.data.container_info = {};
         widget.data.entity = v1State.get('users').getUserTableWithName(signupRole);
-        widget.data.container_info.entity = "User";
+        widget.data.container_info.entity = v1State.get('users').getUserTableWithName(signupRole);
         widget.data.container_info.action = form.action;
         widget.data.container_info.form = form;
         widget.data.container_info.form.signupRole = signupRole;

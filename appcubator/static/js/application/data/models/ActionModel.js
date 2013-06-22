@@ -22,7 +22,11 @@ function() {
 
     toJSON: function () {
       var json = _.clone(this.attributes);
-      if(json.type == "goto") { return json.page_name; }
+      if(json.type == "goto") {
+        var str = "internal://" + json.page_name;
+        if(json.context) str += "/?" + json.context;
+        return str;
+      }
       return json;
     }
   });

@@ -29,6 +29,7 @@ function(FormFieldModel, ActionModel, TutorialView) {
       this.listenTo(this.model, 'change:goto', this.changedGoto);
 
       this.possibleActions =  this.model.getRelationalActions(v1State.getCurrentPage());
+      this.possibleGotos = this.model.getPossibleGotos();
     },
 
     render : function(text) {
@@ -50,27 +51,21 @@ function(FormFieldModel, ActionModel, TutorialView) {
 
     renderGotos: function() {
       var entitiyName = this.entityM.get('name');
-      var redirect = this.model.get('redirect');
+      var redirect = this.model.get('goto');
+      console.log(redirect);
       if(redirect) {
-        this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action goto-action">'+redirect.getNL()+'<div class="remove-from-list"></div></li>');
+        this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action goto-action">Go to '+redirect.get('page_name')+'<div class="remove-from-list"></div></li>');
       }
 
-      var listOfPages = [];
-      listOfPages = v1State.get('pages').getContextFreePageModels();
-      listOfPages = _.union(listOfPages, v1State.get('pages').getPageModelsWithEntityName(entitiyName));
-
-      _(listOfPages).each(function(page, ind) {
-        this.$el.find('.goto-list').append('<li id="page-'+page.cid+'" class="current-action goto-action">Go to '+page.get('name')+'<div class="remove-from-list"></div></li>');
+      this.possibleGotos.each(function(actionModel, ind) {
+        this.$el.find('.goto-list').append('<li id="page-'+actionModel.cid+'" class="goto-action">Go to '+actionModel.get('page_name')+'<div class="remove-from-list"></div></li>');
       }, this);
-
     },
 
 
     gotoActionClicked: function(e) {
       var pageCid = e.target.id.replace('page-','');
-      this.model.set('goto', new ActionModel({ type: "goto",
-                                               page_name: "internal://" + v1State.get('pages').get(pageCid).get('name') }));
-
+      this.model.set('goto', this.possibleGotos.get(pageCid));
     },
 
     currentActionClicked: function(e) {
@@ -83,11 +78,11 @@ function(FormFieldModel, ActionModel, TutorialView) {
     },
 
     changedGoto: function() {
-      this.$el.find('.redirect-action').remove();
+      this.$el.find('.goto-action.current-action').remove();
       var redirect = this.model.get('goto');
       var page_name = redirect.get('page_name').replace('internal://', '');
 
-      this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">Go to '+ page_name +'<div class="remove-from-list"></div></li>');
+      this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action goto-action">Go to '+ page_name +'<div class="remove-from-list"></div></li>');
     },
 
     actionRemoved: function(actionModel) {

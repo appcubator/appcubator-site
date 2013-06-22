@@ -224,6 +224,7 @@ function( PageModel,
 
       _(contextEntites).each(function(entityName) {
         var entity =  v1State.get('tables').getTableWithName(entityName);
+        if(!entity) { entity = v1State.get('users').getTableWithName(entityName); }
         g_contextCollection.push(entity);
       });
     },
