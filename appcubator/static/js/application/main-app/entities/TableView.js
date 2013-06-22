@@ -110,7 +110,6 @@ function(FieldModel, UploadExcelView, ShowDataView) {
 
     clickedDelete: function(e) {
       v1State.get('tables').remove(this.model.cid);
-      this.remove();
     },
 
     clickedPropDelete: function(e) {

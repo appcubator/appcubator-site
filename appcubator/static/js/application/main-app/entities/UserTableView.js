@@ -17,6 +17,8 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
     initialize: function(userTableModel){
       _.bindAll(this);
       this.model  = userTableModel;
+      this.listenTo(this.model, 'remove', this.remove);
+
       this.listenTo(this.model.get('fields'), 'add', this.appendField);
       this.listenTo(this.model.get('fields'), 'remove', this.removeField);
 
@@ -37,6 +39,10 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
       this.$el.find('input[type=checkbox]').prettyCheckable();
       this.adjustTableWidth();
       return this;
+    },
+
+    clickedDelete: function(e) {
+      v1State.get('users').remove(this.model.cid);
     },
 
     appendField: function (fieldModel) {

@@ -3,7 +3,7 @@ var UrlTemplate = {};
 UrlTemplate.mainTemplate = [
   '<h3 class="hi3 hoff1 edit-url">Edit URL</h3>',
     '<div>',
-      '<div class="span30 url">',
+      '<div class="span28 offset1 hoff1 url">',
       '<% var endsWithEnt = 1; _.each(urls, function(url, i) { %>',
      ' <span class="slash">/</span>',
       '<% if (/{{([^\}]+)}}/g.exec(url)) { var urlEnt = /{{([^\}]+)}}/g.exec(url); endsWithEnt = 1 %>',
@@ -39,9 +39,11 @@ UrlTemplate.templateEntity = [
 '<span class="slash">/</span>',
 '<select class="id url-part last" id="inp-new" %>>',
   '<option>Add ID</option>',
-  '<option value="User"> User ID</option>',
-  '<% _.each(entities, function(entity, i) { %>',
-  '<option value="<%= entity.name %>"> <%= entity.name %> ID</option>',
+  '<% _.each(users, function(user, i) { %>',
+  '<option value="<%= user.name %>"> <%= user.name %> ID</option>',
+  '<% }); %>',
+  '<% _.each(tables, function(table, i) { %>',
+  '<option value="<%= table.name %>"> <%= table.name %> ID</option>',
   '<% }); %>',
 '</select>'
 ].join('\n');

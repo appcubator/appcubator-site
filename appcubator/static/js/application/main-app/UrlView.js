@@ -5,6 +5,7 @@ define([
 function() {
 
   var UrlView = Backbone.ModalView.extend({
+    padding: 0,
     events: {
       'change .url-part'      : 'urlPartChanged',
       'change .page'          : 'pageChanged',
@@ -26,8 +27,8 @@ function() {
     render: function() {
       var temp = UrlTemplate.mainTemplate;
       var html = _.template(temp, { 'urls': this.model.get('urlparts'),
-                                    'entities': appState.tables,
-                                    'pages': appState.pages,
+                                    'entities': v1State.get('tables').toJSON(),
+                                    'pages': v1State.get('pages').toJSON(),
                                     'page_name': this.model.get('page_name') });
 
       this.el.innerHTML = html;
@@ -46,7 +47,8 @@ function() {
       }
       else {
         var ind = String(e.target.id).replace('inp-','');
-        this.model.get('urlparts')[ind] = e.target.value;
+        if(e.target.value === "") delete this.model.get('urlparts')[ind];
+        else this.model.get('urlparts')[ind] = e.target.value;
       }
     },
 
@@ -70,7 +72,8 @@ function() {
       $(e.target).removeClass('last');
       var temp = UrlTemplate.templateText;
       var html = _.template(temp, { 'urls': this.urlParts,
-                                    'entities': appState.entities,
+                                    'users': v1State.get('users').toJSON(),
+                                    'tables': v1State.get('tables').toJSON(),
                                     'pages': appState.pages });
       $('.url', this.el).append(html);
     },
@@ -79,7 +82,8 @@ function() {
       $(e.target).removeClass('last');
       var temp = UrlTemplate.templateEntity;
       var html = _.template(temp, { 'urls': this.urlParts,
-                                    'entities': appState.entities,
+                                    'users': v1State.get('users').toJSON(),
+                                    'tables': v1State.get('tables').toJSON(),
                                     'pages': appState.pages });
       $('.url', this.el).append(html);
     }
