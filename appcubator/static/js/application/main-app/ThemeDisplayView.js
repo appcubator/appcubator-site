@@ -44,6 +44,8 @@ function() {
         data: JSON.stringify(newState),
         success: function(data) {
           self.$el.find('.load').append('<div class="hoff2"><h3>Loaded!</h3></div>');
+          util.unloadCSS('uiestate');
+          util.loadDirectory('/app/' + appId + '/uiestate.less', 'uiestate');
         }
       });
 

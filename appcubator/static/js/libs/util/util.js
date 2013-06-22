@@ -31,7 +31,6 @@ define(['jquery'], function() {
         textRange.moveEnd(pos);
         textRange.moveStart(pos);
         textRange.select();
-        console.log('he');
         return true;
       }else if(node.setSelectionRange){
         node.setSelectionRange(pos,pos);
@@ -101,6 +100,20 @@ define(['jquery'], function() {
         cssFile.id = 'css-' + css;
         document.getElementsByTagName('head')[0].appendChild(cssFile);
       }
+    },
+
+    unloadCSS: function(css) {
+      var tag = document.getElementById('css-'+ css);
+      tag.parentNode.removeChild(tag);
+    },
+
+    loadDirectory: function(directory, css) {
+      var cssFile = document.createElement('link');
+      cssFile.setAttribute('type', 'text/css');
+      cssFile.setAttribute('href', directory);
+      cssFile.setAttribute('rel', 'stylesheet');
+      cssFile.id = 'css-' + css;
+      document.getElementsByTagName('head')[0].appendChild(cssFile);
     },
 
     isMouseOn: function(pageX, pageY, element) {
