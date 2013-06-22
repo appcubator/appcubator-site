@@ -11,33 +11,58 @@ define([
   "collections/PageCollection",
   "collections/MobilePageCollection",
   "collections/UserRolesCollection",
+  "collections/TableCollection",
+  "collections/EmailCollection",
+  "models/AppInfoModel",
   "backbone"
 ],
 function( AppModel,
-          UserEntityModel,
+          UserTableModel,
           PageCollection,
           MobilePageCollection,
-          UserRolesCollection) {
+          UserRolesCollection,
+          TableCollection,
+          EmailCollection,
+          AppInfoModel) {
 
-
-  describe( "appState model input-outputs", function () {
-
-    it("UserEntityModel", function () {
-      var newUserModel = new UserEntityModel(appState.users[0]);
-      expect(appState.users[0]).toEqual(newUserModel.toJSON());
-    });
-
-    it("UserRolesCollection", function () {
-      var newCollection = new UserRolesCollection(appState.users);
-      expect(appState.users).toEqual(newCollection.toJSON());
-    });
-
-    it("Whole thing works.", function () {
-      var curAppstate = new AppModel(appState);
-      curAppstate.set('pages', new PageCollection(appState.pages||[]));
-      curAppstate.set('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
-
-      expect(appState).toEqual(curAppstate.toJSON());
+  describe("Emails", function() {
+    it("works", function() {
+      var emailsCollection = new EmailCollection(appState.emails);
+      expect(appState.emails).toEqual(emailsCollection.toJSON());
     });
   });
+
+  describe("Info", function() {
+    it("works", function() {
+      var infoModel = new AppInfoModel(appState.info);
+      expect(appState.info).toEqual(infoModel.toJSON());
+    });
+  });
+
+  describe("Mobile Pages", function() {
+    it("works", function() {
+      var pagesCollection = new MobilePageCollection(appState.mobilePages);
+      expect(appState.mobilePages).toEqual(pagesCollection.toJSON());
+    });
+  });
+
+  describe("Pages", function() {
+    it("works", function() {
+      var pagesCollection = new PageCollection(appState.pages);
+      expect(appState.pages).toEqual(pagesCollection.toJSON());
+    });
+  });
+
+  describe("User Tables", function() {
+    it("works", function() {
+      var usersCollection = new UserRolesCollection(appState.users);
+      expect(appState.users).toEqual(usersCollection.toJSON());
+    });
+  });
+
+  describe("Tables", function() {
+      var tablesCollection = new TableCollection(appState.tables);
+      expect(appState.tables).toEqual(tablesCollection.toJSON());
+  });
+
 });
