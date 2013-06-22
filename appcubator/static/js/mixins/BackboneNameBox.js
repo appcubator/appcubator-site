@@ -44,7 +44,7 @@ function(Backbone) {
       e.preventDefault();
       var name = this.$el.find('input').val();
       if(name.length > 0) {
-        this.$el.find('input form').val('');
+        this.$el.find('input').val('');
         this.$el.find('form').hide();
         this.$el.find('.box-button').fadeIn();
         this.trigger('submit', name);

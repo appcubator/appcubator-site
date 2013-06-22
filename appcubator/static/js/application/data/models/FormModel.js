@@ -19,8 +19,12 @@ function(
       this.set('actions', new ActionCollection(bone.actions || []));
 
       if(bone.loginRoutes) { this.set('loginRoutes', new LoginRouteCollection(bone.loginRoutes));}
-      if(!bone.goto) { bone.goto = "internal://Homepage"; }
-      if(bone.goto) { this.set('goto', new ActionModel( { type: "goto", page_name: bone.goto }));}
+      if(!bone.goto || !_.isString(bone.goto)) { bone.goto = "internal://Homepage"; }
+      if(bone.goto) {
+        var name = bone.goto.replace('internal://','');
+        var parts = name.split('/?');
+        this.set('goto', new ActionModel( { type: "goto", page_name: parts[0], context: parts[1] }));
+      }
 
       this.set('entity', bone.entity);
 
@@ -91,6 +95,28 @@ function(
         type : "redirect",
         page_name : pageModel.get('name')
       }));
+    },
+
+    getPossibleGotos: function() {
+      var entityName = this.get('entity');
+      var listOfPages = new ActionCollection();
+
+      _(v1State.get('pages').getContextFreePageModels()).each(function(pageModel) {
+        listOfPages.push({
+          type: "goto",
+          page_name: pageModel.get('name')
+        });
+      });
+
+      _(v1State.get('pages').getPageModelsWithEntityName(entityName)).each(function(pageModel) {
+        listOfPages.push({
+          type: "goto",
+          page_name: pageModel.get('name'),
+          context: entityName+"=Form."+entityName
+        });
+      });
+
+      return listOfPages;
     },
 
     toJSON: function() {
