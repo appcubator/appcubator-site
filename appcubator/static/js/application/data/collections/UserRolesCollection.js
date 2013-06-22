@@ -9,11 +9,9 @@ define([
     predefinedFields: [],
 
     initialize: function() {
-      this.predefinedFields.push(new FieldModel({ name: "username"}));
       this.predefinedFields.push(new FieldModel({ name: "First Name"}));
       this.predefinedFields.push(new FieldModel({ name: "Last Name"}));
       this.predefinedFields.push(new FieldModel({ name: "Email"}));
-
     },
 
     getUserTableWithName: function(tableNameStr) {

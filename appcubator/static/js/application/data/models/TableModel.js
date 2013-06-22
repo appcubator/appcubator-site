@@ -35,6 +35,7 @@ define([
         this.get('fields').add(bone.fields);
       }
     },
+
     toJSON: function () {
       var json = {};
       json = _.clone(this.attributes);
@@ -42,17 +43,14 @@ define([
       return json;
     },
 
-    getRelations: function() {
-      var relations = [];
-      var self = this;
-      this.get('fields').each(function(fieldModel) {
-        var type = fieldModel.get('type');
-        if(type == "o2o" || type == "fk" || type == "m2m") {
-          fieldModel.set('owner_entity', self.get('name'));
-          relations.push(fieldModel);
-        }
-      }, this);
-      return relations;
+    getNormalFields: function() {
+      var normalFields = this.get('fields').filter(function(field) { return !field.isRelatedField(); });
+      return normalFields;
+    },
+
+    getRelationalFields: function() {
+      var relationalFields = this.get('fields').filter(function(field) { return field.isRelatedField(); });
+      return relationalFi.elds;
     }
   });
 

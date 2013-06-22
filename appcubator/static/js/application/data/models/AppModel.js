@@ -40,6 +40,12 @@ function(AppInfoModel,
       }
     },
 
+    getTableModelWithName: function(nameStr) {
+      var tableM = this.get('tables').getTableWithName(nameStr);
+      if(!tableM) tableM = this.get('users').getTableWithName(nameStr);
+      return tableM;
+    },
+
     toJSON: function() {
       var json = _.clone(this.attributes);
       json.info = json.info.toJSON();

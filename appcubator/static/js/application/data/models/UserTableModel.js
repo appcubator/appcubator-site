@@ -20,6 +20,12 @@ function(TableModel, FieldModel, FieldsCollection, Backbone) {
       this.set('fields', fieldCollection);
     },
 
+    getNormalFields: function() {
+      var normalFields = this.get('fields').filter(function(field) { return !field.isRelatedField(); });
+      normalFields = _.union(normalFields, v1State.get('users').predefinedFields);
+      return normalFields;
+    },
+
     toJSON: function () {
       var json = {};
       json        = _.clone(this.attributes);

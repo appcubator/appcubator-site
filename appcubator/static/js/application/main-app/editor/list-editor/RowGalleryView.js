@@ -68,9 +68,19 @@ function(EditorGalleryView, ElementCollection) {
       //$(self.allList).append(_.template(tempLiForm, context));
 
       self.entity.get('fields').each(function(field) {
+        if(field.isRelatedField()) return self.renderRelatedField(field);
         var context = { entity_id : entityId, entity_name : entityName,
                         field_id : field.cid, field_name: field.get('name') };
         $(self.allList).append(_.template(tempLi, context));
+      });
+    },
+
+    renderRelatedField: function(fieldModel) {
+      console.log(fieldModel);
+      var tableModel = v1State.getTableModelWithName(fieldModel.get('entity_name'));
+      console.log(tableModel);
+      _(tableModel.getNormalFields()).each(function(fieldM) {
+        console.log(fieldM);
       });
     },
 
