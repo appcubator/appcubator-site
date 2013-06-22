@@ -21,12 +21,10 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
 
       this.listenTo(this.model.get('fields'), 'add', this.appendField);
       this.listenTo(this.model.get('fields'), 'remove', this.removeField);
+      this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
 
       this.tables= v1State.get('tables').pluck('name');
       this.otherUserRoles = _(v1State.get('users').pluck('name')).without(this.model.get('name'));
-
-      this.userRelations = v1State.get('users').getRelationsWithName(this.model.get('name'));
-      this.tableRelations = v1State.get('tables').getRelationsWithName(this.model.get('name'));
     },
 
     render: function() {

@@ -34,7 +34,7 @@ function(SelectView) {
       var type = relation.get('type');
       data = relation.toJSON();
       data.cid = relation.cid;
-      console.log(data);
+      data.util = util;
       var newHTML = _.template(TableTemplates.relationalNL[type], data);
       this.$el.prepend(newHTML);
     },
@@ -43,16 +43,28 @@ function(SelectView) {
       var self = this;
       var relationPane = e.target.parentElement;
       var cid = relationPane.id.replace('relation-','');
-      if(v1State.get('users').get(cid)) {
-        v1State.get('users').remove(v1State.get('users').get(cid));
+      var owner = relationPane.dataset.owner;
+      var entity = relationPane.dataset.entity;
+      // remove relation field from owner
+      if(v1State.get('users').where({name: owner}).length > 0) {
+        v1State.get('users').where({name: owner})[0].get('fields').remove(cid);
       }
-      else if(v1State.get('tables').get(cid)) {
-        v1State.get('tables').remove(v1State.get('tables').get(cid));
+      else if(v1State.get('tables').where({name: owner}).length > 0) {
+        v1State.get('tables').where({name: owner})[0].get('fields').remove(cid);
       }
 
+      // refresh relation tags in related entity's view
+      if(v1State.get('users').where({name: entity}).length > 0) {
+        v1State.get('users').where({name: entity})[0].trigger('removeRelation');
+      }
+      else if(v1State.get('tables').where({name: entity}).length > 0) {
+        v1State.get('tables').where({name: entity})[0].trigger('removeRelation');
+      }
+
+      // remove relation view
       $(relationPane).fadeOut('fast', function() {
         self.el.removeChild(this);
-      })
+      });
 
     }
   });

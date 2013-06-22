@@ -36,12 +36,9 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       this.model  = tableModel;
       this.listenTo(this.model, 'remove', this.remove);
       this.listenTo(this.model.get('fields'), 'add', this.appendField);
-      this.listenTo(this.model, 'newRelation', this.renderRelations);
+      this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
       this.userRoles = v1State.get('users').pluck('name');
       this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));
-
-      this.userRelations = v1State.get('users').getRelationsWithName(this.model.get('name'));
-      this.tableRelations = v1State.get('tables').getRelationsWithName(this.model.get('name'));
     },
 
     render: function() {
@@ -123,8 +120,10 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     renderRelations: function() {
-      var list = this.$el.find('.related-fields');
-      var arr = _.union(this.tableRelations, this.userRelations);
+      var userRelations = v1State.get('users').getRelationsWithEntityName(this.model.get('name'));
+      var tableRelations = v1State.get('tables').getRelationsWithEntityName(this.model.get('name'));
+      var list = this.$el.find('.related-fields').empty();
+      var arr = _.union(tableRelations, userRelations);
       _(arr).each(function(relation) {
         var suffix;
         var text = 'Has ' + relation.related_name;

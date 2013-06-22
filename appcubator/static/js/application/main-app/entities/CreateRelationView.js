@@ -90,7 +90,7 @@ function(SelectView) {
         fieldObj.entity_name = this.table2.get('name');
 
         newRelation = this.table1.get('fields').push(fieldObj);
-        this.table1.trigger('newRelation', newRelation);
+        this.table2.trigger('newRelation', newRelation);
       }
 
       if(type1 == "one" && type2 == "many") {
@@ -101,7 +101,7 @@ function(SelectView) {
         fieldObj.entity_name = this.table2.get('name');
 
         newRelation = this.table1.get('fields').push(fieldObj);
-        this.table1.trigger('newRelation', newRelation);
+        this.table2.trigger('newRelation', newRelation);
       }
 
       if(type1 == "many" && type2 == "one") {
@@ -112,7 +112,7 @@ function(SelectView) {
         fieldObj.entity_name = this.table1.get('name');
 
         newRelation = this.table2.get('fields').push(fieldObj);
-        this.table2.trigger('newRelation', newRelation);
+        this.table1.trigger('newRelation', newRelation);
       }
 
       if(type1 == "many" && type2 == "many") {
@@ -123,7 +123,7 @@ function(SelectView) {
         fieldObj.entity_name = this.table2.get('name');
 
         newRelation = this.table1.get('fields').push(fieldObj);
-        this.table1.trigger('newRelation', newRelation);
+        this.table2.trigger('newRelation', newRelation);
       }
 
       this.reset();
