@@ -34,6 +34,7 @@ define([
 
 		initialize: function() {
 			var self = this;
+			AppRouter.view = null;
 			_.bindAll(this);
 			$('#save').on('click', this.save);
 			$('#tutorial').on('click', function(e) {
@@ -117,16 +118,16 @@ define([
 				$('.page').fadeOut();
 				self.tutorialDirectory = [5];
 
-				if(self.view) self.view.remove();
+				if(AppRouter.view) AppRouter.view.remove();
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
 				$(document.body).append(cleanDiv);
 
-				self.view  = new EditorView({pageId: pageId});
-				self.view.setElement(cleanDiv).render();
+				AppRouter.view  = new EditorView({pageId: pageId});
+				AppRouter.view.setElement(cleanDiv).render();
 
 				olark('api.box.hide');
-				self.changeTitle(self.view.title);
+				self.changeTitle(AppRouter.view.title);
 			});
 		},
 
@@ -135,16 +136,16 @@ define([
 			$('.page').fadeOut();
 			self.tutorialDirectory = [5];
 			require(['m-editor/MobileEditorView'], function(MobileEditorView){
-				if(self.view) self.view.remove();
+				if(AppRouter.view) AppRouter.view.remove();
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
 				$(document.body).append(cleanDiv);
 
-				self.view  = new MobileEditorView({pageId: pageId});
-				self.view.setElement(cleanDiv).render();
+				AppRouter.view  = new MobileEditorView({pageId: pageId});
+				AppRouter.view.setElement(cleanDiv).render();
 
 				olark('api.box.hide');
-				self.changeTitle(self.view.title);
+				self.changeTitle(AppRouter.view.title);
 			});
 		},
 
@@ -161,15 +162,16 @@ define([
 
 
 		changePage: function(newView, viewOptions, post_render) {
-			if(self.view) self.view.remove();
+			console.log(AppRouter.view);
+			if(AppRouter.view) AppRouter.view.remove();
 			var cleanDiv = document.createElement('div');
 			cleanDiv.className = "clean-div";
 			$('#main-container').append(cleanDiv);
-			self.view = new newView(viewOptions);
-			self.view.setElement(cleanDiv).render();
+			AppRouter.view = new newView(viewOptions);
+			AppRouter.view.setElement(cleanDiv).render();
 
 			$('.active').removeClass('active');
-			this.changeTitle(self.view.title);
+			this.changeTitle(AppRouter.view.title);
 			post_render();
 		},
 
