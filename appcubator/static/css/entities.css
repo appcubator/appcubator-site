@@ -656,6 +656,24 @@ table tr:hover td {
   border-top-color: transparent;
 }
 
+.relation {
+  position: relative;
+}
+
+.relation .remove-relation {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border-radius: 50%;
+  padding: 0px 7px 1px;
+  color: #fff;
+  background-color: #aaa;
+}
+
+.relation .remove-relation:hover {
+  background-color: #c95446;
+}
+
 .icon-fk,
 .icon-o2o,
 .icon-m2m {

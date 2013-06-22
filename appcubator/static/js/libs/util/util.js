@@ -161,8 +161,14 @@ define(['jquery'], function() {
       var aBelowB = maxAy < minBy;
 
       return !( aLeftOfB || aRightOfB || aAboveB || aBelowB );
-    }
+    },
 
+    pluralize: function(str) {
+      if(str && str.length > 0) {
+        var lastChar = str.charAt(str.length - 1);
+        return (lastChar == 's') ? str + 'es' : str + 's';
+      }
+    }
   };
 
   function csrfSafeMethod(method) {

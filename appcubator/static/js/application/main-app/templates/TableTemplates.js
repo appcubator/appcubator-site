@@ -166,29 +166,32 @@ TableTemplates.Navbar = [
 ].join('\n');
 
 TableTemplates.NewRelationTemplate = [
-'<div class="new-relation"><%= table1.get(\'name\') %> has ',
-'<select id="relation-type-<%= table1.cid %>">',
-  '<option value="many">many <%= table2.get(\'name\') %>(s)</option>',
-  '<option value="one">a single <%= table2.get(\'name\') %></option>',
-'</select>',
-'called <input id="relation-name-<%= table1.cid %>" type="text">.',
+'<div class="new-relation">',
+  'A <%= table1.get(\'name\') %> has ',
+  '<select id="relation-type-<%= table1.cid %>">',
+    '<option value="many" <%= (selected=="many") ? "selected" : "" %>>a list of <%= util.pluralize(table2.get(\'name\')) %></option>',
+    '<option value="one" <%= (selected=="one") ? "selected" : "" %>>a <%= table2.get(\'name\') %></option>',
+  '</select>',
+  'called <input id="relation-name-<%= table1.cid %>" type="text">',
 '</div>'
 ].join('\n');
 
 TableTemplates.relationalNL = {};
 
 TableTemplates.relationalNL["o2o"] = [
-'<div class="pane offsetr1 hboff2 relation">',
+'<div class="pane offsetr1 hboff2 relation" id="relation-<%= cid %>">',
+  '<span class="remove-relation">x</span>',
   '<div class="icon-o2o"></div>',
   '<span class="span16 hoff1 offset1">',
-  "<%= owner_entity %> has a <%= entity_name %>, called <%= name %>,",
-  " and <%= entity_name %> has a <%= owner_entity %> called <%= related_name %>",
+  '<div class="row">A <%= entity_name %> has a <%= owner_entity %> <div>called <strong><%= related_name %></strong></div></div>',
+  '<div class="row hoff2">A <%= owner_entity %> has a <%= entity_name %> <div>called <strong><%= name %></strong></div></div>',
   '</span>',
 '</div>'
 ].join('\n');
 
 TableTemplates.relationalNL["fk"] = [
-'<div class="pane offsetr1 hboff2 relation">',
+'<div class="pane offsetr1 hboff2 relation" id="relation-<%= cid %>">',
+  '<span class="remove-relation">x</span>',
   '<div class="icon-fk"></div>',
   '<span class="offsetr1 hoff1 offset1">',
   '<div class="row">A <%= entity_name %> has a list of <%= owner_entity %>s <div>called <strong><%= related_name %></strong></div></div>',
@@ -199,7 +202,8 @@ TableTemplates.relationalNL["fk"] = [
 
 
 TableTemplates.relationalNL["m2m"] = [
-'<div class="pane offsetr1 hboff2 relation">',
+'<div class="pane offsetr1 hboff2 relation" id="relation-<%= cid %>">',
+  '<span class="remove-relation">x</span>',
   '<div class="icon-m2m"></div>',
   '<span class="span16 hoff1 offset1">',
   "<%= owner_entity %> has many <%= entity_name %>(s), called <%= name %>,",

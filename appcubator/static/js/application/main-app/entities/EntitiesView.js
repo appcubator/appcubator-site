@@ -104,7 +104,11 @@ function(TableCollection,
       },
 
       showCreateRelationForm: function() {
+        var self = this;
         this.createRelationView.$el.fadeIn('fast');
+        $('html, body').animate({
+         scrollTop: self.$('#new-relation').offset().top
+     }, 400);
       }
     });
 
