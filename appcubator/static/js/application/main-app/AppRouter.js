@@ -160,7 +160,6 @@ define([
 			});
 		},
 
-
 		changePage: function(newView, viewOptions, post_render) {
 			if(AppRouter.view) AppRouter.view.remove();
 			var cleanDiv = document.createElement('div');
