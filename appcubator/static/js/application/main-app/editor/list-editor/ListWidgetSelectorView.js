@@ -272,9 +272,9 @@ function() {
     },
 
     doubleClicked: function(e) {
-      // this.selectedEl.trigger('startEditing');
-      // this.selectedEl.bind('stopEditing', this.stoppedEditing);
-      // this.hideNode(this.selectDiv);
+      this.selectedEl.trigger('startEditing');
+      this.selectedEl.bind('stopEditing', this.stoppedEditing);
+      this.hideNode(this.selectDiv);
     },
 
     stoppedEditing: function() {
