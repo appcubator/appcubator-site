@@ -36,6 +36,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       this.model  = tableModel;
       this.listenTo(this.model, 'remove', this.remove);
       this.listenTo(this.model.get('fields'), 'add', this.appendField);
+      this.listenTo(this.model, 'newRelation', this.renderRelations);
       this.userRoles = v1State.get('users').pluck('name');
       this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));
 
@@ -128,10 +129,10 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       _(arr).each(function(relation) {
         var suffix;
         var text = 'Has ' + relation.related_name;
-        if(relation.type == "m2m" || relation.type == "fk") suffix = 'List of ' + relation.entity;
+        if(relation.type == "m2m" || relation.type == "fk") suffix = 'List of ' + util.pluralize(relation.entity);
         if(relation.type == "o2o") suffix = 'Single ' + relation.entity;
 
-        list.append('<div class="related-tag">' + text +' ('+ suffix +')</div>');
+        list.append('<div class="related-tag offset1">' + text +' ('+ suffix +')</div>');
       });
     },
 
