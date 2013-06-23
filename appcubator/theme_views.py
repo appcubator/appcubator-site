@@ -122,7 +122,7 @@ def theme_edit(request, theme):
     theme.name = request.POST['name']
 
   if 'uie_state' in request.POST:
-    uie_json = request.POST['uie_state']
+    uie_json = request.body
     theme.uie_state = simplejson.loads(uie_json)
 
   theme.save()

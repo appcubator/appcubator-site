@@ -49,7 +49,9 @@ function(UIElementView, UIElementModel) {
 
 
     showForm: function(e) {
-      var newModel = new UIElementModel(baseTags[this.type][0]);
+      var root = {};
+      if(baseTags[this.type]) { root = baseTags[this.type][0]; }
+      var newModel = new UIElementModel(root);
       this.collection.push(newModel);
     },
 

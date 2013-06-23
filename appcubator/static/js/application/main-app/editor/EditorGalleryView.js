@@ -251,7 +251,8 @@ define([
         formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
         form = constantContainers[formType];
         var widgetModel;
-
+        widget.data.nodeType = "form";
+        widget.data.class_name = uieState["form"][0].class_name;
 
         if(form.action == "login") {
           widget.data.container_info = {};
@@ -272,6 +273,9 @@ define([
         formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
         form = constantContainers[formType];
         var widgetModel;
+
+        widget.data.nodeType = "form";
+        widget.data.class_name = uieState["form"][0].class_name;
         widget.type = "thirdpartylogin";
         widget.data = {};
         widget.data.action = form.action;
@@ -290,6 +294,7 @@ define([
         var signupRole = id.replace('entity-user-', ''); // "Local_Login" => "Local Login"
         form = constantContainers["Sign Up"];
 
+        widget.data.nodeType = "form";
         widget.data.container_info = {};
         widget.data.entity = v1State.get('users').getUserTableWithName(signupRole);
         widget.data.container_info.entity = v1State.get('users').getUserTableWithName(signupRole);

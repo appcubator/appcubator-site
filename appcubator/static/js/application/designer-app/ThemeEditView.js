@@ -1,7 +1,8 @@
 define([
   'designer-app/UIElementListView',
   'util',
-  'designer-app/ThemeTemplates'
+  'designer-app/ThemeTemplates',
+  'key'
 ],function(UIElementListView) {
 
   var UIElementAttributesModel = Backbone.Model.extend({ });
@@ -21,13 +22,7 @@ define([
     },
 
     initialize: function(themeModel) {
-      _.bindAll(this,'save',
-                     'render',
-                     'expandSection',
-                     'baseChanged',
-                     'fontsChaged',
-                     'pageCreateSubmitted',
-                     'uploadStatic');
+      _.bindAll(this);
 
       var self = this;
       this.model = themeModel;
@@ -55,7 +50,8 @@ define([
       util.get('dropdown-cont').appendChild(dropdownView.el);
       var boxView        = new UIElementListView(this.model.get('boxes'), 'box');
       util.get('box-cont').appendChild(boxView.el);
-
+      var formView        = new UIElementListView(this.model.get('forms'), 'form');
+      util.get('form-cont').appendChild(formView.el);
       //this.model.get('pages').bind('add', this.renderPage);
     },
 
@@ -74,6 +70,8 @@ define([
       _(statics).each(function(file) {
         util.get('statics-cont').innerHTML += '<img width="100" src="'+ file.url +'">' + file.name;
       });
+
+      key('⌘+s', function(e){ self.save(); e.preventDefault(); });
     },
 
     baseChanged: function(e) {
@@ -186,11 +184,16 @@ define([
       json["lines"]       = this.model.get('lines').toJSON();
       json["dropdowns"]   = this.model.get('dropdowns').toJSON();
       json["boxes"]      = this.model.get('boxes').toJSON();
+      json["forms"]      = this.model.get('forms').toJSON();
+
+      var url;
+      if(themeId) { url = '/theme/'+themeId+'/edit/'; }
+      else if(appId) { url = '/app/' + appId + '/uiestate/'; }
 
       $.ajax({
         type: "POST",
-        url: '/theme/'+themeId+'/edit/',
-        data: { uie_state : JSON.stringify(json) },
+        url: url,
+        data: JSON.stringify(json),
         success: function(data) {
           console.log(data);
         },

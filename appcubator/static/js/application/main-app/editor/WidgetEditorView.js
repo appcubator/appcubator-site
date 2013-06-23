@@ -59,14 +59,22 @@ function(WidgetContentEditor,
         action = this.model.get('data').get('container_info').get('action');
 
         if(action == "login" || action == "thirdpartylogin") {
+          this.widgetClassPickerView = new WidgetClassPickerView(this.model);
           this.layoutEditor = new WidgetLayoutEditor(this.model);
-          this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-login-form-btn', 'Edit Login'));
+          this.widgetClassPickerView.bind('change', this.classChanged);
+
+          this.el.appendChild(this.widgetClassPickerView.el);
+          this.el.appendChild(this.renderButtonWithText('edit-login-form-btn', 'Edit Login'));
           this.el.appendChild(this.layoutEditor.el);
         }
 
         if(action == "authentication" || action == "signup") {
+          this.widgetClassPickerView = new WidgetClassPickerView(this.model);
           this.layoutEditor = new WidgetLayoutEditor(this.model);
-          this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
+          this.widgetClassPickerView.bind('change', this.classChanged);
+
+          this.el.appendChild(this.widgetClassPickerView.el);
+          this.el.appendChild(this.renderButtonWithText('form-editor-btn', 'Edit Form'));
           this.el.appendChild(this.layoutEditor.el);
         }
 
