@@ -598,3 +598,16 @@ class Customer(models.Model):
         customer = cls(user_id=0, name=name, email=email, company=company, consulting=consulting,
                        extra_info=extra_info, project_description=description, sign_up_fee=sign_up_fee)
         customer.save()
+
+class AppstateSnapshot(models.Model):
+    owner = models.ForeignKey(User, related_name='appstate_snapshots')
+    app = models.ForeignKey(App, blank=True, null=True, related_name="appstate_snapshots")
+
+    name = models.CharField(max_length=100)
+    snapshot_date = models.DateTimeField(auto_now_add=True)
+
+    _state_json = models.TextField(blank=True, default=get_default_app_state)
+
+    @property
+    def state_json(self):
+        return self._state_json
