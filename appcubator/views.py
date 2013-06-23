@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot
 from email.sendgrid_email import send_email
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
@@ -18,6 +18,7 @@ from app_builder.utils import get_xl_data, add_xl_data, get_model_data
 import requests
 import traceback
 import datetime
+from datetime import datetime
 
 
 def add_statics_to_context(context, app):
@@ -176,6 +177,10 @@ def app_get_state(request, app):
 def app_save_state(request, app, require_valid=True):
     old_state = app.state
     app._state_json = request.body
+    # Save the app state for future use
+    appstate_snapshot = AppstateSnapshot(owner=request.user,
+        app=app, name=app.name, snapshot_date=datetime.now(), _state_json=request.body)
+    appstate_snapshot.save()
     app.state['name'] = app.name
     try:
         app.full_clean()
