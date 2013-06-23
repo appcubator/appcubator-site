@@ -40,6 +40,30 @@ def test_editor(request):
 		}
 		return render(request, 'tests/editor-SpecRunner.html', test_data)
 
+def test_formeditor():
+	#find/create test user
+	try:
+		test_user = User.objects.get(username="!@TEST__USER@!")
+	except User.DoesNotExist:
+		test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
+	else:
+		#delete all apps for user
+		App.objects.filter(owner=test_user).delete()
+		#create new test app
+		app_name = "!@TEST__APP@! %s" % time.time()
+		test_app = App(name=app_name, owner=test_user)
+		test_app.set_test_state()
+		test_app.save()
+		test_data = {
+			'app': test_app,
+			'app_id': long(test_app.id),
+			'user': test_user,
+			'themes': [],
+			'mobile_themes': [],
+			'statics': []
+		}
+		return render(request, 'tests/formeditor-SpecRunner.html', test_data)
+
 def test_data(request):
     return render(request, 'tests/data-SpecRunner.html', {})
 
