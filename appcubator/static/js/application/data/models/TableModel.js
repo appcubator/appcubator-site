@@ -55,7 +55,7 @@ define([
 
     getRelationalFields: function() {
       var relationalFields = this.get('fields').filter(function(field) { return field.isRelatedField(); });
-      return relationalFi.elds;
+      return relationalFields;
     }
   });
 
