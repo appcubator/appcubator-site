@@ -129,6 +129,19 @@ def app_json_editor(request, app_id):
     return render(request, 'app-json-editor.html', page_context)
 
 
+@login_required
+def app_edit_theme(request, app_id):
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id, owner=request.user)
+
+    #theme = get_object_or_404(UITheme, pk = theme_id)
+    page_context = {'title': 'Current Theme',
+                    'appId': long(app_id),
+                    'theme': app._uie_state_json}
+    add_statics_to_context(page_context, app)
+
+    return render(request, 'designer-theme-show.html', page_context)
+
 @require_POST
 @login_required
 def app_delete(request, app_id):

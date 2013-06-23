@@ -28,7 +28,7 @@ function(TableModel) {
     },
 
     getAllRelations: function() {
-      return this.reduce(function(memo, model) { return _.union(memo, model.getRelations()); }, []);
+      return this.reduce(function(memo, model) { return _.union(memo, model.getRelationalFields()); }, []);
     }
   });
 

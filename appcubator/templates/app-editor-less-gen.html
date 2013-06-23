@@ -154,6 +154,18 @@ body {
   }
 
   {% endfor %}
+
+  /* * * * * * * * * * *
+     Forms
+  * * * * * * * * * * */
+
+  {% for b in uie_state.forms %}
+
+  {{b.tagName|safe}}.{{b.class_name|safe}} { 
+  {{b.style|safe}}
+  }
+
+  {% endfor %}
 }
 
 {% endinlineless %}

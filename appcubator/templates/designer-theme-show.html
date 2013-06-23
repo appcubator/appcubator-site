@@ -28,6 +28,7 @@
         <li class="expandible" id="line">Lines</li>
         <li class="expandible" id="dropdown">Dropdowns</li>
         <li class="expandible" id="box">Boxes</li>
+        <li class="expandible" id="form">Forms</li>
         <li class="expandible" id="pages">Pages</li>
         <li class="expandible" id="statics">Statics</li>
       </ul>
@@ -86,6 +87,9 @@
       <li class="" id="box-cont">
         <h3>Boxes</h3>
       </li>
+      <li class="" id="form-cont">
+        <h3>Forms</h3>
+      </li>
       <li id="statics-cont">
         <div class="btn-primary btn" id="upload-static">Upload New</div>
       </li>
@@ -99,7 +103,16 @@
 </script>
 <script>
 var themeState = {{ theme|safe }};
+
+var themeId = null;
+var appId = null;
+
+{% if themeId %}
 var themeId = {{ themeId }};
+{% elif appId%}
+var appId = {{ appId }};
+{% endif %}
+
 var statics = {{ statics|safe }};
 </script>
 <script data-main="{{ STATIC_URL }}js/application/designer-app/theme-show-main" src="{{ STATIC_URL }}js/libs/require.js"></script>

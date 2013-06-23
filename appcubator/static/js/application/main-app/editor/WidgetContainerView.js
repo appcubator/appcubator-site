@@ -137,13 +137,19 @@ function( TableQueryView,
 
     renderElements : function() {
 
-      var self  =this;
+      var self = this;
       this.model.get('data').get('container_info').get('uielements').each(function(widgetModel) {
         self.placeWidget(widgetModel);
       });
 
       if(this.model.get('data').get('container_info').has('form')) {
         this.form.innerHTML = '';
+        if(!this.model.get('data').has('class_name')) {
+          console.log(uieState["forms"]);
+          var className = uieState["forms"][0].class_name;
+          this.model.get('data').set('class_name', className);
+        }
+        this.form.className = this.model.get('data').get('class_name');
         this.formModel.get('fields').each(function(field) {
           self.placeFormElement(field);
         });

@@ -320,7 +320,8 @@
 /* context-entity-update */
 
 .elements-list ul li.context-entity-update,
-.elements-list ul li.context-entity {
+.elements-list ul li.context-entity,
+.elements-list ul li.context-nested-entity {
   padding-top: 16px;
   width: 172px;
 }

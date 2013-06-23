@@ -251,7 +251,8 @@ define([
         formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
         form = constantContainers[formType];
         var widgetModel;
-
+        widget.data.nodeType = "form";
+        widget.data.class_name = uieState["form"][0].class_name;
 
         if(form.action == "login") {
           widget.data.container_info = {};
@@ -272,6 +273,9 @@ define([
         formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
         form = constantContainers[formType];
         var widgetModel;
+
+        widget.data.nodeType = "form";
+        widget.data.class_name = uieState["form"][0].class_name;
         widget.type = "thirdpartylogin";
         widget.data = {};
         widget.data.action = form.action;
@@ -290,6 +294,7 @@ define([
         var signupRole = id.replace('entity-user-', ''); // "Local_Login" => "Local Login"
         form = constantContainers["Sign Up"];
 
+        widget.data.nodeType = "form";
         widget.data.container_info = {};
         widget.data.entity = v1State.get('users').getUserTableWithName(signupRole);
         widget.data.container_info.entity = v1State.get('users').getUserTableWithName(signupRole);
@@ -311,6 +316,27 @@ define([
         var editorContext = this.editorContext ? this.editorContext : "page";
 
         content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+'}}';
+
+        widget.data         = _.extend(widget.data, uieState[this.getFieldType(field)][0]);
+        widget.data.content =  content;
+        widget.type = "node";
+        var widgetModel = new WidgetModel(widget, true);
+
+        this.widgetsCollection.push(widgetModel);
+
+        return widgetModel;
+      }
+      else if(/(context-nested-entity)/.exec(className)) {
+        hash = String(id).replace('context-field-','');
+        hash = hash.split('-');
+        entity = v1State.get('tables').get(hash[0]);
+        console.log(hash[1]);
+        nested_entity = v1State.getTableModelWithCid(hash[1]);
+        field = nested_entity.getFieldsColl().get(hash[2]);
+
+        var editorContext = this.editorContext ? this.editorContext : "page";
+
+        content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ nested_entity.get('name') + '.' +field.get('name')+'}}';
 
         widget.data         = _.extend(widget.data, uieState[this.getFieldType(field)][0]);
         widget.data.content =  content;

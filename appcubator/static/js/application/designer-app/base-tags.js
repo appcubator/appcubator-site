@@ -117,5 +117,15 @@
         },
         isSingle: false
       }
+    ],
+
+    "form" : [
+      {
+        tagName : 'form',
+        content: null,
+        cons_attribs : {
+        },
+        isSingle: false
+      }
     ]
 };

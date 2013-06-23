@@ -24,6 +24,7 @@ function(UIElementCollection) {
       this.set('lines', new UIElementCollection(themeState["lines"], "line"));
       this.set('dropdowns', new UIElementCollection(themeState["dropdowns"], "dropdown"));
       this.set('boxes', new UIElementCollection(themeState["boxes"], "box"));
+      this.set('forms', new UIElementCollection((themeState["forms"]||[]), "form"));
     }
 
   });

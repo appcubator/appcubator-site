@@ -33,6 +33,7 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/new/$', 'app_new'),
     url(r'^app/new/racoon/$', 'app_new_racoon'),
     url(r'^app/(\d+)/delete/$', 'app_delete'),
+    url(r'^app/(\d+)/edit_theme/$', 'app_edit_theme'),
 
     # entities
     url(r'^app/(\d+)/entities/xl/$', 'process_excel'),
@@ -97,6 +98,7 @@ urlpatterns += patterns('appcubator.theme_views',
 
 urlpatterns += patterns('appcubator.test_views',
     url(r'^test/editor/$', 'test_editor'),
+    url(r'^test/formeditor/$', 'test_formeditor'),
     url(r'^test/router/$', 'test_router'),
     url(r'^test/data/$',   'test_data'),
 )

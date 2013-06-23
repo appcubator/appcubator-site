@@ -22,6 +22,11 @@ define(['backbone'], function() {
       return nlType;
     },
 
+    isRelatedField: function() {
+      var type = this.get('type');
+      return (type == "o2o" || type == "fk" || type == "m2m");
+    },
+
     // return the relationship type
     getNL: function() {
       var type = this.get('type');
