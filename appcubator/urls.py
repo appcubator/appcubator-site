@@ -31,7 +31,8 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/$', 'app_welcome'),
     url(r'^app/0/$', 'app_noob_page'),
     url(r'^app/new/$', 'app_new'),
-    url(r'^app/new/racoon/$', 'app_new_racoon'),
+    url(r'^app/new/racoon$', 'app_new', {"is_racoon": True}),
+    url(r'^app/(\d+)/racoon/$', 'app_new_racoon'),
     url(r'^app/(\d+)/delete/$', 'app_delete'),
     url(r'^app/(\d+)/edit_theme/$', 'app_edit_theme'),
 
@@ -45,7 +46,7 @@ urlpatterns += patterns('appcubator.views',
 
     # getting/setting state
     url(r'^app/(\d+)/state/$', 'app_state'),
-    url(r'^app/(\d+)/state/force/$', 'app_state', { "validate": False }),
+    url(r'^app/(\d+)/state/force/$', 'app_state', {"validate": False}),
 
     # getting/setting uie state
     url(r'^app/(\d+)/uiestate/$', 'uie_state'),

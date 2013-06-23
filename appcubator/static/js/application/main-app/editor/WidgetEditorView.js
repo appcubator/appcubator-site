@@ -64,6 +64,7 @@ function(WidgetContentEditor,
           this.widgetClassPickerView.bind('change', this.classChanged);
 
           this.el.appendChild(this.widgetClassPickerView.el);
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
           this.el.appendChild(this.renderButtonWithText('edit-login-form-btn', 'Edit Login'));
           this.el.appendChild(this.layoutEditor.el);
         }
@@ -74,6 +75,7 @@ function(WidgetContentEditor,
           this.widgetClassPickerView.bind('change', this.classChanged);
 
           this.el.appendChild(this.widgetClassPickerView.el);
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
           this.el.appendChild(this.renderButtonWithText('form-editor-btn', 'Edit Form'));
           this.el.appendChild(this.layoutEditor.el);
         }
@@ -148,15 +150,15 @@ function(WidgetContentEditor,
     },
 
     openFormEditor: function() {
-      var entityModel = this.model.get('data').get('container_info').get('entity');
-      console.log(this.model.get('data').get('container_info'));
-      console.log(this.model);
+      var entityModel = this.model.get('data').get('container_info').get('form').get('entity');
       console.log(entityModel);
-      if(entityModel == "User") { entityModel =  this.model.get('data').get('entity'); }
+      if(_.isString(entityModel)) entityModel = v1State.getTableModelWithName(entityModel);
+      console.log(entityModel);
       new FormEditorView(this.model.get('data').get('container_info').get('form'), entityModel);
     },
 
     openLoginEditor: function() {
+      var loginRoutes = this.model.getLoginRoutes();
       new LoginFormEditorView(this.model.get('data').get('container_info').get('form'));
     },
 

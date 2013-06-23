@@ -65,7 +65,7 @@ def app_noob_page(request):
 
 
 @login_required
-def app_new(request):
+def app_new(request, is_racoon = False):
     if request.method == 'GET':
         return render(request, 'apps-new.html')
     elif request.method == 'POST':
@@ -82,10 +82,13 @@ def app_new(request):
         except Exception, e:
             return render(request,  'apps-new.html', {'old_name': app_name, 'errors': e}, status=400)
         a.save()
-        return redirect(app_page, a.id)
+        if is_racoon:
+            return redirect(app_new_racoon, a.id)
+        else:
+            return redirect(app_page, a.id)
 
 
-def app_new_racoon(request):
+def app_new_racoon(request, app_id):
     return render(request, 'app-new-racoon.html')
 
 

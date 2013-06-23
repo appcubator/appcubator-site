@@ -77,7 +77,7 @@ define([
     var validateBackend = function() {
 
       var callback = jasmine.createSpy();
-
+      console.log(v1State.toJSON());
       getValidation(v1State.toJSON(), callback);
       waitsFor(function() {
         return callback.callCount > 0;
@@ -114,6 +114,12 @@ define([
         expect(droppedEl).not.toBe(null);
       });
 
+      it("can be edited", function() {
+        $('.edit-login-form-btn').trigger('click');
+        expect($('.login-route-editor').length>0).toBe(true);
+        $('.modal-cross').trigger('click');
+      });
+
       it("is valid on the backend", function() {
         /* Check validation */
         validateBackend();
@@ -127,7 +133,7 @@ define([
 
     describe("Sign Up Form", function () {
 
-      var id = "entity-user-Admin";
+      var id = "entity-user-User";
       var className = "signup authentication ui-draggable";
       var galleryElement = document.getElementById(id);
       var model;
@@ -147,6 +153,12 @@ define([
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
+      });
+
+      it("can be edited", function() {
+        $('.form-editor-btn').trigger('click');
+        expect($('.form-editor').length>0).toBe(true);
+        $('.modal-cross').trigger('click');
       });
 
       it("is valid on the backend", function() {
@@ -183,6 +195,12 @@ define([
 
       });
 
+      it("can be edited", function() {
+        $('.edit-login-form-btn').trigger('click');
+        expect($('.login-route-editor').length>0).toBe(true);
+        $('.modal-cross').trigger('click');
+      });
+
       it("is valid on the backend", function() {
         validateBackend();
       });
@@ -213,6 +231,12 @@ define([
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
+      });
+
+      it("can be edited", function() {
+        $('.edit-login-form-btn').trigger('click');
+        expect($('.login-route-editor').length>0).toBe(true);
+        $('.modal-cross').trigger('click');
       });
 
       it("is valid on the backend", function() {
@@ -247,35 +271,10 @@ define([
         expect(droppedEl).not.toBe(null);
       });
 
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-
-      it("can be deleted", function() {
-        validateDeleteable(model);
-      });
-
-    });
-
-    describe("Current User", function () {
-      var className = 'current-user ui-draggable';
-      var id = 'current-user-c4';
-      var galleryElement = document.getElementById(id);
-      var model;
-
-       it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
+      it("can be edited", function() {
+        $('.edit-login-form-btn').trigger('click');
+        expect($('.login-route-editor').length>0).toBe(true);
+        $('.modal-cross').trigger('click');
       });
 
       it("is valid on the backend", function() {
@@ -287,6 +286,7 @@ define([
       });
 
     });
+
 
     describe("Create Form", function () {
       var className = 'entity-create-form ui-draggable';
@@ -317,311 +317,5 @@ define([
         validateDeleteable(model);
       });
 
-    });
-
-    describe("List", function () {
-      var className = 'entity-list ui-draggable';
-      var id = 'entity-c11';
-      var galleryElement = document.getElementById(id);
-      var model;
-
-      it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-
-      it("can be deleted", function() {
-        validateDeleteable(model);
-      });
-    });
-
-    describe("Image Node", function () {
-      var className = 'uielement images ui-draggable';
-      var id = 'type-images';
-      var galleryElement = document.getElementById(id);
-      var model;
-
-      it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-
-      it("can be deleted", function() {
-        validateDeleteable(model);
-      });
-    });
-
-    describe("Header Node", function () {
-      var className = 'uielement headerTexts ui-draggable';
-      var id = 'type-headerTexts';
-      var galleryElement = document.getElementById(id);
-      var model;
-
-       it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-
-      it("can be deleted", function() {
-        validateDeleteable(model);
-      });
-
-    });
-
-    describe("Text Node", function () {
-      var className = 'uielement texts ui-draggable';
-      var id = 'type-texts';
-      var galleryElement = document.getElementById(id);
-      var model;
-
-       it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-
-      it("can be deleted", function() {
-        validateDeleteable(model);
-      });
-
-    });
-
-    describe("Link Node", function () {
-      var className = 'uielement links ui-draggable';
-      var id = 'type-links';
-      var galleryElement = document.getElementById(id);
-      var model;
-
-      it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-
-      it("can be deleted", function() {
-        validateDeleteable(model);
-      });
-    });
-
-    describe("Line Node", function () {
-      var className = 'uielement lines ui-draggable';
-      var id = 'type-lines';
-      var galleryElement = document.getElementById(id);
-      var model;
-
-       it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-
-      it("can be deleted", function() {
-        validateDeleteable(model);
-      });
-
-    });
-
-    describe("Box Node", function () {
-      var className = 'uielement boxes ui-draggable';
-      var id = 'type-boxes';
-      var galleryElement = document.getElementById(id);
-      var model;
-
-      it("is on gallery", function() {
-        expect(galleryElement).not.toBe(null);
-      });
-
-      it("can be dropped to the editor", function() {
-        var fE = _.clone(fEvent);
-        fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
-
-        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
-        expect(droppedEl).not.toBe(null);
-      });
-
-      it("is valid on the backend", function() {
-        validateBackend();
-      });
-
-      it("can be deleted", function() {
-        validateDeleteable(model);
-      });
-
-    });
-
-    describe('Navbar', function() {
-      var model = v1State.get('pages').at(pageId).get('navbar');
-      var links = model.get('links');
-      var navbar = AppRouter.view.navbar;
-
-      it('renders the brandName', function() {
-        //set brandName to appState name to start
-        var view_brandName = navbar.$('#brand-name').text('thisisirrelevant').text();
-        var model_brandName = model.get('brandName') || v1State.get('name');
-        expect(model_brandName).toEqual(view_brandName);
-      });
-
-      it('updates the brandName', function() {
-        var old_brandname = model.get('brandName') || v1State.get('name');
-        model.set('brandName', "DERPY");
-        var brandName = navbar.$('#brand-name').text();
-        expect(model.get('brandName')).toEqual(brandName);
-      });
-
-      it('renders correct number of elements', function() {
-        var numLinks = links.length;
-        var numListItems = navbar.$('#links li').length;
-        expect(numLinks).toEqual(numListItems);
-      });
-
-      it('adds new links to navbar', function() {
-        var initialLength = $(navbar.el).find('#links li').length;
-        links.add({
-          title: "DERPTASTIC",
-          url: 'http://www.google.com/'
-        });
-        var after = $(navbar.el).find('#links li');
-        var finalLength = after.length;
-        expect(finalLength).toEqual(initialLength + 1);
-        var lastLink = after.last()[0].children[0];
-        expect(lastLink.innerText).toEqual('DERPTASTIC');
-      });
-
-      it('removes links from navbar', function() {
-        var initialLength = $(navbar.el).find('#links li').length;
-        links.remove(links.first());
-        var finalLength = $(navbar.el).find('#links li').length;
-        expect(finalLength).toEqual(initialLength - 1);
-      });
-    });
-
-    describe('Footer', function() {
-      var model = v1State.get('pages').at(pageId).get('footer');
-      var links = model.get('links');
-      var footer = AppRouter.view.footer;
-
-      it('renders the custom text', function() {
-        //set brandName to appState name to start
-        var view_customText = footer.$('#customText').text();
-        var model_customText = model.get('customText') || "Add custom footer text here";
-        expect(model_customText).toEqual(view_customText);
-      });
-
-      it('updates the custom text', function() {
-        var old_customText = model.get('customText') || "Add custom footer text here";
-        model.set('customText', "DERPY");
-        var customText = footer.$('#customText').text();
-        expect(model.get('customText')).toEqual(customText);
-      });
-
-      it('renders correct number of elements', function() {
-        var numLinks = links.length;
-        var numListItems = footer.$('#links li').length;
-        expect(numLinks).toEqual(numListItems);
-      });
-
-      it('adds new links to footer', function() {
-        var initialLength = $(footer.el).find('#links li').length;
-        links.add({
-          title: "DERPTASTIC",
-          url: 'http://www.google.com/'
-        });
-        var after = $(footer.el).find('#links li');
-        var finalLength = after.length;
-        expect(finalLength).toEqual(initialLength + 1);
-        var lastLink = after.last()[0].children[0];
-        expect(lastLink.innerText).toEqual('DERPTASTIC');
-      });
-
-      it('removes links from footer', function() {
-        var initialLength = $(footer.el).find('#links li').length;
-        links.remove(links.first());
-        var finalLength = $(footer.el).find('#links li').length;
-        expect(finalLength).toEqual(initialLength - 1);
-      });
     });
   });

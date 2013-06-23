@@ -16,8 +16,8 @@
       <h4 class="span12 hoff1">Name of the app</h4>
       <input class="span16 hoff1" name="name" type="text" placeholder="Easy App" value="{{old_name}}"><hr>
       {% if errors %}{{ errors.message_dict.name.0 }}{% endif %}
-      <input id="guid-btn" type='submit'class="span16 hoff2 btn btn-blue offset12" type="submit" value="Let Racoon guide me!"><br>
-      <input type='submit' class="span16 hoff1 btn hi3 offset12" value="Start Building My App »">
+      <input id="guide-btn" type='submit'class="span16 hoff2 btn btn-blue offset12" type="submit" value="Let Racoon guide me!"><br>
+      <div id="skip-racoon" class="span16 hoff1 btn hi3 offset12">Start Building My App »</div>
       </form>
   </div>
   <div class="mascot hoff2 span24 hi16 offset4" id="mascot">

@@ -9,6 +9,7 @@ function(ContentModel,
 
     initialize: function(bone, isNew) {
       this.set('content_attribs', new ContentModel(bone.content_attribs||{}));
+      if(bone.loginRoutes) { this.set('loginRoutes', new LoginRouteCollection(bone.loginRoutes));}
       if(bone.container_info) {
         this.set('container_info', new ContainerInfoModel(bone.container_info, isNew));
       }

@@ -9,6 +9,19 @@ function(WidgetModel) {
       ContainerWidgetModel.__super__.initialize.call(this, bone, isNew);
     },
 
+    getLoginRoutes: function() {
+      var loginRoutes;
+
+      if(this.model.get('data').get('container_info').has('form')) {
+        loginRoutes = this.model.get('data').get('container_info').get('form').get('loginRoutes');
+      }
+      else {
+        loginRoutes =this.model.get('data').get('loginRoutes');
+      }
+
+      return loginRoutes;
+    },
+
     toJSON : function() {
       var json = _.clone(this.attributes);
 

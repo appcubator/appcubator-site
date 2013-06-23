@@ -22,11 +22,16 @@ function($) {
           e.preventDefault();
         });
       });
-    });
+  });
 
-    $('#guid-btn').hover(function() {
-      $('#mascot').addClass('happy');
-    }, function() {
-      $('#mascot').removeClass('happy');
-    });
+  $('#skip-racoon').on('click', function() {
+    $('form').attr("action", "/app/new/");
+    $('form').submit();
+  });
+
+  $('#guid-btn').hover(function() {
+    $('#mascot').addClass('happy');
+  }, function() {
+    $('#mascot').removeClass('happy');
+  });
 });

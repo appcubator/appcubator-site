@@ -40,7 +40,7 @@ def test_editor(request):
 		}
 		return render(request, 'tests/editor-SpecRunner.html', test_data)
 
-def test_formeditor():
+def test_formeditor(request):
 	#find/create test user
 	try:
 		test_user = User.objects.get(username="!@TEST__USER@!")

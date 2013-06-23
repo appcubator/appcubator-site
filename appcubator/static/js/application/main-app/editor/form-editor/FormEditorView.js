@@ -44,10 +44,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       this.model = formModel;
       this.entityModel = entityM;
 
-      // if(entity != "User") {
-      //   this.entityModel = v1State.get('tables').getTableWithName(entity);
-      // }
-
       this.listenTo(this.model.get('fields'), 'add', this.fieldAdded);
       this.listenTo(this.model.get('fields'), 'remove', this.fieldRemoved);
       this.listenTo(this.model.get('actions'), 'add', this.actionAdded);
@@ -86,17 +82,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
         axis: "y"
       });
       return this;
-    },
-
-    renderActions: function() {
-      this.model.get('actions').each(function(action) {
-        this.$el.find('.current-actions').append('<li id="action-'+action.cid +'" class="current-action">'+action.getNL()+'<div class="remove-from-list"></div></li>');
-      }, this);
-
-      var redirect = this.model.get('redirect');
-      if(redirect) {
-        this.$el.find('.current-actions').append('<li id="action-'+redirect.cid +'" class="current-action redirect-action">'+redirect.getNL()+'<div class="remove-from-list"></div></li>');
-      }
     },
 
     renderFields: function() {

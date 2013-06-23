@@ -140,5 +140,12 @@ var uieState = {
                 "tagType": "text"
             }
         }
+    ],
+
+    "forms" : [
+        {
+            "class_name": "form-with-bg",
+            "tagName": "form"
+        }
     ]
 };

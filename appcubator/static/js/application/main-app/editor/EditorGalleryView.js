@@ -252,7 +252,7 @@ define([
         form = constantContainers[formType];
         var widgetModel;
         widget.data.nodeType = "form";
-        widget.data.class_name = uieState["form"][0].class_name;
+        widget.data.class_name = uieState["forms"][0].class_name;
 
         if(form.action == "login") {
           widget.data.container_info = {};
@@ -275,7 +275,7 @@ define([
         var widgetModel;
 
         widget.data.nodeType = "form";
-        widget.data.class_name = uieState["form"][0].class_name;
+        widget.data.class_name = uieState["forms"][0].class_name;
         widget.type = "thirdpartylogin";
         widget.data = {};
         widget.data.action = form.action;
@@ -283,7 +283,7 @@ define([
         widget.data.content = form.content;
         widget.data.container_info = {};
         widget.data.container_info.action = "thirdpartylogin";
-        widget.data.goto = "internal://Homepage";
+        widget.data.loginRoutes = [];
         widgetModel = new ContainerWidgetModel(widget);
 
         this.widgetsCollection.push(widgetModel);

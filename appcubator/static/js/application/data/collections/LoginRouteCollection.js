@@ -10,11 +10,11 @@ function() {
       this.each(function(userRole) {
         if(userRole.get('role') == roleStr) {
           val = userRole.get('redirect');
-          return;
+          return val;
         }
       }, this);
 
-      return val;
+      return "internal://Homepage";
     },
 
     reorganize: function() {
