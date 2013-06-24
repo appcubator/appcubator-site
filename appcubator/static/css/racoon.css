@@ -21,10 +21,12 @@ h1, h2, h3, h4 {
 span.q-sent {
 font-family: 'Roboto Slab', serif;
 display: block;
+margin-bottom: 8px;
 }
 
 .racoon {
   font-size: 16px;
+  margin-bottom: 120px;
 }
 
 .racoon label { 
@@ -41,6 +43,16 @@ display: block;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   font-size: 18px;
+}
+
+.racoon .finish {
+  padding: 28px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background-color: #fff;
+  color: #4e5665;
+  border: 1px solid #d7d8d9;
+  padding-bottom: 60px;
 }
 
 .racoon .question {
@@ -294,4 +306,29 @@ display: block;
 
 .question.centered {
   text-align: center;
+}
+
+.btn-upload {
+  display: block;
+  width: 200px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+#yes, #no {
+  width: 100%;
+}
+
+.btn-add-answer {
+  margin-bottom: 10px;
+}
+
+.multi-answer-input {
+  display: block;
+}
+
+.take-me {
+  display: block;
+  float: right;
+  margin-top: 30px;
 }

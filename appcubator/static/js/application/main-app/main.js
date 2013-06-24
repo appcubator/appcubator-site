@@ -113,6 +113,10 @@ function (AppModel,
       });
     }
 
+    if(DEBUG) {
+      showElems = function() { v1State.getCurrentPage().get('uielements').toJSON(); };
+    }
+
     // handle all click events for routing
     $(document).on('click', 'a[rel!="external"]', function(e) {
       var href = e.currentTarget.getAttribute('href') || "";

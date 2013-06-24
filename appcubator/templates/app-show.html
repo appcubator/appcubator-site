@@ -28,8 +28,7 @@
     var mobileThemes = {{ mobile_themes|safe }};
     var GRID_WIDTH = 80;
     var GRID_HEIGHT = 15;
-
   </script>
-  <script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
-
+  <script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js">
+  </script>
 {% endblock %}

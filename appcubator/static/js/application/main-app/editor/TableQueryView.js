@@ -12,7 +12,7 @@ function() {
       'change .fields-to-display'   : 'fieldsToDisplayChanged',
       'click .belongs-to-user'      : 'belongsToUserChanged',
       'click .nmr-rows'             : 'nmrRowsChanged',
-      'keydown #first-nmr'          : 'nmrRowsNumberChanged',
+      'keyup #first-nmr'          : 'nmrRowsNumberChanged',
       'change .sort-by'             : 'sortByChanged',
       'click .done-btn'             : 'closeModal'
     },
@@ -38,10 +38,10 @@ function() {
       var rFirstNmr=5; rAllNmr = 0;
       var rFirst = '', rAll ='';
 
-      if(String(this.model.get('numberOfRows')).indexOf('First') != -1) {
+      if(this.model.get('numberOfRows') != -1) {
         rFirst = 'checked';
-        rFirstNmr = (this.model.get('numberOfRows').replace('First-',''));
-        if(rFirstNmr === "") rFirstNmr = 5;
+        rFirstNmr = this.model.get('numberOfRows');
+        if(rFirstNmr === null) rFirstNmr = 5;
       }
       else {
         rAll = 'checked';
@@ -99,7 +99,9 @@ function() {
 
     nmrRowsNumberChanged: function(e) {
       util.get('first-rows').checked = true;
+      console.log(e.target.value);
       this.model.set('numberOfRows', parseInt(e.target.value,0));
+      console.log(parseInt(e.target.value,0));
       e.stopPropagation();
     },
 
