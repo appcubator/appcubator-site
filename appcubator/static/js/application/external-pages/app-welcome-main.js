@@ -132,11 +132,8 @@ function (AppModel,
     new Heyoffline();
   });
 
-  $('.fixed-bg').click(function(e) {
-    $('.fixed-bg').fadeOut();
-  });
-
   $('.fixed-bg .quick-tour').click(function(e) {
+    $('.fixed-bg').fadeOut();
     require(['app/QuickTour'], function(QuickTour) {
       window.QuickTour = QuickTour;
       QuickTour.start();
@@ -147,14 +144,15 @@ function (AppModel,
   });
 
   $('.fixed-bg .show-tutorials').click(function(e) {
+    $('.fixed-bg').fadeOut();
     v1.navigate('app/0/tutorial/', {trigger: true});
   });
 
   $('.fixed-bg .twitter-guide').click(function(e) {
     /*...*/
-    e.stopPropagation();
   });
+
   $('.fixed-bg .newapp').click(function(e) {
-    e.stopPropagation();
+    /*...*/
   });
 });
