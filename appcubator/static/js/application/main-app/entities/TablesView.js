@@ -63,9 +63,8 @@ function( FieldModel,
       if(this.isUsers) table = new UserTableView(model);
       else table = new TableView(model);
 
+      this.tableDiv = table;
       this.el.appendChild(table.render().el);
-      //this.activateTab(model);
-
       return this;
     },
 
@@ -75,6 +74,7 @@ function( FieldModel,
 
     newTable: function(newModel) {
       this.renderTable(newModel);
+      util.scrollToElement(this.tableDiv.$el);
     }
   });
 

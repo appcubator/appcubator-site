@@ -181,6 +181,11 @@ define(['jquery'], function() {
         var lastChar = str.charAt(str.length - 1);
         return (lastChar == 's') ? str + 'es' : str + 's';
       }
+    },
+
+    scrollToElement: function($el) {
+      var height = $el.offset().top - 90;
+      $('html, body').animate({ scrollTop: height }, 'slow');
     }
   };
 
