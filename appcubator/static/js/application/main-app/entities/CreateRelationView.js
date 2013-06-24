@@ -36,10 +36,13 @@ function(SelectView) {
         firstModel = entities[i]
         for(var j = i; j < entities.length; j++) {
           secondModel = entities[j];
-          var obj = {};
-          obj.name = firstModel.get('name') + "  \u2194  " + secondModel.get('name');
-          obj.val = "relation-" + firstModel.cid+"-"+secondModel.cid;
-          options.push(obj);
+          // for now, do not include relationships btwn same entity/user
+          if(secondModel.get('name') !== firstModel.get('name')) {
+            var obj = {};
+            obj.name = firstModel.get('name') + "  \u2194  " + secondModel.get('name');
+            obj.val = "relation-" + firstModel.cid+"-"+secondModel.cid;
+            options.push(obj);
+          }
         }
       }
 
