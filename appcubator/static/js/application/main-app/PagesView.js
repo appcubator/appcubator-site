@@ -17,8 +17,8 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
       this.collection = v1State.get('pages');
       this.listenTo(this.collection, 'add', function(model) { this.appendPage(model, false); });
 
-      this.mobileCollection = v1State.get('mobilePages');
-      this.listenTo(this.mobileCollection, 'add', function(model) { this.appendPage(model, true); });
+      //this.mobileCollection = v1State.get('mobilePages');
+      //this.listenTo(this.mobileCollection, 'add', function(model) { this.appendPage(model, true); });
 
       this.title = "Pages";
     },
@@ -26,7 +26,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
     render: function() {
       this.$el.html(_.template(util.getHTML('pages-page'), {}));
       this.listView = document.getElementById('list-pages');
-      this.mobileListView = document.getElementById('list-mobile-pages');
+      //this.mobileListView = document.getElementById('list-mobile-pages');
 
       if(this.collection.length === 0) {
         //$("#web-section").hide();
@@ -38,7 +38,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         }, this);
       }
 
-      if(this.mobileCollection.length === 0) {
+      /*if(this.mobileCollection.length === 0) {
         //$("#mobile-section").hide();
         //this.renderAddMobile();
       }
@@ -46,13 +46,13 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         this.mobileCollection.each(function(model) {
           this.appendPage(model, true);
         }, this);
-      }
+      }*/
 
       var createBox = new Backbone.NameBox({el: document.getElementById('create-page-box')});
       createBox.on('submit', this.createPage);
 
-      var createMobileBox = new Backbone.NameBox({el: document.getElementById('create-mobile-page-box')});
-      createMobileBox.on('submit', this.createMobilePage);
+      /*var createMobileBox = new Backbone.NameBox({el: document.getElementById('create-mobile-page-box')});
+      createMobileBox.on('submit', this.createMobilePage);*/
     },
 
     renderAddMobile: function() {

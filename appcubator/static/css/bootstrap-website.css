@@ -5777,3 +5777,16 @@ color: #fff;
   width: 100%;
   padding-left: 10px;
 }
+
+.coming-soon-overlay {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 500;
+  background-color: rgba(227, 227, 227, 0.9);
+  padding-top: 250px;
+  text-align: center;
+}

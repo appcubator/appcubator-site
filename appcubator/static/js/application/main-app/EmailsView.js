@@ -40,19 +40,9 @@ function(EmailCollection, EmailModel, EmailView) {
       this.emailView.setElement(this.$el.find('.right-bar')).render();
       // overlay hiding email view
       var overlayDiv = document.createElement('div');
-      $(overlayDiv).css({
-        "position": "fixed",
-        "display": "none",
-        "top": "0",
-        "left": "0",
-        "bottom": "0",
-        "right": "0",
-        "z-index": "500",
-        "background-color": "rgba(227, 227, 227, 0.9)",
-        "padding-top": "250px",
-        "text-align": "center"
-      }).html("<h1>Email page coming soon. Check back soon!</h1>")
-        .appendTo(this.$el).fadeIn('fast');
+      $(overlayDiv).addClass('coming-soon-overlay')
+                   .html("<h1>Email page coming soon. Check back soon!</h1>")
+                   .appendTo(this.$el).fadeIn('fast');
       return this;
     },
 
