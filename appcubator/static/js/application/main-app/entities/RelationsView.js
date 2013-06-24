@@ -11,7 +11,9 @@ function(SelectView) {
     className  : 'span58 hoff1 relation-pane',
 
     events : {
-      'click .remove-relation': 'deleteRelation'
+      'click .remove-relation': 'deleteRelation',
+      'mouseover .relation': 'showRemoveIcon',
+      'mouseout .relation': 'hideRemoveIcon',
     },
 
     initialize: function(){
@@ -66,7 +68,14 @@ function(SelectView) {
       $(relationPane).fadeOut('fast', function() {
         self.el.removeChild(this);
       });
+    },
 
+    showRemoveIcon: function(e) {
+      $(e.currentTarget).find('.remove-relation').show();
+    },
+
+    hideRemoveIcon: function(e) {
+      $(e.currentTarget).find('.remove-relation').hide();
     }
   });
 

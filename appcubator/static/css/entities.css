@@ -662,6 +662,7 @@ table tr:hover td {
 
 .relation .remove-relation {
   position: absolute;
+  display: none;
   top: 7px;
   right: 7px;
   border-radius: 50%;
