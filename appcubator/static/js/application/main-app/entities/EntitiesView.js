@@ -20,7 +20,7 @@ function(TableCollection,
 
     var EntitiesView = Backbone.View.extend({
       css: 'entities',
-
+      title: 'Tables',
       events : {
         'click #add-role'        : 'clickedAddUserRole',
         'keyup #add-role-form'  : 'createUserRole',

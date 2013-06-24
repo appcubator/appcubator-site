@@ -75,7 +75,8 @@ require([
   "backbone",
   "bootstrap",
   "util",
-  "comp"
+  "comp",
+  "tourist"
 ],
 function (AppModel,
           PageCollection,
@@ -104,12 +105,11 @@ function (AppModel,
     Backbone.history.start({pushState: true});
 
     if(v1State.has('walkthrough')) {
+      console.log('yo');
+      //v1.navigate('/app/'+appId+'/', {trigger: true});
       require(['app/TwitterTour'], function(QuickTour) {
-        window.QuickTour = QuickTour;
+        //window.QuickTour = QuickTour;
         QuickTour.start();
-        $(document).one('keypress', function(e) {
-          QuickTour.stop(false);
-        });
       });
     }
 

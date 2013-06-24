@@ -58,7 +58,7 @@ questions = {
     questionText: "What are the types of users?",
     multiInp: [],
     next: function(answer) {
-      return "X_info";
+      return "X_user_info";
     }
   },
 
@@ -66,7 +66,23 @@ questions = {
     questionText: "What information would you like to store about your users?",
     multiInp: [],
     next: function() {
-      return "logo";
+      return "other_info";
+    }
+  },
+
+  X_user_info: {
+    questionText: "What information would you like to store about <%= value %>?",
+    multiInp: [],
+    next: function() {
+      return "other_info";
+    }
+  },
+
+  other_info: {
+    questionText: "What other data would you like to store? (e.g Tweet, Status, Job Offering, Coupon Offer, Feedback...)",
+    multiInp: [],
+    next: function(answer) {
+      return "X_info";
     }
   },
 
@@ -80,7 +96,7 @@ questions = {
 
   logo: {
     questionText: "Do you have a logo?",
-    inputBox: "Type your item type here...",
+    upload: {},
     next: function() {
       return null;
     }

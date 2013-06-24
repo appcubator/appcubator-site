@@ -3,7 +3,7 @@ var TableTemplates = {};
 TableTemplates.Table = [
 '<div class="row">',
   '<p class="lead" style="display:none">Click "Add Table" to create your first table</p>',
-  '<div class="span58 entity" id="entity-entity">',
+  '<div class="span58 entity">',
     '<div class="header">',
       '<div class="offset2 hi4 span20">',
         '<h2><%= name %></h2>',
@@ -180,35 +180,35 @@ TableTemplates.NewRelationTemplate = [
 TableTemplates.relationalNL = {};
 
 TableTemplates.relationalNL["o2o"] = [
-'<div class="pane span28 offsetr1 hboff2 relation" data-owner="<%= owner_entity %>" data-entity="<%= entity_name %>" id="relation-<%= cid %>">',
+'<div class="pane span28 offsetr1 hboff2 relation" data-owner="<%= entity_name %>" data-entity="<%= entity_name %>" id="relation-<%= cid %>">',
   '<span class="remove-relation">×</span>',
   '<div class="icon-o2o"></div>',
   '<span class="span16 hoff1 offset1">',
-  '<div class="row">A <%= entity_name %> has a <%= owner_entity %> <div>called <strong><%= related_name %></strong></div></div>',
-  '<div class="row hoff2">A <%= owner_entity %> has a <%= entity_name %> <div>called <strong><%= name %></strong></div></div>',
+  '<div class="row">A <%= entity_name %> has a <%= entity_name %> <div>called <strong><%= related_name %></strong></div></div>',
+  '<div class="row hoff2">A <%= entity_name %> has a <%= entity_name %> <div>called <strong><%= name %></strong></div></div>',
   '</span>',
 '</div>'
 ].join('\n');
 
 TableTemplates.relationalNL["fk"] = [
-'<div class="pane span28 offsetr1 hboff2 relation" data-owner="<%= owner_entity %>" data-entity="<%= entity_name %>"  id="relation-<%= cid %>">',
+'<div class="pane span28 offsetr1 hboff2 relation" data-owner="<%= entity_name %>" data-entity="<%= entity_name %>"  id="relation-<%= cid %>">',
   '<span class="remove-relation">×</span>',
   '<div class="icon-fk"></div>',
   '<span class="offsetr1 hoff1 offset1">',
-  '<div class="row">A <%= entity_name %> has a list of <%= util.pluralize(owner_entity) %> <div>called <strong><%= related_name %></strong></div></div>',
-  '<div class="row hoff2"><%= util.pluralize(owner_entity) %> belong to a <%= entity_name %> <div>called <strong><%= name %></strong></div></div>',
+  '<div class="row">A <%= entity_name %> has a list of <%= util.pluralize(entity_name) %> <div>called <strong><%= related_name %></strong></div></div>',
+  '<div class="row hoff2"><%= util.pluralize(entity_name) %> belong to a <%= entity_name %> <div>called <strong><%= name %></strong></div></div>',
   '</span>',
 '</div>'
 ].join('\n');
 
 
 TableTemplates.relationalNL["m2m"] = [
-'<div class="pane span28 offsetr1 hboff2 relation" data-owner="<%= owner_entity %>" data-entity="<%= entity_name %>"  id="relation-<%= cid %>">',
+'<div class="pane span28 offsetr1 hboff2 relation" data-owner="<%= entity_name %>" data-entity="<%= entity_name %>"  id="relation-<%= cid %>">',
   '<span class="remove-relation">×</span>',
   '<div class="icon-m2m"></div>',
   '<span class="span16 hoff1 offset1">',
-    '<div class="row">A <%= owner_entity %> has many <%= util.pluralize(entity_name) %> <div>called <strong><%= name %></strong></div></div>',
-    '<div class="row hoff2">A <%= entity_name %> has many <%= util.pluralize(owner_entity) %> <div>called <strong><%= related_name %></strong></div></div>',
+    '<div class="row">A <%= entity_name %> has many <%= util.pluralize(entity_name) %> <div>called <strong><%= name %></strong></div></div>',
+    '<div class="row hoff2">A <%= entity_name %> has many <%= util.pluralize(entity_name) %> <div>called <strong><%= related_name %></strong></div></div>',
   '</span>',
 '</div>'
 ].join('\n');
