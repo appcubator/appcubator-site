@@ -51,6 +51,7 @@ require.config({
 //libs
 require([
   "wizard/QuestionView",
+  "wizard/QuestionRouter",
   "wizard/wizard-questions",
   "backbone",
   "bootstrap",
@@ -58,26 +59,14 @@ require([
   "comp",
   'prettyCheckable'
 ],
-function (QuestionView) {
+function (QuestionView, QuestionRouter) {
 
   var WizardView = Backbone.View.extend({
 
     initialize: function() {
-      _.bindAll(this, 'renderQuestion', 'next');
-      this.renderQuestion(questions['platform']);
-    },
-
-    renderQuestion: function(qDict, answer) {
-      var qView = new QuestionView(qDict, answer);
-      qView.bind('next', this.next);
-      $('.racoon').append(qView.el);
-    },
-
-    next: function(inp, answer) {
-      if(!inp) return;
-      var qDict = questions[inp];
-      this.renderQuestion(qDict, answer);
-      $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+      _.bindAll(this);
+      this.questionRouter = new QuestionRouter();
+      this.questionRouter.next("category", [""]);
     }
 
   });
