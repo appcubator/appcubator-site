@@ -7,6 +7,7 @@ require.config({
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "util" : "../../libs/util/util",
+    "util.filepicker" : "../../libs/util/util.filepicker",
     "comp": "../../libs/util/comp",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "app" : "./",
@@ -48,6 +49,7 @@ require.config({
 
 });
 
+g_answers = [];
 //libs
 require([
   "wizard/QuestionView",

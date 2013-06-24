@@ -1,5 +1,6 @@
 define([
-  "backbone"
+  "backbone",
+  "util.filepicker"
 ],
 function() {
 
@@ -13,7 +14,9 @@ function() {
       'submit .answer-form'       : 'answerInputBox',
       'submit .multi-answer-form' : 'addAnswerInput',
       'click .btn-add-answer'     : 'addAnswerInput',
-      'click .btn-done'           : 'answerFromMultipleBox'
+      'click .btn-done'           : 'answerFromMultipleBox',
+      'click .btn-upload'         : 'openUploadModal',
+      'click .skip-btn'           : 'skipAnswer'
     },
 
     initialize: function(qDict, answer) {
@@ -35,7 +38,7 @@ function() {
       if(this.dict.inputBox) { this.renderInputBox(); }
       if(this.dict.answers) { this.renderMultipleChoice(); }
       if(this.dict.multiInp) { this.renderMultipleAnswer(); }
-      if(this.dict.logo) { this.renderUpload(); }
+      if(this.dict.upload) { this.renderUpload(); }
     },
 
     renderInputBox: function() {
@@ -64,12 +67,13 @@ function() {
       form.className ="multi-answer-form";
       $(form).append('<input type="text" class="multi-answer-input" placeholder="Type your answer here..">');
       this.$el.append(form);
-      this.$el.append('<div class="btn btn-add-answer">Add another answer</div>');
+      this.$el.append('<div class="btn-add-answer"><div class="icon"></div>Add another answer</div><br  />');
       this.$el.append('<div class="btn btn-done">Done</div>');
     },
 
     renderUpload: function() {
-
+      this.$el.append('<div class="btn btn-upload">Upload Logo</div>');
+      this.$el.append('<a class="skip-btn">Just Skip</a>');
     },
 
     addAnswerInput: function(e) {
@@ -104,9 +108,22 @@ function() {
       this.answerSend(this.answers);
     },
 
+    openUploadModal: function() {
+      util.filepicker.openFilePick(this.answerUpload, this);
+    },
+
+    answerUpload: function(files, self) {
+      self.answerSend(files[0].url);
+      self.$el.append("<img src='"+files[0].url+"' width='200'>");
+    },
+
+    skipAnswer: function() {
+      this.answerSend([]);
+    },
+
     answerSend: function(answerArr) {
       var nextKey = this.dict.next.call(this, answerArr);
-      this.trigger('next', nextKey, answerArr);
+      this.trigger('answer', nextKey, answerArr);
       this.answered = true;
     }
 

@@ -18,23 +18,12 @@ questions = {
       'e-commerce' : '<div style="display:block" class="e-commerce"><input id="e-commerce" type="radio" name="category" value="e-commerce" data-label="E-Commerce, Online Store"></div>'
     },
     next: function(answers) {
-      if(answers[0] == "shared-economy") {
-        return "renting";
-      }
       if(answers[0] == "social_network") {
         return "multiple_users";
       }
       else {
-        return null;
+        return "logo";
       }
-    }
-  },
-
-  renting: {
-    questionText : "What are you going to be renting? (e.g. House, car)",
-    inputBox: "Type your item type here...",
-    next: function(answer) {
-      return { q: "information" };
     }
   },
 
