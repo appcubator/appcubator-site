@@ -85,8 +85,12 @@ function( TableQueryView,
 
       if(this.model.get('data').get('container_info').get('action') == "imageslider" ) {
         var slideDiv = document.createElement('div');
-        slideDiv.innerHTML = _.template(Templates.sliderTemp, {slides: this.model.get('data').get('container_info').get('slides').toJSON() });
-        $(slideDiv).flexslider();
+        var data = {
+          cid: this.model.cid,
+          slides: this.model.get('data').get('container_info').get('slides').toJSON()
+        };
+        slideDiv.innerHTML = _.template(Templates.sliderTemp, data);
+        $(slideDiv).carousel();
         this.el.appendChild(slideDiv);
       }
 

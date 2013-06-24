@@ -298,7 +298,7 @@ Templates.listNode = [
 ].join('\n');
 
 
-Templates.sliderTemp = [
+/*Templates.sliderTemp = [
   '<ul class="flex slides">',
     '<% _(slides).each(function(slide) { %>',
     '<li>',
@@ -307,6 +307,28 @@ Templates.sliderTemp = [
     '</li>',
     '<% }); %>',
   '</ul>'
+].join('\n');*/
+
+Templates.sliderTemp = [
+  '<div id="slider-<%= cid %>" class="carousel slide">',
+    '<ol class="carousel-indicators">',
+      '<% for(var i=0; i < slides.length; i++) { %>',
+      '<li data-target="#slider-<%= cid %>" data-slide-to="<%= i %>" <% if(i==0) { %>class="active" <% } %>></li>',
+      '<% } %>',
+    '</ol>',
+    '<!-- Carousel items -->',
+    '<div class="carousel-inner">',
+      '<% _(slides).each(function(slide, index) { %>',
+        '<div class="<% if(index == 0) { %>active <% } %>item">',
+          '<img src="<%= slide.image %>">',
+          '<div class="carousel-caption"><p><%= slide.text %></p></div>',
+        '</div>',
+      '<% }); %>',
+    '</div>',
+    '<!-- Carousel nav -->',
+    '<a class="carousel-control left" href="#slider-<%= cid %>" data-slide="prev">&lsaquo;</a>',
+    '<a class="carousel-control right" href="#slider-<%= cid %>" data-slide="next">&rsaquo;</a>',
+  '</div>',
 ].join('\n');
 
 Templates.twitterfeedTemp = [
