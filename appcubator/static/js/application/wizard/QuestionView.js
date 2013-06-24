@@ -35,6 +35,7 @@ function() {
       if(this.dict.inputBox) { this.renderInputBox(); }
       if(this.dict.answers) { this.renderMultipleChoice(); }
       if(this.dict.multiInp) { this.renderMultipleAnswer(); }
+      if(this.dict.logo) { this.renderUpload(); }
     },
 
     renderInputBox: function() {
@@ -65,6 +66,10 @@ function() {
       this.$el.append(form);
       this.$el.append('<div class="btn btn-add-answer">Add another answer</div>');
       this.$el.append('<div class="btn btn-done">Done</div>');
+    },
+
+    renderUpload: function() {
+
     },
 
     addAnswerInput: function(e) {
