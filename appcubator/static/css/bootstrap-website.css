@@ -5731,11 +5731,6 @@ color: #fff;
   font-size: 18px;
 }
 
-.email-paper input[type="text"],
-.email-paper textarea {
-  border-radius: 0;
-}
-
 .emails .variables li {
   display: inline-block;
   background-color: #fff;

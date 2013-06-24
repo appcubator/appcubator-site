@@ -3370,7 +3370,7 @@ ul.list {
 }
 
 
-.navbar .hide-btn#hide-toggle {
+.navbar .hide-btn#hide-toggle, .footer .hide-btn#hide-toggle {
   display: inline-block;
   width: 120px;
   font-size: 12px;
@@ -3379,11 +3379,11 @@ ul.list {
   z-index: 2000;
 }
 
-.navbar.hidden {
+.navbar.hidden, .footer.hidden {
   opacity: 0;
 }
 
-.navbar.hidden:hover {
+.navbar.hidden:hover, .footer.hidden:hover {
   opacity: 0.6;
 }
 
@@ -3712,7 +3712,7 @@ ul.list {
   cursor: move;
 }
 
-.navbar .hide-btn#hide-toggle {
+.navbar .hide-btn#hide-toggle, .footer .hide-btn#hide-toggle {
   display: inline-block;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   width: 120px;
