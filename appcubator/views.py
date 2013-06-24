@@ -89,8 +89,26 @@ def app_new(request, is_racoon = False):
             return redirect(app_page, a.id)
 
 
+@login_required
 def app_new_racoon(request, app_id):
     return render(request, 'app-new-racoon.html')
+
+
+@login_required
+def app_new_walthrough(request):
+    app_name = "Twitter Demo"
+    a = App(name=app_name, owner=request.user)
+    # set the name in the app state
+    s = a.state
+    s['name'] = a.name
+    s['walkthrough'] = 1
+    a.state = s
+    try:
+        a.full_clean()
+    except Exception, e:
+        return render(request,  'apps-new.html', {'old_name': app_name, 'errors': e}, status=400)
+    a.save()
+    return redirect(app_page, a.id)
 
 
 @require_GET

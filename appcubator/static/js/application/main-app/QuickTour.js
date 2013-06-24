@@ -1,6 +1,7 @@
 define([
 	'tourist'
-], function() {
+],
+function() {
 	var steps = [
 		//tables pane
 		{

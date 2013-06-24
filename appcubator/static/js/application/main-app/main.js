@@ -103,6 +103,16 @@ function (AppModel,
 
     Backbone.history.start({pushState: true});
 
+    if(v1State.has('walkthrough')) {
+      require(['app/TwitterTour'], function(QuickTour) {
+        window.QuickTour = QuickTour;
+        QuickTour.start();
+        $(document).one('keypress', function(e) {
+          QuickTour.stop(false);
+        });
+      });
+    }
+
     // handle all click events for routing
     $(document).on('click', 'a[rel!="external"]', function(e) {
       var href = e.currentTarget.getAttribute('href') || "";
@@ -114,7 +124,7 @@ function (AppModel,
     });
 
     // scroll to top button animations
-    var prevScrollPos = 0
+    var prevScrollPos = 0;
     var $scrollBtn = $('#scrollUp');
     $(document).on('scroll', function() {
       var $doc = $(this);
