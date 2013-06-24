@@ -23,9 +23,9 @@ function(TableCollection,
 
       events : {
         'click #add-role'        : 'clickedAddUserRole',
-        'keypress #add-role-form'  : 'createUserRole',
+        'keyup #add-role-form'  : 'createUserRole',
         'click #add-entity'      : 'clickedAddTable',
-        'keypress #add-entity-form': 'createTable',
+        'keyup #add-entity-form': 'createTable',
         'click #add-relation'     : 'showCreateRelationForm',
       },
 
@@ -66,13 +66,18 @@ function(TableCollection,
       },
 
       createUserRole: function(e) {
-        if(e.keyCode !== 13) {
-          return;
+        // if escape key pressed, skip to hiding form/showing btn
+        if(e.keyCode !== 27) {
+          // only save if enter button is pressed
+          if(e.keyCode !== 13) {
+            return;
+          }
+          var elem = new UserTableModel({
+            name: e.target.value
+          });
+          console.log(elem.toJSON());
+          v1State.get('users').add(elem);
         }
-        var elem = new UserTableModel({
-          name: e.target.value
-        });
-        v1State.get('users').add(elem);
 
         e.target.value = '';
         $('#add-role').fadeIn();
@@ -87,14 +92,18 @@ function(TableCollection,
       },
 
       createTable: function(e) {
-        if(e.keyCode !== 13) {
-          return;
+        // if escape key pressed, skip to hiding form/showing btn
+        if(e.keyCode !== 27) {
+          // only save if enter button is pressed
+          if(e.keyCode !== 13) {
+            return;
+          }
+          var elem = new TableModel({
+            name: e.target.value,
+            fields: []
+          });
+          v1State.get('tables').add(elem);
         }
-        var elem = new TableModel({
-          name: e.target.value,
-          fields: []
-        });
-        v1State.get('tables').add(elem);
 
         e.target.value = '';
         $('#add-entity').fadeIn();

@@ -3,7 +3,10 @@ define(['backbone'], function() {
   var FieldModel = Backbone.Model.extend({
     defaults : {
       "name"     : "Property Name",
-      "type"     : "text"
+      "type"     : "text",
+      "owner_entity": null,
+      "related_name": null,
+      "entity_name": null
     },
 
     // return a string version of the relationship

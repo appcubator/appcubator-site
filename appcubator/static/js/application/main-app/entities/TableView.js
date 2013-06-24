@@ -34,6 +34,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     initialize: function(tableModel){
       _.bindAll(this);
       this.model  = tableModel;
+
       this.listenTo(this.model, 'remove', this.remove);
       this.listenTo(this.model.get('fields'), 'add', this.appendField);
       this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
@@ -52,9 +53,11 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     renderProperties: function() {
-      this.model.get('fields').each(function(fieldModel) {
-        if(fieldModel.has('related_name')) return;
-        this.appendField(fieldModel);
+      this.model.get('fields').each(function(field) {
+        // only render non-relational properties
+        if(!field.isRelatedField()) {
+          this.appendField(field);
+        }
       }, this);
     },
 
@@ -80,6 +83,10 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     appendField: function (fieldModel) {
+      // don't append field if it's a relational field
+      if(fieldModel.isRelatedField()) {
+        return false;
+      }
       var page_context = {};
       page_context = _.clone(fieldModel.attributes);
       page_context.cid = fieldModel.cid;

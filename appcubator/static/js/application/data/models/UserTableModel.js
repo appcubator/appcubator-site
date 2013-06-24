@@ -14,10 +14,7 @@ function(TableModel, FieldModel, FieldsCollection, Backbone) {
         bone = appState.users;
       }
 
-      var fieldCollection = new FieldsCollection();
-      if(bone) fieldCollection.add(bone.fields);
-
-      this.set('fields', fieldCollection);
+      this.set('fields', new FieldsCollection(bone.fields || []));
     },
 
     getFieldsColl: function() {

@@ -24,7 +24,6 @@ function( FieldModel,
     tableDiv: null,
 
     events : {
-      'click .tab.nav-tab' : 'clickedNavItem'
     },
 
     initialize: function(tablesCollection, isUsers){
@@ -38,20 +37,6 @@ function( FieldModel,
 
     render: function() {
       this.renderTables();
-      return this;
-    },
-
-    renderNav: function() {
-      this.tableDiv = document.createElement('div');
-
-      this.navBar = document.createElement('ul');
-      this.navBar.className = 'entity-nav span58';
-      this.collection.each(this.appendNavItem);
-
-      $(this.navBar).append('<li class="tab" id="add-role"><a><span class="add-icon"></span>Add User Role</a></li>');
-      this.el.appendChild(this.tableDiv);
-      this.el.appendChild(this.navBar);
-
       return this;
     },
 
@@ -88,33 +73,7 @@ function( FieldModel,
       alert('not supposed to happen');
     },
 
-    appendNavItem: function(tableModel) {
-      this.navBar.innerHTML += '<li class="tab nav-tab" id="navtab-'+ tableModel.cid +'"><a>' + (tableModel.get('name')||tableModel.get('role')) + '</a></li>';
-    },
-
-    activateTab: function(tableModel) {
-      this.$el.find('.active').removeClass('active');
-      this.$el.find('#navtab-'+ tableModel.cid).addClass('active');
-    },
-
-    clickedNavItem: function(e) {
-      var cid = (e.target.id||e.target.parentNode.id).replace('navtab-','');
-      var newModel = this.collection.get(cid);
-      this.currentTable.remove();
-
-      if(this.isUsers) this.currentTable = new UserTableView(newModel);
-      else this.currentTable = new TableView(newModel);
-
-      this.tableDiv.innerHTML = '';
-      this.tableDiv.appendChild(this.currentTable.render().el);
-
-      this.activateTab(newModel);
-    },
-
     newTable: function(newModel) {
-      //this.appendNavItem(newModel);
-      //this.$('.tab').removeClass('active')
-      //    .filter('#navtab-'+newModel.cid).addClass('active');
       this.renderTable(newModel);
     }
   });

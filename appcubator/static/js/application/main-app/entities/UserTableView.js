@@ -17,13 +17,13 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
     initialize: function(userTableModel){
       _.bindAll(this);
       this.model  = userTableModel;
-      this.listenTo(this.model, 'remove', this.remove);
 
+      this.listenTo(this.model, 'remove', this.remove);
       this.listenTo(this.model.get('fields'), 'add', this.appendField);
       this.listenTo(this.model.get('fields'), 'remove', this.removeField);
       this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
 
-      this.tables= v1State.get('tables').pluck('name');
+      this.tables = v1State.get('tables').pluck('name');
       this.otherUserRoles = _(v1State.get('users').pluck('name')).without(this.model.get('name'));
     },
 
@@ -44,6 +44,10 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
     },
 
     appendField: function (fieldModel) {
+      // don't append field if it's a relational field
+      if(fieldModel.isRelatedField()) {
+        return false;
+      }
       var page_context = {};
       page_context = _.clone(fieldModel.attributes);
       page_context.cid = fieldModel.cid;
