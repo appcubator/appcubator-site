@@ -43,7 +43,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
 
     render: function() {
       this.el.innerHTML= _.template(TableTemplates.Table, this.model.toJSON());
-
+      this.el.id = 'table-' + this.model.cid;
       this.renderProperties();
       this.renderRelations();
 

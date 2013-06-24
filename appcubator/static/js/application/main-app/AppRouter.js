@@ -71,9 +71,13 @@ define([
 
 		entities: function(appId, tutorial) {
 			var self = this;
+			console.log("heyysadf");
 			require(['app/entities/EntitiesView'], function(EntitiesView){
 				self.tutorialDirectory = [3];
 				self.changePage(EntitiesView, {}, function() {
+					console.log('swagger1');
+					self.trigger('entities-loaded');
+					console.log('swagger');
 					$('.menu-app-entities').addClass('active');
 					if(tutorial) {
 						self.showTutorial();
@@ -161,16 +165,19 @@ define([
 		},
 
 		changePage: function(newView, viewOptions, post_render) {
+			console.log("YO");
 			if(AppRouter.view) AppRouter.view.remove();
 			var cleanDiv = document.createElement('div');
 			cleanDiv.className = "clean-div";
 			$('#main-container').append(cleanDiv);
 			AppRouter.view = new newView(viewOptions);
 			AppRouter.view.setElement(cleanDiv).render();
-
+			console.log(AppRouter.view.title);
 			$('.active').removeClass('active');
 			this.changeTitle(AppRouter.view.title);
-			post_render();
+			console.log("HEY GURL");
+			console.log(post_render);
+			post_render.call();
 		},
 
 		deploy: function() {

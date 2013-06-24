@@ -31,6 +31,7 @@ function(SelectView) {
     },
 
     addRelation: function(relation) {
+      console.log(relation);
       var type = relation.get('type');
       data = relation.toJSON();
       data.cid = relation.cid;
