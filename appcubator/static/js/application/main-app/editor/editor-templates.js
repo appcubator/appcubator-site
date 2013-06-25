@@ -387,3 +387,15 @@ Templates.sliderImageEditorTemp = [
 Templates.thirdPartyLogin = [
   '<div class="<%= provider %>-login-btn btn"><%= content %></div>'
 ].join('\n');
+
+Templates.footerTemp = [
+        '<div class="footer" id="footer">',
+            '<div class="container">',
+              '<ul class="footer-links" id="links">',
+              '</ul>',
+              '<p id="customText" class="footer-text muted"></p>',
+              '<button class="edit-footer btn btn-small btn-inverse pull-right">Edit Footer</button>',
+            '</div>',
+            '<div class="clearfix"></div>',
+        '</div>'
+].join('\n');

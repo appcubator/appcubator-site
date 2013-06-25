@@ -16,7 +16,7 @@
             "content_attribs": null,
             "class_name": "txt",
             "content": "Default text!",
-            "tagName": "span"
+            "tagName": "p"
         }
     ],
     "images": [

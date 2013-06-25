@@ -8,7 +8,7 @@ function(FooterEditorView) {
     entity: null,
     type: null,
     events: {
-      'mousedown' : 'showFooterEditor'
+      'mousedown .footer' : 'showFooterEditor'
     },
 
     initialize: function(footerModel) {
@@ -25,7 +25,7 @@ function(FooterEditorView) {
 
     render: function() {
       var self = this;
-      this.setElement(document.getElementById('footer'));
+      this.el.innerHTML += _.template(Templates.footerTemp, {});
 
       this.$el.find('#customText').html(this.model.get('customText'));
 
