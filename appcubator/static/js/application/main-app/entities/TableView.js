@@ -37,6 +37,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
 
       this.listenTo(this.model, 'remove', this.remove);
       this.listenTo(this.model.get('fields'), 'add', this.appendField);
+      this.listenTo(this.model.get('fields'), 'remove', this.removeField);
       this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
       this.userRoles = v1State.get('users').pluck('name');
       this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));
@@ -97,6 +98,10 @@ function(FieldModel, UploadExcelView, ShowDataView) {
 
       this.$el.find('.property-list').append(template);
       this.adjustTableWidth();
+    },
+
+    removeField: function(fieldModel) {
+      this.$('#column-'+fieldModel.cid).remove();
     },
 
     changedAttribs: function(e) {
