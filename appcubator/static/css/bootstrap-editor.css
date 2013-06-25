@@ -3002,6 +3002,7 @@ a.badge:hover {
   -moz-transition: width 0.2s;
   -webkit-transition: width 0.2s;
   -o-transition: width 0.2s;
+  padding-bottom: 40px;
 }
 
 .page .navbar {
