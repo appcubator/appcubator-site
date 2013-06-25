@@ -23,7 +23,7 @@
             </ul>
           </li>
           <li class="pull-right dropd">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if app %}{{ app.name }}{% else %}{{ user.get_full_name }}{% endif %}<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.get_full_name }}<b class="caret"></b></a>
             <ul class="v1 dropdown-menu">
               <!-- <li class="header-panel"></li> -->
               {% if app %}
@@ -31,7 +31,7 @@
                 <span class="icon"></span>App settings</a>
               </li>
               {% endif %}
-              <li class="header">Other Applications</li>
+              <li class="header">My Applications</li>
               {% for a in users_apps %}
               <li>
                 <a href="{% url appcubator.views.app_page a.id %}" rel="external"><span class="icon"></span>{{ a.name }}</a>
