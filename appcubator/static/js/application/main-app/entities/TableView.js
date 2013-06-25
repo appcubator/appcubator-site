@@ -139,6 +139,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
         console.log(relation);
         list.append('<a href="#relation-'+relation.cid+'"class="related-tag offset1">' + text +' ('+ suffix +')</a>');
       });
+      list.append('<a href="#relation-new" class="related-tag offset1"><span style="font-size: 13px">+</span>  Add a data relationship</a>');
     },
 
     showData: function(e) {

@@ -121,7 +121,12 @@ function(TableCollection,
 
       scrollToRelation: function(e) {
         e.preventDefault();
-        util.scrollToElement($(e.currentTarget.hash));
+        var hash = e.currentTarget.hash;
+        if(hash === '#relation-new') {
+          this.showCreateRelationForm();
+          return;
+        }
+        util.scrollToElement($(hash));
       }
     });
 
