@@ -91,7 +91,7 @@ def app_new(request, is_racoon = False):
 
 @login_required
 def app_new_racoon(request, app_id):
-    return render(request, 'app-new-racoon.html')
+    return render(request, 'app-new-racoon.html', {'app_id': app_id})
 
 
 @login_required

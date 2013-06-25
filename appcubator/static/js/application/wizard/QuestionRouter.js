@@ -1,13 +1,19 @@
 define([
   "wizard/QuestionView",
   "wizard/AppGenerator",
+  "mixins/ErrorModalView",
   "wizard/wizard-questions"
   ],
 
-  function (QuestionView, AppGenerator) {
+  function (QuestionView, AppGenerator, ErrorModalView) {
 
     var QuestionRouter = Backbone.View.extend({
       answersDict : {},
+      generatedJSON: null,
+
+      events : {
+        'click .done-walkthrough' : 'saveGeneratedApp'
+      },
 
       initialize: function() {
         _.bindAll(this);
@@ -21,7 +27,8 @@ define([
 
       askQuestion: function(qKey, args, isLast) {
         if(!qKey || !args.length) {
-          new AppGenerator(this.answersDict);
+          var appGen = new AppGenerator(this.answersDict);
+          this.generatedJSON = appGen.getJSON();
           return this.renderFinalize();
         }
 
@@ -76,7 +83,6 @@ define([
       },
 
       registerAns: function(qKey, newAnswers) {
-        console.log(qKey + ":" + newAnswers);
         if(!this.answersDict[qKey]) this.answersDict[qKey] = [];
         this.answersDict[qKey].push(_.clone(newAnswers));
         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
@@ -84,7 +90,28 @@ define([
       },
 
       renderFinalize: function() {
-        $('.racoon').append('<li class="finish">Thanks for filling it in. We created most of your app already and it awaits for you to design your pages. <div class="btn">Take Me To My App »</div></li>');
+        $('.racoon').append('<li class="finish">Thanks for filling it in. We created most of your app already and it awaits for you to design your pages. <div class="btn done-walkthrough">Take Me To My App »</div></li>');
+        $('.done-walkthrough').on('click', this.saveGeneratedApp);
+      },
+
+      saveGeneratedApp: function() {
+        $.ajax({
+          type: "POST",
+          url: '/app/'+appId+'/state/',
+          data: JSON.stringify(this.generatedJSON),
+          success: function() {
+            document.location.href='/app/' + appId + '/';
+          },
+          error: function(data) {
+            if(data.responseText == "ok") return;
+            var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+            if(DEBUG) {
+              content = { text: data.responseText };
+            }
+            new ErrorModalView(content);
+          },
+          dataType: "JSON"
+        });
       }
 
     });

@@ -43,6 +43,12 @@ define([
       return json;
     },
 
+    addFieldsWithNames: function(nameArr) {
+      _(nameArr).each(function(name) {
+        this.get('fields').push({ name: name });
+      }, this);
+    },
+
     getFieldsColl: function() {
       var arr = this.get('fields');
       return new Backbone.Collection(arr);

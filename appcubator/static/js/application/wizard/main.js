@@ -12,7 +12,7 @@ require.config({
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "app" : "./",
     "editor" : "./editor",
-    "dicts" : "./dicts",
+    "dicts" : "../main-app/dicts",
     "mixins" : "../../mixins",
     "key" : "../../libs/keymaster/keymaster",
     "answer" : "../../libs/answer/answer",
