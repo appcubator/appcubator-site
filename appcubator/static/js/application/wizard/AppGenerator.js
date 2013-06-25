@@ -31,7 +31,7 @@ function(AppModel,
       this.state.set('mobilePages', new MobilePageCollection());
       this.state.set('info', new AppInfoModel({}));
       this.state.set('emails', new EmailCollection({}));
-      this.state.set('name', "AppcubatorApp");
+      this.state.set('name', appName);
     },
 
     generateUsers: function() {
