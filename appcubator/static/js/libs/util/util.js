@@ -185,7 +185,7 @@ define(['jquery'], function() {
 
     scrollToElement: function($el) {
       var height = $el.offset().top - 90;
-      $('html, body').animate({ scrollTop: height }, 'slow');
+      $('html, body').animate({ scrollTop: height }, 'slow', 'swing');
     }
   };
 
