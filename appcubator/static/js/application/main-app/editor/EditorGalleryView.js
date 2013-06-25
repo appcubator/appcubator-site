@@ -140,6 +140,7 @@ define([
       '</li>'].join('\n');
 
       _(v1State.get('pages').models[pageId].getFields()).each(function(field) {
+        if(field.isRelatedField()) return;
         var context = { id : field.cid, field_name : field.get('name') };
         $(self.allList).append(_.template(tempLi, context));
       });
@@ -224,10 +225,7 @@ define([
         top  = this.findTop(e, ui);
       }
 
-      var widget = {};
-      widget.layout = { top: top, left: left };
-      widget.data = {};
-      widget.context = "";
+      layout = { top: top, left: left };
 
       var targetEl = e.target;
       if(e.target.tagName != "LI") {
@@ -237,75 +235,32 @@ define([
       var className = targetEl.className;
       var id = targetEl.id;
 
-      return this.createElement(widget, className, id);
+      return this.createElement(layout, className, id);
     },
 
-    createElement: function(widget, className, id) {
+    createElement: function(layout, className, id) {
 
-      var hash, entityCid, formCid, action;
+      var hash, entityCid, formCid, action, formType;
       var entity, form, field;
-
+      var widget = {};
+      widget.layout = layout;
 
       if(/(login)/.exec(className)) {
-        var formType = String(id).replace('entity-user-','');
-        formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
-        form = constantContainers[formType];
-        var widgetModel;
-        widget.data.nodeType = "form";
-        widget.data.class_name = uieState["forms"][0].class_name;
+        formType = String(id).replace('entity-user-','').replace('_', ' ');
+        return this.widgetsCollection.createLoginForm(layout, constantContainers[formType]);
 
-        if(form.action == "login") {
-          widget.data.container_info = {};
-          widget.data.container_info.entity = form.entity;
-          widget.data.container_info.action = form.action;
-          widget.data.container_info.form = form;
-          widget.data.container_info.form.entity = 'User';
-          widget.type = 'form';
-          widgetModel = new ContainerWidgetModel(widget);
-        }
-
-        this.widgetsCollection.push(widgetModel);
-
-        return widgetModel;
       }
       else if(/(thirdparty)/.exec(className)) {
-        var formType = String(id).replace('entity-user-','');
-        formType = formType.replace('_', ' '); // "Local_Login" => "Local Login"
+        formType = String(id).replace('entity-user-','').replace('_', ' ');
         form = constantContainers[formType];
-        var widgetModel;
+        return this.widgetsCollection.createThirdPartyLogin(layout, form);
 
-        widget.data.nodeType = "form";
-        widget.data.class_name = uieState["forms"][0].class_name;
-        widget.type = "thirdpartylogin";
-        widget.data = {};
-        widget.data.action = form.action;
-        widget.data.provider = form.provider;
-        widget.data.content = form.content;
-        widget.data.container_info = {};
-        widget.data.container_info.action = "thirdpartylogin";
-        widget.data.loginRoutes = [];
-        widgetModel = new ContainerWidgetModel(widget);
-
-        this.widgetsCollection.push(widgetModel);
-
-        return widgetModel;
       }
       else if(/(signup)/.exec(className)) {
-        var signupRole = id.replace('entity-user-', ''); // "Local_Login" => "Local Login"
+        var signupRole = id.replace('entity-user-', '');
         form = constantContainers["Sign Up"];
 
-        widget.data.nodeType = "form";
-        widget.data.container_info = {};
-        widget.data.entity = v1State.get('users').getUserTableWithName(signupRole);
-        widget.data.container_info.entity = v1State.get('users').getUserTableWithName(signupRole);
-        widget.data.container_info.action = form.action;
-        widget.data.container_info.form = form;
-        widget.data.container_info.form.signupRole = signupRole;
-        widget.type = 'form';
-        var widgetSignupModel = new ContainerWidgetModel(widget);
-        this.widgetsCollection.push(widgetSignupModel);
-
-        return widgetSignupModel;
+        return this.widgetsCollection.createSignupForm(layout, form, signupRole);
       }
       else if(/(context-entity)/.exec(className)) {
         hash = String(id).replace('context-field-','');
@@ -330,7 +285,6 @@ define([
         hash = String(id).replace('context-field-','');
         hash = hash.split('-');
         entity = v1State.get('tables').get(hash[0]);
-        console.log(hash[1]);
         nested_entity = v1State.getTableModelWithCid(hash[1]);
         field = nested_entity.getFieldsColl().get(hash[2]);
 
@@ -350,6 +304,7 @@ define([
       else if(/(entity)/.exec(className)) {
         cid  = String(id).replace('entity-','');
 
+        widget.data = {};
         widget.data.container_info = {};
         widget.data.container_info.entity = v1State.get('tables').get(cid);
         if(/(entity-create-form)/.exec(className)) {
@@ -379,10 +334,12 @@ define([
         });
         //field = v1State.get('users').getCommonProps().get('fields').get(field_id);
 
+
         entity = v1State.get('users');
         content =  '{{CurrentUser.'+field.get('name')+'}}';
 
         widget.type         = "node";
+        widget.data         = {};
         widget.data         = _.extend(widget.data, uieState[this.getFieldType(field)][0]);
         widget.data.content =  content;
         var widgetModel = new WidgetModel(widget);

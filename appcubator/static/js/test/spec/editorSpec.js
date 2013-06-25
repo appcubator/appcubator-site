@@ -109,7 +109,6 @@ define([
 
         /* Check if exists */
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        console.log(model);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
       });
@@ -127,7 +126,7 @@ define([
 
     describe("Sign Up Form", function () {
 
-      var id = "entity-user-Admin";
+      var id = "entity-user-User";
       var className = "signup authentication ui-draggable";
       var galleryElement = document.getElementById(id);
       var model;
