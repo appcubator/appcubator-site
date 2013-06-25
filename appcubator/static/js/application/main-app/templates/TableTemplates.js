@@ -64,8 +64,8 @@ TableTemplates.Property = [
       '<option value="file" <% if(type =="file") %> selected <% %>>File</option>',
     '</select>',
   '</div>',
-  '<div class="hi2 prop-cross" id="delete-<%- cid %>">',
-    '<div class="remove">Remove</div>',
+  '<div class="hi4 prop-cross" id="delete-<%- cid %>">',
+    '<div class="remove hoff1">Remove</div>',
   '</div>',
 '</div>'
 ].join('\n');
