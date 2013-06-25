@@ -136,8 +136,8 @@ function(FieldModel, UploadExcelView, ShowDataView) {
         var text = 'Has ' + relation.related_name;
         if(relation.type == "m2m" || relation.type == "fk") suffix = 'List of ' + util.pluralize(relation.entity);
         if(relation.type == "o2o") suffix = 'Single ' + relation.entity;
-
-        list.append('<div class="related-tag offset1">' + text +' ('+ suffix +')</div>');
+        console.log(relation);
+        list.append('<a href="#relation-'+relation.cid+'"class="related-tag offset1">' + text +' ('+ suffix +')</a>');
       });
     },
 

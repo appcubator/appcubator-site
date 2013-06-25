@@ -594,12 +594,13 @@ table tr:hover td {
 .related-fields .related-tag {
   display: inline-block;
   font-size: 12px;
-  background-color: rgba(30, 30, 30, 0.6);
+  background-color: #1f3d50;
   color:#fff;
   border: 1px solid #333;
   border-radius: 3px;
   padding: 0 4px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .tab .add-icon {

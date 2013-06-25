@@ -27,6 +27,7 @@ function(TableCollection,
         'click #add-entity'      : 'clickedAddTable',
         'keyup #add-entity-form': 'createTable',
         'click #add-relation'     : 'showCreateRelationForm',
+        'click .related-tag'     : 'scrollToRelation'
       },
 
       initialize: function() {
@@ -117,7 +118,16 @@ function(TableCollection,
         this.createRelationView.$el.fadeIn('fast');
         $('html, body').animate({
          scrollTop: self.$('#new-relation').offset().top
-     }, 400);
+        }, 400, 'swing');
+      },
+
+      scrollToRelation: function(e) {
+        e.preventDefault();
+        var target = e.currentTarget.hash;
+        var $target = $(target);
+        $('html, body').stop().animate({
+          'scrollTop': $target.offset().top
+        }, 400, 'swing');
       }
     });
 
