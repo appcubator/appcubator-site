@@ -34,7 +34,7 @@ function(WidgetCollection,
         }
       }
 
-      if(bone.slides) { this.set('slides', new SlideCollection()); }
+      if(bone.slides) { this.set('slides', new SlideCollection(bone.slides)); }
       if(bone.row) { this.set('row', new RowModel(bone.row)); }
       if(bone.query) { this.set('query', new QueryModel(bone.query, this.get('entity'))); }
 
@@ -84,9 +84,10 @@ function(WidgetCollection,
         this.set('query', queryM);
       }
       else if(action == "imageslider") {
-        this.set('slides', new SlideCollection());
-        this.get('slides').push(new SlideModel({image : '/static/img/placeholder-slide1.png'}));
-        this.get('slides').push(new SlideModel({image : '/static/img/placeholder-slide2.png'}));
+        this.set('slides', new SlideCollection([
+          {image : '/static/img/placeholder-slide1.png'},
+          {image : '/static/img/placeholder-slide2.png'}
+        ]));
       }
       else if(action == "twitterfeed") {
         this.set('username', "icanberk");
