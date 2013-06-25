@@ -17,6 +17,7 @@ function(TableModel) {
         table.get('fields').each(function(fieldModel) {
           if(fieldModel.has('entity_name') && fieldModel.get('entity_name') == tableNameStr) {
             var obj = fieldModel.toJSON();
+            obj.cid = fieldModel.cid;
             obj.entity = table.get('name');
             obj.entity_cid = table.cid;
             arrFields.push(obj);
