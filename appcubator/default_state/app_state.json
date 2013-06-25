@@ -18,21 +18,6 @@
         }
     ],
     "tables": [
-        {
-            "name": "Tweet",
-            "fields": [
-                {
-                    "name": "Content",
-                    "type": "text"
-                },
-                {
-                    "name": "User",
-                    "type": "fk",
-                    "entity_name": "User",
-                    "related_name": "Tweets"
-                }
-            ]
-        }
     ],
     "pages": [
         {
