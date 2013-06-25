@@ -6,7 +6,7 @@ var FieldTypes = {
   "dropdown"         : '<select class="drowdown"><option></option><% _(field.get(\'options\')).each(function(option, ind){ %><option><%= option %><% }); %></option>',
   "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value="single-line-text"><label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
   "password-text"    : '<input type="password" placeholder="<%= field.get(\'placeholder\') %>">',
-  "email-text"       : '<div class="input-prepend"><span class="add-on">@</span><input type="text" placeholder="<%= field.get(\'placeholder\') %>"></div>',
+  "email-text"       : '<div class="email"><input type="text" placeholder="<%= field.get(\'placeholder\') %>"></div>',
   "button"           : '<div class="btn"><%= field.get(\'placeholder\') %></div>',
   "image-uploader"   : '<input type="file" placeholder="<%= field.get(\'placeholder\') %>">',
   "date-picker"      : '<input type="text" style="width:40px;" placeholder="mm">/<input type="text" style="width:40px;" placeholder="dd">/<input type="text" style="width:60px;" placeholder="yyyy">'
