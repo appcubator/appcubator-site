@@ -26,10 +26,6 @@ define([
         this.set('name', bone.name||"New Table");
       }
 
-      else {
-        alert('Table should have a name. Something is wrong.');
-      }
-
       this.set('fields', new FieldsCollection());
       if(bone.fields) {
         this.get('fields').add(bone.fields);
