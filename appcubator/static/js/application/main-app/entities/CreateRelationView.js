@@ -39,7 +39,7 @@ function(SelectView) {
           // for now, do not include relationships btwn same entity/user
           if(secondModel.get('name') !== firstModel.get('name')) {
             var obj = {};
-            obj.name = firstModel.get('name') + "  \u2194  " + secondModel.get('name');
+            obj.name = "New " + firstModel.get('name') + "  \u2194  " + secondModel.get('name') + " relationship";
             obj.val = "relation-" + firstModel.cid+"-"+secondModel.cid;
             options.push(obj);
           }

@@ -116,18 +116,17 @@ function(TableCollection,
       showCreateRelationForm: function() {
         var self = this;
         this.createRelationView.$el.fadeIn('fast');
-        $('html, body').animate({
-         scrollTop: self.$('#new-relation').offset().top
-        }, 400, 'swing');
+        util.scrollToElement(self.$('#new-relation'));
       },
 
       scrollToRelation: function(e) {
         e.preventDefault();
-        var target = e.currentTarget.hash;
-        var $target = $(target);
-        $('html, body').stop().animate({
-          'scrollTop': $target.offset().top
-        }, 400, 'swing');
+        var hash = e.currentTarget.hash;
+        if(hash === '#relation-new') {
+          this.showCreateRelationForm();
+          return;
+        }
+        util.scrollToElement($(hash));
       }
     });
 
