@@ -84,14 +84,17 @@ def app_new(request, is_racoon = False):
             return render(request,  'apps-new.html', {'old_name': app_name, 'errors': e}, status=400)
         a.save()
         if is_racoon:
-            return redirect(app_new_racoon, a.id)
+            return redirect(app_new_racoon, a)
         else:
             return redirect(app_page, a.id)
 
 
 @login_required
-def app_new_racoon(request, app_id):
-    return render(request, 'app-new-racoon.html', {'app_id': app_id})
+def app_new_racoon(request, app):
+    page_context = {}
+    page_context['app_id'] = app.pk
+    page_context['app_name'] = app.name
+    return render(request, 'app-new-racoon.html', page_context)
 
 
 @login_required
