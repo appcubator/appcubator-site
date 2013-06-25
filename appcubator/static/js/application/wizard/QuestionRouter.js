@@ -1,62 +1,94 @@
 define([
   "wizard/QuestionView",
+  "wizard/AppGenerator",
   "wizard/wizard-questions"
-],
-function (QuestionView) {
+  ],
 
-  var QuestionRouter = Backbone.View.extend({
-    answersDict : {},
+  function (QuestionView, AppGenerator) {
 
-    initialize: function() {
-      _.bindAll(this);
-    },
+    var QuestionRouter = Backbone.View.extend({
+      answersDict : {},
 
-    renderQuestion: function(qDict, arg) {
-      var qView = new QuestionView(qDict, arg);
-      $('.racoon').append(qView.el);
-      return qView;
-    },
+      initialize: function() {
+        _.bindAll(this);
+      },
 
-    next: function(qKey, args) {
-      console.log(args);
-      if(!qKey || !args.length) {
-        return this.renderFinalize();
-      }
+      renderQuestion: function(qDict, arg) {
+        var qView = new QuestionView(qDict, arg);
+        $('.racoon').append(qView.el);
+        return qView;
+      },
 
-      var qDict = questions[qKey];
-      var qView = this.renderQuestion(qDict, args[0]);
+      askQuestion: function(qKey, args, isLast) {
+        if(!qKey || !args.length) {
+          new AppGenerator(this.answersDict);
+          return this.renderFinalize();
+        }
 
-      qView.bind('answer', function(newKey, newAnswers) {
-        this.registerAns(qKey, newAnswers);
-      }, this);
+        var questionView = {};
+        if(args.length > 1 && qKey.indexOf('X_') === 0) {
+          questionView = this.askSeriesOfQuestions(qKey, args, isLast);
+        }
+        else {
+          questionView = this.askSingleQuestions(qKey, args, isLast);
+        }
 
-      if(args.length > 1) {
+      },
+
+      askSeriesOfQuestions: function(qKey, args, isLast) {
+        var qDict = questions[qKey];
+        var qView = this.renderQuestion(qDict, args[0]);
+
+        var newIsLast = false;
+        if(args.length == 1) {
+          newIsLast = true;
+        }
+
+        if(newIsLast) {
+          qView.bind('answer', function(newQKey, newAnswers) {
+            this.registerAns(qKey, newAnswers);
+            this.askQuestion(newQKey, newAnswers);
+          }, this);
+        }
+        else {
+          qView.bind('answer', function(newQKey, newAnswers) {
+            this.registerAns(qKey, newAnswers);
+            args.shift();
+            this.askSeriesOfQuestions(qKey, args, newIsLast);
+          }, this);
+        }
+
+        return qView;
+      },
+
+      askSingleQuestions: function(qKey, args, isLast) {
+        var qDict = questions[qKey];
+        var qView = this.renderQuestion(qDict, args[0]);
+
         qView.bind('answer', function(newQKey, newAnswers) {
-          args.shift();
-          this.next(qKey, args);
+          this.registerAns(qKey, newAnswers);
+          this.askQuestion(newQKey, newAnswers);
         }, this);
+
+        //qView.bind("answer", this.registerAns);
+
+        return qView;
+      },
+
+      registerAns: function(qKey, newAnswers) {
+        console.log(qKey + ":" + newAnswers);
+        if(!this.answersDict[qKey]) this.answersDict[qKey] = [];
+        this.answersDict[qKey].push(_.clone(newAnswers));
+        $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+
+      },
+
+      renderFinalize: function() {
+        $('.racoon').append('<li class="finish">Thanks for filling it in. We created most of your app already and it awaits for you to design your pages. <div class="btn">Take Me To My App »</div></li>');
       }
-      else if(args.length == 1) {
-        qView.bind('answer', function(newQKey, newAnswers) {
-          this.next(newQKey, newAnswers);
-        }, this);
-      }
-      $("html, body").animate({ scrollTop: $(document).height() }, "slow");
-    },
 
-    registerAns: function(qKey, newAnswers) {
-      console.log(qKey+":"+newAnswers);
-      if(!this.answersDict[qKey]) this.answersDict[qKey] = [];
-      this.answersDict[qKey].push(newAnswers);
-      console.log(this.answersDict);
-    },
+    });
 
-    renderFinalize: function() {
-      $('.racoon').append('<li class="finish">Thanks for filling it in. We created most of your app already and it awaits for you to design your pages. <div class="btn">Take Me To My App »</div></li>');
-    }
-
-  });
-
-  return QuestionRouter;
+return QuestionRouter;
 
 });
