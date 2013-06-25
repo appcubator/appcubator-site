@@ -15,6 +15,12 @@ define([
       this.predefinedFields.push(new FieldModel({ name: "Email"}));
     },
 
+    /* create functions */
+    createUserWithName: function(nameStr) {
+      return this.push({name: nameStr});
+    },
+    /* get functions */
+
     getUserTableWithName: function(tableNameStr) {
       var table = this.where({name : tableNameStr })[0];
       return table;

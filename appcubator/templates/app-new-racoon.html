@@ -34,17 +34,8 @@
 {% endblock %}
 
 {% block js %}
-<!-- <script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery/jquery.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery/prettyCheckable.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/libs/underscore-amd/underscore.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/libs/util/util-nonamd.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/libs/backbone/backbone.js" ></script> -->
 <script>
-// $().ready(function(){
-
-//   $('input[type=radio]').prettyCheckable();
-
-// });
+var appId = {{ app_id }};
 </script>
 <script data-main="{{ STATIC_URL }}js/application/wizard/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 

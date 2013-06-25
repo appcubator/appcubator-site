@@ -6,6 +6,10 @@ function(TableModel) {
   var TableCollection = Backbone.Collection.extend({
     model: TableModel,
 
+    createTableWithName: function(nameStr) {
+      return this.push({name: nameStr});
+    },
+
     getTableWithName: function(tableNameStr) {
       var table = this.where({name : tableNameStr })[0];
       return table;
