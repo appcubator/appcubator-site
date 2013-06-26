@@ -9,8 +9,18 @@ TEMPLATE_DEBUG = DEBUG
 PRODUCTION = True
 STAGING = False
 
+
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_HOST_USER = "postmaster@appcubator.mailgun.org"
+EMAIL_HOST_PASSWORD = "3keeber4xv93"
+
+
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Karan Sikka', 'karan@appcubator.com'),
+    ('Nikhil Khadke', 'nikhil@appcubator.com'),
+    ('Ilter Canberk', 'ilter@appcubator.com'),
+    ('Kedar Amladi', 'kedar@appcubator.com'),
+    ('Sagar Rambhia', 'sagar@appcubator.com'),
 )
 
 MANAGERS = ADMINS

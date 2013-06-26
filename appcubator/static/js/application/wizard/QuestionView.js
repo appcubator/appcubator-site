@@ -12,7 +12,6 @@ function() {
     events: {
       'click .answer'             : 'answerFromMultipleChoice',
       'submit .answer-form'       : 'answerInputBox',
-      'submit .multi-answer-form' : 'addAnswerInput',
       'click .btn-add-answer'     : 'addAnswerInput',
       'click .btn-done'           : 'answerFromMultipleBox',
       'click .btn-upload'         : 'openUploadModal',
@@ -20,7 +19,7 @@ function() {
     },
 
     initialize: function(qDict, answer) {
-      _.bindAll(this, 'render');
+      _.bindAll(this);
       this.dict = qDict;
       this.prevAnswer = answer;
       this.render();
@@ -29,6 +28,7 @@ function() {
     render : function() {
       this.$el.append('<span class="q-sent">' + _.template(this.dict.questionText, {value: this.prevAnswer })+'</span>');
       this.renderAnswers();
+      $(window).on("keydown", this.keydown);
       return this;
     },
 
@@ -65,10 +65,10 @@ function() {
     renderMultipleAnswer: function() {
       var form = document.createElement('form');
       form.className ="multi-answer-form";
-      $(form).append('<input type="text" class="multi-answer-input" placeholder="Type your answer here..">');
       this.$el.append(form);
       this.$el.append('<div class="btn-add-answer"><div class="icon"></div>Add another answer</div><br  />');
-      this.$el.append('<div class="btn btn-done">Done</div>');
+      this.$el.append('<div class="btn-info btn-done">Done</div>');
+      this.addAnswerInput();
     },
 
     renderUpload: function() {
@@ -76,9 +76,9 @@ function() {
       this.$el.append('<a class="skip-btn">Just Skip</a>');
     },
 
-    addAnswerInput: function(e) {
+    addAnswerInput: function() {
       this.$el.find('.multi-answer-form').append('<input type="text" class="multi-answer-input" placeholder="Type your answer here...">');
-      e.preventDefault();
+      this.$el.find('.multi-answer-input').focus();
     },
 
     answerFromMultipleChoice: function(e) {
@@ -105,6 +105,11 @@ function() {
           self.answers.push(val);
         }
       });
+
+      if(this.answers == null || this.answers.length === 0) {
+        alert('You need to have at least one answer :)');
+        return;
+      }
       this.answerSend(this.answers);
     },
 
@@ -122,9 +127,16 @@ function() {
     },
 
     answerSend: function(answerArr) {
+      $(window).off("keydown", this.keydown);
       var nextKey = this.dict.next.call(this, answerArr);
       this.trigger('answer', nextKey, answerArr);
       this.answered = true;
+    },
+
+    keydown: function(e) {
+      if(this.dict.multiInp && e.keyCode == 13) {
+        this.addAnswerInput();
+      }
     }
 
   });

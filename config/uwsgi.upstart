@@ -4,4 +4,4 @@ description "uWSGI Emperor"
 start on runlevel [2345]
 stop on runlevel [06]
 
-exec uwsgi --master --die-on-term --emperor /etc/uwsgi
+exec uwsgi --master --die-on-term --ini /var/www/appcubator-site/config/uwsgi.ini

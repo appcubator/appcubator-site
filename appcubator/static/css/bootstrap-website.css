@@ -2271,20 +2271,32 @@ input[type="button"].btn-block {
 }
 
 .btn-info {
+  display: inline-block;
+  *display: inline;
   color: #ffffff;
+  border-radius: 4px;
+  padding: 6px 14px;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: rgba(31, 106, 111, 1);
+  background-color: #036a6e;
   *background-color: rgba(31, 106, 111, 1);
-  background-image: -moz-linear-gradient(top, rgba(41, 116, 121, 1), rgba(31, 106, 111, 1));
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(41, 116, 121, 1)), to(rgba(31, 106, 111, 1)));
-  background-image: -webkit-linear-gradient(top, rgba(41, 116, 121, 1), rgba(31, 106, 111, 1));
-  background-image: -o-linear-gradient(top, rgba(41, 116, 121, 1), rgba(31, 106, 111, 1));
-  background-image: linear-gradient(to bottom, rgba(41, 116, 121, 1), rgba(31, 106, 111, 1));
-  background-repeat: repeat-x;
-  border-color: rgba(31, 106, 111, 1) rgba(31, 106, 111, 1) #1f6377;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  background-image: -moz-linear-gradient(top, #036a6e, #02686c);
+  background-image: -webkit-linear-gradient(top, #036a6e, #02686c);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2f96b4', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+
+  border: 1px solid #bbbbbb;
+  border-color: #c5c5c5;
+  border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
+  margin-bottom: 0;
+  *margin-left: .3em;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn-info:hover,
@@ -5325,6 +5337,8 @@ hr.vert {
   display: inline-block;
   margin-left: 4px;
   margin-top: 14px;
+  color: #000;
+  text-align: left;
 }
 .sign-up-container input[type="submit"] {
   display: block;
@@ -5334,6 +5348,7 @@ hr.vert {
 }
 .sign-up-container a {
   font-weight: bold;
+  color: #000;
 }
 .sign-up-container h4 {
   margin:0;

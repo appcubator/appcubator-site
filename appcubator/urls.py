@@ -25,6 +25,12 @@ urlpatterns = patterns('',
     url(r'^backend/',                   include('app_builder.urls')),
 )
 
+urlpatterns += patterns('appcubator.log_views',
+    url(r'^app/(\d+)/log/routes/$', 'log_route'),
+    url(r'^log/slide/$', 'log_slide'),
+    url(r'^log/feedback/$', 'log_feedback'),
+)
+
 urlpatterns += patterns('appcubator.views',
     url(r'filepick', django.views.generic.base.TemplateView.as_view(template_name="dev/filepicker-test.html")),
 
@@ -79,19 +85,15 @@ urlpatterns += patterns('appcubator.views',
     url(r'^sendhostedemail/$', 'send_hosted_email'),
 )
 
-urlpatterns += patterns('appcubator.log_views',
-    url(r'^app/(\d+)/log/routes/', 'log_route'),
-    url(r'^log/slide/$', 'log_slide'),
-    url(r'^log/feedback/$', 'log_feedback'),
-)
-
 urlpatterns += patterns('appcubator.theme_views',
     url(r'^designer/$', 'designer_page'),
     url(r'^theme/new/web/$', 'theme_new_web'),
     url(r'^theme/new/mobile/$', 'theme_new_mobile'),
     url(r'^theme/(\d+)/$', 'theme_show'),
     url(r'^theme/(\d+)/info/$', 'theme_info'),
+    url(r'^theme/(\d+)/settings/$', 'theme_settings'),
     url(r'^theme/(\d+)/edit/$', 'theme_edit'),
+    url(r'^theme/(\d+)/edit_image/$', 'theme_image_edit'),
     url(r'^theme/(\d+)/clone/$', 'theme_clone'),
     url(r'^theme/(\d+)/delete/$', 'theme_delete'),
     url(r'^theme/(\d+)/editor/(\d+)$', 'theme_page_editor'),

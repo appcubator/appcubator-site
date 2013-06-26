@@ -7,7 +7,7 @@ function() {
 
     var WidgetCollection = Backbone.Collection.extend({
 
-      createThirdPartyLogin: function(layout, form) {
+      createThirdPartyLogin: function(layout, form, roleStr) {
         var widget = {};
 
         widget.type = "thirdpartylogin";
@@ -21,11 +21,15 @@ function() {
         widget.data.content = form.content;
         widget.data.container_info = {};
         widget.data.container_info.action = "thirdpartylogin";
-
         var ContainerWidgetModel = require('models/ContainerWidgetModel');
         var widgetModel = new ContainerWidgetModel(widget);
+
         widgetModel.createLoginRoutes();
 
+        if(!v1State.isSingleUser()) {
+            widget.data.content = "Sign In w/" + form.provider;
+            widget.data.userRole = roleStr;
+        }
         return this.push(widgetModel);
       },
 
@@ -69,6 +73,18 @@ function() {
         var widgetSignupModel = new ContainerWidgetModel(widget);
 
         return this.push(widgetSignupModel);
+      },
+
+      createNodeWithFieldTypeAndContent: function(layout, type, content) {
+        var widget = {};
+        widget.type = "node";
+        widget.layout = layout;
+        widget.data = {};
+        widget.data         = _.extend(widget.data, uieState[this.getFieldType(field)][0]);
+        widget.data.content =  content;
+
+        var widgetModel = new WidgetModel(widget, true);
+        return this.push(widgetModel);
       }
     });
 

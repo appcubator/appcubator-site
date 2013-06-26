@@ -22,7 +22,7 @@ questions = {
         return "multiple_users";
       }
       else {
-        return "logo";
+        return "multiple_users";
       }
     }
   },

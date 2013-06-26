@@ -159,7 +159,7 @@ function(WidgetContentEditor,
 
     openLoginEditor: function() {
       var loginRoutes = this.model.getLoginRoutes();
-      new LoginFormEditorView(this.model.get('data').get('container_info').get('form'));
+      new LoginFormEditorView(loginRoutes);
     },
 
     openSlideEditor: function() {

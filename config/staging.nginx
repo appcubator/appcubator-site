@@ -1,16 +1,15 @@
 upstream django {
-    # server unix:///path/to/your/mysite/mysite.sock; # for a file socket
-    server 127.0.0.1:8001; # for a web port socket (we'll use this first)
+    server unix:///var/run/appcubator/site.sock; # for a file socket
   }
-
-upstream deploy {
-    # server unix:///path/to/your/mysite/mysite.sock; # for a file socket
-    server 127.0.0.1:8002; # for a web port socket (we'll use this first)
+server {
+    listen 80;
+    server_name v1factory.com;
+    return 301 http://appcubator.com/;
   }
 
 server {
     listen          80;
-    server_name     staging.appcubator.com;
+    server_name     appcubator.com;
     charset         utf-8;
 
     # max upload size
@@ -23,11 +22,6 @@ server {
 
     location /static {
         alias /var/www/appcubator-site/appcubator/static; # your Django project's static files - amend as required
-    }
-
-    location /deployment {
-        uwsgi_pass  deploy;
-        include     /var/www/appcubator-deploy/uwsgi/uwsgi_params; # the uwsgi_params file you installed
     }
 
     # Finally, send all non-media requests to the Django server.
