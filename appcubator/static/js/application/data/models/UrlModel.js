@@ -5,11 +5,21 @@ define(['backbone'], function(Backbone) {
     },
 
     getAppendixString: function() {
-      return '/' + (this.get('urlparts').join('/'));
+      return this.get('urlparts').join('/');
     },
 
     getUrlString: function(appSubdomain) {
-      return 'http://' + (appSubdomain||'yourapp.com') + '/' +this.get('urlparts').join('/');
+      return 'http://' + (appSubdomain||'yourapp.com') + '/' + this.get('page_name') + '/' +  this.getAppendixString();
+    },
+
+    addUrlPart: function(value) {
+      this.get('urlparts').push(value);
+      this.trigger('newUrlPart', value, this.get('urlparts').length-1);
+    },
+
+    removeUrlPart: function(index) {
+      var value = this.get('urlparts').splice(index, 1);
+      this.trigger('removeUrlPart', value, index);
     },
 
     toJSON: function() {

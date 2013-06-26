@@ -10,10 +10,11 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
 
   var PagesView = Backbone.View.extend({
     el: document.body,
-
+    'css': 'pages',
     initialize: function() {
       _.bindAll(this);
 
+      util.loadCSS(this.css);
       this.collection = v1State.get('pages');
       this.listenTo(this.collection, 'add', function(model) { this.appendPage(model, false); });
 
