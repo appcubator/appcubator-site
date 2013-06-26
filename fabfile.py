@@ -23,3 +23,8 @@ def pull_prod():
     run("git pull")
     run("touch config/uwsgi.ini")
 
+@hosts('v1factory@appcubator.com')
+def refresh_themes_prod()
+  code_dir = '/var/www/appcubator-site'
+  with cd(code_dir):
+    run("python scripts/refresh_themes.py")
