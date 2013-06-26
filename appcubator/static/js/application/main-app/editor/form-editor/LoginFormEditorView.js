@@ -19,23 +19,22 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       'change .redirect-page' : 'redirectChanged'
     },
 
-    initialize: function(formModel) {
+    initialize: function(loginRoutes) {
       _.bindAll(this);
-      this.model = formModel;
+      this.model = loginRoutes;
 
-      if(formModel.get('loginRoutes').length != v1State.get('users').length) {
-        formModel.get('loginRoutes').reorganize();
+      if(loginRoutes.length != v1State.get('users').length) {
+        loginRoutes.reorganize();
       }
 
       this.render();
       util.loadCSS('form-editor');
-
     },
 
     render: function() {
       this.el.innerHTML = "<h3>Login Editor</h3>";
 
-      this.model.get('loginRoutes').each(function(route) {
+      this.model.each(function(route) {
         this.el.innerHTML += _.template(FormEditorTemplates.routeTemplate, {route: route, pages: v1State.getPages().toJSON() });
       }, this);
 
@@ -44,11 +43,10 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
     redirectChanged: function (e) {
       var cid = e.target.id.replace('redirect-select-','');
-      var route = this.model.get('loginRoutes').get(cid);
+      var route = this.model.get(cid);
       console.log(route);
       route.set('redirect', e.target.value);
-    },
-
+    }
 
 
   });

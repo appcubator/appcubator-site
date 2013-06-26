@@ -24,11 +24,12 @@ function( WidgetModel,
     getLoginRoutes: function() {
       var loginRoutes;
 
-      if(this.model.get('data').get('container_info').has('form')) {
+      if(this.get('data').has('container_info') &&
+         this.get('data').get('container_info').has('form')) {
         loginRoutes = this.model.get('data').get('container_info').get('form').get('loginRoutes');
       }
       else {
-        loginRoutes =this.model.get('data').get('loginRoutes');
+        loginRoutes =this.get('data').get('loginRoutes');
       }
 
       return loginRoutes;
