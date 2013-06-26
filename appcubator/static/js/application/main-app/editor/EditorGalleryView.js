@@ -263,43 +263,27 @@ define([
         return this.widgetsCollection.createSignupForm(layout, form, signupRole);
       }
       else if(/(context-entity)/.exec(className)) {
-        hash = String(id).replace('context-field-','');
-        hash = hash.split('-');
+        hash = String(id).replace('context-field-','').split('-');
         entity = v1State.get('tables').get(hash[0]);
         field = entity.get('fields').get(hash[1]);
 
+        var type = this.getFieldType(field);
         var editorContext = this.editorContext ? this.editorContext : "page";
+        var content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+'}}';
 
-        content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+'}}';
-
-        widget.data         = _.extend(widget.data, uieState[this.getFieldType(field)][0]);
-        widget.data.content =  content;
-        widget.type = "node";
-        var widgetModel = new WidgetModel(widget, true);
-
-        this.widgetsCollection.push(widgetModel);
-
-        return widgetModel;
+        return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
       }
       else if(/(context-nested-entity)/.exec(className)) {
-        hash = String(id).replace('context-field-','');
-        hash = hash.split('-');
+        hash = String(id).replace('context-field-','').split('-');
         entity = v1State.get('tables').get(hash[0]);
         nested_entity = v1State.getTableModelWithCid(hash[1]);
         field = nested_entity.getFieldsColl().get(hash[2]);
 
+        var type = this.getFieldType(field);
         var editorContext = this.editorContext ? this.editorContext : "page";
+        var content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ nested_entity.get('name') + '.' +field.get('name')+'}}';
 
-        content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ nested_entity.get('name') + '.' +field.get('name')+'}}';
-
-        widget.data         = _.extend(widget.data, uieState[this.getFieldType(field)][0]);
-        widget.data.content =  content;
-        widget.type = "node";
-        var widgetModel = new WidgetModel(widget, true);
-
-        this.widgetsCollection.push(widgetModel);
-
-        return widgetModel;
+        return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
       }
       else if(/(entity)/.exec(className)) {
         cid  = String(id).replace('entity-','');
