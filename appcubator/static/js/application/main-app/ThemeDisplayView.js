@@ -21,8 +21,9 @@ function() {
 
     render: function() {
       template = ['<h2 class="span30"><%= name %></h2>',
-                  '<div class="span10 hoff2"><img src="<%= image %>"></div>',
-                  '<div class="span16 offset2 hoff2 load"><div class="btn" id="load-btn">Load Theme</div></div>'].join('\n');
+                  '<p class="designed-by hoff1">Designed by <%= designer %></p>',
+                  '<div class="span12"><img src="<%= image %>"></div>',
+                  '<div class="span10 offset2 load"><div class="btn" id="load-btn">Load Theme</div></div>'].join('\n');
       this.el.innerHTML = _.template(template, this.info);
     },
 
@@ -43,7 +44,7 @@ function() {
         url: url,
         data: JSON.stringify(newState),
         success: function(data) {
-          self.$el.find('.load').append('<div class="hoff2"><h3>Loaded!</h3></div>');
+          self.$el.find('.load').append('<div class="hoff1"><h4 class="text-success"><strong>Loaded!</strong></h4></div>');
           util.unloadCSS('uiestate');
           util.loadDirectory('/app/' + appId + '/uiestate.less', 'uiestate');
         }

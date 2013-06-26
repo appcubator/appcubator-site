@@ -6,6 +6,7 @@ function() {
 
   var UrlView = Backbone.ModalView.extend({
     padding: 0,
+    height: 150,
     events: {
       'change .url-part'      : 'urlPartChanged',
       'change .page'          : 'pageChanged',
