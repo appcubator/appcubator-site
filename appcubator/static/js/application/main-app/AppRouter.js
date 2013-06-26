@@ -1,3 +1,4 @@
+
 define([
 		"mixins/SimpleModalView",
 		"mixins/ErrorModalView",
@@ -20,7 +21,7 @@ define([
 
 		routes: {
 			"app/:appid/info/(:tutorial/)"     : "info",
-			"app/:appid/entities/(:tutorial/)" : "entities",
+			"app/:appid/tables/(:tutorial/)" : "tables",
 			"app/:appid/gallery/(:tutorial/)"  : "themes",
 			"app/:appid/pages/(:tutorial/)"    : "pages",
 			"app/:appid/editor/:pageid/" : "editor",
@@ -69,7 +70,7 @@ define([
 			});
 		},
 
-		entities: function(appId, tutorial) {
+		tables: function(appId, tutorial) {
 			var self = this;
 			require(['app/entities/EntitiesView'], function(EntitiesView){
 				self.tutorialDirectory = [3];
@@ -100,7 +101,7 @@ define([
 		pages: function(appId, tutorial) {
 			var self = this;
 			self.tutorialDirectory = [4];
-			require(['app/PagesView'], function(PagesView){
+			require(['app/pages/PagesView'], function(PagesView){
 				$('.page').fadeIn();
 				self.tutorialDirectory = [5];
 				self.changePage(PagesView, {}, function() {

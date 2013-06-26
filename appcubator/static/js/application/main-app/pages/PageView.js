@@ -1,5 +1,5 @@
 define([
-  'app/UrlView',
+  'app/pages/UrlView',
   'mixins/SimpleModalView',
   'app/templates/PageTemplates',
   'util',

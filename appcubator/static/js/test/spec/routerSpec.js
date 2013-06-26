@@ -54,7 +54,7 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
     });
 
-    describe("entities", function () {
+    describe("tables", function () {
       var router = null;
 
       afterEach(function() {
@@ -62,23 +62,23 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
         router = null;
       });
 
-      it('calls the entities page route', function() {
-        spyOn(AppRouter.prototype, 'entities');
+      it('calls the tables page route', function() {
+        spyOn(AppRouter.prototype, 'tables');
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
-        router.navigate('app/1/entities/', {trigger: true});
+        router.navigate('app/1/tables/', {trigger: true});
 
         expect(router).toBeDefined();
-        expect(AppRouter.prototype.entities).toHaveBeenCalled();
+        expect(AppRouter.prototype.tables).toHaveBeenCalled();
       });
 
-      it('calls the entities page tutorial', function() {
+      it('calls the tables page tutorial', function() {
         ///spyOn(AppRouter.prototype, 'showTutorial');
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
-        router.navigate('app/1/entities/tutorial/', {trigger: true});
+        router.navigate('app/1/tables/tutorial/', {trigger: true});
 
         expect(router).toBeDefined();
         ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();

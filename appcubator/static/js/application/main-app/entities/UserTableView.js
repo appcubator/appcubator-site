@@ -40,7 +40,12 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
     },
 
     clickedDelete: function(e) {
-      v1State.get('users').remove(this.model.cid);
+      if(v1State.get('users').length <= 1) {
+        alert('You must have at least one User Role');
+      }
+      else {
+        v1State.get('users').remove(this.model.cid);
+      }
     },
 
     appendField: function (fieldModel) {

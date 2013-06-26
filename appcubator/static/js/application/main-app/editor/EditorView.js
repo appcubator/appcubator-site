@@ -1,7 +1,7 @@
 define([
   'models/PageModel',
   'collections/TableCollection',
-  'app/UrlView',
+  'app/pages/UrlView',
   'mixins/SimpleModalView',
   'mixins/ErrorModalView',
   'mixins/DebugOverlay',
