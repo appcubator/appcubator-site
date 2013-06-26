@@ -21,7 +21,7 @@ define([
 
 		routes: {
 			"app/:appid/info/(:tutorial/)"     : "info",
-			"app/:appid/entities/(:tutorial/)" : "entities",
+			"app/:appid/tables/(:tutorial/)" : "tables",
 			"app/:appid/gallery/(:tutorial/)"  : "themes",
 			"app/:appid/pages/(:tutorial/)"    : "pages",
 			"app/:appid/editor/:pageid/" : "editor",
@@ -70,7 +70,7 @@ define([
 			});
 		},
 
-		entities: function(appId, tutorial) {
+		tables: function(appId, tutorial) {
 			var self = this;
 			require(['app/entities/EntitiesView'], function(EntitiesView){
 				self.tutorialDirectory = [3];
