@@ -90,9 +90,10 @@ def app_new(request, is_racoon = False):
 
 
 @login_required
-def app_new_racoon(request, app):
+def app_new_racoon(request, app_id):
     page_context = {}
-    page_context['app_id'] = long(app.pk)
+    app = get_object_or_404(App, id=app_id, owner=request.user)
+    page_context['app_id'] = long(app_id)
     page_context['app_name'] = app.name
     return render(request, 'app-new-racoon.html', page_context)
 
