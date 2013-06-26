@@ -25,6 +25,12 @@ urlpatterns = patterns('',
     url(r'^backend/',                   include('app_builder.urls')),
 )
 
+urlpatterns += patterns('appcubator.log_views',
+    url(r'^app/(\d+)/log/routes/$', 'log_route'),
+    url(r'^log/slide/$', 'log_slide'),
+    url(r'^log/feedback/$', 'log_feedback'),
+)
+
 urlpatterns += patterns('appcubator.views',
     url(r'filepick', django.views.generic.base.TemplateView.as_view(template_name="dev/filepicker-test.html")),
 
@@ -77,12 +83,6 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/', 'app_page'), # this serves all the app pages
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
-)
-
-urlpatterns += patterns('appcubator.log_views',
-    url(r'^app/(\d+)/log/routes/', 'log_route'),
-    url(r'^log/slide/$', 'log_slide'),
-    url(r'^log/feedback/$', 'log_feedback'),
 )
 
 urlpatterns += patterns('appcubator.theme_views',
