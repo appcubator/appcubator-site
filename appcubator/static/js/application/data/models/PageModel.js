@@ -18,6 +18,9 @@ function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, 
     initialize: function(bone) {
       bone = bone||{};
       var self = this;
+      if(bone.url && bone.url.urlparts.length == 0) {
+        bone.url.urlparts = [this.get('name') || "Page Name"];
+      }
       this.set('url', new UrlModel(bone.url||{}));
       this.set('navbar', new NavbarModel(bone.navbar||{}));
       this.set('footer', new FooterModel(bone.footer||{}));
@@ -30,10 +33,6 @@ function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, 
           this.get('uielements').push(new WidgetModel(uielement));
         }
       }, this);
-      if(bone.page_name) {
-        this.get('url').set('page_name', bone.page_name);
-      }
-      this.listenTo(this.get('url'), 'change:page_name', this.updatePageName);
     },
 
     getHeight: function() {
