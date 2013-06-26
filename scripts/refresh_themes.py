@@ -2,6 +2,8 @@ from appcubator.models import UITheme, load_initial_themes
 import sys
 import os
 
+"""This was almost working on the remote server, except the import appcubator didn't work because the python path did not include .. dir"""
+
 if __name__ == "__main__":
 
     if len(sys.argv) > 1:
