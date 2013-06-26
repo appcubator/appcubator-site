@@ -82,8 +82,11 @@ function(SelectView) {
         return newObj;
       });
       statics_list.push({val: "new-image", name: "Upload New Image"});
-
-      var selecView = new SelectView(statics_list, this.model.get('data').get('content_attribs').get('src'), true);
+      var curVal = {
+        name: this.model.get('data').get('content_attribs').get('src'),
+        val: this.model.get('data').get('content_attribs').get('src')
+      };
+      var selecView = new SelectView(statics_list, curVal, true);
       selecView.bind('change', this.changeSrc);
       li.appendChild(selecView.el);
       return li;

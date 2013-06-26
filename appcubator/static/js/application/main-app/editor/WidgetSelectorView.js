@@ -182,7 +182,7 @@ function() {
     resized: function(e, ui) {
       var left = Math.round((ui.position.left / GRID_WIDTH));
       var top  = Math.round((ui.position.top  / GRID_HEIGHT));
-      var deltaHeight = Math.round((ui.size.height + 6) / GRID_HEIGHT);
+      var deltaHeight = Math.round((ui.size.height + 2) / GRID_HEIGHT);
       var deltaWidth = Math.round((ui.size.width + 2) / GRID_WIDTH);
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = '';
