@@ -93,6 +93,14 @@ def theme_show(request, theme):
   return render(request, 'designer-theme-show.html', page_context)
 
 
+@login_required
+@single_theme
+def theme_settings(request, theme):
+  #theme = get_object_or_404(UITheme, pk = theme_id)
+  page_context = { 'title' : theme.name , 'themeId': theme.pk, 'theme' : theme, 'statics' : simplejson.dumps(list(theme.statics.values()))}
+  return render(request, 'designer-theme-settings.html', page_context)
+
+
 @require_POST
 @login_required
 def theme_info(request, theme_id):
@@ -128,6 +136,14 @@ def theme_edit(request, theme):
   theme.save()
   return HttpResponse("ok")
 
+@require_POST
+@login_required
+@single_theme
+def theme_image_edit(request, theme):
+  img = request.POST['img']
+  theme.image = img
+  theme.save()
+  return HttpResponse("ok")
 
 @require_POST
 @login_required

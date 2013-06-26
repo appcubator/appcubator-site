@@ -40,11 +40,16 @@
   padding: 15px;
 }
 
-.theme-gallery li img {
+.theme-gallery li .img {
   width: 100%;
   display: inline-block;
   border-radius: 6px;
   height: 260px;
+  overflow: hidden;
+}
+
+.theme-gallery li .img img {
+  width: 100%;
 }
 
 .theme-gallery li h2 {

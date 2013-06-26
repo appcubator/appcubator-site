@@ -1,0 +1,49 @@
+{% extends "infra-html.html" %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/themes.css">
+{% endblock %}
+
+{% block topbar %}
+{% include "infra-topbar-designer.html" %}
+{% endblock %}
+
+{% block page %}
+<a class="span6 save-btn" id="save">
+  <img src="/static/img/save.png">
+</a>
+<div class="container hoff6">
+  <div class="span12">
+      <ul class="uie-gallery left-nav">
+        <li class="expandible" id="">
+          <a class="" id="base-css" href="/theme/{{ themeId }}/">
+          Back to Theme Editor
+        </a></li>
+      </ul>
+
+  </div>
+  <div class="right-bar span42 offset2">
+    <div class="span28 theme hoff1 offsetr1">
+      <img class="span26 offset1" src="{{ theme.image }}">
+      <div class="btn" id="change-image">Change Image</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+<script data-main="{{ STATIC_URL }}js/application/designer-app/theme-settings-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+
+<script>
+
+var themeId = null;
+var appId = null;
+
+{% if themeId %}
+var themeId = {{ themeId }};
+{% elif appId%}
+var appId = {{ appId }};
+{% endif %}
+
+var statics = {{ statics|safe }};
+</script>
+{% endblock %}
