@@ -15,9 +15,11 @@ function(Backbone) {
 
     _configure: function(options) {
       Backbone.ModalView.__super__._configure.call(this, options);
+      if(options.height) {
+        this.height = options.height;
+      }
       this.backgroundDiv = this.setupModal();
       this.modalWindow = this.setupModalWindow();
-
       _.bindAll(this, 'closeModal', 'handleKey');
     },
 
@@ -62,8 +64,12 @@ function(Backbone) {
       div.style.position = 'fixed';
       div.className = 'modal ' + this.className;
       div.style.width = this.width + 'px';
-      div.style.minHeight = '300px';
-      if(this.height) div.style.height = this.height + 'px';
+      if(this.height) {
+        div.style.height = this.height + 'px';
+      }
+      else {
+        div.style.minHeight = '300px';
+      }
       div.style.top = '50%';
       div.style.left = '50%';
       div.style.marginLeft= '-'+ (this.width/2) +'px';

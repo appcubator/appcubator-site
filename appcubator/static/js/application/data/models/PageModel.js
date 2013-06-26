@@ -17,7 +17,7 @@ function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, 
 
     initialize: function(bone) {
       bone = bone||{};
-
+      var self = this;
       this.set('url', new UrlModel(bone.url||{}));
       this.set('navbar', new NavbarModel(bone.navbar||{}));
       this.set('footer', new FooterModel(bone.footer||{}));
@@ -30,6 +30,10 @@ function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, 
           this.get('uielements').push(new WidgetModel(uielement));
         }
       }, this);
+      if(bone.page_name) {
+        this.get('url').set('page_name', bone.page_name);
+      }
+      this.listenTo(this.get('url'), 'change:page_name', this.updatePageName);
     },
 
     getHeight: function() {
@@ -90,6 +94,10 @@ function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, 
 
       var model = v1State.get('users').getUserTableWithName(access);
       return model.get('fields');
+    },
+
+    updatePageName: function(urlModel, newPageName) {
+      this.set('page_name', newPageName);
     },
 
     toJSON: function() {

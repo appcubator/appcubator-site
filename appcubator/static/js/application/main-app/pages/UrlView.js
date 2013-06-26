@@ -6,12 +6,16 @@ function() {
 
   var UrlView = Backbone.ModalView.extend({
     padding: 0,
+    width: 600,
+    id: 'url-editor',
+    //height: 150,
     events: {
-      'change .url-part'      : 'urlPartChanged',
-      'change .page'          : 'pageChanged',
-      'click .cross'          : 'urlRemoved',
-      'change .last'          : 'lastEntityChanged',
-      'keypress .last'        : 'lastTextChanged'
+      'change .context-part'      : 'contextPartChanged',
+      'keyup .suffix-part'       : 'suffixPartChanged',
+      'keyup .page-name'      : 'pageNameChanged',
+      'click .cross'          : 'clickedRemove',
+      'click .new-context'    : 'addNewContextPart',
+      'click .new-suffix'     : 'addNewSuffixPart'
     },
 
     initialize: function(urlModel){
@@ -21,46 +25,83 @@ function() {
       if(!this.model.get('urlparts')) {
         this.model.set('urlparts', []);
       }
+      this.listenTo(this.model, 'newUrlPart removeUrlPart', this.renderFullUrl);
+      this.listenTo(this.model, 'newUrlPart', this.appendUrlPartForm);
+      this.listenTo(this.model, 'removeUrlPart', this.removeUrlPart);
       this.render();
     },
 
     render: function() {
-      var temp = UrlTemplate.mainTemplate;
-      var html = _.template(temp, { 'urls': this.model.get('urlparts'),
-                                    'entities': v1State.get('tables').toJSON(),
-                                    'pages': v1State.get('pages').toJSON(),
-                                    'page_name': this.model.get('page_name') });
-
-      this.el.innerHTML = html;
-
+      //var temp = UrlTemplate.mainTemplate;
+      var temp = UrlTemplate.theTemplate;
+      this.el.innerHTML = _.template(temp, this.model.toJSON());
+      _(this.model.get('urlparts')).each(this.appendUrlPartForm);
+      this.renderFullUrl();
       return this;
     },
 
-    urlPartChanged: function(e) {
-      if(e.target.id == 'inp-new') {
-        e.target.id = 'inp-' + this.model.get('urlparts').length;
-        var value = e.target.value;
-        if(e.target.tagName == 'SELECT') {
-          value = '{{' + value + '}}';
-        }
-        this.model.get('urlparts').push(value);
+    renderFullUrl: function() {
+      this.$('.full-url').text(this.model.getUrlString());
+    },
+
+    appendUrlPartForm: function(value, index) {
+      console.log("DOE");
+      console.log(arguments);
+      // render table urlpart
+      if(value.indexOf('{{') === 0) {
+        var variable = value.replace('{{','').replace('}}','');
+        var newContext = document.createElement('li');
+        newContext.className = 'row hoff1';
+        newContext.innerHTML = _.template(UrlTemplate.contextTemp, {
+          i: index,
+          value: variable,
+          entities: v1State.get('tables').toJSON()
+        });
+        this.$('.url-parts').append(newContext);
+        this.$('.context-part select').last().focus();
       }
+
+      // render suffix urlpart
       else {
-        var ind = String(e.target.id).replace('inp-','');
-        if(e.target.value === "") delete this.model.get('urlparts')[ind];
-        else this.model.get('urlparts')[ind] = e.target.value;
+        var newSuffix = document.createElement('li');
+        newSuffix.className = 'row hoff1';
+        newSuffix.innerHTML = _.template(UrlTemplate.suffixTemp, {
+          i: index,
+          value: value
+        });
+        this.$('.url-parts').append(newSuffix);
       }
     },
 
-    pageChanged: function(e) {
-      if(e.target.value == "<<new_page>>") {
-        $(e.target).hide();
-        $('.add-page-form', this.el).fadeIn();
-        $('.page-name-input', this.el).focus();
-        return;
-      }
+    clickedRemove: function(e) {
+      var id = e.currentTarget.id.replace('urlpart-','');
+      var index = praseInt(id);
+      this.model.removeUrlPart(index);
+    },
 
-      this.model.set('page_name', e.target.value);
+    removeUrlPart: function(value, index) {
+      this.$('#urlpart-'+index).remove();
+    },
+
+    contextPartChanged: function(e) {
+      console.log(e.currentTarget);
+      var id = e.currentTarget.id.replace('urlpart-','');
+      var index = parseInt(id);
+      this.model.get('urlparts')[id] = "{{" + e.currentTarget.value + "}}";
+      console.log(this.model.get('urlparts'));
+      this.renderFullUrl();
+    },
+
+    suffixPartChanged: function(e) {
+      var id = e.currentTarget.id.replace('urlpart-','');
+      var index = parseInt(id);
+      this.model.get('urlparts')[id] = e.currentTarget.value;
+      this.renderFullUrl();
+    },
+
+    pageNameChanged: function(e) {
+      this.model.set('page_name', e.currentTarget.value);
+      this.renderFullUrl();
     },
 
     urlRemoved: function() {
@@ -68,24 +109,15 @@ function() {
       this.remove();
     },
 
-    lastEntityChanged: function(e) {
-      $(e.target).removeClass('last');
-      var temp = UrlTemplate.templateText;
-      var html = _.template(temp, { 'urls': this.urlParts,
-                                    'users': v1State.get('users').toJSON(),
-                                    'tables': v1State.get('tables').toJSON(),
-                                    'pages': appState.pages });
-      $('.url', this.el).append(html);
+    addNewContextPart: function(e) {
+      var firstTableName = "{{" + v1State.get('tables').at(0).get('name') + "}}";
+      this.model.addUrlPart(firstTableName);
+      this.$('.context-part').last().find('select').focus();
     },
 
-    lastTextChanged: function(e) {
-      $(e.target).removeClass('last');
-      var temp = UrlTemplate.templateEntity;
-      var html = _.template(temp, { 'urls': this.urlParts,
-                                    'users': v1State.get('users').toJSON(),
-                                    'tables': v1State.get('tables').toJSON(),
-                                    'pages': appState.pages });
-      $('.url', this.el).append(html);
+    addNewSuffixPart: function(e) {
+      this.model.addUrlPart('customtext');
+      this.$('.suffix-part').last().find('input').focus();
     }
   });
 
