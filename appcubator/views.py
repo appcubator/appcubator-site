@@ -92,7 +92,7 @@ def app_new(request, is_racoon = False):
 @login_required
 def app_new_racoon(request, app):
     page_context = {}
-    page_context['app_id'] = app.pk
+    page_context['app_id'] = long(app.pk)
     page_context['app_name'] = app.name
     return render(request, 'app-new-racoon.html', page_context)
 

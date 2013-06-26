@@ -11,6 +11,9 @@ function() {
       content: '<h3>Questions?</h3><p>Please follow the directions written in these  small boxes. You can click the question marks to learn details.</p>',
       my: "right center",
       at: "left center",
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      },
       nextButton: true,
       highlightTarget: true
     },
@@ -23,11 +26,12 @@ function() {
       my: "top center",
       at: "bottom center",
       setup: function(tour, options) {
-        $('.menu-app-entities').one('click', tour.next);
-        $('.v1nav ul.nav li').not('.menu-app-entities').on('click', function() { return false; });
+        v1.bind('entities-loaded', function() {
+          tour.next();
+        });
       },
-      teardown: function(tour, options) {
-        $('.v1nav ul.nav li').not('.menu-app-entities').off('click');
+      teardown: function() {
+        v1State.attributes.walkthrough++;
       }
     },
     /*
@@ -40,6 +44,9 @@ function() {
       nextButton: true,
       setup: function() {
         return {  target: $('#add-role') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
       }
     },
     /*
@@ -81,6 +88,7 @@ function() {
       },
       teardown: function(tour, options) {
         $('#add-entity-form').off('keypress', this.checkForm);
+        v1State.attributes.walkthrough++;
       }
     },
     /*
@@ -93,7 +101,10 @@ function() {
       setup: function(tour, options) {
         return { target: $('#table-' + options.cid + ' .header') };
       },
-      nextButton: true
+      nextButton: true,
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
     },
     /*
      * Add Property btn
@@ -110,7 +121,9 @@ function() {
       },
       setup: function(tour, options) {
         $('.property-name-input').on('keypress', this.checkField);
-        v1State.get('tables').get(options.cid).get('fields').on('add', function(fieldModel) {
+        var cid =  v1State.get('tables').getTableWithName("Tweet").cid;
+        console.log(cid);
+        v1State.get('tables').getTableWithName("Tweet").get('fields').on('add', function(fieldModel) {
           if(fieldModel.get('name') == "Content") {
             options.propertyCid = fieldModel.cid;
             tour.next();
@@ -119,9 +132,11 @@ function() {
             this.remove(fieldModel);
           }
         });
-        return { target: $('#table-' + options.cid).find('.add-property-column') };
+        console.log($('#table-' + cid).find('.add-property-column').first());
+        return { target: $('#table-' + cid).find('.add-property-column').first() };
       },
       teardown: function(tour, options) {
+        v1State.attributes.walkthrough++;
         $('.property-name-input').on('keypress', this.checkField);
       }
     },
@@ -135,7 +150,10 @@ function() {
       setup: function(tour, options) {
         return { target: $('#column-' + options.propertyCid) };
       },
-      nextButton: true
+      nextButton: true,
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
     },
     /*
      * Add Relation btn
@@ -151,6 +169,7 @@ function() {
       },
       teardown: function(tour, options) {
         $('#add-relation').off('click', tour.next);
+        v1State.attributes.walkthrough++;
       }
     },
     /*
@@ -165,6 +184,9 @@ function() {
           tour.next();
         });
         return {  target: $('#relations') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
       }
     },
     /*
@@ -206,15 +228,17 @@ function() {
       },
       teardown: function(tour, options) {
         $('.done-relation').off('click', this.checkFields);
+        v1State.attributes.walkthrough++;
       }
     },
     /*
      * User-Tweet relation
      */
     {
-      content: '<h3>OH GAWD</h3><p>Ain\'t nobody fucking wit my clique</p>',
+      content: '<h3>GREAT!</h3><p>Now that there is a one-to-many relation between your users and tweets, you\'re done with the harder part.</p>',
       my: "left center",
       at: "right center",
+      nextButton: true,
       setup: function(tour, options) {
         util.scrollToElement($('#new-relation'));
         var self = this;
@@ -223,12 +247,157 @@ function() {
           tour.view.show();
         }, 250);
         return { target: $('.relation-pane') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Time to Make it Look Good</h3><p>Click here and go to Themes page.</p>',
+      my: "top center",
+      at: "bottom center",
+      target: $('.menu-app-themes'),
+      setup: function(tour, options) {
+        v1.bind('themes-loaded', function() {
+          tour.next();
+        });
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Theme</h3><p>We have a variaty of themes here. Pick the one you like the most and clik on it to load. Make sure you click the "Load Theme" button.',
+      my: "left center",
+      at: "right center",
+      nextButton: true,
+      setup: function() {
+        return { target: $('#themes-title') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Pages</h3><p>Time to put things together. Click on the "Pages" tab to go to Pages Page.',
+      my: "top center",
+      at: "bottom center",
+      target: $('.menu-app-pages'),
+      setup: function(tour, options) {
+        v1.bind('pages-loaded', function() {
+          tour.next();
+        });
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Homepage</h3><p>You have a homepage by default. Ideally you would put the login and signup forms here as well a good explanation of your app. But before that, let\'s create a page for our tweets to show up.</p>',
+      my: "left center",
+      at: "right center",
+      nextButton: true,
+      setup: function(tour, options) {
+        return { target: $('.page-view').first() };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Crete a New Page</h3><p>Click on this large button.</p>',
+      my: "top center",
+      at: "bottom center",
+      setup: function(tour, options) {
+        $('.create-page').one('click', function() {
+          tour.next();
+        });
+
+        return { target : $('.create-page').first() };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Name Your Page</h3><p>Name your page "Tweet Feed" and press enter.</p>',
+      my: "top center",
+      at: "bottom center",
+      setup: function(tour, options) {
+        v1State.get('pages').bind('add', function(pageModel) {
+          if(pageModel.get('name') == "Tweet Feed") {
+            tour.next();
+          }
+          else {
+            alert('You should name your page "Tweet Feed". Just for the sake of the demo. Otherwise this is a free country.');
+          }
+        });
+        return { target: $('.page-name') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Alright</h3><p>We can go ahead and start editing our pages. Please click "Edit Page".</p>',
+      my: "left center",
+      at: "right center",
+      setup: function(tour, options) {
+        v1.bind('editor-loaded', function() {
+          tour.next();
+        });
+        return { target: $('.edit.item').first() };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Alright</h3><p>We can go ahead and start editing our pages. Please click "Edit Page".</p>',
+      my: "left center",
+      at: "right center",
+      setup: function(tour, options) {
+        v1.bind('editor-loaded', function() {
+          tour.next();
+        });
+        return { target: $('.edit.item').first() };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Welcome to Editor</h3><p>This is the what you see is what you get interface editor. You can freely drag and drop elemetn from the elements on the gallery and position them however you like.</p>',
+      my: "left center",
+      at: "right center",
+      nextButton: true,
+      setup: function(tour, options) {
+        return { target: $('.elements-list').first() };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Saving Your Progress</h3><p>Before you start, please don\'t forget to save your progress by clicking this "Save" button.</p>',
+      my: "left center",
+      at: "right center",
+      nextButton: true,
+      setup: function(tour, options) {
+        return { target: $('#save') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
       }
     }
   ];
 
+  var ind = v1State.get('walkthrough');
+  var currentSteps = steps.slice(ind);
+  console.log(currentSteps);
+  console.log(ind);
   var quickTour = new Tourist.Tour({
-    steps: steps,
+    steps: currentSteps,
     stepOptions: {
       "ill": "nasty"
     }
