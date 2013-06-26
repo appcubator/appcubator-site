@@ -78,7 +78,7 @@ def app_new(request, is_racoon = False):
     if request.method == 'GET':
         #log url route
         user_id = request.user.id
-        page_name = 'welcome'
+        page_name = 'newapp'
         app_id = 0
         log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
         log.full_clean()
@@ -108,7 +108,7 @@ def app_new(request, is_racoon = False):
 def app_new_racoon(request, app_id):
     #log url route
     user_id = request.user.id
-    page_name = 'welcome'
+    page_name = 'racoon'
     log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
     log.full_clean()
     log.save()
