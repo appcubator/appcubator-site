@@ -9,13 +9,6 @@ def build_static():
   with cd(code_dir):
     run("./static/build/build.sh")
 
-@hosts('v1factory@appcubator.com')
-def pull_prod():
-  code_dir = '/var/www/v1factory'
-  with cd(code_dir):
-    run("git pull")
-    run("touch prod_wsgi.py")
-
 @hosts('v1factory@staging.appcubator.com')
 def pull_staging():
   code_dir = '/var/www/appcubator-site'
@@ -23,12 +16,15 @@ def pull_staging():
     run("git pull")
     run("touch config/uwsgi.ini")
 
-"""
-@hosts('v1factory@appcubator.com', 'v1factory@staging.appcubator.com')
-def pull_both():
-  code_dir = '/var/www/v1factory'
+@hosts('v1factory@appcubator.com')
+def pull_prod():
+  code_dir = '/var/www/appcubator-site'
   with cd(code_dir):
     run("git pull")
-    run("touch staging_wsgi.py")
-    run("touch prod_wsgi.py")
-"""
+    run("touch config/uwsgi.ini")
+
+@hosts('v1factory@appcubator.com')
+def refresh_themes_prod():
+  code_dir = '/var/www/appcubator-site'
+  with cd(code_dir):
+    run("venv/bin/python scripts/refresh_themes.py settings.prod")
