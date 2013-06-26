@@ -1,11 +1,22 @@
 define(['backbone'], function(Backbone) {
   var UrlModel = Backbone.Model.extend({
     defaults : {
-      urlparts : []
+    },
+
+    initialize: function(bone) {
+      var urlparts = [];
+      if(bone.urlparts) {
+        urlparts = _(bone.urlparts).map(function(value) {
+          return {
+            value: value
+          };
+        });
+      }
+      this.set('urlparts', new Backbone.Collection(urlparts));
     },
 
     getAppendixString: function() {
-      return this.get('urlparts').join('/');
+      return this.get('urlparts').pluck('value').join('/');
     },
 
     getUrlString: function(appSubdomain) {
@@ -14,20 +25,15 @@ define(['backbone'], function(Backbone) {
 
     addUrlPart: function(value) {
       this.get('urlparts').push(value);
-      this.trigger('newUrlPart', value, this.get('urlparts').length-1);
     },
 
-    removeUrlPart: function(index) {
-      var value = this.get('urlparts').splice(index, 1);
-      this.trigger('removeUrlPart', value, index);
+    removeUrlPart: function(value) {
+      var value = this.get('urlparts').remove(value);
     },
 
     toJSON: function() {
       var json = _.clone(this.attributes);
-      json.urlparts = _.filter(json.urlparts, function(val) {
-        return val !== "";
-      });
-
+      json.urlparts = json.urlparts.pluck('value');
       return json;
     }
   });

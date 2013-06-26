@@ -1,0 +1,15 @@
+.url-parts {
+	border-top: 1px solid #ccc;
+	padding-top: 10px;
+}
+.url-parts .remove {
+	border-radius: 25px;
+	padding: 2px 9px;
+	background-color: #ccc;
+	color: #fff;
+	font-size: 16px;
+}
+
+.url-parts .remove:hover {
+	background-color: #c95446;
+}

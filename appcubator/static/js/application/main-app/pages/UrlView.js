@@ -13,7 +13,7 @@ function() {
       'change .context-part'      : 'contextPartChanged',
       'keyup .suffix-part'       : 'suffixPartChanged',
       'keyup .page-name'      : 'pageNameChanged',
-      'click .cross'          : 'clickedRemove',
+      'click .remove'          : 'clickedRemove',
       'click .new-context'    : 'addNewContextPart',
       'click .new-suffix'     : 'addNewSuffixPart'
     },
@@ -22,20 +22,17 @@ function() {
       _.bindAll(this);
 
       this.model = urlModel;
-      if(!this.model.get('urlparts')) {
-        this.model.set('urlparts', []);
-      }
-      this.listenTo(this.model, 'newUrlPart removeUrlPart', this.renderFullUrl);
-      this.listenTo(this.model, 'newUrlPart', this.appendUrlPartForm);
-      this.listenTo(this.model, 'removeUrlPart', this.removeUrlPart);
+      this.listenTo(this.model.get('urlparts'), 'add remove', this.renderFullUrl);
+      this.listenTo(this.model.get('urlparts'), 'change:value', this.renderFullUrl);
+      this.listenTo(this.model.get('urlparts'), 'add', this.appendUrlPartForm);
+      this.listenTo(this.model.get('urlparts'), 'remove', this.removeUrlPart);
       this.render();
     },
 
     render: function() {
-      //var temp = UrlTemplate.mainTemplate;
-      var temp = UrlTemplate.theTemplate;
+      var temp = UrlTemplate.mainTemplate;
       this.el.innerHTML = _.template(temp, this.model.toJSON());
-      _(this.model.get('urlparts')).each(this.appendUrlPartForm);
+      this.model.get('urlparts').each(this.appendUrlPartForm);
       this.renderFullUrl();
       return this;
     },
@@ -44,29 +41,30 @@ function() {
       this.$('.full-url').text(this.model.getUrlString());
     },
 
-    appendUrlPartForm: function(value, index) {
-      console.log("DOE");
-      console.log(arguments);
+    appendUrlPartForm: function(urlpart, index) {
+      var value = urlpart.get('value');
+
       // render table urlpart
       if(value.indexOf('{{') === 0) {
         var variable = value.replace('{{','').replace('}}','');
         var newContext = document.createElement('li');
         newContext.className = 'row hoff1';
+        newContext.id = "urlpart-"+urlpart.cid;
         newContext.innerHTML = _.template(UrlTemplate.contextTemp, {
-          i: index,
+          cid: urlpart.cid,
           value: variable,
-          entities: v1State.get('tables').toJSON()
+          entities: v1State.get('tables').pluck('name')
         });
         this.$('.url-parts').append(newContext);
-        this.$('.context-part select').last().focus();
       }
 
       // render suffix urlpart
       else {
         var newSuffix = document.createElement('li');
         newSuffix.className = 'row hoff1';
+        newSuffix.id = "urlpart-"+urlpart.cid;
         newSuffix.innerHTML = _.template(UrlTemplate.suffixTemp, {
-          i: index,
+          cid: urlpart.cid,
           value: value
         });
         this.$('.url-parts').append(newSuffix);
@@ -74,29 +72,22 @@ function() {
     },
 
     clickedRemove: function(e) {
-      var id = e.currentTarget.id.replace('urlpart-','');
-      var index = praseInt(id);
-      this.model.removeUrlPart(index);
+      var cid = e.currentTarget.id.replace('remove-','');
+      this.model.get('urlparts').remove(cid);
     },
 
-    removeUrlPart: function(value, index) {
-      this.$('#urlpart-'+index).remove();
+    removeUrlPart: function(urlpart, index) {
+      this.$('#urlpart-'+urlpart.cid).remove();
     },
 
     contextPartChanged: function(e) {
-      console.log(e.currentTarget);
-      var id = e.currentTarget.id.replace('urlpart-','');
-      var index = parseInt(id);
-      this.model.get('urlparts')[id] = "{{" + e.currentTarget.value + "}}";
-      console.log(this.model.get('urlparts'));
-      this.renderFullUrl();
+      var cid = e.target.id.replace('form-','');
+      this.model.get('urlparts').get(cid).set('value',"{{" + e.target.value + "}}");
     },
 
     suffixPartChanged: function(e) {
-      var id = e.currentTarget.id.replace('urlpart-','');
-      var index = parseInt(id);
-      this.model.get('urlparts')[id] = e.currentTarget.value;
-      this.renderFullUrl();
+      var cid = e.target.id.replace('form-','');
+      this.model.get('urlparts').get(cid).set('value', e.target.value);
     },
 
     pageNameChanged: function(e) {
@@ -104,20 +95,15 @@ function() {
       this.renderFullUrl();
     },
 
-    urlRemoved: function() {
-      this.model.destroy();
-      this.remove();
-    },
-
     addNewContextPart: function(e) {
       var firstTableName = "{{" + v1State.get('tables').at(0).get('name') + "}}";
-      this.model.addUrlPart(firstTableName);
-      this.$('.context-part').last().find('select').focus();
+      this.model.get('urlparts').push({value: firstTableName});
+      this.$('.context-part').last().focus();
     },
 
     addNewSuffixPart: function(e) {
-      this.model.addUrlPart('customtext');
-      this.$('.suffix-part').last().find('input').focus();
+      this.model.get('urlparts').push({value: 'customtext'});
+      this.$('.suffix-part').last().focus();
     }
   });
 
