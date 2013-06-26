@@ -26,8 +26,8 @@ function(WidgetCollection,
 
       if(bone.entity) {
         if(!bone.entity.attributes) {
-          if(bone.entity == "User") this.set('entity', v1State.get('users'));
-          else this.set('entity', v1State.get('tables').getTableWithName(bone.entity));
+          var entityM = v1State.getTableModelWithName(bone.entity);
+          this.set('entity', entityM);
         }
         else {
           this.set('entity', bone.entity);

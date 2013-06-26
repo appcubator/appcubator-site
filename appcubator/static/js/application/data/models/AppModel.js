@@ -52,6 +52,10 @@ function(AppInfoModel,
       return tableM;
     },
 
+    isSingleUser: function() {
+      return this.get('users').length == 1;
+    },
+
     toJSON: function() {
       var json = _.clone(this.attributes);
       json.info = json.info.toJSON();
