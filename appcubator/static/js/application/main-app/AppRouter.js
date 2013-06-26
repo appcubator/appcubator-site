@@ -89,6 +89,7 @@ define([
 			self.tutorialDirectory = [4];
 			require(['app/ThemesGalleryView'], function(ThemesGalleryView){
 				self.changePage(ThemesGalleryView, {}, function() {
+					self.trigger('themes-loaded');
 					$('.menu-app-themes').addClass('active');
 					if(tutorial) {
 						self.showTutorial();
@@ -104,6 +105,7 @@ define([
 				$('.page').fadeIn();
 				self.tutorialDirectory = [5];
 				self.changePage(PagesView, {}, function() {
+					self.trigger('pages-loaded');
 					$('.menu-app-pages').addClass('active');
 					if(tutorial) {
 						self.showTutorial();
@@ -127,6 +129,8 @@ define([
 
 				AppRouter.view  = new EditorView({pageId: pageId});
 				AppRouter.view.setElement(cleanDiv).render();
+
+				self.trigger('editor-loaded');
 
 				olark('api.box.hide');
 				self.changeTitle(AppRouter.view.title);
