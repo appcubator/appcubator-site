@@ -5805,3 +5805,21 @@ color: #fff;
   padding-top: 20%;
   text-align: center;
 }
+
+.popover {
+  border: 2px solid rgba(200, 0, 0, 0.4);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(200, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(200, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(200, 0, 0, 0.2)
+}
+.popover.left .arrow {
+  border-left-color: rgba(200, 0, 0, 0.4);
+}
+
+.tour-container h3 { 
+  font-size: 18px;
+  margin: 0 8px 4px 8px;
+}
