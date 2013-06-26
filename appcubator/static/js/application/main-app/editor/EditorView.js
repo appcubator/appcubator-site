@@ -110,7 +110,7 @@ function( PageModel,
       this.galleryEditor.render();
       this.widgetsManager.render();
       this.navbar.render();
-      $('#elements-container').append(this.footer.render().el);
+      $('#footer-container').append(this.footer.render().el);
       this.guides.setElement($('#elements-container')).render();
 
       $('#elements-container').append(this.marqueeView.el);
@@ -268,7 +268,7 @@ function( PageModel,
     },
 
     setupPageHeight: function() {
-      var height = (this.model.getHeight() + 4) * 15 + 100;
+      var height = (this.model.getHeight() + 4) * 15;
       if(height < 800) height = 800;
       this.$el.find('#elements-container').css('height', height);
     }

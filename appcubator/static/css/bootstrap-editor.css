@@ -3852,3 +3852,11 @@ ul.list {
 .modal.deploy img {
   height: 300px;
 }
+
+#footer {
+  position: static;
+}
+
+#edit-footer-btn {
+  margin-bottom: 18px; 
+}

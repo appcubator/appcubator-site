@@ -394,7 +394,7 @@ Templates.footerTemp = [
               '<ul class="footer-links" id="links">',
               '</ul>',
               '<p id="customText" class="footer-text muted"></p>',
-              '<button class="edit-footer btn btn-small btn-inverse pull-right">Edit Footer</button>',
+              '<button class="edit-footer btn btn-small btn-inverse pull-right" id="edit-footer-btn">Edit Footer</button>',
             '</div>',
             '<div class="clearfix"></div>',
         '</div>'
