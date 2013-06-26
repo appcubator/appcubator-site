@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, RouteLog
 from email.sendgrid_email import send_email
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
@@ -46,6 +46,14 @@ def app_welcome(request):
 
 
 def app_noob_page(request):
+    #log url route
+    user_id = request.user.id
+    page_name = 'welcome'
+    app_id = 0
+    log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
+    log.full_clean()
+    log.save()
+
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
     mobile_themes = UITheme.get_mobile_themes()
@@ -68,6 +76,13 @@ def app_noob_page(request):
 @login_required
 def app_new(request, is_racoon = False):
     if request.method == 'GET':
+        #log url route
+        user_id = request.user.id
+        page_name = 'welcome'
+        app_id = 0
+        log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
+        log.full_clean()
+        log.save()
         return render(request, 'apps-new.html')
     elif request.method == 'POST':
         app_name = "Unnamed"
@@ -91,6 +106,12 @@ def app_new(request, is_racoon = False):
 
 @login_required
 def app_new_racoon(request, app_id):
+    #log url route
+    user_id = request.user.id
+    page_name = 'welcome'
+    log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
+    log.full_clean()
+    log.save()
     page_context = {}
     app = get_object_or_404(App, id=app_id, owner=request.user)
     page_context['app_id'] = long(app_id)
@@ -112,6 +133,14 @@ def app_new_walthrough(request):
     except Exception, e:
         return render(request,  'apps-new.html', {'old_name': app_name, 'errors': e}, status=400)
     a.save()
+
+    #log url route
+    user_id = request.user.id
+    page_name = 'twitterwalkthrough'
+    log = RouteLog(user_id=user_id, page_name=page_name, app_id=a.id)
+    log.full_clean()
+    log.save()
+
     return redirect(app_page, a.id)
 
 

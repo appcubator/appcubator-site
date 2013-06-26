@@ -17,6 +17,10 @@ import requests
 import traceback
 import datetime
 
+def JSONResponse(serializable_obj, **kwargs):
+    """Just a convenience function, in the middle of horrible code"""
+    return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)
+
 
 @require_POST
 @login_required
