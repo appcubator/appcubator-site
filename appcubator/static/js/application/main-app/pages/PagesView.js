@@ -1,8 +1,8 @@
 define([
   'models/PageModel',
   'collections/PageCollection',
-  'app/UrlView',
-  'app/PageView',
+  'app/pages/UrlView',
+  'app/pages/PageView',
   'mixins/ErrorDialogueView',
   'mixins/BackboneNameBox'
 ],

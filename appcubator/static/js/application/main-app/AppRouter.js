@@ -1,3 +1,4 @@
+
 define([
 		"mixins/SimpleModalView",
 		"mixins/ErrorModalView",
@@ -99,7 +100,7 @@ define([
 		pages: function(appId, tutorial) {
 			var self = this;
 			self.tutorialDirectory = [4];
-			require(['app/PagesView'], function(PagesView){
+			require(['app/pages/PagesView'], function(PagesView){
 				$('.page').fadeIn();
 				self.tutorialDirectory = [5];
 				self.changePage(PagesView, {}, function() {
