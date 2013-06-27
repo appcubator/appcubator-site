@@ -31,7 +31,7 @@ function( TableQueryView,
       var self = this;
       _.bindAll(this);
 
-      if(this.model.get('data').get('container_info').get('action') == "imageslider" ) {
+      if(this.model.getAction() == "imageslider" ) {
         this.listenTo(this.model.get('data').get('container_info').get('slides'), 'add remove change', this.render);
       }
 

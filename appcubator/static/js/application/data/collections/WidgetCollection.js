@@ -34,6 +34,30 @@ function(WidgetModel) {
         return this.push(widgetModel);
       },
 
+      createThirdPartySignup: function(layout, provider, roleStr) {
+        var widget = {};
+
+        widget.type = "thirdpartylogin";
+        widget.layout = layout;
+
+        widget.data = {};
+        widget.data.nodeType = "form";
+        widget.data.class_name = uieState["forms"][0].class_name;
+        widget.data.action = "thirdpartysignup";
+        widget.data.provider = provider;
+        widget.data.content = "Sign Up w/ "+ provider;
+        widget.data.action = "thirdpartylogin";
+        widget.data.signupRole = roleStr;
+        widget.data.goto = "internal://Homepage";
+
+        widget.data.container_info = {};
+
+        var ContainerWidgetModel = require('models/ContainerWidgetModel');
+        var widgetModel = new ContainerWidgetModel(widget);
+
+        return this.push(widgetModel);
+      },
+
       createLoginForm: function(layout, form) {
         var widget = {};
 

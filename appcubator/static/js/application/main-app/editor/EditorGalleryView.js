@@ -106,12 +106,26 @@ define([
       '<span class="name">Login Form</span></li>';
       var tempLocalSignup = '<li id="entity-user-<%- signupRole %>" class="signup authentication">'+
       '<span class="name"><%= signupRole %> Sign Up</span></li>';
+      var tempFacebookSignup = '<li id="entity-user-<%- signupRole %>" class="facebooksignup authentication">'+
+      '<span class="name"><%= signupRole %> Facebook Sign Up</span></li>';
+      var tempTwitterSignup = '<li id="entity-user-<%- signupRole %>" class="twittersignup authentication">'+
+      '<span class="name"><%= signupRole %> Twitter Sign Up</span></li>';
+      var tempLinkedinSignup = '<li id="entity-user-<%- signupRole %>" class="linkedinsignup authentication">'+
+      '<span class="name"><%= signupRole %> LinkedIn Sign Up</span></li>';
 
       $(self.allList).append(tempLocalLogin);
       v1State.get('users').each(function(user) {
         $(self.allList).append(_.template(tempLocalSignup, {signupRole: user.get('name')}));
       });
 
+      if(!v1State.isSingleUser()) {
+        v1State.get('users').each(function(user) {
+          $(self.allList).append(_.template(tempFacebookSignup, {signupRole: user.get('name')}));
+          $(self.allList).append(_.template(tempTwitterSignup, {signupRole: user.get('name')}));
+          $(self.allList).append(_.template(tempLinkedinSignup, {signupRole: user.get('name')}));
+
+        });
+      }
 
       var tempFb = '<li id="entity-user-facebook" class="facebook thirdparty authentication">' +
       '<span class="name">Facebook Login Button</span></li>';
@@ -229,7 +243,14 @@ define([
     },
 
     addFullWidthItem: function(id, className, text, icon) {
+      var li = document.createElement('li');
+      li.className = className;
+      li.id = id;
+      var tempLi = '<span class="<%= icon %>"></span><span class="name"><%= text %></span>';
+      li.innerHTML= _.template(tempLi, { text: text, icon: icon});
+      $(this.allList).append(li);
 
+      return li;
     },
 
     addHalfWidthItem: function(id, className, text, icon) {
@@ -279,6 +300,24 @@ define([
         form = constantContainers[formType];
         return this.widgetsCollection.createThirdPartyLogin(layout, form);
 
+      }
+      else if(/(facebooksignup)/.exec(className)) {
+        var signupRole = id.replace('entity-user-', '');
+        form = constantContainers["Sign Up"];
+
+        return this.widgetsCollection.createThirdPartySignup(layout, "facebook", signupRole);
+      }
+      else if(/(twittersignup)/.exec(className)) {
+        var signupRole = id.replace('entity-user-', '');
+        form = constantContainers["Sign Up"];
+
+        return this.widgetsCollection.createThirdPartySignup(layout, "twitter", signupRole);
+      }
+      else if(/(linkedinsignup)/.exec(className)) {
+        var signupRole = id.replace('entity-user-', '');
+        form = constantContainers["Sign Up"];
+
+        return this.widgetsCollection.createThirdPartySignup(layout, "linkedin", signupRole);
       }
       else if(/(signup)/.exec(className)) {
         var signupRole = id.replace('entity-user-', '');

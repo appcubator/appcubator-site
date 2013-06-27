@@ -10,7 +10,7 @@ function(DataModel, LayoutModel) {
     selected: false,
 
     initialize: function(bone, isNew) {
-      _.bindAll(this, 'isFullWidth');
+      _.bindAll(this);
 
       this.set('type', bone.type||'');
       this.set('layout', new LayoutModel(this.get('layout')));
@@ -104,6 +104,13 @@ function(DataModel, LayoutModel) {
       });
 
       return listOfLinks;
+    },
+
+    getAction:function() {
+      if(this.get('data').has('container_info')) return this.get('data').get('container_info').get('action');
+      else return this.get('data').get('action');
+
+      return;
     },
 
     toJSON : function() {
