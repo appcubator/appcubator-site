@@ -168,7 +168,7 @@ function(WidgetModel) {
         var ContainerWidgetModel = require('models/ContainerWidgetModel');
         var widgetContainerModel = new ContainerWidgetModel(widget, true);
         return this.push(widgetContainerModel);
-      },
+      }
 
     });
 

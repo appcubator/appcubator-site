@@ -320,23 +320,16 @@ define([
       }
       else if (/(current-user)/.exec(className)) {
         var field_id = String(id).replace('current-user-','');
-        field = _(v1State.get('pages').models[pageId].getFields()).find(function(fieldModel) {
+        var field = _(v1State.get('pages').models[pageId].getFields()).find(function(fieldModel) {
           return (fieldModel.cid == field_id);
         });
         //field = v1State.get('users').getCommonProps().get('fields').get(field_id);
 
+        var type = this.getFieldType(field);
+        var content = '{{CurrentUser.'+field.get('name')+'}}';
 
-        entity = v1State.get('users');
-        content =  '{{CurrentUser.'+field.get('name')+'}}';
 
-        widget.type         = "node";
-        widget.data         = {};
-        widget.data         = _.extend(widget.data, uieState[this.getFieldType(field)][0]);
-        widget.data.content =  content;
-        var widgetModel = new WidgetModel(widget);
-        this.widgetsCollection.push(widgetModel);
-
-        return widgetModel;
+        return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
       }
       else if (/(uielement)/.exec(className)){
         var type    = id.replace('type-','');
