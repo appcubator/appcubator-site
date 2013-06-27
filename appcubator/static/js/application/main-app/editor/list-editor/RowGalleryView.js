@@ -36,8 +36,8 @@ function(EditorGalleryView, ElementCollection) {
       var self = this;
       this.allList = this.el;
 
-      this.renderUIElementList();
       this.renderContextEntity();
+      this.renderUIElementList();
 
       this.$el.find('li:not(.ui-draggable)').draggable({
         cursor: "move",

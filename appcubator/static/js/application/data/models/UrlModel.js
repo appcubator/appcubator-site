@@ -32,8 +32,9 @@ define(['backbone'], function(Backbone) {
     },
 
     toJSON: function() {
+      console.log(this.attributes);
       var json = _.clone(this.attributes);
-      json.urlparts = json.urlparts.pluck('value');
+      json.urlparts = this.get('urlparts').pluck('value');
       return json;
     }
   });

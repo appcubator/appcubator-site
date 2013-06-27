@@ -109,12 +109,12 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
       if(!isMobile) {
         var ind = _.indexOf(this.collection.models, model);
         var pageView = new PageView(model, ind, false);
-        this.listView.appendChild(pageView.el);
+        this.listView.appendChild(pageView.render().el);
       }
       else {
         var ind = _.indexOf(this.mobileCollection.models, model);
         var mobilePageView = new PageView(model, ind, true);
-        this.mobileListView.appendChild(mobilePageView.el);
+        this.mobileListView.appendChild(mobilePageView.render().el);
       }
     }
 

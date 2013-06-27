@@ -393,6 +393,7 @@ function() {
   ];
 
   var ind = v1State.get('walkthrough');
+  ind--;
   var currentSteps = steps.slice(ind);
   console.log(currentSteps);
   console.log(ind);

@@ -6,7 +6,7 @@ PageTemplates.tempPage = [
   '<div class="page-menu">',
     '<a class="edit item" href="#"><i class="icon-edit"></i>Edit Page</a>',
     '<a class="delete item"><i class="icon-delete"></i>Delete Page</a>',
-    '<div class="edit-url item"><i class="icon-url"></i>Edit URL</div>',
+    '<div class="edit-url item" <% if(disable_edit_url) { %>style="color: #999"<% } %>><i class="icon-url"></i>Edit URL</div>',
   '</div>'
 ].join('\n');
 

@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}js/test/lib/jasmine-1.3.1/jasmine.css">
+
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-editor.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/widget-editor.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/editor-gallery.css">
+
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/lib/jasmine-1.3.1/jasmine.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/lib/jasmine-1.3.1/jasmine-html.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/src/appState.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/test/src/uieState.js"></script>
+
+  <style type="text/css">
+    #HTMLReporter {
+      position: fixed;
+      top: 120px;
+      width: 400px;
+      height: 500px;
+      left: 50%;
+      margin-left: -300px;
+      margin-bottom: 100px;
+      overflow: scroll;
+      background-color: #fff;
+      border: 1px solid #333;
+      z-index: 2006;
+    }
+  </style>
+
+  <script type="text/javascript">
+
+  var statics = ["image1.png"];
+  var v1State = {};
+  var require = {
+
+    paths: {
+      "jquery" : "{{ STATIC_URL }}js/libs/jquery/jquery",
+      "jquery-ui" : "{{ STATIC_URL }}js/libs/jquery-ui/jquery-ui",
+      "jquery.filedrop" : "{{ STATIC_URL }}js/libs/jquery/jquery.filedrop",
+      "jquery.flexslider" : "{{ STATIC_URL }}js/libs/jquery/jquery.flexslider-min",
+      "underscore" : "{{ STATIC_URL }}js/libs/underscore-amd/underscore",
+      "backbone" : "{{ STATIC_URL }}js/libs/backbone-amd/backbone",
+      "util" : "{{ STATIC_URL }}js/libs/util/util",
+      "util.filepicker" : "{{ STATIC_URL }}js/libs/util/util.filepicker",
+      "comp": "{{ STATIC_URL }}js/libs/util/comp",
+      "bootstrap" : "{{ STATIC_URL }}js/libs/bootstrap/bootstrap",
+      "app" : "{{ STATIC_URL }}js/application/main-app",
+      "editor" : "{{ STATIC_URL }}js/application/main-app/editor",
+      "m-editor" : "{{ STATIC_URL }}js/application/main-app/mobile-editor",
+      "dicts" : "{{ STATIC_URL }}js/application/main-app/dicts",
+      "mixins" : "{{ STATIC_URL }}js/mixins",
+      "key" : "{{ STATIC_URL }}js/libs/keymaster/keymaster",
+      "answer" : "{{ STATIC_URL }}js/libs/answer/answer",
+      "prettyCheckable" : "{{ STATIC_URL }}js/libs/jquery/prettyCheckable",
+      "list" : "{{ STATIC_URL }}js/libs/list",
+      "models" : "{{ STATIC_URL }}js/application/data/models",
+      "collections" : "{{ STATIC_URL }}js/application/data/collections",
+      "tutorial" : "{{ STATIC_URL }}js/application/tutorial",
+      "domReady": "{{ STATIC_URL }}js/test/libs/requirejs/domReady",
+    },
+
+    shim: {
+      "jquery-ui": {
+        exports: "$",
+        deps: ['jquery']
+      },
+      "underscore": {
+        exports: "_"
+      },
+      "backbone": {
+        exports: "Backbone",
+        deps: ["underscore", "jquery"]
+      },
+      "bootstrap" : {
+        deps: ["jquery"]
+      },
+      "answer" : {
+        deps: ["{{ STATIC_URL }}js/libs/answer/lib/natural.js", "underscore", "jquery"]
+      }
+    }
+  };
+
+  </script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript" src="{{ STATIC_URL}}js/libs/requirejs/require.js"></script>
+
+</head>
+
+<body>
+  <div class="page">
+    <div class="container">
+    </div>
+    <div class="container hoff7" id="main-container"></div>
+    <div class="footer"><hr></div>
+  </div>
+</body>
+
+<script type="text/template" id="entities-page">
+<div class="container hoff1" id="entities-page">
+  <div class="span58">
+    <h2 class="pheader">User Tables</h2>
+    <input class="right" id="add-role-form" style="display: none; height: 45px" placeholder="New User Role">
+    <div class="button right" id="add-role">
+      <span class="add-icon"></span><span>Add User Role</span>
+    </div>
+  </div>
+  <hr class="span58 pheader">
+  <div class="span58 hoff1" id="users">
+    <div id="user-entity"></div>
+  </div>
+  <div class="span58 hi1"></div>
+  <div class="span58 hoff2">
+    <h2 class="pheader">Tables</h2>
+    <input class="right" id="add-entity-form" style="display: none; height: 45px" placeholder="New Table">
+    <div class="button right" id="add-entity">
+      <span class="add-icon"></span><span>Add Table</span>
+    </div>
+    <hr class="span58 hoff1">
+  </div>
+  <div class="span58" id="tables"></div>
+  <div class="span58 hi1"></div>
+  <div class="span58 hoff2">
+    <h2 class="pheader">Relations</h2>
+    <div class="button right" id="add-relation">
+      <span class="add-icon"></span><span>Add Relation</span>
+    </div>
+  </div>
+  <hr class="span58 hoff1">
+  <div class="span58" id="relations"></div>
+  <div class="span58" style="height: 45px;"></div>
+</div>
+</script>
+
+<script type="text/javascript">
+
+  require(
+  [
+  "{{ STATIC_URL }}js/test/spec/tablesSpec.js",
+  "{{ STATIC_URL }}js/test/lib/console-runner.js"
+  ],
+  function( document ){
+      // Set up the HTML reporter - this is reponsible for
+      // aggregating the results reported by Jasmine as the
+      // tests and suites are executed.
+      window.consoleReporter = new jasmine.ConsoleReporter();
+      var consoleReporter = window.consoleReporter;
+      jasmine.getEnv().addReporter(consoleReporter);
+      jasmine.getEnv().addReporter(
+      new jasmine.HtmlReporter()
+      );
+
+      // Run all the loaded test specs.
+      jasmine.getEnv().execute();
+
+  });
+
+</script>
+</html>

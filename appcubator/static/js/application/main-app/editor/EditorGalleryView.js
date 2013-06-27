@@ -293,29 +293,21 @@ define([
       }
       else if(/(entity)/.exec(className)) {
         cid  = String(id).replace('entity-','');
+        var entity = v1State.get('tables').get(cid);
 
-        widget.data = {};
+        /*widget.data = {};
         widget.data.container_info = {};
-        widget.data.container_info.entity = v1State.get('tables').get(cid);
+        widget.data.container_info.entity = */
+
         if(/(entity-create-form)/.exec(className)) {
-          widget.type = "form";
-          widget.data.container_info.action = "create";
-          widget.data.container_info.form = {};
-          widget.data.container_info.form.entity = widget.data.container_info.entity.get('name');
+          return this.widgetsCollection.createCreateForm(layout, entity);
         }
         if(/(entity-table)/.exec(className)) {
-          widget.type = "loop";
-          widget.data.container_info.action = "table";
+          return this.widgetsCollection.createTable(layout, entity);
         }
         if(/(entity-list)/.exec(className)) {
-          widget.type = "loop";
-          widget.data.container_info.action = "show";
+          return this.widgetsCollection.createList(layout, entity);
         }
-
-        var widgetContainerModel = new ContainerWidgetModel(widget, true);
-        this.widgetsCollection.push(widgetContainerModel);
-
-        return widgetContainerModel;
       }
       else if (/(current-user)/.exec(className)) {
         var field_id = String(id).replace('current-user-','');

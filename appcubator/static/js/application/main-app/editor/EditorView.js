@@ -205,9 +205,8 @@ function( PageModel,
     },
 
     renderDeployResponse: function(success, responseData, self) {
-      if(success)
-      {
-        new SimpleModalView({ text: 'Your app is available at <a target="_blank" href="'+ responseData.site_url + self.urlModel.getAppendixString() +'">'+ responseData.site_url + self.urlModel.getAppendixString() +'</a><br /><br />You can also see your code on <a target="_blank" href="'+ responseData.github_url +'">Github</a>', img:'happy_engineer.png'});
+      if(success) {
+        new SimpleModalView({ text: 'Your app is available at <a target="_blank" href="'+ responseData.site_url + '/' + self.urlModel.getAppendixString() +'">'+ responseData.site_url + '/' + self.urlModel.getAppendixString() +'</a><br /><br />You can also see your code on <a target="_blank" href="'+ responseData.github_url +'">Github</a>', img:'happy_engineer.png'});
       }
       else
       {
