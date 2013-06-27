@@ -77,6 +77,11 @@ function( TableQueryView,
       this.el.className += ' widget-wrapper span'+width;
       this.el.id = 'widget-wrapper-' + this.model.cid;
 
+      if(this.model.get('data').get('container_info').get('action') == "searchbox") {
+        console.log(this.model.get('data'));
+        this.el.innerHTML = _.template(Templates.searchboxTemp, {entityName: this.model.get('data').get('searchQuery').get('searchOn') });
+      }
+
       if(this.model.get('data').get('container_info').get('action') == "table") {
         var tableDiv = document.createElement('div');
         tableDiv.innerHTML = _.template(Templates.tableNode, this.model.get('data').get('container_info').get('query').attributes);

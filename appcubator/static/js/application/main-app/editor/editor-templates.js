@@ -399,3 +399,11 @@ Templates.footerTemp = [
             '<div class="clearfix"></div>',
         '</div>'
 ].join('\n');
+
+
+Templates.searchboxTemp = [
+'<form class="search-box">',
+'<input type="text" placeholder="Search for  <%= entityName %>…">',
+'<input type="submit" class="btn" value="Search">',
+'</form>'
+].join('\n');

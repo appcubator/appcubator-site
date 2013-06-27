@@ -98,6 +98,9 @@ function(WidgetCollection,
       else if(action == "thirdpartylogin") {
 
       }
+      else if(action == "searchbox") {
+
+      }
       else {
        throw "Action can not be found.";
       }

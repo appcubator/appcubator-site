@@ -295,9 +295,6 @@ define([
         cid  = String(id).replace('entity-','');
         var entity = v1State.get('tables').get(cid);
 
-        /*widget.data = {};
-        widget.data.container_info = {};
-        widget.data.container_info.entity = */
 
         if(/(entity-create-form)/.exec(className)) {
           return this.widgetsCollection.createCreateForm(layout, entity);
@@ -307,6 +304,9 @@ define([
         }
         if(/(entity-list)/.exec(className)) {
           return this.widgetsCollection.createList(layout, entity);
+        }
+        if(/(entity-searchbox)/.exec(className)) {
+          return this.widgetsCollection.createSearchbox(layout, entity);
         }
       }
       else if (/(current-user)/.exec(className)) {

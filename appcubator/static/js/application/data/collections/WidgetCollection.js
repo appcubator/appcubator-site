@@ -120,7 +120,7 @@ function() {
         return this.push(widgetContainerModel);
       },
 
-      createList:function(layout, entity) {
+      createList: function(layout, entity) {
         var widget = {};
         widget.type = "loop";
         widget.layout = layout;
@@ -129,6 +129,25 @@ function() {
         widget.data.container_info = {};
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "show";
+
+        var ContainerWidgetModel = require('models/ContainerWidgetModel');
+        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+        return this.push(widgetContainerModel);
+      },
+
+      createSearchbox: function(layout, entity) {
+        var widget = {};
+        widget.type = "search";
+        widget.layout = layout;
+
+        widget.data = {};
+        widget.data.container_info = {};
+        widget.data.container_info.entity = entity;
+        widget.data.container_info.action = "searchbox";
+
+        widget.data.searchQuery = {};
+        widget.data.searchQuery.searchOn = entity.get('name');
+        widget.data.searchQuery.searchFields = entity.get('fields').pluck('name');
 
         var ContainerWidgetModel = require('models/ContainerWidgetModel');
         var widgetContainerModel = new ContainerWidgetModel(widget, true);
