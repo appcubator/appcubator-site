@@ -25,3 +25,4 @@ South==0.7.6
 autopep8
 objgraph
 shell
+markdown2
