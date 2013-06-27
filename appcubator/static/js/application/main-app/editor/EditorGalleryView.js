@@ -175,12 +175,18 @@ define([
       '<span class="wide-text"><%= entity_name %> Search Box</span>',
       '</li>'].join('\n');
 
+      var tempSearchRestulsLi       = ['<li class="entity-searchlist" id="entity-<%= entity_id %>">',
+      '<span class="list-icon"></span>',
+      '<span class="wide-text"><%= entity_name %> Search Results</span>',
+      '</li>'].join('\n');
+
       v1State.get('tables').each(function(entityModel) {
         var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
         $(self.allList).append(_.template(tempCreateFormLi, context));
         $(self.allList).append(_.template(tempTableLi, context));
         $(self.allList).append(_.template(tempListLi, context));
         $(self.allList).append(_.template(tempSearchLi, context));
+        $(self.allList).append(_.template(tempSearchRestulsLi, context));
       });
 
     },
@@ -307,6 +313,9 @@ define([
         }
         if(/(entity-searchbox)/.exec(className)) {
           return this.widgetsCollection.createSearchbox(layout, entity);
+        }
+        if(/(entity-searchlist)/.exec(className)) {
+          return this.widgetsCollection.createSearchList(layout, entity);
         }
       }
       else if (/(current-user)/.exec(className)) {

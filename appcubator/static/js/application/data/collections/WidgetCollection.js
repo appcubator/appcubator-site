@@ -1,8 +1,9 @@
 define([
+  "models/WidgetModel",
   "backbone"
 ],
 
-function() {
+function(WidgetModel) {
 
 
     var WidgetCollection = Backbone.Collection.extend({
@@ -80,10 +81,10 @@ function() {
         widget.layout = layout;
 
         widget.data = {};
-        widget.data         = _.extend(widget.data, uieState[this.getFieldType(field)][0]);
+        widget.data         = _.extend(widget.data, uieState[type][0]);
         widget.data.content =  content;
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
+        var WidgetModel = require('models/WidgetModel');
         var widgetModel = new WidgetModel(widget, true);
         return this.push(widgetModel);
       },
@@ -152,7 +153,22 @@ function() {
         var ContainerWidgetModel = require('models/ContainerWidgetModel');
         var widgetContainerModel = new ContainerWidgetModel(widget, true);
         return this.push(widgetContainerModel);
-      }
+      },
+
+      createSearchList: function(layout, entity) {
+        var widget = {};
+        widget.type = "loop";
+        widget.layout = layout;
+
+        widget.data = {};
+        widget.data.container_info = {};
+        widget.data.container_info.entity = entity;
+        widget.data.container_info.action = "searchlist";
+
+        var ContainerWidgetModel = require('models/ContainerWidgetModel');
+        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+        return this.push(widgetContainerModel);
+      },
 
     });
 

@@ -104,6 +104,10 @@ function(WidgetCollection,
       else if(action == "searchbox") {
 
       }
+      else if(action == 'searchlist') {
+        var rowModel = new RowModel({});
+        this.set('row', rowModel);
+      }
       else {
        throw "Action can not be found.";
       }

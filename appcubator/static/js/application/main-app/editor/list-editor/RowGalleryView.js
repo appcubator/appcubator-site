@@ -106,10 +106,7 @@ function(EditorGalleryView, ElementCollection) {
         top  = this.findTop(e, ui);
       }
 
-      var widget = {};
-      widget.layout = { top: top, left: left, width:80, height: 80};
-      widget.data = {};
-      widget.context = "";
+      var layout = { top: top, left: left, width:80, height: 80};
 
       var targetEl = e.target;
       if(e.target.tagName != "LI") {
@@ -119,7 +116,7 @@ function(EditorGalleryView, ElementCollection) {
       var className = targetEl.className;
       var id = targetEl.id;
 
-      this.createElement(widget, className, id);
+      this.createElement(layout, className, id);
     },
 
     findLeft: function(e, ui) {
