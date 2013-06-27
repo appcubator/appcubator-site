@@ -130,7 +130,7 @@ function( PageModel,
       console.log("SAVING");
       var $el = $('.menu-button.save');
       $el.fadeOut().html("<span>Saving...</span>").fadeIn();
-      var curAppState = v1State.toJSON();
+      var curAppState = _.clone(v1State.toJSON());
       $.ajax({
         type: "POST",
         url: '/app/'+appId+'/state/',
