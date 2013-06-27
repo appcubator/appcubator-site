@@ -100,9 +100,7 @@ display: block;
 
 .banner {
   display: inline-block;
-  /*float: right;*/
   font-family: 'Roboto Slab', serif;
-  /*margin-right: 145px;*/
   font-size: 20px;
   color: #0f2d40;
   vertical-align: top;
@@ -157,7 +155,6 @@ display: block;
  #container {
   width: 60px;
   height: 60px;
-  //margin-left: 145px;
   display: inline-block;
 
   -webkit-perspective : 1000px;

@@ -258,11 +258,10 @@ def app_save_state(request, app, require_valid=True):
 def tutorial_page(request, page_name):
     print(page_name)
     try:
-        file = open('templates/tutorial/html/'+page_name)
+        htmlString = render(request, 'tutorial/html/'+page_name+'.html')
     except Exception, e:
         return HttpResponse("invalid tutorial page", status=400)
     else:
-        htmlString = file.read()
         data = {
             'content': htmlString
         }
