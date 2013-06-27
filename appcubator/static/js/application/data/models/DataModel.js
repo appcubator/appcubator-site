@@ -12,6 +12,8 @@ function(ContentModel,
   var DataModel = Backbone.Model.extend({
 
     initialize: function(bone, isNew) {
+      console.log(bone);
+
       this.set('content_attribs', new ContentModel(bone.content_attribs||{}));
       if(bone.loginRoutes) { this.set('loginRoutes', new LoginRouteCollection(bone.loginRoutes));}
       if(bone.searchQuery) { this.set('searchQuery', new SearchQueryModel(bone.searchQuery)); }

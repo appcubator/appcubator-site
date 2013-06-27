@@ -24,7 +24,8 @@ require.config({
     "tourist": "../../libs/tourist.min",
     "models" : "../data/models",
     "collections" : "../data/collections",
-    "tutorial" : "../tutorial"
+    "tutorial" : "../tutorial",
+    "xrayquire" : "../../libs/xrayquire"
   },
 
   shim: {
@@ -76,7 +77,8 @@ require([
   "bootstrap",
   "util",
   "comp",
-  "tourist"
+  "tourist",
+  "xrayquire"
 ],
 function (AppModel,
           PageCollection,

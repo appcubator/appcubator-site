@@ -210,28 +210,28 @@ define([
 		},
 
 		save: function(e) {
-			$('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
-			appState = v1State.toJSON();
-			$.ajax({
-				type: "POST",
-				url: '/app/'+appId+'/state/',
-				data: JSON.stringify(appState),
-				success: function() {
-					$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
-					setTimeout(function(){
-						$('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
-					},1000);
-				},
-				error: function(data) {
-					if(data.responseText == "ok") return;
-					var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-					if(DEBUG) {
-						content = { text: data.responseText };
-					}
-					new ErrorModalView(content);
-				},
-				dataType: "JSON"
-			});
+			// $('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
+			// appState = v1State.toJSON();
+			// $.ajax({
+			// 	type: "POST",
+			// 	url: '/app/'+appId+'/state/',
+			// 	data: JSON.stringify(appState),
+			// 	success: function() {
+			// 		$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
+			// 		setTimeout(function(){
+			// 			$('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
+			// 		},1000);
+			// 	},
+			// 	error: function(data) {
+			// 		if(data.responseText == "ok") return;
+			// 		var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+			// 		if(DEBUG) {
+			// 			content = { text: data.responseText };
+			// 		}
+			// 		new ErrorModalView(content);
+			// 	},
+			// 	dataType: "JSON"
+			// });
 		},
 
 		showTutorial: function(dir) {

@@ -127,6 +127,7 @@ function( PageModel,
     },
 
     save : function(callback) {
+      console.log("SAVING");
       var $el = $('.menu-button.save');
       $el.fadeOut().html("<span>Saving...</span>").fadeIn();
       var curAppState = v1State.toJSON();

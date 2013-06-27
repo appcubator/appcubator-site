@@ -4,6 +4,7 @@ function() {
 
   var SearchQueryModel = Backbone.Model.extend({
     initialize: function(bone) {
+      console.log(bone);
       this.set("searchFields", new Backbone.Collection(bone.searchFields||[]));
     },
 
