@@ -5581,27 +5581,27 @@ i.icon-url {
   color: #fff;
   border-radius: 6px;
   margin-bottom: 30px;
-  padding: 30px;
+  padding: 20px;
   font-size: 16px;
   padding-bottom: 50px;
   background-image: url('../img/gift.png');
   background-position: 700px center;
   background-repeat: no-repeat;
   background-size: 100px auto;
-  height: 230px;
+  height: 190px;
   overflow: hidden;
   -webkit-transition: height linear 0.4s;
   -moz-transition: height linear 0.4s;
   -o-transition: height linear 0.4s;
   transition: height linear 0.4s;
 
-  animation-delay:0.2s;
-  -webkit-animation-delay:0.2s; /* Safari and Chrome */
-  -webkit-animation:expand-height 400ms linear;
+/*  animation-delay:0.2s;
+*/  -webkit-animation-delay:0.2s; /* Safari and Chrome */
+/*  -webkit-animation:expand-height 400ms linear;
   -moz-animation:expand-height 400ms linear;
   -ms-animation:expand-height 400ms linear;
   -o-animation:expand-height 400ms linear;
-  animation:expand-height 400ms linear;
+  animation:expand-height 400ms linear;*/
 
 
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -5611,20 +5611,13 @@ i.icon-url {
   border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
 }
 
-  @-webkit-keyframes expand-height {
-    0% {
-      /*transform*/
-      height: 0px;
-    }
-    100% {
-      height: 230px;
-    }
-  }
-
-
 .notice h3 {
   color: #fff;
   margin-bottom: 15px;
+}
+
+.notice input[type="checkbox"] {
+  margin-right: 6px;
 }
 
 .notice a {

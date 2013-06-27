@@ -66,23 +66,22 @@ define([
 
       collection.each(function(element) {
         if(element.get('className') == "buttons" ||
-         element.get('className') == "textInputs" ||
-         element.get('className') == "textAreas" ||
-         element.get('className') == "dropdowns") return;
+           element.get('className') == "textInputs" ||
+           element.get('className') == "textAreas" ||
+           element.get('className') == "dropdowns") return;
 
           self.appendUIElement(element);
-
       });
     },
 
     appendUIElement: function(elementModel) {
-      var self = this;
-      var li = document.createElement('li');
-      li.className = 'uielement ' + elementModel.get('className');
-      li.id='type-' + elementModel.get('className');
-      li.innerHTML = '<span class="icon '+  elementModel.get('className') + '"></span><span class="name">'+ elementModel.get('text')+'</span>';
-      $(this.allList).append(li);
+      var className = 'uielement ' + elementModel.get('className');
+      var id='type-' + elementModel.get('className');
+      var icon = 'icon '+  elementModel.get('className');
+      var text = elementModel.get('text');
 
+      var li = this.addHalfWidthItem(id, className, text, icon);
+      var self = this;
       $(li).draggable({
         cursor  : "move",
         cursorAt: { top: 0, left: 0 },
@@ -229,6 +228,21 @@ define([
       });
     },
 
+    addFullWidthItem: function(id, className, text, icon) {
+
+    },
+
+    addHalfWidthItem: function(id, className, text, icon) {
+      var li = document.createElement('li');
+      li.className = className;
+      li.id = id;
+      var tempLi = '<span class="<%= icon %>"></span><span class="name"><%= text %></span>';
+      li.innerHTML= _.template(tempLi, { text: text, icon: icon});
+      $(this.allList).append(li);
+
+      return li;
+    },
+
     dropped : function(e, ui) {
       var left = 0; var top = 1;
 
@@ -254,8 +268,6 @@ define([
 
       var hash, entityCid, formCid, action, formType;
       var entity, form, field;
-      var widget = {};
-      widget.layout = layout;
 
       if(/(login)/.exec(className)) {
         formType = String(id).replace('entity-user-','').replace('_', ' ');
@@ -323,55 +335,29 @@ define([
         var field = _(v1State.get('pages').models[pageId].getFields()).find(function(fieldModel) {
           return (fieldModel.cid == field_id);
         });
-        //field = v1State.get('users').getCommonProps().get('fields').get(field_id);
 
-        var type = this.getFieldType(field);
+        var type    = this.getFieldType(field);
         var content = '{{CurrentUser.'+field.get('name')+'}}';
-
 
         return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
       }
       else if (/(uielement)/.exec(className)){
-        var type    = id.replace('type-','');
-        widget.data = {};
-        widget.data.nodeType = type;
-        widget.type = "node";
-
+        var type = id.replace('type-','');
         if(type == "imageslider") {
-          widget.type = "gallery";
-          widget.data.container_info = {};
-          widget.data.container_info.action = "imageslider";
-          var widgetContainerModel = new ContainerWidgetModel(widget, true);
-          this.widgetsCollection.push(widgetContainerModel);
-          return widgetContainerModel;
+          return widgetsCollection.createImageSlider(layout);
         }
 
         if(type == "twitterfeed") {
-          widget.type = "gallery";
-          widget.data.container_info = {};
-          widget.data.container_info.action = "twitterfeed";
-          var widgetContainerModel = new ContainerWidgetModel(widget, true);
-          this.widgetsCollection.push(widgetContainerModel);
-          return widgetContainerModel;
+          return widgetsCollection.createTwitterFeed(layout);
         }
 
         if(type == "facebookshare") {
-          widget.type = "gallery";
-          widget.data.container_info = {};
-          widget.data.container_info.action="facebookshare";
-          var widgetContainerModel = new ContainerWidgetModel(widget, true);
-          this.widgetsCollection.push(widgetContainerModel);
-          return widgetContainerModel;
+          return widgetsCollection.createFacebookShare(layout);
         }
 
-        widget.data = _.extend(widget.data, uieState[type][0]);
-
-
-        if(this.entity) { widget.context = this.entity.get('name'); }
-
-        var model = new WidgetModel(widget, true);
-        this.widgetsCollection.push(model);
-        return model;
+        var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, null);
+        if(this.entity) widget.set('context', this.entity.get('name'));
+        return widget;
       }
       else {
         console.error("UFO");
@@ -415,5 +401,5 @@ define([
 
   });
 
-return EditorGalleryView;
+  return EditorGalleryView;
 });

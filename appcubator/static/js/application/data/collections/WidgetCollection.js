@@ -82,7 +82,7 @@ function(WidgetModel) {
 
         widget.data = {};
         widget.data         = _.extend(widget.data, uieState[type][0]);
-        widget.data.content =  content;
+        if(content) widget.data.content =  content;
 
         var WidgetModel = require('models/WidgetModel');
         var widgetModel = new WidgetModel(widget, true);
@@ -168,8 +168,52 @@ function(WidgetModel) {
         var ContainerWidgetModel = require('models/ContainerWidgetModel');
         var widgetContainerModel = new ContainerWidgetModel(widget, true);
         return this.push(widgetContainerModel);
-      }
+      },
 
+      createImageSlider: function(layout) {
+        var widgetSignupModel = {};
+        widget.type = "gallery";
+
+        widget.data = {};
+        widget.data.nodeType = "imageslider";
+        widget.data.container_info = {};
+        widget.data.container_info.action = "imageslider";
+
+        var ContainerWidgetModel = require('models/ContainerWidgetModel');
+        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+
+        return this.push(widgetContainerModel);
+      },
+
+      createTwitterFeed: function(layout) {
+        var widgetSignupModel = {};
+        widget.type = "gallery";
+
+        widget.data = {};
+        widget.data.nodeType = "twitterfeed";
+        widget.data.container_info = {};
+        widget.data.container_info.action = "twitterfeed";
+
+        var ContainerWidgetModel = require('models/ContainerWidgetModel');
+        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+
+        return this.push(widgetContainerModel);
+      },
+
+      createFacebookShare: function(layout) {
+        var widgetSignupModel = {};
+        widget.type = "gallery";
+
+        widget.data = {};
+        widget.data.nodeType = "facebookshare";
+        widget.data.container_info = {};
+        widget.data.container_info.action = "facebookshare";
+
+        var ContainerWidgetModel = require('models/ContainerWidgetModel');
+        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+
+        return this.push(widgetContainerModel);
+      }
     });
 
     return WidgetCollection;
