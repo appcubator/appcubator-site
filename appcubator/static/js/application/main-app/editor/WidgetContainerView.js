@@ -78,8 +78,7 @@ function( TableQueryView,
       this.el.id = 'widget-wrapper-' + this.model.cid;
 
       if(this.model.get('data').get('container_info').get('action') == "searchbox") {
-        console.log(this.model.get('data'));
-        this.el.innerHTML = _.template(Templates.searchboxTemp, {entityName: this.model.get('data').get('searchQuery').get('searchOn') });
+        this.el.innerHTML = _.template(Templates.searchboxTemp, {entityName: this.model.get('data').get('container_info').get('searchQuery').get('searchOn') });
       }
 
       if(this.model.get('data').get('container_info').get('action') == "table") {

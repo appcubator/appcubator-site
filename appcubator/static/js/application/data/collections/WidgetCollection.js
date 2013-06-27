@@ -145,9 +145,9 @@ function() {
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "searchbox";
 
-        widget.data.searchQuery = {};
-        widget.data.searchQuery.searchOn = _.clone(entity.get('name'));
-        widget.data.searchQuery.searchFields = entity.get('fields').pluck('name');
+        widget.data.container_info.searchQuery = {};
+        widget.data.container_info.searchQuery.searchOn = _.clone(entity.get('name'));
+        widget.data.container_info.searchQuery.searchFields = entity.get('fields').pluck('name');
 
         var ContainerWidgetModel = require('models/ContainerWidgetModel');
         var widgetContainerModel = new ContainerWidgetModel(widget, true);

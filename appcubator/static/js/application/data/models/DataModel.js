@@ -1,12 +1,10 @@
 define([
   'models/ContentModel',
   'models/ContainerInfoModel',
-  'models/SearchQueryModel',
   'collections/LoginRouteCollection'
 ],
 function(ContentModel,
          ContainerInfoModel,
-         SearchQueryModel,
          LoginRouteCollection) {
 
   var DataModel = Backbone.Model.extend({
@@ -16,7 +14,6 @@ function(ContentModel,
 
       this.set('content_attribs', new ContentModel(bone.content_attribs||{}));
       if(bone.loginRoutes) { this.set('loginRoutes', new LoginRouteCollection(bone.loginRoutes));}
-      if(bone.searchQuery) { this.set('searchQuery', new SearchQueryModel(bone.searchQuery)); }
       if(bone.container_info) {
         this.set('container_info', new ContainerInfoModel(bone.container_info, isNew));
       }

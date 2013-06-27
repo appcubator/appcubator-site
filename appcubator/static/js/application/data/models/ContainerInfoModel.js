@@ -7,6 +7,7 @@ define([
   'models/RowModel',
   'collections/SlideCollection',
   'models/SlideModel',
+  'models/SearchQueryModel',
   'dicts/constant-containers'
 ],
 function(WidgetCollection,
@@ -16,7 +17,8 @@ function(WidgetCollection,
          FormModel,
          RowModel,
          SlideCollection,
-         SlideModel) {
+         SlideModel,
+         SearchQueryModel) {
 
   var ContainerInfoModel = Backbone.Model.extend({
     initialize: function(bone, isNew) {
@@ -34,6 +36,7 @@ function(WidgetCollection,
         }
       }
 
+      if(bone.searchQuery) { this.set('searchQuery', new SearchQueryModel(bone.searchQuery)); }
       if(bone.slides) { this.set('slides', new SlideCollection(bone.slides)); }
       if(bone.row) { this.set('row', new RowModel(bone.row)); }
       if(bone.query) { this.set('query', new QueryModel(bone.query, this.get('entity'))); }
