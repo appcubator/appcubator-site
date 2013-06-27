@@ -78,6 +78,7 @@ urlpatterns += patterns('appcubator.views',
     # special json editor route
     url(r'^app/(\d+)/editor/\d+/debug/$', 'app_json_editor'), # this serves all the app pages
 
+    url(r'^tutorial/([^/]+)/$', 'tutorial_page'),
 
     # the rest
     url(r'^app/(\d+)/', 'app_page'), # this serves all the app pages
