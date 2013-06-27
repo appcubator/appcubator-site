@@ -22,7 +22,7 @@ function(WidgetCollection,
     initialize: function(bone, isNew) {
       _.bindAll(this);
 
-      this.set('uielements', new WidgetCollection(bone.uielements));
+      this.set('uielements', new WidgetCollection(bone.uielements||[]));
 
       if(bone.entity) {
         if(!bone.entity.attributes) {

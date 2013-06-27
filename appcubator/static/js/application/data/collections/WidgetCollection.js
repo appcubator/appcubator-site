@@ -146,7 +146,7 @@ function() {
         widget.data.container_info.action = "searchbox";
 
         widget.data.searchQuery = {};
-        widget.data.searchQuery.searchOn = entity.get('name');
+        widget.data.searchQuery.searchOn = _.clone(entity.get('name'));
         widget.data.searchQuery.searchFields = entity.get('fields').pluck('name');
 
         var ContainerWidgetModel = require('models/ContainerWidgetModel');
