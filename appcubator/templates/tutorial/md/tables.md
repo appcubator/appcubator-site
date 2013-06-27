@@ -1,6 +1,7 @@
-#Tables#
----
+## Tables ##
 
-Your application has a database to store and access information about your users. You can think of it as the compilation of multiple ‘Excel sheets’ within the same ‘Excel workbook’. It's important to classify information well by putting them into the right Excel sheets. 
+Tables augment user roles by defining the entities of the users can. For a community marketplace, a buyer would add products, and sellers would post comments. 
 
-![alt text](http://appcubator.com/static/img/tutorial/User_Table_1.png)
+![alt text](http://appcubator.com/static/img/tutorial/Tables_1.png)
+
+If you want to add tables, press the “add table” button, add your new properties, and define their types. A good rule of thumb for defining tables is if you want the users to have a new function with different properties, then you will need to define a new table.

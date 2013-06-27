@@ -265,7 +265,7 @@ def tutorial_page(request, page_name):
         data = {
             'content': htmlString
         }
-        return render(request, 'tutorial-base.html', data)
+        return render(request, 'tutorial/tutorial-base.html', data)
 
 @login_required
 def uie_state(request, app_id):

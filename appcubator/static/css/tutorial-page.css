@@ -31,25 +31,38 @@ display: block;
   display: inline-block;
 }
 
-.racoon .intro {
+.racoon {
+  background-color: #fff;
+  border-radius: 6px;
+  margin-bottom: 60px;
+  overflow: hidden;
+}
+
+.racoon h1,
+.racoon h2 {
   font-family: 'Roboto Slab', serif;
   text-align: center;
   background-color: #fff;
   color: #4e5665;
-  border: 1px solid #d7d8d9;
   padding: 28px;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  font-size: 18px;
+  font-size: 22px;
+  border-bottom: 1px solid #f7f8f9;
+  width: 100%;
 }
 
-.racoon .question {
+.racoon hr {
+  height: 2px;
+  margin:0;
+  padding: 0;
+  display: none;
+}
+
+.racoon p {
   background-color: #fff;
   color: #4e5665;
-  border: 1px solid #d7d8d9;
-  border-top: 1px solid #f7f8f9;
   padding: 24px;
   min-height: 80px;
+  border-bottom: 1px solid #f7f8f9;
 }
 
 .question p {
@@ -278,17 +291,24 @@ display: block;
  width: 240px;*/
 }
 
-.menu-list li {
+.menu-list h1 {
+  font-family: 'Open Sans', serif;
   font-weight: bold;
   font-size: 14px;
+  line-height: 20px;
   margin-bottom: 10px;
+  margin-top: 10px;
+  display: block;
 }
 
-.menu-list li li {
+.menu-list h2 {
+  font-family: 'Open Sans', serif;
   font-weight: normal;
   font-size: 12px;
+  line-height: 18px;
   margin-bottom: 0;
   margin-top: 8px;
+  display: block;
 }
 
 .question.centered {
