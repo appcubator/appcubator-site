@@ -99,7 +99,7 @@ def app_new(request, is_racoon = False):
             return render(request,  'apps-new.html', {'old_name': app_name, 'errors': e}, status=400)
         a.save()
         if is_racoon:
-            return redirect(app_new_racoon, a)
+            return redirect(app_new_racoon, a.id)
         else:
             return redirect(app_page, a.id)
 
