@@ -27,9 +27,6 @@ function(UrlView, SimpleModalView) {
       this.isMobile = isMobile;
 
       this.urlModel = pageModel.get('url');
-      this.render();
-
-      this.renderMenu();
     },
 
     render: function() {
@@ -37,12 +34,22 @@ function(UrlView, SimpleModalView) {
       page_context.page_name = this.model.get('name');
       page_context.ind = this.ind;
       page_context.context_text = this.model.getContextSentence();
+      // if this is the homepage view,
+      // mark 'edit url' link as disabled
+      page_context.disable_edit_url = (this.model.get('name') === 'Homepage') ? true : false;
 
       var page = _.template(PageTemplates.tempPage, page_context);
       this.el.innerHTML += page;
+
+      this.renderMenu();
+      return this;
     },
 
     renderUrl: function() {
+      // homepage url can't be edited
+      if(this.model.get('name') === 'Homepage') {
+        return false;
+      }
       var newView =  new UrlView(this.urlModel);
     },
 
