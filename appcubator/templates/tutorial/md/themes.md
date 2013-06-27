@@ -1,5 +1,6 @@
-#Themes#
----
+# Themes #
+
+
 We provide a selection of beautiful themes and all the styles will be available in our internal Editor. Different themes will give your site a different feel – i.e. minimal, professional, classic, or artistic. 
 
 ![alt text](http://appcubator.com/static/img/tutorial/Themes.png)

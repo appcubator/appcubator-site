@@ -1,5 +1,6 @@
 # Pages #
----
+
+
 The pages screen is where you can add and organize pages for your application. You can have as many as you want. For example, for a social network, you will need a homepage, registration page, account page and profile page. You might also need a user-specific gallery or comment board.
 
 ![alt text](http://appcubator.com/static/img/tutorial/Pages.png)

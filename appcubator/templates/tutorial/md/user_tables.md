@@ -1,4 +1,6 @@
 ## User Tables ##
+
+
 User Tables define the different types of User Roles. User Roles reflect the different types of users, and will define the functions that that user can perform. For example, you would want to define the differences between an author, and commenter on a blog/forum, or a buyer and seller on a community marketplace.
 
 ![alt text](http://appcubator.com/static/img/tutorial/User_Table_2.png)

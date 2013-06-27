@@ -1,4 +1,4 @@
-##Domain Settings##
+## Domain Settings ##
 
 
 Domain names are the Internet addresses of websites. Root domains are identified by their domain names with extensions such as .com, .org, etc., (Ex. http://www.example.com) Subdomains are components of root domains that precede the domain name. (Ex. http://subdomain.appcubator.com)

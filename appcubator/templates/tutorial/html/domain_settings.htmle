@@ -4,7 +4,7 @@
 
 <p>Search Engine Optimization or SEO is used to ensure that your website can be found in search engines for words and phrases relevant to what the site is offering, making it easier to connect with new users. </p>
 
-<p><img src="{{STATIC_URL}}/img/tutorial/Domain_Settings.png" alt="alt text" /></p>
+<p><img src="http://appcubator.com/static/img/tutorial/Domain_Settings.png" alt="alt text" /></p>
 
 <ul>
 <li><p>Go to "Change Subdomain" section of Domain &amp; SEO page.

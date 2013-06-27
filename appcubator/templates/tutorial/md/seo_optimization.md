@@ -1,4 +1,4 @@
-##SEO Optimization##
+## SEO Optimization ##
 
 Description is what shows below your title on search engines. 
 
