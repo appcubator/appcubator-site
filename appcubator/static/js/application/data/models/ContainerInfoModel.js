@@ -36,7 +36,6 @@ function(WidgetCollection,
         }
       }
 
-      if(bone.searchQuery) { this.set('searchQuery', new SearchQueryModel(bone.searchQuery)); }
       if(bone.slides) { this.set('slides', new SlideCollection(bone.slides)); }
       if(bone.row) { this.set('row', new RowModel(bone.row)); }
       if(bone.query) { this.set('query', new QueryModel(bone.query, this.get('entity'))); }

@@ -17,6 +17,7 @@ function(ContentModel,
       if(bone.container_info) {
         this.set('container_info', new ContainerInfoModel(bone.container_info, isNew));
       }
+      if(bone.searchQuery) { this.set('searchQuery', new SearchQueryModel(bone.searchQuery)); }
     },
 
     toJSON: function() {

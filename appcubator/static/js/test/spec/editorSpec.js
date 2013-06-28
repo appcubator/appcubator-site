@@ -539,7 +539,7 @@ define([
 
       it('renders the brandName', function() {
         //set brandName to appState name to start
-        var view_brandName = navbar.$('#brand-name').text('thisisirrelevant').text();
+        var view_brandName = navbar.$('#brand-name').text();
         var model_brandName = model.get('brandName') || v1State.get('name');
         expect(model_brandName).toEqual(view_brandName);
       });
@@ -547,8 +547,10 @@ define([
       it('updates the brandName', function() {
         var old_brandname = model.get('brandName') || v1State.get('name');
         model.set('brandName', "DERPY");
-        var brandName = navbar.$('#brand-name').text();
-        expect(model.get('brandName')).toEqual(brandName);
+        var brandName = document.getElementById('brand-name').innerText;
+        console.log(AppRouter.view.navbar.$('#brand-name'));
+        console.log(brandName);
+        expect("DERPY").toEqual(brandName);
       });
 
       it('renders correct number of elements', function() {
@@ -593,8 +595,8 @@ define([
       it('updates the custom text', function() {
         var old_customText = model.get('customText') || "Add custom footer text here";
         model.set('customText', "DERPY");
-        var customText = footer.$('#customText').text();
-        expect(model.get('customText')).toEqual(customText);
+        var customText = document.getElementById('customText').innerText;
+        expect("Derpy").toEqual(customText);
       });
 
       it('renders correct number of elements', function() {
