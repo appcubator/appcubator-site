@@ -5,10 +5,10 @@ define([
 function( WidgetModel,
           LoginRouteCollection) {
 
-  var ContainerWidgetModel = WidgetModel.extend({
+  var WidgetContainerModel = WidgetModel.extend({
 
     initialize: function(bone, isNew) {
-      ContainerWidgetModel.__super__.initialize.call(this, bone, isNew);
+      WidgetContainerModel.__super__.initialize.call(this, bone, isNew);
       _.bindAll(this);
     },
 
@@ -47,5 +47,5 @@ function( WidgetModel,
     }
   });
 
-  return ContainerWidgetModel;
+  return WidgetContainerModel;
 });

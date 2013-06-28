@@ -31,7 +31,6 @@ function() {
 
     render: function() {
       var temp = UrlTemplate.mainTemplate;
-      console.log(this.model.toJSON());
       this.el.innerHTML = _.template(temp, this.model.toJSON());
       this.model.get('urlparts').each(this.appendUrlPartForm);
       this.renderFullUrl();

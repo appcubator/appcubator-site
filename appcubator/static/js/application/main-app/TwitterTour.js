@@ -122,7 +122,6 @@ function() {
       setup: function(tour, options) {
         $('.property-name-input').on('keypress', this.checkField);
         var cid =  v1State.get('tables').getTableWithName("Tweet").cid;
-        console.log(cid);
         v1State.get('tables').getTableWithName("Tweet").get('fields').on('add', function(fieldModel) {
           if(fieldModel.get('name') == "Content") {
             options.propertyCid = fieldModel.cid;
@@ -132,7 +131,6 @@ function() {
             this.remove(fieldModel);
           }
         });
-        console.log($('#table-' + cid).find('.add-property-column').first());
         return { target: $('#table-' + cid).find('.add-property-column').first() };
       },
       teardown: function(tour, options) {
@@ -212,8 +210,6 @@ function() {
           e.stopPropagation();
         }
         else {
-
-          console.log("YARP");
           tour.next();
         }
       },
@@ -221,7 +217,6 @@ function() {
         util.scrollToElement($('#new-relation'));
         var self = this;
         setTimeout(function() {
-          console.log($('.done-relation'));
           $('.done-relation').on('click', self.checkFields);
         }, 500);
         return {  target: $('#new-relation') };
@@ -395,8 +390,6 @@ function() {
   var ind = v1State.get('walkthrough');
   ind--;
   var currentSteps = steps.slice(ind);
-  console.log(currentSteps);
-  console.log(ind);
   var quickTour = new Tourist.Tour({
     steps: currentSteps,
     stepOptions: {

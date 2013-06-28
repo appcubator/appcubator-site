@@ -185,7 +185,6 @@ function(SelectView) {
 
     changeSrc: function(inp) {
       var self = this;
-      console.log(inp);
       if(inp == 'new-image') {
         util.filepicker.openFilePick(self.staticsAdded, self, appId);
       }

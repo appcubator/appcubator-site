@@ -1,13 +1,13 @@
 define([
   'collections/ElementCollection',
-  'models/ContainerWidgetModel',
+  'models/WidgetContainerModel',
   'models/WidgetModel',
   'dicts/default-uielements',
   'dicts/constant-containers',
   'list'
   ],
   function(ElementCollection,
-   ContainerWidgetModel,
+   WidgetContainerModel,
    WidgetModel) {
 
     var EditorGalleryView = Backbone.View.extend({
