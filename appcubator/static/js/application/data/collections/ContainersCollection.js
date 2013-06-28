@@ -1,13 +1,13 @@
 define([
-  'models/ContainerWidgetModel',
+  'models/WidgetContainerModel',
   'backbone'
 ],
-function(ContainerWidgetModel,
+function(WidgetContainerModel,
          Backbone) {
 
   var ContainersCollection = Backbone.Collection.extend({
 
-    model : ContainerWidgetModel,
+    model : WidgetContainerModel,
     selectedEl: null,
 
     initialize: function() {

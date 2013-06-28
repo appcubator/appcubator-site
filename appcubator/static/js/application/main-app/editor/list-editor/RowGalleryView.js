@@ -82,9 +82,7 @@ function(EditorGalleryView, ElementCollection) {
                     '</li>'].join('\n');
       var entityName = this.entity.get('name');
       var entityId = this.entity.cid;
-
       var tableModel = v1State.getTableModelWithName(fieldModel.get('entity_name'));
-      console.log(tableModel);
       _(tableModel.getNormalFields()).each(function(fieldM) {
         var context = { entity_id : entityId, entity_name : entityName,
                         nested_entity_id: tableModel.cid, nested_entity_name: tableModel.get('name'),

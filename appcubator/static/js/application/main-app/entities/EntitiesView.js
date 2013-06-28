@@ -76,7 +76,6 @@ function(TableCollection,
           var elem = new UserTableModel({
             name: e.target.value
           });
-          console.log(elem.toJSON());
           v1State.get('users').add(elem);
         }
 

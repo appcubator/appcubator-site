@@ -44,7 +44,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     redirectChanged: function (e) {
       var cid = e.target.id.replace('redirect-select-','');
       var route = this.model.get(cid);
-      console.log(route);
       route.set('redirect', e.target.value);
     }
 

@@ -153,7 +153,6 @@ function( TableQueryView,
       if(this.model.get('data').get('container_info').has('form')) {
         this.form.innerHTML = '';
         if(!this.model.get('data').has('class_name')) {
-          console.log(uieState["forms"]);
           var className = uieState["forms"][0].class_name;
           this.model.get('data').set('class_name', className);
         }

@@ -2,11 +2,11 @@ define([
   'models/UrlModel',
   'models/NavbarModel',
   'models/FooterModel',
-  'models/ContainerWidgetModel',
+  'models/WidgetContainerModel',
   'models/WidgetModel',
   'collections/WidgetCollection'
 ],
-function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, WidgetCollection) {
+function(UrlModel, NavbarModel, FooterModel, WidgetContainerModel, WidgetModel, WidgetCollection) {
 
   var PageModel = Backbone.Model.extend({
     defaults : {
@@ -35,7 +35,7 @@ function(UrlModel, NavbarModel, FooterModel, ContainerWidgetModel, WidgetModel, 
       this.set('uielements', new WidgetCollection());
       _(bone.uielements).each(function(uielement) {
         if(uielement.container_info) {
-          this.get('uielements').push(new ContainerWidgetModel(uielement));
+          this.get('uielements').push(new WidgetContainerModel(uielement));
         }
         else {
           this.get('uielements').push(new WidgetModel(uielement));

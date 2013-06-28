@@ -99,9 +99,7 @@ function() {
 
     nmrRowsNumberChanged: function(e) {
       util.get('first-rows').checked = true;
-      console.log(e.target.value);
       this.model.set('numberOfRows', parseInt(e.target.value,0));
-      console.log(parseInt(e.target.value,0));
       e.stopPropagation();
     },
 

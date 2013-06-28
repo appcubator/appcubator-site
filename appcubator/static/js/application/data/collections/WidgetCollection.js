@@ -22,8 +22,8 @@ function(WidgetModel) {
         widget.data.content = form.content;
         widget.data.container_info = {};
         widget.data.container_info.action = "thirdpartylogin";
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetModel = new ContainerWidgetModel(widget);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetModel = new WidgetContainerModel(widget);
 
         widgetModel.createLoginRoutes();
 
@@ -52,8 +52,8 @@ function(WidgetModel) {
 
         widget.data.container_info = {};
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetModel = new ContainerWidgetModel(widget);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetModel = new WidgetContainerModel(widget);
 
         return this.push(widgetModel);
       },
@@ -74,8 +74,8 @@ function(WidgetModel) {
         widget.data.container_info.form = form;
         widget.data.container_info.form.entity = 'User';
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetModel = new ContainerWidgetModel(widget);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetModel = new WidgetContainerModel(widget);
         return this.push(widgetModel);
       },
 
@@ -94,8 +94,8 @@ function(WidgetModel) {
         widget.data.container_info.form = form;
         widget.data.container_info.form.signupRole = roleStr;
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetSignupModel = new ContainerWidgetModel(widget);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetSignupModel = new WidgetContainerModel(widget);
         return this.push(widgetSignupModel);
       },
 
@@ -125,8 +125,8 @@ function(WidgetModel) {
         widget.data.container_info.form = {};
         widget.data.container_info.form.entity = entity.get('name');
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetContainerModel = new WidgetContainerModel(widget, true);
         return this.push(widgetContainerModel);
       },
 
@@ -140,8 +140,8 @@ function(WidgetModel) {
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "table";
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetContainerModel = new WidgetContainerModel(widget, true);
         return this.push(widgetContainerModel);
       },
 
@@ -155,8 +155,8 @@ function(WidgetModel) {
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "show";
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetContainerModel = new WidgetContainerModel(widget, true);
         return this.push(widgetContainerModel);
       },
 
@@ -174,8 +174,8 @@ function(WidgetModel) {
         widget.data.searchQuery.searchOn = _.clone(entity.get('name'));
         widget.data.searchQuery.searchFields = entity.get('fields').pluck('name');
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetContainerModel = new WidgetContainerModel(widget, true);
         return this.push(widgetContainerModel);
       },
 
@@ -189,8 +189,8 @@ function(WidgetModel) {
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "searchlist";
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetContainerModel = new WidgetContainerModel(widget, true);
         return this.push(widgetContainerModel);
       },
 
@@ -203,8 +203,8 @@ function(WidgetModel) {
         widget.data.container_info = {};
         widget.data.container_info.action = "imageslider";
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetContainerModel = new WidgetContainerModel(widget, true);
 
         return this.push(widgetContainerModel);
       },
@@ -218,8 +218,8 @@ function(WidgetModel) {
         widget.data.container_info = {};
         widget.data.container_info.action = "twitterfeed";
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetContainerModel = new WidgetContainerModel(widget, true);
 
         return this.push(widgetContainerModel);
       },
@@ -233,8 +233,8 @@ function(WidgetModel) {
         widget.data.container_info = {};
         widget.data.container_info.action = "facebookshare";
 
-        var ContainerWidgetModel = require('models/ContainerWidgetModel');
-        var widgetContainerModel = new ContainerWidgetModel(widget, true);
+        var WidgetContainerModel = require('models/WidgetContainerModel');
+        var widgetContainerModel = new WidgetContainerModel(widget, true);
 
         return this.push(widgetContainerModel);
       }
