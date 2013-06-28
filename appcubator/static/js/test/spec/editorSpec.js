@@ -595,8 +595,8 @@ define([
       it('updates the custom text', function() {
         var old_customText = model.get('customText') || "Add custom footer text here";
         model.set('customText', "DERPY");
-        var customText = document.getElementById('customText').innerText;
-        expect("Derpy").toEqual(customText);
+        var view_customText = footer.$('#customText').text();
+        expect("DERPY").toEqual(view_customText);
       });
 
       it('renders correct number of elements', function() {

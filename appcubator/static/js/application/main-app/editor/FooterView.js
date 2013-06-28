@@ -25,7 +25,7 @@ function(FooterEditorView) {
 
     render: function() {
       var self = this;
-      this.el.innerHTML += _.template(Templates.footerTemp, {});
+      this.el.innerHTML = _.template(Templates.footerTemp, {});
 
       this.$el.find('#customText').html(this.model.get('customText'));
 
