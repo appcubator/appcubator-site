@@ -19,7 +19,6 @@ function(
       this.set('actions', new ActionCollection(bone.actions || []));
 
       if(bone.loginRoutes) { this.set('loginRoutes', new LoginRouteCollection(bone.loginRoutes));}
-      if(!bone.goto || !_.isString(bone.goto)) { bone.goto = "internal://Homepage"; }
       if(bone.goto) {
         var name = bone.goto.replace('internal://','');
         var parts = name.split('/?');
@@ -123,7 +122,7 @@ function(
       var json = _.clone(this.attributes);
       json.name = json.name || "";
       json.fields = this.get('fields').toJSON();
-      json.goto = json.goto.toJSON();
+      if(json.goto) json.goto = json.goto.toJSON();
       return json;
     }
 
