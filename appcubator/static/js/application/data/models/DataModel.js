@@ -1,11 +1,13 @@
 define([
   'models/ContentModel',
   'models/ContainerInfoModel',
-  'collections/LoginRouteCollection'
+  'collections/LoginRouteCollection',
+  'models/SearchQueryModel'
 ],
 function(ContentModel,
          ContainerInfoModel,
-         LoginRouteCollection) {
+         LoginRouteCollection,
+         SearchQueryModel) {
 
   var DataModel = Backbone.Model.extend({
 

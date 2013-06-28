@@ -7,7 +7,6 @@ define([
   'models/RowModel',
   'collections/SlideCollection',
   'models/SlideModel',
-  'models/SearchQueryModel',
   'dicts/constant-containers'
 ],
 function(WidgetCollection,
