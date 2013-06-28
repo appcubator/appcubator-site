@@ -103,14 +103,13 @@ function(WidgetCollection,
 
       }
       else if(action == 'searchlist') {
-        var rowModel = new RowModel({});
+        var rowModel   = new RowModel({});
         var queryModel = new QueryModel({}, this.get('entity'));
         this.set('row', rowModel);
         this.set('search', queryModel);
-
       }
       else {
-       throw "Action can not be found.";
+        throw "Action can not be found.";
       }
     },
 
