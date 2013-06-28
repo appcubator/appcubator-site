@@ -76,6 +76,9 @@ function(WidgetModel) {
 
         var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetModel = new WidgetContainerModel(widget);
+        console.log(widgetModel.getForm());
+        widgetModel.getForm().createLoginRoutes();
+
         return this.push(widgetModel);
       },
 
@@ -173,6 +176,7 @@ function(WidgetModel) {
 
         widget.data.searchQuery = {};
         widget.data.searchQuery.searchOn = _.clone(entity.get('name'));
+        widget.data.searchQuery.searchPage = "Homepage";
         widget.data.searchQuery.searchFields = entity.get('fields').pluck('name');
 
         var WidgetContainerModel = require('models/WidgetContainerModel');

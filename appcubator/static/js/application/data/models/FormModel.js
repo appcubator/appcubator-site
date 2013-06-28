@@ -118,10 +118,21 @@ function(
       return listOfPages;
     },
 
+    createLoginRoutes: function() {
+      this.set('loginRoutes', new LoginRouteCollection());
+      v1State.get('users').each(function(userModel) {
+          this.get('loginRoutes').push({
+            role: userModel.get('name'),
+            redirect: "internal://Homepage"
+          });
+      }, this);
+    },
+
     toJSON: function() {
       var json = _.clone(this.attributes);
       json.name = json.name || "";
       json.fields = this.get('fields').toJSON();
+      if(json.loginRoutes) json.loginRoutes = json.loginRoutes.toJSON();
       if(json.goto) json.goto = json.goto.toJSON();
       return json;
     }

@@ -22,6 +22,10 @@ function( WidgetModel,
       }, this);
     },
 
+    getForm: function() {
+      return this.get('data').get('container_info').get('form');
+    },
+
     getLoginRoutes: function() {
       var loginRoutes;
 
