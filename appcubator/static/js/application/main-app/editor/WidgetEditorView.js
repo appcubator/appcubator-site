@@ -151,9 +151,7 @@ function(WidgetContentEditor,
 
     openFormEditor: function() {
       var entityModel = this.model.get('data').get('container_info').get('form').get('entity');
-      console.log(entityModel);
       if(_.isString(entityModel)) entityModel = v1State.getTableModelWithName(entityModel);
-      console.log(entityModel);
       new FormEditorView(this.model.get('data').get('container_info').get('form'), entityModel);
     },
 

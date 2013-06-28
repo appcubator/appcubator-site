@@ -104,7 +104,10 @@ function(WidgetCollection,
       }
       else if(action == 'searchlist') {
         var rowModel = new RowModel({});
+        var queryModel = new QueryModel({}, this.get('entity'));
         this.set('row', rowModel);
+        this.set('search', queryModel);
+
       }
       else {
        throw "Action can not be found.";
@@ -117,6 +120,7 @@ function(WidgetCollection,
       if(json.slides) json.slides = json.slides.toJSON();
       if(json.form) json.form = json.form.toJSON();
       if(json.query) json.query = this.get('query').toJSON();
+      if(json.search) json.search = this.get('search').toJSON();
       if(json.searchQuery) json.searchQuery = json.searchQuery.toJSON();
       if(this.has('row')) json.row = this.get('row').toJSON();
       if(this.has('entity')) {
