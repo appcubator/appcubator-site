@@ -41,6 +41,7 @@ function( WidgetModel,
 
       json.layout = this.get('layout').toJSON();
       json.data   = this.get('data').toJSON();
+      if(json.context) delete json.context;
 
       return json;
     }

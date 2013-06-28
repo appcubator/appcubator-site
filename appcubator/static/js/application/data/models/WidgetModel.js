@@ -119,7 +119,7 @@ function(DataModel, LayoutModel) {
 
       json.data = this.get('data').toJSON();
       json.layout  = this.get('layout').toJSON();
-
+      if(json.context) delete json.context;
       return json;
     }
   });
