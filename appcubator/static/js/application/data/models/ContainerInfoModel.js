@@ -109,7 +109,6 @@ function(WidgetCollection,
         var searchQueryModel = new QueryModel({}, this.get('entity'));
         this.set('row', rowModel);
         this.set('search', searchQueryModel);
-        this.set('query', queryModel);
       }
       else {
         throw "Action can not be found.";
