@@ -25,11 +25,11 @@ scope: r_fullprofile r_emailaddress
       <div class="sign-up-container span22 hoff1 offset4">
         <form method="POST" class="left" id="signup" class="span46 offset6" action="{% url appcubator.base_views.signup %}">
           <div class="left">
-            <input class="span10" name="name" type="text" placeholder="Name..."><br>
+            <input class="span10" id="inp-name" name="name" type="text" placeholder="Name..."><br>
             <div class="form-error field-name-first_name"></div>
           </div>
           <div class="left">
-            <input class="span10" name="email" type="text" placeholder="Email..."><br>
+            <input class="span10" id="inp-email" name="email" type="text" placeholder="Email..."><br>
             <div class="form-error field-name-email"></div>
           </div>
           <div class="left ">
@@ -55,4 +55,5 @@ scope: r_fullprofile r_emailaddress
 {% endblock %}
 
 {% block js %}
+<script data-main="{{ STATIC_URL }}js/application/external-pages/signup-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 {% endblock %}

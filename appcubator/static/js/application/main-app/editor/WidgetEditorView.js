@@ -93,6 +93,10 @@ function(WidgetContentEditor,
           this.el.appendChild(this.renderButtonWithText('query-editor-btn', 'Edit Query'));
         }
 
+        if(action == "searchlist") {
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
+        }
+
         if(action == "create") {
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
         }

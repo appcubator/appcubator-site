@@ -22,18 +22,22 @@ function( WidgetModel,
       }, this);
     },
 
+    getForm: function() {
+      return this.get('data').get('container_info').get('form');
+    },
+
     getLoginRoutes: function() {
-      var loginRoutes;
+
+      if(this.get('data').has('loginRoutes')) {
+        return this.get('data').get('loginRoutes');
+      }
 
       if(this.get('data').has('container_info') &&
-         this.get('data').get('container_info').has('form')) {
-        loginRoutes = this.model.get('data').get('container_info').get('form').get('loginRoutes');
-      }
-      else {
-        loginRoutes =this.get('data').get('loginRoutes');
+        this.get('data').get('container_info').has('form')) {
+        return this.get('data').get('container_info').get('form').get('loginRoutes');
       }
 
-      return loginRoutes;
+      return null;
     },
 
     toJSON : function() {
