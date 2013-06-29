@@ -8,7 +8,7 @@ function(WidgetModel) {
 
     var WidgetCollection = Backbone.Collection.extend({
 
-      createThirdPartyLogin: function(layout, form, roleStr) {
+      createThirdPartyLogin: function(layout, provider) {
         var widget = {};
 
         widget.type = "thirdpartylogin";
@@ -17,9 +17,9 @@ function(WidgetModel) {
         widget.data = {};
         widget.data.nodeType = "form";
         widget.data.class_name = uieState["forms"][0].class_name;
-        widget.data.action = form.action;
-        widget.data.provider = form.provider;
-        widget.data.content = form.content;
+        widget.data.action = "thirdpartylogin";
+        widget.data.provider = provider;
+        widget.data.content = "Login w/ Facebook";
         widget.data.container_info = {};
         widget.data.container_info.action = "thirdpartylogin";
         var WidgetContainerModel = require('models/WidgetContainerModel');
@@ -69,9 +69,8 @@ function(WidgetModel) {
         widget.data.class_name = uieState["forms"][0].class_name;
 
         widget.data.container_info = {};
-        widget.data.container_info.entity = form.entity;
-        widget.data.container_info.action = form.action;
-        widget.data.container_info.form = form;
+        widget.data.container_info.action = "login";
+        widget.data.container_info.form = constantContainers["Local Login"];
         widget.data.container_info.form.entity = 'User';
 
         var WidgetContainerModel = require('models/WidgetContainerModel');
@@ -81,7 +80,7 @@ function(WidgetModel) {
         return this.push(widgetModel);
       },
 
-      createSignupForm: function(layout, form, roleStr) {
+      createSignupForm: function(layout, roleStr) {
         var widget = {};
 
         widget.type = 'form';
@@ -92,8 +91,8 @@ function(WidgetModel) {
 
         widget.data.container_info= {};
         widget.data.container_info.entity = v1State.get('users').getUserTableWithName(roleStr);
-        widget.data.container_info.action = form.action;
-        widget.data.container_info.form = form;
+        widget.data.container_info.action = "signup";
+        widget.data.container_info.form = constantContainers['Sign Up'];
         widget.data.container_info.form.signupRole = roleStr;
 
         var WidgetContainerModel = require('models/WidgetContainerModel');
@@ -111,7 +110,7 @@ function(WidgetModel) {
         if(content) widget.data.content =  content;
 
         var WidgetModel = require('models/WidgetModel');
-        var widgetModel = new WidgetModel(widget, true);
+        var widgetModel = new WidgetModel(widget);
         return this.push(widgetModel);
       },
 
@@ -129,7 +128,8 @@ function(WidgetModel) {
         widget.data.container_info.form.goto = "internal://Homepage";
 
         var WidgetContainerModel = require('models/WidgetContainerModel');
-        var widgetContainerModel = new WidgetContainerModel(widget, true);
+        var widgetContainerModel = new WidgetContainerModel(widget);
+        widgetContainerModel.getForm().fillWithProps(entity);
         return this.push(widgetContainerModel);
       },
 
@@ -142,9 +142,10 @@ function(WidgetModel) {
         widget.data.container_info = {};
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "table";
+        widget.data.container_info.query = {};
 
         var WidgetContainerModel = require('models/WidgetContainerModel');
-        var widgetContainerModel = new WidgetContainerModel(widget, true);
+        var widgetContainerModel = new WidgetContainerModel(widget);
         return this.push(widgetContainerModel);
       },
 
@@ -157,9 +158,11 @@ function(WidgetModel) {
         widget.data.container_info = {};
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "show";
+        widget.data.container_info.row = {};
+        widget.data.container_info.query = {};
 
         var WidgetContainerModel = require('models/WidgetContainerModel');
-        var widgetContainerModel = new WidgetContainerModel(widget, true);
+        var widgetContainerModel = new WidgetContainerModel(widget);
         return this.push(widgetContainerModel);
       },
 
@@ -179,7 +182,7 @@ function(WidgetModel) {
         widget.data.searchQuery.searchFields = entity.get('fields').pluck('name');
 
         var WidgetContainerModel = require('models/WidgetContainerModel');
-        var widgetContainerModel = new WidgetContainerModel(widget, true);
+        var widgetContainerModel = new WidgetContainerModel(widget);
         return this.push(widgetContainerModel);
       },
 
@@ -194,7 +197,7 @@ function(WidgetModel) {
         widget.data.container_info.action = "searchlist";
 
         var WidgetContainerModel = require('models/WidgetContainerModel');
-        var widgetContainerModel = new WidgetContainerModel(widget, true);
+        var widgetContainerModel = new WidgetContainerModel(widget);
         return this.push(widgetContainerModel);
       },
 
@@ -207,8 +210,13 @@ function(WidgetModel) {
         widget.data.container_info = {};
         widget.data.container_info.action = "imageslider";
 
+        widget.data.container_info.slides = [
+          {image : '/static/img/placeholder-slide1.png'},
+          {image : '/static/img/placeholder-slide2.png'}
+        ];
+
         var WidgetContainerModel = require('models/WidgetContainerModel');
-        var widgetContainerModel = new WidgetContainerModel(widget, true);
+        var widgetContainerModel = new WidgetContainerModel(widget);
 
         return this.push(widgetContainerModel);
       },
@@ -223,7 +231,7 @@ function(WidgetModel) {
         widget.data.container_info.action = "twitterfeed";
 
         var WidgetContainerModel = require('models/WidgetContainerModel');
-        var widgetContainerModel = new WidgetContainerModel(widget, true);
+        var widgetContainerModel = new WidgetContainerModel(widget);
 
         return this.push(widgetContainerModel);
       },
@@ -238,7 +246,7 @@ function(WidgetModel) {
         widget.data.container_info.action = "facebookshare";
 
         var WidgetContainerModel = require('models/WidgetContainerModel');
-        var widgetContainerModel = new WidgetContainerModel(widget, true);
+        var widgetContainerModel = new WidgetContainerModel(widget);
 
         return this.push(widgetContainerModel);
       }

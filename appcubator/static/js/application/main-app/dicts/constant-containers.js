@@ -23,7 +23,6 @@ var constantContainers = {
   'Local Login': {
     name: "local login",
     action: "login",
-    entity: "User",
     fields : [
                     {
                         "field_name": "username",

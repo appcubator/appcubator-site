@@ -75,7 +75,7 @@ define([
     },
 
     appendUIElement: function(elementModel) {
-      var className = 'uielement ' + elementModel.get('className');
+      var className = 'uielement';
       var id='type-' + elementModel.get('className');
       var icon = 'icon '+  elementModel.get('className');
       var text = elementModel.get('text');
@@ -97,24 +97,24 @@ define([
 
     renderAuthenticationForms: function() {
       this.addHeaderItem('Authentication');
-      this.addFullWidthItem("entity-user-Local_Login", "login authentication", "Login Form", "local-login");
+      this.addFullWidthItem("entity-user-Local_Login", "login", "Login Form", "local-login");
 
       v1State.get('users').each(function(user) {
-        this.addFullWidthItem("entity-user-" + user.get('name'), "signup authentication",  user.get('name') + " Sign Up", "local-signup");
+        this.addFullWidthItem("entity-user-" + user.get('name'), "signup",  user.get('name') + " Sign Up", "local-signup");
       }, this);
 
       if(!v1State.isSingleUser()) {
         v1State.get('users').each(function(user) {
           var name = user.get('name');
-          this.addFullWidthItem("entity-user-" + name, "facebooksignup authentication", name + " Facebook Sign Up", "facebook");
-          this.addFullWidthItem("entity-user-" + name, "twittersignup authentication", name + " Twitter Sign Up", "twitter");
-          this.addFullWidthItem("entity-user-" + name, "linkedinsignup authentication", name + " LinkedIn Sign Up", "linkedin");
+          this.addFullWidthItem("entity-user-" + name, "facebooksignup", name + " Facebook Sign Up", "facebook");
+          this.addFullWidthItem("entity-user-" + name, "twittersignup", name + " Twitter Sign Up", "twitter");
+          this.addFullWidthItem("entity-user-" + name, "linkedinsignup", name + " LinkedIn Sign Up", "linkedin");
         });
       }
 
-      this.addFullWidthItem("entity-user-facebook", "facebook thirdparty authentication", "Facebook Login Button", "facebook");
-      this.addFullWidthItem("entity-user-twitter", "twitter thirdparty authentication", "Twitter Login Button", "twitter");
-      this.addFullWidthItem("entity-user-linkedin", "linkedin thirdparty authentication", "LinkedIn Login Button", "linkedin");
+      this.addFullWidthItem("entity-user-facebook", "thirdparty", "Facebook Login Button", "facebook");
+      this.addFullWidthItem("entity-user-twitter", "thirdparty", "Twitter Login Button", "twitter");
+      this.addFullWidthItem("entity-user-linkedin", "thirdparty", "LinkedIn Login Button", "linkedin");
     },
 
     renderCurrentUserElements: function() {
@@ -153,6 +153,202 @@ define([
       });
     },
 
+    dropped : function(e, ui) {
+      var left = 0; var top = 1;
+
+      if(e.type != 'click') {
+        left = this.findLeft(e, ui);
+        top  = this.findTop(e, ui);
+      }
+
+      layout = { top: top, left: left };
+
+      var targetEl = e.target;
+      if(e.target.tagName != "LI") {
+        targetEl = e.target.parentNode;
+      }
+
+      var className = targetEl.className;
+      var id = targetEl.id;
+
+      return this.createElement(layout, className, id);
+    },
+
+    createElement: function(layout, className, id) {
+      className = String(className).replace('ui-draggable', '');
+      className = String(className).replace('full-width', '');
+      className = String(className).replace('half-width', '');
+      className = String(className).trim();
+
+      switch(className)
+      {
+        case "login":
+          return this.createLocalLoginForm(layout, id);
+        case "signup":
+          return this.createLocalSignupForm(layout, id);
+        case "thirdparty":
+          return this.createThirdPartyLogin(layout, id);
+        case "facebooksignup":
+          return this.createFacebookSignup(layout, id);
+        case "twittersignup":
+          return this.createTwitterSigup(layout, id);
+        case "linkedinsignup":
+          return this.createLinkedInSignup(layout, id);
+        case "context-entity":
+          return this.createContextEntityNode(layout, id);
+        case "context-nested-entity":
+          return this.createNestedContextEntityNode(layout, id);
+        case "entity-create-form":
+          return this.createCreateForm(layout, id);
+        case "entity-table":
+          return this.createEntityTable(layout, id);
+        case "entity-list":
+          return this.createEntityList(layout, id);
+        case "entity-searchbox":
+          return this.createSearchBox(layout, id);
+        case "entity-searchlist":
+          return this.createSearchList(layout, id);
+        case "current-user":
+          return this.createCurrentUserNode(layout, id);
+        case "uielement":
+          return this.createNode(layout, id);
+        default:
+          throw "Unknown type dropped to the editor.";
+      }
+    },
+
+    createLocalLoginForm: function(layout, id) {
+      return this.widgetsCollection.createLoginForm(layout);
+    },
+
+    createLocalSignupForm: function(layout, id) {
+      var signupRole = id.replace('entity-user-', '');
+      return this.widgetsCollection.createSignupForm(layout, signupRole);
+    },
+
+    createThirdPartyLogin: function(layout, id) {
+      var provider = String(id).replace('entity-user-','').replace('_', ' ');
+      return this.widgetsCollection.createThirdPartyLogin(layout, provider);
+    },
+
+    createFacebookSignup: function(layout, id) {
+      var signupRole = id.replace('entity-user-', '');
+      return this.widgetsCollection.createThirdPartySignup(layout, "facebook", signupRole);
+    },
+
+    createTwitterSigup: function(layout, id) {
+      var signupRole = id.replace('entity-user-', '');
+      return this.widgetsCollection.createThirdPartySignup(layout, "twitter", signupRole);
+    },
+
+    createLinkedInSignup: function(layout, id) {
+      var signupRole = id.replace('entity-user-', '');
+      return this.widgetsCollection.createThirdPartySignup(layout, "linkedin", signupRole);
+    },
+
+    createContextEntityNode: function(layout, id) {
+      var hash = String(id).replace('context-field-','').split('-');
+      var entityM = v1State.get('tables').get(hash[0]);
+      var fieldM = entity.get('fields').get(hash[1]);
+
+      var displayType = this.getFieldType(field);
+      var editorContext = this.editorContext ? this.editorContext : "page";
+      var content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+'}}';
+
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
+    },
+
+    createNestedContextEntityNode: function(layout, id) {
+      var hash = String(id).replace('context-field-','').split('-');
+      var entity = v1State.get('tables').get(hash[0]);
+      var nested_entity = v1State.getTableModelWithCid(hash[1]);
+      var field = nested_entity.getFieldsColl().get(hash[2]);
+
+      var type = this.getFieldType(field);
+      var editorContext = this.editorContext ? this.editorContext : "page";
+      var content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ nested_entity.get('name') + '.' +field.get('name')+'}}';
+
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
+    },
+
+    createCreateForm: function(layout, id) {
+      var cid = String(id).replace('entity-','');
+      var entity = v1State.get('tables').get(cid);
+      return this.widgetsCollection.createCreateForm(layout, entity);
+    },
+
+    createEntityTable: function(layout, id) {
+      var cid = String(id).replace('entity-','');
+      var entity = v1State.get('tables').get(cid);
+      return this.widgetsCollection.createCreateForm(layout, entity);
+    },
+
+    createEntityList: function(layout, id) {
+      var cid = String(id).replace('entity-','');
+      var entity = v1State.get('tables').get(cid);
+      return this.widgetsCollection.createCreateForm(layout, entity);
+    },
+
+    createSearchbox: function(layout, id) {
+      var cid = String(id).replace('entity-','');
+      var entity = v1State.get('tables').get(cid);
+      return this.widgetsCollection.createCreateForm(layout, entity);
+    },
+
+    createSearchList: function(layout, id) {
+      var cid = String(id).replace('entity-','');
+      var entity = v1State.get('tables').get(cid);
+      return this.widgetsCollection.createCreateForm(layout, entity);
+    },
+
+    createCurrentUserNode: function(layout, id) {
+      var field_id = String(id).replace('current-user-','');
+      var field = _(v1State.get('pages').models[pageId].getFields()).find(function(fieldModel) {
+        return (fieldModel.cid == field_id);
+      });
+
+      var type    = this.getFieldType(field);
+      var content = '{{CurrentUser.'+field.get('name')+'}}';
+
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
+    },
+
+    createNode: function(layout, id) {
+      var type = id.replace('type-','');
+      if(type == "imageslider") {
+        return widgetsCollection.createImageSlider(layout);
+      }
+
+      if(type == "twitterfeed") {
+        return widgetsCollection.createTwitterFeed(layout);
+      }
+
+      if(type == "facebookshare") {
+        return widgetsCollection.createFacebookShare(layout);
+      }
+
+      var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, null);
+      widget.setupPageContext(v1State.getCurrentPage());
+      return widget;
+    },
+
+    findLeft: function(e, ui) {
+      var offsetLeft = document.getElementById('elements-container').offsetLeft;
+      var left = Math.round((e.pageX - offsetLeft)/GRID_WIDTH);
+      if(left < 0) left = 0;
+      if(left + 4 > 12) left = 8;
+
+      return left;
+    },
+
+    findTop: function(e, ui) {
+      var offsetScrolledTop = $('#elements-container').offset().top;
+      var top  = Math.round((e.pageY - offsetScrolledTop)/GRID_HEIGHT);
+      if(top < 0) top = 0;
+
+      return top;
+    },
+
     addFullWidthItem: function(id, className, text, icon) {
       var li = document.createElement('li');
       li.className = className+' full-width';
@@ -182,175 +378,15 @@ define([
       $(this.allList).append(li);
     },
 
-    dropped : function(e, ui) {
-      var left = 0; var top = 1;
-
-      if(e.type != 'click') {
-        left = this.findLeft(e, ui);
-        top  = this.findTop(e, ui);
-      }
-
-      layout = { top: top, left: left };
-
-      var targetEl = e.target;
-      if(e.target.tagName != "LI") {
-        targetEl = e.target.parentNode;
-      }
-
-      var className = targetEl.className;
-      var id = targetEl.id;
-
-      return this.createElement(layout, className, id);
-    },
-
-    createElement: function(layout, className, id) {
-
-      var hash, entityCid, formCid, action, formType;
-      var entity, form, field;
-
-      if(/(login)/.exec(className)) {
-        formType = String(id).replace('entity-user-','').replace('_', ' ');
-        return this.widgetsCollection.createLoginForm(layout, constantContainers[formType]);
-
-      }
-      else if(/(thirdparty)/.exec(className)) {
-        formType = String(id).replace('entity-user-','').replace('_', ' ');
-        form = constantContainers[formType];
-        return this.widgetsCollection.createThirdPartyLogin(layout, form);
-
-      }
-      else if(/(facebooksignup)/.exec(className)) {
-        var signupRole = id.replace('entity-user-', '');
-        form = constantContainers["Sign Up"];
-
-        return this.widgetsCollection.createThirdPartySignup(layout, "facebook", signupRole);
-      }
-      else if(/(twittersignup)/.exec(className)) {
-        var signupRole = id.replace('entity-user-', '');
-        form = constantContainers["Sign Up"];
-
-        return this.widgetsCollection.createThirdPartySignup(layout, "twitter", signupRole);
-      }
-      else if(/(linkedinsignup)/.exec(className)) {
-        var signupRole = id.replace('entity-user-', '');
-        form = constantContainers["Sign Up"];
-
-        return this.widgetsCollection.createThirdPartySignup(layout, "linkedin", signupRole);
-      }
-      else if(/(signup)/.exec(className)) {
-        var signupRole = id.replace('entity-user-', '');
-        form = constantContainers["Sign Up"];
-
-        return this.widgetsCollection.createSignupForm(layout, form, signupRole);
-      }
-      else if(/(context-entity)/.exec(className)) {
-        hash = String(id).replace('context-field-','').split('-');
-        entity = v1State.get('tables').get(hash[0]);
-        field = entity.get('fields').get(hash[1]);
-
-        var type = this.getFieldType(field);
-        var editorContext = this.editorContext ? this.editorContext : "page";
-        var content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+'}}';
-
-        return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
-      }
-      else if(/(context-nested-entity)/.exec(className)) {
-        hash = String(id).replace('context-field-','').split('-');
-        entity = v1State.get('tables').get(hash[0]);
-        nested_entity = v1State.getTableModelWithCid(hash[1]);
-        field = nested_entity.getFieldsColl().get(hash[2]);
-
-        var type = this.getFieldType(field);
-        var editorContext = this.editorContext ? this.editorContext : "page";
-        var content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ nested_entity.get('name') + '.' +field.get('name')+'}}';
-
-        return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
-      }
-      else if(/(entity)/.exec(className)) {
-        cid  = String(id).replace('entity-','');
-        var entity = v1State.get('tables').get(cid);
-
-
-        if(/(entity-create-form)/.exec(className)) {
-          return this.widgetsCollection.createCreateForm(layout, entity);
-        }
-        if(/(entity-table)/.exec(className)) {
-          return this.widgetsCollection.createTable(layout, entity);
-        }
-        if(/(entity-list)/.exec(className)) {
-          return this.widgetsCollection.createList(layout, entity);
-        }
-        if(/(entity-searchbox)/.exec(className)) {
-          return this.widgetsCollection.createSearchbox(layout, entity);
-        }
-        if(/(entity-searchlist)/.exec(className)) {
-          return this.widgetsCollection.createSearchList(layout, entity);
-        }
-      }
-      else if (/(current-user)/.exec(className)) {
-        var field_id = String(id).replace('current-user-','');
-        var field = _(v1State.get('pages').models[pageId].getFields()).find(function(fieldModel) {
-          return (fieldModel.cid == field_id);
-        });
-
-        var type    = this.getFieldType(field);
-        var content = '{{CurrentUser.'+field.get('name')+'}}';
-
-        return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
-      }
-      else if (/(uielement)/.exec(className)){
-        var type = id.replace('type-','');
-        if(type == "imageslider") {
-          return widgetsCollection.createImageSlider(layout);
-        }
-
-        if(type == "twitterfeed") {
-          return widgetsCollection.createTwitterFeed(layout);
-        }
-
-        if(type == "facebookshare") {
-          return widgetsCollection.createFacebookShare(layout);
-        }
-
-        var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, null);
-        widget.setupPageContext(v1State.getCurrentPage());
-        return widget;
-      }
-      else {
-        throw "Unidentified from Gallery";
-      }
-    },
-
-    findLeft: function(e, ui) {
-      var offsetLeft = document.getElementById('elements-container').offsetLeft;
-      var left = Math.round((e.pageX - offsetLeft)/GRID_WIDTH);
-      if(left < 0) left = 0;
-      if(left + 4 > 12) left = 8;
-
-      return left;
-    },
-
-    findTop: function(e, ui) {
-      var offsetScrolledTop = $('#elements-container').offset().top;
-      var top  = Math.round((e.pageY - offsetScrolledTop)/GRID_HEIGHT);
-      if(top < 0) top = 0;
-
-      return top;
-    },
-
     getFieldType: function (fieldModel) {
-      var type;
-
       switch(fieldModel.get('type')) {
         case "text":
         case "date":
         case "number":
         case "email":
-        type = "texts";
-        break;
+          return "texts";
         case "image":
-        type = "images";
-        break;
+          return "images";
       }
 
       return type;

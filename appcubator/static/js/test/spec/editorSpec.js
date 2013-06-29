@@ -92,7 +92,7 @@ define([
     describe("Local Login Form", function () {
 
       var id = "entity-user-Local_Login";
-      var className = "login authentication ui-draggable";
+      var className = "login ui-draggable";
       var loginForm = document.getElementById(id);
       var model;
 
@@ -127,7 +127,7 @@ define([
     describe("Sign Up Form", function () {
 
       var id = "entity-user-User";
-      var className = "signup authentication ui-draggable";
+      var className = "signup ui-draggable";
       var galleryElement = document.getElementById(id);
       var model;
 
@@ -161,7 +161,7 @@ define([
 
     describe("Facebook Login Form", function () {
       var id = "entity-user-facebook";
-      var className = "facebook thirdparty authentication ui-draggable";
+      var className = "thirdparty ui-draggable";
       var galleryElement = document.getElementById(id);
       var model;
 
@@ -194,7 +194,7 @@ define([
 
     describe("Twitter Login Form", function () {
       var id = "entity-user-twitter";
-      var className = "twitter thirdparty authentication ui-draggable";
+      var className = "thirdparty ui-draggable";
       var galleryElement = document.getElementById(id);
       var model;
 
@@ -227,7 +227,7 @@ define([
 
     describe("LinkedIn Login Form", function () {
       var id = "entity-user-linkedin";
-      var className = "linkedin thirdparty authentication ui-draggable";
+      var className = "thirdparty ui-draggable";
       var galleryElement = document.getElementById(id);
       var model;
 
@@ -349,7 +349,7 @@ define([
     });
 
     describe("Image Node", function () {
-      var className = 'uielement images ui-draggable';
+      var className = 'uielement ui-draggable';
       var id = 'type-images';
       var galleryElement = document.getElementById(id);
       var model;
@@ -379,7 +379,7 @@ define([
     });
 
     describe("Header Node", function () {
-      var className = 'uielement headerTexts ui-draggable';
+      var className = 'uielement ui-draggable';
       var id = 'type-headerTexts';
       var galleryElement = document.getElementById(id);
       var model;
@@ -410,7 +410,7 @@ define([
     });
 
     describe("Text Node", function () {
-      var className = 'uielement texts ui-draggable';
+      var className = 'uielement ui-draggable';
       var id = 'type-texts';
       var galleryElement = document.getElementById(id);
       var model;
@@ -441,7 +441,7 @@ define([
     });
 
     describe("Link Node", function () {
-      var className = 'uielement links ui-draggable';
+      var className = 'uielement ui-draggable';
       var id = 'type-links';
       var galleryElement = document.getElementById(id);
       var model;
@@ -471,7 +471,7 @@ define([
     });
 
     describe("Line Node", function () {
-      var className = 'uielement lines ui-draggable';
+      var className = 'uielement ui-draggable';
       var id = 'type-lines';
       var galleryElement = document.getElementById(id);
       var model;
@@ -502,7 +502,7 @@ define([
     });
 
     describe("Box Node", function () {
-      var className = 'uielement boxes ui-draggable';
+      var className = 'uielement ui-draggable';
       var id = 'type-boxes';
       var galleryElement = document.getElementById(id);
       var model;

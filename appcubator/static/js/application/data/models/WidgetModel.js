@@ -81,7 +81,6 @@ function(DataModel, LayoutModel) {
       var listOfLinks = [];
 
       _(pagesCollection.getContextFreePages()).each(function(page) {
-        console.log(page);
         listOfLinks.push({
           name: page,
           val: "internal://" + page

@@ -216,6 +216,10 @@
   padding-left: 4px;
 }
 
+.half-width .icon {
+  margin-top: 8px;
+}
+
 .half-width .name {
   width: 80px;
   text-align: center;

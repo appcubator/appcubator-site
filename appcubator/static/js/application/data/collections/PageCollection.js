@@ -14,7 +14,6 @@ function(PageModel) {
     getContextFreePageModels: function() {
       var pagesList = [];
       this.each(function(page) {
-        console.log(page);
         if(!page.get('url').get('urlparts').some(function(part) { return (/\{\{([^\}]+)\}\}/g).test(part.get('value')); })) {
           pagesList.push(page);
         }
