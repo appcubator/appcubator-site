@@ -7,20 +7,15 @@ function(PageModel) {
     model : PageModel,
 
     getContextFreePages: function() {
-      var pagesList = [];
-      this.each(function(page) {
-        if(!_.some(page.get('url').get('urlparts'), function(part) { return (/\{\{([^\}]+)\}\}/g).test(part); })) {
-          pagesList.push(page.get('name'));
-        }
-      });
-
+      var pagesList = _(this.getContextFreePageModels()).map(function(pageM) { return pageM.get('name'); });
       return pagesList;
     },
 
     getContextFreePageModels: function() {
       var pagesList = [];
       this.each(function(page) {
-        if(!_.some(page.get('url').get('urlparts'), function(part) { return (/\{\{([^\}]+)\}\}/g).test(part); })) {
+        console.log(page);
+        if(!page.get('url').get('urlparts').some(function(part) { return (/\{\{([^\}]+)\}\}/g).test(part.get('value')); })) {
           pagesList.push(page);
         }
       });

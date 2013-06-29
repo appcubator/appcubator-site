@@ -38,7 +38,7 @@ function( PageModel,
     css: "bootstrap-editor",
 
     events    : {
-      'click #save'          : 'save',
+      'click #editor-save'   : 'save',
       'click #deploy'        : 'deploy',
       'click .menu-button.help' : 'help',
       'click .url-bar'       : 'clickedUrl',

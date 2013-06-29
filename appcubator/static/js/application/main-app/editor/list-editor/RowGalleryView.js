@@ -114,7 +114,8 @@ function(EditorGalleryView, ElementCollection) {
       var className = targetEl.className;
       var id = targetEl.id;
 
-      this.createElement(layout, className, id);
+      var widget = this.createElement(layout, className, id);
+      widget.setupLoopContext(this.entity);
     },
 
     findLeft: function(e, ui) {

@@ -348,23 +348,9 @@ function() {
       }
     },
     {
-      content: '<h3>Alright</h3><p>We can go ahead and start editing our pages. Please click "Edit Page".</p>',
-      my: "left center",
-      at: "right center",
-      setup: function(tour, options) {
-        v1.bind('editor-loaded', function() {
-          tour.next();
-        });
-        return { target: $('.edit.item').first() };
-      },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
       content: '<h3>Welcome to Editor</h3><p>This is the what you see is what you get interface editor. You can freely drag and drop elemetn from the elements on the gallery and position them however you like.</p>',
-      my: "left center",
-      at: "right center",
+      my: "right center",
+      at: "left top",
       nextButton: true,
       setup: function(tour, options) {
         return { target: $('.elements-list').first() };
@@ -379,7 +365,7 @@ function() {
       at: "right center",
       nextButton: true,
       setup: function(tour, options) {
-        return { target: $('#save') };
+        return { target: $('#editor-save') };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;

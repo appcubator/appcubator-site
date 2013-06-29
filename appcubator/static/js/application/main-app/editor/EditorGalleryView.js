@@ -395,7 +395,7 @@ define([
         }
 
         var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, null);
-        if(this.entity) widget.set('context', this.entity.get('name'));
+        widget.setupPageContext(v1State.getCurrentPage());
         return widget;
       }
       else {
