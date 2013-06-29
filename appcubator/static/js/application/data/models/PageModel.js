@@ -22,13 +22,11 @@ function(UrlModel, NavbarModel, FooterModel, WidgetContainerModel, WidgetModel, 
         // homepage shouldn't have a customizable url
         if(this.get('name') === 'Homepage') {
           bone.url.urlparts = [];
-          console.log(bone.url);
         }
         else {
           bone.url.urlparts = [this.get('name') || "Page Name"];
         }
       }
-      console.log(bone.url.urlparts);
       this.set('url', new UrlModel(bone.url||{}));
       this.set('navbar', new NavbarModel(bone.navbar||{}));
       this.set('footer', new FooterModel(bone.footer||{}));

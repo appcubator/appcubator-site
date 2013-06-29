@@ -1,20 +1,3 @@
-.elements-list {
-  width: 100%;
-  display: block;
-  overflow:visible;
-}
-
-.elements-list ul {
-  width: 100%;
-  height: 100%;
-  list-style: none;
-  overflow: visible;
-  padding: 0;
-  padding-bottom: 90px;
-  background-color: #2b3545;
-  color: #fff;
-}
-
 .elements-list ul li {
   display: inline-block;
   width: 80px;
@@ -38,37 +21,13 @@
   cursor: pointer;
 }
 
+.elements-list ul li:hover {
+  background-color: #3a4252;
+}
+
 .elements-list ul li:active {
   border: 1px solid #3b4555;
   border-top: 1px solid #3b4555;
-}
-
-
-.elements-list ul li.entity, .elements-list ul li.authentication {
-  width: 172px;
-  padding: 0;
-  background-repeat: no-repeat;
-  background-position: 12px center;
-  background-size: auto 28px;
-}
-
-.elements-list ul li.entity span, .elements-list ul li.authentication span {
-  display: inline-block;
-  vertical-align: middle;
-  height: 80px;
-  margin-left: 40px;
-  width: 70px;
-  padding-top: 20px;
-}
-
-.elements-list ul li.large span {
-  display: inline-block;
-  vertical-align: middle;
-  height: 80px;
-  margin-left: 40px;
-  width: 90px;
-  padding-top: 20px;
-  line-height: 20px;
 }
 
 .item-gallery {
@@ -106,42 +65,22 @@
     /*-webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.8); */
     background-color: rgba(255,255,255,0.4);
 }
-
-
-.create {
-  background-image: url('../img/plus.png');
-  background-position: 10px center;
-  background-size: 40px 40px;
-  background-repeat: no-repeat;
+.elements-list {
+  width: 100%;
+  display: block;
+  overflow:visible;
 }
 
-.show {
-  background-image: url('../img/list.png');
-  background-position: 10px center;
-  background-size: 40px 40px;
-  background-repeat: no-repeat;
+.elements-list ul {
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  overflow: visible;
+  padding: 0;
+  padding-bottom: 90px;
+  background-color: #2b3545;
+  color: #fff;
 }
-
-.update {
-  background-image: url('../img/update.png');
-  background-position: 10px center;
-  background-size: 40px 40px;
-  background-repeat: no-repeat;
-}
-
-.section ul li:hover {
-  background-color: rgba(59, 69, 85, 0.6);
-}
-
-.section ul li:active {
-  background-color: #1b2535;
-}
-
-.section ul li.selected {
-  border-top-color: #1b2535;
-  background-color: #1b2535;
-}
-
 
 .item-gallery .header:before {
   content: ' ';
@@ -156,192 +95,8 @@
   margin-right: 5px;
 }
 
-.section ul.entities-list li {
-  width: 100%;
-  border: none;
-}
-
-.section ul.entities-list li:hover {
-  background-color: inherit;
-}
-.entities-list li .buttons {
-  padding: 0;
-}
-
-.entities-list li span {
-  display: block;
-  text-align: left;
-  padding-left: 70px;
-  padding-top: 30px;
-  font-size: 16px;
-  width: 100%;
-  height: 80px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  vertical-align: top;
-  z-index: 2;
-
-  border-top: 1px solid #3b4555;
-  border-left: 1px solid #1b2535;
-  border-right: 1px solid #1b2535;
-  border-bottom: 1px solid #1b2535;
-}
-.entities-list li span:hover {
-  background-color: #3b4555;
-}
-
-
-
-.signup, .login {
-  background-image: url('../img/users.png');
-}
-
-.single-data {
-  background-image: url('../img/plus.png');
-}
-
-
-.facebook {
-  background-size: auto 30px !important;
-  background-image: url('../img/facebook_icon.png');
-}
-
-.twitter {
-  background-size: auto 30px !important;
-  background-image: url('../img/twitter_icon.png');
-}
-
-.linkedin {
-  background-size: auto 30px !important;
-  background-image: url('../img/linkedin_icon.png');
-}
-
-
-.create {
-  background-image: url('../img/page_layout_icon&48.png');
-}
-
-.table-gal {
-  background-image: url('../img/table_icon.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-/* Type Specific Props */
-
-.wide-text {
-  vertical-align: top;
-}
-
-.elements-list .uielement {
-  text-align: center;
-  padding-top: 18px;
-}
-
-.elements-list .uielement .icon {
-  display: inline-block;
-  width: 50px;
-  height: 30px;
-
-  margin-bottom: 4px;
-
-  background-repeat: no-repeat;
-  background-image: url('../img/uielement_sprite.png');
-}
-
-.elements-list .uielement .name {
-  display: block;
-}
-
-.icon.buttons { background-position: -10px -25px; }
-.icon.boxes { background-position: -150px -25px; }
-.icon.images { background-position: -220px -25px; }
-.icon.headerTexts { background-position: -290px -25px; }
-.icon.texts { background-position: -360px -25px; }
-.icon.links { background-position: -430px -25px; }
-.icon.textInputs { background-position: -500px -25px; }
-.icon.textAreas { background-position: -570px -25px; }
-.icon.lines { background-position: -640px -25px; }
-.icon.dropdowns { background-position: -710px -25px; }
-.icon.imageslider { background-position: -780px -25px; }
-.icon.facebookshare { background-position: -850px -25px; }
-
-/* current-user */
-.elements-list ul li.current-user {
-  width: 172px;
-  padding-top: 16px;
-}
-
-.elements-list ul li .current-user-icon {
-  display: inline-block;
-  width: 50px;
-  height: 34px;
-  background-repeat: no-repeat;
-  background-image: url('../img/plus.png');
-  background-position: center center;
-  background-size:auto 100% ;
-}
-
-.elements-list ul li span.wide-text {
-  display: inline-block;
-  width: 110px;
-}
-
-/* entity-create-form */
-
-.elements-list ul li.entity-create-form,
-.elements-list ul li.entity-table,
-.elements-list ul li.entity-list {
-  width: 172px;
-  padding-top: 16px;
-}
-.elements-list ul li .create-form-icon,
-.elements-list ul li .table-icon,
-.elements-list ul li .list-icon {
-  width: 50px;
-  height: 34px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size:auto 100% ;
-}
-.elements-list ul li .create-form-icon {
-  background-image: url('../img/page_layout_icon&48.png');
-}
-
-.elements-list ul li .list-icon {
-  background-image: url('../img/list.png');
-}
-
-.elements-list ul li .table-icon {
-  background-image: url('../img/table_icon.png');
-}
 
 /* context-entity-update */
-
-.elements-list ul li.context-entity-update,
-.elements-list ul li.context-entity,
-.elements-list ul li.context-nested-entity {
-  padding-top: 16px;
-  width: 172px;
-}
-
-.elements-list ul li .plus-icon,
-.elements-list ul li .form-icon {
-  width: 50px;
-  height: 34px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size:auto 100% ;
-}
-
-.elements-list ul li .plus-icon {
-  background-image: url('../img/plus.png');
-}
-
-.elements-list ul li .form-icon {
-  background-image: url('../img/page_layout_icon&48.png');
-}
 
 .top-panel-title {
   height: 40px;
@@ -436,7 +191,155 @@
   border: none;
 }
 
-ul.row-elements-list.elements-list {
-  height: 360px;
-  overflow-y: scroll;
+.elements-list .full-width {
+  width: 172px;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-position: 12px center;
+  background-size: auto 28px;
+  color: #fff;
+  line-height: 80px;
+}
+
+.elements-list span {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.elements-list .name {
+  width: 120px;
+  text-align: left;
+  line-height: 14px;
+  padding-top: 20px;
+  height: 80px;
+  padding-right: 8px;
+  padding-left: 4px;
+}
+
+.half-width .name {
+  width: 80px;
+  text-align: center;
+  padding-top: 4px;
+}
+
+
+/* icons */
+
+.elements-list .full-width .icon {
+  width: 50px;
+  height: 34px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 100%;
+  margin-top: 24px;
+}
+
+.icon.create {
+  background-image: url('../img/plus.png');
+  background-position: 10px center;
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+}
+
+.icon.show {
+  background-image: url('../img/list.png');
+  background-position: 10px center;
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+}
+
+.icon.update {
+  background-image: url('../img/update.png');
+  background-position: 10px center;
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+}
+
+
+.icon.local-signup, .icon.local-login {
+  background-image: url('../img/users.png');
+}
+
+.icon.single-data {
+  background-image: url('../img/plus.png');
+}
+
+
+.icon.facebook {
+  background-size: auto 30px !important;
+  background-image: url('../img/facebook_icon.png');
+}
+
+.icon.twitter {
+  background-size: auto 30px !important;
+  background-image: url('../img/twitter_icon.png');
+}
+
+.icon.linkedin {
+  background-size: auto 30px !important;
+  background-image: url('../img/linkedin_icon.png');
+}
+
+
+.icon.create {
+  background-image: url('../img/page_layout_icon&48.png');
+}
+
+.icon.table-gal {
+  background-image: url('../img/table_icon.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+
+.uielement .icon {
+  display: inline-block;
+  width: 50px;
+  height: 30px;
+  margin-bottom: 4px;
+  background-repeat: no-repeat;
+  background-image: url('../img/uielement_sprite.png');
+}
+
+.icon.buttons { background-position: -10px -25px; }
+.icon.boxes { background-position: -150px -25px; }
+.icon.images { background-position: -220px -25px; }
+.icon.headerTexts { background-position: -290px -25px; }
+.icon.texts { background-position: -360px -25px; }
+.icon.links { background-position: -430px -25px; }
+.icon.textInputs { background-position: -500px -25px; }
+.icon.textAreas { background-position: -570px -25px; }
+.icon.lines { background-position: -640px -25px; }
+.icon.dropdowns { background-position: -710px -25px; }
+.icon.imageslider { background-position: -780px -25px; }
+.icon.facebookshare { background-position: -850px -25px; }
+
+.icon.current-user-icon {
+  display: inline-block;
+  width: 50px;
+  height: 34px;
+  background-repeat: no-repeat;
+  background-image: url('../img/plus.png');
+  background-position: center center;
+  background-size:auto 100% ;
+}
+
+.icon.plus-icon {
+  background-image: url('../img/plus.png');
+}
+
+.icon.form-icon {
+  background-image: url('../img/page_layout_icon&48.png');
+}
+
+.elements-list ul li .create-form-icon {
+  background-image: url('../img/page_layout_icon&48.png');
+}
+
+.elements-list ul li .list-icon {
+  background-image: url('../img/list.png');
+}
+
+.elements-list ul li .table-icon {
+  background-image: url('../img/table_icon.png');
 }

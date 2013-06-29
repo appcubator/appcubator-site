@@ -96,157 +96,68 @@ define([
     },
 
     renderAuthenticationForms: function() {
-      var li = document.createElement('li');
-      li.className = 'gallery-header ui-draggable';
-      li.innerHTML = 'Authentication';
-      $(this.allList).append(li);
+      this.addHeaderItem('Authentication');
+      this.addFullWidthItem("entity-user-Local_Login", "login authentication", "Login Form", "local-login");
 
-      var self = this;
-      var tempLocalLogin = '<li id="entity-user-Local_Login" class="login authentication">'+
-      '<span class="name">Login Form</span></li>';
-      var tempLocalSignup = '<li id="entity-user-<%- signupRole %>" class="signup authentication">'+
-      '<span class="name"><%= signupRole %> Sign Up</span></li>';
-      var tempFacebookSignup = '<li id="entity-user-<%- signupRole %>" class="facebooksignup authentication">'+
-      '<span class="name"><%= signupRole %> Facebook Sign Up</span></li>';
-      var tempTwitterSignup = '<li id="entity-user-<%- signupRole %>" class="twittersignup authentication">'+
-      '<span class="name"><%= signupRole %> Twitter Sign Up</span></li>';
-      var tempLinkedinSignup = '<li id="entity-user-<%- signupRole %>" class="linkedinsignup authentication">'+
-      '<span class="name"><%= signupRole %> LinkedIn Sign Up</span></li>';
-
-      $(self.allList).append(tempLocalLogin);
       v1State.get('users').each(function(user) {
-        $(self.allList).append(_.template(tempLocalSignup, {signupRole: user.get('name')}));
-      });
+        this.addFullWidthItem("entity-user-" + user.get('name'), "signup authentication",  user.get('name') + " Sign Up", "local-signup");
+      }, this);
 
       if(!v1State.isSingleUser()) {
         v1State.get('users').each(function(user) {
-          $(self.allList).append(_.template(tempFacebookSignup, {signupRole: user.get('name')}));
-          $(self.allList).append(_.template(tempTwitterSignup, {signupRole: user.get('name')}));
-          $(self.allList).append(_.template(tempLinkedinSignup, {signupRole: user.get('name')}));
-
+          var name = user.get('name');
+          this.addFullWidthItem("entity-user-" + name, "facebooksignup authentication", name + " Facebook Sign Up", "facebook");
+          this.addFullWidthItem("entity-user-" + name, "twittersignup authentication", name + " Twitter Sign Up", "twitter");
+          this.addFullWidthItem("entity-user-" + name, "linkedinsignup authentication", name + " LinkedIn Sign Up", "linkedin");
         });
       }
 
-      var tempFb = '<li id="entity-user-facebook" class="facebook thirdparty authentication">' +
-      '<span class="name">Facebook Login Button</span></li>';
-      $(self.allList).append(tempFb);
-
-      var tempTw = '<li id="entity-user-twitter" class="twitter thirdparty authentication">'+
-      '<span class="name"> Twitter Button</span></li>';
-      $(self.allList).append(tempTw);
-
-      var tempLi = '<li id="entity-user-linkedin" class="linkedin thirdparty authentication">'+
-      '<span class="name">LinkedIn Login Button</span></li>';
-      $(self.allList).append(tempLi);
+      this.addFullWidthItem("entity-user-facebook", "facebook thirdparty authentication", "Facebook Login Button", "facebook");
+      this.addFullWidthItem("entity-user-twitter", "twitter thirdparty authentication", "Twitter Login Button", "twitter");
+      this.addFullWidthItem("entity-user-linkedin", "linkedin thirdparty authentication", "LinkedIn Login Button", "linkedin");
     },
 
     renderCurrentUserElements: function() {
-      var li = document.createElement('li');
-      li.className = 'gallery-header ui-draggable';
-      li.innerHTML = 'Current User';
-      $(this.allList).append(li);
-
-      var self = this;
-      var tempLi = ['<li class="current-user" id="current-user-<%= id %>">',
-      '<span class="current-user-icon"></span>',
-      '<span class="wide-text">Current User <%= field_name %></span>',
-      '</li>'].join('\n');
-
-      _(v1State.get('pages').models[pageId].getFields()).each(function(field) {
+      this.addHeaderItem('Current User');
+      _(v1State.getCurrentPage().getFields()).each(function(field) {
         if(field.isRelatedField()) return;
-        var context = { id : field.cid, field_name : field.get('name') };
-        $(self.allList).append(_.template(tempLi, context));
-      });
+        this.addFullWidthItem('current-user-'+field.cid, 'current-user', 'Current User '+ field.get('name'), 'current-user-icon');
+      }, this);
     },
 
     renderEntitiyFormsTablesLists: function() {
-
-      var li = document.createElement('li');
-      li.className = 'gallery-header ui-draggable';
-      li.innerHTML = 'Table Data';
-      $(this.allList).append(li);
-
-
-      var self = this;
-      var tempCreateFormLi = ['<li class="entity-create-form" id="entity-<%= entity_id %>">',
-      '<span class="create-form-icon"></span>',
-      '<span class="wide-text"><%= entity_name %> Create Form</span>',
-      '</li>'].join('\n');
-
-      var tempTableLi      = ['<li class="entity-table" id="entity-<%= entity_id %>">',
-      '<span class="table-icon"></span>',
-      '<span class="wide-text"><%= entity_name %> Table</span>',
-      '</li>'].join('\n');
-
-      var tempListLi       = ['<li class="entity-list" id="entity-<%= entity_id %>">',
-      '<span class="list-icon"></span>',
-      '<span class="wide-text"><%= entity_name %> List</span>',
-      '</li>'].join('\n');
-
-      var tempSearchLi       = ['<li class="entity-searchbox" id="entity-<%= entity_id %>">',
-      '<span class="list-icon"></span>',
-      '<span class="wide-text"><%= entity_name %> Search Box</span>',
-      '</li>'].join('\n');
-
-      var tempSearchRestulsLi       = ['<li class="entity-searchlist" id="entity-<%= entity_id %>">',
-      '<span class="list-icon"></span>',
-      '<span class="wide-text"><%= entity_name %> Search Results</span>',
-      '</li>'].join('\n');
+      this.addHeaderItem('Table Data');
 
       v1State.get('tables').each(function(entityModel) {
         var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
-        $(self.allList).append(_.template(tempCreateFormLi, context));
-        $(self.allList).append(_.template(tempTableLi, context));
-        $(self.allList).append(_.template(tempListLi, context));
-        $(self.allList).append(_.template(tempSearchLi, context));
-        $(self.allList).append(_.template(tempSearchRestulsLi, context));
-      });
-
+        var id = 'entity-' + entityModel.cid;
+        this.addFullWidthItem(id, "entity-create-form", entityModel.get('name') +' Create Form', 'create-form-icon');
+        this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon');
+        this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon');
+        this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'create-form-icon');
+        this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'list-icon');
+      }, this);
     },
 
     renderContextEntityForms: function() {
+      if(!g_contextCollection.models.length) return;
 
-      if(g_contextCollection.models.length > 0) {
-        var li = document.createElement('li');
-        li.className = 'gallery-header ui-draggable';
-        li.innerHTML = 'Page Context Data';
-        $(this.allList).append(li);
-      }
-
-
-      var self = this;
-      var tempLi = ['<li class="context-entity" id="context-field-<%= entity_id %>-<%= field_id %>">',
-      '<span class="plus-icon"></span>',
-      '<span class="wide-text"><%= entity_name %> <%= field_name %></span>',
-      '</li>'].join('\n');
-
-      var tempLiForm = ['<li class="context-entity-update" id="update-<%= entity_id %>">',
-      '<span class="form-icon"></span>',
-      '<span class="wide-text"><%= entity_name %> Update Form</span>',
-      '</li>'].join('\n');
-
-
+      this.addHeaderItem('Page Context Data');
       g_contextCollection.each(function(entity) {
         var entityName = entity.get('name');
         var entityId = entity.cid;
-        var context = {entity_id : entityId, entity_name : entityName};
-        //$(self.allList).append(_.template(tempLiForm, context));
 
         entity.get('fields').each(function(field) {
-          var context = { entity_id : entityId, entity_name : entityName,
-            field_id : field.cid, field_name: field.get('name') };
-
-            $(self.allList).append(_.template(tempLi, context));
-          });
-
+          this.addFullWidthItem('context-field-'+entityId+'-'+field.cid, 'context-entity', entityName+' '+field.get('name'));
+        }, this);
       });
     },
 
     addFullWidthItem: function(id, className, text, icon) {
       var li = document.createElement('li');
-      li.className = className;
+      li.className = className+' full-width';
       li.id = id;
-      var tempLi = '<span class="<%= icon %>"></span><span class="name"><%= text %></span>';
+      var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
       li.innerHTML= _.template(tempLi, { text: text, icon: icon});
       $(this.allList).append(li);
 
@@ -255,13 +166,20 @@ define([
 
     addHalfWidthItem: function(id, className, text, icon) {
       var li = document.createElement('li');
-      li.className = className;
+      li.className = className+' half-width';
       li.id = id;
       var tempLi = '<span class="<%= icon %>"></span><span class="name"><%= text %></span>';
       li.innerHTML= _.template(tempLi, { text: text, icon: icon});
       $(this.allList).append(li);
 
       return li;
+    },
+
+    addHeaderItem: function(text) {
+      var li = document.createElement('li');
+      li.className = 'gallery-header ui-draggable';
+      li.innerHTML = text;
+      $(this.allList).append(li);
     },
 
     dropped : function(e, ui) {
@@ -399,7 +317,7 @@ define([
         return widget;
       }
       else {
-        console.error("UFO");
+        throw "Unidentified from Gallery";
       }
     },
 

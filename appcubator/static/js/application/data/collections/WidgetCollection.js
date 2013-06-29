@@ -76,7 +76,6 @@ function(WidgetModel) {
 
         var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetModel = new WidgetContainerModel(widget);
-        console.log(widgetModel.getForm());
         widgetModel.getForm().createLoginRoutes();
 
         return this.push(widgetModel);

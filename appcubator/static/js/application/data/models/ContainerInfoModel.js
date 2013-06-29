@@ -121,7 +121,6 @@ function(WidgetCollection,
       if(json.slides) json.slides = json.slides.toJSON();
       if(json.form) json.form = json.form.toJSON();
       if(json.query) json.query = this.get('query').toJSON();
-      console.log(json.search);
       if(json.search) json.search = json.search.toJSON();
       if(json.searchQuery) json.searchQuery = json.searchQuery.toJSON();
       if(this.has('row')) json.row = this.get('row').toJSON();
