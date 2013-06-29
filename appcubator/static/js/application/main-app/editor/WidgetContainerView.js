@@ -149,8 +149,6 @@ function( TableQueryView,
 
       var self = this;
       if(this.model.get('data').get('container_info').has('uielements')) {
-        console.log(this.model);
-        alert('checkout');
         this.model.get('data').get('container_info').get('uielements').each(function(widgetModel) {
           self.placeWidget(widgetModel);
         });
