@@ -1,10 +1,11 @@
 define([
   "models/WidgetModel",
+  "models/WidgetContainerModel",
   "backbone"
 ],
 
-function(WidgetModel) {
-
+function(WidgetModel,
+         WidgetContainerModel) {
 
     var WidgetCollection = Backbone.Collection.extend({
 
@@ -22,7 +23,7 @@ function(WidgetModel) {
         widget.data.content = "Login w/ Facebook";
         widget.data.container_info = {};
         widget.data.container_info.action = "thirdpartylogin";
-        var WidgetContainerModel = require('models/WidgetContainerModel');
+
         var widgetModel = new WidgetContainerModel(widget);
 
         widgetModel.createLoginRoutes();
@@ -52,7 +53,6 @@ function(WidgetModel) {
 
         widget.data.container_info = {};
 
-        var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetModel = new WidgetContainerModel(widget);
 
         return this.push(widgetModel);
@@ -73,7 +73,6 @@ function(WidgetModel) {
         widget.data.container_info.form = constantContainers["Local Login"];
         widget.data.container_info.form.entity = 'User';
 
-        var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetModel = new WidgetContainerModel(widget);
         widgetModel.getForm().createLoginRoutes();
 
@@ -95,7 +94,6 @@ function(WidgetModel) {
         widget.data.container_info.form = constantContainers['Sign Up'];
         widget.data.container_info.form.signupRole = roleStr;
 
-        var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetSignupModel = new WidgetContainerModel(widget);
         return this.push(widgetSignupModel);
       },
@@ -109,7 +107,6 @@ function(WidgetModel) {
         widget.data         = _.extend(widget.data, uieState[type][0]);
         if(content) widget.data.content =  content;
 
-        var WidgetModel = require('models/WidgetModel');
         var widgetModel = new WidgetModel(widget);
         return this.push(widgetModel);
       },
@@ -127,7 +124,6 @@ function(WidgetModel) {
         widget.data.container_info.form.entity = entity.get('name');
         widget.data.container_info.form.goto = "internal://Homepage";
 
-        var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetContainerModel = new WidgetContainerModel(widget);
         widgetContainerModel.getForm().fillWithProps(entity);
         return this.push(widgetContainerModel);
@@ -144,7 +140,6 @@ function(WidgetModel) {
         widget.data.container_info.action = "table";
         widget.data.container_info.query = {};
 
-        var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetContainerModel = new WidgetContainerModel(widget);
         return this.push(widgetContainerModel);
       },
@@ -161,7 +156,6 @@ function(WidgetModel) {
         widget.data.container_info.row = {};
         widget.data.container_info.query = {};
 
-        var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetContainerModel = new WidgetContainerModel(widget);
         return this.push(widgetContainerModel);
       },
@@ -181,7 +175,6 @@ function(WidgetModel) {
         widget.data.searchQuery.searchPage = "Homepage";
         widget.data.searchQuery.searchFields = entity.get('fields').pluck('name');
 
-        var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetContainerModel = new WidgetContainerModel(widget);
         return this.push(widgetContainerModel);
       },
@@ -196,7 +189,6 @@ function(WidgetModel) {
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "searchlist";
 
-        var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetContainerModel = new WidgetContainerModel(widget);
         return this.push(widgetContainerModel);
       },
@@ -215,7 +207,6 @@ function(WidgetModel) {
           {image : '/static/img/placeholder-slide2.png'}
         ];
 
-        var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetContainerModel = new WidgetContainerModel(widget);
 
         return this.push(widgetContainerModel);
@@ -230,7 +221,6 @@ function(WidgetModel) {
         widget.data.container_info = {};
         widget.data.container_info.action = "twitterfeed";
 
-        var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetContainerModel = new WidgetContainerModel(widget);
 
         return this.push(widgetContainerModel);
@@ -245,11 +235,19 @@ function(WidgetModel) {
         widget.data.container_info = {};
         widget.data.container_info.action = "facebookshare";
 
-        var WidgetContainerModel = require('models/WidgetContainerModel');
         var widgetContainerModel = new WidgetContainerModel(widget);
 
         return this.push(widgetContainerModel);
+      },
+
+      addWidgetContainerModel: function(uielementDict) {
+        return this.push(new WidgetContainerModel(uielementDict));
+      },
+
+      addWidgetModel: function(uielementDict) {
+        return this.push(new WidgetModel(uielementDict));
       }
+
     });
 
     return WidgetCollection;

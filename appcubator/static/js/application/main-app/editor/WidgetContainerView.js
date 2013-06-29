@@ -35,7 +35,9 @@ function( TableQueryView,
         this.listenTo(this.model.get('data').get('container_info').get('slides'), 'add remove change', this.render);
       }
 
-      this.model.get('data').get('container_info').get('uielements').bind("add", this.placeWidget);
+      if(this.model.get('data').get('container_info').has('uielements')) {
+        this.model.get('data').get('container_info').get('uielements').bind("add", this.placeWidget);
+      }
 
       var action = this.model.get('data').get('container_info').get('action');
 
@@ -146,9 +148,13 @@ function( TableQueryView,
     renderElements : function() {
 
       var self = this;
-      this.model.get('data').get('container_info').get('uielements').each(function(widgetModel) {
-        self.placeWidget(widgetModel);
-      });
+      if(this.model.get('data').get('container_info').has('uielements')) {
+        console.log(this.model);
+        alert('checkout');
+        this.model.get('data').get('container_info').get('uielements').each(function(widgetModel) {
+          self.placeWidget(widgetModel);
+        });
+      }
 
       if(this.model.get('data').get('container_info').has('form')) {
         this.form.innerHTML = '';

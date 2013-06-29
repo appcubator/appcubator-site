@@ -1,5 +1,4 @@
 define([
-  'collections/WidgetCollection',
   'models/QueryModel',
   'models/TableModel',
   'models/UserTableModel',
@@ -9,8 +8,7 @@ define([
   'models/SlideModel',
   'dicts/constant-containers'
 ],
-function(WidgetCollection,
-         QueryModel,
+function(QueryModel,
          TableModel,
          UserTableModel,
          FormModel,
@@ -23,7 +21,10 @@ function(WidgetCollection,
     initialize: function(bone) {
       _.bindAll(this);
 
-      this.set('uielements', new WidgetCollection(bone.uielements||[]));
+      if(bone.uielements) {
+        var WidgetCollection = require('collections/WidgetCollection');
+        this.set('uielements', new WidgetCollection(bone.uielements||[]));
+      }
 
       if(bone.entity) {
         if(!bone.entity.attributes) {
@@ -48,7 +49,7 @@ function(WidgetCollection,
 
     toJSON: function() {
       var json = _.clone(this.attributes);
-      json.uielements = this.get('uielements').toJSON();
+      if(json.uielements) json.uielements = this.get('uielements').toJSON();
       if(json.slides) json.slides = json.slides.toJSON();
       if(json.form) json.form = json.form.toJSON();
       if(json.query) json.query = this.get('query').toJSON();
