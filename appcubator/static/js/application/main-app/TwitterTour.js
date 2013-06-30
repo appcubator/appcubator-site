@@ -339,7 +339,9 @@ function() {
       at: "right center",
       setup: function(tour, options) {
         v1.bind('editor-loaded', function() {
-          tour.next();
+          setTimeout(function() {
+            tour.next();
+          }, 120);
         });
         return { target: $('.edit.item').first() };
       },
@@ -349,11 +351,11 @@ function() {
     },
     {
       content: '<h3>Welcome to Editor</h3><p>This is the what you see is what you get interface editor. You can freely drag and drop elemetn from the elements on the gallery and position them however you like.</p>',
-      my: "right center",
-      at: "left top",
+      my: "right top",
+      at: "left bottom",
       nextButton: true,
       setup: function(tour, options) {
-        return { target: $('.elements-list').first() };
+        return { target: $('.search-panel') };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
@@ -361,11 +363,125 @@ function() {
     },
     {
       content: '<h3>Saving Your Progress</h3><p>Before you start, please don\'t forget to save your progress by clicking this "Save" button.</p>',
+      my: "top center",
+      at: "bottom center",
+      nextButton: true,
+      setup: function(tour, options) {
+        $('#item-gallery').animate({
+          scrollTop: $("#type-headerTexts").offset().top + 20
+        }, 200);
+
+        return { target: $('#editor-save') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Drag\'n\'Drop</h3><p>Just drag this header text to the page, aaand drop. Feel free to edit the text to something you want!</p>',
+      my: "right center",
+      at: "left center",
+      setup: function(tour, options) {
+
+        v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
+          if(uielem.get('data').get('tagName') == "h1") {
+            tour.next();
+          }
+        });
+
+        return { target: $('#type-headerTexts') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Editing Elements</h3><p>You can change the text or click on "Pick Style" to edit this header.</p>',
       my: "left center",
       at: "right center",
       nextButton: true,
       setup: function(tour, options) {
-        return { target: $('#editor-save') };
+        $('#item-gallery').animate({
+          scrollTop: $("#entity-user-facebook").offset().top + 20
+        }, 200);
+
+        return { target: $('.pick-style') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Time to get some users!</h3><p>Just drag this header text to the page, aaand drop. Feel free to edit the text to something you want!</p>',
+      my: "top center",
+      at: "bottom center",
+      setup: function(tour, options) {
+
+        v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
+          console.log(uielem);
+          if(uielem.get('data').get('action') == "thirdpartylogin") {
+            tour.next();
+          }
+        });
+
+        return { target: $('#entity-user-facebook') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Let\'s move to the other page.</h3><p>Please hover over the page menu and click on "Tweet Feed" to go to the other page.</p>',
+      my: "top center",
+      at: "bottom center",
+      target: $('.menu-button.pages'),
+      setup: function(tour, options) {
+        v1.bind('editor-loaded', function() {
+          setTimeout(function() {
+            tour.next();
+          }, 120);
+        });
+
+        return {target:  $('.menu-button.pages')};
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>A New Page</h3><p>On this page, we would like to put a list of all the Tweet, something like a stream as well as a form to tweet new stuff. Let\'s start with the list first.</p>',
+      my: "right top",
+      at: "left bottom",
+      nextButton: true,
+      setup: function(tour, options) {
+
+        $('#item-gallery').animate({
+          scrollTop: $(".entity-list").offset().top + 20
+        }, 200);
+
+        return { target: $('.search-panel') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Let\'s make a list</h3><p>Drag and drop the Tweet List to the top middle of the page.</p>',
+      my: "right center",
+      at: "left center",
+      nextButton: true,
+      setup: function(tour, options) {
+
+        v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
+          console.log(uielem);
+          if(uielem.get('data').get('action') == "list") {
+            setTimeout(function() {
+              tour.next();
+            }, 120);
+          }
+        });
+
+        return { target: $('.entity-list') };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
