@@ -83,6 +83,7 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/', 'app_page'), # this serves all the app pages
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
+    url(r'^stay/up/to/get/lucky/$', 'admin_home'),
 )
 
 urlpatterns += patterns('appcubator.theme_views',
