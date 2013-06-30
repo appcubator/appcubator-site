@@ -78,7 +78,6 @@ function( PageModel,
 
       var self = this; // for binding deploy to ctrlshiftd
       /* Bindings */
-      keyDispatcher.key('⌘+s, ctrl+s', this.save);
       keyDispatcher.key('⌘+c, ctrl+c', this.copy);
       keyDispatcher.key('⌘+v, ctrl+v', this.paste);
       keyDispatcher.key('⌘+shift+d, ctrl+shift+d', function(){ self.deploy({local:true}); });
@@ -127,38 +126,7 @@ function( PageModel,
     },
 
     save : function(callback) {
-      var $el = $('.menu-button.save');
-      $el.fadeOut().html("<span>Saving...</span>").fadeIn();
-      var curAppState = _.clone(v1State.toJSON());
-      $.ajax({
-        type: "POST",
-        url: '/app/'+appId+'/state/',
-        data: JSON.stringify(curAppState),
-        complete: function() {
-          util.dontAskBeforeLeave();
-        },
-        success: function() {
-          $el.html("<span>Saved</span>").fadeIn();
-          if(typeof(callback) !== 'undefined'&&typeof(callback) == 'function')
-            { callback(); }
-          setTimeout(function(){
-            $el.html("<span>Save</span>").fadeIn();
-          },3000);
-        },
-        error: function(data, t) {
-          var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-          if(DEBUG) {
-            var rData = JSON.parse(data.responseText);
-            var max_length = 500;
-            rData = _.map(rData, function(s) { if(s.length > max_length ) return s.substring(0, max_length); else return s; });
-            content = { text: "<br />Error saving app state<br />" + rData.join('<br />\n') };
-          }
-          //new ErrorModalView(content);
-          new DebugOverlay(content);
-        }
-      });
-
-
+      v1.save();
       return false;
     },
 

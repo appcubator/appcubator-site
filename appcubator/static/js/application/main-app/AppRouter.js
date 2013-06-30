@@ -42,7 +42,7 @@ define([
 				self.showTutorial();
 				window.history.pushState(null, null, window.location.href.concat("tutorial/"));
 			});
-      		keyDispatcher.key('⌘+s, ctrl+s', this.save);
+      keyDispatcher.key('⌘+s, ctrl+s', this.save);
 		},
 
 		index: function (appId, tutorial) {
@@ -210,7 +210,11 @@ define([
 		},
 
 		save: function(e) {
+			console.log("SAVE2");
 			$('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
+			var $el = $('.menu-button.save');
+      $el.fadeOut().html("<span>Saving...</span>").fadeIn();
+
 			appState = v1State.toJSON();
 			$.ajax({
 				type: "POST",
@@ -221,6 +225,13 @@ define([
 					setTimeout(function(){
 						$('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
 					},1000);
+
+					$('.menu-button.save').html("<span>Saved</span>").fadeIn();
+          if(typeof(callback) !== 'undefined'&&typeof(callback) == 'function')
+            { callback(); }
+          setTimeout(function(){
+            $el.html("<span>Save</span>").fadeIn();
+          },3000);
 				},
 				error: function(data) {
 					if(data.responseText == "ok") return;
@@ -232,6 +243,8 @@ define([
 				},
 				dataType: "JSON"
 			});
+
+			if(e) e.preventDefault();
 		},
 
 		showTutorial: function(dir) {
