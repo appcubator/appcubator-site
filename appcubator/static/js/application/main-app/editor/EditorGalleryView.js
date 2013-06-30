@@ -134,8 +134,8 @@ define([
         this.addFullWidthItem(id, "entity-create-form", entityModel.get('name') +' Create Form', 'create-form-icon');
         this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon');
         this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon');
-        this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'create-form-icon');
-        this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'list-icon');
+        this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon');
+        this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon');
       }, this);
     },
 
@@ -289,7 +289,7 @@ define([
       return this.widgetsCollection.createCreateForm(layout, entity);
     },
 
-    createSearchbox: function(layout, id) {
+    createSearchBox: function(layout, id) {
       var cid = String(id).replace('entity-','');
       var entity = v1State.get('tables').get(cid);
       return this.widgetsCollection.createCreateForm(layout, entity);

@@ -328,6 +328,13 @@
   background-size:auto 100% ;
 }
 
+.icon.searchbox-icon {
+  background-image: url('../img/searchbox.png');
+}
+.icon.searchlist-icon {
+  background-image: url('../img/searchlist.png');
+}
+
 .icon.plus-icon {
   background-image: url('../img/plus.png');
 }
