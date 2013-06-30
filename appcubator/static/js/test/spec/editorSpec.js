@@ -348,6 +348,68 @@ define([
       });
     });
 
+
+    describe("Search Box", function () {
+      var className = 'entity-searchbox full-width ui-draggable';
+      var id = 'entity-c11';
+      var galleryElement = document.getElementById(id);
+      var model;
+
+      it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+    });
+
+
+    describe("Search List", function () {
+      var className = 'entity-searchlist full-width ui-draggable';
+      var id = 'entity-c11';
+      var galleryElement = document.getElementById(id);
+      var model;
+
+      it("is on gallery", function() {
+        expect(galleryElement).not.toBe(null);
+      });
+
+      it("can be dropped to the editor", function() {
+        var fE = _.clone(fEvent);
+        fE.target = galleryElement;
+        fE.target.className = className;
+        fE.target.id = id;
+
+        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        expect(droppedEl).not.toBe(null);
+      });
+
+      it("is valid on the backend", function() {
+        validateBackend();
+      });
+
+      it("can be deleted", function() {
+        validateDeleteable(model);
+      });
+    });
+
     describe("Image Node", function () {
       var className = 'uielement ui-draggable';
       var id = 'type-images';
