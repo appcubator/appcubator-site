@@ -104,7 +104,7 @@ function(WidgetModel,
         widget.layout = layout;
 
         widget.data = {};
-        widget.data         = _.extend(widget.data, uieState[type][0]);
+        widget.data = _.extend(widget.data, uieState[type][0]);
         if(content) widget.data.content =  content;
 
         var widgetModel = new WidgetModel(widget);

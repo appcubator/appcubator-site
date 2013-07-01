@@ -98,7 +98,7 @@
             "style": "",
             "isSingle": false,
             "content_attribs": {
-                "href": "{{homepage}}"
+                "href": "internal://Homepage"
             },
             "hoverStyle": "",
             "class_name": "link-1",
@@ -110,7 +110,7 @@
             "style": "color:#49afcd;",
             "isSingle": false,
             "content_attribs": {
-                "href": "{{homepage}}"
+                "href": "internal://Homepage"
             },
             "hoverStyle": "",
             "class_name": "blue-link",

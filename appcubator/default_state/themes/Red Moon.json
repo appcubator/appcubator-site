@@ -72,7 +72,7 @@
             "class_name": "link-1",
             "content": "Default Link...",
             "content_attribs": {
-                "href": "{{homepage}}"
+                "href": "internal://Homepage"
             },
             "activeStyle": ""
         },
@@ -84,7 +84,7 @@
             "class_name": "blue-link",
             "content": "Default Link...",
             "content_attribs": {
-                "href": "{{homepage}}"
+                "href": "internal://Homepage"
             },
             "activeStyle": ""
         }
