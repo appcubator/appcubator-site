@@ -65,13 +65,13 @@ function(
 
       if(this.get('action') == "login" || this.get('action') == "signup") return [];
       var entity = v1State.get('tables').getTableWithName(this.get('entity'));
-      var possibleActions = [];
+      var possibleActions = new ActionCollection();
       var userFields = pageModel.getFields();
 
       _(userFields).each(function(field) {
         if(field.get('entity_name') == entity.get('name')) {
           var action = { "set_fk": "this." + field.get('related_name'),
-                         "to_obj": "CurrentUser"};
+                         "to_object": "CurrentUser"};
           possibleActions.push(action);
         }
       });
@@ -81,7 +81,7 @@ function(
           var nlDescr = "Add to CurrentUser." + field.get('related_name');
           var action = { "type": "relation",
                          "set_fk": "this." + field.get('name'),
-                         "to_obj": "CurrentUser",
+                         "to_object": "CurrentUser",
                          "nl_description": nlDescr};
           possibleActions.push(action);
         }
@@ -135,6 +135,7 @@ function(
       json.fields = this.get('fields').toJSON();
       if(json.loginRoutes) json.loginRoutes = json.loginRoutes.toJSON();
       if(json.goto) json.goto = json.goto.toJSON();
+      if(json.actions) json.actions = json.actions.toJSON();
       return json;
     }
 

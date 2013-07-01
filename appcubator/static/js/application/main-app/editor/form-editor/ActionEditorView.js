@@ -15,6 +15,7 @@ function(FormFieldModel, ActionModel, TutorialView) {
 
     events: {
       'click li.goto-action'         : 'gotoActionClicked',
+      'click li.relational-action'   : 'relationalActionClicked',
       'click li.current-action'      : 'currentActionClicked'
     },
 
@@ -46,7 +47,9 @@ function(FormFieldModel, ActionModel, TutorialView) {
     },
 
     renderRelations: function() {
-
+      this.possibleActions.each(function(actionModel, ind) {
+        this.$el.find('.relational-list').append('<li id="action-'+actionModel.cid+'" class="relational-action">' + actionModel.get('nl_description')+'<div class="remove-from-list"></div></li>');
+      }, this);
     },
 
     renderGotos: function() {
@@ -66,6 +69,12 @@ function(FormFieldModel, ActionModel, TutorialView) {
     gotoActionClicked: function(e) {
       var pageCid = e.target.id.replace('page-','');
       this.model.set('goto', this.possibleGotos.get(pageCid));
+    },
+
+    relationalActionClicked: function(e) {
+      var actionCid = e.target.id.replace('action-','');
+      var actionModel = this.possibleActions.get(actionCid);
+      this.model.get('actions').push(actionModel);
     },
 
     currentActionClicked: function(e) {
