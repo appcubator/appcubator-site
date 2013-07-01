@@ -20,7 +20,8 @@ function(EditorGalleryView, ElementCollection) {
 
       this.entity = entityModel;
       this.row = rowModel;
-      this.widgetsCollection = this.row.get('uielements');
+      console.log(rowModel);
+      this.widgetsCollection = rowModel.get('uielements');
       this.editorContext = "loop";
 
       _.bindAll(this);

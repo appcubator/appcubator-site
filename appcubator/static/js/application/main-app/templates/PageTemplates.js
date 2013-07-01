@@ -15,7 +15,7 @@ PageTemplates.tempMenu = [
 '<h4 class="hi2 span12 hoff1 offset2">Access Level</h4>',
   '<select class="span12 offset2" id="access_level">',
     '<option <% if(access_level == \'all\') { %> selected <% } %> value="all">Everyone</option>',
-    '<option <% if(access_level == \'all-users\') { %> selected <% } %> value="all-users">All Users</option>',
+    '<option <% if(access_level == \'users\') { %> selected <% } %> value="users">All Users</option>',
     '<% _.each(user_roles, function(role) { %>',
       '<option <% if(access_level == role) { %> selected <% } %> value="<%=role%>">Only <%= role %></option>',
     '<% }); %>',

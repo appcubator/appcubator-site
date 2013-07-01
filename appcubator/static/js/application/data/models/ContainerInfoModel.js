@@ -39,7 +39,7 @@ function(QueryModel,
       if(bone.slides) { this.set('slides', new SlideCollection(bone.slides)); }
       if(bone.row) { this.set('row', new RowModel(bone.row)); }
       if(bone.query) { this.set('query', new QueryModel(bone.query, this.get('entity'))); }
-      if(bone.search) { this.set('search', new QueryModel(bone.query), this.get('entity')); }
+      if(bone.search) { this.set('search', new QueryModel(bone.search, this.get('entity'))); }
       if(bone.form) {
         if(!bone.form.attributes) { this.set('form', new FormModel(bone.form)); }
         else { this.set('form', bone.form); }

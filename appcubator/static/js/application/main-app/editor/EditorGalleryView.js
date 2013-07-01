@@ -305,13 +305,13 @@ define([
     createSearchBox: function(layout, id) {
       var cid = String(id).replace('entity-','');
       var entity = v1State.get('tables').get(cid);
-      return this.widgetsCollection.createCreateForm(layout, entity);
+      return this.widgetsCollection.createSearchbox(layout, entity);
     },
 
     createSearchList: function(layout, id) {
       var cid = String(id).replace('entity-','');
       var entity = v1State.get('tables').get(cid);
-      return this.widgetsCollection.createCreateForm(layout, entity);
+      return this.widgetsCollection.createSearchList(layout, entity);
     },
 
     createCurrentUserNode: function(layout, id) {
