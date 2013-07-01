@@ -20,6 +20,12 @@
   margin-left: 10px;
 }
 
+#widget-editor.left {
+  top: 0;
+  left: 0;
+  margin-left: -270px;
+}
+
 #widget-editor .top-arrow {
   height: 12px;
   width: 30px;
@@ -42,6 +48,19 @@
   background-image: url(../img/left-blue-arrow.png);
   background-repeat: no-repeat;
   background-position: top left;
+  margin-top: 24px;
+}
+
+#widget-editor .right-arrow {
+  height: 30px;
+  width: 12px;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin-right: -12px;
+  background-image: url(../img/right-blue-arrow.png);
+  background-repeat: no-repeat;
+  background-position: top right;
   margin-top: 24px;
 }
 

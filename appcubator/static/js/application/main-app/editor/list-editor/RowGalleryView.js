@@ -36,6 +36,7 @@ function(EditorGalleryView, ElementCollection) {
       var self = this;
       this.allList = this.el;
 
+      this.addInfoItem('Drop elements to the green area to edit one row of the list.');
       this.renderContextEntity();
       this.renderUIElementList();
 
@@ -44,7 +45,7 @@ function(EditorGalleryView, ElementCollection) {
         cursorAt: { top: 0, left: 0 },
         helper: "clone",
         start : function(e) {
-          self.dragActive = true;
+          self.draggableActive = true;
         },
         stop: self.dropped
       });
@@ -57,37 +58,29 @@ function(EditorGalleryView, ElementCollection) {
       // Form, Data elements belonging to the entity
       var self = this;
 
-      var tempLi = ['<li class="context-entity" id="context-field-<%= entity_id %>-<%= field_id %>">',
-                      '<span class="plus-icon"></span>',
-                      '<span class="wide-text"><%= entity_name %> <%= field_name %></span>',
-                    '</li>'].join('\n');
-
       var entityName = self.entity.get('name');
       var entityId = self.entity.cid;
-      var context = {entity_id : entityId, entity_name : entityName};
-      //$(self.allList).append(_.template(tempLiForm, context));
 
-      self.entity.get('fields').each(function(field) {
+      this.entity.get('fields').each(function(field) {
         if(field.isRelatedField()) return self.renderRelatedField(field);
-        var context = { entity_id : entityId, entity_name : entityName,
-                        field_id : field.cid, field_name: field.get('name') };
-        $(self.allList).append(_.template(tempLi, context));
-      });
+
+        this.addHalfWidthItem('context-field-'+ entityId+'-' + field.cid,
+                              'context-entity', entityName+' '+field.get('name'),
+                              'plus-icon');
+      }, this);
     },
 
     renderRelatedField: function(fieldModel) {
-      var tempLi = ['<li class="context-nested-entity" id="context-field-<%= entity_id %>-<%= nested_entity_id %>-<%= field_id %>">',
-                      '<span class="plus-icon"></span>',
-                      '<span class="wide-text"><%= entity_name %> <%= nested_entity_name %>.<%= field_name %></span>',
-                    '</li>'].join('\n');
+
       var entityName = this.entity.get('name');
       var entityId = this.entity.cid;
       var tableModel = v1State.getTableModelWithName(fieldModel.get('entity_name'));
+
       _(tableModel.getNormalFields()).each(function(fieldM) {
-        var context = { entity_id : entityId, entity_name : entityName,
-                        nested_entity_id: tableModel.cid, nested_entity_name: tableModel.get('name'),
-                        field_id : fieldM.cid, field_name: fieldM.get('name') };
-        $(this.allList).append(_.template(tempLi, context));
+        this.addHalfWidthItem( 'context-field-'+entityId+'-'+ tableModel.cid+'-'+fieldM.cid,
+                               'context-nested-entity',
+                                entityName+' '+tableModel.geT('name')+'.'+fieldM.get('name'),
+                               'plus-icon');
       }, this);
     },
 

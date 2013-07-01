@@ -115,11 +115,11 @@ function() {
     },
 
     unbindAll: function() {
-      var self = this;
       var widget = this.selectedEl;
       widget.on('editModeOff', function() {
-        self.bindWidget(widget);
-      });
+        this.bindWidget(widget);
+        this.setLayout(this.selectDiv, this.selectedEl);
+      }, this);
 
       widget.unbind('hovered');
       widget.unbind('unhovered');

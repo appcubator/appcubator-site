@@ -183,6 +183,19 @@
   text-shadow: 0 1px 0 #1b2535;
 }
 
+.elements-list .gallery-info {
+  width: 100%;
+  color: #fff;
+  margin-top: 8px;
+  margin-left: -1px;
+  border-radius: 0;
+  height: auto;
+}
+
+.elements-list .gallery-info:hover {
+  background-color: inherit;
+}
+
 .elements-list .gallery-header:hover {
   background-color: inherit;
 }
@@ -353,4 +366,10 @@
 
 .elements-list ul li .table-icon {
   background-image: url('../img/table_icon.png');
+}
+
+.elements-list.row-elements-list {
+  height: 330px;
+  overflow: hidden;
+  overflow-y: scroll;
 }

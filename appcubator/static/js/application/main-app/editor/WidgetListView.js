@@ -34,8 +34,12 @@ function( WidgetContainerView,
       this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.placeWidget, true);
       this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.renderShadowElements);
       this.model.get('data').get('container_info').get('row').get('uielements').bind("remove", this.renderShadowElements);
-      this.model.bind('deselected', this.deselected);
+      this.model.bind('deselected', this.switchEditingOff);
+      this.model.bind('deselected', function() {
+        this.model.trigger('editModeOff');
+      }, this);
 
+      this.model.bind('editModeOff', this.switchEditingOff);
       this.model.get('data').get('container_info').get('row').get('layout').bind('change:height', this.renderShadowElements);
 
       var action = this.model.get('data').get('container_info').get('action');
@@ -136,10 +140,9 @@ function( WidgetContainerView,
       this.model.get('layout').set('height', 46);
     },
 
-    deselected: function() {
+    switchEditingOff: function() {
       this.editMode = false;
       this.$el.find('.row').first().removeClass('highlighted');
-      this.model.trigger('editModeOff');
       this.widgetSelectorView.deselect();
     }
 

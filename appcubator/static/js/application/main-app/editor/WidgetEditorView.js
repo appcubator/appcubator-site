@@ -30,9 +30,10 @@ function(WidgetContentEditor,
       'click .edit-slides-button' : 'openSlideEditor',
       'click .query-editor-btn'   : 'openQueryEditor',
       'click .edit-row-btn'       : 'openRowEditor',
-      'click .form-editor-btn'      : 'openFormEditor',
+      'click .form-editor-btn'    : 'openFormEditor',
       'click .pick-style'         : 'openStylePicker',
       'click .edit-login-form-btn': 'openLoginEditor',
+      'click .done-editing'       : 'closeEditingMode',
       'click .delete-button'      : 'clickedDelete',
       'click'                     : 'clicked'
     },
@@ -113,9 +114,14 @@ function(WidgetContentEditor,
         this.el.appendChild(this.contentEditor.el);
       }
 
+      this.$el.removeClass('left');
+      this.$el.removeClass('right');
+      this.$el.removeClass('bottom');
+
       if(action == "show" || action == "loop") {
-        this.location = 'right';
-        this.el.className += ' right';
+        var location = this.getLocation();
+        this.location = location;
+        this.el.className += ' '+location;
       }
       else {
         this.location = 'bottom';
@@ -125,8 +131,11 @@ function(WidgetContentEditor,
       if(this.location == "right") {
         this.$el.append('<div class="left-arrow"></div>');
       }
-      else {
+      else if(this.location == "bottom") {
         this.$el.append('<div class="top-arrow"></div>');
+      }
+      else {
+        this.$el.append('<div class="right-arrow"></div>');
       }
 
       return this;
@@ -179,7 +188,7 @@ function(WidgetContentEditor,
 
     openRowEditor: function() {
       this.hideSubviews();
-
+      this.el.appendChild(this.renderButtonWithText('done-editing', 'Done Editing'));
       var entity = this.model.get('data').get('container_info').get('entity');
       this.listGalleryView = document.createElement('div');
       this.listGalleryView.className = 'elements-list';
@@ -187,6 +196,13 @@ function(WidgetContentEditor,
       var galleryView = new RowGalleryView(this.model);
       this.listGalleryView.appendChild(galleryView.render().el);
       this.el.appendChild(this.listGalleryView);
+    },
+
+    closeEditingMode: function() {
+      this.$el.find('.done-editing').remove();
+      this.listGalleryView.remove();
+      this.showSubviews();
+      this.model.trigger('editModeOff');
     },
 
     classChanged: function() {
@@ -208,6 +224,11 @@ function(WidgetContentEditor,
       if(this.layoutEditor) this.layoutEditor.$el.fadeIn();
       if(this.infoEditor) this.infoEditor.$el.fadeIn();
       this.$el.find('.style-editor').fadeIn();
+      this.$el.find('.form-editor-btn').fadeIn();
+      this.$el.find('.query-editor-btn').fadeIn();
+      this.$el.find('.edit-query-btn').fadeIn();
+      this.$el.find('.edit-row-btn').fadeIn();
+      this.$el.find('.delete-button').fadeIn();
     },
 
     hideSubviews: function() {
@@ -219,8 +240,15 @@ function(WidgetContentEditor,
       this.$el.find('.form-editor-btn').hide();
       this.$el.find('.query-editor-btn').hide();
       this.$el.find('.edit-query-btn').hide();
-      this.$el.find('.row-editor-btn').hide();
+      this.$el.find('.edit-row-btn').hide();
+      this.$el.find('.delete-button').hide();
+    },
 
+    getLocation: function() {
+      var layout = this.model.get('layout');
+      var rightCoor = layout.get('left') + layout.get('width');
+      if((12 - rightCoor) < 2) return "left";
+      return "right";
     },
 
     clickedDelete: function() {

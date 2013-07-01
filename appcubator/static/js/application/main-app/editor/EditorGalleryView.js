@@ -150,7 +150,7 @@ define([
         var tableId = table.cid;
 
         table.get('fields').each(function(field) {
-          this.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'));
+          this.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon');
         }, this);
       }, this);
     },
@@ -282,13 +282,13 @@ define([
     createEntityTable: function(layout, id) {
       var cid = String(id).replace('entity-','');
       var entity = v1State.get('tables').get(cid);
-      return this.widgetsCollection.createCreateForm(layout, entity);
+      return this.widgetsCollection.createTable(layout, entity);
     },
 
     createEntityList: function(layout, id) {
       var cid = String(id).replace('entity-','');
       var entity = v1State.get('tables').get(cid);
-      return this.widgetsCollection.createCreateForm(layout, entity);
+      return this.widgetsCollection.createList(layout, entity);
     },
 
     createSearchBox: function(layout, id) {
@@ -376,6 +376,13 @@ define([
     addHeaderItem: function(text) {
       var li = document.createElement('li');
       li.className = 'gallery-header ui-draggable';
+      li.innerHTML = text;
+      $(this.allList).append(li);
+    },
+
+    addInfoItem: function(text) {
+      var li = document.createElement('li');
+      li.className = 'gallery-info ui-draggable';
       li.innerHTML = text;
       $(this.allList).append(li);
     },
