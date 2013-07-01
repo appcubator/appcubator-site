@@ -37,11 +37,16 @@ function( WidgetContainerView,
       var form = this.model.get('data').get('container_info').get('form');
 
       this.formModel = form;
-      this.formModel.bind('change', this.reRender);
+      //this.formModel.bind('change', this.reRender);
       this.formModel.get('fields').bind('remove', this.reRender);
       this.formModel.get('fields').bind('add', this.reRender);
       this.formModel.get('fields').each(function(model){ model.bind('change', self.reRender); });
 
+    },
+
+    reRender: function() {
+      this.el.innerHTML  = '';
+      this.render();
     },
 
     render: function() {
