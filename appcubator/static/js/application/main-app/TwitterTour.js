@@ -284,6 +284,7 @@ function() {
         });
       },
       teardown: function() {
+        v1.unbind('pages-loaded')
         v1State.attributes.walkthrough++;
       }
     },
@@ -330,6 +331,7 @@ function() {
         return { target: $('.page-name') };
       },
       teardown: function() {
+        v1State.get('pages').unbind('add');
         v1State.attributes.walkthrough++;
       }
     },
@@ -346,6 +348,7 @@ function() {
         return { target: $('.edit.item').first() };
       },
       teardown: function() {
+        v1.unbind('editor-loaded');
         v1State.attributes.walkthrough++;
       }
     },
@@ -418,7 +421,6 @@ function() {
       setup: function(tour, options) {
 
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
-          console.log(uielem);
           if(uielem.get('data').get('action') == "thirdpartylogin") {
             tour.next();
           }
@@ -434,32 +436,30 @@ function() {
       content: '<h3>Let\'s move to the other page.</h3><p>Please hover over the page menu and click on "Tweet Feed" to go to the other page.</p>',
       my: "top center",
       at: "bottom center",
-      target: $('.menu-button.pages'),
       setup: function(tour, options) {
         v1.bind('editor-loaded', function() {
-          setTimeout(function() {
-            tour.next();
-          }, 120);
+          tour.next();
         });
 
         return {target:  $('.menu-button.pages')};
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
+        v1.unbind('editor-loaded');
       }
     },
     {
-      content: '<h3>A New Page</h3><p>On this page, we would like to put a list of all the Tweet, something like a stream as well as a form to tweet new stuff. Let\'s start with the list first.</p>',
-      my: "right top",
-      at: "left bottom",
+      content: '<h3>Feed Page</h3><p>On this page, we would like to put a list of all the Tweet, something like a stream as well as a form to tweet new stuff. Let\'s start with the list first.</p>',
+      my: "top center",
+      at: "bottom center",
       nextButton: true,
       setup: function(tour, options) {
 
         $('#item-gallery').animate({
-          scrollTop: $(".entity-list").offset().top + 20
+          scrollTop: $(".entity-list").offset().top - 90
         }, 200);
 
-        return { target: $('.search-panel') };
+        return { target: $('.menu-button.pages') };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
@@ -469,19 +469,63 @@ function() {
       content: '<h3>Let\'s make a list</h3><p>Drag and drop the Tweet List to the top middle of the page.</p>',
       my: "right center",
       at: "left center",
-      nextButton: true,
       setup: function(tour, options) {
 
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
           console.log(uielem);
-          if(uielem.get('data').get('action') == "list") {
+          if(uielem.get('type') == "loop") {
             setTimeout(function() {
               tour.next();
-            }, 120);
+            }, 300);
           }
         });
 
         return { target: $('.entity-list') };
+      },
+      teardown: function() {
+        v1State.getCurrentPage().get('uielements').unbind('add');
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>We have the list of Tweets!</h3><p>Now we can start editing by clickin "Edit Row" button.</p>',
+      my: "bottom center",
+      at: "top center",
+      setup: function(tour, options) {
+
+        $('.edit-row-btn').one('click', function() {
+            setTimeout(function() {
+              tour.next();
+            }, 300);
+        });
+
+        return { target: $('.edit-row-btn') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>The Green Row</h3><p>The green area is the first, editable row. You should start droping elements on this area.</p>',
+      my: "top center",
+      at: "bottom center",
+      nextButton: true,
+      setup: function(tour, options) {
+
+        return { target: $('.highlighted').first() };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Content of the Tweet</h3><p>Drag\'n\'Drop it on the green area.</p>',
+      my: "top center",
+      at: "bottom center",
+      nextButton: true,
+      setup: function(tour, options) {
+
+        return { target: $('.context-entity', '.row-elements-list') };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
