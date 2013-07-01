@@ -133,6 +133,7 @@ var FieldTypes = {
   "email-text"       : '<input type="text" class="email" placeholder="<%= field.get(\'placeholder\') %>">',
   "button"           : '<input type="submit" class="btn" value="<%= field.get(\'placeholder\') %>">',
   "image-uploader"   : '<input type="file" placeholder="<%= field.get(\'placeholder\') %>">',
+  "file-uploader"    : '<div class="upload-file btn">Upload File</div>',
   "date-picker"      : '<input type="text" placeholder="<%= field.get(\'placeholder\') %>">'
 };
 
@@ -161,6 +162,9 @@ Templates.fieldNode = [
   '<% } %>',
   '<% if(field.get(\'displayType\') == "image-uploader") { %>',
     FieldTypes['image-uploader'],
+  '<% } %>',
+  '<% if(field.get(\'displayType\') == "file-uploader") { %>',
+    FieldTypes['file-uploader'],
   '<% } %>',
   '<% if(field.get(\'displayType\') == "date-picker") { %>',
     FieldTypes['date-picker'],

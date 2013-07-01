@@ -57,8 +57,9 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
 
     getContextEntities: function() {
       var entities = [];
-      _(this.get('url').get('urlparts')).each(function(urlPart) {
-        if (/{{([^\}]+)}}/g.exec(urlPart)) entities.push(/\{\{([^\}]+)\}\}/g.exec(urlPart)[1]);
+      this.get('url').get('urlparts').each(function(urlPart) {
+        var part = urlPart.get('value');
+        if (/{{([^\}]+)}}/g.exec(part)) entities.push(/\{\{([^\}]+)\}\}/g.exec(part)[1]);
       });
       return entities;
     },

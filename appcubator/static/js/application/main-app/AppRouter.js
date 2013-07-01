@@ -212,7 +212,6 @@ define([
 		},
 
 		save: function(e) {
-			console.log("SAVE2");
 			$('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
 			var $el = $('.menu-button.save');
       $el.fadeOut().html("<span>Saving...</span>").fadeIn();

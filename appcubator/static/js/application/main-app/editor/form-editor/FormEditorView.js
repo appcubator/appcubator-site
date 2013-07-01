@@ -26,8 +26,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       'change input[name=required]'      : 'changedRequired',
       'keyup   input.field-label-input'  : 'changedLabel',
       'keyup  .options-input'            : 'changedOptions',
-      'change .belongs-to'               : 'changedBelongsTo',
-      'change .field-connection'         : 'addField',
       'click .done-btn'                  : 'closeModal',
       'click .delete-field'              : 'deleteField',
       'click .q-mark'                    : 'showTutorial',
@@ -108,7 +106,11 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
         var cid = e.target.id.replace('tablefield-', '');
         var fieldModel = this.entityModel.get('fields').get(cid);
-        var formFieldModel = new FormFieldModel({field_name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
+        var formFieldModel = new FormFieldModel({field_name: fieldModel.get('name'),
+                                                 displayType: "single-line-text",
+                                                 type: fieldModel.get('type'),
+                                                 label: fieldModel.get('name'),
+                                                 placeholder: fieldModel.get('name') });
 
 
         if(fieldModel.get('type') == "email") {
@@ -117,11 +119,15 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
         if(fieldModel.get('type') == "image") {
           formFieldModel.set('displayType', "image-uploader");
         }
+        if(fieldModel.get('type') == "file") {
+          formFieldModel.set('displayType', "file-uploader");
+        }
         if(fieldModel.get('type') == "date") {
           formFieldModel.set('displayType', "date-picker");
         }
 
-        this.model.get('fields').add(formFieldModel);
+        var ind = this.model.get('fields').models.length - 1;
+        this.model.get('fields').add(formFieldModel, {at: ind});
       }
       else {
         var removedField = this.model.get('fields').where({ name : e.target.value});
@@ -240,43 +246,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       }
     },
 
-    changedBelongsTo: function(e) {
-      this.model.set('belongsTo', null);
-    },
-
-    addField: function (e) {
-
-      if(e.target.value == 'new-value') {
-        this.$el.find('.new-value-form').fadeIn();
-        this.$el.find('.new-field-inp').focus();
-        $(e.target).hide();
-        return;
-      }
-
-      var cid = e.target.value.replace('field-', '');
-
-      var fieldModel = this.entityModel.get('fields').get(cid);
-      var formFieldModel = new FormFieldModel({name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
-
-      if(fieldModel.get('type') == "email") {
-        formFieldModel.set('displayType', "email-text");
-      }
-      if(fieldModel.get('type') == "image") {
-        formFieldModel.set('displayType', "image-uploader");
-      }
-      if(fieldModel.get('type') == "date") {
-        formFieldModel.set('displayType', "date-picker");
-      }
-
-      var submitBtn = _.last(this.model.get('fields').models);
-      var ind = this.model.get('fields').models.length - 1;
-      this.model.get('fields').push(formFieldModel, {at: ind});
-
-      $(e.target).hide();
-      $(e.target)[0].selectedIndex = 0;
-      this.$el.find('.field-text').fadeIn();
-    },
-
     addNewField: function(e) {
       e.preventDefault();
 
@@ -284,7 +253,11 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       var type = $('input:radio[name=field-type]').val();
 
       var fieldModel = this.entityModel.get('fields').push({name: name, type: type});
-      var formFieldModel = new FormFieldModel({field_name: fieldModel.get('name'), displayType: "single-line-text", type: fieldModel.get('type')});
+      var formFieldModel = new FormFieldModel({field_name: fieldModel.get('name'),
+                                               displayType: "single-line-text",
+                                               type: fieldModel.get('type'),
+                                               label: name,
+                                               placeholder: name});
 
       if(fieldModel.get('type') == "email") {
         formFieldModel.set('displayType', "email-text");
@@ -294,6 +267,9 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       }
       if(fieldModel.get('type') == "date") {
         formFieldModel.set('displayType', "date-picker");
+      }
+      if(fieldModel.get('type') == "file") {
+        formFieldModel.set('displayType', "file-uploader");
       }
 
       var ind = this.model.get('fields').models.length - 1;

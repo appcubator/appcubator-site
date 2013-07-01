@@ -140,17 +140,19 @@ define([
     },
 
     renderContextEntityForms: function() {
-      if(!g_contextCollection.models.length) return;
+      var pageContext = v1State.getCurrentPage().getContextEntities();
+      if(!pageContext.length) return;
 
       this.addHeaderItem('Page Context Data');
-      g_contextCollection.each(function(entity) {
-        var entityName = entity.get('name');
-        var entityId = entity.cid;
+      _(pageContext).each(function(tableName) {
+        var table = v1State.get('tables').getTableWithName(tableName);
+        if(!table) throw "Error with page context";
+        var tableId = table.cid;
 
-        entity.get('fields').each(function(field) {
-          this.addFullWidthItem('context-field-'+entityId+'-'+field.cid, 'context-entity', entityName+' '+field.get('name'));
+        table.get('fields').each(function(field) {
+          this.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'));
         }, this);
-      });
+      }, this);
     },
 
     dropped : function(e, ui) {
@@ -249,13 +251,13 @@ define([
     createContextEntityNode: function(layout, id) {
       var hash = String(id).replace('context-field-','').split('-');
       var entityM = v1State.get('tables').get(hash[0]);
-      var fieldM = entity.get('fields').get(hash[1]);
+      var fieldM = entityM.get('fields').get(hash[1]);
 
-      var displayType = this.getFieldType(field);
+      var displayType = this.getFieldType(fieldM);
       var editorContext = this.editorContext ? this.editorContext : "page";
-      var content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+'}}';
+      var content =  '{{' + editorContext +'.'+ entityM.get('name') +'.'+fieldM.get('name')+'}}';
 
-      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content);
     },
 
     createNestedContextEntityNode: function(layout, id) {
@@ -387,6 +389,8 @@ define([
           return "texts";
         case "image":
           return "images";
+        case "file":
+          return "links";
       }
 
       return type;

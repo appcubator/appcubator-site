@@ -53,6 +53,7 @@ function(
         if(type == "fk"||type == "m2m"||type == "o2o") { return; }
         if(type == "email") { formFieldModel.displayType = "email-text"; }
         if(type == "image") { formFieldModel.displayType = "image-uploader"; }
+        if(type == "file") { formFieldModel.displayType = "file-uploader"; }
         if(type == "date") { formFieldModel.displayType = "date-picker"; }
 
         var ind = this.get('fields').models.length - 1;
