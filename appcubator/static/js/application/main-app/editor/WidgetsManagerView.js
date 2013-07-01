@@ -4,10 +4,17 @@ define([
   'models/WidgetModel',
   'editor/WidgetEditorView',
   'editor/WidgetListView',
+  'editor/WidgetFormView',
   'editor/WidgetSelectorView',
   'backbone'
 ],
-function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetListView, WidgetSelectorView) {
+function( WidgetView,
+          WidgetContainerView,
+          WidgetModel,
+          WidgetEditorView,
+          WidgetListView,
+          WidgetFormView,
+          WidgetSelectorView) {
 
   var WidgetManagerView = Backbone.View.extend({
     el : $('.page'),
@@ -49,6 +56,9 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
       if(model.get('data').has('container_info') && model.get('data').get('container_info').has('row')) {
         self.placeList(model, isNew);
       }
+      else if(model.hasForm()) {
+        self.placeForm(model, isNew);
+      }
       else if(model.get('data').has('container_info') || model.get('data').get('action') == "thirdpartylogin") {
         self.placeContainer(model, isNew);
       }
@@ -75,6 +85,13 @@ function(WidgetView, WidgetContainerView, WidgetModel, WidgetEditorView, WidgetL
 
     placeList: function(containerWidgetModel, isNew) {
       var curWidget= new WidgetListView(containerWidgetModel);
+      if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
+      else util.get('full-container').appendChild(curWidget.render().el);
+      if(isNew) curWidget.autoResize();
+    },
+
+    placeForm: function(containerWidgetModel, isNew) {
+      var curWidget= new WidgetFormView(containerWidgetModel);
       if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
       else util.get('full-container').appendChild(curWidget.render().el);
       if(isNew) curWidget.autoResize();

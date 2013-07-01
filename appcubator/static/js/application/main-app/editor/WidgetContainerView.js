@@ -2,15 +2,13 @@ define([
   'editor/TableQueryView',
   'editor/WidgetView',
   'editor/SubWidgetView',
-  'editor/form-editor/FormEditorView',
   'dicts/constant-containers',
   'editor/editor-templates',
   'jquery.flexslider'
 ],
 function( TableQueryView,
           WidgetView,
-          SubWidgetView,
-          FormEditorView) {
+          SubWidgetView) {
 
   var WidgetContainerView = WidgetView.extend({
     el: null,
@@ -44,28 +42,10 @@ function( TableQueryView,
       if(this.model.get('data').get('container_info').has('query')) {
         this.model.get('data').get('container_info').get('query').bind('change', this.reRender);
       }
-
-
-      if(this.model.get('data').get('container_info').has('form')) {
-        var form = this.model.get('data').get('container_info').get('form');
-        if(form.get('fields').models.length < 2 &&
-           form.get('action') != "facebook"     &&
-           form.get('action') != "twitter"      &&
-           form.get('action') != "linkedin") {
-          new FormEditorView(form, this.model.get('data').get('container_info').get('entity'));
-        }
-
-        this.formModel = form;
-        this.formModel.bind('change', this.reRender);
-        this.formModel.get('fields').bind('remove', this.reRender);
-        this.formModel.get('fields').bind('add', this.reRender);
-        this.formModel.get('fields').each(function(model){ model.bind('change', self.reRender); });
-      }
     },
 
     render: function() {
       var self = this;
-      var form;
 
       this.el.innerHTML = '';
 
@@ -118,11 +98,6 @@ function( TableQueryView,
         this.el.appendChild(thirdPartyBtn);
       }
 
-      if(this.model.get('data').get('container_info').has('form')) {
-        self.form = document.createElement('form');
-        self.el.appendChild(self.form);
-      }
-
       this.renderElements();
 
       return this;
@@ -139,30 +114,11 @@ function( TableQueryView,
       model.get('layout').bind('change', this.reRender);
     },
 
-    placeFormElement: function(fieldModel) {
-      var inp_class = uieState.textInputs[0].class_name;
-      var fieldHtml = _.template(Templates.fieldNode, { field: fieldModel, inpClass: ""});
-      $(this.form).append(fieldHtml);
-    },
-
     renderElements : function() {
-
       var self = this;
       if(this.model.get('data').get('container_info').has('uielements')) {
         this.model.get('data').get('container_info').get('uielements').each(function(widgetModel) {
           self.placeWidget(widgetModel);
-        });
-      }
-
-      if(this.model.get('data').get('container_info').has('form')) {
-        this.form.innerHTML = '';
-        if(!this.model.get('data').has('class_name')) {
-          var className = uieState["forms"][0].class_name;
-          this.model.get('data').set('class_name', className);
-        }
-        this.form.className = this.model.get('data').get('class_name');
-        this.formModel.get('fields').each(function(field) {
-          self.placeFormElement(field);
         });
       }
     },
@@ -170,10 +126,6 @@ function( TableQueryView,
     showDetails: function() {
       if(this.model.get('data').get('container_info').get('action') === "table-gal") {
         new TableQueryView(this.model, 'table');
-      }
-      if(this.model.get('data').get('container_info').has('form')) {
-        new FormEditorView(this.formModel,
-                           this.model.get('data').get('container_info').get('entity'));
       }
     },
 

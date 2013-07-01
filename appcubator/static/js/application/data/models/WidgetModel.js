@@ -113,6 +113,12 @@ function(DataModel, LayoutModel) {
       return;
     },
 
+    hasForm: function() {
+      if(this.get('data').has('container_info') &&
+         this.get('data').get('container_info').has('form')) return true;
+      return false;
+    },
+
     toJSON : function() {
       var json = _.clone(this.attributes);
       json = _.omit(json, 'selected', 'deletable', 'context');
