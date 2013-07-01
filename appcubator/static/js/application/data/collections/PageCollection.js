@@ -44,7 +44,7 @@ function(PageModel) {
       return pagesList;
     },
 
-    isUnique: function(pageName) {
+    isNameUnique: function(pageName) {
       isUnique = true;
       this.each(function(page) {
         if(page.get('name') === pageName) isUnique = false;

@@ -34,6 +34,14 @@ function(TableModel) {
 
     getAllRelations: function() {
       return this.reduce(function(memo, model) { return _.union(memo, model.getRelationalFields()); }, []);
+    },
+
+    isNameUnique: function(name) {
+      isUnique = true;
+      this.each(function(table) {
+        if(table.get('name') === name) isUnique = false;
+      });
+      return isUnique;
     }
   });
 

@@ -186,6 +186,19 @@ define(['jquery'], function() {
     scrollToElement: function($el) {
       var height = $el.offset().top - 90;
       $('html, body').animate({ scrollTop: height }, 'slow', 'swing');
+    },
+
+    isAlphaNumeric: function(str) {
+      var patt=/^[a-z0-9\s]+$/i;
+      return patt.test(str);
+    },
+
+    doesStartWithKeywords: function(str) {
+      var ind1 = str.indexOf('Page');
+      var ind2 = str.indexOf('Form');
+      var ind3 = str.indexOf('loop');
+
+      return (!ind1 || !ind2|| !ind3);
     }
   };
 

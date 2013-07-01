@@ -6,7 +6,8 @@ define([
   'app/entities/UserTableView',
   'app/entities/TablesView',
   'app/entities/CreateRelationView',
-  'app/entities/RelationsView'
+  'app/entities/RelationsView',
+  'mixins/ErrorDialogueView'
 ],
 
 function(TableCollection,
@@ -16,7 +17,8 @@ function(TableCollection,
          UserTableView,
          TablesView,
          CreateRelationView,
-         RelationsView) {
+         RelationsView,
+         ErrorDialogueView) {
 
     var EntitiesView = Backbone.View.extend({
       css: 'entities',
@@ -73,9 +75,23 @@ function(TableCollection,
           if(e.keyCode !== 13) {
             return;
           }
+          var name = e.target.value;
           var elem = new UserTableModel({
-            name: e.target.value
+            name: name
           });
+
+          if(!v1State.get('users').isNameUnique(name)) {
+            new ErrorDialogueView({text: 'Page name should be unique.'});
+            return;
+          }
+          if(!util.isAlphaNumeric(name)){
+            new ErrorDialogueView({text: 'Page name should be alphanumberic.'});
+            return;
+          }
+          if(util.doesStartWithKeywords(name)){
+            new ErrorDialogueView({text: 'Page name should not start with "Page", "Form" or "loop".'});
+            return;
+          }
           v1State.get('users').add(elem);
         }
 
@@ -98,10 +114,24 @@ function(TableCollection,
           if(e.keyCode !== 13) {
             return;
           }
+          var name = e.target.value;
           var elem = new TableModel({
-            name: e.target.value,
+            name: name,
             fields: []
           });
+          if(!v1State.get('tables').isNameUnique(name)) {
+            new ErrorDialogueView({text: 'Page name should be unique.'});
+            return;
+          }
+          if(!util.isAlphaNumeric(name)){
+            new ErrorDialogueView({text: 'Page name should be alphanumberic.'});
+            return;
+          }
+          if(util.doesStartWithKeywords(name)){
+            new ErrorDialogueView({text: 'Page name should not start with "Page", "Form" or "loop".'});
+            return;
+          }
+
           v1State.get('tables').add(elem);
         }
 

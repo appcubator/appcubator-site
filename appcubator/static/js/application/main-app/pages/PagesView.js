@@ -68,10 +68,19 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
       var pageUrlPart = name.replace(/ /g, '_');
       var pageUrl = { urlparts : [pageUrlPart] };
 
-      if(!v1State.get('pages').isUnique(name)) {
+      if(!v1State.get('pages').isNameUnique(name)) {
         new ErrorDialogueView({text: 'Page name should be unique.'});
         return;
       }
+      if(!util.isAlphaNumeric(name)){
+        new ErrorDialogueView({text: 'Page name should be alphanumberic.'});
+        return;
+      }
+      if(util.doesStartWithKeywords(name)){
+        new ErrorDialogueView({text: 'Page name should not start with "Page", "Form" or "loop".'});
+        return;
+      }
+
       this.collection.add({ name: name, url: pageUrl});
       v1.save();
     },
