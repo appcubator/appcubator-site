@@ -63,10 +63,6 @@ function( PageModel,
       v1State.currentPage = this.model;
       v1State.isMobile    = true;
 
-      /* Globals */
-      g_contextCollection    = new TableCollection();
-      this.getContextEntities();
-
       this.widgetsCollection    = this.model.get('uielements');
 
       this.galleryEditor    = new EditorGalleryView(this.widgetsCollection);
@@ -233,18 +229,6 @@ function( PageModel,
         //new ErrorModalView({ text: responseData.errors });
         new DebugOverlay({ text: responseData.errors });
       }
-    },
-
-    getContextEntities: function() {
-      var self = this;
-      var entityModels = [];
-      var contextEntites = _.filter(self.model.get('url').get('urlparts'), function(str){ return (/\{\{([^\}]+)\}\}/g.exec(str)); });
-      contextEntites = _.map(contextEntites, function(str){ return (/\{\{([^\}]+)\}\}/g.exec(str))[1];});
-
-      _(contextEntites).each(function(entityName) {
-        var entity =  v1State.get('entities').getEntityWithName(entityName);
-        g_contextCollection.push(entity);
-      });
     },
 
     clickedUrl: function() {

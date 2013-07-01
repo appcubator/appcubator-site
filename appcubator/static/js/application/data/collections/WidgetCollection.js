@@ -129,6 +129,24 @@ function(WidgetModel,
         return this.push(widgetContainerModel);
       },
 
+      createEditForm: function(layout, entity) {
+        var widget = {};
+        widget.type = "form";
+        widget.layout = layout;
+
+        widget.data = {};
+        widget.data.container_info = {};
+        widget.data.container_info.entity = entity;
+        widget.data.container_info.action = "edit";
+        widget.data.container_info.form = {};
+        widget.data.container_info.form.entity = entity.get('name');
+        widget.data.container_info.form.goto = "internal://Homepage";
+
+        var widgetContainerModel = new WidgetContainerModel(widget);
+        widgetContainerModel.getForm().fillWithProps(entity);
+        return this.push(widgetContainerModel);
+      },
+
       createTable: function(layout, entity) {
         var widget = {};
         widget.type = "loop";

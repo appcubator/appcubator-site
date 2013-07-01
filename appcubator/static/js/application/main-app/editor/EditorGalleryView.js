@@ -145,11 +145,14 @@ define([
 
       this.addHeaderItem('Page Context Data');
       _(pageContext).each(function(tableName) {
-        var table = v1State.get('tables').getTableWithName(tableName);
-        if(!table) throw "Error with page context";
-        var tableId = table.cid;
+        var tableM = v1State.get('tables').getTableWithName(tableName);
+        if(!tableM) throw "Error with page context";
+        var tableId = tableM.cid;
+        var id = 'entity-' + tableM.cid;
 
-        table.get('fields').each(function(field) {
+        this.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon');
+
+        tableM.get('fields').each(function(field) {
           this.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon');
         }, this);
       }, this);
@@ -202,6 +205,8 @@ define([
           return this.createNestedContextEntityNode(layout, id);
         case "entity-create-form":
           return this.createCreateForm(layout, id);
+        case "entity-edit-form":
+          return this.createEditForm(layout, id);
         case "entity-table":
           return this.createEntityTable(layout, id);
         case "entity-list":
@@ -277,6 +282,12 @@ define([
       var cid = String(id).replace('entity-','');
       var entity = v1State.get('tables').get(cid);
       return this.widgetsCollection.createCreateForm(layout, entity);
+    },
+
+    createEditForm: function(layout, id) {
+      var cid = String(id).replace('entity-','');
+      var entity = v1State.get('tables').get(cid);
+      return this.widgetsCollection.createEditForm(layout, entity);
     },
 
     createEntityTable: function(layout, id) {
