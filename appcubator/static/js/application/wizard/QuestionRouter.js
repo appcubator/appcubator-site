@@ -86,21 +86,51 @@ define([
         if(!this.answersDict[qKey]) this.answersDict[qKey] = [];
         this.answersDict[qKey].push(_.clone(newAnswers));
         $("html, body").animate({ scrollTop: $(document).height() }, "slow");
-
       },
 
       renderFinalize: function() {
         $('.racoon').append('<li class="finish">Thanks for filling it in. We created most of your app already and it awaits for you to design your pages. <div class="btn done-walkthrough">Take Me To My App »</div></li>');
-        $('.done-walkthrough').on('click', this.saveGeneratedApp);
+        //$('.done-walkthrough').on('click', this.saveGeneratedApp);
+        this.saveGeneratedApp();
+      },
+
+      renderRacoon: function(url) {
+        $(".bottom-panel").append('<div class="racoon-happy"></div><div class="bubble">Your app is available here:'+url+'</div>');
       },
 
       saveGeneratedApp: function() {
+        var self = this;
         $.ajax({
           type: "POST",
           url: '/app/'+appId+'/state/',
           data: JSON.stringify(this.generatedJSON),
-          success: function() {
-            document.location.href='/app/' + appId + '/';
+          success: function(data) {
+            // document.location.href='/app/' + appId + '/';
+            console.log(data);
+            self.deploy();
+          },
+          error: function(data) {
+            if(data.responseText == "ok") return;
+            var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+            if(DEBUG) {
+              content = { text: data.responseText };
+            }
+            new ErrorModalView(content);
+          },
+          dataType: "JSON"
+        });
+      },
+
+      deploy: function() {
+        var self = this;
+        $.ajax({
+          type: "POST",
+          url: '/app/'+appId+'/deploy/',
+          data: JSON.stringify(this.generatedJSON),
+          success: function(data) {
+            // document.location.href='/app/' + appId + '/';
+            console.log(data);
+            self.renderRacoon(data.site_url);
           },
           error: function(data) {
             if(data.responseText == "ok") return;

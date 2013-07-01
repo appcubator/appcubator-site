@@ -30,12 +30,13 @@
       Welcome! Here are few questions that will help you get started quickly.
     </li>
   </ul>
+  <div class="bottom-panel"></div>
 </div>
 {% endblock %}
 
 {% block js %}
 <script>
-var appName = {{ app_name }};
+var appName = "{{ app_name }}";
 var appId = {{ app_id }};
 </script>
 <script data-main="{{ STATIC_URL }}js/application/wizard/main" src="{{ STATIC_URL }}js/libs/require.js"></script>

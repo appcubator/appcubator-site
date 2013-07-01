@@ -26,7 +26,8 @@ margin-bottom: 8px;
 
 .racoon {
   font-size: 16px;
-  margin-bottom: 120px;
+  margin-bottom: 30px;
+  float: none;
 }
 
 .racoon label { 
@@ -60,7 +61,7 @@ margin-bottom: 8px;
   color: #4e5665;
   border: 1px solid #d7d8d9;
   border-top: 1px solid #f7f8f9;
-  padding: 24px;
+  padding: 28px;
   min-height: 80px;
 }
 
@@ -358,4 +359,34 @@ input.multi-answer-input {
 .skip-btn { 
   font-weight: bold;
   font-size: 10px;
+}
+
+.bottom-panel {
+  display: block;
+  height: 124px;
+  margin-left: 90px;
+}
+
+.racoon-happy {
+  display: inline-block;
+  height: 120px;
+  width: 122px;
+  background-image: url(../img/mascot-happy.png);
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  vertical-align: top;
+}
+
+.bubble {
+  display: inline-block;
+  width: 580px;
+  vertical-align: top;
+  border-radius: 24px;
+  border: 3px solid #000;
+  background-color: #fff;
+  padding: 20px;
+  font-size: 24px;
+  line-height: 32px;
+  margin-left: 24px;
+  font-weight: bold;
 }
