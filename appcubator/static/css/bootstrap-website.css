@@ -5816,3 +5816,7 @@ color: #fff;
   font-size: 18px;
   margin: 0 8px 4px 8px;
 }
+
+.form-error {
+  color: #c95446;
+}

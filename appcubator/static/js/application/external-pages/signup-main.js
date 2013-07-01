@@ -20,13 +20,22 @@ require.config({
 });
 
 require([
-  'prettyCheckable'
+  'prettyCheckable',
+  'underscore'
 ],
   function() {
 
     var SignupMain = function() {
 
     $(document).ready(function() {
+
+      $('#member').on('click', function(e) {
+        $('#bottom-panel').animate({
+          bottom : 0
+        }, 200, function() {
+          $('#id_username').focus();
+        });
+      });
 
       $('form#signup').submit(function(e) {
         console.log($(e.target).serialize());
