@@ -221,6 +221,11 @@ function( PageModel,
       var height = (this.model.getHeight() + 4) * 15;
       if(height < 800) height = 800;
       this.$el.find('#elements-container').css('height', height);
+    },
+
+    remove: function() {
+      this.marqueeView.remove();
+      Backbone.View.prototype.remove.call(this);
     }
 
   });
