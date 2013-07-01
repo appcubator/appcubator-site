@@ -134,6 +134,8 @@ define(['jquery'], function() {
 
     isRectangleIntersectElement: function(a1x, a1y, a2x, a2y, elem) {
       var div = $(elem);
+      if(!div.offset()) return false;
+
       var divTop = div.offset().top;
       var divLeft = div.offset().left;
       var divRight = divLeft + div.width();

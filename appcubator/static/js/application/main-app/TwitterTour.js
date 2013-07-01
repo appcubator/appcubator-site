@@ -472,9 +472,9 @@ function() {
       setup: function(tour, options) {
 
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
-          console.log(uielem);
           if(uielem.get('type') == "loop") {
             setTimeout(function() {
+              tour.pageLoop = uielem;
               tour.next();
             }, 300);
           }
@@ -483,7 +483,6 @@ function() {
         return { target: $('.entity-list') };
       },
       teardown: function() {
-        v1State.getCurrentPage().get('uielements').unbind('add');
         v1State.attributes.walkthrough++;
       }
     },
@@ -525,7 +524,59 @@ function() {
       nextButton: true,
       setup: function(tour, options) {
 
+        $('#item-gallery').scrollTop(0);
+        $('#item-gallery').animate({
+          scrollTop: $(".entity-create-form").offset().top - 90
+        }, 200);
+
+
+        tour.pageLoop.get('data').get('container_info').get('row').get('uielements').bind('add', function() {
+          tour.next();
+        });
         return { target: $('.context-entity', '.row-elements-list') };
+      },
+      teardown: function(tour, options) {
+        tour.pageLoop.get('data').get('container_info').get('row').get('uielements').unbind('add');
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>We\'re Done with this List</h3><p>Just clid "Done Editing" to switch off editing mode.</p>',
+      my: "top center",
+      at: "bottom center",
+      setup: function(tour, options) {
+        $('.done-editing').one('click', function() {
+          tour.next();
+        });
+        return { target: $('.done-editing') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Time to Create Some Tweets</h3><p>We have a list of tweets now, but we also need a way to creat them. Please drag\'n\'drop a create form onto the page.</p>',
+      my: "top center",
+      at: "bottom center",
+      setup: function(tour, options) {
+        v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
+          if(uielem.hasForm()) {
+            tour.next();
+          }
+        });
+        return { target: $('.entity-create-form') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Almost there!</h3><p>Press "Test Run" and you will see your site up and running!</p>',
+      my: "top center",
+      at: "bottom center",
+      nextButton: true,
+      setup: function(tour, options) {
+        return { target: $('#deploy') };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
