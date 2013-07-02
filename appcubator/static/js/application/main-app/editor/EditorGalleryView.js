@@ -369,9 +369,6 @@ define([
       li.id = id;
       var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
       li.innerHTML= _.template(tempLi, { text: text, icon: icon});
-
-      console.log(li);
-
       $(this.allList).append(li);
 
       return li;

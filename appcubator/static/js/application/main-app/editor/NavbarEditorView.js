@@ -12,7 +12,7 @@ function(LinkEditorView) {
     events: {
       'click .done-btn' : 'closeModal',
       'click .add-link' : 'addLinkEditorClicked',
-      'keyup #edit-brandname' : 'updateBrandName',
+      'keyup #edit-brandname' : 'updateBrandName'
     },
     initialize: function(model) {
       var self = this;

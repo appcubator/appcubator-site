@@ -8,10 +8,14 @@ function() {
       this.set("searchFields", new Backbone.Collection(fields||[]));
     },
 
+    removeFieldWithName: function(nameStr) {
+      this.get('searchFields').each(function(searchField) {
+        if(searchField.get('value') == nameStr) this.get('searchFields').remove(searchField);
+      }, this);
+    },
+
     toJSON: function () {
       var json = _.clone(this.attributes);
-      console.log(json.searchFields);
-      console.log(json.searchFields.pluck('value'));
       json.searchFields = json.searchFields.pluck('value');
       return json;
     }

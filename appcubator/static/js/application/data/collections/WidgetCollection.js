@@ -190,7 +190,7 @@ function(WidgetModel,
 
         widget.data.searchQuery = {};
         widget.data.searchQuery.searchOn = _.clone(entity.get('name'));
-        widget.data.searchQuery.searchPage = "Homepage";
+        widget.data.searchQuery.searchPage = "internal://Homepage";
         widget.data.searchQuery.searchFields = entity.get('fields').pluck('name');
 
         var widgetContainerModel = new WidgetContainerModel(widget);
