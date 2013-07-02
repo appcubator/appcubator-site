@@ -581,15 +581,22 @@ class RouteLog(models.Model):
     page_name = models.TextField()
 
 class InvitationKeys(models.Model):
-    api_key = models.CharField(max_length=255)
-    inviter = models.ForeignKey(User, related_name='invitation_keys', blank=True, null=True)
-    invitee = models.CharField(max_length=255)
+    api_key    = models.CharField(max_length=255)
+    inviter_id = models.IntegerField(blank=True)
+    invitee    = models.CharField(max_length=255)
+    date       = models.DateTimeField(auto_now_add=True)
 
     @classmethod
     def get_invitation_key(cls, user):
         hash_string = "%s %s %s %f" %(user.first_name, user.last_name, user.email, random.random())
         return hashlib.sha224(hash_string).hexdigest()
 
+    @classmethod
+    def create_invitation(cls, user, invitee):
+        api_key = cls.get_invitation_key(user)
+        invitation = cls(inviter_id=user.pk, invitee=invitee, api_use=api_key)
+        invitation.save()
+        return invitation
 
 class Customer(models.Model):
     user_id = models.IntegerField(blank=True)

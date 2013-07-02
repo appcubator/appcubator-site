@@ -9,7 +9,7 @@ from django import forms
 from django.utils import simplejson
 from copy import deepcopy
 
-from models import Customer
+from models import Customer, InvitationKeys
 
 import requests
 import re
@@ -173,4 +173,13 @@ def signup_new_customer(request):
     interest = request.POST['interest']
     description = request.POST['description']
     Customer.create_first_time(name, email, company, extra, description, 11, interest)
+    return HttpResponse("ok")
+
+
+@login_required
+@csrf_exempt
+def send_invitation_to_customer(request, customer_id):
+    customer = get_object_or_404(Customer, customer_id=customer_id)
+    invitation = InvitationKeys.create_invitation(request.user, customer.email)
+    #need to send and email using invitation.api_key
     return HttpResponse("ok")

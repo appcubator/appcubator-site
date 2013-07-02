@@ -594,3 +594,4 @@ def sub_register_domain(request, app_id, subdomain):
     }
     app.deploy(d_user)
     return HttpResponse("ok")
+
