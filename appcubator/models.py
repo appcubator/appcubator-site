@@ -587,14 +587,14 @@ class InvitationKeys(models.Model):
     date       = models.DateTimeField(auto_now_add=True)
 
     @classmethod
-    def get_invitation_key(cls, user):
+    def make_invitation_key(cls, user):
         hash_string = "%s %s %s %f" %(user.first_name, user.last_name, user.email, random.random())
         return hashlib.sha224(hash_string).hexdigest()
 
     @classmethod
     def create_invitation(cls, user, invitee):
-        api_key = cls.get_invitation_key(user)
-        invitation = cls(inviter_id=user.pk, invitee=invitee, api_use=api_key)
+        api_key = cls.make_invitation_key(user)
+        invitation = cls(inviter_id=user.pk, invitee=invitee, api_key=api_key)
         invitation.save()
         return invitation
 

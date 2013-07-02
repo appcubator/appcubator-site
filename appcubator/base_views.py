@@ -10,6 +10,7 @@ from django.utils import simplejson
 from copy import deepcopy
 
 from models import Customer, InvitationKeys
+from appcubator.email.sendgrid_email import send_email
 
 import requests
 import re
@@ -123,7 +124,11 @@ def tutorial(request):
 @require_http_methods(["GET", "POST"])
 def signup(request):
     if request.method == "GET":
-      return render(request, "registration/signup.html")
+        if 'k' in request.GET:
+            api_key = request.GET['k']
+            if InvitationKeys.objects.filter(api_key=api_key).count() > 0:
+                return render(request, "registration/signup.html")
+        return render(request, "website-home.html")
     else:
         req = {}
         req = deepcopy(request.POST)
@@ -179,7 +184,9 @@ def signup_new_customer(request):
 @login_required
 @csrf_exempt
 def send_invitation_to_customer(request, customer_id):
-    customer = get_object_or_404(Customer, customer_id=customer_id)
+    customer = get_object_or_404(Customer, user_id=customer_id)
     invitation = InvitationKeys.create_invitation(request.user, customer.email)
-    #need to send and email using invitation.api_key
+    text = "Hello! You can signup here: http://appcubator.com/signup?k=%s" % invitation.api_key
+    html = text
+    send_email("team@appcubator.com", customer.email, "Try out Appcubator!", "", html)
     return HttpResponse("ok")
