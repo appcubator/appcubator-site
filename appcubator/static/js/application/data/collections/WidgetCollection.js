@@ -122,7 +122,7 @@ function(WidgetModel,
         widget.data.container_info.action = "create";
         widget.data.container_info.form = {};
         widget.data.container_info.form.entity = entity.get('name');
-        widget.data.container_info.form.goto = "internal://Homepage";
+        widget.data.container_info.form.goto = v1State.getCurrentPage().getInternalRepresentation();
 
         var widgetContainerModel = new WidgetContainerModel(widget);
         widgetContainerModel.getForm().fillWithProps(entity);

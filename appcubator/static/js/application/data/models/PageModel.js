@@ -104,6 +104,10 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
       this.set('page_name', newPageName);
     },
 
+    getInternalRepresentation: function() {
+      return "internal://" + this.get('name');
+    },
+
     toJSON: function() {
       var json = _.clone(this.attributes);
       json.url = this.get('url').toJSON();
