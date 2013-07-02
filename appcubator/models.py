@@ -11,6 +11,9 @@ import requests
 import simplejson
 import traceback
 import sys
+import hashlib
+import random
+
 
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
     __file__), os.path.normpath("default_state"))
@@ -456,18 +459,15 @@ class StaticFile(models.Model):
     theme = models.ForeignKey(
         UITheme, blank=True, null=True, related_name="statics")
 
+
 # Used to keep track of any of our APIs usage.
 # Count is incremented on each successful use.
-
-
 class ApiKeyCounts(models.Model):
     api_key = models.CharField(max_length=255)
     api_count = models.IntegerField(default=0)
 
 # Keeps track of individual usages, so we can do time based
 # control and analytics later on.
-
-
 class ApiKeyUses(models.Model):
     api_key = models.ForeignKey(ApiKeyCounts, related_name="api_key_counts")
     api_use = models.DateField(auto_now_add=True)
@@ -579,6 +579,16 @@ class RouteLog(models.Model):
     opened_on = models.DateTimeField(auto_now_add=True)
     app_id = models.IntegerField()
     page_name = models.TextField()
+
+class InvitationKeys(models.Model):
+    api_key = models.CharField(max_length=255)
+    inviter = models.ForeignKey(User, related_name='invitation_keys', blank=True, null=True)
+    invitee = models.CharField(max_length=255)
+
+    @classmethod
+    def get_invitation_key(cls, user):
+        hash_string = "%s %s %s %f" %(user.first_name, user.last_name, user.email, random.random())
+        return hashlib.sha224(hash_string).hexdigest()
 
 
 class Customer(models.Model):
