@@ -4,7 +4,7 @@ function() {
 
   var SearchQueryModel = Backbone.Model.extend({
     initialize: function(bone) {
-      var fields =_.map(bone.searchFields, function(field) { console.log(field); return { value: field }; });
+      var fields =_.map(bone.searchFields, function(field) { return { value: field }; });
       this.set("searchFields", new Backbone.Collection(fields||[]));
     },
 
