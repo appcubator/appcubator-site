@@ -95,6 +95,11 @@ function( WidgetView,
       if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
       else util.get('full-container').appendChild(curWidget.render().el);
       if(isNew) curWidget.autoResize();
+    },
+
+    remove: function() {
+      this.widgetSelectorView.remove();
+      Backbone.View.prototype.remove.call(this);
     }
   });
 

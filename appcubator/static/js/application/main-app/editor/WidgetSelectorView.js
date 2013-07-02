@@ -328,6 +328,11 @@ function() {
       node.style.height = 0;
       node.style.width = 0;
       $(node).hide();
+    },
+
+    remove: function() {
+      $('.page.full').off('mousedown', this.clickedPage);
+      Backbone.View.prototype.remove.call(this);
     }
 
   });

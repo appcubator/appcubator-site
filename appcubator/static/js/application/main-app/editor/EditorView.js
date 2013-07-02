@@ -224,6 +224,7 @@ function( PageModel,
     },
 
     remove: function() {
+      this.widgetsManager.remove();
       this.marqueeView.remove();
       Backbone.View.prototype.remove.call(this);
     }
