@@ -75,7 +75,7 @@
             <td>{{ customer.consulting }}</td>
             <td> <a href="#" class="detailed-info" data-placement="bottom" data-toggle="popover" title="" data-content="{{ customer.extra_info }}" data-original-title="Extra Info">Click to see</a></td>
             <td>{{ customer.project_description }}</td>
-            <td>{% if customer.sent_welcome_email %} Sent {% else %} <div class="btn">Send Invitation</div> {% endif %}</td>
+            <td>{% if customer.sent_welcome_email %} Sent {% else %}<form method="post" action="/send_invitation/{{ customer.user_id }}/"> <input type="submit" class="btn" value="Send Invitation"></form>{% endif %}</td>
           </tr>
           {% endfor %}
         </tbody>

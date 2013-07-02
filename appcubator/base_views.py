@@ -184,6 +184,7 @@ def signup_new_customer(request):
 @login_required
 @csrf_exempt
 def send_invitation_to_customer(request, customer_id):
+    print customer_id
     customer = get_object_or_404(Customer, user_id=customer_id)
     invitation = InvitationKeys.create_invitation(request.user, customer.email)
     text = "Hello! You can signup here: http://appcubator.com/signup?k=%s" % invitation.api_key
