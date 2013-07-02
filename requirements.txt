@@ -26,3 +26,7 @@ autopep8
 objgraph
 shell
 markdown2
+splinter
+django-registration
+django-invitation
+
