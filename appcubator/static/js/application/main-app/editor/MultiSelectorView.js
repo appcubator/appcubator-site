@@ -115,8 +115,12 @@ function() {
 
     clickedPage: function(e) {
       this.empty();
-    }
+    },
 
+    remove: function() {
+      $('.page.full').off('mousedown', this.clickedPage);
+      Backbone.View.prototype.remove.call(this);
+    }
   });
 
   return WidgetSelectorView;

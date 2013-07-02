@@ -85,7 +85,7 @@ function() {
       var self = this;
 
       this.listenTo(widget, 'remove', function() {
-        this.deselect
+        this.deselect();
       });
 
       this.listenTo(widget, 'hovered', function() {
@@ -125,10 +125,10 @@ function() {
 
     setLayout: function(node, widgetModel) {
       $(node).show();
-      node.style.width  = ((widgetModel.get('layout').get('width') * 1) + 4) + 'px';
-      node.style.height = ((widgetModel.get('layout').get('height') * 1) + 4) + 'px';
-      node.style.left   = ((widgetModel.get('layout').get('left') * 1) - 2) + 'px';
-      node.style.top    = ((widgetModel.get('layout').get('top') * 1) - 2) + 'px';
+      node.style.width  = ((widgetModel.get('layout').get('width') * 1) + 2) + 'px';
+      node.style.height = ((widgetModel.get('layout').get('height') * 1) + 2) + 'px';
+      node.style.left   = ((widgetModel.get('layout').get('left') * 1) - 1) + 'px';
+      node.style.top    = ((widgetModel.get('layout').get('top') * 1) - 1) + 'px';
       return node;
     },
 
@@ -166,17 +166,17 @@ function() {
 
     resizing: function(e, ui) {
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
-      elem.style.width = ui.size.width - 4 + 'px';
-      elem.style.height = (ui.size.height - 4) + 'px';
-      elem.style.left = ui.position.left + 2 + 'px';
-      elem.style.top  = ui.position.top + 2 + 'px';
+      elem.style.width = ui.size.width - 2 + 'px';
+      elem.style.height = (ui.size.height - 2) + 'px';
+      elem.style.left = ui.position.left + 1 + 'px';
+      elem.style.top  = ui.position.top + 1 + 'px';
     },
 
     resized: function(e, ui) {
       var left = Math.round((ui.position.left / 1));
       var top  = Math.round((ui.position.top  / 1));
       var deltaHeight = Math.round((ui.size.height + 6));
-      var deltaWidth = Math.round((ui.size.width + 2));
+      var deltaWidth = Math.round((ui.size.width + 1));
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = '';
       elem.style.height = '';
@@ -191,8 +191,8 @@ function() {
       model = this.selectedEl;
       if(e.target.id == "list-hover-div") { model = this.hoveredEl; }
       var elem = util.get('widget-wrapper-' + model.cid);
-      elem.style.top = ui.position.top + 2 + 'px';
-      elem.style.left = ui.position.left + 2 + 'px';
+      elem.style.top = ui.position.top + 1 + 'px';
+      elem.style.left = ui.position.left + 1 + 'px';
     },
 
     moved: function(e, ui) {

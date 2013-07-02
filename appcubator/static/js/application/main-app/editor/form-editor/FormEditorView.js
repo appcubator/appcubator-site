@@ -250,7 +250,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       e.preventDefault();
 
       var name = this.$el.find('.new-field-name').val();
-      var type = $('input:radio[name=field-type]').val();
+      var type = this.$el.find('input:radio[name=field-type]:checked').val();
 
       var fieldModel = this.entityModel.get('fields').push({name: name, type: type});
       var formFieldModel = new FormFieldModel({field_name: fieldModel.get('name'),

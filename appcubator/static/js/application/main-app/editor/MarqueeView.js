@@ -153,6 +153,14 @@ function(WidgetEditorView,
           left: rect.left + (window.pageXOffset || docEl.scrollLeft || 0),
           top: rect.top + (window.pageYOffset || docEl.scrollTop || 0)
       };
+    },
+
+    remove: function() {
+      this.multiSelectorView.remove();
+      window.removeEventListener('mouseup', this.mouseup);
+      document.getElementById('page').removeEventListener('mousedown', this.mousedown);
+      document.getElementById('page').removeEventListener('mousemove', this.mousemove);
+      Backbone.View.prototype.remove.call(this);
     }
 
   });

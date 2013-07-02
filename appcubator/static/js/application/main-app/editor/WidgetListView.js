@@ -31,7 +31,7 @@ function( WidgetContainerView,
       WidgetContainerView.__super__.initialize.call(this, widgetModel);
       _.bindAll(this);
 
-      this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.placeWidget, true);
+      this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.placeWidget, true, true);
       this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.renderShadowElements);
       this.model.get('data').get('container_info').get('row').get('uielements').bind("remove", this.renderShadowElements);
       this.model.bind('deselected', this.switchEditingOff);
@@ -124,7 +124,7 @@ function( WidgetContainerView,
 
       this.editorRow.appendChild(widgetView.render().el);
       widgetModel.get('layout').bind('change', this.renderShadowElements);
-      if(isNew) widgetView.autoResize();
+      if(isNew) { widgetView.autoResize(); }
     },
 
     resized: function(e, ui) {

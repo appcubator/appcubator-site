@@ -118,7 +118,7 @@ function(WidgetContentEditor,
       this.$el.removeClass('right');
       this.$el.removeClass('bottom');
 
-      if(action == "show" || action == "loop") {
+      if(action == "show" || this.model.get('type') == "loop") {
         var location = this.getLocation();
         this.location = location;
         this.el.className += ' '+location;
