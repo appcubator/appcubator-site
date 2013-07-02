@@ -11,6 +11,7 @@ import requests
 import simplejson
 import traceback
 import sys
+import subprocess, shlex
 
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
     __file__), os.path.normpath("default_state"))
@@ -175,27 +176,6 @@ class App(models.Model):
         except simplejson.JSONDecodeError, e:
             raise ValidationError(e.msg)
 
-    def summary_user_settings(self):
-        """Human-readable summary of the user settings"""
-        summary = ""
-        summary += "Enabled auth modes:\t{};".format(", ".join(
-            [a for a, v in self.state['users'].items() if v]))
-        return summary
-
-    def summary_entities(self):
-        """Human-readable summary of the entities"""
-        summary = ""
-        summary += "Entities:\t\t{};".format(", ".join(
-            [e['name'] for e in self.state['entities']]))
-        return summary
-
-    def summary_pages(self):
-        """Human-readable summary of the pages"""
-        summary = ""
-        summary += "Pages:\t\t\t{};".format(", ".join(['("{}", {})'.format(
-            u['page_name'], u['urlparts']) for u in self.state['urls']]))
-        return summary
-
     def write_to_tmpdir(self):
         from app_builder.analyzer import App as AnalyzedApp
         from app_builder.controller import create_codes
@@ -230,6 +210,20 @@ class App(models.Model):
 
     def github_url(self):
         return "https://github.com/appcubator/" + self.u_name()
+
+    def zip_path(self):
+        tmpdir = self.write_to_tmpdir()
+
+        def zipify(tmpdir):
+            filenames = os.listdir(tmpdir)
+            p = subprocess.Popen(shlex.split("/usr/bin/zip -r zipfile.zip %s" % ' '.join(filenames)), stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=tmpdir)
+            out, err = p.communicate()
+            #print "%s\n%s" % (("out", "err"), (out, err))
+            retcode = p.wait()
+            #print "ZIP: %d" % retcode
+            return os.path.join(tmpdir, 'zipfile.zip')
+
+        return zipify(tmpdir)
 
     def css(self, deploy=True, mobile=False):
         """Use uiestate, less, and django templates to generate a string of the CSS"""
@@ -300,68 +294,6 @@ class App(models.Model):
 
         else:
           return {'errors': r.content}
-    """
-    def deploy(self, d_user):
-        # this will post the data to appcubator.com
-        post_data = {
-            "u_name": self.u_name(),
-            "subdomain": self.subdomain,
-            "app_json": self.state_json,
-            "css": self.css(),
-            "d_user": simplejson.dumps(d_user),
-            "deploy_secret": "v1factory rocks!"
-        }
-        # deploy to the staging server unless this is the production server.
-        if settings.PRODUCTION and not settings.STAGING:
-            r = requests.post("http://appcubator.com/deployment/push/", data=post_data, headers={
-                              "X-Requested-With": "XMLHttpRequest"})
-        else:
-            r = requests.post("http://staging.appcubator.com/deployment/push/", data=post_data, headers={
-                              "X-Requested-With": "XMLHttpRequest"})
-
-        if r.status_code == 200:
-            response_content = r.json()
-            result = {}
-            result['site_url'] = "http://%s.appcubator.com" % self.subdomain
-            result['github_url'] = self.github_url()
-            if 'errors' in response_content:
-                result['errors'] = response_content['errors']
-            return result
-        else:
-            raise Exception(r.content)
-            """
-
-    def deploy_test(self):
-        return "do the funky chicken"
-        analyzed_app = AnalyzedApp.create_from_dict(self.state, self.name)
-        django_writer = DjangoWriter(analyzed_app)
-
-        # Also want to print:
-        #     user settings
-        #     entities
-        #     urls/pages
-        print "\n".join([self.summary_user_settings(),
-                         self.summary_entities(),
-                         self.summary_pages()])
-
-        def print_test(heading, test_output_fun):
-            print "\n\n\n", 17 * "#", 7 * " ", heading, 7 * " ", 17 * "#"
-            try:
-                test_output = test_output_fun()
-            except Exception:
-                traceback.print_exc(file=sys.stdout)
-            else:
-                print "\n".join(["> " + line for line in test_output.split('\n')])
-            print 17 * "#", 7 * " ", "END", 7 * " ", 17 * "#"
-
-        print_test("urls.py", django_writer.urls_py_as_string)
-        print_test("models.py", django_writer.models_py_as_string)
-        print_test("model_forms.py", django_writer.model_forms_py_as_string)
-        print_test("views.py", django_writer.views_py_as_string)
-        print_test("form_receivers.py",
-                   django_writer.form_receivers_py_as_string)
-        print_test("templates", lambda: "\n\nNEXT:\n".join([t[
-                   1] for t in django_writer.templates_as_strings()]))
 
     def delete(self, *args, **kwargs):
         try:

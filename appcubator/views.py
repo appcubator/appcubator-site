@@ -466,6 +466,17 @@ def staticfiles(request, app_id):
             else:
                 return JSONResponse({"error": "One of the fields was not valid."})
 
+
+@login_required
+@require_GET
+@csrf_exempt
+def app_zip(request, app_id):
+    app = get_object_or_404(App, id=app_id, owner=request.user)
+    zip_bytes = open(app.zip_path(), "r").read()
+    response = HttpResponse(zip_bytes, content_type="application/octet-stream")
+    response['Content-Disposition'] = 'attachment; filename="teh_codez_%s.zip"' % app.hostname()
+    return response
+
 @login_required
 @require_POST
 @csrf_exempt
@@ -495,6 +506,7 @@ def app_deploy_local(request, app_id):
     try:
         result['site_url'] = app.write_to_tmpdir(d_user)
         result['github_url'] = result['site_url']
+        result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
         status = 200
     except Exception, e:
         result['errors'] = traceback.format_exc()
