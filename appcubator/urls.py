@@ -3,6 +3,8 @@ from django.conf import settings
 import django.contrib.auth.views
 import base_views, views, theme_views, log_views, test_views
 import django.views.generic.base
+from django.views.generic.simple import direct_to_template
+from registration.backends.default.views import RegistrationView, ActivationView
 
 # from django.contrib import admin
 # admin.autodiscover()
@@ -10,14 +12,15 @@ import django.views.generic.base
 urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
     url(r'^aboutus/$',                  base_views.aboutus),
+    # Signup, Login and invites
+    url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^login/$',                    django.contrib.auth.views.login, {'template_name' : 'registration/login_page.html'}),
     url(r'^logout/$',                   django.contrib.auth.views.logout, {"next_page":"/"}),
     url(r'^connect_with/$',             base_views.get_linkedin),
-    url(r'^signup/$',                   base_views.signup),
+    url(r'^signup/$',                   base_views.signup, {'template_name' : 'registration/registration_form.html'}),
     url(r'^termsofservice/$',           base_views.terms_of_service),
     url(r'^faq/$',                      base_views.faq),
     url(r'^account/$',                  base_views.account),
-    url(r'^account/set_password/$',     base_views.change_password),
     url(r'^ping/$',                     base_views.ping),
     url(r'^whatisthis/$',               base_views.marketing),
     url(r'^signup_form/$',              base_views.signup_new_customer),

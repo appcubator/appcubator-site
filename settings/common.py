@@ -112,6 +112,7 @@ INSTALLED_APPS = (
     'djcelery',
     'kombu.transport.django',
     'less',
+    'registration',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -176,6 +177,12 @@ LOGGING = {
         },
     }
 }
+
+# Registration window
+ACCOUNT_ACTIVATION_DAYS = 28
+# Invite based information
+INVITATIONS_PER_USER = 5
+ACCOUNT_INVITATION_DAYS = 120
 
 import djcelery
 djcelery.setup_loader()

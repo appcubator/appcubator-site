@@ -25,10 +25,10 @@ function(TableCollection,
       title: 'Tables',
       events : {
         'click #add-role'        : 'clickedAddUserRole',
-        'keyup #add-role-form'  : 'createUserRole',
+        'keyup #add-role-form'   : 'createUserRole',
         'click #add-entity'      : 'clickedAddTable',
-        'keyup #add-entity-form': 'createTable',
-        'click #add-relation'     : 'showCreateRelationForm',
+        'keyup #add-entity-form' : 'createTable',
+        'click #add-relation'    : 'showCreateRelationForm',
         'click .related-tag'     : 'scrollToRelation'
       },
 
