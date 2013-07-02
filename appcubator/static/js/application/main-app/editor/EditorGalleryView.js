@@ -183,6 +183,7 @@ define([
       className = String(className).replace('ui-draggable', '');
       className = String(className).replace('full-width', '');
       className = String(className).replace('half-width', '');
+      className = String(className).replace('authentication', '');
       className = String(className).trim();
 
       switch(className)
@@ -368,6 +369,9 @@ define([
       li.id = id;
       var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
       li.innerHTML= _.template(tempLi, { text: text, icon: icon});
+
+      console.log(li);
+
       $(this.allList).append(li);
 
       return li;

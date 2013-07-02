@@ -104,8 +104,8 @@ define([
         /* Drop the element */
         var fE = _.clone(fEvent);
         fE.target = loginForm;
-        fE.target.className = className;
-        fE.target.id = id;
+        //fE.target.className = className;
+        //fE.target.id = id;
 
         /* Check if exists */
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
@@ -147,8 +147,6 @@ define([
         /* Drop the element */
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -176,7 +174,6 @@ define([
       var id = "entity-user-facebook";
       var className = "facebook thirdparty authentication ui-draggable";
       var galleryElement = document.getElementById(id);
-      var model;
 
       it("is on gallery", function() {     /* Check if on gallery */
         expect(galleryElement).not.toBe(null);
@@ -186,8 +183,6 @@ define([
         /* Drop the element */
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -225,8 +220,6 @@ define([
         /* Drop the element */
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -263,8 +256,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -301,8 +292,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
