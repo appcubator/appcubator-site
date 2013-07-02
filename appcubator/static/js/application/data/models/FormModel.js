@@ -61,6 +61,26 @@ function(
       }, this);
     },
 
+    fillWithEditProps: function(entity) {
+      entity.get('fields').each(function(fieldModel) {
+        var type = fieldModel.get('type');
+        var formFieldModel = { field_name: fieldModel.get('name'),
+                               displayType: "single-line-text",
+                               type: type,
+                               label: fieldModel.get('name'),
+                               placeholder: "Prefilled data: {{" + fieldModel.get('name') + '}}' };
+
+        if(type == "fk"||type == "m2m"||type == "o2o") { return; }
+        if(type == "email") { formFieldModel.displayType = "email-text"; }
+        if(type == "image") { formFieldModel.displayType = "image-uploader"; }
+        if(type == "file") { formFieldModel.displayType = "file-uploader"; }
+        if(type == "date") { formFieldModel.displayType = "date-picker"; }
+
+        var ind = this.get('fields').models.length - 1;
+        this.get('fields').push(formFieldModel, {at: ind});
+      }, this);
+    },
+
     getRelationalActions: function(pageModel) {
 
       if(this.get('action') == "login" || this.get('action') == "signup") return [];

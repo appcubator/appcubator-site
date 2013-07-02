@@ -34,7 +34,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       'submit .new-field-form'           : 'addNewField'
     },
 
-    initialize: function(formModel, entityM, callback) {
+    initialize: function(formModel, entityM) {
       _.bindAll(this);
 
       util.loadCSS(this.css);
@@ -57,7 +57,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       if(this.model.get('fields').models.length > 0) {
         this.selectedNew(_.first(this.model.get('fields').models));
       }
-      this.callback = callback;
     },
 
     render : function(text) {
@@ -170,6 +169,12 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       this.$el.find('#field-' + fieldModel.cid).addClass('selected');
       this.$el.find('.details-panel').fadeIn().css('display', 'inline-block');
       this.$el.find('.drag-icon').css({opacity: 0}).animate({opacity: 1});
+      if(this.model.get("action") == "edit") {
+        console.log("HEY");
+        this.$el.find('.field-placeholder-input').prop('disabled', true);
+        this.$el.find('.field-placeholder-input').attr('disabled', 'disabled');
+      }
+
     },
 
     clickedField: function(e) {

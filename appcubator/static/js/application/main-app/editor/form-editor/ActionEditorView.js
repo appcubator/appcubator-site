@@ -48,7 +48,7 @@ function(FormFieldModel, ActionModel, TutorialView) {
 
     renderRelations: function() {
       this.possibleActions.each(function(actionModel, ind) {
-        this.$el.find('.relational-list').append('<li id="action-'+actionModel.cid+'" class="relational-action">' + actionModel.get('nl_description')+'<div class="remove-from-list"></div></li>');
+        this.$el.find('.relational-list').append('<li id="action-'+actionModel.cid+'" class="relational-action">' + actionModel.get('nl_description')+'<div class="add-to-list"></div></li>');
       }, this);
     },
 
@@ -61,7 +61,7 @@ function(FormFieldModel, ActionModel, TutorialView) {
       }
 
       this.possibleGotos.each(function(actionModel, ind) {
-        this.$el.find('.goto-list').append('<li id="page-'+actionModel.cid+'" class="goto-action">Go to '+actionModel.get('page_name')+'<div class="remove-from-list"></div></li>');
+        this.$el.find('.goto-list').append('<li id="page-'+actionModel.cid+'" class="goto-action">Go to '+actionModel.get('page_name')+'<div class="add-to-list"></div></li>');
       }, this);
     },
 

@@ -98,7 +98,7 @@ function(WidgetContentEditor,
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
         }
 
-        if(action == "create") {
+        if(this.model.hasForm()) {
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
         }
       }
