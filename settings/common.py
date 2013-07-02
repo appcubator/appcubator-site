@@ -190,3 +190,11 @@ BROKER_URL = "django://"
 
 LOGOUT_URL="/"
 LOGIN_URL="/login/"
+
+# Simple SMTP
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "maverickn"
+EMAIL_HOST_PASSWORD = "obscurepassword321"
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'team@appcubator.com'
