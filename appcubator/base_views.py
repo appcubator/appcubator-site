@@ -198,4 +198,6 @@ def send_invitation_to_customer(request, customer_pk):
         subject = request.POST['subject']
 
     send_email("team@appcubator.com", customer.email, subject, "", text)
+    customer.sent_welcome_email = True
+    customer.save()
     return HttpResponse("ok")

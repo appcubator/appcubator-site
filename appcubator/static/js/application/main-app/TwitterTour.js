@@ -8,7 +8,7 @@ function() {
      */
     {
       target: $('.qm-btn'),
-      content: '<h3>Questions?</h3><p>Please follow the directions written in these  small boxes. You can click the question marks to learn details.</p>',
+      content: '<h3>Questions?</h3><p>Please follow the directions written in these small boxes. You can click the question marks at anytime to learn more details.</p>',
       my: "right center",
       at: "left center",
       teardown: function() {
@@ -22,7 +22,7 @@ function() {
      */
     {
       target: $('.menu-app-entities'),
-      content: '<h3>Tables</h3><p>Go to tables page.</p>',
+      content: '<h3>Tables</h3><p>Go to the tables page.</p>',
       my: "top center",
       at: "bottom center",
       setup: function(tour, options) {
@@ -53,7 +53,7 @@ function() {
      * Add Table btn
      */
     {
-      content: '<h3>Adding A Table</h3><p>Since you\'d like to store tweets, you need create a Tweet table. Click "Add Table" button and name the table <strong>Tweet</strong>.</p>',
+      content: '<h3>Adding A Table</h3><p>Since you\'d like to store tweets, you need create a Tweet table. Click the "Add Table" button and name the table: <strong>Tweet</strong>.</p>',
       my: "right center",
       at: "left center",
       bind: ['checkForm'],

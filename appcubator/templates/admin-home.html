@@ -84,13 +84,20 @@
             <div id="invitation-modal-{{ customer.pk }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Modal header</h3>
+                <h3 id="myModalLabel">Invitation Modal</h3>
               </div>
               <form method="post" action="/send_invitation/{{ customer.pk }}/">
               <div class="modal-body">
                 <p>
                     <input type="text" placeholder="Subject Line" name="subject"><br  />
-                    <textarea name="text"></textarea>
+                    <textarea name="text">
+                      Thanks for your interest in Appcubator. Below you can find your access link to Appcubator Private Beta program.
+
+                      SIGNUP_LINK
+
+                      Sincerely,
+                      Appcubator Team
+                    </textarea>
                 </p>
               </div>
               <div class="modal-footer">
