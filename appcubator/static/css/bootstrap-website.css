@@ -5885,3 +5885,10 @@ display: inline-block;
   display: inline-block;
   vertical-align: top;
 }
+
+::selection {
+  background: #fff; /* Safari */
+  }
+::-moz-selection {
+  background: #fff; /* Firefox */
+}
