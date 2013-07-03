@@ -132,7 +132,7 @@ var FieldTypes = {
   "password-text"    : '<input type="password" class="password" placeholder="<%= field.get(\'placeholder\') %>">',
   "email-text"       : '<input type="text" class="email" placeholder="<%= field.get(\'placeholder\') %>">',
   "button"           : '<input type="submit" class="btn" value="<%= field.get(\'placeholder\') %>">',
-  "image-uploader"   : '<input type="file" placeholder="<%= field.get(\'placeholder\') %>">',
+  "image-uploader"   : '<div class="upload-image btn">Upload Image</div>',
   "file-uploader"    : '<div class="upload-file btn">Upload File</div>',
   "date-picker"      : '<input type="text" placeholder="<%= field.get(\'placeholder\') %>">'
 };

@@ -535,7 +535,7 @@ table tr:hover td {
 .description .right-arrow {
   position: absolute;
   left: 840px;
-  top: 5px;
+  top: 33px;
   height: 150px;
   width: 30px;
   text-align: right;
@@ -546,7 +546,7 @@ table tr:hover td {
 .description .left-arrow {
   position: absolute;
   left: 0px;
-  top: 5px;
+  top: 33px;
   height: 150px;
   width: 30px;
   text-align: left;
