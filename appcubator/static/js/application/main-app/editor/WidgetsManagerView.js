@@ -17,7 +17,7 @@ function( WidgetView,
           WidgetSelectorView) {
 
   var WidgetManagerView = Backbone.View.extend({
-    el : $('.page'),
+    el : $('#page'),
     widgetsContainer : null,
     events : {
 

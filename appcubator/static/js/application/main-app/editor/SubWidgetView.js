@@ -1,10 +1,10 @@
 define([
   'collections/WidgetCollection',
-  'editor/TableQueryView',
+  'editor/QueryEditorView',
   'editor/WidgetView',
   'backbone',
   'editor/editor-templates'
-],function(WidgetCollection, TableQueryView, WidgetView) {
+],function(WidgetCollection, QueryEditorView, WidgetView) {
 
   var SubWidgetView = WidgetView.extend({
     el: null,

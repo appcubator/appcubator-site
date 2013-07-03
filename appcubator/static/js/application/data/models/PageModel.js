@@ -104,6 +104,16 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
       this.set('page_name', newPageName);
     },
 
+    getLinkLang: function(contextArgs) {
+      var str = "internal://" + this.get('name');
+      return str;
+    },
+
+    getPageContextDatalang: function() {
+      var entities = this.getContextEntities();
+      return "Page." + entities[0];
+    },
+
     toJSON: function() {
       var json = _.clone(this.attributes);
       json.url = this.get('url').toJSON();

@@ -57,6 +57,9 @@ function() {
 
       var contentHTML = _.template(Templates.queryView, {entity: self.entity, query: self.model, c: checks, type: self.containerType });
       this.el.innerHTML = contentHTML;
+
+      $('select option[value="'+ this.model.get('sortAccordingTo')+'"]').attr('selected', 'selected');
+
       return this;
     },
 

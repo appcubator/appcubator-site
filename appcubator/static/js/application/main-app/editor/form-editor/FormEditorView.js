@@ -170,10 +170,12 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       this.$el.find('.details-panel').fadeIn().css('display', 'inline-block');
       this.$el.find('.drag-icon').css({opacity: 0}).animate({opacity: 1});
       if(this.model.get("action") == "edit") {
-        console.log("HEY");
         this.$el.find('.field-placeholder-input').prop('disabled', true);
         this.$el.find('.field-placeholder-input').attr('disabled', 'disabled');
       }
+
+      if(fieldModel.get('required')) { this.$el.find('#required').attr('checked', true); }
+      else { this.$el.find('#not-required').attr('checked', true); }
 
     },
 

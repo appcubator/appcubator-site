@@ -3,10 +3,11 @@ define([
   'editor/WidgetLayoutEditorView',
   'editor/ImageSliderEditorView',
   'editor/WidgetClassPickerView',
+  'editor/SearchEditorView',
   'editor/list-editor/RowGalleryView',
   'editor/form-editor/FormEditorView',
   'editor/form-editor/LoginFormEditorView',
-  'editor/TableQueryView',
+  'editor/QueryEditorView',
   'mixins/BackboneUI',
   'util'
 ],
@@ -14,10 +15,11 @@ function(WidgetContentEditor,
          WidgetLayoutEditor,
          ImageSliderEditorView,
          WidgetClassPickerView,
+         SearchEditorView,
          RowGalleryView,
          FormEditorView,
          LoginFormEditorView,
-         TableQueryView) {
+         QueryEditorView) {
 
   var WidgetEditorView = Backbone.UIView.extend({
     className : 'widget-editor fadeIn',
@@ -32,6 +34,7 @@ function(WidgetContentEditor,
       'click .edit-row-btn'       : 'openRowEditor',
       'click .form-editor-btn'    : 'openFormEditor',
       'click .pick-style'         : 'openStylePicker',
+      'click .search-editor-btn'  : 'openSearchEditor',
       'click .edit-login-form-btn': 'openLoginEditor',
       'click .done-editing'       : 'closeEditingMode',
       'click .delete-button'      : 'clickedDelete',
@@ -96,6 +99,10 @@ function(WidgetContentEditor,
 
         if(action == "searchlist") {
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
+        }
+
+        if(action == "searchbox") {
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('search-editor-btn', 'Edit Search Options'));
         }
 
         if(this.model.hasForm()) {
@@ -183,7 +190,7 @@ function(WidgetContentEditor,
         type = 'list';
       }
 
-      new TableQueryView(this.model, type);
+      new QueryEditorView(this.model, type);
     },
 
     openRowEditor: function() {
@@ -196,6 +203,11 @@ function(WidgetContentEditor,
       var galleryView = new RowGalleryView(this.model);
       this.listGalleryView.appendChild(galleryView.render().el);
       this.el.appendChild(this.listGalleryView);
+    },
+
+    openSearchEditor: function() {
+      console.log(this.model);
+      new SearchEditorView(this.model.get('data').get('searchQuery'));
     },
 
     closeEditingMode: function() {

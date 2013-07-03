@@ -107,7 +107,6 @@ function (AppModel,
     Backbone.history.start({pushState: true});
 
     if(v1State.has('walkthrough')) {
-      console.log('yo');
       //v1.navigate('/app/'+appId+'/', {trigger: true});
       require(['app/TwitterTour'], function(QuickTour) {
         //window.QuickTour = QuickTour;
