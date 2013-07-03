@@ -166,6 +166,9 @@ define([
         top  = this.findTop(e, ui);
       }
 
+      var itemGallery = document.getElementById('item-gallery');
+      if(util.isRectangleIntersectElement(e.pageX, e.pageY, e.pageX+80, e.pageY+80, itemGallery)) return;
+
       layout = { top: top, left: left };
 
       var targetEl = e.target;
