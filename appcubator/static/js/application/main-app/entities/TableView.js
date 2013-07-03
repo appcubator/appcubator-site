@@ -18,7 +18,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       'click .add-property-button' : 'clickedAddProperty',
       'submit .add-property-form'  : 'formSubmitted',
       'change .attribs'            : 'changedAttribs',
-      'click .prop-cross'          : 'clickedPropDelete',
+      'click .remove'              : 'clickedPropDelete',
       'click .excel'               : 'clickedUploadExcel',
       'click .trash'               : 'clickedDelete',
       'click .show-data'           : 'showData',

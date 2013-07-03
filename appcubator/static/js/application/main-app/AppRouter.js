@@ -1,36 +1,34 @@
 
 define([
 		"mixins/SimpleModalView",
-		"mixins/ErrorModalView",
+		"mixins/ErrorDialogueView",
 		"tutorial/TutorialView",
 		"app/EmailsView",
 		"app/DeployView",
 		"mixins/SimpleDialogueView",
-		"mixins/ErrorDialogueView",
 		"backbone",
 		"bootstrap",
 		"util",
 		"comp"
 ], function(SimpleModalView,
-          ErrorModalView,
+          ErrorDialogueView,
           TutorialView,
           EmailsView,
           DeployView,
-          SimpleDialogueView,
-          ErrorDialogueView) {
+          SimpleDialogueView) {
 
 		var AppRouter = Backbone.Router.extend({
 
 		routes: {
 			"app/:appid/info/(:tutorial/)"     : "info",
-			"app/:appid/tables/(:tutorial/)" : "tables",
+			"app/:appid/tables/(:tutorial/)"   : "tables",
 			"app/:appid/gallery/(:tutorial/)"  : "themes",
 			"app/:appid/pages/(:tutorial/)"    : "pages",
-			"app/:appid/editor/:pageid/" : "editor",
-			"app/:appid/mobile-editor/:pageid/" : "mobileEditor",
-			"app/:appid/emails/(:tutorial/)"    : "emails",
+			"app/:appid/editor/:pageid/"       : "editor",
+			"app/:appid/mobile-editor/:pageid/": "mobileEditor",
+			"app/:appid/emails/(:tutorial/)"   : "emails",
 			"app/:appid/(:tutorial/)"          : "index",
-			//"app/:appid/*"			: "index"
+			"app/:appid/*anything/"            : "index"
 		},
 
 		tutorialDirectory: [0],
@@ -207,7 +205,7 @@ define([
 								if(DEBUG) {
 									content = { text: data.responseText };
 								}
-								new ErrorModalView(content);
+								new ErrorDialogueView(content);
 							},
 							dataType: "JSON"
 				});
@@ -243,7 +241,7 @@ define([
 					if(DEBUG) {
 						content = { text: data.responseText };
 					}
-					new ErrorModalView(content);
+					new ErrorDialogueView(content);
 				},
 				dataType: "JSON"
 			});
