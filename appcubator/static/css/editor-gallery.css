@@ -373,3 +373,16 @@
   overflow: hidden;
   overflow-y: scroll;
 }
+
+.half-width .icon {
+  display: inline-block;
+  width: 50px;
+  height: 30px;
+  margin-bottom: 4px;
+  background-repeat: no-repeat;
+}
+
+.half-width .icon.plus-icon {
+  background-position: center center;
+  background-size: auto 100%;
+}

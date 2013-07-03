@@ -149,11 +149,14 @@ function(WidgetContentEditor,
     },
 
     renderButtonWithText: function(className, buttonText) {
+      return this.renderButtonWithWidthCustomWidth(className, buttonText, 230);
+    },
+
+    renderButtonWithWidthCustomWidth: function(className, buttonText, width) {
       var li       = document.createElement('ul');
       li.className = className;
-      li.innerHTML += '<span class="option-button tt" style="width:230px; display: inline-block;"><strong>'+ buttonText +'</strong></span>';
+      li.innerHTML += '<span class="option-button tt" style="width:'+width+'px; display: inline-block;"><strong>'+ buttonText +'</strong></span>';
       return li;
-
     },
 
     renderButtonWithDeleteButtonandText: function(className, buttonText) {
@@ -195,7 +198,7 @@ function(WidgetContentEditor,
 
     openRowEditor: function() {
       this.hideSubviews();
-      this.el.appendChild(this.renderButtonWithText('done-editing', 'Done Editing'));
+      this.el.appendChild(this.renderButtonWithWidthCustomWidth('done-editing', 'Done Editing', 190));
       var entity = this.model.get('data').get('container_info').get('entity');
       this.listGalleryView = document.createElement('div');
       this.listGalleryView.className = 'elements-list';

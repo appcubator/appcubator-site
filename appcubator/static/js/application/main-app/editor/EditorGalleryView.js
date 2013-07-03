@@ -397,7 +397,7 @@ define([
       var li = document.createElement('li');
       li.className = className+' half-width';
       li.id = id;
-      var tempLi = '<span class="<%= icon %>"></span><span class="name"><%= text %></span>';
+      var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
       li.innerHTML= _.template(tempLi, { text: text, icon: icon});
       $(this.allList).append(li);
 
