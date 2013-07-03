@@ -263,10 +263,16 @@ define([
       var fieldM = entityM.get('fields').get(hash[1]);
 
       var displayType = this.getFieldType(fieldM);
+
       var editorContext = this.editorContext ? this.editorContext : "page";
       var content =  '{{' + editorContext +'.'+ entityM.get('name') +'.'+fieldM.get('name')+'}}';
 
-      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content);
+      if(displayType == "links") {
+        content = 'Download '+fieldM.get('name');
+        href = '{{' + editorContext +'.'+ entityM.get('name') +'.'+fieldM.get('name')+'}}';
+      }
+
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content, href);
     },
 
     createNestedContextEntityNode: function(layout, id) {
@@ -279,7 +285,12 @@ define([
       var editorContext = this.editorContext ? this.editorContext : "page";
       var content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ nested_entity.get('name') + '.' +field.get('name')+'}}';
 
-      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
+      if(type == "links") {
+        content = 'Download '+ field.get('name');
+        href = '{{'+editorContext+'.'+entity.get('name')+'.'+nested_entity.get('name')+'.'+field.get('name')+'}}';
+      }
+
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content, href);
     },
 
     createCreateForm: function(layout, id) {
@@ -327,7 +338,12 @@ define([
       var type    = this.getFieldType(field);
       var content = '{{CurrentUser.'+field.get('name')+'}}';
 
-      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content);
+      if(type == "links") {
+        content = 'Download '+field.get('name') + ' of Current User';
+        href = '{{CurrentUser.'+field.get('name')+'}}';
+      }
+
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content, href);
     },
 
     createNode: function(layout, id) {

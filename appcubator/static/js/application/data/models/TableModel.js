@@ -47,7 +47,7 @@ define([
 
     getFieldsColl: function() {
       var arr = this.get('fields');
-      return new Backbone.Collection(arr);
+      return arr;
     },
 
     getNormalFields: function() {
