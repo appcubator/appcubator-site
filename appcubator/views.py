@@ -5,6 +5,7 @@ from django.utils import simplejson
 from django.shortcuts import redirect, render, render_to_response, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, RouteLog, Customer, ExtraUserData
 from email.sendgrid_email import send_email
