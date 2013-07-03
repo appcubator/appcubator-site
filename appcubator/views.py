@@ -362,6 +362,7 @@ def app_emails(request, app_id):
     return render(request, 'app-emails.html', page_context)
 
 
+@login_required
 def admin_home(request):
     page_context = {}
     page_context["customers"] = Customer.objects.all()

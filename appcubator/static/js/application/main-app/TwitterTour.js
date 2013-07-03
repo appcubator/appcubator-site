@@ -95,7 +95,7 @@ function() {
      * Tweet Table
      */
     {
-      content: '<h3>Congrats!</h3><p>You have a table storing the tweets now. Time to define what information fields this table stores.</p>',
+      content: '<h3>Congrats!</h3><p>You have a table that stores tweets now. Time to define what information fields this table stores.</p>',
       my: "left top",
       at: "top center",
       setup: function(tour, options) {
@@ -142,7 +142,7 @@ function() {
      * About Relations
      */
     {
-      content: '<h3>Nice!</h3><p>So we\'ve described a tweet as an entity that consists of some "Content" text. But how do we associate <strong>Tweets</strong> with <strong>Users</strong>?</p>',
+      content: '<h3>Nice!</h3><p>So we have described a tweet as an entity that consists of some "Content" text. Now we need to associate <strong>Tweets</strong> with <strong>Users</strong>?</p>',
       my: "left top",
       at: "right center",
       setup: function(tour, options) {
@@ -191,7 +191,7 @@ function() {
      * Create Relation Form
      */
     {
-      content: '<h3>How are Users and Tweets related?</h3><p>Each User owns many tweets, and each individual tweet belongs to a User. We need to give property names for the list of tweets and the user owner. Let\'s call these new properties <strong>Tweets</strong> and <strong>Owner</strong></p>',
+      content: '<h3>How are Users and Tweets related?</h3><p>Each User owns many tweets, and each individual tweet belongs to a User. We need to give names for the relations between the List of Tweets and the respective User. Let\'s call these new relations: <strong>Tweets</strong> and <strong>Owner</strong></p>',
       my: "left center",
       at: "top center",
       bind: ['checkFields'],
@@ -262,7 +262,7 @@ function() {
       }
     },
     {
-      content: '<h3>Theme</h3><p>We have a variaty of themes here. Pick the one you like the most and clik on it to load. Make sure you click the "Load Theme" button.',
+      content: '<h3>Theme</h3><p>We have a variety of themes here. Pick the one you like the most and click the "Load Theme" button.',
       my: "left center",
       at: "right center",
       nextButton: true,
@@ -301,7 +301,7 @@ function() {
       }
     },
     {
-      content: '<h3>Crete a New Page</h3><p>Click on this large button.</p>',
+      content: '<h3>Create a new page</h3><p>Click on this large button.</p>',
       my: "top center",
       at: "bottom center",
       setup: function(tour, options) {
@@ -353,7 +353,7 @@ function() {
       }
     },
     {
-      content: '<h3>Welcome to Editor</h3><p>This is the what you see is what you get interface editor. You can freely drag and drop elemetn from the elements on the gallery and position them however you like.</p>',
+      content: '<h3>Welcome to Editor</h3><p>This is the interface editor; what you see is what you get. You can freely drag and drop elements onto the gallery and position them however you like.</p>',
       my: "right top",
       at: "left bottom",
       nextButton: true,
@@ -365,7 +365,7 @@ function() {
       }
     },
     {
-      content: '<h3>Saving Your Progress</h3><p>Before you start, please don\'t forget to save your progress by clicking this "Save" button.</p>',
+      content: '<h3>Saving Your Progress</h3><p>Make sure to save your progress often by clicking this "Save" button as you build your application.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -381,7 +381,7 @@ function() {
       }
     },
     {
-      content: '<h3>Drag\'n\'Drop</h3><p>Just drag this header text to the page, aaand drop. Feel free to edit the text to something you want!</p>',
+      content: '<h3>Drag\'n\'Drop</h3><p>Just drag and drop this header element to the page. Click on the “Default Header” to edit the text to something you want.</p>',
       my: "right center",
       at: "left center",
       setup: function(tour, options) {
@@ -415,7 +415,7 @@ function() {
       }
     },
     {
-      content: '<h3>Time to get some users!</h3><p>Just drag this header text to the page, aaand drop. Feel free to edit the text to something you want!</p>',
+      content: '<h3>Time to get some users!</h3><p>Just drag and drop this facebook login button to the page to easily connect with new users.</p>',
       my: "top center",
       at: "bottom center",
       setup: function(tour, options) {
@@ -449,7 +449,7 @@ function() {
       }
     },
     {
-      content: '<h3>Feed Page</h3><p>On this page, we would like to put a list of all the Tweet, something like a stream as well as a form to tweet new stuff. Let\'s start with the list first.</p>',
+      content: '<h3>Feed Page</h3><p>On this page, we will put a list of the User’s Tweets, something like a stream. We will also add a “Create Tweet” form to tweet new stuff. Let\'s start with the list first.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -487,7 +487,7 @@ function() {
       }
     },
     {
-      content: '<h3>We have the list of Tweets!</h3><p>Now we can start editing by clickin "Edit Row" button.</p>',
+      content: '<h3>We have the list of Tweets!</h3><p>Now we can start editing by clicking the "Edit Row" button.</p>',
       my: "bottom center",
       at: "top center",
       setup: function(tour, options) {
@@ -505,7 +505,7 @@ function() {
       }
     },
     {
-      content: '<h3>The Green Row</h3><p>The green area is the first, editable row. You should start droping elements on this area.</p>',
+      content: '<h3>The Green Row</h3><p>The green area is the first, editable row. You should start dragging and dropping design elements.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
