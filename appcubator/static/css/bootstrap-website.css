@@ -3522,7 +3522,7 @@ input[type="submit"].btn.btn-mini {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1010;
+  z-index: 2006;
   display: none;
   width: 236px;
   padding: 1px;

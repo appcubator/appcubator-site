@@ -214,6 +214,7 @@ define([
 		},
 
 		save: function(e) {
+			if(appId === 0) return;
 			$('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
 			var $el = $('.menu-button.save');
       $el.fadeOut().html("<span>Saving...</span>").fadeIn();

@@ -434,8 +434,8 @@ function() {
     },
     {
       content: '<h3>Let\'s move to the other page.</h3><p>Please hover over the page menu and click on "Tweet Feed" to go to the other page.</p>',
-      my: "top center",
-      at: "bottom center",
+      my: "left top",
+      at: "right center",
       setup: function(tour, options) {
         v1.bind('editor-loaded', function() {
           tour.next();
