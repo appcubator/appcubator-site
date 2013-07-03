@@ -1,6 +1,6 @@
 define([
   'editor/WidgetContainerView',
-  'editor/TableQueryView',
+  'editor/QueryEditorView',
   'editor/WidgetView',
   'editor/SubWidgetView',
   'editor/form-editor/FormEditorView',
@@ -9,7 +9,7 @@ define([
   'jquery.flexslider'
 ],
 function( WidgetContainerView,
-          TableQueryView,
+          QueryEditorView,
           WidgetView,
           SubWidgetView,
           FormEditorView) {

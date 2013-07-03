@@ -1,12 +1,12 @@
 define([
-  'editor/TableQueryView',
+  'editor/QueryEditorView',
   'editor/WidgetView',
   'editor/SubWidgetView',
   'dicts/constant-containers',
   'editor/editor-templates',
   'jquery.flexslider'
 ],
-function( TableQueryView,
+function( QueryEditorView,
           WidgetView,
           SubWidgetView) {
 
@@ -125,7 +125,7 @@ function( TableQueryView,
 
     showDetails: function() {
       if(this.model.get('data').get('container_info').get('action') === "table-gal") {
-        new TableQueryView(this.model, 'table');
+        new QueryEditorView(this.model, 'table');
       }
     },
 

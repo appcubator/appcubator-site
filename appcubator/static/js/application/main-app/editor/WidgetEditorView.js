@@ -7,7 +7,7 @@ define([
   'editor/list-editor/RowGalleryView',
   'editor/form-editor/FormEditorView',
   'editor/form-editor/LoginFormEditorView',
-  'editor/TableQueryView',
+  'editor/QueryEditorView',
   'mixins/BackboneUI',
   'util'
 ],
@@ -19,7 +19,7 @@ function(WidgetContentEditor,
          RowGalleryView,
          FormEditorView,
          LoginFormEditorView,
-         TableQueryView) {
+         QueryEditorView) {
 
   var WidgetEditorView = Backbone.UIView.extend({
     className : 'widget-editor fadeIn',
@@ -190,7 +190,7 @@ function(WidgetContentEditor,
         type = 'list';
       }
 
-      new TableQueryView(this.model, type);
+      new QueryEditorView(this.model, type);
     },
 
     openRowEditor: function() {
