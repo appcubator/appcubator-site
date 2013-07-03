@@ -14,6 +14,7 @@ define([
   'editor/GuideView',
   'editor/MarqueeView',
   'tutorial/TutorialView',
+  'app/DeployView',
   'mixins/BackboneNameBox',
   'editor/editor-templates'
 ],
@@ -31,7 +32,8 @@ function( PageModel,
           FooterView,
           GuideView,
           MarqueeView,
-          TutorialView) {
+          TutorialView,
+          DeployView) {
 
   var EditorView = Backbone.View.extend({
     className : 'editor-page',
@@ -153,7 +155,7 @@ function( PageModel,
           util.get('deploy').innerHTML = '<span>Test Run</span>';
         },
         success: function(data) {
-          self.renderDeployResponse(true, data, self);
+          new DeployView(data);
         },
         error: function(jqXHR) {
           var data = JSON.parse(jqXHR.responseText);
@@ -166,17 +168,6 @@ function( PageModel,
         },
         dataType: "JSON"
       });
-    },
-
-    renderDeployResponse: function(success, responseData, self) {
-      if(success) {
-        new SimpleModalView({ text: 'Your app is available at <a target="_blank" href="'+ responseData.site_url + '/' + self.urlModel.getAppendixString() +'">'+ responseData.site_url + '/' + self.urlModel.getAppendixString() +'</a><br /><br />You can also see your code on <a target="_blank" href="'+ responseData.github_url +'">Github</a>', img:'happy_engineer.png'});
-      }
-      else
-      {
-        //new ErrorModalView({ text: responseData.errors });
-        new DebugOverlay({ text: responseData.errors });
-      }
     },
 
     clickedUrl: function() {

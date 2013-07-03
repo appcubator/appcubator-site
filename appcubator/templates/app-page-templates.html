@@ -356,3 +356,33 @@
     <hr class="span58 pheader">
   </div>
 </script>
+<script type="text/template" id="deploy-panel">
+  <a class="app-link" target="_blank" href=""><%= site_url %></a>
+
+  <div class="left-pane">
+    <img src="{{ STATIC_URL}}img/happy_engineer.png">
+  </div>
+  <div class="right-pane">
+    <p>Your site is available at the url above. You can also share your work with your friends.</p>
+ 
+    <a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= site_url %>" data-text="Check out what I've built with @appcubator" data-size="large" data-count="none">Tweet</a>
+    <br  />
+    <a href="#" 
+      onclick="
+        window.open(
+          'https://www.facebook.com/sharer/sharer.php?u=<%= site_url %>', 
+          'facebook-share-dialog', 
+          'width=626,height=436'); 
+        return false;" class="share-on-facebook">
+      Share on Facebook
+    </a>
+    <br  />
+    <br  />
+    <div class="download-pane">
+      <img src="{{ STATIC_URL }}img/download-icon.png">
+      <a target="_blank" href="<%= zip_url %>">The code you have written is available to download here.</a>
+    </div>
+  </div>
+
+</script>
+    <script></script>

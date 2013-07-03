@@ -4,6 +4,7 @@ define([
 		"mixins/ErrorModalView",
 		"tutorial/TutorialView",
 		"app/EmailsView",
+		"app/DeployView",
 		"mixins/SimpleDialogueView",
 		"mixins/ErrorDialogueView",
 		"backbone",
@@ -14,6 +15,7 @@ define([
           ErrorModalView,
           TutorialView,
           EmailsView,
+          DeployView,
           SimpleDialogueView,
           ErrorDialogueView) {
 
@@ -197,7 +199,7 @@ define([
 									new ErrorDialogueView(content);
 								}
 								else {
-									new SimpleDialogueView({ text: 'Your app is available at <br /><a href="'+ data.site_url + '">'+ data.site_url +'</a>'});
+									new DeployView(data);
 								}
 							},
 							error: function(data) {
