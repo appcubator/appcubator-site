@@ -40,6 +40,7 @@ function( WidgetContainerView,
       //this.formModel.bind('change', this.reRender);
       this.formModel.get('fields').bind('remove', this.reRender);
       this.formModel.get('fields').bind('add', this.reRender);
+      this.formModel.get('fields').bind('change', this.reRender);
       this.formModel.get('fields').each(function(model){ model.bind('change', self.reRender); });
 
     },

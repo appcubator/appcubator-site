@@ -241,9 +241,10 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     changedOrder:function(e, ui) {
       var sortedIDs = $( '.form-fields-list' ).sortable( "toArray" );
 
+      console.log(sortedIDs);
+
       var submitBtn = _.last(this.model.get('fields').models);
       this.model.get('fields').remove(submitBtn, {silent: true});
-      this.model.get('fields').push(submitBtn, {silent: true});
 
       for(var ii = 0; ii < sortedIDs.length; ii++) {
         var cid = sortedIDs[ii].replace('field-','');
@@ -251,6 +252,9 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
         this.model.get('fields').remove(elem, {silent: true});
         this.model.get('fields').push(elem, {silent: true});
       }
+
+      this.model.get('fields').push(submitBtn, {silent: true});
+      this.model.get('fields').trigger('change');
     },
 
     addNewField: function(e) {
