@@ -176,6 +176,7 @@ def signup_new_customer(request):
     company = request.POST['company']
     extra = request.POST['extra']
     interest = request.POST['interest']
+    interest = (interest == 'true')
     description = request.POST['description']
     Customer.create_first_time(name, email, company, extra, description, 11, interest)
     return HttpResponse("ok")
@@ -183,11 +184,18 @@ def signup_new_customer(request):
 
 @login_required
 @csrf_exempt
-def send_invitation_to_customer(request, customer_id):
-    print customer_id
-    customer = get_object_or_404(Customer, user_id=customer_id)
+def send_invitation_to_customer(request, customer_pk):
+    print customer_pk
+    customer = get_object_or_404(Customer, pk=customer_pk)
     invitation = InvitationKeys.create_invitation(request.user, customer.email)
-    text = "Hello! You can signup here: http://appcubator.com/signup?k=%s" % invitation.api_key
-    html = text
-    send_email("team@appcubator.com", customer.email, "Try out Appcubator!", "", html)
+    text = "Hello! \n Thanks for your interest in Appcubator. You can signup here: http://appcubator.com/signup?k=%s" % invitation.api_key
+    subject = "Try out Appcubator!"
+    if request.POST['text']:
+        text = request.POST['text']
+        text = text.replace("SIGNUP_LINK", "<a href='http://appcubator.com/signup?k=%s'>Appcubator | Signup</a>" % invitation.api_key)
+
+    if request.POST['subject']:
+        subject = request.POST['subject']
+
+    send_email("team@appcubator.com", customer.email, subject, "", text)
     return HttpResponse("ok")
