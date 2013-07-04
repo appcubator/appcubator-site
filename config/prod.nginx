@@ -9,7 +9,7 @@ server {
 
 server {
     listen          80;
-    server_name     staging.appcubator.com;
+    server_name     appcubator.com;
     charset         utf-8;
 
     # max upload size

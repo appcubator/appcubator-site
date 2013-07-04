@@ -1,0 +1,13 @@
+[uwsgi]
+home = /var/www/appcubator-site/venv
+chdir = /var/www/appcubator-site
+module = wsgi.staging_wsgi:application
+master = True
+socket = /var/run/appcubator/site.sock
+pidfile = /var/run/appcubator/site.pid
+vacuum = True
+max-requests = 5000
+daemonize = /var/log/uwsgi/site.log
+env = DJANGO_SETTINGS_MODULE=settings.staging
+uid = www-data
+gid = www-data

@@ -268,9 +268,9 @@ class App(models.Model):
             files = {'file':f}
             post_data = self.get_deploy_data()
             if self.deployment_id is None:
-              r = requests.post("http://staging.appcubator.com/deployment/", data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
+                r = requests.post("http://deployment.appcubator.com/deployment/", data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
             else:
-                r = requests.post("http://staging.appcubator.com/deployment/%s/" % self.deployment_id, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
+                r = requests.post("http://deployment.appcubator.com/deployment/%s/" % self.deployment_id, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
 
         finally:
             f.close()
@@ -302,12 +302,8 @@ class App(models.Model):
     def delete(self, *args, **kwargs):
         try:
             post_data = {"u_name": self.u_name()}
-            if settings.STAGING:
-                r = requests.post(
-                    "http://staging.appcubator.com/deployment/delete/", post_data)
-            elif settings.PRODUCTION:
-                r = requests.post(
-                    "http://appcubator.com/deployment/delete/", post_data)
+            r = requests.post(
+                "http://deployment.appcubator.com/deployment/delete/", post_data)
             else:
                 raise Exception("")
 
