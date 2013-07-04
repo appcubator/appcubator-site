@@ -205,7 +205,7 @@ function(WidgetContentEditor,
       this.listGalleryView = document.createElement('div');
       this.listGalleryView.className = 'elements-list';
 
-      var galleryView = new RowGalleryView(this.model);
+      var galleryView = new RowGalleryView(this.model, this.location);
       this.listGalleryView.appendChild(galleryView.render().el);
       this.el.appendChild(this.listGalleryView);
     },

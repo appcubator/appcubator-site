@@ -133,7 +133,7 @@ select.font-picker {
 
 .size-picker {
   display: inline-block;
-  width: 160px;
+  width: 156px;
   margin-left: 4px;
   margin-top: 6px;
 }
@@ -165,12 +165,12 @@ select.font-picker {
 .font-options {
   display: inline-block;
   vertical-align: top;
+  padding: 4px;
 }
 
 strong {
   font-weight: bold !important;
 }
-
 
 select.url-part {
   width: 76px;

@@ -76,7 +76,6 @@
             <td> <a href="#" class="detailed-info" data-placement="bottom" data-toggle="popover" title="" data-content="{{ customer.extra_info }}" data-original-title="Extra Info">Click to see</a></td>
             <td>{{ customer.project_description }}</td>
             <td>
-              {{ customer.sent_welcome_email }}
                 {% if customer.sent_welcome_email %} Sent 
                 {% else %}
                  <a href="#invitation-modal-{{ customer.pk }}" role="button" class="btn" data-toggle="modal">Send Invitation</a>
