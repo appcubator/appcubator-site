@@ -105,7 +105,6 @@ function(WidgetContentEditor,
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('search-editor-btn', 'Edit Search Options'));
         }
 
-        console.log(action);
         if(this.model.hasForm() && action != "login" && action != "signup") {
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
         }
@@ -199,7 +198,6 @@ function(WidgetContentEditor,
 
     openRowEditor: function() {
       this.hideSubviews();
-      console.trace();
       this.el.appendChild(this.renderButtonWithWidthCustomWidth('done-editing', 'Done Editing', 190));
       var entity = this.model.get('data').get('container_info').get('entity');
       this.listGalleryView = document.createElement('div');
@@ -211,7 +209,6 @@ function(WidgetContentEditor,
     },
 
     openSearchEditor: function() {
-      console.log(this.model);
       new SearchEditorView(this.model.get('data').get('searchQuery'));
     },
 

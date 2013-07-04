@@ -26,6 +26,10 @@ function( WidgetModel,
       return this.get('data').get('container_info').get('form');
     },
 
+    getRow: function() {
+      return this.get('data').get('container_info').get('row');
+    },
+
     getLoginRoutes: function() {
 
       if(this.get('data').has('loginRoutes')) {

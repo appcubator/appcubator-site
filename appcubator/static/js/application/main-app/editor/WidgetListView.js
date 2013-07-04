@@ -11,10 +11,11 @@ function( WidgetContainerView,
 
   var WidgetListView = WidgetContainerView.extend({
     el: null,
-    className: 'container-create',
+    className: 'container-create list-widget',
     tagName : 'div',
     entity: null,
     type: null,
+    highlighted: false,
     events: {
       'click'         : 'select',
       'click .delete' : 'remove',
@@ -34,7 +35,6 @@ function( WidgetContainerView,
       this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.placeWidget, true, true);
       this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.renderShadowElements);
       this.model.get('data').get('container_info').get('row').get('uielements').bind("remove", this.renderShadowElements);
-      this.model.bind('deselected', this.switchEditingOff);
       this.model.bind('deselected', function() {
         this.model.trigger('editModeOff');
       }, this);
@@ -109,6 +109,8 @@ function( WidgetContainerView,
 
     highlightFirstRow: function() {
       var self = this;
+      this.highlighted = true;
+      this.$el.addClass('selected');
       $(this.editorRow).resizable({
         handles: "s",
         grid: [ 20, 15 ],
@@ -142,8 +144,11 @@ function( WidgetContainerView,
 
     switchEditingOff: function() {
       this.editMode = false;
+      this.$el.removeClass('selected');
       this.$el.find('.row').first().removeClass('highlighted');
       this.widgetSelectorView.deselect();
+      if(this.highlighted) $(this.editorRow).resizable("destroy");
+      this.highlighted = false;
     }
 
   });

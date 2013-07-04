@@ -3716,3 +3716,7 @@ ul.list {
 #edit-footer-btn {
   margin-bottom: 18px; 
 }
+
+.list-widget.selected .row {
+  border-bottom: 1px dashed #ccc;
+}

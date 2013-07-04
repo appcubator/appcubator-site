@@ -201,6 +201,23 @@ define(['jquery'], function() {
       var ind3 = str.indexOf('loop');
 
       return (!ind1 || !ind2|| !ind3);
+    },
+
+    getDisplayType: function (fieldType) {
+      console.log(fieldType);
+      switch(fieldType) {
+        case "text":
+        case "date":
+        case "number":
+        case "email":
+          return "texts";
+        case "image":
+          return "images";
+        case "file":
+          return "links";
+      }
+
+      return null;
     }
   };
 
