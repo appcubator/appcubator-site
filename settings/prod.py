@@ -44,3 +44,4 @@ DATABASES = {
    }
 }
 WSGI_APPLICATION = 'wsgi.prod_wsgi.application'
+DEPLOYMENT_URI = 'deployment.appcubator.com'
