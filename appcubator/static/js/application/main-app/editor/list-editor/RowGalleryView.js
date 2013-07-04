@@ -12,7 +12,7 @@ function(EditorGalleryView, ElementCollection) {
     events : {
     },
 
-    initialize: function(widgetModel){
+    initialize: function(widgetModel, location){
       this.model = widgetModel;
 
       var rowModel = this.model.get('data').get('container_info').get('row');
@@ -20,12 +20,12 @@ function(EditorGalleryView, ElementCollection) {
 
       this.entity = entityModel;
       this.row = rowModel;
-      console.log(rowModel);
       this.widgetsCollection = rowModel.get('uielements');
       this.editorContext = "loop";
 
       _.bindAll(this);
       this.allList = this.el;
+      this.location = location;
 
       RowGalleryView.__super__.initialize.call(this, rowModel.get('uielements'));
 
@@ -88,7 +88,7 @@ function(EditorGalleryView, ElementCollection) {
     switchEditingModeOn: function() {
       this.model.trigger('highlight');
       this.model.trigger('unhover');
-      this.model.trigger('editModeOn');
+      this.model.trigger('editModeOn', this.location);
     },
 
     dropped : function(e, ui) {

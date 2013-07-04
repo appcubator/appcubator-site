@@ -107,14 +107,14 @@ function() {
         self.deselect();
       });
 
-      widget.on('editModeOn', function() {
-        self.unbindAll();
+      widget.on('editModeOn', function(position) {
+        self.unbindAll(position);
       });
 
       if(isNew) { widget.trigger('selected'); }
     },
 
-    unbindAll: function() {
+    unbindAll: function(position) {
       var widget = this.selectedEl;
       widget.on('editModeOff', function() {
         this.bindWidget(widget);
@@ -127,6 +127,9 @@ function() {
       this.selectDiv.style.height = 0;
       this.selectDiv.style.width = 0;
       this.selectDiv.style.left = (((widget.get('layout').get('width') + widget.get('layout').get('left')) * 80) + 4) + 'px';
+      if(position == "left") {
+        this.selectDiv.style.left = (((widget.get('layout').get('left')) * 80) - 16) + 'px';
+      }
     },
 
     setLayout: function(node, widgetModel) {
