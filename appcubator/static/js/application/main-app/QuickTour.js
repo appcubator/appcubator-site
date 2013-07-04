@@ -56,22 +56,22 @@ function() {
 			}
 		},
 		//Emails pane
-		{
-			target: $('.menu-app-emails'),
-			content: '<h3>Emails</h3><p>Click here to manage your site\'s emails</p>',
-			my: "top center",
-			at: "bottom center",
-			closeButton: true,
-			setup: function(tour, options) {
-				$('.menu-app-emails').addClass('active');
-				$('.menu-app-emails').one('click', function(e) {
-					tour.next();
-				});
-			},
-			teardown: function(tour, options) {
-				$('.menu-app-emails').removeClass('active');
-			}
-		},
+		// {
+		// 	target: $('.menu-app-emails'),
+		// 	content: '<h3>Emails</h3><p>Click here to manage your site\'s emails</p>',
+		// 	my: "top center",
+		// 	at: "bottom center",
+		// 	closeButton: true,
+		// 	setup: function(tour, options) {
+		// 		$('.menu-app-emails').addClass('active');
+		// 		$('.menu-app-emails').one('click', function(e) {
+		// 			tour.next();
+		// 		});
+		// 	},
+		// 	teardown: function(tour, options) {
+		// 		$('.menu-app-emails').removeClass('active');
+		// 	}
+		// },
 
 		//Save btn
 		{
@@ -84,8 +84,6 @@ function() {
 				$('.save-btn').one('click', function(e) {
 					tour.next();
 				});
-			},
-			teardown: function(tour, options) {
 			}
 		},
 
@@ -95,18 +93,29 @@ function() {
 			content: '<p>Click this button at any point for in-depth help</p>',
 			my: "right center",
 			at: "left center",
-			closeButton: true,
 			setup: function(tour, options) {
 				$('').addClass('active');
 				$('.qm-btn').one('click', function(e) {
-					tour.next();
+					setTimeout(tour.next, 300);
 				});
+			}
+		},
+
+		{
+			content: '<p>Feel free to ask your questions here! We promise to reply really fast!</p>',
+			my: "left center",
+			at: "right center",
+			nextButton: true,
+			setup: function(tour, options) {
+				return { target: $('.search-bar') };
 			},
-			teardown: function(tour, options) {
-				$('').removeClass('active');
+
+			teardown: function() {
+				$('.fixed-bg').fadeIn();
 			}
 		}
 	];
+
 
 	var quickTour = new Tourist.Tour({
 		steps: steps
