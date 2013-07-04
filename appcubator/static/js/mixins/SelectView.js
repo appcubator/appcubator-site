@@ -87,6 +87,10 @@ function(Backbone) {
       this.trigger('change', this.list[ind].val);
     },
 
+    selectCurrent: function() {
+      this.trigger('change', this.currentVal);
+    },
+
     toggle: function(e) {
       if(this.expanded) this.shrink(e);
       else this.expand(e);

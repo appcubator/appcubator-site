@@ -105,7 +105,8 @@ function(WidgetContentEditor,
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('search-editor-btn', 'Edit Search Options'));
         }
 
-        if(this.model.hasForm()) {
+        console.log(action);
+        if(this.model.hasForm() && action != "login" && action != "signup") {
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
         }
       }
@@ -154,15 +155,15 @@ function(WidgetContentEditor,
 
     renderButtonWithWidthCustomWidth: function(className, buttonText, width) {
       var li       = document.createElement('ul');
-      li.className = className;
-      li.innerHTML += '<span class="option-button tt" style="width:'+width+'px; display: inline-block;"><strong>'+ buttonText +'</strong></span>';
+      li.className = 'pad section-'+className;
+      li.innerHTML += '<span class="option-button tt '+className+'" style="width:'+width+'px; display: inline-block;">'+ buttonText +'</span>';
       return li;
     },
 
     renderButtonWithDeleteButtonandText: function(className, buttonText) {
       var li       = document.createElement('ul');
-      //li.className = className;
-      li.innerHTML += '<span class="'+ className +'  option-button tt" style="width:194px; display: inline-block;"><strong>'+ buttonText +'</strong></span><span id="delete-widget" class="option-button delete-button tt" style="width:34px; margin-left:1px; display: inline-block;"></span>';
+      li.className = 'pad section-'+className;
+      li.innerHTML += '<span class="'+ className +'  option-button tt" style="width:190px; display: inline-block;">'+ buttonText +'</span><span id="delete-widget" class="option-button delete-button tt" style="width:34px;"></span>';
       return li;
     },
 
@@ -198,6 +199,7 @@ function(WidgetContentEditor,
 
     openRowEditor: function() {
       this.hideSubviews();
+      console.trace();
       this.el.appendChild(this.renderButtonWithWidthCustomWidth('done-editing', 'Done Editing', 190));
       var entity = this.model.get('data').get('container_info').get('entity');
       this.listGalleryView = document.createElement('div');
@@ -214,7 +216,7 @@ function(WidgetContentEditor,
     },
 
     closeEditingMode: function() {
-      this.$el.find('.done-editing').remove();
+      this.$el.find('.section-done-editing').remove();
       this.listGalleryView.remove();
       this.showSubviews();
       this.model.trigger('editModeOff');
@@ -238,12 +240,13 @@ function(WidgetContentEditor,
       if(this.contentEditor) this.contentEditor.$el.fadeIn();
       if(this.layoutEditor) this.layoutEditor.$el.fadeIn();
       if(this.infoEditor) this.infoEditor.$el.fadeIn();
-      this.$el.find('.style-editor').fadeIn();
-      this.$el.find('.form-editor-btn').fadeIn();
-      this.$el.find('.query-editor-btn').fadeIn();
-      this.$el.find('.edit-query-btn').fadeIn();
-      this.$el.find('.edit-row-btn').fadeIn();
-      this.$el.find('.delete-button').fadeIn();
+      this.$el.find('.section-style-editor').fadeIn();
+      this.$el.find('.section-form-editor-btn').fadeIn();
+      this.$el.find('.section-query-editor-btn').fadeIn();
+      this.$el.find('.section-edit-query-btn').fadeIn();
+      this.$el.find('.section-edit-row-btn').fadeIn();
+      this.$el.find('.section-delete-button').fadeIn();
+      this.$el.find('.section-pick-style').fadeIn();
     },
 
     hideSubviews: function() {
@@ -251,12 +254,13 @@ function(WidgetContentEditor,
       if(this.contentEditor) this.contentEditor.$el.hide();
       if(this.layoutEditor) this.layoutEditor.$el.hide();
       if(this.infoEditor) this.infoEditor.$el.hide();
-      this.$el.find('.style-editor').hide();
-      this.$el.find('.form-editor-btn').hide();
-      this.$el.find('.query-editor-btn').hide();
-      this.$el.find('.edit-query-btn').hide();
-      this.$el.find('.edit-row-btn').hide();
-      this.$el.find('.delete-button').hide();
+      this.$el.find('.section-style-editor').hide();
+      this.$el.find('.section-form-editor-btn').hide();
+      this.$el.find('.section-query-editor-btn').hide();
+      this.$el.find('.section-edit-query-btn').hide();
+      this.$el.find('.section-edit-row-btn').hide();
+      this.$el.find('.section-delete-button').hide();
+      this.$el.find('.section-pick-style').hide();
     },
 
     getLocation: function() {

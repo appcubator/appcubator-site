@@ -98,15 +98,16 @@ function(WidgetModel,
         return this.push(widgetSignupModel);
       },
 
-      createNodeWithFieldTypeAndContent: function(layout, type, content, href) {
+      createNodeWithFieldTypeAndContent: function(layout, type, content_ops) {
         var widget = {};
         widget.type = "node";
         widget.layout = layout;
 
         widget.data = {};
+        widget.data.nodeType = type;
         widget.data = _.extend(widget.data, uieState[type][0]);
-        if(content) widget.data.content =  content;
-        if(href) widget.data.href = href;
+        if(content_ops.content) widget.data.content =  content_ops.content;
+        if(content_ops.href) widget.data.href = content_ops.href;
 
         var widgetModel = new WidgetModel(widget);
         return this.push(widgetModel);

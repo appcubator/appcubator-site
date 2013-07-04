@@ -265,14 +265,16 @@ define([
       var displayType = this.getFieldType(fieldM);
 
       var editorContext = this.editorContext ? this.editorContext : "page";
-      var content =  '{{' + editorContext +'.'+ entityM.get('name') +'.'+fieldM.get('name')+'}}';
+
+      var content_ops = {};
+      content_ops.content =  '{{' + editorContext +'.'+ entityM.get('name') +'.'+fieldM.get('name')+'}}';
 
       if(displayType == "links") {
-        content = 'Download '+fieldM.get('name');
-        href = '{{' + editorContext +'.'+ entityM.get('name') +'.'+fieldM.get('name')+'}}';
+        content_ops.content = 'Download '+fieldM.get('name');
+        content_ops.href = '{{' + editorContext +'.'+ entityM.get('name') +'.'+fieldM.get('name')+'}}';
       }
 
-      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content, href);
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
     },
 
     createNestedContextEntityNode: function(layout, id) {
@@ -283,14 +285,16 @@ define([
 
       var type = this.getFieldType(field);
       var editorContext = this.editorContext ? this.editorContext : "page";
-      var content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ nested_entity.get('name') + '.' +field.get('name')+'}}';
+
+      var content_ops = {};
+      content_ops.content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ nested_entity.get('name') + '.' +field.get('name')+'}}';
 
       if(type == "links") {
-        content = 'Download '+ field.get('name');
-        href = '{{'+editorContext+'.'+entity.get('name')+'.'+nested_entity.get('name')+'.'+field.get('name')+'}}';
+        content_ops.content = 'Download '+ field.get('name');
+        content_ops.href = '{{'+editorContext+'.'+entity.get('name')+'.'+nested_entity.get('name')+'.'+field.get('name')+'}}';
       }
 
-      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content, href);
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content_ops);
     },
 
     createCreateForm: function(layout, id) {
@@ -336,14 +340,16 @@ define([
       });
 
       var type    = this.getFieldType(field);
-      var content = '{{CurrentUser.'+field.get('name')+'}}';
+
+      var content_ops = {};
+      content_ops.content = '{{CurrentUser.'+field.get('name')+'}}';
 
       if(type == "links") {
-        content = 'Download '+field.get('name') + ' of Current User';
-        href = '{{CurrentUser.'+field.get('name')+'}}';
+        content_ops.content = 'Download '+field.get('name') + ' of Current User';
+        content_ops.href = '{{CurrentUser.'+field.get('name')+'}}';
       }
 
-      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content, href);
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content, content_ops);
     },
 
     createNode: function(layout, id) {
@@ -360,7 +366,7 @@ define([
         return widgetsCollection.createFacebookShare(layout);
       }
 
-      var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, null);
+      var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, {});
       widget.setupPageContext(v1State.getCurrentPage());
       return widget;
     },
