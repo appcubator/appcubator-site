@@ -19,7 +19,7 @@ function() {
       'mouseup #list-select-div'  : 'mouseup'
     },
 
-    initialize: function(widgetsCollection){
+    initialize: function(widgetsCollection, parentEl){
       _.bindAll(this);
 
       var self = this;
@@ -29,6 +29,8 @@ function() {
       var WidgetEditorView = require('editor/WidgetEditorView');
       this.widgetEditorView = new WidgetEditorView();
       this.widgetEditorView.isMobile = self.isMobile;
+
+      this.parentEl = parentEl;
 
       this.widgetsCollection.each(self.bindWidget);
       this.doKeyBindings();
@@ -74,9 +76,11 @@ function() {
 
 
       selectDiv.style.zIndex = "2004";
-      hoverDiv.style.zIndex = "2005";
+      hoverDiv.style.zIndex = "2003";
       hoverDiv.style.position = "absolute";
       selectDiv.style.position = "absolute";
+
+      $(this.parentEl).on('mousedown', this.clickedPage);
 
       return this;
     },
@@ -240,6 +244,7 @@ function() {
     moveSelectedRight: function() {
       if(!this.selectedEl) return;
       if(keyDispatcher.textEditing === true) return;
+
       this.selectedEl.moveRight();
     },
 
@@ -266,7 +271,8 @@ function() {
     },
 
     clickedPage: function(e) {
-      if(this.selectedEl && !this.isMouseOn(e) && !mouseDispatcher.isMousedownActive) {
+      //mouseDispatcher.isMousedownActive);
+      if(this.selectedEl && !this.isMouseOn(e)) {
         this.deselect();
       }
     },

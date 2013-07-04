@@ -19,11 +19,8 @@ function(SelectView) {
     initialize: function(widgetModel){
       _.bindAll(this);
 
-      console.log(widgetModel);
-
       this.model = widgetModel;
       this.list = _.map(uieState[this.model.get('data').get('nodeType')], function(obj) { return obj.class_name; });
-      console.log( this.list);
       this.currentVal = this.model.get('data').get('class_name');
       this.render();
     },

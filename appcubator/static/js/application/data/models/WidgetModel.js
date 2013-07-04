@@ -8,6 +8,7 @@ function(DataModel, LayoutModel) {
 
   var WidgetModel = Backbone.Model.extend({
     selected: false,
+    editMode: false,
 
     initialize: function(bone, isNew) {
       _.bindAll(this);
@@ -17,6 +18,13 @@ function(DataModel, LayoutModel) {
       this.set('data', new DataModel(bone.data||{}, isNew));
 
       this.set('context', new Backbone.Collection(bone.context|| []));
+
+      this.bind('editModeOn', function() {
+        this.editMode = true;
+      }, this);
+      this.bind('editModeOff', function() {
+        this.editMode = false;
+      }, this);
     },
 
     remove :function() {
@@ -38,7 +46,7 @@ function(DataModel, LayoutModel) {
     },
 
     moveRight: function() {
-      if(this.isFullWidth() || this.collection.editMode) return;
+      if(this.isFullWidth()) return;
 
       if(this.get('layout').get('left') + this.get('layout').get('width') > 11) return;
       this.get('layout').set('left', this.get('layout').get('left') + 1);
@@ -111,6 +119,10 @@ function(DataModel, LayoutModel) {
       else return this.get('data').get('action');
 
       return;
+    },
+
+    getRow: function() {
+      return this.get('data').get('container_info').get('row');
     },
 
     hasForm: function() {

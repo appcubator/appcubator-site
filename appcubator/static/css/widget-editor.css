@@ -12,6 +12,7 @@
   font: normal 16px/20px "proxima-nova", Arial, sans-serif;
   overflow: visible;
   max-height: 400px;
+  z-index: 2006;
 }
 
 #widget-editor.right {

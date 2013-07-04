@@ -107,10 +107,7 @@ function(EditorGalleryView, ElementCollection) {
 
       var className = targetEl.className;
       var id = targetEl.id;
-
-      console.log(layout);
       var widget = this.createElement(layout, className, id);
-      console.log(widget);
 
       widget.setupLoopContext(this.entity);
     },

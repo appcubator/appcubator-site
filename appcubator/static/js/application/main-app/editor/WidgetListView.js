@@ -46,7 +46,7 @@ function( WidgetContainerView,
 
       this.entityModel = this.model.get('data').get('container_info').get('entity');
       this.model.bind('highlight', this.highlightFirstRow);
-      this.widgetSelectorView = new ListWidgetSelectorView(this.model.get('data').get('container_info').get('row').get('uielements'));
+      this.widgetSelectorView = new ListWidgetSelectorView(this.model.get('data').get('container_info').get('row').get('uielements'), this.el);
       this.rowBindings();
     },
 
