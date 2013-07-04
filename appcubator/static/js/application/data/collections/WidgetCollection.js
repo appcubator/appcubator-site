@@ -28,9 +28,9 @@ function(WidgetModel,
 
         widgetModel.createLoginRoutes();
 
-        if(!v1State.isSingleUser()) {
-            widget.data.content = "Sign In w/" + form.provider;
-            widget.data.userRole = roleStr;
+        if(v1State.isSingleUser()) {
+            widget.data.content = "Sign In w/ " + provider;
+            widget.data.userRole = v1State.get('users').first().get('name');
         }
         return this.push(widgetModel);
       },

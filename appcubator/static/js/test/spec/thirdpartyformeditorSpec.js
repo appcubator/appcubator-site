@@ -53,8 +53,8 @@ define([
     var fEvent = {};
     var fUi = {};
     fEvent.type = "drop";
-    fEvent.pageX = 200;
-    fEvent.pageY = 200;
+    fEvent.pageX = 10;
+    fEvent.pageY = 10;
 
     var getValidation = function(data, callback) {
       $.ajax({
@@ -104,8 +104,6 @@ define([
         /* Drop the element */
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);

@@ -109,7 +109,7 @@ define([
           this.addFullWidthItem("entity-user-" + name, "facebooksignup", name + " Facebook Sign Up", "facebook");
           this.addFullWidthItem("entity-user-" + name, "twittersignup", name + " Twitter Sign Up", "twitter");
           this.addFullWidthItem("entity-user-" + name, "linkedinsignup", name + " LinkedIn Sign Up", "linkedin");
-        });
+        }, this);
       }
 
       this.addFullWidthItem("entity-user-facebook", "thirdparty", "Facebook Login Button", "facebook");
@@ -158,7 +158,7 @@ define([
       }, this);
     },
 
-    dropped : function(e, ui) {
+    dropped: function(e, ui) {
       var left = 0; var top = 1;
 
       if(e.type != 'click') {
@@ -169,7 +169,7 @@ define([
       var itemGallery = document.getElementById('item-gallery');
       if(util.isRectangleIntersectElement(e.pageX, e.pageY, e.pageX+80, e.pageY+80, itemGallery)) return;
 
-      layout = { top: top, left: left };
+      var layout = { top: top, left: left };
 
       var targetEl = e.target;
       if(e.target.tagName != "LI") {

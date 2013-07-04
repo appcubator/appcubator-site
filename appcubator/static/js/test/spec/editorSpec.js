@@ -2,8 +2,8 @@ var pageId = 0;
 var g_editorView;
 var g_appState = {};
 var g_initial_appState = {};
-var GRID_WIDTH = 80;
-var GRID_HEIGHT = 15;
+GRID_WIDTH = 80;
+GRID_HEIGHT = 15;
 var v1State = {};
 
 define([
@@ -27,7 +27,7 @@ define([
     KeyDispatcher,
     MouseDispatcher) {
 
-    util.loadCSS = function(str) { console.log("Tried to load: "+ str); };
+    util.loadCSS = function(str) { };
 
     v1State = new Backbone.Model();
     v1State = new AppModel(appState);
@@ -53,8 +53,8 @@ define([
     var fEvent = {};
     var fUi = {};
     fEvent.type = "drop";
-    fEvent.pageX = 200;
-    fEvent.pageY = 200;
+    fEvent.pageX = 20;
+    fEvent.pageY = 20;
 
     var getValidation = function(data, callback) {
       $.ajax({
@@ -94,7 +94,7 @@ define([
       var id = "entity-user-Local_Login";
       var className = "login ui-draggable";
       var loginForm = document.getElementById(id);
-      var model1;
+      var model1 = {};
 
       it("is on gallery.", function () {
         expect(loginForm).not.toBe(null);
@@ -106,9 +106,10 @@ define([
         fE.target = loginForm;
 
         /* Check if exists */
-        model1 = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model1.cid);
+        var m = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + m.cid);
         expect(droppedEl).not.toBe(null);
+        model1 = _.clone(m);
       });
 
       it("is valid on the backend", function() {
@@ -578,8 +579,6 @@ define([
         var old_brandname = model.get('brandName') || v1State.get('name');
         model.set('brandName', "DERPY");
         var brandName = document.getElementById('brand-name').innerText;
-        console.log(AppRouter.view.navbar.$('#brand-name'));
-        console.log(brandName);
         expect("DERPY").toEqual(brandName);
       });
 
