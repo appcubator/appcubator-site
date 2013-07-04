@@ -12,6 +12,8 @@ from copy import deepcopy
 import time
 from models import App
 
+from appcubator.email.sendgrid_email import send_email
+
 import requests
 import re
 
@@ -141,3 +143,9 @@ def test_router(request):
 			'statics': []
 		}
 		return render(request, 'tests/router-SpecRunner.html', test_data)
+
+
+def run_remote_tests(request):
+	email = request.POST['commits'][0]['author']['email']
+	send_email("badcops@appcubator.com", email, "Your Sinful Past", "", "Hey buddy, I heard you committed some stuff.")
+

@@ -93,6 +93,7 @@ function(TableCollection,
             return;
           }
           v1State.get('users').add(elem);
+          return elem;
         }
 
         e.target.value = '';
@@ -133,6 +134,7 @@ function(TableCollection,
           }
 
           v1State.get('tables').add(elem);
+          return elem;
         }
 
         e.target.value = '';

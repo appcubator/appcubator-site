@@ -94,7 +94,7 @@ define([
       var id = "entity-user-Local_Login";
       var className = "login ui-draggable";
       var loginForm = document.getElementById(id);
-      var model;
+      var model1;
 
       it("is on gallery.", function () {
         expect(loginForm).not.toBe(null);
@@ -104,12 +104,10 @@ define([
         /* Drop the element */
         var fE = _.clone(fEvent);
         fE.target = loginForm;
-        fE.target.className = className;
-        fE.target.id = id;
 
         /* Check if exists */
-        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        model1 = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + model1.cid);
         expect(droppedEl).not.toBe(null);
       });
 
@@ -119,7 +117,7 @@ define([
       });
 
       it("can be deleted", function() {
-        validateDeleteable(model);
+        validateDeleteable(model1);
       });
 
     });
@@ -129,7 +127,7 @@ define([
       var id = "entity-user-User";
       var className = "signup ui-draggable";
       var galleryElement = document.getElementById(id);
-      var model;
+      var MD;
 
       it("is on gallery", function() {
         expect(galleryElement).not.toBe(null);
@@ -140,11 +138,9 @@ define([
         /* Drop the element */
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
-        model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
+        MD = AppRouter.view.galleryEditor.dropped(fE, fUi);
+        var droppedEl = document.getElementById('widget-wrapper-' + MD.cid);
         expect(droppedEl).not.toBe(null);
       });
 
@@ -154,7 +150,7 @@ define([
       });
 
       it("can be deleted", function() {
-        validateDeleteable(model);
+        validateDeleteable(MD);
       });
 
     });
@@ -173,8 +169,6 @@ define([
         /* Drop the element */
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -206,8 +200,6 @@ define([
         /* Drop the element */
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -238,8 +230,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -269,8 +259,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -300,8 +288,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -331,8 +317,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -362,8 +346,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -393,8 +375,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -423,8 +403,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -453,8 +431,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -484,8 +460,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -515,8 +489,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -545,8 +517,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
@@ -576,8 +546,6 @@ define([
       it("can be dropped to the editor", function() {
         var fE = _.clone(fEvent);
         fE.target = galleryElement;
-        fE.target.className = className;
-        fE.target.id = id;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);

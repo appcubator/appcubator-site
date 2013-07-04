@@ -90,4 +90,50 @@ define([
         expect(numTablesAfter).toEqual(numTablesBefore-1);
       });
     });
+
+    describe('User roles', function() {
+      var newUserTable = {};
+      var tableUIElem = {};
+      it('add new button works', function() {
+        $('#add-role').trigger('click');
+        $('#add-role-form').val('Teacher');
+
+        var e = {};
+        e.keyCode = 13;
+        e.target = document.getElementById('add-role-form');
+        e.preventDefault = function() {};
+
+        var numTablesBefore = $('#users .entity').length;
+        newUserTable = AppRouter.view.createUserRole(e);
+        var numTablesAfter = $('#users .entity').length;
+
+        expect(newUserTable).not.toEqual(null);
+        expect(numTablesAfter).toEqual(numTablesBefore+1);
+      });
+
+      it("the name is rendered correctly", function() {
+        var uielem = document.getElementById('user-table-'+ newUserTable.cid);
+        expect(uielem).not.toEqual(null);
+        var title = $(uielem).find('h2').text();
+        expect(title).toEqual("Teacher");
+      });
+
+      it("the name is rendered correctly", function() {
+        var uielem = document.getElementById('user-table-'+ newUserTable.cid);
+        tableUIElem = uielem;
+        expect(uielem).not.toEqual(null);
+        var title = $(uielem).find('h2').text();
+        expect(title).toEqual("Teacher");
+      });
+
+      it("can add text field", function() {
+        $(tableUIElem).find('.add-property-button').trigger('click');
+        $(tableUIElem).find('.property-name-input').val('Address');
+        $(tableUIElem).find('.add-property-form').submit();
+        var model = newUserTable.get('fields').last();
+        expect(model.get('name')).toEqual('Address');
+        expect(model.get('type')).toEqual('text');
+      });
+
+    });
 });

@@ -1,4 +1,5 @@
 define([
+  'mixins/BackboneModal',
   'backbone'
 ], function() {
 

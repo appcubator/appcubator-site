@@ -349,7 +349,7 @@ define([
         content_ops.href = '{{CurrentUser.'+field.get('name')+'}}';
       }
 
-      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content, content_ops);
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content_ops);
     },
 
     createNode: function(layout, id) {
