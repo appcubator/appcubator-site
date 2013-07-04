@@ -1,2 +1,0 @@
-1 symlink the nginx file to the sites-enabled folder.
-2 symlink the upstart file to /etc/init/ folder, with proper name.

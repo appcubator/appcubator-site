@@ -1,0 +1,2 @@
+#! /bin/bash
+uwsgi --master --die-on-term --ini /var/www/appcubator-site/config/staging.uwsgi
