@@ -199,4 +199,4 @@ EMAIL_HOST_PASSWORD = "obscurepassword321"
 EMAIL_USE_TLS = False
 DEFAULT_FROM_EMAIL = 'team@appcubator.com'
 
-DEPLOYMENT_URI = 'deployment.staging.appcubator.com'
+DEPLOYMENT_HOSTNAME = 'deployment.staging.appcubator.com'
