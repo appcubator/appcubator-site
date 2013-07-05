@@ -29,4 +29,5 @@ markdown2
 splinter
 django-registration
 django-invitation
+django-grappelli
 
