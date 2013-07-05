@@ -127,6 +127,7 @@ function() {
     },
 
     answerSend: function(answerArr) {
+      $('.answer-input').blur();
       $(window).off("keydown", this.keydown);
       var nextKey = this.dict.next.call(this, answerArr);
       this.trigger('answer', nextKey, answerArr);
