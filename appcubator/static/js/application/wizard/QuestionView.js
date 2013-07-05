@@ -125,7 +125,7 @@ function() {
     },
 
     skipAnswer: function() {
-      this.answerSend([]);
+      this.answerSend(null);
     },
 
     answerSend: function(answerArr) {

@@ -182,13 +182,13 @@ define([
 			post_render.call();
 		},
 
-		deploy: function() {
-			util.startAjaxLoading();
+		deploy: function(callback) {
+
 				$.ajax({
 							type: "POST",
 							url: '/app/'+appId+'/deploy/',
 							success: function(data) {
-								util.stopAjaxLoading();
+								if(callback) callback.call();
 								if(data.errors) {
 									var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
 									if(DEBUG) {

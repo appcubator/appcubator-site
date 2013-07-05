@@ -73,7 +73,13 @@ function(AppModel,
       var homepage = _.clone(HomepageTemp);
       homepage.uielements[0].data.content = appName;
       if(this.answersDict.intro_text) homepage.uielements[1].data.content = this.answersDict.intro_text[0][0];
-      if(this.answersDict.logo) homepage.uielements[2].data.content_attribs.src = this.answersDict.logo[0];
+
+      console.log(this.answersDict.logo);
+      if(this.answersDict.logo[0]) {
+        console.log("HEY");
+        console.log(this.answersDict.logo[0]);
+        homepage.uielements[2].data.content_attribs.src = this.answersDict.logo[0];
+      }
       return homepage;
     },
 

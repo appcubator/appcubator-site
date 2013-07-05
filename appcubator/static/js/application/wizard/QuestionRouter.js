@@ -98,7 +98,7 @@ define([
 
       renderRacoon: function(url) {
         $(".bottom-panel").html('');
-        $(".bottom-panel").append('<div class="racoon-happy"></div><div class="bubble">Your app is available here:'+url+'</div>');
+        $(".bottom-panel").append('<div class="racoon-speech"></div><div class="bubble">Your app is available here:<br  /><a target="_blank" href="'+url+'">'+url+'</a></div>');
       },
 
       saveGeneratedApp: function() {
