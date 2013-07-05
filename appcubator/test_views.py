@@ -145,6 +145,7 @@ def test_router(request):
 		return render(request, 'tests/router-SpecRunner.html', test_data)
 
 
+@csrf_exempt
 def run_remote_tests(request):
 	email = request.POST['commits'][0]['author']['email']
 	print request.POST
