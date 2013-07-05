@@ -27,7 +27,7 @@ define([
     KeyDispatcher,
     MouseDispatcher) {
 
-    util.loadCSS = function(str) { console.log("Tried to load: "+ str); };
+    util.loadCSS = function(str) {  };
 
     v1State = new Backbone.Model();
     v1State = new AppModel(appState);
@@ -53,8 +53,8 @@ define([
     var fEvent = {};
     var fUi = {};
     fEvent.type = "drop";
-    fEvent.pageX = 200;
-    fEvent.pageY = 200;
+    fEvent.pageX = 20;
+    fEvent.pageY = 20;
 
     var getValidation = function(data, callback) {
       $.ajax({
@@ -77,7 +77,6 @@ define([
     var validateBackend = function() {
 
       var callback = jasmine.createSpy();
-      console.log(v1State.toJSON());
       getValidation(v1State.toJSON(), callback);
       waitsFor(function() {
         return callback.callCount > 0;
@@ -109,7 +108,6 @@ define([
 
         /* Check if exists */
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        console.log(model);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
       });

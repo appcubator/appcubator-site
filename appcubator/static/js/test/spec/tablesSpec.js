@@ -28,10 +28,9 @@ define([
     KeyDispatcher,
     MouseDispatcher) {
 
-    util.loadCSS = function(str) { console.log("Tried to load: "+ str); };
+    util.loadCSS = function(str) {  };
 
     v1State = new Backbone.Model();
-    console.log(appState);
     v1State = new AppModel(appState);
     v1State.set('pages', new Backbone.Collection());
     v1State.set('mobilePages', new Backbone.Collection());
@@ -49,8 +48,6 @@ define([
     AppRouter.view = new EntitiesView({});
     AppRouter.view.setElement(cleanDiv).render();
     $('.active').removeClass('active');
-
-    console.log(v1State.toJSON());
 
     describe('Table', function() {
       it('can load tables and user roles properly', function() {
@@ -135,5 +132,60 @@ define([
         expect(model.get('type')).toEqual('text');
       });
 
+      it("can add image field", function() {
+        $(tableUIElem).find('.add-property-button').trigger('click');
+        $(tableUIElem).find('.property-name-input').val('Profile Picture');
+        $(tableUIElem).find('.add-property-form').submit();
+        var model = newUserTable.get('fields').last();
+        expect($(tableUIElem).find('#type-' + model.cid).find('option[value="image"]')).not.toEqual(0);
+
+        $(tableUIElem).find('#type-' + model.cid).val('image');
+        $(tableUIElem).find('#type-' + model.cid).trigger('change');
+
+        expect(model.get('name')).toEqual('Profile Picture');
+        expect(model.get('type')).toEqual('image');
+      });
+
+      it("can add file field", function() {
+        $(tableUIElem).find('.add-property-button').trigger('click');
+        $(tableUIElem).find('.property-name-input').val('Document');
+        $(tableUIElem).find('.add-property-form').submit();
+        var model = newUserTable.get('fields').last();
+        expect($(tableUIElem).find('#type-' + model.cid).find('option[value="file"]')).not.toEqual(0);
+
+        $(tableUIElem).find('#type-' + model.cid).val('file');
+        $(tableUIElem).find('#type-' + model.cid).trigger('change');
+
+        expect(model.get('name')).toEqual('Document');
+        expect(model.get('type')).toEqual('file');
+      });
+
+      it("can add number field", function() {
+        $(tableUIElem).find('.add-property-button').trigger('click');
+        $(tableUIElem).find('.property-name-input').val('Phone');
+        $(tableUIElem).find('.add-property-form').submit();
+        var model = newUserTable.get('fields').last();
+        expect($(tableUIElem).find('#type-' + model.cid).find('option[value="number"]')).not.toEqual(0);
+
+        $(tableUIElem).find('#type-' + model.cid).val('number');
+        $(tableUIElem).find('#type-' + model.cid).trigger('change');
+
+        expect(model.get('name')).toEqual('Phone');
+        expect(model.get('type')).toEqual('number');
+      });
+
+      it("can add email field", function() {
+        $(tableUIElem).find('.add-property-button').trigger('click');
+        $(tableUIElem).find('.property-name-input').val('Email');
+        $(tableUIElem).find('.add-property-form').submit();
+        var model = newUserTable.get('fields').last();
+        expect($(tableUIElem).find('#type-' + model.cid).find('option[value="number"]')).not.toEqual(0);
+
+        $(tableUIElem).find('#type-' + model.cid).val('email');
+        $(tableUIElem).find('#type-' + model.cid).trigger('change');
+
+        expect(model.get('name')).toEqual('Email');
+        expect(model.get('type')).toEqual('email');
+      });
     });
 });

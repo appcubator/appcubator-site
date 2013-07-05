@@ -19,10 +19,8 @@ function(SelectView) {
     initialize: function(relationModel){
       _.bindAll(this);
 
-      console.log(relationModel);
       this.model = relationModel;
       this.listenTo(this.model, 'remove', this.remove);
-
     },
 
     render: function() {
@@ -31,7 +29,6 @@ function(SelectView) {
       data.cid = this.model.cid;
       data.util = util;
 
-      console.log(data);
       var newHTML = _.template(TableTemplates.relationalNL[type], data);
       this.$el.prepend(newHTML);
 
