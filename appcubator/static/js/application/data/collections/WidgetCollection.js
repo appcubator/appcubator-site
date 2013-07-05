@@ -20,7 +20,7 @@ function(WidgetModel,
         widget.data.class_name = uieState["forms"][0].class_name;
         widget.data.action = "thirdpartylogin";
         widget.data.provider = provider;
-        widget.data.content = "Login w/ Facebook";
+        widget.data.content = "Login w/ "+ util.capitaliseFirstLetter(provider);
         widget.data.container_info = {};
         widget.data.container_info.action = "thirdpartylogin";
 
