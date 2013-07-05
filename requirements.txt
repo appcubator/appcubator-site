@@ -30,4 +30,4 @@ splinter
 django-registration
 django-invitation
 django-grappelli
-
+fabric
