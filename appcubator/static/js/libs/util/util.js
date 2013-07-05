@@ -2,7 +2,7 @@ define(['jquery'], function() {
 
   var util = {
     onServerReady: function(url, callback) {
-      $.ajax('url', {
+      $.ajax(url, {
         type: 'GET',
         success: callback,
         error: function(){
