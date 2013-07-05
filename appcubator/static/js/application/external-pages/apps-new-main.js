@@ -29,7 +29,7 @@ function($) {
     $('form').submit();
   });
 
-  $('#guid-btn').hover(function() {
+  $('#guide-btn').hover(function() {
     $('#mascot').addClass('happy');
   }, function() {
     $('#mascot').removeClass('happy');
