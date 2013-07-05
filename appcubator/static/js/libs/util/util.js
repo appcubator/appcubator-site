@@ -1,13 +1,13 @@
 define(['jquery'], function() {
 
   var util = {
-    onServerReady: function(callback) {
-      $.ajax('/ping/', {
-        type: 'POST',
+    onServerReady: function(url, callback) {
+      $.ajax('url', {
+        type: 'GET',
         success: callback,
         error: function(){
           console.log("Server not ready. Waiting 100ms and trying again.");
-          window.setTimeout(function(){util.onServerReady(callback); }, 100);
+          window.setTimeout(function(){util.onServerReady(url, callback); }, 100);
         }
       });
     },
