@@ -160,21 +160,6 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
-        'app_builder': {
-            'handlers':['console'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'deployment_models': {
-            'handlers':['console'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'deployment.views': {
-            'handlers':['console'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
     }
 }
 
@@ -183,10 +168,6 @@ ACCOUNT_ACTIVATION_DAYS = 28
 # Invite based information
 INVITATIONS_PER_USER = 5
 ACCOUNT_INVITATION_DAYS = 120
-
-import djcelery
-djcelery.setup_loader()
-BROKER_URL = "django://"
 
 LOGOUT_URL="/"
 LOGIN_URL="/login/"
