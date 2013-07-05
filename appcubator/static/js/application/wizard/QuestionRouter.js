@@ -29,6 +29,7 @@ define([
         if(!qKey || !args.length) {
           var appGen = new AppGenerator(this.answersDict);
           this.generatedJSON = appGen.getJSON();
+          console.log(this.generatedJSON);
           return this.renderFinalize();
         }
 
@@ -89,12 +90,14 @@ define([
       },
 
       renderFinalize: function() {
-        $('.racoon').append('<li class="finish">Thanks for filling it in. We created most of your app already and it awaits for you to design your pages. <div class="btn done-walkthrough">Take Me To My App »</div></li>');
+        //$('.racoon').append('<li class="finish">Thanks for filling it in. We created most of your app already and it awaits for you to design your pages. <div class="btn done-walkthrough">Take Me To My App »</div></li>');
         //$('.done-walkthrough').on('click', this.saveGeneratedApp);
+        $(".bottom-panel").append('<div class="racoon-thinking"></div>');
         this.saveGeneratedApp();
       },
 
       renderRacoon: function(url) {
+        $(".bottom-panel").html('');
         $(".bottom-panel").append('<div class="racoon-happy"></div><div class="bubble">Your app is available here:'+url+'</div>');
       },
 

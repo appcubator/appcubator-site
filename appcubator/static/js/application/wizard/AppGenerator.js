@@ -6,6 +6,7 @@ define([
   "collections/UserRolesCollection",
   "collections/TableCollection",
   "collections/EmailCollection",
+  "wizard/homepage_temp",
   "backbone"
 ],
 function(AppModel,
@@ -27,7 +28,7 @@ function(AppModel,
       this.state = new AppModel();
       this.state.set('users', this.generateUsers());
       this.state.set('tables', this.generateTables());
-      this.state.set('pages', new PageCollection());
+      this.state.set('pages', this.generatePages());
       this.state.set('mobilePages', new MobilePageCollection());
       this.state.set('info', new AppInfoModel({}));
       this.state.set('emails', new EmailCollection({}));
@@ -58,6 +59,30 @@ function(AppModel,
       }, this);
 
       return tablesColl;
+    },
+
+    generatePages: function() {
+      var pageColl = new PageCollection();
+      pageColl.push(this.generateHomepage());
+      pageColl.push(this.generateRegistrationPage());
+
+      return pageColl;
+    },
+
+    generateHomepage: function() {
+      var homepage = _.clone(HomepageTemp);
+      homepage.uielements[0].data.content = appName;
+      if(this.answersDict.intro_text) homepage.uielements[1].data.content = this.answersDict.intro_text[0][0];
+      if(this.answersDict.logo) homepage.uielements[2].data.content_attribs.src = this.answersDict.logo[0];
+      return homepage;
+    },
+
+    generateRegistrationPage: function() {
+
+    },
+
+    generateProfilePage: function() {
+
     },
 
     getJSON: function() {

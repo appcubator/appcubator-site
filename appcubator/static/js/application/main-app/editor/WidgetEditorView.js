@@ -38,6 +38,7 @@ function(WidgetContentEditor,
       'click .edit-login-form-btn': 'openLoginEditor',
       'click .done-editing'       : 'closeEditingMode',
       'click .delete-button'      : 'clickedDelete',
+      'click .done-text-editing'  : 'clickedDoneTextEditing',
       'click'                     : 'clicked'
     },
 
@@ -50,7 +51,16 @@ function(WidgetContentEditor,
     },
 
     setModel: function(widgetModel) {
+      if(this.model) {
+        this.model.unbind('startEditing', this.startedEditing);
+        this.model.unbind('stopEditing', this.stoppedEditing);
+      }
+
       this.model = widgetModel;
+
+      this.model.bind('startEditing', this.startedEditing);
+      this.model.bind('stopEditing', this.stoppedEditing);
+
       return this;
     },
 
@@ -167,6 +177,7 @@ function(WidgetContentEditor,
     },
 
     openStylePicker: function(e) {
+      console.log("EXPAND");
       this.hideSubviews();
       this.widgetClassPickerView.show();
       this.widgetClassPickerView.expand();
@@ -219,9 +230,23 @@ function(WidgetContentEditor,
       this.model.trigger('editModeOff');
     },
 
+    clickedDoneTextEditing: function() {
+      this.model.trigger('stopEditing');
+    },
+
     classChanged: function() {
       this.showSubviews();
       this.widgetClassPickerView.$el.hide();
+    },
+
+    startedEditing: function() {
+      this.hideSubviews();
+      this.el.appendChild(this.renderButtonWithText('done-text-editing', 'Done Editing'));
+    },
+
+    stoppedEditing: function() {
+      $('.section-done-text-editing').remove();
+      this.showSubviews();
     },
 
     clear: function() {
@@ -233,7 +258,7 @@ function(WidgetContentEditor,
     },
 
     showSubviews: function() {
-      if(this.widgetClassPickerView) this.widgetClassPickerView.$el.fadeIn();
+      //if(this.widgetClassPickerView) this.widgetClassPickerView.$el.fadeIn();
       if(this.contentEditor) this.contentEditor.$el.fadeIn();
       if(this.layoutEditor) this.layoutEditor.$el.fadeIn();
       if(this.infoEditor) this.infoEditor.$el.fadeIn();

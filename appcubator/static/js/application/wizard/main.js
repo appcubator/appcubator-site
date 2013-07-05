@@ -68,7 +68,7 @@ function (QuestionView, QuestionRouter) {
     initialize: function() {
       _.bindAll(this);
       this.questionRouter = new QuestionRouter();
-      this.questionRouter.askQuestion("category", [""], true);
+      this.questionRouter.askQuestion("intro_text", [""], true);
     }
 
   });

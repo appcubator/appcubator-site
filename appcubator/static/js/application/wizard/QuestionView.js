@@ -44,7 +44,9 @@ function() {
     renderInputBox: function() {
         var form = document.createElement('form');
         form.className ="answer-form";
-        $(form).append('<input type="text" class="answer-input" placeholder="'+this.dict.inputBox+'">');
+        $(form).append('<input type="text" class="answer-input" style="width:300px; margin-right:24px;" placeholder="'+this.dict.inputBox+'">');
+        $(form).append('<input type="submit" class="btn-info" value="Done">');
+
         this.el.appendChild(form);
     },
 
@@ -127,6 +129,7 @@ function() {
     },
 
     answerSend: function(answerArr) {
+      $('.answer-input').blur();
       $(window).off("keydown", this.keydown);
       var nextKey = this.dict.next.call(this, answerArr);
       this.trigger('answer', nextKey, answerArr);

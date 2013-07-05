@@ -106,8 +106,10 @@ function(WidgetModel,
         widget.data = {};
         widget.data.nodeType = type;
         widget.data = _.extend(widget.data, uieState[type][0]);
+
         if(content_ops.content) widget.data.content =  content_ops.content;
         if(content_ops.href) widget.data.href = content_ops.href;
+        if(content_ops.src_content) widget.data.content_attribs.src_content = content_ops.src_content;
 
         var widgetModel = new WidgetModel(widget);
         return this.push(widgetModel);

@@ -218,6 +218,11 @@ define(['jquery'], function() {
       }
 
       return null;
+    },
+
+    isInternalData: function(str) {
+      if(str.indexOf("{{") === 0) return true;
+      return false;
     }
   };
 

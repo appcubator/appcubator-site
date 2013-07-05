@@ -5892,3 +5892,12 @@ display: inline-block;
 ::-moz-selection {
   background: #fff; /* Firefox */
 }
+
+.widget-wrapper > *::selection {
+  background: #2b3555; /* Safari */
+  color: #fff;
+}
+.widget-wrapper > *::-moz-selection {
+  background: #2b3555; /* Firefox */
+  color:#fff;
+}
