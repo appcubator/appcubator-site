@@ -9,7 +9,7 @@ questions = {
   //   next: function(answer){ return "category"; }
   // },
   intro_text: {
-    questionText : "How would you explain your site to your users??",
+    questionText : "How would you explain your site to your users?",
     inputBox:" ",
     next: function(answers) {
       return "category";
