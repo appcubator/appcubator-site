@@ -1,30 +1,35 @@
 from __future__ import with_statement
-from fabric.api import local, settings, abort, run, cd, env, hosts
+from fabric.api import local, settings, abort, run, cd, env, hosts, prefix
 from fabric.contrib.console import confirm
 
 
-@hosts('v1factory@appcubator.com')
+def staging():
+  env.hosts = ['v1factory@staging.appcubator.com']
+  env.__mode = 'staging'
+
+def prod():
+  env.hosts = ['v1factory@appcubator.com']
+  env.__mode = 'prod'
+
 def build_static():
-  code_dir = '/var/www/v1factory/v1factory'
+  code_dir = '/var/www/appcubator/appcubator'
   with cd(code_dir):
     run("./static/build/build.sh")
 
-@hosts('v1factory@staging.appcubator.com')
-def pull_staging():
+def pull():
   code_dir = '/var/www/appcubator-site'
   with cd(code_dir):
     run("git pull")
-    run("touch config/uwsgi.ini")
 
-@hosts('v1factory@appcubator.com')
-def pull_prod():
+def sync_and_migrate():
   code_dir = '/var/www/appcubator-site'
   with cd(code_dir):
-    run("git pull")
-    run("touch config/uwsgi.ini")
+    with prefix('source venv'):
+      with prefix('export DJANGO_SETTINGS_MODULE=settings.%s' % env.__mode):
+        run('./manage.py syncdb')
+        run('./manage.py migrate')
 
-@hosts('v1factory@appcubator.com')
-def refresh_themes_prod():
-  code_dir = '/var/www/appcubator-site'
+def reload_servers():
+  code_dir = '/var/www/appcubator-sysadmin'
   with cd(code_dir):
-    run("venv/bin/python scripts/refresh_themes.py settings.prod")
+    run('touch */*.ini')
