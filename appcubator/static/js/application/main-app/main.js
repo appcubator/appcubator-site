@@ -87,7 +87,8 @@ function (AppModel,
           RouteLogger,
           KeyDispatcher,
           MouseDispatcher,
-          Heyoffline) {
+          Heyoffline,
+          Backbone) {
 
   $(document).ready(function() {
 
