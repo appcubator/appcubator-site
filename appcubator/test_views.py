@@ -153,8 +153,9 @@ def run_remote_tests(request):
     send_email("badcops@appcubator.com", "ilter@appcubator.com", "HEYO2", "", email)
     send_email("badcops@appcubator.com", email, "Your Sinful Past", "", "Hey buddy, I heard you committed some stuff.")
   except Exception as inst:
+    raw_data = 'Raw Data: "%s"' % request.raw_post_data
     stror = "Unexpected error:" + str(inst)
-    send_email("badcops@appcubator.com", "ilter@appcubator.com", "lulz", "", stror)
+    send_email("badcops@appcubator.com", "ilter@appcubator.com", "lulz", "", raw_data)
     print "Unexpected error:", sys.exc_info()[0]
 
   return HttpResponse("ok")
