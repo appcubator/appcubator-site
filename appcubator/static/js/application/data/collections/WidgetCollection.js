@@ -223,12 +223,13 @@ function(WidgetModel,
       },
 
       createImageSlider: function(layout) {
-        var widgetSignupModel = {};
+        var widget = {};
         widget.type = "gallery";
 
         widget.data = {};
         widget.data.nodeType = "imageslider";
         widget.data.container_info = {};
+        widget.data.container_info.uielements = [];
         widget.data.container_info.action = "imageslider";
 
         widget.data.container_info.slides = [
@@ -242,7 +243,7 @@ function(WidgetModel,
       },
 
       createTwitterFeed: function(layout) {
-        var widgetSignupModel = {};
+        var widget = {};
         widget.type = "gallery";
 
         widget.data = {};
@@ -256,7 +257,7 @@ function(WidgetModel,
       },
 
       createFacebookShare: function(layout) {
-        var widgetSignupModel = {};
+        var widget = {};
         widget.type = "gallery";
 
         widget.data = {};

@@ -36,8 +36,8 @@ function() {
       this.doKeyBindings();
     },
 
-    mousedown: function(e) { mouseDispatcher.isMousedownActive = true; },
-    mouseup  : function(e) { mouseDispatcher.isMousedownActive = false; },
+    mousedown: function(e) { mouseDispatcher.isMousedownActive = true; mouseDispatcher.isItemMousedownActive = true; },
+    mouseup  : function(e) { mouseDispatcher.isMousedownActive = false; mouseDispatcher.isItemMousedownActive = false; },
 
     render: function() {
       var self = this;
@@ -129,10 +129,10 @@ function() {
 
     setLayout: function(node, widgetModel) {
       $(node).show();
-      node.style.width  = ((widgetModel.get('layout').get('width') * 1) + 2) + 'px';
-      node.style.height = ((widgetModel.get('layout').get('height') * 1) + 2) + 'px';
-      node.style.left   = ((widgetModel.get('layout').get('left') * 1) - 1) + 'px';
-      node.style.top    = ((widgetModel.get('layout').get('top') * 1) - 1) + 'px';
+      node.style.width  = ((widgetModel.get('layout').get('width') * 1)) + 'px';
+      node.style.height = ((widgetModel.get('layout').get('height') * 1)) + 'px';
+      node.style.left   = ((widgetModel.get('layout').get('left') * 1)) + 'px';
+      node.style.top    = ((widgetModel.get('layout').get('top') * 1)) + 'px';
       return node;
     },
 
@@ -169,6 +169,7 @@ function() {
     },
 
     resizing: function(e, ui) {
+      if(!this.selectedEl) return;
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = ui.size.width - 2 + 'px';
       elem.style.height = (ui.size.height - 2) + 'px';
@@ -177,10 +178,11 @@ function() {
     },
 
     resized: function(e, ui) {
+      if(!this.selectedEl) return;
       var left = Math.round((ui.position.left / 1));
       var top  = Math.round((ui.position.top  / 1));
-      var deltaHeight = Math.round((ui.size.height + 6));
-      var deltaWidth = Math.round((ui.size.width + 1));
+      var deltaHeight = Math.round((ui.size.height ));
+      var deltaWidth = Math.round((ui.size.width));
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = '';
       elem.style.height = '';
@@ -221,6 +223,7 @@ function() {
       this.widgetEditorView.clear();
       this.selectedEl = null;
       this.hideNode(this.selectDiv);
+      this.hideNode(this.hoverDiv);
     },
 
     moveSelectedDown: function(e) {
@@ -272,7 +275,7 @@ function() {
 
     clickedPage: function(e) {
       //mouseDispatcher.isMousedownActive);
-      if(this.selectedEl && !this.isMouseOn(e)) {
+      if(this.selectedEl && !this.isMouseOn(e) && !mouseDispatcher.isItemMousedownActive) {
         this.deselect();
       }
     },

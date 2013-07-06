@@ -140,13 +140,16 @@ function(
     },
 
     createLoginRoutes: function() {
-      this.set('loginRoutes', new LoginRouteCollection());
+      var routes = new LoginRouteCollection();
+
       v1State.get('users').each(function(userModel) {
-          this.get('loginRoutes').push({
+          routes.push({
             role: userModel.get('name'),
             redirect: "internal://Homepage"
           });
       }, this);
+
+      this.set('loginRoutes', routes);
     },
 
     toJSON: function() {

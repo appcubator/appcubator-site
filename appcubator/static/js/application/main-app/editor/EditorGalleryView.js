@@ -364,15 +364,15 @@ define([
     createNode: function(layout, id) {
       var type = id.replace('type-','');
       if(type == "imageslider") {
-        return widgetsCollection.createImageSlider(layout);
+        return this.widgetsCollection.createImageSlider(layout);
       }
 
       if(type == "twitterfeed") {
-        return widgetsCollection.createTwitterFeed(layout);
+        return this.widgetsCollection.createTwitterFeed(layout);
       }
 
       if(type == "facebookshare") {
-        return widgetsCollection.createFacebookShare(layout);
+        return this.widgetsCollection.createFacebookShare(layout);
       }
 
       var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, {});
