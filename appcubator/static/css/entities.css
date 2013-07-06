@@ -177,6 +177,29 @@ input[type="checkbox"] {
   color:#fff;
 }
 
+
+.add-property-form {
+  text-align: center;
+}
+.tbl-wrapper .done-btn {
+ font-size: 10px;
+  background-color: #036a6e;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  line-height: 10px;
+  height: 20px;
+  text-align: center;
+  padding: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+
+
+
 .tbl {
   display: block;
   background-color: #fff;
