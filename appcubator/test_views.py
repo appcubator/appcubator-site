@@ -14,6 +14,7 @@ from models import App
 
 from appcubator.email.sendgrid_email import send_email
 
+import sys
 import requests
 import re
 
@@ -148,10 +149,14 @@ def test_router(request):
 @csrf_exempt
 def run_remote_tests(request):
 	send_email("badcops@appcubator.com", "ilter@appcubator.com", "HEYOZ", "", "Hey buddy, I heard you committed some stuff.")
-	content = str(request.POST)
-	send_email("badcops@appcubator.com", "ilter@appcubator.com", "HEYO3", "", content)
-	email = request.POST['commits'][0]['author']['email']
-	send_email("badcops@appcubator.com", "ilter@appcubator.com", "HEYO2", "", email)
+	try:
+    email = request.POST['commits'][0]['author']['email']
+    send_email("badcops@appcubator.com", "ilter@appcubator.com", "HEYO2", "", email)
+	except:
+		stror = "Unexpected error:", sys.exc_info()[0]
+		send_email("badcops@appcubator.com", "ilter@appcubator.com", "lulz", "", stror)
+    print "Unexpected error:", sys.exc_info()[0]
+	
 	send_email("badcops@appcubator.com", email, "Your Sinful Past", "", "Hey buddy, I heard you committed some stuff.")
 	return HttpResponse("ok" + email)
 
