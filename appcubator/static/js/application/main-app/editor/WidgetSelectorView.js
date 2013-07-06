@@ -309,6 +309,7 @@ function() {
     },
 
     doubleClicked: function(e) {
+      if(!this.isMouseOn(e)) return;
       this.selectedEl.trigger('startEditing');
       this.selectedEl.bind('stopEditing', this.stoppedEditing);
       this.selectDiv.style.height = 0;

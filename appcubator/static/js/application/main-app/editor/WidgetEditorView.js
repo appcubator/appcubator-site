@@ -190,6 +190,7 @@ function(WidgetContentEditor,
     },
 
     openLoginEditor: function() {
+      console.log(this.model);
       var loginRoutes = this.model.getLoginRoutes();
       new LoginFormEditorView(loginRoutes);
     },

@@ -26,19 +26,6 @@ function( WidgetModel,
       return this.get('data').get('container_info').get('form');
     },
 
-    getLoginRoutes: function() {
-
-      if(this.get('data').has('loginRoutes')) {
-        return this.get('data').get('loginRoutes');
-      }
-
-      if(this.get('data').has('container_info') &&
-        this.get('data').get('container_info').has('form')) {
-        return this.get('data').get('container_info').get('form').get('loginRoutes');
-      }
-
-      return null;
-    },
 
     toJSON : function() {
       var json = _.clone(this.attributes);
