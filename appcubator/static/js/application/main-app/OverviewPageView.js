@@ -38,7 +38,10 @@ function(SimpleModalView) {
     },
 
     deploy: function() {
-      v1.deploy();
+      $('#deploy').find('h4').html('Deploying...');
+      v1.deploy(function() {
+        $('#deploy').find('h4').html('Go To App');
+      });
     },
 
     showTutorial: function() {

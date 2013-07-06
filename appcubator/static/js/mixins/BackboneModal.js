@@ -11,7 +11,7 @@ function(Backbone) {
     events : {
       'click .modal-bg' : 'closeModal',
       'keydown'         : 'handleKey',
-      'click .done-btn'        : 'closeModal'
+      'click .done-btn' : 'closeModal'
     },
 
     _configure: function(options) {
@@ -86,6 +86,9 @@ function(Backbone) {
       }
       if(this.doneButton) {
         $(div).append('<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>');
+        $(div).find('.done-btn').on('click', function() {
+          self.closeModal();
+        });
       }
 
       var span = document.createElement('span');

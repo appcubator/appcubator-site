@@ -52,7 +52,7 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
     },
 
     doesContainEntityName: function(entityName) {
-      return _.contains(this.get('url').get('urlparts'), '{{' + entityName + '}}');
+      return _.contains(this.get('url').get('urlparts').pluck('value'), '{{' + entityName + '}}');
     },
 
     getContextEntities: function() {

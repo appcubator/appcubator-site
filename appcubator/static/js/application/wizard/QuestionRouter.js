@@ -89,13 +89,15 @@ define([
       },
 
       renderFinalize: function() {
-        $('.racoon').append('<li class="finish">Thanks for filling it in. We created most of your app already and it awaits for you to design your pages. <div class="btn done-walkthrough">Take Me To My App »</div></li>');
+        //$('.racoon').append('<li class="finish">Thanks for filling it in. We created most of your app already and it awaits for you to design your pages. <div class="btn done-walkthrough">Take Me To My App »</div></li>');
         //$('.done-walkthrough').on('click', this.saveGeneratedApp);
+        $(".bottom-panel").append('<div class="racoon-thinking"></div>');
         this.saveGeneratedApp();
       },
 
       renderRacoon: function(url) {
-        $(".bottom-panel").append('<div class="racoon-happy"></div><div class="bubble">Your app is available here:'+url+'</div>');
+        $(".bottom-panel").html('');
+        $(".bottom-panel").append('<div class="racoon-speech"></div><div class="bubble">Your app is available here:<br  /><a target="_blank" href="'+url+'">'+url+'</a></div>');
       },
 
       saveGeneratedApp: function() {

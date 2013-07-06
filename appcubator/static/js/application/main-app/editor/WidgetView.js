@@ -64,9 +64,14 @@ define([
       this.model.get('data').get('content_attribs').bind("change:style", this.changedStyle, this);
 
       this.model.bind("startEditing", this.switchEditModeOn, this);
-      this.model.bind("deselected",   this.switchEditModeOff, this);
+      this.model.bind("deselected",   function() {
+        this.model.trigger('stopEditing');
+      }, this);
+      this.model.bind('stopEditing', this.switchEditModeOff);
 
-      keyDispatcher.key('command+enter', this.switchEditModeOff);
+      keyDispatcher.key('command+enter', function() {
+        self.model.trigger('stopEditing');
+      });
     },
 
     setFreeMovement: function () {
@@ -271,7 +276,6 @@ define([
       if(e) e.preventDefault();
       if(this.editMode === false) return;
 
-      this.model.trigger('stopEditing');
       this.editMode = false;
       this.$el.removeClass('textediting');
       var el = $(this.el.firstChild);

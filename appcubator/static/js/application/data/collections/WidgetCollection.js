@@ -20,7 +20,7 @@ function(WidgetModel,
         widget.data.class_name = uieState["forms"][0].class_name;
         widget.data.action = "thirdpartylogin";
         widget.data.provider = provider;
-        widget.data.content = "Login w/ Facebook";
+        widget.data.content = "Login w/ "+ util.capitaliseFirstLetter(provider);
         widget.data.container_info = {};
         widget.data.container_info.action = "thirdpartylogin";
 
@@ -106,8 +106,10 @@ function(WidgetModel,
         widget.data = {};
         widget.data.nodeType = type;
         widget.data = _.extend(widget.data, uieState[type][0]);
+
         if(content_ops.content) widget.data.content =  content_ops.content;
         if(content_ops.href) widget.data.href = content_ops.href;
+        if(content_ops.src_content) widget.data.content_attribs.src_content = content_ops.src_content;
 
         var widgetModel = new WidgetModel(widget);
         return this.push(widgetModel);
@@ -125,7 +127,7 @@ function(WidgetModel,
         widget.data.container_info.form = {};
         widget.data.container_info.form.entity = entity.get('name');
         var currentPage =  v1State.getCurrentPage();
-        console.log(currentPage.doesContainEntityName());
+
         if(currentPage.getContextEntities().length)  widget.data.container_info.form.goto = "internal://Homepage";
         else widget.data.container_info.form.goto = currentPage.getLinkLang();
 

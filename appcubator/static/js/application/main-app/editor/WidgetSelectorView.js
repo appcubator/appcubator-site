@@ -311,7 +311,12 @@ function() {
     doubleClicked: function(e) {
       this.selectedEl.trigger('startEditing');
       this.selectedEl.bind('stopEditing', this.stoppedEditing);
-      this.hideNode(this.selectDiv);
+      this.selectDiv.style.height = 0;
+      this.selectDiv.style.width = 0;
+      console.log(this.selectedEl.get('layout').get('height'));
+      var top = ((this.selectedEl.get('layout').get('top') * 15) - 2) + ((this.selectedEl.get('layout').get('height') * 15) + 4);
+      console.log(top);
+      this.selectDiv.style.top = top + 'px';
     },
 
     stoppedEditing: function() {

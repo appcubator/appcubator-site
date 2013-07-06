@@ -1,26 +1,24 @@
 define(['jquery'], function() {
 
   var util = {
-    onServerReady: function(callback) {
-      $.ajax('/ping/', {
-        type: 'POST',
+    onServerReady: function(url, callback) {
+      $.ajax(url, {
+        type: 'GET',
         success: callback,
         error: function(){
           console.log("Server not ready. Waiting 100ms and trying again.");
-          window.setTimeout(function(){util.onServerReady(callback); }, 100);
+          window.setTimeout(function(){util.onServerReady(url, callback); }, 100);
         }
       });
     },
 
     assert : function(inp) {
       if(!inp) {
-        console.trace();
         alert('Important Error!');
       }
     },
 
     setCursor: function(node,pos){
-      console.log(node);
       var node = (typeof node == "string" ||
         node instanceof String) ? document.getElementById(node) : node;
       if(!node){
@@ -204,7 +202,6 @@ define(['jquery'], function() {
     },
 
     getDisplayType: function (fieldType) {
-      console.log(fieldType);
       switch(fieldType) {
         case "text":
         case "date":
@@ -218,6 +215,16 @@ define(['jquery'], function() {
       }
 
       return null;
+    },
+
+    isInternalData: function(str) {
+      if(str.indexOf("{{") === 0) return true;
+      return false;
+    },
+
+    capitaliseFirstLetter: function(string)
+    {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
   };
 

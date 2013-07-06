@@ -43,6 +43,7 @@ define([
             if(box) box.checked = true;
           });
 
+          //this.$el.append('<div class="btn done-btn">Done</div>')
           return this;
         },
 

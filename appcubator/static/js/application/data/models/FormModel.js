@@ -107,7 +107,6 @@ function(
         }
       });
 
-      console.log(possibleActions);
       return possibleActions;
     },
 

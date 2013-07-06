@@ -19,9 +19,9 @@ h1, h2, h3, h4 {
 
 
 span.q-sent {
-font-family: 'Roboto Slab', serif;
 display: block;
-margin-bottom: 8px;
+margin-bottom: 20px;
+font-size: 18px;
 }
 
 .racoon {
@@ -359,34 +359,49 @@ input.multi-answer-input {
 .skip-btn { 
   font-weight: bold;
   font-size: 10px;
+  cursor: pointer;
 }
 
 .bottom-panel {
   display: block;
-  height: 124px;
+  height: 320px;
   margin-left: 90px;
+  position: relative;
 }
 
-.racoon-happy {
+.racoon-speech {
   display: inline-block;
-  height: 120px;
-  width: 122px;
-  background-image: url(../img/mascot-happy.png);
+  height: 320px;
+  width: 100%;
+  background-image: url(../img/racoon-speech.png);
   background-repeat: no-repeat;
-  background-size: auto 100%;
+  background-position: bottom left;
+  vertical-align: top;
+}
+
+.racoon-thinking {
+  display: inline-block;
+  width: 100%;
+  height: 320px;
+  background-image: url(../img/loading-plain.gif);
+  background-repeat: no-repeat;
+  background-position: bottom left;
   vertical-align: top;
 }
 
 .bubble {
+  position: absolute;
+  left: 156px;
+  top: 20px;
   display: inline-block;
-  width: 580px;
+  width: 440px;
   vertical-align: top;
-  border-radius: 24px;
-  border: 3px solid #000;
-  background-color: #fff;
   padding: 20px;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 32px;
-  margin-left: 24px;
   font-weight: bold;
+}
+
+.btn-info {
+  vertical-align: top;
 }

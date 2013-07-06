@@ -13,6 +13,7 @@ from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
 
+import app_builder.analyzer as analyzer
 from app_builder.analyzer import App as AnalyzedApp
 from app_builder.utils import get_xl_data, add_xl_data, get_model_data
 
@@ -227,34 +228,25 @@ def app_get_state(request, app):
 @require_POST
 @login_required
 def app_save_state(request, app, require_valid=True):
-    old_state = app.state
     app._state_json = request.body
-    # Save the app state for future use
-    appstate_snapshot = AppstateSnapshot(owner=request.user,
-        app=app, name=app.name, snapshot_date=datetime.now(), _state_json=request.body)
-    appstate_snapshot.save()
     app.state['name'] = app.name
-    try:
-        app.full_clean()
-    except Exception, e:
-        return (400, str(e))
+    app.full_clean()
 
     if not require_valid:
         app.save()
         return (200, "ok")
-
+    try:
+        a = AnalyzedApp.create_from_dict(app.state)
+    except analyzer.UserInputError, e:
+        return (400, e.to_dict())
+    # raise on normal exceptions.
     else:
-        try:
-            a = AnalyzedApp.create_from_dict(app.state)
-        except Exception, e:
-            import django.utils.html
-            if isinstance(e.message, basestring):
-                e.message = [e.message]
-            errors = [django.utils.html.escape(s) for s in e.message]
-            return (400, errors)
-        else:
-            app.save()
-            return (200, "ok")
+        # Save the app state for future use
+        appstate_snapshot = AppstateSnapshot(owner=request.user,
+            app=app, name=app.name, snapshot_date=datetime.now(), _state_json=request.body)
+        appstate_snapshot.save()
+        app.save()
+        return (200, "ok")
 
 def tutorial_page(request, page_name):
     print(page_name)

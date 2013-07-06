@@ -182,13 +182,13 @@ define([
 			post_render.call();
 		},
 
-		deploy: function() {
-			util.startAjaxLoading();
+		deploy: function(callback) {
+
 				$.ajax({
 							type: "POST",
 							url: '/app/'+appId+'/deploy/',
 							success: function(data) {
-								util.stopAjaxLoading();
+								if(callback) callback.call();
 								if(data.errors) {
 									var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
 									if(DEBUG) {
@@ -215,7 +215,7 @@ define([
 			if(appId === 0) return;
 			$('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
 			var $el = $('.menu-button.save');
-      $el.fadeOut().html("<span>Saving...</span>").fadeIn();
+            $el.fadeOut().html("<span>Saving...</span>").fadeIn();
 
 			appState = v1State.toJSON();
 			$.ajax({
@@ -229,11 +229,11 @@ define([
 					},1000);
 
 					$('.menu-button.save').html("<span>Saved</span>").fadeIn();
-          if(typeof(callback) !== 'undefined'&&typeof(callback) == 'function')
-            { callback(); }
-          setTimeout(function(){
-            $el.html("<span>Save</span>").fadeIn();
-          },3000);
+                    if(typeof(callback) !== 'undefined'&&typeof(callback) == 'function')
+                        { callback(); }
+                    setTimeout(function(){
+                        $el.html("<span>Save</span>").fadeIn();
+                    },3000);
 				},
 				error: function(data) {
 					if(data.responseText == "ok") return;

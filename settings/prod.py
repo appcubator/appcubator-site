@@ -10,11 +10,6 @@ PRODUCTION = True
 STAGING = False
 
 
-EMAIL_HOST = "smtp.mailgun.org"
-EMAIL_HOST_USER = "postmaster@appcubator.mailgun.org"
-EMAIL_HOST_PASSWORD = "3keeber4xv93"
-
-
 ADMINS = (
     ('Karan Sikka', 'karan@appcubator.com'),
     ('Nikhil Khadke', 'nikhil@appcubator.com'),
@@ -28,11 +23,6 @@ MANAGERS = ADMINS
 import os.path
 PROJECT_ROOT_PATH = os.path.join(os.path.dirname(__file__), "..")
 
-"""
-'default': {
-    'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-    'NAME': os.path.join(PROJECT_ROOT_PATH, 'tempdb'),
-},"""
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.mysql',

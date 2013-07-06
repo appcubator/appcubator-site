@@ -24,7 +24,7 @@ def pull():
 def sync_and_migrate():
   code_dir = '/var/www/appcubator-site'
   with cd(code_dir):
-    with prefix('source venv'):
+    with prefix('source venv/bin/activate'):
       with prefix('export DJANGO_SETTINGS_MODULE=settings.%s' % env.__mode):
         run('./manage.py syncdb')
         run('./manage.py migrate')

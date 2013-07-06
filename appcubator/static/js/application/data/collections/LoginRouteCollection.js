@@ -5,6 +5,11 @@ function() {
 
   var LoginRouteCollection = Backbone.Collection.extend({
 
+    initialize: function() {
+      _.bindAll(this);
+      v1State.get('users').bind('change add remove', this.reorganize, this);
+    },
+
     findRouteWithRole: function(roleStr) {
       var val = null;
       this.each(function(userRole) {
@@ -13,13 +18,11 @@ function() {
           return val;
         }
       }, this);
-
       return "internal://Homepage";
     },
 
     reorganize: function() {
       var newContent = [];
-
       v1State.get('users').each(function(user) {
         var val = this.findRouteWithRole(user.get('name'));
         newContent.push({
