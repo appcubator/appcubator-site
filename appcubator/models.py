@@ -508,6 +508,12 @@ class RouteLog(models.Model):
     app_id = models.IntegerField()
     page_name = models.TextField()
 
+class LogAnything(models.Model):
+    app_id = models.IntegerField(null=True)
+    user_id = models.IntegerField(null=True)
+    data = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
 class InvitationKeys(models.Model):
     api_key    = models.CharField(max_length=255)
     inviter_id = models.IntegerField(blank=True)
