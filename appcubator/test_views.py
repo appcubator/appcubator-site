@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import forms as auth_forms, authenticate, login
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.utils import simplejson
+
 from django import forms
 from django.utils import simplejson
 from copy import deepcopy
@@ -14,6 +16,7 @@ from models import App
 
 from appcubator.email.sendgrid_email import send_email
 
+import sys
 import requests
 import re
 
@@ -147,9 +150,12 @@ def test_router(request):
 
 @csrf_exempt
 def run_remote_tests(request):
-	email = request.POST['commits'][0]['author']['email']
-	print request.POST
-	print email
-	send_email("badcops@appcubator.com", email, "Your Sinful Past", "", "Hey buddy, I heard you committed some stuff.")
-	return HttpResponse("ok" + email)
+  try:
+    json = simplejson.loads(request.POST['payload'])
+    email = json['commits'][0]['author']['email']
+    send_email("badcops@appcubator.com", email, "Whaddup?", "", "Hey Dawg, I heard you committed some stuff. I hope they pass the tests")
+  except Exception as inst:
+    stror = "Unexpected error:" + str(inst)
+    send_email("badcops@appcubator.com", "ilter@appcubator.com", "lulz", "", stror)
 
+  return HttpResponse("ok")
