@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
-from models import RouteLog, TutorialLog
+from models import RouteLog, TutorialLog, LogAnything
 from email.sendgrid_email import send_email
 from models import DomainRegistration
 
@@ -20,6 +20,18 @@ import datetime
 def JSONResponse(serializable_obj, **kwargs):
     """Just a convenience function, in the middle of horrible code"""
     return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)
+
+@require_POST
+@login_required
+@csrf_exempt
+def log_anything(request):
+    key = request.POST['__key']
+    app_id = request.POST.get('__app_id', None)
+    user_id = request.user.id
+    data = { k:v for k,v in request.POST.items() if not k.startswith('__') }
+    la = LogAnything(app_id=app_id, user_id=user_id, data=simplejson.dumps(data))
+    la.save()
+    return HttpResponse("ok")
 
 
 @require_POST

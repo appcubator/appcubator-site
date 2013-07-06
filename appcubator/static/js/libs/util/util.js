@@ -12,6 +12,19 @@ define(['jquery'], function() {
       });
     },
 
+    log_to_server: function (key_str, val_dict, app_id) {
+        _.each(val_dict, function(val, key) {
+            util.assert((typeof key) == (typeof ''));
+            util.assert((typeof val) == (typeof ''));
+        });
+
+        val_dict['__key'] = key_str;
+        if (app_id)
+            val_dict['__app_id'] = app_id;
+
+        $.post('/log/anything/', val_dict);
+    },
+
     assert : function(inp) {
       if(!inp) {
         alert('Important Error!');
