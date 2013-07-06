@@ -152,14 +152,10 @@ def test_router(request):
 def run_remote_tests(request):
   try:
     json = simplejson.loads(request.POST['payload'])
-    send_email("badcops@appcubator.com", "ilter@appcubator.com", "JSON", "", simplejson.dumps(json))
     email = json['commits'][0]['author']['email']
-    send_email("badcops@appcubator.com", "ilter@appcubator.com", "HEYO2", "", email)
+    send_email("badcops@appcubator.com", email, "Whaddup?", "", "Hey Dawg, I heard you committed some stuff. I hope they pass the tests")
   except Exception as inst:
-    raw_data = 'Raw Data: "%s"' % request.raw_post_data
     stror = "Unexpected error:" + str(inst)
     send_email("badcops@appcubator.com", "ilter@appcubator.com", "lulz", "", stror)
-    print "Unexpected error:", sys.exc_info()[0]
 
   return HttpResponse("ok")
-
