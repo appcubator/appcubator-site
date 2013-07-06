@@ -16,10 +16,29 @@ def build_static():
   with cd(code_dir):
     run("./static/build/build.sh")
 
-def pull():
-  code_dir = '/var/www/appcubator-site'
+repo_path = {
+        'site': '/var/www/appcubator-site',
+        'codegen': '/var/www/appcubator-codegen',
+        'deploy': '/var/www/appcubator-deploy',
+        'sysadmin': '/var/www/appcubator-sysadmin'
+}
+
+def pull(repo):
+  code_dir = repo_path[repo]
   with cd(code_dir):
     run("git pull")
+
+def install_codegen():
+  code_dir = '/var/www/appcubator-site'
+  with cd(code_dir):
+    with prefix('source venv/bin/activate'):
+      run('pip install ../appcubator-codegen --upgrade')
+
+def install_requirements():
+  code_dir = '/var/www/appcubator-site'
+  with cd(code_dir):
+    with prefix('source venv/bin/activate'):
+      run('pip install -r requirements.txt --upgrade')
 
 def sync_and_migrate():
   code_dir = '/var/www/appcubator-site'
