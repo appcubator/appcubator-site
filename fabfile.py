@@ -12,7 +12,7 @@ def prod():
   env.__mode = 'prod'
 
 def build_static():
-  code_dir = '/var/www/appcubator/appcubator'
+  code_dir = '/var/www/appcubator-site/appcubator'
   with cd(code_dir):
     run("./static/build/build.sh")
 
