@@ -29,7 +29,6 @@ define([
         if(!qKey || !args.length) {
           var appGen = new AppGenerator(this.answersDict);
           this.generatedJSON = appGen.getJSON();
-          console.log(this.generatedJSON);
           return this.renderFinalize();
         }
 

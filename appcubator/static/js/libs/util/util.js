@@ -14,13 +14,11 @@ define(['jquery'], function() {
 
     assert : function(inp) {
       if(!inp) {
-        console.trace();
         alert('Important Error!');
       }
     },
 
     setCursor: function(node,pos){
-      console.log(node);
       var node = (typeof node == "string" ||
         node instanceof String) ? document.getElementById(node) : node;
       if(!node){
@@ -204,7 +202,6 @@ define(['jquery'], function() {
     },
 
     getDisplayType: function (fieldType) {
-      console.log(fieldType);
       switch(fieldType) {
         case "text":
         case "date":
