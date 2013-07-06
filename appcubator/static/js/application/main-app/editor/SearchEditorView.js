@@ -30,7 +30,7 @@ define([
             '</div>');
 
           v1State.get('pages').each(function(pageM) {
-            var selected = (pageM.get('name')) == this.model.get('searchPage')? 'selected' : '';
+            var selected = ("internal://" + pageM.get('name')) == this.model.get('searchPage')? 'selected' : '';
             this.$el.find('.search-direct').append('<option value="internal://'+ pageM.get('name') +'" '+selected+'>'+ pageM.get('name') +'</option>');
           }, this);
 

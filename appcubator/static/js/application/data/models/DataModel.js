@@ -36,6 +36,11 @@ function(ContentModel,
       if(json.container_info) {
         json.container_info = this.get('container_info').toJSON();
       }
+
+      if(json.searchQuery) {
+        json.searchQuery = this.get('searchQuery').toJSON();
+      }
+
       return json;
     }
   });
