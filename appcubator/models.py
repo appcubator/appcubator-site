@@ -279,6 +279,7 @@ class App(models.Model):
         if r.status_code == 200:
             result = {}
             response_content = r.json()
+            print response_content
             try:
                 self.deployment_id = response_content['deployment_id']
                 self.save()
