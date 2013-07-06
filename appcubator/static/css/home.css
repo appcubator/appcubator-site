@@ -829,7 +829,7 @@ img.logo {
 }
 
 
-@media (max-width: 680px) {
+@media (max-width: 928px) {
   .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
     width: 100%;
     padding-left: 10px;
@@ -970,6 +970,10 @@ img.logo {
   .slide2, .slide3, .slide-last {
     margin-left: 20px;
     margin-right: 20px;
+  }
+
+  .slide-last {
+    margin-bottom: 120px;
   }
 
   .slide2 .row, .pricing li {
