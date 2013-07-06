@@ -235,6 +235,8 @@ ul.action li:hover .add-to-list {
   overflow: hidden;
   top: 64px;
   left: 720px;
+  overflow-y: scroll;
+  padding-bottom: 90px;
 }
 
 .field-li-item {

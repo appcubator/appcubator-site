@@ -97,16 +97,17 @@ function(
       });
 
       entity.get('fields').each(function(field) {
+        console.log(field);
         if(field.get('entity_name') == "User") {
           var nlDescr = "Add to CurrentUser." + field.get('related_name');
           var action = { "type": "relation",
-                         "set_fk": "this." + field.get('name'),
+                         "set_fk": "Form." + this.get('entity') + '.' + field.get('name'),
                          "to_object": "CurrentUser",
                          "nl_description": nlDescr};
           possibleActions.push(action);
         }
-      });
-
+      }, this);
+      console.log(this.entity);
       return possibleActions;
     },
 
