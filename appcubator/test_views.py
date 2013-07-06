@@ -148,15 +148,14 @@ def test_router(request):
 
 @csrf_exempt
 def run_remote_tests(request):
-	send_email("badcops@appcubator.com", "ilter@appcubator.com", "HEYOZ", "", "Hey buddy, I heard you committed some stuff.")
-	try:
+  try:
     email = request.POST['commits'][0]['author']['email']
     send_email("badcops@appcubator.com", "ilter@appcubator.com", "HEYO2", "", email)
-	except:
-		stror = "Unexpected error:", sys.exc_info()[0]
-		send_email("badcops@appcubator.com", "ilter@appcubator.com", "lulz", "", stror)
+    send_email("badcops@appcubator.com", email, "Your Sinful Past", "", "Hey buddy, I heard you committed some stuff.")
+  except Exception as inst:
+    stror = "Unexpected error:" + str(inst)
+    send_email("badcops@appcubator.com", "ilter@appcubator.com", "lulz", "", stror)
     print "Unexpected error:", sys.exc_info()[0]
-	
-	send_email("badcops@appcubator.com", email, "Your Sinful Past", "", "Hey buddy, I heard you committed some stuff.")
-	return HttpResponse("ok" + email)
+
+  return HttpResponse("ok")
 
