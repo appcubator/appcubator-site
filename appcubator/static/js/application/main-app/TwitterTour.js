@@ -110,7 +110,7 @@ function() {
      * Add Property btn
      */
     {
-      content: '<h3>Create a Field</h3><p>Every tweet contains a message, a text of the actual tweet. Let\'s add our first property, calling it <strong>Content</strong>, and giving it a type of <strong>Text</strong></p>',
+      content: '<h3>Create a Field</h3><p>Every tweet contains a message, a text of the actual tweet. Let\'s add our first property, calling it <strong>Content</strong>, and it gets a type of <strong>Text</strong> by default.</p>',
       bind: ['checkField'],
       checkField: function(tour, options, e) {
         if(e.keyCode !== 13) return;
