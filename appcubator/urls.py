@@ -116,7 +116,7 @@ urlpatterns += patterns('appcubator.test_views',
     url(r'^test/tables/$', 'test_tables'),
     url(r'^test/router/$', 'test_router'),
     url(r'^test/data/$',   'test_data'),
-    url(r'^test/run_tests/$', 'run_remote_tests'),
+    url(r'^test/run_tests/$', 'run_front_end_tests'),
 )
 
 urlpatterns += patterns('',

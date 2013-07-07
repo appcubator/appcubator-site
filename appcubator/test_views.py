@@ -18,7 +18,9 @@ from appcubator.email.sendgrid_email import send_email
 
 import sys
 import requests
-import re
+import shlex
+import subprocess
+import os
 
 
 def test_editor(request):
@@ -27,7 +29,7 @@ def test_editor(request):
 		test_user = User.objects.get(username="!@TEST__USER@!")
 	except User.DoesNotExist:
 		test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
-	else:
+	finally:
 		#delete all apps for user
 		App.objects.filter(owner=test_user).delete()
 		#create new test app
@@ -51,7 +53,7 @@ def test_tables(request):
 		test_user = User.objects.get(username="!@TEST__USER@!")
 	except User.DoesNotExist:
 		test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
-	else:
+	finally:
 		#delete all apps for user
 		App.objects.filter(owner=test_user).delete()
 		#create new test app
@@ -75,7 +77,7 @@ def test_formeditor(request):
 		test_user = User.objects.get(username="!@TEST__USER@!")
 	except User.DoesNotExist:
 		test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
-	else:
+	finally:
 		#delete all apps for user
 		App.objects.filter(owner=test_user).delete()
 		#create new test app
@@ -100,7 +102,7 @@ def test_thirdpartyforms(request):
 		test_user = User.objects.get(username="!@TEST__USER@!")
 	except User.DoesNotExist:
 		test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
-	else:
+	finally:
 		#delete all apps for user
 		App.objects.filter(owner=test_user).delete()
 		#create new test app
@@ -129,7 +131,7 @@ def test_router(request):
 		test_user = User.objects.get(username="!@TEST__USER@!")
 	except User.DoesNotExist:
 		test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
-	else:
+	finally:
 		#delete all apps for user
 		App.objects.filter(owner=test_user).delete()
 		#create new test app
@@ -149,13 +151,20 @@ def test_router(request):
 
 
 @csrf_exempt
-def run_remote_tests(request):
-  try:
+def run_front_end_tests(request, domain="staging.appcubator.com"):
+
+    #TODO(nkhadke): Pull repo first
     json = simplejson.loads(request.POST['payload'])
     email = json['commits'][0]['author']['email']
-    send_email("badcops@appcubator.com", email, "Whaddup?", "", "Hey Dawg, I heard you committed some stuff. I hope they pass the tests")
-  except Exception as inst:
-    stror = "Unexpected error:" + str(inst)
-    send_email("badcops@appcubator.com", "ilter@appcubator.com", "lulz", "", stror)
 
-  return HttpResponse("ok")
+    p = subprocess.Popen(shlex.split("/bin/bash run_tests.sh %s" % domain) ,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=os.path.join(os.path.dirname(__file__), '..'))
+    out, err = p.communicate()
+    retcode = p.wait()
+
+    from_email = "jeffdean@appcubator.com"
+    to_email = email
+    html = "Return Code: %s<br><br>Standard Out:<br>%s<br><br>Standard Error:<br>%s<br><br>" %(retcode, out, err)
+    send_email(from_email, to_email, "Front End Tests", "", html)
+
+    return HttpResponse("ok")
