@@ -2,8 +2,7 @@ define([
   'collections/EmailCollection',
   'models/EmailModel',
   'app/EmailView',
-  'mixins/BackboneNameBox',
-  'util'
+  'mixins/BackboneNameBox'
 ],
 function(EmailCollection, EmailModel, EmailView) {
 

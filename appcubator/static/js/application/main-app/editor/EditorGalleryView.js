@@ -19,7 +19,10 @@ define([
       positionHorizontalGrid : 80,
       positionVerticalGrid   : 15,
 
-      events : { },
+      events : {
+        'mouseover .bottom-arrow' : 'slideDown',
+        'mousemove .bottom-arrow' : 'slideDown'
+      },
 
       initialize   : function(widgetsCollection) {
        _.bindAll(this);
@@ -42,6 +45,11 @@ define([
       this.renderEntitiyFormsTablesLists();
       this.renderContextEntityForms();
       this.renderUIElementList();
+
+      $(this.allList).append('<div class="bottom-arrow"></div>');
+      $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
+      $(this.allList).find('.bottom-arrow').on('mousemove', this.slideDown);
+
 
       $(this.allList).find('li:not(.ui-draggable)').draggable({
         cursor: "move",
@@ -450,6 +458,12 @@ define([
       }
 
       return type;
+    },
+
+    slideDown: function() {
+      var itemGallery = document.getElementById('item-gallery');
+      var h = $(itemGallery).scrollTop();
+      $(itemGallery).scrollTop(h + 14);
     }
 
   });

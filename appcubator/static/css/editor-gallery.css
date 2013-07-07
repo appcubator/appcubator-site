@@ -30,12 +30,27 @@
   border-top: 1px solid #3b4555;
 }
 
+.elements-list .bottom-arrow {
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  bottom:0;
+  right: 0;
+  display: inline-block;
+  border-top: 1px solid #3b4555;
+  background-color: #2b3545;
+  background-image: url(../img/bottom-arrow.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .item-gallery {
   width: 200px;
 
   height: 100%;
   right: 0;
   padding: 0;
+  padding-bottom: 42px;
   margin: 0;
   overflow: visible;
   overflow-y: scroll;
