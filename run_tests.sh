@@ -2,10 +2,9 @@
 # run_tests.sh
 host=$1
 echo "Running tests on $host"
-phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/editor/
-phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/router/
-phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/data/
-phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/formeditor/
-phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/tables/
-phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/thirdparty/
-
+xvfb-run phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/editor/
+xvfb-run phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/router/
+xvfb-run phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/data/
+xvfb-run phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/formeditor/
+xvfb-run phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/tables/
+xvfb-run phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/thirdparty/
