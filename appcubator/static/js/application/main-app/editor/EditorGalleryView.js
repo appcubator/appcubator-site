@@ -16,6 +16,9 @@ define([
       curId               : 'all-elements',
       dragActive          : false,
       css                 : 'editor-gallery',
+      positionHorizontalGrid : 80,
+      positionVerticalGrid   : 15,
+
       events : { },
 
       initialize   : function(widgetsCollection) {
@@ -382,7 +385,7 @@ define([
 
     findLeft: function(e, ui) {
       var offsetLeft = document.getElementById('elements-container').offsetLeft;
-      var left = Math.round((e.pageX - offsetLeft)/GRID_WIDTH);
+      var left = Math.round((e.pageX - offsetLeft)/this.positionHorizontalGrid);
       if(left < 0) left = 0;
       if(left + 4 > 12) left = 8;
 
@@ -391,7 +394,7 @@ define([
 
     findTop: function(e, ui) {
       var offsetScrolledTop = $('#elements-container').offset().top;
-      var top  = Math.round((e.pageY - offsetScrolledTop)/GRID_HEIGHT);
+      var top  = Math.round((e.pageY - offsetScrolledTop)/this.positionVerticalGrid);
       if(top < 0) top = 0;
 
       return top;

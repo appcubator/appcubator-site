@@ -143,7 +143,6 @@ define([
       var width = this.model.get('layout').get('width');
       if(this.positionHorizontalGrid == 80) this.el.className += " span" + width;
       else this.setWidth(width * this.positionHorizontalGrid);
-      //this.setLeft(GRID_WIDTH * (this.model.get('layout').get('left')));
     },
 
     changedAlignment: function() {

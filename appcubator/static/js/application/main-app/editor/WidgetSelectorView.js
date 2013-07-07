@@ -10,6 +10,9 @@ function() {
     selectedEl : null,
     isMobile : false,
 
+    positionHorizontalGrid : 80,
+    positionVerticalGrid   : 15,
+
     events : {
       'click #hover-div'     : 'hoverClicked',
       'click #select-div'    : 'doubleClicked',
@@ -183,10 +186,10 @@ function() {
     },
 
     resized: function(e, ui) {
-      var left = Math.round((ui.position.left / GRID_WIDTH));
-      var top  = Math.round((ui.position.top  / GRID_HEIGHT));
-      var deltaHeight = Math.round((ui.size.height + 2) / GRID_HEIGHT);
-      var deltaWidth = Math.round((ui.size.width + 2) / GRID_WIDTH);
+      var left = Math.round((ui.position.left / this.positionHorizontalGrid));
+      var top  = Math.round((ui.position.top  / this.positionVerticalGrid));
+      var deltaHeight = Math.round((ui.size.height + 2) / this.positionVerticalGrid);
+      var deltaWidth = Math.round((ui.size.width + 2) / this.positionHorizontalGrid);
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = '';
       elem.style.height = '';
@@ -202,10 +205,10 @@ function() {
       if(e.target.id == "hover-div") { model = this.hoveredEl; }
 
       g_guides.hideAll();
-      g_guides.showVertical(ui.position.left / GRID_WIDTH);
-      g_guides.showVertical(ui.position.left / GRID_WIDTH + model.get('layout').get('width'));
-      g_guides.showHorizontal(ui.position.top / GRID_HEIGHT);
-      g_guides.showHorizontal(ui.position.top / GRID_HEIGHT + model.get('layout').get('height'));
+      g_guides.showVertical(ui.position.left / this.positionVerticalGrid);
+      g_guides.showVertical(ui.position.left / this.positionVerticalGrid + model.get('layout').get('width'));
+      g_guides.showHorizontal(ui.position.top / this.positionHorizontalGrid);
+      g_guides.showHorizontal(ui.position.top / this.positionHorizontalGrid + model.get('layout').get('height'));
 
       var elem = util.get('widget-wrapper-' + model.cid);
       elem.style.top = ui.position.top + 2 + 'px';
@@ -218,8 +221,8 @@ function() {
       model = this.selectedEl;
       if(e.target.id == "hover-div") { model = this.hoveredEl; }
 
-      var top = Math.round((ui.position.top / GRID_HEIGHT));
-      var left = Math.round((ui.position.left / GRID_WIDTH));
+      var top = Math.round((ui.position.top / this.positionVerticalGrid));
+      var left = Math.round((ui.position.left / this.positionHorizontalGrid));
 
       if(model.get('layout').get('left') == left) {
         model.get('layout').trigger('change:left');

@@ -9,6 +9,7 @@ function(LinkEditorView) {
     className : 'navbar-editor-modal',
     width: 600,
     padding: 0,
+
     events: {
       'click .done-btn' : 'closeModal',
       'click .add-link' : 'addLinkEditorClicked',
@@ -82,17 +83,6 @@ function(LinkEditorView) {
       if(newBrandName) {
         this.model.set('brandName', newBrandName);
       }
-    },
-
-    resizing: function(e, ui) {
-      var dHeight = (ui.size.height + 2) / GRID_HEIGHT;
-      var dWidth = (ui.size.width + 2) / GRID_WIDTH;
-
-      var deltaHeight = Math.round((ui.size.height + 2) / GRID_HEIGHT);
-      var deltaWidth = Math.round((ui.size.width + 2) / GRID_WIDTH);
-
-      this.rowModel.get('layout').set('width', deltaWidth);
-      this.rowModel.get('layout').set('height', deltaHeight);
     },
 
     cancelSubmit: function() {

@@ -12,6 +12,8 @@ function(WidgetModel) {
     horizontalLinesDict: {},
     verticalLinesDict: {},
     show: false,
+    positionHorizontalGrid : 80,
+    positionVerticalGrid   : 15,
 
     initialize: function(widgetsCollection) {
       _.bindAll(this);
@@ -39,7 +41,7 @@ function(WidgetModel) {
 
       var line = document.createElement('div');
       line.className = 'guide-line-horizontal';
-      line.style.top = (nmr * GRID_HEIGHT) + 'px';
+      line.style.top = (nmr * this.positionVerticalGrid) + 'px';
 
       this.horizontalLinesDict[nmr] = line;
       this.$el.append(line);
@@ -50,7 +52,7 @@ function(WidgetModel) {
 
       var line = document.createElement('div');
       line.className = 'guide-line-vertical';
-      line.style.left = (nmr * GRID_WIDTH) + 'px';
+      line.style.left = (nmr * this.positionHorizontalGrid) + 'px';
 
       this.verticalLinesDict[nmr] = line;
       this.$el.append(line);

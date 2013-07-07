@@ -16,6 +16,10 @@ function( QueryEditorView,
     tagName : 'div',
     entity: null,
     type: null,
+
+    positionHorizontalGrid : 80,
+    positionVerticalGrid   : 15,
+
     events: {
       'click .delete' : 'remove',
       'dblclick'      : 'showDetails',
@@ -52,8 +56,8 @@ function( QueryEditorView,
       var width = this.model.get('layout').get('width');
       var height = this.model.get('layout').get('height');
 
-      this.setTop(GRID_HEIGHT * this.model.get('layout').get('top'));
-      this.setLeft(GRID_WIDTH * this.model.get('layout').get('left'));
+      this.setTop(this.positionVerticalGrid * this.model.get('layout').get('top'));
+      this.setLeft(this.positionHorizontalGrid * this.model.get('layout').get('left'));
       this.setHeight(height * GRID_HEIGHT);
 
       this.el.className += ' widget-wrapper span'+width;
