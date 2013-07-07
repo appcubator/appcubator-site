@@ -110,7 +110,7 @@ function(SelectView) {
       var hash     = 'content_attribs' + '-' + 'style';
       var sizeSelect = new comp().select('').id(hash).classN('font-picker');
 
-      _(['default', '10px', '14px', '16px', '18px', '20px']).each(function(val) {
+      _(['default', '10px', '14px', '16px', '18px', '20px', '32px', '36px','48px', '72px']).each(function(val) {
         sizeSelect.option(val).valProp('font-size:' + val + ';');
       });
 
