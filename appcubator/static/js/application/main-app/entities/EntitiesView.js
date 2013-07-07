@@ -25,9 +25,9 @@ function(TableCollection,
       title: 'Tables',
       events : {
         'click #add-role'        : 'clickedAddUserRole',
-        'keyup #add-role-form'   : 'createUserRole',
+        'submit #add-role-form'   : 'createUserRole',
         'click #add-entity'      : 'clickedAddTable',
-        'keyup #add-entity-form' : 'createTable',
+        'submit #add-entity-form' : 'createTable',
         'click #add-relation'    : 'showCreateRelationForm',
         'click .related-tag'     : 'scrollToRelation'
       },
@@ -69,38 +69,32 @@ function(TableCollection,
       },
 
       createUserRole: function(e) {
-        // if escape key pressed, skip to hiding form/showing btn
-        if(e.keyCode !== 27) {
-          // only save if enter button is pressed
-          if(e.keyCode !== 13) {
-            return;
-          }
-          var name = e.target.value;
-          var elem = new UserTableModel({
-            name: name
-          });
+        var name = e.target.value;
+        var elem = new UserTableModel({
+          name: name
+        });
 
-          if(!v1State.get('users').isNameUnique(name)) {
-            new ErrorDialogueView({text: 'Page name should be unique.'});
-            return;
-          }
-          if(!util.isAlphaNumeric(name)){
-            new ErrorDialogueView({text: 'Page name should be alphanumberic.'});
-            return;
-          }
-          if(util.doesStartWithKeywords(name)){
-            new ErrorDialogueView({text: 'Page name should not start with "Page", "Form" or "loop".'});
-            return;
-          }
-          v1State.get('users').add(elem);
-          return elem;
+        if(!v1State.get('users').isNameUnique(name)) {
+          new ErrorDialogueView({text: 'Page name should be unique.'});
+          return;
         }
+        if(!util.isAlphaNumeric(name)){
+          new ErrorDialogueView({text: 'Page name should be alphanumberic.'});
+          return;
+        }
+        if(util.doesStartWithKeywords(name)){
+          new ErrorDialogueView({text: 'Page name should not start with "Page", "Form" or "loop".'});
+          return;
+        }
+
+        v1State.get('users').add(elem);
 
         e.target.value = '';
         $('#add-role').fadeIn();
         $(e.target).hide();
 
         e.preventDefault();
+        return elem;
       },
 
       clickedAddTable: function(e) {
