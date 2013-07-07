@@ -10,7 +10,7 @@ var FieldTypes = {
   "button"           : '<div class="btn"><%= field.get(\'placeholder\') %></div>',
   "image-uploader"   : '<div class="upload-image btn">Upload Image</div>',
   "file-uploader"    : '<div class="upload-file btn">Upload File</div>',
-  "date-picker"      : '<input type="text" style="width:40px;" placeholder="mm">/<input type="text" style="width:40px;" placeholder="dd">/<input type="text" style="width:60px;" placeholder="yyyy">'
+  "date-picker"      : '<input type="text" placeholder="<%= field.get(\'placeholder\') %>"><img style="margin-left:5px;" src="/static/img/calendar-icon.png">'
 };
 
 

@@ -134,8 +134,9 @@ var FieldTypes = {
   "button"           : '<input type="submit" class="btn" value="<%= field.get(\'placeholder\') %>">',
   "image-uploader"   : '<div class="upload-image btn">Upload Image</div>',
   "file-uploader"    : '<div class="upload-file btn">Upload File</div>',
-  "date-picker"      : '<input type="text" placeholder="<%= field.get(\'placeholder\') %>">'
+  "date-picker"      : '<div class="date-picker-wrapper"><input type="text" placeholder="<%= field.get(\'placeholder\') %>"><img class="date-picker-icon" style="margin-left:5px;" src="/static/img/calendar-icon.png"></div>'
 };
+
 
 Templates.fieldNode = [
 '<label><%= field.get(\'label\') %></label>',
