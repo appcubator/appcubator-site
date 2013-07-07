@@ -302,15 +302,15 @@ class App(models.Model):
 
     def delete(self, *args, **kwargs):
         try:
-            post_data = {"u_name": self.u_name()}
-            r = requests.post(
-                "http://%s/deployment/delete/" % settings.DEPLOYMENT_HOSTNAME, post_data)
+            r = requests.delete("http://%s/deployment/%s/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
 
         except Exception:
             print "Warning: could not reach appcubator server."
         else:
             if r.status_code != 200:
                 print "Error: appcubator could not delete the deployment. Plz do it manually."
+                print "deployment id: %r" % self.deployment_id
+                print r.content
         finally:
             super(App, self).delete(*args, **kwargs)
 
