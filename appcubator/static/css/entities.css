@@ -181,7 +181,8 @@ input[type="checkbox"] {
 .add-property-form {
   text-align: center;
 }
-.tbl-wrapper .done-btn {
+.tbl-wrapper .done-btn,
+.new-table-form .done-btn {
  font-size: 10px;
   background-color: #036a6e;
   color: #fff;
@@ -197,8 +198,13 @@ input[type="checkbox"] {
   margin-top: 6px;
 }
 
+.new-table-form input {
+  vertical-align: top;
+}
 
-
+.new-table-form input[type="text"] {
+  height: 45px;
+}
 
 .tbl {
   display: block;
@@ -727,5 +733,5 @@ table tr:hover td {
 .trash .icon {
   background-image: url(../img/delete-icon.png);
   background-repeat: no-repeat;
-  background-size: 40px 35px;
+  background-size: 38px 35px;
 }

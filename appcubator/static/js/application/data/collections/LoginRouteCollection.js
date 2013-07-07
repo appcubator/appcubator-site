@@ -6,7 +6,6 @@ function() {
   var LoginRouteCollection = Backbone.Collection.extend({
 
     initialize: function() {
-      _.bindAll(this);
       v1State.get('users').bind('change add remove', this.reorganize, this);
     },
 

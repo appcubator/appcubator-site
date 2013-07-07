@@ -5036,6 +5036,11 @@ hr.vert {
     border-left: 1px solid rgba(255, 255, 255, 0.8);
   }
 
+  .v1nav .navigation-menu li:active {
+    box-shadow: inset 0px 0px 4px 0 rgba(160, 160, 160, 0.4);
+  }
+
+
   .v1nav .nav .dropdown-menu li {
     border-left: none;
     border-right: none;
@@ -5083,7 +5088,6 @@ hr.vert {
   }
 
   .v1nav .nav .dropdown-menu li:hover {
-    box-shadow: none;
     background-image: none;
   }
 
@@ -5517,7 +5521,6 @@ i.icon-url {
 
 .v1nav .navigation-menu li:hover {
   max-width: 170px !important;
-  box-shadow: none;
 }
 
 .navigation-menu:hover li.active  {

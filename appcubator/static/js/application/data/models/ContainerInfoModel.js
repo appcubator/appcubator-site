@@ -19,8 +19,6 @@ function(QueryModel,
 
   var ContainerInfoModel = Backbone.Model.extend({
     initialize: function(bone) {
-      _.bindAll(this);
-
       if(bone.uielements) {
         var WidgetCollection = require('collections/WidgetCollection');
         this.set('uielements', new WidgetCollection(bone.uielements||[]));

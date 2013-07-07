@@ -9,7 +9,6 @@ function( WidgetModel,
 
     initialize: function(bone, isNew) {
       WidgetContainerModel.__super__.initialize.call(this, bone, isNew);
-      _.bindAll(this);
     },
 
     createLoginRoutes: function() {
