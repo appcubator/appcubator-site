@@ -11,8 +11,6 @@ function(DataModel, LayoutModel) {
     editMode: false,
 
     initialize: function(bone, isNew) {
-      _.bindAll(this);
-
       this.set('type', bone.type||'');
       this.set('layout', new LayoutModel(this.get('layout')));
       this.set('data', new DataModel(bone.data||{}, isNew));

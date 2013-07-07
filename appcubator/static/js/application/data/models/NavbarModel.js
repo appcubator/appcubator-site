@@ -15,7 +15,6 @@ function(LinkCollection) {
       this.set('links', new LinkCollection(bone.links));
       this.links = this.get('links');
 
-      _.bindAll(this);
     },
 
     getLinks: function() {

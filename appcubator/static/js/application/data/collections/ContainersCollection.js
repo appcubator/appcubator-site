@@ -11,7 +11,7 @@ function(WidgetContainerModel,
     selectedEl: null,
 
     initialize: function() {
-      _.bindAll(this);
+
     },
 
     unselectAll: function() {
