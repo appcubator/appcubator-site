@@ -188,6 +188,8 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
     reRenderDisplayType: function() {
       var field = this.selected;
+      console.log(field);
+      console.log(field.get('options').split(','));
       $('#field-'+ field.cid).find('.form-item').html(_.template(FieldTypes[field.get('displayType')], {field: field, value: ""}));
     },
 
@@ -233,8 +235,8 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     },
 
     changedOptions: function(e) {
-      var options = String(this.$el.find('.options-input').val()).trim().split(',');
-      this.selected.set('options', options);
+      var value = String(this.$el.find('.options-input').val()).trim();
+      this.selected.set('options', value);
       e.stopPropagation();
     },
 

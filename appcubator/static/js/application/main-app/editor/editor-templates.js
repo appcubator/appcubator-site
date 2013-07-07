@@ -127,8 +127,8 @@ Templates.formButton = [
 var FieldTypes = {
   "single-line-text" : '<input type="text" class="" placeholder="<%= field.get(\'placeholder\') %>">',
   "paragraph-text"   : '<textarea class="" placeholder="<%= field.get(\'placeholder\') %>"></textarea>',
-  "dropdown"         : '<select class="drowdown"><% _(field.get(\'options\')).each(function(option, ind){ %><option><%= option %><% }); %></option>',
-  "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\')).each(function(option, ind){ %><label for="opt-<%= ind %>"></label><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value="single-line-text"><%= option %><% }); %></span>',
+  "dropdown"         : '<select class="drowdown"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><option><%= option %><% }); %></option>',
+  "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><label for="opt-<%= ind %>"></label><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value="single-line-text"><%= option %><% }); %></span>',
   "password-text"    : '<input type="password" class="password" placeholder="<%= field.get(\'placeholder\') %>">',
   "email-text"       : '<input type="text" class="email" placeholder="<%= field.get(\'placeholder\') %>">',
   "button"           : '<input type="submit" class="btn" value="<%= field.get(\'placeholder\') %>">',

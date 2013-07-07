@@ -48,6 +48,7 @@ function(
                                displayType: "single-line-text",
                                type: type,
                                label: fieldModel.get('name'),
+                               options: "",
                                placeholder: fieldModel.get('name') };
 
         if(type == "fk"||type == "m2m"||type == "o2o") { return; }
