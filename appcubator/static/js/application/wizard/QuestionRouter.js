@@ -28,7 +28,7 @@ define([
       askQuestion: function(qKey, args, isLast) {
         if(!qKey || !args.length) {
           // # python ... do you speak it?
-          utils.log_to_server('answers', { answers_dict: JSON.stringify(this.answersDict) }, appId);
+          util.log_to_server('answers', { answers_dict: JSON.stringify(this.answersDict) }, appId);
           var appGen = new AppGenerator(this.answersDict);
           this.generatedJSON = appGen.getJSON();
           return this.renderFinalize();

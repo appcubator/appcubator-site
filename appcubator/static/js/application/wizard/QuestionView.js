@@ -121,7 +121,7 @@ function() {
 
     answerUpload: function(files, self) {
       self.answerSend(files[0].url);
-      self.$el.append("<img src='"+files[0].url+"' width='200'>");
+      self.$el.append("<img class='answer-img' src='"+files[0].url+"'>");
     },
 
     skipAnswer: function() {

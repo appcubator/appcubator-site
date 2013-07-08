@@ -216,7 +216,8 @@ function(WidgetModel,
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "searchlist";
         widget.data.container_info.row = {};
-        widget.data.container_info.query = {};
+        widget.data.container_info.search = {};
+       // widget.data.container_info.query = {};
 
         var widgetContainerModel = new WidgetContainerModel(widget);
         return this.push(widgetContainerModel);

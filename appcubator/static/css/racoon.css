@@ -1,5 +1,5 @@
 body {
-  font-family: 'Open Sans', serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 h1, h2, h3, h4 {
@@ -62,7 +62,8 @@ font-size: 18px;
   border: 1px solid #d7d8d9;
   border-top: 1px solid #f7f8f9;
   padding: 28px;
-  min-height: 80px;
+  min-height: 160px;
+  position: relative;
 }
 
 .question p {
@@ -404,4 +405,24 @@ input.multi-answer-input {
 
 .btn-info {
   vertical-align: top;
+}
+
+.answer {
+  vertical-align: top;
+}
+
+.answer-img { 
+  position: absolute;
+  right: 40px;
+  top: 40px;
+  max-height: 100px
+}
+
+p.not-available { 
+font-size: 10px;
+text-align: center;
+vertical-align: top;
+height: 12px;
+padding-left: 30px;
+margin-top: -16px;
 }
