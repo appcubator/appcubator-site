@@ -151,9 +151,14 @@ def test_router(request):
 
 
 @csrf_exempt
-def run_front_end_tests(request, domain="staging.appcubator.com"):
+def run_front_end_tests(request, domain="staging.appcubator.com", branch="staging"):
 
-    #TODO(nkhadke): Pull repo first
+    p = subprocess.Popen(shlex.split("git pull origin %s" % branch) ,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=os.path.join(os.path.dirname(__file__), '..'))
+    out, err = p.communicate()
+    retcode = p.wait()
+    html = "<b>Git Pull Information</b><br><br>Return Code: %s<br><br>Standard Out:<br>%s<br><br>Standard Error:<br>%s<br><br>" %(retcode, out, err)
+
     json = simplejson.loads(request.POST['payload'])
     email = json['commits'][0]['author']['email']
 
@@ -164,7 +169,7 @@ def run_front_end_tests(request, domain="staging.appcubator.com"):
 
     from_email = "jeffdean@appcubator.com"
     to_email = email
-    html = "Return Code: %s<br><br>Standard Out:<br>%s<br><br>Standard Error:<br>%s<br><br>" %(retcode, out, err)
+    html += "<b>Test Information</b><br><br>Return Code: %s<br><br>Standard Out:<br>%s<br><br>Standard Error:<br>%s<br><br>" %(retcode, out, err)
     send_email(from_email, to_email, "Front End Tests", "", html)
 
     return HttpResponse("ok")
