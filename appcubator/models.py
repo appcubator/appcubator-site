@@ -273,7 +273,7 @@ class App(models.Model):
             if self.deployment_id is None:
                 r = requests.post("http://%s/deployment/" % settings.DEPLOYMENT_HOSTNAME, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
             else:
-                r = requests.post("http://%s/deployment/%s/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
+                r = requests.post("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
 
         finally:
             f.close()
@@ -307,7 +307,7 @@ class App(models.Model):
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:
             try:
-                r = requests.delete("http://%s/deployment/%s/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
+                r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
 
             except Exception:
                 logger.error("Could not reach appcubator server.")
