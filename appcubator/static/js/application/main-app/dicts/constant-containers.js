@@ -30,7 +30,7 @@ var constantContainers = {
                         "label": "Username",
                         "displayType": "single-line-text",
                         "type": "text",
-                        "options": []
+                        "options": ''
                     },
                     {
                         "name": "password",
@@ -38,7 +38,7 @@ var constantContainers = {
                         "label": "Password",
                         "displayType": "password-text",
                         "type": "password",
-                        "options": []
+                        "options": ''
                     },
                     {
                         "placeholder": "Login",
@@ -59,7 +59,7 @@ var constantContainers = {
                         "label": "Username",
                         "displayType": "single-line-text",
                         "type": "text",
-                        "options": []
+                        "options": ''
                     },
                     {
                         "name": "password1",
@@ -67,7 +67,7 @@ var constantContainers = {
                         "label": "Password",
                         "displayType": "password-text",
                         "type": "password",
-                        "options": []
+                        "options": ''
                     },
                     {
                         "name": "password2",
@@ -75,7 +75,7 @@ var constantContainers = {
                         "label": "Confirm Password",
                         "displayType": "password-text",
                         "type": "password",
-                        "options": []
+                        "options": ''
                     },
                     {
                         "field_name": "Email",
@@ -83,7 +83,7 @@ var constantContainers = {
                         "label": "Email Address",
                         "displayType": "email-text",
                         "type": "email",
-                        "options": []
+                        "options": ''
                     },
                     {
                         "placeholder": "Sign Up",
