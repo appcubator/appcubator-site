@@ -286,8 +286,9 @@ function() {
       if(!this.selectedEl) return;
       if(keyDispatcher.textEditing === true) return;
       if(this.selectedEl.getRow() && this.selectedEl.editMode === true) return;
-      e.preventDefault();
+
       this.selectedEl.remove();
+      e.preventDefault();
     },
 
     doKeyBindings: function() {

@@ -4,7 +4,7 @@ var FieldTypes = {
   "single-line-text" : '<input type="text" placeholder="<%= field.get(\'placeholder\') %>" disabled>',
   "paragraph-text"   : '<textarea placeholder="<%= field.get(\'placeholder\') %>" disabled></textarea>',
   "dropdown"         : '<select class="drowdown"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><option><%= option %></option><% }); %></select>',
-  "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value="single-line-text"><label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
+  "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value=""> <label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
   "password-text"    : '<input type="password" placeholder="<%= field.get(\'placeholder\') %>">',
   "email-text"       : '<div class="email"><input type="text" placeholder="<%= field.get(\'placeholder\') %>"></div>',
   "button"           : '<div class="btn"><%= field.get(\'placeholder\') %></div>',

@@ -120,6 +120,7 @@ function(DataModel, LayoutModel) {
     },
 
     getRow: function() {
+      if(!this.get('data').has('container_info')) return null;
       return this.get('data').get('container_info').get('row');
     },
 
