@@ -63,6 +63,7 @@ font-size: 18px;
   border-top: 1px solid #f7f8f9;
   padding: 28px;
   min-height: 80px;
+  position: relative;
 }
 
 .question p {
@@ -404,4 +405,23 @@ input.multi-answer-input {
 
 .btn-info {
   vertical-align: top;
+}
+
+.answer {
+  vertical-align: top;
+}
+
+.answer-img { 
+  position: absolute;
+  right: 40px;
+  top: 50px;
+}
+
+p.not-available { 
+font-size: 10px;
+text-align: center;
+vertical-align: top;
+height: 12px;
+padding-left: 30px;
+margin-top: -16px;
 }
