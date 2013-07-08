@@ -127,14 +127,14 @@ Templates.formButton = [
 var FieldTypes = {
   "single-line-text" : '<input type="text" class="" placeholder="<%= field.get(\'placeholder\') %>">',
   "paragraph-text"   : '<textarea class="" placeholder="<%= field.get(\'placeholder\') %>"></textarea>',
-  "dropdown"         : '<select class="drowdown"><% _(field.get(\'options\')).each(function(option, ind){ %><option><%= option %><% }); %></option>',
-  "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\')).each(function(option, ind){ %><label for="opt-<%= ind %>"></label><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value="single-line-text"><%= option %><% }); %></span>',
+  "dropdown"         : '<select class="drowdown"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><option><%= option %><% }); %></option>',
+  "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><label for="opt-<%= ind %>"></label><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value="single-line-text"><%= option %><% }); %></span>',
   "password-text"    : '<input type="password" class="password" placeholder="<%= field.get(\'placeholder\') %>">',
   "email-text"       : '<input type="text" class="email" placeholder="<%= field.get(\'placeholder\') %>">',
   "button"           : '<input type="submit" class="btn" value="<%= field.get(\'placeholder\') %>">',
   "image-uploader"   : '<div class="upload-image btn">Upload Image</div>',
   "file-uploader"    : '<div class="upload-file btn">Upload File</div>',
-  "date-picker"      : '<div class="date-picker-wrapper"><input type="text" placeholder="<%= field.get(\'placeholder\') %>"><img class="date-picker-icon" src="/static/img/calendar-icon.png"></div>'
+  "date-picker"      : '<div class="date-picker-wrapper"><input type="text" placeholder="<%= field.get(\'placeholder\') %>"><img class="date-picker-icon"></div>'
 };
 
 

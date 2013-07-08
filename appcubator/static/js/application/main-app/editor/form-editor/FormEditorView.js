@@ -160,7 +160,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       this.$el.find('.details-panel').hide();
 
       this.$el.find('.details-panel').html(html);
-      if(fieldModel.get('displayType') == "option-boxes") {
+      if(fieldModel.get('displayType') == "option-boxes" || fieldModel.get('displayType') == "dropdown") {
         curOptions = fieldModel.get('options');
         this.$el.find('.options-list').append('<b>Options</b><input class="options-input" placeholder="E.g. Cars,Birds,Trains..." type="text" value="' + curOptions + '">');
       }
@@ -188,6 +188,8 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
     reRenderDisplayType: function() {
       var field = this.selected;
+      console.log(field);
+      console.log(field.get('options').split(','));
       $('#field-'+ field.cid).find('.form-item').html(_.template(FieldTypes[field.get('displayType')], {field: field, value: ""}));
     },
 
@@ -233,15 +235,13 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     },
 
     changedOptions: function(e) {
-      var options = String(this.$el.find('.options-input').val()).split(',');
-      this.selected.set('options', options);
+      var value = String(this.$el.find('.options-input').val()).trim();
+      this.selected.set('options', value);
       e.stopPropagation();
     },
 
     changedOrder:function(e, ui) {
       var sortedIDs = $( '.form-fields-list' ).sortable( "toArray" );
-
-      console.log(sortedIDs);
 
       var submitBtn = _.last(this.model.get('fields').models);
       this.model.get('fields').remove(submitBtn, {silent: true});
