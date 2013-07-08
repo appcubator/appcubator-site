@@ -241,6 +241,7 @@ def app_save_state(request, app, require_valid=True):
     try:
         a = AnalyzedApp.create_from_dict(app.state)
     except analyzer.UserInputError, e:
+        app.save()
         return (400, e.to_dict())
     # raise on normal exceptions.
     else:

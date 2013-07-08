@@ -20,6 +20,9 @@ import random
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
     __file__), os.path.normpath("default_state"))
 
+import logging
+logger = logging.getLogger('appcubator.models')
+
 
 # ADDITIONAL USER DATA CAN BE STORED HERE
 class ExtraUserData(models.Model):
@@ -222,9 +225,9 @@ class App(models.Model):
             filenames = os.listdir(tmpdir)
             p = subprocess.Popen(shlex.split("/usr/bin/zip -r zipfile.zip %s" % ' '.join(filenames)), stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=tmpdir)
             out, err = p.communicate()
-            #print "%s\n%s" % (("out", "err"), (out, err))
+            logger.debug("%s\n%s" % (("out", "err"), (out, err)))
             retcode = p.wait()
-            #print "ZIP: %d" % retcode
+            logger.debug("Command exited with return code %d" % retcode)
             return os.path.join(tmpdir, 'zipfile.zip')
 
         return zipify(tmpdir)
@@ -279,7 +282,7 @@ class App(models.Model):
         if r.status_code == 200:
             result = {}
             response_content = r.json()
-            print response_content
+            logger.debug("Deployment response content: %r" % response_content)
             try:
                 self.deployment_id = response_content['deployment_id']
                 self.save()
@@ -293,6 +296,7 @@ class App(models.Model):
 
         elif r.status_code == 404:
             assert retry_on_404
+            logger.warn("The deployment was not found, so I'm setting deployment id to None")
             self.deployment_id = None
             self.save()
             return self.deploy(retry_on_404=False)
@@ -301,18 +305,16 @@ class App(models.Model):
           return {'errors': r.content}
 
     def delete(self, *args, **kwargs):
-        try:
-            r = requests.delete("http://%s/deployment/%s/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
+        if self.deployment_id is not None:
+            try:
+                r = requests.delete("http://%s/deployment/%s/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
 
-        except Exception:
-            print "Warning: could not reach appcubator server."
-        else:
-            if r.status_code != 200:
-                print "Error: appcubator could not delete the deployment. Plz do it manually."
-                print "deployment id: %r" % self.deployment_id
-                print r.content
-        finally:
-            super(App, self).delete(*args, **kwargs)
+            except Exception:
+                logger.error("Could not reach appcubator server.")
+            else:
+                if r.status_code != 200:
+                    logger.error("Tried to delete %d, Deployment server returned bad response: %d %r" % (self.deployment_id, r.status_code, r.text))
+        super(App, self).delete(*args, **kwargs)
 
 
 class UITheme(models.Model):
