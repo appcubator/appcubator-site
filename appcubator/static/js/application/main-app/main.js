@@ -108,10 +108,12 @@ function (AppModel,
     Backbone.history.start({pushState: true});
 
     if(v1State.has('walkthrough')) {
-      //v1.navigate('/app/'+appId+'/', {trigger: true});
       require(['app/TwitterTour'], function(QuickTour) {
-        //window.QuickTour = QuickTour;
-        QuickTour.start();
+        var url = QuickTour.currentStep.url;
+        v1.navigate('app/'+appId+url, {trigger: true});
+        setTimeout(function() {
+          QuickTour.start();
+        }, 1000);
       });
     }
 
