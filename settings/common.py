@@ -132,6 +132,9 @@ LOGGING = {
         },
     },
     'filters': {
+      'require_debug_false': {
+        '()': 'django.utils.log.RequireDebugFalse',
+      }
     },
     'handlers': {
         'null': {
@@ -146,19 +149,18 @@ LOGGING = {
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
-            'filters': []
+            'filters': ['require_debug_false'],
         }
     },
     'loggers': {
-        'django': {
-            'handlers':['null'],
-            'propagate': True,
-            'level':'INFO',
-        },
         'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
+            'handlers': ['mail_admins', 'console'],
+            'level': 'DEBUG',
             'propagate': False,
+        },
+        'app_builder': {
+            'handlers': ['console'],
+            'level': 'ERROR'
         },
     }
 }
