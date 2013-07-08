@@ -103,7 +103,7 @@ class App(models.Model):
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
     _mobile_uie_state_json = models.TextField(blank=True, default=get_default_mobile_uie_state)
 
-    deployment_id = models.IntegerField(blank=True, null=True, default=None)
+    deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
 
     def save(self, *args, **kwargs):
         if self.subdomain == '':
