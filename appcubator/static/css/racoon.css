@@ -62,7 +62,7 @@ font-size: 18px;
   border: 1px solid #d7d8d9;
   border-top: 1px solid #f7f8f9;
   padding: 28px;
-  min-height: 80px;
+  min-height: 160px;
   position: relative;
 }
 
@@ -414,7 +414,8 @@ input.multi-answer-input {
 .answer-img { 
   position: absolute;
   right: 40px;
-  top: 50px;
+  top: 40px;
+  max-height: 100px
 }
 
 p.not-available { 
