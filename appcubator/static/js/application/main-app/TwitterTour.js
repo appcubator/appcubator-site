@@ -240,34 +240,34 @@ function() {
         v1State.attributes.walkthrough++;
       }
     },
-    {
-      content: '<h3>Time to Make it Look Good</h3><p>Click here and go to Themes page.</p>',
-      my: "top center",
-      at: "bottom center",
-      target: $('.menu-app-themes'),
-      url: '/tables/',
-      setup: function(tour, options) {
-        v1.bind('themes-loaded', function() {
-          tour.next();
-        });
-      },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
-      content: '<h3>Theme</h3><p>We have a variety of themes here. Pick the one you like the most and click the "Load Theme" button.',
-      my: "left center",
-      at: "right center",
-      nextButton: true,
-      url: '/gallery/',
-      setup: function() {
-        return { target: $('#themes-title') };
-      },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
-      }
-    },
+    // {
+    //   content: '<h3>Time to Make it Look Good</h3><p>Click here and go to Themes page.</p>',
+    //   my: "top center",
+    //   at: "bottom center",
+    //   target: $('.menu-app-themes'),
+    //   url: '/tables/',
+    //   setup: function(tour, options) {
+    //     v1.bind('themes-loaded', function() {
+    //       tour.next();
+    //     });
+    //   },
+    //   teardown: function() {
+    //     v1State.attributes.walkthrough++;
+    //   }
+    // },
+    // {
+    //   content: '<h3>Theme</h3><p>We have a variety of themes here. Pick the one you like the most and click the "Load Theme" button.',
+    //   my: "left center",
+    //   at: "right center",
+    //   nextButton: true,
+    //   url: '/gallery/',
+    //   setup: function() {
+    //     return { target: $('#themes-title') };
+    //   },
+    //   teardown: function() {
+    //     v1State.attributes.walkthrough++;
+    //   }
+    // },
     {
       content: '<h3>Pages</h3><p>Time to put things together. Click on the "Pages" tab to go to Pages Page.',
       my: "top center",
