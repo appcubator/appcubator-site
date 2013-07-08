@@ -162,6 +162,10 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'ERROR'
         },
+        'appcubator': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
+        },
     }
 }
 
