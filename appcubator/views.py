@@ -409,19 +409,6 @@ def process_user_excel(request, app_id):
 
     return HttpResponse(r.content, status=r.status_code, mimetype="application/json")
 
-
-@login_required
-@require_POST
-def fetch_data(request, app_id):
-    app_id = long(app_id)
-    model_name = request.POST['model_name']
-    app = get_object_or_404(App, id=app_id, owner=request.user)
-    try:
-        d = Deployment.objects.get(subdomain=app.subdomain())
-    except Deployment.DoesNotExist:
-        raise Exception("App has not been deployed yet")
-    return JSONResponse(get_model_data(model_name, d.app_dir + "/db"))
-
 from django.forms import ModelForm
 
 
