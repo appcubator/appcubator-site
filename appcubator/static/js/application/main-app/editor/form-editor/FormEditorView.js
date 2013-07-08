@@ -65,7 +65,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       temp_context.pages = v1State.get('pages').models;
       temp_context.emails = ["Email 1", "Email 2"];
       temp_context.possibleEntities = _.map(v1State.get('users').getCommonProps(), function(field) { return "CurrentUser." + field.name; });
-      temp_context.possibleActions =  this.possibleActions;
+
       var html = _.template(FormEditorTemplates.template, temp_context);
       this.el.innerHTML = html;
 
@@ -83,6 +83,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
     renderFields: function() {
       var length = this.model.get('fields').length;
+      console.log(this.model.get('fields'));
       this.model.get('fields').each(function(field, ind) {
         if(ind == (length - 1)) return;
         var html = _.template(FormEditorTemplates.field, { field: field, value : ''});
@@ -188,8 +189,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
     reRenderDisplayType: function() {
       var field = this.selected;
-      console.log(field);
-      console.log(field.get('options').split(','));
       $('#field-'+ field.cid).find('.form-item').html(_.template(FieldTypes[field.get('displayType')], {field: field, value: ""}));
     },
 
@@ -207,7 +206,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
         this.$el.find('.options-list').html('');
         if(newType == "option-boxes" || newType == "dropdown") {
           $('.details-panel').animate({ scrollTop: $('.details-panel').height() }, "slow");
-          this.selected.set('options', curOptions.split(','));
+          this.selected.set('options', curOptions);
           this.$el.find('.options-list').append('<b>Options</b><input class="options-input" placeholder="E.g. Cars,Birds,Trains..." type="text" value="' + curOptions + '">');
           $('.options-input').focus();
         }

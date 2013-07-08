@@ -3,7 +3,7 @@ var FormEditorTemplates = { };
 var FieldTypes = {
   "single-line-text" : '<input type="text" placeholder="<%= field.get(\'placeholder\') %>" disabled>',
   "paragraph-text"   : '<textarea placeholder="<%= field.get(\'placeholder\') %>" disabled></textarea>',
-  "dropdown"         : '<select class="drowdown"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><option><%= option %><% }); %></option>',
+  "dropdown"         : '<select class="drowdown"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><option><%= option %></option><% }); %></select>',
   "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value="single-line-text"><label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
   "password-text"    : '<input type="password" placeholder="<%= field.get(\'placeholder\') %>">',
   "email-text"       : '<div class="email"><input type="text" placeholder="<%= field.get(\'placeholder\') %>"></div>',
@@ -49,6 +49,12 @@ FormEditorTemplates.field = [
 '</span><span class="drag-icon"></span><span class="delete-field" id="delete-btn-field-<%= field.cid %>">Delete Field</span></li>'
 ].join('\n');
 
+FormEditorTemplates.submitField = [
+'<li id="field-<%= field.cid %>" class="field-li-item sortable li-<%= field.get(\'displayType\')%>"><label class="header"><%= field.get(\'label\') %> <% if(field.get(\'required\')) { %>*<% } %></label><span class="form-item">',
+'<div class="btn"><%= field.get(\'placeholder\') %></div>',
+'</span><span class="drag-icon"></span></li>'
+].join('\n');
+
 FormEditorTemplates.redirectActions = [
   '<% _(pages).each(function(page) {  %>',
     '<li class="action page-redirect" id="page-<%= page.cid %>">Go to <%= page.get("name") %><div class="add-to-list"></div></li>',
@@ -69,7 +75,7 @@ FormEditorTemplates.template = [
     '<ul class="form-fields-list">',
     '</ul>',
       '<% var field = _.last(form.get(\'fields\').models); var sortable = "not-sortable"; %>',
-        FormEditorTemplates.field,
+       FormEditorTemplates.submitField,
       '<% %>',
   '</div>',
   '<div class="add-field-panel"><div class="btn add-field-button"><span class="icon"></span>Add a New Field</div></div>',

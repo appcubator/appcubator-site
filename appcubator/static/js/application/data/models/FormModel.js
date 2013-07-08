@@ -69,7 +69,8 @@ function(
                                displayType: "single-line-text",
                                type: type,
                                label: fieldModel.get('name'),
-                               placeholder: "Prefilled data: {{" + fieldModel.get('name') + '}}' };
+                               placeholder: "Prefilled data: {{" + fieldModel.get('name') + '}}',
+                               options: "" };
 
         if(type == "fk"||type == "m2m"||type == "o2o") { return; }
         if(type == "email") { formFieldModel.displayType = "email-text"; }

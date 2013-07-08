@@ -409,6 +409,8 @@ input[type="text"] {
 .panel label.opt {
   margin-bottom: 0;
   padding: 4px;
+  vertical-align: top;
+  display: inline-block;
 }
 
 input.field-type {
