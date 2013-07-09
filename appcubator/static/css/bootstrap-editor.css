@@ -2975,7 +2975,7 @@ a.badge:hover {
 .middle-group {
   position: relative;
   left: 430px;
-  width: 300px;
+  width: 344px;
   top: 4px;
   height: 42px;
   display: inline-block;
@@ -2986,8 +2986,8 @@ a.badge:hover {
 
 .right-group {
   position: absolute;
-  width: 220px;
-  right: 20px;
+  width: 188px;
+  right: 4px;
   top: 4px;
   height: 42px;
   display: inline-block;
@@ -3105,6 +3105,7 @@ li.model span.title {
 .menu-button.question {
   background-image: url('../img/help_b.png');
   padding-left: 40px;
+  width: 186px;
 }
 
 .pages {

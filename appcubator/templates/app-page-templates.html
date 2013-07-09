@@ -129,8 +129,8 @@
   <div class="span58">
     <h2 class="pheader">User Tables</h2>
     <form id="add-role-form" class="right new-table-form" style="display: none; height: 45px">
-      <input type="text" placeholder="New User Role">
       <input type="submit" class="done-btn" value="Done">
+      <input type="text" placeholder="New User Role">
     </form>
     <div class="button right" id="add-role">
       <span class="add-icon"></span><span>Add User Role</span>
@@ -144,8 +144,8 @@
   <div class="span58 hoff2">
     <h2 class="pheader">Tables</h2>
     <form style="display: none; height: 45px" class="right new-table-form" id="add-entity-form">
-      <input type="text" placeholder="New Table">
       <input type="submit" class="done-btn" value="Done">
+      <input type="text" placeholder="New Table">
     </form>
     <div class="button right" id="add-entity">
       <span class="add-icon"></span><span>Add Table</span>
@@ -223,13 +223,13 @@
       </div>
     </div>
     <div class="middle-group">
-      <div class="menu-button dropdown-arrow">
-      </div><div class="menu-button pages"><ul id="page-list"></ul>
+      <a href="{% url appcubator.views.app_page app.id %}" class="menu-button home">
+      </a><div class="menu-button pages"><ul id="page-list"></ul>
+      </div><div class="menu-button dropdown-arrow">
       </div>
     </div>
     <div class="right-group">
-      <a href="{% url appcubator.views.app_page app.id %}" class="menu-button home">
-      </a><div class="menu-button question">Have a question?</div>
+      <div class="menu-button question">Ask a Question</div>
     </div>
   </div>
 

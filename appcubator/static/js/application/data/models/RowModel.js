@@ -61,7 +61,7 @@ define([
 
       var height = (nmrImageElements > nmrElements ? nmrImageElements * 95 : nmrElements * 45);
       var rowHeight = Math.ceil(height / 15);
-      console.log(rowHeight);
+      if(rowHeight < 10) rowHeight = 10;
       this.get('layout').set('height', rowHeight);
     },
 

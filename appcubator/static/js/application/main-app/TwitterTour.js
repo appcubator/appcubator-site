@@ -57,8 +57,8 @@ function() {
      */
     {
       content: '<h3>Adding A Table</h3><p>Since you\'d like to store tweets, you need create a Tweet table. Click the "Add Table" button and name the table: <strong>Tweet</strong>.</p>',
-      my: "right center",
-      at: "left center",
+      my: "left center",
+      at: "right center",
       url: '/tables/',
 
       setup: function(tour, options) {
