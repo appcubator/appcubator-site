@@ -220,6 +220,7 @@ function(WidgetModel,
        // widget.data.container_info.query = {};
 
         var widgetContainerModel = new WidgetContainerModel(widget);
+        widgetContainerModel.getRow().fillWithProps(entity);
         return this.push(widgetContainerModel);
       },
 

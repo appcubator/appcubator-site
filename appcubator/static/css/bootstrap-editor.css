@@ -2854,7 +2854,7 @@ a.badge:hover {
 .section-select {
   position: fixed;
   top:0;
-  height: 60px;
+  height: 52px;
   text-align: left;
   width: 100%;
   z-index: 1000;
@@ -2883,6 +2883,9 @@ a.badge:hover {
   padding-left: 12px;
   padding-right: 12px;
   cursor: pointer;
+  background-color: #2b3545;
+  border-top: 1px solid #3b4555;
+  border-bottom: 1px solid #1b2535;
 }
 
 .menu-button span {
@@ -2898,19 +2901,19 @@ a.badge:hover {
   position: absolute;
   display: inline-block;
   border-radius: 6px;
-  top: 8px;
+  top: 4px;
   left: 42px;
-  border: 1px solid #3b4555;
-  border-top: 1px solid #1b2535;
+  border: 1px solid #1b2535;
+  border-bottom: 1px solid #3b4555;
   height: 42px;
 }
 .save-run-group:hover {
 }
 
 .save-run-group .play-btn {
-  height: 52px;
+  height: 54px;
   margin-top: -5px;
-  width: 52px;
+  width: 54px;
   margin-left: -27px;
   display: inline-block;
   position: absolute;
@@ -2918,7 +2921,7 @@ a.badge:hover {
 /*  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #394656), color-stop(100%, #2a334)) !important;
 */  background-image: -webkit-gradient(radial, center center, 0, center center, 52, from(#242d40), to(#3c4a5a), color-stop(70%, #303C4D)); /* old WebKit Syntax */  
 
-  border-radius: 26px;
+  border-radius: 27px;
   border: 1px solid #1b2535;
   border-right: 1px solid #3b4555;
   overflow: hidden;
@@ -2950,39 +2953,47 @@ a.badge:hover {
   background-position: center;
 }
 
+.menu-button.pages {
+  border-top: 0px solid #3b4555;
+}
+
 .save-run-group .menu-button:first-child,
 .middle-group .menu-button:first-child,
 .right-group  .menu-button:first-child{
   border-left-width: 0px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
 }
 .save-run-group .menu-button:last-child,
 .middle-group .menu-button:last-child,
 .right-group .menu-button:last-child {
   border-right-width: 0px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 
 .middle-group {
   position: relative;
   left: 430px;
   width: 300px;
-  top: 8px;
+  top: 4px;
   height: 42px;
   display: inline-block;
   border-radius: 6px;
-  border: 1px solid #3b4555;
-  border-top: 1px solid #1b2535;
+  border: 1px solid #1b2535;
+  border-bottom: 1px solid #3b4555;
 }
 
 .right-group {
   position: absolute;
   width: 220px;
   right: 30px;
-  top: 8px;
+  top: 4px;
   height: 42px;
   display: inline-block;
   vertical-align: top;
-  border: 1px solid #3b4555;
-  border-top: 1px solid #1b2535;
+  border: 1px solid #1b2535;
+  border-bottom: 1px solid #3b4555;
   border-radius: 6px;
 }
 
@@ -3085,6 +3096,10 @@ li.model span.title {
 
 .run {
   background-image: url('../img/run.png');
+}
+
+.run #deploy-text {
+  padding-left: 6px;
 }
 
 .menu-button.question {
