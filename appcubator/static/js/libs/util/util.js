@@ -1,15 +1,21 @@
 define(['jquery'], function() {
 
   var util = {
-    onServerReady: function(url, callback) {
-      $.ajax(url, {
-        type: 'GET',
-        success: callback,
-        error: function(){
-          console.log("Server not ready. Waiting 100ms and trying again.");
-          window.setTimeout(function(){util.onServerReady(url, callback); }, 100);
-        }
-      });
+    onServerReady: function(url, callback, recursive) {
+      // if this call is not recursive, it should wait 300 ms before trying for real.
+        // bc sometimes it takes some time for the server to restart causing a 502.
+      if(!recursive) {
+        window.setTimeout(function(){util.onServerReady(url, callback, true); }, 300);
+      } else {
+        $.ajax(url, {
+          type: 'GET',
+          success: callback,
+          error: function(){
+            console.log("Server not ready. Waiting 100ms and trying again.");
+            window.setTimeout(function(){util.onServerReady(url, callback, true); }, 250);
+          }
+        });
+      }
     },
 
     log_to_server: function (key_str, val_dict, app_id) {

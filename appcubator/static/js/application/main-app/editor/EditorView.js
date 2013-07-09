@@ -144,30 +144,14 @@ function( PageModel,
 
     deploy: function(options) {
       var url = '/app/'+appId+'/deploy/';
-      if(options.local) url = url + 'local/';
-
       var self = this;
       util.get('deploy').innerHTML = '<span>Deploying...</span>';
 
-      $.ajax(url, {
-        type: "POST",
-        complete: function() {
-          util.get('deploy').innerHTML = '<span>Test Run</span>';
-        },
-        success: function(data) {
-          new DeployView(data);
-        },
-        error: function(jqXHR) {
-          var data = JSON.parse(jqXHR.responseText);
-          if(DEBUG)
-            self.renderDeployResponse(false, data, self);
-          else {
-            var fakedata = { errors: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-            self.renderDeployResponse(false, fakedata, self);
-          }
-        },
-        dataType: "JSON"
-      });
+      var success_callback = function() {
+        util.get('deploy').innerHTML = '<span>Test Run</span>';
+      };
+
+      v1.deploy(success_callback);
     },
 
     clickedUrl: function() {
