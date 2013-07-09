@@ -189,7 +189,7 @@ define([
 							url: '/app/'+appId+'/deploy/',
 							success: function(data) {
                                 // call callback
-								if(callback) util.onServerReady(data.site_url, function(){callback.call()});
+								if(callback) callback();
 
                                 // open a modal based on deploy response
 								if(data.errors) {
@@ -200,7 +200,7 @@ define([
 									new ErrorDialogueView(content);
 								}
 								else {
-                                    util.onServerReady(data.site_url, function(){new DeployView(data);});
+                                    new DeployView(data);
 								}
 							},
 							error: function(data) {

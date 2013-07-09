@@ -79,7 +79,6 @@ function( PageModel,
       /* Bindings */
       keyDispatcher.key('⌘+c, ctrl+c', this.copy);
       keyDispatcher.key('⌘+v, ctrl+v', this.paste);
-      keyDispatcher.key('⌘+shift+d, ctrl+shift+d', function(){ self.deploy({local:true}); });
 
       this.title = "Editor";
     },
@@ -157,7 +156,9 @@ function( PageModel,
         util.get('deploy-text').innerHTML = 'Test Run';
       };
 
-      v1.deploy(success_callback);
+      var urlSuffix = '/' + self.urlModel.getAppendixString();
+      if(urlSuffix != '/') urlSuffix += '/';
+      v1.deploy(success_callback, { appendToUrl: urlSuffix });
     },
 
     clickedUrl: function() {
