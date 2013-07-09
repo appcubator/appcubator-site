@@ -43,6 +43,7 @@ function( PageModel,
       'click #editor-save'   : 'save',
       'click #deploy'        : 'deploy',
       'click .menu-button.help' : 'help',
+      'click .menu-button.question' : 'question',
       'click .url-bar'       : 'clickedUrl',
       'click .home'          : 'clickedHome',
       'click .go-to-page'    : 'clickedGoToPage'
@@ -132,6 +133,11 @@ function( PageModel,
       new TutorialView([6]);
     },
 
+    question: function (e) {
+      olark('api.box.show');
+      olark('api.box.expand');
+    },
+
     copy: function(e) {
       //if(this.widgetsManager.copy()) { }
     },
@@ -145,10 +151,10 @@ function( PageModel,
     deploy: function(options) {
       var url = '/app/'+appId+'/deploy/';
       var self = this;
-      util.get('deploy').innerHTML = '<span>Deploying...</span>';
+      util.get('deploy-text').innerHTML = 'Deploying...';
 
       var success_callback = function() {
-        util.get('deploy').innerHTML = '<span>Test Run</span>';
+        util.get('deploy-text').innerHTML = 'Test Run';
       };
 
       v1.deploy(success_callback);

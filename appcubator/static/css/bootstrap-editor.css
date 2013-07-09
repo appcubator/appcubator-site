@@ -3087,7 +3087,7 @@ li.model span.title {
   background-image: url('../img/run.png');
 }
 
-.help {
+.menu-button.question {
   background-image: url('../img/help_b.png');
   padding-left: 40px;
 }
