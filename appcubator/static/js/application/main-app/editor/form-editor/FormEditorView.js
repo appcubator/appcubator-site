@@ -78,12 +78,17 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
         cancel: ".not-sortable",
         axis: "y"
       });
+
+      if(this.model.isConstant()) {
+        $('.add-field-button').remove();
+        $('.delete-field').remove();
+      }
+
       return this;
     },
 
     renderFields: function() {
       var length = this.model.get('fields').length;
-      console.log(this.model.get('fields'));
       this.model.get('fields').each(function(field, ind) {
         if(ind == (length - 1)) return;
         var html = _.template(FormEditorTemplates.field, { field: field, value : ''});
@@ -110,7 +115,8 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
                                                  displayType: "single-line-text",
                                                  type: fieldModel.get('type'),
                                                  label: fieldModel.get('name'),
-                                                 placeholder: fieldModel.get('name') });
+                                                 placeholder: fieldModel.get('name'),
+                                                 options: "" });
 
 
         if(fieldModel.get('type') == "email") {
@@ -267,7 +273,8 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
                                                displayType: "single-line-text",
                                                type: fieldModel.get('type'),
                                                label: name,
-                                               placeholder: name});
+                                               placeholder: name,
+                                               options: ""});
 
       if(fieldModel.get('type') == "email") {
         formFieldModel.set('displayType', "email-text");

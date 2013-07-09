@@ -296,17 +296,18 @@ define([
       var hash = String(id).replace('context-field-','').split('-');
       var entity = v1State.get('tables').get(hash[0]);
       var nested_entity = v1State.getTableModelWithCid(hash[1]);
-      var field = nested_entity.getFieldsColl().get(hash[2]);
+      var field = entity.getFieldsColl().get(hash[2]);
+      var nester_field = nested_entity.getFieldsColl().get(hash[3]);
 
-      var type = this.getFieldType(field);
+      var type = this.getFieldType(nester_field);
       var editorContext = this.editorContext ? this.editorContext : "page";
 
       var content_ops = {};
-      content_ops.content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ nested_entity.get('name') + '.' +field.get('name')+'}}';
+      content_ops.content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ field.get('name') + '.' +nester_field.get('name')+'}}';
 
       if(type == "links") {
         content_ops.content = 'Download '+ field.get('name');
-        content_ops.href = '{{'+editorContext+'.'+entity.get('name')+'.'+nested_entity.get('name')+'.'+field.get('name')+'}}';
+        content_ops.href = '{{'+editorContext+'.'+entity.get('name')+'.'+field.get('name')+'.'+nester_field.get('name')+'}}';
       }
 
       return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content_ops);

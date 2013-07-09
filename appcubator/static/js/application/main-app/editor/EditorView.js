@@ -43,6 +43,7 @@ function( PageModel,
       'click #editor-save'   : 'save',
       'click #deploy'        : 'deploy',
       'click .menu-button.help' : 'help',
+      'click .menu-button.question' : 'question',
       'click .url-bar'       : 'clickedUrl',
       'click .home'          : 'clickedHome',
       'click .go-to-page'    : 'clickedGoToPage'
@@ -78,7 +79,6 @@ function( PageModel,
       /* Bindings */
       keyDispatcher.key('⌘+c, ctrl+c', this.copy);
       keyDispatcher.key('⌘+v, ctrl+v', this.paste);
-      keyDispatcher.key('⌘+shift+d, ctrl+shift+d', function(){ self.deploy({local:true}); });
 
       this.title = "Editor";
     },
@@ -132,6 +132,11 @@ function( PageModel,
       new TutorialView([6]);
     },
 
+    question: function (e) {
+      olark('api.box.show');
+      olark('api.box.expand');
+    },
+
     copy: function(e) {
       //if(this.widgetsManager.copy()) { }
     },
@@ -144,30 +149,16 @@ function( PageModel,
 
     deploy: function(options) {
       var url = '/app/'+appId+'/deploy/';
-      if(options.local) url = url + 'local/';
-
       var self = this;
-      util.get('deploy').innerHTML = '<span>Deploying...</span>';
+      util.get('deploy-text').innerHTML = 'Deploying...';
 
-      $.ajax(url, {
-        type: "POST",
-        complete: function() {
-          util.get('deploy').innerHTML = '<span>Test Run</span>';
-        },
-        success: function(data) {
-          new DeployView(data);
-        },
-        error: function(jqXHR) {
-          var data = JSON.parse(jqXHR.responseText);
-          if(DEBUG)
-            self.renderDeployResponse(false, data, self);
-          else {
-            var fakedata = { errors: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-            self.renderDeployResponse(false, fakedata, self);
-          }
-        },
-        dataType: "JSON"
-      });
+      var success_callback = function() {
+        util.get('deploy-text').innerHTML = 'Test Run';
+      };
+
+      var urlSuffix = '/' + self.urlModel.getAppendixString();
+      if(urlSuffix != '/') urlSuffix += '/';
+      v1.deploy(success_callback, { appendToUrl: urlSuffix });
     },
 
     clickedUrl: function() {
@@ -203,7 +194,7 @@ function( PageModel,
     },
 
     setupPageWrapper: function() {
-      var height = window.innerHeight - 10;
+      var height = window.innerHeight - 90;
       util.get('page-wrapper').style.height = height+ 'px';
       this.$el.find('.page.full').css('height', height - 46);
     },

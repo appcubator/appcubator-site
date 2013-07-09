@@ -93,6 +93,7 @@ function(WidgetModel,
         widget.data.container_info.action = "signup";
         widget.data.container_info.form = constantContainers['Sign Up'];
         widget.data.container_info.form.signupRole = roleStr;
+        widget.data.container_info.form.isConstant = true;
 
         var widgetSignupModel = new WidgetContainerModel(widget);
         return this.push(widgetSignupModel);
@@ -108,7 +109,7 @@ function(WidgetModel,
         widget.data = _.extend(widget.data, uieState[type][0]);
 
         if(content_ops.content) widget.data.content =  content_ops.content;
-        if(content_ops.href) widget.data.href = content_ops.href;
+        if(content_ops.href) widget.data.content_attribs.href = content_ops.href;
         if(content_ops.src_content) widget.data.content_attribs.src_content = content_ops.src_content;
 
         var widgetModel = new WidgetModel(widget);
@@ -220,6 +221,7 @@ function(WidgetModel,
        // widget.data.container_info.query = {};
 
         var widgetContainerModel = new WidgetContainerModel(widget);
+        widgetContainerModel.getRow().fillWithProps(entity);
         return this.push(widgetContainerModel);
       },
 

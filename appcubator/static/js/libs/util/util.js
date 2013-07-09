@@ -1,16 +1,6 @@
 define(['jquery'], function() {
 
   var util = {
-    onServerReady: function(url, callback) {
-      $.ajax(url, {
-        type: 'GET',
-        success: callback,
-        error: function(){
-          console.log("Server not ready. Waiting 100ms and trying again.");
-          window.setTimeout(function(){util.onServerReady(url, callback); }, 100);
-        }
-      });
-    },
 
     log_to_server: function (key_str, val_dict, app_id) {
         _.each(val_dict, function(val, key) {

@@ -56,7 +56,13 @@ define([
         }
 
         this.get('uielements').createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
+
       }, this);
+
+      var height = (nmrImageElements > nmrElements ? nmrImageElements * 95 : nmrElements * 45);
+      var rowHeight = Math.ceil(height / 15);
+      if(rowHeight < 10) rowHeight = 10;
+      this.get('layout').set('height', rowHeight);
     },
 
     toJSON: function() {

@@ -188,8 +188,10 @@ define([
 							type: "POST",
 							url: '/app/'+appId+'/deploy/',
 							success: function(data) {
-								if(callback)
-                                    util.onServerReady(data.site_url, function(){callback.call()});
+                                // call callback
+								if(callback) callback();
+
+                                // open a modal based on deploy response
 								if(data.errors) {
 									var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
 									if(DEBUG) {
@@ -198,8 +200,7 @@ define([
 									new ErrorDialogueView(content);
 								}
 								else {
-                                    util.onServerReady(data.site_url, function(){new DeployView(data);});
-									
+                                    new DeployView(data);
 								}
 							},
 							error: function(data) {

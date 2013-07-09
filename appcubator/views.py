@@ -253,17 +253,16 @@ def app_save_state(request, app, require_valid=True):
         app.save()
         return (200, "ok")
 
-def tutorial_page(request, page_name):
-    print(page_name)
+def documentation_page(request, page_name):
     try:
-        htmlString = render(request, 'tutorial/html/'+page_name+'.html').content
+        htmlString = render(request, 'documentation/html/'+page_name+'.html').content
     except Exception, e:
-        return HttpResponse("invalid tutorial page", status=400)
+        htmlString = render(request, 'documentation/html/intro.html').content
     else:
         data = {
             'content': htmlString
         }
-        return render(request, 'tutorial/tutorial-base.html', data)
+        return render(request, 'documentation/documentation-base.html', data)
 
 @login_required
 def uie_state(request, app_id):

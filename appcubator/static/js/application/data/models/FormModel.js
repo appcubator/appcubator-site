@@ -155,6 +155,10 @@ function(
       this.set('loginRoutes', routes);
     },
 
+    isConstant: function () {
+      return this.get('isConstant');
+    },
+
     toJSON: function() {
       var json = _.clone(this.attributes);
       json.name = json.name || "";

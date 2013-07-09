@@ -8,6 +8,8 @@ function(EditorGalleryView, ElementCollection) {
     el       : null,
     tagName  : 'ul',
     className: 'elements-list row-elements-list',
+    positionHorizontalGrid : 1,
+    positionVerticalGrid   : 1,
 
     events : {
     },
@@ -55,6 +57,27 @@ function(EditorGalleryView, ElementCollection) {
       return this;
     },
 
+    renderUIElementList: function() {
+      var self = this;
+      var collection = new ElementCollection(defaultElements);
+
+      var li = document.createElement('li');
+      li.className = 'gallery-header ui-draggable';
+      li.innerHTML = 'Design Elements';
+      $(this.allList).append(li);
+
+      collection.each(function(element) {
+        if(element.get('className') == "buttons" ||
+           element.get('className') == "textInputs" ||
+           element.get('className') == "textAreas" ||
+           element.get('className') == "dropdowns" ||
+           element.get('className') == "imageslider" ||
+           element.get('className') == "facebookshare") return;
+
+          self.appendUIElement(element);
+      });
+    },
+
     renderContextEntity : function() {
       // Form, Data elements belonging to the entity
       var self = this;
@@ -78,7 +101,7 @@ function(EditorGalleryView, ElementCollection) {
       var tableModel = v1State.getTableModelWithName(fieldModel.get('entity_name'));
 
       _(tableModel.getNormalFields()).each(function(fieldM) {
-        this.addHalfWidthItem( 'context-field-'+entityId+'-'+ tableModel.cid+'-'+fieldM.cid,
+        this.addHalfWidthItem( 'context-field-'+entityId+'-'+tableModel.cid+'-'+fieldModel.cid+'-'+fieldM.cid,
                                'context-nested-entity',
                                 entityName+' '+tableModel.get('name')+'.'+fieldM.get('name'),
                                'plus-icon');

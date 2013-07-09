@@ -1,5 +1,7 @@
 body {
-  font-family: 'Open Sans', serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: normal;
+  color: #101010;
 }
 
 h1, h2, h3, h4 {
@@ -24,7 +26,16 @@ display: block;
 }
 
 .racoon {
+  max-width: 760px;
+  width: 100%;
   font-size: 16px;
+  line-height: 28px;
+  border: 1px solid rgba(144, 144, 144, 0.5);
+  margin-top: 36px;
+}
+
+.racoon:hover {
+  border: 1px solid rgba(144, 144, 144, 0.7);
 }
 
 .racoon label {
@@ -62,7 +73,11 @@ display: block;
   color: #4e5665;
   padding: 24px;
   min-height: 80px;
-  border-bottom: 1px solid #f7f8f9;
+  border-bottom: 1px solid #e7e8e9;
+}
+
+.racoon .images {
+  padding: 24px;
 }
 
 .question p {
@@ -284,33 +299,68 @@ display: block;
 
 /* Menu */
 .menu-list {
- /*position: absolute;
- left: 50%;
- top: 120px;
- margin-left: -550px;
- width: 240px;*/
+/*position: absolute;
+left: 50%;
+top: 120px;
+margin-left: -550px;
+width: 240px;*/
+position: fixed;
+left: 0;
+width: 224px;
+background-color: #0f2d40;
+border-top-right-radius: 6px;
+border-bottom-right-radius: 6px;
+color: #fff;
+top: 130px;
+padding: 6px;
+padding-left: 20px;
+opacity: 0.9;
+transition: opacity 0.2s;
+-webkit-transition: opacity 0.2s; /* Safari */
+}
+
+
+.menu-list:hover {
+  opacity: 1;
+}
+
+
+.menu-list .title {
+  font-family: 'Roboto Slab', serif;
+  font-size: 20px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #fff;
 }
 
 .menu-list h1 {
-  font-family: 'Open Sans', serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   font-weight: bold;
   font-size: 14px;
   line-height: 20px;
   margin-bottom: 10px;
   margin-top: 10px;
   display: block;
+  color: #fff;
 }
 
 .menu-list h2 {
-  font-family: 'Open Sans', serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 18px;
   margin-bottom: 0;
   margin-top: 8px;
   display: block;
+  color: #fff;
 }
 
 .question.centered {
   text-align: center;
+}
+
+.container-fluid {
+  position: absolute;
+  left: 50%;
+  margin-left: -370px;
 }
