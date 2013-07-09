@@ -101,7 +101,7 @@ function(EditorGalleryView, ElementCollection) {
       var tableModel = v1State.getTableModelWithName(fieldModel.get('entity_name'));
 
       _(tableModel.getNormalFields()).each(function(fieldM) {
-        this.addHalfWidthItem( 'context-field-'+entityId+'-'+ tableModel.cid+'-'+fieldM.cid,
+        this.addHalfWidthItem( 'context-field-'+entityId+'-'+tableModel.cid+'-'+fieldModel.cid+'-'+fieldM.cid,
                                'context-nested-entity',
                                 entityName+' '+tableModel.get('name')+'.'+fieldM.get('name'),
                                'plus-icon');
