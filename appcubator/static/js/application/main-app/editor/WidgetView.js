@@ -284,14 +284,19 @@ define([
       keyDispatcher.textEditing = false;
     },
 
-    autoResize: function() {
+    autoResize: function(hGrid, vGrid) {
+      var horizontalGrid = (hGrid || this.positionHorizontalGrid);
+      var verticalGrid = (vGrid || this.positionVerticalGrid);
+
+      console.log(this.el);
+
       var node = this.el.firstChild;
 
-      var height= $(node).outerHeight(true);
+      var height = $(node).outerHeight(true);
       var width = $(node).outerWidth(true);
 
-      var nHeight = Math.ceil(height / (this.positionVerticalGrid));
-      var nWidth  = Math.ceil(width / (this.positionHorizontalGrid));
+      var nHeight = Math.ceil(height / verticalGrid);
+      var nWidth  = Math.ceil(width / horizontalGrid);
 
       if(!nHeight) nHeight = 2;
       if(!nWidth)  nWidth = 2;
