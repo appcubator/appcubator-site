@@ -215,12 +215,22 @@
 
   <!-- Top Menu -->
   <div class="section-select">
-    <a href="{% url appcubator.views.app_page app.id %}" class="menu-button home">
-    </a><div class="menu-button pages"><ul id="page-list"></ul>
-    </div><div class="menu-button save" id="editor-save">
-      <span>Save</span>
-    </div><div class="menu-button run" id="deploy"><span>Test Run</span>
-    </div><div class="menu-button help"></div>
+    
+    <div class="save-run-group">
+      <div class="menu-button run" id="deploy"><span class="play-btn"><span class="play-btn-icon"></span></span><span>Test Run</span>
+      </div><div class="menu-button save" id="editor-save">
+        <span>Save</span>
+      </div>
+    </div>
+    <div class="middle-group">
+      <div class="menu-button dropdown-arrow">
+      </div><div class="menu-button pages"><ul id="page-list"></ul>
+      </div>
+    </div>
+    <div class="right-group">
+      <a href="{% url appcubator.views.app_page app.id %}" class="menu-button home">
+      </a><div class="menu-button help">Have a question?</div>
+    </div>
   </div>
 
   <!-- Inside-Page -->
@@ -275,10 +285,14 @@
   <div class="section-select">
     <a href="{% url appcubator.views.app_page app.id %}" class="menu-button home">
     </a><div class="menu-button pages"><ul id="page-list"></ul>
-    </div><div class="menu-button save" id="editor-save">
+    </div>
+    <div class="save-run-group">
+      <div class="menu-button save" id="editor-save">
       <span>Save</span>
-    </div><div class="menu-button run" id="deploy"><span>Test Run</span>
-    </div><div class="menu-button help"></div>
+      </div><div class="menu-button run" id="deploy"><span>Test Run</span>
+    </div>
+    </div>
+    <div class="menu-button help"></div>
   </div>
 
   <!-- Inside-Page -->

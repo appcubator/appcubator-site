@@ -203,7 +203,7 @@ function( PageModel,
     },
 
     setupPageWrapper: function() {
-      var height = window.innerHeight - 10;
+      var height = window.innerHeight - 90;
       util.get('page-wrapper').style.height = height+ 'px';
       this.$el.find('.page.full').css('height', height - 46);
     },
