@@ -288,8 +288,6 @@ define([
       var horizontalGrid = (hGrid || this.positionHorizontalGrid);
       var verticalGrid = (vGrid || this.positionVerticalGrid);
 
-      console.log(this.el);
-
       var node = this.el.firstChild;
 
       var height = $(node).outerHeight(true);
