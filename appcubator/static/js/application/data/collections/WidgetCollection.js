@@ -93,6 +93,7 @@ function(WidgetModel,
         widget.data.container_info.action = "signup";
         widget.data.container_info.form = constantContainers['Sign Up'];
         widget.data.container_info.form.signupRole = roleStr;
+        widget.data.container_info.form.isConstant = true;
 
         var widgetSignupModel = new WidgetContainerModel(widget);
         return this.push(widgetSignupModel);
