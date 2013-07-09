@@ -78,6 +78,12 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
         cancel: ".not-sortable",
         axis: "y"
       });
+
+      if(this.model.isConstant()) {
+        $('.add-field-button').remove();
+        $('.delete-field').remove();
+      }
+
       return this;
     },
 
