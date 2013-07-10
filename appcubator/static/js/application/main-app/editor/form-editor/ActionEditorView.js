@@ -67,18 +67,18 @@ function(FormFieldModel, ActionModel, TutorialView) {
 
 
     gotoActionClicked: function(e) {
-      var pageCid = e.target.id.replace('page-','');
+      var pageCid = (e.target.id||e.target.parentNode.id).replace('page-','');
       this.model.set('goto', this.possibleGotos.get(pageCid));
     },
 
     relationalActionClicked: function(e) {
-      var actionCid = e.target.id.replace('action-','');
+      var actionCid = (e.target.id||e.target.parentNode.id).replace('action-','');
       var actionModel = this.possibleActions.get(actionCid);
       this.model.get('actions').push(actionModel);
     },
 
     currentActionClicked: function(e) {
-      var actionCid = e.target.id.replace('action-','');
+      var actionCid = (e.target.id||e.target.parentNode.id).replace('action-','');
       this.model.get('actions').remove(actionCid);
     },
 
