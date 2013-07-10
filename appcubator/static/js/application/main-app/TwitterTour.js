@@ -412,14 +412,17 @@ function() {
       url: '/editor/0/',
       setup: function(tour, options) {
         var elem = $(".facebook-login-btn")[0];
+        $('.edit-login-form-btn').on('click', tour.next);
         return { target: $(elem) };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
       }
     },
+    // Then, on the edit login modal
+        // '<h3>Customizing functionality</h3><p>Here, you can customize where the user goes after they login. Not interesting because we only have Homepage right now. Next we'll make a new page.<br><em>Click outside this window to return to the editor.</em></p>'
     {
-      content: '<h3>Let\'s move to the other page.</h3><p>Please hover over the page menu and click on "Tweet Feed" to go to the other page.</p>',
+      content: '<h3>Making a new Page</h3><p>Hover over Homepage, <em>and make a new page called "Tweet Feed".</em></p>',
       my: "left top",
       at: "right center",
       url: '/editor/0/',
@@ -436,7 +439,7 @@ function() {
       }
     },
     {
-      content: '<h3>Feed Page</h3><p>On this page, we will put a list of the User’s Tweets, something like a stream. We will also add a “Create Tweet” form to tweet new stuff. Let\'s start with the list first.</p>',
+      content: '<h3>Tweet Feed Page</h3><p>On this page, we will put a Twitter feed and a “Create Tweet” form. Let\'s start with the Tweet feed first.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -454,7 +457,7 @@ function() {
       }
     },
     {
-      content: '<h3>Let\'s make a list</h3><p>Drag and drop the Tweet List to the top middle of the page.</p>',
+      content: '<h3>Let\'s make a list</h3><p><em>Drag the Tweet List onto the page.</em></p>',
       my: "right center",
       at: "left center",
       url: '/editor/2/',
@@ -476,7 +479,7 @@ function() {
       }
     },
     {
-      content: '<h3>We have the list of Tweets!</h3><p>Now we can start editing by clicking the "Edit Row" button.</p>',
+      content: '<h3>Editing the list</h3><p>Click "Edit Row" to edit each row of the list.</p>',
       my: "bottom center",
       at: "top center",
       url: '/editor/2/',
@@ -495,7 +498,7 @@ function() {
       }
     },
     {
-      content: '<h3>The Green Row</h3><p>The green area is the first, editable row. You should start dragging and dropping design elements.</p>',
+      content: '<h3>The Green Row</h3><p>The green area is the editable row, that all other rows are modeled after. You can drag UI elements into the green row and play around with them, while you\'re in edit mode.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -509,7 +512,7 @@ function() {
       }
     },
     {
-      content: '<h3>Content of the Tweet</h3><p>Drag\'n\'Drop it on the green area.</p>',
+      content: '<h3>Dragging Tweet Stuff</h3><p><em>Drag "Tweet.Owner.username" into the green row.</p></em>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -533,7 +536,7 @@ function() {
       }
     },
     {
-      content: '<h3>We\'re Done with this List</h3><p>Just click "Done Editing" to switch off editing mode.</p>',
+      content: '<h3>We\'re Done with this List</h3><p><em>Click "Done Editing" to switch off editing mode.</em></p>',
       my: "top center",
       at: "bottom center",
       url: '/editor/2/',
