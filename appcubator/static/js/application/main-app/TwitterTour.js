@@ -144,7 +144,7 @@ function() {
      * About Relations
      */
     {
-      content: '<h3>Nice!</h3><p>So we have described a tweet as an entity that consists of some "Content" text. Now we need to associate <strong>Tweets</strong> with <strong>Users</strong>?</p>',
+      content: '<h3>Nice!</h3><p>Next, we\'ll associate <strong>Tweets</strong> with <strong>Users</strong>.</p>',
       my: "left top",
       at: "right center",
       url: '/tables/',
