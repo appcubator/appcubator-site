@@ -8,7 +8,7 @@ function() {
      */
     {
       target: $('.qm-btn'),
-      content: '<h3>Questions?</h3><p>Please follow the directions written in these small boxes. You can click the question marks at anytime to learn more details.</p>',
+      content: '<h3>Questions?</h3><p>If you have questions during the walkthrough, click the question marks for more info.</p>',
       my: "right center",
       at: "left center",
       url: '/',
@@ -23,7 +23,7 @@ function() {
      */
     {
       target: $('.menu-app-entities'),
-      content: '<h3>Tables</h3><p>Go to the tables page.</p>',
+      content: '<h3>Tables</h3><p>Click this button to go to the “Tables” page.<br><em>Go to the “Tables” page.</em></p>',
       my: "top center",
       at: "bottom center",
       url: '/',
@@ -37,10 +37,27 @@ function() {
       }
     },
     /*
+     * Tables page explanation
+     */
+    {
+      target: $('.menu-app-entities'),
+      content: '<h3>Tables</h3><p>This page is where you define the different types of users that use your application and the data they’ll create.</p>',
+      my: "top center",
+      at: "bottom center",
+      nextButton: true,
+      url: '/tables/',
+      /*setup: function() {
+        return {  target: $('#add-role') };
+      },*/
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    /*
      * Add User Role btn
      */
     {
-      content: '<h3>Adding Roles</h3><p>You already have a user role set up, but this is where you setup new roles for your application.</p>',
+      content: '<h3>User Roles</h3><p>In Twitter, there is only one type of user, but in some applications, there may be differences, ie. Doctors vs Patients.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -343,7 +360,7 @@ function() {
         v1.bind('editor-loaded', function() {
           setTimeout(function() {
             tour.next();
-          }, 120);
+          }, 220);
         });
         return { target: $('.edit.item').first() };
       },
