@@ -396,11 +396,26 @@ class ApiKeyCounts(models.Model):
     api_key = models.CharField(max_length=255)
     api_count = models.IntegerField(default=0)
 
+    @staticmethod
+    def get_api_key_from_user(user):
+      user_name = user.username
+      date_joined = user.date_joined
+      hash_string = user_name + str(date_joined)
+      return hashlib.sha224(hash_string).hexdigest()
+
+
 # Keeps track of individual usages, so we can do time based
 # control and analytics later on.
 class ApiKeyUses(models.Model):
-    api_key = models.ForeignKey(ApiKeyCounts, related_name="api_key_counts")
+    api_key = models.ForeignKey(ApiKeyCounts, related_name="api_key_uses")
     api_use = models.DateField(auto_now_add=True)
+
+    @staticmethod
+    def get_api_key_from_user(user):
+      user_name = user.username
+      date_joined = user.date_joined
+      hash_string = user_name + str(date_joined)
+      return hashlib.sha224(hash_string).hexdigest()
 
 
 def load_initial_themes():

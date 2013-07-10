@@ -8,7 +8,7 @@ function() {
      */
     {
       target: $('.qm-btn'),
-      content: '<h3>Questions?</h3><p>Please follow the directions written in these small boxes. You can click the question marks at anytime to learn more details.</p>',
+      content: '<h3>Questions?</h3><p>If you have questions during the walkthrough, click the question marks for more info.</p>',
       my: "right center",
       at: "left center",
       url: '/',
@@ -23,7 +23,7 @@ function() {
      */
     {
       target: $('.menu-app-entities'),
-      content: '<h3>Tables</h3><p>Go to the tables page.</p>',
+      content: '<h3>Tables</h3><p>Click this button to go to the “Tables” page.<br><em>Go to the “Tables” page.</em></p>',
       my: "top center",
       at: "bottom center",
       url: '/',
@@ -37,10 +37,27 @@ function() {
       }
     },
     /*
+     * Tables page explanation
+     */
+    {
+      target: $('.menu-app-entities'),
+      content: '<h3>Tables</h3><p>This page is where you define the different types of users that use your application and the data they’ll create.</p>',
+      my: "top center",
+      at: "bottom center",
+      nextButton: true,
+      url: '/tables/',
+      /*setup: function() {
+        return {  target: $('#add-role') };
+      },*/
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    /*
      * Add User Role btn
      */
     {
-      content: '<h3>Adding Roles</h3><p>You already have a user role set up, but this is where you setup new roles for your application.</p>',
+      content: '<h3>User Roles</h3><p>In Twitter, there is only one type of user, but in some applications, there may be differences, ie. Doctors vs Patients.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -56,7 +73,7 @@ function() {
      * Add Table btn
      */
     {
-      content: '<h3>Adding A Table</h3><p>Since you\'d like to store tweets, you need create a Tweet table. Click the "Add Table" button and name the table: <strong>Tweet</strong>.</p>',
+      content: '<h3>Adding A Table</h3><p>In Twitter, users can create and see Tweets.<br>These are stored in a "Table" of tweets.<br><em>Click "Add Table" name the table: <strong>Tweet</strong>.</em></p>',
       my: "left center",
       at: "right center",
       url: '/tables/',
@@ -84,7 +101,7 @@ function() {
      * Tweet Table
      */
     {
-      content: '<h3>Congrats!</h3><p>You have a table that stores tweets now. Time to define what information fields this table stores.</p>',
+      content: '<h3>Congrats!</h3><p>You created a Tweet table. Next, we\'ll define the fields of the table.</p>',
       my: "left top",
       at: "top center",
       url: '/tables/',
@@ -103,7 +120,7 @@ function() {
      * Add Property btn
      */
     {
-      content: '<h3>Create a Field</h3><p>Every tweet contains a message, a text of the actual tweet. Let\'s add our first property, calling it <strong>Content</strong>, and it gets a type of <strong>Text</strong> by default.</p>',
+      content: '<h3>Create a Field</h3><p>Tweets are simple, they consist of one Text field.<br><em>Add a field and name it <strong>Content</strong>.</p>',
       url: '/tables/',
       setup: function(tour, options) {
 
@@ -343,7 +360,7 @@ function() {
         v1.bind('editor-loaded', function() {
           setTimeout(function() {
             tour.next();
-          }, 120);
+          }, 220);
         });
         return { target: $('.edit.item').first() };
       },
