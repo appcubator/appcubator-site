@@ -135,6 +135,10 @@ class App(models.Model):
     state = property(get_state, set_state)
 
     @property
+    def api_key(self):
+        return ApiKeyCounts.get_api_key_from_user(self.owner)
+
+    @property
     def state_json(self):
         return self._state_json
 
@@ -190,6 +194,8 @@ class App(models.Model):
 
 
         app = AnalyzedApp.create_from_dict(self.state)
+
+        app.api_key = self.api_key
         codes = create_codes(app)
         coder = Coder.create_from_codes(codes)
 
