@@ -238,7 +238,6 @@ def app_save_state(request, app, require_valid=True):
     if not require_valid:
         app.save()
         return (200, "ok")
-    api_key = ApiKeyCounts.get_api_key_from_user(request.user)
     try:
         a = AnalyzedApp.create_from_dict(app.state)
     except analyzer.UserInputError, e:
@@ -250,7 +249,6 @@ def app_save_state(request, app, require_valid=True):
         appstate_snapshot = AppstateSnapshot(owner=request.user,
             app=app, name=app.name, snapshot_date=datetime.now(), _state_json=request.body)
         appstate_snapshot.save()
-        app.api_key = api_key
         app.save()
         return (200, "ok")
 
@@ -472,7 +470,7 @@ def app_deploy(request, app_id):
         'user_name': request.user.username,
         'date_joined': str(request.user.date_joined)
     }
-    #result = app.deploy(d_user)
+    # result = app.deploy(d_user)
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     status = 500 if 'errors' in result else 200
