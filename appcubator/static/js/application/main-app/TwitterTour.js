@@ -569,7 +569,7 @@ function() {
       }
     },
     {
-      content: '<h3>We\'re Done with this List</h3><p>Just clid "Done Editing" to switch off editing mode.</p>',
+      content: '<h3>We\'re Done with this List</h3><p>Just click "Done Editing" to switch off editing mode.</p>',
       my: "top center",
       at: "bottom center",
       url: '/editor/2/',
@@ -584,7 +584,7 @@ function() {
       }
     },
     {
-      content: '<h3>Time to Create Some Tweets</h3><p>We have a list of tweets now, but we also need a way to creat them. Please drag\'n\'drop a create form onto the page.</p>',
+      content: '<h3>Time to Create Some Tweets</h3><p>We have a list of tweets now, but we also need a way to create them. Please drag\'n\'drop a create form onto the page.</p>',
       my: "top center",
       at: "bottom center",
       url: '/editor/2/',
