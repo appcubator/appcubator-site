@@ -69,6 +69,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     formSubmitted: function(e) {
+      e.preventDefault();
       var name = $('.property-name-input', e.target).val();
 
       if(!name.length) return;
@@ -80,7 +81,6 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       $('.add-property-form').hide();
       this.$el.find('.add-property-button').fadeIn();
 
-      e.preventDefault();
     },
 
     appendField: function (fieldModel) {

@@ -3527,7 +3527,7 @@ input[type="submit"].btn.btn-mini {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 2006;
+  z-index: 3001;
   display: none;
   width: 236px;
   padding: 1px;

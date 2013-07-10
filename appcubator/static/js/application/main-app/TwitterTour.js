@@ -41,7 +41,7 @@ function() {
      */
     {
       target: $('.menu-app-entities'),
-      content: '<h3>Tables</h3><p>This page is where you define the different types of users that use your application and the data they’ll create.</p>',
+      content: '<h3>Tables</h3><p>This page is where you define the different types of users and the data they’ll create.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -125,18 +125,22 @@ function() {
       setup: function(tour, options) {
 
         var cid =  v1State.get('tables').getTableWithName("Tweet").cid;
-        v1State.get('tables').getTableWithName("Tweet").get('fields').on('add', function(fieldModel) {
+        checkForContent = function(fieldModel) {
           if(fieldModel.get('name') == "Content") {
             propertyCid = fieldModel.cid;
             tour.next();
           }
           else {
+            alert('Name of the field shoud be "Content"');
             this.remove(fieldModel);
           }
-        });
+        };
+
+        v1State.get('tables').getTableWithName("Tweet").get('fields').bind('add', checkForContent);
         return { target: $('#table-' + cid).find('.add-property-column').first() };
       },
       teardown: function(tour, options) {
+        v1State.get('tables').getTableWithName("Tweet").get('fields').unbind('add', checkForContent);
         v1State.attributes.walkthrough++;
       }
     },
@@ -199,98 +203,82 @@ function() {
      * Create Relation Form
      */
     {
-      content: '<h3>Relations</h3><p>In Twitter, a tweet has an <strong>owner</strong> and by consequence, users are owners of <strong>tweets</strong>.<br><em>Call the user\'s list of tweets <strong>Tweets</strong>, and the tweet\'s user <strong>Owner</strong>.</em></p>',
+      content: '<h3>Relations</h3><p>In Twitter, a tweet has an <strong>owner</strong> and by consequence, users are owners of <strong>tweets</strong>.<br><em>Call the user\'s list of tweets <strong>Tweets</strong>, and the tweet\'s user <strong>Owner</strong>. Then press Done.</em></p>',
       my: "left center",
       at: "top center",
-      bind: ['checkFields'],
       url: '/tables/',
-      checkFields: function(tour, options, e) {
-        var form = $('.edit-relation-div');
-        var form1 = form.find('.new-relation:first-child');
-        var form2 = form.find('.new-relation').eq(1);
+      // checkFields: function(tour, options, e) {
+      //   var form = $('.edit-relation-div');
+      //   var form1 = form.find('.new-relation:first-child');
+      //   var form2 = form.find('.new-relation').eq(1);
 
-        var user_select = form1.find('select').val();
-        var related_name = form1.find('input').val();
-        var tweet_select = form2.find('select').val();
-        var name = form2.find('input').val();
+      //   var user_select = form1.find('select').val();
+      //   var related_name = form1.find('input').val();
+      //   var tweet_select = form2.find('select').val();
+      //   var name = form2.find('input').val();
 
-        if(user_select !== 'many' || related_name !== 'Tweets' || tweet_select !== 'one' || name !== 'Owner') {
-          alert('Make sure you enter "Tweets" in the first box, and "Owner" in the second box');
-          e.stopPropagation();
-        }
-        else {
-          tour.next();
-        }
-      },
+      //   if(user_select !== 'many' || related_name !== 'Tweets' || tweet_select !== 'one' || name !== 'Owner') {
+      //     alert('Make sure you enter "Tweets" in the first box, and "Owner" in the second box');
+      //     e.stopPropagation();
+      //   }
+      //   else {
+      //     tour.next();
+      //   }
+      // },
       setup: function(tour, options) {
         util.scrollToElement($('#new-relation'));
         var self = this;
         setTimeout(function() {
-          $('.done-relation').on('click', self.checkFields);
+          // $('.done-relation').on('click', self.checkFields);
+
+          checkForRelation = function(fieldM) {
+            if( fieldM.get('entity_name') != "User" ||
+                fieldM.get('name') != "Owner" ||
+                fieldM.get('related_name') != "Tweets") {
+
+              this.remove(fieldModel);
+              alert('Make sure you enter "Tweets" in the first box, and "Owner" in the second box');
+            }
+
+            tour.next();
+          };
+
+          v1State.get('tables').models[0].get('fields').bind('add', checkForRelation);
+
         }, 500);
         return {  target: $('#new-relation') };
       },
       teardown: function(tour, options) {
-        $('.done-relation').off('click', this.checkFields);
+          v1State.get('tables').models[0].get('fields').unbind('add', checkForRelation);
         v1State.attributes.walkthrough++;
+        v1.save();
       }
     },
-    /*
-     * User-Tweet relation
-     */
     {
-      content: '<h3>GREAT!</h3><p>You\'re done with the hard part. Now we\'ll make the UI.</p>',
-      my: "left center",
-      at: "right center",
-      nextButton: true,
+      content: '<h3>Save button</h3><p>Let\'s save this work before moving on. We also periodically autosave.<em>Click the save button.</em></p>',
+      my: "right center",
+      at: "left center",
       url: '/tables/',
       setup: function(tour, options) {
-        util.scrollToElement($('#new-relation'));
-        var self = this;
-        setTimeout(function() {
-          tour.view.setTarget($('.relation:first-child'));
-          tour.view.show();
-        }, 250);
-        return { target: $('.relation-pane') };
+
+        $('.save-btn').one('click', function() {
+          tour.next();
+        });
+        return { target: $('.save-btn') };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
       }
     },
-    // {
-    //   content: '<h3>Time to Make it Look Good</h3><p>Click here and go to Themes page.</p>',
-    //   my: "top center",
-    //   at: "bottom center",
-    //   target: $('.menu-app-themes'),
-    //   url: '/tables/',
-    //   setup: function(tour, options) {
-    //     v1.bind('themes-loaded', function() {
-    //       tour.next();
-    //     });
-    //   },
-    //   teardown: function() {
-    //     v1State.attributes.walkthrough++;
-    //   }
-    // },
-    // {
-    //   content: '<h3>Theme</h3><p>We have a variety of themes here. Pick the one you like the most and click the "Load Theme" button.',
-    //   my: "left center",
-    //   at: "right center",
-    //   nextButton: true,
-    //   url: '/gallery/',
-    //   setup: function() {
-    //     return { target: $('#themes-title') };
-    //   },
-    //   teardown: function() {
-    //     v1State.attributes.walkthrough++;
-    //   }
-    // },
+    /*
+     * Done with Tables. Going to pages.
+     */
     {
-      content: '<h3>Pages</h3><p><em>Click on "Pages".</em></p>',
+      content: '<h3>GREAT!</h3><p>You\'re done with the hard part. Now we\'ll make the UI.<br><em>Click on "Pages".</em></p>',
       my: "top center",
       at: "bottom center",
       target: $('.menu-app-pages'),
-      url: '/gallery/',
+      url: '/tables/',
       setup: function(tour, options) {
         v1.bind('pages-loaded', function() {
           tour.next();
@@ -300,12 +288,27 @@ function() {
         v1.unbind('pages-loaded');
         v1State.attributes.walkthrough++;
       }
+      // my: "left center",
+      // at: "right center",
+      // nextButton: true,
+      // url: '/tables/',
+      // setup: function(tour, options) {
+      //   util.scrollToElement($('#new-relation'));
+      //   var self = this;
+      //   setTimeout(function() {
+      //     tour.view.setTarget($('.relation:first-child'));
+      //     tour.view.show();
+      //   }, 250);
+      //   return { target: $('.relation-pane') };
+      // },
+      // teardown: function() {
+      //   v1State.attributes.walkthrough++;
+      // }
     },
     {
-      content: '<h3>Pages</h3><p>Here you can edit and delete your site\'s pages.<em>Click "Edit Page"</em></p>',
+      content: '<h3>Pages</h3><p>Here you can edit and delete your site\'s pages.<br><em>Click "Edit Page"</em></p>',
       my: "left center",
       at: "right center",
-      nextButton: true,
       url: '/pages/',
       setup: function(tour, options) {
         v1.bind('editor-loaded', function() {
@@ -370,7 +373,7 @@ function() {
       }
     },
     {
-      content: '<h3>Editing Elements</h3><p>Click the text to edit in, and click "Pick Style" to quickly spice it up.</p>',
+      content: '<h3>Editing Elements</h3><p>Click the text to edit it.<br>Then, click "Pick Style" to choose your style.</p>',
       my: "left center",
       at: "right center",
       nextButton: true,
@@ -412,17 +415,33 @@ function() {
       url: '/editor/0/',
       setup: function(tour, options) {
         var elem = $(".facebook-login-btn")[0];
-        $('.edit-login-form-btn').on('click', tour.next);
+        $('.edit-login-form-btn').on('click', function() {
+          setTimeout(tour.next, 400);
+        });
         return { target: $(elem) };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
       }
     },
-    // Then, on the edit login modal
-        // '<h3>Customizing functionality</h3><p>Here, you can customize where the user goes after they login. Not interesting because we only have Homepage right now. Next we'll make a new page.<br><em>Click outside this window to return to the editor.</em></p>'
     {
-      content: '<h3>Making a new Page</h3><p>Hover over Homepage, <em>and make a new page called "Tweet Feed".</em></p>',
+      content: '<h3>Customizing functionality</h3><p>Here, you can select where the user goes after login. Right now you only have Homepage right now. Next, we\'ll make a new page.<br><em>Click outside this window to return to the editor.</em></p>',
+      my: "right center",
+      at: "left center",
+      url: '/editor/0/',
+      nextButton: true,
+      setup: function(tour, options) {
+        return { target: $('.login-route-editor') };
+      },
+      teardown: function() {
+        $('.modal-bg').remove();
+        $('.login-route-editor.modal').remove();
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Making a new Page</h3><p>Hover over "Homepage" to see your pages and to make a new one.<br><em>Make a new page called "Tweet Feed" and click on it to go there.</em></p>',
+      // TODO make the gradients more noticable
       my: "left top",
       at: "right center",
       url: '/editor/0/',
@@ -443,7 +462,7 @@ function() {
       my: "top center",
       at: "bottom center",
       nextButton: true,
-      url: '/editor/2/',
+      url: '/editor/1/',
       setup: function(tour, options) {
 
         $('#item-gallery').animate({
@@ -457,10 +476,10 @@ function() {
       }
     },
     {
-      content: '<h3>Let\'s make a list</h3><p><em>Drag the Tweet List onto the page.</em></p>',
+      content: '<h3>Twitter Feed</h3><p><em>Drag a Tweet List onto the page.</em></p>',
       my: "right center",
       at: "left center",
-      url: '/editor/2/',
+      url: '/editor/1/',
       setup: function(tour, options) {
 
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
@@ -479,10 +498,10 @@ function() {
       }
     },
     {
-      content: '<h3>Editing the list</h3><p>Click "Edit Row" to edit each row of the list.</p>',
+      content: '<h3>About this "list"</h3><p>"Edit Row" allows you to edit each row\'s appearance and content.<br>"Edit Query" allows you to filter and sort the Tweets.<br><em>Click on "Edit Row"</em></p>',
       my: "bottom center",
       at: "top center",
-      url: '/editor/2/',
+      url: '/editor/1/',
       setup: function(tour, options) {
 
         $('.edit-row-btn').one('click', function() {
@@ -498,11 +517,11 @@ function() {
       }
     },
     {
-      content: '<h3>The Green Row</h3><p>The green area is the editable row, that all other rows are modeled after. You can drag UI elements into the green row and play around with them, while you\'re in edit mode.</p>',
+      content: '<h3>The Green Row</h3><p>The green area of the list represents a single row. Drag\'N\'Drop works here too.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
-      url: '/editor/2/',
+      url: '/editor/1/',
       setup: function(tour, options) {
 
         return { target: $('.highlighted').first() };
@@ -516,7 +535,7 @@ function() {
       my: "top center",
       at: "bottom center",
       nextButton: true,
-      url: '/editor/2/',
+      url: '/editor/1/',
       setup: function(tour, options) {
 
         $('#item-gallery').scrollTop(0);
@@ -528,7 +547,7 @@ function() {
         tour.pageLoop.get('data').get('container_info').get('row').get('uielements').bind('add', function() {
           tour.next();
         });
-        return { target: $('.context-entity', '.row-elements-list') };
+        return { target: $('.context-nested-entity', '.row-elements-list') };
       },
       teardown: function(tour, options) {
         tour.pageLoop.get('data').get('container_info').get('row').get('uielements').unbind('add');
@@ -536,10 +555,11 @@ function() {
       }
     },
     {
-      content: '<h3>We\'re Done with this List</h3><p><em>Click "Done Editing" to switch off editing mode.</em></p>',
+      // TODO see how this looks and make shorter if necessary
+      content: '<h3>Cool!</h3><p>You successfully made a Twitter feed. You can make things look a little nicer if you want: resize things in the row, pick styles for the elements.<br><em>When done, Click "Done Editing" to switch off editing mode.</em></p>',
       my: "top center",
       at: "bottom center",
-      url: '/editor/2/',
+      url: '/editor/1/',
       setup: function(tour, options) {
         $('.done-editing').one('click', function() {
           tour.next();
@@ -551,10 +571,10 @@ function() {
       }
     },
     {
-      content: '<h3>Time to Create Some Tweets</h3><p>We have a list of tweets now, but we also need a way to create them. Please drag\'n\'drop a create form onto the page.</p>',
+      content: '<h3>Time to Create Some Tweets</h3><p>We have a Twitter feed now, but how will users Tweet? Please drag a Create Form onto the page.</p>',
       my: "top center",
       at: "bottom center",
-      url: '/editor/2/',
+      url: '/editor/1/',
       setup: function(tour, options) {
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
           if(uielem.hasForm()) {
@@ -567,12 +587,13 @@ function() {
         v1State.attributes.walkthrough++;
       }
     },
+    // TODO associate the Tweet with the user in the modal
     {
       content: '<h3>Almost there!</h3><p>Press "Test Run" and you will see your site up and running!</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
-      url: '/editor/2/',
+      url: '/editor/1/',
       setup: function(tour, options) {
         return { target: $('#deploy') };
       },
@@ -594,3 +615,31 @@ function() {
 
   return quickTour;
 });
+    // {
+    //   content: '<h3>Time to Make it Look Good</h3><p>Click here and go to Themes page.</p>',
+    //   my: "top center",
+    //   at: "bottom center",
+    //   target: $('.menu-app-themes'),
+    //   url: '/tables/',
+    //   setup: function(tour, options) {
+    //     v1.bind('themes-loaded', function() {
+    //       tour.next();
+    //     });
+    //   },
+    //   teardown: function() {
+    //     v1State.attributes.walkthrough++;
+    //   }
+    // },
+    // {
+    //   content: '<h3>Theme</h3><p>We have a variety of themes here. Pick the one you like the most and click the "Load Theme" button.',
+    //   my: "left center",
+    //   at: "right center",
+    //   nextButton: true,
+    //   url: '/gallery/',
+    //   setup: function() {
+    //     return { target: $('#themes-title') };
+    //   },
+    //   teardown: function() {
+    //     v1State.attributes.walkthrough++;
+    //   }
+    // },
