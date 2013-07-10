@@ -73,7 +73,7 @@ function() {
      * Add Table btn
      */
     {
-      content: '<h3>Adding A Table</h3><p>Since you\'d like to store tweets, you need create a Tweet table. Click the "Add Table" button and name the table: <strong>Tweet</strong>.</p>',
+      content: '<h3>Adding A Table</h3><p>In Twitter, users can create and see Tweets.<br>These are stored in a "Table" of tweets.<br><em>Click "Add Table" name the table: <strong>Tweet</strong>.</em></p>',
       my: "left center",
       at: "right center",
       url: '/tables/',
@@ -101,7 +101,7 @@ function() {
      * Tweet Table
      */
     {
-      content: '<h3>Congrats!</h3><p>You have a table that stores tweets now. Time to define what information fields this table stores.</p>',
+      content: '<h3>Congrats!</h3><p>You created a Tweet table. Next, we\'ll define the fields of the table.</p>',
       my: "left top",
       at: "top center",
       url: '/tables/',
@@ -120,7 +120,7 @@ function() {
      * Add Property btn
      */
     {
-      content: '<h3>Create a Field</h3><p>Every tweet contains a message, a text of the actual tweet. Let\'s add our first property, calling it <strong>Content</strong>, and it gets a type of <strong>Text</strong> by default.</p>',
+      content: '<h3>Create a Field</h3><p>Tweets are simple, they consist of one Text field.<br><em>Add a field and name it <strong>Content</strong>.</p>',
       url: '/tables/',
       setup: function(tour, options) {
 
