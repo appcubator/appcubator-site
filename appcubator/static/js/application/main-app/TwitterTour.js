@@ -125,18 +125,22 @@ function() {
       setup: function(tour, options) {
 
         var cid =  v1State.get('tables').getTableWithName("Tweet").cid;
-        v1State.get('tables').getTableWithName("Tweet").get('fields').on('add', function(fieldModel) {
+        checkForContent = function(fieldModel) {
           if(fieldModel.get('name') == "Content") {
             propertyCid = fieldModel.cid;
             tour.next();
           }
           else {
+            alert('Name of the field shoud be "Content"');
             this.remove(fieldModel);
           }
-        });
+        };
+
+        v1State.get('tables').getTableWithName("Tweet").get('fields').bind('add', checkForContent);
         return { target: $('#table-' + cid).find('.add-property-column').first() };
       },
       teardown: function(tour, options) {
+        v1State.get('tables').getTableWithName("Tweet").get('fields').unbind('add', checkForContent);
         v1State.attributes.walkthrough++;
       }
     },
@@ -202,45 +206,70 @@ function() {
       content: '<h3>Relations</h3><p>In Twitter, a tweet has an <strong>owner</strong> and by consequence, users are owners of <strong>tweets</strong>.<br><em>Call the user\'s list of tweets <strong>Tweets</strong>, and the tweet\'s user <strong>Owner</strong>. Then press Done.</em></p>',
       my: "left center",
       at: "top center",
-      bind: ['checkFields'],
       url: '/tables/',
-      checkFields: function(tour, options, e) {
-        var form = $('.edit-relation-div');
-        var form1 = form.find('.new-relation:first-child');
-        var form2 = form.find('.new-relation').eq(1);
+      // checkFields: function(tour, options, e) {
+      //   var form = $('.edit-relation-div');
+      //   var form1 = form.find('.new-relation:first-child');
+      //   var form2 = form.find('.new-relation').eq(1);
 
-        var user_select = form1.find('select').val();
-        var related_name = form1.find('input').val();
-        var tweet_select = form2.find('select').val();
-        var name = form2.find('input').val();
+      //   var user_select = form1.find('select').val();
+      //   var related_name = form1.find('input').val();
+      //   var tweet_select = form2.find('select').val();
+      //   var name = form2.find('input').val();
 
-        if(user_select !== 'many' || related_name !== 'Tweets' || tweet_select !== 'one' || name !== 'Owner') {
-          alert('Make sure you enter "Tweets" in the first box, and "Owner" in the second box');
-          e.stopPropagation();
-        }
-        else {
-          tour.next();
-        }
-      },
+      //   if(user_select !== 'many' || related_name !== 'Tweets' || tweet_select !== 'one' || name !== 'Owner') {
+      //     alert('Make sure you enter "Tweets" in the first box, and "Owner" in the second box');
+      //     e.stopPropagation();
+      //   }
+      //   else {
+      //     tour.next();
+      //   }
+      // },
       setup: function(tour, options) {
         util.scrollToElement($('#new-relation'));
         var self = this;
         setTimeout(function() {
-          $('.done-relation').on('click', self.checkFields);
+          // $('.done-relation').on('click', self.checkFields);
+
+          checkForRelation = function(fieldM) {
+            if( fieldM.get('entity_name') != "User" ||
+                fieldM.get('name') != "Owner" ||
+                fieldM.get('related_name') != "Tweets") {
+
+              this.remove(fieldModel);
+              alert('Make sure you enter "Tweets" in the first box, and "Owner" in the second box');
+            }
+
+            tour.next();
+          };
+
+          v1State.get('tables').models[0].get('fields').bind('add', checkForRelation);
+
         }, 500);
         return {  target: $('#new-relation') };
       },
       teardown: function(tour, options) {
-        $('.done-relation').off('click', this.checkFields);
+          v1State.get('tables').models[0].get('fields').unbind('add', checkForRelation);
+        v1State.attributes.walkthrough++;
+        v1.save();
+      }
+    },
+    {
+      content: '<h3>Save button</h3><p>Let\'s save this work before moving on. We also periodically autosave.<em>Click the save button.</em></p>',
+      my: "right center",
+      at: "left center",
+      url: '/tables/',
+      setup: function(tour, options) {
+
+        $('.save-btn').one('click', function() {
+          tour.next();
+        });
+        return { target: $('.save-btn') };
+      },
+      teardown: function() {
         v1State.attributes.walkthrough++;
       }
     },
-    /*
-     * Save work on tables page TODO
-     */
-    // '<h3>Save button</h3><p>Let\'s save this work before moving on. We also periodically autosave.<em>Click the save button.</em></p>'
-    // this box should be next to the save button.
-
     /*
      * Done with Tables. Going to pages.
      */
@@ -386,16 +415,30 @@ function() {
       url: '/editor/0/',
       setup: function(tour, options) {
         var elem = $(".facebook-login-btn")[0];
-        $('.edit-login-form-btn').on('click', tour.next);
+        $('.edit-login-form-btn').on('click', function() {
+          setTimeout(tour.next, 400);
+        });
         return { target: $(elem) };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
       }
     },
-    // TODO Then, on the edit login modal
-        // '<h3>Customizing functionality</h3><p>Here, you can select where the user goes after login. Right now you only have Homepage right now. Next, we'll make a new page.<br><em>Click outside this window to return to the editor.</em></p>'
-        // when they click outside, the twitter tour should advance to the next thing.
+    {
+      content: '<h3>Customizing functionality</h3><p>Here, you can select where the user goes after login. Right now you only have Homepage right now. Next, we\'ll make a new page.<br><em>Click outside this window to return to the editor.</em></p>',
+      my: "right center",
+      at: "left center",
+      url: '/editor/0/',
+      nextButton: true,
+      setup: function(tour, options) {
+        return { target: $('.login-route-editor') };
+      },
+      teardown: function() {
+        $('.modal-bg').remove();
+        $('.login-route-editor.modal').remove();
+        v1State.attributes.walkthrough++;
+      }
+    },
     {
       content: '<h3>Making a new Page</h3><p>Hover over "Homepage" to see your pages and to make a new one.<br><em>Make a new page called "Tweet Feed" and click on it to go there.</em></p>',
       // TODO make the gradients more noticable
@@ -415,6 +458,24 @@ function() {
       }
     },
     {
+      content: '<h3>Tweet Feed Page</h3><p>On this page, we will put a Twitter feed and a “Create Tweet” form. Let\'s start with the Tweet feed first.</p>',
+      my: "top center",
+      at: "bottom center",
+      nextButton: true,
+      url: '/editor/1/',
+      setup: function(tour, options) {
+
+        $('#item-gallery').animate({
+          scrollTop: $(".entity-list").offset().top - 90
+        }, 200);
+
+        return { target: $('.menu-button.pages') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
       content: '<h3>Twitter Feed</h3><p><em>Drag a Tweet List onto the page.</em></p>',
       my: "right center",
       at: "left center",
@@ -430,7 +491,6 @@ function() {
           }
         });
 
-        // TODO figure out why this is not working ( the bubble doesn't show up )
         return { target: $('.entity-list') };
       },
       teardown: function() {
@@ -487,7 +547,7 @@ function() {
         tour.pageLoop.get('data').get('container_info').get('row').get('uielements').bind('add', function() {
           tour.next();
         });
-        return { target: $('.context-entity', '.row-elements-list') };
+        return { target: $('.context-nested-entity', '.row-elements-list') };
       },
       teardown: function(tour, options) {
         tour.pageLoop.get('data').get('container_info').get('row').get('uielements').unbind('add');
