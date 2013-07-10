@@ -226,6 +226,8 @@ define([
 				url: '/app/'+appId+'/state/',
 				data: JSON.stringify(appState),
 				success: function() {
+					util.dontAskBeforeLeave();
+
 					$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
 					setTimeout(function(){
 						$('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
@@ -237,6 +239,7 @@ define([
                     setTimeout(function(){
                         $el.html("<span>Save</span>").fadeIn();
                     },3000);
+
 				},
 				error: function(data) {
 					if(data.responseText == "ok") return;
