@@ -409,6 +409,7 @@ h3 {
   display: block;
   padding: 60px 80px;
   background-image: -webkit-linear-gradient(top, #fafafa,#ffffff 25%);
+  background-image: -moz-linear-gradient(top, #fafafa,#ffffff 25%);
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -520,6 +521,7 @@ h3 {
   display: block;
   padding: 60px 80px;
   background-image: -webkit-linear-gradient(top, #fafafa,#ffffff 25%);
+  background-image: -moz-linear-gradient(top, #fafafa,#ffffff 25%);
   text-align: left;
   border-bottom: 1px solid #ddd;
   vertical-align: top;
