@@ -54,7 +54,7 @@ require.config({
     },
     "tourist": {
       exports: "Tourist",
-      deps: ["jquery", "backbone"]
+      deps: ["backbone"]
     },
     "util.filepicker": {
       exports: "util"
@@ -77,7 +77,6 @@ require([
   "bootstrap",
   "util",
   "comp",
-  "tourist",
   "xrayquire"
 ],
 function (AppModel,
@@ -156,3 +155,5 @@ function (AppModel,
     new Heyoffline();
   });
 });
+
+define("main", function(){});
