@@ -9,8 +9,10 @@ define([
 function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
 
   var PagesView = Backbone.View.extend({
+
     el: document.body,
-    'css': 'pages',
+    css: 'pages',
+
     initialize: function() {
       _.bindAll(this);
 
@@ -102,10 +104,6 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
             {
               "url": "internal://Homepage",
               "title": "Homepage"
-            },
-            {
-              "url": "internal://Registration Page",
-              "title": "Registration Page"
             }
           ]
         }

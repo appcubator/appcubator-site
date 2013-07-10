@@ -262,7 +262,7 @@ h3.edit-url {
   line-height: 18px;
 }
 
-.select-view {
+.widget-editor .select-view {
   position: relative;
   height: 40px;
   min-width: 240px;
@@ -272,7 +272,7 @@ h3.edit-url {
   -webkit-transition: height linear 0.1s;
 }
 
-.select-view .updown-handle {
+.widget-editor .select-view .updown-handle {
   width: 100%;
   height: 40px;
   position: absolute;
@@ -284,20 +284,21 @@ h3.edit-url {
   background-position: right;
   z-index: 1001;
 }
-.select-view ul {
+
+.widget-editor .select-view ul {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
 }
 
-.select-view ul li {
+.widget-editor .select-view ul li {
   height: 40px;
   padding: 10px;
   cursor: pointer;
 }
 
-.select-view ul li:hover {
+.widget-editor .select-view ul li:hover {
   background-color: #3b4555;
 }
 
