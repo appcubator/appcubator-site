@@ -211,6 +211,7 @@ function(WidgetContentEditor,
     openRowEditor: function() {
       this.hideSubviews();
       this.el.appendChild(this.renderButtonWithWidthCustomWidth('done-editing', 'Done Editing', 190));
+      this.el.style.width = '200px';
       var entity = this.model.get('data').get('container_info').get('entity');
       this.listGalleryView = document.createElement('div');
       this.listGalleryView.className = 'elements-list';
@@ -226,6 +227,7 @@ function(WidgetContentEditor,
 
     closeEditingMode: function() {
       this.$el.find('.section-done-editing').remove();
+      this.el.style.width = '';
       this.listGalleryView.remove();
       this.showSubviews();
       this.model.trigger('editModeOff');
@@ -255,6 +257,7 @@ function(WidgetContentEditor,
       if(this.layoutEditor) this.layoutEditor.clear();
       if(this.infoEditor) this.infoEditor.clear();
       this.el.innerHTML = '';
+      this.el.style.width = '';
       this.$el.hide();
     },
 

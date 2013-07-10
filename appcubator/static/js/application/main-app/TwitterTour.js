@@ -8,7 +8,7 @@ function() {
      */
     {
       target: $('.qm-btn'),
-      content: '<h3>Questions?</h3><p>Please follow the directions written in these small boxes. You can click the question marks at anytime to learn more details.</p>',
+      content: '<h3>Questions?</h3><p>If you have questions during the walkthrough, click the question marks for more info.</p>',
       my: "right center",
       at: "left center",
       url: '/',
@@ -23,7 +23,7 @@ function() {
      */
     {
       target: $('.menu-app-entities'),
-      content: '<h3>Tables</h3><p>Go to the tables page.</p>',
+      content: '<h3>Tables</h3><p>Click this button to go to the “Tables” page.<br><em>Go to the “Tables” page.</em></p>',
       my: "top center",
       at: "bottom center",
       url: '/',
@@ -37,10 +37,27 @@ function() {
       }
     },
     /*
+     * Tables page explanation
+     */
+    {
+      target: $('.menu-app-entities'),
+      content: '<h3>Tables</h3><p>This page is where you define the different types of users that use your application and the data they’ll create.</p>',
+      my: "top center",
+      at: "bottom center",
+      nextButton: true,
+      url: '/tables/',
+      /*setup: function() {
+        return {  target: $('#add-role') };
+      },*/
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    /*
      * Add User Role btn
      */
     {
-      content: '<h3>Adding Roles</h3><p>You already have a user role set up, but this is where you setup new roles for your application.</p>',
+      content: '<h3>User Roles</h3><p>In Twitter, there is only one type of user, but in some applications, there may be differences, ie. Doctors vs Patients.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -56,7 +73,7 @@ function() {
      * Add Table btn
      */
     {
-      content: '<h3>Adding A Table</h3><p>Since you\'d like to store tweets, you need create a Tweet table. Click the "Add Table" button and name the table: <strong>Tweet</strong>.</p>',
+      content: '<h3>Adding A Table</h3><p>In Twitter, users can create and see Tweets.<br>These are stored in a "Table" of tweets.<br><em>Click "Add Table" name the table: <strong>Tweet</strong>.</em></p>',
       my: "left center",
       at: "right center",
       url: '/tables/',
@@ -84,7 +101,7 @@ function() {
      * Tweet Table
      */
     {
-      content: '<h3>Congrats!</h3><p>You have a table that stores tweets now. Time to define what information fields this table stores.</p>',
+      content: '<h3>Congrats!</h3><p>You created a Tweet table. Next, we\'ll define the fields of the table.</p>',
       my: "left top",
       at: "top center",
       url: '/tables/',
@@ -103,7 +120,7 @@ function() {
      * Add Property btn
      */
     {
-      content: '<h3>Create a Field</h3><p>Every tweet contains a message, a text of the actual tweet. Let\'s add our first property, calling it <strong>Content</strong>, and it gets a type of <strong>Text</strong> by default.</p>',
+      content: '<h3>Create a Field</h3><p>Tweets are simple, they consist of one Text field.<br><em>Add a field and name it <strong>Content</strong>.</p>',
       url: '/tables/',
       setup: function(tour, options) {
 
@@ -127,7 +144,7 @@ function() {
      * About Relations
      */
     {
-      content: '<h3>Nice!</h3><p>So we have described a tweet as an entity that consists of some "Content" text. Now we need to associate <strong>Tweets</strong> with <strong>Users</strong>?</p>',
+      content: '<h3>Nice!</h3><p>Next, we\'ll associate <strong>Tweets</strong> with <strong>Users</strong>.</p>',
       my: "left top",
       at: "right center",
       url: '/tables/',
@@ -145,7 +162,7 @@ function() {
      * Add Relation btn
      */
     {
-      content: '<h3>Adding A Relation</h3><p>Click the button below to add a new relation</p>',
+      content: '<h3>Make a Relation</h3><p>Relations allow you to associate users and tweets.<br><em>Click Add Relation.</em></p>',
       my: "bottom center",
       at: "top center",
       url: '/tables/',
@@ -163,7 +180,7 @@ function() {
      * Create Relation Options
      */
     {
-      content: '<h3>What kind of Relationship?</h3><p>We want to describe a relationship between <strong>Users</strong> and <strong>Tweets</strong>, so choose this option.</p>',
+      content: '<h3>Relations</h3><p><em>Click below to make a User - Tweet relation.</em></p>',
       my: "bottom left",
       at: "top left",
       url: '/tables/',
@@ -182,7 +199,7 @@ function() {
      * Create Relation Form
      */
     {
-      content: '<h3>How are Users and Tweets related?</h3><p>Each User owns many tweets, and each individual tweet belongs to a User. We need to give names for the relations between the List of Tweets and the respective User. Let\'s call these new relations: <strong>Tweets</strong> and <strong>Owner</strong></p>',
+      content: '<h3>Relations</h3><p>In Twitter, a tweet has an <strong>owner</strong> and by consequence, users are owners of <strong>tweets</strong>.<br><em>Call the user\'s list of tweets <strong>Tweets</strong>, and the tweet\'s user <strong>Owner</strong>.</em></p>',
       my: "left center",
       at: "top center",
       bind: ['checkFields'],
@@ -222,7 +239,7 @@ function() {
      * User-Tweet relation
      */
     {
-      content: '<h3>GREAT!</h3><p>Now that there is a one-to-many relation between your users and tweets, you\'re done with the harder part.</p>',
+      content: '<h3>GREAT!</h3><p>You\'re done with the hard part. Now we\'ll make the UI.</p>',
       my: "left center",
       at: "right center",
       nextButton: true,
@@ -269,7 +286,7 @@ function() {
     //   }
     // },
     {
-      content: '<h3>Pages</h3><p>Time to put things together. Click on the "Pages" tab to go to Pages Page.',
+      content: '<h3>Pages</h3><p><em>Click on "Pages".</em></p>',
       my: "top center",
       at: "bottom center",
       target: $('.menu-app-pages'),
@@ -285,67 +302,18 @@ function() {
       }
     },
     {
-      content: '<h3>Homepage</h3><p>You have a homepage by default. Ideally you would put the login and signup forms here as well a good explanation of your app. But before that, let\'s create a page for our tweets to show up.</p>',
+      content: '<h3>Pages</h3><p>Here you can edit and delete your site\'s pages.<em>Click "Edit Page"</em></p>',
       my: "left center",
       at: "right center",
       nextButton: true,
       url: '/pages/',
       setup: function(tour, options) {
-        return { target: $('.page-view').first() };
-      },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
-      content: '<h3>Create a new page</h3><p>Click on this large button.</p>',
-      my: "top center",
-      at: "bottom center",
-      url: '/pages/',
-      setup: function(tour, options) {
-        $('.create-page').one('click', function() {
-          tour.next();
-        });
-
-        return { target : $('.create-page').first() };
-      },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
-      content: '<h3>Name Your Page</h3><p>Name your page "Tweet Feed" and press enter.</p>',
-      my: "top center",
-      at: "bottom center",
-      url: '/pages/',
-      setup: function(tour, options) {
-        v1State.get('pages').bind('add', function(pageModel) {
-          if(pageModel.get('name') == "Tweet Feed") {
-            tour.next();
-          }
-          else {
-            alert('You should name your page "Tweet Feed". Just for the sake of the demo. Otherwise this is a free country.');
-          }
-        });
-        return { target: $('.page-name') };
-      },
-      teardown: function() {
-        v1State.get('pages').unbind('add');
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
-      content: '<h3>Alright</h3><p>We can go ahead and start editing our pages. Please click "Edit Page".</p>',
-      my: "left center",
-      at: "right center",
-      url: '/pages/',
-      setup: function(tour, options) {
         v1.bind('editor-loaded', function() {
           setTimeout(function() {
             tour.next();
-          }, 120);
+          }, 220);
         });
-        return { target: $('.edit.item').first() };
+        return { target: $('.page-view').first() };
       },
       teardown: function() {
         v1.unbind('editor-loaded');
@@ -353,7 +321,7 @@ function() {
       }
     },
     {
-      content: '<h3>Welcome to Editor</h3><p>This is the interface editor; what you see is what you get. You can freely drag and drop elements onto the gallery and position them however you like.</p>',
+      content: '<h3>Welcome to Editor</h3><p>What you see is what you get. You can drag elements onto the page and play around with them.</p>',
       my: "right top",
       at: "left bottom",
       nextButton: true,
@@ -366,7 +334,7 @@ function() {
       }
     },
     {
-      content: '<h3>Saving Your Progress</h3><p>Make sure to save your progress often by clicking this "Save" button as you build your application.</p>',
+      content: '<h3>Saving Your Progress</h3><p>Save early, save often. We periodically autosave for you.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -383,7 +351,7 @@ function() {
       }
     },
     {
-      content: '<h3>Drag\'n\'Drop</h3><p>Just drag and drop this header element to the page. Click on the “Default Header” to edit the text to something you want.</p>',
+      content: '<h3>Drag\'n\'Drop</h3><p><em>Drag this header element to the page.</em></p>',
       my: "right center",
       at: "left center",
       url: '/editor/0/',
@@ -402,7 +370,7 @@ function() {
       }
     },
     {
-      content: '<h3>Editing Elements</h3><p>You can change the text or click on "Pick Style" to edit this header.</p>',
+      content: '<h3>Editing Elements</h3><p>Click the text to edit in, and click "Pick Style" to quickly spice it up.</p>',
       my: "left center",
       at: "right center",
       nextButton: true,
@@ -419,7 +387,7 @@ function() {
       }
     },
     {
-      content: '<h3>Time to get some users!</h3><p>Just drag and drop this facebook login button to the page to easily connect with new users.</p>',
+      content: '<h3>Time to get some users!</h3><p><em>Drag this facebook login button onto the page.</em></p>',
       my: "top center",
       at: "bottom center",
       url: '/editor/0/',
@@ -438,7 +406,23 @@ function() {
       }
     },
     {
-      content: '<h3>Let\'s move to the other page.</h3><p>Please hover over the page menu and click on "Tweet Feed" to go to the other page.</p>',
+      content: '<h3>Customizing functionality</h3><p>Some elements, like this Facebook button, can be customized.<br><em>Select it and click <strong>Edit Login</strong></em></p>',
+      my: "left center",
+      at: "right center",
+      url: '/editor/0/',
+      setup: function(tour, options) {
+        var elem = $(".facebook-login-btn")[0];
+        $('.edit-login-form-btn').on('click', tour.next);
+        return { target: $(elem) };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    // Then, on the edit login modal
+        // '<h3>Customizing functionality</h3><p>Here, you can customize where the user goes after they login. Not interesting because we only have Homepage right now. Next we'll make a new page.<br><em>Click outside this window to return to the editor.</em></p>'
+    {
+      content: '<h3>Making a new Page</h3><p>Hover over Homepage, <em>and make a new page called "Tweet Feed".</em></p>',
       my: "left top",
       at: "right center",
       url: '/editor/0/',
@@ -455,7 +439,7 @@ function() {
       }
     },
     {
-      content: '<h3>Feed Page</h3><p>On this page, we will put a list of the User’s Tweets, something like a stream. We will also add a “Create Tweet” form to tweet new stuff. Let\'s start with the list first.</p>',
+      content: '<h3>Tweet Feed Page</h3><p>On this page, we will put a Twitter feed and a “Create Tweet” form. Let\'s start with the Tweet feed first.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -473,7 +457,7 @@ function() {
       }
     },
     {
-      content: '<h3>Let\'s make a list</h3><p>Drag and drop the Tweet List to the top middle of the page.</p>',
+      content: '<h3>Let\'s make a list</h3><p><em>Drag the Tweet List onto the page.</em></p>',
       my: "right center",
       at: "left center",
       url: '/editor/2/',
@@ -495,7 +479,7 @@ function() {
       }
     },
     {
-      content: '<h3>We have the list of Tweets!</h3><p>Now we can start editing by clicking the "Edit Row" button.</p>',
+      content: '<h3>Editing the list</h3><p>Click "Edit Row" to edit each row of the list.</p>',
       my: "bottom center",
       at: "top center",
       url: '/editor/2/',
@@ -514,7 +498,7 @@ function() {
       }
     },
     {
-      content: '<h3>The Green Row</h3><p>The green area is the first, editable row. You should start dragging and dropping design elements.</p>',
+      content: '<h3>The Green Row</h3><p>The green area is the editable row, that all other rows are modeled after. You can drag UI elements into the green row and play around with them, while you\'re in edit mode.</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -528,7 +512,7 @@ function() {
       }
     },
     {
-      content: '<h3>Content of the Tweet</h3><p>Drag\'n\'Drop it on the green area.</p>',
+      content: '<h3>Dragging Tweet Stuff</h3><p><em>Drag "Tweet.Owner.username" into the green row.</p></em>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -552,7 +536,7 @@ function() {
       }
     },
     {
-      content: '<h3>We\'re Done with this List</h3><p>Just clid "Done Editing" to switch off editing mode.</p>',
+      content: '<h3>We\'re Done with this List</h3><p><em>Click "Done Editing" to switch off editing mode.</em></p>',
       my: "top center",
       at: "bottom center",
       url: '/editor/2/',
@@ -567,7 +551,7 @@ function() {
       }
     },
     {
-      content: '<h3>Time to Create Some Tweets</h3><p>We have a list of tweets now, but we also need a way to creat them. Please drag\'n\'drop a create form onto the page.</p>',
+      content: '<h3>Time to Create Some Tweets</h3><p>We have a list of tweets now, but we also need a way to create them. Please drag\'n\'drop a create form onto the page.</p>',
       my: "top center",
       at: "bottom center",
       url: '/editor/2/',

@@ -70,6 +70,8 @@ function(TableCollection,
       },
 
       createUserRole: function(e) {
+        e.preventDefault();
+
         var name = $(e.target).find('input[type="text"]').val();
         var elem = new UserTableModel({
           name: name
@@ -105,23 +107,25 @@ function(TableCollection,
       },
 
       createTable: function(e) {
+        e.preventDefault();
         var name = $(e.target).find('input[type="text"]').val();
 
           var elem = new TableModel({
             name: name,
             fields: []
           });
+
           if(!v1State.get('tables').isNameUnique(name)) {
             new ErrorDialogueView({text: 'Page name should be unique.'});
-            return;
+            return false;
           }
           if(!util.isAlphaNumeric(name)){
             new ErrorDialogueView({text: 'Page name should be alphanumberic.'});
-            return;
+            return false;
           }
           if(util.doesStartWithKeywords(name)){
             new ErrorDialogueView({text: 'Page name should not start with "Page", "Form" or "loop".'});
-            return;
+            return false;
           }
 
           v1State.get('tables').add(elem);
@@ -130,9 +134,8 @@ function(TableCollection,
         $('#add-entity').fadeIn();
         $(e.target).hide();
 
-        e.preventDefault();
-        return elem;
 
+        return elem;
       },
 
       showCreateRelationForm: function() {
