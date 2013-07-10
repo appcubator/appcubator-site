@@ -48,12 +48,17 @@ function(SelectView) {
         this.hrefLi = document.createElement('li');
       }
 
+      console.log(this.model);
+      console.log(this.model.get('data').get('content_attribs').get('href'));
       var listOfPages = this.model.getListOfPages();
       var href = this.model.get('data').get('content_attribs').get('href');
 
       var external;
       if(String(href).indexOf('internal://') < 0) {
-        external = href;
+        href = {
+          name: href,
+          val: href
+        };
       }
       else {
         href = {
