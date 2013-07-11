@@ -156,7 +156,7 @@ define([
 
       this.addHeaderItem('Page Context Data');
       _(pageContext).each(function(tableName) {
-        var tableM = v1State.get('tables').getTableWithName(tableName);
+        var tableM = v1State.getTableModelWithName(tableName);
         if(!tableM) throw "Error with page context";
         var tableId = tableM.cid;
         var id = 'entity-' + tableM.cid;
@@ -322,6 +322,8 @@ define([
     createEditForm: function(layout, id) {
       var cid = String(id).replace('entity-','');
       var entity = v1State.get('tables').get(cid);
+      if(!entity) entity = v1State.get('users').get(cid);
+
       return this.widgetsCollection.createEditForm(layout, entity);
     },
 

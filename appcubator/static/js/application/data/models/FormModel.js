@@ -86,7 +86,7 @@ function(
     getRelationalActions: function(pageModel) {
 
       if(this.get('action') == "login" || this.get('action') == "signup") return (new ActionCollection([]));
-      var entity = v1State.get('tables').getTableWithName(this.get('entity'));
+      var entity = v1State.getTableModelWithName(this.get('entity'));
       var possibleActions = new ActionCollection();
       var userFields = pageModel.getFields();
 
