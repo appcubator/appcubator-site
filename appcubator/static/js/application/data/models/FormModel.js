@@ -109,7 +109,21 @@ function(
           possibleActions.push(action);
         }
       }, this);
-      console.log(this.entity);
+
+      return possibleActions;
+    },
+
+    getEmailActions: function (argument) {
+      var possibleActions = new ActionCollection();
+
+      v1State.get('emails').each(function(emailM) {
+          var action = { "type": "email",
+                         "email_to": "CurrentUser",
+                         "email": emailM.get('name'),
+                         "nl_description": "Send " + emailM.get('name') + ' Email'};
+          possibleActions.push(action);
+      });
+
       return possibleActions;
     },
 

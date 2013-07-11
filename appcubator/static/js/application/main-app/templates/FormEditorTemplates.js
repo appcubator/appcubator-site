@@ -91,6 +91,8 @@ FormEditorTemplates.actionPane = [
     '<ul class="action goto-list">',
     '</ul>',
     '<ul class="action relational-list">',
+    '</ul>',
+    '<ul class="action email-list">',
     '</ul>'
 ].join('\n');
 

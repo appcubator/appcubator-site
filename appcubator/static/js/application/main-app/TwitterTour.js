@@ -314,7 +314,7 @@ function() {
         v1.bind('editor-loaded', function() {
           setTimeout(function() {
             tour.next();
-          }, 220);
+          }, 400);
         });
         return { target: $('.page-view').first() };
       },

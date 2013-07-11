@@ -16,6 +16,7 @@ function(FormFieldModel, ActionModel, TutorialView) {
     events: {
       'click li.goto-action'         : 'gotoActionClicked',
       'click li.relational-action'   : 'relationalActionClicked',
+      'click li.email-action'        : 'emailActionClicked',
       'click li.current-action'      : 'currentActionClicked'
     },
 
@@ -29,7 +30,8 @@ function(FormFieldModel, ActionModel, TutorialView) {
       this.listenTo(this.model.get('actions'), 'remove', this.actionRemoved);
       this.listenTo(this.model, 'change:goto', this.changedGoto);
 
-      this.possibleActions =  this.model.getRelationalActions(v1State.getCurrentPage());
+      this.possibleRelationalActions =  this.model.getRelationalActions(v1State.getCurrentPage());
+      this.possibleEmailActions = this.model.getEmailActions();
       this.possibleGotos = this.model.getPossibleGotos();
     },
 
@@ -38,6 +40,7 @@ function(FormFieldModel, ActionModel, TutorialView) {
 
       this.renderRelations();
       this.renderGotos();
+      this.renderEmails();
 
       this.model.get('actions').each(function(action) {
         this.$el.find('.current-actions').append('<li id="action-'+action.cid +'" class="current-action">'+action.getNL()+'<div class="remove-from-list"></div></li>');
@@ -47,8 +50,14 @@ function(FormFieldModel, ActionModel, TutorialView) {
     },
 
     renderRelations: function() {
-      this.possibleActions.each(function(actionModel, ind) {
+      this.possibleRelationalActions.each(function(actionModel, ind) {
         this.$el.find('.relational-list').append('<li id="action-'+actionModel.cid+'" class="relational-action">' + actionModel.get('nl_description')+'<div class="add-to-list"></div></li>');
+      }, this);
+    },
+
+    renderEmails: function() {
+      this.possibleEmailActions.each(function(actionModel, ind) {
+        this.$el.find('.email-list').append('<li id="action-'+actionModel.cid+'" class="email-action">' + actionModel.get('nl_description')+'<div class="add-to-list"></div></li>');
       }, this);
     },
 
@@ -67,18 +76,24 @@ function(FormFieldModel, ActionModel, TutorialView) {
 
 
     gotoActionClicked: function(e) {
-      var pageCid = e.target.id.replace('page-','');
+      var pageCid = (e.target.id||e.target.parentNode.id).replace('page-','');
       this.model.set('goto', this.possibleGotos.get(pageCid));
     },
 
     relationalActionClicked: function(e) {
-      var actionCid = e.target.id.replace('action-','');
-      var actionModel = this.possibleActions.get(actionCid);
+      var actionCid = (e.target.id||e.target.parentNode.id).replace('action-','');
+      var actionModel = this.possibleRelationalActions.get(actionCid);
+      this.model.get('actions').push(actionModel);
+    },
+
+    emailActionClicked: function(e) {
+      var actionCid = (e.target.id||e.target.parentNode.id).replace('action-','');
+      var actionModel = this.possibleEmailActions.get(actionCid);
       this.model.get('actions').push(actionModel);
     },
 
     currentActionClicked: function(e) {
-      var actionCid = e.target.id.replace('action-','');
+      var actionCid = (e.target.id||e.target.parentNode.id).replace('action-','');
       this.model.get('actions').remove(actionCid);
     },
 

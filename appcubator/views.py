@@ -239,7 +239,7 @@ def app_save_state(request, app, require_valid=True):
         app.save()
         return (200, "ok")
     try:
-        a = AnalyzedApp.create_from_dict(app.state)
+        a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
     except analyzer.UserInputError, e:
         app.save()
         return (400, e.to_dict())
