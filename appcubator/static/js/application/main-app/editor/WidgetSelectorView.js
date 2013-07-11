@@ -190,6 +190,10 @@ function() {
     resized: function(e, ui) {
       var left = Math.round((ui.position.left / this.positionHorizontalGrid));
       var top  = Math.round((ui.position.top  / this.positionVerticalGrid));
+
+      if(left < 0) left = 0;
+      if(top < 0) top = 0;
+
       var deltaHeight = Math.round((ui.size.height + 2) / this.positionVerticalGrid);
       var deltaWidth = Math.round((ui.size.width + 2) / this.positionHorizontalGrid);
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
@@ -225,6 +229,9 @@ function() {
 
       var top = Math.round((ui.position.top / this.positionVerticalGrid));
       var left = Math.round((ui.position.left / this.positionHorizontalGrid));
+
+      if(left < 0) left = 0;
+      if(top < 0) top = 0;
 
       if(model.get('layout').get('left') == left) {
         model.get('layout').trigger('change:left');
