@@ -59,6 +59,7 @@
 .modal.query-modal label {
   margin-top: 0px;
   padding: 4px;
+  display: inline-block;
 }
 
 .modal.query-modal label input[type="checkbox"], .modal.query-modal label input[type="radio"] {

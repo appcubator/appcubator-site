@@ -7,9 +7,11 @@ function() {
   var TableQueryView = Backbone.ModalView.extend({
     className : 'query-modal modal',
     css : 'query-editor',
+    title: "Query Editor",
 
     events: {
       'change .fields-to-display'   : 'fieldsToDisplayChanged',
+      'change .query-option'        : 'queryOptionChanged',
       'click .belongs-to-user'      : 'belongsToUserChanged',
       'click .nmr-rows'             : 'nmrRowsChanged',
       'keyup #first-nmr'          : 'nmrRowsNumberChanged',
@@ -24,6 +26,15 @@ function() {
       this.containerType = containerType;
       this.model = widgetModel.get('data').get('container_info').get('query');
       this.entity = widgetModel.get('data').get('container_info').get('entity');
+
+      if(this.containerType == "list") {
+        this.title =  this.entity.get('name') + ' List Query Editor';
+      }
+      else {
+        this.title =  this.entity.get('name') + ' Table Query Editor';
+      }
+
+      this.possibleQueries = this.getCreatePossibleQueries(this.entity.getRelationalFields());
 
       this.render();
 
@@ -55,12 +66,28 @@ function() {
         nLang     : self.getNLdescription()
       };
 
-      var contentHTML = _.template(Templates.queryView, {entity: self.entity, query: self.model, c: checks, type: self.containerType });
+      var contentHTML = _.template(Templates.queryView, {entity: self.entity, query: self.model, queries: self.possibleQueries, c: checks, type: self.containerType });
       this.el.innerHTML = contentHTML;
 
       $('select option[value="'+ this.model.get('sortAccordingTo')+'"]').attr('selected', 'selected');
 
+      this.renderSelectedQueries();
       return this;
+    },
+
+    renderSelectedQueries: function () {
+
+      this.model.get('where').each(function(whereModel) {
+        this.possibleQueries.each(function(possibleWhere) {
+
+          if(whereModel.get('equal_to') == possibleWhere.get('equal_to') &&
+             whereModel.get('field_name') == possibleWhere.get('field_name')) {
+            var input = document.getElementById('query-' + possibleWhere.cid);
+            input.checked = true;
+          }
+
+        }, this);
+      }, this);
     },
 
     changeDescription: function() {
@@ -91,6 +118,53 @@ function() {
       else {
         this.model.get('where').removeClauseWithName('user');
       }
+    },
+
+    queryOptionChanged: function (e) {
+      var cid = e.target.id.replace('query-', '');
+      var queryM = this.possibleQueries.get(cid);
+
+      if(e.target.checked) {
+        this.model.get('where').push(queryM);
+      }
+      else {
+        this.model.get('where').each(function(whereModel) {
+          if(whereModel.get('equal_to') == queryM.get('equal_to') &&
+             whereModel.get('field_name') == queryM.get('field_name')) {
+            this.model.get('where').remove(whereModel.cid);
+          }
+        }, this);
+      }
+    },
+
+    getCreatePossibleQueries: function (fieldModels) {
+      var possibleQueries = new Backbone.Collection();
+
+      _(v1State.getCurrentPage().getContextEntities()).each(function(entityName) {
+        _(fieldModels).each(function(fieldModel) {
+          if(entityName === fieldModel.get('entity_name')) {
+            var query = {
+              equal_to  : "Page." + fieldModel.get('entity_name'),
+              field_name: fieldModel.get('name')
+            };
+            query.nl_description = "Show " + util.pluralize(this.entity.get('name')) + " where "+ fieldModel.get('name') + " is equal to "+ fieldModel.get('entity_name') + ' of the current page.';
+            possibleQueries.push(query);
+          }
+        }, this);
+      }, this);
+
+      _(fieldModels).each(function(fieldModel) {
+        if("User" === fieldModel.get('entity_name')) {
+          var query = {
+            equal_to  : "CurrentUser" ,
+            field_name: fieldModel.get('name')
+          };
+          query.nl_description = "Show " + util.pluralize(this.entity.get('name')) + " where "+ fieldModel.get('name') + " is equal to the current user.";
+          possibleQueries.push(query);
+        }
+      }, this);
+
+      return possibleQueries;
     },
 
     nmrRowsChanged: function(e) {
