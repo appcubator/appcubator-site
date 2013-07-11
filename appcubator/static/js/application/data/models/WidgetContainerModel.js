@@ -21,11 +21,6 @@ function( WidgetModel,
       }, this);
     },
 
-    getForm: function() {
-      return this.get('data').get('container_info').get('form');
-    },
-
-
     toJSON : function() {
       var json = _.clone(this.attributes);
 
