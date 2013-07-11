@@ -56,6 +56,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -69,6 +70,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -83,6 +85,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -97,6 +100,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -113,6 +117,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
