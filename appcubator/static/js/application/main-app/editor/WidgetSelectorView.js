@@ -301,11 +301,11 @@ function() {
     },
 
     doKeyBindings: function() {
-      keyDispatcher.key('down', this.moveSelectedDown);
-      keyDispatcher.key('up', this.moveSelectedUp);
-      keyDispatcher.key('left', this.moveSelectedLeft);
-      keyDispatcher.key('right', this.moveSelectedRight);
-      keyDispatcher.key('backspace', this.deleteSelected);
+      keyDispatcher.bind('down', this.moveSelectedDown);
+      keyDispatcher.bind('up', this.moveSelectedUp);
+      keyDispatcher.bind('left', this.moveSelectedLeft);
+      keyDispatcher.bind('right', this.moveSelectedRight);
+      keyDispatcher.bind('backspace', this.deleteSelected);
     },
 
     hoverClicked: function(e) {
@@ -366,6 +366,7 @@ function() {
     },
 
     remove: function() {
+      this.deselect();
       $('.page.full').off('mousedown', this.clickedPage);
       Backbone.View.prototype.remove.call(this);
     }

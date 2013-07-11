@@ -77,8 +77,8 @@ function( PageModel,
 
       var self = this; // for binding deploy to ctrlshiftd
       /* Bindings */
-      keyDispatcher.key('⌘+c, ctrl+c', this.copy);
-      keyDispatcher.key('⌘+v, ctrl+v', this.paste);
+      // keyDispatcher.bind('⌘+c, ctrl+c', this.copy);
+      // keyDispatcher.bind('⌘+v, ctrl+v', this.paste);
 
       this.title = "Editor";
     },

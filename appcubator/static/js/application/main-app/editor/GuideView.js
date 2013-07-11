@@ -22,7 +22,7 @@ function(WidgetModel) {
 
       this.widgetsCollection = widgetsCollection;
 
-      keyDispatcher.key(';', this.toggleGuides);
+      keyDispatcher.bind(';', this.toggleGuides);
     },
 
     render: function() {
