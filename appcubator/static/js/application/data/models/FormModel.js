@@ -42,7 +42,7 @@ function(
     },
 
     fillWithProps: function(entity) {
-      entity.get('fields').each(function(fieldModel) {
+      entity.getFieldsColl().each(function(fieldModel) {
         var type = fieldModel.get('type');
         var formFieldModel = { field_name: fieldModel.get('name'),
                                displayType: "single-line-text",
@@ -63,7 +63,7 @@ function(
     },
 
     fillWithEditProps: function(entity) {
-      entity.get('fields').each(function(fieldModel) {
+      entity.getFieldsColl().each(function(fieldModel) {
         var type = fieldModel.get('type');
         var formFieldModel = { field_name: fieldModel.get('name'),
                                displayType: "single-line-text",
