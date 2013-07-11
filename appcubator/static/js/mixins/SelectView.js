@@ -48,7 +48,7 @@ function(Backbone) {
         li.id = 'li-' + self.cid + '-' + ind;
         val = val;
         if(self.isNameVal) { val = val.name; }
-        li.innerText = val;
+        li.innerHTML = val;
         list.appendChild(li);
       });
 
