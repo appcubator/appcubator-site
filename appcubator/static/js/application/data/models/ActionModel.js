@@ -17,6 +17,10 @@ function() {
         if(this.get('nl_description')) return this.get('nl_description');
       }
 
+      if(this.get('type') == "email") {
+        if(this.get('nl_description')) return this.get('nl_description');
+      }
+
       return this.get('type');
     },
 
