@@ -26,7 +26,7 @@ define([
 
       if(entity.get('fields').getImageFields()) hasImageElements = 1;
 
-      entity.get('fields').each(function(fieldModel) {
+      entity.getFieldsColl().each(function(fieldModel) {
 
         var type = fieldModel.get('type');
         if(type == "fk"||type == "m2m"||type == "o2o") { return; }

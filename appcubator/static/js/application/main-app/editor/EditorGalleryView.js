@@ -148,6 +148,15 @@ define([
         this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon');
         this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon');
       }, this);
+
+      v1State.get('users').each(function(entityModel) {
+        var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
+        var id = 'entity-' + entityModel.cid;
+        this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon');
+        this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon');
+        this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon');
+        this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon');
+      }, this);
     },
 
     renderContextEntityForms: function() {
@@ -329,25 +338,25 @@ define([
 
     createEntityTable: function(layout, id) {
       var cid = String(id).replace('entity-','');
-      var entity = v1State.get('tables').get(cid);
+      var entity = v1State.getTableModelWithCid(cid);
       return this.widgetsCollection.createTable(layout, entity);
     },
 
     createEntityList: function(layout, id) {
       var cid = String(id).replace('entity-','');
-      var entity = v1State.get('tables').get(cid);
+      var entity = v1State.getTableModelWithCid(cid);
       return this.widgetsCollection.createList(layout, entity);
     },
 
     createSearchBox: function(layout, id) {
       var cid = String(id).replace('entity-','');
-      var entity = v1State.get('tables').get(cid);
+      var entity = v1State.getTableModelWithCid(cid);
       return this.widgetsCollection.createSearchbox(layout, entity);
     },
 
     createSearchList: function(layout, id) {
       var cid = String(id).replace('entity-','');
-      var entity = v1State.get('tables').get(cid);
+      var entity = v1State.getTableModelWithCid(cid);
       return this.widgetsCollection.createSearchList(layout, entity);
     },
 
