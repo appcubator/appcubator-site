@@ -2674,8 +2674,9 @@ a.badge:hover {
 
 .middle-group {
   position: relative;
-  left: 430px;
-  width: 344px;
+  left: 50%;
+  margin-left: -180px;
+  width: 360px;
   top: 4px;
   height: 42px;
   display: inline-block;
@@ -2809,20 +2810,20 @@ li.model span.title {
 }
 
 .pages {
-  width: 254px;
+  width: 314px;
   text-align: left;
   background-color: #2b3545;
   padding: 0;
 }
 
 .pages ul {
+  display: inline-block;
+  width: 269px;
   padding: 0;
   background-color: #2b3545;
   max-height: 42px;
   overflow: hidden;
   margin: 0;
-  border-bottom-right-radius: 6px;
-  border-top-right-radius: 6px;
 }
 
 .pages ul li {
