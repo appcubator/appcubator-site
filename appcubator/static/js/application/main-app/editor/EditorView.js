@@ -167,7 +167,7 @@ function( PageModel,
     },
 
     createPage: function(name) {
-      var pageUrlPart = name.replace(' ', '_');
+      var pageUrlPart = name.replace(/ /g, '_');
       var pageUrl = { urlparts : [pageUrlPart] };
       var pageInd = v1State.get('pages').length;
       var pageModel = new PageModel({ name: name, url: pageUrl});
