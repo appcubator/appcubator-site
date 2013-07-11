@@ -51,9 +51,10 @@
 input[type="text"].property-name-input {
   height: 34px;
   padding-left: 10px;
+  padding-top: 5px;
   width: 126px;
   margin-left: -5px;
-  margin-top: -2px;
+  margin-top: -4px;
   border-radius: 0;
 }
 
@@ -186,7 +187,8 @@ input[type="checkbox"] {
   text-align: center;
 }
 
-.tbl-wrapper .done-btn,.new-table-form .done-btn {
+.tbl-wrapper .done-btn,
+.new-table-form .done-btn {
   font-size: 13px;
   background-color: #036a6e;
   color: #fff;
@@ -198,6 +200,11 @@ input[type="checkbox"] {
   padding-left: 15px;
   padding-right: 15px;
   cursor: pointer;
+}
+.tbl-wrapper .done-btn {
+  font-size: 10px;
+  height: 25px;
+  margin-top: 5px;
 }
 
 .new-table-form input {
