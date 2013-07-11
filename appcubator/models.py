@@ -264,6 +264,7 @@ class App(models.Model):
 
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
+        logger.info("Deployed to %s" % tmpdir)
         contents = os.listdir(tmpdir)
         # tar it up
         t = tarfile.open(os.path.join(tmpdir, 'payload.tar'), 'w')
