@@ -70,10 +70,7 @@ define([
       var self = this;
       var collection = new ElementCollection(defaultElements);
 
-      var li = document.createElement('li');
-      li.className = 'gallery-header ui-draggable';
-      li.innerHTML = 'Design Elements';
-      $(this.allList).append(li);
+      var uiElemsSection = this.addSection('Design Elements');
 
       collection.each(function(element) {
         if(element.get('className') == "buttons" ||
@@ -81,17 +78,17 @@ define([
            element.get('className') == "textAreas" ||
            element.get('className') == "dropdowns") return;
 
-          self.appendUIElement(element);
+          self.appendUIElement(element, uiElemsSection);
       });
     },
 
-    appendUIElement: function(elementModel) {
+    appendUIElement: function(elementModel, container) {
       var className = 'uielement';
       var id='type-' + elementModel.get('className');
       var icon = 'icon '+  elementModel.get('className');
       var text = elementModel.get('text');
 
-      var li = this.addHalfWidthItem(id, className, text, icon);
+      var li = this.addHalfWidthItem(id, className, text, icon, container);
       var self = this;
       $(li).draggable({
         cursor  : "move",
@@ -107,55 +104,56 @@ define([
     },
 
     renderAuthenticationForms: function() {
-      this.addHeaderItem('Authentication');
-      this.addFullWidthItem("entity-user-Local_Login", "login", "Login Form", "local-login");
+      var authSection = this.addSection('Authentication');
+      this.addFullWidthItem("entity-user-Local_Login", "login", "Login Form", "local-login", authSection);
 
       v1State.get('users').each(function(user) {
-        this.addFullWidthItem("entity-user-" + user.get('name'), "signup",  user.get('name') + " Sign Up", "local-signup");
+        this.addFullWidthItem("entity-user-" + user.get('name'), "signup",  user.get('name') + " Sign Up", "local-signup", authSection);
       }, this);
 
       if(!v1State.isSingleUser()) {
         v1State.get('users').each(function(user) {
           var name = user.get('name');
-          this.addFullWidthItem("entity-user-" + name, "facebooksignup", name + " Facebook Sign Up", "facebook");
-          this.addFullWidthItem("entity-user-" + name, "twittersignup", name + " Twitter Sign Up", "twitter");
-          this.addFullWidthItem("entity-user-" + name, "linkedinsignup", name + " LinkedIn Sign Up", "linkedin");
+          this.addFullWidthItem("entity-user-" + name, "facebooksignup", name + " Facebook Sign Up", "facebook", authSection);
+          this.addFullWidthItem("entity-user-" + name, "twittersignup", name + " Twitter Sign Up", "twitter", authSection);
+          this.addFullWidthItem("entity-user-" + name, "linkedinsignup", name + " LinkedIn Sign Up", "linkedin", authSection);
         }, this);
       }
 
-      this.addFullWidthItem("entity-user-facebook", "thirdparty", "Facebook Login Button", "facebook");
-      this.addFullWidthItem("entity-user-twitter", "thirdparty", "Twitter Login Button", "twitter");
-      this.addFullWidthItem("entity-user-linkedin", "thirdparty", "LinkedIn Login Button", "linkedin");
+      this.addFullWidthItem("entity-user-facebook", "thirdparty", "Facebook Login Button", "facebook", authSection);
+      this.addFullWidthItem("entity-user-twitter", "thirdparty", "Twitter Login Button", "twitter", authSection);
+      this.addFullWidthItem("entity-user-linkedin", "thirdparty", "LinkedIn Login Button", "linkedin", authSection);
     },
 
     renderCurrentUserElements: function() {
-      this.addHeaderItem('Current User');
+      var currUserSection = this.addSection('Current User');
+      //this.addHeaderItem('Current User');
       _(v1State.getCurrentPage().getFields()).each(function(field) {
         if(field.isRelatedField()) return;
-        this.addFullWidthItem('current-user-'+field.cid, 'current-user', 'Current User '+ field.get('name'), 'current-user-icon');
+        this.addFullWidthItem('current-user-'+field.cid, 'current-user', 'Current User '+ field.get('name'), 'current-user-icon', currUserSection);
       }, this);
     },
 
     renderEntitiyFormsTablesLists: function() {
-      this.addHeaderItem('Table Data');
-
+      //this.addHeaderItem('Table Data');
+      var tableSection = this.addSection('Table Data');
       v1State.get('tables').each(function(entityModel) {
         var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
         var id = 'entity-' + entityModel.cid;
-        this.addFullWidthItem(id, "entity-create-form", entityModel.get('name') +' Create Form', 'create-form-icon');
-        this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon');
-        this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon');
-        this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon');
-        this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon');
+        this.addFullWidthItem(id, "entity-create-form", entityModel.get('name') +' Create Form', 'create-form-icon', tableSection);
+        this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
+        this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon', tableSection);
+        this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon', tableSection);
+        this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon', tableSection);
       }, this);
 
       v1State.get('users').each(function(entityModel) {
         var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
         var id = 'entity-' + entityModel.cid;
-        this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon');
-        this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon');
-        this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon');
-        this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon');
+        this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
+        this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon', tableSection);
+        this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon', tableSection);
+        this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon', tableSection);
       }, this);
     },
 
@@ -420,24 +418,34 @@ define([
       return top;
     },
 
-    addFullWidthItem: function(id, className, text, icon) {
+    addFullWidthItem: function(id, className, text, icon, container) {
       var li = document.createElement('li');
       li.className = className+' full-width';
       li.id = id;
       var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
       li.innerHTML= _.template(tempLi, { text: text, icon: icon});
-      $(this.allList).append(li);
+      if(container) {
+        $(container).append(li);
+      }
+      else {
+        $(this.allList).append(li);
+      }
 
       return li;
     },
 
-    addHalfWidthItem: function(id, className, text, icon) {
+    addHalfWidthItem: function(id, className, text, icon, container) {
       var li = document.createElement('li');
       li.className = className+' half-width';
       li.id = id;
       var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
       li.innerHTML= _.template(tempLi, { text: text, icon: icon});
-      $(this.allList).append(li);
+      if(container) {
+        $(container).append(li);
+      }
+      else {
+        $(this.allList).append(li);
+      }
 
       return li;
     },
@@ -447,6 +455,20 @@ define([
       li.className = 'gallery-header ui-draggable';
       li.innerHTML = text;
       $(this.allList).append(li);
+      return li;
+    },
+
+    addSection: function(name) {
+      var header = this.addHeaderItem(name);
+      var sectionName = name.replace(' ','-');
+      header.onclick = function(e) {
+        $('.'+sectionName).slideToggle('fast');
+      }
+      var section = document.createElement('section');
+      section.className = sectionName;
+      section.style.display = 'none';
+      $(this.allList).append(section);
+      return section;
     },
 
     addInfoItem: function(text) {
