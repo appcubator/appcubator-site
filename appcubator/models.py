@@ -430,6 +430,8 @@ def load_initial_themes():
         os.path.join(DEFAULT_STATE_DIR, "themes"))
 
     for filename in theme_json_filenames:
+        if not filename.endswith('json'):
+            continue
         try:
             sys.stdout.write("Loading %s" % filename)
             s = simplejson.loads(get_default_data(
@@ -439,6 +441,11 @@ def load_initial_themes():
             t = UITheme(name=filename.replace(".json", ""))
             sys.stdout.write(".")
             t.set_state(s)
+            sys.stdout.write(".")
+            try:
+                t.image = t.uie_state['img_url']
+            except KeyError:
+                sys.stdout.write("No key img_url for %r" % filename)
             sys.stdout.write(".")
             t.full_clean()
             sys.stdout.write(".")
@@ -476,7 +483,7 @@ class DomainRegistration(models.Model):
         return DomainRegistration.api.check_availability(domain)
 
     @classmethod
-    def register_domain(self, domain, test_only=False):
+    def register_domain(cls, domain, test_only=False):
         d = cls()
         d.domain = d
         if test_only:
@@ -489,7 +496,7 @@ class DomainRegistration(models.Model):
 
     def configure_dns(self, staging=True):
         DomainRegistration.api.configure_domain_records(
-            domain, staging=staging)
+            self.domain, staging=staging)
         self.dns_configured = 1
         self.save()
 
