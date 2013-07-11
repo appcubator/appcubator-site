@@ -287,6 +287,7 @@ function() {
     },
 
     stoppedEditing: function() {
+      if(!this.selectedEl) return;
       this.setLayout(this.selectDiv, this.selectedEl);
     },
 
