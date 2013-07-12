@@ -148,7 +148,7 @@ define([
         var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
         var id = 'entity-' + entityModel.cid;
         this.addFullWidthItem(id, "entity-create-form", entityModel.get('name') +' Create Form', 'create-form-icon', tableSection);
-        this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
+        //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
         this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon', tableSection);
         this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon', tableSection);
         this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon', tableSection);
@@ -157,7 +157,7 @@ define([
       v1State.get('users').each(function(entityModel) {
         var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
         var id = 'entity-' + entityModel.cid;
-        this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
+        //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
         this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon', tableSection);
         this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon', tableSection);
         this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon', tableSection);
