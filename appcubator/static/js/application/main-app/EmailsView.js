@@ -38,10 +38,10 @@ function(EmailCollection, EmailModel, EmailView) {
       this.renderVariableList();
       this.emailView.setElement(this.$el.find('.right-bar')).render();
       // overlay hiding email view
-      var overlayDiv = document.createElement('div');
+      /*var overlayDiv = document.createElement('div');
       $(overlayDiv).addClass('coming-soon-overlay')
                    .html("<h1>Email page coming soon. Check back soon!</h1>")
-                   .appendTo(this.$el).fadeIn('fast');
+                   .appendTo(this.$el).fadeIn('fast');*/
       return this;
     },
 
@@ -70,12 +70,24 @@ function(EmailCollection, EmailModel, EmailView) {
     renderVariableList: function() {
       var vars = v1State.get('users').getCommonProps();
       var list = this.$('#variables-list');
-      _(vars).each(function(variable) {
+      // for now, only limit to username and email
+      /*_(vars).each(function(variable) {
         var li = document.createElement('li');
         li.setAttribute('draggable', 'true');
         li.innerHTML = "CurrentUser." + variable.get('name');
         list.append(li);
-      });
+      });*/
+
+      // add username
+      var uservar = document.createElement('li');
+      uservar.setAttribute('draggable', 'true');
+      uservar.innerHTML = 'user';
+      list.append(uservar);
+
+      var emailvar = document.createElement('li');
+      emailvar.setAttribute('draggable', 'true');
+      emailvar.innerHTML = 'email';
+      list.append(emailvar);
 
       return this;
     },
@@ -115,7 +127,8 @@ function(EmailCollection, EmailModel, EmailView) {
     },
 
     setupDrag: function(e) {
-      e.dataTransfer.setData('text/plain', "  {{" + e.target.innerText + "}} ");
+      var dataTransfer = e.dataTransfer || e.originalEvent.dataTransfer;
+      dataTransfer.setData('text/plain', "  {{User." + e.target.innerText + "}} ");
     }
 
   });
