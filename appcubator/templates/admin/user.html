@@ -1,6 +1,10 @@
 {% extends "admin/admin-base.html" %}
 {% block content %}
-
+  <style type="text/css">
+    td.active, th.active {
+      background-color: #d9edf7 !important;
+    }
+  </style>
   <h2>Users</h2>
   <hr>
   <div class="row">
@@ -25,13 +29,13 @@
   <br><br>
   <h3>User Logs</h3>
   <hr>
-  <table class="table table-striped">
+  <table id="logs" class="table table-striped">
     <thead>
       <tr>
-        <th>App ID</th>
-        <th>Timestamp</th>
-        <th>Log Type</th>
-        <th>Log Data</th>
+        <th><a href="#">App ID</a></th>
+        <th><a href="#">Timestamp</a></th>
+        <th><a href="#">Log Type</a></th>
+        <th><a href="#">Log Data</a></th>
       </tr>
     </thead>
     <tbody>
@@ -45,4 +49,23 @@
       {% endfor %}
     </tbody>
   </table>
+  <script type="text/javascript">
+  $('table th').click(function(e) {
+    var index = e.currentTarget.cellIndex;
+    var list = $('table tbody tr').toArray()
+    list = _(list).sortBy(function(row) {
+      return row.children[index].innerText;
+    });
+    var body = $('table tbody').empty();
+    _(list).each(function(row) {
+      body.append(row);
+    });
+    $('th.active, td.active').removeClass('active');
+    $('table th:nth-child('+(index+1)+'), table td:nth-child('+(index+1)+')').addClass('active');
+    return false;
+  });
+
+  // sorted by timestamp by default
+  $('table th:nth-child(2), table td:nth-child(2)').addClass('active');
+  </script>
 {% endblock %}
