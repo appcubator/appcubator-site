@@ -11,6 +11,7 @@ from registration.backends.default.views import RegistrationView, ActivationView
 
 urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
+    url(r'^showhn/$',                   base_views.showhnpage),
     url(r'^aboutus/$',                  base_views.aboutus),
     # Signup, Login and invites
     url(r'^accounts/', include('registration.backends.default.urls')),
