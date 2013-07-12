@@ -181,6 +181,36 @@ def signup_new_customer(request):
     Customer.create_first_time(name, email, company, extra, description, 11, interest)
     return HttpResponse("ok")
 
+@require_http_methods(["GET", "POST"])
+def signup_hn_customer(request):
+    if request.method == "GET":
+        # if 'k' in request.GET:
+        #     api_key = request.GET['k']
+        #     if InvitationKeys.objects.filter(api_key=api_key).count() > 0:
+        #         return render(request, "registration/signup.html")
+        return render(request, "website-showhn.html")
+    else:
+        req = {}
+        req = deepcopy(request.POST)
+        req["username"] = request.POST["email"]
+        req["first_name"] = request.POST["name"].split(" ")[0]
+        req["last_name"] = request.POST["name"].split(" ")[-1]
+        form = MyUserCreationForm(req)
+        if form.is_valid():
+            user = form.save()
+            new_user = authenticate(username=req['email'],
+                                    password=req['password1'])
+            login(request, new_user)
+            name = request.POST['name']
+            email = request.POST['email']
+            company = "Hacker News"
+            extra = ""
+            interest = False
+            description = "HN launch"
+            Customer.create_first_time(name, email, company, extra, description, 11, interest)
+            return HttpResponse(simplejson.dumps({'redirect_to': '/'}), mimetype="application/json")
+        else:
+            return HttpResponse(simplejson.dumps({k: v for k, v in form.errors.items()}), mimetype="application/json")
 
 @login_required
 @csrf_exempt
