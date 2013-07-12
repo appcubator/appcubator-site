@@ -21,10 +21,20 @@ require.config({
 
 require([
   'prettyCheckable',
+  'underscore'
 ],
 function() {
 
   var HomeMain = function() {
+
+      setTimeout(function() {
+        var elem = document.getElementById('video-pane');
+        ifrm = document.createElement("IFRAME");
+        ifrm.setAttribute("src", "//www.youtube.com/embed/GlbyyR1U64A?rel=0");
+        ifrm.style.width = "100%";
+        ifrm.style.height = 550+"px";
+        elem.appendChild(ifrm);
+      }, 800);
 
     var xTrans = -30;
     var yTrans = 45;
@@ -95,7 +105,7 @@ function() {
       $('html, body').animate({ scrollTop: pricingHeight }, 'slow');
     });
     $('.slide-signup').on('click', function(e) {
-      $('html, body').animate({ scrollTop: signupHeight + 40 }, 'slow');
+      $('html, body').animate({ scrollTop: 0 }, 'slow');
     });
 
     IN.Event.on(IN, "auth", function(){ onLinkedInLogin(); });

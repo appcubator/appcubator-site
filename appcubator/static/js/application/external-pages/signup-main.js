@@ -29,6 +29,7 @@ require([
 
     $(document).ready(function() {
 
+
       $('#member').on('click', function(e) {
         $('#bottom-panel').animate({
           bottom : 0
@@ -67,5 +68,6 @@ require([
   };
 
   $(document).ready(new SignupMain());
+
 
 });
