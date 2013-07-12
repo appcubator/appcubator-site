@@ -6197,7 +6197,7 @@ hr.pheader {
   border-radius: 3px;
   border: 1px solid #cad4e7;
   cursor: pointer;
-  padding: 4px 6px 6px;
+  padding: 6px 8px 6px;
   white-space: nowrap;
   color: #3b5998;
   margin-top: 2px;
@@ -6231,16 +6231,37 @@ hr.pheader {
   background-color: #eee;
 }
 
+.download-pane {
+  width: 270px;
+display: inline-block;
+padding: 7px 15px;
+font-size: 13px;
+font-weight: bold;
+color: #333;
+text-shadow: 0 1px 0 rgba(255,255,255,0.9);
+background-color: #eaeaea;
+background-image: -moz-linear-gradient(#fafafa, #eaeaea);
+background-image: -webkit-linear-gradient(#fafafa, #eaeaea);
+background-image: linear-gradient(#fafafa, #eaeaea);
+background-repeat: repeat-x;
+border-radius: 3px;
+border: 1px solid #ddd;
+border-bottom-color: #c5c5c5;
+box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+cursor: pointer;
+}
+
 .download-pane img {
   display: inline-block;
   width: 30px;
   float: left;
   vertical-align: top;
   margin-top: 6px;
+  margin-bottom: 10px;
 }
 
 .download-pane a {
-  width: 230px;
+  width: 200px;
   margin-left: 8px;
   display: inline-block;
   vertical-align: top;
