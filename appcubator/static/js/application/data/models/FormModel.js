@@ -86,6 +86,7 @@ function(
     getRelationalActions: function(pageModel) {
 
       if(this.get('action') == "login" || this.get('action') == "signup") return (new ActionCollection([]));
+
       var entity = v1State.getTableModelWithName(this.get('entity'));
       var possibleActions = new ActionCollection();
       var userFields = pageModel.getFields();
@@ -108,6 +109,23 @@ function(
                          "nl_description": nlDescr};
           possibleActions.push(action);
         }
+      }, this);
+
+      var pageContextEntities = pageModel.getContextEntities();
+
+      _(pageContextEntities).each(function(entityName) {
+        entity.get('fields').each(function(field) {
+          console.log(field);
+          if(field.get('entity_name') == entityName) {
+            var nlDescr = "Add to Page."+ entityName+"." + field.get('related_name');
+            var action = { "type": "relation",
+                           "set_fk": "Form." + this.get('entity') + '.' + field.get('name'),
+                           "to_object": "page." + entityName,
+                           "nl_description": nlDescr};
+            possibleActions.push(action);
+          }
+        }, this);
+
       }, this);
 
       return possibleActions;
