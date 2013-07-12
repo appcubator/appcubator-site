@@ -1,0 +1,27 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+  <h2>Feedback</h2>
+  <hr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Is Noob</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for app in apps reversed%}
+      <tr>
+      <!--
+        <td>{{ user.pk }}</td>
+        <td>{{ user.user.first_name }} {{ user.user.last_name }}</td>
+        <td>{{ user.user.email }}</td>
+        <td>{{ user.noob }}</td>
+        -->
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
