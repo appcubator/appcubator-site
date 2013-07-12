@@ -130,11 +130,13 @@ define([
 
     renderCurrentUserElements: function() {
       var currUserSection = this.addSection('Current User');
-      //this.addHeaderItem('Current User');
+
       _(v1State.getCurrentPage().getFields()).each(function(field) {
         if(field.isRelatedField()) return;
         this.addFullWidthItem('current-user-'+field.cid, 'current-user', 'Current User '+ field.get('name'), 'current-user-icon', currUserSection);
       }, this);
+
+      this.addFullWidthItem('entity-CurrentUser', "entity-edit-form", 'Current User Edit Form', 'create-form-icon', currUserSection);
     },
 
     renderEntitiyFormsTablesLists: function() {
@@ -331,8 +333,17 @@ define([
 
     createEditForm: function(layout, id) {
       var cid = String(id).replace('entity-','');
-      var entity = v1State.get('tables').get(cid);
-      if(!entity) entity = v1State.get('users').get(cid);
+      var entity = {};
+
+      if(cid == "CurrentUser")  {
+        editOn = "CurrentUser";
+        entity = v1State.get('users').models[0];
+      }
+      else {
+        entity = v1State.get('tables').get(cid);
+        if(!entity) entity = v1State.get('users').get(cid);
+        editOn = "Page." + entity.get('name');
+      }
 
       return this.widgetsCollection.createEditForm(layout, entity);
     },
