@@ -484,9 +484,8 @@ define([
       var sectionName = name.replace(/ /g,'-');
       header.onclick = function(e) {
         var section = $('.'+sectionName);
-        $(e.currentTarget).toggleClass('open');
+        $(this).toggleClass('open');
         $('.'+sectionName).slideToggle('fast');
-        $(e.target).toggleClass('open');
       };
 
       var section = document.createElement('section');
