@@ -74,7 +74,19 @@ def homepage(request):
     return render(request, 'website-home.html', page_context)
 
 
+@require_GET
+def showhnpage(request):
+    if request.user.is_authenticated():
+        return redirect('/app')
+
+    page_context = {}
+    page_context["title"] = "Homepage"
+
+    return render(request, 'website-showhn.html', page_context)
+
+
 @login_required
+@csrf_exempt
 def account(request):
     if request.method == 'GET':
         page_context = {}

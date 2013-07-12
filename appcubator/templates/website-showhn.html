@@ -1,0 +1,85 @@
+{% extends "infra-out-html.html" %}
+
+{% block css %}
+<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+api_key: t0q97cjtk5kf
+scope: r_fullprofile r_emailaddress
+</script>
+<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
+{% endblock %}
+{% block page %}
+<div id="fb-root"></div>
+<script>
+</script>
+{% include "website-leftpanel.html" %}
+
+<div class="fixed-bg hn" id="bg4"></div>
+<div class="fixed-bg hn" id="bg3"></div>
+<div class="fixed-bg hn" id="bg2"></div>
+<div class="fixed-bg hn" id="bg1"></div>
+
+<div class="sliding-panel hn">
+  <div class="slide1 hn">
+    <div class="large-text">
+      The Easiest Way to Build Beautiful Web Apps
+    </div>
+    <div class="large-container">
+      <div class="explanation">
+        <div class="row">
+          <span>
+            <span class="title">We want to hear from you.</span>
+              <p>There has been significant improvements to the way we develop applications, but it still takes a lot of time and effort to build a simple CRUD application. </p>
+              <p>We built appcubator to take the tediousness out of this process and create a super-fast way to get started with your project. We still have a lot to do, but we would like to hear your opinions.
+              </p>
+<!--             <p>We are developers who has been building things. Although there has been significant improvements to the way we develop applications, thanks to the frameworks like Django and Ruby on Rails, it's still a tedious job.</p>
+            <p>We decided to build Appcubator to make this process faster and much less tedious.</p> -->
+          </span>
+        </div>
+      </div>
+      <form class="sign-up-form" id="sign" action="{% url appcubator.base_views.signup %}">
+        <div class="left-side">
+          <span class="title">Signup Here</span>
+          <input type="text" name="name" id="inp-name" placeholder="Full Name">
+          <input type="text" name="email" id="inp-email" placeholder="Email">
+          <input type="hidden" name="extra-info" id="inp-extra" value="-">
+          <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
+          <hr>
+          <input type="text" name="password1" id="inp-name" placeholder="Password">
+          <input type="text" name="password2" id="inp-email" placeholder="Confirm Password">
+          <input type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
+        </div>
+      </form>
+      <div class="thanks-for-signing">
+        <p>Thank you for signing up!</p>
+        <p>Someone from our team will contact you for details and further steps very soon.</p>
+        <div class="social-share">
+          <span>In the meantime, you can let your friends know about Appcubator!</span>
+          <div class="fb-share">
+          </div>
+          <div class="twitter-share">
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.appcubator.com" data-via="appcubator">Tweet</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gray-bg  slide-info">
+      See How <span class="icon-down"></span>
+    </div>
+  </div>
+  <div class="slide2 hn slide">
+    <div class="video">
+    </div>
+  </div>
+  <div class="footer">
+   <span>Appcubator © 2013</span> • <a href="/aboutus">About Us</a> • <a href="/termsofservice">Privacy</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script data-main="{{ STATIC_URL }}js/application/external-pages/hn-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+{% endblock %}
