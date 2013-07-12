@@ -3682,6 +3682,8 @@ ul.list {
 
 #link-editors {
   padding: 0 15px 5px;
+  height: 250px;
+  overflow: scroll;
 }
 
 #link-editors li.well-small {
@@ -3720,6 +3722,10 @@ ul.list {
   width: 80px;
   color: #fff;
   background-color: #ec6a5f;
+}
+
+#navbar-editor .add-link {
+  margin-top: 20px;
 }
 
 .red-border {

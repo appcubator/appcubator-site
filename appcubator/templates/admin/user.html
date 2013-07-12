@@ -1,0 +1,46 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+
+  <h2>Users</h2>
+  <hr>
+  <div class="row">
+    <div class="span2">ID</div>
+    <div class="span10">{{ user.pk }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2">Name</div>
+    <div class="span10">{{ user.user.first_name }} {{ user.user.last_name }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2">Email</div>
+    <div class="span10">{{ user.user.email }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2">Noob?</div>
+    <div class="span10">{{ user.noob }}</div>
+  </div>
+  <br><br>
+  <h3>User Logs</h3>
+  <hr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Opened On</th>
+        <th>App_id</th>
+        <th>Page Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for log in userlogs reversed %}
+      <tr>
+        <td>{{ log.opened_on }}</td>
+        <td>{{ log.app_id }}</td>
+        <td>{{ log.page_name }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -484,9 +484,11 @@ define([
       var sectionName = name.replace(/ /g,'-');
       header.onclick = function(e) {
         var section = $('.'+sectionName);
+        $(e.currentTarget).toggleClass('open');
         $('.'+sectionName).slideToggle('fast');
         $(e.target).toggleClass('open');
       };
+
       var section = document.createElement('section');
       section.className = sectionName;
       section.style.display = 'none';
@@ -518,7 +520,6 @@ define([
     },
 
     expandAllSections: function() {
-      console.log("YARP");
       $(this.allList).find('section').show()
                      .end().find('.gallery-header').addClass('open');
     },
