@@ -69,5 +69,5 @@ def admin_app(request, app_id):
 @login_required
 def admin_feedback(request):
     page_context = {}
-    #page_context["feedback"] = App.objects.all()
+    page_context["feedback"] = LogAnything.objects.filter(name='posted feedback')
     return render(request, 'admin/feedback.html', page_context)

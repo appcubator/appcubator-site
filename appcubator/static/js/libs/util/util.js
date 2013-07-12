@@ -14,7 +14,7 @@ define(['jquery'], function() {
         var logData = {
           '__key': key_str,
           '__app_id': app_id,
-          '__data': JSON.stringify(val_dict)
+          '__data': JSON.stringify(val_dict, undefined, 2)
         };
         $.post('/log/anything/', logData);
     },

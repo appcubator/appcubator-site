@@ -6,20 +6,18 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Is Noob</th>
+        <th>Timestamp</th>
+        <th>User ID</th>
+        <th>Message</th>
       </tr>
     </thead>
     <tbody>
-      {% for app in apps reversed%}
+      {% for feedback in feedback reversed%}
       <tr>
-      <!--
-        <td>{{ user.pk }}</td>
-        <td>{{ user.user.first_name }} {{ user.user.last_name }}</td>
-        <td>{{ user.user.email }}</td>
-        <td>{{ user.noob }}</td>
-        -->
+        <td class="span1">{{ feedback.pk }}</td>
+        <td class="span2">{{ feedback.timestamp }}</td>
+        <td class="span1">{{ feedback.user_id }}</td>
+        <td class="span7">{{ feedback.data }}</td>
       </tr>
       {% endfor %}
     </tbody>
