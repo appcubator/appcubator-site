@@ -40,11 +40,11 @@ define([
       util.loadCSS(this.css);
       this.allList = util.get('all-list');
 
+      this.renderUIElementList();
       this.renderAuthenticationForms();
       this.renderCurrentUserElements();
       this.renderEntitiyFormsTablesLists();
       this.renderContextEntityForms();
-      this.renderUIElementList();
 
       // all sections are hidden by default. open first section
       $(this.allList).find('.gallery-header').first().click();
