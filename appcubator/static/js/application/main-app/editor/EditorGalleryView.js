@@ -21,12 +21,12 @@ define([
 
       events : {
         'mouseover .bottom-arrow' : 'slideDown',
-        'mousemove .bottom-arrow' : 'slideDown'
+        'mousemove .bottom-arrow' : 'slideDown',
+        'focus input.search'           : 'expandAllSections'
       },
 
       initialize   : function(widgetsCollection) {
        _.bindAll(this);
-
        this.widgetsCollection = widgetsCollection;
      },
 
@@ -53,7 +53,6 @@ define([
       $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
       $(this.allList).find('.bottom-arrow').on('mousemove', this.slideDown);
 
-
       $(this.allList).find('li:not(.ui-draggable)').draggable({
         cursor: "move",
         cursorAt: { top: 0, left: 0 },
@@ -66,6 +65,9 @@ define([
       this.$el.find('li').on('click', self.dropped);
 
       var list = new List('top-panel-bb', { valueNames: ['name']});
+
+      $(util.get('top-panel-bb')).find('.search').on('focus', this.expandAllSections);
+
       return this;
     },
 
@@ -482,7 +484,7 @@ define([
       header.onclick = function(e) {
         var section = $('.'+sectionName);
         $('.'+sectionName).slideToggle('fast');
-        $(e.target).find('.icon').toggleClass('open');
+        $(e.target).toggleClass('open');
       }
       var section = document.createElement('section');
       section.className = sectionName;
@@ -512,6 +514,12 @@ define([
       }
 
       return type;
+    },
+
+    expandAllSections: function() {
+      console.log("YARP");
+      $(this.allList).find('section').show()
+                     .end().find('.gallery-header').addClass('open');
     },
 
     slideDown: function() {

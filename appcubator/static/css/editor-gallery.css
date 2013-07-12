@@ -247,7 +247,7 @@ background-color: rgba(255,255,255,0.4);
   background-size: 10px 10px;
   background-repeat: no-repeat;*/
 }
-.elements-list .gallery-header .icon.open {
+.elements-list .gallery-header.open .icon {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   -o-transform: rotate(90deg);
