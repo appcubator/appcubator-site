@@ -21,6 +21,7 @@ require.config({
 
 require([
   'prettyCheckable',
+  'underscore'
 ],
 function() {
 
@@ -138,15 +139,19 @@ function() {
     $('input[type=radio]').prettyCheckable();
 
     $('form#signup').submit(function(e) {
+          e.preventDefault();
           console.log($(e.target).serialize());
+          var url = $(e.target).attr('action');
+          console.log(url);
           var self = this;
           var ajax_info = {
            type: 'POST',
-           url: '/signup/',
+           url: url,
            data: $(e.target).serialize(),
            success: function(data, statusStr, xhr) {
-            if (typeof(data.redirect_to) !== 'undefined') {
-              location.href = data.redirect_to;
+            console.log(data);
+            if (data == '') {
+              location.reload()
             } else {
               _.each(data, function(val, key, ind) {
                 if(key==='__all__') {
@@ -161,43 +166,6 @@ function() {
         $.ajax(ajax_info);
         $(self).find('.form-error').html("");
         return false;
-    });
-
-    $('#sign-up-form').on('submit', function(e) {
-      e.preventDefault();
-
-      obj = {};
-      obj.name = $("#inp-name").val();
-      obj.email = $("#inp-email").val();
-      obj.company = $("#inp-company").val();
-      obj.extra = $("#inp-extra").val();
-      obj.interest = $('#inp-interest').prop('checked');
-      obj.description = $('#inp-description').val();
-
-      var isFilled = true;
-
-      for (var key in obj) {
-        var val = obj[key];
-        if(val === "") {
-          isFilled = false;
-          $("#inp-" + key).addClass('required-border');
-        }
-        else {
-          $("#inp-" + key).removeClass('required-border');
-        }
-      }
-
-      if(isFilled) {
-         $.ajax({
-          url: "/signup_form/",
-          type: "POST",
-          data: obj,
-          dataType: "JSON"
-        });
-
-        $('#sign-up-form').hide();
-        $('.thanks-for-signing').fadeIn();
-      }
     });
 
     document.addEventListener("touchstart", function(){}, true);

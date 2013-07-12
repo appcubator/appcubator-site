@@ -21,6 +21,7 @@ define(['jquery'], function() {
 
     assert : function(inp) {
       if(!inp) {
+        console.trace();
         alert('Important Error!');
       }
     },
