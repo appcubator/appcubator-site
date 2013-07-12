@@ -10,6 +10,7 @@ label {
 .content-editor li.expanded {
   display: inline-block;
 }
+
 .expandible.expanded {
   display: inline-block;
 }
@@ -57,7 +58,7 @@ label {
   width: 160px;
 }
 
-.uie-gallery  li.expandible {
+.uie-gallery li.expandible {
   padding-left: 16px;
   border-bottom: 1px solid #ccc;
 }
@@ -77,15 +78,12 @@ div.expandible {
   border-bottom: 1px solid #ccc;
 }
 
-.right-bar, .content-editor, .base-css {
+.right-bar,.content-editor,.base-css {
   height: 500px;
 }
 
-.ace_gutter, .ace_scroller {
+.ace_gutter,.ace_scroller {
   padding-top: 10px;
-}
-
-.base-css {
 }
 
 .uie-gallery li {

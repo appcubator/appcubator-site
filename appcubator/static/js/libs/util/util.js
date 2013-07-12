@@ -1,32 +1,27 @@
 define(['jquery'], function() {
 
   var util = {
-    onServerReady: function(url, callback) {
-      $.ajax(url, {
-        type: 'GET',
-        success: callback,
-        error: function(){
-          console.log("Server not ready. Waiting 100ms and trying again.");
-          window.setTimeout(function(){util.onServerReady(url, callback); }, 100);
-        }
-      });
-    },
 
     log_to_server: function (key_str, val_dict, app_id) {
-        _.each(val_dict, function(val, key) {
+        /*_.each(val_dict, function(val, key) {
             util.assert((typeof key) == (typeof ''));
             util.assert((typeof val) == (typeof ''));
-        });
+        });*/
 
-        val_dict['__key'] = key_str;
+        /*val_dict['__key'] = key_str;
         if (app_id)
-            val_dict['__app_id'] = app_id;
-
-        $.post('/log/anything/', val_dict);
+            val_dict['__app_id'] = app_id;*/
+        var logData = {
+          '__key': key_str,
+          '__app_id': app_id,
+          '__data': JSON.stringify(val_dict, undefined, 2)
+        };
+        $.post('/log/anything/', logData);
     },
 
     assert : function(inp) {
       if(!inp) {
+        console.trace();
         alert('Important Error!');
       }
     },

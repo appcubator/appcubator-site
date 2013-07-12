@@ -239,8 +239,9 @@ def app_save_state(request, app, require_valid=True):
         app.save()
         return (200, "ok")
     try:
-        a = AnalyzedApp.create_from_dict(app.state)
+        a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
     except analyzer.UserInputError, e:
+        app.save()
         return (400, e.to_dict())
     # raise on normal exceptions.
     else:
@@ -251,17 +252,16 @@ def app_save_state(request, app, require_valid=True):
         app.save()
         return (200, "ok")
 
-def tutorial_page(request, page_name):
-    print(page_name)
+def documentation_page(request, page_name):
     try:
-        htmlString = render(request, 'tutorial/html/'+page_name+'.html').content
+        htmlString = render(request, 'documentation/html/'+page_name+'.html').content
     except Exception, e:
-        return HttpResponse("invalid tutorial page", status=400)
+        htmlString = render(request, 'documentation/html/intro.html').content
     else:
         data = {
             'content': htmlString
         }
-        return render(request, 'tutorial/tutorial-base.html', data)
+        return render(request, 'documentation/documentation-base.html', data)
 
 @login_required
 def uie_state(request, app_id):
@@ -357,12 +357,7 @@ def app_emails(request, app_id):
     return render(request, 'app-emails.html', page_context)
 
 
-@login_required
-def admin_home(request):
-    page_context = {}
-    page_context["customers"] = Customer.objects.all()
-    page_context["users"] = ExtraUserData.objects.all()
-    return render(request, 'admin-home.html', page_context)
+
 
 
 @login_required
@@ -407,19 +402,6 @@ def process_user_excel(request, app_id):
             app.url() + "user_excel_import/", data=data, files=files)
 
     return HttpResponse(r.content, status=r.status_code, mimetype="application/json")
-
-
-@login_required
-@require_POST
-def fetch_data(request, app_id):
-    app_id = long(app_id)
-    model_name = request.POST['model_name']
-    app = get_object_or_404(App, id=app_id, owner=request.user)
-    try:
-        d = Deployment.objects.get(subdomain=app.subdomain())
-    except Deployment.DoesNotExist:
-        raise Exception("App has not been deployed yet")
-    return JSONResponse(get_model_data(model_name, d.app_dir + "/db"))
 
 from django.forms import ModelForm
 
@@ -483,7 +465,7 @@ def app_deploy(request, app_id):
         'user_name': request.user.username,
         'date_joined': str(request.user.date_joined)
     }
-    #result = app.deploy(d_user)
+    # result = app.deploy(d_user)
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     status = 500 if 'errors' in result else 200

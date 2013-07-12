@@ -20,9 +20,10 @@ select.id {
 
 .add-page-form {
   display: inline-block;
-  margin:0;
+  margin: 0;
 }
-select.page, input.page-name-input {
+
+select.page,input.page-name-input {
   width: 140px;
   height: 32px;
   margin: 0;

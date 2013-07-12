@@ -1,4 +1,5 @@
 define([
+  "backbone"
 ],
 function() {
 
@@ -6,12 +7,21 @@ function() {
     initialize: function(bone) {
       var fields =_.map(bone.searchFields, function(field) { return { value: field }; });
       this.set("searchFields", new Backbone.Collection(fields||[]));
+      this.listenTo(v1State.getTableModelWithName(bone.searchOn).get('fields'), 'remove', this.entityFieldRemoved);
     },
 
     removeFieldWithName: function(nameStr) {
       this.get('searchFields').each(function(searchField) {
         if(searchField.get('value') == nameStr) this.get('searchFields').remove(searchField);
       }, this);
+    },
+
+    entityFieldRemoved: function(fieldModel) {
+      var name = fieldModel.get('name');
+      var searchFieldModel = this.get('searchFields').find(function(sModel) {
+        return sModel.get('value') == name;
+      });
+      this.get('searchFields').remove(searchFieldModel);
     },
 
     toJSON: function () {

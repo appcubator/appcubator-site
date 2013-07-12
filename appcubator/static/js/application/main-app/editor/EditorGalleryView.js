@@ -16,11 +16,17 @@ define([
       curId               : 'all-elements',
       dragActive          : false,
       css                 : 'editor-gallery',
-      events : { },
+      positionHorizontalGrid : 80,
+      positionVerticalGrid   : 15,
+
+      events : {
+        'mouseover .bottom-arrow' : 'slideDown',
+        'mousemove .bottom-arrow' : 'slideDown',
+        'focus input.search'           : 'expandAllSections'
+      },
 
       initialize   : function(widgetsCollection) {
        _.bindAll(this);
-
        this.widgetsCollection = widgetsCollection;
      },
 
@@ -34,11 +40,18 @@ define([
       util.loadCSS(this.css);
       this.allList = util.get('all-list');
 
+      this.renderUIElementList();
       this.renderAuthenticationForms();
       this.renderCurrentUserElements();
       this.renderEntitiyFormsTablesLists();
       this.renderContextEntityForms();
-      this.renderUIElementList();
+
+      // all sections are hidden by default. open first section
+      $(this.allList).find('.gallery-header').first().click();
+
+      $(this.allList).append('<div class="bottom-arrow"></div>');
+      $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
+      $(this.allList).find('.bottom-arrow').on('mousemove', this.slideDown);
 
       $(this.allList).find('li:not(.ui-draggable)').draggable({
         cursor: "move",
@@ -52,6 +65,9 @@ define([
       this.$el.find('li').on('click', self.dropped);
 
       var list = new List('top-panel-bb', { valueNames: ['name']});
+
+      $(util.get('top-panel-bb')).find('.search').on('focus', this.expandAllSections);
+
       return this;
     },
 
@@ -59,10 +75,7 @@ define([
       var self = this;
       var collection = new ElementCollection(defaultElements);
 
-      var li = document.createElement('li');
-      li.className = 'gallery-header ui-draggable';
-      li.innerHTML = 'Design Elements';
-      $(this.allList).append(li);
+      var uiElemsSection = this.addSection('Design Elements');
 
       collection.each(function(element) {
         if(element.get('className') == "buttons" ||
@@ -70,17 +83,17 @@ define([
            element.get('className') == "textAreas" ||
            element.get('className') == "dropdowns") return;
 
-          self.appendUIElement(element);
+          self.appendUIElement(element, uiElemsSection);
       });
     },
 
-    appendUIElement: function(elementModel) {
+    appendUIElement: function(elementModel, container) {
       var className = 'uielement';
       var id='type-' + elementModel.get('className');
       var icon = 'icon '+  elementModel.get('className');
       var text = elementModel.get('text');
 
-      var li = this.addHalfWidthItem(id, className, text, icon);
+      var li = this.addHalfWidthItem(id, className, text, icon, container);
       var self = this;
       $(li).draggable({
         cursor  : "move",
@@ -96,46 +109,58 @@ define([
     },
 
     renderAuthenticationForms: function() {
-      this.addHeaderItem('Authentication');
-      this.addFullWidthItem("entity-user-Local_Login", "login", "Login Form", "local-login");
+      var authSection = this.addSection('Authentication');
+      this.addFullWidthItem("entity-user-Local_Login", "login", "Login Form", "local-login", authSection);
 
       v1State.get('users').each(function(user) {
-        this.addFullWidthItem("entity-user-" + user.get('name'), "signup",  user.get('name') + " Sign Up", "local-signup");
+        this.addFullWidthItem("entity-user-" + user.get('name'), "signup",  user.get('name') + " Sign Up", "local-signup", authSection);
       }, this);
 
       if(!v1State.isSingleUser()) {
         v1State.get('users').each(function(user) {
           var name = user.get('name');
-          this.addFullWidthItem("entity-user-" + name, "facebooksignup", name + " Facebook Sign Up", "facebook");
-          this.addFullWidthItem("entity-user-" + name, "twittersignup", name + " Twitter Sign Up", "twitter");
-          this.addFullWidthItem("entity-user-" + name, "linkedinsignup", name + " LinkedIn Sign Up", "linkedin");
+          this.addFullWidthItem("entity-user-" + name, "facebooksignup", name + " Facebook Sign Up", "facebook", authSection);
+          // this.addFullWidthItem("entity-user-" + name, "twittersignup", name + " Twitter Sign Up", "twitter", authSection);
+          // this.addFullWidthItem("entity-user-" + name, "linkedinsignup", name + " LinkedIn Sign Up", "linkedin", authSection);
         }, this);
       }
 
-      this.addFullWidthItem("entity-user-facebook", "thirdparty", "Facebook Login Button", "facebook");
-      this.addFullWidthItem("entity-user-twitter", "thirdparty", "Twitter Login Button", "twitter");
-      this.addFullWidthItem("entity-user-linkedin", "thirdparty", "LinkedIn Login Button", "linkedin");
+      this.addFullWidthItem("entity-user-facebook", "thirdparty", "Facebook Login Button", "facebook", authSection);
+      this.addFullWidthItem("entity-user-twitter", "thirdparty", "Twitter Login Button", "twitter", authSection);
+      this.addFullWidthItem("entity-user-linkedin", "thirdparty", "LinkedIn Login Button", "linkedin", authSection);
     },
 
     renderCurrentUserElements: function() {
-      this.addHeaderItem('Current User');
+      var currUserSection = this.addSection('Current User');
+
       _(v1State.getCurrentPage().getFields()).each(function(field) {
         if(field.isRelatedField()) return;
-        this.addFullWidthItem('current-user-'+field.cid, 'current-user', 'Current User '+ field.get('name'), 'current-user-icon');
+        this.addFullWidthItem('current-user-'+field.cid, 'current-user', 'Current User '+ field.get('name'), 'current-user-icon', currUserSection);
       }, this);
+
+      this.addFullWidthItem('entity-CurrentUser', "entity-edit-form", 'Current User Edit Form', 'create-form-icon', currUserSection);
     },
 
     renderEntitiyFormsTablesLists: function() {
-      this.addHeaderItem('Table Data');
-
+      //this.addHeaderItem('Table Data');
+      var tableSection = this.addSection('Table Data');
       v1State.get('tables').each(function(entityModel) {
         var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
         var id = 'entity-' + entityModel.cid;
-        this.addFullWidthItem(id, "entity-create-form", entityModel.get('name') +' Create Form', 'create-form-icon');
-        this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon');
-        this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon');
-        this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon');
-        this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon');
+        this.addFullWidthItem(id, "entity-create-form", entityModel.get('name') +' Create Form', 'create-form-icon', tableSection);
+        //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
+        this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon', tableSection);
+        this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon', tableSection);
+        this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon', tableSection);
+      }, this);
+
+      v1State.get('users').each(function(entityModel) {
+        var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
+        var id = 'entity-' + entityModel.cid;
+        //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
+        this.addFullWidthItem(id, "entity-list", entityModel.get('name') +' List', 'list-icon', tableSection);
+        this.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon', tableSection);
+        this.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon', tableSection);
       }, this);
     },
 
@@ -143,17 +168,18 @@ define([
       var pageContext = v1State.getCurrentPage().getContextEntities();
       if(!pageContext.length) return;
 
-      this.addHeaderItem('Page Context Data');
+      var contextEntitySection = this.addSection('Page Context Data');
+
       _(pageContext).each(function(tableName) {
-        var tableM = v1State.get('tables').getTableWithName(tableName);
+        var tableM = v1State.getTableModelWithName(tableName);
         if(!tableM) throw "Error with page context";
         var tableId = tableM.cid;
         var id = 'entity-' + tableM.cid;
 
-        this.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon');
+        this.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon', contextEntitySection);
 
-        tableM.get('fields').each(function(field) {
-          this.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon');
+        tableM.getFieldsColl().each(function(field) {
+          this.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon', contextEntitySection);
         }, this);
       }, this);
     },
@@ -259,12 +285,12 @@ define([
 
     createContextEntityNode: function(layout, id) {
       var hash = String(id).replace('context-field-','').split('-');
-      var entityM = v1State.get('tables').get(hash[0]);
+      var entityM = v1State.getTableModelWithCid(hash[0]);
       var fieldM = entityM.get('fields').get(hash[1]);
 
       var displayType = this.getFieldType(fieldM);
 
-      var editorContext = this.editorContext ? this.editorContext : "page";
+      var editorContext = this.editorContext ? this.editorContext : "Page";
 
       var content_ops = {};
       if(displayType == "links") {
@@ -285,17 +311,18 @@ define([
       var hash = String(id).replace('context-field-','').split('-');
       var entity = v1State.get('tables').get(hash[0]);
       var nested_entity = v1State.getTableModelWithCid(hash[1]);
-      var field = nested_entity.getFieldsColl().get(hash[2]);
+      var field = entity.getFieldsColl().get(hash[2]);
+      var nester_field = nested_entity.getFieldsColl().get(hash[3]);
 
-      var type = this.getFieldType(field);
+      var type = this.getFieldType(nester_field);
       var editorContext = this.editorContext ? this.editorContext : "page";
 
       var content_ops = {};
-      content_ops.content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ nested_entity.get('name') + '.' +field.get('name')+'}}';
+      content_ops.content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ field.get('name') + '.' +nester_field.get('name')+'}}';
 
       if(type == "links") {
         content_ops.content = 'Download '+ field.get('name');
-        content_ops.href = '{{'+editorContext+'.'+entity.get('name')+'.'+nested_entity.get('name')+'.'+field.get('name')+'}}';
+        content_ops.href = '{{'+editorContext+'.'+entity.get('name')+'.'+field.get('name')+'.'+nester_field.get('name')+'}}';
       }
 
       return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content_ops);
@@ -309,31 +336,42 @@ define([
 
     createEditForm: function(layout, id) {
       var cid = String(id).replace('entity-','');
-      var entity = v1State.get('tables').get(cid);
-      return this.widgetsCollection.createEditForm(layout, entity);
+      var entity = {};
+
+      if(cid == "CurrentUser")  {
+        editOn = "CurrentUser";
+        entity = v1State.get('users').models[0];
+      }
+      else {
+        entity = v1State.get('tables').get(cid);
+        if(!entity) entity = v1State.get('users').get(cid);
+        editOn = "Page." + entity.get('name');
+      }
+
+      return this.widgetsCollection.createEditForm(layout, entity, editOn);
     },
 
     createEntityTable: function(layout, id) {
       var cid = String(id).replace('entity-','');
-      var entity = v1State.get('tables').get(cid);
+      var entity = v1State.getTableModelWithCid(cid);
       return this.widgetsCollection.createTable(layout, entity);
     },
 
     createEntityList: function(layout, id) {
       var cid = String(id).replace('entity-','');
-      var entity = v1State.get('tables').get(cid);
+      var entity = v1State.getTableModelWithCid(cid);
       return this.widgetsCollection.createList(layout, entity);
     },
 
     createSearchBox: function(layout, id) {
       var cid = String(id).replace('entity-','');
-      var entity = v1State.get('tables').get(cid);
+      var entity = v1State.getTableModelWithCid(cid);
       return this.widgetsCollection.createSearchbox(layout, entity);
     },
 
     createSearchList: function(layout, id) {
       var cid = String(id).replace('entity-','');
-      var entity = v1State.get('tables').get(cid);
+      var entity = v1State.getTableModelWithCid(cid);
       return this.widgetsCollection.createSearchList(layout, entity);
     },
 
@@ -382,7 +420,7 @@ define([
 
     findLeft: function(e, ui) {
       var offsetLeft = document.getElementById('elements-container').offsetLeft;
-      var left = Math.round((e.pageX - offsetLeft)/GRID_WIDTH);
+      var left = Math.round((e.pageX - offsetLeft)/this.positionHorizontalGrid);
       if(left < 0) left = 0;
       if(left + 4 > 12) left = 8;
 
@@ -391,30 +429,40 @@ define([
 
     findTop: function(e, ui) {
       var offsetScrolledTop = $('#elements-container').offset().top;
-      var top  = Math.round((e.pageY - offsetScrolledTop)/GRID_HEIGHT);
+      var top  = Math.round((e.pageY - offsetScrolledTop)/this.positionVerticalGrid);
       if(top < 0) top = 0;
 
       return top;
     },
 
-    addFullWidthItem: function(id, className, text, icon) {
+    addFullWidthItem: function(id, className, text, icon, container) {
       var li = document.createElement('li');
       li.className = className+' full-width';
       li.id = id;
       var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
       li.innerHTML= _.template(tempLi, { text: text, icon: icon});
-      $(this.allList).append(li);
+      if(container) {
+        $(container).append(li);
+      }
+      else {
+        $(this.allList).append(li);
+      }
 
       return li;
     },
 
-    addHalfWidthItem: function(id, className, text, icon) {
+    addHalfWidthItem: function(id, className, text, icon, container) {
       var li = document.createElement('li');
       li.className = className+' half-width';
       li.id = id;
       var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
       li.innerHTML= _.template(tempLi, { text: text, icon: icon});
-      $(this.allList).append(li);
+      if(container) {
+        $(container).append(li);
+      }
+      else {
+        $(this.allList).append(li);
+      }
 
       return li;
     },
@@ -423,7 +471,28 @@ define([
       var li = document.createElement('li');
       li.className = 'gallery-header ui-draggable';
       li.innerHTML = text;
+      var icon = document.createElement('img');
+      icon.className="icon";
+      icon.src="/static/img/right-arrow.png";
+      li.appendChild(icon);
       $(this.allList).append(li);
+      return li;
+    },
+
+    addSection: function(name) {
+      var header = this.addHeaderItem(name);
+      var sectionName = name.replace(/ /g,'-');
+      header.onclick = function(e) {
+        var section = $('.'+sectionName);
+        $(this).toggleClass('open');
+        $('.'+sectionName).slideToggle('fast');
+      };
+
+      var section = document.createElement('section');
+      section.className = sectionName;
+      section.style.display = 'none';
+      $(this.allList).append(section);
+      return section;
     },
 
     addInfoItem: function(text) {
@@ -447,6 +516,17 @@ define([
       }
 
       return type;
+    },
+
+    expandAllSections: function() {
+      $(this.allList).find('section').show()
+                     .end().find('.gallery-header').addClass('open');
+    },
+
+    slideDown: function() {
+      var itemGallery = document.getElementById('item-gallery');
+      var h = $(itemGallery).scrollTop();
+      $(itemGallery).scrollTop(h + 14);
     }
 
   });

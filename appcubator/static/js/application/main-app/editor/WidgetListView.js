@@ -16,6 +16,10 @@ function( WidgetContainerView,
     entity: null,
     type: null,
     highlighted: false,
+
+    positionHorizontalGrid : 80,
+    positionVerticalGrid   : 15,
+
     events: {
       'click'         : 'select',
       'click .delete' : 'remove',
@@ -67,8 +71,8 @@ function( WidgetContainerView,
       var width = this.model.get('layout').get('width');
       var height = this.model.get('layout').get('height');
 
-      this.setTop(GRID_HEIGHT * this.model.get('layout').get('top'));
-      this.setLeft(GRID_WIDTH * this.model.get('layout').get('left'));
+      this.setTop(this.positionVerticalGrid * this.model.get('layout').get('top'));
+      this.setLeft(this.positionHorizontalGrid * this.model.get('layout').get('left'));
       this.setHeight(height * GRID_HEIGHT);
 
       this.el.className += ' widget-wrapper span'+width;
@@ -130,7 +134,7 @@ function( WidgetContainerView,
     },
 
     resized: function(e, ui) {
-      var deltaHeight = Math.round((ui.size.height + 6) / GRID_HEIGHT);
+      var deltaHeight = Math.round((ui.size.height + 6) / this.positionVerticalGrid);
       var elem = util.get('widget-wrapper-' + this.model.cid);
       elem.style.width = '';
       elem.style.height = '';
@@ -138,7 +142,11 @@ function( WidgetContainerView,
     },
 
     autoResize: function() {
-      this.model.get('layout').set('width', 7);
+      var left = this.model.get('layout').get('left');
+      var width = 12 - left;
+      if(width > 7) width = 7;
+
+      this.model.get('layout').set('width', width);
       this.model.get('layout').set('height', 46);
     },
 

@@ -1,6 +1,8 @@
 body {
-/*  background-image: url(../img/blank-bg.png);
-*/  background-repeat: no-repeat;
+  /*  background-image:  url(../img/blank-bg.png);
+
+   */
+background-repeat: no-repeat;
   background-position: top center;
 }
 
@@ -26,7 +28,6 @@ body {
 }
 
 .intro {
-
   font-size: 16px;
   line-height: 22px;
 }
@@ -46,7 +47,6 @@ body {
   vertical-align: middle;
 }
 
-
 .welcome-icon {
   height: 140px;
   width: 140px;
@@ -60,6 +60,7 @@ body {
   cursor: pointer;
   text-align: center;
 }
+
 .welcome-icon img {
   margin-top: 16px;
   margin-bottom: 16px;
@@ -70,10 +71,10 @@ body {
   margin-right: 6px;
 }
 
-a.welcome-icon:visited,
-a.welcome-icon:hover {
+a.welcome-icon:visited,a.welcome-icon:hover {
   color: #fff;
 }
+
 .welcome-icon p {
   display: block;
 }
@@ -92,10 +93,14 @@ a.welcome-icon:hover {
   left: 450px;
   width: 315px;
   text-align: left;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
   opacity: 0;
+
   -webkit-transition: opacity 0.4s ease-in;
   -moz-transition: opacity 0.4s ease-in;
   -o-transition: opacity 0.4s ease-in;
+  -ms-transition: opacity 0.4s ease-in;
   transition: opacity 0.4s ease-in;
 }
 
@@ -108,18 +113,29 @@ a.welcome-icon:hover {
 
 .quick-tour:hover .info-text {
   display: block;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
   opacity: 1;
 }
+
 .read-tutorials:hover .info-text {
   display: block;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
   opacity: 1;
 }
+
 .start-building:hover .info-text {
   display: block;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
   opacity: 1;
 }
+
 .walkthrough-twitter:hover .info-text {
   display: block;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
   opacity: 1;
 }
 

@@ -7,6 +7,7 @@ function(FooterEditorView) {
   var FooterView = Backbone.View.extend({
     entity: null,
     type: null,
+
     events: {
       'mousedown .footer' : 'showFooterEditor'
     },

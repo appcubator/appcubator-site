@@ -2,6 +2,8 @@
   position: fixed;
   top: 0;
   padding: 0;
+
+  -webkit-box-shadow: none;
   box-shadow: none;
   border: none;
   overflow: visible;
@@ -11,9 +13,7 @@
   z-index: 2002;
 }
 
-.tutorial-view h1,
-.tutorial-view h2,
-.tutorial-view h3 {
+.tutorial-view h1,.tutorial-view h2,.tutorial-view h3 {
   font-family: verb_regularbold;
 }
 
@@ -23,10 +23,6 @@
   color: #666;
   padding-left: 20px;
   padding-top: 30px;
-}
-
-.tutorial-view  .main-img.q-mark {
-  
 }
 
 .tutorial-content {
@@ -40,28 +36,35 @@
   top: 3%;
   left: 50%;
   z-index: 3002;
+
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   overflow: hidden;
-  overflow-y: scroll;
 
-/*      -webkit-animation-name:flyin;
-    -moz-animation-name:flyin;
-    -ms-animation-name:flyin;
-    -o-animation-name:flyin;
-    animation-name:flyin;*/
+  -ms-overflow-y: scroll;
+  overflow-y: scroll; /*      -webkit-animation-name: flyin;
 
+
+
+
+  */
 }
 
 .tutorial-content h2 {
   display: block;
-  font-size: 24px;  
+  font-size: 24px;
   width: 100%;
   padding: 15px;
   height: 56px;
   border-bottom: 1px solid #f6f6f6;
   margin: 0;
+
   background-image: -webkit-linear-gradient(#ffffff,#f5f5f5);
+  background-image: -moz-linear-gradient(#ffffff,#f5f5f5);
+  background-image: -o-linear-gradient(#ffffff,#f5f5f5);
+  background-image: -ms-linear-gradient(#ffffff,#f5f5f5);
+  background-image: linear-gradient(#ffffff,#f5f5f5);
 }
 
 .tutorial-content .main-img {
@@ -75,11 +78,12 @@
 
 .tutorial-content ul {
   list-style: square;
-  list-style-position:inside;
+  list-style-position: inside;
   margin-left: 10px;
 }
+
 .tutorial-content ul li {
-  margin-top: 14px;  
+  margin-top: 14px;
 }
 
 .tutorial-content .images {
@@ -109,6 +113,8 @@
   border-radius: 3px;
   padding-top: 60px;
   z-index: 3001;
+
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   background-color: #f3f3f3;
   font-size: 14px;
@@ -127,12 +133,16 @@
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   padding-top: 14px;
+
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .tutorial-menu ul {
   height: 100%;
   overflow: scroll;
+
+  -ms-overflow-y: scroll;
   overflow-y: scroll;
   padding-bottom: 20px;
 }
@@ -161,76 +171,203 @@
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #fefefe;
   background-color: #f9f9f9;
-  padding-bottom: 0;
+  padding-bottom: 0; /*  box-shadow:  inset -2px 0 3px 0 rgba(0, 0, 0, 0.3);
 
-/*  box-shadow: inset -2px 0 3px 0 rgba(0, 0, 0, 0.3);
-*/}
+   */
+}
+
 .tutorial-menu ul ul li {
   padding-left: 32px;
   font-weight: normal;
-  font-size:  12px;
+  font-size: 12px;
   border-bottom: none;
   border-top: none;
   background-color: #f9f9f9;
 }
 
 .modal.tutorial-view .tutorial-menu {
-    -webkit-animation-name:none;
-    -moz-animation-name:none;
-    -ms-animation-name:none;
-    -o-animation-name:none;
-    animation-name:none;
+  -webkit-animation-name: none;
+  -moz-animation-name: none;
+  -ms-animation-name: none;
+  -o-animation-name: none;
+  animation-name: none;
 }
 
 .flyin {
-    -webkit-animation-name:flyin;
-    -moz-animation-name:flyin;
-    -ms-animation-name:flyin;
-    -o-animation-name:flyin;
-    animation-name:flyin;
+  -webkit-animation-name: flyin;
+  -moz-animation-name: flyin;
+  -ms-animation-name: flyin;
+  -o-animation-name: flyin;
+  animation-name: flyin;
 }
 
 .flyout {
-    -webkit-animation-name:flyout;
-    -moz-animation-name:flyout;
-    -ms-animation-name:flyout;
-    -o-animation-name:flyout;
-    animation-name:flyout;
+  -webkit-animation-name: flyout;
+  -moz-animation-name: flyout;
+  -ms-animation-name: flyout;
+  -o-animation-name: flyout;
+  animation-name: flyout;
 }
 
+@keyframes "flyin" {
+ 0% {
+    /*transform*/margin-top: -800px;
+ }
+ 55% {
+    margin-top: -550px;
+ }
+ 75% {
+    margin-top: -425px;
+ }
+ 100% {
+    margin-top: -300px;
+ }
 
-  @-webkit-keyframes flyin {
-    0% {
-      /*transform*/
-      margin-top: -800px;
-    }
-    55% {
-      margin-top: -550px;
-    }
-    75% {
-      margin-top: -425px;
-    }
-    100% {
-      margin-top: -300px;
-    }
-  }
+}
 
-  @-webkit-keyframes flyout {
-    0% {
-      /*transform*/
-      margin-top: -300px;
-    }
-    55% {
-      margin-top: 100px;
-    }
-    75% {
-      margin-top: 325px;
-    }
-    100% {
-      margin-top: 500px;
-    }
-  }
+@-moz-keyframes flyin {
+ 0% {
+   /*transform*/margin-top: -800px;
+ }
+ 55% {
+   margin-top: -550px;
+ }
+ 75% {
+   margin-top: -425px;
+ }
+ 100% {
+   margin-top: -300px;
+ }
 
+}
+
+@-webkit-keyframes "flyin" {
+ 0% {
+   /*transform*/margin-top: -800px;
+ }
+ 55% {
+   margin-top: -550px;
+ }
+ 75% {
+   margin-top: -425px;
+ }
+ 100% {
+   margin-top: -300px;
+ }
+
+}
+
+@-ms-keyframes "flyin" {
+ 0% {
+   /*transform*/margin-top: -800px;
+ }
+ 55% {
+   margin-top: -550px;
+ }
+ 75% {
+   margin-top: -425px;
+ }
+ 100% {
+   margin-top: -300px;
+ }
+
+}
+
+@-o-keyframes "flyin" {
+ 0% {
+   /*transform*/margin-top: -800px;
+ }
+ 55% {
+   margin-top: -550px;
+ }
+ 75% {
+   margin-top: -425px;
+ }
+ 100% {
+   margin-top: -300px;
+ }
+
+}
+
+@keyframes "flyout" {
+ 0% {
+    /*transform*/margin-top: -300px;
+ }
+ 55% {
+    margin-top: 100px;
+ }
+ 75% {
+    margin-top: 325px;
+ }
+ 100% {
+    margin-top: 500px;
+ }
+
+}
+
+@-moz-keyframes flyout {
+ 0% {
+   /*transform*/margin-top: -300px;
+ }
+ 55% {
+   margin-top: 100px;
+ }
+ 75% {
+   margin-top: 325px;
+ }
+ 100% {
+   margin-top: 500px;
+ }
+
+}
+
+@-webkit-keyframes "flyout" {
+ 0% {
+   /*transform*/margin-top: -300px;
+ }
+ 55% {
+   margin-top: 100px;
+ }
+ 75% {
+   margin-top: 325px;
+ }
+ 100% {
+   margin-top: 500px;
+ }
+
+}
+
+@-ms-keyframes "flyout" {
+ 0% {
+   /*transform*/margin-top: -300px;
+ }
+ 55% {
+   margin-top: 100px;
+ }
+ 75% {
+   margin-top: 325px;
+ }
+ 100% {
+   margin-top: 500px;
+ }
+
+}
+
+@-o-keyframes "flyout" {
+ 0% {
+   /*transform*/margin-top: -300px;
+ }
+ 55% {
+   margin-top: 100px;
+ }
+ 75% {
+   margin-top: 325px;
+ }
+ 100% {
+   margin-top: 500px;
+ }
+
+}
 
 .modal-bg {
   position: fixed;
@@ -305,4 +442,3 @@ ul.text-cont li.answer-slide:hover {
   background-color: transparent;
   background-image: url(../img/fade-down.png);
 }
-

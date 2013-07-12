@@ -1,0 +1,25 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+  <h2>Users</h2>
+  <hr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Is Noob</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users reversed%}
+      <tr>
+        <td><a href="/stay/up/to/get/lucky/users/{{ user.pk }}">{{ user.pk }}</a></td>
+        <td><a href="/stay/up/to/get/lucky/users/{{ user.pk }}">{{ user.user.first_name }} {{ user.user.last_name }}</a></td>
+        <td>{{ user.user.email }}</td>
+        <td>{{ user.noob }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

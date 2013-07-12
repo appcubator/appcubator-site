@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 import django.contrib.auth.views
-import base_views, views, theme_views, log_views, test_views
+import base_views, views, theme_views, log_views, test_views, admin_views
 import django.views.generic.base
 from django.views.generic.simple import direct_to_template
 from registration.backends.default.views import RegistrationView, ActivationView
@@ -11,6 +11,7 @@ from registration.backends.default.views import RegistrationView, ActivationView
 
 urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
+    url(r'^showhn/$',                   base_views.showhnpage),
     url(r'^aboutus/$',                  base_views.aboutus),
     # Signup, Login and invites
     url(r'^accounts/', include('registration.backends.default.urls')),
@@ -24,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^ping/$',                     base_views.ping),
     url(r'^whatisthis/$',               base_views.marketing),
     url(r'^signup_form/$',              base_views.signup_new_customer),
+    url(r'^signup_hn_form/$',           base_views.signup_hn_customer),
     url(r'^send_invitation/(\d+)/$',    base_views.send_invitation_to_customer),
     url(r'^backend/',                   include('app_builder.urls')),
 )
@@ -50,7 +52,6 @@ urlpatterns += patterns('appcubator.views',
     # entities
     url(r'^app/(\d+)/entities/xl/$', 'process_excel'),
     url(r'^app/(\d+)/entities/userxl/$', 'process_user_excel'),
-    url(r'^app/(\d+)/entities/fetch_data/$', 'fetch_data'),
 
     # statix
     url(r'^app/(\d+)/static/$', 'staticfiles'), # a GET returns the apps statics, a POST creates a static file entry.
@@ -85,13 +86,23 @@ urlpatterns += patterns('appcubator.views',
     # special json editor route
     url(r'^app/(\d+)/editor/\d+/debug/$', 'app_json_editor'), # this serves all the app pages
 
-    url(r'^tutorial/([^/]+)/$', 'tutorial_page'),
+    url(r'^documentation/$', 'documentation_page', {"page_name": "intro"}),
+    url(r'^documentation/([^/]+)/$', 'documentation_page'),
 
     # the rest
     url(r'^app/(\d+)/', 'app_page'), # this serves all the app pages
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
+)
+
+urlpatterns += patterns('appcubator.admin_views',
     url(r'^stay/up/to/get/lucky/$', 'admin_home'),
+    url(r'^stay/up/to/get/lucky/customers/$', 'admin_customers'),
+    url(r'^stay/up/to/get/lucky/users/(\d+)$', 'admin_user'),
+    url(r'^stay/up/to/get/lucky/users/$', 'admin_users'),
+    url(r'^stay/up/to/get/lucky/apps/(\d+)$', 'admin_app'),
+    url(r'^stay/up/to/get/lucky/apps/$', 'admin_apps'),
+    url(r'^stay/up/to/get/lucky/feedback/$', 'admin_feedback'),
 )
 
 urlpatterns += patterns('appcubator.theme_views',

@@ -25,14 +25,16 @@ function(AppModel,
 
       this.answersDict = answers;
 
-      this.state = new AppModel();
-      this.state.set('users', this.generateUsers());
-      this.state.set('tables', this.generateTables());
-      this.state.set('pages', this.generatePages());
-      this.state.set('mobilePages', new MobilePageCollection());
-      this.state.set('info', new AppInfoModel({}));
-      this.state.set('emails', new EmailCollection({}));
-      this.state.set('name', appName);
+      v1State = new AppModel();
+      v1State.set('users', this.generateUsers());
+      v1State.set('tables', this.generateTables());
+      v1State.set('pages', this.generatePages());
+      v1State.set('mobilePages', new MobilePageCollection());
+      v1State.set('info', new AppInfoModel({}));
+      v1State.set('emails', new EmailCollection({}));
+      v1State.set('name', appName);
+
+      this.state  = v1State;
     },
 
     generateUsers: function() {

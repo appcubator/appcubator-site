@@ -20,6 +20,9 @@ import random
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
     __file__), os.path.normpath("default_state"))
 
+import logging
+logger = logging.getLogger('appcubator.models')
+
 
 # ADDITIONAL USER DATA CAN BE STORED HERE
 class ExtraUserData(models.Model):
@@ -100,7 +103,7 @@ class App(models.Model):
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
     _mobile_uie_state_json = models.TextField(blank=True, default=get_default_mobile_uie_state)
 
-    deployment_id = models.IntegerField(blank=True, null=True, default=None)
+    deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
 
     def save(self, *args, **kwargs):
         if self.subdomain == '':
@@ -130,6 +133,10 @@ class App(models.Model):
         self.set_state(s)
 
     state = property(get_state, set_state)
+
+    @property
+    def api_key(self):
+        return ApiKeyCounts.get_api_key_from_user(self.owner)
 
     @property
     def state_json(self):
@@ -187,6 +194,8 @@ class App(models.Model):
 
 
         app = AnalyzedApp.create_from_dict(self.state)
+
+        app.api_key = self.api_key
         codes = create_codes(app)
         coder = Coder.create_from_codes(codes)
 
@@ -222,9 +231,9 @@ class App(models.Model):
             filenames = os.listdir(tmpdir)
             p = subprocess.Popen(shlex.split("/usr/bin/zip -r zipfile.zip %s" % ' '.join(filenames)), stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=tmpdir)
             out, err = p.communicate()
-            #print "%s\n%s" % (("out", "err"), (out, err))
+            logger.debug("%s\n%s" % (("out", "err"), (out, err)))
             retcode = p.wait()
-            #print "ZIP: %d" % retcode
+            logger.debug("Command exited with return code %d" % retcode)
             return os.path.join(tmpdir, 'zipfile.zip')
 
         return zipify(tmpdir)
@@ -255,6 +264,7 @@ class App(models.Model):
 
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
+        logger.info("Deployed to %s" % tmpdir)
         contents = os.listdir(tmpdir)
         # tar it up
         t = tarfile.open(os.path.join(tmpdir, 'payload.tar'), 'w')
@@ -270,7 +280,7 @@ class App(models.Model):
             if self.deployment_id is None:
                 r = requests.post("http://%s/deployment/" % settings.DEPLOYMENT_HOSTNAME, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
             else:
-                r = requests.post("http://%s/deployment/%s/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
+                r = requests.post("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
 
         finally:
             f.close()
@@ -279,7 +289,7 @@ class App(models.Model):
         if r.status_code == 200:
             result = {}
             response_content = r.json()
-            print response_content
+            logger.debug("Deployment response content: %r" % response_content)
             try:
                 self.deployment_id = response_content['deployment_id']
                 self.save()
@@ -293,6 +303,7 @@ class App(models.Model):
 
         elif r.status_code == 404:
             assert retry_on_404
+            logger.warn("The deployment was not found, so I'm setting deployment id to None")
             self.deployment_id = None
             self.save()
             return self.deploy(retry_on_404=False)
@@ -301,18 +312,16 @@ class App(models.Model):
           return {'errors': r.content}
 
     def delete(self, *args, **kwargs):
-        try:
-            post_data = {"u_name": self.u_name()}
-            r = requests.post(
-                "http://%s/deployment/delete/" % settings.DEPLOYMENT_HOSTNAME, post_data)
+        if self.deployment_id is not None:
+            try:
+                r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
 
-        except Exception:
-            print "Warning: could not reach appcubator server."
-        else:
-            if r.status_code != 200:
-                print "Error: appcubator could not delete the deployment. Plz do it manually."
-        finally:
-            super(App, self).delete(*args, **kwargs)
+            except Exception:
+                logger.error("Could not reach appcubator server.")
+            else:
+                if r.status_code != 200:
+                    logger.error("Tried to delete %d, Deployment server returned bad response: %d %r" % (self.deployment_id, r.status_code, r.text))
+        super(App, self).delete(*args, **kwargs)
 
 
 class UITheme(models.Model):
@@ -394,11 +403,26 @@ class ApiKeyCounts(models.Model):
     api_key = models.CharField(max_length=255)
     api_count = models.IntegerField(default=0)
 
+    @staticmethod
+    def get_api_key_from_user(user):
+      user_name = user.username
+      date_joined = user.date_joined
+      hash_string = user_name + str(date_joined)
+      return hashlib.sha224(hash_string).hexdigest()
+
+
 # Keeps track of individual usages, so we can do time based
 # control and analytics later on.
 class ApiKeyUses(models.Model):
-    api_key = models.ForeignKey(ApiKeyCounts, related_name="api_key_counts")
+    api_key = models.ForeignKey(ApiKeyCounts, related_name="api_key_uses")
     api_use = models.DateField(auto_now_add=True)
+
+    @staticmethod
+    def get_api_key_from_user(user):
+      user_name = user.username
+      date_joined = user.date_joined
+      hash_string = user_name + str(date_joined)
+      return hashlib.sha224(hash_string).hexdigest()
 
 
 def load_initial_themes():
@@ -406,6 +430,8 @@ def load_initial_themes():
         os.path.join(DEFAULT_STATE_DIR, "themes"))
 
     for filename in theme_json_filenames:
+        if not filename.endswith('json'):
+            continue
         try:
             sys.stdout.write("Loading %s" % filename)
             s = simplejson.loads(get_default_data(
@@ -415,6 +441,11 @@ def load_initial_themes():
             t = UITheme(name=filename.replace(".json", ""))
             sys.stdout.write(".")
             t.set_state(s)
+            sys.stdout.write(".")
+            try:
+                t.image = t.uie_state['img_url']
+            except KeyError:
+                sys.stdout.write("No key img_url for %r" % filename)
             sys.stdout.write(".")
             t.full_clean()
             sys.stdout.write(".")
@@ -452,7 +483,7 @@ class DomainRegistration(models.Model):
         return DomainRegistration.api.check_availability(domain)
 
     @classmethod
-    def register_domain(self, domain, test_only=False):
+    def register_domain(cls, domain, test_only=False):
         d = cls()
         d.domain = d
         if test_only:
@@ -465,7 +496,7 @@ class DomainRegistration(models.Model):
 
     def configure_dns(self, staging=True):
         DomainRegistration.api.configure_domain_records(
-            domain, staging=staging)
+            self.domain, staging=staging)
         self.dns_configured = 1
         self.save()
 
@@ -511,8 +542,13 @@ class RouteLog(models.Model):
 class LogAnything(models.Model):
     app_id = models.IntegerField(null=True)
     user_id = models.IntegerField(null=True)
+    name = models.TextField()
     data = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def data_json(self):
+        return simplejson.loads(self.data)
 
 class InvitationKeys(models.Model):
     api_key    = models.CharField(max_length=255)

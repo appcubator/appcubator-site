@@ -102,7 +102,7 @@ scope: r_fullprofile r_emailaddress
   (g) No refunds will be given for any days remaining in your current billing cycle.
   (h) You understand and agree that you, as the Account Holder, are ultimately responsible for payment for every Client Website under your account. If, at any time, the billing obligations of any Client Website are not met, we will have the right to disable the Client Website until the billing obligation is met.</p>
   <p><h4>16. INDEMNITY</h4>
-  You agree to indemnify and hold Appcubator, and its subsidiaries, affiliates, officers, directors, agents, co-branders, partners and employees, harmless from any claim or demand, including reasonable attorneys' fees, made by any third party due to or arising out of your Content, use of or connection to the Service, violation of these Terms, or violation of any rights of another.</p>
+  You agree to indemnify and hold Appcubator, and its subsidiaries, affiliates, officers, directors, agents, co-branders, partners and employees, harmless from any claim or demand, including reasonable attorneys' fees, made by any third party due to or arising out of your Content, violation of these Terms, or violation of any rights of another.</p>
   <p><h4>17. RESALE OF SERVICE</h4>
   You agree not to reproduce, duplicate, copy, sell, resell or exploit any portion of the Service without our express written permission.
   Appcubator is often used by Designers to design websites for a third party. Such use is explicitly permitted under the Designer Platform terms above. Should you design websites for third parties on any other version of Appcubator, such sites must each have their own account controlled by the third party, and you may not group multiple client sites under one account owned by you.</p>
@@ -135,4 +135,5 @@ scope: r_fullprofile r_emailaddress
 {% endblock %}
 
 {% block js %}
+<script type="text/javascript" data-main="{{ STATIC_URL }}js/application/external-pages/website-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 {% endblock %}

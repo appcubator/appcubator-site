@@ -26,10 +26,11 @@ def JSONResponse(serializable_obj, **kwargs):
 @csrf_exempt
 def log_anything(request):
     key = request.POST['__key']
+    data = request.POST.get('__data', '(No Data)')
     app_id = request.POST.get('__app_id', None)
     user_id = request.user.id
-    data = { k:v for k,v in request.POST.items() if not k.startswith('__') }
-    la = LogAnything(app_id=app_id, user_id=user_id, data=simplejson.dumps(data))
+    # data = { k:v for k,v in request.POST.items() if not k.startswith('__') }
+    la = LogAnything(app_id=app_id, user_id=user_id, name=key, data=data)
     la.save()
     return HttpResponse("ok")
 
@@ -65,16 +66,21 @@ def log_slide(request):
 
 @require_POST
 @login_required
+@csrf_exempt
 def log_feedback(request):
     user = request.user.first_name
+    user_id = request.user.id
     like = request.POST['like']
     dislike = request.POST['dislike']
     features = request.POST['features']
 
     message =  user + " says.\n\n Like: \n" + like + \
         "\n\n Dislike: \n" + dislike + "\n\n Feature request: \n" + features
+    data = {}
+    data['message'] = message
 
-    TutorialLog.create_feedbacklog(request.user, message)
+    la = LogAnything(app_id=app_id, user_id=user_id, name="posted feedback", data=data)
+    la.save()
 
     requests.post(
         "https://api.mailgun.net/v2/v1factory.mailgun.org/messages",

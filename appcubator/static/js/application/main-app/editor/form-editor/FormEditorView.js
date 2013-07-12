@@ -65,7 +65,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       temp_context.pages = v1State.get('pages').models;
       temp_context.emails = ["Email 1", "Email 2"];
       temp_context.possibleEntities = _.map(v1State.get('users').getCommonProps(), function(field) { return "CurrentUser." + field.name; });
-      temp_context.possibleActions =  this.possibleActions;
+
       var html = _.template(FormEditorTemplates.template, temp_context);
       this.el.innerHTML = html;
 
@@ -78,6 +78,12 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
         cancel: ".not-sortable",
         axis: "y"
       });
+
+      if(this.model.isConstant()) {
+        $('.add-field-button').remove();
+        $('.delete-field').remove();
+      }
+
       return this;
     },
 
@@ -109,7 +115,8 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
                                                  displayType: "single-line-text",
                                                  type: fieldModel.get('type'),
                                                  label: fieldModel.get('name'),
-                                                 placeholder: fieldModel.get('name') });
+                                                 placeholder: fieldModel.get('name'),
+                                                 options: "" });
 
 
         if(fieldModel.get('type') == "email") {
@@ -160,7 +167,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       this.$el.find('.details-panel').hide();
 
       this.$el.find('.details-panel').html(html);
-      if(fieldModel.get('displayType') == "option-boxes") {
+      if(fieldModel.get('displayType') == "option-boxes" || fieldModel.get('displayType') == "dropdown") {
         curOptions = fieldModel.get('options');
         this.$el.find('.options-list').append('<b>Options</b><input class="options-input" placeholder="E.g. Cars,Birds,Trains..." type="text" value="' + curOptions + '">');
       }
@@ -205,7 +212,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
         this.$el.find('.options-list').html('');
         if(newType == "option-boxes" || newType == "dropdown") {
           $('.details-panel').animate({ scrollTop: $('.details-panel').height() }, "slow");
-          this.selected.set('options', curOptions.split(','));
+          this.selected.set('options', curOptions);
           this.$el.find('.options-list').append('<b>Options</b><input class="options-input" placeholder="E.g. Cars,Birds,Trains..." type="text" value="' + curOptions + '">');
           $('.options-input').focus();
         }
@@ -233,15 +240,13 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     },
 
     changedOptions: function(e) {
-      var options = String(this.$el.find('.options-input').val()).split(',');
-      this.selected.set('options', options);
+      var value = String(this.$el.find('.options-input').val()).trim();
+      this.selected.set('options', value);
       e.stopPropagation();
     },
 
     changedOrder:function(e, ui) {
       var sortedIDs = $( '.form-fields-list' ).sortable( "toArray" );
-
-      console.log(sortedIDs);
 
       var submitBtn = _.last(this.model.get('fields').models);
       this.model.get('fields').remove(submitBtn, {silent: true});
@@ -268,7 +273,8 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
                                                displayType: "single-line-text",
                                                type: fieldModel.get('type'),
                                                label: name,
-                                               placeholder: name});
+                                               placeholder: name,
+                                               options: ""});
 
       if(fieldModel.get('type') == "email") {
         formFieldModel.set('displayType', "email-text");

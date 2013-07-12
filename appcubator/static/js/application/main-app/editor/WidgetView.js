@@ -69,7 +69,7 @@ define([
       }, this);
       this.model.bind('stopEditing', this.switchEditModeOff);
 
-      keyDispatcher.key('command+enter', function() {
+      keyDispatcher.bind('command+enter', function() {
         self.model.trigger('stopEditing');
       });
     },
@@ -143,7 +143,6 @@ define([
       var width = this.model.get('layout').get('width');
       if(this.positionHorizontalGrid == 80) this.el.className += " span" + width;
       else this.setWidth(width * this.positionHorizontalGrid);
-      //this.setLeft(GRID_WIDTH * (this.model.get('layout').get('left')));
     },
 
     changedAlignment: function() {
@@ -285,14 +284,17 @@ define([
       keyDispatcher.textEditing = false;
     },
 
-    autoResize: function() {
+    autoResize: function(hGrid, vGrid) {
+      var horizontalGrid = (hGrid || this.positionHorizontalGrid);
+      var verticalGrid = (vGrid || this.positionVerticalGrid);
+
       var node = this.el.firstChild;
 
-      var height= $(node).outerHeight(true);
+      var height = $(node).outerHeight(true);
       var width = $(node).outerWidth(true);
 
-      var nHeight = Math.ceil(height / (this.positionVerticalGrid));
-      var nWidth  = Math.ceil(width / (this.positionHorizontalGrid));
+      var nHeight = Math.ceil(height / verticalGrid);
+      var nWidth  = Math.ceil(width / horizontalGrid);
 
       if(!nHeight) nHeight = 2;
       if(!nWidth)  nWidth = 2;

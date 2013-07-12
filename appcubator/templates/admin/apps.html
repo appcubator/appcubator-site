@@ -1,0 +1,29 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+  <h2>Apps</h2>
+  <hr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Owner</th>
+        <th>Subdomain</th>
+        <th>App State</th>
+        <th>UIE State</th>
+        <th>Deployment ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for app in apps reversed%}
+      <tr>
+        <td><a href="/stay/up/to/get/lucky/users/{{ user.pk }}">{{ app.pk }}</a></td>
+        <td><a href="/stay/up/to/get/lucky/users/{{ user.pk }}">{{ app.name }}</a></td>
+        <td>{{ app.owner }}</td>
+        <td>{{ app.subdomain }}</td>
+        <td>{{ app.deployment_id }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

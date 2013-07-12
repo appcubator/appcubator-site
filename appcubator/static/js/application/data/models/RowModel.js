@@ -26,7 +26,7 @@ define([
 
       if(entity.get('fields').getImageFields()) hasImageElements = 1;
 
-      entity.get('fields').each(function(fieldModel) {
+      entity.getFieldsColl().each(function(fieldModel) {
 
         var type = fieldModel.get('type');
         if(type == "fk"||type == "m2m"||type == "o2o") { return; }
@@ -49,6 +49,7 @@ define([
 
         if(displayType == "images") {
           layout = {left : 0, top: nmrImageElements*90 + 5, height: 90, width: 90};
+          content_ops.content_src = '{{loop.'+ entity.get('name') +'.'+fieldModel.get('name')+'}}';
           nmrImageElements++;
         }
         else {
@@ -56,7 +57,13 @@ define([
         }
 
         this.get('uielements').createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
+
       }, this);
+
+      var height = (nmrImageElements > nmrElements ? nmrImageElements * 95 : nmrElements * 45);
+      var rowHeight = Math.ceil(height / 15);
+      if(rowHeight < 10) rowHeight = 10;
+      this.get('layout').set('height', rowHeight);
     },
 
     toJSON: function() {

@@ -75,7 +75,8 @@ function(SimpleModalView) {
           type: "POST",
           url: '/app/'+appId+'/delete/',
           complete: function() {
-            util.onServerReady(function(){window.location.href='/app/'; })
+              var url = '/app/';
+              window.location.href=url;
           },
           dataType: "JSON"
         });
@@ -102,7 +103,7 @@ function(SimpleModalView) {
         url:'/app/'+appId+'/subdomain/'+subdomain+'/',
         data: {},
         success: function(d){
-          util.onServerReady(function(){location.reload(true);});
+          location.reload(true);
         },
         error: function() {
           util.stopAjaxLoading();

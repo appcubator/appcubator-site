@@ -65,11 +65,14 @@ function(TableCollection,
 
       clickedAddUserRole: function(e) {
         $(e.currentTarget).hide();
-        $('#add-role-form').fadeIn().focus();
+        $('#add-role-form').fadeIn();
+        $('#add-role-form').find('input[type="text"]').focus();
       },
 
       createUserRole: function(e) {
-        var name = e.target.value;
+        e.preventDefault();
+
+        var name = $(e.target).find('input[type="text"]').val();
         var elem = new UserTableModel({
           name: name
         });
@@ -89,7 +92,7 @@ function(TableCollection,
 
         v1State.get('users').add(elem);
 
-        e.target.value = '';
+        $(e.target).find('input[type="text"]').val('');
         $('#add-role').fadeIn();
         $(e.target).hide();
 
@@ -99,43 +102,40 @@ function(TableCollection,
 
       clickedAddTable: function(e) {
         $(e.currentTarget).hide();
-        $('#add-entity-form').fadeIn().focus();
+        $('#add-entity-form').fadeIn();
+        $('#add-entity-form').find('input[type="text"]').focus();
       },
 
       createTable: function(e) {
-        // if escape key pressed, skip to hiding form/showing btn
-        if(e.keyCode !== 27) {
-          // only save if enter button is pressed
-          if(e.keyCode !== 13) {
-            return;
-          }
-          var name = e.target.value;
+        e.preventDefault();
+        var name = $(e.target).find('input[type="text"]').val();
+
           var elem = new TableModel({
             name: name,
             fields: []
           });
+
           if(!v1State.get('tables').isNameUnique(name)) {
             new ErrorDialogueView({text: 'Page name should be unique.'});
-            return;
+            return false;
           }
           if(!util.isAlphaNumeric(name)){
             new ErrorDialogueView({text: 'Page name should be alphanumberic.'});
-            return;
+            return false;
           }
           if(util.doesStartWithKeywords(name)){
             new ErrorDialogueView({text: 'Page name should not start with "Page", "Form" or "loop".'});
-            return;
+            return false;
           }
 
           v1State.get('tables').add(elem);
-          return elem;
-        }
 
-        e.target.value = '';
+        $(e.target).find('input[type="text"]').val('');
         $('#add-entity').fadeIn();
         $(e.target).hide();
 
-        e.preventDefault();
+
+        return elem;
       },
 
       showCreateRelationForm: function() {

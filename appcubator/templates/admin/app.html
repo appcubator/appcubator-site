@@ -1,0 +1,48 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+  <h2>Apps</h2>
+  <hr>
+  <div class="row">
+    <div class="span2">ID</div>
+    <div class="span10">{{ app.pk }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2 align-right">Name</div>
+    <div class="span10">{{ app.name }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2 align-right">Owner</div>
+    <div class="span10">{{ app.owner }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2 align-right">Subdomain</div>
+    <div class="span10">{{ app.subdomain }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2 align-right">Deployment ID</div>
+    <div class="span10">{{ app.deployment_id }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2 align-right">App State</div>
+    <textarea class="span10 offset1" rows="25" id="appState"></textarea>
+  </div>
+
+  <div class="row">
+    <div class="span2 align-right">UIE State</div>
+    <textarea class="span10 offset1" rows="50" id="uieState"></textarea>
+  </div>
+
+  <script type="text/javascript">
+  var appState = {{ app.state_json|safe }};
+  var uieState = {{ app.uie_state_json|safe }};
+  appState = JSON.stringify(appState, undefined, 2);
+  uieState = JSON.stringify(uieState, undefined, 2);
+  document.getElementById('appState').innerHTML = appState;
+  document.getElementById('uieState').innerHTML = uieState;
+  </script>
+{% endblock %}

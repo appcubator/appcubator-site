@@ -1,13 +1,10 @@
 .search-editor label {
-  display: inline-block;
-  margin-left: 8px;
-  margin-top: 4px;
-}
-
-.search-editor input[type="checkbox"] {
+	display: inline-block;
+	margin-left: 8px;
+	margin-top: 4px;
 }
 
 .search-editor .field {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+	padding: 10px;
+	border-bottom: 1px solid #eee;
 }

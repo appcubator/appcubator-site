@@ -1,15 +1,150 @@
 {
+    "textAreas": [
+        {
+            "style": "",
+            "isSingle": false,
+            "tagName": "textarea",
+            "hoverStyle": "",
+            "class_name": "default",
+            "content": "Default Text Area...",
+            "content_attribs": null,
+            "activeStyle": ""
+        }
+    ],
+    "passwords": [
+        {
+            "style": "border-width: 1px;",
+            "isSingle": true,
+            "tagName": "input",
+            "hoverStyle": "",
+            "class_name": "password-1",
+            "content": null,
+            "content_attribs": {
+                "placeholder": "Default placeholder..."
+            },
+            "activeStyle": "",
+            "cons_attribs": {
+                "tagType": "password"
+            }
+        }
+    ],
+    "links": [
+        {
+            "style": "",
+            "isSingle": false,
+            "tagName": "a",
+            "hoverStyle": "",
+            "class_name": "link-1",
+            "content": "Default Link...",
+            "content_attribs": {
+                "href": "internal://Homepage"
+            },
+            "activeStyle": ""
+        },
+        {
+            "style": "color:#49afcd;",
+            "isSingle": false,
+            "tagName": "a",
+            "hoverStyle": "",
+            "class_name": "blue-link",
+            "content": "Default Link...",
+            "content_attribs": {
+                "href": "internal://Homepage"
+            },
+            "activeStyle": ""
+        }
+    ],
+    "button": [
+        {
+            "style": "  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n",
+            "isSingle": true,
+            "tagName": "input",
+            "hoverStyle": "",
+            "class_name": "btn-1",
+            "content": null,
+            "content_attribs": {
+                "value": "Button1"
+            },
+            "activeStyle": "",
+            "cons_attribs": {
+                "type": "submit"
+            }
+        },
+        {
+            "style": "  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n  background-color: #006dcc;\n  *background-color: #0044cc;\n  background-image: -moz-linear-gradient(top, #0088cc, #0044cc);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));\n  background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);\n  background-image: -o-linear-gradient(top, #0088cc, #0044cc);\n  background-image: linear-gradient(to bottom, #0088cc, #0044cc);\n  background-repeat: repeat-x;\n  border-color: #0044cc #0044cc #002a80;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\nborder-",
+            "isSingle": true,
+            "tagName": "input",
+            "hoverStyle": "",
+            "class_name": "btn-2",
+            "content": null,
+            "content_attribs": {
+                "value": "Button1"
+            },
+            "activeStyle": "",
+            "cons_attribs": {
+                "tagType": "submit"
+            }
+        },
+        {
+            "style": "  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n  background-color: #da4f49;\n  *background-color: #bd362f;\n  background-image: -moz-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#bd362f));\n  background-image: -webkit-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: -o-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);\n  background-repeat: repeat-x;\n  border-color: #bd362f #bd362f #802420;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b', endColorstr='#ffbd362f', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);",
+            "isSingle": true,
+            "tagName": "input",
+            "hoverStyle": "  color: #000;\n  background-color: #bd362f;\n  *background-color: #a9302a;",
+            "class_name": "btn-3",
+            "content": null,
+            "content_attribs": {
+                "value": "Button1"
+            },
+            "activeStyle": "",
+            "cons_attribs": {
+                "tagType": "submit"
+            }
+        }
+    ],
+    "fonts": " @import url(\"http://fonts.googleapis.com/css?family=Lato:400,700,900,400italic\");\n",
+    "lines": [
+        {
+            "style": "border-color:#49afcd;",
+            "isSingle": true,
+            "cons_attribs": {},
+            "hoverStyle": "",
+            "class_name": "line-1",
+            "content": null,
+            "tagName": "hr",
+            "activeStyle": ""
+        },
+        {
+            "style": "border-color:#ccc;",
+            "isSingle": true,
+            "cons_attribs": {},
+            "hoverStyle": "",
+            "class_name": "line2",
+            "content": null,
+            "tagName": "hr",
+            "activeStyle": ""
+        },
+        {
+            "style": "",
+            "isSingle": true,
+            "cons_attribs": {},
+            "hoverStyle": "",
+            "class_name": "lin3",
+            "content": null,
+            "tagName": "hr",
+            "activeStyle": ""
+        }
+    ],
     "buttons": [
         {
             "style": "height: 44px;",
             "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
+            "tagName": "input",
             "hoverStyle": "",
             "class_name": "btn",
             "content": null,
-            "tagName": "input",
+            "content_attribs": {
+                "value": "Button1"
+            },
             "activeStyle": "",
             "cons_attribs": {
                 "type": "submit"
@@ -18,13 +153,13 @@
         {
             "style": "border: none;\ncolor: white;\nfont-size: 16.5px;\ntext-decoration: none;\ntext-shadow: none;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;\n-webkit-transition: 0.25s;\n-moz-transition: 0.25s;\n-o-transition: 0.25s;\ntransition: 0.25s;\n-webkit-backface-visibility: hidden;\nbackground-color: #1abc9c;\nbackground-image: none;\nheight: 44px;\nborder-radius: 6px;\nfont-weight: bold;",
             "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
+            "tagName": "input",
             "hoverStyle": "",
             "class_name": "btn-info",
             "content": null,
-            "tagName": "input",
+            "content_attribs": {
+                "value": "Button1"
+            },
             "activeStyle": "",
             "cons_attribs": {
                 "tagType": "submit"
@@ -33,13 +168,13 @@
         {
             "style": "border: none;\nbackground: #34495e;\ncolor: white;\nfont-size: 16.5px;\ntext-decoration: none;\ntext-shadow: none;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;\n-webkit-transition: 0.25s;\n-moz-transition: 0.25s;\n-o-transition: 0.25s;\ntransition: 0.25s;\n-webkit-backface-visibility: hidden;\nbackground-color: #e74c3c;\nborder-radius: 6px;\nheight:44px;\nfont-weight: bold;",
             "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
+            "tagName": "input",
             "hoverStyle": "  color: #000;\n  background-color: #bd362f;\n  *background-color: #a9302a;",
             "class_name": "btn-warning",
             "content": null,
-            "tagName": "input",
+            "content_attribs": {
+                "value": "Button1"
+            },
             "activeStyle": "",
             "cons_attribs": {
                 "tagType": "submit"
@@ -54,11 +189,11 @@
             "hoverStyle": "",
             "class_name": "facebook-btn",
             "content": null,
-            "activeStyle": "",
             "content_attribs": {
                 "value": "Button1"
             },
-            "tagName": "input"
+            "tagName": "input",
+            "activeStyle": ""
         },
         {
             "style": "border: none;\nbackground: #71c5ef;\ncolor: white;\nfont-size: 16.5px;\ntext-decoration: none;\ntext-shadow: none;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;\n-webkit-transition: 0.25s;\n-moz-transition: 0.25s;\n-o-transition: 0.25s;\ntransition: 0.25s;\n-webkit-backface-visibility: hidden;\nheight: 44px;\nborder-radius: 6px;\nfont-weight: bold;",
@@ -69,148 +204,10 @@
             "hoverStyle": "",
             "class_name": "linkedin-btn",
             "content": null,
-            "activeStyle": "",
             "content_attribs": {
                 "value": "Button1"
             },
-            "tagName": "input"
-        }
-    ],
-    "passwords": [
-        {
-            "style": "border-width: 1px;",
-            "isSingle": true,
-            "content_attribs": {
-                "placeholder": "Default placeholder..."
-            },
-            "hoverStyle": "",
-            "class_name": "password-1",
-            "content": null,
             "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "password"
-            }
-        }
-    ],
-    "links": [
-        {
-            "style": "",
-            "isSingle": false,
-            "content_attribs": {
-                "href": "internal://Homepage"
-            },
-            "hoverStyle": "",
-            "class_name": "link-1",
-            "content": "Default Link...",
-            "tagName": "a",
-            "activeStyle": ""
-        },
-        {
-            "style": "color:#49afcd;",
-            "isSingle": false,
-            "content_attribs": {
-                "href": "internal://Homepage"
-            },
-            "hoverStyle": "",
-            "class_name": "blue-link",
-            "content": "Default Link...",
-            "tagName": "a",
-            "activeStyle": ""
-        }
-    ],
-    "button": [
-        {
-            "style": "  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n",
-            "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
-            "hoverStyle": "",
-            "class_name": "btn-1",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "type": "submit"
-            }
-        },
-        {
-            "style": "  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n  background-color: #006dcc;\n  *background-color: #0044cc;\n  background-image: -moz-linear-gradient(top, #0088cc, #0044cc);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));\n  background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);\n  background-image: -o-linear-gradient(top, #0088cc, #0044cc);\n  background-image: linear-gradient(to bottom, #0088cc, #0044cc);\n  background-repeat: repeat-x;\n  border-color: #0044cc #0044cc #002a80;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\nborder-",
-            "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
-            "hoverStyle": "",
-            "class_name": "btn-2",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "submit"
-            }
-        },
-        {
-            "style": "  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n  background-color: #da4f49;\n  *background-color: #bd362f;\n  background-image: -moz-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#bd362f));\n  background-image: -webkit-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: -o-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);\n  background-repeat: repeat-x;\n  border-color: #bd362f #bd362f #802420;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b', endColorstr='#ffbd362f', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);",
-            "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
-            "hoverStyle": "  color: #000;\n  background-color: #bd362f;\n  *background-color: #a9302a;",
-            "class_name": "btn-3",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "submit"
-            }
-        }
-    ],
-    "fonts": " @import url(\"http://fonts.googleapis.com/css?family=Lato:400,700,900,400italic\");\n",
-    "lines": [
-        {
-            "style": "border-color:#49afcd;",
-            "isSingle": true,
-            "cons_attribs": {
-            },
-            "hoverStyle": "",
-            "class_name": "line-1",
-            "content": null,
-            "tagName": "hr",
-            "activeStyle": ""
-        },
-        {
-            "style": "border-color:#ccc;",
-            "isSingle": true,
-            "cons_attribs": {
-            },
-            "hoverStyle": "",
-            "class_name": "line2",
-            "content": null,
-            "tagName": "hr",
-            "activeStyle": ""
-        },
-        {
-            "style": "",
-            "isSingle": true,
-            "cons_attribs": {
-            },
-            "hoverStyle": "",
-            "class_name": "lin3",
-            "content": null,
-            "tagName": "hr",
-            "activeStyle": ""
-        }
-    ],
-    "textAreas": [
-        {
-            "style": "",
-            "isSingle": false,
-            "content_attribs": null,
-            "hoverStyle": "",
-            "class_name": "default",
-            "content": "Default Text Area...",
-            "tagName": "textarea",
             "activeStyle": ""
         }
     ],
@@ -218,21 +215,21 @@
         {
             "style": "",
             "isSingle": false,
-            "content_attribs": null,
+            "tagName": "span",
             "hoverStyle": "",
             "class_name": "txt",
             "content": "Default text!",
-            "tagName": "span",
+            "content_attribs": null,
             "activeStyle": ""
         },
         {
             "style": "font-size:10px;",
             "isSingle": false,
-            "content_attribs": null,
+            "tagName": "span",
             "hoverStyle": "",
             "class_name": "small-txt",
             "content": "Default text!",
-            "tagName": "span",
+            "content_attribs": null,
             "activeStyle": ""
         }
     ],
@@ -266,41 +263,41 @@
         {
             "style": "font-size: 32px;\nfont-weight: bold;",
             "isSingle": false,
-            "content_attribs": null,
+            "tagName": "h1",
             "hoverStyle": "",
             "class_name": "header-1",
             "content": "Default header!",
-            "tagName": "h1",
+            "content_attribs": null,
             "activeStyle": ""
         },
         {
             "style": "font-size: 26px;\nfont-weight: bold;",
             "isSingle": false,
-            "content_attribs": null,
+            "tagName": "h1",
             "hoverStyle": "",
             "class_name": "header-2",
             "content": "Default header!",
-            "tagName": "h1",
+            "content_attribs": null,
             "activeStyle": ""
         },
         {
             "style": "line-height: 28px;\ntext-transform: uppercase;\ncolor: #313131;\nfont-family: 'Open Sans', sans-serif;\nfont-weight: 800;",
             "isSingle": false,
-            "tagName": "h1",
+            "content_attribs": null,
             "hoverStyle": "",
             "class_name": "big",
             "content": "Default header!",
-            "content_attribs": null,
+            "tagName": "h1",
             "activeStyle": ""
         },
         {
             "style": "font-size: 90px;\nfont-weight: 900;\nletter-spacing: -2px;\nline-height: 100px;\ncolor: #34495e;\nfont-family: \"Lato\", sans-serif;",
             "isSingle": false,
-            "tagName": "h1",
+            "content_attribs": null,
             "hoverStyle": "",
             "class_name": "very-large",
             "content": "Default header!",
-            "content_attribs": null,
+            "tagName": "h1",
             "activeStyle": ""
         }
     ],
@@ -309,25 +306,25 @@
         {
             "style": "border-radius: 6px;\nwidth: 100%;",
             "isSingle": true,
-            "content_attribs": {
-                "src": "/static/img/placeholder.png"
-            },
+            "tagName": "img",
             "hoverStyle": "",
             "class_name": "img-width-fixed",
             "content": null,
-            "tagName": "img",
+            "content_attribs": {
+                "src": "/static/img/placeholder.png"
+            },
             "activeStyle": ""
         },
         {
             "style": "border-radius: 6px;\nheight: 280px;",
             "isSingle": true,
-            "content_attribs": {
-                "src": "/static/img/placeholder.png"
-            },
+            "tagName": "img",
             "hoverStyle": "",
             "class_name": "img-height-fixed",
             "content": null,
-            "tagName": "img",
+            "content_attribs": {
+                "src": "/static/img/placeholder.png"
+            },
             "activeStyle": ""
         }
     ],
@@ -347,13 +344,13 @@
         {
             "style": "border: 2px solid #dce4ec;\ncolor: #34495e;\nfont-family: \"Lato\", sans-serif;\nfont-size: 14px;\npadding: 8px 0 9px 10px;\ntext-indent: 1px;\n-webkit-border-radius: 6px;\n-moz-border-radius: 6px;\nborder-radius: 6px;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;",
             "isSingle": true,
-            "content_attribs": {
-                "placeholder": "Default placeholder..."
-            },
+            "tagName": "input",
             "hoverStyle": "",
             "class_name": "inpt-1",
             "content": null,
-            "tagName": "input",
+            "content_attribs": {
+                "placeholder": "Default placeholder..."
+            },
             "activeStyle": "",
             "cons_attribs": {
                 "tagType": "text"
@@ -362,13 +359,13 @@
         {
             "style": "border: 2px solid #dce4ec;\ncolor: #34495e;\nfont-family: \"Lato\", sans-serif;\nfont-size: 14px;\npadding: 8px 0 9px 10px;\ntext-indent: 1px;\n-webkit-border-radius: 6px;\n-moz-border-radius: 6px;\nborder-radius: 6px;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;\nborder-color: #e74c3c;\ncolor: #e74c3c;\n-webkit-box-shadow: none;\n-moz-box-shadow: none;\nbox-shadow: none;",
             "isSingle": true,
-            "content_attribs": {
-                "placeholder": "Default placeholder..."
-            },
+            "tagName": "input",
             "hoverStyle": "",
             "class_name": "inpt-error",
             "content": null,
-            "tagName": "input",
+            "content_attribs": {
+                "placeholder": "Default placeholder..."
+            },
             "activeStyle": "",
             "cons_attribs": {
                 "tagType": "text"
@@ -383,11 +380,11 @@
             "hoverStyle": "",
             "class_name": "input-green",
             "content": null,
-            "activeStyle": "",
             "content_attribs": {
                 "placeholder": "Default placeholder..."
             },
-            "tagName": "input"
+            "tagName": "input",
+            "activeStyle": ""
         }
     ],
     "pages": [

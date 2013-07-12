@@ -42,7 +42,7 @@ define([
 				self.showTutorial();
 				window.history.pushState(null, null, window.location.href.concat("tutorial/"));
 			});
-      keyDispatcher.key('⌘+s, ctrl+s', this.save);
+      keyDispatcher.bind('⌘+s, ctrl+s', this.save);
 
       var autoSave = setInterval(this.save, 30000);
 		},
@@ -56,6 +56,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -69,6 +70,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -83,6 +85,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -97,6 +100,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -113,6 +117,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -183,31 +188,37 @@ define([
 		},
 
 		deploy: function(callback) {
-
+				var before_deploy = new Date().getTime();
 				$.ajax({
-							type: "POST",
-							url: '/app/'+appId+'/deploy/',
-							success: function(data) {
-								if(callback) callback.call();
-								if(data.errors) {
-									var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-									if(DEBUG) {
-										content = { text: data.errors };
-									}
-									new ErrorDialogueView(content);
-								}
-								else {
-									new DeployView(data);
-								}
-							},
-							error: function(data) {
-								var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-								if(DEBUG) {
-									content = { text: data.responseText };
-								}
-								new ErrorDialogueView(content);
-							},
-							dataType: "JSON"
+					type: "POST",
+					url: '/app/'+appId+'/deploy/',
+					success: function(data) {
+						var deploy_time = (new Date().getTime() - before_deploy)/1000;
+						if(callback) callback();
+            // open a modal based on deploy response
+						if(data.errors) {
+							var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+							if(DEBUG) {
+								content = { text: data.errors };
+							}
+							new ErrorDialogueView(content);
+							util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.errors}, appId);
+						}
+						else {
+              new DeployView(data);
+              util.log_to_server('deployed app', {status: 'success', deploy_time: deploy_time + " seconds"}, appId);
+						}
+					},
+					error: function(data) {
+						var deploy_time = (new Date().getTime() - before_deploy)/1000;
+						var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+						if(DEBUG) {
+							content = { text: data.responseText };
+						}
+						new ErrorDialogueView(content);
+						util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.responseText}, appId);
+					},
+					dataType: "JSON"
 				});
 		},
 
@@ -223,6 +234,8 @@ define([
 				url: '/app/'+appId+'/state/',
 				data: JSON.stringify(appState),
 				success: function() {
+					util.dontAskBeforeLeave();
+
 					$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
 					setTimeout(function(){
 						$('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
@@ -234,6 +247,7 @@ define([
                     setTimeout(function(){
                         $el.html("<span>Save</span>").fadeIn();
                     },3000);
+
 				},
 				error: function(data) {
 					if(data.responseText == "ok") return;

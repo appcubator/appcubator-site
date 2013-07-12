@@ -37,7 +37,7 @@ function(Backbone) {
     showForm: function (e) {
       this.$el.find('.box-button').hide();
       this.$el.find('form').fadeIn();
-      this.$el.find('input').focus();
+      this.$el.find('input[type="text"]').focus();
     },
 
     createFormSubmitted: function(e) {

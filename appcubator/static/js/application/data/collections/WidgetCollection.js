@@ -93,6 +93,7 @@ function(WidgetModel,
         widget.data.container_info.action = "signup";
         widget.data.container_info.form = constantContainers['Sign Up'];
         widget.data.container_info.form.signupRole = roleStr;
+        widget.data.container_info.form.isConstant = true;
 
         var widgetSignupModel = new WidgetContainerModel(widget);
         return this.push(widgetSignupModel);
@@ -108,7 +109,7 @@ function(WidgetModel,
         widget.data = _.extend(widget.data, uieState[type][0]);
 
         if(content_ops.content) widget.data.content =  content_ops.content;
-        if(content_ops.href) widget.data.href = content_ops.href;
+        if(content_ops.href) widget.data.content_attribs.href = content_ops.href;
         if(content_ops.src_content) widget.data.content_attribs.src_content = content_ops.src_content;
 
         var widgetModel = new WidgetModel(widget);
@@ -136,7 +137,7 @@ function(WidgetModel,
         return this.push(widgetContainerModel);
       },
 
-      createEditForm: function(layout, entity) {
+      createEditForm: function(layout, entity, editOn) {
         var widget = {};
         widget.type = "form";
         widget.layout = layout;
@@ -146,6 +147,7 @@ function(WidgetModel,
         widget.data.container_info.entity = entity;
         widget.data.container_info.form = {};
         widget.data.container_info.form.action = "edit";
+        widget.data.container_info.form.editOn = editOn;
         widget.data.container_info.form.entity = entity.get('name');
         widget.data.container_info.form.goto = "internal://Homepage";
 
@@ -216,9 +218,11 @@ function(WidgetModel,
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "searchlist";
         widget.data.container_info.row = {};
-        widget.data.container_info.query = {};
+        widget.data.container_info.search = {};
+       // widget.data.container_info.query = {};
 
         var widgetContainerModel = new WidgetContainerModel(widget);
+        widgetContainerModel.getRow().fillWithProps(entity);
         return this.push(widgetContainerModel);
       },
 

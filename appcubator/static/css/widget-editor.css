@@ -65,7 +65,7 @@
   margin-top: 24px;
 }
 
-#widget-editor  ul {
+#widget-editor ul {
   padding: 0px;
   margin: 0px;
 }
@@ -83,8 +83,7 @@
   margin-left: 3%;
 }
 
-
-.content-editor li, .class-picker li {
+.content-editor li,.class-picker li {
   width: 100%;
   list-style: none;
   display: inline-block;
@@ -92,15 +91,9 @@
   border-top: 1px solid #3b4555;
 }
 
-.layout-editor ul li.selected,
-.content-editor ul li.selected,
-.padding-picker .selected,
-.alignment-picker .selected,
-.option-button.selected
-{
+.layout-editor ul li.selected,.content-editor ul li.selected,.padding-picker .selected,.alignment-picker .selected,.option-button.selected {
   background-color: #1b2535;
 }
-
 
 .layout-editor {
   top: 0;
@@ -112,7 +105,7 @@
   width: 240px;
 }
 
-.layout-editor div.padding, .layout-editor div.a-pick {
+.layout-editor div.padding,.layout-editor div.a-pick {
   display: inline-block;
   width: 34px;
   height: 34px;
@@ -123,6 +116,7 @@
   margin-right: 1px;
   text-align: center;
 }
+
 .layout-editor ul li.selected {
   background-color: #1b2535;
 }
@@ -206,6 +200,7 @@ h3.edit-url {
 }
 
 .query-view-panel {
+  -ms-overflow-y: scroll;
   overflow-y: scroll;
 }
 
@@ -217,8 +212,6 @@ h3.edit-url {
   border: 1px solid #ccc;
   margin: 4px;
 }
-
-
 
 .content-editor {
   top: 0;
@@ -258,21 +251,31 @@ h3.edit-url {
   text-align: center;
   font-weight: bold;
   border-top: 1px solid #3b4555;
+
+  background-image: -webkit-linear-gradient(to bottom, #2b3545, #232a3a);
+  background-image: -moz-linear-gradient(to bottom, #2b3545, #232a3a);
+  background-image: -o-linear-gradient(to bottom, #2b3545, #232a3a);
+  background-image: -ms-linear-gradient(to bottom, #2b3545, #232a3a);
   background-image: linear-gradient(to bottom, #2b3545, #232a3a);
   line-height: 18px;
 }
 
-.select-view {
+.widget-editor .select-view {
   position: relative;
   height: 40px;
   min-width: 240px;
   width: 100%;
   overflow: hidden;
   font-size: 14px;
+
   -webkit-transition: height linear 0.1s;
+  -moz-transition: height linear 0.1s;
+  -o-transition: height linear 0.1s;
+  -ms-transition: height linear 0.1s;
+  transition: height linear 0.1s;
 }
 
-.select-view .updown-handle {
+.widget-editor .select-view .updown-handle {
   width: 100%;
   height: 40px;
   position: absolute;
@@ -284,24 +287,25 @@ h3.edit-url {
   background-position: right;
   z-index: 1001;
 }
-.select-view ul {
+
+.widget-editor .select-view ul {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
 }
 
-.select-view ul li {
+.widget-editor .select-view ul li {
   height: 40px;
   padding: 10px;
   cursor: pointer;
 }
 
-.select-view ul li:hover {
+.widget-editor .select-view ul li:hover {
   background-color: #3b4555;
 }
 
-.alignment-picker, .padding-picker {
+.alignment-picker,.padding-picker {
   padding: 4px;
 }
 
@@ -316,6 +320,9 @@ h3.edit-url {
 .a-left {
   background-image: url('../img/align_left_icon.png');
   background-repeat: no-repeat;
+
+  -webkit-background-size: auto 50%;
+  -moz-background-size: auto 50%;
   background-size: auto 50%;
   background-position: center center;
 }
@@ -323,6 +330,9 @@ h3.edit-url {
 .a-center {
   background-image: url('../img/align_center_icon.png');
   background-repeat: no-repeat;
+
+  -webkit-background-size: auto 50%;
+  -moz-background-size: auto 50%;
   background-size: auto 50%;
   background-position: center center;
 }
@@ -330,6 +340,9 @@ h3.edit-url {
 .a-right {
   background-image: url('../img/align_right_icon.png');
   background-repeat: no-repeat;
+
+  -webkit-background-size: auto 50%;
+  -moz-background-size: auto 50%;
   background-size: auto 50%;
   background-position: center center;
 }
@@ -341,6 +354,9 @@ h3.edit-url {
 .padding.tb {
   background-image: url('../img/tb-padding.png');
   background-repeat: no-repeat;
+
+  -webkit-background-size: auto 50%;
+  -moz-background-size: auto 50%;
   background-size: auto 50%;
   background-position: center center;
 }
@@ -348,6 +364,9 @@ h3.edit-url {
 .padding.lr {
   background-image: url('../img/lr-padding.png');
   background-repeat: no-repeat;
+
+  -webkit-background-size: auto 50%;
+  -moz-background-size: auto 50%;
   background-size: auto 50%;
   background-position: center center;
 }

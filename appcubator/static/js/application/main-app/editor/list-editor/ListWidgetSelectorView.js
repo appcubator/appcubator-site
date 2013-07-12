@@ -206,6 +206,10 @@ function() {
       if(e.target.id == "list-hover-div") { model = this.hoveredEl; }
       var top = Math.round((ui.position.top / 1));
       var left = Math.round((ui.position.left / 1));
+
+      if(top < 0) top = 0;
+      if(left < 0) left = 0;
+
       model.get('layout').set('top', top);
 
       if(left == model.get('layout').get('left')) {
@@ -259,11 +263,11 @@ function() {
     },
 
     doKeyBindings: function() {
-      keyDispatcher.key('down', this.moveSelectedDown);
-      keyDispatcher.key('up', this.moveSelectedUp);
-      keyDispatcher.key('left', this.moveSelectedLeft);
-      keyDispatcher.key('right', this.moveSelectedRight);
-      keyDispatcher.key('backspace', this.deleteSelected);
+      keyDispatcher.bind('down', this.moveSelectedDown);
+      keyDispatcher.bind('up', this.moveSelectedUp);
+      keyDispatcher.bind('left', this.moveSelectedLeft);
+      keyDispatcher.bind('right', this.moveSelectedRight);
+      keyDispatcher.bind('backspace', this.deleteSelected);
     },
 
     hoverClicked: function(e) {
@@ -287,6 +291,7 @@ function() {
     },
 
     stoppedEditing: function() {
+      if(!this.selectedEl) return;
       this.setLayout(this.selectDiv, this.selectedEl);
     },
 

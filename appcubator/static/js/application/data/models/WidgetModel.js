@@ -120,7 +120,17 @@ function(DataModel, LayoutModel) {
     },
 
     getRow: function() {
+      if(!this.get('data').has('container_info')) return null;
       return this.get('data').get('container_info').get('row');
+    },
+
+    getContent: function() {
+      return this.get('data').get('content');
+    },
+
+    getForm: function() {
+      if(!this.get('data').has('container_info')) return null;
+      return this.get('data').get('container_info').get('form');
     },
 
     hasForm: function() {

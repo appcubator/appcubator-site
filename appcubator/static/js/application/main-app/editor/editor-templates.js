@@ -127,15 +127,16 @@ Templates.formButton = [
 var FieldTypes = {
   "single-line-text" : '<input type="text" class="" placeholder="<%= field.get(\'placeholder\') %>">',
   "paragraph-text"   : '<textarea class="" placeholder="<%= field.get(\'placeholder\') %>"></textarea>',
-  "dropdown"         : '<select class="drowdown"><% _(field.get(\'options\')).each(function(option, ind){ %><option><%= option %><% }); %></option>',
-  "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\')).each(function(option, ind){ %><label for="opt-<%= ind %>"></label><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value="single-line-text"><%= option %><% }); %></span>',
+  "dropdown"         : '<select class="drowdown"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><option><%= option %><% }); %></option>',
+  "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value="single-line-text"><label for="opt-<%= ind %>"><%= option %></label><% }); %></span>',
   "password-text"    : '<input type="password" class="password" placeholder="<%= field.get(\'placeholder\') %>">',
   "email-text"       : '<input type="text" class="email" placeholder="<%= field.get(\'placeholder\') %>">',
   "button"           : '<input type="submit" class="btn" value="<%= field.get(\'placeholder\') %>">',
   "image-uploader"   : '<div class="upload-image btn">Upload Image</div>',
   "file-uploader"    : '<div class="upload-file btn">Upload File</div>',
-  "date-picker"      : '<input type="text" placeholder="<%= field.get(\'placeholder\') %>">'
+  "date-picker"      : '<div class="date-picker-wrapper"><input type="text" placeholder="<%= field.get(\'placeholder\') %>"><img class="date-picker-icon"></div>'
 };
+
 
 Templates.fieldNode = [
 '<label><%= field.get(\'label\') %></label>',
@@ -172,10 +173,9 @@ Templates.fieldNode = [
 ].join('\n');
 
 Templates.queryView = [
-  '<h1 class="title"><%= entity.get(\'name\') %> <% if(type == "list") { print(\'List\'); } else { print(\'Table\'); } %></h1>',
-  '<small>',
-  '<p id="query-description"><%= c.nLang %></p>',
-  '</small>',
+  // '<small>',
+  // '<p id="query-description"><%= c.nLang %></p>',
+  // '</small>',
   '<div class="sections-container">',
     '<% if(type == "table") { %>',
     '<div class="sect">',
@@ -187,10 +187,9 @@ Templates.queryView = [
     '</div>',
     '<% } %>',
     '<div class="sect">',
-    '<% var checked = (query.get(\'belongsToUser\') === false)? "checked" : \'\' %>',
-    '<p>Do you want to show the rows that just belong to the logged in user?</p>',
-    '<label><input type="radio" class="belongs-to-user" name="belongsTo" value="true" checked> Yes</label>',
-    '<label><input type="radio" class="belongs-to-user" name="belongsTo" value="false"<%= checked %>> No</label>',
+    '<% queries.each(function(query) { %>',
+    '<input type="checkbox" class="query-option" id="query-<%= query.cid %>"><label for="query-<%= query.cid %>"><%= query.get("nl_description") %></label><br  />',
+    '<% }); %>',
     '</div>',
     '<div class="sect">',
     '<p>How do you want to sort the rows?</p>',
@@ -213,39 +212,6 @@ Templates.queryView = [
   '<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>'
 ].join('\n');
 
-Templates.listQueryView = [
-  '<h1 class="title"><%= entity.get(\'name\') %> List Editor</h1>',
-  '<hr>',
-  '<div class="sect">',
-  '<p id="query-description"><%= c.nLang %></p>',
-  '</div>',
-  '<hr>',
-    '<div class="sect">',
-    '<% var checked = (query.get(\'belongsToUser\') === false)? "checked" : \'\' %>',
-    '<p>Do you want to show the rows that just belong to the logged in user?</p>',
-    '<label><input type="radio" class="belongs-to-user" name="belongsTo" value="true" checked> Yes</label>',
-    '<label><input type="radio" class="belongs-to-user" name="belongsTo" value="false"<%= checked %>> No</label>',
-    '</div>',
-    '<hr>',
-    '<div class="sect">',
-    '<p>How do you want to sort the rows?</p>',
-    '<select class="sort-by">',
-    '<option id="by-date">According to the date created</option>',
-    '<% _.each(entity.get("fields").models, function(field) { %>',
-      '<% var selected = "";  if("by-" + field.get("name") == query.get("sortAccordingTo")) selected = "selected" %>',
-      '<option value="by-<%=field.get("name")%>" <%= selected %>>Alphabetically according to <%= field.get("name") %></option>',
-    '<% }); %>',
-    '</select>',
-    '</div>',
-    '<hr>',
-    '<div class="sect">',
-    '<p>How many rows would you like to show?</p>',
-    '<label><input type="radio" class="nmr-rows" id="all-rows" name="nmrRows" value="All" <%= c.rAll %>> All</label>',
-    '<label><input type="radio" class="nmr-rows" id="first-rows" name="nmrRows" value="First" <%= c.rFirst %>> First <input type="text" id="first-nmr" value="<%= c.rFirstNmr %>"> rows</label>',
-    '<label><input type="radio" class="nmr-rows" id="last-rows" name="nmrRows" value="Last" <%= c.rLast %>> Last <input type="text" id="last-nmr" value="<%= c.rLastNmr %>"> rows</label>',
-    '</div>',
-    '<hr>'
-].join('\n');
 
 Templates.listEditorView = [
   '<span class="view-type-list type-pick"></span><span class="view-tyle-grid type-pick"></span>',

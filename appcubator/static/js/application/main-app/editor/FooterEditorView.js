@@ -9,6 +9,7 @@ function(LinkEditorView) {
     className : 'footer-editor-modal',
     width: 600,
     padding: 0,
+
     events: {
       'click .done-btn' : 'closeModal',
       'click .add-link' : 'addLinkEditorClicked',
@@ -70,7 +71,7 @@ function(LinkEditorView) {
       this.rowWidget.style.height ='';
       this.rowWidget.className = 'editor-window container-wrapper ';
       this.rowWidget.className += 'span' + this.rowModel.get('layout').get('width');
-      this.rowWidget.style.height = (this.rowModel.get('layout').get('height') * GRID_HEIGHT) + 'px';
+      this.rowWidget.style.height = (this.rowModel.get('layout').get('height') * this.positionVerticalGrid) + 'px';
       this.rowWidget.style.position = "relative";
     },
 
@@ -79,18 +80,8 @@ function(LinkEditorView) {
       if(newCustomText) {
         this.model.set('customText', newCustomText);
       }
-    },
-
-    resizing: function(e, ui) {
-      var dHeight = (ui.size.height + 2) / GRID_HEIGHT;
-      var dWidth = (ui.size.width + 2) / GRID_WIDTH;
-
-      var deltaHeight = Math.round((ui.size.height + 2) / GRID_HEIGHT);
-      var deltaWidth = Math.round((ui.size.width + 2) / GRID_WIDTH);
-
-      this.rowModel.get('layout').set('width', deltaWidth);
-      this.rowModel.get('layout').set('height', deltaHeight);
     }
+
   });
 
   return FooterEditorView;

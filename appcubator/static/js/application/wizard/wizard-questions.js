@@ -20,9 +20,9 @@ questions = {
     questionText : "Does your app fall into any of the following categories?",
     answers : {
       'shared-economy' : '<div style="display:block" class="shared-economy"><input type="radio" id="shared-economy" name="category" value="shared-economy" data-label="Shared Economy (e.g. AirBnb)"></div>',
-      'marketplace' : '<div style="display:block" class="marketplace"><input type="radio" id="marketplace" name="category" value="marketplace" data-label="Marketplace" disabled><p style="font-size:10px">(Not yet available)</p></div>',
+      'marketplace' : '<div style="display:block" class="marketplace"><input type="radio" id="marketplace" name="category" value="marketplace" data-label="Marketplace" disabled><p class="not-available">(Not yet available)</p></div>',
       'social_network' : '<div style="display:block" class="social-network"><input id="social-network" type="radio" name="category" value="social-network" data-label="Social Network"></div>',
-      'e-commerce' : '<div style="display:block" class="e-commerce"><input id="e-commerce" type="radio" name="category" value="e-commerce" data-label="E-Commerce, Online Store" disabled><p style="font-size:10px">(Not yet available)</p></div>'
+      'e-commerce' : '<div style="display:block" class="e-commerce"><input id="e-commerce" type="radio" name="category" value="e-commerce" data-label="E-Commerce, Online Store" disabled><p class="not-available">(Not yet available)</p></div>'
     },
     next: function(answers) {
       if(answers[0] == "social_network") {

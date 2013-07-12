@@ -86,71 +86,8 @@
 <div class="bg-cover">
 </div>
 </div>
-
-<script type="html/template" id="login-form-template">
-<div class="login pad1 pull-right" style="height:45px; margin-top: 10px; opacity:1.0;">
-  <div class="span8  hi14">
-    <span class="pad1"><strong>User Login</strong><br><i class="micro"> (forgot password?)</i></span>
-  </div>
-  <div class="span20 hi14">
-          <span class="login span24 offset1">
-            {% if form.errors %}
-            <p>Your username and password didn't match. Please try again.</p>
-            {% endif %}
-            <form class="" method="post" action="{% url django.contrib.auth.views.login %}">
-                {% csrf_token %}
-       
-                <input id="id_username" type="text" name="username" placeholder="Email..." maxlength="30">
-                <br>
-                <input type="password" name="password" placeholder="Password..." id="id_password">
-                <br>
-                <input class="btn" type="submit" value="Login"/>
-                <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
-            </form>
-          </span>
-  </div>
-</div>
-</script>
 {% endblock %}
 
 {% block js %}
-<script src="{{ STATIC_URL }}js/libs/jquery/jquery.js"></script>
-<script type="text/javascript">
-// var cur = 1;
-// $(window).on('scroll', function(e) {
-//   var docViewTop    = $(window).scrollTop();
-//   var docViewBottom = docViewTop + $(window).height();
-
-//   // console.log($('#cont-2').offset().top - docViewTop);
-//   if($('#cont-1').offset().top - docViewTop < 120 & cur != 1) {
-//     $('.bg-cover').hide().css("background-image", "url({{ STATIC_URL }}img/bg-1.png)");
-//     cur = 1;
-//   }
-
-//   if($('#cont-2').offset().top - docViewTop < 120 & cur != 2) {
-//     cur = 2;
-//     $('.bg-cover').hide().css("background-image", "url({{ STATIC_URL }}img/bg-2.png)").fadeIn(50);
-//   }
-
-//   if($('#cont-3').offset().top - docViewTop < 120 & cur != 3) {
-//     $('.bg-cover').css("background-image", "url({{ STATIC_URL }}img/bg-3.png)");
-//     cur = 3;
-//   }
-
-//   if($('#cont-4').offset().top - docViewTop < 120 & cur != 4) {
-//     $('.bg-cover').css("background-image", "url({{ STATIC_URL }}img/bg-4.png)");
-//     cur = 4; 
-//   }
-
-//   if($('#cont-5').offset().top - docViewTop < 120 & cur != 5) {
-//     $('.bg-cover').css("background-image", "url({{ STATIC_URL }}img/bg-5.png)");
-//     cur = 5;
-//   }
-
-//   if($('#cont-6').offset().top - docViewTop < 120 & cur != 6) {
-//     $('.bg-cover').css("background-image", "url({{ STATIC_URL }}img/bg-6.png)");
-//     cur = 6;
-//   }
-// })
-</script>
+<script type="text/javascript" data-main="{{ STATIC_URL }}js/application/external-pages/website-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 {% endblock %}

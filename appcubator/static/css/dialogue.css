@@ -1,9 +1,10 @@
 .normal-dialogue {
-  padding:0;
-  padding-top: 50px;  
+  padding: 0;
+  padding-top: 50px;
   position: relative;
   font-size: 16px;
 }
+
 .normal-dialogue p {
   padding: 20px;
 }
@@ -29,8 +30,8 @@
 }
 
 .error-dialogue {
-  padding:0;
-  padding-top: 50px;  
+  padding: 0;
+  padding-top: 50px;
   position: relative;
   font-size: 16px;
 }
