@@ -599,6 +599,8 @@ function() {
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
+        //last step done, delete walkthrough attribute
+        delete v1State.attributes.walkthrough;
       }
     }
   ];
