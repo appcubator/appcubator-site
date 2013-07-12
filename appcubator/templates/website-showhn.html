@@ -39,16 +39,25 @@ scope: r_fullprofile r_emailaddress
           </span>
         </div>
       </div>
-      <form class="sign-up-form" id="sign" action="{% url appcubator.base_views.signup %}">
+      <form class="sign-up-form" method="POST" id="signup" action="{% url appcubator.base_views.signup_hn_customer %}">
         <div class="left-side">
           <span class="title">Signup Here</span>
           <input type="text" name="name" id="inp-name" placeholder="Full Name">
+          <div class="form-error field-name-first_name"></div>
+
           <input type="text" name="email" id="inp-email" placeholder="Email">
+          <div class="form-error field-name-email"></div>
+          <div class="form-error field-name-username"></div>
+
           <input type="hidden" name="extra-info" id="inp-extra" value="-">
           <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
           <hr>
           <input type="password" name="password1" id="inp-name" placeholder="Password">
+          <div class="form-error field-name-password1"></div>
+
           <input type="password" name="password2" id="inp-email" placeholder="Confirm Password">
+          <div class="form-error field-name-password2"></div>
+
           <input type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
         </div>
       </form>
