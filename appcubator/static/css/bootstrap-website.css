@@ -5871,6 +5871,7 @@ i.icon-url {
   margin-left: 15px;
   vertical-align: top;
   line-height: 60px;
+  font-weight: normal;
 }
 
 .v1nav .navigation-menu li.active {

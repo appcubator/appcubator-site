@@ -737,6 +737,10 @@ table tr:hover td {
   display: none;
 }
 
+#new-relation input[type=text] {
+  padding: 5px;
+}
+
 .relation-pane .edit-relation-div select {
   width: 140px;
 }
