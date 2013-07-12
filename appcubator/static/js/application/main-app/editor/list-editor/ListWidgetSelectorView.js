@@ -206,6 +206,10 @@ function() {
       if(e.target.id == "list-hover-div") { model = this.hoveredEl; }
       var top = Math.round((ui.position.top / 1));
       var left = Math.round((ui.position.left / 1));
+
+      if(top < 0) top = 0;
+      if(left < 0) left = 0;
+
       model.get('layout').set('top', top);
 
       if(left == model.get('layout').get('left')) {
