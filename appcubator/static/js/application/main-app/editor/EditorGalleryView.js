@@ -46,6 +46,9 @@ define([
       this.renderContextEntityForms();
       this.renderUIElementList();
 
+      // all sections are hidden by default. open first section
+      $(this.allList).find('.gallery-header').first().click();
+
       $(this.allList).append('<div class="bottom-arrow"></div>');
       $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
       $(this.allList).find('.bottom-arrow').on('mousemove', this.slideDown);
@@ -454,6 +457,10 @@ define([
       var li = document.createElement('li');
       li.className = 'gallery-header ui-draggable';
       li.innerHTML = text;
+      var icon = document.createElement('img');
+      icon.className="icon";
+      icon.src="/static/img/right-arrow.png";
+      li.appendChild(icon);
       $(this.allList).append(li);
       return li;
     },
@@ -462,7 +469,9 @@ define([
       var header = this.addHeaderItem(name);
       var sectionName = name.replace(' ','-');
       header.onclick = function(e) {
+        var section = $('.'+sectionName);
         $('.'+sectionName).slideToggle('fast');
+        $(e.target).find('.icon').toggleClass('open');
       }
       var section = document.createElement('section');
       section.className = sectionName;
