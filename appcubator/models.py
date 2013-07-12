@@ -542,8 +542,13 @@ class RouteLog(models.Model):
 class LogAnything(models.Model):
     app_id = models.IntegerField(null=True)
     user_id = models.IntegerField(null=True)
+    name = models.TextField()
     data = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def data_json(self):
+        return simplejson.loads(self.data)
 
 class InvitationKeys(models.Model):
     api_key    = models.CharField(max_length=255)

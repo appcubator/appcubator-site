@@ -28,17 +28,19 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Opened On</th>
-        <th>App_id</th>
-        <th>Page Name</th>
+        <th>App ID</th>
+        <th>Timestamp</th>
+        <th>Log Type</th>
+        <th>Log Data</th>
       </tr>
     </thead>
     <tbody>
       {% for log in userlogs reversed %}
       <tr>
-        <td>{{ log.opened_on }}</td>
-        <td>{{ log.app_id }}</td>
-        <td>{{ log.page_name }}</td>
+        <td class="span1">{{ log.app_id }}</td>
+        <td class="span2">{{ log.timestamp }}</td>
+        <td class="span2">{{ log.name }}</td>
+        <td class="span7">{{ log.data_json }}</td>
       </tr>
       {% endfor %}
     </tbody>

@@ -5862,7 +5862,7 @@ i.icon-url {
   display: inline-block;
   padding-right: 10px;
   padding-left: 15px;
-  width: 180px;
+  //width: 180px;
   height: 60px;
   line-height: 60px;
 }
@@ -5886,7 +5886,7 @@ i.icon-url {
 }
 
 .navigation-menu:hover li.active {
-  max-width: 60px;
+  //max-width: 60px;
 }
 
 .v1nav .navigation-menu .info-icon,.v1nav .navigation-menu .entities-icon,.v1nav .navigation-menu .gallery-icon,.v1nav .navigation-menu .pages-icon,.v1nav .navigation-menu .emails-icon {
