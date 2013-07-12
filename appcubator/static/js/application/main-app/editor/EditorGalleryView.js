@@ -168,17 +168,18 @@ define([
       var pageContext = v1State.getCurrentPage().getContextEntities();
       if(!pageContext.length) return;
 
-      this.addHeaderItem('Page Context Data');
+      var contextEntitySection = this.addSection('Page Context Data');
+
       _(pageContext).each(function(tableName) {
         var tableM = v1State.getTableModelWithName(tableName);
         if(!tableM) throw "Error with page context";
         var tableId = tableM.cid;
         var id = 'entity-' + tableM.cid;
 
-        this.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon');
+        this.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon', contextEntitySection);
 
-        tableM.get('fields').each(function(field) {
-          this.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon');
+        tableM.getFieldsColl().each(function(field) {
+          this.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon', contextEntitySection);
         }, this);
       }, this);
     },
@@ -284,12 +285,12 @@ define([
 
     createContextEntityNode: function(layout, id) {
       var hash = String(id).replace('context-field-','').split('-');
-      var entityM = v1State.get('tables').get(hash[0]);
+      var entityM = v1State.getTableModelWithCid(hash[0]);
       var fieldM = entityM.get('fields').get(hash[1]);
 
       var displayType = this.getFieldType(fieldM);
 
-      var editorContext = this.editorContext ? this.editorContext : "page";
+      var editorContext = this.editorContext ? this.editorContext : "Page";
 
       var content_ops = {};
       if(displayType == "links") {
@@ -347,7 +348,7 @@ define([
         editOn = "Page." + entity.get('name');
       }
 
-      return this.widgetsCollection.createEditForm(layout, entity);
+      return this.widgetsCollection.createEditForm(layout, entity, editOn);
     },
 
     createEntityTable: function(layout, id) {
@@ -480,12 +481,14 @@ define([
 
     addSection: function(name) {
       var header = this.addHeaderItem(name);
-      var sectionName = name.replace(' ','-');
+      var sectionName = name.replace(/ /g,'-');
       header.onclick = function(e) {
         var section = $('.'+sectionName);
         $(e.currentTarget).toggleClass('open');
         $('.'+sectionName).slideToggle('fast');
-      }
+        $(e.target).toggleClass('open');
+      };
+
       var section = document.createElement('section');
       section.className = sectionName;
       section.style.display = 'none';

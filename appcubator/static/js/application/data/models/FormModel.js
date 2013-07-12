@@ -63,13 +63,13 @@ function(
     },
 
     fillWithEditProps: function(entity) {
-      entity.getFieldsColl().each(function(fieldModel) {
+      entity.get('fields').each(function(fieldModel) {
         var type = fieldModel.get('type');
         var formFieldModel = { field_name: fieldModel.get('name'),
                                displayType: "single-line-text",
                                type: type,
                                label: fieldModel.get('name'),
-                               placeholder: "Prefilled data: {{" + fieldModel.get('name') + '}}',
+                               placeholder: "Prefilled data: ||" + fieldModel.get('name') + '||',
                                options: "" };
 
         if(type == "fk"||type == "m2m"||type == "o2o") { return; }
