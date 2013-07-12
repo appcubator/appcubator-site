@@ -142,7 +142,11 @@ function( WidgetContainerView,
     },
 
     autoResize: function() {
-      this.model.get('layout').set('width', 7);
+      var left = this.model.get('layout').get('left');
+      var width = 12 - left;
+      if(width > 7) width = 7;
+
+      this.model.get('layout').set('width', width);
       this.model.get('layout').set('height', 46);
     },
 

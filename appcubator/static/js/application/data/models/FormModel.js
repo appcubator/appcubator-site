@@ -42,7 +42,7 @@ function(
     },
 
     fillWithProps: function(entity) {
-      entity.get('fields').each(function(fieldModel) {
+      entity.getFieldsColl().each(function(fieldModel) {
         var type = fieldModel.get('type');
         var formFieldModel = { field_name: fieldModel.get('name'),
                                displayType: "single-line-text",
@@ -69,7 +69,7 @@ function(
                                displayType: "single-line-text",
                                type: type,
                                label: fieldModel.get('name'),
-                               placeholder: "Prefilled data: {{" + fieldModel.get('name') + '}}',
+                               placeholder: "Prefilled data: ||" + fieldModel.get('name') + '||',
                                options: "" };
 
         if(type == "fk"||type == "m2m"||type == "o2o") { return; }
@@ -86,7 +86,7 @@ function(
     getRelationalActions: function(pageModel) {
 
       if(this.get('action') == "login" || this.get('action') == "signup") return (new ActionCollection([]));
-      var entity = v1State.get('tables').getTableWithName(this.get('entity'));
+      var entity = v1State.getTableModelWithName(this.get('entity'));
       var possibleActions = new ActionCollection();
       var userFields = pageModel.getFields();
 

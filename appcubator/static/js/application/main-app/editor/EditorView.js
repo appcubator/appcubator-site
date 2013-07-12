@@ -77,8 +77,8 @@ function( PageModel,
 
       var self = this; // for binding deploy to ctrlshiftd
       /* Bindings */
-      keyDispatcher.key('⌘+c, ctrl+c', this.copy);
-      keyDispatcher.key('⌘+v, ctrl+v', this.paste);
+      // keyDispatcher.bind('⌘+c, ctrl+c', this.copy);
+      // keyDispatcher.bind('⌘+v, ctrl+v', this.paste);
 
       this.title = "Editor";
     },
@@ -167,7 +167,7 @@ function( PageModel,
     },
 
     createPage: function(name) {
-      var pageUrlPart = name.replace(' ', '_');
+      var pageUrlPart = name.replace(/ /g, '_');
       var pageUrl = { urlparts : [pageUrlPart] };
       var pageInd = v1State.get('pages').length;
       var pageModel = new PageModel({ name: name, url: pageUrl});

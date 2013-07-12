@@ -42,7 +42,7 @@ define([
 				self.showTutorial();
 				window.history.pushState(null, null, window.location.href.concat("tutorial/"));
 			});
-      keyDispatcher.key('⌘+s, ctrl+s', this.save);
+      keyDispatcher.bind('⌘+s, ctrl+s', this.save);
 
       var autoSave = setInterval(this.save, 30000);
 		},
@@ -56,6 +56,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -69,6 +70,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -83,6 +85,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -97,6 +100,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 
@@ -113,6 +117,7 @@ define([
 						self.showTutorial();
 					}
 				});
+				olark('api.box.show');
 			});
 		},
 

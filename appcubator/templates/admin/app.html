@@ -1,0 +1,39 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+  <h2>Apps</h2>
+  <hr>
+  <div class="row">
+    <div class="span2">ID</div>
+    <div class="span10">{{ app.pk }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2">Name</div>
+    <div class="span10">{{ app.name }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2">Owner</div>
+    <div class="span10">{{ app.owner }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2">Subdomain</div>
+    <div class="span10">{{ app.subdomain }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2">Deployment ID</div>
+    <div class="span10">{{ app.deployment_id }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2">App State</div>
+    <textarea class="span10" rows="25">{{ app.state_json }}</textarea>
+  </div>
+
+  <div class="row">
+    <div class="span2">UIE State</div>
+    <textarea class="span10" rows="50">{{ app.uie_state_json }}</textarea>
+  </div>
+{% endblock %}

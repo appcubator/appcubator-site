@@ -1,6 +1,6 @@
 .element-create-form input[type="text"],.element-create-form textarea {
- width: 90%;
- margin-bottom: 12px;
+  width: 90%;
+  margin-bottom: 12px;
 }
 
 .element-create-form .btn {
@@ -10,17 +10,22 @@
   margin-right: 5%;
 }
 
-/*.remove {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: none;
-}*/
+/*.remove  {
 
-.widgetWrapper:hover .remove{
-  display: inline-block;
+position:  absolute;
+
+top:  10px;
+
+right:  10px;
+
+display:  none;
+
 }
 
+*/
+.widgetWrapper:hover .remove {
+  display: inline-block;
+}
 
 .theme-gallery {
   text-align: left;
@@ -36,7 +41,6 @@
   position: relative;
   background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 6px;
   padding: 15px;
 }
 
@@ -53,8 +57,8 @@
 }
 
 .theme-gallery li h2 {
-  width: 100%;
-  /*margin-top: 30px;*/
+  width: 100%; /*margin-top:  30px;
+  */
 }
 
 .details {
@@ -73,7 +77,7 @@
   line-height: 260px;
 }
 
-.theme-gallery li:hover .details{
+.theme-gallery li:hover .details {
   display: inline-block;
 }
 

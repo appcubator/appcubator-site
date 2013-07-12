@@ -190,6 +190,10 @@ function() {
     resized: function(e, ui) {
       var left = Math.round((ui.position.left / this.positionHorizontalGrid));
       var top  = Math.round((ui.position.top  / this.positionVerticalGrid));
+
+      if(left < 0) left = 0;
+      if(top < 0) top = 0;
+
       var deltaHeight = Math.round((ui.size.height + 2) / this.positionVerticalGrid);
       var deltaWidth = Math.round((ui.size.width + 2) / this.positionHorizontalGrid);
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
@@ -225,6 +229,9 @@ function() {
 
       var top = Math.round((ui.position.top / this.positionVerticalGrid));
       var left = Math.round((ui.position.left / this.positionHorizontalGrid));
+
+      if(left < 0) left = 0;
+      if(top < 0) top = 0;
 
       if(model.get('layout').get('left') == left) {
         model.get('layout').trigger('change:left');
@@ -294,11 +301,11 @@ function() {
     },
 
     doKeyBindings: function() {
-      keyDispatcher.key('down', this.moveSelectedDown);
-      keyDispatcher.key('up', this.moveSelectedUp);
-      keyDispatcher.key('left', this.moveSelectedLeft);
-      keyDispatcher.key('right', this.moveSelectedRight);
-      keyDispatcher.key('backspace', this.deleteSelected);
+      keyDispatcher.bind('down', this.moveSelectedDown);
+      keyDispatcher.bind('up', this.moveSelectedUp);
+      keyDispatcher.bind('left', this.moveSelectedLeft);
+      keyDispatcher.bind('right', this.moveSelectedRight);
+      keyDispatcher.bind('backspace', this.deleteSelected);
     },
 
     hoverClicked: function(e) {
@@ -316,14 +323,18 @@ function() {
 
     doubleClicked: function(e) {
       if(!this.isMouseOn(e)) return;
-      this.selectedEl.trigger('startEditing');
-      this.selectedEl.bind('stopEditing', this.stoppedEditing);
-      this.selectDiv.style.height = 0;
-      this.selectDiv.style.width = 0;
-      console.log(this.selectedEl.get('layout').get('height'));
-      var top = ((this.selectedEl.get('layout').get('top') * 15) - 2) + ((this.selectedEl.get('layout').get('height') * 15) + 4);
-      console.log(top);
-      this.selectDiv.style.top = top + 'px';
+
+      if(this.selectedEl.getForm()) return;
+      if(this.selectedEl.getLoginRoutes()) return;
+
+      if(this.selectedEl.getContent()) {
+        this.selectedEl.trigger('startEditing');
+        this.selectedEl.bind('stopEditing', this.stoppedEditing);
+        this.selectDiv.style.height = 0;
+        this.selectDiv.style.width = 0;
+        var top = ((this.selectedEl.get('layout').get('top') * 15) - 2) + ((this.selectedEl.get('layout').get('height') * 15) + 4);
+        this.selectDiv.style.top = top + 'px';
+      }
     },
 
     stoppedEditing: function() {
@@ -355,6 +366,7 @@ function() {
     },
 
     remove: function() {
+      this.deselect();
       $('.page.full').off('mousedown', this.clickedPage);
       Backbone.View.prototype.remove.call(this);
     }

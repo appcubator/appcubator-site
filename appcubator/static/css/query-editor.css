@@ -1,16 +1,24 @@
 .modal.query-modal {
-  padding: 0!important;
+  padding: 0 !important;
   height: 600px;
-  overflow-y:scroll;
+
+  -ms-overflow-y: scroll;
+  overflow-y: scroll;
   padding-bottom: 50px;
 }
 
 .modal.query-modal .sections-container {
   height: 500px;
+
+  -ms-overflow-y: scroll;
   overflow-y: scroll;
 }
 
 .modal.query-modal h1 {
+  background-image: -webkit-linear-gradient(to bottom, #fdfdfd, #eaeaea);
+  background-image: -moz-linear-gradient(to bottom, #fdfdfd, #eaeaea);
+  background-image: -o-linear-gradient(to bottom, #fdfdfd, #eaeaea);
+  background-image: -ms-linear-gradient(to bottom, #fdfdfd, #eaeaea);
   background-image: linear-gradient(to bottom, #fdfdfd, #eaeaea);
   background-color: #fcfcfc;
   margin: 0;
@@ -59,9 +67,10 @@
 .modal.query-modal label {
   margin-top: 0px;
   padding: 4px;
+  display: inline-block;
 }
 
-.modal.query-modal label input[type="checkbox"], .modal.query-modal label input[type="radio"] {
+.modal.query-modal label input[type="checkbox"],.modal.query-modal label input[type="radio"] {
   margin-top: -4px;
   margin-right: 4px;
 }

@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 import django.contrib.auth.views
-import base_views, views, theme_views, log_views, test_views
+import base_views, views, theme_views, log_views, test_views, admin_views
 import django.views.generic.base
 from django.views.generic.simple import direct_to_template
 from registration.backends.default.views import RegistrationView, ActivationView
@@ -11,6 +11,7 @@ from registration.backends.default.views import RegistrationView, ActivationView
 
 urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
+    url(r'^showhn/$',                   base_views.showhnpage),
     url(r'^aboutus/$',                  base_views.aboutus),
     # Signup, Login and invites
     url(r'^accounts/', include('registration.backends.default.urls')),
@@ -91,7 +92,16 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/', 'app_page'), # this serves all the app pages
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
+)
+
+urlpatterns += patterns('appcubator.admin_views',
     url(r'^stay/up/to/get/lucky/$', 'admin_home'),
+    url(r'^stay/up/to/get/lucky/customers/$', 'admin_customers'),
+    url(r'^stay/up/to/get/lucky/users/(\d+)$', 'admin_user'),
+    url(r'^stay/up/to/get/lucky/users/$', 'admin_users'),
+    url(r'^stay/up/to/get/lucky/apps/(\d+)$', 'admin_app'),
+    url(r'^stay/up/to/get/lucky/apps/$', 'admin_apps'),
+    url(r'^stay/up/to/get/lucky/feedback/$', 'admin_feedback'),
 )
 
 urlpatterns += patterns('appcubator.theme_views',

@@ -53,7 +53,7 @@ function() {
         newContext.innerHTML = _.template(UrlTemplate.contextTemp, {
           cid: urlpart.cid,
           value: variable,
-          entities: v1State.get('tables').pluck('name')
+          entities: _.union(v1State.get('tables').pluck('name'), v1State.get('users').pluck('name'))
         });
         this.$('.url-parts').append(newContext);
       }

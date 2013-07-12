@@ -13,6 +13,7 @@ define(['backbone'], function(Backbone) {
       if(json.src_content) {
         json.src = json.src_content;
       }
+      delete json.src_content;
       return json;
     }
 

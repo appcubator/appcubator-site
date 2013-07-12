@@ -137,7 +137,7 @@ function(WidgetModel,
         return this.push(widgetContainerModel);
       },
 
-      createEditForm: function(layout, entity) {
+      createEditForm: function(layout, entity, editOn) {
         var widget = {};
         widget.type = "form";
         widget.layout = layout;
@@ -147,6 +147,7 @@ function(WidgetModel,
         widget.data.container_info.entity = entity;
         widget.data.container_info.form = {};
         widget.data.container_info.form.action = "edit";
+        widget.data.container_info.form.editOn = editOn;
         widget.data.container_info.form.entity = entity.get('name');
         widget.data.container_info.form.goto = "internal://Homepage";
 

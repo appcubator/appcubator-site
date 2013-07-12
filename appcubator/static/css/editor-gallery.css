@@ -4,20 +4,19 @@
   height: 80px;
   font-size: 12px;
   text-align: center;
-
   border: 1px solid #1b2535;
   border-top: 1px solid #3b4555;
   border-radius: 6px;
-
   background-color: #2b3545;
   background-repeat: no-repeat;
   background-position: center 20px;
-  background-size: auto 20px;
 
+  -webkit-background-size: auto 20px;
+  -moz-background-size: auto 20px;
+  background-size: auto 20px;
   margin-top: 8px;
   margin-left: 10px;
   margin-right: 2px;
-
   cursor: pointer;
 }
 
@@ -34,7 +33,7 @@
   height: 40px;
   width: 100%;
   position: absolute;
-  bottom:0;
+  bottom: 0;
   right: 0;
   display: inline-block;
   border-top: 1px solid #3b4555;
@@ -46,44 +45,50 @@
 
 .item-gallery {
   width: 200px;
-
   height: 100%;
   right: 0;
   padding: 0;
   padding-bottom: 42px;
   margin: 0;
   overflow: visible;
+
+  -ms-overflow-y: scroll;
   overflow-y: scroll;
   z-index: 999;
   border-radius: 0;
   border: none;
+
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
 @-moz-document url-prefix() {
-    .item-gallery {
-        width: 220px;
-    }
+  .item-gallery  {
+   width: 220px;
 }
 
-.item-gallery ::-webkit-scrollbar {
-    width: 6px;
+}
+
+ .item-gallery ::-webkit-scrollbar {
+  width: 6px;
 }
 
 .item-gallery ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    border-radius: 6px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 6px;
 }
 
 .item-gallery ::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    /*-webkit-box-shadow: inset 0 0 6px rgba(255,255,255,0.8); */
-    background-color: rgba(255,255,255,0.4);
+  border-radius: 4px; /*-webkit-box-shadow:  inset 0 0 6px rgba(255,255,255,0.8);
+   */
+background-color: rgba(255,255,255,0.4);
 }
+
 .elements-list {
   width: 100%;
   display: block;
-  overflow:visible;
+  overflow: visible;
 }
 
 .elements-list ul {
@@ -106,13 +111,14 @@
   background-image: url('../img/down-arrow.png');
   background-position: center 5px;
   background-repeat: no-repeat;
+
+  -webkit-background-size: auto 100%;
+  -moz-background-size: auto 100%;
   background-size: auto 100%;
   margin-right: 5px;
 }
 
-
 /* context-entity-update */
-
 .top-panel-title {
   height: 50px;
   border-bottom: 1px solid #1b2535;
@@ -158,10 +164,12 @@
 }
 
 .search-panel .search {
-  background:transparent;
+  background: transparent;
   outline: none;
   color: #fff;
   border: none;
+
+  -webkit-box-shadow: none;
   box-shadow: none;
   padding: 0;
   vertical-align: top;
@@ -190,7 +198,11 @@
   padding: 2px;
   margin-top: 8px;
   margin-left: -1px;
+  position: relative;
   background-position: 0 0;
+
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
   background-size: 100% 100%;
   background-image: url(../img/section-header.png);
   border: none;
@@ -219,11 +231,38 @@
   border: none;
 }
 
+.elements-list .gallery-header .icon {
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  top: 7px;
+  left: 15px;
+  -webkit-transition: all 0.2s ease;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+  /*background-image: url(../img/right-arrow.png);
+  background-size: 10px 10px;
+  background-repeat: no-repeat;*/
+}
+.elements-list .gallery-header.open .icon {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
 .elements-list .full-width {
   width: 172px;
   padding: 0;
   background-repeat: no-repeat;
   background-position: 12px center;
+
+  -webkit-background-size: auto 28px;
+  -moz-background-size: auto 28px;
   background-size: auto 28px;
   color: #fff;
   line-height: 80px;
@@ -254,14 +293,15 @@
   padding-top: 4px;
 }
 
-
 /* icons */
-
 .elements-list .full-width .icon {
   width: 50px;
   height: 34px;
   background-repeat: no-repeat;
   background-position: center center;
+
+  -webkit-background-size: auto 100%;
+  -moz-background-size: auto 100%;
   background-size: auto 100%;
   margin-top: 24px;
 }
@@ -269,6 +309,9 @@
 .icon.create {
   background-image: url('../img/plus.png');
   background-position: 10px center;
+
+  -webkit-background-size: 40px 40px;
+  -moz-background-size: 40px 40px;
   background-size: 40px 40px;
   background-repeat: no-repeat;
 }
@@ -276,6 +319,9 @@
 .icon.show {
   background-image: url('../img/list.png');
   background-position: 10px center;
+
+  -webkit-background-size: 40px 40px;
+  -moz-background-size: 40px 40px;
   background-size: 40px 40px;
   background-repeat: no-repeat;
 }
@@ -283,12 +329,14 @@
 .icon.update {
   background-image: url('../img/update.png');
   background-position: 10px center;
+
+  -webkit-background-size: 40px 40px;
+  -moz-background-size: 40px 40px;
   background-size: 40px 40px;
   background-repeat: no-repeat;
 }
 
-
-.icon.local-signup, .icon.local-login {
+.icon.local-signup,.icon.local-login {
   background-image: url('../img/users.png');
 }
 
@@ -296,22 +344,26 @@
   background-image: url('../img/plus.png');
 }
 
-
 .icon.facebook {
+  -webkit-background-size: auto 30px !important;
+  -moz-background-size: auto 30px !important;
   background-size: auto 30px !important;
   background-image: url('../img/facebook_icon.png');
 }
 
 .icon.twitter {
+  -webkit-background-size: auto 30px !important;
+  -moz-background-size: auto 30px !important;
   background-size: auto 30px !important;
   background-image: url('../img/twitter_icon.png');
 }
 
 .icon.linkedin {
+  -webkit-background-size: auto 30px !important;
+  -moz-background-size: auto 30px !important;
   background-size: auto 30px !important;
   background-image: url('../img/linkedin_icon.png');
 }
-
 
 .icon.create {
   background-image: url('../img/page_layout_icon&48.png');
@@ -323,7 +375,6 @@
   background-position: center center;
 }
 
-
 .uielement .icon {
   display: inline-block;
   width: 50px;
@@ -333,18 +384,53 @@
   background-image: url('../img/uielement_sprite.png');
 }
 
-.icon.buttons { background-position: -10px -25px; }
-.icon.boxes { background-position: -150px -25px; }
-.icon.images { background-position: -220px -25px; }
-.icon.headerTexts { background-position: -290px -25px; }
-.icon.texts { background-position: -360px -25px; }
-.icon.links { background-position: -430px -25px; }
-.icon.textInputs { background-position: -500px -25px; }
-.icon.textAreas { background-position: -570px -25px; }
-.icon.lines { background-position: -640px -25px; }
-.icon.dropdowns { background-position: -710px -25px; }
-.icon.imageslider { background-position: -780px -25px; }
-.icon.facebookshare { background-position: -850px -25px; }
+.icon.buttons {
+  background-position: -10px -25px;
+}
+
+.icon.boxes {
+  background-position: -150px -25px;
+}
+
+.icon.images {
+  background-position: -220px -25px;
+}
+
+.icon.headerTexts {
+  background-position: -290px -25px;
+}
+
+.icon.texts {
+  background-position: -360px -25px;
+}
+
+.icon.links {
+  background-position: -430px -25px;
+}
+
+.icon.textInputs {
+  background-position: -500px -25px;
+}
+
+.icon.textAreas {
+  background-position: -570px -25px;
+}
+
+.icon.lines {
+  background-position: -640px -25px;
+}
+
+.icon.dropdowns {
+  background-position: -710px -25px;
+}
+
+.icon.imageslider {
+  background-position: -780px -25px;
+}
+
+.icon.facebookshare {
+  background-position: -850px -25px;
+}
 
 .icon.current-user-icon {
   display: inline-block;
@@ -353,12 +439,16 @@
   background-repeat: no-repeat;
   background-image: url('../img/plus.png');
   background-position: center center;
-  background-size:auto 100% ;
+
+  -webkit-background-size: auto 100%;
+  -moz-background-size: auto 100%;
+  background-size: auto 100%;
 }
 
 .icon.searchbox-icon {
   background-image: url('../img/searchbox.png');
 }
+
 .icon.searchlist-icon {
   background-image: url('../img/searchlist.png');
 }
@@ -386,6 +476,8 @@
 .elements-list.row-elements-list {
   height: 330px;
   overflow: hidden;
+
+  -ms-overflow-y: scroll;
   overflow-y: scroll;
 }
 
@@ -399,5 +491,8 @@
 
 .half-width .icon.plus-icon {
   background-position: center center;
+
+  -webkit-background-size: auto 100%;
+  -moz-background-size: auto 100%;
   background-size: auto 100%;
 }

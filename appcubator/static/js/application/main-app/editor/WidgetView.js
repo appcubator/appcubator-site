@@ -69,7 +69,7 @@ define([
       }, this);
       this.model.bind('stopEditing', this.switchEditModeOff);
 
-      keyDispatcher.key('command+enter', function() {
+      keyDispatcher.bind('command+enter', function() {
         self.model.trigger('stopEditing');
       });
     },
