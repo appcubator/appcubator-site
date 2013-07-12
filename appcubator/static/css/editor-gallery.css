@@ -198,6 +198,7 @@ background-color: rgba(255,255,255,0.4);
   padding: 2px;
   margin-top: 8px;
   margin-left: -1px;
+  position: relative;
   background-position: 0 0;
 
   -webkit-background-size: 100% 100%;
@@ -228,6 +229,30 @@ background-color: rgba(255,255,255,0.4);
 
 .elements-list .gallery-header:active {
   border: none;
+}
+
+.elements-list .gallery-header .icon {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 7px;
+  left: 15px;
+  -webkit-transition: all 0.2s ease;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+  /*background-image: url(../img/right-arrow.png);
+  background-size: 10px 10px;
+  background-repeat: no-repeat;*/
+}
+.elements-list .gallery-header.open .icon {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 .elements-list .full-width {

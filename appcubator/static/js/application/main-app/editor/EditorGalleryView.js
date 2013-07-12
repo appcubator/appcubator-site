@@ -21,12 +21,12 @@ define([
 
       events : {
         'mouseover .bottom-arrow' : 'slideDown',
-        'mousemove .bottom-arrow' : 'slideDown'
+        'mousemove .bottom-arrow' : 'slideDown',
+        'focus input.search'           : 'expandAllSections'
       },
 
       initialize   : function(widgetsCollection) {
        _.bindAll(this);
-
        this.widgetsCollection = widgetsCollection;
      },
 
@@ -46,10 +46,12 @@ define([
       this.renderContextEntityForms();
       this.renderUIElementList();
 
+      // all sections are hidden by default. open first section
+      $(this.allList).find('.gallery-header').first().click();
+
       $(this.allList).append('<div class="bottom-arrow"></div>');
       $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
       $(this.allList).find('.bottom-arrow').on('mousemove', this.slideDown);
-
 
       $(this.allList).find('li:not(.ui-draggable)').draggable({
         cursor: "move",
@@ -63,6 +65,9 @@ define([
       this.$el.find('li').on('click', self.dropped);
 
       var list = new List('top-panel-bb', { valueNames: ['name']});
+
+      $(util.get('top-panel-bb')).find('.search').on('focus', this.expandAllSections);
+
       return this;
     },
 
@@ -465,6 +470,10 @@ define([
       var li = document.createElement('li');
       li.className = 'gallery-header ui-draggable';
       li.innerHTML = text;
+      var icon = document.createElement('img');
+      icon.className="icon";
+      icon.src="/static/img/right-arrow.png";
+      li.appendChild(icon);
       $(this.allList).append(li);
       return li;
     },
@@ -473,7 +482,9 @@ define([
       var header = this.addHeaderItem(name);
       var sectionName = name.replace(' ','-');
       header.onclick = function(e) {
+        var section = $('.'+sectionName);
         $('.'+sectionName).slideToggle('fast');
+        $(e.target).toggleClass('open');
       }
       var section = document.createElement('section');
       section.className = sectionName;
@@ -503,6 +514,12 @@ define([
       }
 
       return type;
+    },
+
+    expandAllSections: function() {
+      console.log("YARP");
+      $(this.allList).find('section').show()
+                     .end().find('.gallery-header').addClass('open');
     },
 
     slideDown: function() {

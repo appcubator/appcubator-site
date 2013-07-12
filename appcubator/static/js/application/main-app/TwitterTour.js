@@ -23,7 +23,7 @@ function() {
      */
     {
       target: $('.menu-app-entities'),
-      content: '<h3>Tables</h3><p>Click this button to go to the “Tables” page.<br><em>Go to the “Tables” page.</em></p>',
+      content: '<h3>Tables</h3><p>Click this button to go to the “Tables” page.</p><p><em>Go to the “Tables” page.</em></p>',
       my: "top center",
       at: "bottom center",
       url: '/',
@@ -73,7 +73,7 @@ function() {
      * Add Table btn
      */
     {
-      content: '<h3>Adding A Table</h3><p>In Twitter, users can create and see Tweets.<br>These are stored in a "Table" of tweets.<br><em>Click "Add Table" name the table: <strong>Tweet</strong>.</em></p>',
+      content: '<h3>Adding A Table</h3><p>In Twitter, users can create and see Tweets.<br>These tweets are stored in a "Table", which we need to set up.</p><p><em>Click "Add Table" name the table: <strong>Tweet</strong>.</em></p>',
       my: "left center",
       at: "right center",
       url: '/tables/',
@@ -120,7 +120,7 @@ function() {
      * Add Property btn
      */
     {
-      content: '<h3>Create a Field</h3><p>Tweets are simple, they consist of one Text field.<br><em>Add a field and name it <strong>Content</strong>.</p>',
+      content: '<h3>Create a Field</h3><p>Tweets are simple, they consist of one Text field.</p><p><em>Add a field and name it <strong>Content</strong>.</em></p>',
       url: '/tables/',
       setup: function(tour, options) {
 
@@ -150,12 +150,12 @@ function() {
     {
       content: '<h3>Nice!</h3><p>Next, we\'ll associate <strong>Tweets</strong> with <strong>Users</strong>.</p>',
       my: "left top",
-      at: "right center",
+      at: "right top",
       url: '/tables/',
       setup: function(tour, options) {
         var cid =  v1State.get('tables').getTableWithName("Tweet").cid;
         var $tableEl = $('#table-' + cid).first();
-        return { target: $tableEl.find('.column').first() };
+        return { target: $tableEl.find('.column').last() };
       },
       nextButton: true,
       teardown: function() {
@@ -166,7 +166,7 @@ function() {
      * Add Relation btn
      */
     {
-      content: '<h3>Make a Relation</h3><p>Relations allow you to associate users and tweets.<br><em>Click Add Relation.</em></p>',
+      content: '<h3>Make a Relation</h3><p>Relations allow you to associate users and tweets.</p><p><em>Click <strong>Add Relation</strong>.</em></p>',
       my: "bottom center",
       at: "top center",
       url: '/tables/',
@@ -184,7 +184,7 @@ function() {
      * Create Relation Options
      */
     {
-      content: '<h3>Relations</h3><p><em>Click below to make a User - Tweet relation.</em></p>',
+      content: '<h3>Relations</h3><p><em>Click below to make a <strong>User-Tweet</strong> relation.</em></p>',
       my: "bottom left",
       at: "top left",
       url: '/tables/',
@@ -203,7 +203,7 @@ function() {
      * Create Relation Form
      */
     {
-      content: '<h3>Relations</h3><p>In Twitter, a tweet has an <strong>owner</strong> and by consequence, users are owners of <strong>tweets</strong>.<br><em>Call the user\'s list of tweets <strong>Tweets</strong>, and the tweet\'s user <strong>Owner</strong>. Then press Done.</em></p>',
+      content: '<h3>Relations</h3><p>In Twitter, a tweet has an <strong>owner</strong> and by consequence, users are owners of <strong>tweets</strong>.</p><p><em>Call the user\'s list of tweets <strong>Tweets</strong>, and the tweet\'s user <strong>Owner</strong>. Then press Done.</em></p>',
       my: "left center",
       at: "top center",
       url: '/tables/',
@@ -255,7 +255,7 @@ function() {
       }
     },
     {
-      content: '<h3>Save button</h3><p>Let\'s save this work before moving on. We also periodically autosave.<em>Click the save button.</em></p>',
+      content: '<h3>Save button</h3><p>Let\'s save this work before moving on. We also periodically autosave.</p><p><em>Click the save button.</em></p>',
       my: "right center",
       at: "left center",
       url: '/tables/',
@@ -274,7 +274,7 @@ function() {
      * Done with Tables. Going to pages.
      */
     {
-      content: '<h3>GREAT!</h3><p>You\'re done with the hard part. Now we\'ll make the UI.<br><em>Click on "Pages".</em></p>',
+      content: '<h3>GREAT!</h3><p>You\'re done with the hard part. Now we\'ll make the UI.</p><p><em>Click on <strong>Pages</strong>.</em></p>',
       my: "top center",
       at: "bottom center",
       target: $('.menu-app-pages'),
@@ -306,9 +306,9 @@ function() {
       // }
     },
     {
-      content: '<h3>Pages</h3><p>Here you can edit and delete your site\'s pages.<br><em>Click "Edit Page"</em></p>',
-      my: "left center",
-      at: "right center",
+      content: '<h3>Pages</h3><p>Here you can edit and delete your site\'s pages.</p><p><em>Click <strong>Edit Page</strong></em></p>',
+      my: "left top",
+      at: "right top",
       url: '/pages/',
       setup: function(tour, options) {
         v1.bind('editor-loaded', function() {
@@ -409,7 +409,7 @@ function() {
       }
     },
     {
-      content: '<h3>Customizing functionality</h3><p>Some elements, like this Facebook button, can be customized.<br><em>Select it and click <strong>Edit Login</strong></em></p>',
+      content: '<h3>Customizing functionality</h3><p>Some elements, like this Facebook button, can be customized.</p><p><em>Select it and click <strong>Edit Login</strong></em></p>',
       my: "left center",
       at: "right center",
       url: '/editor/0/',
@@ -425,7 +425,7 @@ function() {
       }
     },
     {
-      content: '<h3>Customizing functionality</h3><p>Here, you can select where the user goes after login. Right now you only have Homepage right now. Next, we\'ll make a new page.<br><em>Click outside this window to return to the editor.</em></p>',
+      content: '<h3>Customizing functionality</h3><p>Here, you can select where the user goes after login. Right now you only have Homepage right now. Next, we\'ll make a new page.</p><p><em>Click outside this window to return to the editor.</em></p>',
       my: "right center",
       at: "left center",
       url: '/editor/0/',
@@ -440,7 +440,7 @@ function() {
       }
     },
     {
-      content: '<h3>Making a new Page</h3><p>Hover over "Homepage" to see your pages and to make a new one.<br><em>Make a new page called "Tweet Feed" and click on it to go there.</em></p>',
+      content: '<h3>Making a new Page</h3><p>Hover over "Homepage" to see your pages and to make a new one.</p><p><em>Make a new page called "Tweet Feed" and click on it to go there.</em></p>',
       // TODO make the gradients more noticable
       my: "left top",
       at: "right center",
@@ -498,7 +498,7 @@ function() {
       }
     },
     {
-      content: '<h3>About this "list"</h3><p>"Edit Row" allows you to edit each row\'s appearance and content.<br>"Edit Query" allows you to filter and sort the Tweets.<br><em>Click on "Edit Row"</em></p>',
+      content: '<h3>About this "list"</h3><p>"Edit Row" allows you to edit each row\'s appearance and content.<br>"Edit Query" allows you to filter and sort the Tweets.</p><p><em>Click on "Edit Row"</em></p>',
       my: "bottom center",
       at: "top center",
       url: '/editor/1/',
@@ -531,7 +531,7 @@ function() {
       }
     },
     {
-      content: '<h3>Dragging Tweet Stuff</h3><p><em>Drag "Tweet.Owner.username" into the green row.</p></em>',
+      content: '<h3>Dragging Tweet Stuff</h3><p><em>Drag "Tweet.Owner.username" into the green row.</em></p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -556,7 +556,7 @@ function() {
     },
     {
       // TODO see how this looks and make shorter if necessary
-      content: '<h3>Cool!</h3><p>You successfully made a Twitter feed. You can make things look a little nicer if you want: resize things in the row, pick styles for the elements.<br><em>When done, Click "Done Editing" to switch off editing mode.</em></p>',
+      content: '<h3>Cool!</h3><p>You successfully made a Twitter feed. You can make things look a little nicer if you want: resize things in the row, pick styles for the elements.</p><p><em>When done, Click "Done Editing" to switch off editing mode.</em></p>',
       my: "top center",
       at: "bottom center",
       url: '/editor/1/',
