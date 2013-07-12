@@ -86,6 +86,7 @@ def showhnpage(request):
 
 
 @login_required
+@csrf_exempt
 def account(request):
     if request.method == 'GET':
         page_context = {}
