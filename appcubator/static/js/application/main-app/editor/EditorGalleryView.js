@@ -348,7 +348,7 @@ define([
         editOn = "Page." + entity.get('name');
       }
 
-      return this.widgetsCollection.createEditForm(layout, entity);
+      return this.widgetsCollection.createEditForm(layout, entity, editOn);
     },
 
     createEntityTable: function(layout, id) {
