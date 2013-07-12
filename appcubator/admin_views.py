@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, RouteLog, Customer, ExtraUserData
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, Customer, ExtraUserData
 from email.sendgrid_email import send_email
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
@@ -46,10 +46,7 @@ def admin_users(request):
 def admin_user(request, user_id):
     user_id = long(user_id)
     user = get_object_or_404(ExtraUserData, id=user_id)
-    logs = RouteLog.objects.filter(user_id=user_id)
-    print logs[1].opened_on
-    print logs[1].app_id
-    print logs[1].page_name
+    logs = LogAnything.objects.filter(user_id=user_id)
     page_context = {}
     page_context["user"] = user
     page_context["userlogs"] = logs

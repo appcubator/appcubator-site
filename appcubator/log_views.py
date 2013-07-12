@@ -26,10 +26,11 @@ def JSONResponse(serializable_obj, **kwargs):
 @csrf_exempt
 def log_anything(request):
     key = request.POST['__key']
+    data = request.POST.get('__data', '(No Data)')
     app_id = request.POST.get('__app_id', None)
     user_id = request.user.id
-    data = { k:v for k,v in request.POST.items() if not k.startswith('__') }
-    la = LogAnything(app_id=app_id, user_id=user_id, data=simplejson.dumps(data))
+    # data = { k:v for k,v in request.POST.items() if not k.startswith('__') }
+    la = LogAnything(app_id=app_id, user_id=user_id, name=key, data=data)
     la.save()
     return HttpResponse("ok")
 

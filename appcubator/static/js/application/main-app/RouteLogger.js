@@ -11,14 +11,10 @@ function() {
   RouteLogger.prototype.logRoute = function(router, route, params) {
     var appID = route[0];
     if(router) {
-      $.ajax({
-        type: 'POST',
-        url: '/app/'+appID+'/log/routes/',
-        data: {
-          "page_name": router || 'unknown'
-        },
-        dataType: 'JSON'
-      });
+      var data = {
+        page_name: router || "unknown"
+      };
+      util.log_to_server('visited page', JSON.stringify(data), appID);
     }
   };
 
