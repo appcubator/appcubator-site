@@ -66,16 +66,21 @@ def log_slide(request):
 
 @require_POST
 @login_required
+@csrf_exempt
 def log_feedback(request):
     user = request.user.first_name
+    user_id = request.user.id
     like = request.POST['like']
     dislike = request.POST['dislike']
     features = request.POST['features']
 
     message =  user + " says.\n\n Like: \n" + like + \
         "\n\n Dislike: \n" + dislike + "\n\n Feature request: \n" + features
+    data = {}
+    data['message'] = message
 
-    TutorialLog.create_feedbacklog(request.user, message)
+    la = LogAnything(app_id=app_id, user_id=user_id, name="posted feedback", data=data)
+    la.save()
 
     requests.post(
         "https://api.mailgun.net/v2/v1factory.mailgun.org/messages",

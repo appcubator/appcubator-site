@@ -48,8 +48,9 @@ function(SimpleModalView) {
       v1.showTutorial();
     },
 
-    showFeedback: function() {
-      v1.showTutorial(null, [7]);
+    showFeedback: function(e) {
+      v1.showTutorial([7]);
+      e.preventDefault();
     }
 
   });

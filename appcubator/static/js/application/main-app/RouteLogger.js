@@ -11,10 +11,7 @@ function() {
   RouteLogger.prototype.logRoute = function(router, route, params) {
     var appID = route[0];
     if(router) {
-      var data = {
-        page_name: router || "unknown"
-      };
-      util.log_to_server('visited page', JSON.stringify(data), appID);
+      util.log_to_server('visited page', {page_name: router || "unknown" }, appID);
     }
   };
 

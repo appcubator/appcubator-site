@@ -1,7 +1,8 @@
 define([
   'answer',
   'backbone',
-  './TutorialDict'
+  './TutorialDict',
+  'util'
 ],
 function() {
 
@@ -177,21 +178,7 @@ function() {
     showSlide: function(obj, addr) {
       var title = '<h2>'+ obj.title + '</h2><div class="main-img '+ obj.view +'" style="background-image:url('+ obj.img +')"></div>';
       $('.tutorial-content').html(title + '<div class="text-cont">' + util.getHTML(obj.view) +'</div>');
-/*
-      $.ajax({
-          type: "POST",
-          url: '/log/slide/',
-          data: {
-            title: obj.title,
-            directory: addr.join(',')
-          },
-          success: function(data) {
-            if(typeof v1 != 'undefined') { v1.betaCheck(data); }
-          },
-          dataType: "JSON"
-      });
-*/
-
+      util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
     },
 
     showQuestionSlide: function(question, results) {
@@ -286,20 +273,7 @@ function() {
       var results = this.reader.match(question);
       this.showQuestionSlide(question, results);
 
-
-      $.ajax({
-        type: "POST",
-        url: '/log/slide/',
-        data: {
-          directory: null,
-          title : question
-        },
-        success: function(data) {
-        },
-        dataType: "JSON"
-      });
-
-      e.preventDefault();
+      util.log_to_server('asked question', {directory: null, title: question}, appId);
     },
 
     showAnswer: function(e) {
@@ -309,24 +283,17 @@ function() {
     },
 
     submittedFeedback: function(e) {
+      e.preventDefault();
       var response = {};
       response.like = $('#like-appcubator').val();
       response.dislike = $('#dislike-appcubator').val();
       response.features = $('#features-appcubator').val();
 
-      $.ajax({
-          type: "POST",
-          url: '/log/feedback/',
-          data: response,
-          success: function(data) {
-          },
-          dataType: "JSON"
-      });
+      util.log_to_server('posted feedback', response, appId);
 
       $('#feedback-check').prop('checked', true);
       this.closeModal();
       alert('Thanks for your feedback!');
-      e.preventDefault();
     },
 
     onClose: function() {

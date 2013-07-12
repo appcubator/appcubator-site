@@ -17,8 +17,8 @@
     <tbody>
       {% for app in apps reversed%}
       <tr>
-        <td>{{ app.pk }}</td>
-        <td>{{ app.name }}</td>
+        <td><a href="/stay/up/to/get/lucky/users/{{ user.pk }}">{{ app.pk }}</a></td>
+        <td><a href="/stay/up/to/get/lucky/users/{{ user.pk }}">{{ app.name }}</a></td>
         <td>{{ app.owner }}</td>
         <td>{{ app.subdomain }}</td>
         <td>{{ app.deployment_id }}</td>
