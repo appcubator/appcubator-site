@@ -236,7 +236,7 @@ function() {
                 fieldM.get('name') != "Owner" ||
                 fieldM.get('related_name') != "Tweets") {
 
-              this.remove(fieldModel);
+              this.remove(fieldM);
               alert('Make sure you enter "Tweets" in the first box, and "Owner" in the second box');
             }
 

@@ -30,7 +30,7 @@ function() {
       setTimeout(function() {
         var elem = document.getElementById('video-pane');
         ifrm = document.createElement("IFRAME");
-        ifrm.setAttribute("src", "//www.youtube.com/embed/GlbyyR1U64A?rel=0");
+        ifrm.setAttribute("src", "//www.youtube.com/embed/8CUHAAUin9U?rel=0");
         ifrm.style.width = "100%";
         ifrm.style.height = 550+"px";
         elem.appendChild(ifrm);
