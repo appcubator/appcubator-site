@@ -42,9 +42,10 @@ function(Backbone) {
 
     createFormSubmitted: function(e) {
       e.preventDefault();
-      var name = this.$el.find('input').val();
+      var nameInput = this.$el.find('input[type=text]');
+      var name = nameInput.val();
       if(name.length > 0) {
-        this.$el.find('input').val('');
+        nameInput.val('');
         this.$el.find('form').hide();
         this.$el.find('.box-button').fadeIn();
         this.trigger('submit', name);
