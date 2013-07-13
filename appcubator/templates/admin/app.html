@@ -1,40 +1,46 @@
 {% extends "admin/admin-base.html" %}
 {% block content %}
+  <style type="text/css">
+    textarea {
+      width: 100%;
+    }
+  </style>
+
   <h2>Apps</h2>
   <hr>
   <div class="row">
-    <div class="span2">ID</div>
+    <div class="span2"><p class="pull-right">ID</p></div>
     <div class="span10">{{ app.pk }}</div>
   </div>
 
   <div class="row">
-    <div class="span2 align-right">Name</div>
+    <div class="span2"><p class="pull-right">Name</p></div>
     <div class="span10">{{ app.name }}</div>
   </div>
 
   <div class="row">
-    <div class="span2 align-right">Owner</div>
+    <div class="span2"><p class="pull-right">Owner</p></div>
     <div class="span10">{{ app.owner }}</div>
   </div>
 
   <div class="row">
-    <div class="span2 align-right">Subdomain</div>
+    <div class="span2"><p class="pull-right">Subdomain</p></div>
     <div class="span10">{{ app.subdomain }}</div>
   </div>
 
   <div class="row">
-    <div class="span2 align-right">Deployment ID</div>
+    <div class="span2"><p class="pull-right">Deployment ID</p></div>
     <div class="span10">{{ app.deployment_id }}</div>
   </div>
 
   <div class="row">
-    <div class="span2 align-right">App State</div>
-    <textarea class="span10 offset1" rows="25" id="appState"></textarea>
+    <div class="span2"><p class="pull-right">App State</p></div>
+    <div class="span7"><textarea rows="25" id="appState"></textarea></div>
   </div>
 
   <div class="row">
-    <div class="span2 align-right">UIE State</div>
-    <textarea class="span10 offset1" rows="50" id="uieState"></textarea>
+    <div class="span2"><p class="pull-right">UIE State</p></div>
+    <div class="span7"><textarea rows="50" id="uieState"></textarea></div>
   </div>
 
   <script type="text/javascript">
