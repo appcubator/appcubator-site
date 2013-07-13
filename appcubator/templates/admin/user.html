@@ -49,23 +49,4 @@
       {% endfor %}
     </tbody>
   </table>
-  <script type="text/javascript">
-  $('table th').click(function(e) {
-    var index = e.currentTarget.cellIndex;
-    var list = $('table tbody tr').toArray()
-    list = _(list).sortBy(function(row) {
-      return row.children[index].innerText;
-    });
-    var body = $('table tbody').empty();
-    _(list).each(function(row) {
-      body.append(row);
-    });
-    $('th.active, td.active').removeClass('active');
-    $('table th:nth-child('+(index+1)+'), table td:nth-child('+(index+1)+')').addClass('active');
-    return false;
-  });
-
-  // sorted by timestamp by default
-  $('table th:nth-child(2), table td:nth-child(2)').addClass('active');
-  </script>
 {% endblock %}
