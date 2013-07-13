@@ -68,6 +68,8 @@ define([
 
       $(util.get('top-panel-bb')).find('.search').on('focus', this.expandAllSections);
 
+      this.expandAllSections();
+
       return this;
     },
 

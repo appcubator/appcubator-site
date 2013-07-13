@@ -6162,6 +6162,7 @@ hr.pheader {
 .tour-container h3 {
   font-size: 18px;
   margin: 0 8px 4px 8px;
+  line-height: 24px;
 }
 
 .form-error {

@@ -330,7 +330,7 @@ function() {
       nextButton: true,
       url: '/editor/0/',
       setup: function(tour, options) {
-        $('.gallery-header').not('li:nth-child(1)').click();
+        //$('.gallery-header').not('li:nth-child(1)').click();
         return { target: $('.search-panel') };
       },
       teardown: function() {
@@ -344,9 +344,9 @@ function() {
       nextButton: true,
       url: '/editor/0/',
       setup: function(tour, options) {
-        $('#item-gallery').animate({
-          scrollTop: $("#type-headerTexts").offset().top + 20
-        }, 200);
+        // $('#item-gallery').animate({
+        //   scrollTop: $("#type-headerTexts").offset().top
+        // }, 100);
 
         return { target: $('#editor-save') };
       },
@@ -360,7 +360,6 @@ function() {
       at: "left center",
       url: '/editor/0/',
       setup: function(tour, options) {
-        util.scrollToElement($('#type-headerTexts'));
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
           if(uielem.get('data').get('tagName') == "h1") {
             tour.next();
@@ -381,7 +380,7 @@ function() {
       url: '/editor/0/',
       setup: function(tour, options) {
         $('#item-gallery').animate({
-          scrollTop: $("#entity-user-facebook").offset().top + 20
+          scrollTop: $("#entity-user-facebook").offset().top - 110
         }, 200);
 
         return { target: $('.pick-style') };
@@ -392,8 +391,8 @@ function() {
     },
     {
       content: '<h3>Time to get some users!</h3><p><em>Drag this facebook login button onto the page.</em></p>',
-      my: "top center",
-      at: "bottom center",
+      my: "right center",
+      at: "left center",
       url: '/editor/0/',
       setup: function(tour, options) {
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
