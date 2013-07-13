@@ -239,8 +239,10 @@ function() {
               this.remove(fieldM);
               alert('Make sure you enter "Tweets" in the first box, and "Owner" in the second box');
             }
+            else {
+              tour.next();
+            }
 
-            tour.next();
           };
 
           v1State.get('tables').models[0].get('fields').bind('add', checkForRelation);
