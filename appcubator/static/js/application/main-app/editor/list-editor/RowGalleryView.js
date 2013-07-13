@@ -103,7 +103,7 @@ function(EditorGalleryView, ElementCollection) {
       _(tableModel.getNormalFields()).each(function(fieldM) {
         this.addHalfWidthItem( 'context-field-'+entityId+'-'+tableModel.cid+'-'+fieldModel.cid+'-'+fieldM.cid,
                                'context-nested-entity',
-                                entityName+' '+tableModel.get('name')+'.'+fieldM.get('name'),
+                                entityName+' '+fieldModel.get('name')+'.'+fieldM.get('name'),
                                'plus-icon');
       }, this);
     },

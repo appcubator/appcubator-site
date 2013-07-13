@@ -120,7 +120,7 @@ function(
             var nlDescr = "Add to Page."+ entityName+"." + field.get('related_name');
             var action = { "type": "relation",
                            "set_fk": "Form." + this.get('entity') + '.' + field.get('name'),
-                           "to_object": "page." + entityName,
+                           "to_object": "Page." + entityName,
                            "nl_description": nlDescr};
             possibleActions.push(action);
           }

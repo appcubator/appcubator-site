@@ -35,7 +35,9 @@ define([
           }, this);
 
           this.entity.get('fields').each(function(fieldM) {
-            this.$el.append('<div class="field"><input type="checkbox" value="'+ fieldM.cid +'" id="search-for-'+ fieldM.get('name') +'"><label for="search-for-'+ fieldM.get('name') +'">'+fieldM.get('name')+'</label></div>');
+            if(fieldM.get('type') !== 'fk') {
+              this.$el.append('<div class="field"><input type="checkbox" value="'+ fieldM.cid +'" id="search-for-'+ fieldM.get('name') +'"><label for="search-for-'+ fieldM.get('name') +'">'+fieldM.get('name')+'</label></div>');
+            }
           }, this);
 
           this.model.get('searchFields').each(function(field) {

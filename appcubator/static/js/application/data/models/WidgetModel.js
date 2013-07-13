@@ -67,7 +67,7 @@ function(DataModel, LayoutModel) {
       _(entityList).each(function(entity) {
         contextList.push({
           entity: entity,
-          context: 'page.' + entity
+          context: 'Page.' + entity
         });
       });
 
@@ -93,8 +93,8 @@ function(DataModel, LayoutModel) {
         });
       });
 
-      this.get('context').each(function(context) {
 
+      this.get('context').each(function(context) {
         var listOfPages = v1State.get('pages').getPagesWithEntityName(context.get('entity'));
         _(listOfPages).each(function(pageName) {
           listOfLinks.push({

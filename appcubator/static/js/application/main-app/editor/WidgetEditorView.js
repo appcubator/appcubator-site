@@ -177,7 +177,6 @@ function(WidgetContentEditor,
     },
 
     openStylePicker: function(e) {
-      console.log("EXPAND");
       this.hideSubviews();
       this.widgetClassPickerView.show();
       this.widgetClassPickerView.expand();
@@ -190,7 +189,6 @@ function(WidgetContentEditor,
     },
 
     openLoginEditor: function() {
-      console.log(this.model);
       var loginRoutes = this.model.getLoginRoutes();
       new LoginFormEditorView(loginRoutes);
     },

@@ -85,7 +85,6 @@ function( WidgetContainerView,
       this.editorRow = editorRow;
 
       row.get('uielements').map(function(widgetModel) {
-        widgetModel.setupLoopContext(this.entityModel);
         this.placeWidget(widgetModel, false);
       }, this);
       this.widgetSelectorView.setElement(this.el).render();
