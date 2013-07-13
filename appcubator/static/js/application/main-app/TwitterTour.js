@@ -330,6 +330,7 @@ function() {
       nextButton: true,
       url: '/editor/0/',
       setup: function(tour, options) {
+        $('.gallery-header').not('li:nth-child(1)').click();
         return { target: $('.search-panel') };
       },
       teardown: function() {
@@ -359,7 +360,7 @@ function() {
       at: "left center",
       url: '/editor/0/',
       setup: function(tour, options) {
-
+        util.scrollToElement($('#type-headerTexts'));
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
           if(uielem.get('data').get('tagName') == "h1") {
             tour.next();
@@ -395,7 +396,6 @@ function() {
       at: "bottom center",
       url: '/editor/0/',
       setup: function(tour, options) {
-
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
           if(uielem.get('data').get('action') == "thirdpartylogin") {
             tour.next();
