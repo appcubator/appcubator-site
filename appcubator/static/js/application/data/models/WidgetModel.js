@@ -93,8 +93,8 @@ function(DataModel, LayoutModel) {
         });
       });
 
-      this.get('context').each(function(context) {
 
+      this.get('context').each(function(context) {
         var listOfPages = v1State.get('pages').getPagesWithEntityName(context.get('entity'));
         _(listOfPages).each(function(pageName) {
           listOfLinks.push({

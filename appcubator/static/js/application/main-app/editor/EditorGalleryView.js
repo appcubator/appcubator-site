@@ -171,6 +171,7 @@ define([
       var contextEntitySection = this.addSection('Page Context Data');
 
       _(pageContext).each(function(tableName) {
+
         var tableM = v1State.getTableModelWithName(tableName);
         if(!tableM) throw "Error with page context";
         var tableId = tableM.cid;
@@ -179,8 +180,24 @@ define([
         this.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon', contextEntitySection);
 
         tableM.getFieldsColl().each(function(field) {
+          if(field.isRelatedField()) return this.renderRelatedField(field, tableM, contextEntitySection);
+
           this.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon', contextEntitySection);
         }, this);
+      }, this);
+    },
+
+    renderRelatedField: function(fieldModel, tableModel, section) {
+
+      var tableName = tableModel.get('name');
+      var entityId = tableModel.cid;
+      var nestedTableModel = v1State.getTableModelWithName(fieldModel.get('entity_name'));
+
+      _(nestedTableModel.getNormalFields()).each(function(fieldM) {
+        this.addFullWidthItem( 'context-field-'+entityId+'-'+nestedTableModel.cid+'-'+fieldModel.cid+'-'+fieldM.cid,
+                               'context-nested-entity',
+                                tableName+' '+fieldModel.get('name')+'.'+fieldM.get('name'),
+                               'plus-icon', section);
       }, this);
     },
 
@@ -309,20 +326,20 @@ define([
 
     createNestedContextEntityNode: function(layout, id) {
       var hash = String(id).replace('context-field-','').split('-');
-      var entity = v1State.get('tables').get(hash[0]);
+      var entity = v1State.getTableModelWithCid(hash[0]);
       var nested_entity = v1State.getTableModelWithCid(hash[1]);
       var field = entity.getFieldsColl().get(hash[2]);
-      var nester_field = nested_entity.getFieldsColl().get(hash[3]);
 
-      var type = this.getFieldType(nester_field);
+      var nested_field = nested_entity.getFieldsColl().get(hash[3]);
+      var type = this.getFieldType(nested_field);
       var editorContext = this.editorContext ? this.editorContext : "page";
 
       var content_ops = {};
-      content_ops.content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ field.get('name') + '.' +nester_field.get('name')+'}}';
+      content_ops.content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ field.get('name') + '.' +nested_field.get('name')+'}}';
 
       if(type == "links") {
         content_ops.content = 'Download '+ field.get('name');
-        content_ops.href = '{{'+editorContext+'.'+entity.get('name')+'.'+field.get('name')+'.'+nester_field.get('name')+'}}';
+        content_ops.href = '{{'+editorContext+'.'+entity.get('name')+'.'+field.get('name')+'.'+nested_field.get('name')+'}}';
       }
 
       return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content_ops);
