@@ -1289,11 +1289,8 @@ img.startx {
 
 .slide1.hn .row {
   padding: 0px;
-
   display: block;
-
   -image text-align: left;
-  border-bottom: 1px solid #ddd;
 }
 
 .large-container {
@@ -1348,7 +1345,15 @@ img.startx {
   font-weight: bold;
   margin-bottom: 10px;
   margin-left: 0;
+}
 
+.slide1.hn ul {
+  list-style: disc;
+  list-style-position: inside;
+}
+
+.slide1.hn ul li {
+  margin-top: 8px;
 }
 
 .slide1.hn .explanation .title {

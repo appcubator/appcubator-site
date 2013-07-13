@@ -30,7 +30,7 @@ function() {
       setTimeout(function() {
         var elem = document.getElementById('video-pane');
         ifrm = document.createElement("IFRAME");
-        ifrm.setAttribute("src", "//www.youtube.com/embed/8CUHAAUin9U?rel=0");
+        ifrm.setAttribute("src", "//www.youtube.com/embed/hZTx0vXUo34?rel=0");
         ifrm.style.width = "100%";
         ifrm.style.height = 550+"px";
         elem.appendChild(ifrm);
@@ -108,16 +108,6 @@ function() {
       $('html, body').animate({ scrollTop: 0 }, 'slow');
     });
 
-    IN.Event.on(IN, "auth", function(){ onLinkedInLogin(); });
-
-    function onLinkedInLogin() {
-      IN.API.Profile("me")
-        .fields(["id", "firstName", "lastName", "publicProfileUrl", "emailAddress", "headline", "three-current-positions"])
-        .result(login_callback)
-        .error(function(err) {
-          alert(err);
-        });
-    }
     function login_callback(result) {
       var fullProfile = result.values[0];
       var fullName = fullProfile.firstName + " " + fullProfile.lastName;
@@ -131,10 +121,6 @@ function() {
       document.getElementById('inp-company').value = company;
     }
 
-    $('.IN-widget').hide();
-    $('.btn-linkedin').on('click', function() {
-      $('.IN-widget').children().first().children().first().trigger('click');
-    });
 
     var css = 'prettyCheckable';
     var cssFile = document.createElement('link');
