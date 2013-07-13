@@ -30,7 +30,7 @@ function() {
       setTimeout(function() {
         var elem = document.getElementById('video-pane');
         ifrm = document.createElement("IFRAME");
-        ifrm.setAttribute("src", "//www.youtube.com/embed/hZTx0vXUo34?rel=0");
+        ifrm.setAttribute("src", "http://player.vimeo.com/video/70250440");
         ifrm.style.width = "100%";
         ifrm.style.height = 550+"px";
         elem.appendChild(ifrm);
@@ -120,7 +120,6 @@ function() {
       document.getElementById('inp-email').value = emailAddress;
       document.getElementById('inp-company').value = company;
     }
-
 
     var css = 'prettyCheckable';
     var cssFile = document.createElement('link');
