@@ -47,6 +47,9 @@ function() {
           self.$el.find('.load').append('<div class="hoff1"><h4 class="text-success"><strong>Loaded!</strong></h4></div>');
           util.unloadCSS('uiestate');
           util.loadDirectory('/app/' + appId + '/uiestate.less', 'uiestate');
+          setTimeout(function() {
+            self.closeModal();
+          }, 800);
         }
       });
 

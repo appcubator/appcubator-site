@@ -144,8 +144,7 @@ function (AppModel,
   });
 
   $('.fixed-bg .show-tutorials').click(function(e) {
-    $('.fixed-bg').fadeOut();
-    v1.navigate('app/0/tutorial/', {trigger: true});
+
   });
 
   $('.fixed-bg .twitter-guide').click(function(e) {
