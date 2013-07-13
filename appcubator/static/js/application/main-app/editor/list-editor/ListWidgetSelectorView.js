@@ -25,14 +25,17 @@ function() {
       var self = this;
 
       this.widgetsCollection    = widgetsCollection;
-      this.listenTo(this.widgetsCollection, 'add', this.bindWidget);
+      this.listenTo(this.widgetsCollection, 'add', this.bindWidget, true);
       var WidgetEditorView = require('editor/WidgetEditorView');
       this.widgetEditorView = new WidgetEditorView();
       this.widgetEditorView.isMobile = self.isMobile;
 
       this.parentEl = parentEl;
 
-      this.widgetsCollection.each(self.bindWidget);
+      this.widgetsCollection.each(function(widget) {
+        self.bindWidget(widget, false);
+      });
+
       this.doKeyBindings();
     },
 
@@ -85,7 +88,7 @@ function() {
       return this;
     },
 
-    bindWidget: function(widget) {
+    bindWidget: function(widget, isNew) {
       var self = this;
 
       this.listenTo(widget, 'remove', function() {
@@ -112,6 +115,8 @@ function() {
       this.listenTo(widget, 'editModeOn', function() {
         self.unbindAll();
       });
+
+      if(isNew) { widget.trigger('selected'); }
     },
 
     unbindAll: function() {
@@ -128,6 +133,7 @@ function() {
     },
 
     setLayout: function(node, widgetModel) {
+      if(!node) return;
       $(node).show();
       node.style.width  = ((widgetModel.get('layout').get('width') * 1)) + 'px';
       node.style.height = ((widgetModel.get('layout').get('height') * 1)) + 'px';
@@ -314,6 +320,7 @@ function() {
     clear: function() { },
 
     hideNode: function(node) {
+      if(!node) return;
       node.style.height = 0;
       node.style.width = 0;
       $(node).hide();
