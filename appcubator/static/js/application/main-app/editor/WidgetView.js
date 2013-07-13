@@ -288,16 +288,30 @@ define([
       var horizontalGrid = (hGrid || this.positionHorizontalGrid);
       var verticalGrid = (vGrid || this.positionVerticalGrid);
 
+      console.log(horizontalGrid);
+      console.log(verticalGrid);
+
       var node = this.el.firstChild;
 
       var height = $(node).outerHeight(true);
       var width = $(node).outerWidth(true);
 
+      console.log(height);
+      console.log(width);
+
       var nHeight = Math.ceil(height / verticalGrid);
       var nWidth  = Math.ceil(width / horizontalGrid);
 
+      if(horizontalGrid == 1 && verticalGrid == 1) {
+        nHeight = (nHeight < 30) ? 30 : nHeight;
+        nWidth = (nWidth < 120) ? 120 : nWidth;
+      }
+
       if(!nHeight) nHeight = 2;
       if(!nWidth)  nWidth = 2;
+
+      console.log(nHeight);
+      console.log(nWidth);
 
       this.model.get('layout').set('width', nWidth);
       this.model.get('layout').set('height', nHeight);
