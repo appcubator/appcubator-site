@@ -24,6 +24,13 @@ function() {
       this.get('searchFields').remove(searchFieldModel);
     },
 
+    fillWithFields: function(entity) {
+      entity.get('fields').each(function (fieldM) {
+        if(fieldM.isRelationalField()) return;
+        this.get('searchFields').push({ value: fieldM.get('name')});
+      }, this);
+    },
+
     toJSON: function () {
       var json = _.clone(this.attributes);
       json.searchFields = json.searchFields.pluck('value');

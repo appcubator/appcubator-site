@@ -153,6 +153,10 @@ function(DataModel, LayoutModel) {
       return null;
     },
 
+    getSearchQuery: function () {
+      return this.get('data').get('searchQuery');
+    },
+
     toJSON : function() {
       var json = _.clone(this.attributes);
       json = _.omit(json, 'selected', 'deletable', 'context');
