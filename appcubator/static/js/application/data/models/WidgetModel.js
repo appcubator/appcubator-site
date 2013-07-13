@@ -67,7 +67,7 @@ function(DataModel, LayoutModel) {
       _(entityList).each(function(entity) {
         contextList.push({
           entity: entity,
-          context: 'page.' + entity
+          context: 'Page.' + entity
         });
       });
 
