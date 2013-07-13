@@ -26,7 +26,7 @@ function() {
 
     fillWithFields: function(entity) {
       entity.get('fields').each(function (fieldM) {
-        if(fieldM.isRelationalField()) return;
+        if(fieldM.isRelatedField()) return;
         this.get('searchFields').push({ value: fieldM.get('name')});
       }, this);
     },
