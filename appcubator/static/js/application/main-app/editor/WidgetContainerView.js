@@ -3,8 +3,7 @@ define([
   'editor/WidgetView',
   'editor/SubWidgetView',
   'dicts/constant-containers',
-  'editor/editor-templates',
-  'jquery.flexslider'
+  'editor/editor-templates'
 ],
 function( QueryEditorView,
           WidgetView,

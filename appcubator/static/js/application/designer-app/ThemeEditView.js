@@ -71,7 +71,7 @@ define([
         util.get('statics-cont').innerHTML += '<img width="100" src="'+ file.url +'">' + file.name;
       });
 
-      key('⌘+s', function(e){ self.save(); e.preventDefault(); });
+      keyDispatcher.bindComb('meta+s', function(e){ self.save(); e.preventDefault(); });
     },
 
     baseChanged: function(e) {

@@ -42,7 +42,9 @@ define([
 				self.showTutorial();
 				window.history.pushState(null, null, window.location.href.concat("tutorial/"));
 			});
-      keyDispatcher.bind('⌘+s, ctrl+s', this.save);
+
+      keyDispatcher.bindComb('meta+s', this.save);
+      keyDispatcher.bindComb('ctrl+s', this.save);
 
       var autoSave = setInterval(this.save, 30000);
 		},
@@ -261,6 +263,7 @@ define([
 			});
 
 			if(e) e.preventDefault();
+			return false;
 		},
 
 		showTutorial: function(dir) {

@@ -75,11 +75,6 @@ function( PageModel,
 
       var page = v1State.get('pages').at(pageId);
 
-      var self = this; // for binding deploy to ctrlshiftd
-      /* Bindings */
-      // keyDispatcher.bind('⌘+c, ctrl+c', this.copy);
-      // keyDispatcher.bind('⌘+v, ctrl+v', this.paste);
-
       this.title = "Editor";
     },
 
