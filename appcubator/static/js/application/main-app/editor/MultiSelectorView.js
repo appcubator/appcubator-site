@@ -118,6 +118,11 @@ function() {
     },
 
     remove: function() {
+      keyDispatcher.unbind('down', this.moveSelectedDown);
+      keyDispatcher.unbind('up', this.moveSelectedUp);
+      keyDispatcher.unbind('left', this.moveSelectedLeft);
+      keyDispatcher.unbind('right', this.moveSelectedRight);
+      keyDispatcher.unbind('backspace', this.deleteSelected);
       $('.page.full').off('mousedown', this.clickedPage);
       Backbone.View.prototype.remove.call(this);
     }

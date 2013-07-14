@@ -1,5 +1,5 @@
 define([
-  'key'
+  'jquery.hotkeys'
 ],
 function () {
 
@@ -7,12 +7,15 @@ function () {
     this.bindings = {};
 
     this.bind = function(keyComb, fn, type) {
-      key(keyComb, fn);
-      if(type) { this.store(keyComb, fn ,type); }
+      $(document).bind('keydown', keyComb, fn);
     };
 
+    this.bindComb = function(keyComb, fn, type) {
+      $(document).bind('keydown', keyComb, fn);
+    },
+
     this.unbind = function(keyComb, fn, type) {
-      key.unbind(keyComb);
+      $(document).unbind('keydown', fn);
     },
 
     this.store = function(keyComb, fn, type) {

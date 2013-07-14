@@ -257,6 +257,7 @@ function() {
       this.widgetEditorView.clear();
       this.selectedEl = null;
       this.hideNode(this.selectDiv);
+      this.hideNode(this.hoverDiv);
     },
 
     moveSelectedDown: function(e) {
@@ -366,6 +367,11 @@ function() {
     },
 
     remove: function() {
+      keyDispatcher.unbind('down', this.moveSelectedDown);
+      keyDispatcher.unbind('up', this.moveSelectedUp);
+      keyDispatcher.unbind('left', this.moveSelectedLeft);
+      keyDispatcher.unbind('right', this.moveSelectedRight);
+      keyDispatcher.unbind('backspace', this.deleteSelected);
       this.deselect();
       $('.page.full').off('mousedown', this.clickedPage);
       Backbone.View.prototype.remove.call(this);
