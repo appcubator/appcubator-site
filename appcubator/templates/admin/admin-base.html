@@ -72,13 +72,31 @@
           var index = e.currentTarget.cellIndex;
           var list = body.find('tr').toArray();
 
+          // do we need to sort numerically or alphabetically?
+          var sortNumber = false, sortTimestamp = false;
+          if(e.currentTarget.dataset.type === 'number') {
+            sortNumber = true;
+          }
+          if(e.currentTarget.dataset.type === 'timestamp') {
+            sortTimestamp = true;
+          }
+
           //if column is already active, reverse the order
           if(e.currentTarget.classList.contains('active')) {
             list.reverse();
           }
           else {
             list = _(list).sortBy(function(row) {
-              return row.children[index].innerText;
+              var value = row.children[index].innerText;
+              if(sortNumber) {
+                return parseInt(value, 10);
+              }
+              else if(sortTimestamp) {
+                return Date.parse(value);
+              }
+              else {
+                return value;
+              }
             });
           }
 
