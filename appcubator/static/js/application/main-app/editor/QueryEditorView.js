@@ -170,7 +170,7 @@ function() {
     nmrRowsChanged: function(e) {
       if(e.target.checked) {
         var val = util.get('first-nmr').value;
-        this.model.set('numberOfRows', val);
+        this.model.set('numberOfRows', parseInt(val,0));
       }
     },
 
