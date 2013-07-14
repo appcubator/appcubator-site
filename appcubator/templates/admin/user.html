@@ -1,41 +1,69 @@
 {% extends "admin/admin-base.html" %}
 {% block content %}
-  <style type="text/css">
-    td.active, th.active {
-      background-color: #d9edf7 !important;
-    }
-  </style>
-  <h2>Users</h2>
-  <hr>
+  <div class="page-header">
+    <h2>User: {{ user.user.first_name }} {{ user.user.last_name }}</h2>
+  </div>
+  <h3>Info</h3>
   <div class="row">
-    <div class="span2">ID</div>
+    <div class="span2"><strong>ID</strong></div>
     <div class="span10">{{ user.pk }}</div>
   </div>
 
   <div class="row">
-    <div class="span2">Name</div>
+    <div class="span2"><strong>Name</strong></div>
     <div class="span10">{{ user.user.first_name }} {{ user.user.last_name }}</div>
   </div>
 
   <div class="row">
-    <div class="span2">Email</div>
+    <div class="span2"><strong>Email</strong></div>
     <div class="span10">{{ user.user.email }}</div>
   </div>
 
   <div class="row">
-    <div class="span2">Noob?</div>
+    <div class="span2"><strong>Number of Apps</strong></div>
+    <div class="span10">{{ apps|length }}</div>
+  </div>
+
+  <div class="row">
+    <div class="span2"><strong>Noob?</strong></div>
     <div class="span10">{{ user.noob }}</div>
   </div>
+
   <br><br>
+
+  <h3>Apps</h3>
+  <table id="apps" class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Deployed URL</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for app in apps%}
+      <tr>
+        <td data-type="number"><a href="/stay/up/to/get/lucky/apps/{{ app.pk }}">{{ app.pk }}</a></td>
+        <td>{{ app.name }}</td>
+        {% if app.deployment_id %}
+          <td><a href="http://{{app.subdomain}}.appcubator.com">{{ app.subdomain }}</a></td>
+        {% else %}
+          <td>{{ app.subdomain }}</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
   <h3>User Logs</h3>
-  <hr>
   <table id="logs" class="table table-striped">
     <thead>
       <tr>
-        <th><a href="#" data-type="number">App ID</a></th>
-        <th><a href="#" data-type="timestamp">Timestamp</a></th>
-        <th><a href="#">Log Type</a></th>
-        <th><a href="#">Log Data</a></th>
+        <th data-type="number">App ID</th>
+        <th data-type="timestamp">Timestamp</th>
+        <th>Log Type</th>
+        <th>Log Data</th>
       </tr>
     </thead>
     <tbody>
@@ -49,4 +77,11 @@
       {% endfor %}
     </tbody>
   </table>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+    $('#apps').sortableTable({initialColumn: 1});
+    $('#logs').sortableTable({initialColumn: 2});
+  </script>
 {% endblock %}

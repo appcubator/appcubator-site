@@ -12,9 +12,16 @@
     <link href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" rel="stylesheet">
 
     <style>
-      body {
+      th:hover {
+        text-decoration: underline;
+      }
+      td.active, th.active {
+        background-color: #d9edf7 !important;
       }
     </style>
+
+    {% block css %}
+    {% endblock %}
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -39,7 +46,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Appcubator Panel</a>
+          <a class="brand" href="/stay/up/to/get/lucky/">Appcubator Panel</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="/stay/up/to/get/lucky/">Home</a></li>
@@ -66,65 +73,67 @@
 
     <script type="text/javascript">
       $.fn.sortableTable = function(options) {
-        var table = this;
-        var body = table.find('tbody');
-        table.on('click','th', function(e) {
-          var index = e.currentTarget.cellIndex;
-          var list = body.find('tr').toArray();
+        this.each(function() {
+          var table = $(this);
+          var body = table.find('tbody');
+          table.on('click','th', function(e) {
+            var index = e.currentTarget.cellIndex;
+            var list = body.find('tr').toArray();
 
-          // do we need to sort numerically or alphabetically?
-          var sortNumber = false, sortTimestamp = false;
-          if(e.currentTarget.dataset.type === 'number') {
-            sortNumber = true;
-          }
-          if(e.currentTarget.dataset.type === 'timestamp') {
-            sortTimestamp = true;
-          }
+            // do we need to sort numerically or alphabetically?
+            var sortNumber = false, sortTimestamp = false;
+            if(e.currentTarget.dataset.type === 'number') {
+              sortNumber = true;
+            }
+            if(e.currentTarget.dataset.type === 'timestamp') {
+              sortTimestamp = true;
+            }
 
-          //if column is already active, reverse the order
-          if(e.currentTarget.classList.contains('active')) {
-            list.reverse();
-          }
-          else {
-            list = _(list).sortBy(function(row) {
-              var value = row.children[index].innerText;
-              if(sortNumber) {
-                return parseInt(value, 10);
-              }
-              else if(sortTimestamp) {
-                return Date.parse(value);
-              }
-              else {
-                return value;
-              }
+            //if column is already active, reverse the order
+            if(e.currentTarget.classList.contains('active')) {
+              list.reverse();
+            }
+            else {
+              list = _(list).sortBy(function(row) {
+                var value = row.children[index].innerText;
+                if(sortNumber) {
+                  return parseInt(value, 10);
+                }
+                else if(sortTimestamp) {
+                  return Date.parse(value);
+                }
+                else {
+                  return value;
+                }
+              });
+            }
+
+            // load sorted rows into table
+            var newHTML = '';
+            _(list).each(function(row) {
+              newHTML += '<tr>'+ row.innerHTML + '</tr>';
             });
-          }
+            body.html(newHTML);
 
-          // load sorted rows into table
-          var newHTML = '';
-          _(list).each(function(row) {
-            newHTML += '<tr>'+ row.innerHTML + '</tr>';
+            // update styles for new sorted column
+            table.find('th.active, td.active').removeClass('active');
+            table.find('th:nth-child('+(index+1)+'), td:nth-child('+(index+1)+')').addClass('active');
+
+            e.preventDefault();
           });
-          body.html(newHTML);
 
-          // update styles for new sorted column
-          table.find('th.active, td.active').removeClass('active');
-          table.find('th:nth-child('+(index+1)+'), td:nth-child('+(index+1)+')').addClass('active');
-
-          e.preventDefault();
+          // show initial active column as active
+          if(options && options.initialColumn) {
+            table.find('th:nth-child('+options.initialColumn+'), td:nth-child('+options.initialColumn+')').addClass('active');
+          }
         });
-
-        // show initial active column as active
-        if(options && options.initialColumn) {
-          $('table th:nth-child('+options.initialColumn+'), table td:nth-child('+options.initialColumn+')').addClass('active');
-        }
       };
-
-      $('table').sortableTable({initialColumn: 2});
 
       $('.detailed-info').on('click', function(e) {
         $(e.target).popover('show');
       });
     </script>
+    {% block js %}
+    {% endblock %}
   </body>
 </html>

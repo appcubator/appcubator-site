@@ -28,6 +28,11 @@ from datetime import datetime
 @login_required
 def admin_home(request):
     page_context = {}
+    users = ExtraUserData.objects.all()
+    apps = App.objects.all()
+    logs = LogAnything.objects.all()
+    page_context['num_users'] = users.count()
+    page_context['num_apps'] = apps.count()
     return render(request, 'admin/home.html', page_context)
 
 @login_required
@@ -46,10 +51,12 @@ def admin_users(request):
 def admin_user(request, user_id):
     user_id = long(user_id)
     user = get_object_or_404(ExtraUserData, id=user_id)
+    apps = App.objects.filter(owner=user_id)
     logs = LogAnything.objects.filter(user_id=user_id)
     page_context = {}
     page_context["user"] = user
     page_context["userlogs"] = logs
+    page_context["apps"] = apps
     return render(request, 'admin/user.html', page_context)
 
 @login_required
@@ -61,7 +68,7 @@ def admin_apps(request):
 @login_required
 def admin_app(request, app_id):
     app_id = long(app_id)
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id, owner=request.user.id)
     page_context = {}
     page_context["app"] = app
     return render(request, 'admin/app.html', page_context)
