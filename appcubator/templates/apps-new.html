@@ -11,7 +11,7 @@
 <div class="container hoff3">
   <h2 class="hoff5 span52">Start a New App</h2>
   <div class="hoff2 span32">
-      <form method="post" action="{% url appcubator.views.app_new %}">
+      <form method="post" action="/app/new/">
       {% csrf_token %}
       <h4 class="span12 hoff1">Name of the app</h4>
       <input class="span16 hoff1" name="name" type="text" placeholder="Easy App" value="{{old_name}}"><hr>
