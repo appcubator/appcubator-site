@@ -102,7 +102,7 @@ function( WidgetView,
     },
 
     remove: function() {
-      this.widgetSelectorView.remove();
+      this.widgetSelectorView.close();
       Backbone.View.prototype.remove.call(this);
     }
   });
