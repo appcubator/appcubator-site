@@ -4,7 +4,9 @@ define([
 function() {
 
   var findPos = function (obj) {
-        var curleft = curtop = 0;
+    var curleft = curtop = 0;
+
+    if(obj.style.position == "fixed") return [1,1];
     if (obj.offsetParent) {
         do {
             curleft += obj.offsetLeft;
@@ -13,15 +15,15 @@ function() {
     }
 
     return [curleft,curtop];
-  }
+  };
 
   var waitUntilAppears = function(selector, callbackFn, cont_args, count) {
     var cnt = (count || 0);
-    el = document.querySelector(selector);
 
-    console.log(selector);
+    el = document.querySelector(selector);
+    if(el && !el.tagName) { el = el[0]; }
+
     var repeat = function() {
-      console.log("repeat");
       cnt++;
       window.setTimeout(function() {
         waitUntilAppears.call(this, selector, callbackFn, cont_args, cnt);
@@ -36,6 +38,7 @@ function() {
     if(!el) return repeat();
 
     var pos = findPos(el);
+
 
     if($(el).height() === 0 || $(el).width() === 0 || pos[0] === 0 || pos[1] === 0) return repeat();
     callbackFn.apply(undefined, cont_args);
@@ -368,12 +371,6 @@ function() {
       nextButton: true,
       url: '/editor/0/',
       setup: function(tour, options) {
-        console.log("NEEEEEEEEEEXT!");
-
-        //$('.gallery-header').not('li:nth-child(1)').click();
-        console.log($('.search-panel'));
-        console.log($('.search-panel').height());
-
         return { target: $('.search-panel').first() };
       },
       teardown: function() {
@@ -457,7 +454,7 @@ function() {
       url: '/editor/0/',
       setup: function(tour, options) {
         var elem = $(".facebook-login-btn")[0];
-        $('.edit-login-form-btn').on('click', function() {
+        $('.edit-login-form-btn').first().on('click', function() {
           // setTimeout(tour.next, 400);
           waitUntilAppears('.login-route-editor', tour.next);
         });
