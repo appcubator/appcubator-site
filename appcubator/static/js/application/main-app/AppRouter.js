@@ -176,7 +176,7 @@ define([
 		},
 
 		changePage: function(newView, viewOptions, post_render) {
-			if(AppRouter.view) AppRouter.view.remove();
+			if(AppRouter.view) AppRouter.view.close();
 			var cleanDiv = document.createElement('div');
 			cleanDiv.className = "clean-div";
 			$('#main-container').append(cleanDiv);

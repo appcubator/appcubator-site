@@ -22,6 +22,7 @@ function( FieldModel,
     currentTable : null,
     className : '',
     tableDiv: null,
+    subviews: [],
 
     events : {
     },
@@ -63,6 +64,7 @@ function( FieldModel,
       if(this.isUsers) table = new UserTableView(model);
       else table = new TableView(model);
 
+      this.subviews.push(table);
       this.tableDiv = table;
       this.el.appendChild(table.render().el);
       return this;

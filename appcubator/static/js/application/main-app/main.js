@@ -82,7 +82,8 @@ require([
   "bootstrap",
   "util",
   "comp",
-  "xrayquire"
+  "xrayquire",
+  "mixins/BackboneConvenience"
 ],
 function (AppModel,
           PageCollection,
