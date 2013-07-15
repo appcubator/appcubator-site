@@ -39,7 +39,6 @@ function() {
 
     var pos = findPos(el);
 
-
     if($(el).height() === 0 || $(el).width() === 0 || pos[0] === 0 || pos[1] === 0) return repeat();
     callbackFn.apply(undefined, cont_args);
   };
@@ -603,6 +602,9 @@ function() {
       at: "bottom center",
       url: '/editor/1/',
       setup: function(tour, options) {
+        tour.pageLoop.once('deselected', function() {
+          tour.next();
+        });
         $('.done-editing').one('click', function() {
           tour.next();
         });
@@ -621,6 +623,9 @@ function() {
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
           if(uielem.hasForm()) {
             tour.next();
+          }
+          else {
+            console.log("YARP");
           }
         });
         return { target: $('.entity-create-form') };
