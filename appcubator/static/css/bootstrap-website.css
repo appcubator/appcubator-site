@@ -5243,8 +5243,13 @@ font-size: 30px;
   line-height: 20px;
   font-weight: bold;
   cursor: pointer;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
-  //border-left: 1px solid rgba(255, 255, 255, 0.8);
+/*  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.8);*/
+
+  background-image: url(../img/border-v.png);
+  background-repeat: repeat-y;
+  background-position: right;
+  background-size: 2px auto;
 }
 
 .v1nav .navigation-menu li:active {
@@ -5267,6 +5272,10 @@ font-size: 30px;
   padding-bottom: 0;
   padding-right: 0px;
   text-align: left;
+  background-image: url(../img/border-v.png);
+  background-repeat: repeat-y;
+  background-position: right;
+  background-size: 2px auto;
 }
 
 .v1nav .nav li a {
@@ -5817,7 +5826,6 @@ i.icon-url {
 .navigation-menu {
   display: inline-block;
   vertical-align: top;
-  border-left: 1px solid rgba(0, 0, 0, 0.2);
   height: 59px;
 }
 
