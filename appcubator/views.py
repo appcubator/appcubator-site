@@ -173,8 +173,8 @@ def app_page(request, app_id):
                     'title': 'The Garage',
                     'themes': simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
-                    'apps': request.user.apps.all(),
-                    'user': request.user}
+                    'apps': app.owner.apps.all(),
+                    'user': app.owner}
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)
 
@@ -494,8 +494,8 @@ def app_deploy(request, app_id):
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
     d_user = {
-        'user_name': request.user.username,
-        'date_joined': str(request.user.date_joined)
+        'user_name': app.owner.username,
+        'date_joined': str(app.owner.date_joined)
     }
     # result = app.deploy(d_user)
     result = app.deploy()
@@ -593,8 +593,8 @@ def sub_register_domain(request, app_id, subdomain):
     app.full_clean()
     app.save()
     d_user = {
-        'user_name': request.user.username,
-        'date_joined': str(request.user.date_joined)
+        'user_name': app.owner.username,
+        'date_joined': str(app.owner.date_joined)
     }
     result = app.deploy(d_user)
     status = 500 if 'errors' in result else 200

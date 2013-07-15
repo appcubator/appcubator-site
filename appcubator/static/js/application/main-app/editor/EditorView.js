@@ -109,7 +109,7 @@ function( PageModel,
 
       this.setupPageWrapper();
       this.setupPageHeight();
-      window.onresize = this.setupPageWrapper;
+      window.addEventListener('resize', this.setupPageWrapper);
 
       $('#loading-gif').fadeOut().remove();
     },
@@ -201,6 +201,7 @@ function( PageModel,
     },
 
     remove: function() {
+      window.removeEventListener('resize', this.setupPageWrapper);
       this.widgetsManager.remove();
       this.marqueeView.remove();
       Backbone.View.prototype.remove.call(this);
