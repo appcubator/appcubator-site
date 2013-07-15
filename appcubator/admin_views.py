@@ -1,11 +1,13 @@
 from django.http import HttpResponse
 from django.contrib.auth.decorators import user_passes_test
 from django.utils import simplejson
+import json
 from django.shortcuts import redirect, render, render_to_response, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
 from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, Customer, ExtraUserData
+from django.db.models import Avg
 from email.sendgrid_email import send_email
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
@@ -22,6 +24,13 @@ from datetime import datetime
 @user_passes_test(lambda u: u.is_superuser)
 def admin_home(request):
     page_context = {}
+    deploy_logs_data = [log.data_json for log in LogAnything.objects.filter(name="deployed app")]
+    deploy_times = []
+    for d in deploy_logs_data:
+        if "deploy_time" in d:
+            number = float(d["deploy_time"].replace(" seconds", ""))
+            deploy_times.append(number)
+    page_context["avg_deployment_time"] = sum(deploy_times) / len(deploy_times)
     return render(request, 'admin/home.html', page_context)
 
 @user_passes_test(lambda u: u.is_superuser)
