@@ -7,11 +7,13 @@ function() {
     var cnt = (count || 0);
     el = document.querySelector(selector);
 
+    console.log(selector);
     var repeat = function() {
+      console.log("repeat");
       cnt++;
       window.setTimeout(function() {
-        waitUntilAppears(selector, callbackFn, cont_args, cnt);
-      }, 300);
+        waitUntilAppears.call(this, selector, callbackFn, cont_args, cnt);
+      }, 500);
     };
 
     var fail = function() {
@@ -20,6 +22,10 @@ function() {
 
     if(cnt > 60) return fail();
     if(!el) return repeat();
+
+
+    if($(el).height() === 0 || $(el).width() === 0 || el.offsetLeft === 0 || el.offsetTop === 0) return repeat();
+    console.log("apply");
     //if($el.height() === 0 && $el.width() === 0) return repeat();
     callbackFn.apply(undefined, cont_args);
   };
@@ -351,8 +357,13 @@ function() {
       nextButton: true,
       url: '/editor/0/',
       setup: function(tour, options) {
+        console.log("NEEEEEEEEEEXT!");
+
         //$('.gallery-header').not('li:nth-child(1)').click();
-        return { target: $('.search-panel') };
+        console.log($('.search-panel'));
+        console.log($('.search-panel').height());
+
+        return { target: $('.search-panel').first() };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
