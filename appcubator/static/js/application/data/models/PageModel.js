@@ -93,11 +93,12 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
 
     getFields: function() {
       var access = this.get('access_level');
+
       if(access == "all") { return v1State.get('users').getCommonProps(); }
       if(access == "users") { return v1State.get('users').getCommonProps(); }
 
       var model = v1State.get('users').getUserTableWithName(access);
-      return model.get('fields');
+      return model.getFieldsColl().models;
     },
 
     updatePageName: function(urlModel, newPageName) {

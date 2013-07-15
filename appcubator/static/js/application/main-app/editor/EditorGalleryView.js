@@ -134,7 +134,6 @@ define([
 
     renderCurrentUserElements: function() {
       var currUserSection = this.addSection('Current User');
-
       _(v1State.getCurrentPage().getFields()).each(function(field) {
         if(field.isRelatedField()) return;
         this.addFullWidthItem('current-user-'+field.cid, 'current-user', 'Current User '+ field.get('name'), 'current-user-icon', currUserSection);
