@@ -3,6 +3,18 @@ define([
 ],
 function() {
 
+  var findPos = function (obj) {
+        var curleft = curtop = 0;
+    if (obj.offsetParent) {
+        do {
+            curleft += obj.offsetLeft;
+            curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+    }
+
+    return [curleft,curtop];
+  }
+
   var waitUntilAppears = function(selector, callbackFn, cont_args, count) {
     var cnt = (count || 0);
     el = document.querySelector(selector);
@@ -23,10 +35,9 @@ function() {
     if(cnt > 60) return fail();
     if(!el) return repeat();
 
+    var pos = findPos(el);
 
-    if($(el).height() === 0 || $(el).width() === 0 || el.offsetLeft === 0 || el.offsetTop === 0) return repeat();
-    console.log("apply");
-    //if($el.height() === 0 && $el.width() === 0) return repeat();
+    if($(el).height() === 0 || $(el).width() === 0 || pos[0] === 0 || pos[1] === 0) return repeat();
     callbackFn.apply(undefined, cont_args);
   };
 
