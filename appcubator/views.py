@@ -118,7 +118,9 @@ def app_new_racoon(request, app_id):
     log.full_clean()
     log.save()
     page_context = {}
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
     page_context['app_id'] = long(app_id)
     page_context['app_name'] = app.name
     return render(request, 'app-new-racoon.html', page_context)
@@ -157,7 +159,9 @@ def app_page(request, app_id):
     if(app_id == 0):
         return redirect(app_welcome)
 
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
 
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
@@ -169,8 +173,8 @@ def app_page(request, app_id):
                     'title': 'The Garage',
                     'themes': simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
-                    'apps': request.user.apps.all(),
-                    'user': request.user}
+                    'apps': app.owner.apps.all(),
+                    'user': app.owner}
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)
 
@@ -179,7 +183,9 @@ def app_page(request, app_id):
 @login_required
 def app_json_editor(request, app_id):
     app_id = long(app_id)
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
 
     page_context = {'app': app,
                     'app_id': long(app_id),
@@ -191,7 +197,9 @@ def app_json_editor(request, app_id):
 @login_required
 def app_edit_theme(request, app_id):
     app_id = long(app_id)
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
 
     #theme = get_object_or_404(UITheme, pk = theme_id)
     page_context = {'title': 'Current Theme',
@@ -204,14 +212,18 @@ def app_edit_theme(request, app_id):
 @require_POST
 @login_required
 def app_delete(request, app_id):
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
     app.delete()
     return redirect("/")
 
 
 @login_required
 def app_state(request, app_id, validate=True):
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
     if request.method == 'GET':
         state = app_get_state(request, app)
         return JSONResponse(state)
@@ -265,7 +277,9 @@ def documentation_page(request, page_name):
 
 @login_required
 def uie_state(request, app_id):
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
     if request.method == 'GET':
         state = app_get_uie_state(request, app)
         return JSONResponse(state)
@@ -278,7 +292,9 @@ def uie_state(request, app_id):
 
 @login_required
 def mobile_uie_state(request, app_id):
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
     if request.method == 'GET':
         state = app_get_uie_state(request, app)
         return JSONResponse(state)
@@ -292,7 +308,9 @@ def mobile_uie_state(request, app_id):
 @csrf_exempt
 def less_sheet(request, app_id, isMobile=False):
     app_id = long(app_id)
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
     css_string = app.css(deploy=False, mobile=isMobile)
     return HttpResponse(css_string, mimetype='text/css')
 
@@ -304,7 +322,9 @@ def mobile_less_sheet(request, app_id):
 @csrf_exempt
 def css_sheet(request, app_id, isMobile=False):
     app_id = long(app_id)
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
     uie_state = app.uie_state
     if isMobile:
         uie_state = app.mobile_uie.state
@@ -351,7 +371,9 @@ def app_save_mobile_uie_state(request, app):
 
 def app_emails(request, app_id):
     app_id = long(app_id)
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
 
     page_context = {'app': app, 'title': 'Emails', 'app_id': app_id}
     return render(request, 'app-emails.html', page_context)
@@ -369,7 +391,9 @@ def process_excel(request, app_id):
     entity_name = request.POST['entity_name']
     fields = request.POST['fields']
     fe_data = {'model_name': entity_name, 'fields': fields}
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
     try:
         d = Deployment.objects.get(subdomain=app.subdomain())
     except Deployment.DoesNotExist:
@@ -387,7 +411,9 @@ def process_excel(request, app_id):
 @require_POST
 def process_user_excel(request, app_id):
     f = request.FILES['file_name']
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
 
     data = {"api_secret": "uploadinG!!"}
     files = {'excel_file': f}
@@ -432,7 +458,9 @@ def staticfiles(request, app_id):
         return HttpResponse("Method not allowed", status=405)
     else:
         app_id = long(app_id)
-        app = get_object_or_404(App, id=app_id, owner=request.user)
+        app = get_object_or_404(App, id=app_id)
+        if not request.user.is_superuser and app.owner.id != request.user.id:
+            raise Http404
         if request.method == 'GET':
             sf = StaticFile.objects.filter(
                 app=app).values('name', 'url', 'type')
@@ -450,7 +478,9 @@ def staticfiles(request, app_id):
 @require_GET
 @csrf_exempt
 def app_zip(request, app_id):
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
     zip_bytes = open(app.zip_path(), "r").read()
     response = HttpResponse(zip_bytes, content_type="application/octet-stream")
     response['Content-Disposition'] = 'attachment; filename="teh_codez_%s.zip"' % app.hostname()
@@ -460,38 +490,18 @@ def app_zip(request, app_id):
 @require_POST
 @csrf_exempt
 def app_deploy(request, app_id):
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
     d_user = {
-        'user_name': request.user.username,
-        'date_joined': str(request.user.date_joined)
+        'user_name': app.owner.username,
+        'date_joined': str(app.owner.date_joined)
     }
     # result = app.deploy(d_user)
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     status = 500 if 'errors' in result else 200
     return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
-
-
-@login_required
-@require_POST
-@csrf_exempt
-def app_deploy_local(request, app_id):
-    assert not settings.PRODUCTION, "You should only deploy local if this is a dev machine"
-    app = get_object_or_404(App, id=app_id, owner=request.user)
-    d_user = {
-        'user_name': request.user.username,
-        'date_joined': str(request.user.date_joined)
-    }
-    result = {}
-    try:
-        result['site_url'] = app.write_to_tmpdir(d_user)
-        result['github_url'] = result['site_url']
-        result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
-        status = 200
-    except Exception, e:
-        result['errors'] = traceback.format_exc()
-        status = 500
-    return JSONResponse(result, status=status)
 
 
 @require_POST
@@ -576,13 +586,15 @@ def sub_check_availability(request, subdomain):
 @login_required
 @csrf_exempt
 def sub_register_domain(request, app_id, subdomain):
-    app = get_object_or_404(App, id=app_id, owner=request.user)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
     app.subdomain = subdomain
     app.full_clean()
     app.save()
     d_user = {
-        'user_name': request.user.username,
-        'date_joined': str(request.user.date_joined)
+        'user_name': app.owner.username,
+        'date_joined': str(app.owner.date_joined)
     }
     result = app.deploy(d_user)
     status = 500 if 'errors' in result else 200
