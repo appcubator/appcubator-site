@@ -48,7 +48,7 @@ def app_welcome(request):
     if request.user.apps.count() == 0:
         return redirect(app_new)
     else:
-        return redirect(app_page, request.user.apps.all()[0].id)
+        return redirect(app_page, request.user.apps.all().order_by('-pk')[0].id)
 
 
 def app_noob_page(request):
