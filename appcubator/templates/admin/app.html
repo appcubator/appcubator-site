@@ -6,6 +6,16 @@
     width: 100%;
     display: block;
   }
+  .btn {
+    margin-bottom: 10px;
+    margin-top: -5px;
+  }
+  .editor {
+    position: relative !important;
+    border: 1px solid lightgray;
+    height: 1024px;
+    width: 100%;
+  }
 </style>
 {% endblock %}
 
@@ -19,14 +29,22 @@
   <p><strong>Subdomain:</strong> {{ app.subdomain }}</p>
   <p><strong>Deployment ID:</strong> {{ app.deployment_id }}</p>
 <div class="row">
-  <div class="span5">
+  <div class="span6">
     <strong>App State</strong>
-    <textarea rows="25" id="appState"></textarea>
+    <button id="save-appState" class="btn btn-warning btn-small pull-right" data-toggle="modal" data-target=".deploy">Save App State</button>
+    <!-- <textarea rows="25" id="appState"></textarea> -->
+    <div id="appState" class="editor"></div>
   </div>
-  <div class="span5 offset1">
+  <div class="span6">
     <strong>UIE State</strong>
-    <textarea rows="50" id="uieState"></textarea>
+    <button id="save-uieState" class="btn btn-warning btn-small pull-right" data-toggle="modal" data-target=".deploy">Save UIE State</button>
+    <!-- <textarea rows="50" id="uieState"></textarea> -->
+    <div id="uieState" class="editor"></div>
   </div>
+</div>
+
+<div class="deploy modal hide fade">
+  <div class="modal-body"></div>
 </div>
 {% endblock %}
 
@@ -38,5 +56,45 @@
   uieState = JSON.stringify(uieState, undefined, 2);
   document.getElementById('appState').innerHTML = appState;
   document.getElementById('uieState').innerHTML = uieState;
+
+  var appStateEditor = ace.edit("appState");
+  appStateEditor.setTheme("ace/theme/solarized_dark");
+  appStateEditor.getSession().setMode("ace/mode/json");
+
+  var uieStateEditor = ace.edit("uieState");
+  uieStateEditor.setTheme("ace/theme/solarized_dark");
+  uieStateEditor.getSession().setMode("ace/mode/json");
+
+  $('#save-appState').click(function() {
+    console.log(JSON.parse(appStateEditor.getValue()));
+    //saveState(JSON.parse(uieStateEditor.getValue()));
+  });
+
+  $('#save-uieState').click(function() {
+    console.log(JSON.parse(uieStateEditor.getValue()));
+    //saveState(JSON.parse(uieStateEditor.getValue()));
+  });
+
+  function saveState(state) {
+    $.ajax({
+      url: '/app/'+appId+'/state/',
+      data: JSON.stringify(state),
+      success: function(data) {
+        if(data.errors) {
+          var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+          $('.deploy.modal .modal-body').text(content);
+          console.log(data.errors);
+        }
+        else {
+          $('.deploy.modal .modal-body').text("Data successfully saved!");
+        }
+      },
+      error: function(data) {
+        $('.deploy.modal .modal-body').text(data.responseText);
+      },
+      dataType: "JSON"
+    });
+  }
+
 </script>
 {% endblock %}
