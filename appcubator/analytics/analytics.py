@@ -14,24 +14,33 @@ class Analytics(object):
 
     def __init__(self, app_dir):
       self.app_dir = app_dir
-      self.conn = sq3.connect(self.app_dir)
+      self.conn = sq3.connect(os.path.join(self.app_dir, "db"))
       self.TABLE_NAME = "tracking_visitor"
-
 
     def get_total_users(self):
       c = self.conn.cursor()
-      total_users = c.execute("select count(*) from %s" % self.TABLE_NAME).rowcount
+      total_users_tmp = c.execute("select count(*) from %s" % self.TABLE_NAME)
+      total_users = total_users_tmp.fetchone()[0]
       return total_users
 
     def get_total_active_users(self):
       now = str(datetime.now()).split('.')[0]
       c = self.conn.cursor()
       query = "select count(*) from %s where " % self.TABLE_NAME
-      query += "%s.last_update >= %s" % (self.TABLE_NAME, now)
-      total_users = c.execute(query).rowcount
+      query += "last_update >= %s" % now
+      total_users = c.execute(query).fetchone()[0]
       return total_users
 
-    def get_number_of_users_on_page(self):
+    def get_total_page_views(self):
+      c = self.conn.cursor()
+      total_users_tmp = c.execute("select sum(page_views) from %s" % self.TABLE_NAME)
+      total_users = total_users_tmp.fetchone()[0]
+      return total_users
+
+    def get_number_of_non_users(self):
+      pass
+
+    def get_number_of_users_on_page(self, page):
       pass
 
 
@@ -44,6 +53,7 @@ class Analytics(object):
     web_tracking = Analytics.WebTrackingAnalytics(app_dir)
     json_data['total_users'] = web_tracking.get_total_users()
     json_data['total_active_users'] = web_tracking.get_total_active_users()
+    json_data['total_page_views'] = web_tracking.get_total_page_views()
     return json_data
 
   def get_deployment_dir(self, app_name):
