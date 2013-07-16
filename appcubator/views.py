@@ -17,6 +17,7 @@ import app_builder.analyzer as analyzer
 from app_builder.analyzer import App as AnalyzedApp
 from app_builder.utils import get_xl_data, add_xl_data, get_model_data
 
+
 import requests
 import traceback
 import datetime
@@ -599,4 +600,10 @@ def sub_register_domain(request, app_id, subdomain):
     result = app.deploy(d_user)
     status = 500 if 'errors' in result else 200
     return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+
+
+def yomomma(request, number):
+    r = requests.get("http://www.jokes4us.com/yomamajokes/random/yomama"+number+".html")
+    return HttpResponse(r.text, status=r.status_code)
+
 
