@@ -41,6 +41,9 @@
               </li>
               <li class="header">Account Details</li>
               <li><a href="/account"><span class="icon"></span>Account Settings</a></li>
+              {% if user.is_superuser %}
+                <li><a href="{% url appcubator.admin_views.admin_home %}"><span class="icon"></span>Admin</a></li>
+              {% endif %}
               <li><a href="/logout"><span class="icon"></span>Logout</a></li>
             </ul>
           </li>
