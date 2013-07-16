@@ -3,45 +3,35 @@
   <style type="text/css">
     textarea {
       width: 100%;
+      display: block;
     }
   </style>
 
-  <h2>Apps</h2>
-  <hr>
-  <div class="row">
-    <div class="span2"><p class="pull-right">ID</p></div>
-    <div class="span10">{{ app.pk }}</div>
+  <div class="page-header">
+    <h2>Apps</h2>
   </div>
+    <p><strong>ID:</strong> {{ app.pk }}</p>
+    <p><strong>Name:</strong> {{ app.name }}</p>
+    <p><strong>Owner:</strong> {{ app.owner }}</p>
+    <p><strong>Subdomain:</strong> {{ app.subdomain }}</p>
+    <p><strong>Deployment ID:</strong> {{ app.deployment_id }}</p>
+  <div class="row">
+    <div class="span5">
+      <strong>App State</strong>
+      <textarea rows="25" id="appState"></textarea>
+    </div>
+    <div class="span5 offset1">
+      <strong>UIE State</strong>
+      <textarea rows="50" id="uieState"></textarea>
+    </div>
+  </div>
+  <p>
 
-  <div class="row">
-    <div class="span2"><p class="pull-right">Name</p></div>
-    <div class="span10">{{ app.name }}</div>
-  </div>
+  </p>
 
-  <div class="row">
-    <div class="span2"><p class="pull-right">Owner</p></div>
-    <div class="span10">{{ app.owner }}</div>
-  </div>
+  <p>
 
-  <div class="row">
-    <div class="span2"><p class="pull-right">Subdomain</p></div>
-    <div class="span10">{{ app.subdomain }}</div>
-  </div>
-
-  <div class="row">
-    <div class="span2"><p class="pull-right">Deployment ID</p></div>
-    <div class="span10">{{ app.deployment_id }}</div>
-  </div>
-
-  <div class="row">
-    <div class="span2"><p class="pull-right">App State</p></div>
-    <div class="span7"><textarea rows="25" id="appState"></textarea></div>
-  </div>
-
-  <div class="row">
-    <div class="span2"><p class="pull-right">UIE State</p></div>
-    <div class="span7"><textarea rows="50" id="uieState"></textarea></div>
-  </div>
+  </p>
 
   <script type="text/javascript">
   var appState = {{ app.state_json|safe }};

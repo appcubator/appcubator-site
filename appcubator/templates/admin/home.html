@@ -1,7 +1,63 @@
 {% extends "admin/admin-base.html" %}
 {% block content %}
-  <h1>Y U SO RATCHET</h1>
-  <h3>Deployments</h3>
-  <p><strong>Average deploy time: </strong> {{avg_deployment_time}} seconds</p>
-  <p>Number of Deployed Apps</p>
+	<div class="page-header">
+		<h1>Users</h1>
+	</div>
+	<h3>Active Users This Week</h3>
+	<!-- active users this week -->
+	<table id="week-active-users" class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Is Noob</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users_last_week %}
+      <tr>
+        <td><a href="/stay/up/to/get/lucky/users/{{ user.pk }}">{{ user.pk }}</a></td>
+        <td><a href="/stay/up/to/get/lucky/users/{{ user.pk }}">{{ user.user.first_name }} {{ user.user.last_name }}</a></td>
+        <td>{{ user.user.email }}</td>
+        <td>{{ user.noob }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+	<h3>All-Time Most Active Users</h3>
+  <!-- all-time most active users -->
+  <table id="most-active-users" class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Number of Page Views</th>
+        <th>Number of Apps Deployed</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for obj in most_active_users %}
+      <tr>
+        <td><a href="/stay/up/to/get/lucky/users/{{ obj.user_id }}">{{ obj.user_id }}</a></td>
+        <td><a href="/stay/up/to/get/lucky/users/{{ obj.user_id }}">{{ obj.user.user.first_name }} {{ obj.user.user.last_name }}</a></td>
+        <td>{{ obj.num_logs }}</td>
+        <td>{{ obj.num_apps }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="page-header">
+		<h1>Deployments</h1>
+	</div>
+  <p><strong>Avg. deploy time: </strong> {{avg_deployment_time}} seconds</p>
+  <p><strong>Total deployed apps: </strong> {{ num_deployed_apps }}</p>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	$('#week-active-users').sortableTable({initialColumn: 1});
+	$('#most-active-users').sortableTable({initialColumn: 1});
+</script>
 {% endblock %}

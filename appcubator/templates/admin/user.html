@@ -1,52 +1,71 @@
 {% extends "admin/admin-base.html" %}
 {% block content %}
-  <style type="text/css">
-    td.active, th.active {
-      background-color: #d9edf7 !important;
-    }
-  </style>
-  <h2>Users</h2>
-  <hr>
-  <div class="row">
-    <div class="span2">ID</div>
-    <div class="span10">{{ user.pk }}</div>
+  <div class="page-header">
+    <h2>User: {{ user.user.first_name }} {{ user.user.last_name }}</h2>
   </div>
 
-  <div class="row">
-    <div class="span2">Name</div>
-    <div class="span10">{{ user.user.first_name }} {{ user.user.last_name }}</div>
-  </div>
+  <section id="info">
+    <h3>Info</h3>
+      <p><strong>ID</strong> {{ user.pk }}</p>
+      <p><strong>Name</strong> {{ user.user.first_name }} {{ user.user.last_name }}</p>
+      <p><strong>Email</strong> {{ user.user.email }}</p>
+      <p><strong>Number of Apps</strong> {{ apps|length }}</p>
+      <p><strong>Noob?</strong> {{ user.noob }}</p>
+  </section>
 
-  <div class="row">
-    <div class="span2">Email</div>
-    <div class="span10">{{ user.user.email }}</div>
-  </div>
+  <section id="user-apps">
+    <h3>Apps</h3>
+    <table id="apps" class="table table-striped">
+      <thead>
+        <tr>
+          <th>App ID</th>
+          <th>Name</th>
+          <th>Deployed URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for app in apps %}
+        <tr>
+          <td data-type="number" class="span2"><a href="/stay/up/to/get/lucky/apps/{{ app.pk }}">{{ app.pk }}</a></td>
+          <td>{{ app.name }}</td>
+          {% if app.deployment_id %}
+            <td><a href="http://{{app.subdomain}}.appcubator.com">{{ app.subdomain }}</a></td>
+          {% else %}
+            <td>{{ app.subdomain }}</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
 
-  <div class="row">
-    <div class="span2">Noob?</div>
-    <div class="span10">{{ user.noob }}</div>
-  </div>
-  <br><br>
-  <h3>User Logs</h3>
-  <hr>
-  <table id="logs" class="table table-striped">
-    <thead>
-      <tr>
-        <th><a href="#">App ID</a></th>
-        <th><a href="#">Timestamp</a></th>
-        <th><a href="#">Log Type</a></th>
-        <th><a href="#">Log Data</a></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for log in userlogs reversed %}
-      <tr>
-        <td class="span1">{{ log.app_id }}</td>
-        <td class="span2">{{ log.timestamp }}</td>
-        <td class="span2">{{ log.name }}</td>
-        <td class="span7">{{ log.data }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <section id="user-logs">
+    <h3>User Logs</h3>
+    <table id="logs" class="table table-striped">
+      <thead>
+        <tr>
+          <th data-sortType="number">App ID</th>
+          <th data-sortType="timestamp">Timestamp</th>
+          <th>Log Type</th>
+          <th>Log Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in userlogs reversed %}
+        <tr>
+          <td class="span1">{{ log.app_id }}</td>
+          <td class="span2">{{ log.timestamp }}</td>
+          <td class="span2">{{ log.name }}</td>
+          <td class="span7">{{ log.data }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table></section>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+    $('#apps').sortableTable({initialColumn: 1});
+    $('#logs').sortableTable({initialColumn: 2});
+  </script>
 {% endblock %}
