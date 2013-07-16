@@ -1,44 +1,42 @@
 {% extends "admin/admin-base.html" %}
+
+{% block css %}
+<style type="text/css">
+  textarea {
+    width: 100%;
+    display: block;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-  <style type="text/css">
-    textarea {
-      width: 100%;
-      display: block;
-    }
-  </style>
-
-  <div class="page-header">
-    <h2>Apps</h2>
+<div class="page-header">
+  <h2>Apps</h2>
+</div>
+  <p><strong>ID:</strong> {{ app.pk }}</p>
+  <p><strong>Name:</strong> {{ app.name }}</p>
+  <p><strong>Owner:</strong> {{ app.owner }}</p>
+  <p><strong>Subdomain:</strong> {{ app.subdomain }}</p>
+  <p><strong>Deployment ID:</strong> {{ app.deployment_id }}</p>
+<div class="row">
+  <div class="span5">
+    <strong>App State</strong>
+    <textarea rows="25" id="appState"></textarea>
   </div>
-    <p><strong>ID:</strong> {{ app.pk }}</p>
-    <p><strong>Name:</strong> {{ app.name }}</p>
-    <p><strong>Owner:</strong> {{ app.owner }}</p>
-    <p><strong>Subdomain:</strong> {{ app.subdomain }}</p>
-    <p><strong>Deployment ID:</strong> {{ app.deployment_id }}</p>
-  <div class="row">
-    <div class="span5">
-      <strong>App State</strong>
-      <textarea rows="25" id="appState"></textarea>
-    </div>
-    <div class="span5 offset1">
-      <strong>UIE State</strong>
-      <textarea rows="50" id="uieState"></textarea>
-    </div>
+  <div class="span5 offset1">
+    <strong>UIE State</strong>
+    <textarea rows="50" id="uieState"></textarea>
   </div>
-  <p>
+</div>
+{% endblock %}
 
-  </p>
-
-  <p>
-
-  </p>
-
-  <script type="text/javascript">
+{% block js %}
+<script type="text/javascript">
   var appState = {{ app.state_json|safe }};
   var uieState = {{ app.uie_state_json|safe }};
   appState = JSON.stringify(appState, undefined, 2);
   uieState = JSON.stringify(uieState, undefined, 2);
   document.getElementById('appState').innerHTML = appState;
   document.getElementById('uieState').innerHTML = uieState;
-  </script>
+</script>
 {% endblock %}
