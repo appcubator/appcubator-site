@@ -18,7 +18,7 @@
     <table id="apps" class="table table-striped">
       <thead>
         <tr>
-          <th>App ID</th>
+          <th data-sortType="number">App ID</th>
           <th>Name</th>
           <th>Deployed URL</th>
         </tr>
@@ -26,7 +26,7 @@
       <tbody>
         {% for app in apps %}
         <tr>
-          <td data-type="number" class="span2"><a href="/stay/up/to/get/lucky/apps/{{ app.pk }}">{{ app.pk }}</a></td>
+          <td class="span2"><a href="/stay/up/to/get/lucky/apps/{{ app.pk }}">{{ app.pk }}</a></td>
           <td>{{ app.name }}</td>
           {% if app.deployment_id %}
             <td><a href="http://{{app.subdomain}}.appcubator.com">{{ app.subdomain }}</a></td>

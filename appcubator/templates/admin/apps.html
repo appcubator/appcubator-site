@@ -5,7 +5,7 @@
   <table id="apps" class="table table-striped">
     <thead>
       <tr>
-        <th>#</th>
+        <th data-sortType="number">App ID</th>
         <th>Name</th>
         <th>Owner</th>
         <th>Subdomain</th>
@@ -16,7 +16,7 @@
       <tr>
         <td><a href="/stay/up/to/get/lucky/apps/{{ app.pk }}">{{ app.pk }}</a></td>
         <td><a href="/stay/up/to/get/lucky/apps/{{ app.pk }}">{{ app.name }}</a></td>
-        <td><a href="/stay/up/to/get/lucky/users/{{ app.owner }}">{{ app.owner }}</td>
+        <td><a href="/stay/up/to/get/lucky/users/{{ app.owner.id }}">{{ app.owner }}</td>
         {% if app.deployment_id %}
           <td><a href="http://{{app.subdomain}}.appcubator.com">{{ app.subdomain }}</a></td>
         {% else %}
