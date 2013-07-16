@@ -93,7 +93,7 @@ define([
       var tableUIElem = {};
       it('add new button works', function() {
         $('#add-role').trigger('click');
-        $('#add-role-form').val('Teacher');
+        $('#add-role-form input[type=text]').val('Teacher');
 
         var e = {};
         e.keyCode = 13;
@@ -103,7 +103,6 @@ define([
         var numTablesBefore = $('#users .entity').length;
         newUserTable = AppRouter.view.createUserRole(e);
         var numTablesAfter = $('#users .entity').length;
-
         expect(newUserTable).not.toEqual(null);
         expect(numTablesAfter).toEqual(numTablesBefore+1);
       });

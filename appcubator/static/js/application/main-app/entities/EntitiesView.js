@@ -72,7 +72,7 @@ function(TableCollection,
       createUserRole: function(e) {
         e.preventDefault();
 
-        var name = $(e.target).find('input[type="text"]').val();
+        var name = $('#add-role-form').find('input[type="text"]').val();
         var elem = new UserTableModel({
           name: name
         });
