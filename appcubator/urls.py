@@ -71,7 +71,6 @@ urlpatterns += patterns('appcubator.views',
 
     # deploy
     url(r'^app/(\d+)/deploy/$', 'app_deploy'),
-    url(r'^app/(\d+)/deploy/local/$', 'app_deploy_local'),
 
     #zip
     url(r'^app/(\d+)/zip/$', 'app_zip'),
