@@ -46,7 +46,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+<<<<<<< HEAD
+          <a class="brand" href="/stay/up/to/get/lucky/">Appcubator Panel</a>
+=======
           <a class="brand" href="{% url appcubator.admin_views.admin_home %}">Appcubator Panel</a>
+>>>>>>> staging
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="{% url appcubator.admin_views.admin_apps %}">Apps</a></li>
@@ -75,12 +79,14 @@
         this.each(function() {
           var table = $(this);
           var body = table.find('tbody');
+
           table.on('click', 'th', function(e) {
             var index = e.currentTarget.cellIndex;
             var list = body.find('tr').toArray();
 
             // do we need to sort numerically or alphabetically?
             var sortNumber = false, sortTimestamp = false;
+
             if(e.currentTarget.dataset.sortType === 'number') {
               sortNumber = true;
             }
@@ -132,6 +138,7 @@
         $(e.target).popover('show');
       });
     </script>
+
     <script type="text/javascript" src="/static/js/libs/ace/ace.js"></script>
     <script type="text/javascript" src="/static/js/libs/ace/theme-solarized_dark.js"></script>
     <script type="text/javascript" src="/static/js/libs/ace/mode-json.js"></script>

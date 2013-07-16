@@ -27,6 +27,7 @@ from django.utils import timezone
 @user_passes_test(lambda u: u.is_superuser)
 def admin_home(request):
     page_context = {}
+
     # active users this week
     today = timezone.now().date()
     one_week_ago = today - timedelta(days=7)
@@ -55,6 +56,7 @@ def admin_home(request):
             deploy_times.append(number)
     page_context["avg_deployment_time"] = sum(deploy_times) / len(deploy_times)
     page_context["num_deployed_apps"] = len(deploy_times)
+
     return render(request, 'admin/home.html', page_context)
 
 @login_required
@@ -76,12 +78,14 @@ def admin_users(request):
 def admin_user(request, user_id):
     user_id = long(user_id)
     user = get_object_or_404(ExtraUserData, id=user_id)
+    apps = App.objects.filter(owner=user_id)
     logs = LogAnything.objects.filter(user_id=user_id)
     apps = App.objects.filter(owner=user_id)
     page_context = {}
     page_context["user"] = user
     page_context["apps"] = apps
     page_context["userlogs"] = logs
+    page_context["apps"] = apps
     return render(request, 'admin/user.html', page_context)
 
 @login_required
