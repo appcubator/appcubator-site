@@ -50,6 +50,8 @@ define([
     $('.active').removeClass('active');
 
     describe('Table', function() {
+      var newTable = {};
+      var tableUIElem = {};
       it('can load tables and user roles properly', function() {
         var numUsers = v1State.get('users').length;
         var numTableViews = $('#users .entity').length;
@@ -62,12 +64,13 @@ define([
 
       it("can create a new table view", function() {
         var numTablesBefore = $('#tables .entity').length;
-        var newTable = new TableModel({
+        newTable = new TableModel({
           name: 'TestTable',
           fields: []
         });
         v1State.get('tables').add(newTable);
         var numTablesAfter = $('#tables .entity-pane').length;
+        tableUIElem = document.getElementById('table-'+newTable.cid);
         expect(numTablesAfter).toEqual(numTablesBefore+1);
       });
 
@@ -86,6 +89,71 @@ define([
         var numTablesAfter = $('#tables .entity-pane').length;
         expect(numTablesAfter).toEqual(numTablesBefore-1);
       });
+
+      it("can add text field", function() {
+        $(tableUIElem).find('.add-property-button').trigger('click');
+        $(tableUIElem).find('.property-name-input').val('Address');
+        $(tableUIElem).find('.add-property-form').submit();
+        var model = newTable.get('fields').last();
+        expect(model.get('name')).toEqual('Address');
+        expect(model.get('type')).toEqual('text');
+      });
+
+      it("can add image field", function() {
+        $(tableUIElem).find('.add-property-button').trigger('click');
+        $(tableUIElem).find('.property-name-input').val('Profile Picture');
+        $(tableUIElem).find('.add-property-form').submit();
+        var model = newTable.get('fields').last();
+        expect($(tableUIElem).find('#type-' + model.cid).find('option[value="image"]')).not.toEqual(0);
+
+        $(tableUIElem).find('#type-' + model.cid).val('image');
+        $(tableUIElem).find('#type-' + model.cid).trigger('change');
+
+        expect(model.get('name')).toEqual('Profile Picture');
+        expect(model.get('type')).toEqual('image');
+      });
+
+      it("can add file field", function() {
+        $(tableUIElem).find('.add-property-button').trigger('click');
+        $(tableUIElem).find('.property-name-input').val('Document');
+        $(tableUIElem).find('.add-property-form').submit();
+        var model = newTable.get('fields').last();
+        expect($(tableUIElem).find('#type-' + model.cid).find('option[value="file"]')).not.toEqual(0);
+
+        $(tableUIElem).find('#type-' + model.cid).val('file');
+        $(tableUIElem).find('#type-' + model.cid).trigger('change');
+
+        expect(model.get('name')).toEqual('Document');
+        expect(model.get('type')).toEqual('file');
+      });
+
+      it("can add number field", function() {
+        $(tableUIElem).find('.add-property-button').trigger('click');
+        $(tableUIElem).find('.property-name-input').val('Phone');
+        $(tableUIElem).find('.add-property-form').submit();
+        var model = newTable.get('fields').last();
+        expect($(tableUIElem).find('#type-' + model.cid).find('option[value="number"]')).not.toEqual(0);
+
+        $(tableUIElem).find('#type-' + model.cid).val('number');
+        $(tableUIElem).find('#type-' + model.cid).trigger('change');
+
+        expect(model.get('name')).toEqual('Phone');
+        expect(model.get('type')).toEqual('number');
+      });
+
+      it("can add email field", function() {
+        $(tableUIElem).find('.add-property-button').trigger('click');
+        $(tableUIElem).find('.property-name-input').val('Email');
+        $(tableUIElem).find('.add-property-form').submit();
+        var model = newTable.get('fields').last();
+        expect($(tableUIElem).find('#type-' + model.cid).find('option[value="number"]')).not.toEqual(0);
+
+        $(tableUIElem).find('#type-' + model.cid).val('email');
+        $(tableUIElem).find('#type-' + model.cid).trigger('change');
+
+        expect(model.get('name')).toEqual('Email');
+        expect(model.get('type')).toEqual('email');
+      });
     });
 
     describe('User roles', function() {
@@ -93,7 +161,7 @@ define([
       var tableUIElem = {};
       it('add new button works', function() {
         $('#add-role').trigger('click');
-        $('#add-role-form').val('Teacher');
+        $('#add-role-form input[type=text]').val('Teacher');
 
         var e = {};
         e.keyCode = 13;
@@ -105,14 +173,8 @@ define([
         var numTablesAfter = $('#users .entity').length;
 
         expect(newUserTable).not.toEqual(null);
+        expect(newUserTable.get('name')).not.toEqual(null);
         expect(numTablesAfter).toEqual(numTablesBefore+1);
-      });
-
-      it("the name is rendered correctly", function() {
-        var uielem = document.getElementById('user-table-'+ newUserTable.cid);
-        expect(uielem).not.toEqual(null);
-        var title = $(uielem).find('h2').text();
-        expect(title).toEqual("Teacher");
       });
 
       it("the name is rendered correctly", function() {
