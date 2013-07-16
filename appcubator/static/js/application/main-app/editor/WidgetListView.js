@@ -16,6 +16,7 @@ function( WidgetContainerView,
     entity: null,
     type: null,
     highlighted: false,
+    subviews: [],
 
     positionHorizontalGrid : 80,
     positionVerticalGrid   : 15,
@@ -51,6 +52,8 @@ function( WidgetContainerView,
       this.entityModel = this.model.get('data').get('container_info').get('entity');
       this.model.bind('highlight', this.highlightFirstRow);
       this.widgetSelectorView = new ListWidgetSelectorView(this.model.get('data').get('container_info').get('row').get('uielements'), this.el);
+      this.subviews.push(this.widgetSelectorView);
+
       this.rowBindings();
     },
 

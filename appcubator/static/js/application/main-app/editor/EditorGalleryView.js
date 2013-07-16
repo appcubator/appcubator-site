@@ -501,6 +501,13 @@ define([
       var header = this.addHeaderItem(name);
       var sectionName = name.replace(/ /g,'-');
       header.onclick = function(e) {
+        if(!$(this).hasClass('open')) {
+          var header = $(e.currentTarget);
+          var top = header.position() && header.position().top;
+          $('#item-gallery').animate({
+            scrollTop: top - 90
+          }, 400);
+      }
         var section = $('.'+sectionName);
         $(this).toggleClass('open');
         $('.'+sectionName).slideToggle('fast');

@@ -3,7 +3,7 @@ require.config({
     "jquery" : "../../libs/jquery/jquery",
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
     "jquery.filedrop" : "../../libs/jquery/jquery.filedrop",
-    "jquery.flexslider" : "../../libs/jquery/jquery.flexslider-min",
+    "jquery.hotkeys" : "../../libs/jquery/jquery.hotkeys",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "heyoffline": "../../libs/heyoffline",
@@ -65,6 +65,7 @@ require([
   "editor/MouseDispatcher",
   "heyoffline",
   "backbone",
+  "mixins/BackboneConvenience",
   "bootstrap",
   "util",
   "comp"

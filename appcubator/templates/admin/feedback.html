@@ -2,17 +2,17 @@
 {% block content %}
   <h2>Feedback</h2>
   <hr>
-  <table class="table table-striped">
+  <table id="feedback" class="table table-striped">
     <thead>
       <tr>
-        <th>#</th>
-        <th>Timestamp</th>
+        <th data-sortType="number">Feedback ID</th>
+        <th data-sortType="timestamp">Timestamp</th>
         <th>User ID</th>
         <th>Message</th>
       </tr>
     </thead>
     <tbody>
-      {% for feedback in feedback reversed%}
+      {% for feedback in feedback reversed %}
       <tr>
         <td class="span1">{{ feedback.pk }}</td>
         <td class="span2">{{ feedback.timestamp }}</td>
@@ -22,4 +22,10 @@
       {% endfor %}
     </tbody>
   </table>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  $('#feedback').sortableTable({initialColumn: 1})
+</script>
 {% endblock %}

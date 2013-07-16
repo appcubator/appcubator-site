@@ -134,7 +134,7 @@ function(Backbone) {
         $(window).unbind('keydown', closeHandlerFn);
       }
 
-      this.stopListening();
+      this.close();
     },
 
     handleKey: function(e) {

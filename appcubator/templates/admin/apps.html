@@ -5,18 +5,18 @@
   <table id="apps" class="table table-striped">
     <thead>
       <tr>
-        <th>#</th>
+        <th data-sortType="number">App ID</th>
         <th>Name</th>
         <th>Owner</th>
         <th>Subdomain</th>
       </tr>
     </thead>
     <tbody>
-      {% for app in apps%}
+      {% for app in apps %}
       <tr>
-        <td><a href="/stay/up/to/get/lucky/apps/{{ app.pk }}">{{ app.pk }}</a></td>
-        <td><a href="/stay/up/to/get/lucky/apps/{{ app.pk }}">{{ app.name }}</a></td>
-        <td><a href="/stay/up/to/get/lucky/users/{{ app.owner }}">{{ app.owner }}</a></td>
+        <td><a href="{% url appcubator.admin_views.admin_app app.pk %}">{{ app.pk }}</a></td>
+        <td><a href="{% url appcubator.admin_views.admin_app app.pk %}">{{ app.name }}</a></td>
+        <td><a href="{% url appcubator.admin_views.admin_user app.owner.id %}">{{ app.owner }}</td>
         {% if app.deployment_id %}
           <td><a href="http://{{app.subdomain}}.appcubator.com">{{ app.subdomain }}</a></td>
         {% else %}
@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block js %}
-  <script type="text/javascript">
-    $('#apps').sortableTable({initialColumn: 1});
-  </script>
+<script type="text/javascript">
+  $('#apps').sortableTable({initialColumn: 1});
+</script>
 {% endblock %}

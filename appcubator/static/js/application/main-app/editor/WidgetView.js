@@ -48,7 +48,7 @@ define([
 
       this.model.get('data').bind("change:type", this.changedType, this);
       this.model.get('data').bind("change:class_name", this.changedType, this);
-      this.model.bind("remove", this.remove, this);
+      this.model.bind("remove", this.close, this);
 
       this.model.get('layout').bind("change:width", this.changedWidth, this);
       this.model.get('layout').bind("change:height", this.changedHeight, this);

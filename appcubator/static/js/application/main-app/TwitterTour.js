@@ -2,6 +2,47 @@ define([
   'tourist'
 ],
 function() {
+
+  var findPos = function (obj) {
+    var curleft = curtop = 0;
+
+    if(obj.style.position == "fixed") return [1,1];
+    if (obj.offsetParent) {
+        do {
+            curleft += obj.offsetLeft;
+            curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+    }
+
+    return [curleft,curtop];
+  };
+
+  var waitUntilAppears = function(selector, callbackFn, cont_args, count) {
+    var cnt = (count || 0);
+
+    el = document.querySelector(selector);
+    if(el && !el.tagName) { el = el[0]; }
+
+    var repeat = function() {
+      cnt++;
+      window.setTimeout(function() {
+        waitUntilAppears.call(this, selector, callbackFn, cont_args, cnt);
+      }, 500);
+    };
+
+    var fail = function() {
+      alert('There has been a problem with the flow of the Walkthrough. Please refresh your page. Don\'t worry, you\'ll start from where you left off!');
+    };
+
+    if(cnt > 60) return fail();
+    if(!el) return repeat();
+
+    var pos = findPos(el);
+
+    if($(el).height() === 0 || $(el).width() === 0 || pos[0] === 0 || pos[1] === 0) return repeat();
+    callbackFn.apply(undefined, cont_args);
+  };
+
   var steps = [
     /*
      * Question btn
@@ -228,30 +269,29 @@ function() {
       setup: function(tour, options) {
         util.scrollToElement($('#new-relation'));
         var self = this;
-        setTimeout(function() {
+
           // $('.done-relation').on('click', self.checkFields);
 
-          checkForRelation = function(fieldM) {
-            if( fieldM.get('entity_name') != "User" ||
-                fieldM.get('name') != "Owner" ||
-                fieldM.get('related_name') != "Tweets") {
+        checkForRelation = function(fieldM) {
+          if( fieldM.get('entity_name') != "User" ||
+              fieldM.get('name') != "Owner" ||
+              fieldM.get('related_name') != "Tweets") {
 
-              this.remove(fieldM);
-              alert('Make sure you enter "Tweets" in the first box, and "Owner" in the second box');
-            }
-            else {
-              tour.next();
-            }
+            this.remove(fieldM);
+            alert('Make sure you enter "Tweets" in the first box, and "Owner" in the second box');
+          }
+          else {
+            tour.next();
+          }
 
-          };
+        };
 
-          v1State.get('tables').models[0].get('fields').bind('add', checkForRelation);
+        v1State.get('tables').models[0].get('fields').bind('add', checkForRelation);
 
-        }, 500);
         return {  target: $('#new-relation') };
       },
       teardown: function(tour, options) {
-          v1State.get('tables').models[0].get('fields').unbind('add', checkForRelation);
+        v1State.get('tables').models[0].get('fields').unbind('add', checkForRelation);
         v1State.attributes.walkthrough++;
         v1.save();
       }
@@ -313,11 +353,9 @@ function() {
       at: "right top",
       url: '/pages/',
       setup: function(tour, options) {
-        v1.bind('editor-loaded', function() {
-          setTimeout(function() {
-            tour.next();
-          }, 400);
-        });
+        //v1.bind('editor-loaded', function() {
+          waitUntilAppears('.search-panel', function(tour, options) { tour.next(); }, [tour, options]);
+        //}, this);
         return { target: $('.page-view').first() };
       },
       teardown: function() {
@@ -332,8 +370,7 @@ function() {
       nextButton: true,
       url: '/editor/0/',
       setup: function(tour, options) {
-        //$('.gallery-header').not('li:nth-child(1)').click();
-        return { target: $('.search-panel') };
+        return { target: $('.search-panel').first() };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;
@@ -416,8 +453,9 @@ function() {
       url: '/editor/0/',
       setup: function(tour, options) {
         var elem = $(".facebook-login-btn")[0];
-        $('.edit-login-form-btn').on('click', function() {
-          setTimeout(tour.next, 400);
+        $('.edit-login-form-btn').first().on('click', function() {
+          // setTimeout(tour.next, 400);
+          waitUntilAppears('.login-route-editor', tour.next);
         });
         return { target: $(elem) };
       },
@@ -485,10 +523,12 @@ function() {
 
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
           if(uielem.get('type') == "loop") {
-            setTimeout(function() {
-              tour.pageLoop = uielem;
-              tour.next();
-            }, 300);
+            tour.pageLoop = uielem;
+            waitUntilAppears('.edit-row-btn', tour.next);
+            // setTimeout(function() {
+            //   tour.pageLoop = uielem;
+            //   tour.next();
+            // }, 300);
           }
         });
 
@@ -562,6 +602,9 @@ function() {
       at: "bottom center",
       url: '/editor/1/',
       setup: function(tour, options) {
+        tour.pageLoop.once('deselected', function() {
+          tour.next();
+        });
         $('.done-editing').one('click', function() {
           tour.next();
         });
@@ -580,6 +623,9 @@ function() {
         v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
           if(uielem.hasForm()) {
             tour.next();
+          }
+          else {
+            console.log("YARP");
           }
         });
         return { target: $('.entity-create-form') };

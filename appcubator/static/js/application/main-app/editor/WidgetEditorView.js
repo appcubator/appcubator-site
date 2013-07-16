@@ -226,7 +226,7 @@ function(WidgetContentEditor,
     closeEditingMode: function() {
       this.$el.find('.section-done-editing').remove();
       this.el.style.width = '';
-      this.listGalleryView.remove();
+      $(this.listGalleryView).remove();
       this.showSubviews();
       this.model.trigger('editModeOff');
     },

@@ -54,8 +54,8 @@ define([
         renderLinkOptions: function() {
           var self = this;
           var select = this.$el.find('.link-options');
-          var emptyLink = (this.model.get('url') == '') ? " selected " : "";
-          var htmlString = '<option'+emptyLink+'>Choose a Page</option>';
+          console.log(select.html());
+          var htmlString = '';
           _(this.linkOptions).each(function(link) {
             // if the link model doesn't have a URL,
             // 'Choose a Page' must be selected
@@ -69,7 +69,7 @@ define([
               htmlString += '<option value="' + link.url + '"'+selected+'>' + pageName + '</option>';
             }
             else {
-              htmlString += '<option value="' + link.url + '"'+selected+'>' + link.title +'</option>';
+              htmlString += '<option value="' + link.url + '"'+selected+'>' + link.url +'</option>';
             }
 
           });

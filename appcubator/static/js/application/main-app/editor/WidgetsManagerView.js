@@ -22,6 +22,7 @@ function( WidgetView,
     events : {
 
     },
+    subviews: [],
 
     initialize: function(widgetsCollection) {
       _.bindAll(this);
@@ -38,32 +39,31 @@ function( WidgetView,
     },
 
     render: function() {
-      var self = this;
       this.widgetsContainer = document.getElementById('elements-container');
       this.widgetsContainer.innerHTML = '';
-      self.widgetsCollection.each(function(widget) {
+      this.widgetsCollection.each(function(widget) {
         widget.setupPageContext(v1State.getCurrentPage());
-        self.placeUIElement(widget, false);
-      });
+        var newWidgetView = this.placeUIElement(widget, false);
+        this.subviews.push(newWidgetView);
+      }, this);
       this.widgetSelectorView.setElement(this.widgetsContainer).render();
     },
 
     // this function decides if widget or container
     placeUIElement: function(model, isNew) {
-      var self = this;
       model.setupPageContext(v1State.getCurrentPage());
 
       if(model.get('data').has('container_info') && model.get('data').get('container_info').has('row')) {
-        self.placeList(model, isNew);
+        return this.placeList(model, isNew);
       }
       else if(model.hasForm()) {
-        self.placeForm(model, isNew);
+        return this.placeForm(model, isNew);
       }
       else if(model.get('data').has('container_info') || model.get('data').get('action') == "thirdpartylogin") {
-        self.placeContainer(model, isNew);
+        return this.placeContainer(model, isNew);
       }
       else {
-        self.placeWidget(model, isNew);
+        return this.placeWidget(model, isNew);
       }
     },
 
@@ -72,8 +72,9 @@ function( WidgetView,
 
       if(!widgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
       else util.get('full-container').appendChild(curWidget.render().el);
-
       if(isNew) curWidget.autoResize();
+
+      return curWidget;
     },
 
     placeContainer: function(containerWidgetModel, isNew) {
@@ -81,6 +82,7 @@ function( WidgetView,
       if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
       else util.get('full-container').appendChild(curWidget.render().el);
       if(isNew) curWidget.autoResize();
+      return curWidget;
     },
 
     placeList: function(containerWidgetModel, isNew) {
@@ -88,6 +90,7 @@ function( WidgetView,
       if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
       else util.get('full-container').appendChild(curWidget.render().el);
       if(isNew) curWidget.autoResize();
+      return curWidget;
     },
 
     placeForm: function(containerWidgetModel, isNew) {
@@ -95,10 +98,11 @@ function( WidgetView,
       if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
       else util.get('full-container').appendChild(curWidget.render().el);
       if(isNew) curWidget.autoResize();
+      return curWidget;
     },
 
     remove: function() {
-      this.widgetSelectorView.remove();
+      this.widgetSelectorView.close();
       Backbone.View.prototype.remove.call(this);
     }
   });

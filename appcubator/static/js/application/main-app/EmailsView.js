@@ -13,6 +13,8 @@ function(EmailCollection, EmailModel, EmailView) {
       'dragstart #variables-list li': 'setupDrag',
     },
 
+    subviews: [],
+
     initialize: function() {
       _.bindAll(this);
 

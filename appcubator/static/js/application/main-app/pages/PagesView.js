@@ -12,6 +12,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
 
     el: document.body,
     css: 'pages',
+    subviews: [],
 
     initialize: function() {
       _.bindAll(this);
@@ -117,11 +118,13 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         var ind = _.indexOf(this.collection.models, model);
         var pageView = new PageView(model, ind, false);
         this.listView.appendChild(pageView.render().el);
+        this.subviews.push(pageView);
       }
       else {
         var ind = _.indexOf(this.mobileCollection.models, model);
         var mobilePageView = new PageView(model, ind, true);
         this.mobileListView.appendChild(mobilePageView.render().el);
+        this.subviews.push(mobilePageView);
       }
     }
 

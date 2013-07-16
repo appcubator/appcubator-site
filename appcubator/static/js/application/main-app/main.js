@@ -82,7 +82,8 @@ require([
   "bootstrap",
   "util",
   "comp",
-  "xrayquire"
+  "xrayquire",
+  "mixins/BackboneConvenience"
 ],
 function (AppModel,
           PageCollection,
@@ -113,6 +114,7 @@ function (AppModel,
 
     if(v1State.has('walkthrough')) {
       require(['app/TwitterTour'], function(QuickTour) {
+        if(!QuickTour.currentStep) return;
         var url = QuickTour.currentStep.url;
         v1.navigate('app/'+appId+url, {trigger: true});
         setTimeout(function() {

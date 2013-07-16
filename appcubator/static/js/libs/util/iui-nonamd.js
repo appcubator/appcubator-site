@@ -84,8 +84,6 @@
         containment: "parent"
       });
 
-      //this.el.style.position = 'relative';
-      //console.log('yolo');
       return el;
     },
 
@@ -119,7 +117,6 @@
     },
 
     setCursor: function(node,pos){
-      console.log(node);
       var node = (typeof node == "string" ||
       node instanceof String) ? document.getElementById(node) : node;
           if(!node){
@@ -216,7 +213,6 @@
 
     $(function () {
       /* adds csrftoke to every ajax request we send */
-      console.log("add csrf")
       $.ajaxSetup({
         crossDomain: false, // obviates need for sameOrigin test
         beforeSend: function(xhr, settings) {

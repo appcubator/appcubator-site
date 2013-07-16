@@ -1,54 +1,100 @@
 {% extends "admin/admin-base.html" %}
+
+{% block css %}
+<style type="text/css">
+  textarea {
+    width: 100%;
+    display: block;
+  }
+  .btn {
+    margin-bottom: 10px;
+    margin-top: -5px;
+  }
+  .editor {
+    position: relative !important;
+    border: 1px solid lightgray;
+    height: 1024px;
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-  <style type="text/css">
-    textarea {
-      width: 100%;
-    }
-  </style>
-
+<div class="page-header">
   <h2>Apps</h2>
-  <hr>
-  <div class="row">
-    <div class="span2"><strong class="pull-right">ID</strong></div>
-    <div class="span10">{{ app.pk }}</div>
+</div>
+  <p><strong>ID:</strong> {{ app.pk }}</p>
+  <p><strong>Name:</strong> {{ app.name }}</p>
+  <p><strong>Owner:</strong> {{ app.owner }}</p>
+  <p><strong>Subdomain:</strong> {{ app.subdomain }}</p>
+  <p><strong>Deployment ID:</strong> {{ app.deployment_id }}</p>
+<div class="row">
+  <div class="span6">
+    <strong>App State</strong>
+    <button id="save-appState" class="btn btn-warning btn-small pull-right" data-toggle="modal" data-target=".deploy">Save App State</button>
+    <!-- <textarea rows="25" id="appState"></textarea> -->
+    <div id="appState" class="editor"></div>
   </div>
-
-  <div class="row">
-    <div class="span2"><strong class="pull-right">Name</strong></div>
-    <div class="span10">{{ app.name }}</div>
+  <div class="span6">
+    <strong>UIE State</strong>
+    <button id="save-uieState" class="btn btn-warning btn-small pull-right" data-toggle="modal" data-target=".deploy">Save UIE State</button>
+    <!-- <textarea rows="50" id="uieState"></textarea> -->
+    <div id="uieState" class="editor"></div>
   </div>
+</div>
 
-  <div class="row">
-    <div class="span2"><strong class="pull-right">Owner</strong></div>
-    <div class="span10">{{ app.owner }}</div>
-  </div>
+<div class="deploy modal hide fade">
+  <div class="modal-body"></div>
+</div>
+{% endblock %}
 
-  <div class="row">
-    <div class="span2"><strong class="pull-right">Subdomain</strong></div>
-    <div class="span10">{{ app.subdomain }}</div>
-  </div>
-
-  <div class="row">
-    <div class="span2"><strong class="pull-right">Deployment ID</strong></div>
-    <div class="span10">{{ app.deployment_id }}</div>
-  </div>
-
-  <div class="row">
-    <div class="span2"><strong class="pull-right">App State</strong></div>
-    <div class="span7"><textarea rows="25" id="appState"></textarea></div>
-  </div>
-
-  <div class="row">
-    <div class="span2"><p class="pull-right">UIE State</p></div>
-    <div class="span7"><textarea rows="50" id="uieState"></textarea></div>
-  </div>
-
-  <script type="text/javascript">
+{% block js %}
+<script type="text/javascript">
   var appState = {{ app.state_json|safe }};
   var uieState = {{ app.uie_state_json|safe }};
   appState = JSON.stringify(appState, undefined, 2);
   uieState = JSON.stringify(uieState, undefined, 2);
   document.getElementById('appState').innerHTML = appState;
   document.getElementById('uieState').innerHTML = uieState;
-  </script>
+
+  var appStateEditor = ace.edit("appState");
+  appStateEditor.setTheme("ace/theme/solarized_dark");
+  appStateEditor.getSession().setMode("ace/mode/json");
+
+  var uieStateEditor = ace.edit("uieState");
+  uieStateEditor.setTheme("ace/theme/solarized_dark");
+  uieStateEditor.getSession().setMode("ace/mode/json");
+
+  $('#save-appState').click(function() {
+    console.log(JSON.parse(appStateEditor.getValue()));
+    //saveState(JSON.parse(uieStateEditor.getValue()));
+  });
+
+  $('#save-uieState').click(function() {
+    console.log(JSON.parse(uieStateEditor.getValue()));
+    //saveState(JSON.parse(uieStateEditor.getValue()));
+  });
+
+  function saveState(state) {
+    $.ajax({
+      url: '/app/'+appId+'/state/',
+      data: JSON.stringify(state),
+      success: function(data) {
+        if(data.errors) {
+          var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+          $('.deploy.modal .modal-body').text(content);
+          console.log(data.errors);
+        }
+        else {
+          $('.deploy.modal .modal-body').text("Data successfully saved!");
+        }
+      },
+      error: function(data) {
+        $('.deploy.modal .modal-body').text(data.responseText);
+      },
+      dataType: "JSON"
+    });
+  }
+
+</script>
 {% endblock %}
