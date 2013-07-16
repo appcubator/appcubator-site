@@ -576,10 +576,7 @@ def register_domain(request, domain):
 def sub_check_availability(request, subdomain):
     domain_is_available = not App.objects.filter(subdomain=subdomain.lower()).exists()
 
-    if domain_is_available:
-        return JSONResponse(True)
-    else:
-        return JSONResponse(False)
+    return JSONResponse(bool(domain_is_available))
 
 
 @require_POST
@@ -589,14 +586,15 @@ def sub_register_domain(request, app_id, subdomain):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    app.subdomain = subdomain
-    app.full_clean()
-    app.save()
-    d_user = {
-        'user_name': app.owner.username,
-        'date_joined': str(app.owner.date_joined)
-    }
-    result = app.deploy(d_user)
+    domain_is_available = not App.objects.filter(subdomain=subdomain.lower()).exists()
+    if domain_is_available:
+        app.subdomain = clean_subdomain(subdomain)
+        app.full_clean()
+        app.save()
+        result = app.deploy()
+    else:
+        result = {}
+        result['errors'] = {'subdomain' : "This subdomain is taken"}
     status = 500 if 'errors' in result else 200
     return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 

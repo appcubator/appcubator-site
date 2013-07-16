@@ -92,6 +92,12 @@ def get_default_theme_state():
     f.close()
     return s
 
+"""
+def clean_subdomain(s):
+    HOSTNAME_REGEX = "^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])$"
+    s.lower().replace('_', '-')
+    return s
+"""
 
 class App(models.Model):
     name = models.CharField(max_length=100)
@@ -301,6 +307,30 @@ class App(models.Model):
             result['github_url'] = self.github_url()
             return result
 
+        elif r.status_code == 400:
+            try: # make sure we know this is the "subdomain is taken error"
+                for e_str in r.json()['errors']['subdomain']:
+                    if 'taken' not in e_str:
+                        raise Exception(r.text)
+            except KeyError: # otherwise, let it be known that this error is unknown.
+                raise Exception(r.text)
+
+
+            def increment(s):
+                last_char = s[-1]
+                if last_char in "123456780":
+                    last_char = str(int(last_char) + 1)
+                    s = s[:-1] + last_char
+                else:
+                    s = s + '2'
+                return s
+
+            old_subdomain = self.subdomain
+            self.subdomain = increment(old_subdomain)
+            logger.info("Subdomain %r was taken, so we changed to %r and we're trying again." % (old_subdomain, self.subdomain))
+            self.save()
+            return self.deploy(retry_on_404=retry_on_404)
+
         elif r.status_code == 404:
             assert retry_on_404
             logger.warn("The deployment was not found, so I'm setting deployment id to None")
@@ -309,7 +339,7 @@ class App(models.Model):
             return self.deploy(retry_on_404=False)
 
         else:
-          return {'errors': r.content}
+            raise Exception("Deployment server error: %r" % r.text)
 
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:
