@@ -15,10 +15,12 @@ function(WidgetEditorView,
     origin: { x: 0, y: 0 },
     clientOrigin: { x: 0, y: 0 },
     events : { },
+    subviews: [],
 
     initialize: function(){
       _.bindAll(this);
       this.multiSelectorView = new MultiSelectorView();
+      this.subviews.push(this.multiSelectorView);
     },
 
     mousedown: function(e) {
@@ -49,6 +51,8 @@ function(WidgetEditorView,
     },
 
     mouseup: function(e) {
+      if(this.isDrawing == false) return;
+
       var Xcor = e.clientX;
       var Ycor = e.clientY;
       var arr = v1State.getCurrentPage().get('uielements').filter(function(widget){
@@ -155,12 +159,11 @@ function(WidgetEditorView,
       };
     },
 
-    remove: function() {
-      this.multiSelectorView.remove();
+    close: function() {
       window.removeEventListener('mouseup', this.mouseup);
       document.getElementById('page').removeEventListener('mousedown', this.mousedown);
       document.getElementById('page').removeEventListener('mousemove', this.mousemove);
-      Backbone.View.prototype.remove.call(this);
+      Backbone.View.prototype.close.call(this);
     }
 
   });
