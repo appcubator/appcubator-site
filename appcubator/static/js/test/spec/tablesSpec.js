@@ -103,7 +103,9 @@ define([
         var numTablesBefore = $('#users .entity').length;
         newUserTable = AppRouter.view.createUserRole(e);
         var numTablesAfter = $('#users .entity').length;
+
         expect(newUserTable).not.toEqual(null);
+        expect(newUserTable.get('name')).not.toEqual(null);
         expect(numTablesAfter).toEqual(numTablesBefore+1);
       });
 

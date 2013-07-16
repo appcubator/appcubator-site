@@ -96,7 +96,6 @@ function(TableCollection,
         $('#add-role').fadeIn();
         $(e.target).hide();
 
-        e.preventDefault();
         return elem;
       },
 
