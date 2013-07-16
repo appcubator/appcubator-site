@@ -16,7 +16,8 @@ define([
   "editor/KeyDispatcher",
   "editor/MouseDispatcher",
   "comp",
-  "backbone"
+  "backbone",
+  "mixins/BackboneConvenience"
   ],
   function( EditorView,
     AppModel,
@@ -300,9 +301,91 @@ define([
         validateBackend();
       });
 
+      it("adds new fields", function() {
+
+      });
+
+      it("types of the model fields corresponds to form fields", function() {
+
+      });
+
+      it("required yes, sets required to yes", function() {
+
+      });
+
+      it("required no, sets required to no", function() {
+
+      });
+
+      it("placeholder should alter the placeholder", function() {
+
+      });
+
+      it("label should alter the label", function() {
+
+      });
+
+      it("it should add new form fields", function() {
+
+      });
+
+      it("it should remove form fields", function() {
+
+      });
+
+      it("it should add new model fields", function() {
+
+      });
+
+      it("options splits the comma properly", function() {
+
+      });
+
+      it("image should have a button", function() {
+
+      });
+
+      it("file should have a button", function() {
+
+      });
+
+      it("should have a default goto to current page", function() {
+
+      });
+
+      it("should have list of go-tos for all pages", function() {
+
+      });
+
+      it("should have list of go-tos for all pages", function() {
+
+      });
+
+      it("datalang should be valid for each page", function() {
+
+      });
+
+      it("number of add to should be equal to number of fks in the model", function() {
+
+      });
+
+      it("number of email options should be equal to number of emails", function() {
+
+      });
+
+      it("should re-order properly", function() {
+
+      });
+
+      it("has a submit button at the bottom", function() {
+
+      });
+
+
       it("can be deleted", function() {
         validateDeleteable(model);
       });
 
     });
+
   });

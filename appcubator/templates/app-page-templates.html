@@ -206,7 +206,7 @@
 
   <!-- Top Menu -->
   <div class="section-select">
-    
+
     <div class="save-run-group">
       <div class="menu-button run" id="deploy"><span class="play-btn"><span class="play-btn-icon"></span></span><span id="deploy-text">Test Run</span>
       </div><div class="menu-button save" id="editor-save">
@@ -231,12 +231,10 @@
         <!-- Navbar -->
         <div class="navbar" id="navbar">
           <div class="navbar-inner">
-            <div class="container">
-              <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
-              <ul class="nav" id="links">
-              </ul>
-              <button class="edit-navbar btn btn-small btn-inverse pull-right">Edit Navbar</button>
-            </div>
+            <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
+            <ul class="nav" id="links">
+            </ul>
+            <button class="edit-navbar btn btn-small btn-inverse pull-right">Edit Navbar</button>
           </div>
         </div>
         <!-- Navbar Ends-->
@@ -374,15 +372,15 @@
   </div>
   <div class="right-pane">
     <p>Your site is available at the url above. You can also share your work with your friends.</p>
- 
+
     <a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= site_url %>" data-text="Check out what I've built with @appcubator" data-size="large" data-count="none">Tweet</a>
     <br  />
-    <a href="#" 
+    <a href="#"
       onclick="
         window.open(
-          'https://www.facebook.com/sharer/sharer.php?u=<%= site_url %>', 
-          'facebook-share-dialog', 
-          'width=626,height=436'); 
+          'https://www.facebook.com/sharer/sharer.php?u=<%= site_url %>',
+          'facebook-share-dialog',
+          'width=626,height=436');
         return false;" class="share-on-facebook">
       Share on Facebook
     </a>

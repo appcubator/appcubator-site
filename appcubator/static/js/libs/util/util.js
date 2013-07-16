@@ -202,6 +202,9 @@ define(['jquery'], function() {
     },
 
     doesStartWithKeywords: function(str) {
+      if(!str) {
+        return false;
+      }
       var ind1 = str.indexOf('Page');
       var ind2 = str.indexOf('Form');
       var ind3 = str.indexOf('loop');

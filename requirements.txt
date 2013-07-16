@@ -27,6 +27,7 @@ django-registration==1.0
 django-invitation==1.0
 django-grappelli==2.4.5
 fabric==1.6.1
+django-tracking==0.4.1
 
 
 #mysql-python==1.2.4

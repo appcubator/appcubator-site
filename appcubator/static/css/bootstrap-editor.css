@@ -3687,6 +3687,14 @@ ul.list {
   border-radius: 4px;
 }
 
+#link-editors .select-container {
+  position: relative;
+}
+
+#link-editors .select-container select {
+  width: 90%;
+}
+
 #link-editors li .remove {
   position: absolute;
   right: 10px;

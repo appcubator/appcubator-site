@@ -65,6 +65,7 @@ require([
   "editor/MouseDispatcher",
   "heyoffline",
   "backbone",
+  "mixins/BackboneConvenience",
   "bootstrap",
   "util",
   "comp"
