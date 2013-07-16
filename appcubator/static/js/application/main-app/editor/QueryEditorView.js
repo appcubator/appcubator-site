@@ -91,7 +91,7 @@ function() {
     },
 
     changeDescription: function() {
-      util.get('query-description').innerHTML = this.getNLdescription();
+      //util.get('query-description').innerHTML = this.getNLdescription();
     },
 
     fieldsToDisplayChanged: function(e) {
