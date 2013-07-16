@@ -135,6 +135,10 @@ define([
         this.model.trigger('selected');
         this.el.style.zIndex = 2003;
       }
+      
+      if(this.editMode) {
+        this.model.trigger('stopEditing');
+      }
     },
 
     changedWidth: function(a) {
