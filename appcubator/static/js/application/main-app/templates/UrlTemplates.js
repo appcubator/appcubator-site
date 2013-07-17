@@ -14,7 +14,7 @@ UrlTemplate.mainTemplate = [
     '</div>',*/
     '<ul class="row hoff1 url-parts"></ul>',
     '<div class="row hoff2 hi3 offset2">',
-      '<div class="btn btn-info btn-small offset3 new-context">+ Add Table Context</div>',
+      '<div class="btn btn-info btn-small offset3 new-context">+ Add Context Value</div>',
       '<div class="btn btn-info btn-small offset1 new-suffix">+ Add Custom Text</div>',
     '</div>',
   '</form>'

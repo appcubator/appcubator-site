@@ -36,7 +36,7 @@ function(UrlView, SimpleModalView) {
       page_context.context_text = this.model.getContextSentence();
       // if this is the homepage view,
       // mark 'edit url' link as disabled
-      page_context.disable_edit_url = (this.model.get('name') === 'Homepage') ? true : false;
+      page_context.disable_edit = (this.model.get('name') === 'Homepage') ? true : false;
 
       var page = _.template(PageTemplates.tempPage, page_context);
       this.el.innerHTML += page;
@@ -75,8 +75,8 @@ function(UrlView, SimpleModalView) {
 
     deletePage: function() {
       if(this.model.get('name') == "Homepage" || this.model.get('name') == "Registration Page") {
-        new SimpleModalView({text: "Hompage and Registration page are essential parts of" +
-                                   "your application and cannot be deleted."});
+        new SimpleModalView({text: "The Hompage is an essential part of " +
+                                   "your application, and can't be deleted."});
 
         return;
       }
