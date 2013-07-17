@@ -243,20 +243,17 @@ def send_invitation_to_customer(request, customer_pk):
     customer.save()
     return HttpResponse("ok")
 
+
 @require_POST
 @csrf_exempt
 def update_analytics(request):
-    analytics_json = request.POST['data']
-    d_id = analytics_json['d_id']
-    analytics_data = analytics_json['analytics']
-    apps = App.objects.get(deployment_id=d_id)
-    app = None
-    if len(apps) > 1:
-        return HttpResponse("Error! More than one deployment on same id")
-    elif len(apps) == 1:
-        app = apps[0]
-    else:
-        return HttpResponse("Error! Cant get deployment on provided id")
+    analytics_json = simplejson.loads(request.POST['analytics'])
+    d_id = long(request.POST['d_id'])
+    analytics_data = simplejson.dumps(analytics_json)
+    try:
+        app = App.objects.get(deployment_id=d_id)
+    except App.DoesNotExist:
+        return HttpResponse("Deployment not found")
     old_analytics = AnalyticsStore.objects.all().filter(app=app)
     # Create analytics for the app if needed, otherwise update the analytics.
     if len(old_analytics) == 0:
@@ -269,5 +266,4 @@ def update_analytics(request):
     else:
         return HttpResponse("Error! Multiple analytic stores on provided app")
     return HttpResponse("ok")
-    
 
