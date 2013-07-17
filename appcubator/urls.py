@@ -27,7 +27,6 @@ urlpatterns = patterns('',
     url(r'^signup_form/$',              base_views.signup_new_customer),
     url(r'^signup_hn_form/$',           base_views.signup_hn_customer),
     url(r'^send_invitation/(\d+)/$',    base_views.send_invitation_to_customer),
-    url(r'^recv_analytics/$',           base_views.update_analytics),
     url(r'^backend/',                   include('app_builder.urls')),
 )
 
