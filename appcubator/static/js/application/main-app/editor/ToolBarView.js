@@ -36,7 +36,7 @@ function(PageModel) {
         this.renderPageItem(ind, page.get('name'));
       }, this);
 
-      this.createBox = new Backbone.NameBox({tagName: 'li', className:'new-page', txt:'New Page'});
+      this.createBox = new Backbone.NameBox({tagName: 'li', className:'new-page', txt:'New Page'}).render();
       this.createBox.on('submit', this.createPage);
 
       util.get('page-list').appendChild(this.createBox.el);
