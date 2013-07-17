@@ -101,7 +101,8 @@ function() {
         self.widgetUnhover(widget);
       });
 
-      widget.on('selected', function() {
+      widget.on('selected', function(model) {
+        if(self.selectedEl && model && self.selectedEl.cid == model.cid) return;
         self.widgetUnhover(widget);
         self.newSelected(widget);
       });
@@ -323,7 +324,7 @@ function() {
     },
 
     doubleClicked: function(e) {
-      if(!this.isMouseOn(e)) return;
+      if(!this.isMouseOn(e) || this.selectedEl.editModeOn) return;
 
       if(this.selectedEl.getForm()) return;
       if(this.selectedEl.getLoginRoutes()) return;

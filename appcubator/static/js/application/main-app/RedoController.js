@@ -29,8 +29,7 @@ function() {
       this.listenTo(model, 'change', this.changed);
       _(model.attributes).each(function(val, key) {
 
-        console.log(key);
-        if(this.isModel(val)) { console.log("is model"); this.bindModel(val); }
+        if(this.isModel(val)) { this.bindModel(val); }
         else if(this.isCollection(val)) { this.bindCollection(val); }
 
       }, this);
@@ -45,7 +44,6 @@ function() {
     },
 
     changed: function(model) {
-      console.log("hey");
       var changeObj = {
         action: 'change',
         prevAttributes: _.clone(model._previousAttributes),
@@ -56,12 +54,12 @@ function() {
     },
 
     isModel: function(obj) {
-      if(obj.attributes) return true;
+      if(obj && obj.attributes) return true;
       return false;
     },
 
     isCollection: function (obj) {
-      if(obj.models) return true;
+      if(obj && obj.models) return true;
       return false;
     },
 
