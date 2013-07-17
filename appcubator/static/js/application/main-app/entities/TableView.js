@@ -54,7 +54,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     renderProperties: function() {
-      this.model.get('fields').each(function(field) {
+      this.model.getFieldsColl().each(function(field) {
         // only render non-relational properties
         if(!field.isRelatedField()) {
           this.appendField(field);
@@ -102,6 +102,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
 
     removeField: function(fieldModel) {
       this.$('#column-'+fieldModel.cid).remove();
+      this.adjustTableWidth();
     },
 
     changedAttribs: function(e) {
@@ -159,7 +160,22 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     adjustTableWidth: function() {
-      var width = (this.model.get('fields').length + 7) * 94;
+      var propertyList = this.$el.find('ul.property-list').get(0);
+      var width = propertyList.clientWidth;
+
+      width += 120;
+      this.width = width;
+      this.$el.find('.tbl').width(width);
+      if(width > 870 && !this.hasArrow) {
+        this.hasArrow = true;
+        var div = document.createElement('div');
+        div.className = 'right-arrow';
+        this.$el.find('.description').append(div);
+      }
+    },
+
+    initializeTableWidth: function() {
+      var width = (this.model.getFieldsColl().length + 2) * 96;
       this.width = width;
       this.$el.find('.tbl').width(width);
       if(width > 870 && !this.hasArrow) {

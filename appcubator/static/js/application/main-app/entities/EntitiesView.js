@@ -24,20 +24,20 @@ function(TableCollection,
       css: 'entities',
       title: 'Tables',
       events : {
-        'click #add-role'        : 'clickedAddUserRole',
+        'click #add-role'         : 'clickedAddUserRole',
         'submit #add-role-form'   : 'createUserRole',
-        'click #add-entity'      : 'clickedAddTable',
+        'click #add-entity'       : 'clickedAddTable',
         'submit #add-entity-form' : 'createTable',
-        'click #add-relation'    : 'showCreateRelationForm',
-        'click .related-tag'     : 'scrollToRelation'
+        'click #add-relation'     : 'showCreateRelationForm',
+        'click .related-tag'      : 'scrollToRelation'
       },
 
       initialize: function() {
         _.bindAll(this);
         util.loadCSS(this.css);
-        this.tablesView     = new TablesView(v1State.get('tables'), false);
-        this.userTablesView = new TablesView(v1State.get('users'), true);
-        this.relationsView = new RelationsView();
+        this.tablesView         = new TablesView(v1State.get('tables'), false);
+        this.userTablesView     = new TablesView(v1State.get('users'), true);
+        this.relationsView      = new RelationsView();
         this.createRelationView = new CreateRelationView();
         this.title = "Tables";
       },
