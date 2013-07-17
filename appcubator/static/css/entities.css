@@ -195,15 +195,15 @@ input[type="checkbox"] {
   border: none;
   border-radius: 10px;
   line-height: 10px;
-  height: 45px;
+  height: 25px;
   text-align: center;
   padding-left: 15px;
   padding-right: 15px;
+  margin-top: 10px;
   cursor: pointer;
 }
 .tbl-wrapper .done-btn {
   font-size: 10px;
-  height: 25px;
   margin-top: 5px;
 }
 
@@ -651,7 +651,7 @@ table tr:hover td {
   background: -o-linear-gradient(#f3f3f3,#efefef);
   background: -ms-linear-gradient(#f3f3f3,#efefef);
   background: linear-gradient(#f3f3f3,#efefef);
-  -image border-radius: 4px;
+  border-radius: 4px;
 
   -webkit-box-shadow: 0 1px 3px #b9bbbe;
   box-shadow: 0 1px 3px #b9bbbe;
