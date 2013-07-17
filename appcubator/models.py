@@ -598,3 +598,13 @@ class AppstateSnapshot(models.Model):
     @property
     def state_json(self):
         return self._state_json
+
+class AnalyticsStore(models.Model):
+    owner = models.ForeignKey(User, related_name='analytics_stores')
+    app = models.ForeignKey(App, blank=True, null=True, related_name="analytics_stores")
+
+    analytics_json = models.TextField()
+
+    @property
+    def analytics_data(self):
+        return simplejson.loads(self.analytics_json)
