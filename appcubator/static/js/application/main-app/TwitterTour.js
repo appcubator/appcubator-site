@@ -659,8 +659,7 @@ function() {
   ind--;
   var currentSteps = steps.slice(ind);
   var quickTour = new Tourist.Tour({
-    steps: currentSteps,
-    tipOptions:{ showEffect: 'slidein' }
+    steps: currentSteps
   });
 
   quickTour.currentStep = currentSteps[0];

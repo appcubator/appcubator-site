@@ -338,6 +338,7 @@ z-index: -1;
   margin-top: 10px;
   text-align: center;
   font-family: 'verb_regularregular';
+  text-shadow: #0f3d50 0 1px 1px;
 }
 
 .left-panel h1 img {
