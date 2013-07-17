@@ -385,7 +385,8 @@ def _get_analytics(deployment_id):
         Then upsert it into the analytics store.
     """
     r = requests.post("http://%s/analytics/%d/" % (settings.DEPLOYMENT_HOSTNAME, deployment_id))
-    analytics_json = r.json()
+    # HACK to get rid of double quotes.
+    analytics_json = '%s' % r.text
     try:
         app = App.objects.get(deployment_id=deployment_id)
     except App.DoesNotExist:
