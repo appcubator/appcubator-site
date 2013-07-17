@@ -16,6 +16,7 @@ define([
   'editor/ToolBarView',
   'tutorial/TutorialView',
   'app/DeployView',
+  'app/RedoController',
   'editor/editor-templates'
 ],
 function( PageModel,
@@ -34,7 +35,8 @@ function( PageModel,
           MarqueeView,
           ToolBarView,
           TutorialView,
-          DeployView) {
+          DeployView,
+          RedoController) {
 
   var EditorView = Backbone.View.extend({
     className : 'editor-page',
@@ -66,6 +68,8 @@ function( PageModel,
       this.widgetsManager   = new WidgetsManagerView(this.widgetsCollection);
       this.guides           = new GuideView(this.widgetsCollection);
       this.toolBar          = new ToolBarView();
+
+      redoController = new RedoController();
 
       g_guides = this.guides;
 
