@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, RouteLog, Customer, ExtraUserData
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, RouteLog, Customer, ExtraUserData, AnalyticsStore
 from email.sendgrid_email import send_email
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
@@ -379,9 +379,21 @@ def app_emails(request, app_id):
     page_context = {'app': app, 'title': 'Emails', 'app_id': app_id}
     return render(request, 'app-emails.html', page_context)
 
-
-
-
+@require_GET
+@login_required
+@csrf_exempt
+def get_analytics(request, app_id):
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
+    analytics_data = None
+    try:
+        analytics_data = ApiKeyCounts.objects.get(app=app)
+    except AnalyticsStore.DoesNotExist:
+        return (500, "No analytics found for app_id")
+    data = analytics_data.analytics_data
+    return JSONResponse(data)
 
 @login_required
 @csrf_exempt

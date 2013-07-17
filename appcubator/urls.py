@@ -50,6 +50,9 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/delete/$', 'app_delete'),
     url(r'^app/(\d+)/edit_theme/$', 'app_edit_theme'),
 
+    # analytics
+    url(r'^app/(\d+)/analytics/$', 'get_analytics'),
+
     # entities
     url(r'^app/(\d+)/entities/xl/$', 'process_excel'),
     url(r'^app/(\d+)/entities/userxl/$', 'process_user_excel'),
