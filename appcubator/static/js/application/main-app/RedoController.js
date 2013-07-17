@@ -36,11 +36,11 @@ function() {
     },
 
     added: function(a, b, c, d, e, f, g) {
-      console.log("added");
+      //console.log("added");
     },
 
     removed: function(a, b, c, d, e, f, g) {
-      console.log("removed");
+      //console.log("removed");
     },
 
     changed: function(model) {
@@ -65,8 +65,8 @@ function() {
 
     redo: function() {
       var obj = this.redoStack.pop();
-      console.log(obj.obj);
-      console.log(obj.prevAttributes);
+      //console.log(obj.obj);
+      //console.log(obj.prevAttributes);
       obj.obj.attributes = _.clone(obj.prevAttributes);
       this.stopListening(obj.obj, 'change', this.changed);
       obj.obj.trigger('change');
