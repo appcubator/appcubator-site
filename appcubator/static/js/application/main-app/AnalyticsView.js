@@ -25,7 +25,7 @@ function(SimpleModalView) {
 
     fetchInfo: function() {
       $.ajax({
-        type: "POST",
+        type: "GET",
         url: '/app/' + appId + '/analytics/',
         success: function(data) {
           console.log(data);
