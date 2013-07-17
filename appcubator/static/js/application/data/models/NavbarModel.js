@@ -12,9 +12,7 @@ function(LinkCollection) {
     initialize: function(bone) {
 
       //init items collection with links passed from appState
-      this.set('links', new LinkCollection(bone.links));
-      this.links = this.get('links');
-
+      this.set('links', new LinkCollection(bone.links||[]));
     },
 
     getLinks: function() {

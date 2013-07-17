@@ -17,7 +17,10 @@ function() {
     return [curleft,curtop];
   };
 
+  var timer = {};
+
   var waitUntilAppears = function(selector, callbackFn, cont_args, count) {
+    clearTimeout(timer);
     var cnt = (count || 0);
 
     el = document.querySelector(selector);
@@ -25,7 +28,7 @@ function() {
 
     var repeat = function() {
       cnt++;
-      window.setTimeout(function() {
+      timer = window.setTimeout(function() {
         waitUntilAppears.call(this, selector, callbackFn, cont_args, cnt);
       }, 500);
     };
