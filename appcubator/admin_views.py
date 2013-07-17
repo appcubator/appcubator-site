@@ -28,34 +28,17 @@ from django.utils import timezone
 def admin_home(request):
     page_context = {}
 
-    # active users this week
-    today = timezone.now().date()
-    one_week_ago = today - timedelta(days=7)
-    past_week_logs = LogAnything.objects.filter(timestamp__gte=one_week_ago)
-    user_ids_last_week = past_week_logs.values('user_id').distinct()
-    users_last_week = [ExtraUserData.objects.get(pk=log["user_id"]) for log in user_ids_last_week]
-    page_context["users_last_week"] = users_last_week
+    # active users
+    page_context["users_today"] = recent_users(long_ago=timedelta(days=1))
+    page_context["users_last_week"] = recent_users(long_ago=timedelta(days=1))
+    page_context["users_last_month"] = recent_users(long_ago=timedelta(days=30))
 
-    # users with most page visits
-    page_visits = LogAnything.objects.filter(name='visited page')
-    logs_per_user = page_visits.values('user_id').annotate(num_logs=Count('user_id'))
-    if len(logs_per_user) > 10:
-        logs_per_user = logs_per_user[:10]
-    for x in logs_per_user:
-        user_id = x["user_id"]
-        x["user"] = ExtraUserData.objects.get(pk=user_id)
-        x["num_apps"] = x["user"].user.apps.count()
-    page_context["most_active_users"] = logs_per_user
+    # Top 10 users with most page visits
+    page_context["most_active_users"] = logs_per_user()
 
-    # deployed apps
-    deploy_logs_data = [log.data_json for log in LogAnything.objects.filter(name="deployed app")]
-    deploy_times = []
-    for d in deploy_logs_data:
-        if "deploy_time" in d:
-            number = float(d["deploy_time"].replace(" seconds", ""))
-            deploy_times.append(number)
-    page_context["avg_deployment_time"] = sum(deploy_times) / len(deploy_times)
-    page_context["num_deployed_apps"] = len(deploy_times)
+    # deployed apps stats
+    page_context["avg_deployment_time"] = avg_deployment_time()
+    page_context["num_deployed_apps"] = num_deployed_apps()
 
     return render(request, 'admin/home.html', page_context)
 
@@ -110,3 +93,36 @@ def admin_feedback(request):
     page_context = {}
     page_context["feedback"] = LogAnything.objects.filter(name='posted feedback')
     return render(request, 'admin/feedback.html', page_context)
+
+# active users this past week
+def recent_users(long_ago=timedelta(days=1)):
+    today = timezone.now().date()
+    one_week_ago = today - long_ago
+    past_week_logs = LogAnything.objects.filter(timestamp__gte=one_week_ago)
+    user_ids_last_week = past_week_logs.values('user_id').distinct()
+    users = [ExtraUserData.objects.get(pk=log["user_id"]) for log in user_ids_last_week]
+    return users
+
+# Top 10 users with most page visits
+def logs_per_user():
+    page_visits = LogAnything.objects.filter(name='visited page')
+    logs_per_user = page_visits.values('user_id').annotate(num_logs=Count('user_id'))
+    if len(logs_per_user) > 10:
+        logs_per_user = logs_per_user[:10]
+    for x in logs_per_user:
+        user_id = x["user_id"]
+        x["user"] = ExtraUserData.objects.get(pk=user_id)
+        x["num_apps"] = x["user"].user.apps.count()
+    return logs_per_user
+
+def avg_deployment_time():
+    deploy_logs_data = [log.data_json for log in LogAnything.objects.filter(name="deployed app")]
+    deploy_times = []
+    for d in deploy_logs_data:
+        if "deploy_time" in d:
+            number = float(d["deploy_time"].replace(" seconds", ""))
+            deploy_times.append(number)
+    return sum(deploy_times) / len(deploy_times)
+
+def num_deployed_apps():
+    return App.objects.filter(deployment_id__isnull=False).count()
