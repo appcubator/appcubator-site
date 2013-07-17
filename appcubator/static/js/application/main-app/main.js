@@ -64,7 +64,9 @@ require.config({
     "util.filepicker": {
       exports: "util"
     }
-  }
+  },
+
+  urlArgs: "bust=" + staticVersion
 
 });
 
