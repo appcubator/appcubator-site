@@ -40,6 +40,7 @@ define([
           this.$urlContainer = this.$el.find('.url-container');
           this.$select = this.$el.find('.select-container');
 
+          this.el.id = 'link-' + this.model.cid;
           return this;
         },
 
@@ -54,7 +55,6 @@ define([
         renderLinkOptions: function() {
           var self = this;
           var select = this.$el.find('.link-options');
-          console.log(select.html());
           var htmlString = '';
           _(this.linkOptions).each(function(link) {
             // if the link model doesn't have a URL,
