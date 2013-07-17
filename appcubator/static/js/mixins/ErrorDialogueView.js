@@ -12,8 +12,9 @@ function(Backbone) {
       'click .btn.done' : 'closeModal'
     },
 
-    initialize: function(data) {
+    initialize: function(data, callback) {
       this.render(data.img, data.text);
+      this.callback = callback;
     },
 
     render : function(img, text) {
