@@ -26,7 +26,7 @@ function(AnalyticsView, SimpleModalView) {
       var page_context = {};
       this.el.innerHTML = _.template(util.getHTML('app-main-page'), page_context);
       this.checkTutorialProgress();
-      this.el.appendChild(this.analyticsView.render().el);
+      this.$('.analytics').append(this.analyticsView.render().el);
     },
 
     checkTutorialProgress: function() {
