@@ -246,9 +246,9 @@ def send_invitation_to_customer(request, customer_pk):
 @require_POST
 @csrf_exempt
 def update_analytics(request):
-    analytics_json = simplejson.loads(request.POST['data'])
+    analytics_json = request.POST['data']
     d_id = analytics_json['d_id']
-    analytics_data = simplejson.dumps(analytics_json['analytics'])
+    analytics_data = analytics_json['analytics']
     apps = App.objects.get(deployment_id=d_id)
     app = None
     if len(apps) > 1:
