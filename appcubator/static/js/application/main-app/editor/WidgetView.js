@@ -3,23 +3,6 @@ define([
   'mixins/BackboneUI'
 ],function() {
 
-  $.fn.selectText = function(){
-    var doc = document;
-    var element = this[0];
-    var range;
-    if (doc.body.createTextRange) {
-      range = document.body.createTextRange();
-      range.moveToElementText(element);
-      range.select();
-    } else if (window.getSelection) {
-      var selection = window.getSelection();
-      range = document.createRange();
-      range.selectNodeContents(element);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
-  };
-
   var WidgetView = Backbone.UIView.extend({
     el: null,
     className: 'widget-wrapper',
@@ -69,7 +52,7 @@ define([
       }, this);
       this.model.bind('stopEditing', this.switchEditModeOff);
 
-      keyDispatcher.bind('command+enter', function() {
+      keyDispatcher.bind('meta+return', function() {
         self.model.trigger('stopEditing');
       });
     },
@@ -134,10 +117,6 @@ define([
       if(!this.editMode) {
         this.model.trigger('selected');
         this.el.style.zIndex = 2003;
-      }
-
-      if(this.editMode) {
-        this.model.trigger('stopEditing');
       }
     },
 
@@ -269,7 +248,7 @@ define([
         this.$el.addClass('textediting');
         el.attr('contenteditable', 'true');
         el.focus();
-        el.selectText();
+        util.selectText(el);
         keyDispatcher.textEditing = true;
       }
 
@@ -286,6 +265,7 @@ define([
       this.model.get('data').set('content', val);
       el.attr('contenteditable', 'false');
       keyDispatcher.textEditing = false;
+      util.unselectText();
     },
 
     autoResize: function(hGrid, vGrid) {

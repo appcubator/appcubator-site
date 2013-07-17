@@ -97,8 +97,6 @@ function (AppModel,
 
   $(document).ready(function() {
 
-    console.profile("General");
-
     v1State = new Backbone.Model();
     v1State = new AppModel(appState);
     v1State.set('pages', new PageCollection(appState.pages||[]));

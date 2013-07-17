@@ -9,8 +9,9 @@ function(Backbone) {
     tagName: 'div',
     className: 'deployed',
 
-    initialize: function(data) {
+    initialize: function(data, callback) {
       this.render(data.img, data.text);
+      this.callback = callback;
     },
 
     render : function(img, text) {

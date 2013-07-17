@@ -58,11 +58,11 @@ function( WidgetContainerView,
     },
 
     rowBindings: function() {
-      var self = this;
-      self.model.get('data').get('container_info').get('row').get('uielements').each(function(element) {
-        element.get('layout').bind('change', self.renderShadowElements);
-        element.get('data').bind('change', self.renderShadowElements);
-      });
+      // var self = this;
+      // self.model.get('data').get('container_info').get('row').get('uielements').each(function(element) {
+      //   element.get('layout').bind('change', self.renderShadowElements);
+      //   element.get('data').bind('change', self.renderShadowElements);
+      // });
     },
 
     render: function() {
@@ -131,7 +131,14 @@ function( WidgetContainerView,
       widgetView.setFreeMovement();
 
       this.editorRow.appendChild(widgetView.render().el);
-      widgetModel.get('layout').bind('change', this.renderShadowElements);
+
+      this.deepListenTo(widgetModel, 'change', this.renderShadowElements);
+
+      // widgetModel.get('layout').bind('change', this.renderShadowElements);
+      // //widgetModel.get('layout').bind('change', self.renderShadowElements);
+      // widgetModel.get('data').bind('change', self.renderShadowElements);
+      // widgetModel.get('data').bind('change', self.renderShadowElements);
+
       if(isNew) { widgetView.autoResize(); }
     },
 

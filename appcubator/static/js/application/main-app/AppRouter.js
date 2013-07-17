@@ -32,6 +32,7 @@ define([
 		},
 
 		tutorialDirectory: [0],
+		errorFlag: false,
 
 		initialize: function() {
 			var self = this;
@@ -225,11 +226,14 @@ define([
 		},
 
 		save: function(e) {
+			if(this.errorFlag) return;
 			if(appId === 0) return;
+
 			$('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
 			var $el = $('.menu-button.save');
             $el.fadeOut().html("<span>Saving...</span>").fadeIn();
 
+      var self = this;
 			appState = v1State.toJSON();
 			$.ajax({
 				type: "POST",
@@ -253,11 +257,15 @@ define([
 				},
 				error: function(data) {
 					if(data.responseText == "ok") return;
+					self.errorFlag = true;
 					var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
 					if(DEBUG) {
 						content = { text: data.responseText };
 					}
-					new ErrorDialogueView(content);
+
+					new ErrorDialogueView(content, function() {
+						self.errorFlag = false;
+					});
 				},
 				dataType: "JSON"
 			});

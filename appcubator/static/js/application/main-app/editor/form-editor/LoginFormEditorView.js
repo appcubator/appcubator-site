@@ -28,7 +28,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       }
 
       this.render();
-      util.loadCSS('form-editor');
     },
 
     render: function() {

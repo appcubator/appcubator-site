@@ -12,6 +12,7 @@ define([
         title: "Search Editor",
         doneButton: true,
         className: "search-editor",
+        css: 'searc-editor',
 
         padding: 0,
 
@@ -23,8 +24,6 @@ define([
         },
 
         render: function() {
-          util.loadCSS('search-editor');
-
           this.$el.append('<div class="row well well-small">' +
             '<p class="span24 offset2 hoff1"><strong>Goes to: </strong><select class="search-direct"></select></p>' +
             '</div>');

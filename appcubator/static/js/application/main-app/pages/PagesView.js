@@ -17,7 +17,6 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
     initialize: function() {
       _.bindAll(this);
 
-      util.loadCSS(this.css);
       this.collection = v1State.get('pages');
       this.listenTo(this.collection, 'add', function(model) { this.appendPage(model, false); });
 
@@ -53,6 +52,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
       }*/
 
       var createBox = new Backbone.NameBox({el: document.getElementById('create-page-box')});
+      this.subviews.push(createBox);
       createBox.on('submit', this.createPage);
 
       /*var createMobileBox = new Backbone.NameBox({el: document.getElementById('create-mobile-page-box')});

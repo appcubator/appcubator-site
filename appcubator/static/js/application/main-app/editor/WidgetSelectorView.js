@@ -102,6 +102,7 @@ function() {
       });
 
       widget.on('selected', function() {
+        if(self.selectedEl && widget && self.selectedEl.cid == widget.cid) return;
         self.widgetUnhover(widget);
         self.newSelected(widget);
       });
@@ -323,7 +324,7 @@ function() {
     },
 
     doubleClicked: function(e) {
-      if(!this.isMouseOn(e)) return;
+      if(!this.isMouseOn(e) || this.selectedEl.editModeOn) return;
 
       if(this.selectedEl.getForm()) return;
       if(this.selectedEl.getLoginRoutes()) return;
