@@ -13,6 +13,7 @@ define([
   'editor/FooterView',
   'editor/GuideView',
   'editor/MarqueeView',
+  'editor/ToolBarView',
   'tutorial/TutorialView',
   'app/DeployView',
   'mixins/BackboneNameBox',
@@ -32,6 +33,7 @@ function( PageModel,
           FooterView,
           GuideView,
           MarqueeView,
+          ToolBarView,
           TutorialView,
           DeployView) {
 
@@ -67,37 +69,32 @@ function( PageModel,
       this.galleryEditor    = new EditorGalleryView(this.widgetsCollection);
       this.widgetsManager   = new WidgetsManagerView(this.widgetsCollection);
       this.guides           = new GuideView(this.widgetsCollection);
+      this.toolBar          = new ToolBarView();
+
       g_guides = this.guides;
 
       this.navbar  = new NavbarView(this.model.get('navbar'));
       this.footer  = new FooterView(this.model.get('footer'));
       this.urlModel      = this.model.get('url');
 
-      var page = v1State.get('pages').at(pageId);
-
       this.title = "Editor";
+
+      this.subviews = [ this.marqueeView,
+                        this.galleryEditor,
+                        this.widgetsManager,
+                        this.guides,
+                        this.toolBar,
+                        this.navbar,
+                        this.footer ];
     },
 
     render: function() {
 
       if(!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
 
-      util.get('page-list').innerHTML += '<li>'+ v1State.get('pages').models[pageId].get('name') +'</li>';
 
-      v1State.get('pages').each(function(page, ind) {
-        if(pageId == ind) return;
-        util.get('page-list').innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>' + page.get('name') +
-                                          '</a></li>';
-      });
-
-      var createBox = new Backbone.NameBox({tagName: 'li', className:'new-page', txt:'New Page'});
-      createBox.on('submit', this.createPage);
-
-      util.get('page-list').appendChild(createBox.el);
-
-
+      this.toolBar.setElement(document.getElementById('tool-bar')).render();
       this.marqueeView.render();
-
       this.renderUrlBar();
       this.galleryEditor.render();
       this.widgetsManager.render();
@@ -202,8 +199,6 @@ function( PageModel,
 
     remove: function() {
       window.removeEventListener('resize', this.setupPageWrapper);
-      this.widgetsManager.remove();
-      this.marqueeView.remove();
       Backbone.View.prototype.remove.call(this);
     }
 
