@@ -101,8 +101,8 @@ function() {
         self.widgetUnhover(widget);
       });
 
-      widget.on('selected', function(model) {
-        if(self.selectedEl && model && self.selectedEl.cid == model.cid) return;
+      widget.on('selected', function() {
+        if(self.selectedEl && widget && self.selectedEl.cid == widget.cid) return;
         self.widgetUnhover(widget);
         self.newSelected(widget);
       });
