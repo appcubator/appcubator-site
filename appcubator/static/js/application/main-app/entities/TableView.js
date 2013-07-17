@@ -13,10 +13,9 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     collection : null,
     parentName : "",
     className  : 'span58 pane entity-pane hboff3',
+    subviews : [],
 
     events : {
-      'click .add-property-button' : 'clickedAddProperty',
-      'submit .add-property-form'  : 'formSubmitted',
       'change .attribs'            : 'changedAttribs',
       'click .remove'              : 'clickedPropDelete',
       'click .excel'               : 'clickedUploadExcel',
@@ -49,6 +48,9 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       this.renderProperties();
       this.renderRelations();
 
+      this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('.add-property-column').get(0)).render();
+      this.subviews.push(this.addPropertyBox);
+      this.addPropertyBox.on('submit', this.createNewProperty);
       this.adjustTableWidth();
       return this;
     },
@@ -68,19 +70,11 @@ function(FieldModel, UploadExcelView, ShowDataView) {
       $('.property-name-input', this.el).focus();
     },
 
-    formSubmitted: function(e) {
-      e.preventDefault();
-      var name = $('.property-name-input', e.target).val();
-
+    createNewProperty: function(val) {
+      var name = val;
       if(!name.length) return;
-
       var newField = new FieldModel({ name: name });
       this.model.get('fields').push(newField);
-
-      $('.property-name-input', e.target).val('');
-      $('.add-property-form').hide();
-      this.$el.find('.add-property-button').fadeIn();
-
     },
 
     appendField: function (fieldModel) {

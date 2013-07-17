@@ -10,9 +10,7 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
 
   var UserTableView = TableView.extend({
     el         : null,
-    tagName    : 'div',
-    collection : null,
-    parentName : "",
+    subviews: [],
 
     initialize: function(userTableModel){
       _.bindAll(this);
@@ -37,6 +35,12 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
       util.loadCSS('prettyCheckable');
       this.$el.find('input[type=checkbox]').prettyCheckable();
       this.adjustTableWidth();
+
+      this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('.add-property-column').get(0)).render();
+      this.subviews.push(this.addPropertyBox);
+      this.addPropertyBox.on('submit', this.createNewProperty);
+      this.adjustTableWidth();
+
       return this;
     },
 
