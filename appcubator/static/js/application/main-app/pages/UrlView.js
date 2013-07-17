@@ -96,8 +96,17 @@ function() {
     },
 
     addNewContextPart: function(e) {
-      var firstTableName = "{{" + v1State.get('tables').at(0).get('name') + "}}";
-      this.model.get('urlparts').push({value: firstTableName});
+      if(v1State.get('tables').length > 0) {
+        var firstTableName = "{{" + v1State.get('tables').at(0).get('name') + "}}";
+        this.model.get('urlparts').push({value: firstTableName});
+      }
+      else if(v1State.get('users').length > 0) {
+        var firstUserName = "{{" + v1State.get('users').at(0).get('name') + "}}";
+        this.model.get('urlparts').push({value: firstUserName});
+      }
+      else {
+        alert("Create a Table or User before adding a context value");
+      }
       this.$('.context-part').last().focus();
     },
 
