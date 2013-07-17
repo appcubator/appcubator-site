@@ -26,19 +26,31 @@ function() {
       this.listenTo(this.model.get('urlparts'), 'change:value', this.renderFullUrl);
       this.listenTo(this.model.get('urlparts'), 'add', this.appendUrlPartForm);
       this.listenTo(this.model.get('urlparts'), 'remove', this.removeUrlPart);
+      this.listenTo(this.model.get('urlparts'), 'reset', this.renderUrlParts);
       this.render();
     },
 
     render: function() {
       var temp = UrlTemplate.mainTemplate;
       this.el.innerHTML = _.template(temp, this.model.toJSON());
-      this.model.get('urlparts').each(this.appendUrlPartForm);
+      this.renderUrlParts();
       this.renderFullUrl();
+
+      this.$('.url-parts').sortable({
+        stop: this.changedOrder,
+        axis: 'y'
+      });
+
       return this;
     },
 
     renderFullUrl: function() {
       this.$('.full-url').text(this.model.getUrlString());
+    },
+
+    renderUrlParts: function() {
+      this.$('.url-parts').empty();
+      this.model.get('urlparts').each(this.appendUrlPartForm);
     },
 
     appendUrlPartForm: function(urlpart, index) {
@@ -113,6 +125,19 @@ function() {
     addNewSuffixPart: function(e) {
       this.model.get('urlparts').push({value: 'customtext'});
       this.$('.suffix-part').last().focus();
+    },
+
+    changedOrder: function(e, ui) {
+      var self = this;
+      var sortedIDs = $( '.url-parts' ).sortable( "toArray" );
+      console.log(this.model.get('urlparts').toJSON());
+
+      var newUrlParts = _(sortedIDs).map(function(id) {
+        return self.model.get('urlparts').get(id.replace('urlpart-',''));
+      });
+
+      this.model.get('urlparts').reset(newUrlParts);
+      console.log(this.model.get('urlparts').toJSON());
     }
   });
 
