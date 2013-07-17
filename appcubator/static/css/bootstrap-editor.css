@@ -3652,6 +3652,10 @@ ul.list {
   margin-left: 15px;
 }
 
+#edit-customText {
+  width: 90%;
+}
+
 #navbar-editor h4 {
   margin-right: 15px;
 }
@@ -3728,7 +3732,7 @@ ul.list {
   background-color: #ec6a5f;
 }
 
-#navbar-editor .add-link {
+#navbar-editor .add-link, #footer-editor .add-link {
   margin-top: 20px;
 }
 
@@ -3752,6 +3756,6 @@ ul.list {
   border-bottom: 1px dashed #ccc;
 }
 
-.shadow-x.trans { 
+.shadow-x.trans {
   opacity: 0.6;
 }

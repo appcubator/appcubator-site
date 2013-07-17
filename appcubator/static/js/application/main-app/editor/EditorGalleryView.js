@@ -143,7 +143,6 @@ define([
     },
 
     renderEntitiyFormsTablesLists: function() {
-      //this.addHeaderItem('Table Data');
       var tableSection = this.addSection('Table Data');
       v1State.get('tables').each(function(entityModel) {
         var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
@@ -485,9 +484,10 @@ define([
       return li;
     },
 
-    addHeaderItem: function(text) {
+    addHeaderItem: function(text, target) {
       var li = document.createElement('li');
       li.className = 'gallery-header ui-draggable';
+      li.dataset.target = target;
       li.innerHTML = text;
       var icon = document.createElement('img');
       icon.className="icon";
@@ -498,20 +498,21 @@ define([
     },
 
     addSection: function(name) {
-      var header = this.addHeaderItem(name);
       var sectionName = name.replace(/ /g,'-');
-      header.onclick = function(e) {
+      var target = '.'+sectionName;
+      var header = this.addHeaderItem(name, target);
+      $(header).click(function(e) {
         if(!$(this).hasClass('open')) {
           var header = $(e.currentTarget);
           var top = header.position() && header.position().top;
           $('#item-gallery').animate({
             scrollTop: top - 90
           }, 400);
-      }
-        var section = $('.'+sectionName);
+        }
+        // toggle corresponding section open/closed
+        $(e.currentTarget.dataset.target).slideToggle('fast');
         $(this).toggleClass('open');
-        $('.'+sectionName).slideToggle('fast');
-      };
+      });
 
       var section = document.createElement('section');
       section.className = sectionName;
@@ -548,6 +549,11 @@ define([
                      .end().find('.gallery-header').addClass('open');
     },
 
+    toggleSection: function(index) {
+      var $allList = $(this.allList);
+      $allList.find('.gallery-header').eq(index).click();
+    },
+
     slideDown: function() {
       var itemGallery = document.getElementById('item-gallery');
       var h = $(itemGallery).scrollTop();
@@ -555,6 +561,7 @@ define([
     }
 
   });
+
 
   return EditorGalleryView;
 });

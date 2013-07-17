@@ -389,7 +389,7 @@ function() {
         // $('#item-gallery').animate({
         //   scrollTop: $("#type-headerTexts").offset().top
         // }, 100);
-
+        v1.save();
         return { target: $('#editor-save') };
       },
       teardown: function() {
@@ -659,8 +659,7 @@ function() {
   ind--;
   var currentSteps = steps.slice(ind);
   var quickTour = new Tourist.Tour({
-    steps: currentSteps,
-    tipOptions:{ showEffect: 'slidein' }
+    steps: currentSteps
   });
 
   quickTour.currentStep = currentSteps[0];
