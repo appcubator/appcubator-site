@@ -32,7 +32,7 @@ function(AnalyticsView, SimpleModalView) {
 
     checkTutorialProgress: function() {
       $.ajax({
-        type: "POST",
+        type: "GET",
         url: '/log/slide/',
         data: { title: null, directory: null },
         success: function(data) {
