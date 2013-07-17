@@ -37,8 +37,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     initialize: function(formModel, entityM) {
       _.bindAll(this);
 
-      util.loadCSS(this.css);
-
       this.model = formModel;
       this.entityModel = entityM;
 

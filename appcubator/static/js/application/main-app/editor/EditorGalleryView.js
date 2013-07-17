@@ -37,7 +37,7 @@ define([
       // All Create Forms, Tables, Lists
       // Context Entity Elements and Update Forms
       var self = this;
-      util.loadCSS(this.css);
+
       this.allList = util.get('all-list');
 
       this.renderUIElementList();

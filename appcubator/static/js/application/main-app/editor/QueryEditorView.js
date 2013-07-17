@@ -21,7 +21,6 @@ function() {
     initialize: function(widgetModel, containerType) {
       _.bindAll(this);
 
-      util.loadCSS(this.css);
       this.widgetModel = widgetModel;
       this.containerType = containerType;
       this.model = widgetModel.get('data').get('container_info').get('query');

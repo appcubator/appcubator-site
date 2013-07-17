@@ -34,7 +34,7 @@ function(TableCollection,
 
       initialize: function() {
         _.bindAll(this);
-        util.loadCSS(this.css);
+
         this.tablesView         = new TablesView(v1State.get('tables'), false);
         this.userTablesView     = new TablesView(v1State.get('users'), true);
         this.relationsView      = new RelationsView();

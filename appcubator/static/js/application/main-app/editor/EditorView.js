@@ -53,7 +53,6 @@ function( PageModel,
 
       if(options && options.pageId) pageId = options.pageId;
 
-      util.loadCSS(this.css);
       util.loadCSS('jquery-ui');
 
       this.model             = v1State.get('pages').models[pageId];

@@ -16,7 +16,6 @@ function(AnalyticsView, SimpleModalView) {
 
     initialize: function() {
       _.bindAll(this);
-      util.loadCSS(this.css);
       this.analyticsView = new AnalyticsView();
       this.subviews = [this.analyticsView];
 
