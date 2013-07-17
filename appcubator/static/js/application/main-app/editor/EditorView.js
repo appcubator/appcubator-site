@@ -16,7 +16,6 @@ define([
   'editor/ToolBarView',
   'tutorial/TutorialView',
   'app/DeployView',
-  'mixins/BackboneNameBox',
   'editor/editor-templates'
 ],
 function( PageModel,
@@ -46,9 +45,7 @@ function( PageModel,
       'click #deploy'        : 'deploy',
       'click .menu-button.help' : 'help',
       'click .menu-button.question' : 'question',
-      'click .url-bar'       : 'clickedUrl',
-      'click .home'          : 'clickedHome',
-      'click .go-to-page'    : 'clickedGoToPage'
+      'click .url-bar'       : 'clickedUrl'
     },
 
     initialize: function(options) {
@@ -156,33 +153,6 @@ function( PageModel,
     clickedUrl: function() {
       var newView =  new UrlView(this.urlModel);
       newView.onClose = this.renderUrlBar;
-    },
-
-    createPage: function(name) {
-      var pageUrlPart = name.replace(/ /g, '_');
-      var pageUrl = { urlparts : [pageUrlPart] };
-      var pageInd = v1State.get('pages').length;
-      var pageModel = new PageModel({ name: name, url: pageUrl});
-      v1State.get('pages').push(pageModel);
-
-      $.ajax({
-        type: "POST",
-        url: '/app/'+appId+'/state/',
-        data: JSON.stringify(v1State.toJSON()),
-        complete: function() {
-          $('<li class="go-to-page" id="page-'+pageInd+'"><a>'+name+'</a></li>').insertBefore($('#page-list').find(".new-page"));
-        },
-        dataType: "JSON"
-      });
-    },
-
-    clickedHome: function(e) {
-      v1.navigate("app/"+ appId +"/pages/", {trigger: true});
-    },
-
-    clickedGoToPage: function(e) {
-      var goToPageId = (e.target.id||e.target.parentNode.id).replace('page-','');
-      v1.navigate("app/"+ appId +"/editor/" + goToPageId +"/", {trigger: true});
     },
 
     setupPageWrapper: function() {

@@ -50,6 +50,13 @@ function(Backbone) {
         this.$el.find('.box-button').fadeIn();
         this.trigger('submit', name);
       }
+    },
+
+    reset: function() {
+      var nameInput = this.$el.find('input[type=text]');
+      nameInput.val('');
+      this.$el.find('form').hide();
+      this.$el.find('.box-button').fadeIn();
     }
 
   });
