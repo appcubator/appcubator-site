@@ -134,6 +134,7 @@ function( WidgetContainerView,
       widgetModel.get('layout').bind('change', this.renderShadowElements);
       //widgetModel.get('layout').bind('change', self.renderShadowElements);
       widgetModel.get('data').bind('change', self.renderShadowElements);
+      widgetModel.get('data').bind('change', self.renderShadowElements);
 
       if(isNew) { widgetView.autoResize(); }
     },
