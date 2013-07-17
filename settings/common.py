@@ -98,6 +98,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.csrf",
     "appcubator.context_processors.list_of_users_apps.list_of_users_apps",
     "appcubator.context_processors.list_of_users_apps.debug",
+    "appcubator.context_processors.list_of_users_apps.static_cache_busting"
 )
 
 INSTALLED_APPS = (
@@ -187,3 +188,9 @@ EMAIL_USE_TLS = False
 DEFAULT_FROM_EMAIL = 'team@appcubator.com'
 
 DEPLOYMENT_HOSTNAME = 'deployment.staging.appcubator.com'
+
+import os, os.path
+import re
+static_version_file_path = os.path.join(os.path.dirname(__file__), 'STATIC_VERSION')
+with open(static_version_file_path) as bro:
+    CACHE_BUSTING_STRING = re.sub(r'[^0-9A-Za-z_\-]', '', bro.read().split('\n')[0].strip())
