@@ -389,9 +389,9 @@ def get_analytics(request, app_id):
         raise Http404
     analytics_data = None
     try:
-        analytics_data = ApiKeyCounts.objects.get(app=app)
+        analytics_data = AnalyticsStore.objects.get(app=app)
     except AnalyticsStore.DoesNotExist:
-        return (500, "No analytics found for app_id")
+        return HttpResponse("No analytics found for app_id")
     data = analytics_data.analytics_data
     return JSONResponse(data)
 
