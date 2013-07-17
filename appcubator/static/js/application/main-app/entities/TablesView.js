@@ -67,6 +67,8 @@ function( FieldModel,
       this.subviews.push(table);
       this.tableDiv = table;
       this.el.appendChild(table.render().el);
+      table.initializeTableWidth();
+
       return this;
     },
 

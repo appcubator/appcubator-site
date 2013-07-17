@@ -37,8 +37,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     initialize: function(formModel, entityM) {
       _.bindAll(this);
 
-      util.loadCSS(this.css);
-
       this.model = formModel;
       this.entityModel = entityM;
 
@@ -266,6 +264,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       e.preventDefault();
 
       var name = this.$el.find('.new-field-name').val();
+      if(name == '') return false;
       var type = this.$el.find('input:radio[name=field-type]:checked').val();
 
       var fieldModel = this.entityModel.get('fields').push({name: name, type: type});
@@ -313,6 +312,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       this.$el.find('.details-panel').html('Select the corresponding field.');
       var html = '<ul class="table-fields-list" class="new-field-tablefields">';
       this.entityModel.get('fields').each(function(field) {
+        if(field.isRelatedField()) return;
         html += '<li><input type="radio" class="new-field-option" name="tablefields" id="tablefield-'+field.cid+'"><label for="tablefield-'+field.cid+'">'+ field.get('name') +'</label></li>';
       });
       html += '<li><input type="radio" class="new-field-option" name="tablefields" id="tablefield-new"><label for="tablefield-new">Create A New Field</label></li>';

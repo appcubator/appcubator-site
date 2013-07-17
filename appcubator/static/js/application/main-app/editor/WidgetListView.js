@@ -58,11 +58,11 @@ function( WidgetContainerView,
     },
 
     rowBindings: function() {
-      var self = this;
-      self.model.get('data').get('container_info').get('row').get('uielements').each(function(element) {
-        element.get('layout').bind('change', self.renderShadowElements);
-        element.get('data').bind('change', self.renderShadowElements);
-      });
+      // var self = this;
+      // self.model.get('data').get('container_info').get('row').get('uielements').each(function(element) {
+      //   element.get('layout').bind('change', self.renderShadowElements);
+      //   element.get('data').bind('change', self.renderShadowElements);
+      // });
     },
 
     render: function() {
@@ -106,6 +106,8 @@ function( WidgetContainerView,
       this.listDiv.innerHTML = _.template(Templates.listNode, {layout: row.get('layout'),
                                                           uielements: uielements,
                                                           isListOrGrid: row.get('isListOrGrid')});
+
+      if(this.editMode) { console.log("YOLO"); $('.fdededfcbcbcd .shadow-x').addClass('trans'); }
       return this.listDiv;
     },
 
@@ -115,6 +117,7 @@ function( WidgetContainerView,
 
     highlightFirstRow: function() {
       var self = this;
+      this.editMode = true;
       this.highlighted = true;
       this.$el.addClass('selected');
       $(this.editorRow).resizable({
@@ -123,6 +126,8 @@ function( WidgetContainerView,
         stop  : self.resized
       });
       $(this.editorRow).addClass('highlighted');
+
+      $('.fdededfcbcbcd .shadow-x').addClass('trans');
     },
 
     placeWidget: function(widgetModel, isNew) {
@@ -131,7 +136,14 @@ function( WidgetContainerView,
       widgetView.setFreeMovement();
 
       this.editorRow.appendChild(widgetView.render().el);
-      widgetModel.get('layout').bind('change', this.renderShadowElements);
+
+      this.deepListenTo(widgetModel, 'change', this.renderShadowElements);
+
+      // widgetModel.get('layout').bind('change', this.renderShadowElements);
+      // //widgetModel.get('layout').bind('change', self.renderShadowElements);
+      // widgetModel.get('data').bind('change', self.renderShadowElements);
+      // widgetModel.get('data').bind('change', self.renderShadowElements);
+
       if(isNew) { widgetView.autoResize(); }
     },
 
@@ -158,6 +170,7 @@ function( WidgetContainerView,
       this.$el.find('.row').first().removeClass('highlighted');
       this.widgetSelectorView.deselect();
       if(this.highlighted) $(this.editorRow).resizable("destroy");
+      $('.shadow-x.trans').removeClass('trans');
       this.highlighted = false;
     }
 

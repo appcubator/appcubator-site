@@ -13,9 +13,10 @@ define([
   'editor/FooterView',
   'editor/GuideView',
   'editor/MarqueeView',
+  'editor/ToolBarView',
   'tutorial/TutorialView',
   'app/DeployView',
-  'mixins/BackboneNameBox',
+  'app/RedoController',
   'editor/editor-templates'
 ],
 function( PageModel,
@@ -32,8 +33,10 @@ function( PageModel,
           FooterView,
           GuideView,
           MarqueeView,
+          ToolBarView,
           TutorialView,
-          DeployView) {
+          DeployView,
+          RedoController) {
 
   var EditorView = Backbone.View.extend({
     className : 'editor-page',
@@ -44,9 +47,7 @@ function( PageModel,
       'click #deploy'        : 'deploy',
       'click .menu-button.help' : 'help',
       'click .menu-button.question' : 'question',
-      'click .url-bar'       : 'clickedUrl',
-      'click .home'          : 'clickedHome',
-      'click .go-to-page'    : 'clickedGoToPage'
+      'click .url-bar'       : 'clickedUrl'
     },
 
     initialize: function(options) {
@@ -54,7 +55,6 @@ function( PageModel,
 
       if(options && options.pageId) pageId = options.pageId;
 
-      util.loadCSS(this.css);
       util.loadCSS('jquery-ui');
 
       this.model             = v1State.get('pages').models[pageId];
@@ -67,37 +67,34 @@ function( PageModel,
       this.galleryEditor    = new EditorGalleryView(this.widgetsCollection);
       this.widgetsManager   = new WidgetsManagerView(this.widgetsCollection);
       this.guides           = new GuideView(this.widgetsCollection);
+      this.toolBar          = new ToolBarView();
+
+      redoController = new RedoController();
+
       g_guides = this.guides;
 
       this.navbar  = new NavbarView(this.model.get('navbar'));
       this.footer  = new FooterView(this.model.get('footer'));
       this.urlModel      = this.model.get('url');
 
-      var page = v1State.get('pages').at(pageId);
-
       this.title = "Editor";
+
+      this.subviews = [ this.marqueeView,
+                        this.galleryEditor,
+                        this.widgetsManager,
+                        this.guides,
+                        this.toolBar,
+                        this.navbar,
+                        this.footer ];
     },
 
     render: function() {
 
       if(!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
 
-      util.get('page-list').innerHTML += '<li>'+ v1State.get('pages').models[pageId].get('name') +'</li>';
 
-      v1State.get('pages').each(function(page, ind) {
-        if(pageId == ind) return;
-        util.get('page-list').innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>' + page.get('name') +
-                                          '</a></li>';
-      });
-
-      var createBox = new Backbone.NameBox({tagName: 'li', className:'new-page', txt:'New Page'});
-      createBox.on('submit', this.createPage);
-
-      util.get('page-list').appendChild(createBox.el);
-
-
+      this.toolBar.setElement(document.getElementById('tool-bar')).render();
       this.marqueeView.render();
-
       this.renderUrlBar();
       this.galleryEditor.render();
       this.widgetsManager.render();
@@ -161,33 +158,6 @@ function( PageModel,
       newView.onClose = this.renderUrlBar;
     },
 
-    createPage: function(name) {
-      var pageUrlPart = name.replace(/ /g, '_');
-      var pageUrl = { urlparts : [pageUrlPart] };
-      var pageInd = v1State.get('pages').length;
-      var pageModel = new PageModel({ name: name, url: pageUrl});
-      v1State.get('pages').push(pageModel);
-
-      $.ajax({
-        type: "POST",
-        url: '/app/'+appId+'/state/',
-        data: JSON.stringify(v1State.toJSON()),
-        complete: function() {
-          $('<li class="go-to-page" id="page-'+pageInd+'"><a>'+name+'</a></li>').insertBefore($('#page-list').find(".new-page"));
-        },
-        dataType: "JSON"
-      });
-    },
-
-    clickedHome: function(e) {
-      v1.navigate("app/"+ appId +"/pages/", {trigger: true});
-    },
-
-    clickedGoToPage: function(e) {
-      var goToPageId = (e.target.id||e.target.parentNode.id).replace('page-','');
-      v1.navigate("app/"+ appId +"/editor/" + goToPageId +"/", {trigger: true});
-    },
-
     setupPageWrapper: function() {
       var height = window.innerHeight - 90;
       util.get('page-wrapper').style.height = height+ 'px';
@@ -202,8 +172,6 @@ function( PageModel,
 
     remove: function() {
       window.removeEventListener('resize', this.setupPageWrapper);
-      this.widgetsManager.remove();
-      this.marqueeView.remove();
       Backbone.View.prototype.remove.call(this);
     }
 

@@ -18,7 +18,7 @@ function(TableModel, FieldModel, FieldsCollection, Backbone) {
     },
 
     getFieldsColl: function() {
-      var arr = _.union(this.get('fields').models, v1State.get('users').predefinedFields);
+      var arr = _.union(v1State.get('users').predefinedFields, this.get('fields').models);
       return new Backbone.Collection(arr);
     },
 

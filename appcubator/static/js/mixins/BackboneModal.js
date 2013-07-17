@@ -21,7 +21,7 @@ function(Backbone) {
       }
       this.backgroundDiv = this.setupModal();
       this.modalWindow = this.setupModalWindow();
-      _.bindAll(this, 'closeModal', 'handleKey');
+      _.bindAll(this);
     },
 
     _ensureElement: function(options) {

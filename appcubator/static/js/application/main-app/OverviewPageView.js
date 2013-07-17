@@ -1,8 +1,9 @@
 define([
+  'app/AnalyticsView',
   'mixins/SimpleModalView',
   'app/templates/MainTemplates'
 ],
-function(SimpleModalView) {
+function(AnalyticsView, SimpleModalView) {
 
   var OverviewPageView = Backbone.View.extend({
     css: 'app-page',
@@ -15,7 +16,9 @@ function(SimpleModalView) {
 
     initialize: function() {
       _.bindAll(this);
-      util.loadCSS(this.css);
+      this.analyticsView = new AnalyticsView();
+      this.subviews = [this.analyticsView];
+
       this.title = "The Garage";
     },
 
@@ -23,11 +26,12 @@ function(SimpleModalView) {
       var page_context = {};
       this.el.innerHTML = _.template(util.getHTML('app-main-page'), page_context);
       this.checkTutorialProgress();
+      this.el.appendChild(this.analyticsView.render().el);
     },
 
     checkTutorialProgress: function() {
       $.ajax({
-        type: "POST",
+        type: "GET",
         url: '/log/slide/',
         data: { title: null, directory: null },
         success: function(data) {

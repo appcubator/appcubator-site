@@ -9,7 +9,7 @@ from django import forms
 from django.utils import simplejson
 from copy import deepcopy
 
-from models import Customer, InvitationKeys
+from models import Customer, InvitationKeys, AnalyticsStore, App
 from appcubator.email.sendgrid_email import send_email
 
 import requests
@@ -242,3 +242,4 @@ def send_invitation_to_customer(request, customer_pk):
     customer.sent_welcome_email = True
     customer.save()
     return HttpResponse("ok")
+

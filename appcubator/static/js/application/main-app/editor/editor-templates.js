@@ -196,10 +196,10 @@ Templates.queryView = [
     '<select class="sort-by">',
     '<option id="by-date" value="Date">From older to newer</option>',
     '<option id="by-date" value="-Date">From newer to older</option>',
-    '<% _.each(entity.get("fields").models, function(field) { %>',
-      '<% var selected = "";  if("by-" + field.get("name") == query.get("sortAccordingTo")) selected = "selected" %>',
-      '<option value="by-<%=field.get("name")%>" <%= selected %>>Alphabetically according to <%= field.get("name") %></option>',
-    '<% }); %>',
+    // '<% _.each(entity.get("fields").models, function(field) { %>',
+    //   '<% var selected = "";  if("by-" + field.get("name") == query.get("sortAccordingTo")) selected = "selected" %>',
+    //   '<option value="by-<%=field.get("name")%>" <%= selected %>>Alphabetically according to <%= field.get("name") %></option>',
+    // '<% }); %>',
     '</select>',
     '</div>',
 
@@ -252,7 +252,7 @@ Templates.tempUIElementSized = [
 ].join('\n');
 
 Templates.rowNode = [
-  '<div <% if(isListOrGrid == "list") { %> class="row hi<%= layout.get(\'height\')%> block" <% } else { %> class="row span<%= layout.get(\'width\') %> hi<%= layout.get(\'height\') %>" <% } %> style="position:relative;">',
+  '<div <% if(isListOrGrid == "list") { %> class="row hi<%= layout.get(\'height\')%> block shadow-x" <% } else { %> class="row span<%= layout.get(\'width\') %> hi<%= layout.get(\'height\') %> shadow-x" <% } %> style="position:relative;">',
     '<% _(uielements).each(function(element){ %>',
       Templates.tempUIElementSized,
     '<% }); %>',

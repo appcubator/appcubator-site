@@ -236,7 +236,34 @@ define(['jquery'], function() {
     capitaliseFirstLetter: function(string)
     {
         return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+
+    selectText: function($el) {
+      var doc = document;
+      var element = $el.get(0);
+      var range;
+
+      if (doc.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+      } else if (window.getSelection) {
+        var selection = window.getSelection();
+        range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    },
+
+    unselectText: function () {
+      if ( document.selection ) {
+          document.selection.empty();
+      } else if ( window.getSelection ) {
+          window.getSelection().removeAllRanges();
+      }
     }
+
   };
 
   function csrfSafeMethod(method) {

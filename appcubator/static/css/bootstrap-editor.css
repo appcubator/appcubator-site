@@ -3054,7 +3054,7 @@ li.model span.title {
   width: 269px;
   padding: 0;
   background-color: #2b3545;
-  max-height: 42px;
+  height: 42px;
   overflow: hidden;
   margin: 0;
 }
@@ -3087,9 +3087,10 @@ background-repeat: no-repeat;
   width: 95%;
 }
 
-.pages:hover ul {
+/*.pages:hover ul {
   max-height: 400px;
 }
+*/
 
 ul.list {
   background-image: none;
@@ -3749,4 +3750,8 @@ ul.list {
 
 .list-widget.selected .row {
   border-bottom: 1px dashed #ccc;
+}
+
+.shadow-x.trans { 
+  opacity: 0.6;
 }
