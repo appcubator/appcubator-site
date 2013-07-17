@@ -386,9 +386,9 @@ function() {
       nextButton: true,
       url: '/editor/0/',
       setup: function(tour, options) {
-        // $('#item-gallery').animate({
-        //   scrollTop: $("#type-headerTexts").offset().top
-        // }, 100);
+        $('#item-gallery').animate({
+          scrollTop: $("#type-headerTexts").offset().top
+        }, 100);
         v1.save();
         return { target: $('#editor-save') };
       },
@@ -645,7 +645,7 @@ function() {
       nextButton: true,
       url: '/editor/1/',
       setup: function(tour, options) {
-        return { target: $('#deploy') };
+        return { target: $('#deploy').first() };
       },
       teardown: function() {
         v1State.attributes.walkthrough++;

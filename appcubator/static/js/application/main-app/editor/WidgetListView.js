@@ -76,7 +76,7 @@ function( WidgetContainerView,
 
       this.setTop(this.positionVerticalGrid * this.model.get('layout').get('top'));
       this.setLeft(this.positionHorizontalGrid * this.model.get('layout').get('left'));
-      this.setHeight(height * GRID_HEIGHT);
+      this.setHeight(height * this.positionVerticalGrid);
 
       this.el.className += ' widget-wrapper span'+width;
       this.el.id = 'widget-wrapper-' + this.model.cid;
@@ -107,7 +107,7 @@ function( WidgetContainerView,
                                                           uielements: uielements,
                                                           isListOrGrid: row.get('isListOrGrid')});
 
-      if(this.editMode) { console.log("YOLO"); $('.fdededfcbcbcd .shadow-x').addClass('trans'); }
+      if(this.editMode) { $('.fdededfcbcbcd .shadow-x').addClass('trans'); }
       return this.listDiv;
     },
 
