@@ -3751,3 +3751,7 @@ ul.list {
 .list-widget.selected .row {
   border-bottom: 1px dashed #ccc;
 }
+
+.shadow-x.trans { 
+  opacity: 0.6;
+}

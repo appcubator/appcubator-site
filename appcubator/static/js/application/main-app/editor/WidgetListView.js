@@ -106,6 +106,8 @@ function( WidgetContainerView,
       this.listDiv.innerHTML = _.template(Templates.listNode, {layout: row.get('layout'),
                                                           uielements: uielements,
                                                           isListOrGrid: row.get('isListOrGrid')});
+
+      if(this.editMode) { console.log("YOLO"); $('.fdededfcbcbcd .shadow-x').addClass('trans'); }
       return this.listDiv;
     },
 
@@ -115,6 +117,7 @@ function( WidgetContainerView,
 
     highlightFirstRow: function() {
       var self = this;
+      this.editMode = true;
       this.highlighted = true;
       this.$el.addClass('selected');
       $(this.editorRow).resizable({
@@ -123,6 +126,8 @@ function( WidgetContainerView,
         stop  : self.resized
       });
       $(this.editorRow).addClass('highlighted');
+
+      $('.fdededfcbcbcd .shadow-x').addClass('trans');
     },
 
     placeWidget: function(widgetModel, isNew) {
@@ -165,6 +170,7 @@ function( WidgetContainerView,
       this.$el.find('.row').first().removeClass('highlighted');
       this.widgetSelectorView.deselect();
       if(this.highlighted) $(this.editorRow).resizable("destroy");
+      $('.shadow-x.trans').removeClass('trans');
       this.highlighted = false;
     }
 
