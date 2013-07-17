@@ -389,7 +389,7 @@ function() {
         // $('#item-gallery').animate({
         //   scrollTop: $("#type-headerTexts").offset().top
         // }, 100);
-
+        v1.save();
         return { target: $('#editor-save') };
       },
       teardown: function() {
