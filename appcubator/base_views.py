@@ -269,3 +269,5 @@ def update_analytics(request):
     else:
         return HttpResponse("Error! Multiple analytic stores on provided app")
     return HttpResponse("ok")
+    
+
