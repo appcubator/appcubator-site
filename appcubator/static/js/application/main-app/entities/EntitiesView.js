@@ -74,12 +74,6 @@ function(TableCollection,
         util.get('relations').appendChild(this.relationsView.render().el);
       },
 
-      clickedAddUserRole: function(e) {
-        $(e.currentTarget).hide();
-        $('#add-role-form').fadeIn();
-        $('#add-role-form').find('input[type="text"]').focus();
-      },
-
       createUserRole: function(val) {
 
         var name = val;
@@ -102,19 +96,9 @@ function(TableCollection,
         }
 
         v1State.get('users').add(elem);
-
-        $(e.target).find('input[type="text"]').val('');
-        $('#add-role').fadeIn();
-        $(e.target).hide();
-
         return elem;
       },
 
-      clickedAddTable: function(e) {
-        $(e.currentTarget).hide();
-        $('#add-entity-form').fadeIn();
-        $('#add-entity-form').find('input[type="text"]').focus();
-      },
 
       createTable: function(val) {
           var name = val;
