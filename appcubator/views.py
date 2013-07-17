@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.http import Http404
 
 from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, RouteLog, Customer, ExtraUserData, AnalyticsStore
 from email.sendgrid_email import send_email
@@ -408,6 +409,8 @@ def _get_analytics(deployment_id):
 def get_analytics(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
+    if app.deployment_id is None:
+        raise Http404
     _get_analytics(app.deployment_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
