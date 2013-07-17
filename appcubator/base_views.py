@@ -9,7 +9,7 @@ from django import forms
 from django.utils import simplejson
 from copy import deepcopy
 
-from models import Customer, InvitationKeys
+from models import Customer, InvitationKeys, AnalyticsStore, App
 from appcubator.email.sendgrid_email import send_email
 
 import requests
@@ -241,4 +241,31 @@ def send_invitation_to_customer(request, customer_pk):
     send_email("team@appcubator.com", customer.email, subject, "", text)
     customer.sent_welcome_email = True
     customer.save()
+    return HttpResponse("ok")
+
+@require_POST
+@csrf_exempt
+def update_analytics(request):
+    analytics_json = simplejson.loads(request.POST['data'])
+    d_id = analytics_json['d_id']
+    analytics_data = simplejson.dumps(analytics_json['analytics'])
+    apps = App.objects.get(deployment_id=d_id)
+    app = None
+    if len(apps) > 1:
+        return HttpResponse("Error! More than one deployment on same id")
+    elif len(apps) == 1:
+        app = apps[0]
+    else:
+        return HttpResponse("Error! Cant get deployment on provided id")
+    old_analytics = AnalyticsStore.objects.all().filter(app=app)
+    # Create analytics for the app if needed, otherwise update the analytics.
+    if len(old_analytics) == 0:
+        analytics_store = AnalyticsStore(app=app, owner=app.owner, analytics_json=analytics_data)
+        analytics_store.save()
+    elif len(old_analytics) == 1:
+        old_analytics_store = old_analytics[0]
+        old_analytics_store.analytics_json = analytics_data
+        old_analytics_store.save()
+    else:
+        return HttpResponse("Error! Multiple analytic stores on provided app")
     return HttpResponse("ok")
