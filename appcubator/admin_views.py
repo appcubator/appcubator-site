@@ -122,7 +122,11 @@ def avg_deployment_time():
         if "deploy_time" in d:
             number = float(d["deploy_time"].replace(" seconds", ""))
             deploy_times.append(number)
-    return sum(deploy_times) / len(deploy_times)
+    if(len(deploy_times)):
+        return sum(deploy_times) / len(deploy_times)
+    else:
+        return 0.0
+
 
 def num_deployed_apps():
     return App.objects.filter(deployment_id__isnull=False).count()
