@@ -97,10 +97,10 @@ def admin_feedback(request):
 # active users this past week
 def recent_users(long_ago=timedelta(days=1)):
     today = timezone.now().date()
-    one_week_ago = today - long_ago
-    past_week_logs = LogAnything.objects.filter(timestamp__gte=one_week_ago)
-    user_ids_last_week = past_week_logs.values('user_id').distinct()
-    users = [ExtraUserData.objects.get(pk=log["user_id"]) for log in user_ids_last_week]
+    time_ago = today - long_ago
+    logs = LogAnything.objects.filter(timestamp__gte=time_ago)
+    user_ids = logs.values('user_id').distinct()
+    users = [ExtraUserData.objects.get(pk=log["user_id"]) for log in user_ids]
     return users
 
 # Top 10 users with most page visits
@@ -127,6 +127,43 @@ def avg_deployment_time():
     else:
         return 0.0
 
+# the number of unique apps deployed within the requested time frame
+def deployed_apps(min, max=datetime.now()):
+    # default starting date july 13, 2013
+    if(min is None):
+        min = datetime.date(2013, 7, 13)
+    return LogAnything.objects\
+        .filter(timestamp__gte=min, timestamp__lte=max, name="deployed app")\
+        .distinct('app_id').count()
 
+# the number of page views within the requested time frame
+def pageviews(min, max=datetime.now()):
+    # default starting date july 13, 2013
+    if(min is None):
+        min = datetime.date(2013, 7, 13)
+    return LogAnything.objects\
+            .filter(timestamp__gte=min, timestamp__lte=max, name="visited page")\
+            .count()
+
+# the number of users who joined within the requested time frame
+def num_users(min, max=datetime.now()):
+    # default starting date july 13, 2013
+    if(min is None):
+        min = datetime.date(2013, 7, 13)
+    return User.objects\
+        .filter(date_joined__gte=min, date_joined__lte=max)\
+        .count()
+
+# 'active users' during a min-max time period
+# calculated by finding the number of users who logged a page view
+#   within the requested time frame
+def num_active_users(min, max=datetime.now()):
+    # default starting date july 13, 2013
+    if(min is None):
+        min = datetime.date(2013, 7, 13)
+    day_ago = max - timedelta(days=1)
+    return pageviews(min, max).values('user_id').distinct().count()
+
+# total number of deployed apps
 def num_deployed_apps():
     return App.objects.filter(deployment_id__isnull=False).count()
