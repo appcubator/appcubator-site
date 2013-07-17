@@ -11,7 +11,8 @@ function(Backbone) {
     txt: "",
     events: {
       'click'               : 'showForm',
-      'submit form'         : 'createFormSubmitted'
+      'submit form'         : 'createFormSubmitted',
+      'keydown input[type="text"]' : 'keyDown'
     },
 
     initialize: function(inp) {
@@ -50,6 +51,10 @@ function(Backbone) {
         this.$el.find('.box-button').fadeIn();
         this.trigger('submit', name);
       }
+    },
+
+    keyDown: function (e) {
+      if(e.keyCode === 27) this.reset();
     },
 
     reset: function() {

@@ -52,6 +52,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
       }*/
 
       var createBox = new Backbone.NameBox({el: document.getElementById('create-page-box')});
+      this.subviews.push(createBox);
       createBox.on('submit', this.createPage);
 
       /*var createMobileBox = new Backbone.NameBox({el: document.getElementById('create-mobile-page-box')});
