@@ -85,6 +85,7 @@ def admin_app(request, app_id):
     app = get_object_or_404(App, id=app_id)
     page_context = {}
     page_context["app"] = app
+    page_context["app_id"] = app_id
     return render(request, 'admin/app.html', page_context)
 
 @login_required
