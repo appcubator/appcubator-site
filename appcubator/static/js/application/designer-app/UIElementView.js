@@ -30,7 +30,7 @@ function(UIElementModalView) {
     render: function() {
       this.el.innerHTML ='';
       var div = document.createElement('div');
-      div.className = 'pane-inline offsetr1 border minhi hi12 span14 hoff1 elem-' + this.model.cid;
+      div.className = 'pane-inline  border hi12 span44 hoff1 elem-' + this.model.cid;
 
       div.innerHTML = _.template(ThemeTemplates.tempNode, {info: this.model.attributes});
       div.innerHTML += '<span class="remove">×</span>';

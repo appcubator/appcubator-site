@@ -83,8 +83,8 @@ div.expandible {
 }
 
 .ace_gutter,.ace_scroller {
-  padding-top: 10px;
-}
+/*  padding-top: 10px;
+*/}
 
 .uie-gallery li {
   padding: 0;

@@ -1,8 +1,7 @@
 define([
   'designer-app/UIElementListView',
   'util',
-  'designer-app/ThemeTemplates',
-  'key'
+  'designer-app/ThemeTemplates'
 ],function(UIElementListView) {
 
   var UIElementAttributesModel = Backbone.Model.extend({ });
