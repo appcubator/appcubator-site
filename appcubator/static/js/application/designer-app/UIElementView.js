@@ -1,7 +1,7 @@
 define([
-  'designer-app/UIElementModalView'
+  'designer-app/UIElementEditingView'
 ],
-function(UIElementModalView) {
+function(UIElementEditingView) {
 
   var UIElementView = Backbone.View.extend({
     el: null,
@@ -9,7 +9,7 @@ function(UIElementModalView) {
     isExpanded: false,
 
     events : {
-      'click'             : 'toggleElement',
+      'click .upper-area' : 'toggleElement',
       'click .remove'     : 'removeUIE'
     },
 
@@ -17,18 +17,43 @@ function(UIElementModalView) {
       _.bindAll(this);
 
       this.model = uieModel;
-      this.model.bind('change', this.render);
-      this.render();
+      this.model.bind('change', this.reRender);
+      this.model.bind('change', this.reRenderStyleTags);
       this.renderStyle();
-      this.delegateEvents();
-      if(uieModel.isNew()) this.openModal();
     },
 
     render: function() {
       this.el.id = 'elem-' + this.model.cid;
-      this.el.innerHTML = _.template(ThemeTemplates.tempNode, {info: this.model.attributes});
-      this.el.innerHTML += '<span class="remove">×</span>';
+
+      var upperDiv = document.createElement('div');
+      upperDiv.className = "upper-area";
+      var class_name = this.model.get('class_name');
+      upperDiv.innerHTML =[
+        '<div class="class-menu">',
+          '<input type="text" name="className" class="class_name" value="'+class_name+'" placeholder="className...">',
+          '<div class="btn btn-info">Expand Edit Panel</div>',
+        '</div>'].join('\n');
+
+      this.tempNodeDiv = document.createElement('div');
+      this.tempNodeDiv.className = "temp-node-area";
+      this.tempNodeDiv.innerHTML = _.template(ThemeTemplates.tempNode, {info: this.model.attributes});
+
+      upperDiv.appendChild(this.tempNodeDiv);
+      this.el.appendChild(upperDiv);
       return this;
+    },
+
+    reRender: function (argument) {
+      this.tempNodeDiv.innerHTML = _.template(ThemeTemplates.tempNode, {info: this.model.attributes});
+    },
+
+    reRenderStyleTags: function(e) {
+      var styleTag = document.getElementById(this.model.cid + '-' + 'style');
+      styleTag.innerHTML = '.' +this.model.get('class_name') + '{' + this.model.get('style')  + '}';
+      var hoverTag = document.getElementById(this.model.cid + '-' + 'hover-style');
+      hoverTag.innerHTML = '.' +this.model.get('class_name') + ':hover {' + this.model.get('hoverStyle')  + '}';
+      var activeTag = document.getElementById(this.model.cid + '-' + 'active-style');
+      activeTag.innerHTML = '.' +this.model.get('class_name') + ':active {' + this.model.get('activeStyle')  + '}';
     },
 
     renderStyle: function() {
@@ -71,8 +96,9 @@ function(UIElementModalView) {
     expandElement: function () {
       console.log('expand');
       this.isExpanded = true;
-      this.expandedView = new UIElementModalView(this.model);
+      this.expandedView = new UIElementEditingView(this.model);
       this.el.appendChild(this.expandedView.render().el);
+      this.expandedView.setUpAce();
       this.el.style.height = 'auto';
     },
 
