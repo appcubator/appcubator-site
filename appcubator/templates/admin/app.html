@@ -66,18 +66,22 @@
   uieStateEditor.getSession().setMode("ace/mode/json");
 
   $('#save-appState').click(function() {
-    console.log(JSON.parse(appStateEditor.getValue()));
-    //saveState(JSON.parse(uieStateEditor.getValue()));
+    saveState(JSON.parse(appStateEditor.getValue()));
   });
 
   $('#save-uieState').click(function() {
     console.log(JSON.parse(uieStateEditor.getValue()));
-    //saveState(JSON.parse(uieStateEditor.getValue()));
+    saveState(JSON.parse(uieStateEditor.getValue()));
   });
 
-  function saveState(state) {
+  function saveState(state, is_appState) {
+    var url= '/app/{{ app_id }}/uiestate/';
+    if(is_appState) {
+      url = '/app/{{ app_id }}/state/';
+    }
     $.ajax({
-      url: '/app/'+appId+'/state/',
+      type: 'POST',
+      url: url,
       data: JSON.stringify(state),
       success: function(data) {
         if(data.errors) {
