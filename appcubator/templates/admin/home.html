@@ -1,10 +1,4 @@
 {% extends "admin/admin-base.html" %}
-{% block css %}
-  table {
-    max-height: 600px;
-    overflow: scroll;
-  }
-{% endblock %}
 {% block content %}
   <p class="" id="yomomma"></p>
   <p class="" id="chucknorris"></p>
@@ -21,17 +15,17 @@
           <tr>
             <th data-sort-type="number">User ID</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Is Noob</th>
+            <th>Apps Deployed </th>
+            <th>Page Views</th>
           </tr>
         </thead>
         <tbody>
-          {% for user in users_today %}
+          {% for obj in users_today %}
           <tr>
-            <td><a href="{% url appcubator.admin_views.admin_user user.pk %}">{{ user.pk }}</a></td>
-            <td><a href="{% url appcubator.admin_views.admin_user user.pk %}">{{ user.user.first_name }} {{ user.user.last_name }}</a></td>
-            <td>{{ user.user.email }}</td>
-            <td>{{ user.noob }}</td>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.user_id }}</a></td>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.name }}</a></td>
+            <td>{{ obj.num_apps }}</td>
+            <td>{{ obj.num_logs }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -45,17 +39,17 @@
           <tr>
             <th data-sort-type="number">User ID</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Is Noob</th>
+            <th>Apps Deployed</th>
+            <th>Page Views</th>
           </tr>
         </thead>
         <tbody>
-          {% for user in users_last_week %}
+          {% for obj in users_last_week %}
           <tr>
-            <td><a href="{% url appcubator.admin_views.admin_user user.pk %}">{{ user.pk }}</a></td>
-            <td><a href="{% url appcubator.admin_views.admin_user user.pk %}">{{ user.user.first_name }} {{ user.user.last_name }}</a></td>
-            <td>{{ user.user.email }}</td>
-            <td>{{ user.noob }}</td>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.user_id }}</a></td>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.name }}</a></td>
+            <td>{{ obj.num_apps }}</td>
+            <td>{{ obj.num_logs }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -71,17 +65,17 @@
           <tr>
             <th data-sort-type="number">User ID</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Is Noob</th>
+            <th>Apps Deployed</th>
+            <th>Page Views</th>
           </tr>
         </thead>
         <tbody>
-          {% for user in users_last_month %}
+          {% for obj in users_last_month %}
           <tr>
-            <td><a href="{% url appcubator.admin_views.admin_user user.pk %}">{{ user.pk }}</a></td>
-            <td><a href="{% url appcubator.admin_views.admin_user user.pk %}">{{ user.user.first_name }} {{ user.user.last_name }}</a></td>
-            <td>{{ user.user.email }}</td>
-            <td>{{ user.noob }}</td>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.user_id }}</a></td>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.name }}</a></td>
+            <td>{{ obj.num_apps }}</td>
+            <td>{{ obj.num_logs }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -95,8 +89,8 @@
           <tr>
             <th data-sort-type="number">User ID</th>
             <th>Name</th>
-            <th>Number of Page Views</th>
-            <th>Number of Apps Deployed</th>
+            <th>Apps Deployed</th>
+            <th>Page Views</th>
           </tr>
         </thead>
         <tbody>
@@ -104,8 +98,8 @@
           <tr>
             <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.user_id }}</a></td>
             <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.user.user.first_name }} {{ obj.user.user.last_name }}</a></td>
-            <td>{{ obj.num_logs }}</td>
             <td>{{ obj.num_apps }}</td>
+            <td>{{ obj.num_logs }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -123,10 +117,10 @@
 
 {% block js %}
 <script type="text/javascript">
-  $('#active-users-today').sortableTable({initialColumn: 1});
-  $('#active-users-month').sortableTable({initialColumn: 1});
-	$('#active-users-week').sortableTable({initialColumn: 1});
-	$('#most-active-users').sortableTable({initialColumn: 1});
+  $('#active-users-today').sortableTable({initialColumn: 4});
+  $('#active-users-month').sortableTable({initialColumn: 4});
+	$('#active-users-week').sortableTable({initialColumn: 4});
+	$('#most-active-users').sortableTable({initialColumn: 4});
 
   function yoMomma() {
     var random=Math.floor(Math.random()*1192);
