@@ -9,7 +9,7 @@ function(FooterEditorView) {
     type: null,
 
     events: {
-      'mousedown .footer' : 'showFooterEditor'
+      'mousedown' : 'showFooterEditor'
     },
 
     initialize: function(footerModel) {
@@ -31,6 +31,7 @@ function(FooterEditorView) {
       this.$el.find('#customText').html(this.model.get('customText'));
 
       this.renderLinks();
+      console.log(this.$el.html());
       return this;
     },
 
