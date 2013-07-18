@@ -99,10 +99,17 @@ def admin_feedback(request):
 def recent_users(long_ago=timedelta(days=1)):
     today = timezone.now().date()
     time_ago = today - long_ago
-    logs = LogAnything.objects.filter(timestamp__gte=time_ago)
-    user_ids = logs.values('user_id').distinct()
-    users = [ExtraUserData.objects.get(pk=log["user_id"]) for log in user_ids]
-    return users
+    logs = LogAnything.objects\
+        .filter(timestamp__gte=time_ago, name="visited page")\
+        .values('user_id').distinct()\
+        .annotate(num_logs=Count('user_id'))\
+        .order_by('-num_logs')
+    for log in logs:
+        user_id = log["user_id"]
+        log["user"] = ExtraUserData.objects.get(pk=user_id)
+        log["name"] = log["user"].user.first_name + " " + log["user"].user.last_name
+        log["num_apps"] = log["user"].user.apps.count()
+    return logs
 
 # Top 10 users with most page visits
 def logs_per_user():
