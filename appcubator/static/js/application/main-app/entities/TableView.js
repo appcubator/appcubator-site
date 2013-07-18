@@ -2,10 +2,11 @@ define([
   'models/FieldModel',
   'app/entities/UploadExcelView',
   'app/entities/ShowDataView',
+  'app/entities/AdminPanelView',
   'app/templates/TableTemplates',
   'prettyCheckable'
 ],
-function(FieldModel, UploadExcelView, ShowDataView) {
+function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView) {
 
   var TableView = Backbone.View.extend({
     el         : null,
@@ -123,7 +124,7 @@ function(FieldModel, UploadExcelView, ShowDataView) {
     },
 
     clickedUploadExcel: function(e) {
-      new UploadExcelView(this.model);
+      new AdminPanelView();
     },
 
     renderRelations: function() {

@@ -6327,3 +6327,30 @@ color: #fff;
   background: #2b3555; /* Firefox */
 color: #fff;
 }
+
+
+.modal .bottom-sect {
+  text-align: right;
+  position: absolute;
+  height: 50px;
+  bottom: 0;
+  width: 100%;
+  background-color: #efefef;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.modal .q-mark {
+  display: inline-block;
+  width: 50px;
+  height: 40px;
+  background-image: url(../img/q-mark-gray.png);
+  background-repeat: no-repeat;
+  background-position: 0 -6px;
+  cursor: pointer;
+  float: left;
+}
+
+.modal .q-mark:hover {
+  background-position: -46px -6px;
+}
