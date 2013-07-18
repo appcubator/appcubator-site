@@ -1,16 +1,17 @@
 var AnalyticsTemplates = {};
 AnalyticsTemplates.main_stats = [
 	'<div class="row hoff1">',
-		'<div class="span14 pane hi6">',
-			'Number of Users: <strong class="total-users"></strong>',
+		'<div class="span18 pane hi6">',
+			'<strong class="total-users">0</strong>',
+			'<span class="analyitcs-title">Number of Users</span>',
 		'</div>',
-		'<div class="span43 offset1 pane">',
-			'Total Page Views: <strong class="total-page-views"></strong>',
+		'<div class="span18 offset2 pane hi6">',
+			'<strong class="total-page-views">0</strong>',
+			'<span class="analyitcs-title">Total Page Views</span>',
 		'</div>',
-	'</div>',
-	'<div class="row hoff1">',
-		'<div class="span58 pane active-users">',
-			'Number of Active Users: <strong class="total-active-users"></strong>',
+		'<div class="span18 offset2 pane hi6">',
+			'<strong class="total-active-users">0</strong>',
+			'<span class="analyitcs-title">Number of Active Users</span>',
 		'</div>',
 	'</div>'
 ].join('\n');

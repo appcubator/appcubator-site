@@ -84,7 +84,22 @@ h3 {
 .analytics .pane {
   padding: 15px;
   height: 150px;
+  text-align: center;
 }
+
+.analytics .analyitcs-title {
+  font-weight: bold;
+  text-transform: uppercase;
+  display: block;
+}
+
+.analytics strong {
+  font-size: 48px;
+  display: block;
+  height: 50px;
+  margin-top: 34px;
+}
+
 .analytics .active-users {
   height: 250px;
 }
