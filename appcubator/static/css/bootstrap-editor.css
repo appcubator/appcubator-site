@@ -1701,7 +1701,6 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
 }
 
 .nav .dropdown-toggle .caret {
-  margin-top: 6px;
   border-top-color: #0088cc;
   border-bottom-color: #0088cc;
 }
