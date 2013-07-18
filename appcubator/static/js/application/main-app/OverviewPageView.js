@@ -25,20 +25,7 @@ function(AnalyticsView, SimpleModalView) {
     render: function() {
       var page_context = {};
       this.el.innerHTML = _.template(util.getHTML('app-main-page'), page_context);
-      this.checkTutorialProgress();
       this.$('.analytics').append(this.analyticsView.render().el);
-    },
-
-    checkTutorialProgress: function() {
-      $.ajax({
-        type: "GET",
-        url: '/log/slide/',
-        data: { title: null, directory: null },
-        success: function(data) {
-          v1.betaCheck(data);
-        },
-        dataType: "JSON"
-      });
     },
 
     deploy: function() {
