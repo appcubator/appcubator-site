@@ -17,6 +17,6 @@ for a in App.objects.exclude(owner__email="!@TEST_USER@!@gmail.com"):
         print "Success: %r" % (s,)
 
 with open("redeploy.log", "w") as rl:
-    rl.write("\n".join(\
-        ["\t".join(x) for x in [repr(i) for i in fail_summaries]]))
+    log_text = "\n".join([ "\t".join([repr(d) for d in tupl]) for tupl in fail_summaries ])
+    rl.write(log_text) # each line
 
