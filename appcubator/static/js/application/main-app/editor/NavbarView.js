@@ -8,7 +8,8 @@ function(NavbarEditorView) {
     entity: null,
     type: null,
     events: {
-      'mousedown' : 'showNavbarEditor'
+      'mousedown' : 'showNavbarEditor',
+      'mousedown .edit-navbar' : 'showNavbarEditor'
     },
 
     initialize: function(navbarModel) {

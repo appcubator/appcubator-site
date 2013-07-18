@@ -76,27 +76,31 @@ define([
 
       this.el.style.textAlign = this.model.get('layout').get('alignment');
 
+      console.log(this.model.get('layout').get('l_padding'));
+
       if(this.model.get('layout').has('l_padding')) {
-        this.el.style.paddingLeft = this.model.get('layout').get('l_padding');
+        this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
       }
 
       if(this.model.get('layout').has('r_padding')) {
-        this.el.style.paddingRight = this.model.get('layout').get('r_padding');
+        this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
       }
 
       if(this.model.get('layout').has('t_padding')) {
-        this.el.style.paddingTop = this.model.get('layout').get('t_padding');
+        this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
       }
 
       if(this.model.get('layout').has('b_padding')) {
-        this.el.style.paddingBottom = this.model.get('layout').get('b_padding');
+        this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
       }
 
       this.el.innerHTML = this.renderElement();
       this.el.id = 'widget-wrapper-' + this.model.cid;
 
       if(this.model.isFullWidth()) this.switchOnFullWidth();
+      if(this.model.isBox()) this.el.style.zIndex = 999;
 
+      console.log(this.el);
       return this;
     },
 
@@ -117,6 +121,7 @@ define([
       if(!this.editMode) {
         this.model.trigger('selected');
         this.el.style.zIndex = 2003;
+        if(this.model.isBox()) this.el.style.zIndex = 1000;
       }
     },
 
@@ -207,6 +212,7 @@ define([
 
     hovered: function() {
       if(this.editMode) return;
+      if(this.model.isBox()) return;
       this.hovered = true;
       this.model.trigger('hovered');
     },
