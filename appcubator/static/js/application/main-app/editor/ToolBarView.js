@@ -10,8 +10,8 @@ function(PageModel) {
     events: {
       'mouseover .menu-button.pages' : 'expandPages',
       'mouseout .menu-button.pages'  : 'shrinkPages',
-      'click .home'          : 'clickedHome',
-      'click .go-to-page'    : 'clickedGoToPage'
+      'click .go-to-page'    : 'clickedGoToPage',
+      'click a.back'        : 'navigateBack'
     },
 
     initialize: function(navbarModel) {
@@ -48,10 +48,6 @@ function(PageModel) {
       this.pageList.innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>'+name+'</a></li>';
     },
 
-    clickedHome: function(e) {
-      v1.navigate("app/"+ appId +"/pages/", {trigger: true});
-    },
-
     clickedGoToPage: function(e) {
       var goToPageId = (e.target.id||e.target.parentNode.id).replace('page-','');
       v1.navigate("app/"+ appId +"/editor/" + goToPageId +"/", {trigger: true});
@@ -83,10 +79,12 @@ function(PageModel) {
 
     shrinkPages: function(e) {
       if(util.isMouseOn(e.pageX, e.pageY, this.pageList)) return;
-
-      console.log("REMOOOOVE");
       $('#page-list').height(40);
       this.createBox.reset();
+    },
+
+    navigateBack: function () {
+      window.history.back();
     }
 
   });
