@@ -264,7 +264,7 @@ function(WidgetModel,
 */
       createFacebookShare: function(layout) {
         var widget = {};
-        widget.type = "fbshare";
+        widget.type = "facebookshare";
 
         widget.data = {};
         widget.data.nodeType = "facebookshare";
