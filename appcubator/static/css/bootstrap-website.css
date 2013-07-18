@@ -3627,7 +3627,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 }
 
 @-webkit-keyframes top-down {
-  0%   { 
+  0%   {
     margin-top: -30px;
 
    }
@@ -3637,7 +3637,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 }
 
 @-webkit-keyframes down-top {
-  0%   { 
+  0%   {
     margin-top: 30px;
    }
   100% {
@@ -3646,7 +3646,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 }
 
 @-webkit-keyframes left-right {
-  0%   { 
+  0%   {
     margin-left: -30px;
 
    }
@@ -3656,7 +3656,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 }
 
 @-webkit-keyframes right-left {
-  0%   { 
+  0%   {
     margin-left: 30px;
    }
   100% {
@@ -5441,7 +5441,7 @@ font-size: 30px;
 }
 
 .v1nav .nav li.dropd .caret {
-  margin-left: 6px;
+  margin-left: 10px;
 }
 
 .v1nav .navbar-inner {
