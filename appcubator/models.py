@@ -297,8 +297,12 @@ class App(models.Model):
                 pass
             if 'errors' in response_content:
                 result['errors'] = response_content['errors']
-            result['site_url'] = "http://%s.appcubator.com" % self.subdomain
-            result['github_url'] = self.github_url()
+            result['site_url'] = self.url()
+
+            syncdb_data = [ u for u in response_content['script_results'] if u['script'] == u'syncdb.py' ][0]
+            if u'value to use for existing rows' in syncdb_data['stderr']:
+                assert False, "Migration needs help!!!"
+
             return result
 
         elif r.status_code == 404:
