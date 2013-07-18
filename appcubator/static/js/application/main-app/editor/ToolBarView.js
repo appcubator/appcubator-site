@@ -10,8 +10,8 @@ function(PageModel) {
     events: {
       'mouseover .menu-button.pages' : 'expandPages',
       'mouseout .menu-button.pages'  : 'shrinkPages',
-      'click .home'          : 'clickedHome',
-      'click .go-to-page'    : 'clickedGoToPage'
+      'click .go-to-page'    : 'clickedGoToPage',
+      'click a.back'        : 'navigateBack'
     },
 
     initialize: function(navbarModel) {
@@ -36,7 +36,7 @@ function(PageModel) {
         this.renderPageItem(ind, page.get('name'));
       }, this);
 
-      this.createBox = new Backbone.NameBox({tagName: 'li', className:'new-page', txt:'New Page'});
+      this.createBox = new Backbone.NameBox({tagName: 'li', className:'new-page', txt:'New Page'}).render();
       this.createBox.on('submit', this.createPage);
 
       util.get('page-list').appendChild(this.createBox.el);
@@ -46,10 +46,6 @@ function(PageModel) {
 
     renderPageItem: function(ind, name) {
       this.pageList.innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>'+name+'</a></li>';
-    },
-
-    clickedHome: function(e) {
-      v1.navigate("app/"+ appId +"/pages/", {trigger: true});
     },
 
     clickedGoToPage: function(e) {
@@ -83,10 +79,12 @@ function(PageModel) {
 
     shrinkPages: function(e) {
       if(util.isMouseOn(e.pageX, e.pageY, this.pageList)) return;
-
-      console.log("REMOOOOVE");
       $('#page-list').height(40);
       this.createBox.reset();
+    },
+
+    navigateBack: function () {
+      window.history.back();
     }
 
   });

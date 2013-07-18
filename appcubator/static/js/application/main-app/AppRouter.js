@@ -186,6 +186,7 @@ define([
 			$('.active').removeClass('active');
 			this.changeTitle(AppRouter.view.title);
 			$("html, body").animate({ scrollTop: 0 });
+			$('.page').fadeIn();
 			$('.pull-right.dropd').removeClass('open');
 			post_render.call();
 		},

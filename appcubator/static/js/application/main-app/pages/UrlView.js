@@ -10,12 +10,13 @@ function() {
     id: 'url-editor',
     //height: 150,
     events: {
-      'change .context-part'      : 'contextPartChanged',
-      'keyup .suffix-part'       : 'suffixPartChanged',
+      'change .context-part'  : 'contextPartChanged',
+      'keyup .suffix-part'    : 'suffixPartChanged',
       'keyup .page-name'      : 'pageNameChanged',
-      'click .remove'          : 'clickedRemove',
+      'click .remove'         : 'clickedRemove',
       'click .new-context'    : 'addNewContextPart',
-      'click .new-suffix'     : 'addNewSuffixPart'
+      'click .new-suffix'     : 'addNewSuffixPart',
+      'submit form'           : 'cancelFormSubmit'
     },
 
     initialize: function(urlModel){
@@ -95,11 +96,13 @@ function() {
     contextPartChanged: function(e) {
       var cid = e.target.id.replace('form-','');
       this.model.get('urlparts').get(cid).set('value',"{{" + e.target.value + "}}");
+      return false;
     },
 
     suffixPartChanged: function(e) {
       var cid = e.target.id.replace('form-','');
       this.model.get('urlparts').get(cid).set('value', e.target.value);
+      return false;
     },
 
     pageNameChanged: function(e) {
@@ -138,6 +141,9 @@ function() {
 
       this.model.get('urlparts').reset(newUrlParts);
       console.log(this.model.get('urlparts').toJSON());
+    },
+    cancelFormSubmit: function() {
+      return false;
     }
   });
 

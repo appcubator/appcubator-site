@@ -66,10 +66,10 @@ require.config({
     }
   },
 
-  urlArgs: "bust=" + staticVersion
+  urlArgs: "bust="
 
 });
-
+require.config({ urlArgs: "bust=" + staticVersion });
 //libs
 require([
   "models/AppModel",

@@ -24,13 +24,10 @@ function(TableCollection,
       css: 'entities',
       title: 'Tables',
       events : {
-        'click #add-role'         : 'clickedAddUserRole',
-        'submit #add-role-form'   : 'createUserRole',
-        'click #add-entity'       : 'clickedAddTable',
-        'submit #add-entity-form' : 'createTable',
         'click #add-relation'     : 'showCreateRelationForm',
         'click .related-tag'      : 'scrollToRelation'
       },
+      subviews: [],
 
       initialize: function() {
         _.bindAll(this);
@@ -39,13 +36,27 @@ function(TableCollection,
         this.userTablesView     = new TablesView(v1State.get('users'), true);
         this.relationsView      = new RelationsView();
         this.createRelationView = new CreateRelationView();
+        this.subviews = [this.tablesView, this.userTablesView, this.relationsView, this.createRelationView];
+
         this.title = "Tables";
       },
 
       render : function() {
+
         this.$el.html(_.template(util.getHTML('entities-page'), {}));
         this.renderTables();
         this.renderRelations();
+
+        var addTableBtn = document.getElementById('add-entity');
+        var createTableBox = new Backbone.NameBox({}).setElement(addTableBtn).render();
+        createTableBox.on('submit', this.createTable);
+        this.subviews.push(createTableBox);
+
+        var addroleBtn = document.getElementById('add-role');
+        var createRoleBox = new Backbone.NameBox({}).setElement(addroleBtn).render();
+        createRoleBox.on('submit', this.createUserRole);
+        this.subviews.push(createRoleBox);
+
         return this;
       },
 
@@ -63,16 +74,10 @@ function(TableCollection,
         util.get('relations').appendChild(this.relationsView.render().el);
       },
 
-      clickedAddUserRole: function(e) {
-        $(e.currentTarget).hide();
-        $('#add-role-form').fadeIn();
-        $('#add-role-form').find('input[type="text"]').focus();
-      },
+      createUserRole: function(val) {
 
-      createUserRole: function(e) {
-        e.preventDefault();
+        var name = val;
 
-        var name = $('#add-role-form').find('input[type="text"]').val();
         var elem = new UserTableModel({
           name: name
         });
@@ -91,23 +96,12 @@ function(TableCollection,
         }
 
         v1State.get('users').add(elem);
-
-        $(e.target).find('input[type="text"]').val('');
-        $('#add-role').fadeIn();
-        $(e.target).hide();
-
         return elem;
       },
 
-      clickedAddTable: function(e) {
-        $(e.currentTarget).hide();
-        $('#add-entity-form').fadeIn();
-        $('#add-entity-form').find('input[type="text"]').focus();
-      },
 
-      createTable: function(e) {
-        e.preventDefault();
-        var name = $(e.target).find('input[type="text"]').val();
+      createTable: function(val) {
+          var name = val;
 
           var elem = new TableModel({
             name: name,
@@ -129,12 +123,7 @@ function(TableCollection,
 
           v1State.get('tables').add(elem);
 
-        $(e.target).find('input[type="text"]').val('');
-        $('#add-entity').fadeIn();
-        $(e.target).hide();
-
-
-        return elem;
+          return elem;
       },
 
       showCreateRelationForm: function() {

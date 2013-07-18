@@ -3627,7 +3627,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 }
 
 @-webkit-keyframes top-down {
-  0%   { 
+  0%   {
     margin-top: -30px;
 
    }
@@ -3637,7 +3637,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 }
 
 @-webkit-keyframes down-top {
-  0%   { 
+  0%   {
     margin-top: 30px;
    }
   100% {
@@ -3646,7 +3646,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 }
 
 @-webkit-keyframes left-right {
-  0%   { 
+  0%   {
     margin-left: -30px;
 
    }
@@ -3656,7 +3656,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 }
 
 @-webkit-keyframes right-left {
-  0%   { 
+  0%   {
     margin-left: 30px;
    }
   100% {
@@ -5441,7 +5441,7 @@ font-size: 30px;
 }
 
 .v1nav .nav li.dropd .caret {
-  margin-left: 6px;
+  margin-left: 10px;
 }
 
 .v1nav .navbar-inner {
@@ -6326,4 +6326,31 @@ color: #fff;
 .widget-wrapper > *::-moz-selection {
   background: #2b3555; /* Firefox */
 color: #fff;
+}
+
+
+.modal .bottom-sect {
+  text-align: right;
+  position: absolute;
+  height: 50px;
+  bottom: 0;
+  width: 100%;
+  background-color: #efefef;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.modal .q-mark {
+  display: inline-block;
+  width: 50px;
+  height: 40px;
+  background-image: url(../img/q-mark-gray.png);
+  background-repeat: no-repeat;
+  background-position: 0 -6px;
+  cursor: pointer;
+  float: left;
+}
+
+.modal .q-mark:hover {
+  background-position: -46px -6px;
 }

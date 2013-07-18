@@ -80,3 +80,11 @@ h3 {
 .register-subdomain-input.not-available:focus {
   border-color: #CC0000;
 }
+
+.analytics .pane {
+  padding: 15px;
+  height: 150px;
+}
+.analytics .active-users {
+  height: 250px;
+}

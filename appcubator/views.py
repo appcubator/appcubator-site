@@ -171,6 +171,7 @@ def app_page(request, app_id):
     mobile_themes = [t.to_dict() for t in mobile_themes]
 
     page_context = {'app': app,
+                    'app_url': app.url(),
                     'app_id': long(app_id),
                     'title': 'The Garage',
                     'themes': simplejson.dumps(list(themes)),

@@ -20,8 +20,6 @@ function(Backbone) {
       if(inp.txt) {
         this.txt = inp.txt;
       }
-
-      this.render();
       return this;
     },
 

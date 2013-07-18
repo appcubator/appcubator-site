@@ -44,12 +44,12 @@
 
     <div class="span58 hoff2">
       <div class="row hoff1 analytics" style="position: relative">
-        <div class="coming-soon-overlay" style="display: block; top: 35px; background-color: rgba(227, 227, 227, 0.5);">
+        <div class="coming-soon-overlay" style="display: block; top: 35px; background-color: rgba(227, 227, 227, 0.75);">
           <h2>Site Analytics coming soon!</h2>
         </div>
         <h3>Analytics</h3>
         <hr class="span58 pheader">
-        <img class="span58 analytics-demo hoff1" src="{{ STATIC_URL }}img/analytics.png">
+        <!-- <img class="span58 analytics-demo hoff1" src="{{ STATIC_URL }}img/analytics.png"> -->
       </div>
     </div>
     <div class="span52 offset11 hoff4 hi4"></div>
@@ -119,12 +119,14 @@
 <div class="container hoff1" id="entities-page">
   <div class="span58">
     <h2 class="pheader">User Tables</h2>
-    <form id="add-role-form" class="right new-table-form" style="display: none; height: 45px">
-      <input type="submit" class="done-btn" value="Done">
-      <input type="text" placeholder="New User Role">
-    </form>
-    <div class="button right" id="add-role">
+    <div class="tbl-button right" id="add-role">
+      <div class="box-button">
       <span class="add-icon"></span><span>Add User Table</span>
+      </div>
+      <form id="add-role-form" class="right new-table-form" style="display: none; height: 45px">
+        <input type="submit" class="done-btn" value="Done">
+        <input type="text" placeholder="New User Role">
+      </form>
     </div>
   </div>
   <hr class="span58 pheader">
@@ -134,12 +136,15 @@
   <div class="span58 hi1"></div>
   <div class="span58 hoff2">
     <h2 class="pheader">Tables</h2>
-    <form style="display: none; height: 45px" class="right new-table-form" id="add-entity-form">
-      <input type="submit" class="done-btn" value="Done">
-      <input type="text" placeholder="New Table">
-    </form>
-    <div class="button right" id="add-entity">
+
+    <div class="tbl-button right" id="add-entity">
+      <div class="box-button">
       <span class="add-icon"></span><span>Add Table</span>
+      </div>
+      <form style="display: none; height: 45px" class="right new-table-form" id="add-entity-form">
+        <input type="submit" class="done-btn" value="Done">
+        <input type="text" placeholder="New Table">
+      </form>
     </div>
     <hr class="span58 hoff1">
   </div>
@@ -147,8 +152,10 @@
   <div class="span58 hi1"></div>
   <div class="span58 hoff2">
     <h2 class="pheader">Relations</h2>
-    <div class="button right" id="add-relation">
+    <div class="tbl-button right" id="add-relation">
+      <div class="box-button">
       <span class="add-icon"></span><span>Add Relation</span>
+      </div>
     </div>
   </div>
   <hr class="span58 hoff1">
@@ -215,8 +222,14 @@
       </div>
     </div>
     <div class="middle-group" id="tool-bar">
-      <a href="{% url appcubator.views.app_page app.id %}" class="menu-button home">
-      </a><div class="menu-button pages"><ul id="page-list"></ul><div class="menu-button dropdown-arrow">
+      <div class="navigator menu-button">
+        <a class="back"></a>
+        <a href="{% url appcubator.views.app_page app.id %}pages/" class="pages"></a>
+        <a href="{% url appcubator.views.app_page app.id %}emails/" class="emails"></a>
+        <a href="{% url appcubator.views.app_page app.id %}gallery/" class="themes"></a>
+        <a href="{% url appcubator.views.app_page app.id %}tables/" class="tables"></a>
+      </div>
+      <div class="menu-button pages"><ul id="page-list"></ul><div class="menu-button dropdown-arrow">
       </div></div>
     </div>
     <div class="right-group">
@@ -394,4 +407,17 @@
   </div>
 
 </script>
-    <script></script>
+<script type="text/template" id="admin-panel">
+<div style="padding:20px; padding-top: 40px;">
+<p>You can see your data, and upload new spreadsheets through the Admin Panel. Admin Panel is a seperate panel built into your application.</p>
+
+<p>You can use the following credentials to login to your panel.</p>
+<p>
+  <span><strong>Username:</strong> <%= username %></span><br  />
+  <span><strong>Password:</strong> <%= pwd %></span>
+</p>
+</div>
+<div class="bottom-sect">
+<a class="btn btn-info right" target="_blank" href="<%= url %>">Access Admin Panel »</a>
+</div>
+</script>
