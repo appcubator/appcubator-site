@@ -1,23 +1,20 @@
 define([
-  'designer-app/UIElementModalView',
-  'backbone'
+  'designer-app/UIElementModalView'
 ],
 function(UIElementModalView) {
 
   var UIElementView = Backbone.View.extend({
     el: null,
-    className: 'widgetWrapper',
+    className: 'widgetWrapper pane-inline  border hi12 span44 hoff1',
+    isExpanded: false,
+
     events : {
-      'click'             : 'openModal',
+      'click'             : 'toggleElement',
       'click .remove'     : 'removeUIE'
     },
 
     initialize: function(uieModel) {
-      _.bindAll(this, 'render',
-                      'renderStyle',
-                      'removeUIE',
-                      'baseChanged',
-                      'openModal');
+      _.bindAll(this);
 
       this.model = uieModel;
       this.model.bind('change', this.render);
@@ -28,15 +25,9 @@ function(UIElementModalView) {
     },
 
     render: function() {
-      this.el.innerHTML ='';
-      var div = document.createElement('div');
-      div.className = 'pane-inline  border hi12 span44 hoff1 elem-' + this.model.cid;
-
-      div.innerHTML = _.template(ThemeTemplates.tempNode, {info: this.model.attributes});
-      div.innerHTML += '<span class="remove">×</span>';
-      this.el.appendChild(div);
-      this.el.style.display = 'inline-block';
-      this.el.id = this.model.cid;
+      this.el.id = 'elem-' + this.model.cid;
+      this.el.innerHTML = _.template(ThemeTemplates.tempNode, {info: this.model.attributes});
+      this.el.innerHTML += '<span class="remove">×</span>';
       return this;
     },
 
@@ -71,8 +62,24 @@ function(UIElementModalView) {
 
     },
 
-    openModal: function () {
-      new UIElementModalView(this.model);
+    toggleElement: function () {
+      console.log('toggle');
+      if(!this.isExpanded) this.expandElement();
+      else this.shrinkElement();
+    },
+
+    expandElement: function () {
+      console.log('expand');
+      this.isExpanded = true;
+      this.expandedView = new UIElementModalView(this.model);
+      this.el.appendChild(this.expandedView.render().el);
+      this.el.style.height = 'auto';
+    },
+
+    shrinkElement: function () {
+      this.expandedView.close();
+      this.isExpanded = false;
+      this.el.style.height = '180px';
     }
   });
 

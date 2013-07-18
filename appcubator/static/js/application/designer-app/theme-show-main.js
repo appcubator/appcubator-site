@@ -44,6 +44,7 @@ require([
   "designer-app/ThemeEditView",
   'models/ThemeModel',
   "editor/KeyDispatcher",
+  "mixins/BackboneConvenience",
   "bootstrap",
   "ace"
 ],

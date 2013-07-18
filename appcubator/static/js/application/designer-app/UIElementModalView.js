@@ -3,7 +3,7 @@ define([
 ],
 function(){
 
-  var UIElementModalView = Backbone.ModalView.extend({
+  var UIElementModalView = Backbone.View.extend({
     tagName : 'div',
     className : 'element-view',
     width: 660,
@@ -13,17 +13,11 @@ function(){
       'keyup .style'        : 'styleChanged',
       'keyup .hover-style'  : 'hoverStyleChanged',
       'keyup .active-style' : 'activeStyleChanged',
-      'click .done'         : 'closeModal',
       'keyup .class_name'   : 'classNameChaged',
       'click .delete-elem'  : 'deleteElement'
     },
     initialize: function(uieModel) {
-      _.bindAll(this, 'reRenderElement',
-                      'renderStyleTags',
-                      'styleChanged',
-                      'hoverStyleChanged',
-                      'activeStyleChanged',
-                      'classNameChaged');
+      _.bindAll(this);
 
       this.model = uieModel;
 
@@ -32,8 +26,6 @@ function(){
       this.model.bind('change:activeStyle', this.renderStyleTags);
 
       this.model.bind('change:value', this.reRenderElement);
-
-      this.render();
     },
 
     render: function() {
