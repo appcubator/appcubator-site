@@ -13,7 +13,6 @@ function(){
       'keyup .style'        : 'styleChanged',
       'keyup .hover-style'  : 'hoverStyleChanged',
       'keyup .active-style' : 'activeStyleChanged',
-      'keyup .class_name'   : 'classNameChaged',
       'click .delete-elem'  : 'deleteElement'
     },
     initialize: function(uieModel) {
@@ -74,10 +73,6 @@ function(){
     },
     reRenderElement: function() {
       this.$el.find('.node-wrapper').html(_.template(ThemeTemplates.tempNode, {info: this.model.attributes}));
-    },
-
-    classNameChaged: function(e) {
-      this.model.set('class_name', e.target.value);
     }
 
   });
