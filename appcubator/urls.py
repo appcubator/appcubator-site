@@ -28,6 +28,7 @@ urlpatterns = patterns('',
     url(r'^signup_hn_form/$',           base_views.signup_hn_customer),
     url(r'^send_invitation/(\d+)/$',    base_views.send_invitation_to_customer),
     url(r'^backend/',                   include('app_builder.urls')),
+    url(r'^payments/',                  include('appcubator.payments.urls')),
 )
 
 urlpatterns += patterns('appcubator.log_views',
