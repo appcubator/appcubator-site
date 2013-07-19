@@ -28,6 +28,7 @@ logger = logging.getLogger('appcubator.models')
 class ExtraUserData(models.Model):
     user = models.OneToOneField(User, related_name="extradata")
     noob = models.IntegerField(default=1)
+    technical = models.IntegerField(default=0)
     picture_url = models.URLField(max_length=200, default='/static/default_pic.png')
 
     # RUN THIS TO FIX AN OLD DATABASE
