@@ -3,6 +3,7 @@ require.config({
     "jquery" : "../../libs/jquery/jquery",
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
     "jquery.hotkeys" : "../../libs/jquery/jquery.hotkeys",
+    "fontselect": "../../libs/fontselect/jquery.fontselect",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "util" : "../../libs/util/util",
@@ -23,6 +24,10 @@ require.config({
 
   shim: {
     "jquery-ui": {
+      exports: "$",
+      deps: ['jquery']
+    },
+    'fontselect': {
       exports: "$",
       deps: ['jquery']
     },

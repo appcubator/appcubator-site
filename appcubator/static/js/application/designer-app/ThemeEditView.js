@@ -1,5 +1,6 @@
 define([
   'designer-app/UIElementListView',
+  'fontselect',
   'util',
   'designer-app/ThemeTemplates'
 ],function(UIElementListView) {
@@ -61,10 +62,21 @@ define([
       this.editor.getSession().setMode("ace/mode/css");
       this.editor.setValue(this.model.get('basecss'));
 
-      $('#fonts-editor').val(this.model.get('fonts'));
+      //$('#fonts-editor').val(this.model.get('fonts'));
       /*this.model.get('pages').each(function(page, ind) {
         self.renderPage(page, ind);
       });*/
+
+      //console.log($('.font-selector'));
+      $('.font-selector').fontselect().change(function() {
+        var font = $(this).val().replace(/\+/g, ' ');
+        console.log(font);
+        $('#fonts-cont .fonts').append('<li class="row hi3"><button class="span6 btn btn-small btn-danger remove">Remove</button><span class="span18 offset1 font" style="font-family:'+font+'">'+font+'</span></li>');
+      });
+
+      $('#fonts-cont .fonts ').on('click', 'li .remove', function(e) {
+        $(e.currentTarget).parent().remove();
+      });
 
       _(statics).each(function(file) {
         util.get('statics-cont').innerHTML += '<img width="100" src="'+ file.url +'">' + file.name;
