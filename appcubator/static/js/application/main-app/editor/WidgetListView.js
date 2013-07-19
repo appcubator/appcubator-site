@@ -92,23 +92,26 @@ function( WidgetContainerView,
       }, this);
       this.widgetSelectorView.setElement(this.el).render();
 
-      this.el.appendChild(editorRow);
+      this.shadowElements = document.createElement('div');
       var listDiv = document.createElement('div');
+      listDiv.className = this.model.get('data').get('class_name');
       this.listDiv = listDiv;
-      this.el.appendChild(this.renderShadowElements());
+      this.listDiv.appendChild(editorRow);
+      this.listDiv.appendChild(this.renderShadowElements());
 
+      this.el.appendChild(this.listDiv);
       return this;
     },
 
     renderShadowElements: function() {
       var row = this.model.get('data').get('container_info').get('row');
       var uielements = _.map(row.get('uielements').models, function(obj) { return obj.attributes; });
-      this.listDiv.innerHTML = _.template(Templates.listNode, {layout: row.get('layout'),
+      this.shadowElements.innerHTML = _.template(Templates.listNode, {layout: row.get('layout'),
                                                           uielements: uielements,
                                                           isListOrGrid: row.get('isListOrGrid')});
 
       if(this.editMode) { $('.fdededfcbcbcd .shadow-x').addClass('trans'); }
-      return this.listDiv;
+      return this.shadowElements;
     },
 
     showDetails: function() {
@@ -162,6 +165,10 @@ function( WidgetContainerView,
 
       this.model.get('layout').set('width', width);
       this.model.get('layout').set('height', 46);
+    },
+
+    changedType: function(a) {
+      this.listDiv.className = this.model.get('data').get('class_name');
     },
 
     switchEditingOff: function() {

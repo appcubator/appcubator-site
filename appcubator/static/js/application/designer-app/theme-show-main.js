@@ -26,6 +26,9 @@ require.config({
       exports: "$",
       deps: ['jquery']
     },
+    "jquery.hotkeys": {
+      deps: ['jquery']
+    },
     "underscore": {
       exports: "_"
     },

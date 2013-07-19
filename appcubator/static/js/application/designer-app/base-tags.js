@@ -127,5 +127,15 @@
         },
         isSingle: false
       }
+    ],
+
+    "list" : [
+      {
+        tagName : 'div',
+        content: null,
+        cons_attribs : {
+        },
+        isSingle: false
+      }
     ]
 };

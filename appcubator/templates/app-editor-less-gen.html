@@ -166,6 +166,18 @@ body {
   }
 
   {% endfor %}
+
+  /* * * * * * * * * * *
+     Lists
+  * * * * * * * * * * */
+
+  {% for b in uie_state.lists %}
+
+  {{b.tagName|safe}}.{{b.class_name|safe}} { 
+  {{b.style|safe}}
+  }
+
+  {% endfor %}
 }
 
 {% endinlineless %}

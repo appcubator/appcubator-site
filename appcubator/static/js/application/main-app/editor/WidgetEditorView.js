@@ -103,12 +103,18 @@ function(WidgetContentEditor,
         }
 
         if(action == "show" || action == "loop") {
+          this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+          this.widgetClassPickerView.bind('change', this.classChanged);
+
+          this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
           this.el.appendChild(this.renderButtonWithText('query-editor-btn', 'Edit Query'));
+          this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
         }
 
         if(action == "searchlist") {
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
+          this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
         }
 
         if(action == "searchbox") {
@@ -116,7 +122,12 @@ function(WidgetContentEditor,
         }
 
         if(this.model.hasForm() && action != "login" && action != "signup") {
+          this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+          this.widgetClassPickerView.bind('change', this.classChanged);
+
+          this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
+          this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
         }
       }
       else {
