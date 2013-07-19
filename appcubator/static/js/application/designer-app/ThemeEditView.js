@@ -73,14 +73,23 @@ define([
         self.renderPage(page, ind);
       });*/
 
-      //console.log($('.font-selector'));
+      this.initFonts();
+
       $('.font-selector').fontselect().change(function() {
-        var font = $(this).val().replace(/\+/g, ' ');
-        console.log(font);
-        $('#fonts-cont .fonts').append('<li class="row hi3"><button class="span6 btn btn-small btn-danger remove">Remove</button><span class="span18 offset1 font" style="font-family:'+font+'">'+font+'</span></li>');
+        var value = $(this).val();
+        if(self.model.get('fonts').where({name: value}).length > 0) {
+          return false;
+        }
+        var newFont = self.model.get('fonts').add({name: value});
+        console.log(self.model.get('fonts').toJSON());
+        var font = value.replace(/\+/g, ' ');
+        $('#fonts-cont .fonts').append(_.template(ThemeTemplates.tempFont, { font: font, cid: newFont.cid }));
       });
 
       $('#fonts-cont .fonts ').on('click', 'li .remove', function(e) {
+        var cid = e.currentTarget.dataset.cid;
+        self.model.get('fonts').remove(cid);
+        console.log(self.model.get('fonts').toJSON());
         $(e.currentTarget).parent().remove();
       });
 
@@ -89,6 +98,21 @@ define([
       });
 
       keyDispatcher.bindComb('meta+s', function(e){ self.save(); e.preventDefault(); });
+    },
+
+    initFonts: function() {
+      this.model.get('fonts').reset([{name: 'Lato'}]);
+
+      var fontStyles = document.createElement('style');
+      fontStyles.type="text/css";
+
+      //add font to page style, and to font list
+      this.model.get('fonts').each(function(font) {
+        fontStyles.innerHTML += '@import url("http://fonts.googleapis.com/css?family='+font.get('name')+':400,700,900,400italic");\n';
+        $('#fonts-cont .fonts').append(_.template(ThemeTemplates.tempFont, { font: font.get('name').replace(/\+/g, ' '), cid: font.cid }));
+      });
+
+      document.body.appendChild(fontStyles);
     },
 
     baseChanged: function(e) {
@@ -202,6 +226,7 @@ define([
       json["dropdowns"]   = this.model.get('dropdowns').toJSON();
       json["boxes"]      = this.model.get('boxes').toJSON();
       json["forms"]      = this.model.get('forms').toJSON();
+      json["fonts"]      = this.model.get('fonts').toJSON();
 
       var url;
       if(themeId) { url = '/theme/'+themeId+'/edit/'; }

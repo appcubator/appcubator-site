@@ -25,6 +25,7 @@ function(UIElementCollection) {
       this.set('dropdowns', new UIElementCollection(themeState["dropdowns"], "dropdown"));
       this.set('boxes', new UIElementCollection(themeState["boxes"], "box"));
       this.set('forms', new UIElementCollection((themeState["forms"]||[]), "form"));
+      this.set('fonts', new Backbone.Collection(themeState["fonts"]||[]));
     }
 
   });
