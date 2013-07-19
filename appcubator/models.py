@@ -187,7 +187,7 @@ class App(models.Model):
         except simplejson.JSONDecodeError, e:
             raise ValidationError(e.msg)
 
-    def write_to_tmpdir(self):
+    def write_to_tmpdir(self, for_user=False):
         from app_builder.analyzer import App as AnalyzedApp
         from app_builder.controller import create_codes
         from app_builder.coder import Coder, write_to_fs
@@ -199,7 +199,7 @@ class App(models.Model):
         codes = create_codes(app)
         coder = Coder.create_from_codes(codes)
 
-        tmp_project_dir = write_to_fs(coder, css=self.css())
+        tmp_project_dir = write_to_fs(coder, css=self.css(), for_user=for_user)
 
         return tmp_project_dir
 
@@ -225,7 +225,7 @@ class App(models.Model):
         return "https://github.com/appcubator/" + self.u_name()
 
     def zip_path(self):
-        tmpdir = self.write_to_tmpdir()
+        tmpdir = self.write_to_tmpdir(for_user=True)
 
         def zipify(tmpdir):
             filenames = os.listdir(tmpdir)
