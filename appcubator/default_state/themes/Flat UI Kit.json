@@ -102,7 +102,9 @@
         }
     ],
     "fonts": [
-        "name": "Lato"
+        {
+            "name": "Lato"
+        }
     ],
     "lines": [
         {

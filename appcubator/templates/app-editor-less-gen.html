@@ -1,10 +1,9 @@
 {% load less %}
 
-<style type="text/css">
+
 {% for font in uie_state.fonts %}
-  @import url("http://fonts.googleapis.com/css?family-{{ font.name }}:400,700,400italic,700italic");
+  @import url("http://fonts.googleapis.com/css?family={{ font.name }}:400,700,400italic,700italic");
 {% endfor %}
-</style>
 
 {% inlineless %}
 
@@ -27,7 +26,7 @@ body {
 
 
   /* * * * * * * * * * *
-     Buttons
+     buttons
   * * * * * * * * * * */
 
   {% for b in  uie_state.buttons %}

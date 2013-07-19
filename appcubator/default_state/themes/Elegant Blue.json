@@ -55,8 +55,12 @@
         }
     ],
     "fonts": [
-        "name": "Lato",
-        "name": "Merriweather"
+        {
+            "name": "Lato"
+        },
+        {
+            "name": "Merriweather"
+        }
     ],
     "button": [
         {
