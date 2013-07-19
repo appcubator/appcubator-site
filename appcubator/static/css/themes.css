@@ -22,7 +22,7 @@ label {
   margin-bottom: 0;
 }
 
-.content-editor li {
+.content-editor > li {
   display: none;
 }
 
@@ -144,4 +144,19 @@ div.expandible {
 .element-view label {
   text-align: left;
   margin-left: 10px;
+}
+
+#fonts-cont .fonts li {
+  border-top: 1px solid #999;
+  padding: 15px;
+}
+#fonts-cont .fonts li:last-child {
+  border-bottom: 1px solid #999;
+}
+#fonts-cont .fonts li .btn {
+  height: 25px;
+  margin-top: -5px;
+}
+#fonts-cont .fonts li .font {
+  font-size: 20px;
 }

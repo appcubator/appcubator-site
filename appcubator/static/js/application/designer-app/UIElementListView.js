@@ -16,7 +16,6 @@ function(UIElementView, UIElementModel) {
 
     initialize: function(UIElementColl, type) {
       _.bindAll(this);
-
       this.type = type;
       this.collection = UIElementColl;
       this.collection.bind('add', this.appendUIE);

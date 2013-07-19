@@ -90,12 +90,12 @@
   uieStateEditor.getSession().setMode("ace/mode/json");
 
   $('#save-appState').click(function() {
-    saveState(JSON.parse(appStateEditor.getValue()));
+    saveState(JSON.parse(appStateEditor.getValue()), true);
   });
 
   $('#save-uieState').click(function() {
     console.log(JSON.parse(uieStateEditor.getValue()));
-    saveState(JSON.parse(uieStateEditor.getValue()));
+    saveState(JSON.parse(uieStateEditor.getValue()), false);
   });
 
   function saveState(state, is_appState) {

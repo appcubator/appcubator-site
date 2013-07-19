@@ -382,7 +382,7 @@ def app_emails(request, app_id):
     return render(request, 'app-emails.html', page_context)
 
 def _get_analytics(deployment_id):
-    """ 
+    """
         Send a post request to get analytics from the deployment corresponding to deployment_id.
         Then upsert it into the analytics store.
     """
@@ -538,7 +538,6 @@ def app_deploy(request, app_id):
         'user_name': app.owner.username,
         'date_joined': str(app.owner.date_joined)
     }
-    # result = app.deploy(d_user)
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     status = 500 if 'errors' in result else 200

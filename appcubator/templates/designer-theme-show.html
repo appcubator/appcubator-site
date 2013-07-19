@@ -2,6 +2,7 @@
 
 {% block css %}
   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/themes.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/js/libs/fontselect/fontselect.css" />
 {% endblock %}
 
 {% block topbar %}
@@ -39,12 +40,18 @@
   <div class="right-bar span42 offset2">
     <ul class="content-editor">
       <li id="basecss-cont" class="expanded">
+        <h3>Base CSS</h3>
         <div class="base-css span40" id="base-css">
 
         </div>
       </li>
       <li id="fonts-cont">
-        <textarea id="fonts-editor"></textarea>
+        <h3>Fonts</h3>
+        <div>
+          <input type="text" class="font-selector">
+          <ul class="fonts hoff2"></ul>
+        </div>
+        <!-- <textarea id="fonts-editor"></textarea> -->
       </li>
       <li id="pages-cont">
         <ul id="pages-list" class="pages-list">
