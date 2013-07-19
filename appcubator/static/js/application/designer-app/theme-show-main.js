@@ -19,7 +19,7 @@ require.config({
     "models" : "../data/models",
     "collections" : "../data/collections",
     "tutorial" : "../tutorial",
-    "ace" : "http://rawgithub.com/ajaxorg/ace-builds/master/src-noconflict/ace"
+    "ace" : "../../libs/ace/ace"
   },
 
   shim: {
