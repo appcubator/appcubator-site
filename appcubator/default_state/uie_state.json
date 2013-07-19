@@ -371,7 +371,7 @@
             "cons_attribs": {},
             "class_name": "form-with-bg",
             "content": null,
-            "tagName": "form",
+            "tagName": "form"
         }
     ],
     "lists": [
@@ -380,7 +380,7 @@
             "cons_attribs": {},
             "class_name": "defaul-list",
             "content": null,
-            "tagName": "div",
+            "tagName": "div"
         }
     ],
     "fonts": "",
