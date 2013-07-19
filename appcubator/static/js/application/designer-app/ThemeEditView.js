@@ -26,6 +26,7 @@ define([
 
       var self = this;
       this.model = themeModel;
+      window.themeModel = this.model;
       this.render();
 
       if(!themeModel.has('lists')) {
@@ -101,8 +102,6 @@ define([
     },
 
     initFonts: function() {
-      this.model.get('fonts').reset([{name: 'Lato'}]);
-
       var fontStyles = document.createElement('style');
       fontStyles.type="text/css";
 
@@ -226,16 +225,17 @@ define([
       json["dropdowns"]   = this.model.get('dropdowns').toJSON();
       json["boxes"]      = this.model.get('boxes').toJSON();
       json["forms"]      = this.model.get('forms').toJSON();
+      json["lists"]      = this.model.get('lists').toJSON();
       json["fonts"]      = this.model.get('fonts').toJSON();
 
       var url;
       if(themeId) { url = '/theme/'+themeId+'/edit/'; }
       else if(appId) { url = '/app/' + appId + '/uiestate/'; }
-
+      console.log(json);
       $.ajax({
         type: "POST",
         url: url,
-        data: JSON.stringify(json),
+        data: {uie_state: JSON.stringify(json)},
         success: function(data) {
           console.log(data);
         },
