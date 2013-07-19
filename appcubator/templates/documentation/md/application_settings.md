@@ -1,1 +1,1 @@
-Here are settings about your application.
+Domain & SEO settings to brand your application, making it easier to connect with new users.
