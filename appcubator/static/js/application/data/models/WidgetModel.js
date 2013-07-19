@@ -163,6 +163,11 @@ function(DataModel, LayoutModel) {
       return false;
     },
 
+    isList: function() {
+      if(this.get('type') == "loop") return true;
+      return false;
+    },
+
     toJSON : function() {
       var json = _.clone(this.attributes);
       json = _.omit(json, 'selected', 'deletable', 'context');

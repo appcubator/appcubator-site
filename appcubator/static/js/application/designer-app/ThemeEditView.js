@@ -28,6 +28,10 @@ define([
       this.model = themeModel;
       this.render();
 
+      if(!themeModel.has('lists')) {
+        themeModel.set('lists', new Backbone.Collection());
+      }
+
       var buttonView     = new UIElementListView(this.model.get('buttons'), 'button');
       util.get('button-cont').appendChild(buttonView.el);
       var imageView      = new UIElementListView(this.model.get('images'), 'image');
@@ -52,6 +56,8 @@ define([
       util.get('box-cont').appendChild(boxView.el);
       var formView        = new UIElementListView(this.model.get('forms'), 'form');
       util.get('form-cont').appendChild(formView.el);
+      var listView        = new UIElementListView(this.model.get('lists'), 'list');
+      util.get('list-cont').appendChild(listView.el);
       //this.model.get('pages').bind('add', this.renderPage);
     },
 

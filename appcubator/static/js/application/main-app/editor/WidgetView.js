@@ -76,8 +76,6 @@ define([
 
       this.el.style.textAlign = this.model.get('layout').get('alignment');
 
-      console.log(this.model.get('layout').get('l_padding'));
-
       if(this.model.get('layout').has('l_padding')) {
         this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
       }
@@ -100,7 +98,6 @@ define([
       if(this.model.isFullWidth()) this.switchOnFullWidth();
       if(this.model.isBox()) this.el.style.zIndex = 999;
 
-      console.log(this.el);
       return this;
     },
 
