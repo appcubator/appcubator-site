@@ -44,9 +44,9 @@
 
     <div class="span58 hoff2">
       <div class="row hoff1 analytics" style="position: relative">
-        <!-- <div class="coming-soon-overlay" style="display: block; top: 35px; background-color: rgba(227, 227, 227, 0.5);">
+        <div class="coming-soon-overlay" style="display: block; top: 35px; background-color: rgba(227, 227, 227, 0.75);">
           <h2>Site Analytics coming soon!</h2>
-        </div> -->
+        </div>
         <h3>Analytics</h3>
         <hr class="span58 pheader">
         <!-- <img class="span58 analytics-demo hoff1" src="{{ STATIC_URL }}img/analytics.png"> -->
@@ -243,22 +243,21 @@
       <div class="url-bar">http://yourapp.com</div>
       <div class="page full container fdededfcbcbcd" id="page">
         <!-- Navbar -->
-        <div class="navbar" id="navbar">
+        <navbar class="navbar" id="navbar">
           <div class="navbar-inner">
             <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
             <ul class="nav" id="links">
             </ul>
-            <button class="edit-navbar btn btn-small btn-inverse pull-right">Edit Navbar</button>
+            <button id="edit-navbar-btn">Edit Navbar</button>
           </div>
-        </div>
-        <!-- Navbar Ends-->
+        </navbar>
+        <!-- Editing Container -->
         <div class="container editing" id="full-container"></div>
         <div class="editing" id="elements-container">
         <!-- UI Elements -->
-        <!-- UI Elements Ends-->
         </div>
-        <footer id="footer-container">
-        </footer>
+        <!-- Footer -->
+        <footer class="footer" id="footer"></footer>
       </div>
     </div>
   </div>

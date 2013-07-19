@@ -61,7 +61,6 @@ def admin_users(request):
 def admin_user(request, user_id):
     user_id = long(user_id)
     user = get_object_or_404(ExtraUserData, id=user_id)
-    apps = App.objects.filter(owner=user_id)
     logs = LogAnything.objects.filter(user_id=user_id)
     apps = App.objects.filter(owner=user_id)
     page_context = {}
@@ -83,9 +82,11 @@ def admin_apps(request):
 def admin_app(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
+    logs = LogAnything.objects.filter(user_id=app.owner.id, app_id=app_id)
     page_context = {}
     page_context["app"] = app
     page_context["app_id"] = app_id
+    page_context["app_logs"] = logs
     return render(request, 'admin/app.html', page_context)
 
 @login_required
@@ -99,10 +100,17 @@ def admin_feedback(request):
 def recent_users(long_ago=timedelta(days=1)):
     today = timezone.now().date()
     time_ago = today - long_ago
-    logs = LogAnything.objects.filter(timestamp__gte=time_ago)
-    user_ids = logs.values('user_id').distinct()
-    users = [ExtraUserData.objects.get(pk=log["user_id"]) for log in user_ids]
-    return users
+    logs = LogAnything.objects\
+        .filter(timestamp__gte=time_ago, name="visited page")\
+        .values('user_id').distinct()\
+        .annotate(num_logs=Count('user_id'))\
+        .order_by('-num_logs')
+    for log in logs:
+        user_id = log["user_id"]
+        log["user"] = ExtraUserData.objects.get(pk=user_id)
+        log["name"] = log["user"].user.first_name + " " + log["user"].user.last_name
+        log["num_apps"] = log["user"].user.apps.count()
+    return logs
 
 # Top 10 users with most page visits
 def logs_per_user():

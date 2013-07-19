@@ -42,7 +42,7 @@ var constantContainers = {
                     },
                     {
                         "placeholder": "Login",
-                        "label": "Login",
+                        "label": "",
                         "displayType": "button",
                         "type": "button"
                     }

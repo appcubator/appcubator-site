@@ -98,8 +98,8 @@ function( PageModel,
       this.renderUrlBar();
       this.galleryEditor.render();
       this.widgetsManager.render();
-      this.navbar.render();
-      $('#footer-container').append(this.footer.render().el);
+      this.navbar.setElement('#navbar').render();
+      this.footer.setElement('#footer').render();
       this.guides.setElement($('#elements-container')).render();
 
       $('#elements-container').append(this.marqueeView.el);

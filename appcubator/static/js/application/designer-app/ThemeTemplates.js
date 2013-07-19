@@ -16,13 +16,9 @@ ThemeTemplates.tempNode = [
 ].join('\n');
 
 ThemeTemplates.tempPane = [
-'<form class="element-create-form">',
-  '<label>Class Name: <input type="text" name="className" class="class_name" value="<%= info.class_name %>" placeholder="Class Name..."></label><div class="btn btn-danger delete-elem pull-right">Delete Element</div>',
-  '<div class="hoff2"><label>Normal State <br><textarea name="style" class="style span12 hi10" placeholder="Styling here..."><%= info.style %></textarea></label>',
-  '<label>Hover State <br><textarea name="style" class="hover-style span12 offset1 hi10" placeholder="Styling here..."><%= info.hoverStyle %></textarea></label>',
-  '<label>Active State <br><textarea name="style" class="active-style span12 offset1 hi10" placeholder="Styling here..."><%= info.activeStyle %></textarea></label></div>',
-  '<div class="btn done">Done</div>',
-'</form>'
+  '<div class="sect"><label>Normal State</label><br  /><div id="style-<%= cid %>" class="style span40 hi10" placeholder="Styling here..."></div></div>',
+  '<div class="sect"><label>Hover State</label><br  /><div id="hover-style-<%= cid %>" class="hover-style span40 hi10"></div></div>',
+  '<div class="sect"><label>Active State</label><br  /><div id="active-style-<%= cid %>" class="active-style span40 hi10"></div></div>'
 ].join('\n');
 
 ThemeTemplates.tempCreate = [

@@ -4,7 +4,7 @@
 The "UI Elements" toolbar provides you with your Authentication, Current User Entities, Table Data, and Design Elements. Just Drag and Drop what you need. If you're making your homepage, you will need Authentication Elements. If you are editing a "User Profile," you will rely on Current User and Table Data Entities.
 
 
-####Authentication####
+###Authentication###
 
 ![alt text](http://appcubator.com/static/img/tutorial/Elements_1.png)
 
@@ -15,8 +15,7 @@ The "UI Elements" toolbar provides you with your Authentication, Current User En
 - Social Media Login Button - Allows users to login with Facebook, Twitter, and LinkedIn
 
 
-
-####Current User####
+###Current User###
 
 ![alt text](http://appcubator.com/static/img/tutorial/Elements_2.png) 
 
@@ -25,7 +24,7 @@ The "UI Elements" toolbar provides you with your Authentication, Current User En
 ![alt text](http://appcubator.com/static/img/tutorial/Current_User.png)
 
 
-####Table Data####
+###Table Data###
 
 ![alt text](http://appcubator.com/static/img/tutorial/Elements_3.png)
 
@@ -39,7 +38,8 @@ The "UI Elements" toolbar provides you with your Authentication, Current User En
 
 - List - Displays different records of entities based on the user specific database. Perfect for showing a twitter feed, comment board, or picture gallery.
 
-####Design Elements####
+
+###Design Elements###
 
 ![alt text](http://appcubator.com/static/img/tutorial/Elements_4.png)
 

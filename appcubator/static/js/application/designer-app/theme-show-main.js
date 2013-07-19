@@ -2,27 +2,31 @@ require.config({
   paths: {
     "jquery" : "../../libs/jquery/jquery",
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
+    "jquery.hotkeys" : "../../libs/jquery/jquery.hotkeys",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "util" : "../../libs/util/util",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "designer-app" : "./",
-    "editor" : "./editor",
+    "editor" : "../main-app/editor",
     "m-editor" : "./mobile-editor",
     "dicts" : "./dicts",
     "mixins" : "../../mixins",
-    "key" : "../../libs/keymaster/keymaster",
     "answer" : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
     "list" : "../../libs/list",
     "models" : "../data/models",
     "collections" : "../data/collections",
-    "tutorial" : "../tutorial"
+    "tutorial" : "../tutorial",
+    "ace" : "http://rawgithub.com/ajaxorg/ace-builds/master/src-noconflict/ace"
   },
 
   shim: {
     "jquery-ui": {
       exports: "$",
+      deps: ['jquery']
+    },
+    "jquery.hotkeys": {
       deps: ['jquery']
     },
     "underscore": {
@@ -42,9 +46,13 @@ require.config({
 require([
   "designer-app/ThemeEditView",
   'models/ThemeModel',
-  "bootstrap"
+  "editor/KeyDispatcher",
+  "mixins/BackboneConvenience",
+  "bootstrap",
+  "ace"
 ],
-function(ThemeEditView, ThemeModel) {
+function(ThemeEditView, ThemeModel, KeyDispatcher) {
+  keyDispatcher  = new KeyDispatcher();
   var themeModel = new ThemeModel(themeState);
   var galleryView = new ThemeEditView(themeModel);
 });

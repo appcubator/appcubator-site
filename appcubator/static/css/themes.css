@@ -78,13 +78,17 @@ div.expandible {
   border-bottom: 1px solid #ccc;
 }
 
-.right-bar,.content-editor,.base-css {
+.right-bar,.content-editor {
+  height: 100%;
+}
+
+.base-css {
   height: 500px;
 }
 
 .ace_gutter,.ace_scroller {
-  padding-top: 10px;
-}
+/*  padding-top: 10px;
+*/}
 
 .uie-gallery li {
   padding: 0;
@@ -100,4 +104,44 @@ div.expandible {
 
 .pane-inline {
   background-color: #fff !important;
+}
+
+.upper-area {
+  padding: 10px;
+}
+.class-menu {
+  width: 180px;
+  display: inline-block;
+}
+.temp-node-area {
+  display: inline-block;
+  width: 420px;
+  text-align: center;
+  border-radius: 4px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  vertical-align: top;
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+}
+.element-view {
+}
+
+.element-view .sect {
+  border-top: 1px solid #ccc;
+  height: 200px;
+  padding-top: 10px;
+}
+
+.element-view .ace_editor {
+  margin-left: 10px;
+}
+
+.element-view div {
+  text-align: left;
+}
+.element-view label {
+  text-align: left;
+  margin-left: 10px;
 }
