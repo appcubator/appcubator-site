@@ -234,7 +234,7 @@ function(WidgetModel,
 
       createImageSlider: function(layout) {
         var widget = {};
-        widget.type = "gallery";
+        widget.type = "imageslider";
 
         widget.data = {};
         widget.data.nodeType = "imageslider";
@@ -252,7 +252,7 @@ function(WidgetModel,
         return this.push(widgetContainerModel);
       },
 
-      createTwitterFeed: function(layout) {
+      /*createTwitterFeed: function(layout) {
         var widget = {};
         widget.type = "gallery";
 
@@ -265,10 +265,10 @@ function(WidgetModel,
 
         return this.push(widgetContainerModel);
       },
-
+*/
       createFacebookShare: function(layout) {
         var widget = {};
-        widget.type = "gallery";
+        widget.type = "facebookshare";
 
         widget.data = {};
         widget.data.nodeType = "facebookshare";
