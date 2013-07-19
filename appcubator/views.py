@@ -524,7 +524,7 @@ def app_zip(request, app_id):
         raise Http404
     zip_bytes = open(app.zip_path(), "r").read()
     response = HttpResponse(zip_bytes, content_type="application/octet-stream")
-    response['Content-Disposition'] = 'attachment; filename="teh_codez_%s.zip"' % app.hostname()
+    response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
     return response
 
 @login_required
