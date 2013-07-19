@@ -1,7 +1,7 @@
 define([
   'collections/EmailCollection',
   'models/EmailModel',
-  'app/EmailView',
+  'app/emails/EmailView',
   'mixins/BackboneNameBox'
 ],
 function(EmailCollection, EmailModel, EmailView) {
@@ -64,7 +64,7 @@ function(EmailCollection, EmailModel, EmailView) {
         txt: '+ Create Email'
       });
       createEmailBox.on('submit', this.createEmail);
-      this.listView.append(createEmailBox.el);
+      this.listView.append(createEmailBox.render().el);
 
       return this;
     },

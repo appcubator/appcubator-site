@@ -122,11 +122,14 @@ function(WidgetModel,
         widget.layout = layout;
 
         widget.data = {};
+        widget.data = _.extend(widget.data, uieState["forms"][0]);
+
         widget.data.container_info = {};
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "create";
         widget.data.container_info.form = {};
         widget.data.container_info.form.entity = entity.get('name');
+
         var currentPage =  v1State.getCurrentPage();
 
         if(currentPage.getContextEntities().length)  widget.data.container_info.form.goto = "internal://Homepage";
@@ -177,6 +180,7 @@ function(WidgetModel,
         widget.layout = layout;
 
         widget.data = {};
+        widget.data = _.extend(widget.data, uieState["lists"][0]);
         widget.data.container_info = {};
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "show";

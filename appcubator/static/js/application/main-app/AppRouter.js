@@ -3,7 +3,7 @@ define([
 		"mixins/SimpleModalView",
 		"mixins/ErrorDialogueView",
 		"tutorial/TutorialView",
-		"app/EmailsView",
+		"app/emails/EmailsView",
 		"app/DeployView",
 		"mixins/SimpleDialogueView",
 		"backbone",

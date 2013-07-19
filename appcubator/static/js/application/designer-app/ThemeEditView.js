@@ -1,5 +1,6 @@
 define([
   'designer-app/UIElementListView',
+  'fontselect',
   'util',
   'designer-app/ThemeTemplates'
 ],function(UIElementListView) {
@@ -25,7 +26,12 @@ define([
 
       var self = this;
       this.model = themeModel;
+      window.themeModel = this.model;
       this.render();
+
+      if(!themeModel.has('lists')) {
+        themeModel.set('lists', new Backbone.Collection());
+      }
 
       var buttonView     = new UIElementListView(this.model.get('buttons'), 'button');
       util.get('button-cont').appendChild(buttonView.el);
@@ -51,6 +57,8 @@ define([
       util.get('box-cont').appendChild(boxView.el);
       var formView        = new UIElementListView(this.model.get('forms'), 'form');
       util.get('form-cont').appendChild(formView.el);
+      var listView        = new UIElementListView(this.model.get('lists'), 'list');
+      util.get('list-cont').appendChild(listView.el);
       //this.model.get('pages').bind('add', this.renderPage);
     },
 
@@ -61,16 +69,49 @@ define([
       this.editor.getSession().setMode("ace/mode/css");
       this.editor.setValue(this.model.get('basecss'));
 
-      $('#fonts-editor').val(this.model.get('fonts'));
+      //$('#fonts-editor').val(this.model.get('fonts'));
       /*this.model.get('pages').each(function(page, ind) {
         self.renderPage(page, ind);
       });*/
+
+      this.initFonts();
+
+      $('.font-selector').fontselect().change(function() {
+        var value = $(this).val();
+        if(self.model.get('fonts').where({name: value}).length > 0) {
+          return false;
+        }
+        var newFont = self.model.get('fonts').add({name: value});
+        console.log(self.model.get('fonts').toJSON());
+        var font = value.replace(/\+/g, ' ');
+        $('#fonts-cont .fonts').append(_.template(ThemeTemplates.tempFont, { font: font, cid: newFont.cid }));
+      });
+
+      $('#fonts-cont .fonts ').on('click', 'li .remove', function(e) {
+        var cid = e.currentTarget.dataset.cid;
+        self.model.get('fonts').remove(cid);
+        console.log(self.model.get('fonts').toJSON());
+        $(e.currentTarget).parent().remove();
+      });
 
       _(statics).each(function(file) {
         util.get('statics-cont').innerHTML += '<img width="100" src="'+ file.url +'">' + file.name;
       });
 
       keyDispatcher.bindComb('meta+s', function(e){ self.save(); e.preventDefault(); });
+    },
+
+    initFonts: function() {
+      var fontStyles = document.createElement('style');
+      fontStyles.type="text/css";
+
+      //add font to page style, and to font list
+      this.model.get('fonts').each(function(font) {
+        fontStyles.innerHTML += '@import url("http://fonts.googleapis.com/css?family='+font.get('name')+':400,700,900,400italic");\n';
+        $('#fonts-cont .fonts').append(_.template(ThemeTemplates.tempFont, { font: font.get('name').replace(/\+/g, ' '), cid: font.cid }));
+      });
+
+      document.body.appendChild(fontStyles);
     },
 
     baseChanged: function(e) {
@@ -184,15 +225,17 @@ define([
       json["dropdowns"]   = this.model.get('dropdowns').toJSON();
       json["boxes"]      = this.model.get('boxes').toJSON();
       json["forms"]      = this.model.get('forms').toJSON();
+      json["lists"]      = this.model.get('lists').toJSON();
+      json["fonts"]      = this.model.get('fonts').toJSON();
 
       var url;
       if(themeId) { url = '/theme/'+themeId+'/edit/'; }
       else if(appId) { url = '/app/' + appId + '/uiestate/'; }
-
+      console.log(json);
       $.ajax({
         type: "POST",
         url: url,
-        data: JSON.stringify(json),
+        data: {uie_state: JSON.stringify(json)},
         success: function(data) {
           console.log(data);
         },

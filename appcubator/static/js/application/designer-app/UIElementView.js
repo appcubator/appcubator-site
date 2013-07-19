@@ -10,7 +10,8 @@ function(UIElementEditingView) {
 
     events : {
       'click .upper-area' : 'toggleElement',
-      'click .remove'     : 'removeUIE'
+      'click .remove'     : 'removeUIE',
+      'keyup .class_name' : 'classNameChaged'
     },
 
     initialize: function(uieModel) {
@@ -106,7 +107,12 @@ function(UIElementEditingView) {
       this.expandedView.close();
       this.isExpanded = false;
       this.el.style.height = '180px';
+    },
+
+    classNameChaged: function(e) {
+      this.model.set('class_name', e.target.value);
     }
+
   });
 
   return UIElementView;

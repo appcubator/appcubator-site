@@ -28,3 +28,10 @@ ThemeTemplates.tempCreate = [
   '</div>',
 '</div>'
 ].join('\n');
+
+ThemeTemplates.tempFont = [
+  '<li class="row hi3">',
+    '<button class="span6 btn btn-small btn-danger remove" data-cid="<%= cid %>">Remove</button>',
+    '<span class="span18 offset1 font" style="font-family:<%= font %>"><%= font %></span>',
+  '</li>'
+].join('\n');

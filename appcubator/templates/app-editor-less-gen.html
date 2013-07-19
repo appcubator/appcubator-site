@@ -1,6 +1,10 @@
 {% load less %}
 
-{{  uie_state.fonts|safe }}
+<style type="text/css">
+{% for font in uie_state.fonts %}
+  @import url("http://fonts.googleapis.com/css?family-{{ font.name }}:400,700,400italic,700italic");
+{% endfor %}
+</style>
 
 {% inlineless %}
 
@@ -28,7 +32,7 @@ body {
 
   {% for b in  uie_state.buttons %}
 
-  {{b.tagName|safe}}.{{b.class_name|safe}} { 
+  {{b.tagName|safe}}.{{b.class_name|safe}} {
   {{b.style|safe}}
   }
 
@@ -40,7 +44,7 @@ body {
 
   {% for i in  uie_state.images %}
 
-  {{i.tagName|safe}}.{{i.class_name|safe}} { 
+  {{i.tagName|safe}}.{{i.class_name|safe}} {
   {{i.style|safe}}
   }
 
@@ -52,7 +56,7 @@ body {
 
   {% for ht in  uie_state.headerTexts %}
 
-  {{ht.tagName|safe}}.{{ht.class_name|safe}} { 
+  {{ht.tagName|safe}}.{{ht.class_name|safe}} {
   {{ht.style|safe}}
   }
 
@@ -64,7 +68,7 @@ body {
 
   {% for t in  uie_state.texts %}
 
-  {{t.tagName|safe}}.{{t.class_name|safe}} { 
+  {{t.tagName|safe}}.{{t.class_name|safe}} {
   {{t.style|safe}}
   }
 
@@ -77,7 +81,7 @@ body {
 
   {% for l in  uie_state.links %}
 
-  {{l.tagName|safe}}.{{l.class_name|safe}} { 
+  {{l.tagName|safe}}.{{l.class_name|safe}} {
   {{l.style|safe}}
   }
 
@@ -89,7 +93,7 @@ body {
 
   {% for ti in  uie_state.textInputs %}
 
-  {{ti.tagName|safe}}.{{ti.class_name|safe}} { 
+  {{ti.tagName|safe}}.{{ti.class_name|safe}} {
   {{ti.style|safe}}
   }
 
@@ -101,7 +105,7 @@ body {
 
   {% for p in  uie_state.passwords %}
 
-  {{p.tagName|safe}}.{{p.class_name|safe}} { 
+  {{p.tagName|safe}}.{{p.class_name|safe}} {
   {{p.style|safe}}
   }
 
@@ -113,7 +117,7 @@ body {
 
   {% for ta in uie_state.textAreas %}
 
-  {{ta.tagName|safe}}.{{ta.class_name|safe}} { 
+  {{ta.tagName|safe}}.{{ta.class_name|safe}} {
   {{ta.style|safe}}
   }
 
@@ -125,7 +129,7 @@ body {
 
   {% for l in uie_state.lines %}
 
-  {{l.tagName|safe}}.{{l.class_name|safe}} { 
+  {{l.tagName|safe}}.{{l.class_name|safe}} {
   {{l.style|safe}}
   }
 
@@ -137,7 +141,7 @@ body {
 
   {% for d in uie_state.dropdowns %}
 
-  {{d.tagName|safe}}.{{d.class_name|safe}} { 
+  {{d.tagName|safe}}.{{d.class_name|safe}} {
   {{d.style|safe}}
   }
 
@@ -149,7 +153,7 @@ body {
 
   {% for b in uie_state.boxes %}
 
-  {{b.tagName|safe}}.{{b.class_name|safe}} { 
+  {{b.tagName|safe}}.{{b.class_name|safe}} {
   {{b.style|safe}}
   }
 
@@ -161,7 +165,19 @@ body {
 
   {% for b in uie_state.forms %}
 
-  {{b.tagName|safe}}.{{b.class_name|safe}} { 
+  {{b.tagName|safe}}.{{b.class_name|safe}} {
+  {{b.style|safe}}
+  }
+
+  {% endfor %}
+
+  /* * * * * * * * * * *
+     Lists
+  * * * * * * * * * * */
+
+  {% for b in uie_state.lists %}
+
+  {{b.tagName|safe}}.{{b.class_name|safe}} {
   {{b.style|safe}}
   }
 
