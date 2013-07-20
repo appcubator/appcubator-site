@@ -1,7 +1,9 @@
-# Editor #
+#Editor#
 
 
-The editor allows you to combine your Applicaiton Settings, Tables, Themes, and Pages using a completely visual platform. Learning how to navigate the editor will enable you to assemble your complete application.
+Combine your Applicaiton Settings, Tables, Themes, and Pages using a completely visual platform. 
+
+![alt text](http://appcubator.com/static/img/tutorial/Editor.png)
 
 What is the Editor Toolbar?
 
@@ -10,5 +12,3 @@ What is the Editor Toolbar?
 - Remember to utilize the "Save" function often to record your progress. 
 
 - The "Test Run" function allows you to deply your application to your custom domain or *.appcubator.com subdomain. 
-
-![alt text](http://appcubator.com/static/img/tutorial/Editor.png)
