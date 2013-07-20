@@ -53,17 +53,8 @@ function( WidgetContainerView,
       this.model.bind('highlight', this.highlightFirstRow);
       this.widgetSelectorView = new ListWidgetSelectorView(this.model.get('data').get('container_info').get('row').get('uielements'), this.el);
       this.subviews.push(this.widgetSelectorView);
-
-      this.rowBindings();
     },
 
-    rowBindings: function() {
-      // var self = this;
-      // self.model.get('data').get('container_info').get('row').get('uielements').each(function(element) {
-      //   element.get('layout').bind('change', self.renderShadowElements);
-      //   element.get('data').bind('change', self.renderShadowElements);
-      // });
-    },
 
     render: function() {
       var self = this;
@@ -141,11 +132,6 @@ function( WidgetContainerView,
       this.editorRow.appendChild(widgetView.render().el);
 
       this.deepListenTo(widgetModel, 'change', this.renderShadowElements);
-
-      // widgetModel.get('layout').bind('change', this.renderShadowElements);
-      // //widgetModel.get('layout').bind('change', self.renderShadowElements);
-      // widgetModel.get('data').bind('change', self.renderShadowElements);
-      // widgetModel.get('data').bind('change', self.renderShadowElements);
 
       if(isNew) { widgetView.autoResize(); }
     },
