@@ -127,6 +127,7 @@ function( WidgetContainerView,
     placeWidget: function(widgetModel, isNew) {
       widgetModel.setupLoopContext(this.entityModel);
       var widgetView = new WidgetView(widgetModel);
+      this.subviews.push(widgetView);
       widgetView.setFreeMovement();
 
       this.editorRow.appendChild(widgetView.render().el);

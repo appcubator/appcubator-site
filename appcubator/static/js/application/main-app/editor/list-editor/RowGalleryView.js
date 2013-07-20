@@ -42,8 +42,8 @@ function(EditorGalleryView, ElementCollection) {
       this.allList = this.el;
 
       this.addInfoItem('Drop elements to the green area to edit one row of the list.');
-      this.renderContextEntity();
       this.renderUIElementList();
+      this.renderContextEntity();
       this.el.innerHTML += '<div class="bottom-arrow"></div>';
 
       this.$el.find('li:not(.ui-draggable)').draggable({
@@ -55,7 +55,8 @@ function(EditorGalleryView, ElementCollection) {
         },
         stop: self.dropped
       });
-      this.$el.find('li').on('click', self.dropped);
+
+      //this.$el.find('li').on('click', self.dropped);
       this.switchEditingModeOn();
       return this;
     },
@@ -63,11 +64,7 @@ function(EditorGalleryView, ElementCollection) {
     renderUIElementList: function() {
       var self = this;
       var collection = new ElementCollection(defaultElements);
-
-      var li = document.createElement('li');
-      li.className = 'gallery-header ui-draggable';
-      li.innerHTML = 'Design Elements';
-      $(this.allList).append(li);
+      var uiElemsSection = this.addSection('Design Elements');
 
       collection.each(function(element) {
         if(element.get('className') == "buttons" ||
@@ -77,7 +74,7 @@ function(EditorGalleryView, ElementCollection) {
            element.get('className') == "imageslider" ||
            element.get('className') == "facebookshare") return;
 
-          self.appendUIElement(element);
+          self.appendUIElement(element, uiElemsSection);
       });
     },
 
@@ -85,19 +82,21 @@ function(EditorGalleryView, ElementCollection) {
       // Form, Data elements belonging to the entity
       var self = this;
 
+      var contextEntitySection = this.addSection('Row Context Data');
+
       var entityName = self.entity.get('name');
       var entityId = self.entity.cid;
 
       this.entity.get('fields').each(function(field) {
-        if(field.isRelatedField()) return self.renderRelatedField(field);
+        if(field.isRelatedField()) return self.renderRelatedField(field, contextEntitySection);
 
         this.addHalfWidthItem('context-field-'+ entityId+'-' + field.cid,
                               'context-entity', entityName+' '+field.get('name'),
-                              'plus-icon');
+                              'plus-icon', contextEntitySection);
       }, this);
     },
 
-    renderRelatedField: function(fieldModel) {
+    renderRelatedField: function(fieldModel, contextEntitySection) {
 
       var entityName = this.entity.get('name');
       var entityId = this.entity.cid;
@@ -107,7 +106,7 @@ function(EditorGalleryView, ElementCollection) {
         this.addHalfWidthItem( 'context-field-'+entityId+'-'+tableModel.cid+'-'+fieldModel.cid+'-'+fieldM.cid,
                                'context-nested-entity',
                                 entityName+' '+fieldModel.get('name')+'.'+fieldM.get('name'),
-                               'plus-icon');
+                               'plus-icon', contextEntitySection);
       }, this);
     },
 
@@ -159,7 +158,27 @@ function(EditorGalleryView, ElementCollection) {
       var itemGallery = $('.elements-list.row-elements-list');
       var h = itemGallery.scrollTop();
       itemGallery.scrollTop(h + 10);
-    }
+    },
+
+
+    appendUIElement: function(elementModel, container) {
+      var className = 'uielement';
+      var id='type-' + elementModel.get('className');
+      var icon = 'icon '+  elementModel.get('className');
+      var text = elementModel.get('text');
+
+      var li = this.addHalfWidthItem(id, className, text, icon, container);
+    },
+
+    addSection: function(name) {
+      var sectionName = name.replace(/ /g,'-');
+      var target = '.'+sectionName;
+      var header = this.addHeaderItem(name, target);
+      var section = document.createElement('section');
+      section.className = sectionName;
+      $(this.allList).append(section);
+      return section;
+    },
   });
 
   return RowGalleryView;
