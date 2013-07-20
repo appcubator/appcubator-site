@@ -30,7 +30,7 @@ def admin_home(request):
 
     # active users
     page_context["users_today"] = recent_users(long_ago=timedelta(days=1))
-    page_context["users_last_week"] = recent_users(long_ago=timedelta(days=1))
+    page_context["users_last_week"] = recent_users(long_ago=timedelta(days=7))
     page_context["users_last_month"] = recent_users(long_ago=timedelta(days=30))
 
     # Top 10 users with most page visits
