@@ -139,12 +139,22 @@ span.q-sent {
   display: none;
 }
 
+.racoon ul,
 .racoon p {
   background-color: #fff;
   color: #4e5665;
   padding: 24px;
   min-height: 80px;
   border-bottom: 1px solid #e7e8e9;
+}
+.racoon ul {
+  list-style: circle;
+  list-style-position: inside;
+}
+
+.racoon ul p {
+  padding: 0;
+  border-bottom-width: 0;
 }
 
 .racoon .images {
@@ -402,14 +412,14 @@ span.q-sent {
 
   width:  240px;
   */
-position: fixed;
+  position: absolute;
   left: 0;
   width: 224px;
   background-color: #0f2d40;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
   color: #fff;
-  top: 130px;
+  top: 120px;
   padding: 6px;
   padding-left: 20px;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";

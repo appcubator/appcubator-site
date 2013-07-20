@@ -3780,3 +3780,12 @@ ul.list {
   top: 23px;
   right: 23px;
 }
+
+.field {
+  padding: 8px;
+}
+
+.field label {
+  display: inline-block;
+  margin-left: 4px;
+}
