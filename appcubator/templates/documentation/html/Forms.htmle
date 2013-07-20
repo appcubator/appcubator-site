@@ -1,0 +1,21 @@
+<p>###Forms###</p>
+
+<p>Forms and Lists are the bread and butter of web applications. Without them, you can't enter or display data from your database. </p>
+
+<p><img src="http://appcubator.com/static/img/tutorial/Elements_3.png" alt="alt text" /></p>
+
+<p>Entering New Data!</p>
+
+<p>Drag and Drop a "Create Form" on your User Pages to allow users to post new tweets, upload new pictues, and add new tasks. </p>
+
+<p><img src="http://appcubator.com/static/img/tutorial/Edit_Form.png" alt="alt text" /></p>
+
+<p>How can I modify my Forms?</p>
+
+<p><img src="http://appcubator.com/static/img/tutorial/Form_Editor.png" alt="alt text" /></p>
+
+<ul>
+<li><p>Click "Edit Form" to open up the Form Editor. </p></li>
+<li><p>Fields within the form can be reordered by simply dragging the displayed order.</p></li>
+<li><p>Chose an option from the list in the right panel of the "Form Editor" to change where your user goes when they submit their form.</p></li>
+</ul>
