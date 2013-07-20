@@ -442,5 +442,14 @@
       "tagName": "form",
       "activeStyle": ""
     }
+  ],
+  "lists": [
+    {
+      "isSingle": false,
+      "cons_attribs": {},
+      "class_name": "defaul-list",
+      "content": null,
+      "tagName": "div"
+    }
   ]
 }

@@ -180,7 +180,7 @@ function(WidgetModel,
         widget.layout = layout;
 
         widget.data = {};
-        widget.data = _.extend(widget.data, uieState["lists"][0]);
+        widget.data = _.extend(widget.data, (uieState["lists"][0]||{ class_name: "default_form"}));
         widget.data.container_info = {};
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "show";
@@ -220,6 +220,7 @@ function(WidgetModel,
         widget.layout = layout;
 
         widget.data = {};
+        widget.data = _.extend(widget.data, (uieState["lists"][0]||{ class_name: "default_form"}));
         widget.data.container_info = {};
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "searchlist";
