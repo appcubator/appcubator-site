@@ -12,12 +12,19 @@ function(SimpleModalView) {
     },
 
     initialize: function() {
+      var self = this;
       _.bindAll(this);
       this.render();
+      v1.on('deploy', function() {
+        self.$('.coming-soon-overlay').hide();
+      });
     },
 
     render: function() {
       this.el.innerHTML = _.template(AnalyticsTemplates.main_stats, {});
+      if(!window.is_deployed) {
+        $('.analytics .coming-soon-overlay').show();
+      }
       this.fetchInfo();
       return this;
     },
@@ -39,6 +46,9 @@ function(SimpleModalView) {
         success: function(data) {
           console.log(data);
           self.renderData(data);
+        },
+        error: function(data) {
+          console.log("derp");
         },
         dataType: "JSON"
       });

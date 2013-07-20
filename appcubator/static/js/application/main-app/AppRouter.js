@@ -242,7 +242,8 @@ define([
 				data: JSON.stringify(appState),
 				success: function() {
 					util.dontAskBeforeLeave();
-
+					is_deployed = 1;
+					self.trigger('deploy');
 					$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
 					setTimeout(function(){
 						$('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();

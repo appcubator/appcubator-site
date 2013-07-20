@@ -177,7 +177,8 @@ def app_page(request, app_id):
                     'themes': simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
                     'apps': app.owner.apps.all(),
-                    'user': app.owner}
+                    'user': app.owner,
+                    'is_deployed': 1 if app.deployment_id != None else 0}
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)
 
