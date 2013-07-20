@@ -12,6 +12,8 @@ function(EditorGalleryView, ElementCollection) {
     positionVerticalGrid   : 1,
 
     events : {
+        'mouseover .bottom-arrow' : 'slideDown',
+        'mousemove .bottom-arrow' : 'slideDown'
     },
 
     initialize: function(widgetModel, location){
@@ -42,6 +44,7 @@ function(EditorGalleryView, ElementCollection) {
       this.addInfoItem('Drop elements to the green area to edit one row of the list.');
       this.renderContextEntity();
       this.renderUIElementList();
+      this.el.innerHTML += '<div class="bottom-arrow"></div>';
 
       this.$el.find('li:not(.ui-draggable)').draggable({
         cursor: "move",
@@ -150,6 +153,12 @@ function(EditorGalleryView, ElementCollection) {
       if(top < 0) top = 0;
 
       return top;
+    },
+
+    slideDown: function() {
+      var itemGallery = $('.elements-list.row-elements-list');
+      var h = itemGallery.scrollTop();
+      itemGallery.scrollTop(h + 10);
     }
   });
 
