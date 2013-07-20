@@ -351,7 +351,7 @@ def app_get_uie_state(request, app):
 @require_POST
 @login_required
 def app_save_uie_state(request, app):
-    app._uie_state_json = request.body
+    app._uie_state_json = request.POST['uie_state']
     try:
         app.full_clean()
     except Exception, e:
@@ -363,7 +363,7 @@ def app_save_uie_state(request, app):
 @require_POST
 @login_required
 def app_save_mobile_uie_state(request, app):
-    app._mobile_uie_state_json = request.body
+    app._mobile_uie_state_json = request.POST['uie_state']
     try:
         app.full_clean()
     except Exception, e:
