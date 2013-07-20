@@ -101,11 +101,7 @@
             }
         }
     ],
-    "fonts": [
-        {
-            "name": "Lato"
-        }
-    ],
+    "fonts": [{"name": "Lato"}],
     "lines": [
         {
             "style": "border-color:#49afcd;",
