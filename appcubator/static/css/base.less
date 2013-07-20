@@ -1,3 +1,5 @@
+@import "mixins";
+
 body {
   font-family: "proxima-nova";
   font-size: 14px;
@@ -191,6 +193,25 @@ hr {
   border-bottom: 1px solid #f6f6f6;
 }
 
+.column {
+  overflow: hidden;
+  border-left: 1px solid #ccc;
+  height: 100%;
+}
+
+.column:last-child {
+  border-right: 1px solid #ccc;
+}
+
+.column > div {
+  padding: 4px;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+
+/*
+ * PANES
+ */
 .pane {
   position: relative;
   display: inline-block;
@@ -265,6 +286,9 @@ hr {
   cursor: pointer;
 }
 
+/*
+ * FORMS ON FORMS ON FORMS
+ */
 legend {
   display: block;
   width: 100%;
@@ -308,13 +332,16 @@ textarea {
   height: auto;
 }
 
-textarea,
+select, textarea,
 input[type="text"],input[type="password"],input[type="datetime"],
 input[type="datetime-local"],input[type="date"],input[type="month"],
 input[type="time"],input[type="week"],input[type="number"],
 input[type="email"],input[type="url"],input[type="search"],
 input[type="tel"],input[type="color"],
 .uneditable-input {
+  color: #555555;
+  vertical-align: middle;
+  border-radius: 4px;
   background-color: #ffffff;
   border: 1px solid #cccccc;
 
@@ -326,6 +353,16 @@ input[type="tel"],input[type="color"],
   -o-transition: border linear 0.2s, box-shadow linear 0.2s;
   -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
   transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+
+select, input[type="file"] {
+  height: 30px;
+  line-height: 30px;
+}
+
+select {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
 }
 
 .pull-right {
@@ -432,6 +469,11 @@ input[type="tel"],input[type="color"],
           font-weight: bold;
           cursor: pointer;
           border-right: 1px solid rgba(0,0,0,0.2);
+
+          &:hover {
+            -webkit-box-shadow: inset 0px 0px 5px 0 rgba(90, 90, 90, 0.4);
+            box-shadow: inset 0px 0px 5px 0 rgba(90, 90, 90, 0.4);
+          }
 
           a {
             display: inline-block;
@@ -854,6 +896,7 @@ input[type="tel"],input[type="color"],
 @import "buttons.css";
 @import "app-page.less";
 @import "app-info.less";
+@import "entities.less";
 
 
 
