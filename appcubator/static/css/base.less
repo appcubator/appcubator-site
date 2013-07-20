@@ -27,6 +27,48 @@ h4 {
   font-size: 14px;
 }
 
+img {
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+  border: 0;
+}
+
+/*
+ * FONTS ON FONTS ON FONTS
+ */
+@font-face {
+  font-family: 'verb_regularregular';
+  src: url('../font/verb_regular/VerbRegular-webfont.eot');
+  src: url('../font/verb_regular/VerbRegular-webfont.eot?#iefix') format('embedded-opentype'), url('../font/verb_regular/VerbRegular-webfont.woff') format('woff'), url('../font/verb_regular/VerbRegular-webfont.ttf') format('truetype'), url('../font/verb_regular/VerbRegular-webfont.svg#verb_regularregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'verb_mediumregular';
+  src: url('../font/verb_medium/VerbMedium-webfont.eot');
+  src: url('../font/verb_medium/VerbMedium-webfont.eot?#iefix') format('embedded-opentype'), url('../font/verb_medium/VerbMedium-webfont.woff') format('woff'), url('../font/verb_medium/VerbMedium-webfont.ttf') format('truetype'), url('../font/verb_medium/VerbMedium-webfont.svg#verb_mediumregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'verb_regularbold';
+  src: url('../font/verb_bold/VerbBold-webfont.eot');
+  src: url('../font/verb_bold/VerbBold-webfont.eot?#iefix') format('embedded-opentype'), url('../font/verb_bold/VerbBold-webfont.woff') format('woff'), url('../font/verb_bold/VerbBold-webfont.ttf') format('truetype'), url('../font/verb_bold/VerbBold-webfont.svg#verb_regularbold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'verb_lightitalic';
+  src: url('../font/verb_lightitalic/VerbLight-Italic-webfont.eot');
+  src: url('../font/verb_lightitalic/VerbLight-Italic-webfont.eot?#iefix') format('embedded-opentype'), url('../font/verb_lightitalic/VerbLight-Italic-webfont.woff') format('woff'), url('../font/verb_lightitalic/VerbLight-Italic-webfont.ttf') format('truetype'), url('../font/verb_lightitalic/VerbLight-Italic-webfont.svg#verb_lightitalic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .navbar {
   .nav {
     position: relative;
@@ -324,6 +366,12 @@ h4 {
                 overflow: hidden;
               }
 
+              &:last-child {
+                border-bottom-right-radius: 4px;
+                border-bottom-left-radius: 4px;
+                overflow: hidden;
+              }
+
               &.header {
                 height: 26px;
                 line-height: 26px;
@@ -373,8 +421,219 @@ h4 {
 .page {
   position: relative;
   min-height: 100%;
-
 } // end .page
+
+.qm-btn,.qm-btn-nofix {
+  position: fixed;
+  top: 195px;
+  left: 50%;
+  margin-left: 420px;
+  height: 60px;
+  width: 60px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-image: none;
+  background-color: #000;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)"; /*"*/
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+  text-shadow: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+
+  -webkit-transition: opacity 0.6s;
+  -moz-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+  -ms-transition: opacity 0.6s;
+  transition: opacity 0.6s; /* Firefox 4 */
+/* Safari and Chrome */
+/* Opera */
+
+-webkit-background-size: 44% auto;
+  -moz-background-size: 44% auto;
+  background-size: 44% auto;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  color: #fff; /*    font-weight:  bold;
+
+   */
+font-size: 30px;
+  line-height: 60px;
+}
+
+.qm-btn:hover,.qm-btn-nofix:hover {
+  background-color: #000;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; /*"*/
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+  color: #fff;
+  text-decoration: none;
+}
+
+.save-btn,.save-btn-nofix {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  margin-left: 420px;
+  height: 60px;
+  width: 60px;
+  line-height: 60px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  background-image: none;
+  background-color: #000;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)"; /*"*/
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+  text-shadow: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+
+  -webkit-transition: opacity 0.6s;
+  -moz-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+  -ms-transition: opacity 0.6s;
+  transition: opacity 0.6s; /* Firefox 4 */
+/* Safari and Chrome */
+/* Opera */
+
+-webkit-background-size: 44% auto;
+  -moz-background-size: 44% auto;
+  background-size: 44% auto;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.save-btn:hover,.save-btn-nofix:hover {
+  background-color: #000;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; /*"*/
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+}
+
+.save-btn-nofix {
+  position: static;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.delete-btn,.delete-btn-nofix {
+  position: fixed;
+  top: 150px;
+  left: 50%;
+  margin-left: 500px;
+  height: 52px;
+  width: 52px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-image: none;
+  background-color: #000;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)"; /*"*/
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+  text-shadow: none;
+  background-image: url(../img/trash.png);
+
+  -webkit-background-size: 44% auto;
+  -moz-background-size: 44% auto;
+  background-size: 44% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+
+  -webkit-transition: opacity 0.6s;
+  -moz-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+  -ms-transition: opacity 0.6s;
+  transition: opacity 0.6s; /* Firefox 4 */
+/* Safari and Chrome */
+/* Opera */
+}
+
+.delete-btn:hover,.delete-btn-nofix:hover {
+  background-color: #000;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; /*"*/
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+}
+
+.delete-btn-nofix {
+  position: static;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.scrollUp-btn,.scrollUp-btn-nofix {
+  position: fixed;
+  top: 285px;
+  left: 50%;
+  margin-left: 420px;
+  height: 60px;
+  width: 60px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-image: none;
+  background-color: #000;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)"; /*"*/
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+  text-shadow: none;
+  background-image: url(../img/scroll-up-arrow.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+
+  -webkit-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  -o-transition: all 0.6s;
+  -ms-transition: all 0.6s;
+  transition: all 0.6s; /* Firefox 4 */
+/* Safari and Chrome */
+/* Opera */
+
+-webkit-background-size: 44% auto;
+  -moz-background-size: 44% auto;
+  background-size: 44% auto;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.hidden {
+  top: 320px;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; /*"*/
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+
+.scrollUp-btn:hover,.scrollUp-btn-nofix:hover {
+  background-color: #000;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; /*"*/
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+}
+
+.scrollUp-btn.hidden:hover,.scrollUp-btn-nofix.hidden:hover {
+  background-color: #000;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; /*"*/
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+
+.scrollUp-btn-nofix {
+  position: static;
+  margin-right: 0;
+  margin-left: 0;
+}
 
 
 
