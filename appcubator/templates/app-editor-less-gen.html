@@ -42,7 +42,8 @@ body {
 
   {% for i in  uie_state.images %}
 
-  {{i.tagName|safe}}.{{i.class_name|safe}} {
+  {{i.tagName|safe}}.{{i.class_name|safe}},
+  div.{{i.class_name|safe}} {
   {{i.style|safe}}
   }
 

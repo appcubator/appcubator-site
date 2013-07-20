@@ -33,6 +33,7 @@ function(UIElementEditingView) {
         '<div class="class-menu">',
           '<input type="text" name="className" class="class_name" value="'+class_name+'" placeholder="className...">',
           '<div class="btn btn-info">Expand Edit Panel</div>',
+          '<div class="btn btn-delete remove">Remove Element</div>',
         '</div>'].join('\n');
 
       this.tempNodeDiv = document.createElement('div');

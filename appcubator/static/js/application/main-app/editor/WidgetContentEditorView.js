@@ -40,6 +40,7 @@ function(SelectView) {
 
       if(this.model.get('data').get('content_attribs').has('src')) {
         this.el.appendChild(this.renderSrcInfo());
+        this.el.appendChild(this.renderHrefInfo());
       }
     },
 
@@ -47,10 +48,10 @@ function(SelectView) {
       if(!this.hrefLi) {
         this.hrefLi = document.createElement('li');
       }
-
-      console.log(this.model);
-      console.log(this.model.get('data').get('content_attribs').get('href'));
       var listOfPages = this.model.getListOfPages();
+      if(!this.model.get('data').get('content_attribs').get('href')) {
+        this.model.get('data').get('content_attribs').set('href', "internal://Homepage");
+      }
       var href = this.model.get('data').get('content_attribs').get('href');
 
       var external;

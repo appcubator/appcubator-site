@@ -160,3 +160,45 @@ div.expandible {
 #fonts-cont .fonts li .font {
   font-size: 20px;
 }
+
+.upper-area .btn.btn-info { 
+width: 150px;
+height: 35px;
+display: inline-block;
+color: #ffffff;
+border-radius: 4px;
+padding: 6px 14px;
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+background-color: #036a6e;
+border: 1px solid #bbbbbb;
+border-color: #c5c5c5;
+border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
+margin-bottom: 0;
+font-size: 14px;
+line-height: 20px;
+text-align: center;
+vertical-align: middle;
+cursor: pointer;
+-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.upper-area .btn.btn-delete { 
+width: 150px;
+height: 35px;
+display: inline-block;
+color: #ffffff;
+border-radius: 4px;
+padding: 6px 14px;
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+background-color: red;
+border: 1px solid #bbbbbb;
+border-color: #c5c5c5;
+border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
+margin-bottom: 0;
+font-size: 14px;
+line-height: 20px;
+text-align: center;
+vertical-align: middle;
+cursor: pointer;
+}

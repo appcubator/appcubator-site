@@ -371,6 +371,15 @@
       "tagName": "input"
     }
   ],
+  "lists": [
+      {
+        "isSingle": false,
+        "cons_attribs": {},
+        "class_name": "defaul-list",
+        "content": null,
+        "tagName": "div"
+      }
+  ],
   "pages": [
     {
       "design_props": [
