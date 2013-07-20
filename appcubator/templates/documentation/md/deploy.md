@@ -1,5 +1,4 @@
 ## Deploy ##
----
 
 And We are Live! Share your new Web App with your friends!
 

@@ -16,4 +16,5 @@ How do I create new User Tables?
  
 How do I know if I need more than one User Table?
 
-- A good rule of thumb is that if the user can perform different functions/access different materials than an existing one, then you 	need to define a new user table. 
+- A good rule of thumb is that if the user can perform different functions/access different materials than an existing one, then you 	need to define a new user table.
+

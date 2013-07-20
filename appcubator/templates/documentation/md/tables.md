@@ -8,8 +8,9 @@ For a community marketplace, a buyer would add products, and sellers would post 
 
 How do I add tables? 
 
-- Press the “add table” button, add your new properties, and define their types. 
+- Press the “add table” button, add your new properties, and define their types.
 
 How many tables do I need?
 
 - A good rule of thumb for defining tables is if you want the users to have a new function with different properties, then you will need to define a new table.
+

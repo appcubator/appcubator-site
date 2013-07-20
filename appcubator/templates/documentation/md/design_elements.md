@@ -1,7 +1,7 @@
 ## Design Elements ##
 
 
-###Making it Pretty###
+### Making it Pretty ###
 
 Drag and Drop images, headers, text, links, lines, boxes to create an attractive layout. 
 
