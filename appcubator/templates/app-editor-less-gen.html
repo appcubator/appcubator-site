@@ -36,13 +36,13 @@ body {
 
   {% if b.hoverStyle %}
   {{b.tagName|safe}}.{{b.class_name|safe}}:hover { 
-  {{b.style|safe}}
+  {{b.hoverStyle|safe}}
   }
   {% endif %}
 
   {% if b.activeStyle %}
   {{b.tagName|safe}}.{{b.class_name|safe}}:active { 
-  {{b.style|safe}}
+  {{b.activeStyle|safe}}
   }
   {% endif %}
 
