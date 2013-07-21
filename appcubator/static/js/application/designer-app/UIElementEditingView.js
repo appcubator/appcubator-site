@@ -10,9 +10,6 @@ function(){
     padding: 0,
 
     events: {
-      'keyup .style'        : 'styleChanged',
-      'keyup .hover-style'  : 'hoverStyleChanged',
-      'keyup .active-style' : 'activeStyleChanged',
       'click .delete-elem'  : 'deleteElement'
     },
     initialize: function(uieModel) {
@@ -43,13 +40,13 @@ function(){
 
       this.hoverStyleEditor = ace.edit("hover-style-" + this.model.cid);
       this.hoverStyleEditor.getSession().setMode("ace/mode/css");
-      this.hoverStyleEditor.setValue(this.model.get('activeStyle'));
-      this.hoverStyleEditor.getSession().on('change', this.hoverStyle);
+      this.hoverStyleEditor.setValue(this.model.get('hoverStyle'));
+      this.hoverStyleEditor.getSession().on('change', this.hoverStyleChanged);
 
       this.activeStyleEditor = ace.edit("active-style-" + this.model.cid);
       this.activeStyleEditor.getSession().setMode("ace/mode/css");
-      this.activeStyleEditor.setValue(this.model.get('hoverStyle'));
-      this.activeStyleEditor.getSession().on('change', this.activeStyle);
+      this.activeStyleEditor.setValue(this.model.get('activeStyle'));
+      this.activeStyleEditor.getSession().on('change', this.activeStyleChanged);
 
     },
 
@@ -65,6 +62,9 @@ function(){
     },
     hoverStyleChanged: function(e) {
       var value = this.hoverStyleEditor.getValue();
+      console.log(value);
+      console.log("YOLO");
+      console.log(this.model);
       this.model.set('hoverStyle', value);
     },
     activeStyleChanged: function(e) {

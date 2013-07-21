@@ -211,27 +211,13 @@ define([
     },
 
     save: function() {
-      var json = _.clone(this.model.attributes);
-
-      json["buttons"]     = this.model.get('buttons').toJSON();
-      json["images"]      = this.model.get('images').toJSON();
-      json["headerTexts"]= this.model.get('headerTexts').toJSON();
-      json["texts"]       = this.model.get('texts').toJSON();
-      json["links"]       = this.model.get('links').toJSON();
-      json["textInputs"] = this.model.get('textInputs').toJSON();
-      json["passwords"]   = this.model.get('passwords').toJSON();
-      json["textAreas"]  = this.model.get('textAreas').toJSON();
-      json["lines"]       = this.model.get('lines').toJSON();
-      json["dropdowns"]   = this.model.get('dropdowns').toJSON();
-      json["boxes"]      = this.model.get('boxes').toJSON();
-      json["forms"]      = this.model.get('forms').toJSON();
-      json["lists"]      = this.model.get('lists').toJSON();
-      json["fonts"]      = this.model.get('fonts').toJSON();
-
+      var json = this.model.toJSON();
       var url;
       if(themeId) { url = '/theme/'+themeId+'/edit/'; }
       else if(appId) { url = '/app/' + appId + '/uiestate/'; }
+
       console.log(json);
+
       $.ajax({
         type: "POST",
         url: url,
