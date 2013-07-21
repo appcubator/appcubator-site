@@ -212,6 +212,9 @@
 			}
   	}
 		.add-property-column {
+			form {
+				text-align: center;
+			}
 			input[type="text"].property-name-input {
 				height: 34px;
 				padding: 5px 10px 10px 10px;
@@ -293,3 +296,43 @@
 		}
 	}
 } // end .entity-pane
+
+.relation-pane {
+	#new-relation {
+		display: none;
+
+		input[type=text] {
+			padding: 5px;
+		}
+	}
+	.select-view {
+		width: 100%;
+
+		li {
+			width: 100%;
+			font-size: 16px;
+			height: 40px;
+			border-top: 1px solid #ccc;
+			border-bottom: 1px solid #fcfcfc;
+			line-height: 40px;
+			padding-left: 20px;
+			cursor: pointer;
+
+			&:first-child {
+				border-top-color: transparent;
+			}
+		}
+	} // end .select-view
+
+	.edit-relation-div {
+		padding: 10px;
+
+		select {
+			width: 140px;
+		}
+		.btn {
+			padding: 6px 14px;
+		}
+	}
+}
+
