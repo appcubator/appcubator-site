@@ -282,6 +282,7 @@ function(WidgetContentEditor,
       this.$el.find('.section-edit-row-btn').fadeIn();
       this.$el.find('.section-delete-button').fadeIn();
       this.$el.find('.section-pick-style').fadeIn();
+      this.$el.find('.section-edit-login-form-btn').fadeIn();
     },
 
     hideSubviews: function() {
@@ -289,6 +290,7 @@ function(WidgetContentEditor,
       if(this.contentEditor) this.contentEditor.$el.hide();
       if(this.layoutEditor) this.layoutEditor.$el.hide();
       if(this.infoEditor) this.infoEditor.$el.hide();
+      this.$el.find('.section-edit-login-form-btn').hide();
       this.$el.find('.section-style-editor').hide();
       this.$el.find('.section-form-editor-btn').hide();
       this.$el.find('.section-query-editor-btn').hide();
