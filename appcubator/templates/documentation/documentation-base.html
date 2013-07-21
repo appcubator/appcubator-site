@@ -15,17 +15,10 @@
 </head>
 <body>
   <div class="page">
-    <!-- Left Menu -->
-    <ul class="menu-list">
-      <span class="title">Documentation</span>
-     {% include "documentation/html/menu.html" %}
-    </ul>
-
     <!-- Main Content-->
-    <div class="span52 offset2 container-fluid">
-      <div class="top-panel hoff3">
-        <div class="logo-text  pull-right">Appcubator</div>
-        <div id="container" class="pull-right">
+    <div class="offset2 container-fluid">
+      <div class="top-panel hoff2">
+        <div id="container" class="">
           <div id="cube" class="animate">
             <div></div>
             <div></div>
@@ -35,7 +28,8 @@
             <div></div>
           </div>
         </div>
-        <div class="banner offsetr1">Documentation</div>
+        <div class="logo-text">Appcubator</div>
+        <div class="banner offsetr1 pull-right">Documentation</div>
         
       </div>
       <div class="racoon hoff1">
@@ -44,6 +38,12 @@
         {% endautoescape %}
       </div>
     </div>
+
+        <!-- Left Menu -->
+    <ul class="menu-list">
+      <span class="title">Documentation</span>
+     {% include "documentation/html/menu.html" %}
+    </ul>
   </div>
 
 </body>
