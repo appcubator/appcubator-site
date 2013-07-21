@@ -1,5 +1,4 @@
-##Emails##
----
+## Emails ##
 
 
 Send Welcome Emails to your New Users!
