@@ -403,3 +403,20 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
   border-top-color: #ffffff;
   border-bottom-color: #ffffff;
 }
+
+.small.done-btn {
+  font-size: 10px;
+  background-color: #036a6e;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  line-height: 10px;
+  height: 20px;
+  text-align: center;
+  padding: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  cursor: pointer;
+  margin-top: 6px;
+  vertical-align: top;
+}

@@ -318,20 +318,53 @@ hr {
   left: 50%;
   z-index: 1050;
   width: 560px;
+  padding: 30px;
   margin-left: -280px;
-  background-color: #ffffff;
+  color: #000;
+  background-color: #fff;
   border: 1px solid #999;
   border: 1px solid rgba(0, 0, 0, 0.3);
   *border: 1px solid #999;
   border-radius: 6px;
   outline: none;
-
-  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  .opacity(1);
+  .box-shadow(0 3px 7px rgba(0, 0, 0, 0.3));
 
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding-box;
   background-clip: padding-box;
+}
+
+.modal .title,.modal h2,.modal h1 {
+  color: #000;
+}
+
+.modal h3 {
+  background-image: -webkit-linear-gradient(to bottom, #fdfdfd, #eaeaea);
+  background-image: -moz-linear-gradient(to bottom, #fdfdfd, #eaeaea);
+  background-image: -o-linear-gradient(to bottom, #fdfdfd, #eaeaea);
+  background-image: -ms-linear-gradient(to bottom, #fdfdfd, #eaeaea);
+  background-image: linear-gradient(to bottom, #fdfdfd, #eaeaea);
+  background-color: #fcfcfc;
+  margin: 0;
+  height: 52px;
+  text-shadow: rgb(255, 255, 255) 0 1px 0;
+  color: #666;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  line-height: 52px;
+  width: 100%;
+  padding-left: 10px;
+}
+
+.modal img {
+  margin-bottom: 20px;
+}
+
+.modal-cross {
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .modal.fade {
@@ -411,6 +444,36 @@ hr {
 }
 
 /*
+ * WELLS ON WELLS ON WELLS
+ */
+.well {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  border: none;
+  min-height: 20px;
+  padding: 19px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  .box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.05));
+}
+
+.well blockquote {
+  border-color: #ddd;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.well-large {
+  padding: 24px;
+  .border-radius(6px);
+}
+
+.well-small {
+  padding: 9px;
+  .border-radius(3px);
+}
+
+/*
  * FORMS ON FORMS ON FORMS
  */
 legend {
@@ -423,6 +486,12 @@ legend {
   color: #333333;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
+}
+
+label,input,button,select,textarea {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 20px;
 }
 
 label {
@@ -457,6 +526,7 @@ input[type="text"],input[type="password"] {
   height: 32px;
   outline-width: 1px;
   border: 1px solid #ccc;
+  padding: 10px;
 }
 
 input[type="submit"] {
@@ -467,14 +537,11 @@ textarea {
   height: auto;
 }
 
-select, textarea,
-input[type="text"],input[type="password"],input[type="datetime"],
-input[type="datetime-local"],input[type="date"],input[type="month"],
-input[type="time"],input[type="week"],input[type="number"],
-input[type="email"],input[type="url"],input[type="search"],
-input[type="tel"],input[type="color"],
-.uneditable-input {
-
+input[class*="span"],select[class*="span"],textarea[class*="span"],
+.uneditable-input[class*="span"],.row-fluid input[class*="span"],
+.row-fluid select[class*="span"],.row-fluid textarea[class*="span"],
+.row-fluid .uneditable-input[class*="span"] {
+  float: none;
 }
 
 select, input[type="file"] {
@@ -486,6 +553,75 @@ select {
   background-color: #ffffff;
   border: 1px solid #cccccc;
 }
+
+.control-group {
+  margin-bottom: 10px;
+}
+
+legend + .control-group {
+  margin-top: 20px;
+  -webkit-margin-top-collapse: separate;
+}
+
+.form-horizontal .control-group {
+  margin-bottom: 20px;
+  *zoom: 1;
+}
+
+.form-horizontal .control-group:before,.form-horizontal .control-group:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.form-horizontal .control-group:after {
+  clear: both;
+}
+
+.form-horizontal .control-label {
+  float: left;
+  width: 160px;
+  padding-top: 5px;
+  text-align: right;
+}
+
+.form-horizontal .controls {
+  *display: inline-block;
+  *padding-left: 20px;
+  margin-left: 180px;
+  *margin-left: 0;
+}
+
+.form-horizontal .controls:first-child {
+  *padding-left: 180px;
+}
+
+.form-horizontal .help-block {
+  margin-bottom: 0;
+}
+.form-search input,.form-inline input,.form-horizontal input,.form-search textarea,.form-inline textarea,.form-horizontal textarea,.form-search select,.form-inline select,.form-horizontal select,.form-search .help-inline,.form-inline .help-inline,.form-horizontal .help-inline,.form-search .uneditable-input,.form-inline .uneditable-input,.form-horizontal .uneditable-input,.form-search .input-prepend,.form-inline .input-prepend,.form-horizontal .input-prepend,.form-search .input-append,.form-inline .input-append,.form-horizontal .input-append {
+  display: inline-block;
+  *display: inline;
+  margin-bottom: 0;
+  vertical-align: middle;
+  *zoom: 1;
+}
+
+.form-search .hide,.form-inline .hide,.form-horizontal .hide {
+  display: none;
+}
+
+.form-horizontal input + .help-block,.form-horizontal select + .help-block,.form-horizontal textarea + .help-block,.form-horizontal .uneditable-input + .help-block,.form-horizontal .input-prepend + .help-block,.form-horizontal .input-append + .help-block {
+  margin-top: 10px;
+}
+
+.form-horizontal .form-actions {
+  padding-left: 180px;
+}
+
+/*
+ * MISC. Helper classes
+ */
 
 .pull-right {
   float: right;
@@ -996,6 +1132,7 @@ select {
 @import "app-info";
 @import "entities";
 @import "themes";
+@import "pages";
 
 
 
