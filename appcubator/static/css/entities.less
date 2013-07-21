@@ -320,6 +320,15 @@
 
 			&:first-child {
 				border-top-color: transparent;
+				.border-top-radius(4px);
+			}
+
+			&:last-child {
+				.border-bottom-radius(4px);
+			}
+
+			&:hover {
+				background-color: #fcfcfc;
 			}
 		}
 	} // end .select-view
@@ -334,5 +343,39 @@
 			padding: 6px 14px;
 		}
 	}
+
+	.remove-relation {
+		position: absolute;
+		display: none;
+		top: 7px;
+		right: 7px;
+		border-radius: 50%;
+		padding: 0px 6px;
+		font-size: 16px;
+		color: #fff;
+		background-color: #aaa;
+
+		&:hover {
+			background-color: #c95446;
+		}
+	}
+} // end .relation-pane
+
+.icon-fk, .icon-o2o, .icon-m2m {
+	display: inline-block;
+	height: 140px;
+	width: 140px;
+	margin-left: 10px;
+	background-repeat: no-repeat;
+	float: left;
+	background-image: url(../img/relation-icons.png);
+}
+
+.icon-fk {
+  background-position: -140px 0;
+}
+
+.icon-o2o {
+  background-position: -280px 0;
 }
 
