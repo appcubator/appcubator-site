@@ -71,6 +71,9 @@ function( PageModel,
 
       redoController = new RedoController();
 
+      keyDispatcher.bindComb('meta+z', redoController.redo);
+
+
       g_guides = this.guides;
 
       this.navbar  = new NavbarView(this.model.get('navbar'));
