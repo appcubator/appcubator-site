@@ -59,5 +59,9 @@
 </script>
 
 <script type="text/template" id="feedback-form-page">
+  {% if user.is_authenticated %}
   {% include "documentation/html/feedback-form-page.html" %}
+  {% else %}
+  {% include "documentation/html/feedback.html" %}
+  {% endif %}
 </script>
