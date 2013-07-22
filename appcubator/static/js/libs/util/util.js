@@ -104,7 +104,8 @@ define(['jquery'], function() {
         cssFile.setAttribute('href', '/static/css/' + css + '.css');
         cssFile.setAttribute('rel', 'stylesheet');
         cssFile.id = 'css-' + css;
-        //document.getElementsByTagName('head')[0].appendChild(cssFile);
+        console.log(cssFile);
+        document.getElementsByTagName('head')[0].appendChild(cssFile);
       }
     },
 
