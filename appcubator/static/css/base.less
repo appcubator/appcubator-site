@@ -6,6 +6,7 @@
 @import "entities";
 @import "themes";
 @import "pages";
+@import "emails";
 
 body {
   font-family: "proxima-nova";
@@ -26,6 +27,12 @@ h2 {
   font-family: 'verb_regularbold';
   font-size: 28px;
   line-height: 30px;
+
+  &.pheader {
+    line-height: 45px;
+    height: 45px;
+    text-shadow: 0 1px #fff;
+  }
 }
 
 h3 {
@@ -206,6 +213,11 @@ hr {
   border: 0;
   border-top: 1px solid #bbbbbb;
   border-bottom: 1px solid #f6f6f6;
+
+  &.pheader {
+    margin-top: 14px;
+    margin-bottom: 0px;
+  }
 }
 
 .column {
@@ -341,6 +353,12 @@ hr {
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding-box;
   background-clip: padding-box;
+
+  -webkit-animation: bounce 300ms linear;
+  -moz-animation: bounce 300ms linear;
+  -ms-animation: bounce 300ms linear;
+  -o-animation: bounce 300ms linear;
+  animation: bounce 300ms linear;
 }
 
 .modal .title,.modal h2,.modal h1 {
@@ -527,6 +545,11 @@ input[type="tel"],input[type="color"],
   .box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075));
   .transition(border linear 0.2s);
   .transition(box-shadow linear 0.2s);
+
+  &:focus {
+    outline: thin dotted 9;
+    color: #111;
+  }
 }
 
 input[type="text"],input[type="password"] {
@@ -549,6 +572,16 @@ input[class*="span"],select[class*="span"],textarea[class*="span"],
 .row-fluid select[class*="span"],.row-fluid textarea[class*="span"],
 .row-fluid .uneditable-input[class*="span"] {
   float: none;
+}
+
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 select, input[type="file"] {
@@ -1135,5 +1168,29 @@ legend + .control-group {
   }
 } // end .left-nav
 
+.footer {
+  position: absolute;
+  display: block;
+  bottom: 0;
+  width: 100%;
+  left: 0;
 
+  h2 {
+    font-size: 28px;
+    margin-top: 30px;
+  }
+
+  hr {
+    display: block;
+    height: 10px;
+    background-color: #0f2d40;
+    margin: 0;
+    border: none;
+  }
+} // end .footer
+
+#habla_window_div #habla_topbar_div {
+  overflow: hidden;
+  background-color: #0f2d40 !important;
+}
 
