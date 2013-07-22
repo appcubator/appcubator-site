@@ -73,11 +73,13 @@ function(AppInfoModel,
 
     toJSON: function() {
       var json = _.clone(this.attributes);
+      console.log(json);
       json.info = json.info.toJSON();
       json.users = json.users.toJSON();
       json.tables = json.tables.toJSON();
       if(json.pages) json.pages = json.pages.toJSON();
-      if(json.mobilePages) json.mobilePages = json.mobilePages.toJSON();
+      //if(json.mobilePages) json.mobilePages = json.mobilePages.toJSON();
+      if(json.mobilePages) json.mobilePages = [];
       json.emails = json.emails.toJSON();
 
       return json;
