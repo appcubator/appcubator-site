@@ -17,6 +17,7 @@ function(AppInfoModel,
 
     currentPage: null,
     isMobile: false,
+    lazy: {},
 
     initialize: function(appState) {
       if(!appState) return;
@@ -54,6 +55,20 @@ function(AppInfoModel,
 
     isSingleUser: function() {
       return this.get('users').length == 1;
+    },
+
+    lazySet: function(key, coll) {
+      this.lazy[key] = coll;
+      this.set(key, []);
+    },
+
+    get: function (key) {
+      if(this.lazy[key]) {
+        this.set(key, this.lazy[key]);
+        delete this.lazy[key];
+      }
+
+      return AppModel.__super__.get.call(this, key);
     },
 
     toJSON: function() {
