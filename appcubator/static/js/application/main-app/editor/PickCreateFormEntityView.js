@@ -29,18 +29,27 @@ function() {
         };
       });
 
-      console.log(list);
-
-      this.pickOneFromList = new Backbone.PickOneView(list, true);
+      this.pickOneFromList = new Backbone.PickOneView(list, true, "Add a new entity.");
       this.el.innerHTML += "What should this form create?";
       this.el.appendChild(this.pickOneFromList.render().el);
 
-      this.pickOneFromList.on('answer', this.picked);
+      this.pickOneFromList.on('submit', this.picked);
+      this.pickOneFromList.on('answer', this.newAnswer);
       return this;
     },
 
-    picked: function(tableCid) {
+    newAnswer: function (name) {
+      var entity = v1State.get('tables').push({ name: name});
+      var elem = v1State.getCurrentPage().get('uielements').createCreateForm(this.elLayout, entity);
+      this.closeModal();
+      return elem;
+    },
 
+    picked: function(tableCid) {
+      var entity = v1State.get('tables').get(tableCid);
+      var elem = v1State.getCurrentPage().get('uielements').createCreateForm(this.elLayout, entity);
+      this.closeModal();
+      return elem;
     }
 
   });
