@@ -27,7 +27,7 @@ var constantContainers = {
                     {
                         "field_name": "username",
                         "placeholder": "Email or username",
-                        "label": "",
+                        "label": "Email or username",
                         "displayType": "single-line-text",
                         "type": "text",
                         "options": ''
@@ -35,14 +35,13 @@ var constantContainers = {
                     {
                         "name": "password",
                         "placeholder": "Password",
-                        "label": "",
+                        "label": "Password",
                         "displayType": "password-text",
                         "type": "password",
                         "options": ''
                     },
                     {
                         "placeholder": "Login",
-                        "label": "",
                         "displayType": "button",
                         "type": "button"
                     }
@@ -62,7 +61,7 @@ var constantContainers = {
                         "options": ''
                     },
                     {
-                        "name": "Name",
+                        "name": "name",
                         "placeholder": "Name",
                         "label": "Name",
                         "displayType": "single-line-text",
