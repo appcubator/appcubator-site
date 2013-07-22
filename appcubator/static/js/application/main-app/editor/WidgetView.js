@@ -297,6 +297,13 @@ define([
 
     mousedown: function(e) {
       //e.stopPropagation();
+    },
+
+    close: function () {
+              console.log("deleting yo");
+
+      this.remove();
+      Backbone.View.prototype.close.call(this);
     }
 
   });

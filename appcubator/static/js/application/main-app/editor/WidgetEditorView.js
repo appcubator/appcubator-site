@@ -308,7 +308,11 @@ function(WidgetContentEditor,
     },
 
     clickedDelete: function() {
-      if(this.model) this.model.remove();
+      console.log("delete");
+      if(this.model)  {
+        console.log("delete yo");
+        this.model.remove();
+      }
     },
 
     clicked: function(e) {

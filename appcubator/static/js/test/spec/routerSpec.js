@@ -12,7 +12,8 @@ define([
   "editor/KeyDispatcher",
   "editor/MouseDispatcher",
   "backbone",
-  "util"
+  "util",
+  "mixins/BackboneConvenience"
 ],
 function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
 

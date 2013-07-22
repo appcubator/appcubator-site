@@ -493,7 +493,7 @@ define([
       it("should have list of go-tos for all pages", function() {
         var nmr = $('.goto-list').find('li').length;
         var nmrPages = v1State.get('pages').length;
-        expect(nmr).toEqual(nmrPages);
+        expect(nmr).toEqual(nmrPages - 2);
       });
 
 
