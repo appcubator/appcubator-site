@@ -59,7 +59,7 @@ function(AppInfoModel,
 
     lazySet: function(key, coll) {
       this.lazy[key] = coll;
-      this.set(key, []);
+      this.set(key, new Backbone.Collection([]));
     },
 
     get: function (key) {
