@@ -579,7 +579,7 @@ define([
       it('updates the brandName', function() {
         var old_brandname = model.get('brandName') || v1State.get('name');
         model.set('brandName', "DERPY");
-        var brandName = document.getElementById('brand-name').innerText;
+        var brandName = document.getElementById('brand-name').innerHTML;
         expect("DERPY").toEqual(brandName);
       });
 
@@ -599,7 +599,7 @@ define([
         var finalLength = after.length;
         expect(finalLength).toEqual(initialLength + 1);
         var lastLink = after.last()[0].children[0];
-        expect(lastLink.innerText).toEqual('DERPTASTIC');
+        expect(lastLink.innerHTML).toEqual('DERPTASTIC');
       });
 
       it('removes links from navbar', function() {
@@ -645,7 +645,7 @@ define([
         var finalLength = after.length;
         expect(finalLength).toEqual(initialLength + 1);
         var lastLink = after.last()[0].children[0];
-        expect(lastLink.innerText).toEqual('DERPTASTIC');
+        expect(lastLink.innerHTML).toEqual('DERPTASTIC');
       });
 
       it('removes links from footer', function() {
