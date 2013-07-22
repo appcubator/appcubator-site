@@ -1,0 +1,19 @@
+<h3>Add and Modify Pictures</h3>
+
+<p>Brighten up your application by dragging and dropping images on to the editor.</p>
+
+<p><img src="http://appcubator.com/static/img/tutorial/Image_1.png" alt="alt text" /></p>
+
+<ul>
+<li>Filepicker - Upload an image to the webpage from your file system, Gmail, Dropbox, Instagram, and Web Images.  </li>
+</ul>
+
+<p><img src="http://appcubator.com/static/img/tutorial/Image_Upload.png" alt="alt text" /> </p>
+
+<p>How do I resize images?</p>
+
+<ul>
+<li><p>Click and drag your image boarders to scale your images. </p></li>
+<li><p>Modify the scaling by selecting either the "img-width-fixed" or "img-height-fixed" style. </p></li>
+<li><p>Click on "img-noscale" to preserve your original images resolution. </p></li>
+</ul>

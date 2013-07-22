@@ -123,27 +123,38 @@ function() {
       widget.on('editModeOff', function() {
         this.bindWidget(widget);
         this.setLayout(this.selectDiv, this.selectedEl);
+        this.makeSelectDivVisible();
       }, this);
 
       widget.unbind('hovered');
       widget.unbind('unhovered');
       widget.unbind('selected');
-      this.selectDiv.style.height = 0;
-      this.selectDiv.style.width = 0;
+      this.makeSelectDivInvisible();
       this.selectDiv.style.left = (((widget.get('layout').get('width') + widget.get('layout').get('left')) * 80) + 4) + 'px';
       if(position == "left") {
         this.selectDiv.style.left = (((widget.get('layout').get('left')) * 80) - 16) + 'px';
       }
+    },
+    makeSelectDivInvisible: function () {
+      this.selectDiv.style.height = 0;
+      this.selectDiv.style.width = 0;
+      this.selectDiv.style.borderWidth = 0;
+      $(this.selectDiv).find('.ui-resizable-handle').hide();
+    },
+
+    makeSelectDivVisible: function (argument) {
+      this.selectDiv.style.borderWidth = '';
+      $(this.selectDiv).find('.ui-resizable-handle').fadeIn();
     },
 
     setLayout: function(node, widgetModel) {
       if(!widgetModel) return;
       $(node).show();
 
-      node.style.width  = ((widgetModel.get('layout').get('width') * 80) + 4) + 'px';
-      node.style.height = ((widgetModel.get('layout').get('height') * 15) + 4) + 'px';
-      node.style.left   = ((widgetModel.get('layout').get('left') * 80) - 2) + 'px';
-      node.style.top    = ((widgetModel.get('layout').get('top') * 15) - 2) + 'px';
+      node.style.width  = ((widgetModel.get('layout').get('width') * 80) + 2) + 'px';
+      node.style.height = ((widgetModel.get('layout').get('height') * 15) + 2) + 'px';
+      node.style.left   = ((widgetModel.get('layout').get('left') * 80) - 1) + 'px';
+      node.style.top    = ((widgetModel.get('layout').get('top') * 15) - 1) + 'px';
       return node;
     },
 
@@ -205,6 +216,8 @@ function() {
       this.selectedEl.get('layout').set('left', left);
       this.selectedEl.get('layout').set('top', top);
       this.setLayout(this.selectDiv, this.selectedEl);
+
+      if(this.selectedEl.getRow()) this.selectedEl.getRow().resizeElements(deltaWidth);
     },
 
     moving: function(e, ui) {

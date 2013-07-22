@@ -4,7 +4,8 @@ define([
   'app/pages/UrlView',
   'app/pages/PageView',
   'mixins/ErrorDialogueView',
-  'mixins/BackboneNameBox'
+  'mixins/BackboneNameBox',
+  'jquery-ui'
 ],
 function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
 
@@ -54,6 +55,9 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
       var createBox = new Backbone.NameBox({el: document.getElementById('create-page-box')});
       this.subviews.push(createBox);
       createBox.on('submit', this.createPage);
+
+      $( "#list-pages" ).sortable();
+      $( "#list-pages" ).disableSelection();
 
       /*var createMobileBox = new Backbone.NameBox({el: document.getElementById('create-mobile-page-box')});
       createMobileBox.on('submit', this.createMobilePage);*/

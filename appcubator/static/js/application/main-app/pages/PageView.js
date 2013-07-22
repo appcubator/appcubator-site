@@ -9,7 +9,7 @@ function(UrlView, SimpleModalView) {
 
   var PageView = Backbone.View.extend({
     el: null,
-    tagName : 'div',
+    tagName : 'li',
     className: 'page-view span18 hoff2 offsetr1 pane hi22',
     expanded: false,
     events: {

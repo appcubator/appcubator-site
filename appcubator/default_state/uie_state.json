@@ -359,7 +359,6 @@
             "hoverStyle": "",
             "class_name": "input-green",
             "content": null,
-            "activeStyle": "",
             "content_attribs": {
                 "placeholder": "Default placeholder..."
             },
@@ -368,17 +367,23 @@
     ],
     "forms": [
         {
-            "style": "",
             "isSingle": false,
             "cons_attribs": {},
-            "hoverStyle": "",
             "class_name": "form-with-bg",
             "content": null,
-            "tagName": "form",
-            "activeStyle": ""
+            "tagName": "form"
         }
     ],
-    "fonts": "",
+    "lists": [
+        {
+            "isSingle": false,
+            "cons_attribs": {},
+            "class_name": "defaul-list",
+            "content": null,
+            "tagName": "div"
+        }
+    ],
+    "fonts": [],
     "pages": [
         {
             "design_props": [

@@ -42,7 +42,7 @@ function() {
       $.ajax({
         type: "POST",
         url: url,
-        data: JSON.stringify(newState),
+        data: {uie_state: JSON.stringify(newState) },
         success: function(data) {
           self.$el.find('.load').append('<div class="hoff1"><h4 class="text-success"><strong>Loaded!</strong></h4></div>');
           util.unloadCSS('uiestate');

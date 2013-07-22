@@ -122,11 +122,14 @@ function(WidgetModel,
         widget.layout = layout;
 
         widget.data = {};
+        widget.data = _.extend(widget.data, uieState["forms"][0]);
+
         widget.data.container_info = {};
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "create";
         widget.data.container_info.form = {};
         widget.data.container_info.form.entity = entity.get('name');
+
         var currentPage =  v1State.getCurrentPage();
 
         if(currentPage.getContextEntities().length)  widget.data.container_info.form.goto = "internal://Homepage";
@@ -177,6 +180,7 @@ function(WidgetModel,
         widget.layout = layout;
 
         widget.data = {};
+        widget.data = _.extend(widget.data, (uieState["lists"][0]||{ class_name: "default_form"}));
         widget.data.container_info = {};
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "show";
@@ -216,6 +220,7 @@ function(WidgetModel,
         widget.layout = layout;
 
         widget.data = {};
+        widget.data = _.extend(widget.data, (uieState["lists"][0]||{ class_name: "default_form"}));
         widget.data.container_info = {};
         widget.data.container_info.entity = entity;
         widget.data.container_info.action = "searchlist";
@@ -230,7 +235,7 @@ function(WidgetModel,
 
       createImageSlider: function(layout) {
         var widget = {};
-        widget.type = "gallery";
+        widget.type = "imageslider";
 
         widget.data = {};
         widget.data.nodeType = "imageslider";
@@ -248,7 +253,7 @@ function(WidgetModel,
         return this.push(widgetContainerModel);
       },
 
-      createTwitterFeed: function(layout) {
+      /*createTwitterFeed: function(layout) {
         var widget = {};
         widget.type = "gallery";
 
@@ -261,10 +266,10 @@ function(WidgetModel,
 
         return this.push(widgetContainerModel);
       },
-
+*/
       createFacebookShare: function(layout) {
         var widget = {};
-        widget.type = "gallery";
+        widget.type = "facebookshare";
 
         widget.data = {};
         widget.data.nodeType = "facebookshare";

@@ -128,11 +128,10 @@ def theme_page_editor(request, theme_id, page_id):
 def theme_edit(request, theme):
   if 'name' in request.POST:
     theme.name = request.POST['name']
-
   if 'uie_state' in request.POST:
-    uie_json = request.body
+    uie_json = request.POST['uie_state']
     theme.uie_state = simplejson.loads(uie_json)
-
+    print theme.uie_state["fonts"]
   theme.save()
   return HttpResponse("ok")
 

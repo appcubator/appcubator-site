@@ -10,7 +10,8 @@ function(UIElementEditingView) {
 
     events : {
       'click .upper-area' : 'toggleElement',
-      'click .remove'     : 'removeUIE'
+      'click .remove'     : 'removeUIE',
+      'keyup .class_name' : 'classNameChaged'
     },
 
     initialize: function(uieModel) {
@@ -32,6 +33,7 @@ function(UIElementEditingView) {
         '<div class="class-menu">',
           '<input type="text" name="className" class="class_name" value="'+class_name+'" placeholder="className...">',
           '<div class="btn btn-info">Expand Edit Panel</div>',
+          '<div class="btn btn-delete remove">Remove Element</div>',
         '</div>'].join('\n');
 
       this.tempNodeDiv = document.createElement('div');
@@ -106,7 +108,12 @@ function(UIElementEditingView) {
       this.expandedView.close();
       this.isExpanded = false;
       this.el.style.height = '180px';
+    },
+
+    classNameChaged: function(e) {
+      this.model.set('class_name', e.target.value);
     }
+
   });
 
   return UIElementView;

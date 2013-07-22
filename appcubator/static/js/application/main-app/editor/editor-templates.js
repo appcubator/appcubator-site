@@ -360,15 +360,13 @@ Templates.thirdPartyLogin = [
 ].join('\n');
 
 Templates.footerTemp = [
-        '<div class="footer" id="footer">',
-            '<div class="container">',
-              '<ul class="footer-links" id="links">',
-              '</ul>',
-              '<p id="customText" class="footer-text muted"></p>',
-              '<button class="edit-footer btn btn-small btn-inverse pull-right" id="edit-footer-btn">Edit Footer</button>',
-            '</div>',
-            '<div class="clearfix"></div>',
-        '</div>'
+  '<div class="container">',
+    '<p id="customText" class="footer-text muted"></p>',
+    '<ul class="footer-links" id="links">',
+    '</ul>',
+    '<button class="edit-footer btn btn-small btn-inverse pull-right" id="edit-footer-btn">Edit Footer</button>',
+  '</div>',
+  '<div class="clearfix"></div>'
 ].join('\n');
 
 

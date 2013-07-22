@@ -30,7 +30,7 @@ def admin_home(request):
 
     # active users
     page_context["users_today"] = recent_users(long_ago=timedelta(days=1))
-    page_context["users_last_week"] = recent_users(long_ago=timedelta(days=1))
+    page_context["users_last_week"] = recent_users(long_ago=timedelta(days=7))
     page_context["users_last_month"] = recent_users(long_ago=timedelta(days=30))
 
     # Top 10 users with most page visits
@@ -61,7 +61,6 @@ def admin_users(request):
 def admin_user(request, user_id):
     user_id = long(user_id)
     user = get_object_or_404(ExtraUserData, id=user_id)
-    apps = App.objects.filter(owner=user_id)
     logs = LogAnything.objects.filter(user_id=user_id)
     apps = App.objects.filter(owner=user_id)
     page_context = {}
@@ -83,9 +82,11 @@ def admin_apps(request):
 def admin_app(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
+    logs = LogAnything.objects.filter(user_id=app.owner.id, app_id=app_id)
     page_context = {}
     page_context["app"] = app
     page_context["app_id"] = app_id
+    page_context["app_logs"] = logs
     return render(request, 'admin/app.html', page_context)
 
 @login_required

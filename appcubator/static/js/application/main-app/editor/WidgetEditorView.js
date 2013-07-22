@@ -103,12 +103,18 @@ function(WidgetContentEditor,
         }
 
         if(action == "show" || action == "loop") {
+          this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+          this.widgetClassPickerView.bind('change', this.classChanged);
+
+          this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
           this.el.appendChild(this.renderButtonWithText('query-editor-btn', 'Edit Query'));
+          this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
         }
 
         if(action == "searchlist") {
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
+          this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
         }
 
         if(action == "searchbox") {
@@ -116,7 +122,12 @@ function(WidgetContentEditor,
         }
 
         if(this.model.hasForm() && action != "login" && action != "signup") {
+          this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+          this.widgetClassPickerView.bind('change', this.classChanged);
+
+          this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
+          this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
         }
       }
       else {
@@ -271,6 +282,7 @@ function(WidgetContentEditor,
       this.$el.find('.section-edit-row-btn').fadeIn();
       this.$el.find('.section-delete-button').fadeIn();
       this.$el.find('.section-pick-style').fadeIn();
+      this.$el.find('.section-edit-login-form-btn').fadeIn();
     },
 
     hideSubviews: function() {
@@ -278,6 +290,7 @@ function(WidgetContentEditor,
       if(this.contentEditor) this.contentEditor.$el.hide();
       if(this.layoutEditor) this.layoutEditor.$el.hide();
       if(this.infoEditor) this.infoEditor.$el.hide();
+      this.$el.find('.section-edit-login-form-btn').hide();
       this.$el.find('.section-style-editor').hide();
       this.$el.find('.section-form-editor-btn').hide();
       this.$el.find('.section-query-editor-btn').hide();
@@ -295,7 +308,11 @@ function(WidgetContentEditor,
     },
 
     clickedDelete: function() {
-      if(this.model) this.model.remove();
+      console.log("delete");
+      if(this.model)  {
+        console.log("delete yo");
+        this.model.remove();
+      }
     },
 
     clicked: function(e) {

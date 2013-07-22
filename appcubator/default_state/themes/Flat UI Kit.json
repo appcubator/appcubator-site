@@ -101,7 +101,7 @@
             }
         }
     ],
-    "fonts": " @import url(\"http://fonts.googleapis.com/css?family=Lato:400,700,900,400italic\");\n",
+    "fonts": [{"name": "Lato"}],
     "lines": [
         {
             "style": "border-color:#49afcd;",
@@ -386,6 +386,15 @@
             "tagName": "input",
             "activeStyle": ""
         }
+    ],
+    "lists": [
+      {
+        "isSingle": false,
+        "cons_attribs": {},
+        "class_name": "defaul-list",
+        "content": null,
+        "tagName": "div"
+      }
     ],
     "pages": [
         {

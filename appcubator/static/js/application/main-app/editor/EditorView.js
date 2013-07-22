@@ -71,6 +71,9 @@ function( PageModel,
 
       redoController = new RedoController();
 
+      keyDispatcher.bindComb('meta+z', redoController.redo);
+
+
       g_guides = this.guides;
 
       this.navbar  = new NavbarView(this.model.get('navbar'));
@@ -98,14 +101,16 @@ function( PageModel,
       this.renderUrlBar();
       this.galleryEditor.render();
       this.widgetsManager.render();
-      this.navbar.render();
-      $('#footer-container').append(this.footer.render().el);
+      this.navbar.setElement('#navbar').render();
+      this.footer.setElement('#footer').render();
       this.guides.setElement($('#elements-container')).render();
 
       $('#elements-container').append(this.marqueeView.el);
 
       this.setupPageWrapper();
       this.setupPageHeight();
+      this.setupPageHeightBindings();
+
       window.addEventListener('resize', this.setupPageWrapper);
 
       $('#loading-gif').fadeOut().remove();
@@ -162,6 +167,17 @@ function( PageModel,
       var height = window.innerHeight - 90;
       util.get('page-wrapper').style.height = height+ 'px';
       this.$el.find('.page.full').css('height', height - 46);
+    },
+
+    setupPageHeightBindings: function () {
+      this.listenTo(this.model.get('uielements'), 'add', function(uielem) {
+        this.setupPageHeight();
+        this.listenTo(uielem.get('layout'),'change', this.setupPageHeight);
+      }, this);
+
+      this.model.get('uielements').each(function(uielem) {
+        this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
+      }, this);
     },
 
     setupPageHeight: function() {

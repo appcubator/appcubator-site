@@ -17,7 +17,8 @@ define([
   "editor/MouseDispatcher",
   "comp",
   "backbone",
-  "util"
+  "util",
+  "mixins/BackboneConvenience"
   ],
   function( EntitiesView,
     AppModel,

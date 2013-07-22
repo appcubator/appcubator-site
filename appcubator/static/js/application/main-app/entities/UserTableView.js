@@ -31,6 +31,7 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
 
       this.renderProperties();
       this.renderRelations();
+      this.disablePredefinedVals();
 
       util.loadCSS('prettyCheckable');
       this.$el.find('input[type=checkbox]').prettyCheckable();
@@ -42,6 +43,14 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
       this.adjustTableWidth();
 
       return this;
+    },
+
+    disablePredefinedVals: function () {
+      _(v1State.get('users').predefinedFields).each(function(field) {
+        var column = this.$el.find('#column-'+field.cid);
+        column.find('select').attr('disabled', 'disabled');
+        column.find('.prop-cross').remove();
+      }, this);
     },
 
     clickedDelete: function(e) {

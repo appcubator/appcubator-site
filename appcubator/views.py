@@ -177,7 +177,8 @@ def app_page(request, app_id):
                     'themes': simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
                     'apps': app.owner.apps.all(),
-                    'user': app.owner}
+                    'user': app.owner,
+                    'is_deployed': 1 if app.deployment_id != None else 0}
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)
 
@@ -269,6 +270,8 @@ def app_save_state(request, app, require_valid=True):
 
 def documentation_page(request, page_name):
     try:
+        if page_name == "feedback" and request.user.is_authenticated():
+            page_name = "feedback-form-page"
         htmlString = render(request, 'documentation/html/'+page_name+'.html').content
     except Exception, e:
         htmlString = render(request, 'documentation/html/intro.html').content
@@ -351,7 +354,7 @@ def app_get_uie_state(request, app):
 @require_POST
 @login_required
 def app_save_uie_state(request, app):
-    app._uie_state_json = request.body
+    app._uie_state_json = request.POST['uie_state']
     try:
         app.full_clean()
     except Exception, e:
@@ -363,7 +366,7 @@ def app_save_uie_state(request, app):
 @require_POST
 @login_required
 def app_save_mobile_uie_state(request, app):
-    app._mobile_uie_state_json = request.body
+    app._mobile_uie_state_json = request.POST['uie_state']
     try:
         app.full_clean()
     except Exception, e:
@@ -382,7 +385,7 @@ def app_emails(request, app_id):
     return render(request, 'app-emails.html', page_context)
 
 def _get_analytics(deployment_id):
-    """ 
+    """
         Send a post request to get analytics from the deployment corresponding to deployment_id.
         Then upsert it into the analytics store.
     """
@@ -524,7 +527,7 @@ def app_zip(request, app_id):
         raise Http404
     zip_bytes = open(app.zip_path(), "r").read()
     response = HttpResponse(zip_bytes, content_type="application/octet-stream")
-    response['Content-Disposition'] = 'attachment; filename="teh_codez_%s.zip"' % app.hostname()
+    response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
     return response
 
 @login_required
@@ -538,7 +541,6 @@ def app_deploy(request, app_id):
         'user_name': app.owner.username,
         'date_joined': str(app.owner.date_joined)
     }
-    # result = app.deploy(d_user)
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     status = 500 if 'errors' in result else 200

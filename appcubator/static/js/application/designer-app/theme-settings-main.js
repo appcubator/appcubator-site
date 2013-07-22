@@ -35,6 +35,9 @@ require.config({
     },
     "bootstrap" : {
       deps: ["jquery"]
+    },
+    "util.filepicker": {
+      deps: ["util"]
     }
   }
 

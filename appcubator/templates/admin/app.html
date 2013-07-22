@@ -28,6 +28,7 @@
   <p><strong>Owner:</strong> {{ app.owner }}</p>
   <p><strong>Subdomain:</strong> {{ app.subdomain }}</p>
   <p><strong>Deployment ID:</strong> {{ app.deployment_id }}</p>
+  <p><button class="btn btn-inverse" id="deploy-app" data-toggle="modal" data-target=".deploy">Deploy App</button></p>
 <div class="row">
   <div class="span6">
     <strong>App State</strong>
@@ -42,6 +43,28 @@
     <div id="uieState" class="editor"></div>
   </div>
 </div>
+<section id="app-logs">
+    <h3>User Logs</h3>
+    <table id="logs" class="table table-striped table-hover table-bordered">
+      <thead>
+        <tr>
+          <th data-sort-type="number">App ID</th>
+          <th data-sort-type="timestamp">Timestamp</th>
+          <th>Log Type</th>
+          <th>Log Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in app_logs reversed %}
+        <tr>
+          <td class="span1">{{ log.app_id }}</td>
+          <td class="span2">{{ log.timestamp }}</td>
+          <td class="span2">{{ log.name }}</td>
+          <td class="span7">{{ log.data }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table></section>
 
 <div class="deploy modal hide fade">
   <div class="modal-body"></div>
@@ -50,6 +73,7 @@
 
 {% block js %}
 <script type="text/javascript">
+  var appId = {{ app.pk }}
   var appState = {{ app.state_json|safe }};
   var uieState = {{ app.uie_state_json|safe }};
   appState = JSON.stringify(appState, undefined, 2);
@@ -66,12 +90,12 @@
   uieStateEditor.getSession().setMode("ace/mode/json");
 
   $('#save-appState').click(function() {
-    saveState(JSON.parse(appStateEditor.getValue()));
+    saveState(JSON.parse(appStateEditor.getValue()), true);
   });
 
   $('#save-uieState').click(function() {
     console.log(JSON.parse(uieStateEditor.getValue()));
-    saveState(JSON.parse(uieStateEditor.getValue()));
+    saveState(JSON.parse(uieStateEditor.getValue()), false);
   });
 
   function saveState(state, is_appState) {
@@ -99,6 +123,43 @@
       dataType: "JSON"
     });
   }
+
+  $('#deploy-app').click(function() {
+    $('.deploy.modal .modal-body').text("Deploying App...");
+    var before_deploy = new Date().getTime();
+    $.ajax({
+      type: "POST",
+      url: '/app/'+appId+'/deploy/',
+      success: function(data) {
+        var deploy_time = (new Date().getTime() - before_deploy)/1000;
+        // open a modal based on deploy response
+        if(data.errors) {
+          var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+          //if(DEBUG) {
+            content = { text: data.errors };
+          //}
+          $('.deploy.modal .modal-body').text(content);
+          util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.errors}, appId);
+        }
+        else {
+          $('.deploy.modal .modal-body').text("App Successfully Deployed!");
+          //util.log_to_server('deployed app', {status: 'success', deploy_time: deploy_time + " seconds"}, appId);
+        }
+      },
+      error: function(data) {
+        var deploy_time = (new Date().getTime() - before_deploy)/1000;
+        var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+        //if(DEBUG) {
+          content = { text: data.responseText };
+        //}
+        $('.deploy.modal .modal-body').text(data.responseText + "DERP");
+        //util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.responseText}, appId);
+      },
+      dataType: "JSON"
+    });
+  });
+
+  $('#logs').sortableTable({initialColumn: 2});
 
 </script>
 {% endblock %}
