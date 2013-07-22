@@ -741,9 +741,24 @@ legend + .control-group {
         color: #0f2d40;
         padding-top: 0;
         padding-bottom: 0;
-        padding-right: 0px;
-        text-align: left;
-        border-right: 1px solid rgba(0,0,0,0.2);
+        padding-right: 4px;
+        background-image: url(../img/border-v.png);
+        background-position: right;
+        background-size: 2px 1px; 
+        background-repeat: repeat-y;
+        text-align: center;
+      }
+
+      .title {
+        display: none;
+      }
+
+      h1:hover .brand {
+        display: none;
+      }
+
+      h1:hover .title {
+        display: inline-block;
       }
 
       .navigation-menu {
@@ -757,10 +772,14 @@ legend + .control-group {
           line-height: 20px;
           font-weight: bold;
           cursor: pointer;
-          border-right: 1px solid rgba(0,0,0,0.2);
+          border-right: 0px solid rgba(0,0,0,0.2);
+          background-image: url(../img/border-v.png);
+          background-position: right;
+          background-size: 2px 1px; 
+          background-repeat: repeat-y;
 
           &:hover {
-            .box-shadow(inset 0px 0px 5px 0 rgba(90, 90, 90, 0.4));
+            .box-shadow(inset 0px 0px 3px 0 rgba(90, 90, 90, 0.4));
           }
 
           a {
@@ -805,7 +824,6 @@ legend + .control-group {
 
           &:hover {
             text-decoration: none;
-            background-color: #eee;
           }
         }
         &.pull-right {
