@@ -25,6 +25,22 @@ body {
   {{b.style|safe}}
   }
 
+  {{b.tagName|safe}}.{{b.class_name|safe}} { 
+  {{b.style|safe}}
+  }
+
+  {% if b.hoverStyle %}
+  {{b.tagName|safe}}.{{b.class_name|safe}}:hover { 
+  {{b.style|safe}}
+  }
+  {% endif %}
+
+  {% if b.activeStyle %}
+  {{b.tagName|safe}}.{{b.class_name|safe}}:active { 
+  {{b.style|safe}}
+  }
+  {% endif %}
+
   {% endfor %}
 
   /* * * * * * * * * * *

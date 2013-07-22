@@ -11,10 +11,9 @@
   <link type="text/css" href="{{ STATIC_URL }}css/tutorial-page.css" id="css-racoon" rel="stylesheet"/>
   <link type="text/css" href="{{ STATIC_URL }}css/prettyCheckable.css" id="css-prettycheckable" rel="stylesheet"/>
   <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 </head>
 <body>
-  <div class="page">
+  <div class="page" id="page">
     <!-- Main Content-->
     <div class="offset2 container-fluid">
       <div class="top-panel hoff2">
@@ -45,6 +44,6 @@
      {% include "documentation/html/menu.html" %}
     </ul>
   </div>
-
+  <script data-main="{{ STATIC_URL }}js/application/tutorial/DocumentationPage-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 </body>
 </html>

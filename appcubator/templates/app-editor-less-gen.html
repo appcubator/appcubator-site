@@ -34,6 +34,18 @@ body {
   {{b.style|safe}}
   }
 
+  {% if b.hoverStyle %}
+  {{b.tagName|safe}}.{{b.class_name|safe}}:hover { 
+  {{b.hoverStyle|safe}}
+  }
+  {% endif %}
+
+  {% if b.activeStyle %}
+  {{b.tagName|safe}}.{{b.class_name|safe}}:active { 
+  {{b.activeStyle|safe}}
+  }
+  {% endif %}
+
   {% endfor %}
 
   /* * * * * * * * * * *

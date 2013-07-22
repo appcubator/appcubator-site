@@ -31,7 +31,6 @@ function(FooterEditorView) {
       this.$el.find('#customText').html(this.model.get('customText'));
 
       this.renderLinks();
-      console.log(this.$el.html());
       return this;
     },
 

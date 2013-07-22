@@ -293,7 +293,6 @@ define([
         fE.target = galleryElement;
 
         model = AppRouter.view.galleryEditor.dropped(fE, fUi);
-        console.log(model);
         var droppedEl = document.getElementById('widget-wrapper-' + model.cid);
         expect(droppedEl).not.toBe(null);
       });
@@ -324,7 +323,6 @@ define([
 
       it("types of the model fields corresponds to form fields", function() {
         var form = model.getForm();
-        console.log(model);
         var entity = model.get('data').get('container_info').get('entity');
 
         var hasSubmitBtn = false;
@@ -475,7 +473,6 @@ define([
 
         var cid = form.get('fields').models[nmrOfFields-2].cid;
 
-        console.log($('#field-'+cid));
         expect($('#field-'+cid).find('.upload-file.btn').length).toBe(1);
 
       });
@@ -493,7 +490,7 @@ define([
       it("should have list of go-tos for all pages", function() {
         var nmr = $('.goto-list').find('li').length;
         var nmrPages = v1State.get('pages').length;
-        expect(nmr).toEqual(nmrPages);
+        expect(nmr).toEqual(nmrPages - 2);
       });
 
 

@@ -19,7 +19,7 @@ require.config({
     "models" : "../data/models",
     "collections" : "../data/collections",
     "tutorial" : "../tutorial",
-    "ace" : "../../libs/ace/ace"
+    "ace" : "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace"
   },
 
   shim: {

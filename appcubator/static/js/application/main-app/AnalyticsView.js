@@ -32,9 +32,9 @@ function(SimpleModalView) {
     renderData: function(data) {
       var self = this;
       clearTimeout(this.updateInterval);
-      document.getElementsByClassName('total-users')[0].innerText = data.total_users;
-      document.getElementsByClassName('total-page-views')[0].innerText = data.total_page_views;
-      document.getElementsByClassName('total-active-users')[0].innerText = data.total_active_users;
+      document.getElementsByClassName('total-users')[0].innerHTML = data.total_users;
+      document.getElementsByClassName('total-page-views')[0].innerHTML = data.total_page_views;
+      document.getElementsByClassName('total-active-users')[0].innerHTML = data.total_active_users;
       this.updateInterval = setTimeout(this.fetchInfo, 10000);
     },
 

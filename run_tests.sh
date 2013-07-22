@@ -2,9 +2,9 @@
 # run_tests.sh
 host=$1
 echo "Running tests on $host"
-phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/editor/
-phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/router/
-phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/data/
-phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/formeditor/
-phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/tables/
-phantomjs /var/www/appcubator-site/appcubator/static/js/test/lib/run_jasmine_test.coffee $host/test/thirdparty/
+phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee http://127.0.0.1:8000/test/editor/
+phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee http://127.0.0.1:8000/test/router/
+phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee http://127.0.0.1:8000/test/data/
+phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee http://127.0.0.1:8000/test/formeditor/
+phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee http://127.0.0.1:8000/test/tables/
+phantomjs appcubator/static/js/test/lib/run_jasmine_test.coffee http://127.0.0.1:8000/test/thirdparty/

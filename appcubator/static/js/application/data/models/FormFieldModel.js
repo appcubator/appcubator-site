@@ -10,7 +10,7 @@ function() {
 
       this.set('label', (bone.label||bone.name));
       this.set('placeholder', (bone.placeholder||bone.name)||"placeholder");
-      this.set('required', (bone.required || false));
+      this.set('required', (bone.required || true));
     },
 
     toJSON: function() {

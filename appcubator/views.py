@@ -270,6 +270,8 @@ def app_save_state(request, app, require_valid=True):
 
 def documentation_page(request, page_name):
     try:
+        if page_name == "feedback" and request.user.is_authenticated():
+            page_name = "feedback-form-page"
         htmlString = render(request, 'documentation/html/'+page_name+'.html').content
     except Exception, e:
         htmlString = render(request, 'documentation/html/intro.html').content
