@@ -150,7 +150,7 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
   background-image: -o-linear-gradient(top, #0088cc, #0044cc);
   background-image: -ms-linear-gradient(top, #0088cc, #0044cc);
   background-image: linear-gradient(top, #0088cc, #0044cc);
-  -image background-repeat: repeat-x;
+  background-repeat: repeat-x;
   border-color: #0044cc #0044cc #002a80;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);
@@ -177,7 +177,7 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
   background-image: -o-linear-gradient(top, #fbb450, #f89406);
   background-image: -ms-linear-gradient(top, #fbb450, #f89406);
   background-image: linear-gradient(top, #fbb450, #f89406);
-  -image background-repeat: repeat-x;
+  background-repeat: repeat-x;
   border-color: #f89406 #f89406 #ad6704;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450', endColorstr='#fff89406', GradientType=0);
@@ -204,7 +204,7 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
   background-image: -o-linear-gradient(top, #ee5f5b, #bd362f);
   background-image: -ms-linear-gradient(top, #ee5f5b, #bd362f);
   background-image: linear-gradient(top, #ee5f5b, #bd362f);
-  -image background-repeat: repeat-x;
+  background-repeat: repeat-x;
   border-color: #bd362f #bd362f #802420;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b', endColorstr='#ffbd362f', GradientType=0);
@@ -231,7 +231,7 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
   background-image: -o-linear-gradient(top, #62c462, #51a351);
   background-image: -ms-linear-gradient(top, #62c462, #51a351);
   background-image: linear-gradient(top, #62c462, #51a351);
-  -image background-repeat: repeat-x;
+  background-repeat: repeat-x;
   border-color: #51a351 #51a351 #387038;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff51a351', GradientType=0);
@@ -292,7 +292,7 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
   background-image: -o-linear-gradient(top, #444444, #222222);
   background-image: -ms-linear-gradient(top, #444444, #222222);
   background-image: linear-gradient(top, #444444, #222222);
-  -image background-repeat: repeat-x;
+  background-repeat: repeat-x;
   border-color: #222222 #222222 #000000;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444', endColorstr='#ff222222', GradientType=0);

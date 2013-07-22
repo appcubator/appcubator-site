@@ -14,8 +14,16 @@
 <link href="{{ STATIC_URL }}css/animate.css" id="css-animate" rel="stylesheet">
 
 <!-- <link href="{{ STATIC_URL }}css/bootstrap-website.css" id="css-bootstrap-website" rel="stylesheet"> -->
-<link rel="stylesheet" href="{{ STATIC_URL }}css/grid.css">
+
+{% if DEBUG %}
+<!--<link rel="stylesheet" href="{{ STATIC_URL }}css/grid.css">-->
 <link rel="stylesheet/less" href="{{ STATIC_URL }}css/base.less">
+<script src="{{ STATIC_URL }}js/libs/less.min.js" type="text/javascript"></script>
+<script type="text/javascript">less.watch();</script>
+{% else %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+{% endif %}
+
 
 <script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
 <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
@@ -23,8 +31,6 @@
 <script type="text/javascript">
   var DEBUG = {% if DEBUG %}true{% else %}false{% endif %};
 </script>
-
-<script src="{{ STATIC_URL }}js/libs/less.min.js" type="text/javascript"></script>
 
 {% block css %}
 {% endblock %}
