@@ -48,7 +48,7 @@ function(SimpleModalView) {
           self.renderData(data);
         },
         error: function(data) {
-          console.log("derp");
+          console.log("No analytics data.");
         },
         dataType: "JSON"
       });
