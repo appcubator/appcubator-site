@@ -9,8 +9,9 @@ function(Backbone) {
     el: null,
     tagName: 'div',
     events: {
-      'click .new-option' : 'showNewOptionBox',
-      'click .existing-option' : 'pickedAnswer'
+      'click .new-option'      : 'showNewOptionBox',
+      'click .existing-option' : 'pickedAnswer',
+      'submit #new-value-form' : 'createdAnswer'
     },
 
     initialize: function(list, doesAcceptNew, newLabel) {
@@ -24,7 +25,6 @@ function(Backbone) {
     },
 
     render: function() {
-      console.log(this.list);
 
       _(this.list).each(function (val, ind) {
 
@@ -32,7 +32,7 @@ function(Backbone) {
         input.id = "option-" + ind;
         input.className = "existing-option";
         input.setAttribute("type", "radio");
-        input.setAttribute("name", "this.cid");
+        input.setAttribute("name", this.cid);
         input.value = val.val;
         var label = document.createElement('label');
         label.innerHTML = val.name;
@@ -48,7 +48,7 @@ function(Backbone) {
         input.className = "new-option";
         input.id = "new-option";
         input.setAttribute("type", "radio");
-        input.setAttribute("name", "this.cid");
+        input.setAttribute("name", this.cid);
         var label = document.createElement('label');
         label.innerHTML = this.newLabel;
         label.setAttribute("for", "new-option");
@@ -57,25 +57,25 @@ function(Backbone) {
         this.el.appendChild(label);
       }
 
-
-      //var form = document.createElement('form');
-
-
-// <input type="radio" name="group2" value="Water"> Water<br>
-
-
       return this;
     },
 
     showNewOptionBox: function (argument) {
-      this.newLabelEl.innerHTML = '<input type="text" placeholder="">';
+      this.newLabelEl.setAttribute("for", "");
+      this.newLabelEl.innerHTML = '<form id="new-value-form"><input type="text" class="new-value-input" placeholder="Type the new value..."><input type="submit" class="done-btn" value="add"></form>';
+      $('.new-value-input').focus();
     },
 
     pickedAnswer: function (e) {
       var val = e.currentTarget.id.replace('option-','');
-      this.trigger('submit', val);
-    }
+      this.trigger('submit', this.list[val].val);
+    },
 
+    createdAnswer: function (e) {
+      e.preventDefault();
+      var val= $('.new-value-input').val();
+      this.trigger('answer', val);
+    }
 
   });
 
