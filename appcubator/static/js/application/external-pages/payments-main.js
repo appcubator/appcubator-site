@@ -20,12 +20,13 @@ require.config({
 });
 
 require([
-  'stripe'
+  'app/Striper'
 ],
 function(StripeMain) {
 
   var PaymentsMain = function() {
-    StripeMain();
+    new Striper();
+    //Striper.bindPayment('#') - Add buttonSelector, formId here.
   };
 
   $(document).ready(new PaymentsMain());
