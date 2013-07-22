@@ -1,4 +1,5 @@
 define([
+  'editor/PickCreateFormEntityView',
   'collections/ElementCollection',
   'models/WidgetContainerModel',
   'models/WidgetModel',
@@ -6,9 +7,11 @@ define([
   'dicts/constant-containers',
   'list'
   ],
-  function(ElementCollection,
-   WidgetContainerModel,
-   WidgetModel) {
+  function(
+    PickCreateFormEntityView,
+    ElementCollection,
+    WidgetContainerModel,
+    WidgetModel) {
 
     var EditorGalleryView = Backbone.View.extend({
       el                  : util.get('top-panel-bb'),
@@ -80,13 +83,14 @@ define([
       var uiElemsSection = this.addSection('Design Elements');
 
       collection.each(function(element) {
-        if(element.get('className') == "buttons" ||
-           element.get('className') == "textInputs" ||
+        if(element.get('className') == "textInputs" ||
            element.get('className') == "textAreas" ||
            element.get('className') == "dropdowns") return;
 
           self.appendUIElement(element, uiElemsSection);
       });
+
+      self.appendLambdaCreate(uiElemsSection);
     },
 
     appendUIElement: function(elementModel, container) {
@@ -103,6 +107,25 @@ define([
         helper: function( event ) {
           return $(elementModel.get('el')).css('position','fixed');
         },
+        start : function(e) {
+          self.dragActive = true;
+        },
+        stop: self.dropped
+      });
+    },
+
+    appendLambdaCreate: function (container) {
+      var className = 'lambda-create-form';
+      var id='type-create-form';
+      var icon = 'icon form';
+      var text = 'Create Form';
+
+      var li = this.addHalfWidthItem(id, className, text, icon, container);
+      var self = this;
+      $(li).draggable({
+        cursor  : "move",
+        cursorAt: { top: 0, left: 0 },
+        helper: "clone",
         start : function(e) {
           self.dragActive = true;
         },
@@ -266,6 +289,8 @@ define([
           return this.createCurrentUserNode(layout, id);
         case "uielement":
           return this.createNode(layout, id);
+        case "lambda-create-form":
+          return new PickCreateFormEntityView(layout, id);
         default:
           throw "Unknown type dropped to the editor.";
       }
