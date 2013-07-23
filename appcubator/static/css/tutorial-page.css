@@ -132,6 +132,11 @@ span.q-sent {
   width: 100%;
 }
 
+.racoon h3 {
+  font-size: 18px;
+  padding: 2px 28px;
+}
+
 .racoon hr {
   height: 2px;
   margin: 0;

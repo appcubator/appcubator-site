@@ -1,4 +1,4 @@
-###List Editor###
+# List Editor #
 
 When you drop a "Table List" into the page editor, you are given a blank shell which you can edit. The Lists, display different records of entities based on the user specific database. 
 

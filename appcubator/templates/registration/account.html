@@ -11,9 +11,18 @@
 
 {% block page %}
 <div class="container hoff5">
-  <div class="row hoff1">
-    <div class="span48 pane">
-      <form action="/account/" method="POST" class="span22 offset2 hoff2">
+  <div class="span12 hoff1">
+        <div class="navigator">
+          <ul class="left-nav nav">
+            <li><a href="#account-info">Account Info</a></li>
+            <li><a href="#payment-history">Payment History</a></li>
+            <li><a href="#payment-settings">Payment Settings</a></li>
+          </ul>
+        </div>
+  </div>
+  <div class="row hoff1 span48 offset2">
+    <div class="span48 pane padding" id="account-info">
+      <form action="/account/" method="POST" class="span22">
         <h3 class="">Profile Info</h3><br  />
         <h4 class="">Name</h4><br  />
         <input type="text" class="span8 hoff1" placeholder="First Name" name="first_name" value="{{ user.first_name }}">
@@ -25,7 +34,7 @@
         <div class="span16 form-error field-name-email"></div><br />
         <input type="submit" class="btn" value="Save Changes">
       </form>
-      <div class="hoff1" class="span20 offset2">
+      <div class="span20 offset2">
         <h3 class="">Password</h3><br  />
         <form action="/account/set_password/" method="POST">
           <input type="password" class="span16 hoff1" name="password1" placeholder="New Password..."><br />
@@ -36,10 +45,10 @@
         </form>
       </div>
     </div>
-    <div class="span48 pane hoff4">
+    <div class="span48 pane hoff4 padding" id="payment-history">
+      <h3>Payment History</h3><br  />
       {% include "payment/_subscription_status.html" %}
-      <h2>Payment History</h2>
-      <p class="lead">Your transaction history</p>
+      <h4>Your transaction history</h4>
       {% if user.customer.invoices.all %}
       <table class="table table-striped">
         <thead>
@@ -74,13 +83,15 @@
     <p>You have not made any payments yet.</p>
     {% endif %}
     </div>
-    <div class="span48 pane hoff4">
-      <h2>Payment Settings</h2>
+    <div class="span48 pane hoff4 padding" id="payment-settings">
+      <h3>Payment Settings</h3>
       {% include "payment/_subscription_status.html" %}
       {% include "payment/_change_card_form.html" %} 
       {% include "payment/_cancel_form.html" %}
     </div>
 </div>
+<div class="hi4 hoff4 span4"></div>
+
 </div>
 {% endblock %}
 
