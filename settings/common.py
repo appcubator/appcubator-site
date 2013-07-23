@@ -100,7 +100,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.csrf",
     "appcubator.context_processors.list_of_users_apps.list_of_users_apps",
     "appcubator.context_processors.list_of_users_apps.debug",
-    "appcubator.context_processors.list_of_users_apps.static_cache_busting"
+    "appcubator.context_processors.list_of_users_apps.static_cache_busting",
+    "appcubator.payments.views.stripe_context",
 )
 
 INSTALLED_APPS = (
@@ -177,12 +178,21 @@ LOGGING = {
 # Stripe Payments based key
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_qbJZ9hMePgdpdZUrkKTskzgz")
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_GhzvfBePNCkvC6j23UtZkmTi")
+
 PAYMENTS_PLANS = {
     "monthly": {
         "stripe_plan_id": "pro-monthly",
         "name": "Production ($35/month)",
         "description": "The monthly subscription plan when your application is ready for production",
         "price": 35,
+        "currency": "usd",
+        "interval": "month"
+    },
+    "free": {
+        "stripe_plan_id": "pro-monthly-free",
+        "name": "Starter (Free)",
+        "description": "The free subscription plan to play around with your application(s)",
+        "price": 0,
         "currency": "usd",
         "interval": "month"
     }

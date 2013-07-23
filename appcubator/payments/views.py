@@ -187,3 +187,11 @@ def webhook(request):
         event.validate()
         event.process()
     return HttpResponse()
+
+def stripe_context(request):
+    stripe_dict = {
+        "STRIPE_PUBLIC_KEY": app_settings.STRIPE_PUBLIC_KEY,
+        "PLAN_CHOICES": app_settings.PLAN_CHOICES,
+        "PAYMENT_PLANS": app_settings.PAYMENTS_PLANS
+    }
+    return stripe_dict
