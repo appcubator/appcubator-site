@@ -81,13 +81,14 @@ define([
     renderUIElementList: function() {
       var self = this;
       var collection = new ElementCollection(defaultElements);
-
+      console.log(defaultElements);
       var uiElemsSection = this.addSection('Design Elements');
 
       collection.each(function(element) {
         if(element.get('className') == "textInputs" ||
            element.get('className') == "textAreas" ||
-           element.get('className') == "dropdowns") return;
+           element.get('className') == "dropdowns" ||
+          element.get('className') == "facebookshare") return;
 
           self.appendUIElement(element, uiElemsSection);
       });
@@ -153,8 +154,8 @@ define([
       }
 
       this.addFullWidthItem("entity-user-facebook", "thirdparty", "Facebook Login Button", "facebook", authSection);
-      this.addFullWidthItem("entity-user-twitter", "thirdparty", "Twitter Login Button", "twitter", authSection);
-      this.addFullWidthItem("entity-user-linkedin", "thirdparty", "LinkedIn Login Button", "linkedin", authSection);
+      //this.addFullWidthItem("entity-user-twitter", "thirdparty", "Twitter Login Button", "twitter", authSection);
+      //this.addFullWidthItem("entity-user-linkedin", "thirdparty", "LinkedIn Login Button", "linkedin", authSection);
     },
 
     renderCurrentUserElements: function() {
