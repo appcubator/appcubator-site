@@ -148,8 +148,12 @@ function (AppModel,
 
   });
 
-  $('.fixed-bg .twitter-guide').click(function(e) {
-    /*...*/
+  $('.fixed-bg .walkthrough-twitter').click(function(e) {
+    $('.fixed-bg .row .welcome-icon').not('.row.twitter-chooser .welcome-icon').fadeOut('fast', function() {
+      $('.twitter-chooser').fadeIn('fast');
+    });
+
+    return false;
   });
 
   $('.fixed-bg .newapp').click(function(e) {
