@@ -1,23 +1,20 @@
 ## Domain Settings ##
 
-
-Domain names are the internet addresses of websites. Root domains are identified by their domain names (Ex. http://www.example.com) Subdomains are components of root domains that precede the domain name. (Ex. http://subdomain.appcubator.com)
-
-Search Engine Optimization or SEO is used to ensure that your website can be found in search engines for words and phrases relevant to what the site is offering. 
-
 ![alt text](http://appcubator.com/static/img/tutorial/Domain_Settings.png)
 
-How To Change your Subdomain?
+A "domain" is your own space on the web. Examples include "google.com" and "facebook.com".
+You can claim your own appcubator subdomain - like john.appcubator.com - for free.
 
-- Go to "Change Subdomain" section of Domain & SEO page.
-
+### How To Customize your Subdomain ###
+- Go to "Change Subdomain" section of [app settings](/documentation/application_settings/) page.
 - Type the domain you would like to have and press "Claim Subdomain" if it's available.
 
-How to Register a Custom Domain?
+### How to Register a Custom Domain? ###
+
+Prices for domain names range from $10 to $40 a year, and some more valuable ones are bought and sold on the market.
+The simplest way to buy a domain is through a domain reseller, like Godaddy, Namecheap, and many others.
 
 - Go to “Custom Domains” section of Domain & SEO page
-
 - Type the custom domain you would like to deploy your app on.
-
 - Press “Register" and add any additional custom domains!
 

@@ -1,1 +1,5 @@
-Domain & SEO settings to brand your application, making it easier to connect with new users.
+## Application settings ##
+
+![alt text](http://appcubator.com/static/img/tutorial/Application_settings.png)
+
+Click on "App settings" to configure your domain, SEO, and to delete your app.
