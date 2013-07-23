@@ -29,7 +29,7 @@ define([
       events : {
         'mouseover .bottom-arrow' : 'slideDown',
         'mousemove .bottom-arrow' : 'slideDown',
-        'focus input.search'           : 'expandAllSections'
+        'focus input.search'           : 'expandAllSections',
       },
 
       initialize   : function(widgetsCollection) {
@@ -46,16 +46,14 @@ define([
       var self = this;
 
       this.allList = util.get('all-list');
-
+      this.allList.innerHTML = '';
+      this.sections = [];
       this.renderUIElementList();
       this.renderAuthenticationForms();
       this.renderCurrentUserElements();
-      this.renderEntitiyFormsTablesLists();
-      this.renderContextEntityForms();
+      this.renderEntityFormsTablesLists();
+      this.renderContextEntityElements();
       this.displayAllSections();
-
-      // all sections are hidden by default. open first section
-      $(this.allList).find('.gallery-header').first().click();
 
       $(this.allList).append('<div class="bottom-arrow"></div>');
       $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
@@ -77,6 +75,9 @@ define([
       $(util.get('top-panel-bb')).find('.search').on('focus', this.expandAllSections);
 
       this.expandAllSections();
+
+      // listen for changes to url to update context entity section
+      this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
 
       return this;
     },
@@ -187,10 +188,12 @@ define([
         this.currUserSection.addFullWidthItem('current-user-'+field.cid, 'current-user', 'Current User '+ field.get('name'), 'current-user-icon');
       }, this);
 
-      this.currUserSection.addFullWidthItem('entity-CurrentUser', "entity-edit-form", 'Current User Edit Form', 'create-form-icon');
+      v1State.get('users').each(function(user) {
+        this.currUserSection.addFullWidthItem('entity-user-'+user.cid, "entity-edit-form", 'Current ' + user.get('name') + ' Edit Form', 'create-form-icon');
+      }, this);
     },
 
-    renderEntitiyFormsTablesLists: function() {
+    renderEntityFormsTablesLists: function() {
       this.tableSection = new EditorGallerySectionView();
       this.tableSection.name = 'Table Data';
       this.tableSection.render();
@@ -217,27 +220,36 @@ define([
       }, this);
     },
 
-    renderContextEntityForms: function() {
+    renderContextEntityElements: function() {
       var pageContext = v1State.getCurrentPage().getContextEntities();
       if(!pageContext.length) return;
+      if(!this.contextEntitySection) {
+        this.contextEntitySection = new EditorGallerySectionView();
+        this.contextEntitySection.name = 'Page Context Data';
+        this.contextEntitySection.render();
+        this.subviews.push(this.contextEntitySection);
+        this.sections.push(this.contextEntitySection);
+      }
+      else {
+        this.contextEntitySection.render();
+      }
 
-      this.contextEntitySection = new EditorGallerySectionView('Page Context Data').render();
-      this.subviews.push(this.contextEntitySection);
-      this.sections.push(this.contextEntitySection);
-
+      console.log(pageContext);
       _(pageContext).each(function(tableName) {
-
         var tableM = v1State.getTableModelWithName(tableName);
         if(!tableM) throw "Error with page context";
         var tableId = tableM.cid;
-        var id = 'entity-' + tableM.cid;
-
-        this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon', contextEntitySection);
-
+        var id = '';
+        if(tableM.isUser) {
+          id = 'entity-user-'+tableM.cid;
+        }
+        else {
+          id = 'entity-table-' + tableM.cid;
+        }
+        this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon');
         tableM.getFieldsColl().each(function(field) {
-          if(field.isRelatedField()) return this.renderRelatedField(field, tableM, contextEntitySection);
-
-          this.contextEntitySection.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon', contextEntitySection);
+          //if(field.isRelatedField()) return this.renderRelatedField(field, tableM, contextEntitySection);
+          this.contextEntitySection.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon');
         }, this);
       }, this);
     },
@@ -360,7 +372,8 @@ define([
     createContextEntityNode: function(layout, id) {
       var hash = String(id).replace('context-field-','').split('-');
       var entityM = v1State.getTableModelWithCid(hash[0]);
-      var fieldM = entityM.get('fields').get(hash[1]);
+      console.log(entityM);
+      var fieldM = entityM.getFieldsColl().get(hash[1]);
 
       var displayType = this.getFieldType(fieldM);
 
@@ -409,14 +422,17 @@ define([
     },
 
     createEditForm: function(layout, id) {
-      var cid = String(id).replace('entity-','');
+      var entityType = String(id).replace('entity-','');
       var entity = {};
-
-      if(cid == "CurrentUser")  {
+      //if edit form is for a user role
+      if(entityType.indexOf('user') > -1) {
+        var cid = entityType.replace('user-','');
         editOn = "CurrentUser";
-        entity = v1State.get('users').models[0];
+        entity = v1State.get('users').get(cid);
       }
+      //edit form is for a table
       else {
+        var cid = entityType.replace('table-','');
         entity = v1State.get('tables').get(cid);
         if(!entity) entity = v1State.get('users').get(cid);
         editOn = "Page." + entity.get('name');
@@ -530,6 +546,10 @@ define([
       }
 
       return type;
+    },
+
+    expandSection: function(index) {
+      this.sections[index].expand();
     },
 
     expandAllSections: function() {

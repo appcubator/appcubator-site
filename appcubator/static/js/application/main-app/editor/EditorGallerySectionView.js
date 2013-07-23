@@ -20,12 +20,16 @@ function(
     },
     isExpanded: true,
 
-    initialize   : function() {
+    initialize: function() {
       _.bindAll(this);
       return this;
     },
 
     render: function() {
+      console.log(this.el);
+      if(this.el) {
+        this.el.innerHTML = '';
+      }
       var sectionName = this.name.replace(/ /g,'-');
       this.header = this.addHeaderItem(this.name);
       this.list = document.createElement('ul');
@@ -58,7 +62,6 @@ function(
     addHeaderItem: function(text, target) {
       var li = document.createElement('li');
       li.className = 'gallery-header ui-draggable';
-      li.dataset.target = target;
       li.innerHTML = text;
       var icon = document.createElement('img');
       icon.className="icon";
@@ -75,13 +78,13 @@ function(
 
     expand: function() {
       this.header.className +=' open';
-      $(this.list).show();
+      $(this.list).slideDown(200);
       this.isExpanded = true;
     },
 
     hide: function() {
       $(this.header).removeClass('open');
-      $(this.list).hide();
+      $(this.list).slideUp(200);
       this.isExpanded = false;
     }
 

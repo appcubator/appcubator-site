@@ -30,6 +30,7 @@ define([
       if(bone.fields) {
         this.get('fields').add(bone.fields);
       }
+      this.isUser = false;
     },
 
     toJSON: function () {
