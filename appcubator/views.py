@@ -18,6 +18,7 @@ import app_builder.analyzer as analyzer
 from app_builder.analyzer import App as AnalyzedApp
 from app_builder.utils import get_xl_data, add_xl_data, get_model_data
 
+from payments.views import subscribe
 
 import requests
 import traceback
@@ -530,6 +531,8 @@ def app_zip(request, app_id):
     response = HttpResponse(zip_bytes, content_type="application/octet-stream")
     response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
     return response
+
+
 
 @login_required
 @require_POST
