@@ -38,8 +38,13 @@ function(Backbone) {
         label.innerHTML = val.name;
         label.setAttribute("for", "option-" + ind);
 
-        this.el.appendChild(input);
-        this.el.appendChild(label);
+        var option = document.createElement('div');
+        option.className = 'option';
+
+        option.appendChild(input);
+        option.appendChild(label);
+
+        this.el.appendChild(option);
       }, this);
 
 
