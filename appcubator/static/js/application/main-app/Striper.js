@@ -1,5 +1,6 @@
 define([
   'jquery',
+  'backbone',
   'https://checkout.stripe.com/v2/checkout.js'
 ],
   function() {
@@ -16,28 +17,29 @@ define([
 
       bindPayment: function(selector, formId) {
         var self = this;
-        $(selector).on('click', {tokem: this.token, formId: formId}, this.checkoutOpen);
+        $(selector).on('click', {token: this.token, formId: formId}, this.checkoutOpen);
       },
 
       checkoutOpen: function(e) {
-          StripeCheckout.open({
-            key       :   $('#' + event.data.formId).data("stripe-key"),
-            name      :  'Payment Method',
-            panelLabel:  'Add Payment Method',
-            token     :   event.data.token
-          });
+        e.preventDefault();
+        this.form = $('#' + e.data.formId);
+        StripeCheckout.open({
+          key       :   $('#' + e.data.formId).data("stripe-key"),
+          name      :  'Payment Method',
+          panelLabel:  'Add Payment Method',
+          token     :   e.data.token
+        });
       },
 
       token: function(result) {
-        $form.find("input[name=stripe_token]").val(res.id);
+        var form = this.form
+        this.form.find("input[name=stripe_token]").val(result.id);
         $.ajax({
              type: 'POST',
              url: '/payments/a/subscribe/',
-             data: $form.serialize(),
+             data: this.form.serialize(),
              success: function(data, statusStr, xhr) {
-              console.log('hello');
-              console.log(data);
-              $form.remove();
+              form.remove();
               $('.page').append(data.html);
             }
         });

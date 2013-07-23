@@ -4,11 +4,17 @@ require.config({
     "underscore" : "../../libs/underscore-amd/underscore",
     "util" : "../../libs/util/util",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
-    "app" : "../",
-    "prettyCheckable" : "../../libs/jquery/prettyCheckable"
+    "app" : "../main-app",
+    "prettyCheckable" : "../../libs/jquery/prettyCheckable",
+    "underscore" : "../../libs/underscore-amd/underscore",
+    "backbone" : "../../libs/backbone-amd/backbone"
   },
 
   shim: {
+    "backbone": {
+      exports: "Backbone",
+      deps: ["underscore", "jquery"]
+    },
     "underscore": {
       exports: "_"
     },
@@ -22,11 +28,11 @@ require.config({
 require([
   'app/Striper'
 ],
-function(StripeMain) {
+function(Striper) {
 
   var PaymentsMain = function() {
-    new Striper();
-    //Striper.bindPayment('#') - Add buttonSelector, formId here.
+    var striper = new Striper();
+    striper.bindPayment('.btn.btn-primary', 'subscribe-form');
   };
 
   $(document).ready(new PaymentsMain());
