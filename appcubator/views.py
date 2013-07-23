@@ -130,13 +130,16 @@ def app_new_racoon(request, app_id):
 
 
 @login_required
-def app_new_walthrough(request):
+def app_new_walkthrough(request, walkthrough):
     app_name = "Twitter Demo"
     a = App(name=app_name, owner=request.user)
     # set the name in the app state
     s = a.state
     s['name'] = a.name
-    s['walkthrough'] = 1
+    if walkthrough is 'simpleWalkthrough':
+        s['simpleWalkthrough'] = 1
+    else:
+        s['walkthrough'] = 1
     a.state = s
     try:
         a.full_clean()
