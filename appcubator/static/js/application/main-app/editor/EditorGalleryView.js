@@ -133,7 +133,7 @@ define([
     appendLambdaCreate: function () {
       var className = 'lambda-create-form';
       var id='type-create-form';
-      var icon = 'icon form';
+      var icon = 'create-form-icon';
       var text = 'Create Form';
 
       var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);

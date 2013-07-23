@@ -8,7 +8,7 @@ function() {
   var PickCreateFormEntityView = Backbone.ModalView.extend({
     className : 'navbar-editor-modal',
     width: 600,
-    padding: 0,
+    padding: 20,
     title: "New Create Form",
 
     events: {
