@@ -1,10 +1,10 @@
 define([
-  'mixins/SimpleModalView',
+  'mixins/SimpleDialogueView',
   'jquery',
   'backbone',
   'https://checkout.stripe.com/v2/checkout.js'
 ],
-  function(SimpleModalView) {
+  function(SimpleDialogueView) {
 
     var Striper = Backbone.View.extend({
 
@@ -34,7 +34,7 @@ define([
 
       token: function(result) {
         var self = this;
-        var form = this.form
+        var form = this.form;
         this.form.find("input[name=stripe_token]").val(result.id);
         $.ajax({
              type: 'POST',
@@ -48,10 +48,11 @@ define([
       },
 
       showPlanSuccessModal: function() {
-        var modal = new SimpleModalView({txt: "Thank you! Your preferences have been saved."});
+        var self = this;
+        var modal = new SimpleDialogueView({ txt: "Thank you! Your payment has been received and your preferences has been saved."});
         modal.onClose = function() {
-          window.location = '/app/';
-        }
+          self.onSuccess.call();
+        };
       }
     });
 

@@ -2,12 +2,12 @@ from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import login_required
 
 from views import SubscribeView, ChangeCardView, ChangePlanView, CancelView, HistoryView
-from views import subscribe
+from views import subscribe, app_payment
 
 urlpatterns = patterns(
     "payments.views",
     url(r"^webhook/$", "webhook", name="payments_webhook"),
-    
+
     url(r"^a/subscribe/$", subscribe, name="payments_ajax_subscribe"),
     url(r"^a/change/card/$", "change_card", name="payments_ajax_change_card"),
     url(r"^a/change/plan/$", "change_plan", name="payments_ajax_change_plan"),
@@ -38,4 +38,7 @@ urlpatterns = patterns(
         login_required(HistoryView.as_view()),
         name="payments_history"
     ),
+    url(
+        r"^payment/$",
+        app_payment)
 )

@@ -4,12 +4,16 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_GET, require_POST
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+
+from django.shortcuts import redirect, render, render_to_response, get_object_or_404
 
 import stripe
 
@@ -18,9 +22,11 @@ from payments.models import EventProcessingException, Customer
 from payments.models import Event, CurrentSubscription
 from payments import settings as app_settings
 
+from appcubator.models import App
+
 
 class PaymentsContextMixin(object):
-    
+
     def get_context_data(self, **kwargs):
         context = super(PaymentsContextMixin, self).get_context_data(**kwargs)
         context.update({
@@ -187,3 +193,24 @@ def webhook(request):
         event.validate()
         event.process()
     return HttpResponse()
+
+
+@login_required
+@require_GET
+def app_payment(request, app_id):
+    app_id = long(app_id)
+    # id of 0 is reserved for sample app
+    print "hey nikhil"
+    app = get_object_or_404(App, id=app_id)
+    page_context = {'app': app,
+                    'app_url': app.url(),
+                    'app_id': long(app_id),
+                    'title': 'The Garage',
+                    'user': app.owner,
+                    'is_deployed': 1 if app.deployment_id != None else 0,
+                    'form': PlanForm,
+                    'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
+                    # 'PLAN_CHOICES': settings.PLAN_CHOICES,
+                    'PAYMENT_PLANS': settings.PAYMENTS_PLANS }
+
+    return render(request, 'app-payment.html', page_context)
