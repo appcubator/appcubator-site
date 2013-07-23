@@ -538,11 +538,6 @@ define([
       });
     },
 
-    toggleSection: function(index) {
-      var $allList = $(this.allList);
-      $allList.find('.gallery-header').eq(index).click();
-    },
-
     slideDown: function() {
       var itemGallery = document.getElementById('item-gallery');
       var h = $(itemGallery).scrollTop();
