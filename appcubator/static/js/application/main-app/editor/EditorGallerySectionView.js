@@ -1,5 +1,4 @@
 define([
-  'editor/PickCreateFormEntityView',
   'collections/ElementCollection',
   'models/WidgetContainerModel',
   'models/WidgetModel',
@@ -8,7 +7,6 @@ define([
   'list'
 ],
 function(
-  PickCreateFormEntityView,
   ElementCollection,
   WidgetContainerModel,
   WidgetModel) {
@@ -33,6 +31,8 @@ function(
       this.header = this.addHeaderItem(this.name);
       this.list = document.createElement('ul');
       this.el.appendChild(this.list);
+      this.list.style = '';
+
       return this;
     },
 
@@ -71,7 +71,6 @@ function(
     },
 
     toggle: function() {
-      alert("DERP");
       if(this.isExpanded) this.hide();
       else this.expand();
     },

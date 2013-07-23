@@ -13,6 +13,8 @@ function(EditorGallerySectionView,
     className: 'elements-list row-elements-list',
     positionHorizontalGrid : 1,
     positionVerticalGrid   : 1,
+    sections : [],
+    subviews : [],
 
     events : {
         'mouseover .bottom-arrow' : 'slideDown',
@@ -21,8 +23,12 @@ function(EditorGallerySectionView,
 
     initialize: function(widgetModel, location){
       this.model = widgetModel;
-
       var rowModel = this.model.get('data').get('container_info').get('row');
+      RowGalleryView.__super__.initialize.call(this, rowModel.get('uielements'));
+      _.bindAll(this);
+      this.subviews = [];
+      this.sections = [];
+
       var entityModel = this.model.get('data').get('container_info').get('entity');
 
       this.entity = entityModel;
@@ -30,11 +36,13 @@ function(EditorGallerySectionView,
       this.widgetsCollection = rowModel.get('uielements');
       this.editorContext = "loop";
 
-      _.bindAll(this);
+
+
+
       this.allList = this.el;
       this.location = location;
 
-      RowGalleryView.__super__.initialize.call(this, rowModel.get('uielements'));
+
 
     },
 
@@ -69,6 +77,14 @@ function(EditorGallerySectionView,
       return this;
     },
 
+    displayAllSections: function() {
+      _.each(this.sections, function(section) {
+        this.allList.appendChild(section.el);
+      }, this);
+      //this.expandAllSections();
+    },
+
+
     renderUIElementList: function() {
       var self = this;
       var collection = new ElementCollection(defaultElements);
@@ -102,7 +118,7 @@ function(EditorGallerySectionView,
       var entityId = self.entity.cid;
 
       this.entity.getFieldsColl().each(function(field) {
-        if(field.isRelatedField()) return self.renderRelatedField(field, contextEntitySection);
+        if(field.isRelatedField()) return self.renderRelatedField(field, this.contextEntitySection);
         this.contextEntitySection.addHalfWidthItem('context-field-'+ entityId+'-' + field.cid,
                               'context-entity', entityName+' '+field.get('name'),
                               'plus-icon');
