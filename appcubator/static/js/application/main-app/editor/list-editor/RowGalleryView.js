@@ -78,12 +78,9 @@ function(EditorGallerySectionView,
     },
 
     displayAllSections: function() {
-      _.each(this.sections, function(section) {
-        this.allList.appendChild(section.el);
-      }, this);
-      //this.expandAllSections();
+      this.allList.appendChild(this.contextEntitySection.el);
+      this.allList.appendChild(this.uiElemsSection.el);
     },
-
 
     renderUIElementList: function() {
       var self = this;

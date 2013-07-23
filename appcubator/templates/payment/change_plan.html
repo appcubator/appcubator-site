@@ -1,0 +1,8 @@
+{% extends "payment/payments_base.html" %}
+
+{% block title %}Change Subscription{% endblock title %}
+
+{% block page %}
+    {% include "payment/_subscription_status.html" %}
+    {% include "payment/_change_plan_form.html" %}
+{% endblock %}

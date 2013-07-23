@@ -7,7 +7,7 @@ require.config({
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "app" : "../",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
-    "answer" : "../../libs/answer/answer",
+    "answer" : "../../libs/answer/answer"
   },
 
   shim: {
@@ -35,6 +35,7 @@ function() {
   var DocumentationMain = Backbone.View.extend({
     el: null,
     addr : [0],
+    pages: ["application_settings", "domain_settings", "seo_optimization", "deleting_your_application", "tables_page", "user_tables", "tables", "relationships", "themes", "pages", "access", "editor", "design_eleents", "images", "login", "page_content", "forms", "lists", "search", "deploy", "emails", "feedback"],
 
     events : {
       "submit .tutorial-q-form" : "submittedQuestion"
@@ -44,13 +45,21 @@ function() {
       _.bindAll(this);
       this.el = document.getElementById('page');
       this.form = document.getElementById('feedback-form');
-      console.log(this.form);
+
+      this.ind = 0;
+      _(this.pages).each(function(val, ind) {
+        if(val == pageName) this.ind = ind;
+      }, this);
+
       this.render();
     },
 
     render : function(img, text) {
-      console.log(this.el);
       $(this.form).on('submit', this.submittedFeedback);
+
+      $('.right-arrow').on('click', this.nextPage);
+      $('.left-arrow').on('click', this.previousPage);
+
       return this;
     },
 
@@ -75,6 +84,17 @@ function() {
 
       $('#feedback-check').prop('checked', true);
       $('#feedback-form').html("<p>We have received your feedback! Thank you for your helping us make Appcubator better.</p>");
+    },
+
+    nextPage: function () {
+      console.log(this.pages);
+      console.log(this.ind );
+      console.log(this.pages[this.ind + 1]);
+      window.location = '/documentation/' + this.pages[this.ind + 1] + '/';
+    },
+
+    previousPage: function () {
+      window.location = '/documentation/' + this.pages[this.ind - 1] + '/';
     }
 
   });

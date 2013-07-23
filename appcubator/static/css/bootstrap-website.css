@@ -4515,6 +4515,10 @@ a.pane:hover {
   overflow: hidden;
 }
 
+.padding {
+  padding: 30px;
+}
+
 .pane-inline {
   position: relative;
   display: inline-block;
@@ -6365,4 +6369,8 @@ color: #fff;
 
 .modal .q-mark:hover {
   background-position: -46px -6px;
+}
+
+.alert.alert-warning.lead {
+  font-size: 16px;
 }

@@ -1,3 +1,4 @@
+import os
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -72,6 +73,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+#    'payments.middleware.ActiveSubscriptionMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -98,7 +100,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.csrf",
     "appcubator.context_processors.list_of_users_apps.list_of_users_apps",
     "appcubator.context_processors.list_of_users_apps.debug",
-    "appcubator.context_processors.list_of_users_apps.static_cache_busting"
+    "appcubator.context_processors.list_of_users_apps.static_cache_busting",
+    "appcubator.payments.views.stripe_context",
 )
 
 INSTALLED_APPS = (
@@ -114,6 +117,8 @@ INSTALLED_APPS = (
     'kombu.transport.django',
     'less',
     'registration',
+    'django_forms_bootstrap',
+    'payments',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -169,6 +174,33 @@ LOGGING = {
         },
     }
 }
+
+# Stripe Payments based key
+STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_qbJZ9hMePgdpdZUrkKTskzgz")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_GhzvfBePNCkvC6j23UtZkmTi")
+
+PAYMENTS_PLANS = {
+    "monthly": {
+        "stripe_plan_id": "pro-monthly",
+        "name": "Production ($35/month)",
+        "description": "The monthly subscription plan when your application is ready for production",
+        "price": 35,
+        "currency": "usd",
+        "interval": "month"
+    },
+    "free": {
+        "stripe_plan_id": "pro-monthly-free",
+        "name": "Starter (Free)",
+        "description": "The free subscription plan to play around with your application(s)",
+        "price": 0,
+        "currency": "usd",
+        "interval": "month"
+    }
+}
+# SUBSCRIPTION_REQUIRED_EXCEPTION_URLS = ['/']
+# SUBSCRIPTION_REQUIRED_REDIRECT='/'
+
+# End keys
 
 # Registration window
 ACCOUNT_ACTIVATION_DAYS = 28

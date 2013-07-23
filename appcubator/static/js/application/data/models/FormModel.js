@@ -57,6 +57,9 @@ function(
         if(type == "file") { formFieldModel.displayType = "file-uploader"; }
         if(type == "date") { formFieldModel.displayType = "date-picker"; }
 
+        if(_.contains(["file", "image"], type)) // #functional
+           formFieldModel.placeholder = "Attach "+type;
+
         var ind = this.get('fields').models.length - 1;
         this.get('fields').push(formFieldModel, {at: ind});
       }, this);
@@ -77,6 +80,9 @@ function(
         if(type == "image") { formFieldModel.displayType = "image-uploader"; }
         if(type == "file") { formFieldModel.displayType = "file-uploader"; }
         if(type == "date") { formFieldModel.displayType = "date-picker"; }
+
+        if(_.contains(["file", "image"], type)) // #functional
+           formFieldModel.placeholder = "Update "+type;
 
         var ind = this.get('fields').models.length - 1;
         this.get('fields').push(formFieldModel, {at: ind});

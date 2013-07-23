@@ -36,6 +36,8 @@
           {{ content }}
         {% endautoescape %}
       </div>
+      <div class="left-arrow">Previous Page</div>
+      <div class="right-arrow">Next Page</div>
     </div>
 
         <!-- Left Menu -->
@@ -44,6 +46,9 @@
      {% include "documentation/html/menu.html" %}
     </ul>
   </div>
+  <script type="text/javascript">
+    var pageName = "{{ page_name }}";
+  </script>
   <script data-main="{{ STATIC_URL }}js/application/tutorial/DocumentationPage-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 </body>
 </html>

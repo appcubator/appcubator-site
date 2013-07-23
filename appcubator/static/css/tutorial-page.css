@@ -117,7 +117,7 @@ span.q-sent {
 .racoon {
   background-color: #fff;
   border-radius: 6px;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   overflow: hidden;
 }
 
@@ -130,6 +130,11 @@ span.q-sent {
   font-size: 22px;
   border-bottom: 1px solid #f7f8f9;
   width: 100%;
+}
+
+.racoon h3 {
+  font-size: 18px;
+  padding: 2px 28px;
 }
 
 .racoon hr {
@@ -147,6 +152,13 @@ span.q-sent {
   min-height: 80px;
   border-bottom: 1px solid #e7e8e9;
 }
+
+.racoon p img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .racoon ul {
   list-style: circle;
   list-style-position: inside;
@@ -483,6 +495,47 @@ span.q-sent {
   max-width: 780px;
   z-index: 1000;
   position: relative;
+}
+
+.right-arrow {
+  display: inline-block;
+  background-image: url(../img/next-arrow-blue.png);
+  height: 40px;
+  width: 140px;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: right;
+  float: right;
+  cursor: pointer;
+  padding-right: 40px;
+  font-size: 12px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #666;
+}
+
+.right-arrow:hover {
+  background-size: auto 120%;
+}
+
+.left-arrow {
+  display: inline-block;
+  background-image: url(../img/previous-arrow-blue.png);
+  height: 40px;
+  width: 140px;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: left;
+  cursor: pointer;
+  padding-left: 50px;
+  font-size: 12px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #666;
+}
+
+.left-arrow:hover {
+  background-size: auto 120%;
 }
 
 @media all and (max-width: 1000px) {
