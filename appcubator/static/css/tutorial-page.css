@@ -117,7 +117,7 @@ span.q-sent {
 .racoon {
   background-color: #fff;
   border-radius: 6px;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   overflow: hidden;
 }
 
@@ -483,6 +483,47 @@ span.q-sent {
   max-width: 780px;
   z-index: 1000;
   position: relative;
+}
+
+.right-arrow {
+  display: inline-block;
+  background-image: url(../img/next-arrow-blue.png);
+  height: 40px;
+  width: 140px;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: right;
+  float: right;
+  cursor: pointer;
+  padding-right: 40px;
+  font-size: 12px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #666;
+}
+
+.right-arrow:hover {
+  background-size: auto 120%;
+}
+
+.left-arrow {
+  display: inline-block;
+  background-image: url(../img/previous-arrow-blue.png);
+  height: 40px;
+  width: 140px;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: left;
+  cursor: pointer;
+  padding-left: 50px;
+  font-size: 12px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #666;
+}
+
+.left-arrow:hover {
+  background-size: auto 120%;
 }
 
 @media all and (max-width: 1000px) {

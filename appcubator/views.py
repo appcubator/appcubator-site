@@ -277,7 +277,8 @@ def documentation_page(request, page_name):
         htmlString = render(request, 'documentation/html/intro.html').content
     else:
         data = {
-            'content': htmlString
+            'content': htmlString,
+            'page_name': page_name
         }
         return render(request, 'documentation/documentation-base.html', data)
 
