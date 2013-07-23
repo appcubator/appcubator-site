@@ -26,7 +26,6 @@ function(
     },
 
     render: function() {
-      console.log(this.el);
       if(this.el) {
         this.el.innerHTML = '';
       }

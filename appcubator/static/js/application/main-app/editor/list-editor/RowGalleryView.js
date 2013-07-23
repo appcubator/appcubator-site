@@ -66,14 +66,7 @@ function(EditorGallerySectionView,
       //this.$el.find('li').on('click', self.dropped);
       this.switchEditingModeOn();
 
-      this.expandAllSections();
       return this;
-    },
-
-    displayAllSections: function() {
-      _.each(this.sections, function(section) {
-        this.allList.appendChild(section.el);
-      }, this);
     },
 
     renderUIElementList: function() {
@@ -84,7 +77,6 @@ function(EditorGallerySectionView,
       this.uiElemsSection.render();
       this.subviews.push(this.uiElemsSection);
       this.sections.push(this.uiElemsSection);
-
       collection.each(function(element) {
         if(element.get('className') == "buttons" ||
            element.get('className') == "textInputs" ||
@@ -92,7 +84,6 @@ function(EditorGallerySectionView,
            element.get('className') == "dropdowns" ||
            element.get('className') == "imageslider" ||
            element.get('className') == "facebookshare") return;
-
           this.appendUIElement(element);
       }, this);
     },
@@ -183,19 +174,13 @@ function(EditorGallerySectionView,
     },
 
 
-    appendUIElement: function(elementModel, container) {
+    appendUIElement: function(elementModel) {
       var className = 'uielement';
       var id='type-' + elementModel.get('className');
       var icon = 'icon '+  elementModel.get('className');
       var text = elementModel.get('text');
 
       var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
-    },
-
-    expandAllSections: function() {
-      _(this.sections).each(function(section) {
-        section.expand();
-      });
     }
   });
 

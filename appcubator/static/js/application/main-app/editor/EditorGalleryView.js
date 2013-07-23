@@ -47,7 +47,6 @@ define([
 
       this.allList = util.get('all-list');
       this.allList.innerHTML = '';
-      this.sections = [];
       this.renderUIElementList();
       this.renderAuthenticationForms();
       this.renderCurrentUserElements();
@@ -74,8 +73,6 @@ define([
 
       $(util.get('top-panel-bb')).find('.search').on('focus', this.expandAllSections);
 
-      this.expandAllSections();
-
       // listen for changes to url to update context entity section
       this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
 
@@ -86,6 +83,7 @@ define([
       _.each(this.sections, function(section) {
         this.allList.appendChild(section.el);
       }, this);
+      this.expandAllSections();
     },
 
     renderUIElementList: function() {
@@ -234,7 +232,6 @@ define([
         this.contextEntitySection.render();
       }
 
-      console.log(pageContext);
       _(pageContext).each(function(tableName) {
         var tableM = v1State.getTableModelWithName(tableName);
         if(!tableM) throw "Error with page context";
@@ -372,7 +369,6 @@ define([
     createContextEntityNode: function(layout, id) {
       var hash = String(id).replace('context-field-','').split('-');
       var entityM = v1State.getTableModelWithCid(hash[0]);
-      console.log(entityM);
       var fieldM = entityM.getFieldsColl().get(hash[1]);
 
       var displayType = this.getFieldType(fieldM);
