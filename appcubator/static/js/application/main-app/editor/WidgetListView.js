@@ -163,9 +163,9 @@ function( WidgetContainerView,
     switchEditingOff: function() {
       this.editMode = false;
       this.$el.removeClass('selected');
-      this.$el.find('.row').first().removeClass('highlighted');
       this.widgetSelectorView.deselect();
       if(this.highlighted) $(this.editorRow).resizable("destroy");
+      this.$el.find('.row').first().removeClass('highlighted');
       $('.shadow-x.trans').removeClass('trans');
       this.highlighted = false;
     }

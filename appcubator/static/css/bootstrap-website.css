@@ -5318,8 +5318,20 @@ font-size: 30px;
   padding-top: 0;
   padding-bottom: 0;
   padding-right: 0px;
-  text-align: left;
+  text-align: center;
   border-right: 1px solid rgba(0,0,0,0.2);
+}
+
+.v1nav .nav h1.name .title {
+  display: none;
+}
+
+.v1nav .nav h1.name:hover .brand {
+  display: none;
+}
+
+.v1nav .nav h1.name:hover .title {
+  display: inline-block;
 }
 
 .v1nav .nav li a {
