@@ -1,6 +1,6 @@
 {% load url from future %}
 
-<div class="cancel-subscription">
+<div class="cancel-subscription hoff1">
     
     {% if user.customer.current_subscription.status == 'canceled' %}
         <div class="alert alert-danger">Your account has been canceled. It will remain active until <strong>{{ user.customer.current_subscription.current_period_end }}.</strong>

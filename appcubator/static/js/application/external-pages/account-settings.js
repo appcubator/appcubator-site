@@ -6,7 +6,6 @@ require.config({
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "app" : "../main-app",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
-    "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "mixins" : "../../mixins",
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui"
@@ -23,13 +22,17 @@ require.config({
     },
     "prettyCheckable" : {
       deps: ["jquery"]
+    },
+    "bootstrap" : {
+      deps: ["jquery"]
     }
   }
 
 });
 
 require([
-  'app/Striper'
+  'app/Striper',
+  'bootstrap'
 ],
 function(Striper) {
 
@@ -45,6 +48,19 @@ function(Striper) {
   };
 
   $(document).ready(new PaymentsMain());
+
+
+  this.$nav = $('.navigator .left-nav');
+
+      // make left nav links scroll page
+  this.$nav.find('a').click(function() {
+    var elem = this.getAttribute('href');
+    var topPos = $(elem).offset().top - 75;
+    $('html,body').animate({scrollTop: topPos});
+    return false;
+  });
+
+  $('.left-nav').affix({offset: 0});
 
   // @ksikka's code
   $(document).ready(function() {
