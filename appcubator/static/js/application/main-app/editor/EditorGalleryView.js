@@ -351,6 +351,7 @@ define([
         case "uielement":
           return this.createNode(layout, id);
         case "lambda-create-form":
+          v1State.getCurrentPage().trigger('creat-form-dropped');
           return new PickCreateFormEntityView(layout, id);
         default:
           throw "Unknown type dropped to the editor.";

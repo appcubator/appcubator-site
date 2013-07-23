@@ -242,10 +242,7 @@ define([
   my: "right center",
   at: "left center",
   url: '/editor/0/',
-  nextButton: true,
   setup: function(tour, options) {
-    console.log(tour.loginButton);
-    console.log(tour.loginButton.get('data'));
     tour.loginButton.get('data').get('loginRoutes').models[0].bind('change', tour.next);
     return { target: $('.login-route-editor') };
   },
@@ -298,22 +295,22 @@ define([
       at: "left center",
       url: '/editor/1/',
       setup: function(tour, options) {
-        createFormDragged = function(uielem) {
-          if(uielem.hasForm()) {
-            tour.createForm = uielem;
-            tour.next();
-          }
+
+        checkForNewOption = function() {
+          waitUntilAppears('#new-option', tour.next);
         };
-        v1State.getCurrentPage().get('uielements').bind('add', createFormDragged);
+
+        v1State.getCurrentPage().bind('creat-form-dropped', checkForNewOption);
+
         return { target: $('#type-create-form') };
       },
       teardown: function() {
-        v1State.getCurrentPage().get('uielements').unbind('add', createFormDragged);
+        v1State.getCurrentPage().unbind('creat-form-dropped', checkForNewOption);
         v1State.attributes.walkthrough++;
       }
     },
     {
-      content: '<h3>Create Form</h3><p><em>Drag this form on to the left side of the page.</em></p>',
+      content: '<h3>What to create?</h3><p><em>Drag this form on to the left side of the page.</em></p>',
       my: "right center",
       at: "left center",
       url: '/editor/1/',
@@ -321,7 +318,7 @@ define([
         tweetTableCreated = function(table) {
           if(table.get('name') == "Tweet") {
             tour.tweetTable = table;
-            tour.next();
+            waitUntilAppears('.form-editor-btn', tour.next);
           }
           else {
             alert('Name of the table should be "Tweet"');
@@ -337,24 +334,90 @@ define([
       }
     },
     {
-      content: '<h3>Create Form</h3><p>We have this blank form now and we need to add some fields to it. Click on <em>Edit Login</em> button.</p>',
+      content: '<h3>Editing the Form</h3><p>We have this blank form now and we need to add some fields to it. Click on <em>Edit Login</em> button.</p>',
       my: "top center",
       at: "bottom center",
       url: '/editor/1/',
       setup: function(tour, options) {
         $('.form-editor-btn').first().one('click', function() {
           // setTimeout(tour.next, 400);
-          waitUntilAppears('.modal.form-editor', tour.next);
+          waitUntilAppears('.form-editor-title', tour.next);
         });
         return { target: $('.form-editor-btn') };
       },
       teardown: function() {
-        v1State.get('tables').bind('add', tweetTableCreated);
         v1State.attributes.walkthrough++;
       }
     },
-
-//
+    {
+      content: '<h3>Form Editor</h3><p>Form editor let\'s you edit your forms and add new fields to it.</p>',
+      my: "left top",
+      at: "right top",
+      url: '/editor/1/',
+      nextButton: true,
+      setup: function(tour, options) {
+        return { target: $('.form-editor-title') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Add a New Field</h3><p>Create a new form field by clicking on <em>Add a New Field</em> button.</p>',
+      my: "bottom center",
+      at: "top center",
+      url: '/editor/1/',
+      setup: function(tour, options) {
+        $('.btn.add-field-button').one('click', function() {
+          waitUntilAppears('#option-0', tour.next);
+        });
+        return { target: $('.btn.add-field-button') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>Creating a Form Field</h3><p>Since we don\'t have and fields defined before, we should create a new one. Click on <em>Create A New Field</em></p>',
+      my: "top left",
+      at: "bottom left",
+      url: '/editor/1/',
+      setup: function(tour, options) {
+        $('#option-0').one('change', function() {
+          waitUntilAppears('.new-field-form', tour.next);
+        });
+        return { target: $('#option-0') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>We want to Save Some Text</h3><p>We want to save the text content of a tweet here, so we can just name the field as "Content" and click <em>Done</em></p>',
+      my: "left top",
+      at: "right top",
+      url: '/editor/1/',
+      setup: function(tour, options) {
+        $('.new-field-form').one('submit', tour.next);
+        return { target: $('.new-field-form') };
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
+    {
+      content: '<h3>We have an awesome form now</h3><p>We\'re basically done with our form, but you can customize it further, change the label to "Tweet" etc. When you\'re done click on <em>Done</em> to coninue.</p>',
+      my: "bottom right",
+      at: "top right",
+      url: '/editor/1/',
+      setup: function(tour, options) {
+        $('.btn.done-btn').one('click', tour.next);
+        return { target: $('.btn.done-btn')};
+      },
+      teardown: function() {
+        v1State.attributes.walkthrough++;
+      }
+    },
     //new-option
     {
       content: '<h3>About this "list"</h3><p>"Edit Row" allows you to edit each row\'s appearance and content.<br>"Edit Query" allows you to filter and sort the Tweets.</p><p><em>Click on "Edit Row"</em></p>',
