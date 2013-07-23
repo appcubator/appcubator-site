@@ -21,6 +21,8 @@ define([
       css                 : 'editor-gallery',
       positionHorizontalGrid : 80,
       positionVerticalGrid   : 15,
+      sections : [],
+      subviews : [],
 
       events : {
         'mouseover .bottom-arrow' : 'slideDown',
