@@ -1,4 +1,4 @@
-### Search ###
+# Search #
 
 Search for a specific post or picture stored in your database. Set which table properties your Users can use to search
 

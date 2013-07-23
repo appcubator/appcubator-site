@@ -5,7 +5,7 @@
 Users, Tweets, Craigslist posts, Quora questions, Friendships, Likes, Comments, Inventory.
 These are all examples of "data" that web applications store in a "database".
 
-## Data structure ##
+## Structure of the Data ##
 
 You should think of your data as organized in spreadsheets.
 [(Click for more info)](/documentation/user_tables/)

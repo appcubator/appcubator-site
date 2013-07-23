@@ -1,3 +1,5 @@
+# Images #
+
 ### Add and Modify Pictures ###
 
 Brighten up your application by dragging and dropping images on to the editor.
