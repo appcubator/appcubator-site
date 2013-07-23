@@ -4,7 +4,7 @@
 {% block title %}Purchase a Subscription{% endblock title %}
 
 {% block page %}
-    {% with request.user.customer.current_subscription as subscription %}
+    {% with user.customer.current_subscription as subscription %}
         {% if not subscription or subscription.status != 'active'  %}
             {% include "payment/_subscription_status.html" %}
             {% include "payment/_subscribe_form.html" %}
