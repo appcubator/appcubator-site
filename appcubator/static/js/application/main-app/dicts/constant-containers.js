@@ -26,8 +26,8 @@ var constantContainers = {
     fields : [
                     {
                         "field_name": "username",
-                        "placeholder": "Username",
-                        "label": "Username",
+                        "placeholder": "Email or username",
+                        "label": "Email or username",
                         "displayType": "single-line-text",
                         "type": "text",
                         "options": ''
@@ -42,7 +42,6 @@ var constantContainers = {
                     },
                     {
                         "placeholder": "Login",
-                        "label": "",
                         "displayType": "button",
                         "type": "button"
                     }
@@ -54,35 +53,27 @@ var constantContainers = {
     "entity": "User",
     "fields": [
                     {
-                        "field_name": "username",
-                        "placeholder": "Username",
-                        "label": "Username",
-                        "displayType": "single-line-text",
-                        "type": "text",
-                        "options": ''
-                    },
-                    {
-                        "name": "password1",
-                        "placeholder": "Password",
-                        "label": "Password",
-                        "displayType": "password-text",
-                        "type": "password",
-                        "options": ''
-                    },
-                    {
-                        "name": "password2",
-                        "placeholder": "Confirm Password",
-                        "label": "Confirm Password",
-                        "displayType": "password-text",
-                        "type": "password",
-                        "options": ''
-                    },
-                    {
                         "field_name": "Email",
                         "placeholder": "Email Address",
                         "label": "Email Address",
                         "displayType": "email-text",
                         "type": "email",
+                        "options": ''
+                    },
+                    {
+                        "name": "name",
+                        "placeholder": "Name",
+                        "label": "Name",
+                        "displayType": "single-line-text",
+                        "type": "text",
+                        "options": ''
+                    },
+                    {
+                        "name": "password",
+                        "placeholder": "Password",
+                        "label": "Password",
+                        "displayType": "password-text",
+                        "type": "password",
                         "options": ''
                     },
                     {

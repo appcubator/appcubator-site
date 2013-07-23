@@ -28,6 +28,7 @@ logger = logging.getLogger('appcubator.models')
 class ExtraUserData(models.Model):
     user = models.OneToOneField(User, related_name="extradata")
     noob = models.IntegerField(default=1)
+    technical = models.IntegerField(default=0)
     picture_url = models.URLField(max_length=200, default='/static/default_pic.png')
 
     # RUN THIS TO FIX AN OLD DATABASE
@@ -187,7 +188,7 @@ class App(models.Model):
         except simplejson.JSONDecodeError, e:
             raise ValidationError(e.msg)
 
-    def write_to_tmpdir(self):
+    def write_to_tmpdir(self, for_user=False):
         from app_builder.analyzer import App as AnalyzedApp
         from app_builder.controller import create_codes
         from app_builder.coder import Coder, write_to_fs
@@ -199,7 +200,7 @@ class App(models.Model):
         codes = create_codes(app)
         coder = Coder.create_from_codes(codes)
 
-        tmp_project_dir = write_to_fs(coder, css=self.css())
+        tmp_project_dir = write_to_fs(coder, css=self.css(), for_user=for_user)
 
         return tmp_project_dir
 
@@ -225,7 +226,7 @@ class App(models.Model):
         return "https://github.com/appcubator/" + self.u_name()
 
     def zip_path(self):
-        tmpdir = self.write_to_tmpdir()
+        tmpdir = self.write_to_tmpdir(for_user=True)
 
         def zipify(tmpdir):
             filenames = os.listdir(tmpdir)
@@ -297,8 +298,12 @@ class App(models.Model):
                 pass
             if 'errors' in response_content:
                 result['errors'] = response_content['errors']
-            result['site_url'] = "http://%s.appcubator.com" % self.subdomain
-            result['github_url'] = self.github_url()
+            result['site_url'] = self.url()
+
+            syncdb_data = [ u for u in response_content['script_results'] if u['script'] == u'syncdb.py' ][0]
+            if u'value to use for existing rows' in syncdb_data['stderr']:
+                assert False, "Migration needs help!!!"
+
             return result
 
         elif r.status_code == 404:

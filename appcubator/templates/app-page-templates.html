@@ -1,6 +1,6 @@
 <script type="text/template" id="app-main-page">
     <div class="row hoff1 span58">
-      <h2 class="span48 pheader">{{ app.name }}</h2>
+      <h2 class="span48 pheader">{{ app.name }} Overview</h2>
       <div class="pane deploy-pane span10 hi3 right">
         <div class="hi3 span10 deploy" id="deploy"><span class="icon"></span><h4>Go To App</h4></div>
       </div>
@@ -14,38 +14,10 @@
         <li><input type="checkbox" id="feedback-check" disabled>Fill the <a class="feedback" href="#">feedback form</a>.</li>
       </ul>
     </div>
-
-    <div class="span58 hoff1 hoff2">
-        <a class="pane hi11 span13 menu-app-info" id="app-info" href="/app/{{ app.id }}/info/">
-          <img src="{{ STATIC_URL }}img/info.png">
-          <div class="hoff1 offset1 offsetr1">
-          <h3>Domain & SEO</h3>
-          </div>
-        </a>
-        <a class="pane hi11 span13 menu-app-entities offset2" id="data-storage" href="/app/{{ app.id }}/tables/">
-          <img src="{{ STATIC_URL }}img/entities.png">
-          <div class="hoff1 offset1 offsetr1">
-          <h3>Tables</h3>
-          </div>
-        </a>
-        <a class="pane hi11 span13 offset2 menu-app-themes" id="themes" href="/app/{{ app.id }}/gallery/">
-          <img src="{{ STATIC_URL }}img/design.png">
-          <div class="hoff1 offset1 offsetr1">
-          <h3>Design & Themes</h3>
-          </div>
-        </a>
-        <a class="pane hi11 span13 offset2 menu-app-pages" id="pages" href="/app/{{ app.id }}/pages/">
-          <img src="{{ STATIC_URL }}img/page.png">
-          <div class="hoff1 offset1 offsetr1">
-          <h3>Pages</h3>
-          </div>
-        </a>
-    </div>
-
     <div class="span58 hoff2">
       <div class="row hoff1 analytics" style="position: relative">
-        <div class="coming-soon-overlay" style="display: block; top: 35px; background-color: rgba(227, 227, 227, 0.75);">
-          <h2>Site Analytics coming soon!</h2>
+        <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75);">
+          <h2>Deploy your app to see your site analytics!</h2>
         </div>
         <h3>Analytics</h3>
         <hr class="span58 pheader">
@@ -169,7 +141,7 @@
     <div id="web-section">
       <h2 class="pheader">Pages</h2>
       <hr class="span58 pheader">
-      <div class="" id="list-pages">
+      <ul class="" id="list-pages">
       </div>
       <div class="add-box create-page span18 pane hi22" id="create-page-box">
         <div class="box-button span18 hoff2">
@@ -243,22 +215,21 @@
       <div class="url-bar">http://yourapp.com</div>
       <div class="page full container fdededfcbcbcd" id="page">
         <!-- Navbar -->
-        <div class="navbar" id="navbar">
+        <navbar class="navbar" id="navbar">
           <div class="navbar-inner">
             <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
             <ul class="nav" id="links">
             </ul>
             <button id="edit-navbar-btn">Edit Navbar</button>
           </div>
-        </div>
-        <!-- Navbar Ends-->
+        </navbar>
+        <!-- Editing Container -->
         <div class="container editing" id="full-container"></div>
         <div class="editing" id="elements-container">
         <!-- UI Elements -->
-        <!-- UI Elements Ends-->
         </div>
-        <footer id="footer-container">
-        </footer>
+        <!-- Footer -->
+        <footer class="footer" id="footer"></footer>
       </div>
     </div>
   </div>

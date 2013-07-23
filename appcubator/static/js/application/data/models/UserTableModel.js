@@ -13,8 +13,8 @@ function(TableModel, FieldModel, FieldsCollection, Backbone) {
       if(typeof bone === "string") {
         bone = appState.users;
       }
-
       this.set('fields', new FieldsCollection(bone.fields || []));
+      this.isUser = true;
     },
 
     getFieldsColl: function() {

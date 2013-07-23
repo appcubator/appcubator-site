@@ -35,22 +35,31 @@ function() {
       }, this);
     },
 
-    added: function(a, b, c, d, e, f, g) {
-      //console.log("added");
+    added: function(model, collection) {
+      var changeObj = {
+        action: 'added',
+        obj: model,
+        collection: collection
+      };
+      this.redoStack.push(changeObj);
     },
 
-    removed: function(a, b, c, d, e, f, g) {
-      //console.log("removed");
+    removed: function(model, collection) {
+      var changeObj = {
+        action: 'removed',
+        obj: model,
+        collection: collection
+      };
+      this.redoStack.push(changeObj);
     },
 
     changed: function(model) {
       var changeObj = {
-        action: 'change',
+        action: 'changed',
         prevAttributes: _.clone(model._previousAttributes),
         obj: model
       };
       this.redoStack.push(changeObj);
-      console.log("changed");
     },
 
     isModel: function(obj) {
@@ -65,12 +74,32 @@ function() {
 
     redo: function() {
       var obj = this.redoStack.pop();
-      //console.log(obj.obj);
-      //console.log(obj.prevAttributes);
-      obj.obj.attributes = _.clone(obj.prevAttributes);
-      this.stopListening(obj.obj, 'change', this.changed);
-      obj.obj.trigger('change');
-      this.listenTo(obj.obj, 'change', this.changed);
+      if(!obj) return;
+
+      switch(obj.action) {
+        case "added":
+          this.stopListening(obj.collection, 'remove', this.removed);
+          obj.collection.remove(obj.obj);
+          this.listenTo(obj.collection, 'remove', this.removed);
+          break;
+        case "removed":
+          this.stopListening(obj.collection, 'add', this.added);
+          obj.collection.add(obj.obj);
+          this.listenTo(obj.collection, 'add', this.added);
+          break;
+        case "changed":
+          obj.obj.attributes = _.clone(obj.prevAttributes);
+          this.stopListening(obj.obj, 'change', this.changed);
+          obj.obj.trigger('change');
+          if(obj.obj.has('top')) {
+            obj.obj.trigger('change:left');
+            obj.obj.trigger('change:top');
+            obj.obj.trigger('change:width');
+            obj.obj.trigger('change:height');
+          }
+          this.listenTo(obj.obj, 'change', this.changed);
+          break;
+      }
     }
   });
 

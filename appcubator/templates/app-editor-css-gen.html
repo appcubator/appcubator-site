@@ -1,6 +1,6 @@
-
-{{  app.uie_state.fonts|safe }}
-
+{% for font in app.uie_state.fonts %}
+  @import url("http://fonts.googleapis.com/css?family-{{ font.name }}:400,700,400italic,700italic");
+{% endfor %}
 
 {% if deploy %}
 body {
@@ -24,6 +24,22 @@ body {
   {{b.tagName|safe}}.{{b.class_name|safe}} { 
   {{b.style|safe}}
   }
+
+  {{b.tagName|safe}}.{{b.class_name|safe}} { 
+  {{b.style|safe}}
+  }
+
+  {% if b.hoverStyle %}
+  {{b.tagName|safe}}.{{b.class_name|safe}}:hover { 
+  {{b.style|safe}}
+  }
+  {% endif %}
+
+  {% if b.activeStyle %}
+  {{b.tagName|safe}}.{{b.class_name|safe}}:active { 
+  {{b.style|safe}}
+  }
+  {% endif %}
 
   {% endfor %}
 

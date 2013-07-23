@@ -103,7 +103,7 @@ span.q-sent {
   font-size: 16px;
   line-height: 28px;
   border: 1px solid rgba(144, 144, 144, 0.5);
-  margin-top: 36px;
+  margin-top: 20px;
 }
 
 .racoon:hover {
@@ -139,12 +139,22 @@ span.q-sent {
   display: none;
 }
 
+.racoon ul,
 .racoon p {
   background-color: #fff;
   color: #4e5665;
   padding: 24px;
   min-height: 80px;
   border-bottom: 1px solid #e7e8e9;
+}
+.racoon ul {
+  list-style: circle;
+  list-style-position: inside;
+}
+
+.racoon ul p {
+  padding: 0;
+  border-bottom-width: 0;
 }
 
 .racoon .images {
@@ -402,14 +412,14 @@ span.q-sent {
 
   width:  240px;
   */
-position: fixed;
+  position: absolute;
   left: 0;
   width: 224px;
   background-color: #0f2d40;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
   color: #fff;
-  top: 130px;
+  top: 120px;
   padding: 6px;
   padding-left: 20px;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
@@ -464,7 +474,39 @@ position: fixed;
 }
 
 .container-fluid {
-  position: absolute;
+/*  position: absolute;
   left: 50%;
-  margin-left: -370px;
+  margin-left: -370px;*/
+
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 780px;
+  z-index: 1000;
+  position: relative;
+}
+
+@media all and (max-width: 1000px) {
+  .menu-list {
+    position: relative;
+    top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 780px;
+    width: 90%;
+    z-index: 1000;
+    border-top-left-radius: 4px;
+    border-bottom-right-radius: 0px;
+  }
+
+  .menu-list .title {
+    display: block;
+  }
+  .menu-list h1, .menu-list h2 {
+    display: inline-block;
+    width: 48%;
+  }
+
+  .banner {
+    font-size: 16px;
+  }
 }

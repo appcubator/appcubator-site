@@ -170,6 +170,8 @@ function() {
       this.listenTo(widgetModel.get('layout'), 'change', function() {
         self.setLayout(self.selectDiv, widgetModel);
       });
+
+      this.hideNode(this.hoverDiv);
       this.setLayout(this.selectDiv, widgetModel);
       this.selectDiv.appendChild(this.widgetEditorView.setModel(widgetModel).render().el);
     },
@@ -213,8 +215,8 @@ function() {
       var top = Math.round((ui.position.top / 1));
       var left = Math.round((ui.position.left / 1));
 
-      if(top < 0) top = 0;
-      if(left < 0) left = 0;
+      if(top < 0) top = 1;
+      if(left < 0) left = 1;
 
       model.get('layout').set('top', top);
 
@@ -222,8 +224,8 @@ function() {
         model.get('layout').trigger('change:left');
       }
       model.get('layout').set('left', left);
+
       this.newSelected(model);
-      this.setLayout(e.target, model);
     },
 
     deselect: function() {
@@ -320,7 +322,7 @@ function() {
     clear: function() { },
 
     hideNode: function(node) {
-      if(!node) return;
+      if(!node)  { return; }
       node.style.height = 0;
       node.style.width = 0;
       $(node).hide();

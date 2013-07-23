@@ -12,12 +12,19 @@ function(SimpleModalView) {
     },
 
     initialize: function() {
+      var self = this;
       _.bindAll(this);
       this.render();
+      v1.on('deploy', function() {
+        self.$('.coming-soon-overlay').hide();
+      });
     },
 
     render: function() {
       this.el.innerHTML = _.template(AnalyticsTemplates.main_stats, {});
+      if(!window.is_deployed) {
+        $('.analytics .coming-soon-overlay').show();
+      }
       this.fetchInfo();
       return this;
     },
@@ -25,9 +32,9 @@ function(SimpleModalView) {
     renderData: function(data) {
       var self = this;
       clearTimeout(this.updateInterval);
-      document.getElementsByClassName('total-users')[0].innerText = data.total_users;
-      document.getElementsByClassName('total-page-views')[0].innerText = data.total_page_views;
-      document.getElementsByClassName('total-active-users')[0].innerText = data.total_active_users;
+      document.getElementsByClassName('total-users')[0].innerHTML = data.total_users;
+      document.getElementsByClassName('total-page-views')[0].innerHTML = data.total_page_views;
+      document.getElementsByClassName('total-active-users')[0].innerHTML = data.total_active_users;
       this.updateInterval = setTimeout(this.fetchInfo, 10000);
     },
 
@@ -39,6 +46,9 @@ function(SimpleModalView) {
         success: function(data) {
           console.log(data);
           self.renderData(data);
+        },
+        error: function(data) {
+          console.log("No analytics data.");
         },
         dataType: "JSON"
       });

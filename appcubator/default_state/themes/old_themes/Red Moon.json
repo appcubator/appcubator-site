@@ -101,7 +101,7 @@
       }
     }
   ],
-  "fonts": "",
+  "fonts": [],
   "lines": [
     {
       "style": "border-color:#49afcd;",
@@ -370,6 +370,15 @@
       },
       "tagName": "input"
     }
+  ],
+  "lists": [
+      {
+        "isSingle": false,
+        "cons_attribs": {},
+        "class_name": "defaul-list",
+        "content": null,
+        "tagName": "div"
+      }
   ],
   "pages": [
     {

@@ -3,7 +3,7 @@ define([
 		"mixins/SimpleModalView",
 		"mixins/ErrorDialogueView",
 		"tutorial/TutorialView",
-		"app/EmailsView",
+		"app/emails/EmailsView",
 		"app/DeployView",
 		"mixins/SimpleDialogueView",
 		"backbone",
@@ -238,11 +238,12 @@ define([
 			appState = v1State.toJSON();
 			$.ajax({
 				type: "POST",
-				url: '/app/'+appId+'/state/',
+				url: '/app/'+appId+'/state/force/',
 				data: JSON.stringify(appState),
 				success: function() {
 					util.dontAskBeforeLeave();
-
+					is_deployed = 1;
+					self.trigger('deploy');
 					$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
 					setTimeout(function(){
 						$('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();

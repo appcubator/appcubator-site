@@ -99,49 +99,17 @@
     ],
     "buttons": [
         {
-            "style": "",
-            "isSingle": true,
+            "tagName" : "a",
+            "cons_attribs": { },
             "content_attribs": {
-                "value": "Button1"
+                "href" : "internal://Homepage"
             },
-            "hoverStyle": "",
-            "class_name": "btn-1",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "type": "submit"
-            }
-        },
-        {
+            "content" : "Default Button",
+            "isSingle": false,
             "style": "",
-            "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
+            "class_name": "btn",
             "hoverStyle": "",
-            "class_name": "btn-2",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "submit"
-            }
-        },
-        {
-            "style": "",
-            "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
-            "hoverStyle": "",
-            "class_name": "btn-3",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "submit"
-            }
+            "activeStyle": ""
         }
     ],
     "headerTexts": [
@@ -359,7 +327,6 @@
             "hoverStyle": "",
             "class_name": "input-green",
             "content": null,
-            "activeStyle": "",
             "content_attribs": {
                 "placeholder": "Default placeholder..."
             },
@@ -368,17 +335,23 @@
     ],
     "forms": [
         {
-            "style": "",
             "isSingle": false,
             "cons_attribs": {},
-            "hoverStyle": "",
             "class_name": "form-with-bg",
             "content": null,
-            "tagName": "form",
-            "activeStyle": ""
+            "tagName": "form"
         }
     ],
-    "fonts": "",
+    "lists": [
+        {
+            "isSingle": false,
+            "cons_attribs": {},
+            "class_name": "defaul-list",
+            "content": null,
+            "tagName": "div"
+        }
+    ],
+    "fonts": [],
     "pages": [
         {
             "design_props": [

@@ -3,6 +3,7 @@ require.config({
     "jquery" : "../../libs/jquery/jquery",
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
     "jquery.hotkeys" : "../../libs/jquery/jquery.hotkeys",
+    "fontselect": "../../libs/fontselect/jquery.fontselect",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "util" : "../../libs/util/util",
@@ -18,11 +19,19 @@ require.config({
     "models" : "../data/models",
     "collections" : "../data/collections",
     "tutorial" : "../tutorial",
-    "ace" : "http://rawgithub.com/ajaxorg/ace-builds/master/src-noconflict/ace"
+    "ace" : "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace"
   },
 
   shim: {
     "jquery-ui": {
+      exports: "$",
+      deps: ['jquery']
+    },
+    'fontselect': {
+      exports: "$",
+      deps: ['jquery']
+    },
+    'jquery.hotkeys': {
       exports: "$",
       deps: ['jquery']
     },

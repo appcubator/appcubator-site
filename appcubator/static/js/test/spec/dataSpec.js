@@ -14,7 +14,8 @@ define([
   "collections/TableCollection",
   "collections/EmailCollection",
   "models/AppInfoModel",
-  "backbone"
+  "backbone",
+  "mixins/BackboneConvenience"
 ],
 function( AppModel,
           UserTableModel,

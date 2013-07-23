@@ -28,6 +28,7 @@
     var themes = {{ themes|safe }};
     var mobileThemes = {{ mobile_themes|safe }};
     var staticVersion = "{{STATIC_VERSION}}";
+    var is_deployed = {{ is_deployed }}
   </script>
   <script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js">
   </script>
