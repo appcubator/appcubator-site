@@ -238,7 +238,7 @@ define([
 			appState = v1State.toJSON();
 			$.ajax({
 				type: "POST",
-				url: '/app/'+appId+'/state/force/',
+				url: '/app/'+appId+'/state/',
 				data: JSON.stringify(appState),
 				success: function() {
 					util.dontAskBeforeLeave();
