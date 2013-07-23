@@ -18,7 +18,8 @@ define([
   "comp",
   "backbone",
   "util",
-  "mixins/BackboneConvenience"
+  "mixins/BackboneConvenience",
+  "mixins/BackboneNameBox"
   ],
   function( EntitiesView,
     AppModel,
@@ -160,6 +161,7 @@ define([
     describe('User roles', function() {
       var newUserTable = {};
       var tableUIElem = {};
+
       it('add new button works', function() {
         $('#add-role').trigger('click');
         $('#add-role-form input[type=text]').val('Teacher');
@@ -170,7 +172,8 @@ define([
         e.preventDefault = function() {};
 
         var numTablesBefore = $('#users .entity').length;
-        newUserTable = AppRouter.view.createUserRole(e);
+        console.log(AppRouter.view);
+        newUserTable = AppRouter.view.createUserRole("Teacher");
         var numTablesAfter = $('#users .entity').length;
 
         expect(newUserTable).not.toEqual(null);

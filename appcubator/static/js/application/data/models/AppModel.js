@@ -17,6 +17,7 @@ function(AppInfoModel,
 
     currentPage: null,
     isMobile: false,
+    lazy: {},
 
     initialize: function(appState) {
       if(!appState) return;
@@ -56,13 +57,28 @@ function(AppInfoModel,
       return this.get('users').length == 1;
     },
 
+    lazySet: function(key, coll) {
+      this.lazy[key] = coll;
+      this.set(key, new Backbone.Collection([]));
+    },
+
+    get: function (key) {
+      if(this.lazy[key]) {
+        this.set(key, this.lazy[key]);
+        delete this.lazy[key];
+      }
+
+      return AppModel.__super__.get.call(this, key);
+    },
+
     toJSON: function() {
       var json = _.clone(this.attributes);
       json.info = json.info.toJSON();
       json.users = json.users.toJSON();
       json.tables = json.tables.toJSON();
       if(json.pages) json.pages = json.pages.toJSON();
-      if(json.mobilePages) json.mobilePages = json.mobilePages.toJSON();
+      //if(json.mobilePages) json.mobilePages = json.mobilePages.toJSON();
+      if(json.mobilePages) json.mobilePages = [];
       json.emails = json.emails.toJSON();
 
       return json;

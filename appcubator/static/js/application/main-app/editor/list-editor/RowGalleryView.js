@@ -1,8 +1,11 @@
 define([
+  'editor/EditorGallerySectionView',
   'editor/EditorGalleryView',
   'collections/ElementCollection'
 ],
-function(EditorGalleryView, ElementCollection) {
+function(EditorGallerySectionView,
+         EditorGalleryView,
+         ElementCollection) {
 
   var RowGalleryView = EditorGalleryView.extend({
     el       : null,
@@ -10,6 +13,8 @@ function(EditorGalleryView, ElementCollection) {
     className: 'elements-list row-elements-list',
     positionHorizontalGrid : 1,
     positionVerticalGrid   : 1,
+    sections : [],
+    subviews : [],
 
     events : {
         'mouseover .bottom-arrow' : 'slideDown',
@@ -18,8 +23,12 @@ function(EditorGalleryView, ElementCollection) {
 
     initialize: function(widgetModel, location){
       this.model = widgetModel;
-
       var rowModel = this.model.get('data').get('container_info').get('row');
+      RowGalleryView.__super__.initialize.call(this, rowModel.get('uielements'));
+      _.bindAll(this);
+      this.subviews = [];
+      this.sections = [];
+
       var entityModel = this.model.get('data').get('container_info').get('entity');
 
       this.entity = entityModel;
@@ -27,11 +36,13 @@ function(EditorGalleryView, ElementCollection) {
       this.widgetsCollection = rowModel.get('uielements');
       this.editorContext = "loop";
 
-      _.bindAll(this);
+
+
+
       this.allList = this.el;
       this.location = location;
 
-      RowGalleryView.__super__.initialize.call(this, rowModel.get('uielements'));
+
 
     },
 
@@ -40,10 +51,14 @@ function(EditorGalleryView, ElementCollection) {
       // Context Entity Elements and Update Forms
       var self = this;
       this.allList = this.el;
-
+      this.allList.innerHTML = '';
       this.addInfoItem('Drop elements to the green area to edit one row of the list.');
+
+      this.sections = [];
       this.renderUIElementList();
       this.renderContextEntity();
+      this.displayAllSections();
+
       this.el.innerHTML += '<div class="bottom-arrow"></div>';
 
       this.$el.find('li:not(.ui-draggable)').draggable({
@@ -58,14 +73,26 @@ function(EditorGalleryView, ElementCollection) {
 
       //this.$el.find('li').on('click', self.dropped);
       this.switchEditingModeOn();
+
       return this;
     },
+
+    displayAllSections: function() {
+      _.each(this.sections, function(section) {
+        this.allList.appendChild(section.el);
+      }, this);
+      //this.expandAllSections();
+    },
+
 
     renderUIElementList: function() {
       var self = this;
       var collection = new ElementCollection(defaultElements);
-      var uiElemsSection = this.addSection('Design Elements');
-
+      this.uiElemsSection = new EditorGallerySectionView();
+      this.uiElemsSection.name = 'Design Elements';
+      this.uiElemsSection.render();
+      this.subviews.push(this.uiElemsSection);
+      this.sections.push(this.uiElemsSection);
       collection.each(function(element) {
         if(element.get('className') == "buttons" ||
            element.get('className') == "textInputs" ||
@@ -73,26 +100,28 @@ function(EditorGalleryView, ElementCollection) {
            element.get('className') == "dropdowns" ||
            element.get('className') == "imageslider" ||
            element.get('className') == "facebookshare") return;
-
-          self.appendUIElement(element, uiElemsSection);
-      });
+          this.appendUIElement(element);
+      }, this);
     },
 
     renderContextEntity : function() {
       // Form, Data elements belonging to the entity
       var self = this;
 
-      var contextEntitySection = this.addSection('Row Context Data');
+      this.contextEntitySection = new EditorGallerySectionView();
+      this.contextEntitySection.name = 'Row Context Data';
+      this.contextEntitySection.render();
+      this.subviews.push(this.contextEntitySection);
+      this.sections.push(this.contextEntitySection);
 
       var entityName = self.entity.get('name');
       var entityId = self.entity.cid;
 
-      this.entity.get('fields').each(function(field) {
-        if(field.isRelatedField()) return self.renderRelatedField(field, contextEntitySection);
-
-        this.addHalfWidthItem('context-field-'+ entityId+'-' + field.cid,
+      this.entity.getFieldsColl().each(function(field) {
+        if(field.isRelatedField()) return self.renderRelatedField(field, this.contextEntitySection);
+        this.contextEntitySection.addHalfWidthItem('context-field-'+ entityId+'-' + field.cid,
                               'context-entity', entityName+' '+field.get('name'),
-                              'plus-icon', contextEntitySection);
+                              'plus-icon');
       }, this);
     },
 
@@ -103,10 +132,10 @@ function(EditorGalleryView, ElementCollection) {
       var tableModel = v1State.getTableModelWithName(fieldModel.get('entity_name'));
 
       _(tableModel.getNormalFields()).each(function(fieldM) {
-        this.addHalfWidthItem( 'context-field-'+entityId+'-'+tableModel.cid+'-'+fieldModel.cid+'-'+fieldM.cid,
+        this.contextEntitySection.addHalfWidthItem( 'context-field-'+entityId+'-'+tableModel.cid+'-'+fieldModel.cid+'-'+fieldM.cid,
                                'context-nested-entity',
                                 entityName+' '+fieldModel.get('name')+'.'+fieldM.get('name'),
-                               'plus-icon', contextEntitySection);
+                               'plus-icon');
       }, this);
     },
 
@@ -161,24 +190,14 @@ function(EditorGalleryView, ElementCollection) {
     },
 
 
-    appendUIElement: function(elementModel, container) {
+    appendUIElement: function(elementModel) {
       var className = 'uielement';
       var id='type-' + elementModel.get('className');
       var icon = 'icon '+  elementModel.get('className');
       var text = elementModel.get('text');
 
-      var li = this.addHalfWidthItem(id, className, text, icon, container);
-    },
-
-    addSection: function(name) {
-      var sectionName = name.replace(/ /g,'-');
-      var target = '.'+sectionName;
-      var header = this.addHeaderItem(name, target);
-      var section = document.createElement('section');
-      section.className = sectionName;
-      $(this.allList).append(section);
-      return section;
-    },
+      var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
+    }
   });
 
   return RowGalleryView;

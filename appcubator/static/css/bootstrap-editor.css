@@ -1988,6 +1988,15 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
   padding: 16px;
 }
 
+.modal label,
+.modal input {
+  display: inline-block;
+}
+
+.modal label {
+  margin-left: 6px;
+}
+
 .modal.fade {
   top: -25%;
 

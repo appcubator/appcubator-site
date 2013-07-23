@@ -75,9 +75,8 @@ function(Backbone) {
       div.style.left = '50%';
       div.style.marginLeft= '-'+ (this.width/2) +'px';
       div.style.marginTop = '-300px';
-
-      div.style.padding = this.padding + 'px';
       div.style.zIndex = 3001;
+      div.style.padding = 0;
 
       if(this.title) {
         var title = document.createElement('h3');
@@ -101,8 +100,9 @@ function(Backbone) {
 
       var content = document.createElement('div');
       content.style.width = '100%';
-      div.appendChild(content);
+      content.style.padding = (this.padding||0) + 'px';
 
+      div.appendChild(content);
 
       document.body.appendChild(div);
 

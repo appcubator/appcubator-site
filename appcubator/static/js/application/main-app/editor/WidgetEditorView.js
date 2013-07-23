@@ -308,9 +308,7 @@ function(WidgetContentEditor,
     },
 
     clickedDelete: function() {
-      console.log("delete");
       if(this.model)  {
-        console.log("delete yo");
         this.model.remove();
       }
     },

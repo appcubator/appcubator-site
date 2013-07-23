@@ -300,8 +300,6 @@ define([
     },
 
     close: function () {
-              console.log("deleting yo");
-
       this.remove();
       Backbone.View.prototype.close.call(this);
     }
