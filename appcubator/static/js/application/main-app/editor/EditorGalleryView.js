@@ -58,6 +58,25 @@ define([
       $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
       $(this.allList).find('.bottom-arrow').on('mousemove', this.slideDown);
 
+      this.bindDraggable();
+
+      var list = new List('top-panel-bb', { valueNames: ['name']});
+
+      $(util.get('top-panel-bb')).find('.search').on('focus', this.expandAllSections);
+
+      // listen for changes to url to update context entity section
+      this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
+      this.listenTo(v1State.get('tables'), 'add remove', this.renderEntityFormsTablesLists);
+
+      return this;
+    },
+
+    bindDraggable: function() {
+      var self = this;
+
+      $(this.allList).find('li:not(.ui-draggable)').on('click', function(e) {
+        self.dropped(e);
+      });
       $(this.allList).find('li:not(.ui-draggable)').draggable({
         cursor: "move",
         cursorAt: { top: 0, left: 0 },
@@ -67,16 +86,7 @@ define([
         },
         stop: self.dropped
       });
-      this.$el.find('li').on('click', self.dropped);
 
-      var list = new List('top-panel-bb', { valueNames: ['name']});
-
-      $(util.get('top-panel-bb')).find('.search').on('focus', this.expandAllSections);
-
-      // listen for changes to url to update context entity section
-      this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
-
-      return this;
     },
 
     displayAllSections: function() {
@@ -126,6 +136,7 @@ define([
         },
         stop: self.dropped
       });
+      $(li).on('click', self.dropped);
     },
 
     appendLambdaCreate: function () {
@@ -192,11 +203,17 @@ define([
     },
 
     renderEntityFormsTablesLists: function() {
-      this.tableSection = new EditorGallerySectionView();
-      this.tableSection.name = 'Table Data';
-      this.tableSection.render();
-      this.subviews.push(this.tableSection);
-      this.sections.push(this.tableSection);
+
+      if(!this.tableSection) {
+        this.tableSection = new EditorGallerySectionView();
+        this.tableSection.name = 'Table Data';
+        this.tableSection.render();
+        this.subviews.push(this.tableSection);
+        this.sections.push(this.tableSection);
+      }
+      else {
+        this.tableSection.render();
+      }
 
       v1State.get('tables').each(function(entityModel) {
         var context = { entity_id : entityModel.cid, entity_name : entityModel.get('name')};
@@ -216,6 +233,8 @@ define([
         this.tableSection.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') +' Search Box', 'searchbox-icon');
         this.tableSection.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') +' Search Results', 'searchlist-icon');
       }, this);
+
+      this.bindDraggable();
     },
 
     renderContextEntityElements: function() {
@@ -249,6 +268,8 @@ define([
           this.contextEntitySection.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon');
         }, this);
       }, this);
+
+      this.bindDraggable();
     },
 
     renderRelatedField: function(fieldModel, tableModel, section) {
@@ -267,14 +288,13 @@ define([
 
     dropped: function(e, ui) {
       var left = 0; var top = 1;
+      var itemGallery = document.getElementById('item-gallery');
 
       if(e.type != 'click') {
         left = this.findLeft(e, ui);
         top  = this.findTop(e, ui);
+        if(util.isRectangleIntersectElement(e.pageX, e.pageY, e.pageX+80, e.pageY+80, itemGallery)) return;
       }
-
-      var itemGallery = document.getElementById('item-gallery');
-      if(util.isRectangleIntersectElement(e.pageX, e.pageY, e.pageX+80, e.pageY+80, itemGallery)) return;
 
       var layout = { top: top, left: left };
 
