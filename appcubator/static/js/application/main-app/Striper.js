@@ -42,13 +42,13 @@ define([
              data: this.form.serialize(),
              success: function(data, statusStr, xhr) {
               form.remove();
-              self.showSuccessModal();
+              self.showPlanSuccessModal();
             }
         });
       },
 
-      showSuccessModal: function() {
-        var modal = new SimpleModalView({txt: "Thank you for the payment"});
+      showPlanSuccessModal: function() {
+        var modal = new SimpleModalView({txt: "Thank you! Your preferences have been saved."});
         modal.onClose = function() {
           window.location = '/app/';
         }
