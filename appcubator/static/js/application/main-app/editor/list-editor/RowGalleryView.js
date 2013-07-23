@@ -1,8 +1,11 @@
 define([
+  'editor/EditorGallerySectionView',
   'editor/EditorGalleryView',
   'collections/ElementCollection'
 ],
-function(EditorGalleryView, ElementCollection) {
+function(EditorGallerySectionView,
+         EditorGalleryView,
+         ElementCollection) {
 
   var RowGalleryView = EditorGalleryView.extend({
     el       : null,
@@ -40,10 +43,14 @@ function(EditorGalleryView, ElementCollection) {
       // Context Entity Elements and Update Forms
       var self = this;
       this.allList = this.el;
-
+      this.allList.innerHTML = '';
       this.addInfoItem('Drop elements to the green area to edit one row of the list.');
+
+      this.sections = [];
       this.renderUIElementList();
       this.renderContextEntity();
+      this.displayAllSections();
+
       this.el.innerHTML += '<div class="bottom-arrow"></div>';
 
       this.$el.find('li:not(.ui-draggable)').draggable({
@@ -58,13 +65,25 @@ function(EditorGalleryView, ElementCollection) {
 
       //this.$el.find('li').on('click', self.dropped);
       this.switchEditingModeOn();
+
+      this.expandAllSections();
       return this;
+    },
+
+    displayAllSections: function() {
+      _.each(this.sections, function(section) {
+        this.allList.appendChild(section.el);
+      }, this);
     },
 
     renderUIElementList: function() {
       var self = this;
       var collection = new ElementCollection(defaultElements);
-      var uiElemsSection = this.addSection('Design Elements');
+      this.uiElemsSection = new EditorGallerySectionView();
+      this.uiElemsSection.name = 'Design Elements';
+      this.uiElemsSection.render();
+      this.subviews.push(this.uiElemsSection);
+      this.sections.push(this.uiElemsSection);
 
       collection.each(function(element) {
         if(element.get('className') == "buttons" ||
@@ -74,25 +93,28 @@ function(EditorGalleryView, ElementCollection) {
            element.get('className') == "imageslider" ||
            element.get('className') == "facebookshare") return;
 
-          self.appendUIElement(element, uiElemsSection);
-      });
+          this.appendUIElement(element);
+      }, this);
     },
 
     renderContextEntity : function() {
       // Form, Data elements belonging to the entity
       var self = this;
 
-      var contextEntitySection = this.addSection('Row Context Data');
+      this.contextEntitySection = new EditorGallerySectionView();
+      this.contextEntitySection.name = 'Row Context Data';
+      this.contextEntitySection.render();
+      this.subviews.push(this.contextEntitySection);
+      this.sections.push(this.contextEntitySection);
 
       var entityName = self.entity.get('name');
       var entityId = self.entity.cid;
 
-      this.entity.get('fields').each(function(field) {
+      this.entity.getFieldsColl().each(function(field) {
         if(field.isRelatedField()) return self.renderRelatedField(field, contextEntitySection);
-
-        this.addHalfWidthItem('context-field-'+ entityId+'-' + field.cid,
+        this.contextEntitySection.addHalfWidthItem('context-field-'+ entityId+'-' + field.cid,
                               'context-entity', entityName+' '+field.get('name'),
-                              'plus-icon', contextEntitySection);
+                              'plus-icon');
       }, this);
     },
 
@@ -103,10 +125,10 @@ function(EditorGalleryView, ElementCollection) {
       var tableModel = v1State.getTableModelWithName(fieldModel.get('entity_name'));
 
       _(tableModel.getNormalFields()).each(function(fieldM) {
-        this.addHalfWidthItem( 'context-field-'+entityId+'-'+tableModel.cid+'-'+fieldModel.cid+'-'+fieldM.cid,
+        this.contextEntitySection.addHalfWidthItem( 'context-field-'+entityId+'-'+tableModel.cid+'-'+fieldModel.cid+'-'+fieldM.cid,
                                'context-nested-entity',
                                 entityName+' '+fieldModel.get('name')+'.'+fieldM.get('name'),
-                               'plus-icon', contextEntitySection);
+                               'plus-icon');
       }, this);
     },
 
@@ -167,18 +189,14 @@ function(EditorGalleryView, ElementCollection) {
       var icon = 'icon '+  elementModel.get('className');
       var text = elementModel.get('text');
 
-      var li = this.addHalfWidthItem(id, className, text, icon, container);
+      var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
     },
 
-    addSection: function(name) {
-      var sectionName = name.replace(/ /g,'-');
-      var target = '.'+sectionName;
-      var header = this.addHeaderItem(name, target);
-      var section = document.createElement('section');
-      section.className = sectionName;
-      $(this.allList).append(section);
-      return section;
-    },
+    expandAllSections: function() {
+      _(this.sections).each(function(section) {
+        section.expand();
+      });
+    }
   });
 
   return RowGalleryView;

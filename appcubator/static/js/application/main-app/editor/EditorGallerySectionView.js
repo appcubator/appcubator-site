@@ -72,6 +72,7 @@ function(
     },
 
     toggle: function() {
+      alert("DERP");
       if(this.isExpanded) this.hide();
       else this.expand();
     },
