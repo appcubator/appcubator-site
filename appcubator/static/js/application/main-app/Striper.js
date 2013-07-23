@@ -1,9 +1,10 @@
 define([
+  'mixins/SimpleModalView',
   'jquery',
   'backbone',
   'https://checkout.stripe.com/v2/checkout.js'
 ],
-  function() {
+  function(SimpleModalView) {
 
     var Striper = Backbone.View.extend({
 
@@ -32,6 +33,7 @@ define([
       },
 
       token: function(result) {
+        var self = this;
         var form = this.form
         this.form.find("input[name=stripe_token]").val(result.id);
         $.ajax({
@@ -40,9 +42,16 @@ define([
              data: this.form.serialize(),
              success: function(data, statusStr, xhr) {
               form.remove();
-              $('.page').append(data.html);
+              self.showSuccessModal();
             }
         });
+      },
+
+      showSuccessModal: function() {
+        var modal = new SimpleModalView({txt: "Thank you for the payment"});
+        modal.onClose = function() {
+          window.location = '/app/';
+        }
       }
     });
 

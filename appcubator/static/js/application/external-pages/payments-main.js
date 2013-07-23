@@ -7,7 +7,10 @@ require.config({
     "app" : "../main-app",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
     "underscore" : "../../libs/underscore-amd/underscore",
-    "backbone" : "../../libs/backbone-amd/backbone"
+    "backbone" : "../../libs/backbone-amd/backbone",
+    "mixins" : "../../mixins",
+    "jquery-ui" : "../../libs/jquery-ui/jquery-ui"
+
   },
 
   shim: {
