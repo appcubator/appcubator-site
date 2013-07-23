@@ -1,4 +1,4 @@
-{% with request.user.customer.current_subscription as subscription %}
+{% with user.customer.current_subscription as subscription %}
     {% if subscription %}
         {% if subscription.status == "active" %}
             <div class="alert alert-info">
@@ -6,7 +6,7 @@
             </div>
         {% else %}
             {% if subscription.status == "trialing" %}
-                {% if request.user.customer.plan and request.user.customer.card_kind %}
+                {% if user.customer.plan and user.customer.card_kind %}
                     <div class="alert alert-info">
                         Your free trial will end in <strong>{{ subscription.current_period_end|timeuntil }}</strong> after which you commence a <strong>{{ subscription.plan_display }}</strong> plan.
                     </div>

@@ -7,12 +7,12 @@
     {% if error %}
         <div class="alert alert-error">{{ error }}</div>
     {% endif %}
-    <form action="{% url 'payments_ajax_subscribe' %}" class="form ajax"  data-stripe-key="{{ STRIPE_PUBLIC_KEY }}" data-replace-closest=".subscribe-form" method="POST">
+    <form action="{% url 'payments_ajax_subscribe' %}" class="form ajax"  data-stripe-key="{{ STRIPE_PUBLIC_KEY }}" data-replace-closest=".subscribe-form" id="subscribe-form" method="POST">
         {% csrf_token %}
         {{ form }}
         <input name="stripe_token" type="hidden" />
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Subscribe</button>
+            <button type="submit" id="payment-btn" class="btn btn-blue">Subscribe</button>
         </div>
     </form>
 </div>

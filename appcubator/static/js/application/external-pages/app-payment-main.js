@@ -35,7 +35,10 @@ function(Striper) {
 
   var PaymentsMain = function() {
     var striper = new Striper();
-    striper.bindPayment('.btn.btn-primary', 'subscribe-form');
+    striper.bindPayment('#payment-btn', 'subscribe-form');
+    striper.onSuccess = function() {
+      window.location = "/app/" + appId + "/info/";
+    };
   };
 
   $(document).ready(new PaymentsMain());
