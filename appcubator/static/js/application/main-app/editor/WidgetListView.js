@@ -37,6 +37,8 @@ function( WidgetContainerView,
       WidgetContainerView.__super__.initialize.call(this, widgetModel);
       _.bindAll(this);
 
+      this.subviews = [];
+
       this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.placeWidget, true, true);
       this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.renderShadowElements);
       this.model.get('data').get('container_info').get('row').get('uielements').bind("remove", this.renderShadowElements);
