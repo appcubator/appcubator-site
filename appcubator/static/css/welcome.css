@@ -139,6 +139,20 @@ a.welcome-icon:visited,a.welcome-icon:hover {
   opacity: 1;
 }
 
+.twitter-chooser a .info-text {
+  left: 460px;
+}
+.twitter-chooser a:hover .info-text {
+  display: block;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
+  opacity: 1;
+}
+
+.twitter-chooser a {
+  width: 150px;
+}
+
 .notice {
   display: none;
 }
