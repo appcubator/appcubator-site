@@ -99,16 +99,14 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       this.renderFields();
     },
 
-    newFormField: function(e) {
-      if(e.target.checked) {
+    newFormField: function(val) {
 
-        if(e.target.id == "tablefield-new") {
+        if(val == "new") {
           this.renderNewFieldForm();
           return;
         }
 
-        var cid = e.target.id.replace('tablefield-', '');
-        var fieldModel = this.entityModel.get('fields').get(cid);
+        var fieldModel = this.entityModel.get('fields').get(val);
         var formFieldModel = new FormFieldModel({field_name: fieldModel.get('name'),
                                                  displayType: "single-line-text",
                                                  type: fieldModel.get('type'),
@@ -132,11 +130,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
         var ind = this.model.get('fields').models.length - 1;
         this.model.get('fields').add(formFieldModel, {at: ind});
-      }
-      else {
-        var removedField = this.model.get('fields').where({ name : e.target.value});
-        this.model.get('fields').remove(removedField);
-      }
+
     },
 
     fieldAdded: function(fieldModel) {
@@ -308,16 +302,15 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
 
     clickedAddField: function(e) {
-      this.selected = null;
-      this.$el.find('.details-panel').html('Select the corresponding field.');
-      var html = '<ul class="table-fields-list" class="new-field-tablefields">';
-      this.entityModel.get('fields').each(function(field) {
-        if(field.isRelatedField()) return;
-        html += '<li><input type="radio" class="new-field-option" name="tablefields" id="tablefield-'+field.cid+'"><label for="tablefield-'+field.cid+'">'+ field.get('name') +'</label></li>';
-      });
-      html += '<li><input type="radio" class="new-field-option" name="tablefields" id="tablefield-new"><label for="tablefield-new">Create A New Field</label></li>';
-      html += '</ul>';
-      this.$el.find('.details-panel').append(html);
+      var list = this.entityModel.get('fields').filter(function(field) { return !field.isRelatedField(); });
+      list = _(list).map(function(field) { return { name: field.get('name'), val: field.cid }; });
+      list.push({ name: "Create A New Field", val:"new"});
+
+      this.fieldPicker = new Backbone.PickOneView(list, false);
+      this.$el.find('.details-panel').html('');
+      this.$el.find('.details-panel').append(this.fieldPicker.render().el);
+
+      this.fieldPicker.on('submit', this.newFormField);
     },
 
     renderNewFieldForm: function() {

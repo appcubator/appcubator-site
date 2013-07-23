@@ -5,7 +5,7 @@ import base_views, views, theme_views, log_views, test_views, admin_views
 import django.views.generic.base
 from django.views.generic.simple import direct_to_template
 from registration.backends.default.views import RegistrationView, ActivationView
-
+from payments import views as payment_views
 # from django.contrib import admin
 # admin.autodiscover()
 
@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^send_invitation/(\d+)/$',    base_views.send_invitation_to_customer),
     url(r'^backend/',                   include('app_builder.urls')),
     url(r'^payments/',                  include('appcubator.payments.urls')),
+    url(r'^app/(\d+)/payment/$',       payment_views.app_payment)
 )
 
 urlpatterns += patterns('appcubator.log_views',

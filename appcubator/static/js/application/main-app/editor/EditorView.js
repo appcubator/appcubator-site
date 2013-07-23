@@ -52,7 +52,6 @@ function( PageModel,
 
     initialize: function(options) {
       _.bindAll(this);
-
       if(options && options.pageId) pageId = options.pageId;
 
       util.loadCSS('jquery-ui');

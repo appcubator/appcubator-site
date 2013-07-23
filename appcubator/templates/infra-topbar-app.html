@@ -9,15 +9,20 @@
       <div class="nav-collapse collapse navbar-responsive-collapse">
         <ul class="nav">
           <li class="brand">
-            <h1 class="name"><a id="main-menu" href="/app/{{ app.id }}/">Appcubator</a></h1><ul class="navigation-menu">
-              <li class="menu-app-entities">
-                <a id="entities-menu" href="/app/{{ app.id }}/tables/"><span class="entities-icon"></span><span>Tables</span></a>
-              </li><li class="menu-app-themes">
-                <a id="gallery-menu" href="/app/{{ app.id }}/gallery/"><span class="gallery-icon"></span><span>Themes</span></a>
-              </li><li class="menu-app-pages">
+            <h1 class="name">
+              <a id="main-menu" href="/app/{{ app.id }}/">
+                <span class="brand">Appcubator</span>
+                <span class="title">Overview</span>
+              </a>
+            </h1><ul class="navigation-menu">
+              <li class="menu-app-pages">
                 <a id="pages-menu" href="/app/{{ app.id }}/pages/"><span class="pages-icon"></span><span>Pages</span></a>
+              </li><li class="menu-app-entities">
+                <a id="entities-menu" href="/app/{{ app.id }}/tables/"><span class="entities-icon"></span><span>Tables</span></a>
               </li><li class="menu-app-emails">
                 <a id="emails-menu" href="/app/{{ app.id }}/emails/"><span class="emails-icon"></span><span>Emails</span></a>
+              </li><li class="menu-app-themes">
+                <a id="gallery-menu" href="/app/{{ app.id }}/gallery/"><span class="gallery-icon"></span><span>Themes</span></a>
               </li>
             </ul>
           </li>

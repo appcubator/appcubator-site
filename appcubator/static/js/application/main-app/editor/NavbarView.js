@@ -9,7 +9,7 @@ function(NavbarEditorView) {
     type: null,
     events: {
       'mousedown' : 'showNavbarEditor',
-      'mousedown .edit-navbar' : 'showNavbarEditor'
+      'mousedown #edit-navbar' : 'showNavbarEditor'
     },
 
     initialize: function(navbarModel) {

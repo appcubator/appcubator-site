@@ -1,8 +1,8 @@
 {% extends "infra-html.html" %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/reset.css">
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-website.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/reset.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-website.css">
 {% endblock %}
 
 {% block topbar %}
@@ -12,11 +12,9 @@
 {% block page %}
 <div class="container hoff5">
   <div class="row hoff1">
-    <div class="span11 offsetr1">
-    </div>
-    <div class="span36">
-      <h3 class="">Profile Info</h3><br  />
-      <form action="/account/" method="POST">
+    <div class="span48 pane">
+      <form action="/account/" method="POST" class="span22 offset2 hoff2">
+        <h3 class="">Profile Info</h3><br  />
         <h4 class="">Name</h4><br  />
         <input type="text" class="span8 hoff1" placeholder="First Name" name="first_name" value="{{ user.first_name }}">
         <input type="text" class="span8 hoff1" placeholder="Last Name" name="last_name" value="{{ user.last_name }}"><br  />
@@ -27,8 +25,7 @@
         <div class="span16 form-error field-name-email"></div><br />
         <input type="submit" class="btn" value="Save Changes">
       </form>
-      <hr>
-      <div class="hoff1">
+      <div class="hoff1" class="span20 offset2">
         <h3 class="">Password</h3><br  />
         <form action="/account/set_password/" method="POST">
           <input type="password" class="span16 hoff1" name="password1" placeholder="New Password..."><br />
@@ -39,53 +36,58 @@
         </form>
       </div>
     </div>
-  </div>
+    <div class="span48 pane hoff4">
+      {% include "payment/_subscription_status.html" %}
+      <h2>Payment History</h2>
+      <p class="lead">Your transaction history</p>
+      {% if user.customer.invoices.all %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Transaction ID</th>
+            <th>Date</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        {% for invoice in user.customer.invoices.all %}
+        <tr>
+          <td class="fixed">#{{ invoice.id }}</td>
+          <td>{{ invoice.date|date:"M d" }}</td>
+        </td>
+        <td>
+          {% if invoice.paid and invoice.total > 0 %}
+          <p>
+            <span class="label label-success">Paid</span> ${{ invoice.total|floatformat:"2" }}
+          </p>
+          {% endif %}
+
+          {% if invoice.paid and invoice.total < 0 %}
+          <p>
+            <span class="label label-success">Credit</span> ${{ invoice.total|floatformat:"2" }}
+          </p>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p>You have not made any payments yet.</p>
+    {% endif %}
+    </div>
+    <div class="span48 pane hoff4">
+      {% include "payment/_subscription_status.html" %}
+      <h2>Payment Settings</h2>
+      {% include "payment/_subscription_status.html" %}
+      {% include "payment/_change_card_form.html" %}      
+    </div>
+</div>
 </div>
 {% endblock %}
 
 {% block js %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery/jquery.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/libs/bootstrap/bootstrap.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/libs/underscore-amd/underscore.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/libs/util/iui-nonamd.js"></script>
+<script data-main="{{ STATIC_URL }}js/application/external-pages/account-settings" src="{{ STATIC_URL }}js/libs/require.js"></script>
 
 <script type="text/javascript">
 // ajaxify forms @ksikka
-$(document).ready(function() {
-  $('form').each(function(ind, node) {
-
-    $(node).submit(function(e) {
-      var self = this;
-      var ajax_info = {
-        type : $(node).attr('method'),
-        url  : $(node).attr('action'),
-        data : $(node).serialize(),
-        success : function(data, statusStr, xhr) {
-          if (typeof(data.redirect_to) !== 'undefined') {
-            location.href = data.redirect_to;
-          } else {
-            _.each(data, function(val, key, ind) {
-              if(key==='__all__') {
-                $(self).find('.form-error.field-all').html(val.join('<br />'));
-              } else {
-                $(self).find('.form-error.field-name-'+key).html(val.join('<br />'));
-              }
-            });
-          }
-        }
-      };
-      $.ajax(ajax_info);
-      $(self).find('.form-error').html("");
-
-      return false;
-
-    });
-
-  });
-
-
-
-
-});
 </script>
 {% endblock %}

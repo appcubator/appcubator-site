@@ -91,7 +91,7 @@ background-color: rgba(255,255,255,0.4);
   overflow: visible;
 }
 
-.elements-list ul {
+.elements-list ul.list {
   width: 100%;
   height: 100%;
   list-style: none;
@@ -463,6 +463,11 @@ background-color: rgba(255,255,255,0.4);
 
 .elements-list ul li .create-form-icon {
   background-image: url('../img/page_layout_icon&48.png');
+}
+
+.half-width  .create-form-icon  {
+  background-size: auto 100%;
+  background-position: center;
 }
 
 .elements-list ul li .list-icon {
