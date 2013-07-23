@@ -10,10 +10,10 @@
     {% if error %}
         <div class="alert alert-error">{{ error }}</div>
     {% endif %}
-    <form class="form ajax" data-replace-closest=".cancel-subscription" action="{% url 'payments_ajax_cancel' %}" method="POST">
+    <form class="form ajax" data-replace-closest=".cancel-subscription" action="{% url 'payments_ajax_cancel' %}" method="POST" id="cancel-form">
         {% csrf_token %}
         <div class="actions">
-            <button type="submit" class="btn btn-mini btn-danger">Cancel</button>
+            <button type="submit" class="btn btn-mini btn-danger" id="cancel-btn">Cancel</button>
         </div>
     </form>
     {% endif %}

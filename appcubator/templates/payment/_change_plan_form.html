@@ -13,9 +13,9 @@
     {% if error %}
         <div class="alert alert-error">{{ error }}</div>
     {% endif %}
-    <form action="{% url 'payments_ajax_change_plan' %}" method="POST" class="form-inline ajax" data-replace-closest=".change-subscription">
+    <form action="{% url 'payments_ajax_change_plan' %}" method="POST" class="form-inline ajax" data-replace-closest=".change-subscription" id="change-plan-form">
         {% csrf_token %}
         {{ form|as_bootstrap }}
-        <button type="submit" class="btn btn-primary">Change</button>
+        <button type="submit" id="change-plan-btn" class="btn btn-primary">Change</button>
     </form>
 </div>

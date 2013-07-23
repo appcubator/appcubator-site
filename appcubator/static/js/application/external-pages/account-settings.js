@@ -39,6 +39,9 @@ function(Striper) {
     striper.onSuccess = function() {
       window.location = "/account/";
     };
+
+    striper.bindPayment('#change-plan-btn','change-plan-form');
+    striper.bindPayment('#cancel-btn','cancel-form');
   };
 
   $(document).ready(new PaymentsMain());
