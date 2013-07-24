@@ -107,6 +107,7 @@
   padding: 20px;
   min-height: 100%;
   height: auto;
+  margin-bottom: 60px;
 }
 
 .text-cont h1, .text-cont h2 {
@@ -436,26 +437,32 @@ ul.text-cont li.answer-slide:hover {
 }
 
 .tutorial-view .feedback-form {
-  margin-left: 100px;
   display: inline-block;
-  width: 460px;
   font-size: 14px;
+  width: 640px;
+  margin-top: 15px;
 }
 
 .feedback-form p {
-  margin-bottom: 30px;
+  border-top: 1px solid #ddd;
+  padding: 10px 0 0;
   font-size: 16px;
   line-height: 20px;
+}
+
+.feedback-form p:last-child {
+  border-bottom: 1px solid #ddd;
 }
 
 .feedback-form textarea {
   display: inline-block;
   width: 460px;
+  height: 100px;
+  margin-top: 5px !important;
 }
 
 .feedback-form .btn {
-  margin-top: 20px;
-  float: right;
+  margin: 20px 0;
 }
 
 .bottom-arrow {
