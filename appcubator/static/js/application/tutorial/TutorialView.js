@@ -17,7 +17,8 @@ function() {
       "click #tutorial-menu-list li" : "clickedMenuItem",
       "submit .tutorial-q-form" : "submittedQuestion",
       "click .answer-slide"     : "showAnswer",
-      "submit #feedback-form"   : "submittedFeedback"
+      "submit #feedback-form"   : "submittedFeedback",
+      "mouseover .bottom-arrow" : "slideDown"
     },
 
     initialize: function(directory) {
@@ -322,6 +323,12 @@ function() {
       else {
         $('.bottom-arrow').fadeIn();
       }
+    },
+
+    slideDown: function() {
+      this.$el.find('#tutorial-menu-list').animate({
+        scrollTop: '32'
+      }, 200);
     }
 
   });
