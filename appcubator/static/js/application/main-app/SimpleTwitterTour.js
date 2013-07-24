@@ -57,7 +57,7 @@ define([
       at: "left center",
       url: '/',
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       },
       nextButton: true,
       highlightTarget: true
@@ -78,7 +78,7 @@ define([
       },
       teardown: function() {
         v1.unbind('pages-loaded');
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
     {
@@ -91,11 +91,14 @@ define([
         return { target: $('.page-view').first() };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
+    /*
+     * Add New Page
+     */
     {
-      content: '<h3>A New Page</h3><p>Let\'s create a new page and call it Tweet Feed</p><p><em>Click <strong>this big button</strong></em></p>',
+      content: '<h3>A New Page</h3><p>Let\'s create a new page.</p><p><em>Click this button and enter <strong>Tweet Feed</strong></em></p>',
       my: "left top",
       at: "right top",
       url: '/pages/',
@@ -113,10 +116,13 @@ define([
       },
       teardown: function() {
         v1State.get('pages').unbind('add', feedPageAdded);
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
-      {
+    /*
+     * Click Edit Page
+     */
+    {
       content: '<h3>Editing a Page</h3><p>Here you can edit your home page. <p><em>Click <strong>Edit Page</strong></em></p>',
       my: "left top",
       at: "right top",
@@ -127,134 +133,157 @@ define([
       },
       teardown: function() {
         v1.unbind('editor-loaded');
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
-
-{
-  content: '<h3>Welcome to Editor</h3><p>What you see is what you get. You can drag elements onto the page and play around with them.</p>',
-  my: "right top",
-  at: "left bottom",
-  nextButton: true,
-  url: '/editor/0/',
-  setup: function(tour, options) {
-    return { target: $('.search-panel').first() };
-  },
-  teardown: function() {
-    v1State.attributes.walkthrough++;
-  }
-},
-{
-  content: '<h3>Saving Your Progress</h3><p>Save early, save often. We periodically autosave for you.</p>',
-  my: "top center",
-  at: "bottom center",
-  nextButton: true,
-  url: '/editor/0/',
-  setup: function(tour, options) {
-    $('#item-gallery').animate({
-      scrollTop: $("#type-headerTexts").offset().top - 110
-    }, 200);
-    v1.save();
-    return { target: $('#editor-save') };
-  },
-  teardown: function() {
-    v1State.attributes.walkthrough++;
-  }
-},
-{
-  content: '<h3>Drag\'n\'Drop</h3><p><em>Drag this header element to the page.</em></p>',
-  my: "right center",
-  at: "left center",
-  url: '/editor/0/',
-  setup: function(tour, options) {
-
-    headerDragged = function(uielem) {
-      if(uielem.get('data').get('tagName') == "h1") {
-        tour.next();
+    /*
+     * Welcome to Editor
+     */
+    {
+      content: '<h3>Welcome to Editor</h3><p>What you see is what you get. You can drag elements onto the page and play around with them.</p>',
+      my: "right top",
+      at: "left bottom",
+      nextButton: true,
+      url: '/editor/0/',
+      setup: function(tour, options) {
+        return { target: $('.search-panel').first() };
+      },
+      teardown: function() {
+        v1State.attributes.simpleWalkthrough++;
       }
-    };
-    v1State.getCurrentPage().get('uielements').bind('add', headerDragged);
-
-    return { target: $('#type-headerTexts') };
-  },
-  teardown: function() {
-    v1State.getCurrentPage().get('uielements').unbind('add', headerDragged);
-    v1State.attributes.walkthrough++;
-  }
-},
-{
-  content: '<h3>Editing Elements</h3><p>Click the text to edit it.<br>Then, click "Pick Style" to choose your style.</p>',
-  my: "left center",
-  at: "right center",
-  nextButton: true,
-  url: '/editor/0/',
-  setup: function(tour, options) {
-    $('#item-gallery').animate({
-      scrollTop: $("#entity-user-facebook").offset().top - 110
-    }, 200);
-
-    return { target: $('.pick-style') };
-  },
-  teardown: function() {
-    v1State.attributes.walkthrough++;
-  }
-},
-{
-  content: '<h3>Time to get some users!</h3><p><em>Drag this facebook login button onto the page.</em></p>',
-  my: "right center",
-  at: "left center",
-  url: '/editor/0/',
-  setup: function(tour, options) {
-    facebookDropped = function(uielem) {
-      if(uielem.get('data').get('action') == "thirdpartylogin") {
-        tour.loginButton = uielem;
-        tour.next();
+    },
+    /*
+     * Save Early, ssave often
+     */
+    {
+      content: '<h3>Saving Your Progress</h3><p>Save early, save often. We periodically autosave for you.</p>',
+      my: "top center",
+      at: "bottom center",
+      nextButton: true,
+      url: '/editor/0/',
+      setup: function(tour, options) {
+        $('#item-gallery').animate({
+          scrollTop: $("#type-headerTexts").offset().top - 110
+        }, 200);
+        v1.save();
+        return { target: $('#editor-save') };
+      },
+      teardown: function() {
+        v1State.attributes.simpleWalkthrough++;
       }
-    };
-    v1State.getCurrentPage().get('uielements').bind('add', facebookDropped);
+    },
+    /*
+     * Drag header element
+     */
+    {
+      content: '<h3>Drag\'n\'Drop</h3><p><em>Drag this header element to the page.</em></p>',
+      my: "right center",
+      at: "left center",
+      url: '/editor/0/',
+      setup: function(tour, options) {
 
-    return { target: $('#entity-user-facebook') };
-  },
-  teardown: function() {
-    v1State.getCurrentPage().get('uielements').unbind('add', facebookDropped);
-    v1State.attributes.walkthrough++;
-  }
-},
-{
-  content: '<h3>Customizing functionality</h3><p>Some elements, like this Facebook button, can be customized.</p><p><em>Select it and click <strong>Edit Login</strong></em></p>',
-  my: "left center",
-  at: "right center",
-  url: '/editor/0/',
-  setup: function(tour, options) {
-    var elem = $(".facebook-login-btn")[0];
-    $('.edit-login-form-btn').first().on('click', function() {
-          // setTimeout(tour.next, 400);
-          waitUntilAppears('.login-route-editor', tour.next);
-        });
-    return { target: $(elem) };
-  },
-  teardown: function() {
-    v1State.attributes.walkthrough++;
-  }
-},
-{
-  content: '<h3>Customizing functionality</h3><p>Here, you can select where the user goes after login. Please change it to the "Tweet Feed" page.</em></p>',
-  my: "right center",
-  at: "left center",
-  url: '/editor/0/',
-  setup: function(tour, options) {
-    tour.loginButton.get('data').get('loginRoutes').models[0].bind('change', tour.next);
-    return { target: $('.login-route-editor') };
-  },
-  teardown: function(tour, options) {
-    tour.loginButton.get('data').get('loginRoutes').models[0].unbind('change', tour.next);
-    $('.modal-bg').remove();
-    $('.login-route-editor.modal').remove();
-    v1State.attributes.walkthrough++;
-  }
-},
-{
-  content: '<h3>On to the next page!</h3><p>Hover over "Homepage" to see your pages and easily navigate to "Tweet Feed" by clicking on it.</em></p>',
+        headerDragged = function(uielem) {
+          if(uielem.get('data').get('tagName') == "h1") {
+            tour.next();
+          }
+        };
+        v1State.getCurrentPage().get('uielements').bind('add', headerDragged);
+
+        return { target: $('#type-headerTexts') };
+      },
+      teardown: function() {
+        v1State.getCurrentPage().get('uielements').unbind('add', headerDragged);
+        v1State.attributes.simpleWalkthrough++;
+      }
+    },
+    /*
+     * Editing Elements
+     */
+    {
+      content: '<h3>Editing Elements</h3><p>Click the text to edit it.<br>Then, click "Pick Style" to choose your style.</p>',
+      my: "left center",
+      at: "right center",
+      nextButton: true,
+      url: '/editor/0/',
+      setup: function(tour, options) {
+        $('#item-gallery').animate({
+          scrollTop: $("#entity-user-facebook").offset().top - 110
+        }, 200);
+
+        return { target: $('.pick-style') };
+      },
+      teardown: function() {
+        v1State.attributes.simpleWalkthrough++;
+      }
+    },
+    /*
+     * Drag facebook login
+     */
+    {
+      content: '<h3>Time to get some users!</h3><p><em>Drag this facebook login button onto the page.</em></p>',
+      my: "right center",
+      at: "left center",
+      url: '/editor/0/',
+      setup: function(tour, options) {
+        facebookDropped = function(uielem) {
+          if(uielem.get('data').get('action') == "thirdpartylogin") {
+            tour.loginButton = uielem;
+            tour.next();
+          }
+        };
+        v1State.getCurrentPage().get('uielements').bind('add', facebookDropped);
+
+        return { target: $('#entity-user-facebook') };
+      },
+      teardown: function() {
+        v1State.getCurrentPage().get('uielements').unbind('add', facebookDropped);
+        v1State.attributes.simpleWalkthrough++;
+      }
+    },
+    /*
+     * Customize facebook login btn
+     */
+    {
+      content: '<h3>Customizing functionality</h3><p>Some elements, like this Facebook button, can be customized.</p><p><em>Select it and click <strong>Edit Login</strong></em></p>',
+      my: "left center",
+      at: "right center",
+      url: '/editor/0/',
+      setup: function(tour, options) {
+        var elem = $(".facebook-login-btn")[0];
+        $('.edit-login-form-btn').first().on('click', function() {
+              // setTimeout(tour.next, 400);
+              waitUntilAppears('.login-route-editor', tour.next);
+            });
+        return { target: $(elem) };
+      },
+      teardown: function() {
+        v1State.attributes.simpleWalkthrough++;
+      }
+    },
+    /*
+     * change action after login
+     */
+    {
+      content: '<h3>Customizing functionality</h3><p>Here, you can select where the user goes after login. Please change it to the "Tweet Feed" page.</em></p>',
+      my: "right center",
+      at: "left center",
+      url: '/editor/0/',
+      setup: function(tour, options) {
+        tour.loginButton.get('data').get('loginRoutes').models[0].bind('change', tour.next);
+        return { target: $('.login-route-editor') };
+      },
+      teardown: function(tour, options) {
+        tour.loginButton.get('data').get('loginRoutes').models[0].unbind('change', tour.next);
+        $('.modal-bg').remove();
+        $('.login-route-editor.modal').remove();
+        v1State.attributes.simpleWalkthrough++;
+      }
+    },
+    /*
+     * Change to Tweet Feed Page
+     */
+    {
+      content: '<h3>On to the next page!</h3><p>Hover over "Homepage" to see your pages and easily navigate to "Tweet Feed" by clicking on it.</em></p>',
       // TODO make the gradients more noticable
       my: "left top",
       at: "right center",
@@ -267,10 +296,13 @@ define([
         return {target:  $('.menu-button.pages')};
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
         v1.unbind('editor-loaded');
       }
     },
+    /*
+     * Tweet feed page
+     */
     {
       content: '<h3>Tweet Feed Page</h3><p>On this page, we will a “Create Form" and put a Twitter feed. Let\'s start with the form first.</p>',
       my: "top center",
@@ -278,17 +310,15 @@ define([
       nextButton: true,
       url: '/editor/1/',
       setup: function(tour, options) {
-
-        // $('#item-gallery').animate({
-        //   scrollTop: $(".entity-list").offset().top - 90
-        // }, 200);
-
         return { target: $('.menu-button.pages') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
+    /*
+     * Add Tweet Create form
+     */
     {
       content: '<h3>Create Form</h3><p><em>Drag this form on to the left side of the page.</em></p>',
       my: "right center",
@@ -306,11 +336,14 @@ define([
       },
       teardown: function() {
         v1State.getCurrentPage().unbind('creat-form-dropped', checkForNewOption);
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
+    /*
+     *
+     */
     {
-      content: '<h3>What to create?</h3><p><em>Drag this form on to the left side of the page.</em></p>',
+      content: '<h3>What to create?</h3><p><em>Select <strong>Add a new entity</strong>, and enter <strong>Tweet</strong></em></p>',
       my: "right center",
       at: "left center",
       url: '/editor/1/',
@@ -330,11 +363,11 @@ define([
       },
       teardown: function() {
         v1State.get('tables').bind('add', tweetTableCreated);
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
     {
-      content: '<h3>Editing the Form</h3><p>We have this blank form now and we need to add some fields to it. Click on <em>Edit Login</em> button.</p>',
+      content: '<h3>Editing the Form</h3><p>We have this blank form now and we need to add some fields to it. Click on <em>Edit Form</em> button.</p>',
       my: "top center",
       at: "bottom center",
       url: '/editor/1/',
@@ -346,7 +379,7 @@ define([
         return { target: $('.form-editor-btn') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
     {
@@ -359,7 +392,7 @@ define([
         return { target: $('.form-editor-title') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
     {
@@ -374,7 +407,7 @@ define([
         return { target: $('.btn.add-field-button') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
     {
@@ -389,7 +422,7 @@ define([
         return { target: $('#option-0') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
     {
@@ -402,7 +435,7 @@ define([
         return { target: $('.new-field-form') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
     {
@@ -411,18 +444,43 @@ define([
       at: "top right",
       url: '/editor/1/',
       setup: function(tour, options) {
+        $('#item-gallery').animate({
+          scrollTop: $(".entity-list").offset().top - 90
+        }, 200);
         $('.btn.done-btn').one('click', tour.next);
         return { target: $('.btn.done-btn')};
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
-    //new-option
+    /*
+     * Creating a List
+     */
+    {
+      content: '<h3>Twitter Feed</h3><p><em>Drag a <strong>Tweet List</strong> onto the page.</em></p>',
+      my: "right center",
+      at: "left center",
+      url: '/editor/1/',
+      setup: function(tour, options) {
+        draggedTweetList = function(uielem) {
+          if(uielem.get('type') == "loop") {
+            tour.pageLoop = uielem;
+            waitUntilAppears('.edit-row-btn', tour.next);
+          }
+        };
+        v1State.getCurrentPage().get('uielements').bind('add', draggedTweetList);
+        return { target: $('.entity-list') };
+      },
+      teardown: function() {
+        v1State.getCurrentPage().get('uielements').unbind('add', draggedTweetList);
+        v1State.attributes.simpleWalkthrough++;
+      }
+    },
     {
       content: '<h3>About this "list"</h3><p>"Edit Row" allows you to edit each row\'s appearance and content.<br>"Edit Query" allows you to filter and sort the Tweets.</p><p><em>Click on "Edit Row"</em></p>',
-      my: "bottom center",
-      at: "top center",
+      my: "top center",
+      at: "bottom center",
       url: '/editor/1/',
       setup: function(tour, options) {
 
@@ -432,10 +490,10 @@ define([
           }, 300);
         });
 
-        return { target: $('.edit-row-btn') };
+        return { target: $('#widget-editor') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
     {
@@ -449,11 +507,11 @@ define([
         return { target: $('.highlighted').first() };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
     {
-      content: '<h3>Dragging Tweet Stuff</h3><p><em>Drag "Tweet.Owner.username" into the green row.</em></p>',
+      content: '<h3>Editing Row Content</h3><p><em>Drag a header element into the green row.</em></p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,
@@ -470,18 +528,18 @@ define([
         };
 
         tour.pageLoop.get('data').get('container_info').get('row').get('uielements').bind('add', tweetStuffDragged);
-        return { target: $('.context-nested-entity', '.row-elements-list') };
+        return { target: $('.row-elements-list') };
       },
       teardown: function(tour, options) {
         tour.pageLoop.get('data').get('container_info').get('row').get('uielements').unbind('add', tweetStuffDragged);
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
     {
       // TODO see how this looks and make shorter if necessary
       content: '<h3>Cool!</h3><p>You successfully made a Twitter feed. You can make things look a little nicer if you want: resize things in the row, pick styles for the elements.</p><p><em>When done, Click "Done Editing" to switch off editing mode.</em></p>',
-      my: "top center",
-      at: "bottom center",
+      my: "right center",
+      at: "left center",
       url: '/editor/1/',
       setup: function(tour, options) {
         tour.pageLoop.bind('deselected', function() {
@@ -494,26 +552,7 @@ define([
       },
       teardown: function(tour, options) {
         tour.pageLoop.unbind('deselected');
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
-      content: '<h3>Time to Create Some Tweets</h3><p>We have a Twitter feed now, but how will users Tweet? Please drag a Create Form onto the page.</p>',
-      my: "top center",
-      at: "bottom center",
-      url: '/editor/1/',
-      setup: function(tour, options) {
-        createFormDragged = function(uielem) {
-          if(uielem.hasForm()) {
-            tour.next();
-          }
-        };
-        v1State.getCurrentPage().get('uielements').bind('add', createFormDragged);
-        return { target: $('.entity-create-form') };
-      },
-      teardown: function() {
-        v1State.getCurrentPage().get('uielements').unbind('add', createFormDragged);
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
       }
     },
     // TODO associate the Tweet with the user in the modal
@@ -527,14 +566,14 @@ define([
         return { target: $('.save-run-group') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.attributes.simpleWalkthrough++;
         //last step done, delete walkthrough attribute
-        delete v1State.attributes.walkthrough;
+        delete v1State.attributes.simpleWalkthrough;
       }
     }
     ];
 
-    var ind = v1State.get('walkthrough');
+    var ind = v1State.get('simpleWalkthrough');
     ind--;
     var currentSteps = steps.slice(ind);
     var quickTour = new Tourist.Tour({
