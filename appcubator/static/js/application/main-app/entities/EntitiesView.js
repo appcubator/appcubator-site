@@ -7,7 +7,8 @@ define([
   'app/entities/TablesView',
   'app/entities/CreateRelationView',
   'app/entities/RelationsView',
-  'mixins/ErrorDialogueView'
+  'mixins/ErrorDialogueView',
+  'util'
 ],
 
 function(TableCollection,
@@ -75,8 +76,8 @@ function(TableCollection,
       },
 
       createUserRole: function(val) {
-
-        var name = val;
+        //force user role names to be singular
+        var name = util.singularize(val);;
 
         var elem = new UserTableModel({
           name: name
@@ -101,7 +102,8 @@ function(TableCollection,
 
 
       createTable: function(val) {
-          var name = val;
+          //force table names to be singular
+          var name = util.singularize(val);
 
           var elem = new TableModel({
             name: name,
