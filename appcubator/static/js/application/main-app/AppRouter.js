@@ -275,7 +275,6 @@ define([
 
 		showTutorial: function(dir) {
 			var inp = (dir) ? [dir] : this.tutorialDirectory;
-			console.log(this.tutorialDirectory);
 			tutorial = new TutorialView(inp);
 		},
 

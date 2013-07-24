@@ -142,7 +142,7 @@ function() {
           self.showSlide(obj, addr);
         });
 
-        $(this.mainDiv).delay(240).animate({
+        $(this.mainDiv).delay(240).scrollTop(0).animate({
           top: "3%",
           opacity: "1"
         });
@@ -165,7 +165,7 @@ function() {
     showSlide: function(obj, addr) {
       var header = '<header><h1>'+ obj.title + '</h1></header>';
       var content = '<div class="text-cont">' + util.getHTML(obj.view) +'</div>';
-      var footer = '<footer><a class="prev btn pull-left" href="#">Prev</a><a class="next btn pull-right" href="#">Next</a></footer>';
+      var footer = '<footer><a class="prev btn pull-left" href="#">&laquo; Prev</a><a class="next btn pull-right" href="#">Next &raquo;</a></footer>';
       $('.tutorial-content').html(header + content + footer);
       //util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
     },
