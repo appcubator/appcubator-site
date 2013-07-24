@@ -19,14 +19,13 @@ function(AppInfoModel,
     isMobile: false,
     lazy: {},
 
-    initialize: function(appState) {
-      if(!appState) return;
+    initialize: function(aState) {
+      if(!aState) return;
 
-      this.set('info', new AppInfoModel(appState.info));
-      this.set('users', new UserRolesCollection(appState.users));
-      this.set('tables', new TableCollection(appState.tables));
-      this.set('emails', new EmailCollection(appState.emails));
-      this.set('pages', new PageCollection(appState.pages));
+      this.set('info', new AppInfoModel(aState.info));
+      this.set('users', new UserRolesCollection(aState.users));
+      this.set('tables', new TableCollection(aState.tables));
+      this.set('emails', new EmailCollection(aState.emails));
     },
 
     getCurrentPage: function() {
@@ -77,7 +76,7 @@ function(AppInfoModel,
       json.info = json.info.toJSON();
       json.users = json.users.toJSON();
       json.tables = json.tables.toJSON();
-      json.pages = json.pages.toJSON();
+      json.pages = this.get('pages').toJSON();
       //if(json.mobilePages) json.mobilePages = json.mobilePages.toJSON();
       if(json.mobilePages) json.mobilePages = [];
       json.emails = json.emails.toJSON();
