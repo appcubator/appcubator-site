@@ -26,6 +26,7 @@ function(AppInfoModel,
       this.set('users', new UserRolesCollection(appState.users||[]));
       this.set('tables', new TableCollection(appState.tables||[]));
       this.set('emails', new EmailCollection(appState.emails || []));
+      this.set('pages', new PageCollection(appState.pages || []));
     },
 
     getCurrentPage: function() {
