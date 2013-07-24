@@ -264,7 +264,7 @@ define([
         }
         this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon');
         tableM.getFieldsColl().each(function(field) {
-          if(field.isRelatedField()) return this.renderRelatedField(field, tableM, contextEntitySection);
+          if(field.isRelatedField()) return this.renderRelatedField(field, tableM);
           this.contextEntitySection.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon');
         }, this);
       }, this);
