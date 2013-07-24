@@ -161,8 +161,10 @@ function(WidgetEditorView,
 
     close: function() {
       window.removeEventListener('mouseup', this.mouseup);
-      document.getElementById('page').removeEventListener('mousedown', this.mousedown);
-      document.getElementById('page').removeEventListener('mousemove', this.mousemove);
+      if(document.getElementById('page')) {
+        document.getElementById('page').removeEventListener('mousedown', this.mousedown);
+        document.getElementById('page').removeEventListener('mousemove', this.mousemove);
+      }
       Backbone.View.prototype.close.call(this);
     }
 

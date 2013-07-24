@@ -187,23 +187,7 @@ input[type="checkbox"] {
   text-align: center;
 }
 
-.tbl-wrapper .done-btn,
-.new-table-form .done-btn {
-  font-size: 10px;
-  background-color: #036a6e;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  line-height: 24px;
-  height: 24px;
-  margin-top: 10px;
-  text-align: center;
-  padding: 0;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-top: 10px;
-  cursor: pointer;
-}
+
 .tbl-wrapper .done-btn {
   font-size: 10px;
   margin-top: 5px;

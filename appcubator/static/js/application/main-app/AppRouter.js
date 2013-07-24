@@ -17,7 +17,7 @@ define([
           DeployView,
           SimpleDialogueView) {
 
-		var AppRouter = Backbone.Router.extend({
+	var AppRouter = Backbone.Router.extend({
 
 		routes: {
 			"app/:appid/info/(:tutorial/)"     : "info",
@@ -66,7 +66,7 @@ define([
 		info: function(appId, tutorial) {
 			var self = this;
 			require(['app/AppInfoView'], function(InfoView){
-				self.tutorialDirectory = [2];
+				self.tutorialDirectory = [7];
 				self.changePage(InfoView, {}, function() {
 					$('.menu-app-info').addClass('active');
 					if(tutorial) {
@@ -80,7 +80,7 @@ define([
 		tables: function(appId, tutorial) {
 			var self = this;
 			require(['app/entities/EntitiesView'], function(EntitiesView){
-				self.tutorialDirectory = [3];
+				self.tutorialDirectory = [1];
 				self.changePage(EntitiesView, {}, function() {
 					self.trigger('entities-loaded');
 					$('.menu-app-entities').addClass('active');
@@ -109,10 +109,9 @@ define([
 
 		pages: function(appId, tutorial) {
 			var self = this;
-			self.tutorialDirectory = [4];
+			self.tutorialDirectory = [2];
 			require(['app/pages/PagesView'], function(PagesView){
 				$('.page').fadeIn();
-				self.tutorialDirectory = [5];
 				self.changePage(PagesView, {}, function() {
 					self.trigger('pages-loaded');
 					$('.menu-app-pages').addClass('active');
@@ -126,13 +125,10 @@ define([
 
 		editor: function(appId, pageId) {
 			var self = this;
-			self.tutorialDirectory = [4];
+			self.tutorialDirectory = [3];
 			require(['editor/EditorView'], function(EditorView){
-
 				$('.page').fadeOut();
-				self.tutorialDirectory = [5];
-
-				if(AppRouter.view) AppRouter.view.remove();
+				if(AppRouter.view) AppRouter.view.close();
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
 				$(document.body).append(cleanDiv);
@@ -150,9 +146,9 @@ define([
 		mobileEditor: function(appId, pageId) {
 			var self = this;
 			$('.page').fadeOut();
-			self.tutorialDirectory = [5];
+			self.tutorialDirectory = [3];
 			require(['m-editor/MobileEditorView'], function(MobileEditorView){
-				if(AppRouter.view) AppRouter.view.remove();
+				if(AppRouter.view) AppRouter.view.close();
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
 				$(document.body).append(cleanDiv);
@@ -180,7 +176,9 @@ define([
 			if(AppRouter.view) AppRouter.view.close();
 			var cleanDiv = document.createElement('div');
 			cleanDiv.className = "clean-div";
-			$('#main-container').append(cleanDiv);
+			var mainContainer = document.getElementById('main-container');
+			mainContainer.appendChild(cleanDiv);
+
 			AppRouter.view = new newView(viewOptions);
 			AppRouter.view.setElement(cleanDiv).render();
 			$('.active').removeClass('active');
@@ -245,21 +243,26 @@ define([
 					is_deployed = 1;
 					self.trigger('deploy');
 					$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
-					setTimeout(function(){
+					var timer = setTimeout(function(){
 						$('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
+						clearTimeout(timer);
 					},1000);
 
 					$('.menu-button.save').html("<span>Saved</span>").fadeIn();
-                    if(typeof(callback) !== 'undefined'&&typeof(callback) == 'function')
-                        { callback(); }
-                    setTimeout(function(){
-                        $el.html("<span>Save</span>").fadeIn();
-                    },3000);
+
+          if(typeof(callback) !== 'undefined'&&typeof(callback) == 'function') {
+						callback();
+          }
+          var timer2 = setTimeout(function(){
+            $el.html("<span>Save</span>").fadeIn();
+            clearTimeout(timer2);
+          }, 3000);
 
 				},
 				error: function(data) {
+					var self = this;
 					if(data.responseText == "ok") return;
-					self.errorFlag = true;
+					this.errorFlag = true;
 					var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
 					if(DEBUG) {
 						content = { text: data.responseText };
@@ -277,7 +280,7 @@ define([
 		},
 
 		showTutorial: function(dir) {
-			var inp = (dir) ? [dir] : self.tutorialDirectory;
+			var inp = (dir) ? [dir] : this.tutorialDirectory;
 			tutorial = new TutorialView(inp);
 		},
 

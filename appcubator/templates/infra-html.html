@@ -18,6 +18,7 @@
 <link rel="stylesheet/less" href="{{ STATIC_URL }}css/style.less">
 <script>
 less = {
+  env: 'development',
   dumpLineNumbers: 'all'
 };
 </script>
@@ -26,7 +27,7 @@ less = {
 less.watch();
 </script>
 {% else %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+<!--<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">-->
 {% endif %}
 
 

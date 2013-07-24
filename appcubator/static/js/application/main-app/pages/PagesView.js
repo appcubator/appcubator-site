@@ -130,6 +130,11 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         this.mobileListView.appendChild(mobilePageView.render().el);
         this.subviews.push(mobilePageView);
       }
+    },
+
+    close: function() {
+      $( "#list-pages" ).sortable("destroy");
+      PagesView.__super__.close.call(this);
     }
 
   });

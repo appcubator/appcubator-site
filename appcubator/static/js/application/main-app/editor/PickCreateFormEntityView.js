@@ -32,7 +32,7 @@ function() {
       this.pickOneFromList = new Backbone.PickOneView(list, true, "Add a new entity.");
       this.el.innerHTML += "What should this form create?";
       this.el.appendChild(this.pickOneFromList.render().el);
-
+      this.pickOneFromList.el.style.marginTop = '14px';
       this.pickOneFromList.on('submit', this.picked);
       this.pickOneFromList.on('answer', this.newAnswer);
       return this;
