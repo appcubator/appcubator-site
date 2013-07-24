@@ -29,32 +29,39 @@ define([
 
       this.model = widgetModel;
 
-      this.model.get('data').bind("change:type", this.changedType, this);
-      this.model.get('data').bind("change:class_name", this.changedType, this);
-      this.model.bind("remove", this.close, this);
+      this.listenTo(this.model.get('data'), "change:type", this.changedType, this);
+      this.listenTo(this.model.get('data'), "change:class_name", this.changedType, this);
+      this.listenTo(this.model, "remove", this.close, this);
 
-      this.model.get('layout').bind("change:width", this.changedWidth, this);
-      this.model.get('layout').bind("change:height", this.changedHeight, this);
-      this.model.get('layout').bind("change:top", this.changedTop, this);
-      this.model.get('layout').bind("change:left", this.changedLeft, this);
-      this.model.get('layout').bind("change:isFull", this.toggleFull, this);
-      this.model.get('layout').bind("change:alignment", this.changedAlignment, this);
-      this.model.get('layout').bind("change", this.changedPadding, this);
+      this.listenTo( this.model.get('layout'), "change:width",this.changedWidth, this);
+      this.listenTo( this.model.get('layout'), "change:height", this.changedHeight, this);
+      this.listenTo( this.model.get('layout'), "change:top", this.changedTop, this);
+      this.listenTo( this.model.get('layout'), "change:left", this.changedLeft, this);
+      this.listenTo( this.model.get('layout'), "change:isFull", this.toggleFull, this);
+      this.listenTo( this.model.get('layout'), "change:alignment", this.changedAlignment, this);
+      this.listenTo( this.model.get('layout'), "change", this.changedPadding, this);
 
-      this.model.get('data').bind("change:content", this.changedText, this);
-      this.model.get('data').get('content_attribs').bind("change:src", this.changedSource, this);
-      this.model.get('data').get('content_attribs').bind("change:value", this.changedValue, this);
-      this.model.get('data').get('content_attribs').bind("change:style", this.changedStyle, this);
+      this.listenTo(this.model.get('data'), "change:content", this.changedText, this);
 
-      this.model.bind("startEditing", this.switchEditModeOn, this);
-      this.model.bind("deselected",   function() {
+      this.listenTo(this.model.get('data').get('content_attribs'), "change:src", this.changedSource, this);
+      this.listenTo(this.model.get('data').get('content_attribs'), "change:value", this.changedValue, this);
+      this.listenTo(this.model.get('data').get('content_attribs'), "change:style", this.changedStyle, this);
+
+      this.listenTo(this.model, "startEditing", this.switchEditModeOn, this);
+      this.listenTo(this.model, "deselected",   function() {
         this.model.trigger('stopEditing');
       }, this);
-      this.model.bind('stopEditing', this.switchEditModeOff);
+      this.listenTo(this.model, "stopEditing", this.switchEditModeOff);
 
       keyDispatcher.bind('meta+return', function() {
         self.model.trigger('stopEditing');
       });
+
+
+      console.log("YOLO");
+        console.log(this.cid);
+
+
     },
 
     setFreeMovement: function () {
@@ -300,8 +307,9 @@ define([
     },
 
     close: function () {
-      this.remove();
-      Backbone.View.prototype.close.call(this);
+      //Backbone.View.prototype.close.call(this);
+      console.log("removed");
+      WidgetView.__super__.remove.call(this);
     }
 
   });

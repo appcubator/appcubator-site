@@ -17,7 +17,7 @@ define([
           DeployView,
           SimpleDialogueView) {
 
-		var AppRouter = Backbone.Router.extend({
+	var AppRouter = Backbone.Router.extend({
 
 		routes: {
 			"app/:appid/info/(:tutorial/)"     : "info",
@@ -132,7 +132,7 @@ define([
 				$('.page').fadeOut();
 				self.tutorialDirectory = [5];
 
-				if(AppRouter.view) AppRouter.view.remove();
+				if(AppRouter.view) AppRouter.view.close();
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
 				$(document.body).append(cleanDiv);
@@ -152,7 +152,7 @@ define([
 			$('.page').fadeOut();
 			self.tutorialDirectory = [5];
 			require(['m-editor/MobileEditorView'], function(MobileEditorView){
-				if(AppRouter.view) AppRouter.view.remove();
+				if(AppRouter.view) AppRouter.view.close();
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
 				$(document.body).append(cleanDiv);
@@ -180,7 +180,9 @@ define([
 			if(AppRouter.view) AppRouter.view.close();
 			var cleanDiv = document.createElement('div');
 			cleanDiv.className = "clean-div";
-			$('#main-container').append(cleanDiv);
+			var mainContainer = document.getElementById('main-container');
+			mainContainer.appendChild(cleanDiv);
+
 			AppRouter.view = new newView(viewOptions);
 			AppRouter.view.setElement(cleanDiv).render();
 			$('.active').removeClass('active');
@@ -245,16 +247,20 @@ define([
 					is_deployed = 1;
 					self.trigger('deploy');
 					$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
-					setTimeout(function(){
+					var timer = setTimeout(function(){
 						$('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
+						clearTimeout(timer);
 					},1000);
 
 					$('.menu-button.save').html("<span>Saved</span>").fadeIn();
-                    if(typeof(callback) !== 'undefined'&&typeof(callback) == 'function')
-                        { callback(); }
-                    setTimeout(function(){
-                        $el.html("<span>Save</span>").fadeIn();
-                    },3000);
+
+          if(typeof(callback) !== 'undefined'&&typeof(callback) == 'function') {
+						callback();
+          }
+          var timer2 = setTimeout(function(){
+            $el.html("<span>Save</span>").fadeIn();
+            clearTimeout(timer2);
+          }, 3000);
 
 				},
 				error: function(data) {

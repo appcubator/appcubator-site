@@ -52,6 +52,8 @@ function( PageModel,
 
     initialize: function(options) {
       _.bindAll(this);
+      this.subviews = [];
+
       if(options && options.pageId) pageId = options.pageId;
 
       util.loadCSS('jquery-ui');
@@ -81,6 +83,7 @@ function( PageModel,
 
       this.title = "Editor";
 
+      console.log(this.navbar.cid);
       this.subviews = [ this.marqueeView,
                         this.galleryEditor,
                         this.widgetsManager,
@@ -186,6 +189,7 @@ function( PageModel,
     },
 
     remove: function() {
+      console.log("removing");
       window.removeEventListener('resize', this.setupPageWrapper);
       Backbone.View.prototype.remove.call(this);
     }

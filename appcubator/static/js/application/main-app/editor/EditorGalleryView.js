@@ -29,7 +29,7 @@ define([
       events : {
         'mouseover .bottom-arrow' : 'slideDown',
         'mousemove .bottom-arrow' : 'slideDown',
-        'focus input.search'           : 'expandAllSections',
+        'focus input.search'      : 'expandAllSections'
       },
 
       initialize   : function(widgetsCollection) {
@@ -250,6 +250,7 @@ define([
       else {
         this.contextEntitySection.render();
       }
+
 
       _(pageContext).each(function(tableName) {
         var tableM = v1State.getTableModelWithName(tableName);
