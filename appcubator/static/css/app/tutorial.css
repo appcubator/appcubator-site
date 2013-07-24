@@ -471,5 +471,5 @@ ul.text-cont li.answer-slide:hover {
   height: 20px;
   width: 220px;
   background-color: transparent;
-  background-image: url(../img/fade-down.png);
+  background-image: url(/static/img/fade-down.png);
 }
