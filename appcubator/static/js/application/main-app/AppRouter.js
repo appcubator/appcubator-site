@@ -132,7 +132,10 @@ define([
 				$('.page').fadeOut();
 				self.tutorialDirectory = [5];
 
-				if(AppRouter.view) AppRouter.view.close();
+				if(AppRouter.view) {
+					console.log("CLOOOSED");
+					AppRouter.view.close();
+				}
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
 				$(document.body).append(cleanDiv);
