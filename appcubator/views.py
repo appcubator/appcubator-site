@@ -8,7 +8,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import Http404
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, RouteLog, Customer, ExtraUserData, AnalyticsStore
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, Customer, ExtraUserData, AnalyticsStore
 from email.sendgrid_email import send_email
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
@@ -58,8 +58,7 @@ def app_noob_page(request):
     user_id = request.user.id
     page_name = 'welcome'
     app_id = 0
-    log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
-    log.full_clean()
+    log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "welcome"})
     log.save()
 
     themes = UITheme.get_web_themes()
@@ -86,10 +85,8 @@ def app_new(request, is_racoon = False):
     if request.method == 'GET':
         #log url route
         user_id = request.user.id
-        page_name = 'newapp'
         app_id = 0
-        log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
-        log.full_clean()
+        log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "newapp"})
         log.save()
         return render(request, 'apps-new.html')
     elif request.method == 'POST':
@@ -116,9 +113,7 @@ def app_new(request, is_racoon = False):
 def app_new_racoon(request, app_id):
     #log url route
     user_id = request.user.id
-    page_name = 'racoon'
-    log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
-    log.full_clean()
+    log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "racoon"})
     log.save()
     page_context = {}
     app = get_object_or_404(App, id=app_id)
@@ -138,8 +133,10 @@ def app_new_walkthrough(request, walkthrough):
     s['name'] = a.name
     if walkthrough is 'simpleWalkthrough':
         s['simpleWalkthrough'] = 1
+        page_name = "twitterwalkthrough-simple"
     else:
         s['walkthrough'] = 1
+        page_name = "twitterwalkthrough"
     a.state = s
     try:
         a.full_clean()
@@ -149,9 +146,7 @@ def app_new_walkthrough(request, walkthrough):
 
     #log url route
     user_id = request.user.id
-    page_name = 'twitterwalkthrough'
-    log = RouteLog(user_id=user_id, page_name=page_name, app_id=a.id)
-    log.full_clean()
+    log = LogAnything(user_id=user_id, app_id=a.id, name="visited page", data={"page_name": page_name})
     log.save()
 
     return redirect(app_page, a.id)

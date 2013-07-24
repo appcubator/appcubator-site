@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
     url(r'^showhn/$',                   base_views.showhnpage),
     url(r'^aboutus/$',                  base_views.aboutus),
+    url(r'^changelog/$',                base_views.changelog),
     # Signup, Login and invites
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^login/$',                    django.contrib.auth.views.login, {'template_name' : 'registration/login_page.html'}),
@@ -33,8 +34,6 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('appcubator.log_views',
-    url(r'^app/(\d+)/log/routes/$', 'log_route'),
-    url(r'^log/slide/$', 'log_slide'),
     url(r'^log/feedback/$', 'log_feedback'),
     url(r'^log/anything/$', 'log_anything'),
 )

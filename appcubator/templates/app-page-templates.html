@@ -16,7 +16,7 @@
     </div>
     <div class="span58 hoff2">
       <div class="row hoff1 analytics" style="position: relative">
-        <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75);">
+        <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75); padding-top: 10%">
           <h2>Deploy your app to see your site analytics!</h2>
         </div>
         <h3>Analytics</h3>
@@ -55,7 +55,7 @@
             {% if user.customer.current_subscription.plan == "monthly" %}
             <a href="/account">You can see your finance history from the account setting page.</a>
             {% else %}
-            <a class="btn" rel="external" href="/app/{{ app.pk }}/payment/">Switch to Pro for only $35 p/month</a>\
+            <a class="btn" rel="external" href="/app/{{ app.pk }}/payment/">Switch to Pro for only $35 p/month</a>
             {% endif %}
           </div>
         </div>
