@@ -57,11 +57,6 @@ define([
         self.model.trigger('stopEditing');
       });
 
-
-      console.log("YOLO");
-        console.log(this.cid);
-
-
     },
 
     setFreeMovement: function () {
@@ -307,8 +302,6 @@ define([
     },
 
     close: function () {
-      //Backbone.View.prototype.close.call(this);
-      console.log("removed");
       WidgetView.__super__.remove.call(this);
     }
 

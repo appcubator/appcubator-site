@@ -105,7 +105,6 @@ function( WidgetView,
     },
 
     close: function() {
-      console.log("CLOSED YO");
       this.widgetSelectorView.close();
       Backbone.View.prototype.remove.call(this);
     }

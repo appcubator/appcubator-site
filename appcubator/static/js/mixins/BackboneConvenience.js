@@ -4,7 +4,6 @@ define([
 ],
 
 function(Backbone) {
-  console.log("CONVENIENT");
 
   Backbone.View.prototype.close = function(){
 
@@ -15,7 +14,6 @@ function(Backbone) {
 
     if(this.subviews) {
       _(this.subviews).each(function(subview) {
-        console.log("View:" + subview.cid);
         subview.close();
       });
       this.subviews = null;

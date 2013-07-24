@@ -22,7 +22,6 @@ function(AppInfoModel,
     initialize: function(aState) {
       if(!aState) return;
 
-      console.log(aState.info);
       this.set('info', new AppInfoModel(aState.info));
       this.set('users', new UserRolesCollection(aState.users));
       this.set('tables', new TableCollection(aState.tables));

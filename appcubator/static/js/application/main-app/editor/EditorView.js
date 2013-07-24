@@ -83,7 +83,6 @@ function( PageModel,
 
       this.title = "Editor";
 
-      console.log(this.navbar.cid);
       this.subviews = [ this.marqueeView,
                         this.galleryEditor,
                         this.widgetsManager,
@@ -96,8 +95,6 @@ function( PageModel,
     render: function() {
 
       if(!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
-
-      console.log(this.el.innerHTML);
 
       this.toolBar.setElement(document.getElementById('tool-bar')).render();
       this.marqueeView.render();
@@ -190,7 +187,6 @@ function( PageModel,
     },
 
     remove: function() {
-      console.log("removing");
       window.removeEventListener('resize', this.setupPageWrapper);
       Backbone.View.prototype.remove.call(this);
     }
