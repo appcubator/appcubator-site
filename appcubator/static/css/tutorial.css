@@ -50,7 +50,7 @@
   width: 100%;
   padding: 15px;
   height: 60px;
-  border-bottom: 1px solid #f6f6f6;
+  border-bottom: 1px solid #e3e3e3;
   margin: 0;
 
   background-image: -webkit-linear-gradient(#ffffff,#f5f5f5);
@@ -67,12 +67,12 @@
 }
 
 .tutorial-content > footer {
-  //position: absolute;
-  bottom: 0;
-  width: 100%;
+  position: fixed;
+  bottom: 3%;
+  width: 960px;
   padding: 15px;
   height: 60px;
-  border-bottom: 1px solid #f6f6f6;
+  border-top: 1px solid #e3e3e3;
   margin: 0;
 
   background-image: -webkit-linear-gradient(#f5f5f5,#e3e3e3);
