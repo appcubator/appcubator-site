@@ -14,6 +14,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     className: 'login-route-editor modal',
     padding: 0,
     css: 'form-editor',
+    doneButton: true,
 
     events: {
       'change .redirect-page' : 'redirectChanged'

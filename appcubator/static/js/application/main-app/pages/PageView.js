@@ -25,8 +25,9 @@ function(UrlView, SimpleModalView) {
       this.model = pageModel;
       this.ind = ind;
       this.isMobile = isMobile;
-
       this.urlModel = pageModel.get('url');
+      this.listenTo(this.model, 'remove', this.close, this);
+
     },
 
     render: function() {

@@ -83,7 +83,7 @@ function(EmailCollection, EmailModel, EmailView) {
       // add username
       var uservar = document.createElement('li');
       uservar.setAttribute('draggable', 'true');
-      uservar.innerHTML = 'user';
+      uservar.innerHTML = 'username';
       list.append(uservar);
 
       var emailvar = document.createElement('li');

@@ -104,7 +104,6 @@ function (AppModel,
     v1State.lazySet('pages', new PageCollection(appState.pages||[]));
     v1State.lazySet('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
 
-
     g_guides = {};
     keyDispatcher  = new KeyDispatcher();
     mouseDispatcher  = new MouseDispatcher();
@@ -117,6 +116,17 @@ function (AppModel,
 
     if(v1State.has('walkthrough')) {
       require(['app/TwitterTour'], function(QuickTour) {
+        if(!QuickTour.currentStep) return;
+        var url = QuickTour.currentStep.url;
+        v1.navigate('app/'+appId+url, {trigger: true});
+        setTimeout(function() {
+          QuickTour.start();
+        }, 1000);
+      });
+    }
+
+    if(v1State.has('simpleWalkthrough')) {
+      require(['app/SimpleTwitterTour'], function(QuickTour) {
         if(!QuickTour.currentStep) return;
         var url = QuickTour.currentStep.url;
         v1.navigate('app/'+appId+url, {trigger: true});
