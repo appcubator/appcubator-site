@@ -505,45 +505,6 @@ class DomainRegistration(models.Model):
         self.dns_configured = 1
         self.save()
 
-
-class TutorialLog(models.Model):
-    user = models.ForeignKey(User, related_name="logs")
-    opened_on = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=300, blank=True)
-    directory = models.CharField(max_length=50, blank=True)
-
-    @classmethod
-    def create_log(cls, user, title, directory):
-        log = cls(user=user, title=title, directory=directory)
-        log.save()
-
-    @classmethod
-    def create_feedbacklog(cls, user, message):
-        log = cls(user=user, title=message, directory="feedback")
-        log.save()
-
-    @classmethod
-    def is_donewithfeedback(cls, user):
-        log = cls.objects.filter(user=user, directory="feedback")
-        if len(log) is 0:
-            return False
-        else:
-            return True
-
-    @classmethod
-    def get_percentage(cls, user):
-        log = cls.objects.filter(user=user).exclude(
-            directory='').values("directory").annotate(n=models.Count("pk"))
-        percentage = (len(log) * 100) / 15
-        return percentage
-
-
-class RouteLog(models.Model):
-    user_id = models.IntegerField()
-    opened_on = models.DateTimeField(auto_now_add=True)
-    app_id = models.IntegerField()
-    page_name = models.TextField()
-
 class LogAnything(models.Model):
     app_id = models.IntegerField(null=True)
     user_id = models.IntegerField(null=True)
