@@ -12,7 +12,7 @@
     ],
     "emails": [
         {
-            "content": "Dear {{User.user}},\n\nThanks for signing up!\n\nCheers!",
+            "content": "Dear {{User.username}},\n\nThanks for signing up!\n\nCheers!",
             "name": "Welcome",
             "subject": "Thanks for Signing up!"
         }
