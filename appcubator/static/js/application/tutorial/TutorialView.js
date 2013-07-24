@@ -17,26 +17,15 @@ function() {
       "click #tutorial-menu-list li" : "clickedMenuItem",
       "submit .tutorial-q-form" : "submittedQuestion",
       "click .answer-slide"     : "showAnswer",
+      'click .tutorial-content .prev' : 'prevSlide',
+      'click .tutorial-content .next' : 'nextSlide',
       "submit #feedback-form"   : "submittedFeedback"
     },
 
     initialize: function(directory) {
-      _.bindAll(this, 'render',
-                      'renderLeftMenu',
-                      'renderMainModal',
-                      'parseAnswers',
-                      'appendMenuItem',
-                      'clickedMenuItem',
-                      'chooseSlide',
-                      'selectMenu',
-                      'keyhandler',
-                      'submittedQuestion',
-                      'showQuestionSlide',
-                      'showAnswer',
-                      'submittedFeedback',
-                      'menuScrolled');
+      _.bindAll(this);
 
-      if(directory) this.addr = directory;
+      this.addr = (directory) ? directory : [0];
 
       util.loadCSS(this.css);
       this.render();
@@ -126,8 +115,11 @@ function() {
     },
 
     clickedMenuItem: function(e) {
-      var addr = String(e.target.id).split('-');
-      this.chooseSlide(addr);
+      var addr = (e.target.id).split('-');
+      addr = _(addr).map(function(ind) {
+        return parseInt(ind, 10);
+      });
+      this.chooseSlide(addr, false);
     },
 
     chooseSlide: function(addr, isNew) {
@@ -137,7 +129,6 @@ function() {
       this.selectMenu();
 
       if(!isNew) {
-
         $(this.mainDiv).animate({
           top: "-100%",
           opacity: "0"
@@ -145,28 +136,24 @@ function() {
 
           $(this).css({top: '100%'});
           var obj = TutorialDirectory[addr[0]];
-          if(addr[1]) {
+          if(addr.length == 2) {
             obj = obj.contents[addr[1]];
           }
-
           self.showSlide(obj, addr);
-
         });
 
-        $(this.mainDiv).delay(240).animate({
+        $(this.mainDiv).delay(240).scrollTop(0).animate({
           top: "3%",
           opacity: "1"
         });
       }
       else {
         var obj = TutorialDirectory[addr[0]];
-        if(addr[1]) {
+        if(addr.length == 2) {
           obj = obj.contents[addr[1]];
         }
         this.showSlide(obj, addr);
       }
-
-
     },
 
     selectMenu: function (addr) {
@@ -176,15 +163,17 @@ function() {
     },
 
     showSlide: function(obj, addr) {
-      var title = '<h2>'+ obj.title + '</h2><div class="main-img '+ obj.view +'" style="background-image:url('+ obj.img +')"></div>';
-      $('.tutorial-content').html(title + '<div class="text-cont">' + util.getHTML(obj.view) +'</div>');
-      util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
+      var header = '<header><h1>'+ obj.title + '</h1></header>';
+      var content = '<div class="text-cont">' + util.getHTML(obj.view) +'</div>';
+      var footer = '<footer><a class="prev btn pull-left" href="#">&laquo; Prev</a><a class="next btn pull-right" href="#">Next &raquo;</a></footer>';
+      $('.tutorial-content').html(header + content + footer);
+      //util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
     },
 
     showQuestionSlide: function(question, results) {
       console.log(results);
 
-      var title = '<h2>'+ 'Question' + '</h2><div class="main-img q-mark" style="background-image:url(/static/img/tutorial/large-q-mark.png)">'+ question +'</div>';
+      var title = '<div class="main-img q-mark" style="background-image:url(/static/img/tutorial/large-q-mark.png)">'+ question +'</div>';
       var resultItems = '';
 
       _(results).each(function(result) {
@@ -200,48 +189,63 @@ function() {
       $('.tutorial-content').html(title + '<ul class="text-cont">'+resultItems+'</ul>');
     },
 
-    selectNext: function (obj) {
+    selectNext: function () {
       var self = this;
-      var cur = _.last(self.addr);
-
+      var ind1 = this.addr[0];
+      if(this.addr.length == 2) {
+        var ind2 = this.addr[1];
+      }
       if(self.addr.length == 1) {
-        if(TutorialDirectory[cur].contents) {
-          self.addr = [self.addr[0], 0];
+        if(TutorialDirectory[ind1].contents) {
+          self.addr = [ind1, 0];
         }
-        else if(TutorialDirectory[cur + 1]) {
-          self.addr = [cur +1];
+        else if(TutorialDirectory[ind1 + 1]) {
+          self.addr = [ind1+1];
         }
       }
       else {
-        if(TutorialDirectory[self.addr[0]].contents[self.addr[1] + 1]) {
-          self.addr = [self.addr[0], self.addr[1]+1];
+        if(TutorialDirectory[ind1].contents[ind2 + 1]) {
+          self.addr = [ind1, ind2+1];
         }
-        else if(TutorialDirectory[self.addr[0] + 1]) {
-          self.addr = [self.addr[0] + 1];
+        else if(TutorialDirectory[ind1 + 1]) {
+          self.addr = [ind1 + 1];
         }
       }
-
+      if(this.addr.length == 2) {
+        this.chooseSlide(this.addr, false);
+      }
+      else {
+        this.chooseSlide(this.addr, false);
+      }
     },
 
-    selectPrevious: function (obj) {
+    selectPrevious: function () {
       var self = this;
-      var cur = _.last(self.addr);
-
+      var ind1 = this.addr[0];
+      if(this.addr.length == 2) {
+        var ind2 = this.addr[1];
+      }
       if(self.addr.length == 1) {
-        if(TutorialDirectory[cur-1].contents) {
-          self.addr = [cur-1, (TutorialDirectory[cur-1].contents.length - 1)];
+        if(TutorialDirectory[ind1].contents) {
+          self.addr = [ind1, 0];
         }
-        else if(TutorialDirectory[cur - 1]) {
-          self.addr = [cur - 1];
+        else if(TutorialDirectory[ind1 - 1]) {
+          self.addr = [ind1-1];
         }
       }
       else {
-        if(TutorialDirectory[self.addr[0]].contents[self.addr[1] - 1]) {
-          self.addr = [self.addr[0], self.addr[1] - 1];
+        if(TutorialDirectory[ind1].contents[ind2 - 1]) {
+          self.addr = [ind1, ind2-1];
         }
-        else if(TutorialDirectory[self.addr[0]]) {
-          self.addr = [self.addr[0]];
+        else if(TutorialDirectory[ind1 - 1]) {
+          self.addr = [ind1 - 1];
         }
+      }
+      if(this.addr.length == 2) {
+        this.showSlide(TutorialDirectory[this.addr[0]].contents[this.addr[1]]);
+      }
+      else {
+        this.showSlide(TutorialDirectory[this.addr[0]]);
       }
     },
 
@@ -322,6 +326,16 @@ function() {
       else {
         $('.bottom-arrow').fadeIn();
       }
+    },
+
+    prevSlide: function(e) {
+      e.preventDefault();
+      this.selectPrevious();
+    },
+
+    nextSlide: function(e) {
+      e.preventDefault();
+      this.selectNext();
     }
 
   });
