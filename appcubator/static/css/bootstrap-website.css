@@ -6356,6 +6356,11 @@ color: #fff;
   border-top: 1px solid #ccc;
 }
 
+.bottom-sect .done-btn {
+  height: auto;
+  margin-top: 0;
+}
+
 .modal .q-mark {
   display: inline-block;
   width: 50px;
@@ -6374,3 +6379,23 @@ color: #fff;
 .alert.alert-warning.lead {
   font-size: 16px;
 }
+
+.done-btn {
+font-size: 10px;
+background-color: #036a6e;
+color: #fff;
+border: none;
+border-radius: 12px;
+line-height: 24px;
+height: 24px;
+margin-top: 10px;
+text-align: center;
+padding: 0;
+padding-left: 15px;
+padding-right: 15px;
+margin-top: 10px;
+cursor: pointer;
+vertical-align: top;
+margin-left: 4px;
+}
+

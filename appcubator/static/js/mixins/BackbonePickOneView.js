@@ -67,7 +67,7 @@ function(Backbone) {
 
     showNewOptionBox: function (argument) {
       this.newLabelEl.setAttribute("for", "");
-      this.newLabelEl.innerHTML = '<form id="new-value-form"><input type="text" class="new-value-input" placeholder="Type the new value..."><input type="submit" class="done-btn" value="add"></form>';
+      this.newLabelEl.innerHTML = '<form id="new-value-form"><input type="text" class="new-value-input" placeholder="Type the new value..."><input type="submit" class="done-btn" value="Add"></form>';
       $('.new-value-input').focus();
     },
 

@@ -1,0 +1,69 @@
+{% extends "infra-out-html.html" %}
+
+{% block css %}
+<script type="text/javascript" src="https://platform.linkedin.com/in.js">
+api_key: etouje3xl27v
+scope: r_fullprofile r_emailaddress
+</script>
+<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
+{% endblock %}
+{% block page %}
+<div id="fb-root"></div>
+<script>
+</script>
+<style type="text/css">
+
+.change-log {
+list-style:circle;
+}
+
+.change-log li {
+  margin-bottom: 16px;
+  margin-left: 20px;
+}
+
+.change-log li strong {
+  display: block;
+}
+</style>
+{% include "website-leftpanel.html" %}
+
+<div class="sliding-panel">
+  <div class="slide-aboutus">
+    <h3>Change Log</h3>
+    <ul class="change-log" style="">
+      <li><strong>Upgrade from Django 1.4 to 1.5</strong>
+      We updated the generated apps from 1.4 to 1.5 so you can take advantage of the latest and greatest that django has to offer.</li>
+
+      <li><strong>Change to our user system</strong>
+      Previously, we generated apps with 1 User model and 1 Userprofile model, and linked them with a one to one relationship. With 1.5, we’re using a unified user model.  Now it’s substantially easier to alter the User model, and import/export user data.</li>
+
+      <li><strong>New login and signup forms</strong>
+      Previously, the generated apps shipped with a username login/signup system by default. We’ve made it possible for people to sign in with their username or email. We simplified the signup form to have only email, name, and password, making it easier for people to sign up for your apps.
+      Note:
+      If you had a login/signup form on your page, you should delete it and drag a new one onto the page from the gallery pane on the right of the editor. Then you will see the new version of the forms.</li>
+
+      <li><strong>Added “Purple Theme”</strong>
+      This new theme features a modern look, with a textured background and sans serif fonts.</li>
+
+      <li><strong>Improved user edit forms</strong>
+      Previously, user edit forms only allowed user to edit additional fields that you added to the user model. Now, users can also edit their name, email, username, and all their other fields. This is useful for creating account settings pages and edit user profile pages.</li>
+
+      <li><strong>Switched from sqlite to MySQL</strong>
+      Previously, generated apps ran with sqlite as the database backend. Due to its limited ability to alter its schema, we switched to MySQL. Now, when you add or remove fields and tables, schema migrations automatically work correctly.</li>
+
+      <li><strong>Improved downloadable code</strong>
+      Previously, our downloaded code was missing a few requirements, and was hard to install. We fixed our requirements file and are working on a better README. Reach out to us if you want us to guide you through the process of running the downloaded code on your computer.</li>
+    </ul>
+  </div>
+  <div class="footer">
+   <span>Appcubator © 2013</span> • <a href="/aboutus">About Us</a> • <a href="/termsofservice">Privacy</a>
+ </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" data-main="{{ STATIC_URL }}js/application/external-pages/website-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+{% endblock %}

@@ -241,6 +241,7 @@ h3.edit-url {
   background-color: rgba(30, 30, 30, 0.8);
   padding: 6px;
   font-weight: bold;
+  margin-left: 10px;
   border-radius: 4px;
 }
 
@@ -354,7 +355,7 @@ h3.edit-url {
 .padding.tb {
   background-image: url('../img/tb-padding.png');
   background-repeat: no-repeat;
-
+  padding: 0;
   -webkit-background-size: auto 50%;
   -moz-background-size: auto 50%;
   background-size: auto 50%;
@@ -364,7 +365,7 @@ h3.edit-url {
 .padding.lr {
   background-image: url('../img/lr-padding.png');
   background-repeat: no-repeat;
-
+  padding: 0;
   -webkit-background-size: auto 50%;
   -moz-background-size: auto 50%;
   background-size: auto 50%;
