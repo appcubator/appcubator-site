@@ -24,6 +24,9 @@ function(SimpleModalView) {
       this.el.innerHTML = _.template(AnalyticsTemplates.main_stats, {});
       if(!window.is_deployed) {
         $('.analytics .coming-soon-overlay').show();
+        $('.total-users', this.el)[0].innerHTML = "?";
+        $('.total-page-views', this.el)[0].innerHTML = "?";
+        $('.total-active-users', this.el)[0].innerHTML = "?";
       }
       this.fetchInfo();
       return this;
