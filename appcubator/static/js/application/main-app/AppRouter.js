@@ -66,7 +66,7 @@ define([
 		info: function(appId, tutorial) {
 			var self = this;
 			require(['app/AppInfoView'], function(InfoView){
-				self.tutorialDirectory = [2];
+				self.tutorialDirectory = [7];
 				self.changePage(InfoView, {}, function() {
 					$('.menu-app-info').addClass('active');
 					if(tutorial) {
@@ -109,10 +109,9 @@ define([
 
 		pages: function(appId, tutorial) {
 			var self = this;
-			self.tutorialDirectory = [4];
+			self.tutorialDirectory = [2];
 			require(['app/pages/PagesView'], function(PagesView){
 				$('.page').fadeIn();
-				self.tutorialDirectory = [5];
 				self.changePage(PagesView, {}, function() {
 					self.trigger('pages-loaded');
 					$('.menu-app-pages').addClass('active');
@@ -126,12 +125,9 @@ define([
 
 		editor: function(appId, pageId) {
 			var self = this;
-			self.tutorialDirectory = [4];
+			self.tutorialDirectory = [3];
 			require(['editor/EditorView'], function(EditorView){
-
 				$('.page').fadeOut();
-				self.tutorialDirectory = [5];
-
 				if(AppRouter.view) AppRouter.view.remove();
 				var cleanDiv = document.createElement('div');
 				cleanDiv.className = "clean-div editor-page";
@@ -150,7 +146,7 @@ define([
 		mobileEditor: function(appId, pageId) {
 			var self = this;
 			$('.page').fadeOut();
-			self.tutorialDirectory = [5];
+			self.tutorialDirectory = [3];
 			require(['m-editor/MobileEditorView'], function(MobileEditorView){
 				if(AppRouter.view) AppRouter.view.remove();
 				var cleanDiv = document.createElement('div');
@@ -258,8 +254,9 @@ define([
 
 				},
 				error: function(data) {
+					var self = this;
 					if(data.responseText == "ok") return;
-					self.errorFlag = true;
+					this.errorFlag = true;
 					var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
 					if(DEBUG) {
 						content = { text: data.responseText };
@@ -277,7 +274,8 @@ define([
 		},
 
 		showTutorial: function(dir) {
-			var inp = (dir) ? [dir] : self.tutorialDirectory;
+			var inp = (dir) ? [dir] : this.tutorialDirectory;
+			console.log(this.tutorialDirectory);
 			tutorial = new TutorialView(inp);
 		},
 
