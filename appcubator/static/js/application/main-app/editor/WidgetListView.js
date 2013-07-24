@@ -39,20 +39,20 @@ function( WidgetContainerView,
 
       this.subviews = [];
 
-      this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.placeWidget, true, true);
-      this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.renderShadowElements);
-      this.model.get('data').get('container_info').get('row').get('uielements').bind("remove", this.renderShadowElements);
-      this.model.bind('deselected', function() {
+      this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "add", this.placeWidget, true, true);
+      this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "add", this.renderShadowElements);
+      this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "remove", this.renderShadowElements);
+      this.listenTo(this.model, 'deselected', function() {
         this.model.trigger('editModeOff');
       }, this);
 
-      this.model.bind('editModeOff', this.switchEditingOff);
-      this.model.get('data').get('container_info').get('row').get('layout').bind('change:height', this.renderShadowElements);
+      this.listenTo(this.model, 'editModeOff', this.switchEditingOff);
+      this.listenTo(this.model.get('data').get('container_info').get('row').get('layout'), 'change:height', this.renderShadowElements);
 
       var action = this.model.get('data').get('container_info').get('action');
 
       this.entityModel = this.model.get('data').get('container_info').get('entity');
-      this.model.bind('highlight', this.highlightFirstRow);
+      this.listenTo(this.model, 'highlight', this.highlightFirstRow);
       this.widgetSelectorView = new ListWidgetSelectorView(this.model.get('data').get('container_info').get('row').get('uielements'), this.el);
       this.subviews.push(this.widgetSelectorView);
     },

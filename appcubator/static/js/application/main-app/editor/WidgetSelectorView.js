@@ -28,7 +28,7 @@ function() {
       var self = this;
 
       this.widgetsCollection    = widgetsCollection;
-      this.widgetsCollection.bind('add', this.bindWidget, true);
+      this.listenTo(this.widgetsCollection, 'add', this.bindWidget, true);
       var WidgetEditorView = require('editor/WidgetEditorView');
       this.widgetEditorView = new WidgetEditorView();
       this.widgetEditorView.isMobile = self.isMobile;
@@ -89,29 +89,29 @@ function() {
     bindWidget: function(widget, isNew) {
       var self = this;
 
-      widget.bind('remove', function() {
+      this.listenTo(widget, 'remove', function() {
         self.deselect();
       });
 
-      widget.bind('hovered', function() {
+      this.listenTo(widget, 'hovered', function() {
         self.widgetHover(widget);
       });
 
-      widget.on('unhovered', function() {
+      this.listenTo(widget, 'unhovered', function() {
         self.widgetUnhover(widget);
       });
 
-      widget.on('selected', function() {
+      this.listenTo(widget, 'selected', function() {
         if(self.selectedEl && widget && self.selectedEl.cid == widget.cid) return;
         self.widgetUnhover(widget);
         self.newSelected(widget);
       });
 
-      widget.on('deselect', function() {
+      this.listenTo(widget, 'deselect', function() {
         self.deselect();
       });
 
-      widget.on('editModeOn', function(position) {
+      this.listenTo(widget, 'editModeOn', function(position) {
         self.unbindAll(position);
       });
 
@@ -126,9 +126,9 @@ function() {
         this.makeSelectDivVisible();
       }, this);
 
-      widget.unbind('hovered');
-      widget.unbind('unhovered');
-      widget.unbind('selected');
+      this.stopListening(widget, 'hovered');
+      this.stopListening(widget, 'unhovered');
+      this.stopListening(widget, 'selected');
       this.makeSelectDivInvisible();
       this.selectDiv.style.left = (((widget.get('layout').get('width') + widget.get('layout').get('left')) * 80) + 4) + 'px';
       if(position == "left") {
@@ -178,12 +178,12 @@ function() {
       }
 
       if(this.selectedEl) {
-        widgetModel.get('layout').unbind('change', self.setLayout);
+        this.stopListening(widgetModel.get('layout'),'change', self.setLayout);
       }
 
       this.deselect();
       this.selectedEl = widgetModel;
-      widgetModel.get('layout').bind('change', function() {
+      this.listenTo(widgetModel.get('layout'), 'change', function() {
         self.setLayout(self.selectDiv, widgetModel);
       });
       this.hideNode(this.hoverDiv);
@@ -344,7 +344,7 @@ function() {
 
       if(this.selectedEl.getContent()) {
         this.selectedEl.trigger('startEditing');
-        this.selectedEl.bind('stopEditing', this.stoppedEditing);
+        this.listenTo(this.selectedEl, 'stopEditing', this.stoppedEditing);
         this.selectDiv.style.height = 0;
         this.selectDiv.style.width = 0;
         var top = ((this.selectedEl.get('layout').get('top') * 15) - 2) + ((this.selectedEl.get('layout').get('height') * 15) + 4);
@@ -380,7 +380,7 @@ function() {
       $(node).hide();
     },
 
-    remove: function() {
+    close: function() {
       keyDispatcher.unbind('down', this.moveSelectedDown);
       keyDispatcher.unbind('up', this.moveSelectedUp);
       keyDispatcher.unbind('left', this.moveSelectedLeft);
@@ -388,7 +388,12 @@ function() {
       keyDispatcher.unbind('backspace', this.deleteSelected);
       this.deselect();
       $('.page.full').off('mousedown', this.clickedPage);
-      Backbone.View.prototype.remove.call(this);
+
+      //$(this.selectDiv).show().resizable("destroy");
+      //$(this.hoverDiv).show().draggable("destroy");
+      //$(this.selectDiv).show().draggable("destroy");
+
+      Backbone.View.prototype.close.call(this);
     }
 
   });

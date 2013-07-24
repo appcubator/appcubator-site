@@ -93,6 +93,11 @@ border-bottom: 1px solid #efefef;
 z-index: 3002;
 }
 
+
+.details-panel .option {
+  padding: 15px;
+}
+
 .panel b {
   font-weight: bold;
 }
