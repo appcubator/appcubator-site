@@ -80,7 +80,7 @@ define([
 		tables: function(appId, tutorial) {
 			var self = this;
 			require(['app/entities/EntitiesView'], function(EntitiesView){
-				self.tutorialDirectory = [3];
+				self.tutorialDirectory = [1];
 				self.changePage(EntitiesView, {}, function() {
 					self.trigger('entities-loaded');
 					$('.menu-app-entities').addClass('active');

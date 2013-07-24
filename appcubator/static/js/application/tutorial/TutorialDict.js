@@ -72,6 +72,16 @@ var TutorialDirectory = [
     ]
   },
   {
+    title : "Themes",
+    view  : "tutorial-themes",
+    contents : null
+  },
+  {
+    title : "Deploy",
+    view  : "tutorial-deploy",
+    contents : null
+  },
+  {
     title : "Emails",
     view  : "tutorial-emails",
     contents : null
