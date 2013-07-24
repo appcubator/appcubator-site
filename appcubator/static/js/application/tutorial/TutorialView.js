@@ -25,7 +25,7 @@ function() {
     initialize: function(directory) {
       _.bindAll(this);
 
-      if(directory) this.addr = directory;
+      this.addr = (directory) ? directory : [0];
 
       util.loadCSS(this.css);
       this.render();
@@ -115,8 +115,11 @@ function() {
     },
 
     clickedMenuItem: function(e) {
-      var addr = String(e.target.id).split('-');
-      this.chooseSlide(addr);
+      var addr = (e.target.id).split('-');
+      addr = _(addr).map(function(ind) {
+        return parseInt(ind, 10);
+      });
+      this.chooseSlide(addr, false);
     },
 
     chooseSlide: function(addr, isNew) {
@@ -126,7 +129,6 @@ function() {
       this.selectMenu();
 
       if(!isNew) {
-
         $(this.mainDiv).animate({
           top: "-100%",
           opacity: "0"
@@ -134,12 +136,10 @@ function() {
 
           $(this).css({top: '100%'});
           var obj = TutorialDirectory[addr[0]];
-          if(addr[1]) {
+          if(addr.length == 2) {
             obj = obj.contents[addr[1]];
           }
-
           self.showSlide(obj, addr);
-
         });
 
         $(this.mainDiv).delay(240).animate({
@@ -149,13 +149,11 @@ function() {
       }
       else {
         var obj = TutorialDirectory[addr[0]];
-        if(addr[1]) {
+        if(addr.length == 2) {
           obj = obj.contents[addr[1]];
         }
         this.showSlide(obj, addr);
       }
-
-
     },
 
     selectMenu: function (addr) {
@@ -191,48 +189,63 @@ function() {
       $('.tutorial-content').html(title + '<ul class="text-cont">'+resultItems+'</ul>');
     },
 
-    selectNext: function (obj) {
+    selectNext: function () {
       var self = this;
-      var cur = _.last(self.addr);
-
+      var ind1 = this.addr[0];
+      if(this.addr.length == 2) {
+        var ind2 = this.addr[1];
+      }
       if(self.addr.length == 1) {
-        if(TutorialDirectory[cur].contents) {
-          self.addr = [self.addr[0], 0];
+        if(TutorialDirectory[ind1].contents) {
+          self.addr = [ind1, 0];
         }
-        else if(TutorialDirectory[cur + 1]) {
-          self.addr = [cur +1];
+        else if(TutorialDirectory[ind1 + 1]) {
+          self.addr = [ind1+1];
         }
       }
       else {
-        if(TutorialDirectory[self.addr[0]].contents[self.addr[1] + 1]) {
-          self.addr = [self.addr[0], self.addr[1]+1];
+        if(TutorialDirectory[ind1].contents[ind2 + 1]) {
+          self.addr = [ind1, ind2+1];
         }
-        else if(TutorialDirectory[self.addr[0] + 1]) {
-          self.addr = [self.addr[0] + 1];
+        else if(TutorialDirectory[ind1 + 1]) {
+          self.addr = [ind1 + 1];
         }
       }
-
+      if(this.addr.length == 2) {
+        this.chooseSlide(this.addr, false);
+      }
+      else {
+        this.chooseSlide(this.addr, false);
+      }
     },
 
-    selectPrevious: function (obj) {
+    selectPrevious: function () {
       var self = this;
-      var cur = _.last(self.addr);
-
+      var ind1 = this.addr[0];
+      if(this.addr.length == 2) {
+        var ind2 = this.addr[1];
+      }
       if(self.addr.length == 1) {
-        if(TutorialDirectory[cur-1].contents) {
-          self.addr = [cur-1, (TutorialDirectory[cur-1].contents.length - 1)];
+        if(TutorialDirectory[ind1].contents) {
+          self.addr = [ind1, 0];
         }
-        else if(TutorialDirectory[cur - 1]) {
-          self.addr = [cur - 1];
+        else if(TutorialDirectory[ind1 - 1]) {
+          self.addr = [ind1-1];
         }
       }
       else {
-        if(TutorialDirectory[self.addr[0]].contents[self.addr[1] - 1]) {
-          self.addr = [self.addr[0], self.addr[1] - 1];
+        if(TutorialDirectory[ind1].contents[ind2 - 1]) {
+          self.addr = [ind1, ind2-1];
         }
-        else if(TutorialDirectory[self.addr[0]]) {
-          self.addr = [self.addr[0]];
+        else if(TutorialDirectory[ind1 - 1]) {
+          self.addr = [ind1 - 1];
         }
+      }
+      if(this.addr.length == 2) {
+        this.showSlide(TutorialDirectory[this.addr[0]].contents[this.addr[1]]);
+      }
+      else {
+        this.showSlide(TutorialDirectory[this.addr[0]]);
       }
     },
 
@@ -317,12 +330,12 @@ function() {
 
     prevSlide: function(e) {
       e.preventDefault();
-      this.selectNext();
+      this.selectPrevious();
     },
 
     nextSlide: function(e) {
       e.preventDefault();
-      this.selectPrevious();
+      this.selectNext();
     }
 
   });

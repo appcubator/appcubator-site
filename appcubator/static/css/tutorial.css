@@ -67,7 +67,7 @@
 }
 
 .tutorial-content > footer {
-  position: absolute;
+  //position: absolute;
   bottom: 0;
   width: 100%;
   padding: 15px;
@@ -109,6 +109,8 @@
 
 .text-cont {
   padding: 20px;
+  min-height: 100%;
+  height: 100%;
 }
 
 .text-cont h1, .text-cont h2 {
