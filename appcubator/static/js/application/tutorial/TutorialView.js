@@ -17,24 +17,13 @@ function() {
       "click #tutorial-menu-list li" : "clickedMenuItem",
       "submit .tutorial-q-form" : "submittedQuestion",
       "click .answer-slide"     : "showAnswer",
+      'click .tutorial-content .prev' : 'prevSlide',
+      'click .tutorial-content .next' : 'nextSlide',
       "submit #feedback-form"   : "submittedFeedback"
     },
 
     initialize: function(directory) {
-      _.bindAll(this, 'render',
-                      'renderLeftMenu',
-                      'renderMainModal',
-                      'parseAnswers',
-                      'appendMenuItem',
-                      'clickedMenuItem',
-                      'chooseSlide',
-                      'selectMenu',
-                      'keyhandler',
-                      'submittedQuestion',
-                      'showQuestionSlide',
-                      'showAnswer',
-                      'submittedFeedback',
-                      'menuScrolled');
+      _.bindAll(this);
 
       if(directory) this.addr = directory;
 
@@ -176,15 +165,17 @@ function() {
     },
 
     showSlide: function(obj, addr) {
-      var title = '<h2>'+ obj.title + '</h2><div class="main-img '+ obj.view +'" style="background-image:url('+ obj.img +')"></div>';
-      $('.tutorial-content').html(title + '<div class="text-cont">' + util.getHTML(obj.view) +'</div>');
-      util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
+      var header = '<header><h1>'+ obj.title + '</h1></header>';
+      var content = '<div class="text-cont">' + util.getHTML(obj.view) +'</div>';
+      var footer = '<footer><a class="prev btn pull-left" href="#">Prev</a><a class="next btn pull-right" href="#">Next</a></footer>';
+      $('.tutorial-content').html(header + content + footer);
+      //util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
     },
 
     showQuestionSlide: function(question, results) {
       console.log(results);
 
-      var title = '<h2>'+ 'Question' + '</h2><div class="main-img q-mark" style="background-image:url(/static/img/tutorial/large-q-mark.png)">'+ question +'</div>';
+      var title = '<div class="main-img q-mark" style="background-image:url(/static/img/tutorial/large-q-mark.png)">'+ question +'</div>';
       var resultItems = '';
 
       _(results).each(function(result) {
@@ -322,6 +313,16 @@ function() {
       else {
         $('.bottom-arrow').fadeIn();
       }
+    },
+
+    prevSlide: function(e) {
+      e.preventDefault();
+      this.selectNext();
+    },
+
+    nextSlide: function(e) {
+      e.preventDefault();
+      this.selectPrevious();
     }
 
   });
