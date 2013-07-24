@@ -93,7 +93,8 @@ def admin_app(request, app_id):
 @user_passes_test(lambda u: u.is_superuser)
 def admin_feedback(request):
     page_context = {}
-    page_context["feedback"] = LogAnything.objects.filter(name='posted feedback')
+    feedback = list(LogAnything.objects.filter(name='posted feedback'))
+    page_context["feedback"] = feedback
     return render(request, 'admin/feedback.html', page_context)
 
 # active users this past week
