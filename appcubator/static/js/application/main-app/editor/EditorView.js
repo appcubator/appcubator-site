@@ -97,6 +97,7 @@ function( PageModel,
 
       if(!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
 
+      console.log(this.el.innerHTML);
 
       this.toolBar.setElement(document.getElementById('tool-bar')).render();
       this.marqueeView.render();

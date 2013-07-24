@@ -381,7 +381,6 @@ function() {
     },
 
     close: function() {
-      console.log("CLose selectetor");
       keyDispatcher.unbind('down', this.moveSelectedDown);
       keyDispatcher.unbind('up', this.moveSelectedUp);
       keyDispatcher.unbind('left', this.moveSelectedLeft);
@@ -390,9 +389,9 @@ function() {
       this.deselect();
       $('.page.full').off('mousedown', this.clickedPage);
 
-      $(this.selectDiv).resizable("destroy");
-      $(this.hoverDiv).draggable("destroy");
-      $(this.selectDiv).draggable("destroy");
+      //$(this.selectDiv).show().resizable("destroy");
+      //$(this.hoverDiv).show().draggable("destroy");
+      //$(this.selectDiv).show().draggable("destroy");
 
       Backbone.View.prototype.close.call(this);
     }

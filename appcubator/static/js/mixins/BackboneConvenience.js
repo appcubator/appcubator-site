@@ -7,14 +7,19 @@ function(Backbone) {
   console.log("CONVENIENT");
 
   Backbone.View.prototype.close = function(){
+
+    this.undelegateEvents();
+    this.$el.removeData().unbind();
+    this.remove();
+    this.unbind();
+
     if(this.subviews) {
       _(this.subviews).each(function(subview) {
         console.log("View:" + subview.cid);
         subview.close();
       });
+      this.subviews = null;
     }
-    this.remove();
-    this.unbind();
   };
 
   Backbone.View.prototype._ensureElement = function() {
