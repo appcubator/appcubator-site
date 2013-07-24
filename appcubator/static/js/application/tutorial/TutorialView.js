@@ -17,14 +17,13 @@ function() {
       "click #tutorial-menu-list li" : "clickedMenuItem",
       "submit .tutorial-q-form" : "submittedQuestion",
       "click .answer-slide"     : "showAnswer",
-      'click .tutorial-content .prev' : 'prevSlide',
-      'click .tutorial-content .next' : 'nextSlide',
+      'click .tutorial-content .prev' : 'prevBtnClicked',
+      'click .tutorial-content .next' : 'nextBtnClicked',
       "submit #feedback-form"   : "submittedFeedback"
     },
 
     initialize: function(directory) {
       _.bindAll(this);
-
       this.addr = (directory) ? directory : [0];
 
       util.loadCSS(this.css);
@@ -93,6 +92,8 @@ function() {
         itemNode.innerText = item.title;
         itemNode.id = prefix + ind;
         node.appendChild(itemNode);
+
+        // append subheadings if they exist
         if(item.contents) {
           var menuUl = document.createElement('ul');
           self.appendMenuItem(menuUl, item.contents, ind);
@@ -107,10 +108,6 @@ function() {
         if(item.view) {
           self.reader.read(util.getHTML(item.view), [ind] ,item.title);
         }
-
-        // if(item.contents) {
-        //   self.parseAnswers(item.contents);
-        // }
       });
     },
 
@@ -124,10 +121,10 @@ function() {
 
     chooseSlide: function(addr, isNew) {
       var self = this;
-
       this.addr = addr;
       this.selectMenu();
 
+      // if a slide is already displayed
       if(!isNew) {
         $(this.mainDiv).animate({
           top: "-100%",
@@ -147,6 +144,7 @@ function() {
           opacity: "1"
         });
       }
+      //if there is no current slide yet
       else {
         var obj = TutorialDirectory[addr[0]];
         if(addr.length == 2) {
@@ -167,7 +165,7 @@ function() {
       var content = '<div class="text-cont">' + util.getHTML(obj.view) +'</div>';
       var footer = '<footer><a class="prev btn pull-left" href="#">&laquo; Prev</a><a class="next btn pull-right" href="#">Next &raquo;</a></footer>';
       $('.tutorial-content').html(header + content + footer);
-      //util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
+      util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
     },
 
     showQuestionSlide: function(question, results) {
@@ -328,12 +326,12 @@ function() {
       }
     },
 
-    prevSlide: function(e) {
+    prevBtnClicked: function(e) {
       e.preventDefault();
       this.selectPrevious();
     },
 
-    nextSlide: function(e) {
+    nextBtnClicked: function(e) {
       e.preventDefault();
       this.selectNext();
     }
