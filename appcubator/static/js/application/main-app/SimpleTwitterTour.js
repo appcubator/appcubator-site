@@ -104,11 +104,13 @@ define([
       url: '/pages/',
       setup: function(tour, options) {
         feedPageAdded = function(page) {
+          console.log(page);
           if(page.get('name') == "Tweet Feed") {
             tour.next();
           }
           else {
-            v1State.get('pages').remove(page);
+            alert("Make sure you call the page 'Tweet Feed'");
+            v1State.get('pages').remove(page.cid);
           }
         };
         v1State.get('pages').bind('add', feedPageAdded);
@@ -512,8 +514,8 @@ define([
     },
     {
       content: '<h3>Editing Row Content</h3><p><em>Drag a header element into the green row.</em></p>',
-      my: "top center",
-      at: "bottom center",
+      my: "bottom center",
+      at: "top center",
       nextButton: true,
       url: '/editor/1/',
       setup: function(tour, options) {
