@@ -1,4 +1,3 @@
-
 define([
 		"mixins/SimpleModalView",
 		"mixins/ErrorDialogueView",
@@ -224,7 +223,7 @@ define([
 		},
 
 		save: function(e) {
-			if(v1.errorFlag) return;
+			if(v1.errorFlag === true) return;
 			if(appId === 0) return;
 
 			$('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
@@ -240,7 +239,7 @@ define([
 				success: function() {
 					util.dontAskBeforeLeave();
 					is_deployed = 1;
-					v1.errorFlag = true;
+					v1.errorFlag = false;
 					self.trigger('deploy');
 					$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
 					var timer = setTimeout(function(){
