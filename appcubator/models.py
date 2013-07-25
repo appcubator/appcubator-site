@@ -300,7 +300,7 @@ class App(models.Model):
                 result['errors'] = response_content['errors']
             result['site_url'] = self.url()
 
-            syncdb_data = [ u for u in response_content['script_results'] if u['script'] == u'syncdb.py' ][0]
+            syncdb_data = [ u for u in response_content['script_results'] if 'syncdb.py' in u['script'] ][0]
             if u'value to use for existing rows' in syncdb_data['stderr']:
                 assert False, "Migration needs help!!!"
 
