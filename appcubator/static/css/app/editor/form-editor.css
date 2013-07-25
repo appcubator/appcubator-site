@@ -39,7 +39,7 @@
 .form-editor h4.form-action-title {
   font-size: 12px;
   display: inline-block;
-  width: 240px;
+  width: 238px;
   border-right: 1px solid #ddd;
   border-left: 1px solid #efefef;
   border-top-right-radius: 6px;
@@ -213,6 +213,7 @@ ul.action li:hover .add-to-list {
   width: 100%;
   background-color: #efefef;
   padding: 10px;
+  margin-left: 0;
   border-top: 1px solid #ccc;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;

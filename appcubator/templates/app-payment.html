@@ -10,7 +10,7 @@
 
 {% block page %}
 <div class="container hoff6">
-  <div class="hoff2 span32 pane">
+  <div class="hoff2 span32 pane padding">
     {% with user.customer.current_subscription as subscription %}
         {% if not subscription or subscription.status != 'active'  %}
             {% include "payment/_subscription_status.html" %}

@@ -91,6 +91,25 @@ def showhnpage(request):
 
     return render(request, 'website-showhn.html', page_context)
 
+@require_GET
+def showdnpage(request):
+    if request.user.is_authenticated():
+        return redirect('/app')
+
+    page_context = {}
+    page_context["title"] = "Homepage"
+
+    return render(request, 'website-showdn.html', page_context)
+
+@require_GET
+def showgsbpage(request):
+    if request.user.is_authenticated():
+        return redirect('/app')
+
+    page_context = {}
+    page_context["title"] = "Homepage"
+
+    return render(request, 'website-showgsb.html', page_context)
 
 @login_required
 @csrf_exempt
@@ -246,8 +265,7 @@ def send_invitation_to_customer(request, customer_pk):
         subject = request.POST['subject']
 
     template_context = {"text" : text}
-    send_template_email("team@appcubator.com", customer.email, subject, "emails/base_boxed_basic_query.html", template_context)
+    send_template_email("team@appcubator.com", customer.email, subject, "", "emails/base_boxed_basic_query.html", template_context)
     customer.sent_welcome_email = True
     customer.save()
     return HttpResponse("ok")
-

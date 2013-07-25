@@ -527,7 +527,8 @@ define([
     },
 
     findLeft: function(e, ui) {
-      var offsetLeft = document.getElementById('elements-container').offsetLeft;
+      var offsetLeft = document.getElementById('elements-container').offsetLeft + document.getElementById('page-wrapper').offsetLeft;
+      offsetLeft+= 20;
       var left = Math.round((e.pageX - offsetLeft)/this.positionHorizontalGrid);
       if(left < 0) left = 0;
       if(left + 4 > 12) left = 8;

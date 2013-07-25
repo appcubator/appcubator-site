@@ -247,6 +247,10 @@ hr {
     background-color: transparent;
   }
 
+  &.padding {
+    padding: 30px;
+  }
+
   img {
     position: absolute;
     right: -10px;
@@ -428,6 +432,11 @@ hr {
   border-top: 1px solid #ccc;
 }
 
+.modal.error-dialogue .bottom-sect {
+  background-color: #ee9999;
+  border-top: 1px solid #ff8888;
+}
+
 .modal .q-mark {
   display: inline-block;
   width: 50px;
@@ -542,7 +551,7 @@ input[type="email"],input[type="url"],input[type="search"],
 input[type="tel"],input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: 28px;
+  height: 32px;
   padding: 4px 6px;
   margin-bottom: 10px;
   font-size: 14px;
@@ -1053,4 +1062,17 @@ legend + .control-group {
     vertical-align: top;
   }
 } // end .download-pane
+
+.mascot {
+  background-image: url('/static/img/mascot.png');
+  background-repeat: no-repeat;
+
+  -webkit-background-size: auto 100%;
+  -moz-background-size: auto 100%;
+  background-size: auto 100%;
+}
+
+.mascot.happy {
+  background-image: url(../img/mascot-happy.png);
+}
 

@@ -73,7 +73,7 @@ function( PageModel,
       redoController = new RedoController();
 
       keyDispatcher.bindComb('meta+z', redoController.redo);
-
+      keyDispatcher.bindComb('ctrl+z', redoController.redo);
 
       g_guides = this.guides;
 

@@ -397,6 +397,7 @@
       "isSingle": false,
       "cons_attribs": {},
       "class_name": "defaul-list",
+      "style": ".row { border-bottom: 1px solid #ccc; }\n",
       "content": null,
       "tagName": "div"
     }

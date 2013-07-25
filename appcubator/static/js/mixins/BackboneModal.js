@@ -84,7 +84,9 @@ function(Backbone) {
         div.appendChild(title);
       }
       if(this.doneButton) {
-        $(div).append('<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>');
+        var qMark = '';
+        if(this.address) { qMark = '<div class="q-mark"></div>'; }
+        $(div).append('<div class="bottom-sect">'+ qMark+'<div class="btn done-btn">Done</div></div>');
         $(div).find('.done-btn').on('click', function() {
           self.closeModal();
         });

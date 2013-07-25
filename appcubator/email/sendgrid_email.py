@@ -21,5 +21,5 @@ def send_email(from_email, to_email, subject, text, html):
   s.quit()
 
 def send_template_email(from_email, to_email, subject, text, template_file, template_context):
-  html = "<pre>%s</pre>" % render_to_string(template_file, template_context)
+  html = "%s" % render_to_string(template_file, template_context)
   send_email(from_email, to_email, subject, text, html)
