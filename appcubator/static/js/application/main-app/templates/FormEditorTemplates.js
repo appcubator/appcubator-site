@@ -81,7 +81,7 @@ FormEditorTemplates.template = [
   '<div class="add-field-panel"><div class="btn add-field-button"><span class="icon"></span>Add a New Field</div></div>',
   '<div class="action-panel panel">',
   '</div>',
-  '<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>'
+  '<div class="bottom-sect"><div class="q-mark"></div><div class="btn">Done</div></div>'
 ].join('\n');
 
 FormEditorTemplates.actionPane = [
