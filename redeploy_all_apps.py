@@ -5,7 +5,7 @@ fail_summaries = []
 def summary(app):
     return (app.owner.id, app.owner.email, app.id, app.deployment_id, )
 
-for a in App.objects.exclude(owner__email="!@TEST_USER@!@gmail.com"):
+for a in App.objects.exclude(owner__email="!@TEST__USER@!@gmail.com"):
     s = summary(a)
     try:
         a.deploy()
