@@ -32,7 +32,6 @@ define([
 		},
 
 		tutorialDirectory: [0],
-		errorFlag: false,
 
 		initialize: function() {
 			var self = this;
@@ -225,7 +224,7 @@ define([
 		},
 
 		save: function(e) {
-			if(this.errorFlag) return;
+			if(v1.errorFlag) return;
 			if(appId === 0) return;
 
 			$('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
@@ -241,6 +240,7 @@ define([
 				success: function() {
 					util.dontAskBeforeLeave();
 					is_deployed = 1;
+					v1.errorFlag = true;
 					self.trigger('deploy');
 					$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
 					var timer = setTimeout(function(){
@@ -262,14 +262,14 @@ define([
 				error: function(data) {
 					var self = this;
 					if(data.responseText == "ok") return;
-					this.errorFlag = true;
+					v1.errorFlag = true;
 					var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
 					if(DEBUG) {
 						content = { text: data.responseText };
 					}
 
 					new ErrorDialogueView(content, function() {
-						self.errorFlag = false;
+						v1.errorFlag = false;
 					});
 				},
 				dataType: "JSON"

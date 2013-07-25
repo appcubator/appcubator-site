@@ -14,7 +14,7 @@
     <div class="span36 offset8 intro">
       <img class="welcome" src="{{ STATIC_URL }}img/welcome-marker.png">
       <p>We are happy to see you using Appcubator and would like to help you get started as smoothly as possible.</p>
-      <p>How would you like to proceed?</p>
+      <p id="question">How would you like to proceed?</p>
     </div>
   </div>
   <div class="row hoff2 span48 offset8">
@@ -56,21 +56,19 @@
   </div>
   <div class="row span48 offset8 twitter-chooser" style="display: none">
       <!-- simple twitter tutorial -->
-      <a class="welcome-icon" href="{% url appcubator.views.app_new_walkthrough walkthrough='simpleWalkthrough' %}">
+      <a class="welcome-icon wide" href="{% url appcubator.views.app_new_walkthrough walkthrough='simpleWalkthrough' %}">
         <img src="{{ STATIC_URL }}img/walkthrough-twitter.png">
-        <p>Simple Walkthrough</p>
-        <div class="info-text qt-text">
+        <div class="explain-text qt-text">
           <span class="title">Simple Walkthrough</span>
-          Skip the setup, and dive into designing your own Twitter!
+          Skip the details, and dive into designing your own Twitter!
         </div>
       </a>
       <!-- in-depth twitter tutorial -->
-      <a class="welcome-icon" href="{% url appcubator.views.app_new_walkthrough walkthrough='walkthrough' %}">
+      <a class="welcome-icon wide" href="{% url appcubator.views.app_new_walkthrough walkthrough='walkthrough' %}">
         <img src="{{ STATIC_URL }}img/walkthrough-twitter.png">
-        <p>In-Depth Walkthrough</p>
-        <div class="info-text qt-text">
+        <div class="explain-text qt-text">
           <span class="title">In-Depth Walkthrough</span>
-          Go through the whole process of building Twitter, from start to end, using Appcubator.
+          Go through the complete process of building Twitter with tables and relations using Appcubator.
         </div>
       </a>
     </div>
