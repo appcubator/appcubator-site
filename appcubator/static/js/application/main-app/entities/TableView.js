@@ -160,7 +160,11 @@ function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView) {
 
       width += 120;
       this.width = width;
-      this.$el.find('.tbl').width(width);
+      console.log(width);
+      if(this.width < 300) this.width = 300;
+      console.log(this.width);
+      this.$el.find('.tbl').width(this.width);
+
       if(width > 870 && !this.hasArrow) {
         this.hasArrow = true;
         var div = document.createElement('div');
@@ -170,9 +174,11 @@ function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView) {
     },
 
     initializeTableWidth: function() {
-      var width = (this.model.getFieldsColl().length + 2) * 96;
+      var width = (this.model.getFieldsColl().length + 2) * 100;
+      width += 120;
       this.width = width;
-      this.$el.find('.tbl').width(width);
+      if(this.width < 300) this.width = 300;
+      this.$el.find('.tbl').width(this.width);
       if(width > 870 && !this.hasArrow) {
         this.hasArrow = true;
         var div = document.createElement('div');

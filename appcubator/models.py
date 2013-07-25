@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from simplejson import JSONDecodeError
 
 import tarfile
 import os, os.path
@@ -573,4 +574,10 @@ class AnalyticsStore(models.Model):
 
     @property
     def analytics_data(self):
-        return simplejson.loads(self.analytics_json)
+        result = {}
+        try:
+            result = simplejson.loads(self.analytics_json)
+        except JSONDecodeError:
+            print "Could not decode %r" % self.analytics_json
+        else:
+            return result
