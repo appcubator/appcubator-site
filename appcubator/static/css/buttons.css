@@ -438,3 +438,22 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
   margin-top: 6px;
   vertical-align: top;
 }
+
+.btn-blue {
+  display: inline-block;
+  background-color: #0f2d40;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  padding: 14px 20px;
+  font-family: 'verb_regularregular';
+  background-image: none !important;
+  text-shadow: none;
+  line-height: 18px;
+}
+
+.btn-blue:hover {
+  background-color: #0f1d30;
+  color: #fff;
+}
+
