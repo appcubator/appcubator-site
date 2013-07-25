@@ -31,7 +31,8 @@ function(AnalyticsView, SimpleModalView) {
 
     renderNextStep: function() {
       var nmrPages = v1State.get('pages').length;
-      $('.what-to-do').html('You seem to have only '+ nmrPages +' pages. You can add more on the <a href="pages/">Pages page</a>.');
+      var pagesStr = nmrPages > 1 ? ' pages' : ' page';
+      $('.what-to-do').html('You currently have '+ nmrPages + pagesStr + '.<br><a href="pages/">Add more on the Pages page</a>.');
     },
 
     deploy: function() {
