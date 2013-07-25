@@ -61,6 +61,39 @@ background-repeat: no-repeat;
   text-align: center;
 }
 
+.welcome-icon.wide {
+  width: 480px;
+  margin-right: 0;
+  height: 90px;
+  display: block;
+  text-align: left;
+}
+
+.welcome-icon.wide .explain-text {
+  left: 10px;
+  position: static;
+  display: inline-block;
+  width: auto;
+  width: 360px;
+  vertical-align: top;
+  padding-top: 12px;
+  padding-left: 10px;
+}
+
+.explain-text  .title {
+  display: block;
+  font-weight: bold;
+}
+
+.welcome-icon.wide {
+  display: inline-block;
+}
+
+.welcome-icon.wide img {
+  width: 36px;
+  margin-left: 10px;
+}
+
 .welcome-icon img {
   margin-top: 16px;
   margin-bottom: 16px;
