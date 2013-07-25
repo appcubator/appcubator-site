@@ -27,6 +27,11 @@
   margin-left: -270px;
 }
 
+#widget-editor .font-picker {
+  width: 70px;
+  margin-left: 8px;
+}
+
 #widget-editor .top-arrow {
   height: 12px;
   width: 30px;
@@ -119,11 +124,6 @@
 
 .layout-editor ul li.selected {
   background-color: #1b2535;
-}
-
-select.font-picker {
-  width: 70px;
-  margin-left: 8px;
 }
 
 .size-picker {
