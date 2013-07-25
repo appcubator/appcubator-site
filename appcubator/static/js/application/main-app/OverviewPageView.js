@@ -32,11 +32,11 @@ function(AnalyticsView, SimpleModalView) {
     renderNextStep: function() {
       var nmrPages = v1State.get('pages').length;
       var pagesStr = nmrPages > 1 ? ' pages' : ' page';
-      if(nmrPages >= 3) {
+      if(nmrPages >= 4) {
         $('.what-to-do').html('You currently have '+ nmrPages + pagesStr + '.<br><a href="pages/">Add more on the Pages page</a>.');
       }
       else {
-        $('.what-to-do').html('You can go to the <a href="tables/">Tables</a> page, and click "Access Data" to see the data your app has generated.');
+        $('.what-to-do').html('You can go to the <a href="tables/">Tables</a> page, and click "Access Data" to browse the data in your app\'s database.');
       }
     },
 
