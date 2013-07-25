@@ -10,7 +10,7 @@ from django.utils import simplejson
 from copy import deepcopy
 
 from models import Customer, InvitationKeys, AnalyticsStore, App
-from appcubator.email.sendgrid_email import send_email
+from appcubator.email.sendgrid_email import send_email, send_template_email
 
 import requests
 import re
@@ -238,7 +238,8 @@ def send_invitation_to_customer(request, customer_pk):
     if request.POST['subject']:
         subject = request.POST['subject']
 
-    send_email("team@appcubator.com", customer.email, subject, "", text)
+    template_context = {"text" : html}
+    send_template_email("team@appcubator.com", customer.email, subject, "emails/base_boxed_basic_query.html", template_context)
     customer.sent_welcome_email = True
     customer.save()
     return HttpResponse("ok")
