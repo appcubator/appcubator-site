@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
-from models import RouteLog, TutorialLog, LogAnything
+from models import LogAnything
 from email.sendgrid_email import send_email
 from models import DomainRegistration
 
@@ -33,36 +33,6 @@ def log_anything(request):
     la = LogAnything(app_id=app_id, user_id=user_id, name=key, data=data)
     la.save()
     return HttpResponse("ok")
-
-
-@require_POST
-@login_required
-@csrf_exempt
-def log_route(request, app_id):
-    user_id = request.user.id
-    page_name = request.POST['page_name']
-    app_id = long(app_id)
-    log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
-    log.full_clean()
-    log.save()
-    return HttpResponse("saved route")
-
-
-@require_POST
-@login_required
-def log_slide(request):
-    title = request.POST['title']
-    directory = request.POST['directory']
-
-    if title is not None or directory is not None:
-        TutorialLog.create_log(request.user, title, directory)
-
-    d = {}
-    d['percentage'] = TutorialLog.get_percentage(request.user)
-    d['feedback'] = TutorialLog.is_donewithfeedback(request.user)
-
-    return JSONResponse(d)
-
 
 @require_POST
 @login_required

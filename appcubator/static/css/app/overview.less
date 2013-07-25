@@ -13,7 +13,7 @@ h3 {
   }
 
   .icon {
-    background-image: url('../img/go-to-icon.png');
+    background-image: url('/static/img/go-to-icon.png');
     background-repeat: no-repeat;
     height: 45px;
     width: 45px;
@@ -35,6 +35,8 @@ h3 {
 } // end .deploy
 
 .notice {
+  position: relative;
+
   background-color: #0f2d40;
   color: #fff;
   border-radius: 6px;
@@ -42,14 +44,13 @@ h3 {
   padding: 20px;
   font-size: 16px;
   padding-bottom: 50px;
-  background-image: url('../img/gift.png');
   background-position: 700px center;
   background-repeat: no-repeat;
 
   -webkit-background-size: 100px auto;
   -moz-background-size: 100px auto;
   background-size: 100px auto;
-  height: 190px;
+  height: 270px;
   overflow: hidden;
 
   -webkit-transition: height linear 0.4s;
@@ -63,9 +64,10 @@ h3 {
   border: 1px solid #bbbbbb;
   border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
 
-  h3 {
+  h3, h2 {
     color: #fff;
     margin-bottom: 15px;
+    display: inline-block;
   }
 
   input[type="checkbox"] {
@@ -83,7 +85,68 @@ h3 {
   ul li {
     margin-top: 6px;
   }
+
+  .what-to-do {
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: lighter;
+  }
+
+  &.inactive {
+    background: -webkit-linear-gradient(#f3f3f3,#efefef);
+    background: -moz-linear-gradient(#f3f3f3,#efefef);
+    background: -o-linear-gradient(#f3f3f3,#efefef);
+    background: -ms-linear-gradient(#f3f3f3,#efefef);
+    background: linear-gradient(#f3f3f3,#efefef);
+    color: #0f2d40;
+
+    h3 {
+      color: #0f2d40;
+    }
+
+    .icon.notification {
+      background-image: url(/static/img/announce.png);
+      background-position: -50px 0;
+    }
+
+  }
+
+  .tip {
+    border-top: 1px solid #fff;
+    position: absolute;
+    bottom: 10px;
+    padding-top: 10px;
+    margin-right: 15px;
+    font-size: 12px;
+  }
+
+  .icon {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    float: right;
+    margin-right: 6px;
+    vertical-align: top;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: auto 100%;
+    
+    &.notification {
+      background-image: url(/static/img/announce.png);
+    }
+
+    &.next-step {
+      font-size: 48px;
+      font-weight: bold;
+      line-height: 50px;
+      text-align: right;
+    }
+
+  }
+
+
 } // end .notice
+
 
 
 .deploy-pane:active {

@@ -29,7 +29,7 @@ define([
       events : {
         'mouseover .bottom-arrow' : 'slideDown',
         'mousemove .bottom-arrow' : 'slideDown',
-        'focus input.search'           : 'expandAllSections',
+        'focus input.search'      : 'expandAllSections'
       },
 
       initialize   : function(widgetsCollection) {
@@ -251,6 +251,7 @@ define([
         this.contextEntitySection.render();
       }
 
+
       _(pageContext).each(function(tableName) {
         var tableM = v1State.getTableModelWithName(tableName);
         if(!tableM) throw "Error with page context";
@@ -264,7 +265,7 @@ define([
         }
         this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon');
         tableM.getFieldsColl().each(function(field) {
-          //if(field.isRelatedField()) return this.renderRelatedField(field, tableM, contextEntitySection);
+          if(field.isRelatedField()) return this.renderRelatedField(field, tableM);
           this.contextEntitySection.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon');
         }, this);
       }, this);
@@ -351,6 +352,7 @@ define([
         case "uielement":
           return this.createNode(layout, id);
         case "lambda-create-form":
+          v1State.getCurrentPage().trigger('creat-form-dropped');
           return new PickCreateFormEntityView(layout, id);
         default:
           throw "Unknown type dropped to the editor.";

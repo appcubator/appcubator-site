@@ -44,22 +44,21 @@ function(WidgetContentEditor,
 
     initialize: function(){
       _.bindAll(this);
-
+      this.subviews = [];
       util.loadCSS(this.css);
-      var self = this;
       this.model = null;
     },
 
     setModel: function(widgetModel) {
       if(this.model) {
-        this.model.unbind('startEditing', this.startedEditing);
-        this.model.unbind('stopEditing', this.stoppedEditing);
+        this.stopListening(this.model, 'startEditing', this.startedEditing);
+        this.stopListening(this.model, 'stopEditing', this.stoppedEditing);
       }
 
       this.model = widgetModel;
 
-      this.model.bind('startEditing', this.startedEditing);
-      this.model.bind('stopEditing', this.stoppedEditing);
+      this.listenTo(this.model, 'startEditing', this.startedEditing);
+      this.listenTo(this.model, 'stopEditing', this.stoppedEditing);
 
       return this;
     },
@@ -75,7 +74,10 @@ function(WidgetContentEditor,
         if(action == "login" || action == "thirdpartylogin") {
           this.widgetClassPickerView = new WidgetClassPickerView(this.model);
           this.layoutEditor = new WidgetLayoutEditor(this.model);
-          this.widgetClassPickerView.bind('change', this.classChanged);
+          this.subviews.push(this.layoutEditor);
+          this.subviews.push(this.widgetClassPickerView);
+
+          this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
           this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
@@ -86,7 +88,10 @@ function(WidgetContentEditor,
         if(action == "authentication" || action == "signup") {
           this.widgetClassPickerView = new WidgetClassPickerView(this.model);
           this.layoutEditor = new WidgetLayoutEditor(this.model);
-          this.widgetClassPickerView.bind('change', this.classChanged);
+          this.subviews.push(this.layoutEditor);
+          this.subviews.push(this.widgetClassPickerView);
+
+          this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
           this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
@@ -104,7 +109,9 @@ function(WidgetContentEditor,
 
         if(action == "show" || action == "loop") {
           this.widgetClassPickerView = new WidgetClassPickerView(this.model);
-          this.widgetClassPickerView.bind('change', this.classChanged);
+          this.subviews.push(this.widgetClassPickerView);
+
+          this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
           this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
@@ -123,7 +130,9 @@ function(WidgetContentEditor,
 
         if(this.model.hasForm() && action != "login" && action != "signup") {
           this.widgetClassPickerView = new WidgetClassPickerView(this.model);
-          this.widgetClassPickerView.bind('change', this.classChanged);
+          this.subviews.push(this.widgetClassPickerView);
+
+          this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
           this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
@@ -134,7 +143,12 @@ function(WidgetContentEditor,
         this.widgetClassPickerView = new WidgetClassPickerView(this.model);
         this.layoutEditor = new WidgetLayoutEditor(this.model);
         this.contentEditor = new WidgetContentEditor(this.model);
-        this.widgetClassPickerView.bind('change', this.classChanged);
+
+        this.subviews.push(this.widgetClassPickerView);
+        this.subviews.push(this.layoutEditor);
+        this.subviews.push(this.contentEditor);
+
+        this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
         this.el.appendChild(this.widgetClassPickerView.el);
         this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
@@ -226,6 +240,8 @@ function(WidgetContentEditor,
       this.listGalleryView.className = 'elements-list';
 
       var galleryView = new RowGalleryView(this.model, this.location);
+      this.subviews.push(galleryView);
+
       this.listGalleryView.appendChild(galleryView.render().el);
       this.el.appendChild(this.listGalleryView);
     },

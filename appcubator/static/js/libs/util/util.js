@@ -104,7 +104,8 @@ define(['jquery'], function() {
         cssFile.setAttribute('href', '/static/css/' + css + '.css');
         cssFile.setAttribute('rel', 'stylesheet');
         cssFile.id = 'css-' + css;
-        document.getElementsByTagName('head')[0].appendChild(cssFile);
+        console.log("loading " + css);
+        //document.getElementsByTagName('head')[0].appendChild(cssFile);
       }
     },
 
@@ -184,10 +185,24 @@ define(['jquery'], function() {
       return !( aLeftOfB || aRightOfB || aAboveB || aBelowB );
     },
 
+    isPlural: function(str) {
+      if(str && str.length > 0) {
+        var lastChar = str.charAt(str.length - 1);
+        return (lastChar === 's' || lastChar === 'S');
+      }
+    },
+
     pluralize: function(str) {
       if(str && str.length > 0) {
         var lastChar = str.charAt(str.length - 1);
-        return (lastChar == 's') ? str + 'es' : str + 's';
+        return (lastChar === 's' || lastChar === "S") ? str + 'es' : str + 's';
+      }
+    },
+
+    singularize: function(str) {
+      if(str && str.length > 0) {
+        var lastChar = str.charAt(str.length - 1);
+        return (lastChar === 's' || lastChar === "S") ? str.substring(0, str.length - 1) : str;
       }
     },
 

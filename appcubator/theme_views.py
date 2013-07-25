@@ -6,7 +6,7 @@ from django.shortcuts import redirect,render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, TutorialLog
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts
 
 import requests
 import traceback

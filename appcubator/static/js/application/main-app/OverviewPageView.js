@@ -26,6 +26,12 @@ function(AnalyticsView, SimpleModalView) {
       var page_context = {};
       this.el.innerHTML = _.template(util.getHTML('app-main-page'), page_context);
       this.$('.analytics').append(this.analyticsView.render().el);
+      this.renderNextStep();
+    },
+
+    renderNextStep: function() {
+      var nmrPages = v1State.get('pages').length;
+      $('.what-to-do').html('You seem to have only '+ nmrPages +' pages. You can add more on the <a href="pages/">Pages page</a>.');
     },
 
     deploy: function() {
@@ -40,7 +46,7 @@ function(AnalyticsView, SimpleModalView) {
     },
 
     showFeedback: function(e) {
-      v1.showTutorial([7]);
+      v1.showTutorial([8]);
       e.preventDefault();
     }
 

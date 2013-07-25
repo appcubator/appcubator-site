@@ -64,6 +64,13 @@ def aboutus(request):
 
 
 @require_GET
+def changelog(request):
+    page_context = {}
+    page_context["title"] = "Change Log"
+    return render(request, 'website-changelist.html', page_context)
+
+
+@require_GET
 def homepage(request):
     if request.user.is_authenticated():
         return redirect('/app')

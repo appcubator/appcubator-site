@@ -6,20 +6,27 @@
       </div>
       <hr class="span58 pheader">
     </div>
-    <div class="row hoff1 span58 notice">
-      <h3 class="hoff1">Thank you for joining Appcubator Private Beta program!</h3>
-      <div> You just need to complete the following steps to claim your free domain.</div>
+    <div class="hoff1 span38 notice">
+      <h2 class="hoff1">Next Step?</h2>
+      <p class="what-to-do">
+
+      </p>
+      <p class="tip hoff1"><strong>Appcubator tip of the day:</strong> You can upload images to a page directly from your Facebook, Dropbox or Instagram accounts.</p>
+    </div>
+    <div class="hoff1 span18 offset2 notice inactive">
+      <h3 class="hoff1">Notifications</h3><div class="notification icon"></div>
       <ul>
-        <li><input type="checkbox" disabled checked>Create a simple app.</li>
-        <li><input type="checkbox" id="feedback-check" disabled>Fill the <a class="feedback" href="#">feedback form</a>.</li>
+        <li><input type="checkbox" id="feedback-check" disabled> You can fill the <a class="feedback" href="#">feedback form</a> for a chance to win a free domain.</li>
+        <li><input type="checkbox" disabled checked> Now you can see the analytics about your application in the dashboard below.</li>
+
       </ul>
     </div>
     <div class="span58 hoff2">
       <div class="row hoff1 analytics" style="position: relative">
-        <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75);">
+        <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75); padding-top: 10%">
           <h2>Deploy your app to see your site analytics!</h2>
         </div>
-        <h3>Analytics</h3>
+        <h2>Analytics</h2>
         <hr class="span58 pheader">
         <!-- <img class="span58 analytics-demo hoff1" src="{{ STATIC_URL }}img/analytics.png"> -->
       </div>
@@ -36,13 +43,14 @@
       <div class="span12">
         <div class="navigator">
           <ul class="left-nav nav">
+            <li><a href="#payment-plan">Payment Plan</a></li>
             <li><a href="#domain-settings">Domain Settings</a></li>
             <li><a href="#seo-optimizations">SEO Optimizations</a></li>
             <li><a href="#danger-zone">Danger Zone</a></li>
           </ul>
         </div>
       </div>
-      <div class="span40 offset2" id="content">
+      <div class="span40 offset2" id="payment-plan">
         <div class="span40 domains w-pane pb2" id="domain-settings">
           <h3 class="span36 offset2 hoff1">Plan</h3>
           <hr class="span40">
@@ -51,7 +59,7 @@
             <div>{{ user.customer.current_subscription.plan_display }}</div>
           </div>
           <hr class="span40">
-          <div class="span36 offset2 hi3 hoff1">
+          <div class="span36 offset2">
             {% if user.customer.current_subscription.plan == "monthly" %}
             <a href="/account">You can see your finance history from the account setting page.</a>
             {% else %}
