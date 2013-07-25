@@ -33,7 +33,7 @@
   position: absolute;
   top: 0;
   margin-top: -12px;
-  background-image: url(../img/top-blue-arrow.png);
+  background-image: url(/static/img/top-blue-arrow.png);
   background-repeat: no-repeat;
   background-position: top left;
   margin-left: 24px;
@@ -46,7 +46,7 @@
   left: 0;
   top: 0;
   margin-left: -12px;
-  background-image: url(../img/left-blue-arrow.png);
+  background-image: url(/static/img/left-blue-arrow.png);
   background-repeat: no-repeat;
   background-position: top left;
   margin-top: 24px;
@@ -59,7 +59,7 @@
   left: 100%;
   top: 0;
   margin-right: -12px;
-  background-image: url(../img/right-blue-arrow.png);
+  background-image: url(/static/img/right-blue-arrow.png);
   background-repeat: no-repeat;
   background-position: top right;
   margin-top: 24px;
@@ -283,7 +283,7 @@ h3.edit-url {
   top: 0;
   right: 0;
   background-color: transparent;
-  background-image: url('../img/updown-handle.png');
+  background-image: url('/static/img/updown-handle.png');
   background-repeat: no-repeat;
   background-position: right;
   z-index: 1001;
@@ -319,7 +319,7 @@ h3.edit-url {
 }
 
 .a-left {
-  background-image: url('../img/align_left_icon.png');
+  background-image: url('/static/img/align_left_icon.png');
   background-repeat: no-repeat;
 
   -webkit-background-size: auto 50%;
@@ -329,7 +329,7 @@ h3.edit-url {
 }
 
 .a-center {
-  background-image: url('../img/align_center_icon.png');
+  background-image: url('/static/img/align_center_icon.png');
   background-repeat: no-repeat;
 
   -webkit-background-size: auto 50%;
@@ -339,7 +339,7 @@ h3.edit-url {
 }
 
 .a-right {
-  background-image: url('../img/align_right_icon.png');
+  background-image: url('/static/img/align_right_icon.png');
   background-repeat: no-repeat;
 
   -webkit-background-size: auto 50%;
@@ -353,7 +353,7 @@ h3.edit-url {
 }
 
 .padding.tb {
-  background-image: url('../img/tb-padding.png');
+  background-image: url('/static/img/tb-padding.png');
   background-repeat: no-repeat;
   padding: 0;
   -webkit-background-size: auto 50%;
@@ -363,7 +363,7 @@ h3.edit-url {
 }
 
 .padding.lr {
-  background-image: url('../img/lr-padding.png');
+  background-image: url('/static/img/lr-padding.png');
   background-repeat: no-repeat;
   padding: 0;
   -webkit-background-size: auto 50%;
