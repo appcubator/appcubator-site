@@ -9,7 +9,7 @@
     <div class="hoff1 span38 notice">
       <h2 class="hoff1">Next Step?</h2>
       <p class="what-to-do">
-        
+
       </p>
       <p class="tip hoff1"><strong>Appcubator tip of the day:</strong> You can upload images to a page directly from your Facebook, Dropbox or Instagram accounts.</p>
     </div>
@@ -43,13 +43,14 @@
       <div class="span12">
         <div class="navigator">
           <ul class="left-nav nav">
+            <li><a href="#payment-plan">Payment Plan</a></li>
             <li><a href="#domain-settings">Domain Settings</a></li>
             <li><a href="#seo-optimizations">SEO Optimizations</a></li>
             <li><a href="#danger-zone">Danger Zone</a></li>
           </ul>
         </div>
       </div>
-      <div class="span40 offset2" id="content">
+      <div class="span40 offset2" id="payment-plan">
         <div class="span40 domains w-pane pb2" id="domain-settings">
           <h3 class="span36 offset2 hoff1">Plan</h3>
           <hr class="span40">
@@ -58,7 +59,7 @@
             <div>{{ user.customer.current_subscription.plan_display }}</div>
           </div>
           <hr class="span40">
-          <div class="span36 offset2 hi3 hoff1">
+          <div class="span36 offset2">
             {% if user.customer.current_subscription.plan == "monthly" %}
             <a href="/account">You can see your finance history from the account setting page.</a>
             {% else %}
