@@ -101,11 +101,11 @@ define(['jquery'], function() {
       if(!document.getElementById('css-' + css)) {
         var cssFile = document.createElement('link');
         cssFile.setAttribute('type', 'text/css');
-        cssFile.setAttribute('href', '/static/css/' + css + '.css');
+        cssFile.setAttribute('href', '/static/css-backup/' + css + '.css');
         cssFile.setAttribute('rel', 'stylesheet');
         cssFile.id = 'css-' + css;
         console.log("loading " + css);
-        //document.getElementsByTagName('head')[0].appendChild(cssFile);
+        document.getElementsByTagName('head')[0].appendChild(cssFile);
       }
     },
 
