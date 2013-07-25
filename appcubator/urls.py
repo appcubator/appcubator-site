@@ -12,6 +12,9 @@ from payments import views as payment_views
 urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
     url(r'^showhn/$',                   base_views.showhnpage),
+    url(r'^showgsb/$',                  base_views.showgsbpage),
+    url(r'^showdn/$',                   base_views.showdnpage),
+
     url(r'^aboutus/$',                  base_views.aboutus),
     url(r'^changelog/$',                base_views.changelog),
     # Signup, Login and invites

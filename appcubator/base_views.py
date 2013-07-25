@@ -91,6 +91,25 @@ def showhnpage(request):
 
     return render(request, 'website-showhn.html', page_context)
 
+@require_GET
+def showdnpage(request):
+    if request.user.is_authenticated():
+        return redirect('/app')
+
+    page_context = {}
+    page_context["title"] = "Homepage"
+
+    return render(request, 'website-showdn.html', page_context)
+
+@require_GET
+def showgsbpage(request):
+    if request.user.is_authenticated():
+        return redirect('/app')
+
+    page_context = {}
+    page_context["title"] = "Homepage"
+
+    return render(request, 'website-showgsb.html', page_context)
 
 @login_required
 @csrf_exempt
