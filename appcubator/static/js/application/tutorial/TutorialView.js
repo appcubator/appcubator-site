@@ -32,8 +32,6 @@ function() {
       this.chooseSlide(this.addr, true);
       this.reader = new answer();
       this.parseAnswers(TutorialDirectory);
-
-      $(window).bind('keydown', this.keyhandler);
     },
 
     render : function(img, text) {
@@ -164,7 +162,10 @@ function() {
     showSlide: function(obj, addr) {
       var header = '<header><h1>'+ obj.title + '</h1></header>';
       var content = '<div class="text-cont">' + util.getHTML(obj.view) +'</div>';
-      var footer = '<footer><a class="prev btn pull-left" href="#">&laquo; Prev</a><a class="next btn pull-right" href="#">Next &raquo;</a></footer>';
+      var footer = '<footer>';
+      if(addr[0] !== 0) footer += '<a class="prev btn pull-left" href="#">&laquo; Prev</a>';
+      if(addr[0] !== TutorialDirectory.length - 1) footer += '<a class="next btn pull-right" href="#">Next &raquo;</a>';
+      footer += '</footer>';
       $('.tutorial-content').html(header + content + footer);
       util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
     },
@@ -225,10 +226,7 @@ function() {
         var ind2 = this.addr[1];
       }
       if(self.addr.length == 1) {
-        if(TutorialDirectory[ind1].contents) {
-          self.addr = [ind1, 0];
-        }
-        else if(TutorialDirectory[ind1 - 1]) {
+        if(TutorialDirectory[ind1 - 1]) {
           self.addr = [ind1-1];
         }
       }
@@ -241,31 +239,10 @@ function() {
         }
       }
       if(this.addr.length == 2) {
-        this.showSlide(TutorialDirectory[this.addr[0]].contents[this.addr[1]]);
+        this.chooseSlide(this.addr, false);
       }
       else {
-        this.showSlide(TutorialDirectory[this.addr[0]]);
-      }
-    },
-
-    keyhandler: function (e) {
-      var self = this;
-      switch(e.keyCode) {
-        case 39:
-        case 40:
-         self.selectNext();
-         self.chooseSlide(self.addr, false);
-         e.preventDefault();
-         break;
-        case 37:
-        case 38:
-         self.selectPrevious();
-         self.chooseSlide(self.addr, false);
-         e.preventDefault();
-         break;
-        case 27:
-         self.closeModal();
-         break;
+        this.chooseSlide(this.addr, false);
       }
     },
 
