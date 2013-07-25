@@ -46,7 +46,7 @@ function(AnalyticsView, SimpleModalView) {
     },
 
     showFeedback: function(e) {
-      v1.showTutorial([7]);
+      v1.showTutorial([8]);
       e.preventDefault();
     }
 
