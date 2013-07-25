@@ -35,8 +35,8 @@ DATABASES = {
 }
 
 # Production/Live keys for Stripe
-# STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_fY9VBkCmjBQLk621M0ya73gL")
-# STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_live_QcJadrTVAXeC3DrotELf02KJ")
+#STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_fY9VBkCmjBQLk621M0ya73gL")
+#STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_live_QcJadrTVAXeC3DrotELf02KJ")
 
 WSGI_APPLICATION = 'wsgi.prod_wsgi.application'
 DEPLOYMENT_HOSTNAME = 'deployment.appcubator.com'
