@@ -4,5 +4,6 @@
 venv
 tempdb
 dist_static
+*.DS_STORE
 *~
 \#*#

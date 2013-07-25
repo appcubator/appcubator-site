@@ -4,7 +4,7 @@ define([
   'backbone',
   'https://checkout.stripe.com/v2/checkout.js'
 ],
-  function(SimpleDialogueView) {
+  function(SimpleModalView) {
 
     var Striper = Backbone.View.extend({
 
@@ -18,7 +18,24 @@ define([
 
       bindPayment: function(selector, formId) {
         var self = this;
-        $(selector).on('click', {token: this.token, formId: formId}, this.checkoutOpen);
+        this.action = formId;
+        console.log(formId);
+
+        $(selector).on('click', {token: this.token, formId: formId}, function(e, data) {
+          if(formId === 'cancel-form') {
+            $.ajax({
+                 type: 'POST',
+                 url: '/payments/a/cancel/',
+                 data: {},
+                 success: function(data, statusStr, xhr) {
+                  self.showCancelModal(data);
+                }
+              });
+          }
+          else {
+            self.checkoutOpen(e, data);
+          }
+        });
       },
 
       checkoutOpen: function(e) {
@@ -36,12 +53,20 @@ define([
         var self = this;
         var form = this.form;
         this.form.find("input[name=stripe_token]").val(result.id);
+        var url = '';
+        switch(this.action) {
+          case 'cancel-form':
+            url = '/payments/a/cancel/';
+          default:
+            url = '/payments/a/subscribe/';
+        }
         $.ajax({
              type: 'POST',
-             url: '/payments/a/subscribe/',
+             url: url,
              data: this.form.serialize(),
              success: function(data, statusStr, xhr) {
               form.remove();
+              debugger;
               self.showPlanSuccessModal();
             }
         });
@@ -49,7 +74,15 @@ define([
 
       showPlanSuccessModal: function() {
         var self = this;
-        var modal = new SimpleDialogueView({ txt: "Thank you! Your payment has been received and your preferences has been saved."});
+        var modal = new SimpleModalView({ text: "Thank you! Your payment has been received and your preferences has been saved."});
+        modal.onClose = function() {
+          self.onSuccess.call();
+        };
+      },
+
+      showCancelModal: function(data) {
+        var self = this;
+        var modal = new SimpleModalView({ text: data.html });
         modal.onClose = function() {
           self.onSuccess.call();
         };

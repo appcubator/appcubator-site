@@ -21,6 +21,7 @@
                         <div class="alert alert-warning lead">
                             Your subscription has been <strong>canceled</strong> but you can continue to use the site for another <strong>{{ subscription.current_period_end|timeuntil }}</strong>.
                         </div>
+                        <a href="/payments/subscribe/" class="btn btn-info">Click here to Re-Subscribe</a>
                     {% else %}
                         <div class="alert alert-danger lead">
                             Your subscription has been <strong>canceled</strong>.
