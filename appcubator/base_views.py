@@ -238,7 +238,7 @@ def send_invitation_to_customer(request, customer_pk):
     if request.POST['subject']:
         subject = request.POST['subject']
 
-    template_context = {"text" : html}
+    template_context = {"text" : text}
     send_template_email("team@appcubator.com", customer.email, subject, "emails/base_boxed_basic_query.html", template_context)
     customer.sent_welcome_email = True
     customer.save()
