@@ -326,13 +326,12 @@ function() {
         $('.bottom-arrow').fadeIn();
       }
     },
-
-<<<<<<< HEAD
     slideDown: function() {
       this.$el.find('#tutorial-menu-list').animate({
         scrollTop: '32'
       }, 200);
-=======
+    },
+
     prevBtnClicked: function(e) {
       e.preventDefault();
       this.selectPrevious();
@@ -341,7 +340,6 @@ function() {
     nextBtnClicked: function(e) {
       e.preventDefault();
       this.selectNext();
->>>>>>> master
     }
 
   });
