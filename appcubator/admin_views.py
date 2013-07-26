@@ -127,7 +127,7 @@ def active_users_json(request, t_start, t_end, t_delta):
     tempEnd = tempStart + delta
     data = {}
     while tempEnd < end:
-        data[tempEnd.strftime("%m/%d/%y")] = num_active_users(tempStart, tempEnd)
+        data[tempStart.strftime("%m/%d/%y")] = num_active_users(tempStart, tempEnd)
         tempStart = tempEnd
         tempEnd = tempEnd + delta
     return HttpResponse(json.dumps(data), mimetype="application/json")
@@ -212,7 +212,6 @@ def num_active_users(min, max=datetime.now()):
     # default starting date july 13, 2013
     if(min is None):
         min = datetime.date(2013, 7, 13)
-    day_ago = max - timedelta(days=1)
     return pageviews(min, max).values('user_id').distinct().count()
 
 # total number of deployed apps
