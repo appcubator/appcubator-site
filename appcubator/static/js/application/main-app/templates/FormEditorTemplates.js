@@ -81,7 +81,7 @@ FormEditorTemplates.template = [
   '<div class="add-field-panel"><div class="btn add-field-button"><span class="icon"></span>Add a New Field</div></div>',
   '<div class="action-panel panel">',
   '</div>',
-  '<div class="bottom-sect"><div class="q-mark"></div><div class="btn">Done</div></div>'
+  '<div class="bottom-sect"><div class="q-mark"></div><div class="btn done">Done</div></div>'
 ].join('\n');
 
 FormEditorTemplates.actionPane = [
@@ -220,7 +220,7 @@ FormEditorTemplates.routeTemplate = [
     '<span><strong><%= route.get("role") %></strong> goes to </span>',
     '<select class="redirect-page" id="redirect-select-<%= route.cid %>">',
       '<% _(pages).each(function(page) { var selected = ""; if("internal://"+page.name == route.get("redirect")) { selected = "selected"; } %>',
-      '<option value="internal://<%= page.name %>" <%= selected %>><%= page.name %></option>',
+      '<option value="<%= page.val %>" <%= selected %>><%= page.name %></option>',
       '<% }); %>',
     '</select>',
   '</div>'

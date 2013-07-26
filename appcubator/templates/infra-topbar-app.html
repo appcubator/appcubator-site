@@ -34,7 +34,7 @@
               <li><a href="{% url appcubator.views.app_page app.id %}info/">
                 <span class="icon"></span>App settings</a>
               </li>
-                {% if user.is_superuser %}
+                {% if user.is_superuser and app.pk %}
                 <li><a href="{% url appcubator.admin_views.admin_app app.pk %}"><span class="icon"></span>Admin</a></li>
                 {% endif %}
               {% endif %}

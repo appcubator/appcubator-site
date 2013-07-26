@@ -30,6 +30,8 @@ urlpatterns = patterns('',
     url(r'^whatisthis/$',               base_views.marketing),
     url(r'^signup_form/$',              base_views.signup_new_customer),
     url(r'^signup_hn_form/$',           base_views.signup_hn_customer),
+    url(r'^signup_dn_form/$',           base_views.signup_dn_customer),
+    url(r'^signup_gsb_form/$',          base_views.signup_gsb_customer),
     url(r'^send_invitation/(\d+)/$',    base_views.send_invitation_to_customer),
     url(r'^backend/',                   include('app_builder.urls')),
     url(r'^payments/',                  include('appcubator.payments.urls')),
@@ -112,6 +114,8 @@ urlpatterns += patterns('appcubator.admin_views',
     url(r'^stay/up/to/get/lucky/apps/(\d+)$', 'admin_app'),
     url(r'^stay/up/to/get/lucky/apps/$', 'admin_apps'),
     url(r'^stay/up/to/get/lucky/feedback/$', 'admin_feedback'),
+    url(r'^stay/up/to/get/lucky/graphs/$', 'admin_graphs'),
+    url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json')
 )
 
 urlpatterns += patterns('appcubator.theme_views',

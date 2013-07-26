@@ -1,4 +1,5 @@
-@import "grid.css";
+@import "grid";
+@import "animate";
 @import "mixins";
 
 body {
@@ -489,6 +490,228 @@ hr {
 }
 
 /*
+ * POPOVERS ON POPOVERS ON POPOVERS
+ */
+.popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3001;
+  display: none;
+  width: 236px;
+  padding: 1px;
+  text-align: left;
+  white-space: normal;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+
+/*  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);*/
+
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
+}
+
+@-webkit-keyframes top-down {
+  0%   {
+    margin-top: -30px;
+
+   }
+  100% {
+    margin-top: -10px;
+  }
+}
+
+@-webkit-keyframes down-top {
+  0%   {
+    margin-top: 30px;
+   }
+  100% {
+    margin-top: 10px;
+  }
+}
+
+@-webkit-keyframes left-right {
+  0%   {
+    margin-left: -30px;
+
+   }
+  100% {
+    margin-left: -10px;
+  }
+}
+
+@-webkit-keyframes right-left {
+  0%   {
+    margin-left: 30px;
+   }
+  100% {
+    margin-left: 10px;
+  }
+}
+
+
+
+.popover.visible {
+  opacity: 1;
+}
+
+.popover.top {
+  margin-top: -10px;
+
+  animation: top-down 0.2s; /* IE 10+ */
+  -webkit-animation: top-down 0.2s;
+}
+
+.popover.right {
+  margin-left: 10px;
+  animation: right-left 0.2s; /* IE 10+ */
+  -webkit-animation: right-left 0.2s;
+}
+
+.popover.bottom {
+  margin-top: 10px;
+  animation: down-top 0.2s; /* IE 10+ */
+  -webkit-animation: down-top 0.2s;
+}
+
+.popover.left {
+  margin-left: -10px;
+  animation: left-right 0.2s; /* IE 10+ */
+  -webkit-animation: left-right 0.2s;
+}
+
+.popover-title {
+  padding: 8px 14px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 18px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ebebeb;
+  border-radius: 5px 5px 0 0;
+}
+
+.popover-content {
+  padding: 9px 14px;
+}
+
+.popover .arrow,.popover .arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.popover .arrow {
+  border-width: 11px;
+}
+
+.popover .arrow:after {
+  border-width: 10px;
+  content: "";
+}
+
+.popover.top .arrow {
+  bottom: -11px;
+  left: 50%;
+  margin-left: -11px;
+  border-top-color: #999;
+  border-top-color: rgba(0, 0, 0, 0.25);
+  border-bottom-width: 0;
+}
+
+.popover.top .arrow:after {
+  bottom: 1px;
+  margin-left: -10px;
+  border-top-color: #ffffff;
+  border-bottom-width: 0;
+}
+
+.popover.right .arrow {
+  top: 50%;
+  left: -11px;
+  margin-top: -11px;
+  border-right-color: #999;
+  border-right-color: rgba(0, 0, 0, 0.25);
+  border-left-width: 0;
+}
+
+.popover.right .arrow:after {
+  bottom: -10px;
+  left: 1px;
+  border-right-color: #ffffff;
+  border-left-width: 0;
+}
+
+.popover.bottom .arrow {
+  top: -11px;
+  left: 50%;
+  margin-left: -11px;
+  border-bottom-color: #999;
+  border-bottom-color: rgba(0, 0, 0, 0.25);
+  border-top-width: 0;
+}
+
+.popover.bottom .arrow:after {
+  top: 1px;
+  margin-left: -10px;
+  border-bottom-color: #ffffff;
+  border-top-width: 0;
+}
+
+.popover.left .arrow {
+  top: 50%;
+  right: -11px;
+  margin-top: -11px;
+  border-left-color: #999;
+  border-left-color: rgba(0, 0, 0, 0.25);
+  border-right-width: 0;
+}
+
+.popover.left .arrow:after {
+  right: 1px;
+  bottom: -10px;
+  border-left-color: #ffffff;
+  border-right-width: 0;
+}
+
+.popover .tour-container {
+  padding: 10px;
+}
+
+.popover .tour-buttons {
+  min-height: 40px;
+}
+
+.popover .label {
+  font-weight: normal;
+}
+
+.popover {
+  border: 2px solid #c95446;
+  border-radius: 6px;
+
+/*  -webkit-box-shadow: 0 5px 10px rgba(200, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(200, 0, 0, 0.2);*/
+}
+
+.popover.left .arrow {
+  border-left-color: rgba(200, 0, 0, 0.4);
+}
+
+.tour-container h3 {
+  font-size: 18px;
+  margin: 0 8px 4px 8px;
+  line-height: 24px;
+}
+
+/*
  * WELLS ON WELLS ON WELLS
  */
 .well {
@@ -623,6 +846,9 @@ legend + .control-group {
   -webkit-margin-top-collapse: separate;
 }
 
+/*
+ * FORM-HORIZONTAL
+ */
 .form-horizontal .control-group {
   margin-bottom: 20px;
   *zoom: 1;
@@ -659,6 +885,38 @@ legend + .control-group {
 .form-horizontal .help-block {
   margin-bottom: 0;
 }
+
+.form-horizontal input + .help-block,.form-horizontal select + .help-block,.form-horizontal textarea + .help-block,.form-horizontal .uneditable-input + .help-block,.form-horizontal .input-prepend + .help-block,.form-horizontal .input-append + .help-block {
+  margin-top: 10px;
+}
+
+.form-horizontal .form-actions {
+  padding-left: 180px;
+}
+
+/*
+ * FORM-SEARCH
+ */
+.form-search .input-append .search-query,.form-search .input-prepend .search-query {
+  border-radius: 0;
+}
+
+.form-search .input-append .search-query {
+  border-radius: 14px 0 0 14px;
+}
+
+.form-search .input-append .btn {
+  border-radius: 0 14px 14px 0;
+}
+
+.form-search .input-prepend .search-query {
+  border-radius: 0 14px 14px 0;
+}
+
+.form-search .input-prepend .btn {
+  border-radius: 14px 0 0 14px;
+}
+
 .form-search input,.form-inline input,.form-horizontal input,.form-search textarea,.form-inline textarea,.form-horizontal textarea,.form-search select,.form-inline select,.form-horizontal select,.form-search .help-inline,.form-inline .help-inline,.form-horizontal .help-inline,.form-search .uneditable-input,.form-inline .uneditable-input,.form-horizontal .uneditable-input,.form-search .input-prepend,.form-inline .input-prepend,.form-horizontal .input-prepend,.form-search .input-append,.form-inline .input-append,.form-horizontal .input-append {
   display: inline-block;
   *display: inline;
@@ -671,12 +929,24 @@ legend + .control-group {
   display: none;
 }
 
-.form-horizontal input + .help-block,.form-horizontal select + .help-block,.form-horizontal textarea + .help-block,.form-horizontal .uneditable-input + .help-block,.form-horizontal .input-prepend + .help-block,.form-horizontal .input-append + .help-block {
-  margin-top: 10px;
+.form-search label,.form-inline label,.form-search .btn-group,.form-inline .btn-group {
+  display: inline-block;
 }
 
-.form-horizontal .form-actions {
-  padding-left: 180px;
+.form-search .input-append,.form-inline .input-append,.form-search .input-prepend,.form-inline .input-prepend {
+  margin-bottom: 0;
+}
+
+.form-search .radio,.form-search .checkbox,.form-inline .radio,.form-inline .checkbox {
+  padding-left: 0;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+.form-search .radio input[type="radio"],.form-search .checkbox input[type="checkbox"],.form-inline .radio input[type="radio"],.form-inline .checkbox input[type="checkbox"] {
+  float: left;
+  margin-right: 3px;
+  margin-left: 0;
 }
 
 /*

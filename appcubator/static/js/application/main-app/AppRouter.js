@@ -1,15 +1,14 @@
-
 define([
-		"mixins/SimpleModalView",
-		"mixins/ErrorDialogueView",
-		"tutorial/TutorialView",
-		"app/emails/EmailsView",
-		"app/DeployView",
-		"mixins/SimpleDialogueView",
-		"backbone",
-		"bootstrap",
-		"util",
-		"comp"
+        "mixins/SimpleModalView",
+        "mixins/ErrorDialogueView",
+        "tutorial/TutorialView",
+        "app/emails/EmailsView",
+        "app/DeployView",
+        "mixins/SimpleDialogueView",
+        "backbone",
+        "bootstrap",
+        "util",
+        "comp"
 ], function(SimpleModalView,
           ErrorDialogueView,
           TutorialView,
@@ -17,297 +16,310 @@ define([
           DeployView,
           SimpleDialogueView) {
 
-	var AppRouter = Backbone.Router.extend({
+    var AppRouter = Backbone.Router.extend({
 
-		routes: {
-			"app/:appid/info/(:tutorial/)"     : "info",
-			"app/:appid/tables/(:tutorial/)"   : "tables",
-			"app/:appid/gallery/(:tutorial/)"  : "themes",
-			"app/:appid/pages/(:tutorial/)"    : "pages",
-			"app/:appid/editor/:pageid/"       : "editor",
-			"app/:appid/mobile-editor/:pageid/": "mobileEditor",
-			"app/:appid/emails/(:tutorial/)"   : "emails",
-			"app/:appid/(:tutorial/)"          : "index",
-			"app/:appid/*anything/"            : "index"
-		},
+        routes: {
+            "app/:appid/info/(:tutorial/)"     : "info",
+            "app/:appid/tables/(:tutorial/)"   : "tables",
+            "app/:appid/gallery/(:tutorial/)"  : "themes",
+            "app/:appid/pages/(:tutorial/)"    : "pages",
+            "app/:appid/editor/:pageid/"       : "editor",
+            "app/:appid/mobile-editor/:pageid/": "mobileEditor",
+            "app/:appid/emails/(:tutorial/)"   : "emails",
+            "app/:appid/(:tutorial/)"          : "index",
+            "app/:appid/*anything/"            : "index"
+        },
 
-		tutorialDirectory: [0],
+        tutorialDirectory: [0],
 
-		initialize: function() {
-			var self = this;
-			AppRouter.view = null;
-			_.bindAll(this);
-			$('#save').on('click', this.save);
-			$('#tutorial').on('click', function(e) {
-				self.showTutorial();
-				window.history.pushState(null, null, window.location.href.concat("tutorial/"));
-			});
+        initialize: function() {
+            var self = this;
+            AppRouter.view = null;
+            _.bindAll(this);
+            $('#save').on('click', this.save);
+            $('#tutorial').on('click', function(e) {
+                self.showTutorial();
+                window.history.pushState(null, null, window.location.href.concat("tutorial/"));
+            });
 
       keyDispatcher.bindComb('meta+s', this.save);
       keyDispatcher.bindComb('ctrl+s', this.save);
 
       var autoSave = setInterval(this.save, 30000);
-		},
+        },
 
-		index: function (appId, tutorial) {
-			var self = this;
-			require(['app/OverviewPageView'], function(OverviewPageView){
-				self.tutorialDirectory = [0];
-				self.changePage(OverviewPageView, {}, function() {
-					if(tutorial) {
-						self.showTutorial();
-					}
-				});
-				olark('api.box.show');
-			});
-		},
+        index: function (appId, tutorial) {
+            var self = this;
+            require(['app/OverviewPageView'], function(OverviewPageView){
+                self.tutorialDirectory = [0];
+                self.changePage(OverviewPageView, {}, function() {
+                    if(tutorial) {
+                        self.showTutorial();
+                    }
+                });
+                olark('api.box.show');
+            });
+        },
 
-		info: function(appId, tutorial) {
-			var self = this;
-			require(['app/AppInfoView'], function(InfoView){
-				self.tutorialDirectory = [7];
-				self.changePage(InfoView, {}, function() {
-					$('.menu-app-info').addClass('active');
-					if(tutorial) {
-						self.showTutorial();
-					}
-				});
-				olark('api.box.show');
-			});
-		},
+        info: function(appId, tutorial) {
+            var self = this;
+            require(['app/AppInfoView'], function(InfoView){
+                self.tutorialDirectory = [7];
+                self.changePage(InfoView, {}, function() {
+                    $('.menu-app-info').addClass('active');
+                    if(tutorial) {
+                        self.showTutorial();
+                    }
+                });
+                olark('api.box.show');
+            });
+        },
 
-		tables: function(appId, tutorial) {
-			var self = this;
-			require(['app/entities/EntitiesView'], function(EntitiesView){
-				self.tutorialDirectory = [1];
-				self.changePage(EntitiesView, {}, function() {
-					self.trigger('entities-loaded');
-					$('.menu-app-entities').addClass('active');
-					if(tutorial) {
-						self.showTutorial();
-					}
-				});
-				olark('api.box.show');
-			});
-		},
+        tables: function(appId, tutorial) {
+            var self = this;
+            require(['app/entities/EntitiesView'], function(EntitiesView){
+                self.tutorialDirectory = [1];
+                self.changePage(EntitiesView, {}, function() {
+                    self.trigger('entities-loaded');
+                    $('.menu-app-entities').addClass('active');
+                    if(tutorial) {
+                        self.showTutorial();
+                    }
+                });
+                olark('api.box.show');
+            });
+        },
 
-		themes: function(appId, tutorial) {
-			var self = this;
-			self.tutorialDirectory = [4];
-			require(['app/ThemesGalleryView'], function(ThemesGalleryView){
-				self.changePage(ThemesGalleryView, {}, function() {
-					self.trigger('themes-loaded');
-					$('.menu-app-themes').addClass('active');
-					if(tutorial) {
-						self.showTutorial();
-					}
-				});
-				olark('api.box.show');
-			});
-		},
+        themes: function(appId, tutorial) {
+            var self = this;
+            self.tutorialDirectory = [4];
+            require(['app/ThemesGalleryView'], function(ThemesGalleryView){
+                self.changePage(ThemesGalleryView, {}, function() {
+                    self.trigger('themes-loaded');
+                    $('.menu-app-themes').addClass('active');
+                    if(tutorial) {
+                        self.showTutorial();
+                    }
+                });
+                olark('api.box.show');
+            });
+        },
 
-		pages: function(appId, tutorial) {
-			var self = this;
-			self.tutorialDirectory = [2];
-			require(['app/pages/PagesView'], function(PagesView){
-				$('.page').fadeIn();
-				self.changePage(PagesView, {}, function() {
-					self.trigger('pages-loaded');
-					$('.menu-app-pages').addClass('active');
-					if(tutorial) {
-						self.showTutorial();
-					}
-				});
-				olark('api.box.show');
-			});
-		},
+        pages: function(appId, tutorial) {
+            var self = this;
+            self.tutorialDirectory = [2];
+            require(['app/pages/PagesView'], function(PagesView){
+                $('.page').fadeIn();
+                self.changePage(PagesView, {}, function() {
+                    self.trigger('pages-loaded');
+                    $('.menu-app-pages').addClass('active');
+                    if(tutorial) {
+                        self.showTutorial();
+                    }
+                });
+                olark('api.box.show');
+            });
+        },
 
-		editor: function(appId, pageId) {
-			var self = this;
-			self.tutorialDirectory = [3];
-			require(['editor/EditorView'], function(EditorView){
-				$('.page').fadeOut();
-				if(AppRouter.view) AppRouter.view.close();
-				var cleanDiv = document.createElement('div');
-				cleanDiv.className = "clean-div editor-page";
-				$(document.body).append(cleanDiv);
+        editor: function(appId, pageId) {
+            var self = this;
+            self.tutorialDirectory = [3];
+            require(['editor/EditorView'], function(EditorView){
+                $('.page').fadeOut();
+                if(AppRouter.view) AppRouter.view.close();
+                var cleanDiv = document.createElement('div');
+                cleanDiv.className = "clean-div editor-page";
+                $(document.body).append(cleanDiv);
 
-				AppRouter.view  = new EditorView({pageId: pageId});
-				AppRouter.view.setElement(cleanDiv).render();
+                AppRouter.view  = new EditorView({pageId: pageId});
+                AppRouter.view.setElement(cleanDiv).render();
 
-				self.trigger('editor-loaded');
+                self.trigger('editor-loaded');
 
-				olark('api.box.hide');
-				self.changeTitle(AppRouter.view.title);
-			});
-		},
+                olark('api.box.hide');
+                self.changeTitle(AppRouter.view.title);
+            });
+        },
 
-		mobileEditor: function(appId, pageId) {
-			var self = this;
-			$('.page').fadeOut();
-			self.tutorialDirectory = [3];
-			require(['m-editor/MobileEditorView'], function(MobileEditorView){
-				if(AppRouter.view) AppRouter.view.close();
-				var cleanDiv = document.createElement('div');
-				cleanDiv.className = "clean-div editor-page";
-				$(document.body).append(cleanDiv);
+        mobileEditor: function(appId, pageId) {
+            var self = this;
+            $('.page').fadeOut();
+            self.tutorialDirectory = [3];
+            require(['m-editor/MobileEditorView'], function(MobileEditorView){
+                if(AppRouter.view) AppRouter.view.close();
+                var cleanDiv = document.createElement('div');
+                cleanDiv.className = "clean-div editor-page";
+                $(document.body).append(cleanDiv);
 
-				AppRouter.view  = new MobileEditorView({pageId: pageId});
-				AppRouter.view.setElement(cleanDiv).render();
+                AppRouter.view  = new MobileEditorView({pageId: pageId});
+                AppRouter.view.setElement(cleanDiv).render();
 
-				olark('api.box.hide');
-				self.changeTitle(AppRouter.view.title);
-			});
-		},
+                olark('api.box.hide');
+                self.changeTitle(AppRouter.view.title);
+            });
+        },
 
-		emails: function(appId, tutorial) {
-			var self = this;
-			self.tutorialDirectory = [6];
-			this.changePage(EmailsView, {}, function() {
-				$('.menu-app-emails').addClass('active');
-				if(tutorial) {
-					self.showTutorial();
-				}
-			});
-		},
+        emails: function(appId, tutorial) {
+            var self = this;
+            self.tutorialDirectory = [6];
+            this.changePage(EmailsView, {}, function() {
+                $('.menu-app-emails').addClass('active');
+                if(tutorial) {
+                    self.showTutorial();
+                }
+            });
+        },
 
-		changePage: function(newView, viewOptions, post_render) {
-			if(AppRouter.view) AppRouter.view.close();
-			var cleanDiv = document.createElement('div');
-			cleanDiv.className = "clean-div";
-			var mainContainer = document.getElementById('main-container');
-			mainContainer.appendChild(cleanDiv);
+        changePage: function(newView, viewOptions, post_render) {
+            if(AppRouter.view) AppRouter.view.close();
+            var cleanDiv = document.createElement('div');
+            cleanDiv.className = "clean-div";
+            var mainContainer = document.getElementById('main-container');
+            mainContainer.appendChild(cleanDiv);
 
-			AppRouter.view = new newView(viewOptions);
-			AppRouter.view.setElement(cleanDiv).render();
-			$('.active').removeClass('active');
-			this.changeTitle(AppRouter.view.title);
-			$("html, body").animate({ scrollTop: 0 });
-			$('.page').fadeIn();
-			$('.pull-right.dropd').removeClass('open');
-			post_render.call();
-		},
+            AppRouter.view = new newView(viewOptions);
+            AppRouter.view.setElement(cleanDiv).render();
+            $('.active').removeClass('active');
+            this.changeTitle(AppRouter.view.title);
+            $("html, body").animate({ scrollTop: 0 });
+            $('.page').fadeIn();
+            $('.pull-right.dropd').removeClass('open');
+            post_render.call();
+        },
 
-		deploy: function(callback) {
-				var before_deploy = new Date().getTime();
-				$.ajax({
-					type: "POST",
-					url: '/app/'+appId+'/deploy/',
-					success: function(data) {
-						var deploy_time = (new Date().getTime() - before_deploy)/1000;
-						if(callback) callback();
+        deploy: function(callback) {
+                var before_deploy = new Date().getTime();
+                $.ajax({
+                    type: "POST",
+                    url: '/app/'+appId+'/deploy/',
+                    success: function(data) {
+                        var deploy_time = (new Date().getTime() - before_deploy)/1000;
+                        if(callback) callback();
             // open a modal based on deploy response
-						if(data.errors) {
-							var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-							if(DEBUG) {
-								content = { text: data.errors };
-							}
-							new ErrorDialogueView(content);
-							util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.errors}, appId);
-						}
-						else {
+                        if(data.errors) {
+                            var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+                            if(DEBUG) {
+                                content = { text: data.errors };
+                            }
+                            new ErrorDialogueView(content);
+                            util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.errors}, appId);
+                        }
+                        else {
               new DeployView(data);
               util.log_to_server('deployed app', {status: 'success', deploy_time: deploy_time + " seconds"}, appId);
-						}
-					},
-					error: function(data) {
-						var deploy_time = (new Date().getTime() - before_deploy)/1000;
-						var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-						if(DEBUG) {
-							content = { text: data.responseText };
-						}
-						new ErrorDialogueView(content);
-						util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.responseText}, appId);
-					},
-					dataType: "JSON"
-				});
-		},
+                        }
+                    },
+                    error: function(data) {
+                        var deploy_time = (new Date().getTime() - before_deploy)/1000;
+                        var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+                        if(DEBUG) {
+                            content = { text: data.responseText };
+                        }
+                        new ErrorDialogueView(content);
+                        util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.responseText}, appId);
+                    },
+                    dataType: "JSON"
+                });
+        },
 
-		save: function(e) {
-			if(v1.errorFlag) return;
-			if(appId === 0) return;
+        save: function(e) {
+            if(v1.errorFlag === true) return;
+            if(appId === 0) return;
 
-			$('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
-			var $el = $('.menu-button.save');
+            $('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
+            var $el = $('.menu-button.save');
             $el.fadeOut().html("<span>Saving...</span>").fadeIn();
 
-      var self = this;
-			appState = v1State.toJSON();
-			$.ajax({
-				type: "POST",
-				url: '/app/'+appId+'/state/',
-				data: JSON.stringify(appState),
-				success: function() {
-					util.dontAskBeforeLeave();
-					is_deployed = 1;
-					v1.errorFlag = true;
-					self.trigger('deploy');
-					$('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
-					var timer = setTimeout(function(){
-						$('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
-						clearTimeout(timer);
-					},1000);
+            var self = this;
+            appState = v1State.toJSON();
 
-					$('.menu-button.save').html("<span>Saved</span>").fadeIn();
+            var successHandler = function() {
+                util.dontAskBeforeLeave();
+                v1.errorFlag = false;
 
-          if(typeof(callback) !== 'undefined'&&typeof(callback) == 'function') {
-						callback();
-          }
-          var timer2 = setTimeout(function(){
-            $el.html("<span>Save</span>").fadeIn();
-            clearTimeout(timer2);
-          }, 3000);
+                self.trigger('deploy');
 
-				},
-				error: function(data) {
-					var self = this;
-					if(data.responseText == "ok") return;
-					v1.errorFlag = true;
-					var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-					if(DEBUG) {
-						content = { text: data.responseText };
-					}
+                $('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
+                var timer = setTimeout(function(){
+                    $('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
+                    clearTimeout(timer);
+                }, 1000);
+                $('.menu-button.save').html("<span>Saved</span>").fadeIn();
 
-					new ErrorDialogueView(content, function() {
-						v1.errorFlag = false;
-					});
-				},
-				dataType: "JSON"
-			});
+                if( (typeof(callback) !== 'undefined') && (typeof(callback) == 'function') ) {
+                    callback();
+                }
 
-			if(e) e.preventDefault();
-			return false;
-		},
+                var timer2 = setTimeout(function(){
+                    $el.html("<span>Save</span>").fadeIn();
+                    clearTimeout(timer2);
+                }, 3000);
+            };
+            var softErrorHandler = function(jqxhr) {
+                var data = JSON.parse(jqxhr.responseText);
+                v1.errorFlag = true;
+                var content = { text: "Warning: " + data.message + ' We saved your progress, but you need to fix this before deploying again. FYI, this occurred in ' + data.path + '.' };
+                new ErrorDialogueView(content, function() { v1.errorFlag = false;});
+            };
+            var hardErrorHandler = function(jqxhr) {
+                v1.errorFlag = true;
+                var content = "";
+                if(DEBUG)
+                    content = { text: jqxhr.responseText };
+                else
+                    content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+                new ErrorDialogueView(content, function() { v1.errorFlag = false; });
+            };
 
-		showTutorial: function(dir) {
-			var inp = (dir) ? [dir] : this.tutorialDirectory;
-			tutorial = new TutorialView(inp);
-		},
+            // for now, no difference
+            var notFoundHandler = hardErrorHandler;
 
-		betaCheck: function(data) {
-			if(data.percentage > 30 && data.feedback === true) {
-				$('.notice').css('height', '118px');
-				$('.notice').html('<h3 class="">Thank you for joining Appcubator Private Beta program!</h3><div>You can claim your free domain from <a class="menu-app-info">Domain & SEO</a> page.</div>');
-				v1.menuBindings();
-			}
+            $.ajax({
+                type: "POST",
+                url: '/app/'+appId+'/state/',
+                data: JSON.stringify(appState),
+                statusCode: {
+                    200: successHandler,
+                    400: softErrorHandler,
+                    500: hardErrorHandler,
+                    404: notFoundHandler,
+                },
+                dataType: "JSON"
+            });
 
-			if(data.percentage > 30) {
-				$('#tutorial-check').prop('checked', true);
-			}
-			if(data.feedback === true) {
-				$('#feedback-check').prop('checked', true);
-			}
-		},
+            if(e) e.preventDefault();
+            return false;
+        },
 
-		changeTitle: function(title) {
-			var newTitle = "";
-			if(title) {
-				newTitle = " | " + title;
-			}
-			document.title = "Appcubator" + newTitle;
-		}
-	});
+        showTutorial: function(dir) {
+            var inp = (dir) ? [dir] : this.tutorialDirectory;
+            tutorial = new TutorialView(inp);
+        },
 
-	return AppRouter;
+        betaCheck: function(data) {
+            if(data.percentage > 30 && data.feedback === true) {
+                $('.notice').css('height', '118px');
+                $('.notice').html('<h3 class="">Thank you for joining Appcubator Private Beta program!</h3><div>You can claim your free domain from <a class="menu-app-info">Domain & SEO</a> page.</div>');
+                v1.menuBindings();
+            }
+
+            if(data.percentage > 30) {
+                $('#tutorial-check').prop('checked', true);
+            }
+            if(data.feedback === true) {
+                $('#feedback-check').prop('checked', true);
+            }
+        },
+
+        changeTitle: function(title) {
+            var newTitle = "";
+            if(title) {
+                newTitle = " | " + title;
+            }
+            document.title = "Appcubator" + newTitle;
+        }
+    });
+
+    return AppRouter;
 
 });
