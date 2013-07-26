@@ -230,46 +230,59 @@ define([
             var $el = $('.menu-button.save');
             $el.fadeOut().html("<span>Saving...</span>").fadeIn();
 
-      var self = this;
+            var self = this;
             appState = v1State.toJSON();
+
+            var successHandler = function() {
+                util.dontAskBeforeLeave();
+                v1.errorFlag = false;
+
+                self.trigger('deploy');
+
+                $('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
+                var timer = setTimeout(function(){
+                    $('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
+                    clearTimeout(timer);
+                }, 1000);
+                $('.menu-button.save').html("<span>Saved</span>").fadeIn();
+
+                if( (typeof(callback) !== 'undefined') && (typeof(callback) == 'function') ) {
+                    callback();
+                }
+
+                var timer2 = setTimeout(function(){
+                    $el.html("<span>Save</span>").fadeIn();
+                    clearTimeout(timer2);
+                }, 3000);
+            };
+            var softErrorHandler = function(jqxhr) {
+                var data = JSON.parse(jqxhr.responseText);
+                v1.errorFlag = true;
+                var content = { text: "Warning: " + data.message + ' We saved your progress, but you need to fix this before deploying again. FYI, this occurred in ' + data.path + '.' };
+                new ErrorDialogueView(content, function() { v1.errorFlag = false;});
+            };
+            var hardErrorHandler = function(jqxhr) {
+                v1.errorFlag = true;
+                var content = "";
+                if(DEBUG)
+                    content = { text: jqxhr.responseText };
+                else
+                    content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+                new ErrorDialogueView(content, function() { v1.errorFlag = false; });
+            };
+
+            // for now, no difference
+            var notFoundHandler = hardErrorHandler;
+
             $.ajax({
                 type: "POST",
                 url: '/app/'+appId+'/state/',
                 data: JSON.stringify(appState),
-                success: function() {
-                    util.dontAskBeforeLeave();
-                    is_deployed = 1;
-                    v1.errorFlag = false;
-                    self.trigger('deploy');
-                    $('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
-                    var timer = setTimeout(function(){
-                        $('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
-                        clearTimeout(timer);
-                    },1000);
-
-                    $('.menu-button.save').html("<span>Saved</span>").fadeIn();
-
-          if(typeof(callback) !== 'undefined'&&typeof(callback) == 'function') {
-                        callback();
-          }
-          var timer2 = setTimeout(function(){
-            $el.html("<span>Save</span>").fadeIn();
-            clearTimeout(timer2);
-          }, 3000);
-
-                },
-                error: function(data) {
-                    var self = this;
-                    if(data.responseText == "ok") return;
-                    v1.errorFlag = true;
-                    var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-                    if(DEBUG) {
-                        content = { text: data.responseText };
-                    }
-
-                    new ErrorDialogueView(content, function() {
-                        v1.errorFlag = false;
-                    });
+                statusCode: {
+                    200: successHandler,
+                    400: softErrorHandler,
+                    500: hardErrorHandler,
+                    404: notFoundHandler,
                 },
                 dataType: "JSON"
             });
