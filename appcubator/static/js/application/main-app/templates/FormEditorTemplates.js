@@ -220,7 +220,7 @@ FormEditorTemplates.routeTemplate = [
     '<span><strong><%= route.get("role") %></strong> goes to </span>',
     '<select class="redirect-page" id="redirect-select-<%= route.cid %>">',
       '<% _(pages).each(function(page) { var selected = ""; if("internal://"+page.name == route.get("redirect")) { selected = "selected"; } %>',
-      '<option value="internal://<%= page.name %>" <%= selected %>><%= page.name %></option>',
+      '<option value="<%= page.val %>" <%= selected %>><%= page.name %></option>',
       '<% }); %>',
     '</select>',
   '</div>'
