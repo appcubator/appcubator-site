@@ -2,6 +2,8 @@
 {% block css %}
 <link type="text/css" href="/app/{{ app_id}}/uiestate.less" id="css-uiestate" rel="stylesheet"/>
 <link type="text/css" href="/app/{{ app_id}}/mobile_uiestate.less" id="css-uiestate" rel="stylesheet"/>
+{% load socketio_tags %}
+{% socketio %}
 {% endblock %}
 
 {% block topbar %}
@@ -33,5 +35,8 @@
     var v1State = {};
   </script>
   <script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js">
+  </script>
+  <script>
+
   </script>
 {% endblock %}

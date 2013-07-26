@@ -42,10 +42,35 @@ define([
                 window.history.pushState(null, null, window.location.href.concat("tutorial/"));
             });
 
-      keyDispatcher.bindComb('meta+s', this.save);
-      keyDispatcher.bindComb('ctrl+s', this.save);
+            keyDispatcher.bindComb('meta+s', this.save);
+            keyDispatcher.bindComb('ctrl+s', this.save);
 
-      var autoSave = setInterval(this.save, 30000);
+            var autoSave = setInterval(this.save, 30000);
+            this.setupSocket();
+        },
+
+        setupSocket: function() {
+            var connected =  function() {
+                socket.subscribe('app-' + appId);
+                var msg = {room: 'app-' + appId, action: 'start'};
+                console.log(msg);
+                //socket.send(msg);
+                socket.emit('message', msg);
+            };
+            var messaged = function(data, mata) {
+              v1.showMultiTabView();
+              console.log("YOLO");
+              console.log(data);
+              console.log(mata);
+                switch (data.action) {
+                    case 'start':
+                        break;
+                }
+            };
+            var socket = new io.Socket();
+            socket.connect();
+            socket.on('connect', connected);
+            socket.on('message', function(hey) { messaged(); });
         },
 
         index: function (appId, tutorial) {
@@ -185,6 +210,15 @@ define([
             $('.page').fadeIn();
             $('.pull-right.dropd').removeClass('open');
             post_render.call();
+        },
+
+        showMultiTabView: function() {
+            this.multiTabView = new ErrorDialogueView({ text: "HELLO"});
+        },
+
+        hideMultiTabView: function() {
+            if(!this.multiTabView) return;
+            this.multiTabView.close();
         },
 
         deploy: function(callback) {

@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'registration',
     'django_forms_bootstrap',
     'payments',
+    'django_socketio',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
