@@ -24,17 +24,16 @@
   var d0 = new Date('July 13, 2013');
   var d2 = new Date();
   $.getJSON("{% url appcubator.admin_views.active_users_json beginning now 'day' %}", {}, function(data) {
-    console.log(data);
-    console.log(parseData(data));
+    data = JSON.parse('{"07/13/13": 122, "07/25/13": 13, "07/23/13": 13, "07/21/13": 5, "07/15/13": 28, "07/18/13": 13, "07/22/13": 15, "07/16/13": 19, "07/24/13": 23, "07/20/13": 10, "07/19/13": 11, "07/14/13": 57, "07/17/13": 14}');
     nv.addGraph(function() {
-      var chart = nv.models.discreteBarChart()
-          .x(function(d) { return d.label.toLocaleDateString })
+      var chart = nv.models.lineChart()
+          .x(function(d) { return d.label.toLocaleDateString() })
           .y(function(d) { return d.value })
           .staggerLabels(true)
-          .tooltips(false)
+          .tooltips(true)
           .showValues(true)
 
-      //chart.xAxis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+      chart.xAxis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
 
       d3.select('#chart svg')
           .datum(parseData(data))
@@ -51,12 +50,12 @@
     var values = [];
     for(key in data) {
       values.push({
-        'label': key,
+        'label': new Date(key),
         'value': data[key]
       });
     }
     values.sort(function(v1, v2) {
-      return (new Date(v1.label) <= new Date(v2.label)) ? -1 : 1;
+      return (v1.label <= v2.label) ? -1 : 1;
     });
     return [{
       "key": "Active Users",
