@@ -21,6 +21,7 @@ import shlex
 import subprocess
 import os
 from datetime import datetime, timedelta
+import time
 from django.utils import timezone
 
 @login_required
@@ -99,6 +100,16 @@ def admin_feedback(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+def admin_graphs(request):
+    now = datetime.utcnow()
+    beginning = datetime(year=2013, month=7, day=13)
+    page_context = {}
+    page_context["now"] = int(time.mktime(now.timetuple())) * 1000
+    page_context["beginning"] = int(time.mktime(beginning.timetuple())) * 1000
+    return render(request, 'admin/graphs.html', page_context)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def active_users_json(request, t_start, t_end, t_delta):
     t_start = int(t_start)
     t_end = int(t_end)
@@ -127,7 +138,7 @@ def active_users_json(request, t_start, t_end, t_delta):
     tempEnd = tempStart + delta
     data = {}
     while tempEnd < end:
-        data[tempEnd.strftime("%m/%d/%y")] = num_active_users(tempStart, tempEnd)
+        data[tempStart.strftime("%m/%d/%y")] = num_active_users(tempStart, tempEnd)
         tempStart = tempEnd
         tempEnd = tempEnd + delta
     return HttpResponse(json.dumps(data), mimetype="application/json")
@@ -212,7 +223,6 @@ def num_active_users(min, max=datetime.now()):
     # default starting date july 13, 2013
     if(min is None):
         min = datetime.date(2013, 7, 13)
-    day_ago = max - timedelta(days=1)
     return pageviews(min, max).values('user_id').distinct().count()
 
 # total number of deployed apps
