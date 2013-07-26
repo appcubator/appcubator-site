@@ -10,6 +10,7 @@ function() {
     tagName: 'div',
     className: 'tutorial-view',
     css : "tutorial",
+    expanded: false,
 
     addr : [0],
 
@@ -20,7 +21,8 @@ function() {
       'click .tutorial-content .prev' : 'prevBtnClicked',
       'click .tutorial-content .next' : 'nextBtnClicked',
       "submit #feedback-form"   : "submittedFeedback",
-      "mouseover .bottom-arrow" : "slideDown"
+      "mouseover .bottom-arrow" : "slideDown",
+      "click .btn-navbar"       : "toggleMenu"
     },
 
     initialize: function(directory) {
@@ -76,7 +78,7 @@ function() {
 
       this.appendMenuItem(menuUl, TutorialDirectory);
 
-      menuDiv.appendChild(searchLi);
+      //menuDiv.appendChild(searchLi);
       menuDiv.appendChild(menuUl);
       this.el.appendChild(menuDiv);
     },
@@ -125,23 +127,11 @@ function() {
 
       // if a slide is already displayed
       if(!isNew) {
-        $(this.mainDiv).animate({
-          top: "-100%",
-          opacity: "0"
-        }, 240, function() {
-
-          $(this).css({top: '100%'});
           var obj = TutorialDirectory[addr[0]];
           if(addr.length == 2) {
             obj = obj.contents[addr[1]];
           }
           self.showSlide(obj, addr);
-        });
-
-        $(this.mainDiv).delay(240).scrollTop(0).animate({
-          top: "3%",
-          opacity: "1"
-        });
       }
       //if there is no current slide yet
       else {
@@ -160,7 +150,12 @@ function() {
     },
 
     showSlide: function(obj, addr) {
-      var header = '<header><h1>'+ obj.title + '</h1></header>';
+      var header = '<header><h1>'+ obj.title + '</h1><a class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">'+
+          '<span class="icon-bar"></span>'+
+          '<span class="icon-bar"></span>'+
+          '<span class="icon-bar"></span>'+
+        '</a></header>';
+
       var content = '<div class="text-cont">' + util.getHTML(obj.view) +'</div>';
       var footer = '<footer>';
       if(addr[0] !== 0) footer += '<a class="prev btn pull-left" href="#">&laquo; Prev</a>';
@@ -317,6 +312,19 @@ function() {
     nextBtnClicked: function(e) {
       e.preventDefault();
       this.selectNext();
+    },
+
+    toggleMenu: function() {
+      if(!this.expanded) {
+        this.expanded = true;
+        $('.tutorial-menu').addClass('open');
+        $('.tutorial-content').addClass('open');
+      }
+      else {
+        this.expanded = false;
+        $('.tutorial-menu').removeClass('open');
+        $('.tutorial-content').removeClass('open');
+      }
     }
 
   });

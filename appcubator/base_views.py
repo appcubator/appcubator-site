@@ -249,6 +249,68 @@ def signup_hn_customer(request):
         else:
             return HttpResponse(simplejson.dumps({k: v for k, v in form.errors.items()}), mimetype="application/json")
 
+@require_http_methods(["GET", "POST"])
+@csrf_exempt
+def signup_dn_customer(request):
+    if request.method == "GET":
+        if request.user.is_authenticated():
+            return redirect('/app')
+        return render(request, "website-showdn.html")
+    else:
+        req = {}
+        req = deepcopy(request.POST)
+        req["username"] = request.POST["email"]
+        req["first_name"] = request.POST["name"].split(" ")[0]
+        req["last_name"] = request.POST["name"].split(" ")[-1]
+        form = MyUserCreationForm(req)
+        if form.is_valid():
+            user = form.save()
+            new_user = authenticate(username=req['email'],
+                                    password=req['password1'])
+            login(request, new_user)
+            name = request.POST['name']
+            email = request.POST['email']
+            company = "Hacker News"
+            extra = ""
+            interest = False
+            description = "DN launch"
+            Customer.create_first_time(name, email, company, extra, description, 11, interest)
+            return HttpResponse()
+        else:
+            return HttpResponse(simplejson.dumps({k: v for k, v in form.errors.items()}), mimetype="application/json")
+
+
+@require_http_methods(["GET", "POST"])
+@csrf_exempt
+def signup_gsb_customer(request):
+    if request.method == "GET":
+        if request.user.is_authenticated():
+            return redirect('/app')
+        return render(request, "website-showgsb.html")
+    else:
+        req = {}
+        req = deepcopy(request.POST)
+        req["username"] = request.POST["email"]
+        req["first_name"] = request.POST["name"].split(" ")[0]
+        req["last_name"] = request.POST["name"].split(" ")[-1]
+        form = MyUserCreationForm(req)
+        if form.is_valid():
+            user = form.save()
+            new_user = authenticate(username=req['email'],
+                                    password=req['password1'])
+            login(request, new_user)
+            name = request.POST['name']
+            email = request.POST['email']
+            company = "Hacker News"
+            extra = ""
+            interest = False
+            description = "GSB launch"
+            Customer.create_first_time(name, email, company, extra, description, 11, interest)
+            return HttpResponse()
+        else:
+            return HttpResponse(simplejson.dumps({k: v for k, v in form.errors.items()}), mimetype="application/json")
+
+
 @login_required
 @csrf_exempt
 def send_invitation_to_customer(request, customer_pk):
