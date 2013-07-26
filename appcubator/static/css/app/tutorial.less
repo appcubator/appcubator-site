@@ -1,5 +1,5 @@
 .tutorial-view {
-  position: fixed;
+  position: absolute;
   top: 0;
   padding: 0;
 
@@ -9,6 +9,7 @@
   overflow: visible;
   color: #000;
   height: 100%;
+  width: 100%;
   font-family: freight-sans-pro, sans-serif;
   z-index: 2002;
 }
@@ -29,21 +30,45 @@
   display: block;
   background-color: #fff;
   position: fixed;
-  width: 960px;
-  margin-top: 0;
-  margin-left: -390px;
-  height: 94%;
-  top: 3%;
+  width: 900px;
   left: 50%;
+  margin-left: -450px;
+
+  height: 92%;
+  bottom: 0;
   z-index: 3002;
 
   -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
+
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+
   overflow: hidden;
 
   -ms-overflow-y: scroll;
   overflow-y: scroll;
+
+  -webkit-animation: slideInBottom 0.3s ease-out;
+  -moz-animation: slideInBottom 0.3s ease-out;
+  animation: slideInBottom 0.3s ease-out;
+
+  transition: width 0.3s linear,margin-left 0.3s linear;
+}
+
+.tutorial-content.open {
+  width: 760px;
+  margin-left: -280px;
+}
+
+@-webkit-keyframes slideInBottom {
+  0% { margin-bottom: -300px; }
+  100% { margin-bottom: 0px; } 
+}
+
+@keyframes slideInBottom {
+  0% { margin-bottom: -300px; }
+  100% { margin-bottom: 0px; } 
 }
 
 .tutorial-content > header {
@@ -61,26 +86,49 @@
 }
 
 .tutorial-content > header h1 {
-  display: block;
+  display: inline-block;
   font-size: 26px;
   line-height: 30px;
 }
 
+.tutorial-content .btn-navbar {
+  float: left;
+  display: inline-block;
+  padding: 4px 12px;
+  padding-bottom: 8px;
+  margin-right: 12px;
+}
+
+.tutorial-content .btn-navbar .icon-bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  margin-top: 4px;
+  background-color: #a5a5a5;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 1px;
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0 0 1px rgba(0,0,0,0.25);
+  box-shadow: 0 0 1px rgba(0,0,0,0.4);
+}
+
 .tutorial-content > footer {
   position: fixed;
-  bottom: 3%;
-  width: 960px;
+  bottom: 0%;
+  width: 900px;
   padding: 15px;
   height: 60px;
   .border-radius(0px 0px 3px 3px);
   border-top: 1px solid #e3e3e3;
   margin: 0;
 
-  background-image: -webkit-linear-gradient(#f5f5f5,#e3e3e3);
-  background-image: -moz-linear-gradient(#f5f5f5,#e3e3e3);
-  background-image: -o-linear-gradient(#f5f5f5,#e3e3e3);
-  background-image: -ms-linear-gradient(#f5f5f5,#e3e3e3);
-  background-image: linear-gradient(#f5f5f5,#e3e3e3);
+  background-color: #f5f5f5;
+  transition: width,margin-left 0.3s linear;
+}
+
+.tutorial-content.open > footer {
+  width: 760px;
 }
 
 .tutorial-content ul {
@@ -128,16 +176,15 @@
 
 .tutorial-menu {
   position: fixed;
-  width: 220px;
+  width: 200px;
   overflow: hidden;
   background-color: #fff;
   left: 50%;
-  top: 60px;
-  height: 90%;
-  top: 5%;
-  margin-left: -600px;
+  bottom: 0px;
+  height: 92%;
+  margin-left: -200px;
   border-radius: 3px;
-  padding-top: 60px;
+  padding-top: 0;
   z-index: 3001;
 
   -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
@@ -146,6 +193,17 @@
   font-size: 14px;
   color: #444;
   font-weight: bolder;
+
+  transition: margin-left 0.3s linear;
+  -webkit-animation: slideInBottom 0.3s ease-out;
+  -moz-animation: slideInBottom 0.3s ease-out;
+  animation: slideInBottom 0.3s ease-out;
+
+  transition: margin-left 0.3s linear;
+}
+
+.tutorial-menu.open {
+  margin-left: -480px;
 }
 
 .search-bar {
@@ -211,197 +269,13 @@
   background-color: #f9f9f9;
 }
 
-.modal.tutorial-view .tutorial-menu {
-  -webkit-animation-name: none;
-  -moz-animation-name: none;
-  -ms-animation-name: none;
-  -o-animation-name: none;
-  animation-name: none;
-}
-
-.flyin {
-  -webkit-animation-name: flyin;
-  -moz-animation-name: flyin;
-  -ms-animation-name: flyin;
-  -o-animation-name: flyin;
-  animation-name: flyin;
-}
-
-.flyout {
-  -webkit-animation-name: flyout;
-  -moz-animation-name: flyout;
-  -ms-animation-name: flyout;
-  -o-animation-name: flyout;
-  animation-name: flyout;
-}
-
-@keyframes "flyin" {
- 0% {
-    /*transform*/margin-top: -800px;
- }
- 55% {
-    margin-top: -550px;
- }
- 75% {
-    margin-top: -425px;
- }
- 100% {
-    margin-top: -300px;
- }
-
-}
-
-@-moz-keyframes flyin {
- 0% {
-   /*transform*/margin-top: -800px;
- }
- 55% {
-   margin-top: -550px;
- }
- 75% {
-   margin-top: -425px;
- }
- 100% {
-   margin-top: -300px;
- }
-
-}
-
-@-webkit-keyframes "flyin" {
- 0% {
-   /*transform*/margin-top: -800px;
- }
- 55% {
-   margin-top: -550px;
- }
- 75% {
-   margin-top: -425px;
- }
- 100% {
-   margin-top: -300px;
- }
-
-}
-
-@-ms-keyframes "flyin" {
- 0% {
-   /*transform*/margin-top: -800px;
- }
- 55% {
-   margin-top: -550px;
- }
- 75% {
-   margin-top: -425px;
- }
- 100% {
-   margin-top: -300px;
- }
-
-}
-
-@-o-keyframes "flyin" {
- 0% {
-   /*transform*/margin-top: -800px;
- }
- 55% {
-   margin-top: -550px;
- }
- 75% {
-   margin-top: -425px;
- }
- 100% {
-   margin-top: -300px;
- }
-
-}
-
-@keyframes "flyout" {
- 0% {
-    /*transform*/margin-top: -300px;
- }
- 55% {
-    margin-top: 100px;
- }
- 75% {
-    margin-top: 325px;
- }
- 100% {
-    margin-top: 500px;
- }
-
-}
-
-@-moz-keyframes flyout {
- 0% {
-   /*transform*/margin-top: -300px;
- }
- 55% {
-   margin-top: 100px;
- }
- 75% {
-   margin-top: 325px;
- }
- 100% {
-   margin-top: 500px;
- }
-
-}
-
-@-webkit-keyframes "flyout" {
- 0% {
-   /*transform*/margin-top: -300px;
- }
- 55% {
-   margin-top: 100px;
- }
- 75% {
-   margin-top: 325px;
- }
- 100% {
-   margin-top: 500px;
- }
-
-}
-
-@-ms-keyframes "flyout" {
- 0% {
-   /*transform*/margin-top: -300px;
- }
- 55% {
-   margin-top: 100px;
- }
- 75% {
-   margin-top: 325px;
- }
- 100% {
-   margin-top: 500px;
- }
-
-}
-
-@-o-keyframes "flyout" {
- 0% {
-   /*transform*/margin-top: -300px;
- }
- 55% {
-   margin-top: 100px;
- }
- 75% {
-   margin-top: 325px;
- }
- 100% {
-   margin-top: 500px;
- }
-
-}
-
 .modal-bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 2002;
 }
 
@@ -468,7 +342,7 @@ ul.text-cont li.answer-slide:hover {
 
 .bottom-arrow {
   position: fixed;
-  bottom: 5%;
+  bottom: 0%;
   height: 20px;
   width: 220px;
   background-color: transparent;
