@@ -97,6 +97,41 @@ def admin_feedback(request):
     page_context["feedback"] = feedback
     return render(request, 'admin/feedback.html', page_context)
 
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def active_users_json(request, t_start, t_end, t_delta):
+    t_start = int(t_start)
+    t_end = int(t_end)
+    t_delta = str(t_delta)
+    try:
+        start = datetime.fromtimestamp(t_start / 1000.0)
+        end = datetime.fromtimestamp(t_end / 1000.0)
+    except ValueError:
+        return HttpResponse("Invalid start/end values (%d,%d), must be passed as POSIX datetime number" % (int(start),int(end)), status=405)
+    # require start < end
+    if end < start:
+        start, end = end, start
+    # determine timedelta
+    if (t_delta == "day"):
+        delta = timedelta(days=1)
+    elif (t_delta == "year"):
+        delta = timedelta(days=365)
+    elif (t_delta == "month"):
+        delta = timedelta(days=30)
+    elif (t_delta == "week"):
+        delta = timedelta(weeks=1)
+    else:
+        return HttpResponse("invalid delta string (%s), must be 'day', 'week', 'month', or 'year'" % t_delta, status=405)
+
+    tempStart = start
+    tempEnd = tempStart + delta
+    data = {}
+    while tempEnd < end:
+        data[tempEnd.strftime("%m/%d/%y")] = num_active_users(tempStart, tempEnd)
+        tempStart = tempEnd
+        tempEnd = tempEnd + delta
+    return HttpResponse(json.dumps(data), mimetype="application/json")
+
 # active users this past week
 def recent_users(long_ago=timedelta(days=1)):
     today = timezone.now().date()
@@ -146,23 +181,29 @@ def deployed_apps(min, max=datetime.now()):
         .filter(timestamp__gte=min, timestamp__lte=max, name="deployed app")\
         .distinct('app_id').count()
 
-# the number of page views within the requested time frame
+# page views within the requested time frame
 def pageviews(min, max=datetime.now()):
     # default starting date july 13, 2013
     if(min is None):
         min = datetime.date(2013, 7, 13)
     return LogAnything.objects\
-            .filter(timestamp__gte=min, timestamp__lte=max, name="visited page")\
-            .count()
+            .filter(timestamp__gte=min, timestamp__lte=max, name="visited page")
 
-# the number of users who joined within the requested time frame
-def num_users(min, max=datetime.now()):
+# the number of page views within the requested time frame
+def num_pageviews(min, max=datetime.now()):
+    return pageviews(min,max).count()
+
+# users who joined within the requested time frame
+def users_joined(min, max=datetime.now()):
     # default starting date july 13, 2013
     if(min is None):
         min = datetime.date(2013, 7, 13)
     return User.objects\
-        .filter(date_joined__gte=min, date_joined__lte=max)\
-        .count()
+        .filter(date_joined__gte=min, date_joined__lte=max)
+
+# the number of users who joined within the requested time frame
+def num_users_joined(min, max=datetime.now()):
+    return users_joined(min,max).count()
 
 # 'active users' during a min-max time period
 # calculated by finding the number of users who logged a page view
