@@ -222,8 +222,8 @@ function() {
     },
 
     moving: function(e, ui) {
-      model = this.selectedEl;
       if(e.target.id == "hover-div") { model = this.hoveredEl; }
+      else { model = this.selectedEl; this.hideNode(this.hoverDiv); }
 
       this.widgetEditorView.clear();
 
