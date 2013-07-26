@@ -1,7 +1,7 @@
 {% extends "infra-html.html" %}
 
 {% block css %}
-  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/themes.css">
+  <link type="text/css"  rel="stylesheet/less" href="{{ STATIC_URL }}css/app/themes.less">
   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/js/libs/fontselect/fontselect.css" />
 {% endblock %}
 
@@ -38,7 +38,7 @@
 
   </div>
   <div class="right-bar span42 offset2">
-    <ul class="content-editor">
+    <ul class="element-editor">
       <li id="basecss-cont" class="expanded">
         <h3>Base CSS</h3>
         <div class="base-css span40" id="base-css">
