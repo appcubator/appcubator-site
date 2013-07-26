@@ -26,6 +26,7 @@ function(SelectView) {
         this.list = _.map(uieState["forms"], function(obj) { return obj.class_name; });
       }
 
+      console.log(widgetModel.isList());
       if(widgetModel.isList()) {
         this.list = _.map(uieState["lists"], function(obj) { return obj.class_name; });
       }
