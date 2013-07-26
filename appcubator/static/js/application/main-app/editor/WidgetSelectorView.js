@@ -197,6 +197,7 @@ function() {
       elem.style.height = (ui.size.height - 4) + 'px';
       elem.style.left = ui.position.left + 2 + 'px';
       elem.style.top  = ui.position.top + 2 + 'px';
+
     },
 
     resized: function(e, ui) {
@@ -223,6 +224,8 @@ function() {
     moving: function(e, ui) {
       model = this.selectedEl;
       if(e.target.id == "hover-div") { model = this.hoveredEl; }
+
+      this.widgetEditorView.clear();
 
       g_guides.hideAll();
       g_guides.showVertical(ui.position.left / this.positionVerticalGrid);
@@ -261,6 +264,7 @@ function() {
         model.get('layout').set('top', top);
       }
 
+      this.selectDiv.appendChild(this.widgetEditorView.setModel(model).render().el);
       this.newSelected(model);
     },
 
