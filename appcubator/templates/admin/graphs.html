@@ -1,0 +1,67 @@
+{% extends "admin/admin-base.html" %}
+
+{% block css %}
+<style type="text/css">
+.chart svg {
+  height: 400px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+  <h2>Graphs</h2>
+  <hr>
+
+  <h3>Active Users</h3>
+  <div id="chart" class="chart">
+    <svg></svg>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  var d0 = new Date('July 13, 2013');
+  var d2 = new Date();
+  $.getJSON("{% url appcubator.admin_views.active_users_json beginning now 'day' %}", {}, function(data) {
+    console.log(data);
+    console.log(parseData(data));
+    nv.addGraph(function() {
+      var chart = nv.models.discreteBarChart()
+          .x(function(d) { return d.label.toLocaleDateString })
+          .y(function(d) { return d.value })
+          .staggerLabels(true)
+          .tooltips(false)
+          .showValues(true)
+
+      //chart.xAxis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+
+      d3.select('#chart svg')
+          .datum(parseData(data))
+        .transition().duration(500)
+          .call(chart);
+
+      nv.utils.windowResize(chart.update);
+
+      return chart;
+    });
+  });
+
+  function parseData(data) {
+    var values = [];
+    for(key in data) {
+      values.push({
+        'label': key,
+        'value': data[key]
+      });
+    }
+    values.sort(function(v1, v2) {
+      return (new Date(v1.label) <= new Date(v2.label)) ? -1 : 1;
+    });
+    return [{
+      "key": "Active Users",
+      "values": values
+    }];
+  }
+</script>
+{% endblock %}

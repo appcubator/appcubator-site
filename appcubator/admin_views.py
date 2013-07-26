@@ -21,6 +21,7 @@ import shlex
 import subprocess
 import os
 from datetime import datetime, timedelta
+import time
 from django.utils import timezone
 
 @login_required
@@ -96,6 +97,16 @@ def admin_feedback(request):
     feedback = list(LogAnything.objects.filter(name='posted feedback'))
     page_context["feedback"] = feedback
     return render(request, 'admin/feedback.html', page_context)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_graphs(request):
+    now = datetime.utcnow()
+    beginning = datetime(year=2013, month=7, day=13)
+    page_context = {}
+    page_context["now"] = int(time.mktime(now.timetuple())) * 1000
+    page_context["beginning"] = int(time.mktime(beginning.timetuple())) * 1000
+    return render(request, 'admin/graphs.html', page_context)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
