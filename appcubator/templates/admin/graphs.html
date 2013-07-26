@@ -28,7 +28,7 @@
     console.log(parseData(data));
     nv.addGraph(function() {
       var chart = nv.models.discreteBarChart()
-          .x(function(d) { return d.label.toLocaleDateString })
+          .x(function(d) { return d.label.toLocaleDateString() })
           .y(function(d) { return d.value })
           .staggerLabels(true)
           .tooltips(false)
