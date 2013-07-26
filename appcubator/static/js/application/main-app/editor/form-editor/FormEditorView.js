@@ -26,7 +26,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       'change input[name=required]'      : 'changedRequired',
       'keyup   input.field-label-input'  : 'changedLabel',
       'keyup  .options-input'            : 'changedOptions',
-      'click .done-btn'                  : 'closeModal',
+      'click .done'                  : 'closeModal',
       'click .delete-field'              : 'deleteField',
       'click .q-mark'                    : 'showTutorial',
       'click .add-field-button'          : 'clickedAddField',
