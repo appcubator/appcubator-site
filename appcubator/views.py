@@ -249,8 +249,7 @@ def app_save_state(request, app, require_valid=True):
     # if the incoming appState's version_id does not match the
     # db's version_id, the incoming appState is an outdated version
     if not app.isCurrentVersion(simplejson.loads(request.body)):
-        print "old, new: %s, %s" % (app.state['version_id'], simplejson.loads(request.body).get('version_id'))
-        return (400, {"message": "You made newer changes from another browser window. Make sure you are only editing on one browser window at any time. <strong>Please refresh your page</strong>.", "path": ""})
+        return (409, "")
 
     app._state_json = request.body
     app.state['name'] = app.name
