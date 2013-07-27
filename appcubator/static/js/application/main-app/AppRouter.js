@@ -235,11 +235,11 @@ define([
             var self = this;
             appState = v1State.toJSON();
 
-            var successHandler = function(version_id) {
+            var successHandler = function(data) {
                 util.dontAskBeforeLeave();
                 v1.errorFlag = false;
 
-                self.trigger('saved', version_id);
+                self.trigger('saved', data.version_id);
 
                 $('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
                 var timer = setTimeout(function(){

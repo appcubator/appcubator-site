@@ -257,12 +257,14 @@ def app_save_state(request, app, require_valid=True):
 
     if not require_valid:
         app.save()
-        return (200, app.state.get('version_id', 0))
+        return (200, {'version_id': app.state.get('version_id', 0)})
     try:
         a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
     except analyzer.UserInputError, e:
         app.save()
-        return (400, e.to_dict())
+        d = e.to_dict()
+        d['version_id'] = app.state.get('version_id', 0)
+        return (400, d)
     # raise on normal exceptions.
     else:
         # Save the app state for future use
@@ -270,7 +272,7 @@ def app_save_state(request, app, require_valid=True):
             app=app, name=app.name, snapshot_date=datetime.now(), _state_json=request.body)
         appstate_snapshot.save()
         app.save()
-        return (200, app.state.get('version_id', 0))
+        return (200, {'version_id': app.state.get('version_id', 0)})
 
 def documentation_page(request, page_name):
     try:

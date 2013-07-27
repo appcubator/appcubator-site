@@ -115,8 +115,8 @@ class App(models.Model):
         self.subdomain = self.subdomain.lower()
 
         # increment version id
-        new_state = self.state
-        new_state['version_id'] = self.state.get('version_id', 0) + 1
+        s = self.state
+        s['version_id'] = s.get('version_id', 0) + 1
         self.state = new_state
 
         return super(App, self).save(*args, **kwargs)
@@ -186,17 +186,9 @@ class App(models.Model):
 
     def isCurrentVersion(self, new_state):
         """Returns True if new_state is the same version as self.state's."""
-        if 'version_id' not in self.state:
-            new_state = self.state
-            new_state['version_id'] = 0
-            self.state = new_state
-            return True
-        else:
-            if 'version_id' not in new_state:
-                new_state['version_id'] = 0
-            current_version_id = self.state.get('version_id', 0)
-            new_version_id = new_state['version_id']
-            return (new_version_id is current_version_id)
+        current_version_id = self.state.get('version_id', 0)
+        new_version_id = new_state.get('version_id', 0)
+        return (new_version_id == current_version_id)
 
     def get_absolute_url(self):
         return reverse('views.app_page', args=[str(self.id)])
