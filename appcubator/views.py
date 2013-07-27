@@ -655,4 +655,7 @@ def yomomma(request, number):
     r = requests.get("http://www.jokes4us.com/yomamajokes/random/yomama"+number+".html")
     return HttpResponse(r.text, status=r.status_code)
 
+def webgeekjokes(request):
+    r = requests.get("http://www.webgeekjokes.tumblr.com/random")
+    return JSONResponse(r.text)
 
