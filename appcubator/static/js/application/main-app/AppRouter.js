@@ -195,6 +195,7 @@ define([
                 url: '/app/'+appId+'/deploy/',
                 success: function(data) {
                     var deploy_time = (new Date().getTime() - before_deploy)/1000;
+                    self.trigger('deployed', data.version_id);
                     if(callback) callback();
                     // open a modal based on deploy response
                     if(data.errors) {
@@ -208,7 +209,6 @@ define([
                     else {
                       new DeployView(data);
                       util.log_to_server('deployed app', {status: 'success', deploy_time: deploy_time + " seconds"}, appId);
-                      self.trigger('deployed');
                     }
                 },
                 error: function(data) {
@@ -219,6 +219,7 @@ define([
                     }
                     new ErrorDialogueView(content);
                     util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.responseText}, appId);
+                    self.trigger('deployed', data.version_id);
                 },
                 dataType: "JSON"
             });

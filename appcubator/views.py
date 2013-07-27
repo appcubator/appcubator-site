@@ -550,6 +550,7 @@ def app_deploy(request, app_id):
     }
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
+    result['version_id'] = app.state.get('version_id', 0)
     status = 500 if 'errors' in result else 200
     return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 
