@@ -236,11 +236,11 @@ define([
             var self = this;
             appState = v1State.toJSON();
 
-            var successHandler = function(version_id) {
+            var successHandler = function(data) {
                 util.dontAskBeforeLeave();
                 v1.errorFlag = false;
 
-                self.trigger('saved', version_id);
+                v1State.set('version_id', data.version_id);
 
                 $('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
                 var timer = setTimeout(function(){
@@ -260,9 +260,13 @@ define([
             };
             var softErrorHandler = function(jqxhr) {
                 var data = JSON.parse(jqxhr.responseText);
+                v1State.set('version_id', data.version_id);
                 v1.errorFlag = true;
                 var content = { text: "Warning: " + data.message + ' We saved your progress, but you need to fix this before deploying again. FYI, this occurred in ' + data.path + '.' };
                 new ErrorDialogueView(content, function() { v1.errorFlag = false;});
+            };
+            var browserConflictHandler = function(jqxhr) {
+                new ErrorDialogueView({text:"Looks like you (or someone else) made a change to your app in another browser window. Please make sure you only use one window with Appcubator or you may end up overwriting your app with an older version. Please refresh the browser to get the updated version of your app."}, function() { v1.errorFlag = false;});
             };
             var hardErrorHandler = function(jqxhr) {
                 v1.errorFlag = true;
@@ -284,6 +288,7 @@ define([
                 statusCode: {
                     200: successHandler,
                     400: softErrorHandler,
+                    409: browserConflictHandler,
                     500: hardErrorHandler,
                     404: notFoundHandler,
                 },

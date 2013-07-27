@@ -109,15 +109,16 @@ class App(models.Model):
 
     deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
 
-    def save(self, *args, **kwargs):
+    def save(self, state_version=True, *args, **kwargs):
         if self.subdomain == '':
             self.reset_subdomain()
         self.subdomain = self.subdomain.lower()
 
         # increment version id
-        new_state = self.state
-        new_state['version_id'] = self.version_id + 1
-        self.state = new_state
+        s = self.state
+        if state_version:
+            s['version_id'] = s.get('version_id', 0) + 1
+        self.state = s
 
         return super(App, self).save(*args, **kwargs)
 
@@ -184,23 +185,11 @@ class App(models.Model):
     def urls(self):
         return self.state['urls']
 
-    @property
-    def version_id(self):
-        return self.state['version_id']
-
     def isCurrentVersion(self, new_state):
         """Returns True if new_state is the same version as self.state's."""
-        if 'version_id' not in self.state:
-            new_state = self.state
-            new_state['version_id'] = 0
-            self.state = new_state
-            return True
-        else:
-            if 'version_id' not in new_state:
-                new_state['version_id'] = 0
-            current_version_id = self.version_id
-            new_version_id = new_state['version_id']
-            return (new_version_id is current_version_id)
+        current_version_id = self.state.get('version_id', 0)
+        new_version_id = new_state.get('version_id', 0)
+        return (new_version_id == current_version_id)
 
     def get_absolute_url(self):
         return reverse('views.app_page', args=[str(self.id)])
@@ -320,7 +309,7 @@ class App(models.Model):
             logger.debug("Deployment response content: %r" % response_content)
             try:
                 self.deployment_id = response_content['deployment_id']
-                self.save()
+                self.save(state_version=False)
             except KeyError:
                 pass
             if 'errors' in response_content:
@@ -337,7 +326,7 @@ class App(models.Model):
             assert retry_on_404
             logger.warn("The deployment was not found, so I'm setting deployment id to None")
             self.deployment_id = None
-            self.save()
+            self.save(state_version=False)
             return self.deploy(retry_on_404=False)
 
         else:
@@ -530,7 +519,7 @@ class DomainRegistration(models.Model):
         DomainRegistration.api.configure_domain_records(
             self.domain, staging=staging)
         self.dns_configured = 1
-        self.save()
+        self.save(state_version=False)
 
 class LogAnything(models.Model):
     app_id = models.IntegerField(null=True)

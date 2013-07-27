@@ -249,7 +249,7 @@ def app_save_state(request, app, require_valid=True):
     # if the incoming appState's version_id does not match the
     # db's version_id, the incoming appState is an outdated version
     if not app.isCurrentVersion(simplejson.loads(request.body)):
-        return (400, {"message": "You made newer changes from another browser window. Make sure you are only editing on one browser window at any time. <strong>Please refresh your page</strong>.", "path": ""})
+        return (409, "")
 
     app._state_json = request.body
     app.state['name'] = app.name
@@ -257,12 +257,14 @@ def app_save_state(request, app, require_valid=True):
 
     if not require_valid:
         app.save()
-        return (200, app.version_id)
+        return (200, {'version_id': app.state.get('version_id', 0)})
     try:
         a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
     except analyzer.UserInputError, e:
         app.save()
-        return (400, e.to_dict())
+        d = e.to_dict()
+        d['version_id'] = app.state.get('version_id', 0)
+        return (400, d)
     # raise on normal exceptions.
     else:
         # Save the app state for future use
@@ -270,7 +272,7 @@ def app_save_state(request, app, require_valid=True):
             app=app, name=app.name, snapshot_date=datetime.now(), _state_json=request.body)
         appstate_snapshot.save()
         app.save()
-        return (200, app.version_id)
+        return (200, {'version_id': app.state.get('version_id', 0)})
 
 def documentation_page(request, page_name):
     try:
@@ -279,12 +281,11 @@ def documentation_page(request, page_name):
         htmlString = render(request, 'documentation/html/'+page_name+'.html').content
     except Exception, e:
         htmlString = render(request, 'documentation/html/intro.html').content
-    else:
-        data = {
-            'content': htmlString,
-            'page_name': page_name
-        }
-        return render(request, 'documentation/documentation-base.html', data)
+    data = {
+        'content': htmlString,
+        'page_name': page_name
+    }
+    return render(request, 'documentation/documentation-base.html', data)
 
 @login_required
 def uie_state(request, app_id):
@@ -364,7 +365,7 @@ def app_save_uie_state(request, app):
         app.full_clean()
     except Exception, e:
         return (400, str(e))
-    app.save()
+    app.save(state_version=False)
     return (200, 'ok')
 
 
@@ -376,7 +377,7 @@ def app_save_mobile_uie_state(request, app):
         app.full_clean()
     except Exception, e:
         return (400, str(e))
-    app.save()
+    app.save(state_version=False)
     return (200, 'ok')
 
 
@@ -642,7 +643,7 @@ def sub_register_domain(request, app_id, subdomain):
         raise Http404
     app.subdomain = subdomain
     app.full_clean()
-    app.save()
+    app.save(state_version=False)
     d_user = {
         'user_name': app.owner.username,
         'date_joined': str(app.owner.date_joined)

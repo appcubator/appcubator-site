@@ -30,18 +30,18 @@ body {
 
   {% for b in  uie_state.buttons %}
 
-  {{b.tagName|safe}}.{{b.class_name|safe}} {
+  .{{b.class_name|safe}} {
   {{b.style|safe}}
   }
 
   {% if b.hoverStyle %}
-  {{b.tagName|safe}}.{{b.class_name|safe}}:hover { 
+  .{{b.class_name|safe}}:hover { 
   {{b.hoverStyle|safe}}
   }
   {% endif %}
 
   {% if b.activeStyle %}
-  {{b.tagName|safe}}.{{b.class_name|safe}}:active { 
+  .{{b.class_name|safe}}:active { 
   {{b.activeStyle|safe}}
   }
   {% endif %}
