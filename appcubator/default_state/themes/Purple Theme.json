@@ -1,429 +1,476 @@
 {
-    "img_url": "https://www.filepicker.io/api/file/bbiY3zkRTmYK4xps4n7v",
-    "textAreas": [
-        {
-            "style": "",
-            "isSingle": false,
-            "content_attribs": null,
-            "hoverStyle": "",
-            "class_name": "textarea1",
-            "content": "Default Text Area...",
-            "tagName": "textarea",
-            "activeStyle": ""
-        }
-    ],
-    "passwords": [
-        {
-            "style": "border-width: 1px;",
-            "isSingle": true,
-            "content_attribs": {
-                "placeholder": "Default placeholder..."
+   "textAreas":[
+      {
+         "style":"",
+         "isSingle":false,
+         "tagName":"textarea",
+         "hoverStyle":"",
+         "class_name":"textarea1",
+         "content":"Default Text Area...",
+         "content_attribs":null,
+         "activeStyle":""
+      }
+   ],
+   "passwords":[
+      {
+         "style":"border-width: 1px;",
+         "isSingle":true,
+         "tagName":"input",
+         "hoverStyle":"",
+         "class_name":"password-1",
+         "content":null,
+         "content_attribs":{
+            "placeholder":"Default placeholder..."
+         },
+         "activeStyle":"",
+         "cons_attribs":{
+            "tagType":"password"
+         }
+      }
+   ],
+   "links":[
+      {
+         "style":"color: #036a6e;",
+         "isSingle":false,
+         "tagName":"a",
+         "hoverStyle":"",
+         "class_name":"link-1",
+         "content":"Default Link...",
+         "content_attribs":{
+            "href":"internal://Homepage"
+         },
+         "activeStyle":""
+      },
+      {
+         "style":"color:#57264f;\nfont-size: 16px;\nfont-weight: bold;",
+         "isSingle":false,
+         "tagName":"a",
+         "hoverStyle":"",
+         "class_name":"blue-link",
+         "content":"Default Link...",
+         "content_attribs":{
+            "href":"internal://Homepage"
+         },
+         "activeStyle":""
+      }
+   ],
+   "fonts":[
+      {
+         "name":"Open+Sans:400,600,700,300"
+      }
+   ],
+   "button":[
+      {
+         "style":"  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n",
+         "isSingle":true,
+         "tagName":"input",
+         "hoverStyle":"",
+         "class_name":"btn-1",
+         "content":null,
+         "content_attribs":{
+            "value":"Button1"
+         },
+         "activeStyle":"",
+         "cons_attribs":{
+            "type":"submit"
+         }
+      },
+      {
+         "style":"  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n  background-color: #006dcc;\n  *background-color: #0044cc;\n  background-image: -moz-linear-gradient(top, #0088cc, #0044cc);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));\n  background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);\n  background-image: -o-linear-gradient(top, #0088cc, #0044cc);\n  background-image: linear-gradient(to bottom, #0088cc, #0044cc);\n  background-repeat: repeat-x;\n  border-color: #0044cc #0044cc #002a80;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\nborder-",
+         "isSingle":true,
+         "tagName":"input",
+         "hoverStyle":"",
+         "class_name":"btn-2",
+         "content":null,
+         "content_attribs":{
+            "value":"Button1"
+         },
+         "activeStyle":"",
+         "cons_attribs":{
+            "tagType":"submit"
+         }
+      },
+      {
+         "style":"  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n  color: #ffffff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n  background-color: #da4f49;\n  *background-color: #bd362f;\n  background-image: -moz-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#bd362f));\n  background-image: -webkit-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: -o-linear-gradient(top, #ee5f5b, #bd362f);\n  background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);\n  background-repeat: repeat-x;\n  border-color: #bd362f #bd362f #802420;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b', endColorstr='#ffbd362f', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);",
+         "isSingle":true,
+         "tagName":"input",
+         "hoverStyle":"  color: #000;\n  background-color: #bd362f;\n  *background-color: #a9302a;",
+         "class_name":"btn-3",
+         "content":null,
+         "content_attribs":{
+            "value":"Button1"
+         },
+         "activeStyle":"",
+         "cons_attribs":{
+            "tagType":"submit"
+         }
+      }
+   ],
+   "dropdowns":[
+      {
+         "attribs":null,
+         "style":"",
+         "isSingle":false,
+         "hoverStyle":"",
+         "class_name":"default-dropdown",
+         "content":"Option 1",
+         "tagName":"select",
+         "activeStyle":""
+      }
+   ],
+   "lines":[
+      {
+         "style":"border-color:#57264f;\nborder-width: 0px;\nborder-top-width: 1px;\nopacity: 0.2;",
+         "isSingle":true,
+         "cons_attribs":{
+
+         },
+         "hoverStyle":"",
+         "class_name":"line-1",
+         "content":null,
+         "tagName":"hr",
+         "activeStyle":""
+      },
+      {
+         "style":"border-color:#ccc;",
+         "isSingle":true,
+         "cons_attribs":{
+
+         },
+         "hoverStyle":"",
+         "class_name":"line-4",
+         "content":null,
+         "tagName":"hr",
+         "activeStyle":""
+      },
+      {
+         "style":"",
+         "isSingle":true,
+         "cons_attribs":{
+
+         },
+         "hoverStyle":"",
+         "class_name":"line-3",
+         "content":null,
+         "tagName":"hr",
+         "activeStyle":""
+      }
+   ],
+   "lists":[
+      {
+         "style":"background-color: #fff;\nborder: 1px solid #ccc;\nborder-radius: 4px;\n\n.row {\n    border-bottom: 1px solid #ccc;\n}",
+         "isSingle":false,
+         "cons_attribs":{
+
+         },
+         "class_name":"default-list",
+         "content":null,
+         "tagName":"div"
+      },
+      {
+         "style":"\n.row {\n    border-bottom: 1px solid #ccc;\n}\n",
+         "isSingle":false,
+         "cons_attribs":{
+
+         },
+         "hoverStyle":"",
+         "class_name":"transparent-list",
+         "content":null,
+         "tagName":"div",
+         "activeStyle":""
+      }
+   ],
+   "buttons":[
+      {
+         "style":"background-color: rgb(87, 38, 79);\nbackground-image: none;\nbackground-position: 0% 0%;\nbackground-repeat: repeat-x;\nborder-bottom-color: rgb(87, 38, 79);\nborder-bottom-left-radius: 3px;\nborder-bottom-right-radius: 3px;\nborder-bottom-style: solid;\nborder-bottom-width: 1px;\nborder-image-outset: 0px;\nborder-image-repeat: stretch;\nborder-image-slice: 100%;\nborder-image-source: none;\nborder-image-width: 1;\nborder-left-color: rgb(87, 38, 79);\nborder-left-style: solid;\nborder-left-width: 1px;\nborder-right-color: rgb(87, 38, 79);\nborder-right-style: solid;\nborder-right-width: 1px;\nborder-top-color: rgb(87, 38, 79);\nborder-top-left-radius: 3px;\nborder-top-right-radius: 3px;\nborder-top-style: solid;\nborder-top-width: 1px;\nbox-shadow: none;\nbox-sizing: content-box;\ncolor: rgb(255, 255, 255);\ncursor: pointer;\ndisplay: inline-block;\nfilter: none;\nfont-family: MuseoSans300;\nfont-size: 14px;\nfont-weight: bold;\nheight: 20px;\nletter-spacing: normal;\nline-height: 20px;\npadding-bottom: 8px;\npadding-left: 26px;\npadding-right: 27px;\npadding-top: 12px;\ntext-align: center;\ntext-indent: 0px;\ntext-shadow: rgba(0, 0, 0, 0) 0px 0px 0px;\ntext-transform: none;\nvertical-align: top;\nwhite-space: pre;\ntext-transform: uppercase;\nfont-family: 'Open Sans', sans-serif;\n\n    ",
+         "isSingle":true,
+         "tagName":"input",
+         "hoverStyle":"background-color: rgb(67, 18, 59);\ncolor: #fff;\n     -webkit-transition: background-color 200ms linear;\n     -moz-transition: background-color 200ms linear;\n     -o-transition: background-color 200ms linear;\n     -ms-transition: background-color 200ms linear;\n     transition: background-color 200ms linear;",
+         "class_name":"btn",
+         "content":null,
+         "content_attribs":{
+            "value":"Button1"
+         },
+         "activeStyle":"",
+         "cons_attribs":{
+            "type":"submit"
+         }
+      },
+      {
+         "style":"",
+         "isSingle":true,
+         "tagName":"input",
+         "hoverStyle":"",
+         "class_name":"btn-2",
+         "content":null,
+         "content_attribs":{
+            "value":"Button1"
+         },
+         "activeStyle":"",
+         "cons_attribs":{
+            "tagType":"submit"
+         }
+      },
+      {
+         "style":"",
+         "isSingle":true,
+         "tagName":"input",
+         "hoverStyle":"",
+         "class_name":"btn-3",
+         "content":null,
+         "content_attribs":{
+            "value":"Button1"
+         },
+         "activeStyle":"",
+         "cons_attribs":{
+            "tagType":"submit"
+         }
+      }
+   ],
+   "texts":[
+      {
+         "style":"",
+         "isSingle":false,
+         "tagName":"p",
+         "hoverStyle":"",
+         "class_name":"normal-text",
+         "content":"Default text!",
+         "content_attribs":null,
+         "activeStyle":""
+      },
+      {
+         "style":"color: #666;",
+         "isSingle":false,
+         "tagName":"p",
+         "hoverStyle":"",
+         "class_name":"gray-text",
+         "content":"Default text!",
+         "content_attribs":null,
+         "activeStyle":""
+      }
+   ],
+   "boxes":[
+      {
+         "style":"height: 100%;\nwidth: 100%;\nbackground-color:#fff;\nopacity: 0.8;",
+         "isSingle":false,
+         "cons_attribs":{
+            "style":"border:1px solud #333;"
+         },
+         "hoverStyle":"",
+         "class_name":"box-1",
+         "content":null,
+         "tagName":"div",
+         "activeStyle":""
+      },
+      {
+         "style":"background-color: #f96530 !important;\nwidth: 100%;\nheight: 100%;\n",
+         "isSingle":false,
+         "cons_attribs":{
+            "style":"border:1px solud #333;"
+         },
+         "hoverStyle":"",
+         "class_name":"box-2",
+         "content":null,
+         "tagName":"div",
+         "activeStyle":""
+      }
+   ],
+   "headerTexts":[
+      {
+         "style":"color:#57264f;\nfont-size: 32px;\nfont-weight: bold;\nfont-family: 'Open Sans', sans-serif;\nline-height: 40px;",
+         "isSingle":false,
+         "tagName":"h1",
+         "hoverStyle":"",
+         "class_name":"header-1",
+         "content":"Default header!",
+         "content_attribs":null,
+         "activeStyle":""
+      },
+      {
+         "style":"color: #57264f;\nfont-size: 24px;\nline-height: 36px;\nfont-weight: lighter;\nfont-family: 'Open Sans', sans-serif;",
+         "isSingle":false,
+         "tagName":"h1",
+         "hoverStyle":"",
+         "class_name":"header-2",
+         "content":"Default header!",
+         "content_attribs":null,
+         "activeStyle":""
+      },
+      {
+         "style":"font-weight: 200;\nfont-size: 16px;\nfont-weight: lighter;\nfont-family: 'Open Sans', sans-serif;\ncolor: #fff;\nline-height:30px;",
+         "isSingle":false,
+         "tagName":"h1",
+         "hoverStyle":"",
+         "class_name":"header-3",
+         "content":"Default header!",
+         "content_attribs":null,
+         "activeStyle":""
+      }
+   ],
+   "basecss":"  margin: 0;\n  font-family: 'Open Sans', sans-serif;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  background-color: #eee;\n  background-image: url(https://www.filepicker.io/api/file/MrpyHFeHQBWajBhXZ3rq);\n  background-repeat:repeat;\n\n.navbar {\n    color: #57264f;\n    z-index: 1002;\n    height: 120px;\n    display:block;\n}\n\n.navbar-inner {\n    width: 960px;\n    display: block;\n    margin-right: auto;\n    margin-left: auto;\n    z-index: 1002;\n}\n\n.navbar-inner a.brand {\n    position: relative;\n    display:block;\n    font-size: 32px;\n    font-weight: lighter;\n    float: left;\n    margin-top: 40px;\n    z-index: 1002;\n    margin-left: 15px;\n}\n\n.navbar-inner ul {\n    display: block;\n    width: 100%;\n    margin-top: 20px;\n    z-index: 1002;\n    margin-left: 15px;\n    font-weight: bold;\n    position: relative;\n    left: 0;\n    float: left;\n}\n\n.navbar-inner ul li {\n    padding-right: 8px;\n    display: inline;\n}\n\n.navbar-inner ul li a {\n    display: inline-block;\n}\n\n.navbar-inner .logout-item.pull-right {\n    float: none;\n}\n\n.navbar-inner ul li a:after {\n    display: inline;\n    content: '\\B7';\n    margin-left: 8px;\n}\n\n.navbar-inner ul li:last-child a:after {\n    display: none;\n}\n\n.facebook-login-btn.btn {\n    background-color: #3B5998;\n    text-transform: uppercase;\n    font-family: 'Open Sans', sans-serif;\n    text-align: center;\n    background-image: none;\n    text-shadow: none;\n    color: #fff;\n    border-color: transparent;\n    border-width: 0;\n    font-size: 14px;\n    font-weight: bold;\n    letter-spacing: normal;\n    line-height: 20px;\n    padding-bottom: 8px;\n    padding-left: 26px;\n    padding-right: 27px;\n    padding-top: 12px;\n    text-align: center;\n    border-radius: 3px;\n    background-image: none;\n}\n.facebook-login-btn.btn:hover {\n    background-color: #1B3978;\n}\ninput[type=\"text\"],\ninput[type=\"password\"]{\n-webkit-appearance: none;\n-webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;\n-webkit-rtl-ordering: logical;\n-webkit-transition-delay: 0s, 0s;\n-webkit-transition-duration: 0.2s, 0.2s;\n-webkit-transition-property: border, box-shadow;\n-webkit-transition-timing-function: linear, linear;\n-webkit-user-select: text;\n-webkit-writing-mode: horizontal-tb;\nbackground-color: rgb(255, 255, 255);\nborder-bottom-color: rgb(204, 204, 204);\nborder-bottom-left-radius: 3px;\nborder-bottom-right-radius: 3px;\nborder-bottom-style: solid;\nborder-bottom-width: 1px;\nborder-image-outset: 0px;\nborder-image-repeat: stretch;\nborder-image-slice: 100%;\nborder-image-source: none;\nborder-image-width: 1;\nborder-left-color: rgb(204, 204, 204);\nborder-left-style: solid;\nborder-left-width: 1px;\nborder-right-color: rgb(204, 204, 204);\nborder-right-style: solid;\nborder-right-width: 1px;\nborder-top-color: rgb(204, 204, 204);\nborder-top-left-radius: 3px;\nborder-top-right-radius: 3px;\nborder-top-style: solid;\nborder-top-width: 1px;\nbox-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;\ncolor: rgb(85, 85, 85);\ncursor: auto;\ndisplay: inline-block;\nfloat: none;\nfont-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\nfont-size: 14px;\nfont-weight: normal;\nheight: 42px;\nletter-spacing: normal;\nline-height: 30px;\nmin-height: 1px;\npadding-bottom: 3px;\npadding-left: 20px;\npadding-right: 20px;\npadding-top: 2px;\ntext-align: start;\ntext-indent: 0px;\ntext-shadow: none;\ntext-transform: none;\ntransition-delay: 0s, 0s;\ntransition-duration: 0.2s, 0.2s;\ntransition-property: border, box-shadow;\ntransition-timing-function: linear, linear;\nvertical-align: middle;\nmargin-bottom: 10px;\n}",
+   "images":[
+      {
+         "style":"",
+         "isSingle":true,
+         "tagName":"img",
+         "hoverStyle":"",
+         "class_name":"img-normal",
+         "content":null,
+         "content_attribs":{
+            "src":"/static/img/placeholder.png"
+         },
+         "activeStyle":""
+      },
+      {
+         "style":"height: 100%;",
+         "isSingle":true,
+         "tagName":"img",
+         "hoverStyle":"",
+         "class_name":"img-height-fixed",
+         "content":null,
+         "content_attribs":{
+            "src":"/static/img/placeholder.png"
+         },
+         "activeStyle":""
+      },
+      {
+         "style":"width: 100%;",
+         "isSingle":true,
+         "tagName":"img",
+         "hoverStyle":"",
+         "class_name":"img-width-fixed",
+         "content":null,
+         "content_attribs":{
+            "src":"/static/img/placeholder.png"
+         },
+         "activeStyle":""
+      },
+      {
+         "style":"width:100%;\nheight:100%;",
+         "isSingle":true,
+         "tagName":"img",
+         "hoverStyle":"",
+         "class_name":"img-noscale",
+         "content":null,
+         "content_attribs":{
+            "src":"/static/img/placeholder.png"
+         },
+         "activeStyle":""
+      }
+   ],
+   "textInputs":[
+      {
+         "style":"font-size: 14px;\nfont-weight: normal;\nline-height: 20px;\nheight:32px;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  background-color: #ffffff;\n  border: 1px solid #cccccc !important;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;\n     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;\n       -o-transition: border linear 0.2s, box-shadow linear 0.2s;\n          transition: border linear 0.2s, box-shadow linear 0.2s;",
+         "isSingle":true,
+         "tagName":"input",
+         "hoverStyle":"",
+         "class_name":"inpt-1",
+         "content":null,
+         "content_attribs":{
+            "placeholder":"Default placeholder..."
+         },
+         "activeStyle":"",
+         "cons_attribs":{
+            "tagType":"text"
+         }
+      },
+      {
+         "style":"-webkit-appearance: none;\n-webkit-background-clip: border-box;\n-webkit-background-origin: padding-box;\n-webkit-background-size: auto;\n-webkit-border-image: none;\n-webkit-box-shadow: none;\n-webkit-rtl-ordering: logical;\n-webkit-transition-delay: 0s, 0s;\n-webkit-transition-duration: 0.2s, 0.2s;\n-webkit-transition-property: border, box-shadow;\n-webkit-transition-timing-function: linear, linear;\n-webkit-user-select: text;\n-webkit-writing-mode: horizontal-tb;\nbackground-attachment: scroll;\nbackground-clip: border-box;\nbackground-color: rgb(209, 209, 209);\nbackground-image: none;\nbackground-origin: padding-box;\nbackground-size: auto;\nborder-bottom-color: rgb(209, 209, 209);\nborder-bottom-left-radius: 3px;\nborder-bottom-right-radius: 3px;\nborder-bottom-style: solid;\nborder-bottom-width: 1px;\nborder-left-color: rgb(209, 209, 209);\nborder-left-style: solid;\nborder-left-width: 1px;\nborder-right-color: rgb(209, 209, 209);\nborder-right-style: solid;\nborder-right-width: 1px;\nborder-top-color: rgb(209, 209, 209);\nborder-top-left-radius: 3px;\nborder-top-right-radius: 3px;\nborder-top-style: solid;\nborder-top-width: 1px;\nborder-width: 1px !important;\nbox-shadow: none;\ncolor: rgb(49, 49, 49);\ncursor: auto;\ndisplay: inline-block;\nfloat: none;\nfont-family: Arial;\nfont-size: 12px;\nfont-style: italic;\nfont-weight: normal;\nheight: 20px;\nletter-spacing: normal;\nline-height: 20px;\nmargin-bottom: 5px;\nmargin-left: 0px;\nmargin-right: 0px;\nmargin-top: 0px;\nmin-height: 1px;\noutline-color: rgb(49, 49, 49);\noutline-style: none;\noutline-width: 0px;\npadding-bottom: 3px;\npadding-left: 6px;\npadding-right: 6px;\npadding-top: 3px;\ntext-align: start;\ntext-indent: 0px;\ntext-shadow: none;\ntext-transform: none;\ntransition-delay: 0s, 0s;\ntransition-duration: 0.2s, 0.2s;\ntransition-property: border, box-shadow;\ntransition-timing-function: linear, linear;\nvertical-align: middle;\nwidth: 256px;\nheight: 32px;\nword-spacing: 0px;\nwriting-mode: lr-tb;\nborder-color: #3a87ad !important;\n",
+         "isSingle":true,
+         "tagName":"input",
+         "hoverStyle":"",
+         "class_name":"inpt-blue",
+         "content":null,
+         "content_attribs":{
+            "placeholder":"Default placeholder..."
+         },
+         "activeStyle":"",
+         "cons_attribs":{
+            "tagType":"text"
+         }
+      },
+      {
+         "style":"  font-size: 14px;\n  font-weight: normal;\n  line-height: 20px;\n  height:32px;\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  background-color: #ffffff;\n  border: 1px solid #cccccc !important;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;\n     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;\n       -o-transition: border linear 0.2s, box-shadow linear 0.2s;\n          transition: border linear 0.2s, box-shadow linear 0.2s;\nborder-color: #468847 !important;",
+         "isSingle":true,
+         "cons_attribs":{
+            "type":"text"
+         },
+         "hoverStyle":"",
+         "class_name":"input-green",
+         "content":null,
+         "content_attribs":{
+            "placeholder":"Default placeholder..."
+         },
+         "tagName":"input",
+         "activeStyle":""
+      }
+   ],
+   "pages":[
+      {
+         "design_props":[
+            {
+               "type":"background-image",
+               "value":"/static/img/sample_bg.png"
             },
-            "hoverStyle": "",
-            "class_name": "password-1",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "password"
+            {
+               "type":"background-color",
+               "value":"#fff"
+            },
+            {
+               "type":"text-color",
+               "value":"#000"
+            },
+            {
+               "type":"text-size",
+               "value":"12px"
+            },
+            {
+               "type":"text-family",
+               "value":"\"Helvetica Neue\", Helvetica, \"Lucida Grande\""
+            },
+            {
+               "type":"header-color",
+               "value":"#666"
+            },
+            {
+               "type":"header-size",
+               "value":"16px"
+            },
+            {
+               "type":"header-family",
+               "value":"\"Helvetica Neue\", Helvetica, \"Lucida Grande\""
             }
-        }
-    ],
-    "links": [
-        {
-            "style": "color: #036a6e;",
-            "isSingle": false,
-            "content_attribs": {
-                "href": "internal://Homepage"
-            },
-            "hoverStyle": "",
-            "class_name": "link-1",
-            "content": "Default Link...",
-            "tagName": "a",
-            "activeStyle": ""
-        },
-        {
-            "style": "color:#57264f;\nfont-size: 16px;\nfont-weight: bold;",
-            "isSingle": false,
-            "content_attribs": {
-                "href": "internal://Homepage"
-            },
-            "hoverStyle": "",
-            "class_name": "blue-link",
-            "content": "Default Link...",
-            "tagName": "a",
-            "activeStyle": ""
-        }
-    ],
-    "fonts": [
-        {
-            "name": "Open+Sans:400,600,700,300"
-        }
-    ],
-    "lists": [
-        {
-            "isSingle": false,
-            "cons_attribs": {},
-            "class_name": "default-list",
-            "content": null,
-            "tagName": "div",
-            "style": "background-color: #fff;\nborder: 1px solid #ccc;\nborder-radius: 4px;\n\n.row {\n    border-bottom: 1px solid #ccc;\n}"
-        },
-        {
-            "tagName": "div",
-            "content": null,
-            "cons_attribs": {},
-            "isSingle": false,
-            "style": "\n.row {\n    border-bottom: 1px solid #ccc;\n}\n",
-            "hoverStyle": "",
-            "activeStyle": "",
-            "class_name": "transparent-list"
-        }
-    ],
-    "button": [
-        {
-            "style": "  display: inline-block;\n  *display: inline;\n  padding: 4px 12px;\n  margin-bottom: 0;\n  *margin-left: .3em;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  text-align: center;\n  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\n  vertical-align: middle;\n  cursor: pointer;\n  background-color: #f5f5f5;\n  *background-color: #e6e6e6;\n  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\n  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\n  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\n  background-repeat: repeat-x;\n  border: 1px solid #cccccc;\n  *border: 0;\n  border-color: #e6e6e6 #e6e6e6 #bfbfbf;\n  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\n  border-bottom-color: #b3b3b3;\n  -webkit-border-radius: 4px;\n     -moz-border-radius: 4px;\n          border-radius: 4px;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\n  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n  *zoom: 1;\n  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n",
-            "isSingle": false,
-            "content_attribs": {
-                "href" : "internal://Homepage"
-            },
-            "hoverStyle": "",
-            "class_name": "btn-1",
-            "content": null,
-            "tagName": "a",
-            "activeStyle": "",
-            "content" : "Default Button"
-        }
-    ],
-    "dropdowns": [
-        {
-            "attribs": null,
-            "style": "",
-            "isSingle": false,
-            "hoverStyle": "",
-            "class_name": "default-dropdown",
-            "content": "Option 1",
-            "tagName": "select",
-            "activeStyle": ""
-        }
-    ],
-    "lines": [
-        {
-            "style": "border-color:#57264f;\nborder-width: 0px;\nborder-top-width: 1px;\nopacity: 0.2;",
-            "isSingle": true,
-            "cons_attribs": {},
-            "hoverStyle": "",
-            "class_name": "line-1",
-            "content": null,
-            "tagName": "hr",
-            "activeStyle": ""
-        },
-        {
-            "style": "border-color:#ccc;",
-            "isSingle": true,
-            "cons_attribs": {},
-            "hoverStyle": "",
-            "class_name": "line-4",
-            "content": null,
-            "tagName": "hr",
-            "activeStyle": ""
-        },
-        {
-            "style": "",
-            "isSingle": true,
-            "cons_attribs": {},
-            "hoverStyle": "",
-            "class_name": "line-3",
-            "content": null,
-            "tagName": "hr",
-            "activeStyle": ""
-        }
-    ],
-    "buttons": [
-        {
-            "style": "background-color: rgb(87, 38, 79);\nbackground-image: none;\nbackground-position: 0% 0%;\nbackground-repeat: repeat-x;\nborder-bottom-color: rgb(87, 38, 79);\nborder-bottom-left-radius: 3px;\nborder-bottom-right-radius: 3px;\nborder-bottom-style: solid;\nborder-bottom-width: 1px;\nborder-image-outset: 0px;\nborder-image-repeat: stretch;\nborder-image-slice: 100%;\nborder-image-source: none;\nborder-image-width: 1;\nborder-left-color: rgb(87, 38, 79);\nborder-left-style: solid;\nborder-left-width: 1px;\nborder-right-color: rgb(87, 38, 79);\nborder-right-style: solid;\nborder-right-width: 1px;\nborder-top-color: rgb(87, 38, 79);\nborder-top-left-radius: 3px;\nborder-top-right-radius: 3px;\nborder-top-style: solid;\nborder-top-width: 1px;\nbox-shadow: none;\nbox-sizing: content-box;\ncolor: rgb(255, 255, 255);\ncursor: pointer;\ndisplay: inline-block;\nfilter: none;\nfont-family: MuseoSans300;\nfont-size: 14px;\nfont-weight: bold;\nheight: 20px;\nletter-spacing: normal;\nline-height: 20px;\npadding-bottom: 8px;\npadding-left: 26px;\npadding-right: 27px;\npadding-top: 12px;\ntext-align: center;\ntext-indent: 0px;\ntext-shadow: rgba(0, 0, 0, 0) 0px 0px 0px;\ntext-transform: none;\nvertical-align: top;\nwhite-space: pre;\ntext-transform: uppercase;\nfont-family: 'Open Sans', sans-serif;\n\n    ",
-            "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
-            "hoverStyle": "background-color: rgb(67, 18, 59);\ncolor: #fff;\n     -webkit-transition: background-color 200ms linear;\n     -moz-transition: background-color 200ms linear;\n     -o-transition: background-color 200ms linear;\n     -ms-transition: background-color 200ms linear;\n     transition: background-color 200ms linear;",
-            "class_name": "btn",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "type": "submit"
-            }
-        },
-        {
-            "style": "",
-            "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
-            "hoverStyle": "",
-            "class_name": "btn-2",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "submit"
-            }
-        },
-        {
-            "style": "",
-            "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
-            "hoverStyle": "",
-            "class_name": "btn-3",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "submit"
-            }
-        }
-    ],
-    "texts": [
-        {
-            "style": "",
-            "isSingle": false,
-            "content_attribs": null,
-            "hoverStyle": "",
-            "class_name": "normal-text",
-            "content": "Default text!",
-            "tagName": "p",
-            "activeStyle": ""
-        },
-        {
-            "style": "color: #666;",
-            "isSingle": false,
-            "content_attribs": null,
-            "hoverStyle": "",
-            "class_name": "gray-text",
-            "content": "Default text!",
-            "tagName": "p",
-            "activeStyle": ""
-        }
-    ],
-    "boxes": [
-        {
-            "style": "height: 100%;\nwidth: 100%;\nbackground-color:#fff;\nopacity: 0.8;",
-            "isSingle": false,
-            "cons_attribs": {
-                "style": "border:1px solud #333;"
-            },
-            "hoverStyle": "",
-            "class_name": "box-1",
-            "content": null,
-            "tagName": "div",
-            "activeStyle": ""
-        },
-        {
-            "style": "background-color: #f96530 !important;\nwidth: 100%;\nheight: 100%;\n",
-            "isSingle": false,
-            "cons_attribs": {
-                "style": "border:1px solud #333;"
-            },
-            "hoverStyle": "",
-            "class_name": "box-2",
-            "content": null,
-            "tagName": "div",
-            "activeStyle": ""
-        }
-    ],
-    "headerTexts": [
-        {
-            "style": "color:#57264f;\nfont-size: 32px;\nfont-weight: bold;\nfont-family: 'Open Sans', sans-serif;\nline-height: 40px;",
-            "isSingle": false,
-            "content_attribs": null,
-            "hoverStyle": "",
-            "class_name": "header-1",
-            "content": "Default header!",
-            "tagName": "h1",
-            "activeStyle": ""
-        },
-        {
-            "style": "color: #57264f;\nfont-size: 24px;\nline-height: 36px;\nfont-weight: lighter;\nfont-family: 'Open Sans', sans-serif;",
-            "isSingle": false,
-            "content_attribs": null,
-            "hoverStyle": "",
-            "class_name": "header-2",
-            "content": "Default header!",
-            "tagName": "h1",
-            "activeStyle": ""
-        },
-        {
-            "style": "font-weight: 200;\nfont-size: 16px;\nfont-weight: lighter;\nfont-family: 'Open Sans', sans-serif;\ncolor: #fff;\nline-height:30px;",
-            "isSingle": false,
-            "content_attribs": null,
-            "hoverStyle": "",
-            "class_name": "header-3",
-            "content": "Default header!",
-            "tagName": "h1",
-            "activeStyle": ""
-        }
-    ],
-    "basecss": "  margin: 0;\n  font-family: 'Open Sans', sans-serif;\n  font-size: 14px;\n  line-height: 20px;\n  color: #333333;\n  background-color: #eee;\n  background-image: url(https://www.filepicker.io/api/file/MrpyHFeHQBWajBhXZ3rq);\n  background-repeat:repeat;\n\n.navbar {\n    color: #57264f;\n    z-index: 1002;\n}\n\n.navbar-inner {\n    width: 960px;\n    display: block;\n    margin-right: auto;\n    margin-left: auto;\n    z-index: 1002;\n}\n\n.navbar-inner a.brand {\n    position: relative;\n    display:block;\n    font-size: 32px;\n    font-weight: lighter;\n    float: left;\n    margin-top: 40px;\n    z-index: 1002;\n    margin-left: 15px;\n}\n\n.navbar-inner ul {\n    display: block;\n    width: 100%;\n    margin-top: 20px;\n    z-index: 1002;\n    margin-left: 15px;\n    font-weight: bold;\n    position: relative;\n    left: 0;\n    float: left;\n}\n\n.navbar-inner ul li {\n    padding-right: 8px;\n    display: inline;\n}\n\n.navbar-inner ul li a {\n    display: inline-block;\n}\n\n.navbar-inner .logout-item.pull-right {\n    float: none;\n}\n\n.navbar-inner ul li a:after {\n    display: inline;\n    content: '\\B7';\n    margin-left: 8px;\n}\n\n.navbar-inner ul li:last-child a:after {\n    display: none;\n}\n\n.facebook-login-btn.btn {\n    background-color: #3B5998;\n    text-transform: uppercase;\n    font-family: 'Open Sans', sans-serif;\n    text-align: center;\n    background-image: none;\n    text-shadow: none;\n    color: #fff;\n    border-color: transparent;\n    border-width: 0;\n    font-size: 14px;\n    font-weight: bold;\n    letter-spacing: normal;\n    line-height: 20px;\n    padding-bottom: 8px;\n    padding-left: 26px;\n    padding-right: 27px;\n    padding-top: 12px;\n    text-align: center;\n    border-radius: 3px;\n    background-image: none;\n}\n.facebook-login-btn.btn:hover {\n    background-color: #1B3978;\n}\ninput[type=\"text\"],\ninput[type=\"password\"]{\n-webkit-appearance: none;\n-webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;\n-webkit-rtl-ordering: logical;\n-webkit-transition-delay: 0s, 0s;\n-webkit-transition-duration: 0.2s, 0.2s;\n-webkit-transition-property: border, box-shadow;\n-webkit-transition-timing-function: linear, linear;\n-webkit-user-select: text;\n-webkit-writing-mode: horizontal-tb;\nbackground-color: rgb(255, 255, 255);\nborder-bottom-color: rgb(204, 204, 204);\nborder-bottom-left-radius: 3px;\nborder-bottom-right-radius: 3px;\nborder-bottom-style: solid;\nborder-bottom-width: 1px;\nborder-image-outset: 0px;\nborder-image-repeat: stretch;\nborder-image-slice: 100%;\nborder-image-source: none;\nborder-image-width: 1;\nborder-left-color: rgb(204, 204, 204);\nborder-left-style: solid;\nborder-left-width: 1px;\nborder-right-color: rgb(204, 204, 204);\nborder-right-style: solid;\nborder-right-width: 1px;\nborder-top-color: rgb(204, 204, 204);\nborder-top-left-radius: 3px;\nborder-top-right-radius: 3px;\nborder-top-style: solid;\nborder-top-width: 1px;\nbox-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;\ncolor: rgb(85, 85, 85);\ncursor: auto;\ndisplay: inline-block;\nfloat: none;\nfont-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\nfont-size: 14px;\nfont-weight: normal;\nheight: 42px;\nletter-spacing: normal;\nline-height: 30px;\nmin-height: 1px;\npadding-bottom: 3px;\npadding-left: 20px;\npadding-right: 20px;\npadding-top: 2px;\ntext-align: start;\ntext-indent: 0px;\ntext-shadow: none;\ntext-transform: none;\ntransition-delay: 0s, 0s;\ntransition-duration: 0.2s, 0.2s;\ntransition-property: border, box-shadow;\ntransition-timing-function: linear, linear;\nvertical-align: middle;\nmargin-bottom: 10px;\n}",
-    "images": [
-        {
-            "style": "",
-            "isSingle": true,
-            "content_attribs": {
-                "src": "/static/img/placeholder.png"
-            },
-            "hoverStyle": "",
-            "class_name": "img-normal",
-            "content": null,
-            "tagName": "img",
-            "activeStyle": ""
-        },
-        {
-            "style": "height: 100%;",
-            "isSingle": true,
-            "content_attribs": {
-                "src": "/static/img/placeholder.png"
-            },
-            "hoverStyle": "",
-            "class_name": "img-height-fixed",
-            "content": null,
-            "tagName": "img",
-            "activeStyle": ""
-        },
-        {
-            "style": "width: 100%;",
-            "isSingle": true,
-            "content_attribs": {
-                "src": "/static/img/placeholder.png"
-            },
-            "hoverStyle": "",
-            "class_name": "img-width-fixed",
-            "content": null,
-            "tagName": "img",
-            "activeStyle": ""
-        },
-        {
-            "style": "width:100%;\nheight:100%;",
-            "isSingle": true,
-            "content_attribs": {
-                "src": "/static/img/placeholder.png"
-            },
-            "hoverStyle": "",
-            "class_name": "img-noscale",
-            "content": null,
-            "tagName": "img",
-            "activeStyle": ""
-        }
-    ],
-    "textInputs": [
-        {
-            "style": "font-size: 14px;\nfont-weight: normal;\nline-height: 20px;\nheight:32px;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  background-color: #ffffff;\n  border: 1px solid #cccccc !important;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;\n     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;\n       -o-transition: border linear 0.2s, box-shadow linear 0.2s;\n          transition: border linear 0.2s, box-shadow linear 0.2s;",
-            "isSingle": true,
-            "content_attribs": {
-                "placeholder": "Default placeholder..."
-            },
-            "hoverStyle": "",
-            "class_name": "inpt-1",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "text"
-            }
-        },
-        {
-            "style": "-webkit-appearance: none;\n-webkit-background-clip: border-box;\n-webkit-background-origin: padding-box;\n-webkit-background-size: auto;\n-webkit-border-image: none;\n-webkit-box-shadow: none;\n-webkit-rtl-ordering: logical;\n-webkit-transition-delay: 0s, 0s;\n-webkit-transition-duration: 0.2s, 0.2s;\n-webkit-transition-property: border, box-shadow;\n-webkit-transition-timing-function: linear, linear;\n-webkit-user-select: text;\n-webkit-writing-mode: horizontal-tb;\nbackground-attachment: scroll;\nbackground-clip: border-box;\nbackground-color: rgb(209, 209, 209);\nbackground-image: none;\nbackground-origin: padding-box;\nbackground-size: auto;\nborder-bottom-color: rgb(209, 209, 209);\nborder-bottom-left-radius: 3px;\nborder-bottom-right-radius: 3px;\nborder-bottom-style: solid;\nborder-bottom-width: 1px;\nborder-left-color: rgb(209, 209, 209);\nborder-left-style: solid;\nborder-left-width: 1px;\nborder-right-color: rgb(209, 209, 209);\nborder-right-style: solid;\nborder-right-width: 1px;\nborder-top-color: rgb(209, 209, 209);\nborder-top-left-radius: 3px;\nborder-top-right-radius: 3px;\nborder-top-style: solid;\nborder-top-width: 1px;\nborder-width: 1px !important;\nbox-shadow: none;\ncolor: rgb(49, 49, 49);\ncursor: auto;\ndisplay: inline-block;\nfloat: none;\nfont-family: Arial;\nfont-size: 12px;\nfont-style: italic;\nfont-weight: normal;\nheight: 20px;\nletter-spacing: normal;\nline-height: 20px;\nmargin-bottom: 5px;\nmargin-left: 0px;\nmargin-right: 0px;\nmargin-top: 0px;\nmin-height: 1px;\noutline-color: rgb(49, 49, 49);\noutline-style: none;\noutline-width: 0px;\npadding-bottom: 3px;\npadding-left: 6px;\npadding-right: 6px;\npadding-top: 3px;\ntext-align: start;\ntext-indent: 0px;\ntext-shadow: none;\ntext-transform: none;\ntransition-delay: 0s, 0s;\ntransition-duration: 0.2s, 0.2s;\ntransition-property: border, box-shadow;\ntransition-timing-function: linear, linear;\nvertical-align: middle;\nwidth: 256px;\nheight: 32px;\nword-spacing: 0px;\nwriting-mode: lr-tb;\nborder-color: #3a87ad !important;\n",
-            "isSingle": true,
-            "content_attribs": {
-                "placeholder": "Default placeholder..."
-            },
-            "hoverStyle": "",
-            "class_name": "inpt-blue",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "text"
-            }
-        },
-        {
-            "style": "  font-size: 14px;\n  font-weight: normal;\n  line-height: 20px;\n  height:32px;\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  background-color: #ffffff;\n  border: 1px solid #cccccc !important;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);\n  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;\n     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;\n       -o-transition: border linear 0.2s, box-shadow linear 0.2s;\n          transition: border linear 0.2s, box-shadow linear 0.2s;\nborder-color: #468847 !important;",
-            "isSingle": true,
-            "cons_attribs": {
-                "type": "text"
-            },
-            "hoverStyle": "",
-            "class_name": "input-green",
-            "content": null,
-            "activeStyle": "",
-            "content_attribs": {
-                "placeholder": "Default placeholder..."
-            },
-            "tagName": "input"
-        }
-    ],
-    "pages": [
-        {
-            "design_props": [
-                {
-                    "type": "background-image",
-                    "value": "/static/img/sample_bg.png"
-                },
-                {
-                    "type": "background-color",
-                    "value": "#fff"
-                },
-                {
-                    "type": "text-color",
-                    "value": "#000"
-                },
-                {
-                    "type": "text-size",
-                    "value": "12px"
-                },
-                {
-                    "type": "text-family",
-                    "value": "\"Helvetica Neue\", Helvetica, \"Lucida Grande\""
-                },
-                {
-                    "type": "header-color",
-                    "value": "#666"
-                },
-                {
-                    "type": "header-size",
-                    "value": "16px"
-                },
-                {
-                    "type": "header-family",
-                    "value": "\"Helvetica Neue\", Helvetica, \"Lucida Grande\""
-                }
-            ],
-            "uielements": [],
-            "name": "thjsldkjfg"
-        }
-    ],
-    "forms": [
-        {
-            "style": "input[type=\"text\"],\ninput[type=\"password\"] {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n}\n.btn:hover {\n background-color: rgb(127, 78, 119);\n}",
-            "isSingle": false,
-            "cons_attribs": {},
-            "hoverStyle": "",
-            "class_name": "form-with-bg",
-            "content": null,
-            "tagName": "form",
-            "activeStyle": ""
-        },
-        {
-            "tagName": "form",
-            "content": null,
-            "cons_attribs": {},
-            "isSingle": false,
-            "style": "input[type=\"text\"],\ninput[type=\"password\"] {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n}\n.btn:hover {\n background-color: rgb(127, 78, 119);\n}",
-            "hoverStyle": "",
-            "activeStyle": "defa",
-            "class_name": "default-form"
-        }
-    ]
+         ],
+         "uielements":[
+
+         ],
+         "name":"thjsldkjfg"
+      }
+   ],
+   "forms":[
+      {
+         "style":"input[type=\"text\"],\ninput[type=\"password\"] {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n\n.option {\n    display:block;\n}\n\n.option label {\n    display: inline-block;\n}\n\ninput[type=\"radio\"] {\n    display: inline-block;\n    margin-left: 6px;\n}\n\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n    margin-top: 12px;\n}\n.btn:hover {\n background-color: rgb(127, 78, 119);\n}",
+         "isSingle":false,
+         "cons_attribs":{
+
+         },
+         "hoverStyle":"",
+         "class_name":"form-with-bg",
+         "content":null,
+         "tagName":"form",
+         "activeStyle":""
+      },
+      {
+         "style":"input[type=\"text\"],\ninput[type=\"password\"] {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n}\n.btn:hover {\n background-color: rgb(127, 78, 119);\n}",
+         "isSingle":false,
+         "cons_attribs":{
+
+         },
+         "hoverStyle":"",
+         "class_name":"default-form",
+         "content":null,
+         "tagName":"form",
+         "activeStyle":"defa"
+      }
+   ]
 }
