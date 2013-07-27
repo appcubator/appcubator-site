@@ -109,14 +109,15 @@ class App(models.Model):
 
     deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
 
-    def save(self, *args, **kwargs):
+    def save(self, state_version=True, *args, **kwargs):
         if self.subdomain == '':
             self.reset_subdomain()
         self.subdomain = self.subdomain.lower()
 
         # increment version id
         s = self.state
-        s['version_id'] = s.get('version_id', 0) + 1
+        if state_version:
+            s['version_id'] = s.get('version_id', 0) + 1
         self.state = s
 
         return super(App, self).save(*args, **kwargs)
@@ -308,7 +309,7 @@ class App(models.Model):
             logger.debug("Deployment response content: %r" % response_content)
             try:
                 self.deployment_id = response_content['deployment_id']
-                self.save()
+                self.save(state_version=False)
             except KeyError:
                 pass
             if 'errors' in response_content:
@@ -325,7 +326,7 @@ class App(models.Model):
             assert retry_on_404
             logger.warn("The deployment was not found, so I'm setting deployment id to None")
             self.deployment_id = None
-            self.save()
+            self.save(state_version=False)
             return self.deploy(retry_on_404=False)
 
         else:
@@ -518,7 +519,7 @@ class DomainRegistration(models.Model):
         DomainRegistration.api.configure_domain_records(
             self.domain, staging=staging)
         self.dns_configured = 1
-        self.save()
+        self.save(state_version=False)
 
 class LogAnything(models.Model):
     app_id = models.IntegerField(null=True)

@@ -365,7 +365,7 @@ def app_save_uie_state(request, app):
         app.full_clean()
     except Exception, e:
         return (400, str(e))
-    app.save()
+    app.save(state_version=False)
     return (200, 'ok')
 
 
@@ -377,7 +377,7 @@ def app_save_mobile_uie_state(request, app):
         app.full_clean()
     except Exception, e:
         return (400, str(e))
-    app.save()
+    app.save(state_version=False)
     return (200, 'ok')
 
 
@@ -642,7 +642,7 @@ def sub_register_domain(request, app_id, subdomain):
         raise Http404
     app.subdomain = subdomain
     app.full_clean()
-    app.save()
+    app.save(state_version=False)
     d_user = {
         'user_name': app.owner.username,
         'date_joined': str(app.owner.date_joined)
