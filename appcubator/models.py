@@ -104,6 +104,7 @@ class App(models.Model):
     _state_json = models.TextField(blank=True, default=get_default_app_state)
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
     _mobile_uie_state_json = models.TextField(blank=True, default=get_default_mobile_uie_state)
+    last_modified = models.DateTimeField(auto_now=True, auto_now_add=True)
 
     deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
 
