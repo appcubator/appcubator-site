@@ -117,7 +117,7 @@ class App(models.Model):
         # increment version id
         s = self.state
         s['version_id'] = s.get('version_id', 0) + 1
-        self.state = new_state
+        self.state = s
 
         return super(App, self).save(*args, **kwargs)
 

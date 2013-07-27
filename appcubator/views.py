@@ -281,12 +281,11 @@ def documentation_page(request, page_name):
         htmlString = render(request, 'documentation/html/'+page_name+'.html').content
     except Exception, e:
         htmlString = render(request, 'documentation/html/intro.html').content
-    else:
-        data = {
-            'content': htmlString,
-            'page_name': page_name
-        }
-        return render(request, 'documentation/documentation-base.html', data)
+    data = {
+        'content': htmlString,
+        'page_name': page_name
+    }
+    return render(request, 'documentation/documentation-base.html', data)
 
 @login_required
 def uie_state(request, app_id):
