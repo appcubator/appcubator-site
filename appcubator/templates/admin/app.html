@@ -99,14 +99,12 @@
   });
 
   function saveState(state, is_appState) {
-    var url= '/app/{{ app_id }}/uiestate/';
-    if(is_appState) {
-      url = '/app/{{ app_id }}/state/';
-    }
+    var url = is_appState ? '/app/{{ app_id }}/state/' : '/app/{{ app_id }}/uiestate/';
+    var data = is_appState ? JSON.stringify(state) : { uie_state : JSON.stringify(state) };
     $.ajax({
       type: 'POST',
       url: url,
-      data: JSON.stringify(state),
+      data: data,
       success: function(data) {
         if(data.errors) {
           var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
@@ -117,8 +115,8 @@
           $('.deploy.modal .modal-body').text("Data successfully saved!");
         }
       },
-      error: function(data) {
-        $('.deploy.modal .modal-body').text(data.responseText);
+      error: function(jqXHR) {
+        $('.deploy.modal .modal-body').text(jqXHR.responseText);
       },
       dataType: "JSON"
     });
