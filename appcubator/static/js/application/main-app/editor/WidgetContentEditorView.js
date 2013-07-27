@@ -49,10 +49,11 @@ function(SelectView) {
         this.hrefLi = document.createElement('li');
       }
       var listOfPages = this.model.getListOfPages();
-      if(!this.model.get('data').get('content_attribs').get('href')) {
-        this.model.get('data').get('content_attribs').set('href', "internal://Homepage");
-      }
-      var href = this.model.get('data').get('content_attribs').get('href');
+      // if(!this.model.get('data').get('content_attribs').get('href')) {
+      //   this.model.get('data').get('content_attribs').set('href', "internal://Homepage");
+      // }
+      var href = (this.model.get('data').get('content_attribs').get('href')||null);
+      console.log(href);
 
       var external;
       if(String(href).indexOf('internal://') < 0) {
