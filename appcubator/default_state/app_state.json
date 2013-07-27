@@ -48,5 +48,6 @@
             "access_level": "all"
         }],
     "mobilePages" : [],
-    "name": "thisisirrelevant"
+    "name": "thisisirrelevant",
+    "version_id": 0
 }

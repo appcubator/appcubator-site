@@ -188,38 +188,40 @@ define([
         },
 
         deploy: function(callback) {
-                var before_deploy = new Date().getTime();
-                $.ajax({
-                    type: "POST",
-                    url: '/app/'+appId+'/deploy/',
-                    success: function(data) {
-                        var deploy_time = (new Date().getTime() - before_deploy)/1000;
-                        if(callback) callback();
-            // open a modal based on deploy response
-                        if(data.errors) {
-                            var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-                            if(DEBUG) {
-                                content = { text: data.errors };
-                            }
-                            new ErrorDialogueView(content);
-                            util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.errors}, appId);
-                        }
-                        else {
-              new DeployView(data);
-              util.log_to_server('deployed app', {status: 'success', deploy_time: deploy_time + " seconds"}, appId);
-                        }
-                    },
-                    error: function(data) {
-                        var deploy_time = (new Date().getTime() - before_deploy)/1000;
+            var self = this;
+            var before_deploy = new Date().getTime();
+            $.ajax({
+                type: "POST",
+                url: '/app/'+appId+'/deploy/',
+                success: function(data) {
+                    var deploy_time = (new Date().getTime() - before_deploy)/1000;
+                    if(callback) callback();
+                    // open a modal based on deploy response
+                    if(data.errors) {
                         var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
                         if(DEBUG) {
-                            content = { text: data.responseText };
+                            content = { text: data.errors };
                         }
                         new ErrorDialogueView(content);
-                        util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.responseText}, appId);
-                    },
-                    dataType: "JSON"
-                });
+                        util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.errors}, appId);
+                    }
+                    else {
+                      new DeployView(data);
+                      util.log_to_server('deployed app', {status: 'success', deploy_time: deploy_time + " seconds"}, appId);
+                      self.trigger('deployed');
+                    }
+                },
+                error: function(data) {
+                    var deploy_time = (new Date().getTime() - before_deploy)/1000;
+                    var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+                    if(DEBUG) {
+                        content = { text: data.responseText };
+                    }
+                    new ErrorDialogueView(content);
+                    util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.responseText}, appId);
+                },
+                dataType: "JSON"
+            });
         },
 
         save: function(e) {
@@ -233,11 +235,11 @@ define([
             var self = this;
             appState = v1State.toJSON();
 
-            var successHandler = function() {
+            var successHandler = function(version_id) {
                 util.dontAskBeforeLeave();
                 v1.errorFlag = false;
 
-                self.trigger('deploy');
+                self.trigger('saved', version_id);
 
                 $('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
                 var timer = setTimeout(function(){

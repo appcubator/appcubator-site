@@ -246,13 +246,18 @@ def app_get_state(request, app):
 @require_POST
 @login_required
 def app_save_state(request, app, require_valid=True):
+    # if the incoming appState's version_id does not match the
+    # db's version_id, the incoming appState is an outdated version
+    if not app.isCurrentVersion(simplejson.loads(request.body)):
+        return (400, {"message": "You made newer changes from another browser window. Make sure you are only editing on one browser window at any time. <strong>Please refresh your page</strong>.", "path": ""})
+
     app._state_json = request.body
     app.state['name'] = app.name
     app.full_clean()
 
     if not require_valid:
         app.save()
-        return (200, "ok")
+        return (200, app.version_id)
     try:
         a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
     except analyzer.UserInputError, e:
@@ -265,7 +270,7 @@ def app_save_state(request, app, require_valid=True):
             app=app, name=app.name, snapshot_date=datetime.now(), _state_json=request.body)
         appstate_snapshot.save()
         app.save()
-        return (200, "ok")
+        return (200, app.version_id)
 
 def documentation_page(request, page_name):
     try:
@@ -650,4 +655,7 @@ def yomomma(request, number):
     r = requests.get("http://www.jokes4us.com/yomamajokes/random/yomama"+number+".html")
     return HttpResponse(r.text, status=r.status_code)
 
+def webgeekjokes(request):
+    r = requests.get("http://www.webgeekjokes.tumblr.com/random")
+    return JSONResponse(r.text)
 
