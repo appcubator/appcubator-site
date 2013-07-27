@@ -2,6 +2,7 @@
 {% block content %}
   <p class="" id="yomomma"></p>
   <p class="" id="chucknorris"></p>
+  <p class="" id="webgeekjokes"></p>
   <br>
 	<div class="page-header">
 		<h1>Users</h1>
@@ -122,23 +123,32 @@
 	$('#active-users-week').sortableTable({initialColumn: 4});
 	$('#most-active-users').sortableTable({initialColumn: 4});
 
+/*
   function yoMomma() {
     var random=Math.floor(Math.random()*1192);
     $.get('/yomomma/'+random+'/', {}, function(html) {
       var joke = $(html).find('font[size=5]')[0].innerText;
       $('#yomomma').text(joke);
     });
-  };
+  }; */
 
   function chuckNorris() {
     $.get('http://api.icndb.com/jokes/random', {}, function(data) {
-      data = JSON.parse(data);
-      if(data.type !=="success") return false;
-      $('#chucknorris').text(data.value.joke);
+      //data = JSON.parse(data);
+      $('#chucknorris').text(data.value.joke.replace("&quot;",'"'));
     });
   };
 
-  yoMomma();
+  function webgeekjokes() {
+    $.get('/webgeekjokes/', {}, function(html) {
+      var text = $(html).find('.content').text().replace('\n','');
+      text = text.replace('A QUOTE ', '').replace('A CHAT','').replace('A PHOTO','');
+      $('#webgeekjokes').text(text);
+    });
+  };
+
+  //yoMomma();
   chuckNorris();
+  webgeekjokes()
 </script>
 {% endblock %}
