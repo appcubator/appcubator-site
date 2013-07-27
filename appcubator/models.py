@@ -12,6 +12,8 @@ import requests
 import simplejson
 import traceback
 import sys
+from datetime import datetime
+import time
 
 import subprocess, shlex
 import hashlib
@@ -104,7 +106,6 @@ class App(models.Model):
     _state_json = models.TextField(blank=True, default=get_default_app_state)
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
     _mobile_uie_state_json = models.TextField(blank=True, default=get_default_mobile_uie_state)
-    last_modified = models.DateTimeField(auto_now=True, auto_now_add=True)
 
     deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
 
@@ -112,6 +113,12 @@ class App(models.Model):
         if self.subdomain == '':
             self.reset_subdomain()
         self.subdomain = self.subdomain.lower()
+
+        # increment version id
+        new_state = self.state
+        new_state['version_id'] = self.version_id + 1
+        self.state = new_state
+
         return super(App, self).save(*args, **kwargs)
 
     def reset_subdomain(self):
@@ -176,6 +183,24 @@ class App(models.Model):
     @property
     def urls(self):
         return self.state['urls']
+
+    @property
+    def version_id(self):
+        return self.state['version_id']
+
+    def isCurrentVersion(self, new_state):
+        """Returns True if new_state is the same version as self.state's."""
+        if 'version_id' not in self.state:
+            new_state = self.state
+            new_state['version_id'] = 0
+            self.state = new_state
+            return True
+        else:
+            if 'version_id' not in new_state:
+                new_state['version_id'] = 0
+            current_version_id = self.version_id
+            new_version_id = new_state['version_id']
+            return (new_version_id is current_version_id)
 
     def get_absolute_url(self):
         return reverse('views.app_page', args=[str(self.id)])

@@ -112,6 +112,11 @@ function (AppModel,
     v1 = new AppRouter();
     routeLogger = new RouteLogger({router: v1});
 
+    // on appstate saves, synchronize version ids
+    v1State.listenTo(v1, 'saved', function(new_version_id) {
+      v1State.set('version_id', new_version_id);
+    });
+
     Backbone.history.start({pushState: true});
 
     if(v1State.has('walkthrough')) {
