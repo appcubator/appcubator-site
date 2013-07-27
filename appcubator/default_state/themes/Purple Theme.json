@@ -142,48 +142,15 @@
     "buttons": [
         {
             "style": "background-color: rgb(87, 38, 79);\nbackground-image: none;\nbackground-position: 0% 0%;\nbackground-repeat: repeat-x;\nborder-bottom-color: rgb(87, 38, 79);\nborder-bottom-left-radius: 3px;\nborder-bottom-right-radius: 3px;\nborder-bottom-style: solid;\nborder-bottom-width: 1px;\nborder-image-outset: 0px;\nborder-image-repeat: stretch;\nborder-image-slice: 100%;\nborder-image-source: none;\nborder-image-width: 1;\nborder-left-color: rgb(87, 38, 79);\nborder-left-style: solid;\nborder-left-width: 1px;\nborder-right-color: rgb(87, 38, 79);\nborder-right-style: solid;\nborder-right-width: 1px;\nborder-top-color: rgb(87, 38, 79);\nborder-top-left-radius: 3px;\nborder-top-right-radius: 3px;\nborder-top-style: solid;\nborder-top-width: 1px;\nbox-shadow: none;\nbox-sizing: content-box;\ncolor: rgb(255, 255, 255);\ncursor: pointer;\ndisplay: inline-block;\nfilter: none;\nfont-family: MuseoSans300;\nfont-size: 14px;\nfont-weight: bold;\nheight: 20px;\nletter-spacing: normal;\nline-height: 20px;\npadding-bottom: 8px;\npadding-left: 26px;\npadding-right: 27px;\npadding-top: 12px;\ntext-align: center;\ntext-indent: 0px;\ntext-shadow: rgba(0, 0, 0, 0) 0px 0px 0px;\ntext-transform: none;\nvertical-align: top;\nwhite-space: pre;\ntext-transform: uppercase;\nfont-family: 'Open Sans', sans-serif;\n\n    ",
-            "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
             "hoverStyle": "background-color: rgb(67, 18, 59);\ncolor: #fff;\n     -webkit-transition: background-color 200ms linear;\n     -moz-transition: background-color 200ms linear;\n     -o-transition: background-color 200ms linear;\n     -ms-transition: background-color 200ms linear;\n     transition: background-color 200ms linear;",
+            "isSingle": false,
+            "content_attribs": {
+                "href": "internal://Homepage"
+            },
             "class_name": "btn",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "type": "submit"
-            }
-        },
-        {
-            "style": "",
-            "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
-            "hoverStyle": "",
-            "class_name": "btn-2",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "submit"
-            }
-        },
-        {
-            "style": "",
-            "isSingle": true,
-            "content_attribs": {
-                "value": "Button1"
-            },
-            "hoverStyle": "",
-            "class_name": "btn-3",
-            "content": null,
-            "tagName": "input",
-            "activeStyle": "",
-            "cons_attribs": {
-                "tagType": "submit"
-            }
+            "content": "Button1",
+            "tagName": "a",
+            "activeStyle": ""
         }
     ],
     "texts": [

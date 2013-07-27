@@ -35,7 +35,7 @@ function() {
   var DocumentationMain = Backbone.View.extend({
     el: null,
     addr : [0],
-    pages: ["application_settings", "domain_settings", "seo_optimization", "deleting_your_application", "tables_page", "user_tables", "tables", "relationships", "themes", "pages", "access", "editor", "design_eleents", "images", "login", "page_content", "forms", "lists", "search", "deploy", "emails", "feedback"],
+    pages: ["application_settings", "domain_settings", "seo_optimization", "deleting_your_application", "tables_page", "user_tables", "tables", "relationships", "themes", "pages", "editor", "design_eleents", "images", "login", "page_content", "forms", "lists", "search", "deploy", "emails", "feedback"],
 
     events : {
       "submit .tutorial-q-form" : "submittedQuestion"
