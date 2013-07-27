@@ -239,7 +239,7 @@ define([
                 util.dontAskBeforeLeave();
                 v1.errorFlag = false;
 
-                self.trigger('saved', data.version_id);
+                v1State.set('version_id', data.version_id);
 
                 $('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
                 var timer = setTimeout(function(){
@@ -259,6 +259,7 @@ define([
             };
             var softErrorHandler = function(jqxhr) {
                 var data = JSON.parse(jqxhr.responseText);
+                v1State.set('version_id', data.version_id);
                 v1.errorFlag = true;
                 var content = { text: "Warning: " + data.message + ' We saved your progress, but you need to fix this before deploying again. FYI, this occurred in ' + data.path + '.' };
                 new ErrorDialogueView(content, function() { v1.errorFlag = false;});
