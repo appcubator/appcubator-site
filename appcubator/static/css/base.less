@@ -1032,7 +1032,7 @@ legend + .control-group {
   text-decoration: none;
 }
 
-.save-btn,.save-btn-nofix {
+.save-btn, .save-btn-nofix {
   position: fixed;
   top: 120px;
   left: 50%;
@@ -1057,7 +1057,7 @@ legend + .control-group {
   -ms-transition: opacity 0.6s;
   transition: opacity 0.6s;
 
--webkit-background-size: 44% auto;
+  -webkit-background-size: 44% auto;
   -moz-background-size: 44% auto;
   background-size: 44% auto;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -1070,6 +1070,11 @@ legend + .control-group {
   background-color: #000;
   .opacity(0.8);
 }
+
+.save-btn:active,.save-btn-nofix:active {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+} 
 
 .save-btn-nofix {
   position: static;

@@ -27,6 +27,7 @@ function(WidgetContentEditor,
     tagName : 'div',
     css : 'widget-editor',
     location: "bottom",
+    subviews: [],
 
     events : {
       'click .edit-slides-button' : 'openSlideEditor',
@@ -164,13 +165,13 @@ function(WidgetContentEditor,
       this.$el.removeClass('right');
       this.$el.removeClass('bottom');
 
+      var location = this.getLocation();
+      this.location = location;
+
       if(action == "show" || this.model.get('type') == "loop") {
-        var location = this.getLocation();
-        this.location = location;
         this.el.className += ' '+location;
       }
       else {
-        this.location = 'bottom';
         this.$el.removeClass('right');
       }
 
@@ -285,6 +286,7 @@ function(WidgetContentEditor,
       if(this.contentEditor) this.contentEditor.clear();
       if(this.layoutEditor) this.layoutEditor.clear();
       if(this.infoEditor) this.infoEditor.clear();
+      _(this.subviews).each(function(subview) { subview.close(); });
       this.el.innerHTML = '';
       this.el.style.width = '';
       this.$el.hide();
@@ -323,6 +325,11 @@ function(WidgetContentEditor,
     getLocation: function() {
       var layout = this.model.get('layout');
       var rightCoor = layout.get('left') + layout.get('width');
+
+      if(layout.get('height') < 22) {
+        return "bottom";
+      }
+
       if((12 - rightCoor) < 2) return "left";
       return "right";
     },

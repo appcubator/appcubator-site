@@ -9,6 +9,7 @@ function(EmailModel) {
 
 		events: {
 			'keyup input': 'saveChange',
+			'keyup textarea': 'saveChange',
 			'click h3.name': 'showNameForm',
 			'click .remove': 'removeEmail'
 		},

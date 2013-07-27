@@ -208,8 +208,7 @@ Templates.queryView = [
     '<label><input type="radio" class="nmr-rows" id="all-rows" name="nmrRows" value="All" <%= c.rAll %>> All</label>',
     '<label><input type="radio" class="nmr-rows" id="first-rows" name="nmrRows" value="First" <%= c.rFirst %>> <input type="text" id="first-nmr" value="<%= c.rFirstNmr %>"> rows</label>',
     '</div>',
-  '</div>',
-  '<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>'
+  '</div>'
 ].join('\n');
 
 
@@ -235,7 +234,7 @@ Templates.tempUIElement = [
 
 
 Templates.tempUIElementSized = [
-  '<div style="position:absolute; left: <%= element.layout.get(\'left\') %>px; top:<%= element.layout.get(\'top\') %>px; width:<%= element.layout.get(\'width\')%>px; height:<%=element.layout.get(\'height\')%>px;">',
+  '<div style="position:absolute; left: <%= element.layout.get(\'left\') %>px; top:<%= element.layout.get(\'top\') %>px; width:<%= element.layout.get(\'width\')%>px; height:<%=element.layout.get(\'height\') %>px; text-align:<%=element.layout.get(\'alignment\')%>;">',
   '<<%= element.data.get(\'tagName\') %>',
   'class = "<%= element.data.get(\'class_name\') %>"',
   '<% if(element.data.get(\'cons_attribs\')) { %>',

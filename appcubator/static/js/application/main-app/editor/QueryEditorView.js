@@ -8,6 +8,8 @@ function() {
     className : 'query-modal modal',
     css : 'query-editor',
     title: "Query Editor",
+    doneButton: true,
+    padding: 0,
 
     events: {
       'change .fields-to-display'   : 'fieldsToDisplayChanged',

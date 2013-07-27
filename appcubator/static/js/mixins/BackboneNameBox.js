@@ -49,6 +49,9 @@ function(Backbone) {
         this.$el.find('.box-button').fadeIn();
         this.trigger('submit', name);
       }
+      else {
+        this.reset();
+      }
     },
 
     keyDown: function (e) {

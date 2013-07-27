@@ -284,6 +284,7 @@ function() {
       if(this.selectedEl.getRow() && this.selectedEl.editMode === true) return;
 
       this.selectedEl.moveDown();
+      e.preventDefault();
     },
 
     moveSelectedUp: function() {
@@ -292,6 +293,7 @@ function() {
       if(this.selectedEl.getRow() && this.selectedEl.editMode === true) return;
 
       this.selectedEl.moveUp();
+      e.preventDefault();
     },
 
     moveSelectedLeft: function() {
@@ -300,6 +302,7 @@ function() {
       if(this.selectedEl.getRow() && this.selectedEl.editMode === true) return;
 
       this.selectedEl.moveLeft();
+      e.preventDefault();
     },
 
     moveSelectedRight: function() {
@@ -308,6 +311,7 @@ function() {
       if(this.selectedEl.getRow() && this.selectedEl.editMode === true) return;
 
       this.selectedEl.moveRight();
+      e.preventDefault();
     },
 
     deleteSelected: function(e) {
