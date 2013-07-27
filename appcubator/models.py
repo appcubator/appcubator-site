@@ -116,7 +116,7 @@ class App(models.Model):
 
         # increment version id
         new_state = self.state
-        new_state['version_id'] = self.version_id + 1
+        new_state['version_id'] = self.state.get('version_id', 0) + 1
         self.state = new_state
 
         return super(App, self).save(*args, **kwargs)
@@ -184,10 +184,6 @@ class App(models.Model):
     def urls(self):
         return self.state['urls']
 
-    @property
-    def version_id(self):
-        return self.state['version_id']
-
     def isCurrentVersion(self, new_state):
         """Returns True if new_state is the same version as self.state's."""
         if 'version_id' not in self.state:
@@ -198,7 +194,7 @@ class App(models.Model):
         else:
             if 'version_id' not in new_state:
                 new_state['version_id'] = 0
-            current_version_id = self.version_id
+            current_version_id = self.state.get('version_id', 0)
             new_version_id = new_state['version_id']
             return (new_version_id is current_version_id)
 
