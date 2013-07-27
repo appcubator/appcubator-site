@@ -15,7 +15,7 @@ function(SimpleModalView) {
       var self = this;
       _.bindAll(this);
       this.render();
-      v1.on('deploy', function() {
+      v1.on('deployed', function() {
         self.$('.coming-soon-overlay').hide();
       });
     },
