@@ -102,6 +102,7 @@
   background-repeat: no-repeat;
   background-size: auto 100%;
   background-position: bottom;
+   -webkit-animation: flyUp 0.4s ease-out;
 }
 
 .soft-error-modal span {
@@ -120,3 +121,35 @@
 .soft-error-modal p {
   display: block;
 }
+
+    @-moz-keyframes flyUp {
+        0% {
+           -webkit-transform: translateY(100px);
+        }
+
+        100% {
+
+            -webkit-transform:  translateY(0);
+        }
+    }
+
+    @-webkit-keyframes flyUp {
+        0% {
+             -webkit-transform: translateY(80px);
+        }
+        90% {
+             -webkit-transform: translateY(-10px);
+        }
+        100% {
+            -webkit-transform:  translateY(0);
+        }
+    }
+
+    @-ms-keyframes flyUp {
+        0% {
+            -webkit-transform:  translateY(100px);
+        }
+        100% {
+            -webkit-transform:  translateY(0);
+        }
+    }
