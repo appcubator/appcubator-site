@@ -304,7 +304,7 @@ def signup_gsb_customer(request):
             company = "Hacker News"
             extra = ""
             interest = False
-            description = "GSB launch"
+            description = "Turkey Training"
             Customer.create_first_time(name, email, company, extra, description, 11, interest)
             return HttpResponse()
         else:
