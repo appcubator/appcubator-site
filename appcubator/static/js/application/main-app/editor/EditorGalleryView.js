@@ -35,6 +35,8 @@ define([
       initialize   : function(widgetsCollection) {
        _.bindAll(this);
        this.widgetsCollection = widgetsCollection;
+       this.sections = [];
+       this.subviews = [];
      },
 
      render: function() {
@@ -90,10 +92,11 @@ define([
     },
 
     displayAllSections: function() {
+      this.allList.innerHTML = '';
       _.each(this.sections, function(section) {
+        console.log(section);
         this.allList.appendChild(section.el);
       }, this);
-      this.expandAllSections();
     },
 
     renderUIElementList: function() {
