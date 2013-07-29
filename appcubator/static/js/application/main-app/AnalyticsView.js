@@ -26,8 +26,10 @@ function(SimpleModalView) {
       if(!window.is_deployed) {
         $('.analytics .coming-soon-overlay').show();
         $('.total-users', this.el)[0].innerHTML = "?";
+        $('.total-visitors', this.el)[0].innerHTML = "?";
         $('.total-page-views', this.el)[0].innerHTML = "?";
         $('.total-active-users', this.el)[0].innerHTML = "?";
+        $('.total-active-visitors', this.el)[0].innerHTML = "?";
       }
       this.fetchInfo();
       return this;
