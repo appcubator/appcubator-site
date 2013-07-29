@@ -37,13 +37,15 @@ function(SimpleModalView) {
       var self = this;
       clearTimeout(this.updateInterval);
       document.getElementsByClassName('total-users')[0].innerHTML = data.total_users;
-      var total_page_views = data.total_page_views;
+      document.getElementsByClassName('total-visitors')[0].innerHTML = data.total_visitors;
+      document.getElementsByClassName('total-active-users')[0].innerHTML = data.total_active_users;
+      document.getElementsByClassName('total-active-visitors')[0].innerHTML = data.total_active_visitors;
       // filter out requests for 'blacklisted' pages/statics
+      var total_page_views = data.total_page_views;
       for(var i=0; i < this.blackList.length; i++) {
         total_page_views -= data.total_page_views_dict[this.blackList[i]];
       }
       document.getElementsByClassName('total-page-views')[0].innerHTML = total_page_views;
-      document.getElementsByClassName('total-active-users')[0].innerHTML = data.total_active_users;
       this.updateInterval = setTimeout(this.fetchInfo, 10000);
     },
 
