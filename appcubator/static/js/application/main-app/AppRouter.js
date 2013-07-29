@@ -240,7 +240,13 @@ define([
             var successHandler = function(data) {
                 util.dontAskBeforeLeave();
                 v1.errorFlag = false;
-
+                if(data.version_id) {
+                    console.log('received new version id: ' + data.version_id);
+                }
+                else {
+                    console.log("did not receive new version id");
+                }
+                console.log(v1State.get('version_id') + ' -> ' + data.version_id);
                 v1State.set('version_id', data.version_id);
 
                 $('#save-icon').attr('src', '/static/img/checkmark.png').hide().fadeIn();
