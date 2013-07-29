@@ -14,6 +14,7 @@ function(SimpleModalView) {
     initialize: function() {
       var self = this;
       _.bindAll(this);
+      this.blackList = ['/favicon.ico'];
       this.render();
       v1.on('deployed', function() {
         self.$('.coming-soon-overlay').hide();
@@ -36,7 +37,12 @@ function(SimpleModalView) {
       var self = this;
       clearTimeout(this.updateInterval);
       document.getElementsByClassName('total-users')[0].innerHTML = data.total_users;
-      document.getElementsByClassName('total-page-views')[0].innerHTML = data.total_page_views;
+      var total_page_views = data.total_page_views;
+      // filter out requests for 'blacklisted' pages/statics
+      for(var i=0; i < this.blackList.length; i++) {
+        total_page_views -= data.total_page_views_dict[this.blackList[i]];
+      }
+      document.getElementsByClassName('total-page-views')[0].innerHTML = total_page_views;
       document.getElementsByClassName('total-active-users')[0].innerHTML = data.total_active_users;
       this.updateInterval = setTimeout(this.fetchInfo, 10000);
     },
