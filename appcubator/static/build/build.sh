@@ -1,5 +1,6 @@
 cp ./static/js/application/main-app/main.js ./static/js/application/main-app/main.js.backup
 echo "Copied main.js to main.js.backup"
+lessc --verbose --rootpath=/static/css/ -x --yui-compress --ru --line-numbers=mediaquery ./static/css/base.less ./static/css/base.css
 lessc --verbose --rootpath=/static/css/app/ -x --yui-compress --ru --line-numbers=mediaquery ./static/css/app/style.less ./static/css/app/style.css
 echo "Compiled app/style.less to app.css"
 r.js -o ./static/build/app.build.js
