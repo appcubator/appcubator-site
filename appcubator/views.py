@@ -133,10 +133,10 @@ def app_new_walkthrough(request, walkthrough):
     s['name'] = a.name
     if walkthrough is 'simpleWalkthrough':
         s['simpleWalkthrough'] = 1
-        page_name = "twitterwalkthrough-simple"
+        log_name = 'started simple twitter walkthrough'
     else:
         s['walkthrough'] = 1
-        page_name = "twitterwalkthrough"
+        log_name = "started in-depth twitter walkthrough"
     a.state = s
     try:
         a.full_clean()
@@ -146,7 +146,7 @@ def app_new_walkthrough(request, walkthrough):
 
     #log url route
     user_id = request.user.id
-    log = LogAnything(user_id=user_id, app_id=a.id, name="visited page", data={"page_name": page_name})
+    log = LogAnything(user_id=user_id, app_id=a.id, name=log_name, data={})
     log.save()
 
     return redirect(app_page, a.id)

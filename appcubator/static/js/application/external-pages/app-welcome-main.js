@@ -138,6 +138,7 @@ function (AppModel,
     require(['app/QuickTour'], function(QuickTour) {
       window.QuickTour = QuickTour;
       QuickTour.start();
+      util.log_to_server('started quick tour', {}, appId);
       $(document).one('keypress', function(e) {
         QuickTour.stop(false);
       });
