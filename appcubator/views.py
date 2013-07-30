@@ -25,9 +25,6 @@ from payments.views import subscribe
 import requests
 import traceback
 import datetime
-import shlex
-import subprocess
-import os
 from datetime import datetime
 
 
@@ -508,10 +505,6 @@ def app_deploy(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    d_user = {
-        'user_name': app.owner.username,
-        'date_joined': str(app.owner.date_joined)
-    }
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     status = 500 if 'errors' in result else 200
@@ -588,12 +581,11 @@ def register_domain(request, domain):
 @login_required
 @csrf_exempt
 def sub_check_availability(request, subdomain):
-    domain_is_available = not App.objects.filter(subdomain=subdomain.lower()).exists()
-
-    if domain_is_available:
+    data = {'subdomain': subdomain}
+    form = forms.ChangeSubdomain(data)
+    if form.is_valid():
         return JSONResponse(True)
-    else:
-        return JSONResponse(False)
+    return JSONResponse(False)
 
 
 @require_POST
@@ -603,16 +595,14 @@ def sub_register_domain(request, app_id, subdomain):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    app.subdomain = subdomain
-    app.full_clean()
-    app.save(state_version=False)
-    d_user = {
-        'user_name': app.owner.username,
-        'date_joined': str(app.owner.date_joined)
-    }
-    result = app.deploy(d_user)
-    status = 500 if 'errors' in result else 200
-    return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+    form = forms.ChangeSubdomain({'subdomain': subdomain}, app=app)
+    if form.is_valid():
+        app = form.save(state_version=False)
+        result = app.deploy()
+        status = 500 if 'errors' in result else 200
+        return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+
+    return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")
 
 
 def yomomma(request, number):
