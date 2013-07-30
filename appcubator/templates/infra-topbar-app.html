@@ -31,9 +31,10 @@
             <ul class="v1 dropdown-menu">
               <!-- <li class="header-panel"></li> -->
               {% if app %}
-              <li><a href="{% url appcubator.views.app_page app.id %}info/">App settings</a></li>
+              <li><a href="{% url appcubator.views.app_page app.id %}info/">App Settings</a></li>
                 {% if user.is_superuser and app.pk %}
-                <li><a href="{% url appcubator.admin_views.admin_app app.pk %}">Admin</a></li>
+                <li><a href="{% url appcubator.admin_views.admin_app app.pk %}" rel="external" target="_blank">Data Panel</a></li>
+                <li><a href="{% url appcubator.admin_views.admin_app app.pk %}" rel="external" target="_blank">Theme Editor</a></li>
                 {% endif %}
               {% endif %}
               <li class="header">My Applications</li>
