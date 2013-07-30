@@ -127,6 +127,7 @@ class App(models.Model):
 
     def clean(self):
         from django.core.exceptions import ValidationError
+        print "calling clean on %d" % self.id
         if self.owner.apps.filter(name=self.name).exists():
             raise ValidationError('You have another app with the same name.')
 

@@ -14,6 +14,8 @@ from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
 
+import forms
+
 import app_builder.analyzer as analyzer
 from app_builder.analyzer import App as AnalyzedApp
 from app_builder.utils import get_xl_data, add_xl_data, get_model_data
@@ -89,24 +91,21 @@ def app_new(request, is_racoon = False):
         log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "newapp"})
         log.save()
         return render(request, 'apps-new.html')
+
     elif request.method == 'POST':
-        app_name = "Unnamed"
-        if 'name' in request.POST:
-            app_name = request.POST['name']
-        a = App(name=app_name, owner=request.user)
-        # set the name in the app state
-        s = a.state
-        s['name'] = a.name
-        a.state = s
-        try:
-            a.full_clean()
-        except Exception, e:
-            return render(request,  'apps-new.html', {'old_name': app_name, 'errors': e}, status=400)
-        a.save()
-        if is_racoon:
-            return redirect(app_new_racoon, a.id)
-        else:
-            return redirect(app_page, a.id)
+        data = {}
+        data['name'] = request.POST.get('name', '')
+        data['subdomain'] = request.POST.get('name', '')
+        data['owner'] = request.user.id
+        form = forms.AppNew(data)
+        if form.is_valid():
+            app = form.save()
+            if is_racoon:
+                return redirect(app_new_racoon, app.id)
+            else:
+                return redirect(app_page, app.id)
+
+        return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'errors': form.errors}, status=400)
 
 
 @login_required
