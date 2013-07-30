@@ -38,6 +38,7 @@
       chart.reduceXTicks(true);
 
       chart.xAxis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+      chart.yAxis.tickFormat(d3.format('d'));
 
       d3.select('#active-users svg')
           .datum(parseActiveUsersData(data))
@@ -78,6 +79,7 @@
           .y(function(d) { return d.value })
 
       chart.xAxis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+      chart.yAxis.tickFormat(d3.format('d'));
 
       d3.select('#user-signups svg')
           .datum(parseUserSignupsData(data))
