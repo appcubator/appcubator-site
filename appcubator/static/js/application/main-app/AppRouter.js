@@ -43,6 +43,7 @@ define([
                 self.showTutorial();
                 window.history.pushState(null, null, window.location.href.concat("tutorial/"));
             });
+            v1.saving = false;
 
       keyDispatcher.bindComb('meta+s', this.save);
       keyDispatcher.bindComb('ctrl+s', this.save);
@@ -229,6 +230,12 @@ define([
         save: function(e) {
             if(v1.errorFlag === true) return;
             if(appId === 0) return;
+            if(v1.saving) {
+                return;
+            }
+            else {
+                v1.saving = true;
+            }
 
             $('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
             var $el = $('.menu-button.save');
@@ -264,6 +271,8 @@ define([
                     $el.html("<span>Save</span>").fadeIn();
                     clearTimeout(timer2);
                 }, 3000);
+
+                v1.saving = false;
             };
             var softErrorHandler = function(jqxhr) {
                 console.log("HANDLING SOFT ERROR");
@@ -273,12 +282,14 @@ define([
                 //var content = { text: "Warning: " + data.message + ' We saved your progress, but you need to fix this before deploying again. FYI, this occurred in ' + data.path + '.' };
                 //new ErrorDialogueView(content, function() { v1.errorFlag = false;});
                 new SoftErrorView({text: data.message, path: data.path });
+                v1.saving = false;
             };
             var browserConflictHandler = function(jqxhr) {
                 new ErrorDialogueView({text:"Looks like you (or someone else) made a change to your app in another browser window. Please make sure you only use one window with Appcubator or you may end up overwriting your app with an older version. Please refresh the browser to get the updated version of your app."}, function() { v1.errorFlag = false;});
             };
             var hardErrorHandler = function(jqxhr) {
                 v1.errorFlag = true;
+                v1.saving = false;
                 var content = "";
                 if(DEBUG)
                     content = { text: jqxhr.responseText };
