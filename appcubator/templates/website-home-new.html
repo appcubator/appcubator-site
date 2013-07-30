@@ -16,24 +16,20 @@ scope: r_fullprofile r_emailaddress
 </script>
 {% include "website-leftpanel.html" %}
 
-<div class="fixed-bg" id="bg4"></div>
-<div class="fixed-bg" id="bg3"></div>
-<div class="fixed-bg" id="bg2"></div>
-<div class="fixed-bg" id="bg1"></div>
 
 <div class="sliding-panel">
-  <div class="slide1">
+  <div class="slide slide-intro">
     <div class="large-text">
       The Easiest Way to Prototype Web Apps
     </div>
     <div class="sub-text">
       No code. No hassle. No limits.
     </div>
-    <div class="gray-bg  slide-info">
+    <div class="gray-bg  slide-to-info">
       More Info <span class="icon-down"></span>
     </div>
   </div>
-  <div class="slide2 slide">
+  <div class="slide-info slide">
     <div class="row">
       <h2>Get Started Really Quick</h2>
       <ul>
@@ -47,7 +43,7 @@ scope: r_fullprofile r_emailaddress
       Gallery <span class="icon-down"></span>
     </div>
   </div>
-  <div class="slide slide4">
+  <div class="slide slide-gallery">
     <div class="row">
       <h2>Anyone Can Build</h2>
       <div class="gallery">
@@ -63,7 +59,6 @@ scope: r_fullprofile r_emailaddress
     <div class="large-container">
         <div class="left-side">
           <form id="sign-up-form">
-            <div class="left-side">
               <input type="text" name="name" id="inp-name" placeholder="Full Name">
               <input type="text" name="email" id="inp-email" placeholder="Email">
 <!--               <input type="text" name="company" id="inp-company" placeholder="Company">
@@ -74,19 +69,18 @@ scope: r_fullprofile r_emailaddress
               <textarea name="description" id="inp-description" placeholder="Technical description of your application. This is for us to attain the feasibility of the project to best direct you. Optional."></textarea>
               <input type="checkbox" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
               <input type="submit" class="btn btn-blue" id="sign-up" value="Request an Invite!">
-            </div>
           </form>
         </div>
         <div class="right-side">
           <ul class="pricing">
             <li class="free">
-              <span class="title">Building your App</span>
+              <span class="title free">Free forever to build...</span>
               <span class="content">
                 <p>It's free to sign up, explore and build your app for as long as you want.</p>
                 <p class="includes"> Includes 24 hour support, unlimited *.appcubator.com domains, design themes and service integrations.</p>
               </span>
-              <span class="price">Free</span>
-            </li>
+<!--               <span class="price">Free</span>
+ -->            </li>
             <li class="mobile">
               <span class="title">Production</span>
               <span class="content">

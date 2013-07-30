@@ -29,16 +29,29 @@ function() {
     var xTrans = -30;
     var yTrans = 45;
 
-    var infoHeight = $('.slide2').offset().top;
-    var galleryHeight = $('.slide4').offset().top + 40;
+    var infoHeight = $('.slide-info').offset().top;
+    var galleryHeight = $('.slide-gallery').offset().top + 40;
     var signupHeight = $('.slide-last').offset().top - 40;
 
     var bg = 1;
 
+    var $slideIntro = $('.slide-intro');
+    var $slideInfo = $('.slide-info');
+    var $slideLast = $('.slide-last');
 
     $('#bg2').css('background-image', 'url(/static/img/bg3.jpg)');
     $('#bg3').css('background-image', 'url(/static/img/bg4.jpg)');
     $('#bg4').css('background-image', 'url(/static/img/bg4.jpg)');
+
+    $(window).on('scroll', function(e) { 
+      var newValue = $(window).scrollTop();
+      console.log('hey');
+      $slideIntro.css('background-position', '0 '+Math.round(newValue / 5) + 'px');
+      $slideInfo.css('background-position', '0 '+Math.round(newValue / 3) + 'px');
+      if(newValue > 1300) {
+        $slideLast.css('background-position', '0 -'+Math.round((newValue-1300) / 4) + 'px');
+      }
+    });
 
     $(window).on('scroll', function(e) {
       var newValue = $(window).scrollTop();
@@ -51,35 +64,35 @@ function() {
       });
 
       var animating = false;
-      if(newValue < infoHeight && bg != 1 && !animating) {
-        $('#bg1').show();
-        bg = 1;
-      }
-      else if(newValue > infoHeight && newValue < pricingHeight && bg !=2 && !animating) {
-        animating = true;
-        $('#bg2').show();
-        $('#bg1').fadeOut(function() {
-          animating = false;
-        });
+      // if(newValue < infoHeight && bg != 1 && !animating) {
+      //   $('#bg1').show();
+      //   bg = 1;
+      // }
+      // else if(newValue > infoHeight && newValue < pricingHeight && bg !=2 && !animating) {
+      //   animating = true;
+      //   $('#bg2').show();
+      //   $('#bg1').fadeOut(function() {
+      //     animating = false;
+      //   });
 
-        bg = 2;
-      }
-      else if(newValue > pricingHeight && newValue < signupHeight && bg !=3 && !animating) {
-        animating = true;
-        $('#bg3').show();
-        $('#bg2').fadeOut(function() {
-          animating = false;
-        });
-        bg = 3;
-      }
-      else if(newValue > signupHeight && bg !=4 && !animating) {
-        animating = true;
-        $('#bg4').show();
-        $('#bg3').fadeOut(function() {
-          animating = false;
-        });
-        bg = 4;
-      }
+      //   bg = 2;
+      // }
+      // else if(newValue > pricingHeight && newValue < signupHeight && bg !=3 && !animating) {
+      //   animating = true;
+      //   $('#bg3').show();
+      //   $('#bg2').fadeOut(function() {
+      //     animating = false;
+      //   });
+      //   bg = 3;
+      // }
+      // else if(newValue > signupHeight && bg !=4 && !animating) {
+      //   animating = true;
+      //   $('#bg4').show();
+      //   $('#bg3').fadeOut(function() {
+      //     animating = false;
+      //   });
+      //   bg = 4;
+      // }
     });
 
     $('.btn-facebook').on('click', function() {
