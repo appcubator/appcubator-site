@@ -1,5 +1,6 @@
 define([
-  'tourist'
+  'tourist',
+  'util'
   ],
   function() {
 
@@ -16,6 +17,10 @@ define([
 
       return [curleft,curtop];
     };
+
+    var incrementStep = function() {
+      v1State.set('walkthrough', v1State.get('walkthrough') + 1);
+    }
 
     var timer = {};
 
@@ -57,7 +62,7 @@ define([
       at: "left center",
       url: '/',
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       },
       nextButton: true,
       highlightTarget: true
@@ -77,7 +82,7 @@ define([
         });
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
@@ -94,7 +99,7 @@ define([
         return {  target: $('#add-role') };
       },*/
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
@@ -110,7 +115,7 @@ define([
         return {  target: $('#add-role') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
@@ -138,7 +143,7 @@ define([
         return {  target: $('#add-entity') };
       },
       teardown: function(tour, options) {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
@@ -157,7 +162,7 @@ define([
       },
       nextButton: true,
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
@@ -185,7 +190,7 @@ define([
       },
       teardown: function(tour, options) {
         v1State.get('tables').getTableWithName("Tweet").get('fields').unbind('add', checkForContent);
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
@@ -203,7 +208,7 @@ define([
       },
       nextButton: true,
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
@@ -221,7 +226,7 @@ define([
       },
       teardown: function(tour, options) {
         $('#add-relation').off('click', tour.next);
-        //v1State.attributes.walkthrough++;
+        //incrementStep();
       }
     },
     /*
@@ -239,8 +244,8 @@ define([
         return {  target: $('#relations') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
-        v1State.attributes.walkthrough++;
+        incrementStep();
+        incrementStep();
       }
     },
     /*
@@ -295,7 +300,7 @@ define([
       },
       teardown: function(tour, options) {
         v1State.get('tables').models[0].get('fields').unbind('add', checkForRelation);
-        v1State.attributes.walkthrough++;
+        incrementStep();
         v1.save();
       }
     },
@@ -312,7 +317,7 @@ define([
         return { target: $('.save-btn') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
@@ -331,7 +336,7 @@ define([
       },
       teardown: function() {
         v1.unbind('pages-loaded');
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
       // my: "left center",
       // at: "right center",
@@ -347,7 +352,7 @@ define([
       //   return { target: $('.relation-pane') };
       // },
       // teardown: function() {
-      //   v1State.attributes.walkthrough++;
+      //   incrementStep();
       // }
     },
     {
@@ -363,7 +368,7 @@ return { target: $('.page-view').first() };
 },
 teardown: function() {
   v1.unbind('editor-loaded');
-  v1State.attributes.walkthrough++;
+  incrementStep();
 }
 },
 {
@@ -376,7 +381,7 @@ teardown: function() {
     return { target: $('.search-panel').first() };
   },
   teardown: function() {
-    v1State.attributes.walkthrough++;
+    incrementStep();
   }
 },
 {
@@ -393,7 +398,7 @@ teardown: function() {
     return { target: $('#editor-save') };
   },
   teardown: function() {
-    v1State.attributes.walkthrough++;
+    incrementStep();
   }
 },
 {
@@ -414,7 +419,7 @@ teardown: function() {
   },
   teardown: function() {
     v1State.getCurrentPage().get('uielements').unbind('add', headerDragged);
-    v1State.attributes.walkthrough++;
+    incrementStep();
   }
 },
 {
@@ -431,7 +436,7 @@ teardown: function() {
     return { target: $('.pick-style') };
   },
   teardown: function() {
-    v1State.attributes.walkthrough++;
+    incrementStep();
   }
 },
 {
@@ -451,7 +456,7 @@ teardown: function() {
   },
   teardown: function() {
     v1State.getCurrentPage().get('uielements').unbind('add', facebookDropped);
-    v1State.attributes.walkthrough++;
+    incrementStep();
   }
 },
 {
@@ -468,7 +473,7 @@ teardown: function() {
     return { target: $(elem) };
   },
   teardown: function() {
-    v1State.attributes.walkthrough++;
+    incrementStep();
   }
 },
 {
@@ -483,7 +488,7 @@ teardown: function() {
   teardown: function() {
     $('.modal-bg').remove();
     $('.login-route-editor.modal').remove();
-    v1State.attributes.walkthrough++;
+    incrementStep();
   }
 },
 {
@@ -500,7 +505,7 @@ teardown: function() {
         return {target:  $('.menu-button.pages')};
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
         v1.unbind('editor-loaded');
       }
     },
@@ -519,7 +524,7 @@ teardown: function() {
         return { target: $('.menu-button.pages') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     {
@@ -539,7 +544,7 @@ teardown: function() {
       },
       teardown: function() {
         v1State.getCurrentPage().get('uielements').unbind('add', draggedTweetList);
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     {
@@ -558,7 +563,7 @@ teardown: function() {
         return { target: $('.edit-row-btn') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     {
@@ -572,7 +577,7 @@ teardown: function() {
         return { target: $('.highlighted').first() };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     {
@@ -597,7 +602,7 @@ teardown: function() {
       },
       teardown: function(tour, options) {
         tour.pageLoop.get('data').get('container_info').get('row').get('uielements').unbind('add', tweetStuffDragged);
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     {
@@ -617,7 +622,7 @@ teardown: function() {
       },
       teardown: function(tour, options) {
         tour.pageLoop.unbind('deselected');
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     {
@@ -636,7 +641,7 @@ teardown: function() {
       },
       teardown: function() {
         v1State.getCurrentPage().get('uielements').unbind('add', createFormDragged);
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     // TODO associate the Tweet with the user in the modal
@@ -650,9 +655,10 @@ teardown: function() {
         return { target: $('.save-run-group') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
         //last step done, delete walkthrough attribute
         delete v1State.attributes.walkthrough;
+        util.log_to_server('finished in-depth twitter walkthrough', {}, appId);
       }
     }
     ];
@@ -662,6 +668,10 @@ teardown: function() {
     var currentSteps = steps.slice(ind);
     var quickTour = new Tourist.Tour({
       steps: currentSteps
+    });
+
+    v1State.on('change:walkthrough', function(model) {
+      util.log_to_server('in-depth twitter walkthrough step', { step: model.attributes.walkthrough}, appId);
     });
 
     quickTour.currentStep = currentSteps[0];

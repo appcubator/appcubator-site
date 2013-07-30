@@ -14,6 +14,7 @@ function(SimpleModalView) {
     initialize: function() {
       var self = this;
       _.bindAll(this);
+      this.blackList = ['/favicon.ico'];
       this.render();
       v1.on('deployed', function() {
         self.$('.coming-soon-overlay').hide();
@@ -25,8 +26,10 @@ function(SimpleModalView) {
       if(!window.is_deployed) {
         $('.analytics .coming-soon-overlay').show();
         $('.total-users', this.el)[0].innerHTML = "?";
+        $('.total-visitors', this.el)[0].innerHTML = "?";
         $('.total-page-views', this.el)[0].innerHTML = "?";
         $('.total-active-users', this.el)[0].innerHTML = "?";
+        $('.total-active-visitors', this.el)[0].innerHTML = "?";
       }
       this.fetchInfo();
       return this;
@@ -36,8 +39,15 @@ function(SimpleModalView) {
       var self = this;
       clearTimeout(this.updateInterval);
       document.getElementsByClassName('total-users')[0].innerHTML = data.total_users;
-      document.getElementsByClassName('total-page-views')[0].innerHTML = data.total_page_views;
+      document.getElementsByClassName('total-visitors')[0].innerHTML = data.total_visitors;
       document.getElementsByClassName('total-active-users')[0].innerHTML = data.total_active_users;
+      document.getElementsByClassName('total-active-visitors')[0].innerHTML = data.total_active_visitors;
+      // filter out requests for 'blacklisted' pages/statics
+      var total_page_views = data.total_page_views;
+      for(var i=0; i < this.blackList.length; i++) {
+        total_page_views -= data.total_page_views_dict[this.blackList[i]];
+      }
+      document.getElementsByClassName('total-page-views')[0].innerHTML = total_page_views;
       this.updateInterval = setTimeout(this.fetchInfo, 10000);
     },
 
