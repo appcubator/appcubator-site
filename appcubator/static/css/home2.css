@@ -330,8 +330,8 @@ z-index: -1;
 
 .slide-gallery  .gallery li .content {
   display: inline-block;
-  height: 280px;
-  width: 280px;
+  height: 270px;
+  width: 270px;
   border-radius: 6px;
   padding-top: 20px;
   background-image: -webkit-linear-gradient(top, #fafafa,#ffffff 25%);
@@ -339,9 +339,30 @@ z-index: -1;
   background-image: -o-linear-gradient(top, #fafafa,#ffffff 25%);
   background-image: -ms-linear-gradient(top, #fafafa,#ffffff 25%);
   background-image: linear-gradient(top, #fafafa,#ffffff 25%);
-    border: 1px solid #c0c2c3;
-
+  border: 1px solid #c0c2c3;
   text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  vertical-align: top;
+
+  transition: all 0.1s  ease-in;
+  -webkit-transition: all 0.1s  ease-in;
+}
+
+.gallery li .content .title {
+  display: block;
+}
+
+.slide-gallery  .gallery li .content:hover {
+  display: inline-block;
+  height: 290px;
+  width: 290px;
+  border-radius: 6px;
+  padding-top: 20px;
+  border: 3px solid #0f2d40;
+  text-align: center;
+  margin-top:10px;
+  margin-bottom: 10px;
 }
 
 .slide-gallery .gallery li .screenshot {
@@ -395,7 +416,7 @@ z-index: -1;
   position: relative;
   left: 270px;
   padding: 20px;
-  width: 540px;
+  width: 560px;
 }
 
 .slide-last .sign-up-form {
@@ -510,7 +531,7 @@ z-index: -1;
 }
 
 .pricing li .title.free {
-  font-size: 32px;
+  font-size: 36px;
   line-height: 32px;
   margin-bottom: 18px;
   margin-top: -4px;
@@ -519,7 +540,7 @@ z-index: -1;
 .pricing li .price {
   position: absolute;
   top: 6px;
-  right: 20px;
+  right: 10px;
   padding: 10px;
   margin-left: auto;
   margin-right: auto;
@@ -541,12 +562,12 @@ z-index: -1;
 }
 
 .pricing li:hover {
-  max-height: 200px;
-}
+/*  max-height: 200px;
+*/}
 
 .pricing li:hover p.includes {
-  display: inline-block;
-}
+/*  display: inline-block;
+*/}
 
 .gray-bg {
   position: absolute;
