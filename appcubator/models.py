@@ -110,10 +110,6 @@ class App(models.Model):
     deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
 
     def save(self, state_version=True, *args, **kwargs):
-        if self.subdomain == '':
-            self.reset_subdomain()
-        self.subdomain = self.subdomain.lower()
-
         # increment version id
         s = self.state
         if state_version:
@@ -121,9 +117,6 @@ class App(models.Model):
         self.state = s
 
         return super(App, self).save(*args, **kwargs)
-
-    def reset_subdomain(self):
-        self.subdomain = self.u_name().lower()
 
     def clean(self):
         from django.core.exceptions import ValidationError
@@ -221,26 +214,14 @@ class App(models.Model):
 
         return tmp_project_dir
 
-    def u_name(self):
-        """Used to be the way we generate subdomains, but now it's just a function
-        that almost always returns a unique name for this app"""
-        cleaned_username = self.owner.username.split('@')[0] if self.owner.username.find('@') != -1 else self.owner.username
-        u_name = cleaned_username.lower() + "-" + self.name.replace(
-            " ", "-").lower()
-        if not settings.PRODUCTION or settings.STAGING:
-            u_name = u_name + '.staging'
-            if not settings.STAGING:
-                u_name = "dev-" + u_name
-        return u_name
-
     def hostname(self):
-        return "%s.appcubator.com" % self.subdomain
+        if not settings.PRODUCTION:
+            return "%s.staging.appcubator.com" % self.subdomain
+        else:
+            return "%s.appcubator.com" % self.subdomain
 
     def url(self):
-        return "http://%s.appcubator.com/" % self.subdomain
-
-    def github_url(self):
-        return "https://github.com/appcubator/" + self.u_name()
+        return "http://%s/" % self.hostname()
 
     def zip_path(self):
         tmpdir = self.write_to_tmpdir(for_user=True)
@@ -273,7 +254,6 @@ class App(models.Model):
 
     def get_deploy_data(self):
         post_data = {
-            "u_name": self.u_name(),
             "subdomain": self.hostname(),
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
