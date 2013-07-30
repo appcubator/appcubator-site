@@ -32,11 +32,18 @@ function() {
         type: 'GET',
         url: '/invitations/',
         success: function(data) {
-          var tbody = self.$('.invitations tbody').empty();
+          var htmlString = '';
           _(data).each(function(invitation) {
-            html = _.template(InvitationsTemplates.invitationListItemTemp, invitation);
-            tbody.append(html);
+            data = {
+              invitee: invitation.invitee,
+              date: (new Date(invitation.date)).toLocaleDateString(),
+              accepted: (invitation.accepted) ? "Accepted!" : "Waiting for reply..."
+            };
+            li_html = _.template(InvitationsTemplates.invitationListItemTemp, data);
+            htmlString += li_html;
           });
+
+          self.$('.invitations tbody').html(htmlString);
         }
       });
 
