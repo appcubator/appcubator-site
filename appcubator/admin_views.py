@@ -102,11 +102,25 @@ def admin_feedback(request):
 @user_passes_test(lambda u: u.is_superuser)
 def admin_graphs(request):
     now = datetime.utcnow()
-    beginning = datetime(year=2013, month=7, day=13)
+    beginning = datetime(year=2013, month=6, day=26)
     page_context = {}
     page_context["now"] = int(time.mktime(now.timetuple())) * 1000
     page_context["beginning"] = int(time.mktime(beginning.timetuple())) * 1000
     return render(request, 'admin/graphs.html', page_context)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def user_signups_json(request):
+    # group number of users by date (not datetime) user joined
+    users = User.objects\
+                .extra(select={'day_joined': 'date(date_joined)'})\
+                .values('day_joined')\
+                .annotate(num_users=Count('id'))\
+                .order_by('day_joined')
+    # format date objects as strings for JSON serialization
+    result = [{'day_joined': str(x['day_joined']), 'num_users': x['num_users']} for x in list(users)]
+    #result = [{str(x['day_joined']): x['num_users']} for x in users]
+    return HttpResponse(json.dumps(result), mimetype="application/json")
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -229,3 +243,8 @@ def num_active_users(min, max=datetime.now()):
 # total number of deployed apps
 def num_deployed_apps():
     return App.objects.filter(deployment_id__isnull=False).count()
+
+
+def JSONResponse(serializable_obj, **kwargs):
+    """Just a convenience function, in the middle of horrible code"""
+    return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)

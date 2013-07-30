@@ -113,6 +113,7 @@ urlpatterns += patterns('appcubator.admin_views',
     url(r'^stay/up/to/get/lucky/apps/$', 'admin_apps'),
     url(r'^stay/up/to/get/lucky/feedback/$', 'admin_feedback'),
     url(r'^stay/up/to/get/lucky/graphs/$', 'admin_graphs'),
+    url(r'^stay/up/to/get/lucky/usersbydate/$', 'user_signups_json'),
     url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json')
 )
 
