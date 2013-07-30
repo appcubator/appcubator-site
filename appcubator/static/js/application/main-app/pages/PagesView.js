@@ -130,6 +130,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         this.mobileListView.appendChild(mobilePageView.render().el);
         this.subviews.push(mobilePageView);
       }
+      v1.save();
     },
 
     close: function() {
