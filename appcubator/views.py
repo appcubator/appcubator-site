@@ -8,8 +8,8 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import Http404
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, Customer, ExtraUserData, AnalyticsStore
-from email.sendgrid_email import send_email
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore
+from email.sendgrid_email import send_email, send_template_email
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
@@ -273,6 +273,29 @@ def app_save_state(request, app, require_valid=True):
         appstate_snapshot.save()
         app.save()
         return (200, {'version_id': app.state.get('version_id', 0)})
+
+@login_required
+@csrf_exempt
+def invitations(request):
+    # get all invitations sent by user {{user_id}}
+    if request.method == 'GET':
+        user_id = int(request.user.id)
+        invitations = list(InvitationKeys.objects.filter(inviter_id=user_id))
+        json = []
+        for i in invitations:
+            json.append({"invitee": i.invitee, "date": str(i.date.date()), "accepted": i.accepted})
+        return JSONResponse(json)
+    # send an invitation from {{user_id}} to a friend
+    else:
+        firstName = request.POST['firstName']
+        lastName = request.POST['lastName']
+        email = request.POST['email']
+        subject = request.POST['subject']
+        message = request.POST['message']
+        invitation = InvitationKeys.create_invitation(request.user, email)
+        template_context = { "text": message }
+        send_template_email(request.user.email, email, subject, "", "emails/base_boxed_basic_query.html", template_context)
+        return HttpResponse("ok")
 
 def documentation_page(request, page_name):
     try:

@@ -537,6 +537,7 @@ class InvitationKeys(models.Model):
     inviter_id = models.IntegerField(blank=True)
     invitee    = models.CharField(max_length=255)
     date       = models.DateTimeField(auto_now_add=True)
+    accepted   = models.BooleanField(default=False)
 
     @classmethod
     def make_invitation_key(cls, user):
