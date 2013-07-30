@@ -29,7 +29,7 @@
           <td class="span2"><a href="{% url appcubator.admin_views.admin_app app.pk %}">{{ app.pk }}</a></td>
           <td>{{ app.name }}</td>
           {% if app.deployment_id %}
-            <td><a href="http://{{app.subdomain}}.appcubator.com">{{ app.subdomain }}</a></td>
+            <td><a href="{{app.url}}">{{ app.subdomain }}</a></td>
           {% else %}
             <td>{{ app.subdomain }}</td>
           {% endif %}

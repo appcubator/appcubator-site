@@ -34,60 +34,80 @@ scope: r_fullprofile r_emailaddress
     </div>
   </div>
   <div class="slide2 slide">
-    <h2>Get Started Really Quick</h2>
-    <ul>
-      <li>Gets Up and Running Instantly</li>
-      <li>Using the visual editor doesn't require any coding experience.</li>
-      <li>Low Cost, Quick Turnaround</li>
-    </ul>
-    <div class="screen"></div>
-<!--     <div class="gray-bg slide-pricing">
-      Pricing <span class="icon-down"></span>
-    </div> -->
-  </div>
-  <div class="slide slide4">
-    <h2>Anyone Can Build</h2>
-    <div class="gallery">
+    <div class="row">
+      <h2>Get Started Really Quick</h2>
       <ul>
-        <li><div class="content"><span class="title"> App 1</span><div class="screenshot"></div></div></li>
-        <li><div class="content"><span class="title"> App 2</span><div class="screenshot"></div></div></li>
-        <li><div class="content"><span class="title"> App 3</span><div class="screenshot"></div></div></li>
+        <li>Gets Up and Running Instantly</li>
+        <li>Using the visual editor doesn't require any coding experience.</li>
+        <li>Low Cost, Quick Turnaround</li>
       </ul>
+      <div class="screen"></div>
+    </div>
+    <div class="gray-bg slide-gallery">
+      Gallery <span class="icon-down"></span>
     </div>
   </div>
-  <div class="slide3 slide">
-    <ul class="pricing">
-      <li class="free">
-        <span class="title">Building your App</span>
-        <span class="content">
-          <p>It's free to sign up, explore and build your app for as long as you want.</p>
-          <p class="includes"> Includes 24 hour support, unlimited *.appcubator.com domains, design themes and service integrations.</p>
-        </span>
-        <span class="price">Free</span>
-      </li>
-      <li class="mobile">
-        <span class="title">Production</span>
-        <span class="content">
-          <p>For when you are ready to deploy your app to customers.</p>
-          <p class="includes"> Includes custom domain and branding, analytics to your site, more scalable infrastructure, and a free domain as well as everything on the free plan.</p>
-        </span>
-        <span class="price"><i class="small">$</i>35<i class="small">/mo</i></span>
-      </li>
-      <li class="session">
-        <span class="title">Head Start</span>
-        <span class="content">
-          <p>Short on time? We are happy to help. You can set up a 2 hour video call with someone from our team where we will build  your application and teach you how to use Appcubator for further iterations.</p>
-          <p class="includes"> Includes ~2 hours private video call or Skype session with someone from Appcubator team.</p>
-        </span>
-        <span class="price"><i class="small">$</i>480</span>
-      </li>
-    </ul>
-    <div class="gray-bg slide-signup">
-      Sign Up<span class="icon-down"></span>
+  <div class="slide slide4">
+    <div class="row">
+      <h2>Anyone Can Build</h2>
+      <div class="gallery">
+        <ul>
+          <li><div class="content"><span class="title"> App 1</span><div class="screenshot"></div></div></li>
+          <li><div class="content"><span class="title"> App 2</span><div class="screenshot"></div></div></li>
+          <li><div class="content"><span class="title"> App 3</span><div class="screenshot"></div></div></li>
+        </ul>
+      </div>
     </div>
   </div>
   <div class="slide-last">
-    <form class="sign-up-form" id="sign-up-form">
+    <div class="large-container">
+        <div class="left-side">
+          <form id="sign-up-form">
+            <div class="left-side">
+              <input type="text" name="name" id="inp-name" placeholder="Full Name">
+              <input type="text" name="email" id="inp-email" placeholder="Email">
+<!--               <input type="text" name="company" id="inp-company" placeholder="Company">
+ -->              <input type="hidden" name="extra-info" id="inp-extra" value="-">
+              <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
+              <hr>
+              <script type="IN/Login"></script>
+              <textarea name="description" id="inp-description" placeholder="Technical description of your application. This is for us to attain the feasibility of the project to best direct you. Optional."></textarea>
+              <input type="checkbox" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
+              <input type="submit" class="btn btn-blue" id="sign-up" value="Request an Invite!">
+            </div>
+          </form>
+        </div>
+        <div class="right-side">
+          <ul class="pricing">
+            <li class="free">
+              <span class="title">Building your App</span>
+              <span class="content">
+                <p>It's free to sign up, explore and build your app for as long as you want.</p>
+                <p class="includes"> Includes 24 hour support, unlimited *.appcubator.com domains, design themes and service integrations.</p>
+              </span>
+              <span class="price">Free</span>
+            </li>
+            <li class="mobile">
+              <span class="title">Production</span>
+              <span class="content">
+                <p>For when you are ready to deploy your app to customers.</p>
+                <p class="includes"> Includes custom domain and branding, analytics to your site, more scalable infrastructure, and a free domain as well as everything on the free plan.</p>
+              </span>
+              <span class="price"><i class="small">$</i>35<i class="small">/mo</i></span>
+            </li>
+            <li class="session">
+              <span class="title">Head Start</span>
+              <span class="content">
+                <p>Short on time? We are happy to help. You can set up a 2 hour video call with someone from our team where we will build  your application and teach you how to use Appcubator for further iterations.</p>
+                <p class="includes"> Includes ~2 hours private video call or Skype session with someone from Appcubator team.</p>
+              </span>
+              <span class="price"><i class="small">$</i>480</span>
+            </li>
+          </ul>
+        </div>
+    </div>
+
+<!--     <form class="sign-up-form" id="sign-up-form">
       <div class="left-side">
         <input type="text" name="name" id="inp-name" placeholder="Full Name">
         <input type="text" name="email" id="inp-email" placeholder="Email">
@@ -103,7 +123,7 @@ scope: r_fullprofile r_emailaddress
         <input type="checkbox" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
         <input type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
       </div>
-    </form>
+    </form> -->
     <div class="thanks-for-signing">
       <p>Thank you for signing up!</p>
       <p>Someone from our team will contact you for details and further steps very soon.</p>
@@ -127,5 +147,5 @@ scope: r_fullprofile r_emailaddress
 {% endblock %}
 
 {% block js %}
-<script data-main="{{ STATIC_URL }}js/application/external-pages/home-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+<script data-main="{{ STATIC_URL }}js/application/external-pages/home-main2" src="{{ STATIC_URL }}js/libs/require.js"></script>
 {% endblock %}
