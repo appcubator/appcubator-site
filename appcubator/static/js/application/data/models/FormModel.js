@@ -57,8 +57,9 @@ function(
         if(type == "file") { formFieldModel.displayType = "file-uploader"; }
         if(type == "date") { formFieldModel.displayType = "date-picker"; }
 
-        if(_.contains(["file", "image"], type)) // #functional
-           formFieldModel.placeholder = "Attach "+type;
+        if(_.contains(["file", "image"], type)) {
+           formFieldModel.placeholder = "Upload "+util.capitaliseFirstLetter(type);
+         }
 
         var ind = this.get('fields').models.length - 1;
         this.get('fields').push(formFieldModel, {at: ind});

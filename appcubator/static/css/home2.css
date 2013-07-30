@@ -786,8 +786,14 @@ background-repeat: repeat;
 }
 
 .pricing p.includes {
+  display: none;
   font-size: 14px;
   margin-top: 6px;
+}
+
+
+.pricing li:hover p.includes {
+  display: inline-block;
 }
 
 .gray-bg {

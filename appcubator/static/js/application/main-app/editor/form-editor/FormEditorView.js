@@ -61,7 +61,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       var temp_context = {};
       temp_context.form = this.model;
       temp_context.pages = v1State.get('pages').models;
-      temp_context.emails = ["Email 1", "Email 2"];
       temp_context.possibleEntities = _.map(v1State.get('users').getCommonProps(), function(field) { return "CurrentUser." + field.name; });
 
       var html = _.template(FormEditorTemplates.template, temp_context);
@@ -154,7 +153,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       this.listenTo(this.selected, 'change:placeholder', this.reRenderDisplayType);
       this.listenTo(this.selected, 'change:options', this.reRenderDisplayType);
       this.listenTo(this.selected, 'change:label', this.reRenderLabel);
-      this.listenTo(this.selected, 'change:required', this.reRenderDisplayType);
+      this.listenTo(this.selected, 'change:required', this.reRenderLabel);
 
       this.$el.find('.details-panel').hide();
 
@@ -192,7 +191,9 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
     reRenderLabel: function() {
       var field = this.selected;
-      $('#field-'+ field.cid).find('label').html(field.get('label'));
+      var str = field.get('label');
+      if(field.get('required')) str += ' *';
+      $('#field-'+ field.cid).find('label').html(str);
     },
 
     changedFieldType: function(e) {
