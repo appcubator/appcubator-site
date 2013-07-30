@@ -60,10 +60,6 @@ urlpatterns += patterns('appcubator.views',
     # analytics
     url(r'^app/(\d+)/analytics/$', 'get_analytics'),
 
-    # entities
-    url(r'^app/(\d+)/entities/xl/$', 'process_excel'),
-    url(r'^app/(\d+)/entities/userxl/$', 'process_user_excel'),
-
     # statix
     url(r'^app/(\d+)/static/$', 'staticfiles'), # a GET returns the apps statics, a POST creates a static file entry.
 
