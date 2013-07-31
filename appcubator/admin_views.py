@@ -195,13 +195,9 @@ def active_users_json(request, t_start, t_end, t_delta):
         tempEnd = tempEnd + delta
     return HttpResponse(json.dumps(data), mimetype="application/json")
 
-<<<<<<< Updated upstream
-# active users this past week
+
+# active users this past week/day/month
 def recent_users(long_ago=timedelta(days=1), limit=10):
-=======
-# active users this past day/week/month
-def recent_users(long_ago=timedelta(days=1)):
->>>>>>> Stashed changes
     today = timezone.now().date()
     time_ago = today - long_ago
     logs = get_logs({'end': time_ago, 'name': 'visited page'})\
