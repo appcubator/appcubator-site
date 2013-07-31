@@ -103,9 +103,9 @@ def admin_feedback(request):
 @user_passes_test(lambda u: u.is_superuser)
 def admin_graphs(request):
     now = datetime.utcnow()
-    now = int(time.mktime(now.timetuple())) * 1000
+    now = int(time.mktime(now.timetuple()))
     beginning = datetime(year=2013, month=6, day=26)
-    beginning = int(time.mktime(beginning.timetuple())) * 1000
+    beginning = int(time.mktime(beginning.timetuple()))
     page_context = {}
     page_context["now"] = now
     page_context["beginning"] = beginning
@@ -145,8 +145,8 @@ def active_users_json(request, t_start, t_end, t_delta):
     t_end = int(t_end)
     t_delta = str(t_delta)
     try:
-        start = datetime.fromtimestamp(t_start / 1000.0)
-        end = datetime.fromtimestamp(t_end / 1000.0)
+        start = datetime.fromtimestamp(t_start)
+        end = datetime.fromtimestamp(t_end)
     except ValueError:
         return HttpResponse("Invalid start/end values (%d,%d), must be passed as POSIX datetime number" % (int(start),int(end)), status=405)
     # require start < end
