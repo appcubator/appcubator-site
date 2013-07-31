@@ -4,14 +4,21 @@
     <h2>User: {{ user.user.first_name }} {{ user.user.last_name }}</h2>
   </div>
 
-  <section id="info">
-    <h3>Info</h3>
-      <p><strong>ID</strong> {{ user.pk }}</p>
-      <p><strong>Name</strong> {{ user.user.first_name }} {{ user.user.last_name }}</p>
-      <p><strong>Email</strong> {{ user.user.email }}</p>
-      <p><strong>Number of Apps</strong> {{ apps|length }}</p>
-      <p><strong>Noob?</strong> {{ user.noob }}</p>
-  </section>
+  <div class="row">
+    <section id="info" class="span4">
+      <h3>Info</h3>
+        <p><strong>ID</strong> {{ user.pk }}</p>
+        <p><strong>Name</strong> {{ user.user.first_name }} {{ user.user.last_name }}</p>
+        <p><strong>Email</strong> {{ user.user.email }}</p>
+        <p><strong>Number of Apps</strong> {{ apps|length }}</p>
+        <p><strong>Noob?</strong> {{ user.noob }}</p>
+    </section>
+
+    <div id="user-logs-graph" class="span8">
+      <svg style="height: 300px;"></svg>
+    </div>
+  </div>
+
 
   <section id="user-apps">
     <h3>Apps</h3>
@@ -67,5 +74,40 @@
   <script type="text/javascript">
     $('#apps').sortableTable({initialColumn: 1});
     $('#logs').sortableTable({initialColumn: 2});
+    var user_logs_data = {{ user_logs_graph|safe }};
+    //var user_logs_data = [{'date': '2013-07-14', 'num_logs': 275},{'date': '2013-07-15','num_logs': 431},{'date': '2013-07-16', 'num_logs': 70},{'date': '2013-07-17', 'num_logs': 46},{'date': '2013-07-18', 'num_logs': 552},{'date': '2013-07-19', 'num_logs': 84},{'date': '2013-07-20', 'num_logs': 5},{'date': '2013-07-21', 'num_logs': 22},{'date': '2013-07-22', 'num_logs': 17},{'date': '2013-07-23', 'num_logs': 3},{'date': '2013-07-24', 'num_logs': 125},{'date': '2013-07-25', 'num_logs': 179},{'date': '2013-07-26', 'num_logs': 120},{'date': '2013-07-27', 'num_logs': 19},{'date': '2013-07-28', 'num_logs': 107},{'date': '2013-07-29', 'num_logs': 138},{'date': '2013-07-30', 'num_logs': 80}]
+    nv.addGraph(function() {
+    var chart = nv.models.cumulativeLineChart()
+        .x(function(d) { return d[0] })
+        .y(function(d) { return d[1] })
+        .tooltips(false);
+
+      chart.xAxis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+      chart.yAxis.tickFormat(d3.format('d'));
+
+      d3.select('#user-logs-graph svg')
+          .datum(parseData(user_logs_data))
+        .transition().duration(500)
+          .call(chart);
+
+      nv.utils.windowResize(chart.update);
+
+      return chart;
+    });
+
+    function parseData(data) {
+     var values = [];
+      _(data).each(function(d) {
+        values.push([new Date(d['date']).getTime(), d['num_logs']]);
+      });
+
+      values.sort(function(v1, v2) {
+        return (v1[0] <= v2[0]) ? -1 : 1;
+      });
+      return [{
+        "key": "User Activity",
+        "values": values
+      }];
+    }
   </script>
 {% endblock %}

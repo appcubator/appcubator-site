@@ -68,6 +68,7 @@ def admin_user(request, user_id):
     page_context["user"] = user
     page_context["apps"] = apps
     page_context["userlogs"] = logs
+    page_context['user_logs_graph'] = user_logs_json(request, user_id).content
     page_context["apps"] = apps
     return render(request, 'admin/user.html', page_context)
 
@@ -111,6 +112,17 @@ def admin_graphs(request):
     page_context['active_users'] = active_users_json(request, page_context['beginning'], page_context['now'], 'day').content
     page_context['user_signups'] = user_signups_json(request).content
     return render(request, 'admin/graphs.html', page_context)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def user_logs_json(request, user_id):
+    logs = LogAnything.objects.filter(user_id=long(user_id))\
+                .extra(select={'date': 'date(timestamp)'})\
+                .values('date')\
+                .annotate(num_logs=Count('id'))\
+                .order_by('date')
+    result = [{'date': str(x['date']), 'num_logs': x['num_logs']} for x in logs]
+    return HttpResponse(json.dumps(result), mimetype="application/json")
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
