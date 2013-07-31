@@ -17,6 +17,18 @@ h2 {
   line-height: 50px;
 }
 
+h4 {
+  font-size: 32px;
+  line-height: 50px;
+  font-family: "proxima-nova";
+  font-weight: lighter;
+  text-transform: uppercase;
+  display: block;
+  border-bottom: 1px solid #0f3d50;
+  color: #0f3d50;
+  margin-top: 22px;
+}
+
 body {
   background-color: #eee;
   background-image: url(../img/noisy.png);
@@ -1233,3 +1245,38 @@ img.startx {
 .footer hr {
   display: none;
 }
+
+.screencasts li {
+  width: 100%;
+  height: 210px;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-top: 14px;
+}
+
+.screencasts li .picture {
+  display: inline-block;
+  width: 250px;
+  height: 190px;
+  vertical-align: top;
+  float: left;
+  border-radius: 4px;
+  border: 3px solid #0f3d50;
+  margin-top: 10px;
+  overflow: hidden;
+  margin-left: 10px;
+}
+
+.screencasts li .summary {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 15px;
+  width: 400px;
+  margin-top: 10px;
+}
+
+li .summary h3 {
+  margin-top: 0;
+}
+

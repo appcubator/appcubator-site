@@ -36,7 +36,10 @@ urlpatterns = patterns('',
     url(r'^send_invitation/(\d+)/$',    base_views.send_invitation_to_customer),
     url(r'^backend/',                   include('app_builder.urls')),
     url(r'^payments/',                  include('appcubator.payments.urls')),
-    url(r'^app/(\d+)/payment/$',       payment_views.app_payment)
+    url(r'^app/(\d+)/payment/$',       payment_views.app_payment),
+
+    url(r'^resources/$',                   base_views.resources),
+    url(r'^resources/screencast/(\d+)/$',  base_views.screencast),
 )
 
 urlpatterns += patterns('appcubator.log_views',
