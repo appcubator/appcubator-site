@@ -338,3 +338,13 @@ def send_invitation_to_customer(request, customer_pk):
     customer.sent_welcome_email = True
     customer.save()
     return HttpResponse("ok")
+
+def resources(request):
+    page_context = {}
+    page_context["title"] = "Resources"
+    return render(request, 'resources.html', page_context)
+
+def screencast(request, screencast_id):
+    page_context = {}
+    page_context["title"] = "Screecast 1"
+    return render(request, 'screencast-1.html', page_context)
