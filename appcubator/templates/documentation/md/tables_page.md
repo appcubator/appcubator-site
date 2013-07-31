@@ -2,8 +2,9 @@
 
 ![alt text](http://appcubator.com/static/img/tutorial/User_Table_1.png)
 
-Users, Tweets, Craigslist posts, Quora questions, Friendships, Likes, Comments, Inventory.
-These are all examples of "data" that web applications store in a "database".
+Web applications differ from standard websites in that they allow users to login, store, and access data from 'tables'. 
+
+Users, Tweets, Craigslist posts, Quora questions, Friendships, Likes, Comments, Inventory. These are all examples of 'data' that web applications store in 'tables'.
 
 ## Structure of the Data ##
 
