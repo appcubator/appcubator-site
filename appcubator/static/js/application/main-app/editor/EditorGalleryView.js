@@ -85,13 +85,6 @@ define([
 
     },
 
-    displayAllSections: function() {
-      this.allList.innerHTML = '';
-      _.each(this.sections, function(section) {
-        this.allList.appendChild(section.el);
-      }, this);
-    },
-
     renderUIElementList: function() {
       var self = this;
       var collection = new ElementCollection(defaultElements);
