@@ -23,6 +23,7 @@ import os
 from datetime import datetime, timedelta
 import time
 from django.utils import timezone
+from django.core.serializers.json import DjangoJSONEncoder
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -39,7 +40,7 @@ def admin_home(request):
 
     # deployed apps stats
     page_context["avg_deployment_time"] = avg_deployment_time()
-    page_context["num_deployed_apps"] = num_deployed_apps()
+    page_context["num_deployed_apps"] = App.objects.filter(deployment_id__isnull=False).count()
 
     return render(request, 'admin/home.html', page_context)
 
@@ -68,7 +69,7 @@ def admin_user(request, user_id):
     page_context["user"] = user
     page_context["apps"] = apps
     page_context["userlogs"] = logs
-    page_context['user_logs_graph'] = user_logs_json(request, user_id).content
+    page_context['user_logs_graph'] = user_logs_graph(request, user_id).content
     page_context["apps"] = apps
     return render(request, 'admin/user.html', page_context)
 
@@ -115,14 +116,35 @@ def admin_graphs(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def user_logs_json(request, user_id):
-    logs = LogAnything.objects.filter(user_id=long(user_id))\
+def user_logs_graph(request, user_id):
+    logs = get_logs({'user_id': long(user_id)})\
                 .extra(select={'date': 'date(timestamp)'})\
                 .values('date')\
                 .annotate(num_logs=Count('id'))\
                 .order_by('date')
     result = [{'date': str(x['date']), 'num_logs': x['num_logs']} for x in logs]
     return HttpResponse(json.dumps(result), mimetype="application/json")
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def logs(request):
+    logs = get_logs(request.GET)
+    result = [{'id': log.pk, 'user_id': log.user_id, 'app_id': log.app_id, 'name': log.name, 'timestamp': str(log.timestamp), 'data': log.data} for log in list(logs)]
+    return HttpResponse(result, mimetype="application/json")
+
+def get_logs(args):
+    logs = LogAnything.objects
+    if 'name' in args:
+        logs = logs.filter(name=args['name'])
+    if 'app_id' in args:
+        logs = logs.filter(app_id=args['app_id'])
+    if 'user_id' in args:
+        logs = logs.filter(user_id=args['user_id'])
+    if 'start' in args:
+        logs = logs.filter(timestamp__gte=args['start'])
+    if 'end' in args:
+        logs = logs.filter(timestamp__lte=args['end'])
+    return logs.exclude(user_id=None)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -148,7 +170,7 @@ def active_users_json(request, t_start, t_end, t_delta):
         start = datetime.fromtimestamp(t_start)
         end = datetime.fromtimestamp(t_end)
     except ValueError:
-        return HttpResponse("Invalid start/end values (%d,%d), must be passed as POSIX datetime number" % (int(start),int(end)), status=405)
+        return HttpResponse("Invalid start/end values (%d,%d), must be passed as POSIX datetime number" % (int(t_start),int(t_end)), status=405)
     # require start < end
     if end < start:
         start, end = end, start
@@ -173,12 +195,16 @@ def active_users_json(request, t_start, t_end, t_delta):
         tempEnd = tempEnd + delta
     return HttpResponse(json.dumps(data), mimetype="application/json")
 
+<<<<<<< Updated upstream
 # active users this past week
 def recent_users(long_ago=timedelta(days=1), limit=10):
+=======
+# active users this past day/week/month
+def recent_users(long_ago=timedelta(days=1)):
+>>>>>>> Stashed changes
     today = timezone.now().date()
     time_ago = today - long_ago
-    logs = LogAnything.objects\
-        .filter(timestamp__gte=time_ago, name="visited page")\
+    logs = get_logs({'end': time_ago, 'name': 'visited page'})\
         .exclude(user_id=None)\
         .values('user_id').distinct()\
         .annotate(num_logs=Count('user_id'))\
@@ -205,7 +231,7 @@ def logs_per_user():
     return logs_per_user
 
 def avg_deployment_time():
-    deploy_logs_data = [log.data_json for log in LogAnything.objects.filter(name="deployed app")]
+    deploy_logs_data = [log.data_json for log in get_logs({'name': "deployed app"})]
     deploy_times = []
     for d in deploy_logs_data:
         if "deploy_time" in d:
@@ -230,12 +256,8 @@ def pageviews(min, max=datetime.now()):
     # default starting date july 13, 2013
     if(min is None):
         min = datetime.date(2013, 7, 13)
-    return LogAnything.objects\
-            .filter(timestamp__gte=min, timestamp__lte=max, name="visited page")
+    return get_logs({'start': min, 'end': max, 'name': 'visited page'})
 
-# the number of page views within the requested time frame
-def num_pageviews(min, max=datetime.now()):
-    return pageviews(min,max).count()
 
 # users who joined within the requested time frame
 def users_joined(min, max=datetime.now()):
@@ -245,9 +267,6 @@ def users_joined(min, max=datetime.now()):
     return User.objects\
         .filter(date_joined__gte=min, date_joined__lte=max)
 
-# the number of users who joined within the requested time frame
-def num_users_joined(min, max=datetime.now()):
-    return users_joined(min,max).count()
 
 # 'active users' during a min-max time period
 # calculated by finding the number of users who logged a page view
@@ -258,11 +277,6 @@ def num_active_users(min, max=datetime.now()):
         min = datetime.date(2013, 7, 13)
     return pageviews(min, max).values('user_id').distinct().count()
 
-# total number of deployed apps
-def num_deployed_apps():
-    return App.objects.filter(deployment_id__isnull=False).count()
 
-
-def JSONResponse(serializable_obj, **kwargs):
-    """Just a convenience function, in the middle of horrible code"""
-    return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)
+def JSONResponse(data, **kwargs):
+    return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), mimetype="application/json", **kwargs)
