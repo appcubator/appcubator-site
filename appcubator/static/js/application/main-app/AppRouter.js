@@ -174,7 +174,7 @@ define([
             }
             else if(tutorial) {
                 // remove random ending string from url path
-                this.navigate(window.location.pathname.replace(tutorial, ''));
+                this.navigate(window.location.pathname.replace(tutorial, ''), {replace: true});
             }
             else {
                 if(this.tutorialIsVisible) {
