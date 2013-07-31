@@ -102,10 +102,14 @@ def admin_feedback(request):
 @user_passes_test(lambda u: u.is_superuser)
 def admin_graphs(request):
     now = datetime.utcnow()
+    now = int(time.mktime(now.timetuple())) * 1000
     beginning = datetime(year=2013, month=6, day=26)
+    beginning = int(time.mktime(beginning.timetuple())) * 1000
     page_context = {}
-    page_context["now"] = int(time.mktime(now.timetuple())) * 1000
-    page_context["beginning"] = int(time.mktime(beginning.timetuple())) * 1000
+    page_context["now"] = now
+    page_context["beginning"] = beginning
+    page_context['active_users'] = active_users_json(request, page_context['beginning'], page_context['now'], 'day').content
+    page_context['user_signups'] = user_signups_json(request).content
     return render(request, 'admin/graphs.html', page_context)
 
 @login_required
