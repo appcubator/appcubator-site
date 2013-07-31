@@ -282,6 +282,7 @@ function() {
         self.remove();
         self.stopListening();
         window.history.pushState(null, null, window.location.href.replace("tutorial/",""));
+        v1.tutorialIsVisible = false;
       });
     },
 

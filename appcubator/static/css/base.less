@@ -953,6 +953,18 @@ legend + .control-group {
  * MISC. Helper classes
  */
 
+#ajax-loader {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background-image: url('../img/ajax-loader.gif');
+  .background-size(100% auto);
+  height: 60px;
+  width: 60px;
+  display: inline-block;
+  background-repeat: no-repeat;
+}
+
 .pull-right {
   float: right;
 }
@@ -1074,7 +1086,7 @@ legend + .control-group {
 .save-btn:active,.save-btn-nofix:active {
   -webkit-box-shadow: none;
   box-shadow: none;
-} 
+}
 
 .save-btn-nofix {
   position: static;
