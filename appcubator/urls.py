@@ -111,14 +111,15 @@ urlpatterns += patterns('appcubator.admin_views',
     url(r'^stay/up/to/get/lucky/$', 'admin_home'),
     url(r'^stay/up/to/get/lucky/customers/$', 'admin_customers'),
     url(r'^stay/up/to/get/lucky/users/(\d+)$', 'admin_user'),
-    url(r'^stay/up/to/get/lucky/users/(\d+)/graph/$', 'user_logs_json'),
+    url(r'^stay/up/to/get/lucky/users/(\d+)/graph/$', 'user_logs_graph'),
     url(r'^stay/up/to/get/lucky/users/$', 'admin_users'),
     url(r'^stay/up/to/get/lucky/apps/(\d+)$', 'admin_app'),
     url(r'^stay/up/to/get/lucky/apps/$', 'admin_apps'),
     url(r'^stay/up/to/get/lucky/feedback/$', 'admin_feedback'),
     url(r'^stay/up/to/get/lucky/graphs/$', 'admin_graphs'),
     url(r'^stay/up/to/get/lucky/usersbydate/$', 'user_signups_json'),
-    url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json')
+    url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json'),
+    url(r'^stay/up/to/get/lucky/logs/$', 'logs'),
 )
 
 urlpatterns += patterns('appcubator.theme_views',
