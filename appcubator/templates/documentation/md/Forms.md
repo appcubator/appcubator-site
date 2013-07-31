@@ -1,8 +1,12 @@
 # Forms #
 
-Forms and Lists are the bread and butter of web applications. Without them, you can't enter or display data from your database. 
+Forms are what input information into your web applications. And Lists are what output the information from your web server. Without them, you can't enter or display data from your database. 
 
-![alt text](http://appcubator.com/static/img/tutorial/Elements_3.png)
+![alt text](http://appcubator.com/static/img/tutorial/Twitter_Form.png)
+
+When you enter a tweet into twitter, you are using a create form. When you see a list of your favorite celebrities tweets, you are using a list. 
+
+![alt text](http://appcubator.com/static/img/tutorial/Forms.png)
 
 Entering New Data!
 

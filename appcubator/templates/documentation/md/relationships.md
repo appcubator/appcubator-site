@@ -1,6 +1,6 @@
 ## Relationships ##
  
-Relations provide the links between your User Tables and Tables. 
+Relations provide the links between your User Tables and Tables. Just like your 'tables' are defined by a set of data properties, your web application are defined by your set of 'tables'. Relations provide the rules between your set of 'tables'.
 
 Why are Relations important?
 
