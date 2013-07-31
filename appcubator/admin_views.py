@@ -174,7 +174,7 @@ def active_users_json(request, t_start, t_end, t_delta):
     return HttpResponse(json.dumps(data), mimetype="application/json")
 
 # active users this past week
-def recent_users(long_ago=timedelta(days=1)):
+def recent_users(long_ago=timedelta(days=1), limit=10):
     today = timezone.now().date()
     time_ago = today - long_ago
     logs = LogAnything.objects\
@@ -188,6 +188,8 @@ def recent_users(long_ago=timedelta(days=1)):
         log["user"] = ExtraUserData.objects.get(user_id=user_id)
         log["name"] = log["user"].user.first_name + " " + log["user"].user.last_name
         log["num_apps"] = log["user"].user.apps.count()
+    if(len(logs) > limit):
+        logs = logs[:limit]
     return logs
 
 # Top 10 users with most page visits
