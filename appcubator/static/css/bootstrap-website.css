@@ -4811,6 +4811,10 @@ hr.vert {
   text-shadow: none;
 }
 
+a.btn-green:visited {
+  color: #fff;
+}
+
 .btn-green:hover {
   background-color: #5fb33f;
   color: #fff;
