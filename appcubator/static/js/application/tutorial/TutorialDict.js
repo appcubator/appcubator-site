@@ -50,6 +50,11 @@ var TutorialDirectory = [
         contents : null
       },
       {
+        title : "Sign Up",
+        view  : "tutorial-sign-up",
+        contents : null
+      },
+      {
         title : "Page Content",
         view  : "tutorial-page-content",
         contents : null
