@@ -38,6 +38,7 @@ function() {
     var $slideIntro = $('.slide-intro');
     var $slideInfo = $('.slide-info');
     var $slideLast = $('.slide-last');
+    var $cube = $('#cube');
 
     $('#bg2').css('background-image', 'url(/static/img/bg3.jpg)');
     $('#bg3').css('background-image', 'url(/static/img/bg4.jpg)');
@@ -55,44 +56,16 @@ function() {
 
     $(window).on('scroll', function(e) {
       var newValue = $(window).scrollTop();
-      var newXtrans = xTrans + newValue;
-      var newYtrans = yTrans + newValue;
+      var newXtrans = Math.round((xTrans + newValue)/3);
+      var newYtrans = Math.round((yTrans + newValue)/3);
+
       var str = 'rotateX('+ newXtrans +'deg) rotateY('+ newYtrans +'deg)';
-      $('#cube').css({
+      $cube.css({
           "webkitTransform":str,
           "MozTransform":str
       });
 
       var animating = false;
-      // if(newValue < infoHeight && bg != 1 && !animating) {
-      //   $('#bg1').show();
-      //   bg = 1;
-      // }
-      // else if(newValue > infoHeight && newValue < pricingHeight && bg !=2 && !animating) {
-      //   animating = true;
-      //   $('#bg2').show();
-      //   $('#bg1').fadeOut(function() {
-      //     animating = false;
-      //   });
-
-      //   bg = 2;
-      // }
-      // else if(newValue > pricingHeight && newValue < signupHeight && bg !=3 && !animating) {
-      //   animating = true;
-      //   $('#bg3').show();
-      //   $('#bg2').fadeOut(function() {
-      //     animating = false;
-      //   });
-      //   bg = 3;
-      // }
-      // else if(newValue > signupHeight && bg !=4 && !animating) {
-      //   animating = true;
-      //   $('#bg4').show();
-      //   $('#bg3').fadeOut(function() {
-      //     animating = false;
-      //   });
-      //   bg = 4;
-      // }
     });
 
     $('.btn-facebook').on('click', function() {
