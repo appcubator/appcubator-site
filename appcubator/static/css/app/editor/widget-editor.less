@@ -7,77 +7,89 @@
   text-align: left;
   padding: 0px;
   background-color: #2b3545;
-  border-radius: 4px;
+  .border-radius(4px);
   margin-top: 12px;
   font: normal 16px/20px "proxima-nova", Arial, sans-serif;
   overflow: visible;
   max-height: 400px;
   z-index: 2006;
-}
 
-#widget-editor.right {
-  top: 0;
-  left: 100%;
-  margin-left: 10px;
-}
+  &.right {
+    top: 0;
+    left: 100%;
+    margin-left: 10px;
+  }
 
-#widget-editor.left {
-  top: 0;
-  left: 0;
-  margin-left: -270px;
-}
+  &.left {
+    top: 0;
+    left: 0;
+    margin-left: -270px;
+  }
 
-#widget-editor .font-picker {
-  width: 70px;
-  margin-left: 8px;
-}
+  .font-picker {
+    width: 70px;
+    margin-left: 8px;
+  }
 
-#widget-editor .top-arrow {
-  height: 12px;
-  width: 30px;
-  position: absolute;
-  top: 0;
-  margin-top: -12px;
-  background-image: url(/static/img/top-blue-arrow.png);
-  background-repeat: no-repeat;
-  background-position: top left;
-  margin-left: 24px;
-}
+  .top-arrow {
+    height: 12px;
+    width: 30px;
+    position: absolute;
+    top: 0;
+    margin-top: -12px;
+    background-image: url(/static/img/top-blue-arrow.png);
+    background-repeat: no-repeat;
+    background-position: top left;
+    margin-left: 24px;
+  }
 
-#widget-editor .left-arrow {
-  height: 30px;
-  width: 12px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  margin-left: -12px;
-  background-image: url(/static/img/left-blue-arrow.png);
-  background-repeat: no-repeat;
-  background-position: top left;
-  margin-top: 24px;
-}
+  .left-arrow {
+    height: 30px;
+    width: 12px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: -12px;
+    background-image: url(/static/img/left-blue-arrow.png);
+    background-repeat: no-repeat;
+    background-position: top left;
+    margin-top: 24px;
+  }
 
-#widget-editor .right-arrow {
-  height: 30px;
-  width: 12px;
-  position: absolute;
-  left: 100%;
-  top: 0;
-  margin-right: -12px;
-  background-image: url(/static/img/right-blue-arrow.png);
-  background-repeat: no-repeat;
-  background-position: top right;
-  margin-top: 24px;
-}
+  .right-arrow {
+    height: 30px;
+    width: 12px;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    margin-right: -12px;
+    background-image: url(/static/img/right-blue-arrow.png);
+    background-repeat: no-repeat;
+    background-position: top right;
+    margin-top: 24px;
+  }
 
-#widget-editor ul {
-  padding: 0px;
-  margin: 0px;
-}
+  .pad {
+    padding: 5px;
+  }
 
-#widget-editor .pad {
-  padding: 5px;
-}
+  ul {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .tool-tip-box {
+    display: inline-block;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: rgba(30, 30, 30, 0.8);
+    padding: 6px;
+    font-weight: bold;
+    margin-left: 10px;
+    .border-radius(4px);
+  }
+} // end #widget-editor
 
 .content-editor .key {
   height: 30px;
@@ -114,7 +126,7 @@
   display: inline-block;
   width: 34px;
   height: 34px;
-  border-radius: 4px;
+  .border-radius(4px);
   border: 1px solid #1b2535;
   border-top: 1px solid #3b4555;
   margin-left: 1px;
@@ -137,7 +149,7 @@
   display: inline-block;
   width: 34px;
   height: 34px;
-  border-radius: 4px;
+  .border-radius(4px);
   border: 1px solid #1b2535;
   border-top: 1px solid #3b4555;
   text-align: center;
@@ -208,7 +220,7 @@ h3.edit-url {
   display: inline-block;
   width: 60px;
   height: 60px;
-  border-radius: 4px;
+  .border-radius(4px);
   border: 1px solid #ccc;
   margin: 4px;
 }
@@ -233,18 +245,6 @@ h3.edit-url {
   width: 94%;
 }
 
-#widget-editor .tool-tip-box {
-  display: inline-block;
-  position: absolute;
-  left: 100%;
-  top: 0;
-  background-color: rgba(30, 30, 30, 0.8);
-  padding: 6px;
-  font-weight: bold;
-  margin-left: 10px;
-  border-radius: 4px;
-}
-
 .header-div {
   height: 20px;
   width: 100%;
@@ -252,12 +252,7 @@ h3.edit-url {
   text-align: center;
   font-weight: bold;
   border-top: 1px solid #3b4555;
-
-  background-image: -webkit-linear-gradient(to bottom, #2b3545, #232a3a);
-  background-image: -moz-linear-gradient(to bottom, #2b3545, #232a3a);
-  background-image: -o-linear-gradient(to bottom, #2b3545, #232a3a);
-  background-image: -ms-linear-gradient(to bottom, #2b3545, #232a3a);
-  background-image: linear-gradient(to bottom, #2b3545, #232a3a);
+  .gradient(#2b3545, #232a3a);
   line-height: 18px;
 }
 
@@ -268,12 +263,7 @@ h3.edit-url {
   width: 100%;
   overflow: hidden;
   font-size: 14px;
-
-  -webkit-transition: height linear 0.1s;
-  -moz-transition: height linear 0.1s;
-  -o-transition: height linear 0.1s;
-  -ms-transition: height linear 0.1s;
-  transition: height linear 0.1s;
+  .transition(height linear 0.1s);
 }
 
 .widget-editor .select-view .updown-handle {
@@ -321,30 +311,21 @@ h3.edit-url {
 .a-left {
   background-image: url('/static/img/align_left_icon.png');
   background-repeat: no-repeat;
-
-  -webkit-background-size: auto 50%;
-  -moz-background-size: auto 50%;
-  background-size: auto 50%;
+  .background-size(auto 50%);
   background-position: center center;
 }
 
 .a-center {
   background-image: url('/static/img/align_center_icon.png');
   background-repeat: no-repeat;
-
-  -webkit-background-size: auto 50%;
-  -moz-background-size: auto 50%;
-  background-size: auto 50%;
+  .background-size(auto 50%);
   background-position: center center;
 }
 
 .a-right {
   background-image: url('/static/img/align_right_icon.png');
   background-repeat: no-repeat;
-
-  -webkit-background-size: auto 50%;
-  -moz-background-size: auto 50%;
-  background-size: auto 50%;
+  .background-size(auto 50%);
   background-position: center center;
 }
 
@@ -356,9 +337,7 @@ h3.edit-url {
   background-image: url('/static/img/tb-padding.png');
   background-repeat: no-repeat;
   padding: 0;
-  -webkit-background-size: auto 50%;
-  -moz-background-size: auto 50%;
-  background-size: auto 50%;
+  .background-size(auto 50%);
   background-position: center center;
 }
 
@@ -366,8 +345,6 @@ h3.edit-url {
   background-image: url('/static/img/lr-padding.png');
   background-repeat: no-repeat;
   padding: 0;
-  -webkit-background-size: auto 50%;
-  -moz-background-size: auto 50%;
-  background-size: auto 50%;
+  .background-size(auto 50%);
   background-position: center center;
 }
