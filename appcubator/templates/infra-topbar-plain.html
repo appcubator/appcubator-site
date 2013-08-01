@@ -21,25 +21,19 @@
             <ul class="v1 dropdown-menu">
               <!-- <li class="header-panel"></li> -->
               {% if app %}
-              <li><a href="{% url appcubator.views.app_page app.id %}info/">
-                <span class="icon"></span>App settings</a>
-              </li>
+              <li><a href="{% url appcubator.views.app_page app.id %}info/"></span>App settings</a></li>
                 {% if user.is_superuser and app.pk %}
-                <li><a href="{% url appcubator.admin_views.admin_app app.pk %}"><span class="icon"></span>Admin</a></li>
+                <li><a href="{% url appcubator.admin_views.admin_app app.pk %}"></span>Admin</a></li>
                 {% endif %}
               {% endif %}
               <li class="header">My Applications</li>
               {% for a in users_apps %}
-              <li>
-                <a href="{% url appcubator.views.app_page a.id %}" rel="external"><span class="icon"></span>{{ a.name }}</a>
-              </li>
+              <li><a href="{% url appcubator.views.app_page a.id %}" rel="external"></span>{{ a.name }}</a></li>
               {% endfor %}
-              <li>
-                <a href="{% url appcubator.views.app_new %}" rel="external"><span class="icon"></span>Create New</a>
-              </li>
+              <li><a href="{% url appcubator.views.app_new %}" rel="external"></span>Create New</a></li>
               <li class="header">Account Details</li>
-              <li><a href="/account"><span class="icon"></span>Account Settings</a></li>
-              <li><a href="/logout"><span class="icon"></span>Logout</a></li>
+              <li><a href="/account">Account Settings</a></li>
+              <li><a href="/logout">Logout</a></li>
             </ul>
           </li>
         </ul>

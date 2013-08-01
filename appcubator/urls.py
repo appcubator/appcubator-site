@@ -11,6 +11,7 @@ from payments import views as payment_views
 
 urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
+    url(r'^home/$',                     base_views.homepagenew),
     url(r'^showhn/$',                   base_views.showhnpage),
     url(r'^showgsb/$',                  base_views.showgsbpage),
     url(r'^showdn/$',                   base_views.showdnpage),
@@ -35,7 +36,10 @@ urlpatterns = patterns('',
     url(r'^send_invitation/(\d+)/$',    base_views.send_invitation_to_customer),
     url(r'^backend/',                   include('app_builder.urls')),
     url(r'^payments/',                  include('appcubator.payments.urls')),
-    url(r'^app/(\d+)/payment/$',       payment_views.app_payment)
+    url(r'^app/(\d+)/payment/$',       payment_views.app_payment),
+
+    url(r'^resources/$',                   base_views.resources),
+    url(r'^resources/screencast/(\d+)/$',  base_views.screencast),
 )
 
 urlpatterns += patterns('appcubator.log_views',
@@ -58,10 +62,6 @@ urlpatterns += patterns('appcubator.views',
 
     # analytics
     url(r'^app/(\d+)/analytics/$', 'get_analytics'),
-
-    # entities
-    url(r'^app/(\d+)/entities/xl/$', 'process_excel'),
-    url(r'^app/(\d+)/entities/userxl/$', 'process_user_excel'),
 
     # statix
     url(r'^app/(\d+)/static/$', 'staticfiles'), # a GET returns the apps statics, a POST creates a static file entry.
@@ -114,12 +114,15 @@ urlpatterns += patterns('appcubator.admin_views',
     url(r'^stay/up/to/get/lucky/$', 'admin_home'),
     url(r'^stay/up/to/get/lucky/customers/$', 'admin_customers'),
     url(r'^stay/up/to/get/lucky/users/(\d+)$', 'admin_user'),
+    url(r'^stay/up/to/get/lucky/users/(\d+)/graph/$', 'user_logs_graph'),
     url(r'^stay/up/to/get/lucky/users/$', 'admin_users'),
     url(r'^stay/up/to/get/lucky/apps/(\d+)$', 'admin_app'),
     url(r'^stay/up/to/get/lucky/apps/$', 'admin_apps'),
     url(r'^stay/up/to/get/lucky/feedback/$', 'admin_feedback'),
     url(r'^stay/up/to/get/lucky/graphs/$', 'admin_graphs'),
-    url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json')
+    url(r'^stay/up/to/get/lucky/usersbydate/$', 'user_signups_json'),
+    url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json'),
+    url(r'^stay/up/to/get/lucky/logs/$', 'logs'),
 )
 
 urlpatterns += patterns('appcubator.theme_views',

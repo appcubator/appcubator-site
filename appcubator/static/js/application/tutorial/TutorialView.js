@@ -153,15 +153,14 @@ function() {
       var header = '<header><h1>'+ obj.title + '</h1><a class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">'+
           '<span class="icon-bar"></span>'+
           '<span class="icon-bar"></span>'+
-          '<span class="icon-bar"></span>'+
-        '</a></header>';
+          '<span class="icon-bar"></span></a>';
+      header += '<span class="pull-right">';
+      if(addr[0] !== 0) header += '<a class="prev btn" href="#">&laquo; Prev</a>';
+      if(addr[0] !== TutorialDirectory.length - 1) header += '<a class="next btn offset1" href="#">Next &raquo;</a>';
+      header += '</span></header>';
 
       var content = '<div class="text-cont">' + util.getHTML(obj.view) +'</div>';
-      var footer = '<footer>';
-      if(addr[0] !== 0) footer += '<a class="prev btn pull-left" href="#">&laquo; Prev</a>';
-      if(addr[0] !== TutorialDirectory.length - 1) footer += '<a class="next btn pull-right" href="#">Next &raquo;</a>';
-      footer += '</footer>';
-      $('.tutorial-content').html(header + content + footer);
+      $('.tutorial-content').html(header + content);
       util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
     },
 
@@ -282,6 +281,7 @@ function() {
         self.remove();
         self.stopListening();
         window.history.pushState(null, null, window.location.href.replace("tutorial/",""));
+        v1.tutorialIsVisible = false;
       });
     },
 
@@ -299,8 +299,9 @@ function() {
       }
     },
     slideDown: function() {
+      var self = this;
       this.$el.find('#tutorial-menu-list').animate({
-        scrollTop: '32'
+        scrollTop: '200px'
       }, 200);
     },
 

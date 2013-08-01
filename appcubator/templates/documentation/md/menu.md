@@ -7,6 +7,7 @@
 ## [Design Elements](/documentation/design_elements/)##
 ## [Images](/documentation/images/) ##
 ## [Login](/documentation/login/) ##
+## [Sign Up](/documentation/sign_up/) ##
 ## [Page Content](/documentation/page_content/) ##
 ## [Forms](/documentation/forms/) ##
 ## [Lists](/documentation/lists/) ##
@@ -15,7 +16,5 @@
 # [Deploy](/documentation/deploy/) #
 # [Emails](/documentation/emails/) #
 # [Application Settings](/documentation/application_settings/) ##
-## [Domain Settings](/documentation/domain_settings/) ##
-## [SEO Optimization](/documentation/seo_optimization/) ##
-## [Deleting Your Application](/documentation/deleting_your_application/) ##
+
 # [Feedback](/documentation/feedback/) #

@@ -40,21 +40,15 @@ define([
      },
 
      render: function() {
-      // Basic UI Elements
-      // Authentication Forms
-      // CurrentUser Elements
-      // All Create Forms, Tables, Lists
-      // Context Entity Elements and Update Forms
       var self = this;
 
       this.allList = util.get('all-list');
       this.allList.innerHTML = '';
-      this.renderUIElementList();
-      this.renderAuthenticationForms();
-      this.renderCurrentUserElements();
-      this.renderEntityFormsTablesLists();
-      this.renderContextEntityElements();
-      this.displayAllSections();
+      this.renderUIElementList();              // Basic UI Elements
+      this.renderAuthenticationForms();        // Authentication Forms
+      this.renderCurrentUserElements();        // CurrentUser Elements
+      this.renderEntityFormsTablesLists();     // All Create Forms, Tables, Lists
+      this.renderContextEntityElements();      // Context Entity Elements and Update Forms
 
       $(this.allList).append('<div class="bottom-arrow"></div>');
       $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
@@ -91,23 +85,10 @@ define([
 
     },
 
-    displayAllSections: function() {
-      this.allList.innerHTML = '';
-      _.each(this.sections, function(section) {
-        console.log(section);
-        this.allList.appendChild(section.el);
-      }, this);
-    },
-
     renderUIElementList: function() {
       var self = this;
       var collection = new ElementCollection(defaultElements);
-
-      this.uiElemsSection = new EditorGallerySectionView();
-      this.uiElemsSection.name = 'Design Elements';
-      this.uiElemsSection.render();
-      this.subviews.push(this.uiElemsSection);
-      this.sections.push(this.uiElemsSection);
+      this.uiElemsSection = this.addNewSection('Design Elements');
 
       collection.each(function(element) {
         if(element.get('className') == "textInputs" ||
@@ -162,11 +143,7 @@ define([
     },
 
     renderAuthenticationForms: function() {
-      this.authSection = new EditorGallerySectionView();
-      this.authSection.name= 'Authentication';
-      this.authSection.render();
-      this.subviews.push(this.authSection);
-      this.sections.push(this.authSection);
+      this.authSection = this.addNewSection('Authentication');
 
       this.authSection.addFullWidthItem("entity-user-Local_Login", "login", "Login Form", "local-login");
 
@@ -189,11 +166,7 @@ define([
     },
 
     renderCurrentUserElements: function() {
-      this.currUserSection = new EditorGallerySectionView();
-      this.currUserSection.name = 'Current User';
-      this.currUserSection.render();
-      this.subviews.push(this.currUserSection);
-      this.sections.push(this.currUserSection);
+      this.currUserSection = this.addNewSection('Current User');
 
       _(v1State.getCurrentPage().getFields()).each(function(field) {
         if(field.isRelatedField()) return;
@@ -208,11 +181,7 @@ define([
     renderEntityFormsTablesLists: function() {
 
       if(!this.tableSection) {
-        this.tableSection = new EditorGallerySectionView();
-        this.tableSection.name = 'Table Data';
-        this.tableSection.render();
-        this.subviews.push(this.tableSection);
-        this.sections.push(this.tableSection);
+        this.tableSection = this.addNewSection('Table Data');
       }
       else {
         this.tableSection.render();
@@ -242,16 +211,20 @@ define([
 
     renderContextEntityElements: function() {
       var pageContext = v1State.getCurrentPage().getContextEntities();
-      if(!pageContext.length) return;
+
+      // if there are no context entities, remove this section if it exists
+      if(!pageContext.length) {
+        if(this.contextEntitySection) {
+          this.removeSection(this.contextEntitySection);
+        }
+        return;
+      }
+
       if(!this.contextEntitySection) {
-        this.contextEntitySection = new EditorGallerySectionView();
-        this.contextEntitySection.name = 'Page Context Data';
-        this.contextEntitySection.render();
-        this.subviews.push(this.contextEntitySection);
-        this.sections.push(this.contextEntitySection);
+        this.contextEntitySection = this.addNewSection('Page Context Data');
       }
       else {
-        this.contextEntitySection.render();
+        this.allList.appendChild(this.contextEntitySection.render().el);
       }
 
 
@@ -288,6 +261,21 @@ define([
                                 tableName+' '+fieldModel.get('name')+'.'+fieldM.get('name'),
                                'plus-icon', section);
       }, this);
+    },
+
+    addNewSection: function(name) {
+      var sectionView = new EditorGallerySectionView();
+      sectionView.name = name;
+      this.subviews.push(sectionView);
+      this.sections.push(sectionView);
+      this.allList.appendChild(sectionView.render().el);
+      return sectionView;
+    },
+
+    removeSection: function(sectionView) {
+      sectionView.close()
+      this.sections.splice(this.sections.indexOf(sectionView), 1);
+      this.subviews.splice(this.subviews.indexOf(sectionView), 1);
     },
 
     dropped: function(e, ui) {

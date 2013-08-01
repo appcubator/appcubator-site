@@ -417,11 +417,7 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
   position: relative;
   height: 0;
   overflow: hidden;
-  -webkit-transition: height 0.35s ease;
-  -moz-transition: height 0.35s ease;
-  -o-transition: height 0.35s ease;
-  -ms-transition: height 0.35s ease;
-  transition: height 0.35s ease;
+  .transition(height 0.35s ease);
 }
 
 hr {
@@ -488,35 +484,28 @@ hr {
     right: -10px;
     bottom: -28px;
     .opacity(0.15);
-
-    -webkit-transition: opacity 0.6s;
-    -moz-transition: opacity 0.6s;
-    -o-transition: opacity 0.6s;
-    -ms-transition: opacity 0.6s;
-    transition: opacity 0.6s;
+    .transition(opacity 0.6s);
     width: 100px;
     height: 100px;
   }
 
   &:hover img {
     .opacity(0.9);
-    }
+  }
 } // end .pane
 
 .pane-inline {
   position: relative;
   display: inline-block;
   background-color: #1C3a62;
-  border-radius: 6px;
+  .border-radius(6px);
   color: #fff;
-
-  -webkit-box-shadow: 0 1px 3px #b9bbbe;
-  box-shadow: 0 1px 3px #b9bbbe;
+  .box-shadow(0 1px 3px #b9bbbe);
   overflow: hidden;
 }
 
 .w-pane {
-  border-radius: 4px;
+  .border-radius(4px);
   background-color: #fff;
   border: 1px solid #d3d3d3;
 }
@@ -614,12 +603,7 @@ hr {
 
 .modal.fade {
   top: -25%;
-
-  -webkit-transition: opacity 0.3s linear, top 0.3s ease-out;
-  -moz-transition: opacity 0.3s linear, top 0.3s ease-out;
-  -o-transition: opacity 0.3s linear, top 0.3s ease-out;
-  -ms-transition: opacity 0.3s linear, top 0.3s ease-out;
-  transition: opacity 0.3s linear, top 0.3s ease-out;
+  .transition(opacity 0.3s linear, top 0.3s ease-out);
 }
 
 .modal.fade.in {
@@ -1016,8 +1000,7 @@ input[type="tel"],input[type="color"],
   border: 1px solid #cccccc;
   .border-radius(4px);
   .box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075));
-  .transition(border linear 0.2s);
-  .transition(box-shadow linear 0.2s);
+  .transition(border linear 0.2s, box-shadow linear 0.2s);
 
   &:focus {
     outline: thin dotted 9;
@@ -1183,6 +1166,18 @@ legend + .control-group {
  * MISC. Helper classes
  */
 
+#ajax-loader {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background-image: url('../img/ajax-loader.gif');
+  .background-size(100% auto);
+  height: 60px;
+  width: 60px;
+  display: inline-block;
+  background-repeat: no-repeat;
+}
+
 .pull-right {
   float: right;
 }
@@ -1236,19 +1231,10 @@ legend + .control-group {
   background-position: center;
   display: inline-block;
 
-  -webkit-transition: opacity 0.6s;
-  -moz-transition: opacity 0.6s;
-  -o-transition: opacity 0.6s;
-  -ms-transition: opacity 0.6s;
-  transition: opacity 0.6s;
-
-  -webkit-background-size: 44% auto;
-  -moz-background-size: 44% auto;
-  background-size: 44% auto;
+  .transition(opacity 0.6s);
+  .background-size(44% auto);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
-
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  .box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05));
   text-align: center;
   color: #fff;
   font-size: 30px;
@@ -1280,20 +1266,10 @@ legend + .control-group {
   background-repeat: no-repeat;
   background-position: center;
   display: inline-block;
-
-  -webkit-transition: opacity 0.6s;
-  -moz-transition: opacity 0.6s;
-  -o-transition: opacity 0.6s;
-  -ms-transition: opacity 0.6s;
-  transition: opacity 0.6s;
-
-  -webkit-background-size: 44% auto;
-  -moz-background-size: 44% auto;
-  background-size: 44% auto;
+  .transition(opacity 0.6s);
+  .background-size(44% auto);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
-
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  .box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05));
 }
 
 .save-btn:hover,.save-btn-nofix:hover {
@@ -1302,8 +1278,7 @@ legend + .control-group {
 }
 
 .save-btn:active,.save-btn-nofix:active {
-  -webkit-box-shadow: none;
-  box-shadow: none;
+  .box-shadow(none);
 }
 
 .save-btn-nofix {
@@ -1326,21 +1301,11 @@ legend + .control-group {
   .opacity(0.6);
   text-shadow: none;
   background-image: url(/static/img/trash.png);
-
-  -webkit-background-size: 44% auto;
-  -moz-background-size: 44% auto;
-  background-size: 44% auto;
+  .background-size(44% auto);
   background-repeat: no-repeat;
   background-position: center;
   display: inline-block;
-
-  -webkit-transition: opacity 0.6s;
-  -moz-transition: opacity 0.6s;
-  -o-transition: opacity 0.6s;
-  -ms-transition: opacity 0.6s;
-  transition: opacity 0.6s; /* Firefox 4 */
-/* Safari and Chrome */
-/* Opera */
+  .transition(opacity 0.6s);
 }
 
 .delete-btn:hover,.delete-btn-nofix:hover {
@@ -1371,20 +1336,10 @@ legend + .control-group {
   background-repeat: no-repeat;
   background-position: center;
   display: inline-block;
-
-  -webkit-transition: all 0.6s;
-  -moz-transition: all 0.6s;
-  -o-transition: all 0.6s;
-  -ms-transition: all 0.6s;
-  transition: all 0.6s;
-
-  -webkit-background-size: 44% auto;
-  -moz-background-size: 44% auto;
-  background-size: 44% auto;
+  .transition(all 0.6s);
+  .background-size(44% auto);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
-
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  .box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05));
 }
 
 .hidden {
@@ -1549,7 +1504,7 @@ legend + .control-group {
   border-radius: 3px;
   border: 1px solid #ddd;
   border-bottom-color: #c5c5c5;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  .box-shadow(0 1px 3px rgba(0,0,0,0.05));
   cursor: pointer;
 
   img {
@@ -1572,10 +1527,7 @@ legend + .control-group {
 .mascot {
   background-image: url('/static/img/mascot.png');
   background-repeat: no-repeat;
-
-  -webkit-background-size: auto 100%;
-  -moz-background-size: auto 100%;
-  background-size: auto 100%;
+  .background-size(auto 100%);
 }
 
 .mascot.happy {

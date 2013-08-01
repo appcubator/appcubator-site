@@ -1,9 +1,97 @@
 <h1>Page Content</h1>
 
-<p>Create Personalized User Pages! </p>
+<p>Create Personalized Pages for Users and Tables. This is where you connect your tables with what is displayed to your users.</p>
 
-<p><img src="{{STATIC_URL}}/img/tutorial/Elements_2.png" alt="alt text" /> </p>
+<p>Adding table specific data</p>
 
-<p>Drag and Drop the "Current User Buttons" to display the user's information stored in your application database </p>
+<p><img src="{{STATIC_URL}}/img/tutorial/Twitter_ID.png" alt="alt text" /> </p>
 
-<p><img src="{{STATIC_URL}}/img/tutorial/Current_User.png" alt="alt text" /></p>
+<p>Twitter stores user's tweets in table. User's tweets are either displayed in lists or in individual pages with specific URL IDs. </p>
+
+<p>This documentation page will go over the individual tweet pages with specific URL IDs.</p>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/TwitterURL.png" alt="alt text" /> </p>
+
+<p>Modify your URL</p>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/ChangeURL.png" alt="alt text" /> </p>
+
+<ul>
+<li>Click on your URL address field to open the 'Edit URL' window</li>
+</ul>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/Edit_URL1.png" alt="alt text" /></p>
+
+<ul>
+<li>Click 'Add Context Value' to add Context Data. Context data is your Table data, like tweets, tests, posts, and users.</li>
+</ul>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/Edit_URL2.png" alt="alt text" /> </p>
+
+<ul>
+<li>Click on the dropdown window to pick between  your user tables, and tables and add an 'ID'. </li>
+</ul>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/Edit_URL3.png" alt="alt text" /> </p>
+
+<ul>
+<li>Your URL will update. When your site is live, you will have a distinct id.</li>
+</ul>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/Edit_URL4.png" alt="alt text" /> </p>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/URL_ID.png" alt="alt text" /> </p>
+
+<ul>
+<li>By adding the 'Context Value' to the page URL, you can now access the 'Page Context Data' sidebar</li>
+</ul>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/Page_Context.png" alt="alt text" /> </p>
+
+<p>Page Context Data</p>
+
+<ul>
+<li>Drag and Drop the "Table Buttons." </li>
+</ul>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/Test_Buttons.png" alt="alt text" /> </p>
+
+<p>In the example these store that stores the current Test and can access that Test's file, Class Major, and Class Number.</p>
+
+<ul>
+<li>Double click on the {{Text}} to add a description when the table information is present.</li>
+</ul>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/Test_Description.png" alt="alt text" /></p>
+
+<p>Can I put two Table Context Data pieces next to each other?</p>
+
+<ul>
+<li>The {{Tags}} represent that piece of information, you can copy and paste it like text so that it will read next to each other.</li>
+</ul>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/Test_Double.png" alt="alt text" /></p>
+
+<p>How do I display User Information?</p>
+
+<p>Also stored are the Test Owner's information to display the user's information stored in your application database </p>
+
+<ul>
+<li>Click on the other Page Context Data buttons to drag in relational information.</li>
+</ul>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/Test_Relation.png" alt="alt text" /></p>
+
+<ul>
+<li>This can display information such as who created this specific tweet or test.</li>
+</ul>
+
+<p>Here is an example of how these {{Tags}} translate from your editor to a deployed application.</p>
+
+<p>Before:</p>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/Test_Before.png" alt="alt text" /></p>
+
+<p>After:</p>
+
+<p><img src="{{STATIC_URL}}/img/tutorial/Test_After.png" alt="alt text" /></p>

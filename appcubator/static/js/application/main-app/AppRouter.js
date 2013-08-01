@@ -21,14 +21,14 @@ define([
     var AppRouter = Backbone.Router.extend({
 
         routes: {
-            "app/:appid/info/(:tutorial/)"     : "info",
-            "app/:appid/tables/(:tutorial/)"   : "tables",
-            "app/:appid/gallery/(:tutorial/)"  : "themes",
-            "app/:appid/pages/(:tutorial/)"    : "pages",
+            "app/:appid/info/*tutorial"     : "info",
+            "app/:appid/tables/*tutorial"   : "tables",
+            "app/:appid/gallery/*tutorial"  : "themes",
+            "app/:appid/pages/*tutorial"    : "pages",
             "app/:appid/editor/:pageid/"       : "editor",
             "app/:appid/mobile-editor/:pageid/": "mobileEditor",
-            "app/:appid/emails/(:tutorial/)"   : "emails",
-            "app/:appid/(:tutorial/)"          : "index",
+            "app/:appid/emails/*tutorial"   : "emails",
+            "app/:appid/*tutorial"          : "index",
             "app/:appid/*anything/"            : "index"
         },
 
@@ -60,10 +60,7 @@ define([
             var self = this;
             require(['app/OverviewPageView'], function(OverviewPageView){
                 self.tutorialDirectory = [0];
-                self.changePage(OverviewPageView, {}, function() {
-                    if(tutorial) {
-                        self.showTutorial();
-                    }
+                self.changePage(OverviewPageView, tutorial, function() {
                 });
                 olark('api.box.show');
             });
@@ -73,11 +70,8 @@ define([
             var self = this;
             require(['app/AppInfoView'], function(InfoView){
                 self.tutorialDirectory = [7];
-                self.changePage(InfoView, {}, function() {
+                self.changePage(InfoView, tutorial, function() {
                     $('.menu-app-info').addClass('active');
-                    if(tutorial) {
-                        self.showTutorial();
-                    }
                 });
                 olark('api.box.show');
             });
@@ -87,12 +81,9 @@ define([
             var self = this;
             require(['app/entities/EntitiesView'], function(EntitiesView){
                 self.tutorialDirectory = [1];
-                self.changePage(EntitiesView, {}, function() {
+                self.changePage(EntitiesView, tutorial, function() {
                     self.trigger('entities-loaded');
                     $('.menu-app-entities').addClass('active');
-                    if(tutorial) {
-                        self.showTutorial();
-                    }
                 });
                 olark('api.box.show');
             });
@@ -102,12 +93,9 @@ define([
             var self = this;
             self.tutorialDirectory = [4];
             require(['app/ThemesGalleryView'], function(ThemesGalleryView){
-                self.changePage(ThemesGalleryView, {}, function() {
+                self.changePage(ThemesGalleryView, tutorial, function() {
                     self.trigger('themes-loaded');
                     $('.menu-app-themes').addClass('active');
-                    if(tutorial) {
-                        self.showTutorial();
-                    }
                 });
                 olark('api.box.show');
             });
@@ -118,12 +106,9 @@ define([
             self.tutorialDirectory = [2];
             require(['app/pages/PagesView'], function(PagesView){
                 $('.page').fadeIn();
-                self.changePage(PagesView, {}, function() {
+                self.changePage(PagesView, tutorial, function() {
                     self.trigger('pages-loaded');
                     $('.menu-app-pages').addClass('active');
-                    if(tutorial) {
-                        self.showTutorial();
-                    }
                 });
                 olark('api.box.show');
             });
@@ -170,22 +155,19 @@ define([
         emails: function(appId, tutorial) {
             var self = this;
             self.tutorialDirectory = [6];
-            this.changePage(EmailsView, {}, function() {
+            this.changePage(EmailsView, tutorial, function() {
                 $('.menu-app-emails').addClass('active');
-                if(tutorial) {
-                    self.showTutorial();
-                }
             });
         },
 
-        changePage: function(newView, viewOptions, post_render) {
+        changePage: function(newView, tutorial, post_render) {
             if(AppRouter.view) AppRouter.view.close();
             var cleanDiv = document.createElement('div');
             cleanDiv.className = "clean-div";
             var mainContainer = document.getElementById('main-container');
             mainContainer.appendChild(cleanDiv);
 
-            AppRouter.view = new newView(viewOptions);
+            AppRouter.view = new newView();
             AppRouter.view.setElement(cleanDiv).render();
             $('.active').removeClass('active');
             this.changeTitle(AppRouter.view.title);
@@ -193,6 +175,18 @@ define([
             $('.page').fadeIn();
             $('.pull-right.dropd').removeClass('open');
             post_render.call();
+            if(tutorial && tutorial === 'tutorial/') {
+                this.showTutorial();
+            }
+            else if(tutorial) {
+                // remove random ending string from url path
+                this.navigate(window.location.pathname.replace(tutorial, ''), {replace: true});
+            }
+            else {
+                if(this.tutorialIsVisible) {
+                    this.tutorial.closeModal();
+                }
+            }
         },
 
         deploy: function(callback) {
@@ -310,7 +304,13 @@ define([
 
         showTutorial: function(dir) {
             var inp = (dir) ? [dir] : this.tutorialDirectory;
-            tutorial = new TutorialView(inp);
+            if(this.tutorialIsVisible) {
+                this.tutorial.chooseSlide(inp, false);
+            }
+            else {
+                this.tutorial = new TutorialView(inp);
+                this.tutorialIsVisible = true;
+            }
         },
 
         betaCheck: function(data) {

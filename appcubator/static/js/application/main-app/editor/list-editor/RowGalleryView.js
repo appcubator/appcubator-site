@@ -35,15 +35,8 @@ function(EditorGallerySectionView,
       this.row = rowModel;
       this.widgetsCollection = rowModel.get('uielements');
       this.editorContext = "loop";
-
-
-
-
       this.allList = this.el;
       this.location = location;
-
-
-
     },
 
     render: function() {
@@ -57,7 +50,7 @@ function(EditorGallerySectionView,
       this.sections = [];
       this.renderUIElementList();
       this.renderContextEntity();
-      this.displayAllSections();
+      //this.displayAllSections();
 
       this.el.innerHTML += '<div class="bottom-arrow"></div>';
 
@@ -77,19 +70,11 @@ function(EditorGallerySectionView,
       return this;
     },
 
-    displayAllSections: function() {
-      this.allList.appendChild(this.contextEntitySection.el);
-      this.allList.appendChild(this.uiElemsSection.el);
-    },
-
     renderUIElementList: function() {
       var self = this;
       var collection = new ElementCollection(defaultElements);
-      this.uiElemsSection = new EditorGallerySectionView();
-      this.uiElemsSection.name = 'Design Elements';
-      this.uiElemsSection.render();
-      this.subviews.push(this.uiElemsSection);
-      this.sections.push(this.uiElemsSection);
+      this.uiElemsSection = this.addNewSection('Design Elements');
+
       collection.each(function(element) {
         if(element.get('className') == "buttons" ||
            element.get('className') == "textInputs" ||
@@ -104,12 +89,7 @@ function(EditorGallerySectionView,
     renderContextEntity : function() {
       // Form, Data elements belonging to the entity
       var self = this;
-
-      this.contextEntitySection = new EditorGallerySectionView();
-      this.contextEntitySection.name = 'Row Context Data';
-      this.contextEntitySection.render();
-      this.subviews.push(this.contextEntitySection);
-      this.sections.push(this.contextEntitySection);
+      this.contextEntitySection = this.addNewSection('Row Context Data');
 
       var entityName = self.entity.get('name');
       var entityId = self.entity.cid;

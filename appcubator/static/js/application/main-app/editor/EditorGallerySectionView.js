@@ -60,7 +60,7 @@ function(
 
     addHeaderItem: function(text, target) {
       var li = document.createElement('li');
-      li.className = 'gallery-header ui-draggable';
+      li.className = 'gallery-header ui-draggable open';
       li.innerHTML = text;
       var icon = document.createElement('img');
       icon.className="icon";

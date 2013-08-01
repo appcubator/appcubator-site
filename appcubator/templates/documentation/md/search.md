@@ -8,7 +8,7 @@ Search Box
 
 - Drag and Drop a "Search Box" from your "Table Data" sidebar. Every table that you created will have one.
 
-![alt text](http://appcubator.com/static/img/tutorial/Display_Lists.png)
+![alt text](http://appcubator.com/static/img/tutorial/Search_Box.png)
 
 How can I edit my Search Options?
 

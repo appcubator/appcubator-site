@@ -14,6 +14,8 @@ from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
 
+import forms
+
 import app_builder.analyzer as analyzer
 from app_builder.analyzer import App as AnalyzedApp
 from app_builder.utils import get_xl_data, add_xl_data, get_model_data
@@ -23,9 +25,6 @@ from payments.views import subscribe
 import requests
 import traceback
 import datetime
-import shlex
-import subprocess
-import os
 from datetime import datetime
 
 
@@ -89,24 +88,29 @@ def app_new(request, is_racoon = False):
         log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "newapp"})
         log.save()
         return render(request, 'apps-new.html')
+
     elif request.method == 'POST':
-        app_name = "Unnamed"
-        if 'name' in request.POST:
-            app_name = request.POST['name']
-        a = App(name=app_name, owner=request.user)
-        # set the name in the app state
-        s = a.state
-        s['name'] = a.name
-        a.state = s
-        try:
-            a.full_clean()
-        except Exception, e:
-            return render(request,  'apps-new.html', {'old_name': app_name, 'errors': e}, status=400)
-        a.save()
-        if is_racoon:
-            return redirect(app_new_racoon, a.id)
-        else:
-            return redirect(app_page, a.id)
+        data = {}
+        data['name'] = request.POST.get('name', '')
+        data['subdomain'] = request.POST.get('name', '')
+        # dev modifications
+        if not settings.STAGING and not settings.PRODUCTION:
+            data['subdomain'] = 'dev-%s-%s' % (request.user.username.split('@')[0], data['subdomain'])
+
+        data['owner'] = request.user.id
+        form = forms.AppNew(data)
+        if form.is_valid():
+            app = form.save(commit=False)
+            s = app.state
+            s['name'] = app.name
+            app.state = s
+            app.save()
+            if is_racoon:
+                return redirect(app_new_racoon, app.id)
+            else:
+                return redirect(app_page, app.id)
+
+        return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'errors': form.errors}, status=400)
 
 
 @login_required
@@ -177,6 +181,8 @@ def app_page(request, app_id):
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
                     'apps': app.owner.apps.all(),
                     'user': app.owner,
+                    'staging': settings.STAGING,
+                    'staging': settings.PRODUCTION,
                     'is_deployed': 1 if app.deployment_id != None else 0}
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)
@@ -455,52 +461,6 @@ def get_analytics(request, app_id):
     data = analytics_data.analytics_data
     return JSONResponse(data)
 
-@login_required
-@csrf_exempt
-@require_POST
-def process_excel(request, app_id):
-    app_id = long(app_id)
-    file_name = request.FILES['file_name']
-    entity_name = request.POST['entity_name']
-    fields = request.POST['fields']
-    fe_data = {'model_name': entity_name, 'fields': fields}
-    app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
-        raise Http404
-    try:
-        d = Deployment.objects.get(subdomain=app.subdomain())
-    except Deployment.DoesNotExist:
-        raise Exception("App has not been deployed yet")
-    state = app.get_state()
-    xl_data = get_xl_data(file_name)
-    app_state_entities = [e['name'] for e in state['entities']]
-    for sheet in xl_data:
-        add_xl_data(xl_data, fe_data, app_state_entities, d.app_dir + "/db")
-    return HttpResponse("ok")
-
-
-@login_required
-@csrf_exempt
-@require_POST
-def process_user_excel(request, app_id):
-    f = request.FILES['file_name']
-    app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
-        raise Http404
-
-    data = {"api_secret": "uploadinG!!"}
-    files = {'excel_file': f}
-    if settings.DEBUG and not settings.STAGING:
-        try:
-            r = requests.post(
-                "http://localhost:8001/" + "user_excel_import/", data=data, files=files)
-        except Exception:
-            print "To test excel in dev mode, you have to have the child webapp running on port 8001"
-    else:
-        r = requests.post(
-            app.url() + "user_excel_import/", data=data, files=files)
-
-    return HttpResponse(r.content, status=r.status_code, mimetype="application/json")
 
 from django.forms import ModelForm
 
@@ -568,10 +528,6 @@ def app_deploy(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    d_user = {
-        'user_name': app.owner.username,
-        'date_joined': str(app.owner.date_joined)
-    }
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     status = 500 if 'errors' in result else 200
@@ -648,12 +604,11 @@ def register_domain(request, domain):
 @login_required
 @csrf_exempt
 def sub_check_availability(request, subdomain):
-    domain_is_available = not App.objects.filter(subdomain=subdomain.lower()).exists()
-
-    if domain_is_available:
+    data = {'subdomain': subdomain}
+    form = forms.ChangeSubdomain(data)
+    if form.is_valid():
         return JSONResponse(True)
-    else:
-        return JSONResponse(False)
+    return JSONResponse(False)
 
 
 @require_POST
@@ -663,16 +618,14 @@ def sub_register_domain(request, app_id, subdomain):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    app.subdomain = subdomain
-    app.full_clean()
-    app.save(state_version=False)
-    d_user = {
-        'user_name': app.owner.username,
-        'date_joined': str(app.owner.date_joined)
-    }
-    result = app.deploy(d_user)
-    status = 500 if 'errors' in result else 200
-    return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+    form = forms.ChangeSubdomain({'subdomain': subdomain}, app=app)
+    if form.is_valid():
+        app = form.save(state_version=False)
+        result = app.deploy()
+        status = 500 if 'errors' in result else 200
+        return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+
+    return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")
 
 
 def yomomma(request, number):
