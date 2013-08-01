@@ -135,12 +135,16 @@ function(WidgetContentEditor,
 
         if(this.model.hasForm() && action != "login" && action != "signup") {
           this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+          this.layoutEditor = new WidgetLayoutEditor(this.model);
+
           this.subviews.push(this.widgetClassPickerView);
+          this.subviews.push(this.layoutEditor);
 
           this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
-          this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
+          this.el.appendChild(this.layoutEditor.el);
+          this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
         }
       }
