@@ -260,10 +260,9 @@ define([
                 }, 3000);
             };
             var softErrorHandler = function(jqxhr) {
-                console.log("HANDLING SOFT ERROR");
                 var data = JSON.parse(jqxhr.responseText);
                 v1State.set('version_id', data.version_id);
-                //v1.disableSave = true;
+                v1.disableSave = false;
                 //var content = { text: "Warning: " + data.message + ' We saved your progress, but you need to fix this before deploying again. FYI, this occurred in ' + data.path + '.' };
                 //new ErrorDialogueView(content, function() { v1.disableSave = false;});
                 new SoftErrorView({text: data.message, path: data.path });
