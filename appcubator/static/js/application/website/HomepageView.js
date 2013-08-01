@@ -1,15 +1,16 @@
 define([
+  './SignupModalView',
   'answer',
   'backbone',
-  './TutorialDict',
   'util'
 ],
-function() {
+function(SignupModalView) {
 
   var HomepageView = Backbone.View.extend({
+    el: document.body,
 
     events : {
-
+      'click #request' : 'openSignupForm'
     },
 
     initialize: function(directory) {
@@ -48,6 +49,10 @@ function() {
           $slideLast.css('background-position', '0 -'+Math.round((newValue-1300) / 4) + 'px');
         }
       });
+    },
+
+    openSignupForm: function() {
+      new SignupModalView();
     }
 
   });
