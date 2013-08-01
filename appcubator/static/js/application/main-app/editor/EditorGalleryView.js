@@ -330,6 +330,8 @@ define([
           return this.createCreateForm(layout, id);
         case "entity-edit-form":
           return this.createEditForm(layout, id);
+        case "entity-delete-form":
+          return this.createDeleteForm(layout, id);
         case "entity-table":
           return this.createEntityTable(layout, id);
         case "entity-list":
@@ -433,6 +435,7 @@ define([
     createEditForm: function(layout, id) {
       var entityType = String(id).replace('entity-','');
       var entity = {};
+      var editOn = {};
       //if edit form is for a user role
       if(entityType.indexOf('user') > -1) {
         var cid = entityType.replace('user-','');
@@ -448,6 +451,27 @@ define([
       }
 
       return this.widgetsCollection.createEditForm(layout, entity, editOn);
+    },
+
+    createDeleteForm: function(layout, id) {
+      var entityType = String(id).replace('entity-','');
+      var entity = {};
+      var editOn = {};
+      //if delete form is for a user role
+      if(entityType.indexOf('user') > -1) {
+        var cid = entityType.replace('user-','');
+        editOn = "CurrentUser";
+        entity = v1State.get('users').get(cid);
+      }
+      //delete form is for a table
+      else {
+        var cid = entityType.replace('table-','');
+        entity = v1State.get('tables').get(cid);
+        if(!entity) entity = v1State.get('users').get(cid);
+        editOn = "Page." + entity.get('name');
+      }
+
+      return this.widgetsCollection.createDeleteForm(layout, entity, editOn);
     },
 
     createEntityTable: function(layout, id) {
