@@ -227,7 +227,7 @@ define([
         },
 
         save: function(e) {
-            if(v1.errorFlag === true) return;
+            if(v1.disableSave === true) return;
             if(appId === 0) return;
 
             $('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
@@ -239,7 +239,7 @@ define([
 
             var successHandler = function(data) {
                 util.dontAskBeforeLeave();
-                v1.errorFlag = false;
+                v1.disableSave = false;
 
                 v1State.set('version_id', data.version_id);
 
@@ -263,22 +263,23 @@ define([
                 console.log("HANDLING SOFT ERROR");
                 var data = JSON.parse(jqxhr.responseText);
                 v1State.set('version_id', data.version_id);
-                //v1.errorFlag = true;
+                //v1.disableSave = true;
                 //var content = { text: "Warning: " + data.message + ' We saved your progress, but you need to fix this before deploying again. FYI, this occurred in ' + data.path + '.' };
-                //new ErrorDialogueView(content, function() { v1.errorFlag = false;});
+                //new ErrorDialogueView(content, function() { v1.disableSave = false;});
                 new SoftErrorView({text: data.message, path: data.path });
             };
             var browserConflictHandler = function(jqxhr) {
-                new ErrorDialogueView({text:"Looks like you (or someone else) made a change to your app in another browser window. Please make sure you only use one window with Appcubator or you may end up overwriting your app with an older version. Please refresh the browser to get the updated version of your app."}, function() { v1.errorFlag = false;});
+                var content = { text: "Looks like you (or someone else) made a change to your app in another browser window. Please make sure you only use one window with Appcubator or you may end up overwriting your app with an older version. Please refresh the browser to get the updated version of your app." };
+                new ErrorDialogueView(content, function() { v1.disableSave = false;});
             };
             var hardErrorHandler = function(jqxhr) {
-                v1.errorFlag = true;
-                var content = "";
+                v1.disableSave = true;
+                var content = {};
                 if(DEBUG)
                     content = { text: jqxhr.responseText };
                 else
                     content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-                new ErrorDialogueView(content, function() { v1.errorFlag = false; });
+                new ErrorDialogueView(content, function() { v1.disableSave = false; });
             };
 
             // for now, no difference
