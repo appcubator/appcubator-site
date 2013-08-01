@@ -333,18 +333,20 @@ def send_invitation_to_customer(request, customer_pk):
     if request.POST['subject']:
         subject = request.POST['subject']
 
-    template_context = {"text" : text}
+    template_context = {"text": text}
     send_template_email("team@appcubator.com", customer.email, subject, "", "emails/base_boxed_basic_query.html", template_context)
     customer.sent_welcome_email = True
     customer.save()
     return HttpResponse("ok")
+
 
 def resources(request):
     page_context = {}
     page_context["title"] = "Resources"
     return render(request, 'resources.html', page_context)
 
-def screencast(request, screencast_id):
+
+def screencast(request, screencast_id=1):
     page_context = {}
-    page_context["title"] = "Screecast 1"
-    return render(request, 'screencast-1.html', page_context)
+    page_context["title"] = "Screecast " + screencast_id
+    return render(request, 'screencast-' + screencast_id + '.html', page_context)
