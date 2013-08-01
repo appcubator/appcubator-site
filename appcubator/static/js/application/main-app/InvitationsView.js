@@ -30,7 +30,7 @@ function() {
       var self = this;
       $.ajax({
         type: 'GET',
-        url: '/invitations/',
+        url: '/app/'+appId+'/invitations/',
         success: function(data) {
           var htmlString = '';
           _(data).each(function(invitation) {
@@ -50,26 +50,22 @@ function() {
     },
 
     onFormSubmit: function(e) {
-      var self = this;
       e.preventDefault();
+      var self = this;
+      var name = this.$('.name').val();
+      var email = this.$('.email').val();
       $.ajax({
         type: 'POST',
-        url: '/invitations/',
+        url: '/app/'+appId+'/invitations/',
         data: {
-          firstName: this.$('.firstname').val(),
-          lastName: this.$('.lastname').val(),
-          email: this.$('.email').val(),
-          subject: this.$('.subject').val(),
-          message: this.$('.message').val()
+          name: name,
+          email: email
         },
         dataType: 'json',
         complete: function(status) {
           console.log(status);
-          self.$('.firstname').val('');
-          self.$('.lastname').val('');
+          self.$('.name').val('');
           self.$('.email').val('');
-          self.$('.subject').val('');
-          self.$('.message').val('');
           self.renderInvitations();
         }
       });

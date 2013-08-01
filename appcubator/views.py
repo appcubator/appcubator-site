@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import Http404
-
+from django.contrib.auth.models import User
 from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore
 from email.sendgrid_email import send_email, send_template_email
 from models import DomainRegistration
@@ -282,10 +282,10 @@ def app_save_state(request, app, require_valid=True):
 
 @login_required
 @csrf_exempt
-def invitations(request):
+def invitations(request, app_id):
+    user_id = long(request.user.id)
     # get all invitations sent by user {{user_id}}
     if request.method == 'GET':
-        user_id = int(request.user.id)
         invitations = list(InvitationKeys.objects.filter(inviter_id=user_id))
         json = []
         for i in invitations:
@@ -293,15 +293,28 @@ def invitations(request):
         return JSONResponse(json)
     # send an invitation from {{user_id}} to a friend
     else:
-        firstName = request.POST['firstName']
-        lastName = request.POST['lastName']
+        user = get_object_or_404(User, pk=user_id)
+        if user.first_name is not "":
+            user_name = user.first_name
+            if user.last_name is not "":
+                user_name = user_name + " " + user.last_name
+        else:
+            user_name = user.username
+        app = get_object_or_404(App, pk=long(app_id))
+        name = request.POST['name']
         email = request.POST['email']
-        subject = request.POST['subject']
-        message = request.POST['message']
+        subject = "%s has invited you to check out Appcubator!" % user_name
+
+        message = ('Dear {name},\n\n'
+                   'Check out what I\'ve build using Appcubator:\n\n'
+                   '<a href="{hostname}">{hostname}</a>\n\n'
+                   'Appcubator is the only visual web editor that can build rich web applications without hiring a developer or knowing how to code. It is also free to build an app, forever. See what others have built and try to create a web app of your own.\n\n'
+                   'Best,\n{user_name}\n\n\n')
+        message = message.format(name=name, hostname=app.hostname(), user_name=user_name)
         invitation = InvitationKeys.create_invitation(request.user, email)
         template_context = { "text": message }
         send_template_email(request.user.email, email, subject, "", "emails/base_boxed_basic_query.html", template_context)
-        return HttpResponse("ok")
+        return HttpResponse(message)
 
 def documentation_page(request, page_name):
     try:

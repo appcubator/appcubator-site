@@ -86,7 +86,7 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/zip/$', 'app_zip'),
 
     #invitations
-    url(r'^invitations/$', 'invitations'),
+    url(r'^app/(\d+)/invitations/$', 'invitations'),
 
     # domains
     url(r'^domains/(.*)/available_check/$', 'check_availability'),
