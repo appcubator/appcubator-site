@@ -262,12 +262,11 @@ define([
             var softErrorHandler = function(jqxhr) {
                 var data = JSON.parse(jqxhr.responseText);
                 v1State.set('version_id', data.version_id);
-                v1.disableSave = false;
-                //var content = { text: "Warning: " + data.message + ' We saved your progress, but you need to fix this before deploying again. FYI, this occurred in ' + data.path + '.' };
-                //new ErrorDialogueView(content, function() { v1.disableSave = false;});
-                new SoftErrorView({text: data.message, path: data.path });
+                v1.disableSave = true;
+                new SoftErrorView({text: data.message, path: data.path }, function() { v1.disableSave = false;});
             };
             var browserConflictHandler = function(jqxhr) {
+                v1.disableSave = true;
                 var content = { text: "Looks like you (or someone else) made a change to your app in another browser window. Please make sure you only use one window with Appcubator or you may end up overwriting your app with an older version. Please refresh the browser to get the updated version of your app." };
                 new ErrorDialogueView(content, function() { v1.disableSave = false;});
             };
