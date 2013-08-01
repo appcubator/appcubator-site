@@ -368,12 +368,17 @@ body {
 
 
 .slide-gallery .gallery li .screenshot {
-  background-image: url(../img/screenshot.png);
-  background-repeat: no-repeat;
+/*  background-image: url(../img/screenshot.png);
+*/  background-repeat: no-repeat;
   background-size: 100% auto;
   display: inline-block;
   width: 240px;
-  height: 240px;
+  height: 160px;
+}
+
+.gallery li .content p {
+  font-size: 12px;
+  padding: 0 10px;
 }
 
 .slide-info .explanation {
