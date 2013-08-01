@@ -11,11 +11,16 @@ function(Backbone) {
       'click' : 'close'
     },
 
-    initialize: function(options) {
+    initialize: function(options, closeCallback) {
       _.bindAll(this);
 
       this.text = options.text;
       this.path = options.path;
+      // wrap the callback in a function, since the callback may be undefined
+      this.closeCallback = function() {
+        if(typeof(closeCallback) == 'function') return closeCallback();
+        else return false;
+      }
       this.render();
     },
 
@@ -45,6 +50,11 @@ function(Backbone) {
       document.body.appendChild(this.el);
       console.log(this.el);
       return this;
+    },
+
+    close: function() {
+      this.closeCallback();
+      SoftErrorView.__super__.close.call(this);
     }
 
   });
