@@ -80,7 +80,7 @@ body {
   margin-top: 10px;
   text-align: center;
   font-family: 'verb_regularregular';
-  text-shadow: #0f3d50 0 1px 1px;
+  text-shadow: #ddd 0 1px 1px;
 }
 
 .left-panel h1 img {
@@ -307,8 +307,8 @@ body {
   margin-bottom: 20px;
   vertical-align: top;
 
-  transition: all 0.1s  ease-in;
-  -webkit-transition: all 0.1s  ease-in;
+/*  transition: all 0.1s  ease-in;
+  -webkit-transition: all 0.1s  ease-in;*/
 }
 
 .gallery li .content .title {
@@ -317,15 +317,55 @@ body {
 
 .slide-gallery  .gallery li .content:hover {
   display: inline-block;
-  height: 290px;
-  width: 290px;
-  border-radius: 6px;
-  padding-top: 20px;
   border: 3px solid #0f2d40;
-  text-align: center;
-  margin-top:10px;
-  margin-bottom: 10px;
+  animation: blurp 0.2s linear;
+  -webkit-animation: blurp 0.2s linear;
+  -webkit-transform: scale(1.1);
 }
+
+@keyframes blurp {
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  45% {
+    -webkit-transform: scale(1.15);
+  }
+
+  100% {
+    -webkit-transform: scale(1.1);
+  }
+}
+
+@-moz-keyframes blurp {
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  45% {
+    -webkit-transform: scale(1.15);
+  }
+
+  100% {
+    -webkit-transform: scale(1.1);
+  }
+}
+
+@-webkit-keyframes blurp {
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  45% {
+    -webkit-transform: scale(1.15);
+  }
+
+  100% {
+    -webkit-transform: scale(1.1);
+  }
+}
+
+
 
 .slide-gallery .gallery li .screenshot {
   background-image: url(../img/screenshot.png);
@@ -386,8 +426,6 @@ body {
 }
 
 .left-side {
-  position: absolute;
-  left: 0;
   display: inline-block;
   width: 270px;
   vertical-align: top;
@@ -1313,4 +1351,71 @@ li .summary h3 {
   border-radius: 4px;
   margin-bottom: 15px;
   margin-top: 15px;
+}
+
+.modal.fancy {
+  animation: bounce 0.2s linear;
+  -webkit-animation: bounce 0.2s linear;
+}
+
+@-webkit-keyframes bounce {
+  0% {
+    -webkit-transform: scale3d(0.1,0.1,1);
+    box-shadow: 0 3px 20px rgba(0,0,0,0.9);
+  }
+  75% {
+    -webkit-transform: scale3d(0.95,0.95,1);
+    box-shadow: 0 0 20px rgba(0,0,0,0.9);
+  }
+  100% {
+    -webkit-transform: scale3d(1,1,1);
+    box-shadow: 0 3px 20px rgba(0,0,0,0.9);
+  }
+}
+
+@-moz-keyframes bounce {
+  0% {
+    -moz-transform: scale3d(0.1,0.1,1);
+    box-shadow: 0 3px 20px rgba(0,0,0,0.9);
+  }
+  75% {
+    -moz-transform: scale3d(0.95,0.95,1);
+    box-shadow: 0 0 20px rgba(0,0,0,0.9);
+  }
+  100% {
+    -moz-transform: scale3d(1,1,1);
+    box-shadow: 0 3px 20px rgba(0,0,0,0.9);
+  }
+}
+
+.sign-up-form {
+  padding-top: 10px;
+}
+
+.sign-up-form .right-side {
+  display: inline-block;
+  width: 360px;
+  vertical-align: top;
+  text-align: left;
+  text-align: 14px;
+  padding: 20px;
+  color: #333;
+}
+
+.sign-up-form .right-side textarea {
+  height: 184px;
+  width: 100%;
+}
+
+.sign-up-form .right-side .btn-blue {
+  float: right;
+}
+
+.sign-up-form .left-side input {
+  width: 100%;
+  height: 42px;
+}
+
+.sign-up-form label {
+  display: inline-block;
 }

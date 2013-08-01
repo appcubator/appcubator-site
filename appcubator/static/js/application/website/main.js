@@ -1,13 +1,32 @@
 require.config({
   paths: {
     "jquery" : "../../libs/jquery/jquery",
+    "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
+    "jquery.filedrop" : "../../libs/jquery/jquery.filedrop",
+    "jquery.hotkeys" : "../../libs/jquery/jquery.hotkeys",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
+    "heyoffline": "../../libs/heyoffline",
     "util" : "../../libs/util/util",
+    "util.filepicker" : "../../libs/util/util.filepicker",
+    "comp": "../../libs/util/comp",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
-    "app" : "../",
+    "app" : "../main-app",
+    "editor" : "../main-app/editor",
+    "m-editor" : "../main-app/mobile-editor",
+    "dicts" : "../main-app/dicts",
+    "mixins" : "../../mixins",
+    "key" : "../../libs/keymaster/keymaster",
+    "mousetrap" : "../../libs/mousetrap.min",
+    "answer" : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
-    "answer" : "../../libs/answer/answer"
+    "list" : "../../libs/list",
+    "snap" : "../../libs/snap.min",
+    "tourist": "../../libs/tourist.min",
+    "models" : "../data/models",
+    "collections" : "../data/collections",
+    "tutorial" : "../tutorial",
+    "xrayquire" : "../../libs/xrayquire"
   },
 
   shim: {
@@ -30,7 +49,8 @@ require([
   'backbone',
   'answer',
   'util',
-  'prettyCheckable'
+  'prettyCheckable',
+  'mixins/BackboneConvenience'
 ],
 function(HomepageView) {
 
