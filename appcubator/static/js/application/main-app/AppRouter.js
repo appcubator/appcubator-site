@@ -282,6 +282,7 @@ define([
 
             // for now, no difference
             var notFoundHandler = hardErrorHandler;
+            v1.disableSave = true;
 
             $.ajax({
                 type: "POST",
