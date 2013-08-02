@@ -1,0 +1,90 @@
+{% extends "infra-out-html.html" %}
+
+{% block css %}
+<script type="text/javascript" src="https://platform.linkedin.com/in.js">
+api_key: etouje3xl27v
+scope: r_fullprofile r_emailaddress
+</script>
+<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
+{% endblock %}
+{% block page %}
+<div id="fb-root"></div>
+<script>
+</script>
+{% include "website-leftpanel.html" %}
+
+<div class="fixed-bg hn" id="bg4"></div>
+<div class="fixed-bg hn" id="bg3"></div>
+<div class="fixed-bg hn" id="bg2"></div>
+<div class="fixed-bg hn" id="bg1"></div>
+
+<div class="sliding-panel hn">
+  <div class="slide1 hn">
+    <div class="large-text">
+      The Easiest Way to Prototype Web Apps
+    </div>
+    <div class="large-container">
+      <div class="explanation">
+        <div class="row">
+          <span>
+            <span class="title">We want to hear from you.</span>
+             <p>It takes a lot of time and effort to build the backend and frontend of a simple CRUD web application. We built Appcubator so you can quickly draft your web application without an in depth knowledge of web development.</p>
+              <ul>
+                <li>Define relational database tables</li>
+                <li>Drag and drop web page editor</li>
+                <li>Built in User Authentication and Admin panel</li>
+                <li>Generates downloadable Django code</li>
+                <li>Easy deployment and hosting</li>
+              </ul>
+              <p class="footer-txt">We have a lot more to build and integrate, but we would like to know what you think. Please give us your feedback.</p>
+          </span>
+        </div>
+      </div>
+      <form class="sign-up-form" method="POST" id="signup" action="{% url gwc_signup_form %}">
+        <div class="left-side">
+          <span class="title">Signup Here</span>
+          <input type="text" name="name" id="inp-name" placeholder="Full Name">
+          <div class="form-error field-name-first_name"></div>
+
+          <input type="text" name="email" id="inp-email" placeholder="Email">
+          <div class="form-error field-name-email"></div>
+          <div class="form-error field-name-username"></div>
+
+          <input type="hidden" name="extra-info" id="inp-extra" value="-">
+
+          <input type="password" name="password1" id="inp-name" placeholder="Password">
+          <div class="form-error field-name-password1"></div>
+
+          <input type="password" name="password2" id="inp-email" placeholder="Confirm Password">
+          <div class="form-error field-name-password2"></div>
+
+          <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
+          <input style="margin-top:10px;" type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
+        </div>
+      </form>
+    </div>
+    <div class="gray-bg  slide-info">
+      See How <span class="icon-down"></span>
+    </div>
+  </div>
+  <div class="slide2 hn slide">
+
+    <div class="video">
+      <div class="title">Building a Sample Shared Economy Site</div>
+      <div style="display: block; height:550px; width: 100%; margin-top: 5px; overflow:hidden; border-radius: 4px;" id="video-pane">
+      </div>
+      <a class="link" href="http://ilter-ourbnb.appcubator.com/">http://ilter-ourbnb.appcubator.com/</a>
+    </div>
+  </div>
+  <div class="footer">
+   <span>Appcubator © 2013</span> • <a href="/aboutus">About Us</a> • <a href="/termsofservice">Privacy</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script data-main="{{ STATIC_URL }}js/application/external-pages/hn-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+{% endblock %}

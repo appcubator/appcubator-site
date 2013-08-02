@@ -99,6 +99,16 @@ def showhnpage(request):
     return render(request, 'website-showhn.html', page_context)
 
 @require_GET
+def showgwcpage(request):
+    if request.user.is_authenticated():
+        return redirect('/app/')
+
+    page_context = {}
+    page_context["title"] = "Homepage"
+
+    return render(request, 'website-showgwc.html', page_context)
+
+@require_GET
 def showdnpage(request):
     if request.user.is_authenticated():
         return redirect('/app/')
@@ -240,14 +250,17 @@ def signup_new_customer(request):
 def signup_from(request, src):
     src_company_map = { 'hn': 'Hacker News',
                         'dn': 'Design News',
+                        'gwc': 'Girls who code',
                         'gsb': 'GSB' }
 
     src_description_map = { 'hn': 'HN launch',
                             'dn': 'DN launch',
+                            'gwc': 'Referred by Renee',
                             'gsb': 'Turkey training' }
 
     src_template_map = { 'hn': 'website-showhn.html',
                          'dn': 'website-showdn.html',
+                         'gwc': 'website-showgwc.html',
                          'gsb': 'website-showgsb.html' }
 
     if request.method == "GET":
@@ -294,6 +307,11 @@ def signup_from_dn(request):
 @csrf_exempt
 def signup_from_gsb(request):
     return signup_from(request, 'gsb')
+
+@require_http_methods(["GET", "POST"])
+@csrf_exempt
+def signup_from_gwc(request):
+    return signup_from(request, 'gwc')
 
 @login_required
 @csrf_exempt
