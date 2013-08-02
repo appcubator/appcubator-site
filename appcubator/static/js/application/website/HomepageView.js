@@ -53,6 +53,7 @@ function(SignupModalView) {
 
     openSignupForm: function() {
       new SignupModalView();
+      
     }
 
   });

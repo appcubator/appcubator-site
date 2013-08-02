@@ -206,7 +206,7 @@ body {
   margin-bottom: 360px;
 
   -image text-align: left;
-  border-bottom: 1px solid #0f2d40;
+  border-bottom: 2px solid #0f2d40;
   border-top: 8px solid #0f2d40;
 
 }
@@ -673,10 +673,9 @@ img.logo {
 
 .thanks-for-signing {
   display: none;
-  margin-top: 160px;
+  margin-top: 30px;
   padding: 30px;
   padding-top: 40px;
-  background-color: rgba(250, 250, 255, 0.7);
   width: 500px;
   margin-left: auto;
   margin-right: auto;
