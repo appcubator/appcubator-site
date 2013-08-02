@@ -215,7 +215,7 @@ def recent_users(long_ago=timedelta(days=1), limit=10):
         fullName = "%s %s" % (user.first_name, user.last_name)
         num_apps = user.apps.count()
         result.append({'user_id': user_id, 'num_logs': num_logs, 'name': fullName, 'num_apps': num_apps})
-    result.sort(key=lambda x: x['num_logs'])
+    result.sort(key=lambda x: x['num_logs'], reverse=True)
     # limit results to top [limit]
     if len(result) > limit:
         result = result[:10]
@@ -236,7 +236,7 @@ def logs_per_user(limit=10):
         obj['num_apps'] = user.apps.count()
         obj['num_logs'] = num_logs
         result.append(obj)
-    result.sort(key=lambda x: x['num_logs'])
+    result.sort(key=lambda x: x['num_logs'], reverse=True)
     # limit results to top [limit]
     if len(result) > limit:
         result = result[:10]
