@@ -215,6 +215,10 @@ def recent_users(long_ago=timedelta(days=1), limit=10):
         fullName = "%s %s" % (user.first_name, user.last_name)
         num_apps = user.apps.count()
         result.append({'user_id': user_id, 'num_logs': num_logs, 'name': fullName, 'num_apps': num_apps})
+    result.sort(lambda x: x['num_logs'])
+    # limit results to top [limit]
+    if len(result) > limit:
+        result = result[:10]
     return result
 
 # Top [limit] users with most page visits
@@ -222,8 +226,6 @@ def logs_per_user(limit=10):
     users = LogAnything.objects\
                 .exclude(user_id=None)\
                 .values_list('user_id', flat=True).distinct()
-    if len(users) > limit:
-        users = users[:10]
     result = []
     for user_id in users:
         user = ExtraUserData.objects.get(user__id=long(user_id)).user
@@ -234,6 +236,10 @@ def logs_per_user(limit=10):
         obj['num_apps'] = user.apps.count()
         obj['num_logs'] = num_logs
         result.append(obj)
+    result.sort(lambda x: x['num_logs'])
+    # limit results to top [limit]
+    if len(result) > limit:
+        result = result[:10]
     return result
 
 def avg_deployment_time():
