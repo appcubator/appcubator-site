@@ -1,6 +1,15 @@
 {% extends "infra-html.html" %}
 
 {% block css %}
+<link rel="stylesheet/less" href="{{ STATIC_URL }}css/designer.less">
+<script>
+less = {
+  env: 'development',
+  relativeUrls: true,
+  dumpLineNumbers: 'mediaQuery'
+};
+</script>
+<script src="{{ STATIC_URL }}js/libs/less.min.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block topbar %}
@@ -17,15 +26,15 @@
     <h2 class="hi4 span40">Current Themes</h2>
     <ul id="themes-list">
       {% for theme in themes %}
-      <li class="hoff1 span10">
+      <li class="hoff1 offsetr2 span10 theme-thumb">
         <a href="/theme/{{ theme.pk }}/">
           <h3>{{ theme.name }}</h3>
           <div>
             <img src="{{theme.image}}">
           </div>
-          <form class="hoff1" method="POST" action="/theme/{{theme.pk}}/delete/">
+          <form method="POST" action="/theme/{{theme.pk}}/delete/">
             {% csrf_token %}
-            <input type="submit"  class="btn btn-danger" value="Delete">
+            <input type="submit"  class="btn btn-danger btn-mini btn-block" value="Delete">
           </form>
         </a>
       </li>
