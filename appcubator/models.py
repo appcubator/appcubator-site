@@ -131,11 +131,9 @@ class App(models.Model):
         self._state_json = simplejson.dumps(val)
 
     def set_test_state(self):
-        f = open(os.path.join(DEFAULT_STATE_DIR, "test_state.json"))
-        s = f.read()
-        simplejson.loads(s)
-        f.close()
-        self.set_state(s)
+        with open(os.path.join(DEFAULT_STATE_DIR, "test_state.json")) as f:
+            s = simplejson.load(f)
+            self.state = s
 
     state = property(get_state, set_state)
 
@@ -297,9 +295,12 @@ class App(models.Model):
                 result['errors'] = response_content['errors']
             result['site_url'] = self.url()
 
-            syncdb_data = [ u for u in response_content['script_results'] if 'syncdb.py' in u['script'] ][0]
-            if u'value to use for existing rows' in syncdb_data['stderr']:
-                assert False, "Migration needs help!!!"
+            try:
+                syncdb_data = [ u for u in response_content['script_results'] if 'syncdb.py' in u['script'] ][0]
+                if u'value to use for existing rows' in syncdb_data['stderr']:
+                    assert False, "Migration needs help!!!"
+            except IndexError:
+                pass # this is the fast_deploy case
 
             return result
 

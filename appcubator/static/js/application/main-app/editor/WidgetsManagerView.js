@@ -49,6 +49,11 @@ function( WidgetView,
       this.widgetSelectorView.setElement(this.widgetsContainer).render();
     },
 
+    addWidgets: function(arrWidgets) {
+      widget.setupPageContext(v1State.getCurrentPage());
+      var newWidgetView = this.placeUIElement(widget, false);
+    },
+
     // this function decides if widget or container
     placeUIElement: function(model, isNew) {
       model.setupPageContext(v1State.getCurrentPage());

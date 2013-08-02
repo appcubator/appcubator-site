@@ -30,8 +30,6 @@ function() {
 
     },
 
-    
-
     var xTrans = -30;
     var yTrans = 45;
 

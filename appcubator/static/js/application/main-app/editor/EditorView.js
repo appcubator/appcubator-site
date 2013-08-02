@@ -74,6 +74,10 @@ function( PageModel,
 
       keyDispatcher.bindComb('meta+z', redoController.redo);
       keyDispatcher.bindComb('ctrl+z', redoController.redo);
+      keyDispatcher.bindComb('meta+c', this.copy);
+      keyDispatcher.bindComb('ctrl+c', this.copy);
+      keyDispatcher.bindComb('meta+v', this.paste);
+      keyDispatcher.bindComb('ctrl+v', this.paste);
 
       g_guides = this.guides;
 
@@ -135,13 +139,27 @@ function( PageModel,
     },
 
     copy: function(e) {
-      //if(this.widgetsManager.copy()) { }
+      if(this.marqueeView.multiSelectorView.contents.length) {
+        this.contents = [];
+        _(this.marqueeView.multiSelectorView.contents).each(function(model) {
+          this.contents.push(model.toJSON());
+        }, this);
+      }
+      else if(this.widgetsManager.widgetSelectorView.selectedEl){
+        this.contents = [];
+        this.contents.push(this.widgetsManager.widgetSelectorView.selectedEl.toJSON());
+      }
     },
 
     paste: function(e) {
-      if(this.widgetsManager.paste()){
-        e.stopPropagation();
-      }
+      if(!this.contents) return;
+
+      _(this.contents).each(function(cont) {
+        cont.layout.left++;
+        cont.layout.top++;
+        cont.layout.top++;
+      });
+      this.widgetsCollection.add(this.contents);
     },
 
     deploy: function(options) {

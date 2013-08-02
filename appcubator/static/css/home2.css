@@ -206,7 +206,7 @@ body {
   margin-bottom: 360px;
 
   -image text-align: left;
-  border-bottom: 1px solid #0f2d40;
+  border-bottom: 2px solid #0f2d40;
   border-top: 8px solid #0f2d40;
 
 }
@@ -320,7 +320,7 @@ body {
   border: 3px solid #0f2d40;
   animation: blurp 0.2s linear;
   -webkit-animation: blurp 0.2s linear;
-  -webkit-transform: scale(1.1);
+  -webkit-transform: scale(1.15);
 }
 
 @keyframes blurp {
@@ -329,11 +329,11 @@ body {
   }
 
   45% {
-    -webkit-transform: scale(1.15);
+    -webkit-transform: scale(1.2);
   }
 
   100% {
-    -webkit-transform: scale(1.1);
+    -webkit-transform: scale(1.15);
   }
 }
 
@@ -343,11 +343,11 @@ body {
   }
 
   45% {
-    -webkit-transform: scale(1.15);
+    -webkit-transform: scale(1.2);
   }
 
   100% {
-    -webkit-transform: scale(1.1);
+    -webkit-transform: scale(1.15);
   }
 }
 
@@ -357,23 +357,34 @@ body {
   }
 
   45% {
-    -webkit-transform: scale(1.15);
+    -webkit-transform: scale(1.2);
   }
 
   100% {
-    -webkit-transform: scale(1.1);
+    -webkit-transform: scale(1.15);
   }
 }
 
 
 
 .slide-gallery .gallery li .screenshot {
-  background-image: url(../img/screenshot.png);
-  background-repeat: no-repeat;
+/*  background-image: url(../img/screenshot.png);
+*/  background-repeat: no-repeat;
   background-size: 100% auto;
   display: inline-block;
   width: 240px;
-  height: 240px;
+  height: 160px;
+}
+
+.gallery li .content p {
+  opacity: 0;
+  font-size: 10px;
+  padding: 0 8px;
+  transition: opacity 0.2s  ease-in;
+  -webkit-transition: opacity 0.2s  ease-in;
+}
+.gallery li .content:hover p {
+  opacity: 1;
 }
 
 .slide-info .explanation {
@@ -668,10 +679,9 @@ img.logo {
 
 .thanks-for-signing {
   display: none;
-  margin-top: 160px;
+  margin-top: 30px;
   padding: 30px;
   padding-top: 40px;
-  background-color: rgba(250, 250, 255, 0.7);
   width: 500px;
   margin-left: auto;
   margin-right: auto;
