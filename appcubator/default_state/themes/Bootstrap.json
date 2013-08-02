@@ -147,7 +147,7 @@
   ],
   "headerTexts": [
     {
-      "style": "font-size: 32px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+      "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
       "isSingle": false,
       "content_attribs": null,
       "hoverStyle": "",
@@ -157,7 +157,7 @@
       "activeStyle": ""
     },
     {
-      "style": "font-size: 60px;\nline-height: 1;\nletter-spacing: -1px;\ncolor: inherit;\nfont-weight: bold;\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+      "style": "font-size: 60px;\nline-height: 64px;\nletter-spacing: -1px;\ncolor: inherit;\nfont-weight: bold;\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
       "isSingle": false,
       "content_attribs": null,
       "hoverStyle": "",
@@ -167,7 +167,7 @@
       "activeStyle": ""
     },
     {
-      "style": "font-size: 32px;\nfont-weight: lighter;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\nline-height: 40px;",
+      "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: lighter;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\nline-height: 40px;",
       "isSingle": false,
       "content_attribs": null,
       "hoverStyle": "",
