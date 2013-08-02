@@ -226,7 +226,7 @@ define([
             });
         },
 
-        save: function(e) {
+        save: function(e, callback) {
             if(v1.disableSave === true) return;
             if(appId === 0) return;
 
