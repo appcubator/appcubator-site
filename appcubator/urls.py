@@ -23,16 +23,21 @@ urlpatterns = patterns('',
     url(r'^login/$',                    django.contrib.auth.views.login, {'template_name' : 'registration/login_page.html'}),
     url(r'^logout/$',                   django.contrib.auth.views.logout, {"next_page":"/"}),
     url(r'^connect_with/$',             base_views.get_linkedin),
-    url(r'^signup/$',                   base_views.signup),
     url(r'^termsofservice/$',           base_views.terms_of_service),
     url(r'^faq/$',                      base_views.faq),
     url(r'^account/$',                  base_views.account),
     url(r'^ping/$',                     base_views.ping),
     url(r'^whatisthis/$',               base_views.marketing),
+
+    # only creates beta invite
     url(r'^signup_form/$',              base_views.signup_new_customer),
-    url(r'^signup_hn_form/$',           base_views.signup_hn_customer),
-    url(r'^signup_dn_form/$',           base_views.signup_dn_customer),
-    url(r'^signup_gsb_form/$',          base_views.signup_gsb_customer),
+    # actually signs up.
+    url(r'^signup/$',                   base_views.signup),
+    # actually signs up, stores source info
+    url(r'^signup_hn_form/$',           base_views.signup_from_hn, name='hn_signup_form'),
+    url(r'^signup_dn_form/$',           base_views.signup_from_dn, name='dn_signup_form'),
+    url(r'^signup_gsb_form/$',          base_views.signup_from_gsb, name='gsb_signup_form'),
+
     url(r'^send_invitation/(\d+)/$',    base_views.send_invitation_to_customer),
     url(r'^backend/',                   include('app_builder.urls')),
     url(r'^payments/',                  include('appcubator.payments.urls')),

@@ -43,7 +43,7 @@ scope: r_fullprofile r_emailaddress
           </span>
         </div>
       </div>
-      <form class="sign-up-form" method="POST" id="signup" action="{% url appcubator.base_views.signup_hn_customer %}">
+      <form class="sign-up-form" method="POST" id="signup" action="{% url hn_signup_form %}">
         <div class="left-side">
           <span class="title">Signup Here</span>
           <input type="text" name="name" id="inp-name" placeholder="Full Name">
