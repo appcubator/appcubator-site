@@ -34,21 +34,23 @@ less = {
           </div>
           <form method="POST" action="/theme/{{theme.pk}}/delete/">
             {% csrf_token %}
-            <input type="submit"  class="btn btn-danger btn-mini btn-block" value="Delete">
+            <input type="submit"  class="btn btn-danger btn-mini" value="Delete">
           </form>
         </a>
       </li>
       {% endfor %}
     </ul>
-    <div class="hi5 hoff1 span40 pane border create-theme">
-      <div class="create-theme-text">+ Create a new theme</div>
+    <div class="hi8 span36 hoff2 pane create-theme pane">
+      <h2 class="create-theme-text">+ New Theme</h2>
+      <img src="{{ STATIC_URL }}img/add.png" class="span3 add-img">
       <form class="create-form hi3 hoff1 span36" style="display:none;"><input type="text" placeholder="Name of the theme" class="theme-name"><input type="submit" class="btn" value="Create"></form>
     </div>
-
+    <!--
      <div class="hi5 hoff1 span40 pane border create-mobile-theme">
       <div class="create-mobile-theme-text">+ Create a mobile theme</div>
       <form class="create-mobile-form hi3 hoff1 span36" style="display:none;"><input type="text" placeholder="Name of the theme" class="theme-name"><input type="submit" class="btn" value="Create"></form>
     </div>
+    -->
   </div>
 
 </div>
