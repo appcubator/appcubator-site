@@ -214,6 +214,8 @@ def marketing(request):
 
 
 class NewCustomerForm(forms.ModelForm):
+    extra_info = forms.CharField(max_length=255, required=False)
+    project_description = forms.CharField(max_length=255, required=False)
     class Meta:
         model = Customer
         fields = ('name', 'email', 'company', 'extra_info', 'consulting', 'project_description', 'sign_up_fee')
@@ -276,7 +278,7 @@ def signup_from(request, src):
             c.save()
             return HttpResponse("")
         else:
-            return HttpResponse(simplejson.dumps(dict(user_form.errors.items() + cust_form.errors.items())), mimetype="application/json")
+            return HttpResponse(simplejson.dumps(dict(user_form.errors.items() + cust_form.errors.items())), mimetype="application/json", status=400)
 
 @require_http_methods(["GET", "POST"])
 @csrf_exempt
