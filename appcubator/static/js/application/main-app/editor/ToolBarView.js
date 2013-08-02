@@ -61,15 +61,9 @@ function(PageModel) {
       v1State.get('pages').push(pageModel);
 
       var self = this;
-      $.ajax({
-        type: "POST",
-        url: '/app/'+appId+'/state/',
-        data: JSON.stringify(v1State.toJSON()),
-        complete: function() {
-          $('<li class="go-to-page" id="page-'+pageInd+'"><a>'+name+'</a></li>').insertBefore($('#page-list').find(".new-page"));
+      v1.save(null, function() {
+        $('<li class="go-to-page" id="page-'+pageInd+'"><a>'+name+'</a></li>').insertBefore($('#page-list').find(".new-page"));
           self.expandPages();
-        },
-        dataType: "JSON"
       });
     },
 

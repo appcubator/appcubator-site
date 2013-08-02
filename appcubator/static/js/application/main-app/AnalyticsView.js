@@ -37,7 +37,7 @@ function(SimpleModalView) {
 
     renderData: function(data) {
       var self = this;
-      clearTimeout(this.updateInterval);
+      //clearTimeout(this.updateInterval);
       document.getElementsByClassName('total-users')[0].innerHTML = data.total_users || 0;
       document.getElementsByClassName('total-visitors')[0].innerHTML = data.total_visitors || 0;
       document.getElementsByClassName('total-active-users')[0].innerHTML = data.total_active_users || 0;
@@ -50,7 +50,7 @@ function(SimpleModalView) {
         }
       }
       document.getElementsByClassName('total-page-views')[0].innerHTML = total_page_views;
-      this.updateInterval = setTimeout(this.fetchInfo, 10000);
+      //this.updateInterval = setTimeout(this.fetchInfo, 10000);
     },
 
     fetchInfo: function() {
@@ -70,7 +70,7 @@ function(SimpleModalView) {
     },
 
     close: function() {
-      clearTimeout(this.updateInterval);
+      //clearTimeout(this.updateInterval);
     }
 
   });

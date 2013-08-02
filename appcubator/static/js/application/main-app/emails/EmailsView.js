@@ -112,15 +112,7 @@ function(EmailCollection, EmailModel, EmailView) {
     },
 
     saveEmails: function(e) {
-      appState.emails = this.collection.toJSON();
-
-      $.ajax({
-        type: "POST",
-        url: '/app/'+appId+'/state/',
-        data: JSON.stringify(v1State),
-        success: function() {},
-        dataType: "JSON"
-      });
+      v1.save();
     },
 
     showActiveEmail: function(model) {
