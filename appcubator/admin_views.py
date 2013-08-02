@@ -29,14 +29,17 @@ from django.core.serializers.json import DjangoJSONEncoder
 @user_passes_test(lambda u: u.is_superuser)
 def admin_home(request):
     page_context = {}
+    now = datetime.utcnow()
+    now = int(time.mktime(now.timetuple()))
+    beginning = datetime(year=2013, month=6, day=26)
+    beginning = int(time.mktime(beginning.timetuple()))
 
     # active users
     page_context["users_today"] = recent_users(long_ago=timedelta(days=1))
     page_context["users_last_week"] = recent_users(long_ago=timedelta(days=7))
-    page_context["users_last_month"] = recent_users(long_ago=timedelta(days=30))
-
-    # Top 10 users with most page visits
     page_context["most_active_users"] = logs_per_user()
+    page_context['active_users'] = active_users_json(request, beginning, now, 'day').content
+    page_context['user_signups'] = user_signups_json(request).content
 
     # deployed apps stats
     page_context["avg_deployment_time"] = avg_deployment_time()
@@ -200,31 +203,38 @@ def active_users_json(request, t_start, t_end, t_delta):
 def recent_users(long_ago=timedelta(days=1), limit=10):
     today = timezone.now().date()
     time_ago = today - long_ago
-    logs = get_logs({'end': time_ago, 'name': 'visited page'})\
-        .exclude(user_id=None)\
-        .values('user_id').distinct()\
-        .annotate(num_logs=Count('user_id'))\
-        .order_by('-num_logs')
-    for log in logs:
-        user_id = log["user_id"]
-        log["user"] = ExtraUserData.objects.get(user_id=user_id)
-        log["name"] = log["user"].user.first_name + " " + log["user"].user.last_name
-        log["num_apps"] = log["user"].user.apps.count()
-    if(len(logs) > limit):
-        logs = logs[:limit]
-    return logs
+    users = LogAnything.objects.filter(timestamp__gte=time_ago)\
+            .exclude(user_id=None)\
+            .values_list('user_id', flat=True).distinct()
+    if len(users) > limit:
+        users = users[:limit]
+    result = []
+    for user_id in users:
+        user = ExtraUserData.objects.get(user__id=long(user_id)).user
+        num_logs = LogAnything.objects.filter(timestamp__gte=time_ago, user_id=user_id).count()
+        fullName = "%s %s" % (user.first_name, user.last_name)
+        num_apps = user.apps.count()
+        result.append({'user_id': user_id, 'num_logs': num_logs, 'name': fullName, 'num_apps': num_apps})
+    return result
 
-# Top 10 users with most page visits
-def logs_per_user():
-    page_visits = LogAnything.objects.filter(name='visited page').exclude(user_id=None)
-    logs_per_user = page_visits.values('user_id').annotate(num_logs=Count('user_id')).order_by('-num_logs')
-    if len(logs_per_user) > 10:
-        logs_per_user = logs_per_user[:10]
-    for x in logs_per_user:
-        user_id = x["user_id"]
-        x["user"] = ExtraUserData.objects.get(user_id=user_id)
-        x["num_apps"] = x["user"].user.apps.count()
-    return logs_per_user
+# Top [limit] users with most page visits
+def logs_per_user(limit=10):
+    users = LogAnything.objects\
+                .exclude(user_id=None)\
+                .values_list('user_id', flat=True).distinct()
+    if len(users) > limit:
+        users = users[:10]
+    result = []
+    for user_id in users:
+        user = ExtraUserData.objects.get(user__id=long(user_id)).user
+        num_logs = LogAnything.objects.filter(user_id=user_id).count()
+        obj = {}
+        obj['user_id'] = user_id
+        obj['user'] = user
+        obj['num_apps'] = user.apps.count()
+        obj['num_logs'] = num_logs
+        result.append(obj)
+    return result
 
 def avg_deployment_time():
     deploy_logs_data = [log.data_json for log in get_logs({'name': "deployed app"})]
