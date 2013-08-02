@@ -269,10 +269,11 @@ def signup_from(request, src):
             user = user_form.save()
             c = cust_form.save(commit=False)
             c.sent_welcome_email = True
-            c.save()
             new_user = authenticate(username=req['email'],
                                     password=req['password1'])
             login(request, new_user)
+            c.user_id = new_user.id
+            c.save()
             return HttpResponse("")
         else:
             return HttpResponse(simplejson.dumps(dict(user_form.errors.items() + cust_form.errors.items())), mimetype="application/json")
