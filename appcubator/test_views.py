@@ -23,131 +23,86 @@ import subprocess
 import os
 
 
-def test_editor(request):
-	#find/create test user
-	try:
-		test_user = User.objects.get(username="!@TEST__USER@!")
-	except User.DoesNotExist:
-		test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
-	finally:
-		#delete all apps for user
-		App.objects.filter(owner=test_user).delete()
-		#create new test app
-		app_name = "!@TEST__APP@! %s" % time.time()
-		test_app = App(name=app_name, owner=test_user)
-		test_app.set_test_state()
-		test_app.save()
-		test_data = {
-			'app': test_app,
-			'app_id': long(test_app.id),
-			'user': test_user,
-			'themes': [],
-			'mobile_themes': [],
-			'statics': []
-		}
-		return render(request, 'tests/editor-SpecRunner.html', test_data)
+def run_with_test_app(f):
+    def ret_fun(request, *args, **kwargs):
+        test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
+        try:
+            #create new test app
+            app_name = "!@TEST__APP@! %s" % time.time()
+            test_app = App(name=app_name, owner=test_user)
+            test_app.set_test_state()
+            test_app.save()
+            # call the wrapped function with the test app
+            r = f(request, test_app, *args, **kwargs)
+        finally:
+            test_user.delete()
+        return r
+    return ret_fun
 
-def test_tables(request):
-	#find/create test user
-	try:
-		test_user = User.objects.get(username="!@TEST__USER@!")
-	except User.DoesNotExist:
-		test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
-	finally:
-		#delete all apps for user
-		App.objects.filter(owner=test_user).delete()
-		#create new test app
-		app_name = "!@TEST__APP@! %s" % time.time()
-		test_app = App(name=app_name, owner=test_user)
-		test_app.set_test_state()
-		test_app.save()
-		test_data = {
-			'app': test_app,
-			'app_id': long(test_app.id),
-			'user': test_user,
-			'themes': [],
-			'mobile_themes': [],
-			'statics': []
-		}
-		return render(request, 'tests/tables-SpecRunner.html', test_data)
+@run_with_test_app
+def test_editor(request, test_app):
+    test_data = {
+        'app': test_app,
+        'app_id': long(test_app.id),
+        'user': test_app.owner,
+        'themes': [],
+        'mobile_themes': [],
+        'statics': []
+    }
+    return render(request, 'tests/editor-SpecRunner.html', test_data)
 
-def test_formeditor(request):
-	#find/create test user
-	try:
-		test_user = User.objects.get(username="!@TEST__USER@!")
-	except User.DoesNotExist:
-		test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
-	finally:
-		#delete all apps for user
-		App.objects.filter(owner=test_user).delete()
-		#create new test app
-		app_name = "!@TEST__APP@! %s" % time.time()
-		test_app = App(name=app_name, owner=test_user)
-		test_app.set_test_state()
-		test_app.save()
-		test_data = {
-			'app': test_app,
-			'app_id': long(test_app.id),
-			'user': test_user,
-			'themes': [],
-			'mobile_themes': [],
-			'statics': []
-		}
-		return render(request, 'tests/formeditor-SpecRunner.html', test_data)
+@run_with_test_app
+def test_tables(request, test_app):
+    test_data = {
+        'app': test_app,
+        'app_id': long(test_app.id),
+        'user': test_app.owner,
+        'themes': [],
+        'mobile_themes': [],
+        'statics': []
+    }
+    return render(request, 'tests/tables-SpecRunner.html', test_data)
 
+@run_with_test_app
+def test_formeditor(request, test_app):
+    test_data = {
+        'app': test_app,
+        'app_id': long(test_app.id),
+        'user': test_app.owner,
+        'themes': [],
+        'mobile_themes': [],
+        'statics': []
+    }
+    return render(request, 'tests/formeditor-SpecRunner.html', test_data)
 
-def test_thirdpartyforms(request):
-	#find/create test user
-	try:
-		test_user = User.objects.get(username="!@TEST__USER@!")
-	except User.DoesNotExist:
-		test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
-	finally:
-		#delete all apps for user
-		App.objects.filter(owner=test_user).delete()
-		#create new test app
-		app_name = "!@TEST__APP@! %s" % time.time()
-		test_app = App(name=app_name, owner=test_user)
-		test_app.set_test_state()
-		test_app.save()
-		test_data = {
-			'app': test_app,
-			'app_id': long(test_app.id),
-			'user': test_user,
-			'themes': [],
-			'mobile_themes': [],
-			'statics': []
-		}
-		return render(request, 'tests/thirdpartyformeditors.html', test_data)
+@run_with_test_app
+def test_thirdpartyforms(request, test_app):
+    test_data = {
+        'app': test_app,
+        'app_id': long(test_app.id),
+        'user': test_app.owner,
+        'themes': [],
+        'mobile_themes': [],
+        'statics': []
+    }
+    return render(request, 'tests/thirdpartyformeditors.html', test_data)
 
 
 def test_data(request):
     return render(request, 'tests/data-SpecRunner.html', {})
 
 
-def test_router(request):
-	#find/create test user
-	try:
-		test_user = User.objects.get(username="!@TEST__USER@!")
-	except User.DoesNotExist:
-		test_user = User.objects.create_user("!@TEST__USER@!", "!@TEST__USER@!@gmail.com", "!@TEST__USER@!")
-	finally:
-		#delete all apps for user
-		App.objects.filter(owner=test_user).delete()
-		#create new test app
-		app_name = "!@TEST__APP@! %s" % time.time()
-		test_app = App(name=app_name, owner=test_user)
-		test_app.set_test_state()
-		test_app.save()
-		test_data = {
-			'app': test_app,
-			'app_id': long(test_app.id),
-			'user': test_user,
-			'themes': [],
-			'mobile_themes': [],
-			'statics': []
-		}
-		return render(request, 'tests/router-SpecRunner.html', test_data)
+@run_with_test_app
+def test_router(request, test_app):
+    test_data = {
+        'app': test_app,
+        'app_id': long(test_app.id),
+        'user': test_app.owner,
+        'themes': [],
+        'mobile_themes': [],
+        'statics': []
+    }
+    return render(request, 'tests/router-SpecRunner.html', test_data)
 
 
 @csrf_exempt
