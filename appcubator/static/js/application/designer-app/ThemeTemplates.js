@@ -30,8 +30,8 @@ ThemeTemplates.tempCreate = [
 ].join('\n');
 
 ThemeTemplates.tempFont = [
-  '<li class="row hi5">',
+  '<li class="row hi4">',
     '<button class="span6 btn btn-small btn-danger remove" data-cid="<%= cid %>">Remove</button>',
-    '<span class="span18 offset1 font" style="font-family:<%= font %>"><%= font %></span>',
+    '<span class="span18 offset2 font" style="font-family:<%= font %>"><%= font %></span>',
   '</li>'
 ].join('\n');

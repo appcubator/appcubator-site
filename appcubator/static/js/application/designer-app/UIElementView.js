@@ -51,11 +51,11 @@ function(UIElementEditingView) {
 
     reRenderStyleTags: function(e) {
       var styleTag = document.getElementById(this.model.cid + '-' + 'style');
-      styleTag.innerHTML = '.' +this.model.get('class_name') + '{' + this.model.get('style')  + '}';
+      styleTag.innerHTML = '#' +this.model.get('class_name') + '{' + this.model.get('style')  + '}';
       var hoverTag = document.getElementById(this.model.cid + '-' + 'hover-style');
-      hoverTag.innerHTML = '.' +this.model.get('class_name') + ':hover {' + this.model.get('hoverStyle')  + '}';
+      hoverTag.innerHTML = '#' +this.model.get('class_name') + ':hover {' + this.model.get('hoverStyle')  + '}';
       var activeTag = document.getElementById(this.model.cid + '-' + 'active-style');
-      activeTag.innerHTML = '.' +this.model.get('class_name') + ':active {' + this.model.get('activeStyle')  + '}';
+      activeTag.innerHTML = '#' +this.model.get('class_name') + ':active {' + this.model.get('activeStyle')  + '}';
     },
 
     renderStyle: function() {

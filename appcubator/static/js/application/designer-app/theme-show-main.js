@@ -61,4 +61,6 @@ function(ThemeEditView, ThemeModel, KeyDispatcher) {
   keyDispatcher  = new KeyDispatcher();
   var themeModel = new ThemeModel(themeState);
   var galleryView = new ThemeEditView(themeModel);
+  keyDispatcher.bindComb('meta+s', galleryView.save);
+  keyDispatcher.bindComb('ctrl+s', galleryView.save);
 });

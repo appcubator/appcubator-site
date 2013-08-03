@@ -15,7 +15,7 @@ define([
       'click #save'        : 'save',
       'click .expandible'  : 'expandSection',
       'keyup #base-css'    : 'baseChanged',
-      'keyup #fonts-editor'       : 'fontsChaged',
+      'keyup #fonts-editor'       : 'fontsChanged',
       'click #create-page' : 'pageCreateClicked',
       'submit .create-page-form' : 'pageCreateSubmitted',
       'click #upload-static' : 'uploadStatic'
@@ -76,6 +76,24 @@ define([
 
       this.initFonts();
 
+      _(statics).each(function(file) {
+        util.get('statics-cont').innerHTML += '<img width="100" src="'+ file.url +'">' + file.name;
+      });
+    },
+
+    initFonts: function() {
+      var self = this;
+      var fontStyles = document.createElement('style');
+      fontStyles.type="text/css";
+
+      // add font to page style, and to font list
+      this.model.get('fonts').each(function(font) {
+        fontStyles.innerHTML += '@import url("http://fonts.googleapis.com/css?family='+font.get('name')+':400,700,900,400italic");\n';
+        $('#fonts-cont .fonts').append(_.template(ThemeTemplates.tempFont, { font: font.get('name').replace(/\+/g, ' '), cid: font.cid }));
+      });
+      document.body.appendChild(fontStyles);
+
+      // setup font event handlers
       $('.font-selector').fontselect().change(function() {
         var value = $(this).val();
         if(self.model.get('fonts').where({name: value}).length > 0) {
@@ -93,25 +111,6 @@ define([
         console.log(self.model.get('fonts').toJSON());
         $(e.currentTarget).parent().remove();
       });
-
-      _(statics).each(function(file) {
-        util.get('statics-cont').innerHTML += '<img width="100" src="'+ file.url +'">' + file.name;
-      });
-
-      keyDispatcher.bindComb('meta+s', function(e){ self.save(); e.preventDefault(); });
-    },
-
-    initFonts: function() {
-      var fontStyles = document.createElement('style');
-      fontStyles.type="text/css";
-
-      //add font to page style, and to font list
-      this.model.get('fonts').each(function(font) {
-        fontStyles.innerHTML += '@import url("http://fonts.googleapis.com/css?family='+font.get('name')+':400,700,900,400italic");\n';
-        $('#fonts-cont .fonts').append(_.template(ThemeTemplates.tempFont, { font: font.get('name').replace(/\+/g, ' '), cid: font.cid }));
-      });
-
-      document.body.appendChild(fontStyles);
     },
 
     baseChanged: function(e) {
@@ -159,7 +158,7 @@ define([
       this.model.set('basecss', currentCSS);
     },
 
-    fontsChaged: function(e) {
+    fontsChanged: function(e) {
       this.model.set('fonts', e.target.value);
     },
 
@@ -210,7 +209,8 @@ define([
       // self.model.get('content_attribs').set('src', _.last(files).url);
     },
 
-    save: function() {
+    save: function(e) {
+      e.preventDefault();
       var json = this.model.toJSON();
       var url;
       if(themeId) { url = '/theme/'+themeId+'/edit/'; }
