@@ -36,7 +36,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Invitation Modal</h3>
           </div>
-          <form method="post" action="/send_invitation/{{ customer.pk }}/">
+          <form class="ksikka-send-invitation" method="post" action="/send_invitation/{{ customer.pk }}/">
           <div class="modal-body">
             <p class="row">
                 <input type="text" class="span10 offset1" placeholder="Subject Line" name="subject"><br  />
@@ -65,5 +65,10 @@
 {% block js %}
 <script type="text/javascript">
   $('#customers').sortableTable({initialColumn: 1})
+  $('form.ksikka-send-invitation').submit(function(){
+    var url = $(this).attr('action');
+    $.post(url, $(this).serialize(), function(d){alert(d);});
+    return false;
+  });
 </script>
 {% endblock %}

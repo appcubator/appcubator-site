@@ -240,9 +240,7 @@ def signup_new_customer(request):
     data['extra_info'] = data.get('extra', '')
     form = NewCustomerForm(data)
     if form.is_valid():
-        c = form.save(commit=False)
-        c.sent_welcome_email = True
-        c.save()
+        c = form.save()
         return HttpResponse("")
 
     return HttpResponse(simplejson.dumps(form.errors), mimetype="application/json", status=400)

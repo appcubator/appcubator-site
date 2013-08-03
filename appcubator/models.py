@@ -534,7 +534,7 @@ class InvitationKeys(models.Model):
         return invitation
 
 class Customer(models.Model):
-    user_id = models.IntegerField(blank=True)
+    user_id = models.IntegerField(blank=True, null=True)
     name = models.TextField()
     email = models.EmailField(max_length=75)
     company = models.TextField()
