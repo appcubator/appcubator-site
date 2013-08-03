@@ -9,6 +9,12 @@ from operator import add
 
 T0 = date(2013, 6, 26)
 
+def mean(arr):
+	return float(sum(arr)) / float(len(arr)) if len(arr) else 0.0
+
+def percentage(part, whole):
+  return 100 * float(part)/float(whole) if whole else 0.0
+
 """
 filter a Query to within a specificed timeframe
 @param query_set: a Django QuerySet
@@ -59,7 +65,7 @@ def unique_user_logs(query_set=None, min=T0, max=datetime.now(), count=False):
 		query = timeframe(LogAnything.objects.all(), min, max)
 	else:
 		query = query_set
-	query = query.values('user_id').distinct()
+	query = query.values_list('user_id', flat=True).distinct()
 	if not count:
 		return query
 	else:
@@ -83,9 +89,31 @@ def avg_deployment_time():
 
     deploy_times = map(get_deploy_time, deploy_times)
     if(len(deploy_times)):
-        return sum(deploy_times) / len(deploy_times)
+        return mean(deploy_times)
     else:
         return 0.0
 
-def percentage(part, whole):
-  return 100 * float(part)/float(whole) if whole else 0.0
+# given a LogAnything QuerySet, return a list of the data attributes, parsed
+# as dictionaries. if attr is specified, return a specific attribute in the data
+def log_data(query_set=None, attr=None):
+	if query_set is None:
+		query_set = LogAnything.objects.all()
+	query_set = query_set.values_list('data', flat=True)
+	data = map(json.loads, query_set)
+	if attr is not None:
+		return [d[attr] for d in data if attr in d]
+	else:
+		return data
+
+# given a queryset of users who have done a walkthrough,
+# find the average last step completed
+def get_avg_last_walkthrough_step(query_set, walkthrough='simple'):
+	max_steps = []
+	for user_id in query_set:
+		if walkthrough is 'simple':
+			logs = get_logs({'user_id': user_id, 'name': 'simple twitter walkthrough step'})
+		else:
+			logs = get_logs({'user_id': user_id, 'name': 'in-depth twitter walkthrough step'})
+		steps = log_data(logs, 'step')
+		max_steps.append(max(steps) if len(steps) else 0)
+	return mean(max_steps)

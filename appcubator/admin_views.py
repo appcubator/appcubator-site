@@ -137,6 +137,8 @@ def admin_walkthroughs(request):
     page_context["p_finished_quicktour"] = percentage(num_finished_quicktour, num_started_quicktour)
     page_context["p_finished_indepth_walkthrough"] = percentage(num_finished_indepth_walkthrough, num_started_indepth_walkthrough)
     page_context["p_finished_simple_walkthrough"] = percentage(num_finished_simple_walkthrough, num_started_simple_walkthrough)
+    page_context['avg_last_step_simple'] = get_avg_last_walkthrough_step(started_simple_walkthrough, 'simple')
+    page_context['avg_last_step_indepth'] = get_avg_last_walkthrough_step(started_indepth_walkthrough, 'in-depth')
     return render(request, 'admin/walkthroughs.html', {'data_json': json.dumps(page_context), 'data': page_context})
 
 @login_required
