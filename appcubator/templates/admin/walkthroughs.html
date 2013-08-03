@@ -1,0 +1,63 @@
+{% extends "admin/admin-base.html" %}
+
+{% block css %}
+<style>
+  .centered {
+    text-align: center;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Walkthrough Stats</h2>
+<hr>
+
+<div class="row">
+  <div class="span4">
+    <div class="well">
+      <h2 class="centered">{{ data.num_started_quicktour }}</h2>
+      <p class="centered">Users who started the Quick Tour</p>
+    </div>
+  </div>
+  <div class="span4">
+    <div class="well">
+      <h2 class="centered">{{ data.num_started_simple_walkthrough }}</h2>
+      <p class="centered">Users who started the simple walkthrough</p>
+    </div>
+  </div>
+  <div class="span4">
+    <div class="well">
+      <h2 class="centered">{{ data.num_started_indepth_walkthrough }}</h2>
+      <p class="centered">Users who started the in-depth walkthrough</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span4">
+    <div class="well">
+      <h2 class="centered">{{ data.p_finished_quicktour }}%</h2>
+      <p class="centered">Quick Tour Completion</p>
+    </div>
+  </div>
+  <div class="span4">
+    <div class="well">
+      <h2 class="centered">{{ data.p_finished_simple_walkthrough }}%</h2>
+      <p class="centered">Simple Walkthrough Completion</p>
+    </div>
+  </div>
+  <div class="span4">
+    <div class="well">
+      <h2 class="centered">{{ data.p_finished_indepth_walkthrough }}%</h2>
+      <p class="centered">In-Depth Walkthrough Completion</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+  var data = {{ data_json|safe }};
+  console.log(data);
+</script>
+{% endblock %}

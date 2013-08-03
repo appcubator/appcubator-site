@@ -25,6 +25,8 @@ import time
 from django.utils import timezone
 from django.core.serializers.json import DjangoJSONEncoder
 
+from appcubator.stats import *
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_home(request):
@@ -106,17 +108,36 @@ def admin_feedback(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_graphs(request):
-    now = datetime.utcnow()
-    now = int(time.mktime(now.timetuple()))
-    beginning = datetime(year=2013, month=6, day=26)
-    beginning = int(time.mktime(beginning.timetuple()))
+def admin_walkthroughs(request):
+    num_users = User.objects.all().count()
+    started_quicktour = unique_user_logs(get_logs({'name': 'started quick tour'}))
+    started_indepth_walkthrough = unique_user_logs(get_logs({'name': 'started in-depth twitter walkthrough'}))
+    started_simple_walkthrough = unique_user_logs(get_logs({'name': 'started simple twitter walkthrough'}))
+    finished_quicktour = unique_user_logs(get_logs({'name': 'finished quick tour'}))
+    finished_indepth_walkthrough = unique_user_logs(get_logs({'name': 'finished in-depth twitter walkthrough'}))
+    finished_simple_walkthrough = unique_user_logs(get_logs({'name': 'finished simple twitter walkthrough'}))
+
+    num_started_quicktour = started_quicktour.count()
+    num_started_indepth_walkthrough = started_indepth_walkthrough.count()
+    num_started_simple_walkthrough = started_simple_walkthrough.count()
+    num_finished_quicktour = finished_quicktour.count()
+    num_finished_indepth_walkthrough = finished_indepth_walkthrough.count()
+    num_finished_simple_walkthrough = finished_simple_walkthrough.count()
+
     page_context = {}
-    page_context["now"] = now
-    page_context["beginning"] = beginning
-    page_context['active_users'] = active_users_json(request, page_context['beginning'], page_context['now'], 'day').content
-    page_context['user_signups'] = user_signups_json(request).content
-    return render(request, 'admin/graphs.html', page_context)
+    page_context["num_started_quicktour"] = num_started_quicktour
+    page_context["num_started_indepth_walkthrough"]  = num_started_indepth_walkthrough
+    page_context["num_started_simple_walkthrough"] = num_started_simple_walkthrough
+    page_context["num_finished_quicktour"] = num_finished_quicktour
+    page_context["num_finished_indepth_walkthrough"] = num_finished_indepth_walkthrough
+    page_context["num_finished_simple_walkthrough"] = num_finished_simple_walkthrough
+    page_context["p_started_quicktour"] = percentage(num_started_quicktour, num_users)
+    page_context["p_started_indepth_walkthrough"] = percentage(num_started_indepth_walkthrough, num_users)
+    page_context["p_started_simple_walkthrough"] = percentage(num_started_simple_walkthrough, num_users)
+    page_context["p_finished_quicktour"] = percentage(num_finished_quicktour, num_started_quicktour)
+    page_context["p_finished_indepth_walkthrough"] = percentage(num_finished_indepth_walkthrough, num_started_indepth_walkthrough)
+    page_context["p_finished_simple_walkthrough"] = percentage(num_finished_simple_walkthrough, num_started_simple_walkthrough)
+    return render(request, 'admin/walkthroughs.html', {'data_json': json.dumps(page_context), 'data': page_context})
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -135,20 +156,6 @@ def logs(request):
     logs = get_logs(request.GET)
     result = [{'id': log.pk, 'user_id': log.user_id, 'app_id': log.app_id, 'name': log.name, 'timestamp': str(log.timestamp), 'data': log.data} for log in list(logs)]
     return HttpResponse(result, mimetype="application/json")
-
-def get_logs(args):
-    logs = LogAnything.objects
-    if 'name' in args:
-        logs = logs.filter(name=args['name'])
-    if 'app_id' in args:
-        logs = logs.filter(app_id=args['app_id'])
-    if 'user_id' in args:
-        logs = logs.filter(user_id=args['user_id'])
-    if 'start' in args:
-        logs = logs.filter(timestamp__gte=args['start'])
-    if 'end' in args:
-        logs = logs.filter(timestamp__lte=args['end'])
-    return logs.exclude(user_id=None)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -278,23 +285,23 @@ def logs_per_user(limit=10):
         result = result[:10]
     return result
 
-def avg_deployment_time():
-    deploy_logs_data = [log.data_json for log in get_logs({'name': "deployed app"})]
-    deploy_times = []
-    for d in deploy_logs_data:
-        if "deploy_time" in d:
-            number = float(d["deploy_time"].replace(" seconds", ""))
-            deploy_times.append(number)
-    if(len(deploy_times)):
-        return sum(deploy_times) / len(deploy_times)
-    else:
-        return 0.0
+# def avg_deployment_time():
+#     deploy_logs_data = [log.data_json for log in get_logs({'name': "deployed app"})]
+#     deploy_times = []
+#     for d in deploy_logs_data:
+#         if "deploy_time" in d:
+#             number = float(d["deploy_time"].replace(" seconds", ""))
+#             deploy_times.append(number)
+#     if(len(deploy_times)):
+#         return sum(deploy_times) / len(deploy_times)
+#     else:
+#         return 0.0
 
 # the number of unique apps deployed within the requested time frame
 def deployed_apps(min, max=datetime.now()):
     # default starting date july 13, 2013
     if(min is None):
-        min = datetime.date(2013, 7, 13)
+        min = datetime.date(2013, 6, 26)
     return LogAnything.objects\
         .filter(timestamp__gte=min, timestamp__lte=max, name="deployed app")\
         .distinct('app_id').count()
@@ -303,7 +310,7 @@ def deployed_apps(min, max=datetime.now()):
 def pageviews(min, max=datetime.now()):
     # default starting date july 13, 2013
     if(min is None):
-        min = datetime.date(2013, 7, 13)
+        min = datetime.date(2013, 6, 26)
     return get_logs({'start': min, 'end': max, 'name': 'visited page'})
 
 
