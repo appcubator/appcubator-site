@@ -131,7 +131,7 @@ def app_new_racoon(request, app_id):
 @login_required
 def app_new_walkthrough(request, walkthrough):
     app_name = "Twitter Demo"
-    a = App(name=app_name, owner=request.user)
+    a = App(name=app_name, owner=request.user, subdomain=App.provision_subdomain('%s-walkthrough' % request.user.username))
     # set the name in the app state
     s = a.state
     s['name'] = a.name
@@ -527,7 +527,7 @@ def app_zip(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    zip_bytes = open(app.zip_path(), "r").read()
+    zip_bytes = app.zip_bytes()
     response = HttpResponse(zip_bytes, content_type="application/octet-stream")
     response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
     return response
@@ -544,6 +544,8 @@ def app_deploy(request, app_id):
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     status = 500 if 'errors' in result else 200
+    if status == 500:
+        raise Exception(result)
     return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 
 

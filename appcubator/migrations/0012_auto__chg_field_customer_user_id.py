@@ -8,16 +8,14 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'InvitationKeys.accepted'
-        db.add_column('appcubator_invitationkeys', 'accepted',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
 
+        # Changing field 'Customer.user_id'
+        db.alter_column('appcubator_customer', 'user_id', self.gf('django.db.models.fields.IntegerField')(null=True))
 
     def backwards(self, orm):
-        # Deleting field 'InvitationKeys.accepted'
-        db.delete_column('appcubator_invitationkeys', 'accepted')
 
+        # Changing field 'Customer.user_id'
+        db.alter_column('appcubator_customer', 'user_id', self.gf('django.db.models.fields.IntegerField')(default=None))
 
     models = {
         'appcubator.analyticsstore': {
@@ -71,7 +69,7 @@ class Migration(SchemaMigration):
             'sent_welcome_email': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'sign_up_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'sign_up_fee': ('django.db.models.fields.IntegerField', [], {}),
-            'user_id': ('django.db.models.fields.IntegerField', [], {'blank': 'True'})
+            'user_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
         },
         'appcubator.domainregistration': {
             'Meta': {'object_name': 'DomainRegistration'},

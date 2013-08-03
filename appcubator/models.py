@@ -18,6 +18,7 @@ import time
 import subprocess, shlex
 import hashlib
 import random
+import shutil
 
 
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
@@ -96,6 +97,33 @@ def get_default_theme_state():
     f.close()
     return s
 
+def clean_subdomain(subdomain):
+    toks = subdomain.split('.')
+    if len(toks) > 1:
+        subdomain = '.'.join([clean_subdomain(t) for t in toks])
+        subdomain = re.sub(r'\.+', '.', subdomain)
+        subdomain = re.sub(r'^\.', '', subdomain)
+        subdomain = re.sub(r'\.$', '', subdomain)
+    else:
+        # assume no periods
+        # trim whitespace and lowercase
+        subdomain = subdomain.strip().lower()
+        # replace junk with hyphens
+        subdomain = re.sub(r'[^0-9a-z]', '-', subdomain)
+        # collect together runs of hyphens and periods
+        subdomain = re.sub(r'\-+', '-', subdomain)
+        # hyphens or periods can't occur at beginning or end
+        subdomain = re.sub(r'^\-', '', subdomain)
+        subdomain = re.sub(r'\-$', '', subdomain)
+        # trim if too long
+        subdomain = subdomain[:min(len(subdomain), 40)]
+
+    # fix if too short
+    if len(subdomain) == 0:
+        subdomain = "unnamed"
+
+    return subdomain
+
 
 class App(models.Model):
     name = models.CharField(max_length=100)
@@ -123,6 +151,20 @@ class App(models.Model):
         print "calling clean on %d" % self.id
         if self.owner.apps.filter(name=self.name).exists():
             raise ValidationError('You have another app with the same name.')
+
+    @classmethod
+    def provision_subdomain(cls, subdomain):
+        subdomain = clean_subdomain(subdomain)
+
+        # prevent duplicate subdomains
+        while cls.objects.filter(subdomain__iexact=subdomain).exists():
+            subdomain += str(random.randint(1,9))
+
+        # the above process may have caused string to grow, so trim if too long
+        subdomain = subdomain[-min(len(subdomain), 40):] # take the last min(40, len subdomain) chars.
+
+        return subdomain
+
 
     def get_state(self):
         return simplejson.loads(self._state_json)
@@ -221,7 +263,7 @@ class App(models.Model):
     def url(self):
         return "http://%s/" % self.hostname()
 
-    def zip_path(self):
+    def zip_bytes(self):
         tmpdir = self.write_to_tmpdir(for_user=True)
 
         def zipify(tmpdir):
@@ -233,7 +275,15 @@ class App(models.Model):
             logger.debug("Command exited with return code %d" % retcode)
             return os.path.join(tmpdir, 'zipfile.zip')
 
-        return zipify(tmpdir)
+        try:
+            zpath = zipify(tmpdir)
+            with open(zpath, 'r') as zfile:
+                zbytes = zfile.read()
+        finally:
+            # because hard disk space doesn't grow on trees.
+            shutil.rmtree(tmpdir)
+
+        return zbytes
 
     def css(self, deploy=True, mobile=False):
         """Use uiestate, less, and django templates to generate a string of the CSS"""
@@ -258,17 +308,15 @@ class App(models.Model):
         }
         return post_data
 
-    def deploy(self, retry_on_404=True):
-        tmpdir = self.write_to_tmpdir()
-        logger.info("Deployed to %s" % tmpdir)
-        contents = os.listdir(tmpdir)
+    def _transport_app(self, appdir, retry_on_404=True):
+        contents = os.listdir(appdir)
         # tar it up
-        t = tarfile.open(os.path.join(tmpdir, 'payload.tar'), 'w')
+        t = tarfile.open(os.path.join(appdir, 'payload.tar'), 'w')
         try:
             for fname in contents:
-                t.add(os.path.join(tmpdir, fname), arcname=fname)
+                t.add(os.path.join(appdir, fname), arcname=fname)
             t.close()
-            f = open(os.path.join(tmpdir, 'payload.tar'), "r")
+            f = open(os.path.join(appdir, 'payload.tar'), "r")
 
             # send the whole shibam to deployment server
             files = {'file':f}
@@ -280,7 +328,7 @@ class App(models.Model):
 
         finally:
             f.close()
-            os.remove(os.path.join(tmpdir, 'payload.tar'))
+            os.remove(os.path.join(appdir, 'payload.tar'))
 
         if r.status_code == 200:
             result = {}
@@ -309,10 +357,20 @@ class App(models.Model):
             logger.warn("The deployment was not found, so I'm setting deployment id to None")
             self.deployment_id = None
             self.save(state_version=False)
-            return self.deploy(retry_on_404=False)
+            return self._transport_app(appdir, retry_on_404=False)
 
         else:
           return {'errors': r.content}
+
+    def deploy(self, retry_on_404=True):
+        tmpdir = self.write_to_tmpdir()
+        try:
+            logger.info("Deployed to %s" % tmpdir)
+            r = self._transport_app(tmpdir, retry_on_404=retry_on_404)
+        finally:
+            # because hard disk space doesn't grow on trees.
+            shutil.rmtree(tmpdir)
+        return r
 
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:
@@ -534,7 +592,7 @@ class InvitationKeys(models.Model):
         return invitation
 
 class Customer(models.Model):
-    user_id = models.IntegerField(blank=True)
+    user_id = models.IntegerField(blank=True, null=True)
     name = models.TextField()
     email = models.EmailField(max_length=75)
     company = models.TextField()
