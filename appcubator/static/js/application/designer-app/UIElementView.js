@@ -5,7 +5,7 @@ function(UIElementEditingView) {
 
   var UIElementView = Backbone.View.extend({
     el: null,
-    className: 'widgetWrapper pane-inline  border hi12 span44 hoff1',
+    className: 'widgetWrapper pane-inline border hi12 span45 hoff1',
     isExpanded: false,
 
     events : {
@@ -62,15 +62,15 @@ function(UIElementEditingView) {
 
       var styleTag = document.createElement('style');
       styleTag.id = this.model.cid + '-' + 'style';
-      styleTag.innerHTML = '.' +this.model.get('class_name') + '{' + this.model.get('style') + '}';
+      styleTag.innerHTML = '#' +this.model.get('class_name') + '{' + this.model.get('style') + '}';
 
       var hoverStyleTag = document.createElement('style');
       hoverStyleTag.id = this.model.cid + '-' + 'hover-style';
-      hoverStyleTag.innerHTML = '.' +this.model.get('class_name') + ':hover {' + this.model.get('hoverStyle') + '}';
+      hoverStyleTag.innerHTML = '#' +this.model.get('class_name') + ':hover {' + this.model.get('hoverStyle') + '}';
 
       var activeStyleTag = document.createElement('style');
       activeStyleTag.id = this.model.cid + '-' + 'active-style';
-      activeStyleTag.innerHTML = '.' +this.model.get('class_name') + ':active {' + this.model.get('activeStyle') + '}';
+      activeStyleTag.innerHTML = '#' +this.model.get('class_name') + ':active {' + this.model.get('activeStyle') + '}';
 
       document.head.appendChild(styleTag);
       document.head.appendChild(hoverStyleTag);
