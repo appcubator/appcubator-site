@@ -215,15 +215,25 @@ define([
       var url;
       if(themeId) { url = '/theme/'+themeId+'/edit/'; }
       else if(appId) { url = '/app/' + appId + '/uiestate/'; }
-
-      console.log(json);
+      var save_btn = $('.save-btn img');
+      console.log(save_btn[0]);
+      save_btn.attr('src', '/static/img/ajax-loader-white.gif');
 
       $.ajax({
         type: "POST",
         url: url,
         data: {uie_state: JSON.stringify(json)},
-        success: function(data) {
-          console.log(data);
+        statusCode: {
+          200: function(data) {
+            $('.save-btn img').attr('src', '/static/img/checkmark.png').hide().fadeIn();
+            var timer = setTimeout(function(){
+                $('.save-btn img').attr('src', '/static/img/save.png').hide().fadeIn();
+                clearTimeout(timer);
+            }, 1000);
+          },
+          500: function() {
+            alert('Server Error');
+          }
         },
         dataType: "JSON"
       });

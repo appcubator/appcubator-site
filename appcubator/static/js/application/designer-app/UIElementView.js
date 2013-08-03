@@ -9,7 +9,7 @@ function(UIElementEditingView) {
     isExpanded: false,
 
     events : {
-      'click .upper-area' : 'toggleElement',
+      'click .btn-info' : 'toggleElement',
       'click .remove'     : 'removeUIE',
       'keyup .class_name' : 'classNameChaged'
     },
