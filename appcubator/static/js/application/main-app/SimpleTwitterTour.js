@@ -453,8 +453,8 @@ define([
         $('#item-gallery').animate({
           scrollTop: $(".entity-list").offset().top - 90
         }, 200);
-        $('.btn.done-btn').one('click', tour.next);
-        return { target: $('.btn.done-btn')};
+        $('.btn.done').one('click', tour.next);
+        return { target: $('.btn.done')};
       },
       teardown: function() {
         incrementStep();
