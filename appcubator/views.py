@@ -527,7 +527,7 @@ def app_zip(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    zip_bytes = open(app.zip_path(), "r").read()
+    zip_bytes = app.zip_bytes()
     response = HttpResponse(zip_bytes, content_type="application/octet-stream")
     response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
     return response

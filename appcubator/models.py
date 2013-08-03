@@ -18,6 +18,7 @@ import time
 import subprocess, shlex
 import hashlib
 import random
+import shutil
 
 
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
@@ -262,7 +263,7 @@ class App(models.Model):
     def url(self):
         return "http://%s/" % self.hostname()
 
-    def zip_path(self):
+    def zip_bytes(self):
         tmpdir = self.write_to_tmpdir(for_user=True)
 
         def zipify(tmpdir):
@@ -274,7 +275,15 @@ class App(models.Model):
             logger.debug("Command exited with return code %d" % retcode)
             return os.path.join(tmpdir, 'zipfile.zip')
 
-        return zipify(tmpdir)
+        try:
+            zpath = zipify(tmpdir)
+            with open(zpath, 'r') as zfile:
+                zbytes = zfile.read()
+        finally:
+            # because hard disk space doesn't grow on trees.
+            shutil.rmtree(tmpdir)
+
+        return zbytes
 
     def css(self, deploy=True, mobile=False):
         """Use uiestate, less, and django templates to generate a string of the CSS"""
@@ -299,17 +308,15 @@ class App(models.Model):
         }
         return post_data
 
-    def deploy(self, retry_on_404=True):
-        tmpdir = self.write_to_tmpdir()
-        logger.info("Deployed to %s" % tmpdir)
-        contents = os.listdir(tmpdir)
+    def _transport_app(self, appdir, retry_on_404=True):
+        contents = os.listdir(appdir)
         # tar it up
-        t = tarfile.open(os.path.join(tmpdir, 'payload.tar'), 'w')
+        t = tarfile.open(os.path.join(appdir, 'payload.tar'), 'w')
         try:
             for fname in contents:
-                t.add(os.path.join(tmpdir, fname), arcname=fname)
+                t.add(os.path.join(appdir, fname), arcname=fname)
             t.close()
-            f = open(os.path.join(tmpdir, 'payload.tar'), "r")
+            f = open(os.path.join(appdir, 'payload.tar'), "r")
 
             # send the whole shibam to deployment server
             files = {'file':f}
@@ -321,7 +328,7 @@ class App(models.Model):
 
         finally:
             f.close()
-            os.remove(os.path.join(tmpdir, 'payload.tar'))
+            os.remove(os.path.join(appdir, 'payload.tar'))
 
         if r.status_code == 200:
             result = {}
@@ -350,10 +357,20 @@ class App(models.Model):
             logger.warn("The deployment was not found, so I'm setting deployment id to None")
             self.deployment_id = None
             self.save(state_version=False)
-            return self.deploy(retry_on_404=False)
+            return self._transport_app(appdir, retry_on_404=False)
 
         else:
           return {'errors': r.content}
+
+    def deploy(self, retry_on_404=True):
+        tmpdir = self.write_to_tmpdir()
+        try:
+            logger.info("Deployed to %s" % tmpdir)
+            r = self._transport_app(tmpdir, retry_on_404=retry_on_404)
+        finally:
+            # because hard disk space doesn't grow on trees.
+            shutil.rmtree(tmpdir)
+        return r
 
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:
