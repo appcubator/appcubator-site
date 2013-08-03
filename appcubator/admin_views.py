@@ -20,7 +20,7 @@ import datetime
 import shlex
 import subprocess
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import time
 from django.utils import timezone
 from django.core.serializers.json import DjangoJSONEncoder
@@ -39,6 +39,7 @@ def admin_home(request):
     page_context["users_last_week"] = recent_users(long_ago=timedelta(days=7))
     page_context["most_active_users"] = logs_per_user()
     page_context['active_users'] = active_users_json(request, beginning, now, 'day').content
+    page_context['user_signups_cumulative'] = user_signups_cumulative_json(request, beginning, now, 'day').content
     page_context['user_signups'] = user_signups_json(request).content
 
     # deployed apps stats
@@ -164,6 +165,41 @@ def user_signups_json(request):
     return HttpResponse(json.dumps(result), mimetype="application/json")
 
 @login_required
+@user_passes_test(lambda u:u.is_superuser)
+def user_signups_cumulative_json(request, t_start, t_end, t_delta):
+    t_start = int(t_start)
+    t_end = int(t_end)
+    t_delta = str(t_delta)
+    try:
+        start = datetime.fromtimestamp(t_start)
+        end = datetime.fromtimestamp(t_end)
+    except ValueError:
+        return HttpResponse("Invalid start/end values (%d,%d), must be passed as POSIX datetime number" % (int(t_start),int(t_end)), status=405)
+    # require start < end
+    if end < start:
+        start, end = end, start
+    # determine timedelta
+    if (t_delta == "day"):
+        delta = timedelta(days=1)
+    elif (t_delta == "year"):
+        delta = timedelta(days=365)
+    elif (t_delta == "month"):
+        delta = timedelta(days=30)
+    elif (t_delta == "week"):
+        delta = timedelta(weeks=1)
+    else:
+        return HttpResponse("invalid delta string (%s), must be 'day', 'week', 'month', or 'year'" % t_delta, status=405)
+
+    tempStart = start
+    tempEnd = tempStart + delta
+    data = {}
+    while tempEnd < end:
+        data[tempStart.strftime("%m/%d/%y")] = num_users_joined(None, tempEnd, cumulative=True)
+        tempStart = tempEnd
+        tempEnd = tempEnd + delta
+    return HttpResponse(json.dumps(data), mimetype="application/json")
+
+@login_required
 @user_passes_test(lambda u: u.is_superuser)
 def active_users_json(request, t_start, t_end, t_delta):
     t_start = int(t_start)
@@ -273,11 +309,15 @@ def pageviews(min, max=datetime.now()):
 
 # users who joined within the requested time frame
 def users_joined(min, max=datetime.now()):
-    # default starting date july 13, 2013
+    # default starting date july 26, 2013
     if(min is None):
-        min = datetime.date(2013, 7, 13)
-    return User.objects\
-        .filter(date_joined__gte=min, date_joined__lte=max)
+        min = date(2013, 6, 26)
+    return User.objects.filter(date_joined__gte=min, date_joined__lte=max)
+
+def num_users_joined(min, max=datetime.now(), cumulative=False):
+    if cumulative:
+        min=None
+    return users_joined(min, max).count()
 
 
 # 'active users' during a min-max time period

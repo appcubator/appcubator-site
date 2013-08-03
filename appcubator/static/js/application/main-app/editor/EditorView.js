@@ -139,6 +139,7 @@ function( PageModel,
     },
 
     copy: function(e) {
+      if(keyDispatcher.textEditing === true) return;
       if(this.marqueeView.multiSelectorView.contents.length) {
         this.contents = [];
         _(this.marqueeView.multiSelectorView.contents).each(function(model) {
@@ -152,6 +153,7 @@ function( PageModel,
     },
 
     paste: function(e) {
+      if(keyDispatcher.textEditing === true) return;
       if(!this.contents) return;
 
       _(this.contents).each(function(cont) {
