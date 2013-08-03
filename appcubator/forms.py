@@ -1,35 +1,9 @@
+import models
 from models import App
 from django import forms
 import re
 import random
 
-
-def clean_subdomain(subdomain):
-    toks = subdomain.split('.')
-    if len(toks) > 1:
-        subdomain = '.'.join([clean_subdomain(t) for t in toks])
-        subdomain = re.sub(r'\.+', '.', subdomain)
-        subdomain = re.sub(r'^\.', '', subdomain)
-        subdomain = re.sub(r'\.$', '', subdomain)
-    else:
-        # assume no periods
-        # trim whitespace and lowercase
-        subdomain = subdomain.strip().lower()
-        # replace junk with hyphens
-        subdomain = re.sub(r'[^0-9a-z]', '-', subdomain)
-        # collect together runs of hyphens and periods
-        subdomain = re.sub(r'\-+', '-', subdomain)
-        # hyphens or periods can't occur at beginning or end
-        subdomain = re.sub(r'^\-', '', subdomain)
-        subdomain = re.sub(r'\-$', '', subdomain)
-        # trim if too long
-        subdomain = subdomain[:min(len(subdomain), 40)]
-
-    # fix if too short
-    if len(subdomain) == 0:
-        subdomain = "unnamed"
-
-    return subdomain
 
 class AppNew(forms.ModelForm):
 
@@ -38,12 +12,12 @@ class AppNew(forms.ModelForm):
         fields = ('name', 'owner', 'subdomain')
 
     name = forms.CharField(max_length=40)
-    subdomain = forms.CharField(max_length=40)
+    subdomain = forms.CharField(max_length=40, min_length=1)
 
     def clean_subdomain(self):
         subdomain = self.cleaned_data['subdomain']
 
-        subdomain = clean_subdomain(subdomain)
+        subdomain = models.clean_subdomain(subdomain)
 
         # prevent duplicate subdomains
         while App.objects.filter(subdomain__iexact=subdomain).exists():
@@ -67,7 +41,7 @@ class ChangeSubdomain(forms.Form):
     def clean_subdomain(self):
         "Validate that it's clean and case-insensitive unique"
         subdomain = self.cleaned_data['subdomain'].lower()
-        cleaned = clean_subdomain(subdomain)
+        cleaned = models.clean_subdomain(subdomain)
         if subdomain != cleaned:
             raise forms.ValidationError("Subdomain invalid, subdomain vs cleaned: %r" % ((subdomain, cleaned),))
         if App.objects.filter(subdomain__iexact=subdomain).exists():

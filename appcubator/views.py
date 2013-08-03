@@ -131,7 +131,7 @@ def app_new_racoon(request, app_id):
 @login_required
 def app_new_walkthrough(request, walkthrough):
     app_name = "Twitter Demo"
-    a = App(name=app_name, owner=request.user)
+    a = App(name=app_name, owner=request.user, subdomain=App.provision_subdomain('%s-walkthrough' % request.user.username))
     # set the name in the app state
     s = a.state
     s['name'] = a.name

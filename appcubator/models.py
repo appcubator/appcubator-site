@@ -96,6 +96,33 @@ def get_default_theme_state():
     f.close()
     return s
 
+def clean_subdomain(subdomain):
+    toks = subdomain.split('.')
+    if len(toks) > 1:
+        subdomain = '.'.join([clean_subdomain(t) for t in toks])
+        subdomain = re.sub(r'\.+', '.', subdomain)
+        subdomain = re.sub(r'^\.', '', subdomain)
+        subdomain = re.sub(r'\.$', '', subdomain)
+    else:
+        # assume no periods
+        # trim whitespace and lowercase
+        subdomain = subdomain.strip().lower()
+        # replace junk with hyphens
+        subdomain = re.sub(r'[^0-9a-z]', '-', subdomain)
+        # collect together runs of hyphens and periods
+        subdomain = re.sub(r'\-+', '-', subdomain)
+        # hyphens or periods can't occur at beginning or end
+        subdomain = re.sub(r'^\-', '', subdomain)
+        subdomain = re.sub(r'\-$', '', subdomain)
+        # trim if too long
+        subdomain = subdomain[:min(len(subdomain), 40)]
+
+    # fix if too short
+    if len(subdomain) == 0:
+        subdomain = "unnamed"
+
+    return subdomain
+
 
 class App(models.Model):
     name = models.CharField(max_length=100)
@@ -123,6 +150,20 @@ class App(models.Model):
         print "calling clean on %d" % self.id
         if self.owner.apps.filter(name=self.name).exists():
             raise ValidationError('You have another app with the same name.')
+
+    @classmethod
+    def provision_subdomain(cls, subdomain):
+        subdomain = clean_subdomain(subdomain)
+
+        # prevent duplicate subdomains
+        while cls.objects.filter(subdomain__iexact=subdomain).exists():
+            subdomain += str(random.randint(1,9))
+
+        # the above process may have caused string to grow, so trim if too long
+        subdomain = subdomain[-min(len(subdomain), 40):] # take the last min(40, len subdomain) chars.
+
+        return subdomain
+
 
     def get_state(self):
         return simplejson.loads(self._state_json)
