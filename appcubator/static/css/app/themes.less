@@ -159,7 +159,39 @@ div.expandible {
 }
 
 .upper-area {
-  padding: 10px;
+  input {
+    height: 40px;
+    width: 100%;
+  }
+
+  .btn {
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    display: inline-block;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 4px;
+    padding: 6px 14px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border: 1px solid #bbbbbb;
+    border-color: #c5c5c5;
+    border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    .box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.05));
+
+    &.btn-info {
+      background-color: #036a6e;
+    }
+
+    &.btn-delete {
+      background-color: red;
+    }
+  }
 }
 .class-menu {
   width: 180px;
@@ -167,93 +199,67 @@ div.expandible {
 }
 .temp-node-area {
   display: inline-block;
+  height: 150px;
   width: 420px;
   text-align: center;
   border-radius: 4px;
   background-color: #eee;
   border: 1px solid #ccc;
   vertical-align: top;
-  height: 150px;
   overflow: hidden;
   position: relative;
 }
+
+.element-node {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  left: 50%;
+  top: 50%;
+  margin: -5% 0 0 -25%;
+}
 .element-view {
-}
+  .sect {
+    border-top: 1px solid #ccc;
+    height: 200px;
+    padding: 15px 0;
+    margin-top: 15px;
+  }
 
-.element-view .sect {
-  border-top: 1px solid #ccc;
-  height: 200px;
-  padding-top: 10px;
-}
+  .ace_editor {
+    font-size: 10px;
+    border: 2px solid #ccc;
+    .border-radius(6px);
+    padding: 5px;
+  }
 
-.element-view .ace_editor {
-  margin-left: 10px;
-}
-
-.element-view div {
-  text-align: left;
-}
-.element-view label {
-  text-align: left;
-  margin-left: 10px;
+  div {
+    text-align: left;
+  }
+  label {
+    text-align: left;
+    margin-left: 10px;
+  }
 }
 
 #fonts-cont .fonts li {
   border-top: 1px solid #999;
   padding: 15px;
-}
-#fonts-cont .fonts li:last-child {
-  border-bottom: 1px solid #999;
-}
-#fonts-cont .fonts li .btn {
-  height: 25px;
-  margin-top: -5px;
-}
-#fonts-cont .fonts li .font {
-  font-size: 20px;
-}
 
-.upper-area .btn.btn-info { 
-width: 150px;
-height: 35px;
-display: inline-block;
-color: #ffffff;
-border-radius: 4px;
-padding: 6px 14px;
-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-background-color: #036a6e;
-border: 1px solid #bbbbbb;
-border-color: #c5c5c5;
-border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
-margin-bottom: 0;
-font-size: 14px;
-line-height: 20px;
-text-align: center;
-vertical-align: middle;
-cursor: pointer;
--webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-}
+  &:last-child {
+    border-bottom: 1px solid #999;
+  }
 
-.upper-area .btn.btn-delete { 
-width: 150px;
-height: 35px;
-display: inline-block;
-color: #ffffff;
-border-radius: 4px;
-padding: 6px 14px;
-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-background-color: red;
-border: 1px solid #bbbbbb;
-border-color: #c5c5c5;
-border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
-margin-bottom: 0;
-font-size: 14px;
-line-height: 20px;
-text-align: center;
-vertical-align: middle;
-cursor: pointer;
-}
+  .btn {
+    height: 25px;
+    margin-top: -5px;
+  }
+
+  .font {
+    font-size: 20px;
+  }
+} // end #fonts-cont .fonts
+
 
 .element-create-form input[type="text"],.element-create-form textarea {
   width: 90%;
@@ -280,8 +286,12 @@ display:  none;
 }
 
 */
-.widgetWrapper:hover .remove {
-  display: inline-block;
+
+.widgetWrapper {
+    padding: 10px;
+    &:hover .remove {
+    display: inline-block;
+  }
 }
 
 .theme-gallery {

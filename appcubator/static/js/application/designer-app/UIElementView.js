@@ -37,7 +37,7 @@ function(UIElementEditingView) {
         '</div>'].join('\n');
 
       this.tempNodeDiv = document.createElement('div');
-      this.tempNodeDiv.className = "temp-node-area";
+      this.tempNodeDiv.className = "temp-node-area offset1";
       this.tempNodeDiv.innerHTML = _.template(ThemeTemplates.tempNode, {info: this.model.attributes});
 
       upperDiv.appendChild(this.tempNodeDiv);
@@ -91,8 +91,15 @@ function(UIElementEditingView) {
 
     toggleElement: function () {
       console.log('toggle');
-      if(!this.isExpanded) this.expandElement();
-      else this.shrinkElement();
+      var btn = this.$('.btn-info')[0]
+      if(!this.isExpanded) {
+        this.expandElement();
+        btn.innerText = 'Close Edit Panel';
+      }
+      else {
+        this.shrinkElement();
+        btn.innerText = 'Expand Edit Panel';
+      }
     },
 
     expandElement: function () {

@@ -16,9 +16,9 @@ ThemeTemplates.tempNode = [
 ].join('\n');
 
 ThemeTemplates.tempPane = [
-  '<div class="sect"><label>Normal State</label><br  /><div id="style-<%= cid %>" class="style span40 hi10" placeholder="Styling here..."></div></div>',
-  '<div class="sect"><label>Hover State</label><br  /><div id="hover-style-<%= cid %>" class="hover-style span40 hi10"></div></div>',
-  '<div class="sect"><label>Active State</label><br  /><div id="active-style-<%= cid %>" class="active-style span40 hi10"></div></div>'
+  '<div class="sect span14"><p class="lead">Normal State</p><div id="style-<%= cid %>" class="style span13 hi10" placeholder="Styling here..."></div></div>',
+  '<div class="sect span14"><p class="lead">Hover State</p><div id="hover-style-<%= cid %>" class="hover-style span13 hi10"></div></div>',
+  '<div class="sect span14"><p class="lead">Active State</p><div id="active-style-<%= cid %>" class="active-style span13 hi10"></div></div>'
 ].join('\n');
 
 ThemeTemplates.tempCreate = [
