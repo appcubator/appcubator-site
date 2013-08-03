@@ -6,7 +6,7 @@ function(LinkCollection) {
   var FooterModel = Backbone.Model.extend({
 
     defaults : {
-      customText : "Add custom footer text here",
+      customText : "Powered by Appcubator",
       isHidden : false,
       isFixed : true
     },
