@@ -37,6 +37,7 @@
                 <li><a href="{% url appcubator.admin_views.admin_app app.pk %}" rel="external" target="_blank">Theme Editor</a></li>
                 {% endif %}
               {% endif %}
+              <li><a href="#invitations" class="toggle-invitations-modal">Invitations</a></li>
               <li class="header">My Applications</li>
               {% for a in users_apps %}
               <li><a href="{% url appcubator.views.app_page a.id %}" rel="external">{{ a.name }}</a></li>

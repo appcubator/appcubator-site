@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^showhn/$',                   base_views.showhnpage),
     url(r'^showgsb/$',                  base_views.showgsbpage),
     url(r'^showdn/$',                   base_views.showdnpage),
+    url(r'^girlswhocode/$',             base_views.showgwcpage),
 
     url(r'^aboutus/$',                  base_views.aboutus),
     url(r'^changelog/$',                base_views.changelog),
@@ -23,20 +24,29 @@ urlpatterns = patterns('',
     url(r'^login/$',                    django.contrib.auth.views.login, {'template_name' : 'registration/login_page.html'}),
     url(r'^logout/$',                   django.contrib.auth.views.logout, {"next_page":"/"}),
     url(r'^connect_with/$',             base_views.get_linkedin),
-    url(r'^signup/$',                   base_views.signup),
     url(r'^termsofservice/$',           base_views.terms_of_service),
     url(r'^faq/$',                      base_views.faq),
     url(r'^account/$',                  base_views.account),
     url(r'^ping/$',                     base_views.ping),
     url(r'^whatisthis/$',               base_views.marketing),
+
+    # only creates beta invite
     url(r'^signup_form/$',              base_views.signup_new_customer),
-    url(r'^signup_hn_form/$',           base_views.signup_hn_customer),
-    url(r'^signup_dn_form/$',           base_views.signup_dn_customer),
-    url(r'^signup_gsb_form/$',          base_views.signup_gsb_customer),
+    # actually signs up.
+    url(r'^signup/$',                   base_views.signup),
+    # actually signs up, stores source info
+    url(r'^signup_hn_form/$',           base_views.signup_from_hn, name='hn_signup_form'),
+    url(r'^signup_dn_form/$',           base_views.signup_from_dn, name='dn_signup_form'),
+    url(r'^signup_gsb_form/$',          base_views.signup_from_gsb, name='gsb_signup_form'),
+    url(r'^signup_gwc_form/$',          base_views.signup_from_gwc, name='gwc_signup_form'),
+
     url(r'^send_invitation/(\d+)/$',    base_views.send_invitation_to_customer),
     url(r'^backend/',                   include('app_builder.urls')),
     url(r'^payments/',                  include('appcubator.payments.urls')),
-    url(r'^app/(\d+)/payment/$',       payment_views.app_payment)
+    url(r'^app/(\d+)/payment/$',       payment_views.app_payment),
+
+    url(r'^resources/$',                   base_views.resources),
+    url(r'^resources/screencast/(\d+)/$',  base_views.screencast),
 )
 
 urlpatterns += patterns('appcubator.log_views',
@@ -82,6 +92,9 @@ urlpatterns += patterns('appcubator.views',
     #zip
     url(r'^app/(\d+)/zip/$', 'app_zip'),
 
+    #invitations
+    url(r'^app/(\d+)/invitations/$', 'invitations'),
+
     # domains
     url(r'^domains/(.*)/available_check/$', 'check_availability'),
     url(r'^domains/(.*)/register/$', 'register_domain'),
@@ -108,14 +121,15 @@ urlpatterns += patterns('appcubator.admin_views',
     url(r'^stay/up/to/get/lucky/$', 'admin_home'),
     url(r'^stay/up/to/get/lucky/customers/$', 'admin_customers'),
     url(r'^stay/up/to/get/lucky/users/(\d+)$', 'admin_user'),
-    url(r'^stay/up/to/get/lucky/users/(\d+)/graph/$', 'user_logs_json'),
+    url(r'^stay/up/to/get/lucky/users/(\d+)/graph/$', 'user_logs_graph'),
     url(r'^stay/up/to/get/lucky/users/$', 'admin_users'),
     url(r'^stay/up/to/get/lucky/apps/(\d+)$', 'admin_app'),
     url(r'^stay/up/to/get/lucky/apps/$', 'admin_apps'),
     url(r'^stay/up/to/get/lucky/feedback/$', 'admin_feedback'),
     url(r'^stay/up/to/get/lucky/graphs/$', 'admin_graphs'),
     url(r'^stay/up/to/get/lucky/usersbydate/$', 'user_signups_json'),
-    url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json')
+    url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json'),
+    url(r'^stay/up/to/get/lucky/logs/$', 'logs'),
 )
 
 urlpatterns += patterns('appcubator.theme_views',

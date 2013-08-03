@@ -35,7 +35,7 @@
             },
             "footer": {
                 "isFixed": true,
-                "customText": "Add custom footer text here",
+                "customText": "Powered by Appcubator",
                 "isHidden": false,
                 "links": [
                     {

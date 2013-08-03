@@ -8,6 +8,8 @@ function(WidgetModel,
          WidgetContainerModel) {
 
     var WidgetCollection = Backbone.Collection.extend({
+      
+      model: WidgetModel,
 
       createThirdPartyLogin: function(layout, provider) {
         var widget = {};
@@ -253,20 +255,6 @@ function(WidgetModel,
         return this.push(widgetContainerModel);
       },
 
-      /*createTwitterFeed: function(layout) {
-        var widget = {};
-        widget.type = "gallery";
-
-        widget.data = {};
-        widget.data.nodeType = "twitterfeed";
-        widget.data.container_info = {};
-        widget.data.container_info.action = "twitterfeed";
-
-        var widgetContainerModel = new WidgetContainerModel(widget);
-
-        return this.push(widgetContainerModel);
-      },
-*/
       createFacebookShare: function(layout) {
         var widget = {};
         widget.type = "facebookshare";

@@ -618,12 +618,12 @@ define([
       it('renders the custom text', function() {
         //set brandName to appState name to start
         var view_customText = footer.$('#customText').text();
-        var model_customText = model.get('customText') || "Add custom footer text here";
+        var model_customText = model.get('customText') || "Powered by Appcubator";
         expect(model_customText).toEqual(view_customText);
       });
 
       it('updates the custom text', function() {
-        var old_customText = model.get('customText') || "Add custom footer text here";
+        var old_customText = model.get('customText') || "Powered by Appcubator";
         model.set('customText', "DERPY");
         var view_customText = footer.$('#customText').text();
         expect("DERPY").toEqual(view_customText);

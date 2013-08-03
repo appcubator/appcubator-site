@@ -31,4 +31,4 @@ django-tracking==0.4.1
 django-forms-bootstrap
 django-stripe-payments
 
-#mysql-python==1.2.4
+mysql-python==1.2.4

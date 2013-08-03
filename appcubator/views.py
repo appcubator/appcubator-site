@@ -7,9 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import Http404
-
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, Customer, ExtraUserData, AnalyticsStore
-from email.sendgrid_email import send_email
+from django.contrib.auth.models import User
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore
+from email.sendgrid_email import send_email, send_template_email
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
@@ -131,7 +131,7 @@ def app_new_racoon(request, app_id):
 @login_required
 def app_new_walkthrough(request, walkthrough):
     app_name = "Twitter Demo"
-    a = App(name=app_name, owner=request.user)
+    a = App(name=app_name, owner=request.user, subdomain=App.provision_subdomain('%s-walkthrough' % request.user.username))
     # set the name in the app state
     s = a.state
     s['name'] = a.name
@@ -279,6 +279,42 @@ def app_save_state(request, app, require_valid=True):
         appstate_snapshot.save()
         app.save()
         return (200, {'version_id': app.state.get('version_id', 0)})
+
+@login_required
+@csrf_exempt
+def invitations(request, app_id):
+    user_id = long(request.user.id)
+    # get all invitations sent by user {{user_id}}
+    if request.method == 'GET':
+        invitations = list(InvitationKeys.objects.filter(inviter_id=user_id))
+        json = []
+        for i in invitations:
+            json.append({"invitee": i.invitee, "date": str(i.date.date()), "accepted": i.accepted})
+        return JSONResponse(json)
+    # send an invitation from {{user_id}} to a friend
+    else:
+        user = get_object_or_404(User, pk=user_id)
+        if user.first_name is not "":
+            user_name = user.first_name
+            if user.last_name is not "":
+                user_name = user_name + " " + user.last_name
+        else:
+            user_name = user.username
+        app = get_object_or_404(App, pk=long(app_id))
+        name = request.POST['name']
+        email = request.POST['email']
+        subject = "%s has invited you to check out Appcubator!" % user_name
+
+        message = ('Dear {name},\n\n'
+                   'Check out what I\'ve build using Appcubator:\n\n'
+                   '<a href="{hostname}">{hostname}</a>\n\n'
+                   'Appcubator is the only visual web editor that can build rich web applications without hiring a developer or knowing how to code. It is also free to build an app, forever. See what others have built and try to create a web app of your own.\n\n'
+                   'Best,\n{user_name}\n\n\n')
+        message = message.format(name=name, hostname=app.hostname(), user_name=user_name)
+        invitation = InvitationKeys.create_invitation(request.user, email)
+        template_context = { "text": message }
+        send_template_email(request.user.email, email, subject, "", "emails/base_boxed_basic_query.html", template_context)
+        return HttpResponse(message)
 
 def documentation_page(request, page_name):
     try:
@@ -491,7 +527,7 @@ def app_zip(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    zip_bytes = open(app.zip_path(), "r").read()
+    zip_bytes = app.zip_bytes()
     response = HttpResponse(zip_bytes, content_type="application/octet-stream")
     response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
     return response
@@ -508,6 +544,8 @@ def app_deploy(request, app_id):
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     status = 500 if 'errors' in result else 200
+    if status == 500:
+        raise Exception(result)
     return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 
 

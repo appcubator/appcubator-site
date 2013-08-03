@@ -21,14 +21,14 @@ define([
     var AppRouter = Backbone.Router.extend({
 
         routes: {
-            "app/:appid/info/(:tutorial/)"     : "info",
-            "app/:appid/tables/(:tutorial/)"   : "tables",
-            "app/:appid/gallery/(:tutorial/)"  : "themes",
-            "app/:appid/pages/(:tutorial/)"    : "pages",
+            "app/:appid/info/*tutorial"     : "info",
+            "app/:appid/tables/*tutorial"   : "tables",
+            "app/:appid/gallery/*tutorial"  : "themes",
+            "app/:appid/pages/*tutorial"    : "pages",
             "app/:appid/editor/:pageid/"       : "editor",
             "app/:appid/mobile-editor/:pageid/": "mobileEditor",
-            "app/:appid/emails/(:tutorial/)"   : "emails",
-            "app/:appid/(:tutorial/)"          : "index",
+            "app/:appid/emails/*tutorial"   : "emails",
+            "app/:appid/*tutorial"          : "index",
             "app/:appid/*anything/"            : "index"
         },
 
@@ -43,6 +43,12 @@ define([
                 self.showTutorial();
                 window.history.pushState(null, null, window.location.href.concat("tutorial/"));
             });
+            $('.toggle-invitations-modal').on('click', function(e) {
+                require(['app/InvitationsView'], function(InvitationsView) {
+                    new InvitationsView();
+                });
+                e.preventDefault();
+            })
 
       keyDispatcher.bindComb('meta+s', this.save);
       keyDispatcher.bindComb('ctrl+s', this.save);
@@ -54,10 +60,7 @@ define([
             var self = this;
             require(['app/OverviewPageView'], function(OverviewPageView){
                 self.tutorialDirectory = [0];
-                self.changePage(OverviewPageView, {}, function() {
-                    if(tutorial) {
-                        self.showTutorial();
-                    }
+                self.changePage(OverviewPageView, tutorial, function() {
                 });
                 olark('api.box.show');
             });
@@ -67,11 +70,8 @@ define([
             var self = this;
             require(['app/AppInfoView'], function(InfoView){
                 self.tutorialDirectory = [7];
-                self.changePage(InfoView, {}, function() {
+                self.changePage(InfoView, tutorial, function() {
                     $('.menu-app-info').addClass('active');
-                    if(tutorial) {
-                        self.showTutorial();
-                    }
                 });
                 olark('api.box.show');
             });
@@ -81,12 +81,9 @@ define([
             var self = this;
             require(['app/entities/EntitiesView'], function(EntitiesView){
                 self.tutorialDirectory = [1];
-                self.changePage(EntitiesView, {}, function() {
+                self.changePage(EntitiesView, tutorial, function() {
                     self.trigger('entities-loaded');
                     $('.menu-app-entities').addClass('active');
-                    if(tutorial) {
-                        self.showTutorial();
-                    }
                 });
                 olark('api.box.show');
             });
@@ -96,12 +93,9 @@ define([
             var self = this;
             self.tutorialDirectory = [4];
             require(['app/ThemesGalleryView'], function(ThemesGalleryView){
-                self.changePage(ThemesGalleryView, {}, function() {
+                self.changePage(ThemesGalleryView, tutorial, function() {
                     self.trigger('themes-loaded');
                     $('.menu-app-themes').addClass('active');
-                    if(tutorial) {
-                        self.showTutorial();
-                    }
                 });
                 olark('api.box.show');
             });
@@ -112,12 +106,9 @@ define([
             self.tutorialDirectory = [2];
             require(['app/pages/PagesView'], function(PagesView){
                 $('.page').fadeIn();
-                self.changePage(PagesView, {}, function() {
+                self.changePage(PagesView, tutorial, function() {
                     self.trigger('pages-loaded');
                     $('.menu-app-pages').addClass('active');
-                    if(tutorial) {
-                        self.showTutorial();
-                    }
                 });
                 olark('api.box.show');
             });
@@ -164,22 +155,19 @@ define([
         emails: function(appId, tutorial) {
             var self = this;
             self.tutorialDirectory = [6];
-            this.changePage(EmailsView, {}, function() {
+            this.changePage(EmailsView, tutorial, function() {
                 $('.menu-app-emails').addClass('active');
-                if(tutorial) {
-                    self.showTutorial();
-                }
             });
         },
 
-        changePage: function(newView, viewOptions, post_render) {
+        changePage: function(newView, tutorial, post_render) {
             if(AppRouter.view) AppRouter.view.close();
             var cleanDiv = document.createElement('div');
             cleanDiv.className = "clean-div";
             var mainContainer = document.getElementById('main-container');
             mainContainer.appendChild(cleanDiv);
 
-            AppRouter.view = new newView(viewOptions);
+            AppRouter.view = new newView();
             AppRouter.view.setElement(cleanDiv).render();
             $('.active').removeClass('active');
             this.changeTitle(AppRouter.view.title);
@@ -187,6 +175,18 @@ define([
             $('.page').fadeIn();
             $('.pull-right.dropd').removeClass('open');
             post_render.call();
+            if(tutorial && tutorial === 'tutorial/') {
+                this.showTutorial();
+            }
+            else if(tutorial) {
+                // remove random ending string from url path
+                this.navigate(window.location.pathname.replace(tutorial, ''), {replace: true});
+            }
+            else {
+                if(this.tutorialIsVisible) {
+                    this.tutorial.closeModal();
+                }
+            }
         },
 
         deploy: function(callback) {
@@ -226,8 +226,8 @@ define([
             });
         },
 
-        save: function(e) {
-            if(v1.errorFlag === true) return;
+        save: function(e, callback) {
+            if(v1.disableSave === true) return;
             if(appId === 0) return;
 
             $('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
@@ -239,7 +239,7 @@ define([
 
             var successHandler = function(data) {
                 util.dontAskBeforeLeave();
-                v1.errorFlag = false;
+                v1.disableSave = false;
 
                 v1State.set('version_id', data.version_id);
 
@@ -260,29 +260,29 @@ define([
                 }, 3000);
             };
             var softErrorHandler = function(jqxhr) {
-                console.log("HANDLING SOFT ERROR");
                 var data = JSON.parse(jqxhr.responseText);
                 v1State.set('version_id', data.version_id);
-                //v1.errorFlag = true;
-                //var content = { text: "Warning: " + data.message + ' We saved your progress, but you need to fix this before deploying again. FYI, this occurred in ' + data.path + '.' };
-                //new ErrorDialogueView(content, function() { v1.errorFlag = false;});
-                new SoftErrorView({text: data.message, path: data.path });
+                v1.disableSave = true;
+                new SoftErrorView({text: data.message, path: data.path }, function() { v1.disableSave = false;});
             };
             var browserConflictHandler = function(jqxhr) {
-                new ErrorDialogueView({text:"Looks like you (or someone else) made a change to your app in another browser window. Please make sure you only use one window with Appcubator or you may end up overwriting your app with an older version. Please refresh the browser to get the updated version of your app."}, function() { v1.errorFlag = false;});
+                v1.disableSave = true;
+                var content = { text: "Looks like you (or someone else) made a change to your app in another browser window. Please make sure you only use one window with Appcubator or you may end up overwriting your app with an older version. Please refresh the browser to get the updated version of your app." };
+                new ErrorDialogueView(content, function() { v1.disableSave = false;});
             };
             var hardErrorHandler = function(jqxhr) {
-                v1.errorFlag = true;
-                var content = "";
+                v1.disableSave = true;
+                var content = {};
                 if(DEBUG)
                     content = { text: jqxhr.responseText };
                 else
                     content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
-                new ErrorDialogueView(content, function() { v1.errorFlag = false; });
+                new ErrorDialogueView(content, function() { v1.disableSave = false; });
             };
 
             // for now, no difference
             var notFoundHandler = hardErrorHandler;
+            v1.disableSave = true;
 
             $.ajax({
                 type: "POST",
@@ -304,7 +304,13 @@ define([
 
         showTutorial: function(dir) {
             var inp = (dir) ? [dir] : this.tutorialDirectory;
-            tutorial = new TutorialView(inp);
+            if(this.tutorialIsVisible) {
+                this.tutorial.chooseSlide(inp, false);
+            }
+            else {
+                this.tutorial = new TutorialView(inp);
+                this.tutorialIsVisible = true;
+            }
         },
 
         betaCheck: function(data) {

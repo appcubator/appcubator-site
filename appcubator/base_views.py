@@ -73,7 +73,7 @@ def changelog(request):
 @require_GET
 def homepage(request):
     if request.user.is_authenticated():
-        return redirect('/app')
+        return redirect('/app/')
 
     page_context = {}
     page_context["title"] = "Homepage"
@@ -91,7 +91,7 @@ def homepagenew(request):
 @require_GET
 def showhnpage(request):
     if request.user.is_authenticated():
-        return redirect('/app')
+        return redirect('/app/')
 
     page_context = {}
     page_context["title"] = "Homepage"
@@ -99,9 +99,19 @@ def showhnpage(request):
     return render(request, 'website-showhn.html', page_context)
 
 @require_GET
+def showgwcpage(request):
+    if request.user.is_authenticated():
+        return redirect('/app/')
+
+    page_context = {}
+    page_context["title"] = "Homepage"
+
+    return render(request, 'website-showgwc.html', page_context)
+
+@require_GET
 def showdnpage(request):
     if request.user.is_authenticated():
-        return redirect('/app')
+        return redirect('/app/')
 
     page_context = {}
     page_context["title"] = "Homepage"
@@ -111,7 +121,7 @@ def showdnpage(request):
 @require_GET
 def showgsbpage(request):
     if request.user.is_authenticated():
-        return redirect('/app')
+        return redirect('/app/')
 
     page_context = {}
     page_context["title"] = "Homepage"
@@ -171,7 +181,7 @@ def signup(request):
     if request.method == "GET":
         if 'k' in request.GET:
             api_key = request.GET['k']
-            if InvitationKeys.objects.filter(api_key=api_key).count() > 0:
+            if InvitationKeys.objects.filter(api_key=api_key).exists():
                 return render(request, "registration/signup.html")
         return render(request, "website-home.html")
     else:
@@ -188,7 +198,7 @@ def signup(request):
             login(request, new_user)
             return HttpResponse()
         else:
-            return HttpResponse(simplejson.dumps({k: v for k, v in form.errors.items()}), mimetype="application/json")
+            return HttpResponse(simplejson.dumps(form.errors), mimetype="application/json")
 
 
 def terms_of_service(request):
@@ -213,110 +223,93 @@ def marketing(request):
     return render(request, 'hello.html', page_context)
 
 
+class NewCustomerForm(forms.ModelForm):
+    extra_info = forms.CharField(max_length=255, required=False)
+    project_description = forms.CharField(max_length=255, required=False)
+    class Meta:
+        model = Customer
+        fields = ('name', 'email', 'company', 'extra_info', 'consulting', 'project_description', 'sign_up_fee')
+
 @require_POST
 @csrf_exempt
 def signup_new_customer(request):
-    name = request.POST['name']
-    email = request.POST['email']
-    company = request.POST['company']
-    extra = request.POST['extra']
-    interest = request.POST['interest']
-    interest = (interest == 'true')
-    description = request.POST['description']
-    Customer.create_first_time(name, email, company, extra, description, 11, interest)
-    return HttpResponse("ok")
+    data = request.POST.copy()
+    data['sign_up_fee'] = '11'
+    data['project_description'] = data.get('description', '')
+    data['consulting'] = data.get('interest', '')
+    data['extra_info'] = data.get('extra', '')
+    form = NewCustomerForm(data)
+    if form.is_valid():
+        c = form.save()
+        return HttpResponse("")
 
-@require_http_methods(["GET", "POST"])
-@csrf_exempt
-def signup_hn_customer(request):
+    return HttpResponse(simplejson.dumps(form.errors), mimetype="application/json", status=400)
+
+def signup_from(request, src):
+    src_company_map = { 'hn': 'Hacker News',
+                        'dn': 'Design News',
+                        'gwc': 'Girls who code',
+                        'gsb': 'GSB' }
+
+    src_description_map = { 'hn': 'HN launch',
+                            'dn': 'DN launch',
+                            'gwc': 'Referred by Renee',
+                            'gsb': 'Turkey training' }
+
+    src_template_map = { 'hn': 'website-showhn.html',
+                         'dn': 'website-showdn.html',
+                         'gwc': 'website-showgwc.html',
+                         'gsb': 'website-showgsb.html' }
+
     if request.method == "GET":
         if request.user.is_authenticated():
-            return redirect('/app')
-        return render(request, "website-showhn.html")
+            return redirect('/app/')
+        return render(request, src_template_map[src])
     else:
         req = {}
         req = deepcopy(request.POST)
         req["username"] = request.POST["email"]
         req["first_name"] = request.POST["name"].split(" ")[0]
-        req["last_name"] = request.POST["name"].split(" ")[-1]
-        form = MyUserCreationForm(req)
-        if form.is_valid():
-            user = form.save()
+        req["last_name"] = ' '.join(request.POST["name"].split(" ")[1:])
+        user_form = MyUserCreationForm(req)
+        req['company'] = src_company_map[src]
+        req['extra_info'] = ""
+        req['consulting'] = "false"
+        req['description'] = src_description_map[src]
+        req['sign_up_fee'] = '11'
+        cust_form = NewCustomerForm(req)
+        if user_form.is_valid() and cust_form.is_valid():
+            user = user_form.save()
+            c = cust_form.save(commit=False)
+            c.sent_welcome_email = True
             new_user = authenticate(username=req['email'],
                                     password=req['password1'])
             login(request, new_user)
-            name = request.POST['name']
-            email = request.POST['email']
-            company = "Hacker News"
-            extra = ""
-            interest = False
-            description = "HN launch"
-            Customer.create_first_time(name, email, company, extra, description, 11, interest)
-            return HttpResponse()
+            c.user_id = new_user.id
+            c.save()
+            return HttpResponse("")
         else:
-            return HttpResponse(simplejson.dumps({k: v for k, v in form.errors.items()}), mimetype="application/json")
+            return HttpResponse(simplejson.dumps(dict(user_form.errors.items() + cust_form.errors.items())), mimetype="application/json", status=400)
 
 @require_http_methods(["GET", "POST"])
 @csrf_exempt
-def signup_dn_customer(request):
-    if request.method == "GET":
-        if request.user.is_authenticated():
-            return redirect('/app')
-        return render(request, "website-showdn.html")
-    else:
-        req = {}
-        req = deepcopy(request.POST)
-        req["username"] = request.POST["email"]
-        req["first_name"] = request.POST["name"].split(" ")[0]
-        req["last_name"] = request.POST["name"].split(" ")[-1]
-        form = MyUserCreationForm(req)
-        if form.is_valid():
-            user = form.save()
-            new_user = authenticate(username=req['email'],
-                                    password=req['password1'])
-            login(request, new_user)
-            name = request.POST['name']
-            email = request.POST['email']
-            company = "Hacker News"
-            extra = ""
-            interest = False
-            description = "DN launch"
-            Customer.create_first_time(name, email, company, extra, description, 11, interest)
-            return HttpResponse()
-        else:
-            return HttpResponse(simplejson.dumps({k: v for k, v in form.errors.items()}), mimetype="application/json")
-
+def signup_from_hn(request):
+    return signup_from(request, 'hn')
 
 @require_http_methods(["GET", "POST"])
 @csrf_exempt
-def signup_gsb_customer(request):
-    if request.method == "GET":
-        if request.user.is_authenticated():
-            return redirect('/app')
-        return render(request, "website-showgsb.html")
-    else:
-        req = {}
-        req = deepcopy(request.POST)
-        req["username"] = request.POST["email"]
-        req["first_name"] = request.POST["name"].split(" ")[0]
-        req["last_name"] = request.POST["name"].split(" ")[-1]
-        form = MyUserCreationForm(req)
-        if form.is_valid():
-            user = form.save()
-            new_user = authenticate(username=req['email'],
-                                    password=req['password1'])
-            login(request, new_user)
-            name = request.POST['name']
-            email = request.POST['email']
-            company = "Hacker News"
-            extra = ""
-            interest = False
-            description = "Turkey Training"
-            Customer.create_first_time(name, email, company, extra, description, 11, interest)
-            return HttpResponse()
-        else:
-            return HttpResponse(simplejson.dumps({k: v for k, v in form.errors.items()}), mimetype="application/json")
+def signup_from_dn(request):
+    return signup_from(request, 'dn')
 
+@require_http_methods(["GET", "POST"])
+@csrf_exempt
+def signup_from_gsb(request):
+    return signup_from(request, 'gsb')
+
+@require_http_methods(["GET", "POST"])
+@csrf_exempt
+def signup_from_gwc(request):
+    return signup_from(request, 'gwc')
 
 @login_required
 @csrf_exempt
@@ -333,8 +326,20 @@ def send_invitation_to_customer(request, customer_pk):
     if request.POST['subject']:
         subject = request.POST['subject']
 
-    template_context = {"text" : text}
+    template_context = {"text": text}
     send_template_email("team@appcubator.com", customer.email, subject, "", "emails/base_boxed_basic_query.html", template_context)
     customer.sent_welcome_email = True
     customer.save()
     return HttpResponse("ok")
+
+
+def resources(request):
+    page_context = {}
+    page_context["title"] = "Resources"
+    return render(request, 'resources.html', page_context)
+
+
+def screencast(request, screencast_id=1):
+    page_context = {}
+    page_context["title"] = "Screecast " + screencast_id
+    return render(request, 'screencast-' + screencast_id + '.html', page_context)

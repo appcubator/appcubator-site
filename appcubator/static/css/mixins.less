@@ -51,6 +51,11 @@
      -moz-box-shadow: @shadow;
           box-shadow: @shadow;
 }
+.box-shadow(@shadow1, @shadow2) {
+  -webkit-box-shadow: @shadow1, @shadow2;
+     -moz-box-shadow: @shadow1, @shadow2;
+          box-shadow: @shadow1, @shadow2;
+}
 
 // Transitions
 .transition(@transition) {
@@ -59,6 +64,14 @@
       -ms-transition: @transition;
        -o-transition: @transition;
           transition: @transition;
+}
+// Transitions
+.transition(@transition1, @transition2) {
+  -webkit-transition: @transition1, @transition2;
+     -moz-transition: @transition1, @transition2;
+      -ms-transition: @transition1, @transition2;
+       -o-transition: @transition1, @transition2;
+          transition: @transition1, @transition2;
 }
 
 // Center-align a block level element
@@ -112,4 +125,12 @@
   @opperc: @opacity * 100;
   -ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(opacity=@{opperc})";/*"*/
   filter: "alpha(opacity=@{opperc})";
+}
+
+// Shortcut for 1px solid borders
+.border(@color) {
+  border: 1px solid @color;
+}
+.border(@top, @right, @bottom, @left, @color) {
+  border: @top @right @bottom @left solid @color;
 }

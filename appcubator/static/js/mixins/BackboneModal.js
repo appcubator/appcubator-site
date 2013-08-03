@@ -70,7 +70,9 @@ function(Backbone) {
       }
       else {
         div.style.minHeight = '300px';
+        div.style.maxHeight = '630px';
       }
+      div.style.overflow = 'scroll';
       div.style.top = '50%';
       div.style.left = '50%';
       div.style.marginLeft= '-'+ (this.width/2) +'px';
