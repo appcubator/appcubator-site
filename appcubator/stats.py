@@ -4,6 +4,7 @@ from django.db.models import Avg, Count
 from datetime import datetime, timedelta, date
 import time
 import json
+import urllib
 from operator import add
 
 T0 = date(2013, 6, 26)
@@ -26,7 +27,7 @@ def user_logs(user_id):
 def get_logs(args):
     logs = LogAnything.objects
     if 'name' in args:
-        logs = logs.filter(name=args['name'])
+        logs = logs.filter(name=urllib.unquote_plus(args['name']))
     if 'app_id' in args:
         logs = logs.filter(app_id=args['app_id'])
     if 'user_id' in args:

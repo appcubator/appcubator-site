@@ -153,9 +153,10 @@ def user_logs_graph(request, user_id):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def logs(request):
-    logs = get_logs(request.GET)
-    result = [{'id': log.pk, 'user_id': log.user_id, 'app_id': log.app_id, 'name': log.name, 'timestamp': str(log.timestamp), 'data': log.data} for log in list(logs)]
-    return HttpResponse(result, mimetype="application/json")
+    logs = get_logs(request.GET).values('id', 'user_id', 'app_id', 'name', 'timestamp', 'data')
+    for log in logs:
+        log['timestamp'] = str(log['timestamp'])
+    return HttpResponse(logs, mimetype="application/json")
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
