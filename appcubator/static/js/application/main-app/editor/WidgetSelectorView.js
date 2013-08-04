@@ -212,6 +212,10 @@ function() {
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = '';
       elem.style.height = '';
+
+      if(deltaHeight <= 0) deltaHeight = 1;
+      if(deltaWidth <= 0) deltaWidth = 1;
+
       this.selectedEl.get('layout').set('width', deltaWidth);
       this.selectedEl.get('layout').set('height', deltaHeight);
       this.selectedEl.get('layout').set('left', left);
