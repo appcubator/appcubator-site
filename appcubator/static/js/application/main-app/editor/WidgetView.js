@@ -33,8 +33,8 @@ define([
       this.listenTo(this.model.get('data'), "change:class_name", this.changedType, this);
       this.listenTo(this.model, "remove", this.close, this);
 
-      this.listenTo( this.model.get('layout'), "change:width",this.changedWidth, this);
-      this.listenTo( this.model.get('layout'), "change:height", this.changedHeight, this);
+      this.listenTo( this.model.get('layout'), "change:width",this.changedSize, this);
+      this.listenTo( this.model.get('layout'), "change:height", this.changedSize, this);
       this.listenTo( this.model.get('layout'), "change:top", this.changedTop, this);
       this.listenTo( this.model.get('layout'), "change:left", this.changedLeft, this);
       this.listenTo( this.model.get('layout'), "change:isFull", this.toggleFull, this);
@@ -165,8 +165,15 @@ define([
       $('#elements-container').append(this.el);
       this.render();
     },
+    
+    changedSize: function() {
+      this.changedHeight();
+      this.changedWidth();
+    },
 
     changedHeight: function(a) {
+      console.log(this.model.get('layout').get('height'));
+      console.log(this.model.get('layout').get('height') * (this.positionVerticalGrid));
       this.setHeight(this.model.get('layout').get('height') * (this.positionVerticalGrid));
     },
 
