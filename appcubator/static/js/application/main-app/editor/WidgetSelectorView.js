@@ -228,10 +228,10 @@ function() {
       this.widgetEditorView.clear();
 
       g_guides.hideAll();
-      g_guides.showVertical(ui.position.left / this.positionVerticalGrid);
-      g_guides.showVertical(ui.position.left / this.positionVerticalGrid + model.get('layout').get('width'));
-      g_guides.showHorizontal(ui.position.top / this.positionHorizontalGrid);
-      g_guides.showHorizontal(ui.position.top / this.positionHorizontalGrid + model.get('layout').get('height'));
+      g_guides.showVertical(ui.position.left / this.positionHorizontalGrid);
+      g_guides.showVertical(ui.position.left / this.positionHorizontalGrid + model.get('layout').get('width'));
+      g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid);
+      g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'));
 
       var elem = util.get('widget-wrapper-' + model.cid);
       elem.style.top = ui.position.top + 2 + 'px';
