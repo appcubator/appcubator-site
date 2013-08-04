@@ -279,6 +279,48 @@ define(['jquery'], function() {
       }
     },
 
+    findPos: function (obj) {
+      var curleft = curtop = 0;
+
+      if(obj.style.position == "fixed") return [1,1];
+      if (obj.offsetParent) {
+        do {
+          curleft += obj.offsetLeft;
+          curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+      }
+
+      return [curleft,curtop];
+    },
+
+    waitUntilAppears: function(selector, callbackFn, cont_args, count, timer) {
+      if(!timer) timer = {};
+      clearTimeout(timer);
+      var cnt = (count || 0);
+
+      el = document.querySelector(selector);
+      if(el && !el.tagName) { el = el[0]; }
+
+      var repeat = function() {
+        cnt++;
+        timer = window.setTimeout(function() {
+          util.waitUntilAppears.call(this, selector, callbackFn, cont_args, cnt, timer);
+        }, 500);
+      };
+
+      var fail = function() {
+        alert('There has been a problem with the flow of the Walkthrough. Please refresh your page. Don\'t worry, you\'ll start from where you left off!');
+      };
+
+      if(cnt > 60) return fail();
+      if(!el) return repeat();
+
+      var pos = util.findPos(el);
+
+      if($(el).height() === 0 || $(el).width() === 0 || pos[0] === 0 || pos[1] === 0) return repeat();
+      callbackFn.apply(undefined, cont_args);
+    },
+
     threeDots: function() {
       var el = document.createElement('span');
       el.style.marginLeft = 0;
