@@ -277,6 +277,29 @@ define(['jquery'], function() {
       } else if ( window.getSelection ) {
           window.getSelection().removeAllRanges();
       }
+    },
+
+    threeDots: function() {
+      var el = document.createElement('span');
+      el.style.marginLeft = 0;
+      el.style.width = '12px';
+      el.style.textAlign = 'left';
+      var currentNmr = 1;
+      var timer = setInterval(function() {
+        nmr = (currentNmr % 3);
+        var str = '.';
+        for(var ii = 0; ii < nmr; ii++) {
+          str += '.';
+        }
+        el.innerHTML = str;
+        currentNmr++;
+      }, 200);
+
+      var obj = {};
+      obj.el = el;
+      obj.timer = timer;
+
+      return obj;
     }
 
   };

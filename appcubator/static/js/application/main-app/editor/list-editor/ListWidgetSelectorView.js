@@ -194,6 +194,10 @@ function() {
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = '';
       elem.style.height = '';
+
+      if(deltaHeight <= 8) deltaHeight = 15;
+      if(deltaWidth <= 8) deltaWidth = 15;
+
       this.selectedEl.get('layout').set('width', deltaWidth);
       this.selectedEl.get('layout').set('height', deltaHeight);
       this.selectedEl.get('layout').set('left', left);

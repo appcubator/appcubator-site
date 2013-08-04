@@ -212,6 +212,10 @@ function() {
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = '';
       elem.style.height = '';
+
+      if(deltaHeight <= 0) deltaHeight = 1;
+      if(deltaWidth <= 0) deltaWidth = 1;
+
       this.selectedEl.get('layout').set('width', deltaWidth);
       this.selectedEl.get('layout').set('height', deltaHeight);
       this.selectedEl.get('layout').set('left', left);
@@ -228,10 +232,10 @@ function() {
       this.widgetEditorView.clear();
 
       g_guides.hideAll();
-      g_guides.showVertical(ui.position.left / this.positionVerticalGrid);
-      g_guides.showVertical(ui.position.left / this.positionVerticalGrid + model.get('layout').get('width'));
-      g_guides.showHorizontal(ui.position.top / this.positionHorizontalGrid);
-      g_guides.showHorizontal(ui.position.top / this.positionHorizontalGrid + model.get('layout').get('height'));
+      g_guides.showVertical(ui.position.left / this.positionHorizontalGrid);
+      g_guides.showVertical(ui.position.left / this.positionHorizontalGrid + model.get('layout').get('width'));
+      g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid);
+      g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'));
 
       var elem = util.get('widget-wrapper-' + model.cid);
       elem.style.top = ui.position.top + 2 + 'px';
