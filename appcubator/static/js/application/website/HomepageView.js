@@ -28,8 +28,6 @@ function(SignupModalView) {
 
       $(document).ready(function() {
         setTimeout(function() {
-          console.trace();
-          console.log("YALOOO")
           var elem = document.getElementById('video-pane');
           ifrm = document.createElement("IFRAME");
           ifrm.setAttribute("src", "http://player.vimeo.com/video/70250440");
