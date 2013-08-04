@@ -81,8 +81,6 @@ function() {
         bg = 4;
       }
 
-
-
     });
 
     $('.btn-facebook').on('click', function() {

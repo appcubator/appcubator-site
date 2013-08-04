@@ -81,6 +81,7 @@ function(HomepageView) {
     },
 
     homepage: function() {
+      console.log("halloooo");
       this.view = new HomepageView().render();
     },
 

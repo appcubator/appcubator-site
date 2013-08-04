@@ -16,7 +16,6 @@ function(SignupModalView) {
     initialize: function(directory) {
       _.bindAll(this);
       this.addr = (directory) ? directory : [0];
-      this.render();
     },
 
     render : function(img, text) {
@@ -24,6 +23,19 @@ function(SignupModalView) {
 
       $('input[type=checkbox]').prettyCheckable();
       $('input[type=radio]').prettyCheckable();
+
+      $(document).ready(function() {
+        setTimeout(function() {
+          console.trace();
+          console.log("YALOOO")
+          var elem = document.getElementById('video-pane');
+          ifrm = document.createElement("IFRAME");
+          ifrm.setAttribute("src", "http://player.vimeo.com/video/70250440");
+          ifrm.style.width = "100%";
+          ifrm.style.height = 195+"px";
+          elem.appendChild(ifrm);
+        }, 800);
+      });
 
       return this;
     },
