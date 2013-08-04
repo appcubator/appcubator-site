@@ -76,6 +76,7 @@ function(FormFieldModel, ActionModel, TutorialView) {
 
 
     gotoActionClicked: function(e) {
+      if($(e.currentTarget).hasClass('current-action')) return;
       var pageCid = (e.target.id||e.target.parentNode.id).replace('page-','');
       this.model.set('goto', this.possibleGotos.get(pageCid));
     },
@@ -93,6 +94,7 @@ function(FormFieldModel, ActionModel, TutorialView) {
     },
 
     currentActionClicked: function(e) {
+      if($(e.currentTarget).hasClass('goto-action')) return;
       var actionCid = (e.target.id||e.target.parentNode.id).replace('action-','');
       this.model.get('actions').remove(actionCid);
     },
