@@ -167,15 +167,22 @@ function( PageModel,
     deploy: function(options) {
       var url = '/app/'+appId+'/deploy/';
       var self = this;
-      util.get('deploy-text').innerHTML = 'Deploying...';
-
+      util.get('deploy-text').innerHTML = 'Deploying';
+      var threeDots = util.threeDots();
+      util.get('deploy-text').appendChild(threeDots.el);
+      
       var success_callback = function() {
         util.get('deploy-text').innerHTML = 'Test Run';
+        clearInterval(threeDots.timer);
+      };
+
+      var hold_on_callback = function() {
+        util.get('deploy-text').innerHTML = 'Hold On, It\'s still deploying.';
       };
 
       var urlSuffix = '/' + self.urlModel.getAppendixString();
       if(urlSuffix != '/') urlSuffix += '/';
-      v1.deploy(success_callback, { appendToUrl: urlSuffix });
+      v1.deploy(success_callback, hold_on_callback,{ appendToUrl: urlSuffix });
     },
 
     clickedUrl: function() {
