@@ -49,7 +49,7 @@ define([
 
         if(displayType == "images") {
           layout = {left : 0, top: nmrImageElements*90 + 5, height: 90, width: 90};
-          content_ops.content_src = '{{loop.'+ entity.get('name') +'.'+fieldModel.get('name')+'}}';
+          content_ops.src_content = '{{loop.'+ entity.get('name') +'.'+fieldModel.get('name')+'}}';
           nmrImageElements++;
         }
         else {
