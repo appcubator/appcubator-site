@@ -10,7 +10,9 @@ function(SignupModalView) {
     el: document.body,
 
     events : {
-      'click #request' : 'openSignupForm'
+      'click #request'       : 'openSignupForm',
+      'click .slide-to-info' : 'slideToInfo',
+      'click .slide-gallery' : 'slideGallery'
     },
 
     initialize: function(directory) {
@@ -66,6 +68,16 @@ function(SignupModalView) {
     openSignupForm: function() {
       new SignupModalView();
       
+    },
+
+    slideToInfo: function() {
+      var infoHeight = $('.slide-info').offset().top - 30;
+      $('html, body').animate({ scrollTop: infoHeight }, 'slow');
+    },
+
+    slideGallery: function() {
+      var galleryHeight = $('.slide-gallery').offset().top - 30;
+      $('html, body').animate({ scrollTop: galleryHeight }, 'slow');
     }
 
   });
