@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for user in users reversed%}
+      {% for user in users reversed %}
       <tr>
         <td><a href="{% url appcubator.admin_views.admin_user user.pk %}">{{ user.pk }}</a></td>
         <td><a href="{% url appcubator.admin_views.admin_user user.pk %}">{{ user.user.first_name }} {{ user.user.last_name }}</a></td>
