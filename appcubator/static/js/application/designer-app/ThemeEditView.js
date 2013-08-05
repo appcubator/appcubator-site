@@ -67,7 +67,7 @@ define([
 
       this.editor = ace.edit("base-css");
       this.editor.getSession().setMode("ace/mode/css");
-      this.editor.setValue(this.model.get('basecss'));
+      this.editor.setValue(this.model.get('basecss'), -1);
 
       //$('#fonts-editor').val(this.model.get('fonts'));
       /*this.model.get('pages').each(function(page, ind) {
