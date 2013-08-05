@@ -22,10 +22,9 @@ ThemeTemplates.tempPane = [
 ].join('\n');
 
 ThemeTemplates.tempCreate = [
-'<div class="span9 hoff1 create-text">',
-  '<div class="pane border minhi">',
-    '<span class="">+ Create an element</span>',
-  '</div>',
+'<div class="span22 hoff1 create-text pane hi7">',
+  '<img src="/static/img/add.png" class="span3 add-img">',
+  '<h3 class="hoff1 offset1">+ Create an element</span>',
 '</div>'
 ].join('\n');
 
