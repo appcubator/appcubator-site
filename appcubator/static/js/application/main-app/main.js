@@ -134,10 +134,22 @@ function (AppModel,
       require(['app/SimpleTwitterTour'], function(QuickTour) {
         if(!QuickTour.currentStep) return;
         var url = QuickTour.currentStep.url;
-        v1.navigate('app/'+appId+url, {trigger: true});
-        setTimeout(function() {
-          QuickTour.start();
-        }, 1000);
+
+        if(QuickTour.currentStep.waitUntil) {
+          util.waitUntilAppears(QuickTour.currentStep.waitUntil, function() {
+            v1.navigate('app/'+appId+url, {trigger: true});
+            setTimeout(function() {
+              QuickTour.start();
+            }, 1000);
+          });
+        }
+        else {
+          v1.navigate('app/'+appId+url, {trigger: true});
+          setTimeout(function() {
+            QuickTour.start();
+          }, 1000);
+        }
+
       });
     }
 

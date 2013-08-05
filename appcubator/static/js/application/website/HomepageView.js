@@ -10,13 +10,14 @@ function(SignupModalView) {
     el: document.body,
 
     events : {
-      'click #request' : 'openSignupForm'
+      'click #request'       : 'openSignupForm',
+      'click .slide-to-info' : 'slideToInfo',
+      'click .slide-gallery' : 'slideGallery'
     },
 
     initialize: function(directory) {
       _.bindAll(this);
       this.addr = (directory) ? directory : [0];
-      this.render();
     },
 
     render : function(img, text) {
@@ -24,6 +25,17 @@ function(SignupModalView) {
 
       $('input[type=checkbox]').prettyCheckable();
       $('input[type=radio]').prettyCheckable();
+
+      $(document).ready(function() {
+        setTimeout(function() {
+          var elem = document.getElementById('video-pane');
+          ifrm = document.createElement("IFRAME");
+          ifrm.setAttribute("src", "http://player.vimeo.com/video/70250440");
+          ifrm.style.width = "100%";
+          ifrm.style.height = 195+"px";
+          elem.appendChild(ifrm);
+        }, 800);
+      });
 
       return this;
     },
@@ -54,6 +66,16 @@ function(SignupModalView) {
     openSignupForm: function() {
       new SignupModalView();
       
+    },
+
+    slideToInfo: function() {
+      var infoHeight = $('.slide-info').offset().top - 30;
+      $('html, body').animate({ scrollTop: infoHeight }, 'slow');
+    },
+
+    slideGallery: function() {
+      var galleryHeight = $('.slide-gallery').offset().top - 30;
+      $('html, body').animate({ scrollTop: galleryHeight }, 'slow');
     }
 
   });

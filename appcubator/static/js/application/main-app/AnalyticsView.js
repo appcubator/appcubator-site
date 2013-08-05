@@ -45,9 +45,11 @@ function(SimpleModalView) {
       // filter out requests for 'blacklisted' pages/statics
       var total_page_views = data.total_page_views || 0;
       if(data.total_page_views_dict) {
-        for(var i=0; i < this.blackList.length; i++) {
-          total_page_views -= data.total_page_views_dict[this.blackList[i]];
-        }
+        _(this.blackList).each(function(item) {
+          if (item in data.total_page_views_dict) {
+            total_page_views -= data.total_page_views_dict[item];
+          }
+        });
       }
       document.getElementsByClassName('total-page-views')[0].innerHTML = total_page_views;
       //this.updateInterval = setTimeout(this.fetchInfo, 10000);

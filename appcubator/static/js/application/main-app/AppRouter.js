@@ -189,13 +189,15 @@ define([
             }
         },
 
-        deploy: function(callback) {
+        deploy: function(callback, hold_on_callback) {
             var self = this;
+            var isDeployed = false;
             var before_deploy = new Date().getTime();
             $.ajax({
                 type: "POST",
                 url: '/app/'+appId+'/deploy/',
                 success: function(data) {
+                    isDeployed = true;
                     var deploy_time = (new Date().getTime() - before_deploy)/1000;
                     if(callback) callback();
                     // open a modal based on deploy response
@@ -214,6 +216,7 @@ define([
                     }
                 },
                 error: function(data) {
+                    isDeployed = true;
                     var deploy_time = (new Date().getTime() - before_deploy)/1000;
                     var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
                     if(DEBUG) {
@@ -224,6 +227,11 @@ define([
                 },
                 dataType: "JSON"
             });
+
+            var holdOnTimer = setTimeout(function() { 
+                if(!isDeployed) hold_on_callback.call();
+                clearTimeout(holdOnTimer);
+            }, 10000);
         },
 
         save: function(e, callback) {

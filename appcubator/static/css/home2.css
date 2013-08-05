@@ -397,13 +397,24 @@ body {
   display: inline-block;
   width: 440px;
   height: 330px;
-  position: absolute;
+  position: relative;
   right: 0px;
   bottom: 20px; 
   background-image: url(../img/screen.png);
   background-repeat: no-repeat;
   background-size: auto 100%;
   overflow: hidden;
+  float: right;
+}
+
+.slide-info .screen .video {
+  display: inline-block;
+  position: absolute;
+  width: 100%;
+  left: 15px;
+  top: 15px;
+  height: 195px;
+  width: 360px;
 }
 
 .slide-info .row .title {
@@ -1352,15 +1363,6 @@ li .summary h3 {
 .fb-comments {
   left: 50%;
   margin-left: -300px;
-}
-
-.video {
-  margin-left: -10px;
-  overflow: hidden;
-  display: inline-block;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  margin-top: 15px;
 }
 
 .modal.fancy {

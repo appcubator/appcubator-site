@@ -219,7 +219,7 @@ define([
         return { target: $('.pick-style') };
       },
       teardown: function() {
-        incrementStep();
+        
       }
     },
     /*
@@ -230,6 +230,7 @@ define([
       my: "right center",
       at: "left center",
       url: '/editor/0/',
+      waitUntil: "#entity-user-facebook",
       setup: function(tour, options) {
         facebookDropped = function(uielem) {
           if(uielem.get('data').get('action') == "thirdpartylogin") {
@@ -237,13 +238,16 @@ define([
             tour.next();
           }
         };
-        v1State.getCurrentPage().get('uielements').bind('add', facebookDropped);
+        v1State.get('pages').models[0].get('uielements').bind('add', facebookDropped);
 
-        return { target: $('#entity-user-facebook') };
+        return { target: function() { 
+          $('#item-gallery').scrollTop($("#entity-user-facebook").offset().top - 110);
+          return $('#entity-user-facebook'); 
+        }() };
       },
       teardown: function() {
         v1State.getCurrentPage().get('uielements').unbind('add', facebookDropped);
-        incrementStep();
+
       }
     },
     /*
@@ -263,7 +267,7 @@ define([
         return { target: $(elem) };
       },
       teardown: function() {
-        incrementStep();
+
       }
     },
     /*
@@ -282,6 +286,9 @@ define([
         tour.loginButton.get('data').get('loginRoutes').models[0].unbind('change', tour.next);
         $('.modal-bg').remove();
         $('.login-route-editor.modal').remove();
+        incrementStep();
+        incrementStep();
+        incrementStep();
         incrementStep();
       }
     },
@@ -453,8 +460,8 @@ define([
         $('#item-gallery').animate({
           scrollTop: $(".entity-list").offset().top - 90
         }, 200);
-        $('.btn.done-btn').one('click', tour.next);
-        return { target: $('.btn.done-btn')};
+        $('.btn.done').one('click', tour.next);
+        return { target: $('.btn.done')};
       },
       teardown: function() {
         incrementStep();

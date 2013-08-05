@@ -62,6 +62,11 @@ function(Striper) {
 
   $('.left-nav').affix({offset: 0});
 
+  $('#add-key-btn').on('click', function() {
+    $('#add-key-btn').hide();
+    $('#add-key-panel').fadeIn();
+  });
+
   // @ksikka's code
   $(document).ready(function() {
     $('form').each(function(ind, node) {

@@ -59,16 +59,8 @@ function(HomepageView) {
   var WebsiteRouter = Backbone.Router.extend({
 
     routes: {
-      // "app/:appid/info/(:tutorial/)"     : "info",
-      // "app/:appid/tables/(:tutorial/)"   : "tables",
-      // "app/:appid/gallery/(:tutorial/)"  : "themes",
-      // "app/:appid/pages/(:tutorial/)"    : "pages",
-      // "app/:appid/editor/:pageid/"       : "editor",
-      // "app/:appid/mobile-editor/:pageid/": "mobileEditor",
-      // "app/:appid/emails/(:tutorial/)"   : "emails",
-      // "app/:appid/(:tutorial/)"          : "index",
-      "/"                                   : "homepage",
-      "home/"                              : "homepage"
+      "/"                              : "homepage",
+      ""                               : "homepage"
     },
 
     cube: $('#cube'),
@@ -81,6 +73,7 @@ function(HomepageView) {
     },
 
     homepage: function() {
+      console.log("halloooo");
       this.view = new HomepageView().render();
     },
 
