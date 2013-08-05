@@ -55,7 +55,9 @@ function( WidgetView,
     },
 
     // this function decides if widget or container
-    placeUIElement: function(model, isNew) {
+    placeUIElement: function(model, isNew, extraData) {
+      if(extraData && extraData.collection) { isNew = false; }
+
       model.setupPageContext(v1State.getCurrentPage());
       var widget = {};
       if(model.get('data').has('container_info') && model.get('data').get('container_info').has('row')) {
