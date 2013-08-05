@@ -5,7 +5,7 @@ function(UIElementEditingView) {
 
   var UIElementView = Backbone.View.extend({
     el: null,
-    className: 'widgetWrapper pane-inline border hi12 span45 hoff1',
+    className: 'widgetWrapper pane-inline border hi9 span44 hoff1',
     isExpanded: false,
 
     events : {
@@ -27,17 +27,17 @@ function(UIElementEditingView) {
       this.el.id = 'elem-' + this.model.cid;
 
       var upperDiv = document.createElement('div');
-      upperDiv.className = "upper-area";
+      upperDiv.className = "upper-area row";
       var class_name = this.model.get('class_name');
       upperDiv.innerHTML =[
-        '<div class="class-menu">',
+        '<div class="class-menu span10">',
+          '<span class="remove-relation remove">×</span>',
           '<input type="text" name="className" class="class_name" value="'+class_name+'" placeholder="className...">',
           '<div class="btn btn-info">Expand Edit Panel</div>',
-          '<div class="btn btn-delete remove">Remove Element</div>',
         '</div>'].join('\n');
 
       this.tempNodeDiv = document.createElement('div');
-      this.tempNodeDiv.className = "temp-node-area offset1";
+      this.tempNodeDiv.className = "temp-node-area offset1 span29";
       this.tempNodeDiv.innerHTML = _.template(ThemeTemplates.tempNode, {info: this.model.attributes});
 
       upperDiv.appendChild(this.tempNodeDiv);
