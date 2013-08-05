@@ -1,18 +1,19 @@
 define([
-  './SignupModalView',
+  './RequestInviteModalView',
   'answer',
   'backbone',
   'util'
 ],
-function(SignupModalView) {
+function(RequestInviteModalView) {
 
   var HomepageView = Backbone.View.extend({
     el: document.body,
 
     events : {
-      'click #request'       : 'openSignupForm',
-      'click .slide-to-info' : 'slideToInfo',
-      'click .slide-gallery' : 'slideGallery'
+      'click #request'          : 'openSignupForm',
+      'click #request-left-btn' : 'openSignupForm',
+      'click .slide-to-info'    : 'slideToInfo',
+      'click .slide-gallery'    : 'slideGallery'
     },
 
     initialize: function(directory) {
@@ -23,6 +24,7 @@ function(SignupModalView) {
     render : function(img, text) {
       this.bindSliders();
 
+      $('#request-left-btn').html('Request an Invite');
       $('input[type=checkbox]').prettyCheckable();
       $('input[type=radio]').prettyCheckable();
 
@@ -53,7 +55,7 @@ function(SignupModalView) {
       var $slideInfo = $('.slide-info');
       var $slideLast = $('.slide-last');
 
-      $(window).on('scroll', function(e) { 
+      $(window).on('scroll', function(e) {
         var newValue = $(window).scrollTop();
         $slideIntro.css('background-position', '0 '+Math.round(newValue / 5) + 'px');
         $slideInfo.css('background-position', '0 '+Math.round(newValue / 3) + 'px');
@@ -64,8 +66,7 @@ function(SignupModalView) {
     },
 
     openSignupForm: function() {
-      new SignupModalView();
-      
+      new RequestInviteModalView();
     },
 
     slideToInfo: function() {

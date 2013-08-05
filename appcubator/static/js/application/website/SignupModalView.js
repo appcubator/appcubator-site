@@ -4,7 +4,7 @@ define([
   function(BackboneModal) {
     var SignupModalView = Backbone.ModalView.extend({
       padding: 0,
-      width: 660,
+      width: 550,
       className: 'model fancy signup',
 
     //height: 150,
@@ -31,8 +31,9 @@ define([
 
     ajaxify: function() {
       var self = this;
-      this.$el.find('#sign-up-form').on('submit', function(e) {
+      this.$el.find('#signup').on('submit', function(e) {
         e.preventDefault();
+        url = $(e.target).attr('action');
 
         obj = {};
         obj.name = $("#inp-name").val();
@@ -57,7 +58,7 @@ define([
 
         if(isFilled) {
          $.ajax({
-          url: "/signup_form/",
+          url: url,
           type: "POST",
           data: obj,
           dataType: "JSON"
