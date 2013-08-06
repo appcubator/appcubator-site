@@ -91,9 +91,9 @@ body {
   position: fixed;
   left: 0;
   width: 280px;
-  bottom: -170px;
+  bottom: -210px;
   padding-bottom: 20px;
-  text-align: center; 
+  text-align: center;
 }
 
 .left-panel .bottom-panel .login {
@@ -107,6 +107,13 @@ body {
 .left-panel .bottom-panel .login input {
   width: 232px;
   height: 42px;
+}
+
+.left-panel .bottom-panel .login a {
+  display: block;
+  text-align: left;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .left-panel .bottom-panel .login input[type="text"],.bottom-panel .login input[type="password"] {
@@ -679,7 +686,7 @@ img.logo {
   display: block;
 }
 
-.sliding-panel .footer ul { 
+.sliding-panel .footer ul {
   width: 190px;
   margin-right: 30px;
   padding-top: 10px;
