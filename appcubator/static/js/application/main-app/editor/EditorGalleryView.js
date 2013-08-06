@@ -50,6 +50,10 @@ define([
       this.renderEntityFormsTablesLists();     // All Create Forms, Tables, Lists
       this.renderContextEntityElements();      // Context Entity Elements and Update Forms
 
+      // hide all sections except first
+      this.hideAllSections();
+      this.expandSection(0);
+
       $(this.allList).append('<div class="bottom-arrow"></div>');
       $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
       $(this.allList).find('.bottom-arrow').on('mousemove', this.slideDown);
@@ -562,9 +566,19 @@ define([
       this.sections[index].expand();
     },
 
+    hideSection: function(index) {
+      this.sections[index].hide();
+    },
+
     expandAllSections: function() {
       _(this.sections).each(function(section) {
         section.expand();
+      });
+    },
+
+    hideAllSections: function() {
+      _(this.sections).each(function(section) {
+        section.hide();
       });
     },
 
