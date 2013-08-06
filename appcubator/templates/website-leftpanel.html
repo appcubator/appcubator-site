@@ -28,7 +28,9 @@
         <br>
         <input type="password" name="password" placeholder="Password..." id="id_password">
         <br>
-        <input class="btn" type="submit" value="Login »"/>
+        <a href="{% url auth_password_reset %}">Forgot your password?</a>
+        <br>
+        <input class="btn hoff1" type="submit" value="Login »"/>
         <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
       </form>
     </span>

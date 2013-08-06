@@ -1,10 +1,29 @@
 {% extends "infra-html.html" %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
+
+{% endblock %}
+
+{% block topbar %}
+{% include "infra-topbar-out.html" %}
+{% endblock %}
+
 {% block page %}
-{% block title %}
-{% endblock %}
-{% block content %}
-{% endblock %}
+<div class="row hoff8">
+  <div class="container centered">
+        <h2 class="hoff5">
+        	{% block title %}
+        	{% endblock %}
+        </h2>
+  </div>
+</div>
+<div class="row">
+  <div class="container centered hoff2">
+  	{% block content %}
+		{% endblock %}
+  </div>
+</div>
 {% endblock %}
 
 
