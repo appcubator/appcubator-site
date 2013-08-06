@@ -6,7 +6,7 @@ function() {
 
   var PageStylePicker = Backbone.ModalView.extend({
     className : 'page-template-picker',
-    width  : 800,
+    width  : 700,
     events : {
       'click .page-template' : 'selected'
     },
@@ -26,12 +26,14 @@ function() {
     render: function() {
       var self = this;
       this.el.innerHTML = "<h2>Choose a page template to start with?</h2>";
-      this.el.innerHTML += "<ul>";
 
+      var list = document.createElement('ul');
+      list.className = 'template-icons';
       _(page_templates).each(function(page, ind) {
-        self.el.innerHTML += '<li class="page-template" id="page-'+ ind +'">'+ page.name +'</li>';
+        list.innerHTML += '<li class="page-template" id="page-'+ ind +'"><img src="/static/img/page_templates/'+page.icon+'"><span>'+ page.name +'</span></li>';
       });
-      this.el.innerHTML += "</ul>";
+      this.el.appendChild(list);
+      console.log(this.el.innerHTML);
     }
   });
 

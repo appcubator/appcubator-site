@@ -1,6 +1,7 @@
 var page_templates = [
   {
     "name": "Homepage Style 1",
+    "icon": "homepage1.png",
     "uielements": [
       {
         "data": {
@@ -166,6 +167,7 @@ var page_templates = [
   },
   {
     "name": "Homepage Style 2",
+    "icon": "homepage2.png",
     "uielements": [
       {
         "layout": {
@@ -275,6 +277,266 @@ var page_templates = [
   },
   {
     "name": "Contact Page",
-    "uielements": []
+    "icon": "contact.png",
+    "uielements": [
+      {
+        "type": "node",
+        "layout": {
+          "top": 11,
+          "left": 3,
+          "height": 3,
+          "width": 2,
+          "t_padding": 0,
+          "b_padding": 0,
+          "l_padding": 0,
+          "r_padding": 0,
+          "alignment": "left"
+        },
+        "data": {
+          "nodeType": "headerTexts",
+          "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+          "isSingle": false,
+          "content_attribs": {},
+          "hoverStyle": "",
+          "class_name": "header-1",
+          "content": "Address",
+          "tagName": "h1",
+          "activeStyle": ""
+        }
+      },
+      {
+        "type": "node",
+        "layout": {
+          "top": 16,
+          "left": 3,
+          "height": 3,
+          "width": 2,
+          "t_padding": 0,
+          "b_padding": 0,
+          "l_padding": 0,
+          "r_padding": 0,
+          "alignment": "left"
+        },
+        "data": {
+          "nodeType": "headerTexts",
+          "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+          "isSingle": false,
+          "content_attribs": {},
+          "hoverStyle": "",
+          "class_name": "header-1",
+          "content": "Phone\n",
+          "tagName": "h1",
+          "activeStyle": ""
+        }
+      },
+      {
+        "type": "node",
+        "layout": {
+          "top": 21,
+          "left": 3,
+          "height": 3,
+          "width": 2,
+          "t_padding": 0,
+          "b_padding": 0,
+          "l_padding": 0,
+          "r_padding": 0,
+          "alignment": "left"
+        },
+        "data": {
+          "nodeType": "headerTexts",
+          "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+          "isSingle": false,
+          "content_attribs": {},
+          "hoverStyle": "",
+          "class_name": "header-1",
+          "content": "Email",
+          "tagName": "h1",
+          "activeStyle": ""
+        }
+      },
+      {
+        "type": "node",
+        "layout": {
+          "top": 15,
+          "left": 3,
+          "height": 1,
+          "width": 6,
+          "t_padding": 0,
+          "b_padding": 0,
+          "l_padding": 0,
+          "r_padding": 0,
+          "alignment": "left"
+        },
+        "data": {
+          "nodeType": "lines",
+          "style": "border-color:#49afcd;\nborder-width: 0px;\nborder-top-width: 1px;\n",
+          "isSingle": true,
+          "cons_attribs": {},
+          "hoverStyle": "",
+          "class_name": "line-1",
+          "content": null,
+          "tagName": "hr",
+          "activeStyle": "",
+          "content_attribs": {}
+        }
+      },
+      {
+        "type": "node",
+        "layout": {
+          "top": 20,
+          "left": 3,
+          "height": 1,
+          "width": 6,
+          "t_padding": 0,
+          "b_padding": 0,
+          "l_padding": 0,
+          "r_padding": 0,
+          "alignment": "left"
+        },
+        "data": {
+          "nodeType": "lines",
+          "style": "border-color:#49afcd;\nborder-width: 0px;\nborder-top-width: 1px;\n",
+          "isSingle": true,
+          "cons_attribs": {},
+          "hoverStyle": "",
+          "class_name": "line-1",
+          "content": null,
+          "tagName": "hr",
+          "activeStyle": "",
+          "content_attribs": {}
+        }
+      },
+      {
+        "type": "node",
+        "layout": {
+          "top": 11,
+          "left": 5,
+          "height": 4,
+          "width": 4,
+          "t_padding": 0,
+          "b_padding": 0,
+          "l_padding": 0,
+          "r_padding": 0,
+          "alignment": "left"
+        },
+        "data": {
+          "nodeType": "texts",
+          "tagName": "p",
+          "content_attribs": {},
+          "content": "Blake Medical Center - Bradenton, FL\n",
+          "isSingle": false,
+          "style": "",
+          "hoverStyle": "",
+          "activeStyle": "",
+          "class_name": "normal-text"
+        }
+      },
+      {
+        "type": "node",
+        "layout": {
+          "top": 16,
+          "left": 5,
+          "height": 3,
+          "width": 4,
+          "t_padding": 0,
+          "b_padding": 0,
+          "l_padding": 0,
+          "r_padding": 0,
+          "alignment": "left"
+        },
+        "data": {
+          "nodeType": "texts",
+          "tagName": "p",
+          "content_attribs": {},
+          "content": "+ 444 111 22 33\n+ 444 222 11 55",
+          "isSingle": false,
+          "style": "",
+          "hoverStyle": "",
+          "activeStyle": "",
+          "class_name": "normal-text"
+        }
+      },
+      {
+        "type": "node",
+        "layout": {
+          "top": 21,
+          "left": 5,
+          "height": 3,
+          "width": 4,
+          "t_padding": 0,
+          "b_padding": 0,
+          "l_padding": 0,
+          "r_padding": 0,
+          "alignment": "left"
+        },
+        "data": {
+          "nodeType": "texts",
+          "tagName": "p",
+          "content_attribs": {},
+          "content": "contact@me.com",
+          "isSingle": false,
+          "style": "",
+          "hoverStyle": "",
+          "activeStyle": "",
+          "class_name": "normal-text"
+        }
+      },
+      {
+        "type": "node",
+        "layout": {
+          "top": 3,
+          "left": 3,
+          "height": 3,
+          "width": 6,
+          "t_padding": 0,
+          "b_padding": 0,
+          "l_padding": 0,
+          "r_padding": 0,
+          "alignment": "center"
+        },
+        "data": {
+          "nodeType": "headerTexts",
+          "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+          "isSingle": false,
+          "content_attribs": {},
+          "hoverStyle": "",
+          "class_name": "header-1",
+          "content": "Contact Us",
+          "tagName": "h1",
+          "activeStyle": ""
+        }
+      }
+    ]
+  },
+  {
+    "name": "Blank Page",
+    "icon": "blank.png",
+    "uielements": [
+      {
+        "type": "node",
+        "layout": {
+          "top": 3,
+          "left": 3,
+          "height": 3,
+          "width": 6,
+          "t_padding": 0,
+          "b_padding": 0,
+          "l_padding": 0,
+          "r_padding": 0,
+          "alignment": "center"
+        },
+        "data": {
+          "nodeType": "headerTexts",
+          "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+          "isSingle": false,
+          "content_attribs": {},
+          "hoverStyle": "",
+          "class_name": "header-1",
+          "content": "Welcome header!",
+          "tagName": "h1",
+          "activeStyle": ""
+        }
+      }
+    ]
   }
 ];
