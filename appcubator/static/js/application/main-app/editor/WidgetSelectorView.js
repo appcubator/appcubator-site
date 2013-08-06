@@ -229,6 +229,8 @@ function() {
       if(e.target.id == "hover-div") { model = this.hoveredEl; }
       else { model = this.selectedEl; this.hideNode(this.hoverDiv); }
 
+      if(!model) return;
+  
       this.widgetEditorView.clear();
 
       g_guides.hideAll();

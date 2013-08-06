@@ -41,7 +41,7 @@ function() {
         obj: model,
         collection: collection
       };
-      this.redoStack.push(changeObj);
+      this.undoStack.push(changeObj);
     },
 
     removed: function(model, collection) {
@@ -50,7 +50,7 @@ function() {
         obj: model,
         collection: collection
       };
-      this.redoStack.push(changeObj);
+      this.undoStack.push(changeObj);
     },
 
     changed: function(model) {
@@ -59,7 +59,7 @@ function() {
         prevAttributes: _.clone(model._previousAttributes),
         obj: model
       };
-      this.redoStack.push(changeObj);
+      this.undoStack.push(changeObj);
     },
 
     isModel: function(obj) {
@@ -72,22 +72,47 @@ function() {
       return false;
     },
 
+    undo: function() {
+      var obj = this.undoStack.pop();
+      if(!obj) return;
+      var reverted_obj = this.pushChange(obj);
+      this.redoStack.push(reverted_obj);
+    },
+
     redo: function() {
       var obj = this.redoStack.pop();
+      console.log(obj);
       if(!obj) return;
+      this.pushChange(obj);
+      //this.redoStack.push(obj);
+    },
+
+    pushChange: function(obj) {
+
+      var revertedObj = {};
 
       switch(obj.action) {
         case "added":
           this.stopListening(obj.collection, 'remove', this.removed);
           obj.collection.remove(obj.obj);
           this.listenTo(obj.collection, 'remove', this.removed);
+
+          revertedObj.action = "removed";
+          revertedObj.collection = obj.collection;
+          revertedObj.obj = obj.obj;
           break;
         case "removed":
           this.stopListening(obj.collection, 'add', this.added);
           obj.collection.add(obj.obj);
           this.listenTo(obj.collection, 'add', this.added);
+
+          revertedObj.action = "added";
+          revertedObj.collection = obj.collection;
+          revertedObj.obj = obj.obj;
           break;
         case "changed":
+          revertedObj.prevAttributes = _.clone(obj.obj.attributes);
+
           obj.obj.attributes = _.clone(obj.prevAttributes);
           this.stopListening(obj.obj, 'change', this.changed);
           obj.obj.trigger('change');
@@ -98,8 +123,14 @@ function() {
             obj.obj.trigger('change:height');
           }
           this.listenTo(obj.obj, 'change', this.changed);
+
+          revertedObj.action = "changed";
+          revertedObj.obj = obj.obj;
+
           break;
       }
+
+      return revertedObj;
     }
   });
 

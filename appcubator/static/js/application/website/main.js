@@ -48,19 +48,21 @@ require.config({
 
 require([
   './HomepageView',
+  './DeveloperpageView',
   'backbone',
   'answer',
   'util',
   'prettyCheckable',
   'mixins/BackboneConvenience'
 ],
-function(HomepageView) {
+function(HomepageView, DeveloperpageView) {
 
   var WebsiteRouter = Backbone.Router.extend({
 
     routes: {
       "/"                              : "homepage",
-      ""                               : "homepage"
+      ""                               : "homepage",
+      "developer/"                     : "developerpage",
     },
 
     cube: $('#cube'),
@@ -73,8 +75,11 @@ function(HomepageView) {
     },
 
     homepage: function() {
-      console.log("halloooo");
       this.view = new HomepageView().render();
+    },
+
+    developerpage: function() {
+      this.view = new DeveloperpageView().render();
     },
 
     bindLoginForm: function() {
