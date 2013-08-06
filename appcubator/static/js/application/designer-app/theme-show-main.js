@@ -7,6 +7,7 @@ require.config({
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "util" : "../../libs/util/util",
+    "util.filepicker" : "../../libs/util/util.filepicker",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "designer-app" : "./",
     "editor" : "../main-app/editor",

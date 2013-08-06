@@ -143,7 +143,10 @@ urlpatterns += patterns('appcubator.theme_views',
     url(r'^theme/(\d+)/clone/$', 'theme_clone'),
     url(r'^theme/(\d+)/delete/$', 'theme_delete'),
     url(r'^theme/(\d+)/editor/(\d+)$', 'theme_page_editor'),
-    url(r'^theme/(\d+)/static/$', 'themestaticfiles'), # a GET returns the apps statics, a POST creates a static file entry.
+    # GET returns the apps statics, POST creates a new static file entry,
+    # DELETE delete a static file
+    url(r'^theme/(\d+)/static/(\d+)$', 'deletethemestaticfile'),
+    url(r'^theme/(\d+)/static/$', 'themestaticfiles'),
 )
 
 urlpatterns += patterns('appcubator.test_views',

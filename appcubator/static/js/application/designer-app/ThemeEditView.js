@@ -2,6 +2,7 @@ define([
   'designer-app/UIElementListView',
   'fontselect',
   'util',
+  'util.filepicker',
   'designer-app/ThemeTemplates'
 ],function(UIElementListView) {
 
@@ -18,7 +19,8 @@ define([
       'keyup #fonts-editor'       : 'fontsChanged',
       'click #create-page' : 'pageCreateClicked',
       'submit .create-page-form' : 'pageCreateSubmitted',
-      'click #upload-static' : 'uploadStatic'
+      'click #upload-static' : 'uploadStatic',
+      'click #theme-statics .remove': 'deleteStaticFile'
     },
 
     initialize: function(themeModel) {
@@ -76,9 +78,7 @@ define([
 
       this.initFonts();
 
-      _(statics).each(function(file) {
-        util.get('statics-cont').innerHTML += '<img width="100" src="'+ file.url +'">' + file.name;
-      });
+      _(statics).each(this.appendStaticFile, this);
     },
 
     initFonts: function() {
@@ -196,17 +196,43 @@ define([
       $('#create-page').fadeIn();
     },
 
+    appendStaticFile: function(file) {
+      util.get('theme-statics').innerHTML += '<div id="themestatic-'+file.id+'" class="span12 offsetr1 hoff1"><img src="'+ file.url +'"><p class="name">' + file.name+'</p><a href="#'+file.id+'" class="btn btn-danger remove">Delete</a></div>';
+    },
+
+    deleteStaticFile: function(e) {
+      var self = this;
+      var imgNode = e.target.parentNode;
+      var id = parseInt(imgNode.id.replace('themestatic-',''), 10);
+      $.ajax({
+        type: 'DELETE',
+        url: '/theme/'+themeId+'/static/'+id,
+        success: function() {
+          console.log('successfully deleted!');
+          util.get('theme-statics').removeChild(imgNode);
+        },
+        error: function(jqxhr, textStatus) {
+          message = "Error deleting file";
+          if(textStatus) {
+            message += ': ' + textStatus;
+          }
+          new ErrorDialogueView({text: message});
+        }
+      })
+      return false;
+    },
+
     uploadStatic: function() {
       var self = this;
-      util.openThemeFilePick(self.staticsAdded, self, themeId);
+      util.filepicker.openThemeFilePick(this.staticsAdded, this, themeId);
     },
 
     staticsAdded: function(files, self) {
-      // _(files).each(function(file){
-      //   file.name = file.filename;
-      //   statics.push(file);
-      // });
-      // self.model.get('content_attribs').set('src', _.last(files).url);
+      console.log(files);
+      _(files).each(function(file){
+        file.name = file.filename;
+        self.appendStaticFile(file);
+      });
     },
 
     save: function(e) {
