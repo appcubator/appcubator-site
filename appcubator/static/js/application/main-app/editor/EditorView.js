@@ -121,6 +121,12 @@ function( PageModel,
       window.addEventListener('resize', this.setupPageWrapper);
 
       $('#loading-gif').fadeOut().remove();
+
+      if(!this.model.get('uielements').length) {
+        new PageStylePicker(this.model);
+      }
+
+      return this;
     },
 
     renderUrlBar: function() {

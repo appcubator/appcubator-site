@@ -53,7 +53,6 @@ function(SelectView) {
       //   this.model.get('data').get('content_attribs').set('href', "internal://Homepage");
       // }
       var href = (this.model.get('data').get('content_attribs').get('href')||null);
-      console.log(href);
 
       var external;
       if(String(href).indexOf('internal://') < 0) {
