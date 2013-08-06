@@ -18,7 +18,7 @@ function() {
     },
 
     selected : function(e) {
-      var tempId = String(e.target.id).replace('page-','');
+      var tempId = String(e.currentTarget.id).replace('page-','');
       this.model.get('uielements').add(page_templates[tempId].uielements);
       this.closeModal();
     },
