@@ -46,6 +46,12 @@
   padding-top: 24px;
 }
 
+@-moz-document url-prefix() { 
+  .form-editor h4.form-action-title {
+    width: 224px;
+  }
+}
+
 .panel {
   height: 490px;
   display: inline-block;
@@ -73,12 +79,16 @@
 border-bottom: 1px solid #efefef;
 }
 
-.panel.details-panel > label {
+.panel.details-panel div.label {
   display: inline-block;
   width: 220px;
   margin-left: 20px;
   background-color: #DFEFFF;
   margin-top: 10px;
+  color: #000;
+  text-shadow: none;
+  border-radius: 0;
+  padding: 10px;
 }
 
 .details-panel {

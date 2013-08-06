@@ -197,22 +197,22 @@ FormEditorTemplates.newField = [
 ].join('\n');
 
 FormEditorTemplates.details = [
-  '<label><b>Label</b><br>',
+  '<div class="label"><b>Label</b><br>',
   '<input class="field-label-input" id="field-label-<%= field.cid %>" type="text" placeholder="Field Label..." value="<%= field.get(\'label\') %>">',
-  '</label>',
-  '<label><b>Placeholder</b><br>',
+  '</div>',
+  '<div class="label"><b>Placeholder</b><br>',
   '<input class="field-placeholder-input" type="text" id="field-placeholder-<%= field.cid %>" placeholder="Field Placeholder..." value="<%= field.get(\'placeholder\') %>">',
-  '</label>',
-  '<label><b>Required</b><br>',
-  '<label for="required" class="radio"><input type="radio" name="required" id="required" value="yes" checked="<%= field.get(\'required\') %>">Yes</label>',
-  '<label for="not-required" class="radio"><input type="radio" name="required" id="not-required" value="no" >No</label>',
-  '</label>',
-  '<label><b>Display Type</b>',
+  '</div>',
+  '<div class="label"><b>Required</b><br>',
+  '<input type="radio" name="required" id="required" value="yes" <% if(field.get(\'required\')) print("checked"); %>><label for="required" class="radio">Yes</label>',
+  '<input type="radio" name="required" id="not-required" value="no"><label for="not-required" class="radio">No</label>',
+  '</div>',
+  '<div class="label"><b>Display Type</b>',
     '<ul class="field-types">',
     FormEditorTemplates.displayTypes,
     '</ul>',
-  '</label>',
-  '<label class="options-list"></label>'
+  '</div>',
+  '<div class="label options-list"></div>'
 ].join('\n');
 
 FormEditorTemplates.routeTemplate = [
