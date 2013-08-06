@@ -308,17 +308,24 @@ class App(models.Model):
         }
         return post_data
 
-    def _transport_app(self, appdir, retry_on_404=True):
+    def _write_tar_from_app_dir(self, appdir):
+        """
+        Given the directory of the app, tar it up and return the path to the tar.
+        """
         contents = os.listdir(appdir)
         # tar it up
         t = tarfile.open(os.path.join(appdir, 'payload.tar'), 'w')
-        try:
-            for fname in contents:
-                t.add(os.path.join(appdir, fname), arcname=fname)
-            t.close()
-            f = open(os.path.join(appdir, 'payload.tar'), "r")
+        for fname in contents:
+            t.add(os.path.join(appdir, fname), arcname=fname)
+        t.close()
+        return os.path.join(appdir, 'payload.tar')
 
-            # send the whole shibam to deployment server
+    def _transport_app(self, appdir, retry_on_404=True):
+        # tar it up
+        tar_path = self._write_tar_from_app_dir(appdir)
+        f = open(tar_path, "r")
+        try:
+            # catapult the tar over to the deployment server
             files = {'file':f}
             post_data = self.get_deploy_data()
             if self.deployment_id is None:
