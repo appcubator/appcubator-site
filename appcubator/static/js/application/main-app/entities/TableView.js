@@ -18,6 +18,7 @@ function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView) {
 
     events : {
       'change .attribs'            : 'changedAttribs',
+      'click .q-mark-circle'       : 'showTableTutorial',
       'click .remove'              : 'clickedPropDelete',
       'click .excel'               : 'clickedUploadExcel',
       'click .trash'               : 'clickedDelete',
@@ -212,6 +213,10 @@ function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView) {
       var cid = e.target.id.replace('type-row-','');
       $('#type-' + cid).click();
       e.preventDefault();
+    },
+
+    showTableTutorial: function(e) {
+      v1.showTutorial("Tables");
     }
 
   });

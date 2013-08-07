@@ -69,8 +69,7 @@ function(Striper) {
 
   // @ksikka's code
   $(document).ready(function() {
-    $('form').each(function(ind, node) {
-
+    $('form').not('.no-ajax').each(function(ind, node) {
       $(node).submit(function(e) {
         var self = this;
         var ajax_info = {
@@ -83,9 +82,9 @@ function(Striper) {
             } else {
               _.each(data, function(val, key, ind) {
                 if(key==='__all__') {
-                  $(self).find('.form-error.field-all').html(val.join('<br />'));
+                  $(self).find('.form-error.field-all').html(val.join('<br />')).show();
                 } else {
-                  $(self).find('.form-error.field-name-'+key).html(val.join('<br />'));
+                  $(self).find('.form-error.field-name-'+key).html(val.join('<br />')).show();
                 }
               });
             }
@@ -93,11 +92,8 @@ function(Striper) {
         };
         $.ajax(ajax_info);
         $(self).find('.form-error').html("");
-
         return false;
-
       });
-
     });
   });
 });

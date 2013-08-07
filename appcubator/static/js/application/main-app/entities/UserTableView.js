@@ -89,6 +89,10 @@ function(FieldModel, TableView, UploadExcelView, ShowDataView) {
         div.className = 'right-arrow';
         this.$el.find('.description').append(div);
       }
+    },
+
+    showTableTutorial: function(e) {
+      v1.showTutorial("User Tables");
     }
 
   });

@@ -148,6 +148,8 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     selectedNew: function(fieldModel) {
       var html = _.template(FormEditorTemplates.details, {field : fieldModel});
 
+      console.log(html);
+
       this.selected = fieldModel;
       this.listenTo(this.selected, 'change:displayType', this.reRenderDisplayType);
       this.listenTo(this.selected, 'change:placeholder', this.reRenderDisplayType);
@@ -155,7 +157,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       this.listenTo(this.selected, 'change:label', this.reRenderLabel);
       this.listenTo(this.selected, 'change:required', this.reRenderLabel);
 
-      this.$el.find('.details-panel').hide();
+      // this.$el.find('.details-panel').hide();
 
       this.$el.find('.details-panel').html(html);
       if(fieldModel.get('displayType') == "option-boxes" || fieldModel.get('displayType') == "dropdown") {
@@ -165,7 +167,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
       this.$el.find('.selected').removeClass('selected');
       this.$el.find('#field-' + fieldModel.cid).addClass('selected');
-      this.$el.find('.details-panel').fadeIn().css('display', 'inline-block');
+      // this.$el.find('.details-panel').fadeIn().css('display', 'inline-block');
       this.$el.find('.drag-icon').css({opacity: 0}).animate({opacity: 1});
       if(this.model.get("action") == "edit") {
         this.$el.find('.field-placeholder-input').prop('disabled', true);

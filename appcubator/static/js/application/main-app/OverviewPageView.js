@@ -1,7 +1,8 @@
 define([
   'app/AnalyticsView',
   'mixins/SimpleModalView',
-  'app/templates/MainTemplates'
+  'app/templates/MainTemplates',
+  'util'
 ],
 function(AnalyticsView, SimpleModalView) {
 
@@ -41,9 +42,12 @@ function(AnalyticsView, SimpleModalView) {
     },
 
     deploy: function() {
-      $('#deploy').find('h4').html('Deploying...');
+      var threeDots = util.threeDots();
+      $('#deploy').find('h4').html('Deploying').append(threeDots.el);
+
       v1.deploy(function() {
         $('#deploy').find('h4').html('Go To App');
+        clearInterval(threeDots.timer);
       });
     },
 

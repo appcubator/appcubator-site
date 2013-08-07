@@ -14,7 +14,7 @@
   <a href="/"><h1>Appcubator</h1></a>
   <div class="bottom-panel" id="bottom-panel">
     <div class="buttons">
-      <div class="btn btn-blue hoff1 slide-signup" id="request">Join the Beta Program</div>
+      <div class="btn btn-blue hoff1" id="request-left-btn">Join the Beta Program</div>
       <div class="btn btn-green hoff1" id="member">Already a Member?</div>
     </div>
     <span class="login" id="login-form">
@@ -28,6 +28,7 @@
         <br>
         <input type="password" name="password" placeholder="Password..." id="id_password">
         <br>
+        <a href="{% url auth_password_reset %}">Forgot your password?</a>
         <input class="btn" type="submit" value="Login »"/>
         <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
       </form>

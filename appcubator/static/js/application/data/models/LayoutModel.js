@@ -5,10 +5,10 @@ define(['backbone'], function(Backbone) {
       'left'   : 0,
       'height' : 8,
       'width'  : 4,
-      't_padding' : 1,
-      'b_padding' : 1,
-      'l_padding' : 1,
-      'r_padding' : 1,
+      't_padding' : 0,
+      'b_padding' : 0,
+      'l_padding' : 0,
+      'r_padding' : 0,
       'alignment' : 'left'
     },
     toJSON: function() {

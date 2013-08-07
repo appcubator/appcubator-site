@@ -4,7 +4,7 @@ define([
   function(BackboneModal) {
     var SignupModalView = Backbone.ModalView.extend({
       padding: 0,
-      width: 550,
+      width: 660,
       className: 'model fancy signup',
 
     //height: 150,
@@ -20,7 +20,7 @@ define([
 
     render: function() {
       var self = this;
-      var temp = document.getElementById('temp-signupform').innerHTML;
+      var temp = document.getElementById('temp-inviteform').innerHTML;
       this.el.innerHTML = _.template(temp, {});
 
       $('input[type=checkbox]').prettyCheckable();
@@ -31,9 +31,8 @@ define([
 
     ajaxify: function() {
       var self = this;
-      this.$el.find('#signup').on('submit', function(e) {
+      this.$el.find('#sign-up-form').on('submit', function(e) {
         e.preventDefault();
-        url = $(e.target).attr('action');
 
         obj = {};
         obj.name = $("#inp-name").val();
@@ -58,7 +57,7 @@ define([
 
         if(isFilled) {
          $.ajax({
-          url: url,
+          url: "/signup_form/",
           type: "POST",
           data: obj,
           dataType: "JSON"

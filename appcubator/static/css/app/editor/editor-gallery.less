@@ -64,9 +64,8 @@
 
 @-moz-document url-prefix() {
   .item-gallery  {
-   width: 220px;
-}
-
+    width: 220px;
+  }
 }
 
  .item-gallery ::-webkit-scrollbar {
@@ -191,16 +190,17 @@ background-color: rgba(255,255,255,0.4);
 .elements-list .gallery-header {
   width: 100%;
   margin: 0;
-  height: 26px;
+  height: 36px;
   text-align: center;
   border-radius: 0;
   font-weight: bold;
   padding: 6px;
+  padding-left: 20px;
   margin-top: 8px;
   margin-left: -1px;
   position: relative;
   background-position: 0 0;
-
+  line-height: 23px;
   -webkit-background-size: 100% 100%;
   -moz-background-size: 100% 100%;
   background-size: 100% 100%;
@@ -208,7 +208,48 @@ background-color: rgba(255,255,255,0.4);
   border: none;
   cursor: auto;
   text-shadow: 0 1px 0 #1b2535;
-}
+
+  :hover {
+    background-color: inherit;
+  }
+
+  :active {
+    border: none;
+  }
+
+  img.qmark {
+    margin-left: 15px;
+    margin-top: -3px;
+    height: 17px;
+    width: auto;
+    .border-radius(10px);
+  }
+
+  .icon {
+    position: absolute;
+    width: 6px;
+    height: 10px;
+    top: 12px;
+    left: 15px;
+    -webkit-transition: all 0.2s ease;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    /*background-image: url(/static/img/right-arrow.png);
+    background-size: 10px 10px;
+    background-repeat: no-repeat;*/
+  }
+
+  &.open .icon {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+} // end .elements-list .gallery-header
 
 .elements-list .gallery-info {
   width: 100%;
@@ -221,38 +262,6 @@ background-color: rgba(255,255,255,0.4);
 
 .elements-list .gallery-info:hover {
   background-color: inherit;
-}
-
-.elements-list .gallery-header:hover {
-  background-color: inherit;
-}
-
-.elements-list .gallery-header:active {
-  border: none;
-}
-
-.elements-list .gallery-header .icon {
-  position: absolute;
-  width: 6px;
-  height: 10px;
-  top: 8px;
-  left: 15px;
-  -webkit-transition: all 0.2s ease;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  -ms-transform: rotate(0deg);
-  transform: rotate(0deg);
-  /*background-image: url(/static/img/right-arrow.png);
-  background-size: 10px 10px;
-  background-repeat: no-repeat;*/
-}
-.elements-list .gallery-header.open .icon {
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
 }
 
 .elements-list .full-width {

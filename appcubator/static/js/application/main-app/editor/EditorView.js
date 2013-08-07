@@ -72,8 +72,11 @@ function( PageModel,
 
       redoController = new RedoController();
 
-      keyDispatcher.bindComb('meta+z', redoController.redo);
-      keyDispatcher.bindComb('ctrl+z', redoController.redo);
+      keyDispatcher.bindComb('meta+z', redoController.undo);
+      keyDispatcher.bindComb('ctrl+z', redoController.undo);
+      keyDispatcher.bindComb('meta+shift+z', redoController.redo);
+      keyDispatcher.bindComb('ctrl+shift+z', redoController.redo);
+
       keyDispatcher.bindComb('meta+c', this.copy);
       keyDispatcher.bindComb('ctrl+c', this.copy);
       keyDispatcher.bindComb('meta+v', this.paste);
@@ -118,6 +121,12 @@ function( PageModel,
       window.addEventListener('resize', this.setupPageWrapper);
 
       $('#loading-gif').fadeOut().remove();
+
+      if(!this.model.get('uielements').length) {
+        new PageStylePicker(this.model);
+      }
+
+      return this;
     },
 
     renderUrlBar: function() {
@@ -213,9 +222,17 @@ function( PageModel,
       this.$el.find('#elements-container').css('height', height);
     },
 
-    remove: function() {
+    close: function() {
       window.removeEventListener('resize', this.setupPageWrapper);
-      Backbone.View.prototype.remove.call(this);
+
+      keyDispatcher.unbind('meta+z', redoController.redo);
+      keyDispatcher.unbind('ctrl+z', redoController.redo);
+      keyDispatcher.unbind('meta+c', this.copy);
+      keyDispatcher.unbind('ctrl+c', this.copy);
+      keyDispatcher.unbind('meta+v', this.paste);
+      keyDispatcher.unbind('ctrl+v', this.paste);
+
+      Backbone.View.prototype.close.call(this);
     }
 
   });
