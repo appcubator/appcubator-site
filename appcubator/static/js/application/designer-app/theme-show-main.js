@@ -69,7 +69,8 @@ function(ThemeEditView, ThemeModel, KeyDispatcher) {
   var WebsiteRouter = Backbone.Router.extend({
 
     routes: {
-      "app/:appid/edit_theme/:page_name/"   : "showElement"
+      "app/:appid/edit_theme/:page_name/"   : "showElement",
+      "theme/:appid/:page_name/"            : "showElement"
     },
 
     initialize: function() {
@@ -90,8 +91,8 @@ function(ThemeEditView, ThemeModel, KeyDispatcher) {
   $(document).on('click', 'a[rel!="external"]', function(e) {
       var href = e.currentTarget.getAttribute('href') || "";
       // if internal link, navigate with router
-      console.log("yolo [ush" + href);
-      if(href.indexOf('/app/'+appId+'/') === 0) {
+      if(href.indexOf('/app/'+appId+'/') === 0||
+         href.indexOf('/theme/'+themeId+'/') === 0) {
         WebsiteApp.navigate(href, {trigger: true});
         return false;
       }
