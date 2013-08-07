@@ -16,22 +16,22 @@
 <div class="container hoff6">
   <div class="span12">
       <ul class="uie-gallery left-nav">
-        <li class="expandible" id="basecss"><a href="/app/{{ appId }}/edit_theme/basecss/">Base CSS</a></li>
-        <li class="expandible" id="fonts"><a href="/app/{{ appId }}/edit_theme/fonts/">Fonts</a></li>
-        <li class="expandible" id="button"><a href="/app/{{ appId }}/edit_theme/button/">Buttons</a></li>
-        <li class="expandible" id="image"><a href="/app/{{ appId }}/edit_theme/image/">Images</a></li>
-        <li class="expandible" id="header-text"><a href="/app/{{ appId }}/edit_theme/header-text/">Headers</a></li>
-        <li class="expandible" id="text"><a href="/app/{{ appId }}/edit_theme/text/">Texts</a></li>
-        <li class="expandible" id="link"><a href="/app/{{ appId }}/edit_theme/link/">Links</a></li>
-        <li class="expandible" id="text-input"><a href="/app/{{ appId }}/edit_theme/text-input/">Inputs</a></li>
-        <li class="expandible" id="password"><a href="/app/{{ appId }}/edit_theme/password/">Password Fields</a></li>
-        <li class="expandible" id="text-area"><a href="/app/{{ appId }}/edit_theme/text-area/">Text Areas</a></li>
-        <li class="expandible" id="line"><a href="/app/{{ appId }}/edit_theme/line/">Lines</a></li>
-        <li class="expandible" id="dropdown"><a href="/app/{{ appId }}/edit_theme/dropdown/">Dropdowns</a></li>
-        <li class="expandible" id="box"><a href="/app/{{ appId }}/edit_theme/box/">Boxes</a></li>
-        <li class="expandible" id="form"><a href="/app/{{ appId }}/edit_theme/form/">Forms</a></li>
-        <li class="expandible" id="list"><a href="/app/{{ appId }}/edit_theme/list/">Lists</a></li>
-        <li class="expandible" id="statics"><a href="/app/{{ appId }}/edit_theme/statics/">Statics</a></li>
+        <li class="expandible" id="basecss"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}basecss/">Base CSS</a></li>
+        <li class="expandible" id="fonts"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}fonts/">Fonts</a></li>
+        <li class="expandible" id="button"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}button/">Buttons</a></li>
+        <li class="expandible" id="image"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}image/">Images</a></li>
+        <li class="expandible" id="header-text"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}header-text/">Headers</a></li>
+        <li class="expandible" id="text"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}text/">Texts</a></li>
+        <li class="expandible" id="link"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}link/">Links</a></li>
+        <li class="expandible" id="text-input"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}text-input/">Inputs</a></li>
+        <li class="expandible" id="password"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}password/">Password Fields</a></li>
+        <li class="expandible" id="text-area"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}text-area/">Text Areas</a></li>
+        <li class="expandible" id="line"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}line/">Lines</a></li>
+        <li class="expandible" id="dropdown"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}dropdown/">Dropdowns</a></li>
+        <li class="expandible" id="box"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}box/">Boxes</a></li>
+        <li class="expandible" id="form"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}form/">Forms</a></li>
+        <li class="expandible" id="list"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}list/">Lists</a></li>
+        <li class="expandible" id="statics"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}statics/">Statics</a></li>
       </ul>
   </div>
   <div class="right-bar span42 offset1">

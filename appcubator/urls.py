@@ -138,7 +138,6 @@ urlpatterns += patterns('appcubator.theme_views',
     url(r'^designer/$', 'designer_page'),
     url(r'^theme/new/web/$', 'theme_new_web'),
     url(r'^theme/new/mobile/$', 'theme_new_mobile'),
-    url(r'^theme/(\d+)/$', 'theme_show'),
     url(r'^theme/(\d+)/info/$', 'theme_info'),
     url(r'^theme/(\d+)/settings/$', 'theme_settings'),
     url(r'^theme/(\d+)/edit/$', 'theme_edit'),
@@ -150,6 +149,8 @@ urlpatterns += patterns('appcubator.theme_views',
     # DELETE delete a static file
     url(r'^theme/(\d+)/static/(\d+)$', 'deletethemestaticfile'),
     url(r'^theme/(\d+)/static/$', 'themestaticfiles'),
+
+    url(r'^theme/(\d+)/', 'theme_show'),
 )
 
 urlpatterns += patterns('appcubator.test_views',
