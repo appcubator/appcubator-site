@@ -7,7 +7,7 @@ require.config({
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "app" : "../",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
-    "answer" : "../../libs/answer/answer"
+    "answer" : "../../libs/answer/answer",
   },
 
   shim: {
@@ -28,44 +28,47 @@ require.config({
 require([
   'backbone',
   'answer',
+  './TutorialDict',
   'util'
 ],
 function() {
 
   var DocumentationMain = Backbone.View.extend({
-    el: null,
-    addr : [0],
-    pages: ["application_settings", "domain_settings", "seo_optimization", "deleting_your_application", "tables_page", "user_tables", "tables", "relationships", "themes", "pages", "access", "editor", "design_eleents", "images", "login", "page_content", "forms", "lists", "search", "deploy", "emails", "feedback"],
+    el: '#page',
 
     events : {
-      "submit .tutorial-q-form" : "submittedQuestion"
+      "submit .tutorial-q-form" : "submittedQuestion",
+      'click .menu-list form img' : 'submitSearchForm',
+      'click .prev.arrow' : 'previousPage',
+      'click .next.arrow' : 'nextPage'
     },
 
-    initialize: function(directory) {
+    initialize: function() {
       _.bindAll(this);
-      this.el = document.getElementById('page');
       this.form = document.getElementById('feedback-form');
-
-      this.ind = 0;
-      _(this.pages).each(function(val, ind) {
-        if(val == pageName) this.ind = ind;
-      }, this);
-
+      this.pages = _.pluck(TutorialDirectory, 'view');
+      this.pages = _.map(this.pages, function(title) {
+        return title.toLowerCase().replace(' ', '_');
+      })
+      this.ind = this.getCurrentIndex();
       this.render();
     },
 
     render : function(img, text) {
       $(this.form).on('submit', this.submittedFeedback);
-
-      $('.right-arrow').on('click', this.nextPage);
-      $('.left-arrow').on('click', this.previousPage);
-
+      // hide next or prev btns when applicable
+      if(this.ind === 0) {
+        console.log('lol');
+        $('.prev.arrow').hide();
+      }
+      if(this.ind === this.pages.length - 1) {
+        $('.next.arrow').hide();
+      }
       return this;
     },
 
     submittedQuestion: function(e) {
       e.preventDefault();
-
       var question = this.$el.find('.q-input').val();
       var results = this.reader.match(question);
       this.showQuestionSlide(question, results);
@@ -86,15 +89,29 @@ function() {
       $('#feedback-form').html("<p>We have received your feedback! Thank you for your helping us make Appcubator better.</p>");
     },
 
-    nextPage: function () {
-      console.log(this.pages);
-      console.log(this.ind );
-      console.log(this.pages[this.ind + 1]);
-      window.location = '/documentation/' + this.pages[this.ind + 1] + '/';
+    submitSearchForm: function(e) {
+      $(e.target.parentNode).submit();
     },
 
-    previousPage: function () {
-      window.location = '/documentation/' + this.pages[this.ind - 1] + '/';
+    getCurrentIndex: function() {
+      var index = this.pages.indexOf(pageName);
+      return (index > -1) ? index : 0;
+    },
+
+    getNextPageName: function() {
+      return this.pages[this.getCurrentIndex() + 1];
+    },
+
+    getPrevPageName: function() {
+      return this.pages[this.getCurrentIndex() - 1];
+    },
+
+    nextPage: function (e) {
+      window.location = '/documentation/' + this.getNextPageName() + '/';
+    },
+
+    previousPage: function (e) {
+      window.location = '/documentation/' + this.getPrevPageName() + '/';
     }
 
   });
