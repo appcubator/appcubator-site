@@ -136,7 +136,7 @@ define([
       var id = parseInt(imgNode.id.replace('themestatic-',''), 10);
       $.ajax({
         type: 'DELETE',
-        url: '/theme/'+themeId+'/static/'+id,
+        url: url+'/static/'+id,
         success: function() {
           console.log('successfully deleted!');
           util.get('theme-statics').removeChild(imgNode);
@@ -154,7 +154,12 @@ define([
 
     uploadStatic: function() {
       var self = this;
-      util.filepicker.openThemeFilePick(this.staticsAdded, this, themeId);
+      if(themeId) {
+        util.filepicker.openThemeFilePick(this.staticsAdded, this, themeId);
+      }
+      else {
+        util.filepicker.openFilePick(this.staticsAdded, this, appId);
+      }
     },
 
     staticsAdded: function(files, self) {
@@ -169,8 +174,8 @@ define([
       e.preventDefault();
       var json = this.model.toJSON();
       var url;
-      if(themeId) { url = '/theme/'+themeId+'/edit/'; }
-      else if(appId) { url = '/app/' + appId + '/uiestate/'; }
+      if(themeId) { url = url + '/edit/'; }
+      else if(appId) { url = url + '/uiestate/'; }
       var save_btn = $('.save-btn img');
       console.log(save_btn[0]);
       save_btn.attr('src', '/static/img/ajax-loader-white.gif');

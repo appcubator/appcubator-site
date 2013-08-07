@@ -26,16 +26,13 @@ less = {
     <h2 class="hi4 span40">Current Themes</h2>
     <ul id="themes-list">
       {% for theme in themes %}
-      <li class="hoff1 offsetr2 span10 theme-thumb">
+      <li class="hoff1 offsetr2 span10 theme-thumb" id="theme-{{ theme.pk }}">
         <a href="/theme/{{ theme.pk }}/">
           <h3>{{ theme.name }}</h3>
           <div>
             <img src="{{theme.image}}">
           </div>
-          <form method="POST" action="/theme/{{theme.pk}}/delete/">
-            {% csrf_token %}
-            <input type="submit"  class="btn btn-danger btn-mini" value="Delete">
-          </form>
+          <input type="submit" id="theme-delete-{{ theme.pk }}" class="btn btn-danger btn-mini delete-theme-btn" value="Delete">
         </a>
       </li>
       {% endfor %}

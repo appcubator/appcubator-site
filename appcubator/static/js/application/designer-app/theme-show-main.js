@@ -97,4 +97,6 @@ function(ThemeEditView, ThemeModel, KeyDispatcher) {
       }
   });
 
+  $('.left-nav').affix({offset: 0});
+
 });
