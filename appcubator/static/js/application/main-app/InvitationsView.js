@@ -6,6 +6,7 @@ function() {
   var UrlView = Backbone.ModalView.extend({
     padding: 0,
     width: 600,
+    height: 600,
     id: 'url-editor',
     //height: 150,
     events: {

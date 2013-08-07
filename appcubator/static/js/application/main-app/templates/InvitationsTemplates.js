@@ -10,16 +10,18 @@ InvitationsTemplates.mainTemp = [
 	'</div>',
 '</form>',
 '<h2 class="hoff2">Invitations Sent</h2>',
-'<table class="invitations table table-striped table-hover table-bordered">',
-	'<thead>',
-		'<tr>',
-			'<th>Invitee</th>',
-			'<th>When</th>',
-			'<th>Status</th>',
-		'</tr>',
-	'</thead>',
-	'<tbody></tbody>',
-'</table>'
+'<div class="table-wrapper" style="height: 300px">',
+	'<table class="invitations table table-striped table-hover">',
+		'<thead>',
+			'<tr>',
+				'<th>Invitee</th>',
+				'<th>When</th>',
+				'<th>Status</th>',
+			'</tr>',
+		'</thead>',
+		'<tbody></tbody>',
+	'</table>',
+'</div>'
 ].join('\n');
 
 InvitationsTemplates.invitationListItemTemp = [
