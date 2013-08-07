@@ -99,6 +99,7 @@ function(Backbone) {
       span.style.right = '15px';
       span.style.top = '15px';
       span.innerText = '×';
+      span.style.zIndex = '1000';
       div.appendChild(span);
 
       var content = document.createElement('div');
