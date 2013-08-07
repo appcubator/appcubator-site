@@ -25,6 +25,11 @@ from payments.views import subscribe
 import requests
 import traceback
 import datetime
+import os
+import string
+import nltk
+import json
+import re
 from datetime import datetime
 
 
@@ -328,6 +333,41 @@ def documentation_page(request, page_name):
         'page_name': page_name
     }
     return render(request, 'documentation/documentation-base.html', data)
+
+def documentation_search(request):
+    query = request.GET['q']
+    if query is None or query is "":
+        return redirect(documentation_page)
+    query = query.replace(' ',"|")
+    query_regex = re.compile('%s'%query)
+    search_dir = settings.DOCUMENTATION_SEARCH_DIR
+    # read ALL the documentation texts
+    # TODO: do this ONCE, maybe on server startup
+    pages = []
+    for docfile in os.listdir(search_dir):
+        d = {}
+        d['filename'] = docfile
+        d['title'] = string.capwords(docfile.replace('.html', '').replace('_',' '))
+        count = 0
+        dir_path = os.path.join(search_dir, docfile)
+        with open(dir_path, 'r') as curr_file:
+            raw_text = curr_file.read()
+            raw_text_clean = nltk.clean_html(raw_text)
+            raw_text_linebreaks = raw_text_clean.split('\n')
+            d['title'] = raw_text_linebreaks[0]
+            len_title = len(raw_text_linebreaks[0])
+            d['content'] = "%s..." % raw_text_clean[len_title:140]
+            raw_text = re.sub(r"^[#,-[]!:()]$", "", raw_text_clean)
+            tokens = nltk.word_tokenize(raw_text)
+            for t in tokens:
+                if(re.match(query_regex, t)):
+                    count += 1
+        d['count'] = count
+        pages.append(d)
+    results = [p for p in pages if p['count'] > 0]
+    results.sort(key=lambda r: r['count'], reverse=True)
+    # search ALL the documentation texts
+    return render(request, 'documentation/documentation-base.html', {'results': results})
 
 @login_required
 def uie_state(request, app_id):

@@ -107,6 +107,7 @@ urlpatterns += patterns('appcubator.views',
 
     url(r'^feedback/$', 'documentation_page', {"page_name": "feedback"}),
     url(r'^documentation/$', 'documentation_page', {"page_name": "intro"}),
+    url(r'^documentation/search/', 'documentation_search'),
     url(r'^documentation/([^/]+)/$', 'documentation_page'),
 
     # the rest

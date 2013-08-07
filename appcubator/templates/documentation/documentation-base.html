@@ -45,16 +45,36 @@
       </div>
       <div class="racoon hoff1">
         {% autoescape off %}
-          {{ content }}
+          {% if content %}
+            {{ content }}
+          {% elif results and results|length > 0%}
+            {% for page in results %}
+              <div class="results-section">
+                <h3>
+                  <a href="/documentation/{{ page.filename }}">{{ page.title }}</a>
+                </h3>
+                <p>{{ page.content }}</p>
+              </div>
+            {% endfor %}
+          {% else %}
+            <h2>No Results</h2>
+          {% endif %}
         {% endautoescape %}
       </div>
+      {% if content %}
       <div class="prev arrow">Previous Page</div>
       <div class="next arrow">Next Page</div>
+      {% endif %}
     </div>
 
     <!-- Left Menu -->
     <ul class="menu-list">
       <span class="title">Documentation</span>
+      <form action="/documentation/search/" method="GET">
+        <input class="search hoff1 span10" name="q" type="text" placeholder="Search...">
+        <img src="{{ STATIC_URL }}img/search-icon.png">
+        <button type="submit" class="hide" value="Search"></button>
+      </form>
      {% include "documentation/html/menu.html" %}
     </ul>
   </div>

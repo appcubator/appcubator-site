@@ -359,6 +359,16 @@ span.q-sent {
     border-bottom: 1px solid #fff;
   }
 
+  form {
+    position: relative;
+    img {
+      position: absolute;
+      top: 12px;
+      right: 5px;
+      cursor: pointer;
+    }
+  }
+
   h1 {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: bold;
@@ -451,5 +461,19 @@ span.q-sent {
 
   .banner {
     font-size: 16px;
+  }
+}
+
+.results-section {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  h3, p {
+    border: none;
+    padding: 5px 10px 0;
   }
 }

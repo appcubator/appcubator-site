@@ -38,6 +38,7 @@ function() {
 
     events : {
       "submit .tutorial-q-form" : "submittedQuestion",
+      'click .menu-list form img' : 'submitSearchForm',
       'click .prev.arrow' : 'previousPage',
       'click .next.arrow' : 'nextPage'
     },
@@ -86,6 +87,10 @@ function() {
 
       $('#feedback-check').prop('checked', true);
       $('#feedback-form').html("<p>We have received your feedback! Thank you for your helping us make Appcubator better.</p>");
+    },
+
+    submitSearchForm: function(e) {
+      $(e.target.parentNode).submit();
     },
 
     getCurrentIndex: function() {
