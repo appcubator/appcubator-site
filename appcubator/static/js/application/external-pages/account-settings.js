@@ -82,9 +82,9 @@ function(Striper) {
             } else {
               _.each(data, function(val, key, ind) {
                 if(key==='__all__') {
-                  $(self).find('.form-error.field-all').html(val.join('<br />'));
+                  $(self).find('.form-error.field-all').html(val.join('<br />')).show();
                 } else {
-                  $(self).find('.form-error.field-name-'+key).html(val.join('<br />'));
+                  $(self).find('.form-error.field-name-'+key).html(val.join('<br />')).show();
                 }
               });
             }
