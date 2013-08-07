@@ -13,13 +13,10 @@ define([
   var ThemeEditView = Backbone.View.extend({
     el: document.body,
     events: {
-      'click #save'        : 'save',
-      'click .expandible'  : 'expandSection',
-      'keyup #base-css'    : 'baseChanged',
-      'keyup #fonts-editor'       : 'fontsChanged',
-      'click #create-page' : 'pageCreateClicked',
-      'submit .create-page-form' : 'pageCreateSubmitted',
-      'click #upload-static' : 'uploadStatic',
+      'click #save'                 : 'save',
+      'keyup #base-css'             : 'baseChanged',
+      'keyup #fonts-editor'         : 'fontsChanged',
+      'click #upload-static'        : 'uploadStatic',
       'click #theme-statics .remove': 'deleteStaticFile'
     },
 
@@ -70,12 +67,6 @@ define([
       this.editor = ace.edit("base-css");
       this.editor.getSession().setMode("ace/mode/css");
       this.editor.setValue(this.model.get('basecss'), -1);
-
-      //$('#fonts-editor').val(this.model.get('fonts'));
-      /*this.model.get('pages').each(function(page, ind) {
-        self.renderPage(page, ind);
-      });*/
-
       this.initFonts();
 
       _(statics).each(this.appendStaticFile, this);
@@ -114,47 +105,7 @@ define([
     },
 
     baseChanged: function(e) {
-
-      // height: 3901px;
-      // line-height: 18px;
-      // margin-bottom: 0px;
-      // margin-left: 0px;
-      // margin-right: 0px;
-      // margin-top: 0px;
-      // overflow-x: hidden;
-      // padding-bottom: 0px;
-      // padding-left: 0px;
-      // padding-right: 0px;
-      // padding-top: 0px;
-      // position: relative;
-      // width: 1125px;
-
       var currentCSS = this.editor.getValue();
-/*
-      var bodyRegExp = /body \{([^\}]+)\}/g;
-      var marginRegExp = /margin:([^;]+);/g;
-      var heightRegExp = /height:([^;]+);/g;
-      var positionRegExp = /position:([^;]+);/g;
-      var widthRegExp = /width:([^;]+);/g;
-      var overflowXRegExp = /overflow-x:([^;]+);/g;
-
-      if(bodyRegExp.exec(currentCSS) && bodyRegExp.exec(currentCSS).length > 0) {
-        var initBodyTag = bodyRegExp.exec(currentCSS)[0];
-      }
-      else {
-        var initBodyTag = "";
-      }
-
-      var newBodyTag;
-      newBodyTag = initBodyTag.replace(heightRegExp, '');
-      newBodyTag = newBodyTag.replace(marginRegExp, '');
-      newBodyTag = newBodyTag.replace(positionRegExp, '');
-      newBodyTag = newBodyTag.replace(widthRegExp, '');
-      newBodyTag = newBodyTag.replace(overflowXRegExp, '');
-
-
-      currentCSS = currentCSS.replace(initBodyTag, newBodyTag);
-*/
       this.model.set('basecss', currentCSS);
     },
 
@@ -162,38 +113,17 @@ define([
       this.model.set('fonts', e.target.value);
     },
 
-    renderPage: function(page, ind) {
-      /*var pages = util.get('pages-list');
-      var cInd = ind;
-      if(ind === null) {
-        cInd = (this.model.get('pages').models.length);
-      }
-      if(typeof cInd != "number") {
-        cInd = cInd.models.length -1;
-      }
 
-      pages.innerHTML += '<li><a href="/theme/'+ themeId +'/editor/' + cInd +'">' + page.get('name') + '</a></li>';*/
-    },
-
-    expandSection: function(e) {
+    showElement: function(elementName) {
+      console.log(elementName);
       $('.expanded').removeClass('expanded');
-      $('#' + e.target.id + "-cont").addClass('expanded');
+      $('#' +elementName+ "-cont").addClass('expanded');
     },
 
     pageCreateClicked: function(e) {
       $(e.target).hide();
       $('.create-page-form').fadeIn();
       $('.create-page-name').focus();
-    },
-
-    pageCreateSubmitted: function(e) {
-      e.preventDefault();
-      var name =  $('.create-page-name').val();/*
-      var newPage = new PageDesignModel({name: name});
-      $('.create-page-name').val('');
-      this.model.get('pages').add(newPage);*/
-      $('.create-page-form').hide();
-      $('#create-page').fadeIn();
     },
 
     appendStaticFile: function(file) {
@@ -218,7 +148,7 @@ define([
           }
           new ErrorDialogueView({text: message});
         }
-      })
+      });
       return false;
     },
 

@@ -74,6 +74,11 @@ label {
   display: inline-block;
 }
 
+.element-editor li h3 {
+  display: block;
+  margin-bottom: 6px;
+}
+
 .expandible.expanded {
   display: inline-block;
 }
@@ -118,6 +123,12 @@ label {
 .uie-gallery li.expandible {
   padding-left: 16px;
   border-bottom: 1px solid #ccc;
+}
+
+.uie-gallery li.expandible a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
 }
 
 .left-bar h3 {
@@ -165,20 +176,32 @@ div.expandible {
 
 .upper-area {
   input {
-    height: 45px;
-    width: 100%;
+    height: 38px;
+  }
+
+  span {
+    line-height: 38px;
+    margin-right: 8px;
+  }
+
+  span.remove-relation {
+    line-height: 28px;
+    margin-right: -2px;
+  }
+
+  &:hover .edit-text {
+    display: inline-block;
   }
 
   .btn {
-    width: 100%;
-    height: 45px;
-    line-height: 30px;
+    height: 38px;
+    line-height: 38px;
     margin-bottom: 10px;
     display: inline-block;
     cursor: pointer;
     color: #fff;
     border-radius: 4px;
-    padding: 6px 14px;
+    padding: 0px 14px;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     border: 1px solid #bbbbbb;
     border-color: #c5c5c5;
@@ -187,15 +210,26 @@ div.expandible {
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
+    float: none;
+
     .box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.05));
 
     &.btn-info {
       background-color: #036a6e;
+      float: right;
     }
 
     &.btn-delete {
       background-color: red;
     }
+  }
+
+  .edit-text {
+    float: right;
+    color: #ccc;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none;
   }
 }
 .class-menu {

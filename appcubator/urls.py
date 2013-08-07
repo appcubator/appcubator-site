@@ -65,7 +65,7 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/new/walkthrough/indepth/$', 'app_new_walkthrough', {"walkthrough": 'walkthrough'}),
     url(r'^app/(\d+)/racoon/$', 'app_new_racoon'),
     url(r'^app/(\d+)/delete/$', 'app_delete'),
-    url(r'^app/(\d+)/edit_theme/$', 'app_edit_theme'),
+    url(r'^app/(\d+)/edit_theme/', 'app_edit_theme'),
 
     # analytics
     url(r'^app/(\d+)/analytics/$', 'get_analytics'),

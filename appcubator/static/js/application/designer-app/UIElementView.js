@@ -5,11 +5,11 @@ function(UIElementEditingView) {
 
   var UIElementView = Backbone.View.extend({
     el: null,
-    className: 'widgetWrapper pane-inline border hi9 span44 hoff1',
+    className: 'widgetWrapper pane-inline border hi15 span44 hoff2',
     isExpanded: false,
 
     events : {
-      'click .btn-info' : 'toggleElement',
+      'click'             : 'toggleElement',
       'click .remove'     : 'removeUIE',
       'keyup .class_name' : 'classNameChaged'
     },
@@ -30,14 +30,14 @@ function(UIElementEditingView) {
       upperDiv.className = "upper-area row";
       var class_name = this.model.get('class_name');
       upperDiv.innerHTML =[
-        '<div class="class-menu span10">',
+        '<div class="class-menu span41 hoff1">',
+          '<span class="offset1">Class Name:</span><input type="text" name="className" class="class_name span16" value="'+class_name+'" placeholder="className...">',
+          '<div class="span12 right edit-text">Click to expand edit panel.</div>',
           '<span class="remove-relation remove">×</span>',
-          '<input type="text" name="className" class="class_name" value="'+class_name+'" placeholder="className...">',
-          '<div class="btn btn-info">Expand Edit Panel</div>',
         '</div>'].join('\n');
 
       this.tempNodeDiv = document.createElement('div');
-      this.tempNodeDiv.className = "temp-node-area offset1 span29";
+      this.tempNodeDiv.className = "temp-node-area offset1 span40 hoff1";
       this.tempNodeDiv.innerHTML = _.template(ThemeTemplates.tempNode, {info: this.model.attributes});
 
       upperDiv.appendChild(this.tempNodeDiv);
@@ -89,16 +89,20 @@ function(UIElementEditingView) {
 
     },
 
-    toggleElement: function () {
-      console.log('toggle');
-      var btn = this.$('.btn-info')[0]
+    toggleElement: function (e) {
+
+      if(e.target.tagName == "INPUT") return;
+      if(e.target.className.indexOf('ace_') === 0) return;
+      console.log(e.target);
+
+      var btn = this.$el.find('.edit-text').first();
       if(!this.isExpanded) {
         this.expandElement();
-        btn.innerText = 'Close Edit Panel';
+        btn.html('Close Edit Panel');
       }
       else {
         this.shrinkElement();
-        btn.innerText = 'Expand Edit Panel';
+        btn.html('Expand Edit Panel');
       }
     },
 
@@ -114,7 +118,7 @@ function(UIElementEditingView) {
     shrinkElement: function () {
       this.expandedView.close();
       this.isExpanded = false;
-      this.el.style.height = '180px';
+      this.el.style.height = '225px';
     },
 
     classNameChaged: function(e) {
