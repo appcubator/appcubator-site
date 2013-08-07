@@ -173,15 +173,15 @@ define([
     save: function(e) {
       e.preventDefault();
       var json = this.model.toJSON();
-      if(themeId) { url = url + '/edit/'; }
-      else if(appId) { url = url + '/uiestate/'; }
+      if(themeId) { save_url = url + '/edit/'; }
+      else if(appId) { save_url = url + '/uiestate/'; }
       var save_btn = $('.save-btn img');
       console.log(save_btn[0]);
       save_btn.attr('src', '/static/img/ajax-loader-white.gif');
 
       $.ajax({
         type: "POST",
-        url: url,
+        url: save_url,
         data: {uie_state: JSON.stringify(json)},
         statusCode: {
           200: function(data) {
