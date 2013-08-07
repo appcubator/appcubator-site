@@ -48,8 +48,9 @@ function() {
       this.form = document.getElementById('feedback-form');
       this.pages = _.pluck(TutorialDirectory, 'view');
       this.pages = _.map(this.pages, function(title) {
-        return title.toLowerCase().replace(' ', '_');
-      })
+        return title.replace('tutorial-', '').replace('-','_');
+      });
+      console.log(this.pages);
       this.ind = this.getCurrentIndex();
       this.render();
     },

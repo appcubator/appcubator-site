@@ -367,7 +367,7 @@ def documentation_search(request):
                     count += 1
         if count > 0:
             d = {}
-            d['filename'] = docfile
+            d['filename'] = docfile.replace('.html','')
             d['title'] = title
             d['content'] = excerpt
             d['count'] = count
