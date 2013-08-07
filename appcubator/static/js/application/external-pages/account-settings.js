@@ -69,8 +69,7 @@ function(Striper) {
 
   // @ksikka's code
   $(document).ready(function() {
-    $('form').each(function(ind, node) {
-
+    $('form').not('.no-ajax').each(function(ind, node) {
       $(node).submit(function(e) {
         var self = this;
         var ajax_info = {
@@ -93,11 +92,8 @@ function(Striper) {
         };
         $.ajax(ajax_info);
         $(self).find('.form-error').html("");
-
         return false;
-
       });
-
     });
   });
 });

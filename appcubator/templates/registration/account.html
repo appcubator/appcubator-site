@@ -36,11 +36,11 @@
       </form>
       <div class="span20 offset2">
         <h3 class="">Password</h3><br  />
-        <form action="/account/set_password/" method="POST">
-          <input type="password" class="span16 hoff1" name="password1" placeholder="New Password..."><br />
-          <div class="span16 form-error field-name-password1"></div><br />
-          <input type="password" class="span16" name="password2" placeholder="Confirm Password..."><br />
-          <div class="span16 form-error field-name-password2"></div><br />
+        <form action="/accounts/password/change/" method="POST" class="no-ajax">
+          {% csrf_token %}
+          <input type="password" class="span16 hoff1" name="old_password" id="id_old_password" placeholder="Old Password..."><br />
+          <input type="password" class="span16" name="new_password1" id="id_new_password1" placeholder="New Password..."><br />
+          <input type="password" class="span16" name="new_password2" id="id_new_password2" placeholder="Confirm Password..."><br />
           <input type="submit" class="btn" value="Change Password">
         </form>
       </div>
