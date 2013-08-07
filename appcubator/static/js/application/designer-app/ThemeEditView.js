@@ -173,7 +173,6 @@ define([
     save: function(e) {
       e.preventDefault();
       var json = this.model.toJSON();
-      var url;
       if(themeId) { url = url + '/edit/'; }
       else if(appId) { url = url + '/uiestate/'; }
       var save_btn = $('.save-btn img');
