@@ -34,6 +34,12 @@ def install_codegen():
     with prefix('source venv/bin/activate'):
       run('pip install ../appcubator-codegen --upgrade')
 
+def install_analytics():
+  code_dir = '/var/www/appcubator-site'
+  with cd(code_dir):
+    with prefix('source venv/bin/activate'):
+      run('pip install ../appcubator-codegen/analytics --upgrade')
+
 def install_requirements():
   code_dir = '/var/www/appcubator-site'
   with cd(code_dir):

@@ -1,7 +1,7 @@
 {% extends "infra-html.html" %}
 {% block css %}
 <link type="text/css" href="/app/{{ app_id}}/uiestate.less" id="css-uiestate" rel="stylesheet"/>
-<link type="text/css" href="/app/{{ app_id}}/mobile_uiestate.less" id="css-uiestate" rel="stylesheet"/>
+<link type="text/css" href="/app/{{ app_id}}/mobile_uiestate.less" id="css-mobile-uiestate" rel="stylesheet"/>
 {% endblock %}
 
 {% block topbar %}
@@ -20,14 +20,17 @@
   {% block js %}
   <script type="text/javascript">
     var appId = {{ app_id }};
+    var appUrl = "{{ app_url }}";
     var appState = {{ app.state_json|safe }};
     var uieState = {{ app.uie_state_json|safe }};
     var mobileUieState = {{ app.mobile_uie_state_json|safe }};
     var statics = {{ statics|safe }};
     var themes = {{ themes|safe }};
     var mobileThemes = {{ mobile_themes|safe }};
-    var GRID_WIDTH = 80;
-    var GRID_HEIGHT = 15;
+    var staticVersion = "{{STATIC_VERSION}}";
+    var is_deployed = {{ is_deployed }}
+    var v1 = {};
+    var v1State = {};
   </script>
   <script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js">
   </script>

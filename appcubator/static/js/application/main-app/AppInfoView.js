@@ -15,10 +15,12 @@ function(SimpleModalView) {
       'keyup .register-subdomain-input' : 'checkForSubDomain',
       'click #register-new-subdomain' : 'showSubDomainRegistrationForm',
       'click .register-subdomain-button' : 'registerSubDomain',
+      'submit .register-subdomain-form' : 'cancelFormSubmission',
 
       'keyup .register-domain-input' : 'checkForDomain',
       'click #register-new-domain' : 'showDomainRegistrationForm',
-      'click .register-domain-button' : 'registerDomain'
+      'click .register-domain-button' : 'registerDomain',
+      'submit .register-domain-form' : 'cancelFormSubmission'
     },
 
     initialize: function() {
@@ -105,13 +107,13 @@ function(SimpleModalView) {
         success: function(d){
           location.reload(true);
         },
-        error: function() {
+        error: function(xhr) {
           util.stopAjaxLoading();
+          console.log(JSON.parse(xhr.responseText).errors.replace("\n", '\n'));
           alert("error: see logs");
         }
       });
       util.startAjaxLoading();
-      $(e.target).hide();
     },
 
     showSubDomainRegistrationForm: function(e) {
@@ -166,6 +168,10 @@ function(SimpleModalView) {
           },
           dataType: "JSON"
       });
+    },
+
+    cancelFormSubmission: function(e) {
+      e.preventDefault();
     }
   });
 

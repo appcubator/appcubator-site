@@ -12,7 +12,7 @@
     ],
     "emails": [
         {
-            "content": "Dear {{User.First_Name}},\n\nThanks for signing up!\n\n- {{AppName}} Team",
+            "content": "Dear {{User.username}},\n\nThanks for signing up!\n\nCheers!\n{{AppName}}",
             "name": "Welcome",
             "subject": "Thanks for Signing up!"
         }
@@ -35,7 +35,7 @@
             },
             "footer": {
                 "isFixed": true,
-                "customText": "Add custom footer text here",
+                "customText": "Powered by Appcubator",
                 "isHidden": false,
                 "links": [
                     {
@@ -48,5 +48,6 @@
             "access_level": "all"
         }],
     "mobilePages" : [],
-    "name": "thisisirrelevant"
+    "name": "thisisirrelevant",
+    "version_id": 0
 }

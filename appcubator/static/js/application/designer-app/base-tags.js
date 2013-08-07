@@ -2,15 +2,13 @@
 
     "button": [
       {
-        tagName : 'input',
-        cons_attribs: {
-          type : 'submit'
-        },
+        tagName : 'a',
+        cons_attribs: { },
         content_attribs: {
-          value : "Button1"
+          href : "internal://Homepage"
         },
-        content : null,
-        isSingle: true
+        content : "Default Button",
+        isSingle: false
       }
     ],
 
@@ -122,6 +120,16 @@
     "form" : [
       {
         tagName : 'form',
+        content: null,
+        cons_attribs : {
+        },
+        isSingle: false
+      }
+    ],
+
+    "list" : [
+      {
+        tagName : 'div',
         content: null,
         cons_attribs : {
         },

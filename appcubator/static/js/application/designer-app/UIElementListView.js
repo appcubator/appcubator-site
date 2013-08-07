@@ -15,12 +15,7 @@ function(UIElementView, UIElementModel) {
     },
 
     initialize: function(UIElementColl, type) {
-      _.bindAll(this,'render',
-                     'showForm',
-                     'submitForm',
-                     'appendUIE',
-                     'removeUIE');
-
+      _.bindAll(this);
       this.type = type;
       this.collection = UIElementColl;
       this.collection.bind('add', this.appendUIE);
@@ -50,7 +45,9 @@ function(UIElementView, UIElementModel) {
 
     showForm: function(e) {
       var root = {};
+      console.log(this.type);
       if(baseTags[this.type]) { root = baseTags[this.type][0]; }
+      console.log(root);
       var newModel = new UIElementModel(root);
       this.collection.push(newModel);
     },
@@ -61,7 +58,7 @@ function(UIElementView, UIElementModel) {
 
     appendUIE: function(uieModel) {
       var newView = new UIElementView(uieModel);
-      this.elems.appendChild(newView.el);
+      this.elems.appendChild(newView.render().el);
     },
 
     removeUIE: function(uieModel) {

@@ -104,7 +104,8 @@ define(['jquery'], function() {
         cssFile.setAttribute('href', '/static/css/' + css + '.css');
         cssFile.setAttribute('rel', 'stylesheet');
         cssFile.id = 'css-' + css;
-        document.getElementsByTagName('head')[0].appendChild(cssFile);
+        console.log("loading " + css);
+        //document.getElementsByTagName('head')[0].appendChild(cssFile);
       }
     },
 
@@ -184,10 +185,24 @@ define(['jquery'], function() {
       return !( aLeftOfB || aRightOfB || aAboveB || aBelowB );
     },
 
+    isPlural: function(str) {
+      if(str && str.length > 0) {
+        var lastChar = str.charAt(str.length - 1);
+        return (lastChar === 's' || lastChar === 'S');
+      }
+    },
+
     pluralize: function(str) {
       if(str && str.length > 0) {
         var lastChar = str.charAt(str.length - 1);
-        return (lastChar == 's') ? str + 'es' : str + 's';
+        return (lastChar === 's' || lastChar === "S") ? str + 'es' : str + 's';
+      }
+    },
+
+    singularize: function(str) {
+      if(str && str.length > 0) {
+        var lastChar = str.charAt(str.length - 1);
+        return (lastChar === 's' || lastChar === "S") ? str.substring(0, str.length - 1) : str;
       }
     },
 
@@ -202,6 +217,9 @@ define(['jquery'], function() {
     },
 
     doesStartWithKeywords: function(str) {
+      if(!str) {
+        return false;
+      }
       var ind1 = str.indexOf('Page');
       var ind2 = str.indexOf('Form');
       var ind3 = str.indexOf('loop');
@@ -233,7 +251,99 @@ define(['jquery'], function() {
     capitaliseFirstLetter: function(string)
     {
         return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+
+    selectText: function($el) {
+      var doc = document;
+      var element = $el.get(0);
+      var range;
+
+      if (doc.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+      } else if (window.getSelection) {
+        var selection = window.getSelection();
+        range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    },
+
+    unselectText: function () {
+      if ( document.selection ) {
+          document.selection.empty();
+      } else if ( window.getSelection ) {
+          window.getSelection().removeAllRanges();
+      }
+    },
+
+    findPos: function (obj) {
+      var curleft = curtop = 0;
+
+      if(obj.style.position == "fixed") return [1,1];
+      if (obj.offsetParent) {
+        do {
+          curleft += obj.offsetLeft;
+          curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+      }
+
+      return [curleft,curtop];
+    },
+
+    waitUntilAppears: function(selector, callbackFn, cont_args, count, timer) {
+      if(!timer) timer = {};
+      clearTimeout(timer);
+      var cnt = (count || 0);
+
+      el = document.querySelector(selector);
+      if(el && !el.tagName) { el = el[0]; }
+
+      var repeat = function() {
+        cnt++;
+        timer = window.setTimeout(function() {
+          util.waitUntilAppears.call(this, selector, callbackFn, cont_args, cnt, timer);
+        }, 500);
+      };
+
+      var fail = function() {
+        alert('There has been a problem with the flow of the Walkthrough. Please refresh your page. Don\'t worry, you\'ll start from where you left off!');
+      };
+
+      if(cnt > 60) return fail();
+      if(!el) return repeat();
+
+      var pos = util.findPos(el);
+
+      if($(el).height() === 0 || $(el).width() === 0 || pos[0] === 0 || pos[1] === 0) return repeat();
+      callbackFn.apply(undefined, cont_args);
+    },
+
+    threeDots: function() {
+      var el = document.createElement('span');
+      el.style.marginLeft = 0;
+      el.style.width = '12px';
+      el.style.textAlign = 'left';
+      var currentNmr = 1;
+      var timer = setInterval(function() {
+        nmr = (currentNmr % 3);
+        var str = '.';
+        for(var ii = 0; ii < nmr; ii++) {
+          str += '.';
+        }
+        el.innerHTML = str;
+        currentNmr++;
+      }, 200);
+
+      var obj = {};
+      obj.el = el;
+      obj.timer = timer;
+
+      return obj;
     }
+
   };
 
   function csrfSafeMethod(method) {

@@ -26,7 +26,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       'change input[name=required]'      : 'changedRequired',
       'keyup   input.field-label-input'  : 'changedLabel',
       'keyup  .options-input'            : 'changedOptions',
-      'click .done-btn'                  : 'closeModal',
+      'click .done'                  : 'closeModal',
       'click .delete-field'              : 'deleteField',
       'click .q-mark'                    : 'showTutorial',
       'click .add-field-button'          : 'clickedAddField',
@@ -36,8 +36,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
     initialize: function(formModel, entityM) {
       _.bindAll(this);
-
-      util.loadCSS(this.css);
 
       this.model = formModel;
       this.entityModel = entityM;
@@ -63,7 +61,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       var temp_context = {};
       temp_context.form = this.model;
       temp_context.pages = v1State.get('pages').models;
-      temp_context.emails = ["Email 1", "Email 2"];
       temp_context.possibleEntities = _.map(v1State.get('users').getCommonProps(), function(field) { return "CurrentUser." + field.name; });
 
       var html = _.template(FormEditorTemplates.template, temp_context);
@@ -101,16 +98,14 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       this.renderFields();
     },
 
-    newFormField: function(e) {
-      if(e.target.checked) {
+    newFormField: function(val) {
 
-        if(e.target.id == "tablefield-new") {
+        if(val == "new") {
           this.renderNewFieldForm();
           return;
         }
 
-        var cid = e.target.id.replace('tablefield-', '');
-        var fieldModel = this.entityModel.get('fields').get(cid);
+        var fieldModel = this.entityModel.get('fields').get(val);
         var formFieldModel = new FormFieldModel({field_name: fieldModel.get('name'),
                                                  displayType: "single-line-text",
                                                  type: fieldModel.get('type'),
@@ -134,11 +129,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
         var ind = this.model.get('fields').models.length - 1;
         this.model.get('fields').add(formFieldModel, {at: ind});
-      }
-      else {
-        var removedField = this.model.get('fields').where({ name : e.target.value});
-        this.model.get('fields').remove(removedField);
-      }
+
     },
 
     fieldAdded: function(fieldModel) {
@@ -157,14 +148,16 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     selectedNew: function(fieldModel) {
       var html = _.template(FormEditorTemplates.details, {field : fieldModel});
 
+      console.log(html);
+
       this.selected = fieldModel;
       this.listenTo(this.selected, 'change:displayType', this.reRenderDisplayType);
       this.listenTo(this.selected, 'change:placeholder', this.reRenderDisplayType);
       this.listenTo(this.selected, 'change:options', this.reRenderDisplayType);
       this.listenTo(this.selected, 'change:label', this.reRenderLabel);
-      this.listenTo(this.selected, 'change:required', this.reRenderDisplayType);
+      this.listenTo(this.selected, 'change:required', this.reRenderLabel);
 
-      this.$el.find('.details-panel').hide();
+      // this.$el.find('.details-panel').hide();
 
       this.$el.find('.details-panel').html(html);
       if(fieldModel.get('displayType') == "option-boxes" || fieldModel.get('displayType') == "dropdown") {
@@ -174,7 +167,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
       this.$el.find('.selected').removeClass('selected');
       this.$el.find('#field-' + fieldModel.cid).addClass('selected');
-      this.$el.find('.details-panel').fadeIn().css('display', 'inline-block');
+      // this.$el.find('.details-panel').fadeIn().css('display', 'inline-block');
       this.$el.find('.drag-icon').css({opacity: 0}).animate({opacity: 1});
       if(this.model.get("action") == "edit") {
         this.$el.find('.field-placeholder-input').prop('disabled', true);
@@ -200,7 +193,9 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
     reRenderLabel: function() {
       var field = this.selected;
-      $('#field-'+ field.cid).find('label').html(field.get('label'));
+      var str = field.get('label');
+      if(field.get('required')) str += ' *';
+      $('#field-'+ field.cid).find('label').html(str);
     },
 
     changedFieldType: function(e) {
@@ -266,6 +261,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       e.preventDefault();
 
       var name = this.$el.find('.new-field-name').val();
+      if(name == '') return false;
       var type = this.$el.find('input:radio[name=field-type]:checked').val();
 
       var fieldModel = this.entityModel.get('fields').push({name: name, type: type});
@@ -309,15 +305,15 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
 
 
     clickedAddField: function(e) {
-      this.selected = null;
-      this.$el.find('.details-panel').html('Select the corresponding field.');
-      var html = '<ul class="table-fields-list" class="new-field-tablefields">';
-      this.entityModel.get('fields').each(function(field) {
-        html += '<li><input type="radio" class="new-field-option" name="tablefields" id="tablefield-'+field.cid+'"><label for="tablefield-'+field.cid+'">'+ field.get('name') +'</label></li>';
-      });
-      html += '<li><input type="radio" class="new-field-option" name="tablefields" id="tablefield-new"><label for="tablefield-new">Create A New Field</label></li>';
-      html += '</ul>';
-      this.$el.find('.details-panel').append(html);
+      var list = this.entityModel.get('fields').filter(function(field) { return !field.isRelatedField(); });
+      list = _(list).map(function(field) { return { name: field.get('name'), val: field.cid }; });
+      list.push({ name: "Create A New Field", val:"new"});
+
+      this.fieldPicker = new Backbone.PickOneView(list, false);
+      this.$el.find('.details-panel').html('');
+      this.$el.find('.details-panel').append(this.fieldPicker.render().el);
+
+      this.fieldPicker.on('submit', this.newFormField);
     },
 
     renderNewFieldForm: function() {

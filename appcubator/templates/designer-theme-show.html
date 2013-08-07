@@ -1,7 +1,8 @@
 {% extends "infra-html.html" %}
 
 {% block css %}
-  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/themes.css">
+  <link type="text/css"  rel="stylesheet/less" href="{{ STATIC_URL }}css/app/themes.less">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/js/libs/fontselect/fontselect.css" />
 {% endblock %}
 
 {% block topbar %}
@@ -15,44 +16,39 @@
 <div class="container hoff6">
   <div class="span12">
       <ul class="uie-gallery left-nav">
-        <li class="expandible" id="basecss">Base CSS</li>
-        <li class="expandible" id="fonts">Fonts</li>
-        <li class="expandible" id="button">Buttons</li>
-        <li class="expandible" id="image">Images</li>
-        <li class="expandible" id="header-text">Headers</li>
-        <li class="expandible" id="text">Texts</li>
-        <li class="expandible" id="link">Links</li>
-        <li class="expandible" id="text-input">Inputs</li>
-        <li class="expandible" id="password">Password Fields</li>
-        <li class="expandible" id="text-area">Text Areas</li>
-        <li class="expandible" id="line">Lines</li>
-        <li class="expandible" id="dropdown">Dropdowns</li>
-        <li class="expandible" id="box">Boxes</li>
-        <li class="expandible" id="form">Forms</li>
-        <li class="expandible" id="pages">Pages</li>
-        <li class="expandible" id="statics">Statics</li>
+        <li class="expandible" id="basecss"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}basecss/">Base CSS</a></li>
+        <li class="expandible" id="fonts"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}fonts/">Fonts</a></li>
+        <li class="expandible" id="button"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}button/">Buttons</a></li>
+        <li class="expandible" id="image"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}image/">Images</a></li>
+        <li class="expandible" id="header-text"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}header-text/">Headers</a></li>
+        <li class="expandible" id="text"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}text/">Texts</a></li>
+        <li class="expandible" id="link"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}link/">Links</a></li>
+        <li class="expandible" id="text-input"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}text-input/">Inputs</a></li>
+        <li class="expandible" id="password"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}password/">Password Fields</a></li>
+        <li class="expandible" id="text-area"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}text-area/">Text Areas</a></li>
+        <li class="expandible" id="line"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}line/">Lines</a></li>
+        <li class="expandible" id="dropdown"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}dropdown/">Dropdowns</a></li>
+        <li class="expandible" id="box"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}box/">Boxes</a></li>
+        <li class="expandible" id="form"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}form/">Forms</a></li>
+        <li class="expandible" id="list"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}list/">Lists</a></li>
+        <li class="expandible" id="statics"><a href="{% if themeId %}/theme/{{ themeId }}/{% else %}/app/{{ appId }}/edit_theme/{% endif %}statics/">Statics</a></li>
       </ul>
-
   </div>
-  <div class="right-bar span42 offset2">
-    <ul class="content-editor">
+  <div class="right-bar span42 offset1">
+    <ul class="element-editor">
       <li id="basecss-cont" class="expanded">
+        <h3>Base CSS</h3>
         <div class="base-css span40" id="base-css">
 
         </div>
       </li>
       <li id="fonts-cont">
-        <textarea id="fonts-editor"></textarea>
-      </li>
-      <li id="pages-cont">
-        <ul id="pages-list" class="pages-list">
-        </ul>
-        <div class="span16 hi12 pane border" id="create-page">
-          + Create Sample Page
+        <h3>Fonts</h3>
+        <div>
+          <input type="text" class="font-selector">
+          <ul class="fonts hoff2"></ul>
         </div>
-        <form class="create-page-form" style="display:none">
-          <input class="create-page-name" type="text" placeholder="placename">
-        </form>
+        <!-- <textarea id="fonts-editor"></textarea> -->
       </li>
       <li class="" id="button-cont">
         <h3>Buttons</h3>
@@ -90,27 +86,31 @@
       <li class="" id="form-cont">
         <h3>Forms</h3>
       </li>
+      <li class="" id="list-cont">
+        <h3>Lists</h3>
+      </li>
       <li id="statics-cont">
         <div class="btn-primary btn" id="upload-static">Upload New</div>
+        <div id="theme-statics" class="row hoff2"></div>
       </li>
     </ul>
   </div>
 </div>
 {% endblock %}
 {% block js %}
-<script src="http://rawgithub.com/ajaxorg/ace-builds/master/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script>
 </script>
 <script>
 var themeState = {{ theme|safe }};
-
 var themeId = null;
 var appId = null;
 
 {% if themeId %}
 var themeId = {{ themeId }};
+var url = '/theme/'+themeId;
 {% elif appId%}
 var appId = {{ appId }};
+var url = '/app/' + appId;
 {% endif %}
 
 var statics = {{ statics|safe }};

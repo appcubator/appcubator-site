@@ -318,7 +318,7 @@ test_json = r"""
                 "links": []
             },
             "footer": {
-                "customText": "Add custom footer text here",
+                "customText": "Powered by Appcubator",
                 "isHidden": false,
                 "isFixed": true,
                 "links": []
@@ -423,7 +423,7 @@ test_json = r"""
                 "links": []
             },
             "footer": {
-                "customText": "Add custom footer text here",
+                "customText": "Powered by Appcubator",
                 "isHidden": false,
                 "isFixed": true,
                 "links": []

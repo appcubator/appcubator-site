@@ -42,7 +42,7 @@
       "jquery" : "{{ STATIC_URL }}js/libs/jquery/jquery",
       "jquery-ui" : "{{ STATIC_URL }}js/libs/jquery-ui/jquery-ui",
       "jquery.filedrop" : "{{ STATIC_URL }}js/libs/jquery/jquery.filedrop",
-      "jquery.flexslider" : "{{ STATIC_URL }}js/libs/jquery/jquery.flexslider-min",
+      "jquery.hotkeys" : "{{ STATIC_URL }}js/libs/jquery/jquery.hotkeys",
       "underscore" : "{{ STATIC_URL }}js/libs/underscore-amd/underscore",
       "backbone" : "{{ STATIC_URL }}js/libs/backbone-amd/backbone",
       "util" : "{{ STATIC_URL }}js/libs/util/util",
@@ -101,12 +101,27 @@
 
   <!-- Top Menu -->
   <div class="section-select">
-    <a href="" class="menu-button home">
-    </a><div class="menu-button pages"><ul id="page-list"></ul>
-    </div><div class="menu-button save" id="save">
-      <span>Save</span>
-    </div><div class="menu-button run" id="deploy"><span>Test Run</span>
-    </div><div class="menu-button help"></div>
+
+    <div class="save-run-group">
+      <div class="menu-button run" id="deploy"><span class="play-btn"><span class="play-btn-icon"></span></span><span id="deploy-text">Test Run</span>
+      </div><div class="menu-button save" id="editor-save">
+        <span>Save</span>
+      </div>
+    </div>
+    <div class="middle-group" id="tool-bar">
+      <div class="navigator menu-button">
+        <a class="back"></a>
+        <a href="{% url appcubator.views.app_page app.id %}pages/" class="pages"></a>
+        <a href="{% url appcubator.views.app_page app.id %}emails/" class="emails"></a>
+        <a href="{% url appcubator.views.app_page app.id %}gallery/" class="themes"></a>
+        <a href="{% url appcubator.views.app_page app.id %}tables/" class="tables"></a>
+      </div>
+      <div class="menu-button pages"><ul id="page-list"></ul><div class="menu-button dropdown-arrow">
+      </div></div>
+    </div>
+    <div class="right-group">
+      <div class="menu-button question">Ask a Question</div>
+    </div>
   </div>
 
   <!-- Inside-Page -->
@@ -115,23 +130,21 @@
       <div class="url-bar">http://yourapp.com</div>
       <div class="page full container fdededfcbcbcd" id="page">
         <!-- Navbar -->
-        <div class="navbar" id="navbar">
+        <navbar class="navbar" id="navbar">
           <div class="navbar-inner">
-            <div class="container">
-              <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
-              <ul class="nav" id="links">
-              </ul>
-              <button class="edit-navbar btn btn-small btn-inverse pull-right">Edit Navbar</button>
-            </div>
+            <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
+            <ul class="nav" id="links">
+            </ul>
+            <button id="edit-navbar-btn">Edit Navbar</button>
           </div>
-        </div>
-        <!-- Navbar Ends-->
+        </navbar>
+        <!-- Editing Container -->
         <div class="container editing" id="full-container"></div>
-        <div class="editing" id="elements-container"></div>
+        <div class="editing" id="elements-container">
+        <!-- UI Elements -->
+        </div>
         <!-- Footer -->
-        <footer id="footer-container">
-        </footer>
-        <!-- Footer Ends-->
+        <footer class="footer" id="footer"></footer>
       </div>
     </div>
   </div>

@@ -2,24 +2,34 @@
 {% block content %}
   <h2>Feedback</h2>
   <hr>
-  <table class="table table-striped">
+  <table id="feedback" class="table table-striped table-hover table-bordered">
     <thead>
       <tr>
-        <th>#</th>
-        <th>Timestamp</th>
+        <th data-sort-type="number">Feedback ID</th>
+        <th data-sort-type="timestamp">Timestamp</th>
         <th>User ID</th>
-        <th>Message</th>
+        <th>Likes</th>
+        <th>Dislikes</th>
+        <th>Features</th>
       </tr>
     </thead>
     <tbody>
-      {% for feedback in feedback reversed%}
+      {% for feedback in feedback reversed %}
       <tr>
         <td class="span1">{{ feedback.pk }}</td>
         <td class="span2">{{ feedback.timestamp }}</td>
         <td class="span1">{{ feedback.user_id }}</td>
-        <td class="span7">{{ feedback.data }}</td>
+        <td class="span2">{{ feedback.data_json.like|linebreaks }}</td>
+        <td class="span2">{{ feedback.data_json.dislike|linebreaks }}</td>
+        <td class="span2">{{ feedback.data_json.features|linebreaks }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  $('#feedback').sortableTable({initialColumn: 1})
+</script>
 {% endblock %}

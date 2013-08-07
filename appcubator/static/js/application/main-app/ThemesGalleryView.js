@@ -12,7 +12,6 @@ function(ThemeDisplayView) {
     },
 
     initialize: function() {
-      util.loadCSS(this.css);
       this.title = "Themes";
     },
 

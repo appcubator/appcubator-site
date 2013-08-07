@@ -1,4 +1,4 @@
-var ToopTipHints = {
+var ToolTipHints = {
   "a-left"   : "Align left",
   "a-center" : "Align center",
   "a-right"  : "Align right",

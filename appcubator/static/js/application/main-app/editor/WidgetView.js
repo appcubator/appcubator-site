@@ -3,23 +3,6 @@ define([
   'mixins/BackboneUI'
 ],function() {
 
-  $.fn.selectText = function(){
-    var doc = document;
-    var element = this[0];
-    var range;
-    if (doc.body.createTextRange) {
-      range = document.body.createTextRange();
-      range.moveToElementText(element);
-      range.select();
-    } else if (window.getSelection) {
-      var selection = window.getSelection();
-      range = document.createRange();
-      range.selectNodeContents(element);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
-  };
-
   var WidgetView = Backbone.UIView.extend({
     el: null,
     className: 'widget-wrapper',
@@ -46,32 +29,34 @@ define([
 
       this.model = widgetModel;
 
-      this.model.get('data').bind("change:type", this.changedType, this);
-      this.model.get('data').bind("change:class_name", this.changedType, this);
-      this.model.bind("remove", this.close, this);
+      this.listenTo(this.model.get('data'), "change:type", this.changedType, this);
+      this.listenTo(this.model.get('data'), "change:class_name", this.changedType, this);
+      this.listenTo(this.model, "remove", this.close, this);
 
-      this.model.get('layout').bind("change:width", this.changedWidth, this);
-      this.model.get('layout').bind("change:height", this.changedHeight, this);
-      this.model.get('layout').bind("change:top", this.changedTop, this);
-      this.model.get('layout').bind("change:left", this.changedLeft, this);
-      this.model.get('layout').bind("change:isFull", this.toggleFull, this);
-      this.model.get('layout').bind("change:alignment", this.changedAlignment, this);
-      this.model.get('layout').bind("change", this.changedPadding, this);
+      this.listenTo( this.model.get('layout'), "change:width",this.changedSize, this);
+      this.listenTo( this.model.get('layout'), "change:height", this.changedSize, this);
+      this.listenTo( this.model.get('layout'), "change:top", this.changedTop, this);
+      this.listenTo( this.model.get('layout'), "change:left", this.changedLeft, this);
+      this.listenTo( this.model.get('layout'), "change:isFull", this.toggleFull, this);
+      this.listenTo( this.model.get('layout'), "change:alignment", this.changedAlignment, this);
+      this.listenTo( this.model.get('layout'), "change", this.changedPadding, this);
 
-      this.model.get('data').bind("change:content", this.changedText, this);
-      this.model.get('data').get('content_attribs').bind("change:src", this.changedSource, this);
-      this.model.get('data').get('content_attribs').bind("change:value", this.changedValue, this);
-      this.model.get('data').get('content_attribs').bind("change:style", this.changedStyle, this);
+      this.listenTo(this.model.get('data'), "change:content", this.changedText, this);
 
-      this.model.bind("startEditing", this.switchEditModeOn, this);
-      this.model.bind("deselected",   function() {
+      this.listenTo(this.model.get('data').get('content_attribs'), "change:src", this.changedSource, this);
+      this.listenTo(this.model.get('data').get('content_attribs'), "change:value", this.changedValue, this);
+      this.listenTo(this.model.get('data').get('content_attribs'), "change:style", this.changedStyle, this);
+
+      this.listenTo(this.model, "startEditing", this.switchEditModeOn, this);
+      this.listenTo(this.model, "deselected",   function() {
         this.model.trigger('stopEditing');
       }, this);
-      this.model.bind('stopEditing', this.switchEditModeOff);
+      this.listenTo(this.model, "stopEditing", this.switchEditModeOff);
 
-      keyDispatcher.bind('command+enter', function() {
+      keyDispatcher.bind('meta+return', function() {
         self.model.trigger('stopEditing');
       });
+
     },
 
     setFreeMovement: function () {
@@ -94,25 +79,26 @@ define([
       this.el.style.textAlign = this.model.get('layout').get('alignment');
 
       if(this.model.get('layout').has('l_padding')) {
-        this.el.style.paddingLeft = this.model.get('layout').get('l_padding');
+        this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
       }
 
       if(this.model.get('layout').has('r_padding')) {
-        this.el.style.paddingRight = this.model.get('layout').get('r_padding');
+        this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
       }
 
       if(this.model.get('layout').has('t_padding')) {
-        this.el.style.paddingTop = this.model.get('layout').get('t_padding');
+        this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
       }
 
       if(this.model.get('layout').has('b_padding')) {
-        this.el.style.paddingBottom = this.model.get('layout').get('b_padding');
+        this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
       }
 
       this.el.innerHTML = this.renderElement();
       this.el.id = 'widget-wrapper-' + this.model.cid;
 
       if(this.model.isFullWidth()) this.switchOnFullWidth();
+      if(this.model.isBox()) this.el.style.zIndex = 999;
 
       return this;
     },
@@ -134,6 +120,7 @@ define([
       if(!this.editMode) {
         this.model.trigger('selected');
         this.el.style.zIndex = 2003;
+        if(this.model.isBox()) this.el.style.zIndex = 1000;
       }
     },
 
@@ -178,8 +165,15 @@ define([
       $('#elements-container').append(this.el);
       this.render();
     },
+    
+    changedSize: function() {
+      this.changedHeight();
+      this.changedWidth();
+    },
 
     changedHeight: function(a) {
+      console.log(this.model.get('layout').get('height'));
+      console.log(this.model.get('layout').get('height') * (this.positionVerticalGrid));
       this.setHeight(this.model.get('layout').get('height') * (this.positionVerticalGrid));
     },
 
@@ -224,6 +218,7 @@ define([
 
     hovered: function() {
       if(this.editMode) return;
+      if(this.model.isBox()) return;
       this.hovered = true;
       this.model.trigger('hovered');
     },
@@ -265,7 +260,7 @@ define([
         this.$el.addClass('textediting');
         el.attr('contenteditable', 'true');
         el.focus();
-        el.selectText();
+        util.selectText(el);
         keyDispatcher.textEditing = true;
       }
 
@@ -282,6 +277,7 @@ define([
       this.model.get('data').set('content', val);
       el.attr('contenteditable', 'false');
       keyDispatcher.textEditing = false;
+      util.unselectText();
     },
 
     autoResize: function(hGrid, vGrid) {
@@ -310,6 +306,10 @@ define([
 
     mousedown: function(e) {
       //e.stopPropagation();
+    },
+
+    close: function () {
+      WidgetView.__super__.remove.call(this);
     }
 
   });

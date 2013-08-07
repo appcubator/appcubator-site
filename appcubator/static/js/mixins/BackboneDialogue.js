@@ -17,15 +17,15 @@ function(Backbone) {
     },
 
     _configure: function(options) {
-      Backbone.ModalView.__super__._configure.call(this, options);
+      Backbone.DialogueView.__super__._configure.call(this, options);
       this.backgroundDiv = this.setupModal();
       this.modalWindow = this.setupModalWindow();
       util.loadCSS(this.css);
-      _.bindAll(this, 'closeModal', 'handleKey');
+      _.bindAll(this);
     },
 
     _ensureElement: function(options) {
-      Backbone.ModalView.__super__._ensureElement.call(this, options);
+      Backbone.DialogueView.__super__._ensureElement.call(this, options);
     },
 
     setupModal: function() {

@@ -21,6 +21,15 @@ function(SelectView) {
 
       this.model = widgetModel;
       this.list = _.map(uieState[this.model.get('data').get('nodeType')], function(obj) { return obj.class_name; });
+
+      if(widgetModel.hasForm()) {
+        this.list = _.map(uieState["forms"], function(obj) { return obj.class_name; });
+      }
+
+      if(widgetModel.isList()) {
+        this.list = _.map(uieState["lists"], function(obj) { return obj.class_name; });
+      }
+
       this.currentVal = this.model.get('data').get('class_name');
       this.render();
     },

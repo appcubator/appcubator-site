@@ -11,7 +11,7 @@ function(Backbone) {
     events : {
       'click .modal-bg' : 'closeModal',
       'keydown'         : 'handleKey',
-      'click .done-btn' : 'closeModal'
+      'click .done' : 'closeModal'
     },
 
     _configure: function(options) {
@@ -21,7 +21,7 @@ function(Backbone) {
       }
       this.backgroundDiv = this.setupModal();
       this.modalWindow = this.setupModalWindow();
-      _.bindAll(this, 'closeModal', 'handleKey');
+      _.bindAll(this);
     },
 
     _ensureElement: function(options) {
@@ -70,14 +70,14 @@ function(Backbone) {
       }
       else {
         div.style.minHeight = '300px';
+        div.style.maxHeight = '630px';
       }
       div.style.top = '50%';
       div.style.left = '50%';
       div.style.marginLeft= '-'+ (this.width/2) +'px';
       div.style.marginTop = '-300px';
-
-      div.style.padding = this.padding + 'px';
       div.style.zIndex = 3001;
+      div.style.padding = 0;
 
       if(this.title) {
         var title = document.createElement('h3');
@@ -85,8 +85,10 @@ function(Backbone) {
         div.appendChild(title);
       }
       if(this.doneButton) {
-        $(div).append('<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>');
-        $(div).find('.done-btn').on('click', function() {
+        var qMark = '';
+        if(this.address) { qMark = '<div class="q-mark"></div>'; }
+        $(div).append('<div class="bottom-sect">'+ qMark+'<div class="btn done">Done</div></div>');
+        $(div).find('.done').on('click', function() {
           self.closeModal();
         });
       }
@@ -97,12 +99,15 @@ function(Backbone) {
       span.style.right = '15px';
       span.style.top = '15px';
       span.innerText = '×';
+      span.style.zIndex = '1000';
       div.appendChild(span);
 
       var content = document.createElement('div');
       content.style.width = '100%';
+      content.style.height = '100%';
+      content.style.position = "relative";
+      content.style.padding = (this.padding||0) + 'px';
       div.appendChild(content);
-
 
       document.body.appendChild(div);
 
@@ -119,7 +124,6 @@ function(Backbone) {
       this.undelegateEvents();
       if(this.callback) this.callback();
       if(this.onClose) this.onClose();
-      // fadeOut(function() { $(this).remove(); });
       $(self.modalWindow).fadeOut(100);
       $(self.backgroundDiv).hide();
 

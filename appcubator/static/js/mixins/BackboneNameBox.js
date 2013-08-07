@@ -11,7 +11,8 @@ function(Backbone) {
     txt: "",
     events: {
       'click'               : 'showForm',
-      'submit form'         : 'createFormSubmitted'
+      'submit form'         : 'createFormSubmitted',
+      'keydown input[type="text"]' : 'keyDown'
     },
 
     initialize: function(inp) {
@@ -19,8 +20,6 @@ function(Backbone) {
       if(inp.txt) {
         this.txt = inp.txt;
       }
-
-      this.render();
       return this;
     },
 
@@ -50,6 +49,20 @@ function(Backbone) {
         this.$el.find('.box-button').fadeIn();
         this.trigger('submit', name);
       }
+      else {
+        this.reset();
+      }
+    },
+
+    keyDown: function (e) {
+      if(e.keyCode === 27) this.reset();
+    },
+
+    reset: function() {
+      var nameInput = this.$el.find('input[type=text]');
+      nameInput.val('');
+      this.$el.find('form').hide();
+      this.$el.find('.box-button').fadeIn();
     }
 
   });

@@ -1,4 +1,4 @@
-<div class="v1nav navbar logo-text navbar-inverse navbar-fixed-top ">
+  <div class="v1nav navbar logo-text navbar-inverse navbar-fixed-top ">
   <div class="hi4 navbar-inner">
     <div class="container">
       <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -9,22 +9,29 @@
       <div class="nav-collapse collapse navbar-responsive-collapse">
         <ul class="nav">
           <li class="brand">
-            <h1 class="name"><a id="main-menu">Appcubator</a></h1>
-            <ul class="navigation-menu">
-            </ul>
+            <h1 class="name">
+              <a id="main-menu" href="/app/{{ app.id }}/">
+                <span class="brand">Appcubator</span>
+                <span class="title">Overview</span>
+              </a>
+            </h1>
           </li>
           <li class="pull-right dropd">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if app %}{{ app.name }}{% else %}{{ user.get_full_name }}{% endif %}<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.get_full_name }}<b class="caret"></b></a>
             <ul class="v1 dropdown-menu">
+              <!-- <li class="header-panel"></li> -->
               {% if app %}
-              <li><a href="{% url appcubator.views.app_page app.id %}">App settings</a></li>
-              <li class="divider"></li>
+              <li><a href="{% url appcubator.views.app_page app.id %}info/"></span>App settings</a></li>
+                {% if user.is_superuser and app.pk %}
+                <li><a href="{% url appcubator.admin_views.admin_app app.pk %}"></span>Admin</a></li>
+                {% endif %}
               {% endif %}
+              <li class="header">My Applications</li>
               {% for a in users_apps %}
-              <li><a href="{% url appcubator.views.app_page a.id %}">{{ a.name }}</a></li>
+              <li><a href="{% url appcubator.views.app_page a.id %}" rel="external"></span>{{ a.name }}</a></li>
               {% endfor %}
-              <li><a href="{% url appcubator.views.app_new %}">+ Create New</a></li>
-              <li class="divider"></li>
+              <li><a href="{% url appcubator.views.app_new %}" rel="external"></span>Create New</a></li>
+              <li class="header">Account Details</li>
               <li><a href="/account">Account Settings</a></li>
               <li><a href="/logout">Logout</a></li>
             </ul>

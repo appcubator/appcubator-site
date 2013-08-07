@@ -13,9 +13,10 @@ define([
   'editor/FooterView',
   'editor/GuideView',
   'editor/MarqueeView',
+  'editor/ToolBarView',
   'tutorial/TutorialView',
   'app/DeployView',
-  'mixins/BackboneNameBox',
+  'app/RedoController',
   'editor/editor-templates'
 ],
 function( PageModel,
@@ -32,8 +33,10 @@ function( PageModel,
           FooterView,
           GuideView,
           MarqueeView,
+          ToolBarView,
           TutorialView,
-          DeployView) {
+          DeployView,
+          RedoController) {
 
   var EditorView = Backbone.View.extend({
     className : 'editor-page',
@@ -44,17 +47,15 @@ function( PageModel,
       'click #deploy'        : 'deploy',
       'click .menu-button.help' : 'help',
       'click .menu-button.question' : 'question',
-      'click .url-bar'       : 'clickedUrl',
-      'click .home'          : 'clickedHome',
-      'click .go-to-page'    : 'clickedGoToPage'
+      'click .url-bar'       : 'clickedUrl'
     },
 
     initialize: function(options) {
       _.bindAll(this);
+      this.subviews = [];
 
       if(options && options.pageId) pageId = options.pageId;
 
-      util.loadCSS(this.css);
       util.loadCSS('jquery-ui');
 
       this.model             = v1State.get('pages').models[pageId];
@@ -67,51 +68,65 @@ function( PageModel,
       this.galleryEditor    = new EditorGalleryView(this.widgetsCollection);
       this.widgetsManager   = new WidgetsManagerView(this.widgetsCollection);
       this.guides           = new GuideView(this.widgetsCollection);
+      this.toolBar          = new ToolBarView();
+
+      redoController = new RedoController();
+
+      keyDispatcher.bindComb('meta+z', redoController.undo);
+      keyDispatcher.bindComb('ctrl+z', redoController.undo);
+      keyDispatcher.bindComb('meta+shift+z', redoController.redo);
+      keyDispatcher.bindComb('ctrl+shift+z', redoController.redo);
+
+      keyDispatcher.bindComb('meta+c', this.copy);
+      keyDispatcher.bindComb('ctrl+c', this.copy);
+      keyDispatcher.bindComb('meta+v', this.paste);
+      keyDispatcher.bindComb('ctrl+v', this.paste);
+
       g_guides = this.guides;
 
       this.navbar  = new NavbarView(this.model.get('navbar'));
       this.footer  = new FooterView(this.model.get('footer'));
       this.urlModel      = this.model.get('url');
 
-      var page = v1State.get('pages').at(pageId);
-
       this.title = "Editor";
+
+      this.subviews = [ this.marqueeView,
+                        this.galleryEditor,
+                        this.widgetsManager,
+                        this.guides,
+                        this.toolBar,
+                        this.navbar,
+                        this.footer ];
     },
 
     render: function() {
 
       if(!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
 
-      util.get('page-list').innerHTML += '<li>'+ v1State.get('pages').models[pageId].get('name') +'</li>';
-
-      v1State.get('pages').each(function(page, ind) {
-        if(pageId == ind) return;
-        util.get('page-list').innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>' + page.get('name') +
-                                          '</a></li>';
-      });
-
-      var createBox = new Backbone.NameBox({tagName: 'li', className:'new-page', txt:'New Page'});
-      createBox.on('submit', this.createPage);
-
-      util.get('page-list').appendChild(createBox.el);
-
-
+      this.toolBar.setElement(document.getElementById('tool-bar')).render();
       this.marqueeView.render();
-
       this.renderUrlBar();
       this.galleryEditor.render();
       this.widgetsManager.render();
-      this.navbar.render();
-      $('#footer-container').append(this.footer.render().el);
+      this.navbar.setElement('#navbar').render();
+      this.footer.setElement('#footer').render();
       this.guides.setElement($('#elements-container')).render();
 
       $('#elements-container').append(this.marqueeView.el);
 
       this.setupPageWrapper();
       this.setupPageHeight();
+      this.setupPageHeightBindings();
+
       window.addEventListener('resize', this.setupPageWrapper);
 
       $('#loading-gif').fadeOut().remove();
+
+      if(!this.model.get('uielements').length) {
+        new PageStylePicker(this.model);
+      }
+
+      return this;
     },
 
     renderUrlBar: function() {
@@ -133,59 +148,55 @@ function( PageModel,
     },
 
     copy: function(e) {
-      //if(this.widgetsManager.copy()) { }
+      if(keyDispatcher.textEditing === true) return;
+      if(this.marqueeView.multiSelectorView.contents.length) {
+        this.contents = [];
+        _(this.marqueeView.multiSelectorView.contents).each(function(model) {
+          this.contents.push(model.toJSON());
+        }, this);
+      }
+      else if(this.widgetsManager.widgetSelectorView.selectedEl){
+        this.contents = [];
+        this.contents.push(this.widgetsManager.widgetSelectorView.selectedEl.toJSON());
+      }
     },
 
     paste: function(e) {
-      if(this.widgetsManager.paste()){
-        e.stopPropagation();
-      }
+      if(keyDispatcher.textEditing === true) return;
+      if(!this.contents) return;
+
+      _(this.contents).each(function(cont) {
+        cont.layout.left++;
+        cont.layout.top++;
+        cont.layout.top++;
+      });
+      this.widgetsCollection.add(this.contents);
     },
 
     deploy: function(options) {
       var url = '/app/'+appId+'/deploy/';
       var self = this;
-      util.get('deploy-text').innerHTML = 'Deploying...';
-
+      util.get('deploy-text').innerHTML = 'Deploying';
+      var threeDots = util.threeDots();
+      util.get('deploy-text').appendChild(threeDots.el);
+      
       var success_callback = function() {
         util.get('deploy-text').innerHTML = 'Test Run';
+        clearInterval(threeDots.timer);
+      };
+
+      var hold_on_callback = function() {
+        util.get('deploy-text').innerHTML = 'Hold On, It\'s still deploying.';
       };
 
       var urlSuffix = '/' + self.urlModel.getAppendixString();
       if(urlSuffix != '/') urlSuffix += '/';
-      v1.deploy(success_callback, { appendToUrl: urlSuffix });
+      v1.deploy(success_callback, hold_on_callback,{ appendToUrl: urlSuffix });
     },
 
     clickedUrl: function() {
       var newView =  new UrlView(this.urlModel);
       newView.onClose = this.renderUrlBar;
-    },
-
-    createPage: function(name) {
-      var pageUrlPart = name.replace(/ /g, '_');
-      var pageUrl = { urlparts : [pageUrlPart] };
-      var pageInd = v1State.get('pages').length;
-      var pageModel = new PageModel({ name: name, url: pageUrl});
-      v1State.get('pages').push(pageModel);
-
-      $.ajax({
-        type: "POST",
-        url: '/app/'+appId+'/state/',
-        data: JSON.stringify(v1State.toJSON()),
-        complete: function() {
-          $('<li class="go-to-page" id="page-'+pageInd+'"><a>'+name+'</a></li>').insertBefore($('#page-list').find(".new-page"));
-        },
-        dataType: "JSON"
-      });
-    },
-
-    clickedHome: function(e) {
-      v1.navigate("app/"+ appId +"/pages/", {trigger: true});
-    },
-
-    clickedGoToPage: function(e) {
-      var goToPageId = (e.target.id||e.target.parentNode.id).replace('page-','');
-      v1.navigate("app/"+ appId +"/editor/" + goToPageId +"/", {trigger: true});
     },
 
     setupPageWrapper: function() {
@@ -194,17 +205,34 @@ function( PageModel,
       this.$el.find('.page.full').css('height', height - 46);
     },
 
+    setupPageHeightBindings: function () {
+      this.listenTo(this.model.get('uielements'), 'add', function(uielem) {
+        this.setupPageHeight();
+        this.listenTo(uielem.get('layout'),'change', this.setupPageHeight);
+      }, this);
+
+      this.model.get('uielements').each(function(uielem) {
+        this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
+      }, this);
+    },
+
     setupPageHeight: function() {
       var height = (this.model.getHeight() + 4) * 15;
       if(height < 800) height = 800;
       this.$el.find('#elements-container').css('height', height);
     },
 
-    remove: function() {
+    close: function() {
       window.removeEventListener('resize', this.setupPageWrapper);
-      this.widgetsManager.remove();
-      this.marqueeView.remove();
-      Backbone.View.prototype.remove.call(this);
+
+      keyDispatcher.unbind('meta+z', redoController.redo);
+      keyDispatcher.unbind('ctrl+z', redoController.redo);
+      keyDispatcher.unbind('meta+c', this.copy);
+      keyDispatcher.unbind('ctrl+c', this.copy);
+      keyDispatcher.unbind('meta+v', this.paste);
+      keyDispatcher.unbind('ctrl+v', this.paste);
+
+      Backbone.View.prototype.close.call(this);
     }
 
   });

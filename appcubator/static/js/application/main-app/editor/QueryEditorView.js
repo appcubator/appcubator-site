@@ -8,6 +8,8 @@ function() {
     className : 'query-modal modal',
     css : 'query-editor',
     title: "Query Editor",
+    doneButton: true,
+    padding: 0,
 
     events: {
       'change .fields-to-display'   : 'fieldsToDisplayChanged',
@@ -21,7 +23,6 @@ function() {
     initialize: function(widgetModel, containerType) {
       _.bindAll(this);
 
-      util.loadCSS(this.css);
       this.widgetModel = widgetModel;
       this.containerType = containerType;
       this.model = widgetModel.get('data').get('container_info').get('query');
@@ -91,7 +92,7 @@ function() {
     },
 
     changeDescription: function() {
-      util.get('query-description').innerHTML = this.getNLdescription();
+      //util.get('query-description').innerHTML = this.getNLdescription();
     },
 
     fieldsToDisplayChanged: function(e) {

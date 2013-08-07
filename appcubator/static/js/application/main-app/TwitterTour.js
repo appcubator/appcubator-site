@@ -1,60 +1,68 @@
 define([
-  'tourist'
-],
-function() {
+  'tourist',
+  'util'
+  ],
+  function() {
 
-  var findPos = function (obj) {
-    var curleft = curtop = 0;
+    var findPos = function (obj) {
+      var curleft = curtop = 0;
 
-    if(obj.style.position == "fixed") return [1,1];
-    if (obj.offsetParent) {
+      if(obj.style.position == "fixed") return [1,1];
+      if (obj.offsetParent) {
         do {
-            curleft += obj.offsetLeft;
-            curtop += obj.offsetTop;
+          curleft += obj.offsetLeft;
+          curtop += obj.offsetTop;
         } while (obj = obj.offsetParent);
+      }
+
+      return [curleft,curtop];
+    };
+
+    var incrementStep = function() {
+      v1State.set('walkthrough', v1State.get('walkthrough') + 1);
     }
 
-    return [curleft,curtop];
-  };
+    var timer = {};
 
-  var waitUntilAppears = function(selector, callbackFn, cont_args, count) {
-    var cnt = (count || 0);
+    var waitUntilAppears = function(selector, callbackFn, cont_args, count) {
+      clearTimeout(timer);
+      var cnt = (count || 0);
 
-    el = document.querySelector(selector);
-    if(el && !el.tagName) { el = el[0]; }
+      el = document.querySelector(selector);
+      if(el && !el.tagName) { el = el[0]; }
 
-    var repeat = function() {
-      cnt++;
-      window.setTimeout(function() {
-        waitUntilAppears.call(this, selector, callbackFn, cont_args, cnt);
-      }, 500);
+      var repeat = function() {
+        cnt++;
+        timer = window.setTimeout(function() {
+          waitUntilAppears.call(this, selector, callbackFn, cont_args, cnt);
+        }, 500);
+      };
+
+      var fail = function() {
+        alert('There has been a problem with the flow of the Walkthrough. Please refresh your page. Don\'t worry, you\'ll start from where you left off!');
+      };
+
+      if(cnt > 60) return fail();
+      if(!el) return repeat();
+
+      var pos = findPos(el);
+
+      if($(el).height() === 0 || $(el).width() === 0 || pos[0] === 0 || pos[1] === 0) return repeat();
+      callbackFn.apply(undefined, cont_args);
     };
 
-    var fail = function() {
-      alert('There has been a problem with the flow of the Walkthrough. Please refresh your page. Don\'t worry, you\'ll start from where you left off!');
-    };
-
-    if(cnt > 60) return fail();
-    if(!el) return repeat();
-
-    var pos = findPos(el);
-
-    if($(el).height() === 0 || $(el).width() === 0 || pos[0] === 0 || pos[1] === 0) return repeat();
-    callbackFn.apply(undefined, cont_args);
-  };
-
-  var steps = [
+    var steps = [
     /*
      * Question btn
      */
-    {
+     {
       target: $('.qm-btn'),
       content: '<h3>Questions?</h3><p>If you have questions during the walkthrough, click the question marks for more info.</p>',
       my: "right center",
       at: "left center",
       url: '/',
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       },
       nextButton: true,
       highlightTarget: true
@@ -62,7 +70,7 @@ function() {
     /*
      * Tables Menu Nav
      */
-    {
+     {
       target: $('.menu-app-entities'),
       content: '<h3>Tables</h3><p>Click this button to go to the “Tables” page.</p><p><em>Go to the “Tables” page.</em></p>',
       my: "top center",
@@ -74,13 +82,13 @@ function() {
         });
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
      * Tables page explanation
      */
-    {
+     {
       target: $('.menu-app-entities'),
       content: '<h3>Tables</h3><p>This page is where you define the different types of users and the data they’ll create.</p>',
       my: "top center",
@@ -91,13 +99,13 @@ function() {
         return {  target: $('#add-role') };
       },*/
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
      * Add User Role btn
      */
-    {
+     {
       content: '<h3>User Roles</h3><p>In Twitter, there is only one type of user, but in some applications, there may be differences, ie. Doctors vs Patients.</p>',
       my: "top center",
       at: "bottom center",
@@ -107,13 +115,13 @@ function() {
         return {  target: $('#add-role') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
      * Add Table btn
      */
-    {
+     {
       content: '<h3>Adding A Table</h3><p>In Twitter, users can create and see Tweets.<br>These tweets are stored in a "Table", which we need to set up.</p><p><em>Click "Add Table" name the table: <strong>Tweet</strong>.</em></p>',
       my: "left center",
       at: "right center",
@@ -135,13 +143,13 @@ function() {
         return {  target: $('#add-entity') };
       },
       teardown: function(tour, options) {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
      * Tweet Table
      */
-    {
+     {
       content: '<h3>Congrats!</h3><p>You created a Tweet table. Next, we\'ll define the fields of the table.</p>',
       my: "left top",
       at: "top center",
@@ -154,13 +162,13 @@ function() {
       },
       nextButton: true,
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
      * Add Property btn
      */
-    {
+     {
       content: '<h3>Create a Field</h3><p>Tweets are simple, they consist of one Text field.</p><p><em>Add a field and name it <strong>Content</strong>.</em></p>',
       url: '/tables/',
       setup: function(tour, options) {
@@ -182,13 +190,13 @@ function() {
       },
       teardown: function(tour, options) {
         v1State.get('tables').getTableWithName("Tweet").get('fields').unbind('add', checkForContent);
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
      * About Relations
      */
-    {
+     {
       content: '<h3>Nice!</h3><p>Next, we\'ll associate <strong>Tweets</strong> with <strong>Users</strong>.</p>',
       my: "left top",
       at: "right top",
@@ -200,13 +208,13 @@ function() {
       },
       nextButton: true,
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
      * Add Relation btn
      */
-    {
+     {
       content: '<h3>Make a Relation</h3><p>Relations allow you to associate users and tweets.</p><p><em>Click <strong>Add Relation</strong>.</em></p>',
       my: "bottom center",
       at: "top center",
@@ -218,13 +226,13 @@ function() {
       },
       teardown: function(tour, options) {
         $('#add-relation').off('click', tour.next);
-        //v1State.attributes.walkthrough++;
+        //incrementStep();
       }
     },
     /*
      * Create Relation Options
      */
-    {
+     {
       content: '<h3>Relations</h3><p><em>Click below to make a <strong>User-Tweet</strong> relation.</em></p>',
       my: "bottom left",
       at: "top left",
@@ -236,14 +244,14 @@ function() {
         return {  target: $('#relations') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
-        v1State.attributes.walkthrough++;
+        incrementStep();
+        incrementStep();
       }
     },
     /*
      * Create Relation Form
      */
-    {
+     {
       content: '<h3>Relations</h3><p>In Twitter, a tweet has an <strong>owner</strong> and by consequence, users are owners of <strong>tweets</strong>.</p><p><em>Call the user\'s list of tweets <strong>Tweets</strong>, and the tweet\'s user <strong>Owner</strong>. Then press Done.</em></p>',
       my: "left center",
       at: "top center",
@@ -272,12 +280,12 @@ function() {
 
           // $('.done-relation').on('click', self.checkFields);
 
-        checkForRelation = function(fieldM) {
-          if( fieldM.get('entity_name') != "User" ||
+          checkForRelation = function(fieldM) {
+            if( fieldM.get('entity_name') != "User" ||
               fieldM.get('name') != "Owner" ||
               fieldM.get('related_name') != "Tweets") {
 
-            this.remove(fieldM);
+              this.remove(fieldM);
             alert('Make sure you enter "Tweets" in the first box, and "Owner" in the second box');
           }
           else {
@@ -292,7 +300,7 @@ function() {
       },
       teardown: function(tour, options) {
         v1State.get('tables').models[0].get('fields').unbind('add', checkForRelation);
-        v1State.attributes.walkthrough++;
+        incrementStep();
         v1.save();
       }
     },
@@ -309,13 +317,13 @@ function() {
         return { target: $('.save-btn') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     /*
      * Done with Tables. Going to pages.
      */
-    {
+     {
       content: '<h3>GREAT!</h3><p>You\'re done with the hard part. Now we\'ll make the UI.</p><p><em>Click on <strong>Pages</strong>.</em></p>',
       my: "top center",
       at: "bottom center",
@@ -328,7 +336,7 @@ function() {
       },
       teardown: function() {
         v1.unbind('pages-loaded');
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
       // my: "left center",
       // at: "right center",
@@ -344,7 +352,7 @@ function() {
       //   return { target: $('.relation-pane') };
       // },
       // teardown: function() {
-      //   v1State.attributes.walkthrough++;
+      //   incrementStep();
       // }
     },
     {
@@ -356,130 +364,135 @@ function() {
         //v1.bind('editor-loaded', function() {
           waitUntilAppears('.search-panel', function(tour, options) { tour.next(); }, [tour, options]);
         //}, this);
-        return { target: $('.page-view').first() };
-      },
-      teardown: function() {
-        v1.unbind('editor-loaded');
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
-      content: '<h3>Welcome to Editor</h3><p>What you see is what you get. You can drag elements onto the page and play around with them.</p>',
-      my: "right top",
-      at: "left bottom",
-      nextButton: true,
-      url: '/editor/0/',
-      setup: function(tour, options) {
-        return { target: $('.search-panel').first() };
-      },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
-      content: '<h3>Saving Your Progress</h3><p>Save early, save often. We periodically autosave for you.</p>',
-      my: "top center",
-      at: "bottom center",
-      nextButton: true,
-      url: '/editor/0/',
-      setup: function(tour, options) {
-        // $('#item-gallery').animate({
-        //   scrollTop: $("#type-headerTexts").offset().top
-        // }, 100);
+return { target: $('.page-view').first() };
+},
+teardown: function() {
+  v1.unbind('editor-loaded');
+  incrementStep();
+}
+},
+{
+  content: '<h3>Welcome to Editor</h3><p>What you see is what you get. You can drag elements onto the page and play around with them.</p>',
+  my: "right top",
+  at: "left bottom",
+  nextButton: true,
+  url: '/editor/0/',
+  setup: function(tour, options) {
+    return { target: $('.search-panel').first() };
+  },
+  teardown: function() {
+    incrementStep();
+  }
+},
+{
+  content: '<h3>Saving Your Progress</h3><p>Save early, save often. We periodically autosave for you.</p>',
+  my: "top center",
+  at: "bottom center",
+  nextButton: true,
+  url: '/editor/0/',
+  setup: function(tour, options) {
+    $('#item-gallery').animate({
+      scrollTop: $("#type-headerTexts").offset().top - 110
+    }, 200);
+    v1.save();
+    return { target: $('#editor-save') };
+  },
+  teardown: function() {
+    incrementStep();
+  }
+},
+{
+  content: '<h3>Drag\'n\'Drop</h3><p><em>Drag this header element to the page.</em></p>',
+  my: "right center",
+  at: "left center",
+  url: '/editor/0/',
+  setup: function(tour, options) {
 
-        return { target: $('#editor-save') };
-      },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
+    headerDragged = function(uielem) {
+      if(uielem.get('data').get('tagName') == "h1") {
+        tour.next();
       }
-    },
-    {
-      content: '<h3>Drag\'n\'Drop</h3><p><em>Drag this header element to the page.</em></p>',
-      my: "right center",
-      at: "left center",
-      url: '/editor/0/',
-      setup: function(tour, options) {
-        v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
-          if(uielem.get('data').get('tagName') == "h1") {
-            tour.next();
-          }
-        });
+    };
+    v1State.getCurrentPage().get('uielements').bind('add', headerDragged);
 
-        return { target: $('#type-headerTexts') };
-      },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
-      content: '<h3>Editing Elements</h3><p>Click the text to edit it.<br>Then, click "Pick Style" to choose your style.</p>',
-      my: "left center",
-      at: "right center",
-      nextButton: true,
-      url: '/editor/0/',
-      setup: function(tour, options) {
-        $('#item-gallery').animate({
-          scrollTop: $("#entity-user-facebook").offset().top - 110
-        }, 200);
+    return { target: $('#type-headerTexts') };
+  },
+  teardown: function() {
+    v1State.getCurrentPage().get('uielements').unbind('add', headerDragged);
+    incrementStep();
+  }
+},
+{
+  content: '<h3>Editing Elements</h3><p>Click the text to edit it.<br>Then, click "Pick Style" to choose your style.</p>',
+  my: "left center",
+  at: "right center",
+  nextButton: true,
+  url: '/editor/0/',
+  setup: function(tour, options) {
+    $('#item-gallery').animate({
+      scrollTop: $("#entity-user-facebook").offset().top - 110
+    }, 200);
 
-        return { target: $('.pick-style') };
-      },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
+    return { target: $('.pick-style') };
+  },
+  teardown: function() {
+    incrementStep();
+  }
+},
+{
+  content: '<h3>Time to get some users!</h3><p><em>Drag this facebook login button onto the page.</em></p>',
+  my: "right center",
+  at: "left center",
+  url: '/editor/0/',
+  setup: function(tour, options) {
+    facebookDropped = function(uielem) {
+      if(uielem.get('data').get('action') == "thirdpartylogin") {
+        tour.next();
       }
-    },
-    {
-      content: '<h3>Time to get some users!</h3><p><em>Drag this facebook login button onto the page.</em></p>',
-      my: "right center",
-      at: "left center",
-      url: '/editor/0/',
-      setup: function(tour, options) {
-        v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
-          if(uielem.get('data').get('action') == "thirdpartylogin") {
-            tour.next();
-          }
-        });
+    };
+    v1State.getCurrentPage().get('uielements').bind('add', facebookDropped);
 
-        return { target: $('#entity-user-facebook') };
-      },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
-      content: '<h3>Customizing functionality</h3><p>Some elements, like this Facebook button, can be customized.</p><p><em>Select it and click <strong>Edit Login</strong></em></p>',
-      my: "left center",
-      at: "right center",
-      url: '/editor/0/',
-      setup: function(tour, options) {
-        var elem = $(".facebook-login-btn")[0];
-        $('.edit-login-form-btn').first().on('click', function() {
+    return { target: $('#entity-user-facebook') };
+  },
+  teardown: function() {
+    v1State.getCurrentPage().get('uielements').unbind('add', facebookDropped);
+    incrementStep();
+  }
+},
+{
+  content: '<h3>Customizing functionality</h3><p>Some elements, like this Facebook button, can be customized.</p><p><em>Select it and click <strong>Edit Login</strong></em></p>',
+  my: "left center",
+  at: "right center",
+  url: '/editor/0/',
+  setup: function(tour, options) {
+    var elem = $(".facebook-login-btn")[0];
+    $('.edit-login-form-btn').first().on('click', function() {
           // setTimeout(tour.next, 400);
           waitUntilAppears('.login-route-editor', tour.next);
         });
-        return { target: $(elem) };
-      },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
-      content: '<h3>Customizing functionality</h3><p>Here, you can select where the user goes after login. Right now you only have Homepage right now. Next, we\'ll make a new page.</p><p><em>Click outside this window to return to the editor.</em></p>',
-      my: "right center",
-      at: "left center",
-      url: '/editor/0/',
-      nextButton: true,
-      setup: function(tour, options) {
-        return { target: $('.login-route-editor') };
-      },
-      teardown: function() {
-        $('.modal-bg').remove();
-        $('.login-route-editor.modal').remove();
-        v1State.attributes.walkthrough++;
-      }
-    },
-    {
-      content: '<h3>Making a new Page</h3><p>Hover over "Homepage" to see your pages and to make a new one.</p><p><em>Make a new page called "Tweet Feed" and click on it to go there.</em></p>',
+    return { target: $(elem) };
+  },
+  teardown: function() {
+    incrementStep();
+  }
+},
+{
+  content: '<h3>Customizing functionality</h3><p>Here, you can select where the user goes after login. Right now you only have Homepage right now. Next, we\'ll make a new page.</p><p><em>Click outside this window to return to the editor.</em></p>',
+  my: "right center",
+  at: "left center",
+  url: '/editor/0/',
+  nextButton: true,
+  setup: function(tour, options) {
+    return { target: $('.login-route-editor') };
+  },
+  teardown: function() {
+    $('.modal-bg').remove();
+    $('.login-route-editor.modal').remove();
+    incrementStep();
+  }
+},
+{
+  content: '<h3>Making a new Page</h3><p>Hover over "Homepage" to see your pages and to make a new one.</p><p><em>Make a new page called "Tweet Feed" and click on it to go there.</em></p>',
       // TODO make the gradients more noticable
       my: "left top",
       at: "right center",
@@ -492,7 +505,7 @@ function() {
         return {target:  $('.menu-button.pages')};
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
         v1.unbind('editor-loaded');
       }
     },
@@ -511,7 +524,7 @@ function() {
         return { target: $('.menu-button.pages') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     {
@@ -520,22 +533,18 @@ function() {
       at: "left center",
       url: '/editor/1/',
       setup: function(tour, options) {
-
-        v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
+        draggedTweetList = function(uielem) {
           if(uielem.get('type') == "loop") {
             tour.pageLoop = uielem;
             waitUntilAppears('.edit-row-btn', tour.next);
-            // setTimeout(function() {
-            //   tour.pageLoop = uielem;
-            //   tour.next();
-            // }, 300);
           }
-        });
-
+        };
+        v1State.getCurrentPage().get('uielements').bind('add', draggedTweetList);
         return { target: $('.entity-list') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.getCurrentPage().get('uielements').unbind('add', draggedTweetList);
+        incrementStep();
       }
     },
     {
@@ -546,15 +555,15 @@ function() {
       setup: function(tour, options) {
 
         $('.edit-row-btn').one('click', function() {
-            setTimeout(function() {
-              tour.next();
-            }, 300);
+          setTimeout(function() {
+            tour.next();
+          }, 300);
         });
 
         return { target: $('.edit-row-btn') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     {
@@ -568,7 +577,7 @@ function() {
         return { target: $('.highlighted').first() };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
       }
     },
     {
@@ -584,15 +593,16 @@ function() {
           scrollTop: $(".entity-create-form").offset().top - 90
         }, 200);
 
-
-        tour.pageLoop.get('data').get('container_info').get('row').get('uielements').bind('add', function() {
+        tweetStuffDragged = function() {
           tour.next();
-        });
+        };
+
+        tour.pageLoop.get('data').get('container_info').get('row').get('uielements').bind('add', tweetStuffDragged);
         return { target: $('.context-nested-entity', '.row-elements-list') };
       },
       teardown: function(tour, options) {
-        tour.pageLoop.get('data').get('container_info').get('row').get('uielements').unbind('add');
-        v1State.attributes.walkthrough++;
+        tour.pageLoop.get('data').get('container_info').get('row').get('uielements').unbind('add', tweetStuffDragged);
+        incrementStep();
       }
     },
     {
@@ -602,7 +612,7 @@ function() {
       at: "bottom center",
       url: '/editor/1/',
       setup: function(tour, options) {
-        tour.pageLoop.once('deselected', function() {
+        tour.pageLoop.bind('deselected', function() {
           tour.next();
         });
         $('.done-editing').one('click', function() {
@@ -610,8 +620,9 @@ function() {
         });
         return { target: $('.done-editing') };
       },
-      teardown: function() {
-        v1State.attributes.walkthrough++;
+      teardown: function(tour, options) {
+        tour.pageLoop.unbind('deselected');
+        incrementStep();
       }
     },
     {
@@ -620,18 +631,17 @@ function() {
       at: "bottom center",
       url: '/editor/1/',
       setup: function(tour, options) {
-        v1State.getCurrentPage().get('uielements').bind('add', function(uielem) {
+        createFormDragged = function(uielem) {
           if(uielem.hasForm()) {
             tour.next();
           }
-          else {
-            console.log("YARP");
-          }
-        });
+        };
+        v1State.getCurrentPage().get('uielements').bind('add', createFormDragged);
         return { target: $('.entity-create-form') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        v1State.getCurrentPage().get('uielements').unbind('add', createFormDragged);
+        incrementStep();
       }
     },
     // TODO associate the Tweet with the user in the modal
@@ -642,53 +652,29 @@ function() {
       nextButton: true,
       url: '/editor/1/',
       setup: function(tour, options) {
-        return { target: $('#deploy') };
+        return { target: $('.save-run-group') };
       },
       teardown: function() {
-        v1State.attributes.walkthrough++;
+        incrementStep();
         //last step done, delete walkthrough attribute
         delete v1State.attributes.walkthrough;
+        util.log_to_server('finished in-depth twitter walkthrough', {}, appId);
       }
     }
-  ];
+    ];
 
-  var ind = v1State.get('walkthrough');
-  ind--;
-  var currentSteps = steps.slice(ind);
-  var quickTour = new Tourist.Tour({
-    steps: currentSteps,
-    tipOptions:{ showEffect: 'slidein' }
+    var ind = v1State.get('walkthrough');
+    ind--;
+    var currentSteps = steps.slice(ind);
+    var quickTour = new Tourist.Tour({
+      steps: currentSteps
+    });
+
+    v1State.on('change:walkthrough', function(model) {
+      util.log_to_server('in-depth twitter walkthrough step', { step: model.attributes.walkthrough}, appId);
+    });
+
+    quickTour.currentStep = currentSteps[0];
+
+    return quickTour;
   });
-
-  quickTour.currentStep = currentSteps[0];
-
-  return quickTour;
-});
-    // {
-    //   content: '<h3>Time to Make it Look Good</h3><p>Click here and go to Themes page.</p>',
-    //   my: "top center",
-    //   at: "bottom center",
-    //   target: $('.menu-app-themes'),
-    //   url: '/tables/',
-    //   setup: function(tour, options) {
-    //     v1.bind('themes-loaded', function() {
-    //       tour.next();
-    //     });
-    //   },
-    //   teardown: function() {
-    //     v1State.attributes.walkthrough++;
-    //   }
-    // },
-    // {
-    //   content: '<h3>Theme</h3><p>We have a variety of themes here. Pick the one you like the most and click the "Load Theme" button.',
-    //   my: "left center",
-    //   at: "right center",
-    //   nextButton: true,
-    //   url: '/gallery/',
-    //   setup: function() {
-    //     return { target: $('#themes-title') };
-    //   },
-    //   teardown: function() {
-    //     v1State.attributes.walkthrough++;
-    //   }
-    // },

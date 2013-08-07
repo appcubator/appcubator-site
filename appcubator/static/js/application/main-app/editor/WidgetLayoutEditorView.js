@@ -95,7 +95,7 @@ function(WidgetClassPickerView) {
 
       var div = document.createElement('div');
       div.className = "tool-tip-box fadeIn";
-      var text = ToopTipHints[e.target.id];
+      var text = ToolTipHints[e.target.id];
       if(text) {
         div.innerHTML = text;
         this.toolTip = div;

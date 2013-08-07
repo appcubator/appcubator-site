@@ -17,14 +17,15 @@ function(AppInfoModel,
 
     currentPage: null,
     isMobile: false,
+    lazy: {},
 
-    initialize: function(appState) {
-      if(!appState) return;
+    initialize: function(aState) {
+      if(!aState) return;
 
-      this.set('info', new AppInfoModel(appState.info || {}));
-      this.set('users', new UserRolesCollection(appState.users||[]));
-      this.set('tables', new TableCollection(appState.tables||[]));
-      this.set('emails', new EmailCollection(appState.emails || []));
+      this.set('info', new AppInfoModel(aState.info));
+      this.set('users', new UserRolesCollection(aState.users));
+      this.set('tables', new TableCollection(aState.tables));
+      this.set('emails', new EmailCollection(aState.emails));
     },
 
     getCurrentPage: function() {
@@ -56,13 +57,28 @@ function(AppInfoModel,
       return this.get('users').length == 1;
     },
 
+    lazySet: function(key, coll) {
+      this.lazy[key] = coll;
+      this.set(key, new Backbone.Collection([]));
+    },
+
+    get: function (key) {
+      if(this.lazy[key]) {
+        this.set(key, this.lazy[key]);
+        delete this.lazy[key];
+      }
+
+      return AppModel.__super__.get.call(this, key);
+    },
+
     toJSON: function() {
       var json = _.clone(this.attributes);
       json.info = json.info.toJSON();
       json.users = json.users.toJSON();
       json.tables = json.tables.toJSON();
-      if(json.pages) json.pages = json.pages.toJSON();
-      if(json.mobilePages) json.mobilePages = json.mobilePages.toJSON();
+      json.pages = this.get('pages').toJSON();
+      //if(json.mobilePages) json.mobilePages = json.mobilePages.toJSON();
+      if(json.mobilePages) json.mobilePages = [];
       json.emails = json.emails.toJSON();
 
       return json;

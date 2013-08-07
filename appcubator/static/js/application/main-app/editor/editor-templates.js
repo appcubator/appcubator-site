@@ -128,7 +128,7 @@ var FieldTypes = {
   "single-line-text" : '<input type="text" class="" placeholder="<%= field.get(\'placeholder\') %>">',
   "paragraph-text"   : '<textarea class="" placeholder="<%= field.get(\'placeholder\') %>"></textarea>',
   "dropdown"         : '<select class="drowdown"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><option><%= option %><% }); %></option>',
-  "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value="single-line-text"><label for="opt-<%= ind %>"><%= option %></label><% }); %></span>',
+  "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><div class="option"><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value="single-line-text"><label for="opt-<%= ind %>"><%= option %></label></div><% }); %></span>',
   "password-text"    : '<input type="password" class="password" placeholder="<%= field.get(\'placeholder\') %>">',
   "email-text"       : '<input type="text" class="email" placeholder="<%= field.get(\'placeholder\') %>">',
   "button"           : '<input type="submit" class="btn" value="<%= field.get(\'placeholder\') %>">',
@@ -196,10 +196,10 @@ Templates.queryView = [
     '<select class="sort-by">',
     '<option id="by-date" value="Date">From older to newer</option>',
     '<option id="by-date" value="-Date">From newer to older</option>',
-    '<% _.each(entity.get("fields").models, function(field) { %>',
-      '<% var selected = "";  if("by-" + field.get("name") == query.get("sortAccordingTo")) selected = "selected" %>',
-      '<option value="by-<%=field.get("name")%>" <%= selected %>>Alphabetically according to <%= field.get("name") %></option>',
-    '<% }); %>',
+    // '<% _.each(entity.get("fields").models, function(field) { %>',
+    //   '<% var selected = "";  if("by-" + field.get("name") == query.get("sortAccordingTo")) selected = "selected" %>',
+    //   '<option value="by-<%=field.get("name")%>" <%= selected %>>Alphabetically according to <%= field.get("name") %></option>',
+    // '<% }); %>',
     '</select>',
     '</div>',
 
@@ -208,8 +208,7 @@ Templates.queryView = [
     '<label><input type="radio" class="nmr-rows" id="all-rows" name="nmrRows" value="All" <%= c.rAll %>> All</label>',
     '<label><input type="radio" class="nmr-rows" id="first-rows" name="nmrRows" value="First" <%= c.rFirst %>> <input type="text" id="first-nmr" value="<%= c.rFirstNmr %>"> rows</label>',
     '</div>',
-  '</div>',
-  '<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>'
+  '</div>'
 ].join('\n');
 
 
@@ -235,7 +234,7 @@ Templates.tempUIElement = [
 
 
 Templates.tempUIElementSized = [
-  '<div style="position:absolute; left: <%= element.layout.get(\'left\') %>px; top:<%= element.layout.get(\'top\') %>px; width:<%= element.layout.get(\'width\')%>px; height:<%=element.layout.get(\'height\')%>px;">',
+  '<div style="position:absolute; left: <%= element.layout.get(\'left\') %>px; top:<%= element.layout.get(\'top\') %>px; width:<%= element.layout.get(\'width\')%>px; height:<%=element.layout.get(\'height\') %>px; text-align:<%=element.layout.get(\'alignment\')%>;">',
   '<<%= element.data.get(\'tagName\') %>',
   'class = "<%= element.data.get(\'class_name\') %>"',
   '<% if(element.data.get(\'cons_attribs\')) { %>',
@@ -252,7 +251,7 @@ Templates.tempUIElementSized = [
 ].join('\n');
 
 Templates.rowNode = [
-  '<div <% if(isListOrGrid == "list") { %> class="row hi<%= layout.get(\'height\')%> block" <% } else { %> class="row span<%= layout.get(\'width\') %> hi<%= layout.get(\'height\') %>" <% } %> style="position:relative;">',
+  '<div <% if(isListOrGrid == "list") { %> class="row hi<%= layout.get(\'height\')%> block shadow-x" <% } else { %> class="row span<%= layout.get(\'width\') %> hi<%= layout.get(\'height\') %> shadow-x" <% } %> style="position:relative;">',
     '<% _(uielements).each(function(element){ %>',
       Templates.tempUIElementSized,
     '<% }); %>',
@@ -360,15 +359,13 @@ Templates.thirdPartyLogin = [
 ].join('\n');
 
 Templates.footerTemp = [
-        '<div class="footer" id="footer">',
-            '<div class="container">',
-              '<ul class="footer-links" id="links">',
-              '</ul>',
-              '<p id="customText" class="footer-text muted"></p>',
-              '<button class="edit-footer btn btn-small btn-inverse pull-right" id="edit-footer-btn">Edit Footer</button>',
-            '</div>',
-            '<div class="clearfix"></div>',
-        '</div>'
+  '<div class="container">',
+    '<p id="customText" class="footer-text muted"></p>',
+    '<ul class="footer-links" id="links">',
+    '</ul>',
+    '<button class="edit-footer btn btn-small btn-inverse pull-right" id="edit-footer-btn">Edit Footer</button>',
+  '</div>',
+  '<div class="clearfix"></div>'
 ].join('\n');
 
 

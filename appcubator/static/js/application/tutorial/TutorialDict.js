@@ -1,95 +1,117 @@
 var TutorialDirectory = [
   {
     title : "Introduction",
-    img : '/static/img/tutorial/intro.png',
     view  : "tutorial-intro",
-    contents: null
+    isSubSection: false
   },
   {
-    title : "Overview",
-    img : '/static/img/tutorial/Appcubator.png',
-    view  : "tutorial-overview",
-    contents: null
+    title : "Tables Page",
+    view  : "tutorial-tables-page",
+    isSubSection: false
   },
   {
-    title : "Domain & SEO",
-    img : '/static/img/tutorial/domainseo.png',
-    view  : "tutorial-app_info",
-    contents : null
+    title : "User Tables",
+    view  : "tutorial-user-tables",
+    isSubSection : true
   },
   {
-    title : "Data & Storage",
-    img : '/static/img/tutorial/dataentities.png',
-    view  : "tutorial-data_storage",
-    html: "<p>Data storage!</p>",
-    contents : [
-      {
-        title : "Entity",
-        img : '/static/img/tutorial/entity.png',
-        view  : "tutorial-data_storage-entity",
-        contents: null
-      },
-      {
-        title : "User Entity",
-        img : '/static/img/tutorial/user-entity.png',
-        view  : "tutorial-data_storage-user",
-        contents : null
-      },
-      {
-        title : "Upload and Download Data",
-        img : '/static/img/tutorial/upload-download.png',
-        view  : "tutorial-data_storage-upload",
-        contents : null
-      }
-    ]
+    title : "Tables",
+    view  : "tutorial-tables",
+    isSubSection: true
   },
   {
-    title : "Themes & Design",
-    img : '/static/img/tutorial/themes.png',
-    view  : "tutorial-themes_design",
-    contents : [
-      {
-        title : "You already have a design?",
-        view  : "tutorial-themes_design-existingdesign",
-        contents : null
-      }
-    ]
+    title : "Relationships",
+    view  : "tutorial-relationships",
+    isSubSection : true
   },
   {
     title : "Pages",
-    img : '/static/img/tutorial/pages-page.png',
     view  : "tutorial-pages",
-    contents : [
-      {
-        title : "Dynamic URLs",
-        view  : "tutorial-pages-context",
-        contents : null
-      }
-    ]
+    isSubSection : false
   },
   {
     title : "Editor",
-    img : null,
     view  : "tutorial-editor",
-    contents : [
-      {
-        title : "Lists",
-        img : null,
-        view  : "tutorial-editor-lists",
-        contents : null
-      },
-      {
-        title : "Forms",
-        img : null,
-        view  : "tutorial-editor-forms",
-        contents : null
-      }
-    ]
+    isSubSection : false
   },
   {
-    title : "Feedback Form",
-    img : null,
+    title : "Design Elements",
+    view  : "tutorial-design-elements",
+    isSubSection : true
+  },
+  {
+    title : "Images",
+    view  : "tutorial-images",
+    isSubSection : true
+  },
+  {
+    title : "Login",
+    view  : "tutorial-login",
+    isSubSection : true
+  },
+  {
+    title : "Sign Up",
+    view  : "tutorial-sign-up",
+    isSubSection : true
+  },
+  {
+    title : "Page Content",
+    view  : "tutorial-page-content",
+    isSubSection : true
+  },
+  {
+    title : "Forms",
+    view  : "tutorial-forms",
+    isSubSection : true
+  },
+  {
+    title : "Lists",
+    view  : "tutorial-lists",
+    isSubSection : true
+  },
+  {
+    title : "Search",
+    view  : "tutorial-search",
+    isSubSection : true
+  },
+  {
+    title : "Themes",
+    view  : "tutorial-themes",
+    isSubSection : false
+  },
+  {
+    title : "Deploy",
+    view  : "tutorial-deploy",
+    isSubSection : false
+  },
+  {
+    title : "Emails",
+    view  : "tutorial-emails",
+    isSubSection : false
+  },
+  {
+    title : "Application Settings",
+    view  : "tutorial-application-settings",
+    isSubSection : false
+  },
+  {
+    title : "Domain Settings",
+    view  : "tutorial-domain-settings",
+    isSubSection : true
+  },
+  {
+    title : "SEO Optimization",
+    view  : "tutorial-seo-optimization",
+    isSubSection : true
+  },
+  {
+    title : "Deleting Your Application",
+    view  : "tutorial-deleting-your-application",
+    isSubSection : true
+  },
+  {
+    title : "Feedback",
     view  : "feedback-form-page",
-    contents : null
+    isSubSection : false
   }
 ];

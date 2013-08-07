@@ -4,7 +4,8 @@ define([
   'app/pages/UrlView',
   'app/pages/PageView',
   'mixins/ErrorDialogueView',
-  'mixins/BackboneNameBox'
+  'mixins/BackboneNameBox',
+  'jquery-ui'
 ],
 function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
 
@@ -17,7 +18,6 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
     initialize: function() {
       _.bindAll(this);
 
-      util.loadCSS(this.css);
       this.collection = v1State.get('pages');
       this.listenTo(this.collection, 'add', function(model) { this.appendPage(model, false); });
 
@@ -53,7 +53,11 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
       }*/
 
       var createBox = new Backbone.NameBox({el: document.getElementById('create-page-box')});
+      this.subviews.push(createBox);
       createBox.on('submit', this.createPage);
+
+      $( "#list-pages" ).sortable();
+      $( "#list-pages" ).disableSelection();
 
       /*var createMobileBox = new Backbone.NameBox({el: document.getElementById('create-mobile-page-box')});
       createMobileBox.on('submit', this.createMobilePage);*/
@@ -126,6 +130,11 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         this.mobileListView.appendChild(mobilePageView.render().el);
         this.subviews.push(mobilePageView);
       }
+    },
+
+    close: function() {
+      $( "#list-pages" ).sortable("destroy");
+      PagesView.__super__.close.call(this);
     }
 
   });

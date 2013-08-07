@@ -6,23 +6,30 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.core.urlresolvers import reverse
-
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, RouteLog, Customer, ExtraUserData
-from email.sendgrid_email import send_email
+from django.http import Http404
+from django.contrib.auth.models import User
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore
+from email.sendgrid_email import send_email, send_template_email
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
+
+import forms
 
 import app_builder.analyzer as analyzer
 from app_builder.analyzer import App as AnalyzedApp
 from app_builder.utils import get_xl_data, add_xl_data, get_model_data
 
+from payments.views import subscribe
+
 import requests
 import traceback
 import datetime
-import shlex
-import subprocess
 import os
+import string
+import nltk
+import json
+import re
 from datetime import datetime
 
 
@@ -47,7 +54,7 @@ def app_welcome(request):
     if request.user.apps.count() == 0:
         return redirect(app_new)
     else:
-        return redirect(app_page, request.user.apps.all()[0].id)
+        return redirect(app_page, request.user.apps.latest('id').id)
 
 
 def app_noob_page(request):
@@ -55,8 +62,7 @@ def app_noob_page(request):
     user_id = request.user.id
     page_name = 'welcome'
     app_id = 0
-    log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
-    log.full_clean()
+    log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "welcome"})
     log.save()
 
     themes = UITheme.get_web_themes()
@@ -83,39 +89,40 @@ def app_new(request, is_racoon = False):
     if request.method == 'GET':
         #log url route
         user_id = request.user.id
-        page_name = 'newapp'
         app_id = 0
-        log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
-        log.full_clean()
+        log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "newapp"})
         log.save()
         return render(request, 'apps-new.html')
+
     elif request.method == 'POST':
-        app_name = "Unnamed"
-        if 'name' in request.POST:
-            app_name = request.POST['name']
-        a = App(name=app_name, owner=request.user)
-        # set the name in the app state
-        s = a.state
-        s['name'] = a.name
-        a.state = s
-        try:
-            a.full_clean()
-        except Exception, e:
-            return render(request,  'apps-new.html', {'old_name': app_name, 'errors': e}, status=400)
-        a.save()
-        if is_racoon:
-            return redirect(app_new_racoon, a.id)
-        else:
-            return redirect(app_page, a.id)
+        data = {}
+        data['name'] = request.POST.get('name', '')
+        data['subdomain'] = request.POST.get('name', '')
+        # dev modifications
+        if not settings.STAGING and not settings.PRODUCTION:
+            data['subdomain'] = 'dev-%s-%s' % (request.user.username.split('@')[0], data['subdomain'])
+
+        data['owner'] = request.user.id
+        form = forms.AppNew(data)
+        if form.is_valid():
+            app = form.save(commit=False)
+            s = app.state
+            s['name'] = app.name
+            app.state = s
+            app.save()
+            if is_racoon:
+                return redirect(app_new_racoon, app.id)
+            else:
+                return redirect(app_page, app.id)
+
+        return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'errors': form.errors}, status=400)
 
 
 @login_required
 def app_new_racoon(request, app_id):
     #log url route
     user_id = request.user.id
-    page_name = 'racoon'
-    log = RouteLog(user_id=user_id, page_name=page_name, app_id=app_id)
-    log.full_clean()
+    log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "racoon"})
     log.save()
     page_context = {}
     app = get_object_or_404(App, id=app_id)
@@ -127,13 +134,18 @@ def app_new_racoon(request, app_id):
 
 
 @login_required
-def app_new_walthrough(request):
+def app_new_walkthrough(request, walkthrough):
     app_name = "Twitter Demo"
-    a = App(name=app_name, owner=request.user)
+    a = App(name=app_name, owner=request.user, subdomain=App.provision_subdomain('%s-walkthrough' % request.user.username))
     # set the name in the app state
     s = a.state
     s['name'] = a.name
-    s['walkthrough'] = 1
+    if walkthrough is 'simpleWalkthrough':
+        s['simpleWalkthrough'] = 1
+        log_name = 'started simple twitter walkthrough'
+    else:
+        s['walkthrough'] = 1
+        log_name = "started in-depth twitter walkthrough"
     a.state = s
     try:
         a.full_clean()
@@ -143,9 +155,7 @@ def app_new_walthrough(request):
 
     #log url route
     user_id = request.user.id
-    page_name = 'twitterwalkthrough'
-    log = RouteLog(user_id=user_id, page_name=page_name, app_id=a.id)
-    log.full_clean()
+    log = LogAnything(user_id=user_id, app_id=a.id, name=log_name, data={})
     log.save()
 
     return redirect(app_page, a.id)
@@ -169,12 +179,16 @@ def app_page(request, app_id):
     mobile_themes = [t.to_dict() for t in mobile_themes]
 
     page_context = {'app': app,
+                    'app_url': app.url(),
                     'app_id': long(app_id),
                     'title': 'The Garage',
                     'themes': simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
                     'apps': app.owner.apps.all(),
-                    'user': app.owner}
+                    'user': app.owner,
+                    'staging': settings.STAGING,
+                    'staging': settings.PRODUCTION,
+                    'is_deployed': 1 if app.deployment_id != None else 0}
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)
 
@@ -243,18 +257,25 @@ def app_get_state(request, app):
 @require_POST
 @login_required
 def app_save_state(request, app, require_valid=True):
+    # if the incoming appState's version_id does not match the
+    # db's version_id, the incoming appState is an outdated version
+    if not app.isCurrentVersion(simplejson.loads(request.body)):
+        return (409, "")
+
     app._state_json = request.body
     app.state['name'] = app.name
     app.full_clean()
 
     if not require_valid:
         app.save()
-        return (200, "ok")
+        return (200, {'version_id': app.state.get('version_id', 0)})
     try:
         a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
     except analyzer.UserInputError, e:
         app.save()
-        return (400, e.to_dict())
+        d = e.to_dict()
+        d['version_id'] = app.state.get('version_id', 0)
+        return (400, d)
     # raise on normal exceptions.
     else:
         # Save the app state for future use
@@ -262,18 +283,97 @@ def app_save_state(request, app, require_valid=True):
             app=app, name=app.name, snapshot_date=datetime.now(), _state_json=request.body)
         appstate_snapshot.save()
         app.save()
-        return (200, "ok")
+        return (200, {'version_id': app.state.get('version_id', 0)})
+
+@login_required
+@csrf_exempt
+def invitations(request, app_id):
+    user_id = long(request.user.id)
+    # get all invitations sent by user {{user_id}}
+    if request.method == 'GET':
+        invitations = list(InvitationKeys.objects.filter(inviter_id=user_id))
+        json = []
+        for i in invitations:
+            json.append({"invitee": i.invitee, "date": str(i.date.date()), "accepted": i.accepted})
+        return JSONResponse(json)
+    # send an invitation from {{user_id}} to a friend
+    else:
+        user = get_object_or_404(User, pk=user_id)
+        if user.first_name is not "":
+            user_name = user.first_name
+            if user.last_name is not "":
+                user_name = user_name + " " + user.last_name
+        else:
+            user_name = user.username
+        app = get_object_or_404(App, pk=long(app_id))
+        name = request.POST['name']
+        email = request.POST['email']
+        subject = "%s has invited you to check out Appcubator!" % user_name
+
+        message = ('Dear {name},\n\n'
+                   'Check out what I\'ve build using Appcubator:\n\n'
+                   '<a href="{hostname}">{hostname}</a>\n\n'
+                   'Appcubator is the only visual web editor that can build rich web applications without hiring a developer or knowing how to code. It is also free to build an app, forever. See what others have built and try to create a web app of your own.\n\n'
+                   'Best,\n{user_name}\n\n\n')
+        message = message.format(name=name, hostname=app.hostname(), user_name=user_name)
+        invitation = InvitationKeys.create_invitation(request.user, email)
+        template_context = { "text": message }
+        send_template_email(request.user.email, email, subject, "", "emails/base_boxed_basic_query.html", template_context)
+        return HttpResponse(message)
 
 def documentation_page(request, page_name):
     try:
+        if page_name == "feedback" and request.user.is_authenticated():
+            page_name = "feedback-form-page"
         htmlString = render(request, 'documentation/html/'+page_name+'.html').content
     except Exception, e:
         htmlString = render(request, 'documentation/html/intro.html').content
-    else:
-        data = {
-            'content': htmlString
-        }
-        return render(request, 'documentation/documentation-base.html', data)
+    data = {
+        'content': htmlString,
+        'page_name': page_name
+    }
+    return render(request, 'documentation/documentation-base.html', data)
+
+def documentation_search(request):
+    query = request.GET['q']
+    if query is None or query is "":
+        return redirect(documentation_page)
+    query = query.replace(' ',"|")
+    query_regex = re.compile('%s'%query)
+    search_dir = settings.DOCUMENTATION_SEARCH_DIR
+    # read ALL the documentation texts
+    # TODO: do this ONCE, maybe on server startup
+    results = []
+    for docfile in os.listdir(search_dir):
+        count = 0
+        dir_path = os.path.join(search_dir, docfile)
+        with open(dir_path, 'r') as curr_file:
+            raw_text = curr_file.read()
+            raw_text_clean = nltk.clean_html(raw_text)
+            # title is the first <h2></h2> header
+            raw_text_linebreaks = raw_text_clean.split('\n')
+            title = raw_text_linebreaks[0]
+            # content is everything after the first <h2></h2> header
+            # excerpt first 140 characters only yo
+            len_title = len(raw_text_linebreaks[0])
+            excerpt = "%s..." % raw_text_clean[len_title:140]
+            # TODO: I don't think this is being applied, but it works without it
+            # possible optimization for later
+            raw_text = re.sub(r"^[#,-[]!:()]$", "", raw_text_clean)
+            tokens = nltk.word_tokenize(raw_text)
+            # search ALL the file's tokens
+            for t in tokens:
+                if(re.match(query_regex, t)):
+                    count += 1
+        if count > 0:
+            d = {}
+            d['filename'] = docfile.replace('.html','')
+            d['title'] = title
+            d['content'] = excerpt
+            d['count'] = count
+            results.append(d)
+    results.sort(key=lambda r: r['count'], reverse=True)
+    return render(request, 'documentation/documentation-base.html', {'results': results})
 
 @login_required
 def uie_state(request, app_id):
@@ -348,24 +448,24 @@ def app_get_uie_state(request, app):
 @require_POST
 @login_required
 def app_save_uie_state(request, app):
-    app._uie_state_json = request.body
+    app._uie_state_json = request.POST['uie_state']
     try:
         app.full_clean()
     except Exception, e:
         return (400, str(e))
-    app.save()
+    app.save(state_version=False)
     return (200, 'ok')
 
 
 @require_POST
 @login_required
 def app_save_mobile_uie_state(request, app):
-    app._mobile_uie_state_json = request.body
+    app._mobile_uie_state_json = request.POST['uie_state']
     try:
         app.full_clean()
     except Exception, e:
         return (400, str(e))
-    app.save()
+    app.save(state_version=False)
     return (200, 'ok')
 
 
@@ -378,56 +478,48 @@ def app_emails(request, app_id):
     page_context = {'app': app, 'title': 'Emails', 'app_id': app_id}
     return render(request, 'app-emails.html', page_context)
 
-
-
-
-
-@login_required
-@csrf_exempt
-@require_POST
-def process_excel(request, app_id):
-    app_id = long(app_id)
-    file_name = request.FILES['file_name']
-    entity_name = request.POST['entity_name']
-    fields = request.POST['fields']
-    fe_data = {'model_name': entity_name, 'fields': fields}
-    app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
-        raise Http404
+def _get_analytics(deployment_id):
+    """
+        Send a post request to get analytics from the deployment corresponding to deployment_id.
+        Then upsert it into the analytics store.
+    """
+    r = requests.post("http://%s/analytics/%d/" % (settings.DEPLOYMENT_HOSTNAME, deployment_id))
+    # HACK to get rid of double quotes.
+    analytics_json = '%s' % r.text
     try:
-        d = Deployment.objects.get(subdomain=app.subdomain())
-    except Deployment.DoesNotExist:
-        raise Exception("App has not been deployed yet")
-    state = app.get_state()
-    xl_data = get_xl_data(file_name)
-    app_state_entities = [e['name'] for e in state['entities']]
-    for sheet in xl_data:
-        add_xl_data(xl_data, fe_data, app_state_entities, d.app_dir + "/db")
-    return HttpResponse("ok")
+        app = App.objects.get(deployment_id=deployment_id)
+    except App.DoesNotExist:
+        return
+    old_analytics = AnalyticsStore.objects.all().filter(app=app)
+    # Create analytics for the app if needed, otherwise update the analytics.
+    if len(old_analytics) == 0:
+        analytics_store = AnalyticsStore(app=app, owner=app.owner, analytics_json=analytics_json)
+        analytics_store.save()
+    elif len(old_analytics) == 1:
+        old_analytics_store = old_analytics[0]
+        old_analytics_store.analytics_json = analytics_json
+        old_analytics_store.save()
 
 
+@require_GET
 @login_required
 @csrf_exempt
-@require_POST
-def process_user_excel(request, app_id):
-    f = request.FILES['file_name']
+def get_analytics(request, app_id):
+    app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
+    if app.deployment_id is None:
+        raise Http404
+    _get_analytics(app.deployment_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
+    analytics_data = None
+    try:
+        analytics_data = AnalyticsStore.objects.get(app=app)
+    except AnalyticsStore.DoesNotExist:
+        return JSONResponse({})
+    data = analytics_data.analytics_data
+    return JSONResponse(data)
 
-    data = {"api_secret": "uploadinG!!"}
-    files = {'excel_file': f}
-    if settings.DEBUG and not settings.STAGING:
-        try:
-            r = requests.post(
-                "http://localhost:8001/" + "user_excel_import/", data=data, files=files)
-        except Exception:
-            print "To test excel in dev mode, you have to have the child webapp running on port 8001"
-    else:
-        r = requests.post(
-            app.url() + "user_excel_import/", data=data, files=files)
-
-    return HttpResponse(r.content, status=r.status_code, mimetype="application/json")
 
 from django.forms import ModelForm
 
@@ -481,10 +573,12 @@ def app_zip(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    zip_bytes = open(app.zip_path(), "r").read()
+    zip_bytes = app.zip_bytes()
     response = HttpResponse(zip_bytes, content_type="application/octet-stream")
-    response['Content-Disposition'] = 'attachment; filename="teh_codez_%s.zip"' % app.hostname()
+    response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
     return response
+
+
 
 @login_required
 @require_POST
@@ -493,14 +587,11 @@ def app_deploy(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    d_user = {
-        'user_name': app.owner.username,
-        'date_joined': str(app.owner.date_joined)
-    }
-    # result = app.deploy(d_user)
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     status = 500 if 'errors' in result else 200
+    if status == 500:
+        raise Exception(result)
     return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 
 
@@ -574,9 +665,11 @@ def register_domain(request, domain):
 @login_required
 @csrf_exempt
 def sub_check_availability(request, subdomain):
-    domain_is_available = not App.objects.filter(subdomain=subdomain.lower()).exists()
-
-    return JSONResponse(bool(domain_is_available))
+    data = {'subdomain': subdomain}
+    form = forms.ChangeSubdomain(data)
+    if form.is_valid():
+        return JSONResponse(True)
+    return JSONResponse(False)
 
 
 @require_POST
@@ -586,15 +679,21 @@ def sub_register_domain(request, app_id, subdomain):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    domain_is_available = not App.objects.filter(subdomain=subdomain.lower()).exists()
-    if domain_is_available:
-        app.subdomain = clean_subdomain(subdomain)
-        app.full_clean()
-        app.save()
+    form = forms.ChangeSubdomain({'subdomain': subdomain}, app=app)
+    if form.is_valid():
+        app = form.save(state_version=False)
         result = app.deploy()
-    else:
-        result = {}
-        result['errors'] = {'subdomain' : "This subdomain is taken"}
-    status = 500 if 'errors' in result else 200
-    return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+        status = 500 if 'errors' in result else 200
+        return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+
+    return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")
+
+
+def yomomma(request, number):
+    r = requests.get("http://www.jokes4us.com/yomamajokes/random/yomama"+number+".html")
+    return HttpResponse(r.text, status=r.status_code)
+
+def webgeekjokes(request):
+    r = requests.get("http://www.webgeekjokes.tumblr.com/random")
+    return JSONResponse(r.text)
 

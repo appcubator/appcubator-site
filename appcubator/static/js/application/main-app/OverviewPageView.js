@@ -1,8 +1,10 @@
 define([
+  'app/AnalyticsView',
   'mixins/SimpleModalView',
-  'app/templates/MainTemplates'
+  'app/templates/MainTemplates',
+  'util'
 ],
-function(SimpleModalView) {
+function(AnalyticsView, SimpleModalView) {
 
   var OverviewPageView = Backbone.View.extend({
     css: 'app-page',
@@ -15,32 +17,37 @@ function(SimpleModalView) {
 
     initialize: function() {
       _.bindAll(this);
-      util.loadCSS(this.css);
+      this.analyticsView = new AnalyticsView();
+      this.subviews = [this.analyticsView];
+
       this.title = "The Garage";
     },
 
     render: function() {
       var page_context = {};
       this.el.innerHTML = _.template(util.getHTML('app-main-page'), page_context);
-      this.checkTutorialProgress();
+      this.$('.analytics').append(this.analyticsView.render().el);
+      this.renderNextStep();
     },
 
-    checkTutorialProgress: function() {
-      $.ajax({
-        type: "POST",
-        url: '/log/slide/',
-        data: { title: null, directory: null },
-        success: function(data) {
-          v1.betaCheck(data);
-        },
-        dataType: "JSON"
-      });
+    renderNextStep: function() {
+      var nmrPages = v1State.get('pages').length;
+      var pagesStr = nmrPages > 1 ? ' pages' : ' page';
+      if(nmrPages >= 4) {
+        $('.what-to-do').html('You currently have '+ nmrPages + pagesStr + '.<br><a href="pages/">Add more on the Pages page</a>.');
+      }
+      else {
+        $('.what-to-do').html('You can go to the <a href="tables/">Tables</a> page, and click "Access Data" to browse the data in your app\'s database.');
+      }
     },
 
     deploy: function() {
-      $('#deploy').find('h4').html('Deploying...');
+      var threeDots = util.threeDots();
+      $('#deploy').find('h4').html('Deploying').append(threeDots.el);
+
       v1.deploy(function() {
         $('#deploy').find('h4').html('Go To App');
+        clearInterval(threeDots.timer);
       });
     },
 
@@ -49,7 +56,7 @@ function(SimpleModalView) {
     },
 
     showFeedback: function(e) {
-      v1.showTutorial([7]);
+      v1.showTutorial([8]);
       e.preventDefault();
     }
 

@@ -12,7 +12,8 @@ define([
   "editor/KeyDispatcher",
   "editor/MouseDispatcher",
   "backbone",
-  "util"
+  "util",
+  "mixins/BackboneConvenience"
 ],
 function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
 
@@ -32,7 +33,7 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the info page route', function() {
-        spyOn(AppRouter.prototype, 'info');
+        spyOn(AppRouter.prototype, 'info').andCallThrough();
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
@@ -43,14 +44,14 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the info page tutorial', function() {
-        ///spyOn(AppRouter.prototype, 'showTutorial');
+/*        spyOn(AppRouter.prototype, 'showTutorial').andCallThrough();*/
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
         router.navigate('app/1/info/tutorial/', {trigger: true});
 
         expect(router).toBeDefined();
-        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+/*        expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();*/
       });
     });
 
@@ -63,7 +64,7 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the tables page route', function() {
-        spyOn(AppRouter.prototype, 'tables');
+        spyOn(AppRouter.prototype, 'tables').andCallThrough();
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
@@ -74,14 +75,14 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the tables page tutorial', function() {
-        ///spyOn(AppRouter.prototype, 'showTutorial');
+/*        spyOn(AppRouter.prototype, 'showTutorial').andCallThrough();*/
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
         router.navigate('app/1/tables/tutorial/', {trigger: true});
 
         expect(router).toBeDefined();
-        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+/*        expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();*/
       });
     });
 
@@ -94,7 +95,7 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the themes page route', function() {
-        spyOn(AppRouter.prototype, 'themes');
+        spyOn(AppRouter.prototype, 'themes').andCallThrough();
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
@@ -105,14 +106,14 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the themes page tutorial', function() {
-        ///spyOn(AppRouter.prototype, 'showTutorial');
+/*        spyOn(AppRouter.prototype, 'showTutorial').andCallThrough();*/
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
         router.navigate('app/1/themes/tutorial/', {trigger: true});
 
         expect(router).toBeDefined();
-        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+/*        expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();*/
       });
     });
 
@@ -125,7 +126,7 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the pages page route', function() {
-        spyOn(AppRouter.prototype, 'pages');
+        spyOn(AppRouter.prototype, 'pages').andCallThrough();
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
@@ -136,14 +137,14 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the pages page tutorial', function() {
-        ///spyOn(AppRouter.prototype, 'showTutorial');
+/*        spyOn(AppRouter.prototype, 'showTutorial').andCallThrough();*/
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
         router.navigate('app/1/pages/tutorial/', {trigger: true});
 
         expect(router).toBeDefined();
-        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+/*        expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();*/
       });
     });
 
@@ -155,8 +156,10 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
         router = null;
       });
 
+      console.log($('body')[0]);
+
       it('calls the emails page route', function() {
-        spyOn(AppRouter.prototype, 'emails');
+        spyOn(AppRouter.prototype, 'emails').andCallThrough();
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
@@ -167,14 +170,14 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the emails page tutorial', function() {
-        ///spyOn(AppRouter.prototype, 'showTutorial');
+/*        spyOn(AppRouter.prototype, 'showTutorial').andCallThrough();*/
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
         router.navigate('app/1/emails/tutorial/', {trigger: true});
 
         expect(router).toBeDefined();
-        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+/*        expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();*/
       });
     });
 
@@ -187,7 +190,7 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the index page route', function() {
-        spyOn(AppRouter.prototype, 'index');
+        spyOn(AppRouter.prototype, 'index').andCallThrough();
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
@@ -198,14 +201,14 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the index page tutorial', function() {
-        ///spyOn(AppRouter.prototype, 'showTutorial');
+/*        spyOn(AppRouter.prototype, 'showTutorial').andCallThrough();*/
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
         router.navigate('app/1/tutorial/', {trigger: true});
 
         expect(router).toBeDefined();
-        ///expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();
+/*        expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();*/
       });
     });
 
@@ -218,7 +221,7 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the editor page route', function() {
-        spyOn(AppRouter.prototype, 'editor');
+        spyOn(AppRouter.prototype, 'editor').andCallThrough();
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
@@ -229,7 +232,7 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
     });
 
-    describe("mobile editor", function () {
+    /*describe("mobile editor", function () {
       var router = null;
 
       afterEach(function() {
@@ -238,7 +241,7 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
       });
 
       it('calls the mobile editor page route', function() {
-        spyOn(AppRouter.prototype, 'mobileEditor');
+        spyOn(AppRouter.prototype, 'mobileEditor').andCallThrough();
         router = new AppRouter();
         Backbone.history.start({pushState: true});
 
@@ -247,6 +250,6 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
         expect(router).toBeDefined();
         expect(AppRouter.prototype.mobileEditor).toHaveBeenCalled();
       });
-    });
+    });*/
   });
 });

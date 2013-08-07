@@ -8,7 +8,8 @@ function(NavbarEditorView) {
     entity: null,
     type: null,
     events: {
-      'mousedown' : 'showNavbarEditor'
+      'mousedown' : 'showNavbarEditor',
+      'mousedown #edit-navbar' : 'showNavbarEditor'
     },
 
     initialize: function(navbarModel) {
@@ -25,7 +26,6 @@ function(NavbarEditorView) {
 
     render: function() {
       var self = this;
-      this.setElement(document.getElementById('navbar'));
 
       if(this.model.get('brandName')) {
         this.$el.find('#brand-name').html(this.model.get('brandName'));

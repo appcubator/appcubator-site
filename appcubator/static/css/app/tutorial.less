@@ -1,0 +1,351 @@
+.tutorial-view {
+  position: absolute;
+  top: 0;
+  padding: 0;
+
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  overflow: visible;
+  color: #000;
+  height: 100%;
+  width: 100%;
+  font-family: freight-sans-pro, sans-serif;
+  z-index: 2002;
+}
+
+.tutorial-view h1,.tutorial-view h2,.tutorial-view h3 {
+  font-family: verb_regularbold;
+}
+
+.tutorial-view .main-img {
+  font-size: 28px;
+  font-weight: bold;
+  color: #666;
+  padding-left: 20px;
+  padding-top: 30px;
+}
+
+
+/*
+ * Tutorial Content
+ */
+.tutorial-content {
+  display: block;
+  background-color: #fff;
+  position: fixed;
+  width: 900px;
+  left: 50%;
+  margin-left: -450px;
+
+  height: 92%;
+  bottom: 0;
+  z-index: 3002;
+
+  .box-shadow(0 3px 7px rgba(0, 0, 0, 0.3));
+  .transition(width 0.3s linear, margin-left 0.3s linear);
+
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+
+  overflow: hidden;
+
+  -ms-overflow-y: scroll;
+  overflow-y: scroll;
+
+  -webkit-animation: slideInBottom 0.3s ease-out;
+  -moz-animation: slideInBottom 0.3s ease-out;
+  animation: slideInBottom 0.3s ease-out;
+
+  &.open {
+    width: 760px;
+    margin-left: -280px;
+  }
+
+  & > header {
+    width: 100%;
+    padding: 15px;
+    height: 60px;
+    border-bottom: 1px solid #e3e3e3;
+    margin: 0;
+    .gradient(#fff, #f5f5f5);
+
+    h1 {
+      display: inline-block;
+      font-size: 26px;
+      line-height: 30px;
+    }
+
+    .btn-navbar {
+      float: left;
+      display: inline-block;
+      padding: 4px 12px;
+      padding-bottom: 8px;
+      margin-right: 12px;
+
+      .icon-bar {
+        display: block;
+        width: 18px;
+        height: 2px;
+        margin-top: 4px;
+        background-color: #a5a5a5;
+        .border-radius(1px);
+        .box-shadow(0 0 1px rgba(0,0,0,0.25));
+      }
+    }
+  } // end .tutorial-content > header
+
+  // .tutorial-content ul
+  ul {
+    list-style: disc;
+    list-style-position: inside;
+    margin-left: 15px;
+
+    li {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+
+  // .tutorial-content .images
+  .images {
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+    img {
+      height: 60px;
+      margin-left: 10px;
+    }
+  }
+
+  .text-cont {
+    padding: 20px;
+    min-height: 100%;
+    height: auto;
+    margin-bottom: 60px;
+
+    h1, h2 {
+      display: block;
+      margin-top: 20px;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 5px 0 10px;
+    }
+
+    img {
+      margin: 10px 0px;
+      border: 1px solid #ccc;
+    }
+  } // end .text-cont
+
+} // end .tutorial-content
+
+@-webkit-keyframes slideInBottom {
+  0% { margin-bottom: -300px; }
+  100% { margin-bottom: 0px; }
+}
+
+@keyframes slideInBottom {
+  0% { margin-bottom: -300px; }
+  100% { margin-bottom: 0px; }
+}
+
+
+
+/*
+ * Tutorial Menu
+ */
+.tutorial-menu {
+  position: fixed;
+  width: 200px;
+  overflow: hidden;
+  left: 50%;
+  bottom: 0px;
+  height: 92%;
+  margin-left: -200px;
+  border-radius: 3px;
+  padding-top: 0;
+  z-index: 3001;
+  .box-shadow(0 3px 7px rgba(0, 0, 0, 0.3));
+  background-color: #f3f3f3;
+  font-size: 14px;
+  color: #444;
+  font-weight: bolder;
+  .transition(margin-left 0.3s linear);
+
+  -webkit-animation: slideInBottom 0.3s ease-out;
+  -moz-animation: slideInBottom 0.3s ease-out;
+  animation: slideInBottom 0.3s ease-out;
+
+  &.open {
+    margin-left: -480px;
+  }
+
+  & > ul {
+    height: 100%;
+    overflow: scroll;
+
+    -ms-overflow-y: scroll;
+    overflow-y: scroll;
+    padding-bottom: 20px;
+  }
+
+  // .tutorial-menu ul
+  ul {
+    li {
+      font-size: 14px;
+      padding: 20px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      cursor: pointer;
+      border-bottom: 1px solid #ccc;
+      border-top: 1px solid #fefefe;
+      background-color: #f3f3f3;
+
+      &:hover, &.submenu:hover {
+        background-color: #ededed;
+      }
+
+      &.selected, &.submenu.selected {
+        background-color: #fff;
+      }
+
+      &:not(.submenu) + &.submenu {
+        border-bottom: 1px solid #ccc;
+      }
+
+      &.submenu {
+        padding-left: 32px;
+        font-weight: normal;
+        font-size: 12px;
+        border-top: none;
+        border-bottom: none;
+        background-color: #f9f9f9;
+      }
+
+      &.submenu + &:not(.submenu) {
+        border-top: 1px solid #fefefe;
+      }
+    }
+
+    // .tutorial-menu ul ul
+    /*ul {
+      height: auto;
+      border-bottom: 1px solid #ccc;
+      border-top: 1px solid #fefefe;
+      background-color: #f9f9f9;
+      padding-bottom: 0;
+
+      li {
+        padding-left: 32px;
+        font-weight: normal;
+        font-size: 12px;
+        border-bottom: none;
+        border-top: none;
+        background-color: #f9f9f9;
+      }
+    }*/
+  } // end .tutorial-menu ul
+
+
+  .search-bar {
+    position: fixed;
+    top: 5%;
+    height: 60px;
+    width: 220px;
+    background-color: #fff;
+    text-align: center;
+    border-radius: 0;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    padding-top: 14px;
+    .box-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  }
+} // end .tutorial-menu
+
+
+.modal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 2002;
+}
+
+.tutorial-q-form input[type="text"] {
+  width: 150px;
+}
+
+.tutorial-q-form .btn {
+  vertical-align: top;
+  margin-left: 6px;
+}
+
+ul.text-cont {
+  padding: 0;
+  margin: 0;
+}
+
+ul.text-cont li.answer-slide {
+  padding: 10px;
+  font-size: 12px;
+  max-height: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+ul.text-cont li.answer-slide:hover {
+  background-color: #fefefe;
+}
+
+.main-img.feedback-form-page {
+  height: 0;
+  padding: 0;
+}
+
+/*
+ * Feedback Form
+ */
+.feedback-form {
+  display: inline-block;
+  font-size: 14px;
+  width: 640px;
+  margin-top: 15px;
+
+  p {
+    border-top: 1px solid #ddd;
+    padding: 10px 0 0;
+    font-size: 16px;
+    line-height: 20px;
+
+    &:last-child {
+      border-bottom: 1px solid #ddd;
+    }
+  }
+
+  textarea {
+    display: inline-block;
+    width: 460px;
+    height: 100px;
+    margin-top: 5px !important;
+  }
+
+  .btn {
+    margin: 20px 0;
+  }
+} // end .feedback-form
+
+.bottom-arrow {
+  position: fixed;
+  bottom: 0%;
+  height: 20px;
+  width: 220px;
+  background-color: transparent;
+  background-image: url(/static/img/fade-down.png);
+}

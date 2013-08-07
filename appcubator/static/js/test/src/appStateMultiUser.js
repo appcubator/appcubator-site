@@ -270,7 +270,7 @@ var appState = {
                         "title": "Registration Page"
                     }
                 ],
-                "customText": "Add custom footer text here"
+                "customText": "Powered by Appcubator"
             },
             "url": {
                 "urlparts": [
@@ -466,7 +466,7 @@ var appState = {
                 "links": []
             },
             "footer": {
-                "customText": "Add custom footer text here",
+                "customText": "Powered by Appcubator",
                 "isHidden": false,
                 "isFixed": true,
                 "links": []
@@ -572,7 +572,7 @@ var appState = {
                 "links": []
             },
             "footer": {
-                "customText": "Add custom footer text here",
+                "customText": "Powered by Appcubator",
                 "isHidden": false,
                 "isFixed": true,
                 "links": []
@@ -669,7 +669,7 @@ var appState = {
                 "links": []
             },
             "footer": {
-                "customText": "Add custom footer text here",
+                "customText": "Powered by Appcubator",
                 "isHidden": false,
                 "isFixed": true,
                 "links": []
@@ -697,7 +697,7 @@ var appState = {
                 "links": []
             },
             "footer": {
-                "customText": "Add custom footer text here",
+                "customText": "Powered by Appcubator",
                 "isHidden": false,
                 "isFixed": true,
                 "links": []
@@ -725,7 +725,7 @@ var appState = {
                 "links": []
             },
             "footer": {
-                "customText": "Add custom footer text here",
+                "customText": "Powered by Appcubator",
                 "isHidden": false,
                 "isFixed": true,
                 "links": []
@@ -753,7 +753,7 @@ var appState = {
                 "links": []
             },
             "footer": {
-                "customText": "Add custom footer text here",
+                "customText": "Powered by Appcubator",
                 "isHidden": false,
                 "isFixed": true,
                 "links": []

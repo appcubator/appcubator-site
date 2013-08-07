@@ -64,10 +64,12 @@ require.config({
     "util.filepicker": {
       exports: "util"
     }
-  }
+  },
+
+  urlArgs: "bust="
 
 });
-
+require.config({ urlArgs: "bust=" + staticVersion });
 //libs
 require([
   "models/AppModel",
@@ -99,8 +101,8 @@ function (AppModel,
 
     v1State = new Backbone.Model();
     v1State = new AppModel(appState);
-    v1State.set('pages', new PageCollection(appState.pages||[]));
-    v1State.set('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
+    v1State.lazySet('pages', new PageCollection(appState.pages||[]));
+    v1State.lazySet('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
 
     g_guides = {};
     keyDispatcher  = new KeyDispatcher();
@@ -109,6 +111,11 @@ function (AppModel,
     v1 = {};
     v1 = new AppRouter();
     routeLogger = new RouteLogger({router: v1});
+
+    // on appstate saves, synchronize version ids
+    v1State.listenTo(v1, 'saved', function(new_version_id) {
+      v1State.set('version_id', new_version_id);
+    });
 
     Backbone.history.start({pushState: true});
 
@@ -120,6 +127,29 @@ function (AppModel,
         setTimeout(function() {
           QuickTour.start();
         }, 1000);
+      });
+    }
+
+    if(v1State.has('simpleWalkthrough')) {
+      require(['app/SimpleTwitterTour'], function(QuickTour) {
+        if(!QuickTour.currentStep) return;
+        var url = QuickTour.currentStep.url;
+
+        if(QuickTour.currentStep.waitUntil) {
+          util.waitUntilAppears(QuickTour.currentStep.waitUntil, function() {
+            v1.navigate('app/'+appId+url, {trigger: true});
+            setTimeout(function() {
+              QuickTour.start();
+            }, 1000);
+          });
+        }
+        else {
+          v1.navigate('app/'+appId+url, {trigger: true});
+          setTimeout(function() {
+            QuickTour.start();
+          }, 1000);
+        }
+
       });
     }
 

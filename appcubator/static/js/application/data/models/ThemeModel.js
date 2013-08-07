@@ -25,6 +25,29 @@ function(UIElementCollection) {
       this.set('dropdowns', new UIElementCollection(themeState["dropdowns"], "dropdown"));
       this.set('boxes', new UIElementCollection(themeState["boxes"], "box"));
       this.set('forms', new UIElementCollection((themeState["forms"]||[]), "form"));
+      this.set('lists', new Backbone.Collection((themeState["lists"]||[]), "list"));
+      this.set('fonts', new Backbone.Collection(themeState["fonts"]||[]));
+    },
+
+    toJSON: function() {
+      var json = _.clone(this.attributes);
+
+      json["buttons"]     = this.get('buttons').toJSON();
+      json["images"]      = this.get('images').toJSON();
+      json["headerTexts"]= this.get('headerTexts').toJSON();
+      json["texts"]       = this.get('texts').toJSON();
+      json["links"]       = this.get('links').toJSON();
+      json["textInputs"] = this.get('textInputs').toJSON();
+      json["passwords"]   = this.get('passwords').toJSON();
+      json["textAreas"]  = this.get('textAreas').toJSON();
+      json["lines"]       = this.get('lines').toJSON();
+      json["dropdowns"]   = this.get('dropdowns').toJSON();
+      json["boxes"]      = this.get('boxes').toJSON();
+      json["forms"]      = this.get('forms').toJSON();
+      json["lists"]      = this.get('lists').toJSON();
+      json["fonts"]      = this.get('fonts').toJSON();
+
+      return json;
     }
 
   });

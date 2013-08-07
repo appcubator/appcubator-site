@@ -37,33 +37,26 @@ function( WidgetContainerView,
       WidgetContainerView.__super__.initialize.call(this, widgetModel);
       _.bindAll(this);
 
-      this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.placeWidget, true, true);
-      this.model.get('data').get('container_info').get('row').get('uielements').bind("add", this.renderShadowElements);
-      this.model.get('data').get('container_info').get('row').get('uielements').bind("remove", this.renderShadowElements);
-      this.model.bind('deselected', function() {
+      this.subviews = [];
+
+      this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "add", this.placeWidget, true, true);
+      this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "add", this.renderShadowElements);
+      this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "remove", this.renderShadowElements);
+      this.listenTo(this.model, 'deselected', function() {
         this.model.trigger('editModeOff');
       }, this);
 
-      this.model.bind('editModeOff', this.switchEditingOff);
-      this.model.get('data').get('container_info').get('row').get('layout').bind('change:height', this.renderShadowElements);
+      this.listenTo(this.model, 'editModeOff', this.switchEditingOff);
+      this.listenTo(this.model.get('data').get('container_info').get('row').get('layout'), 'change:height', this.renderShadowElements);
 
       var action = this.model.get('data').get('container_info').get('action');
 
       this.entityModel = this.model.get('data').get('container_info').get('entity');
-      this.model.bind('highlight', this.highlightFirstRow);
+      this.listenTo(this.model, 'highlight', this.highlightFirstRow);
       this.widgetSelectorView = new ListWidgetSelectorView(this.model.get('data').get('container_info').get('row').get('uielements'), this.el);
       this.subviews.push(this.widgetSelectorView);
-
-      this.rowBindings();
     },
 
-    rowBindings: function() {
-      var self = this;
-      self.model.get('data').get('container_info').get('row').get('uielements').each(function(element) {
-        element.get('layout').bind('change', self.renderShadowElements);
-        element.get('data').bind('change', self.renderShadowElements);
-      });
-    },
 
     render: function() {
       var self = this;
@@ -76,7 +69,7 @@ function( WidgetContainerView,
 
       this.setTop(this.positionVerticalGrid * this.model.get('layout').get('top'));
       this.setLeft(this.positionHorizontalGrid * this.model.get('layout').get('left'));
-      this.setHeight(height * GRID_HEIGHT);
+      this.setHeight(height * this.positionVerticalGrid);
 
       this.el.className += ' widget-wrapper span'+width;
       this.el.id = 'widget-wrapper-' + this.model.cid;
@@ -92,21 +85,26 @@ function( WidgetContainerView,
       }, this);
       this.widgetSelectorView.setElement(this.el).render();
 
-      this.el.appendChild(editorRow);
+      this.shadowElements = document.createElement('div');
       var listDiv = document.createElement('div');
+      listDiv.className = this.model.get('data').get('class_name');
       this.listDiv = listDiv;
-      this.el.appendChild(this.renderShadowElements());
+      this.listDiv.appendChild(editorRow);
+      this.listDiv.appendChild(this.renderShadowElements());
 
+      this.el.appendChild(this.listDiv);
       return this;
     },
 
     renderShadowElements: function() {
       var row = this.model.get('data').get('container_info').get('row');
       var uielements = _.map(row.get('uielements').models, function(obj) { return obj.attributes; });
-      this.listDiv.innerHTML = _.template(Templates.listNode, {layout: row.get('layout'),
+      this.shadowElements.innerHTML = _.template(Templates.listNode, {layout: row.get('layout'),
                                                           uielements: uielements,
                                                           isListOrGrid: row.get('isListOrGrid')});
-      return this.listDiv;
+
+      if(this.editMode) { $('.fdededfcbcbcd .shadow-x').addClass('trans'); }
+      return this.shadowElements;
     },
 
     showDetails: function() {
@@ -115,6 +113,7 @@ function( WidgetContainerView,
 
     highlightFirstRow: function() {
       var self = this;
+      this.editMode = true;
       this.highlighted = true;
       this.$el.addClass('selected');
       $(this.editorRow).resizable({
@@ -123,15 +122,20 @@ function( WidgetContainerView,
         stop  : self.resized
       });
       $(this.editorRow).addClass('highlighted');
+
+      $('.fdededfcbcbcd .shadow-x').addClass('trans');
     },
 
     placeWidget: function(widgetModel, isNew) {
       widgetModel.setupLoopContext(this.entityModel);
       var widgetView = new WidgetView(widgetModel);
+      this.subviews.push(widgetView);
       widgetView.setFreeMovement();
 
       this.editorRow.appendChild(widgetView.render().el);
-      widgetModel.get('layout').bind('change', this.renderShadowElements);
+
+      this.deepListenTo(widgetModel, 'change', this.renderShadowElements);
+
       if(isNew) { widgetView.autoResize(); }
     },
 
@@ -152,12 +156,17 @@ function( WidgetContainerView,
       this.model.get('layout').set('height', 46);
     },
 
+    changedType: function(a) {
+      this.listDiv.className = this.model.get('data').get('class_name');
+    },
+
     switchEditingOff: function() {
       this.editMode = false;
       this.$el.removeClass('selected');
-      this.$el.find('.row').first().removeClass('highlighted');
       this.widgetSelectorView.deselect();
       if(this.highlighted) $(this.editorRow).resizable("destroy");
+      this.$el.find('.row').first().removeClass('highlighted');
+      $('.shadow-x.trans').removeClass('trans');
       this.highlighted = false;
     }
 

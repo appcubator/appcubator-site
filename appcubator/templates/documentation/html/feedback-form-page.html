@@ -1,11 +1,20 @@
+<h1>Feedback</h1>
+
+<p>Help us build a better Appcubator!</p>
+
 <form method="POST" action="#" class="feedback-form" id="feedback-form">
-	<p>Thank you for checking Appcubator out! Your feedback is very valuable for us.</p>
-	<label>What did you like about Appcubator?</label>
-	<textarea id="like-appcubator"></textarea>
-	<label>What did you dislike about Appcubator? And which parts seemed overly complicated?</label>
-	<textarea id="dislike-appcubator"></textarea>
-	<label>We know that we have a lot more features to integrate into Appcubator such as the payments. What features do you think would be the most useful?</label>
-	<textarea id="features-appcubator"></textarea>
-	<br  />
-	<input type="submit" class="btn btn-blue" value="Send Feedback Form!">
+  {% csrf_token %}
+<p>
+  <label>What did you like about Appcubator?</label>
+  <textarea id="like-appcubator" style="width: 100%; max-width: 400px; margin-top: 15px;"></textarea>
+</p>
+<p>
+  <label>What did you dislike about Appcubator? And which parts seemed overly complicated?</label>
+  <textarea id="dislike-appcubator" style="width: 100%; max-width: 400px; margin-top: 15px;"></textarea>
+</p>
+<p>
+  <label>We know that we have a lot more features to integrate into Appcubator such as the payments. What features do you think would be the most useful?</label>
+  <textarea id="features-appcubator" style="width: 100%; max-width: 400px; margin-top: 15px;"></textarea>
+</p>
+  <input type="submit" class="btn btn-blue offset2" style="margin-bottom: 30px" value="Send Feedback Form!">
 </form>

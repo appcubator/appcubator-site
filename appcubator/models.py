@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from simplejson import JSONDecodeError
 
 import tarfile
 import os, os.path
@@ -11,10 +12,13 @@ import requests
 import simplejson
 import traceback
 import sys
+from datetime import datetime
+import time
 
 import subprocess, shlex
 import hashlib
 import random
+import shutil
 
 
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
@@ -28,6 +32,7 @@ logger = logging.getLogger('appcubator.models')
 class ExtraUserData(models.Model):
     user = models.OneToOneField(User, related_name="extradata")
     noob = models.IntegerField(default=1)
+    technical = models.IntegerField(default=0)
     picture_url = models.URLField(max_length=200, default='/static/default_pic.png')
 
     # RUN THIS TO FIX AN OLD DATABASE
@@ -92,12 +97,33 @@ def get_default_theme_state():
     f.close()
     return s
 
-"""
-def clean_subdomain(s):
-    HOSTNAME_REGEX = "^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])$"
-    s.lower().replace('_', '-')
-    return s
-"""
+def clean_subdomain(subdomain):
+    toks = subdomain.split('.')
+    if len(toks) > 1:
+        subdomain = '.'.join([clean_subdomain(t) for t in toks])
+        subdomain = re.sub(r'\.+', '.', subdomain)
+        subdomain = re.sub(r'^\.', '', subdomain)
+        subdomain = re.sub(r'\.$', '', subdomain)
+    else:
+        # assume no periods
+        # trim whitespace and lowercase
+        subdomain = subdomain.strip().lower()
+        # replace junk with hyphens
+        subdomain = re.sub(r'[^0-9a-z]', '-', subdomain)
+        # collect together runs of hyphens and periods
+        subdomain = re.sub(r'\-+', '-', subdomain)
+        # hyphens or periods can't occur at beginning or end
+        subdomain = re.sub(r'^\-', '', subdomain)
+        subdomain = re.sub(r'\-$', '', subdomain)
+        # trim if too long
+        subdomain = subdomain[:min(len(subdomain), 40)]
+
+    # fix if too short
+    if len(subdomain) == 0:
+        subdomain = "unnamed"
+
+    return subdomain
+
 
 class App(models.Model):
     name = models.CharField(max_length=100)
@@ -111,19 +137,34 @@ class App(models.Model):
 
     deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
 
-    def save(self, *args, **kwargs):
-        if self.subdomain == '':
-            self.reset_subdomain()
-        self.subdomain = self.subdomain.lower()
-        return super(App, self).save(*args, **kwargs)
+    def save(self, state_version=True, *args, **kwargs):
+        # increment version id
+        s = self.state
+        if state_version:
+            s['version_id'] = s.get('version_id', 0) + 1
+        self.state = s
 
-    def reset_subdomain(self):
-        self.subdomain = self.u_name().lower()
+        return super(App, self).save(*args, **kwargs)
 
     def clean(self):
         from django.core.exceptions import ValidationError
+        print "calling clean on %d" % self.id
         if self.owner.apps.filter(name=self.name).exists():
             raise ValidationError('You have another app with the same name.')
+
+    @classmethod
+    def provision_subdomain(cls, subdomain):
+        subdomain = clean_subdomain(subdomain)
+
+        # prevent duplicate subdomains
+        while cls.objects.filter(subdomain__iexact=subdomain).exists():
+            subdomain += str(random.randint(1,9))
+
+        # the above process may have caused string to grow, so trim if too long
+        subdomain = subdomain[-min(len(subdomain), 40):] # take the last min(40, len subdomain) chars.
+
+        return subdomain
+
 
     def get_state(self):
         return simplejson.loads(self._state_json)
@@ -132,11 +173,9 @@ class App(models.Model):
         self._state_json = simplejson.dumps(val)
 
     def set_test_state(self):
-        f = open(os.path.join(DEFAULT_STATE_DIR, "test_state.json"))
-        s = f.read()
-        simplejson.loads(s)
-        f.close()
-        self.set_state(s)
+        with open(os.path.join(DEFAULT_STATE_DIR, "test_state.json")) as f:
+            s = simplejson.load(f)
+            self.state = s
 
     state = property(get_state, set_state)
 
@@ -180,6 +219,12 @@ class App(models.Model):
     def urls(self):
         return self.state['urls']
 
+    def isCurrentVersion(self, new_state):
+        """Returns True if new_state is the same version as self.state's."""
+        current_version_id = self.state.get('version_id', 0)
+        new_version_id = new_state.get('version_id', 0)
+        return (new_version_id == current_version_id)
+
     def get_absolute_url(self):
         return reverse('views.app_page', args=[str(self.id)])
 
@@ -193,7 +238,7 @@ class App(models.Model):
         except simplejson.JSONDecodeError, e:
             raise ValidationError(e.msg)
 
-    def write_to_tmpdir(self):
+    def write_to_tmpdir(self, for_user=False):
         from app_builder.analyzer import App as AnalyzedApp
         from app_builder.controller import create_codes
         from app_builder.coder import Coder, write_to_fs
@@ -205,33 +250,21 @@ class App(models.Model):
         codes = create_codes(app)
         coder = Coder.create_from_codes(codes)
 
-        tmp_project_dir = write_to_fs(coder, css=self.css())
+        tmp_project_dir = write_to_fs(coder, css=self.css(), for_user=for_user)
 
         return tmp_project_dir
 
-    def u_name(self):
-        """Used to be the way we generate subdomains, but now it's just a function
-        that almost always returns a unique name for this app"""
-        cleaned_username = self.owner.username.split('@')[0] if self.owner.username.find('@') != -1 else self.owner.username
-        u_name = cleaned_username.lower() + "-" + self.name.replace(
-            " ", "-").lower()
-        if not settings.PRODUCTION or settings.STAGING:
-            u_name = u_name + '.staging'
-            if not settings.STAGING:
-                u_name = "dev-" + u_name
-        return u_name
-
     def hostname(self):
-        return "%s.appcubator.com" % self.subdomain
+        if not settings.PRODUCTION:
+            return "%s.staging.appcubator.com" % self.subdomain
+        else:
+            return "%s.appcubator.com" % self.subdomain
 
     def url(self):
-        return "http://%s.appcubator.com/" % self.subdomain
+        return "http://%s/" % self.hostname()
 
-    def github_url(self):
-        return "https://github.com/appcubator/" + self.u_name()
-
-    def zip_path(self):
-        tmpdir = self.write_to_tmpdir()
+    def zip_bytes(self):
+        tmpdir = self.write_to_tmpdir(for_user=True)
 
         def zipify(tmpdir):
             filenames = os.listdir(tmpdir)
@@ -242,7 +275,15 @@ class App(models.Model):
             logger.debug("Command exited with return code %d" % retcode)
             return os.path.join(tmpdir, 'zipfile.zip')
 
-        return zipify(tmpdir)
+        try:
+            zpath = zipify(tmpdir)
+            with open(zpath, 'r') as zfile:
+                zbytes = zfile.read()
+        finally:
+            # because hard disk space doesn't grow on trees.
+            shutil.rmtree(tmpdir)
+
+        return zbytes
 
     def css(self, deploy=True, mobile=False):
         """Use uiestate, less, and django templates to generate a string of the CSS"""
@@ -261,26 +302,30 @@ class App(models.Model):
 
     def get_deploy_data(self):
         post_data = {
-            "u_name": self.u_name(),
             "subdomain": self.hostname(),
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
         return post_data
 
-    def deploy(self, retry_on_404=True):
-        tmpdir = self.write_to_tmpdir()
-        logger.info("Deployed to %s" % tmpdir)
-        contents = os.listdir(tmpdir)
+    def _write_tar_from_app_dir(self, appdir):
+        """
+        Given the directory of the app, tar it up and return the path to the tar.
+        """
+        contents = os.listdir(appdir)
         # tar it up
-        t = tarfile.open(os.path.join(tmpdir, 'payload.tar'), 'w')
-        try:
-            for fname in contents:
-                t.add(os.path.join(tmpdir, fname), arcname=fname)
-            t.close()
-            f = open(os.path.join(tmpdir, 'payload.tar'), "r")
+        t = tarfile.open(os.path.join(appdir, 'payload.tar'), 'w')
+        for fname in contents:
+            t.add(os.path.join(appdir, fname), arcname=fname)
+        t.close()
+        return os.path.join(appdir, 'payload.tar')
 
-            # send the whole shibam to deployment server
+    def _transport_app(self, appdir, retry_on_404=True):
+        # tar it up
+        tar_path = self._write_tar_from_app_dir(appdir)
+        f = open(tar_path, "r")
+        try:
+            # catapult the tar over to the deployment server
             files = {'file':f}
             post_data = self.get_deploy_data()
             if self.deployment_id is None:
@@ -290,7 +335,7 @@ class App(models.Model):
 
         finally:
             f.close()
-            os.remove(os.path.join(tmpdir, 'payload.tar'))
+            os.remove(os.path.join(appdir, 'payload.tar'))
 
         if r.status_code == 200:
             result = {}
@@ -298,13 +343,20 @@ class App(models.Model):
             logger.debug("Deployment response content: %r" % response_content)
             try:
                 self.deployment_id = response_content['deployment_id']
-                self.save()
+                self.save(state_version=False)
             except KeyError:
                 pass
             if 'errors' in response_content:
                 result['errors'] = response_content['errors']
-            result['site_url'] = "http://%s.appcubator.com" % self.subdomain
-            result['github_url'] = self.github_url()
+            result['site_url'] = self.url()
+
+            try:
+                syncdb_data = [ u for u in response_content['script_results'] if 'syncdb.py' in u['script'] ][0]
+                if u'value to use for existing rows' in syncdb_data['stderr']:
+                    assert False, "Migration needs help!!!"
+            except IndexError:
+                pass # this is the fast_deploy case
+
             return result
 
         elif r.status_code == 400:
@@ -335,11 +387,21 @@ class App(models.Model):
             assert retry_on_404
             logger.warn("The deployment was not found, so I'm setting deployment id to None")
             self.deployment_id = None
-            self.save()
-            return self.deploy(retry_on_404=False)
+            self.save(state_version=False)
+            return self._transport_app(appdir, retry_on_404=False)
 
         else:
             raise Exception("Deployment server error: %r" % r.text)
+
+    def deploy(self, retry_on_404=True):
+        tmpdir = self.write_to_tmpdir()
+        try:
+            logger.info("Deployed to %s" % tmpdir)
+            r = self._transport_app(tmpdir, retry_on_404=retry_on_404)
+        finally:
+            # because hard disk space doesn't grow on trees.
+            shutil.rmtree(tmpdir)
+        return r
 
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:
@@ -528,46 +590,7 @@ class DomainRegistration(models.Model):
         DomainRegistration.api.configure_domain_records(
             self.domain, staging=staging)
         self.dns_configured = 1
-        self.save()
-
-
-class TutorialLog(models.Model):
-    user = models.ForeignKey(User, related_name="logs")
-    opened_on = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=300, blank=True)
-    directory = models.CharField(max_length=50, blank=True)
-
-    @classmethod
-    def create_log(cls, user, title, directory):
-        log = cls(user=user, title=title, directory=directory)
-        log.save()
-
-    @classmethod
-    def create_feedbacklog(cls, user, message):
-        log = cls(user=user, title=message, directory="feedback")
-        log.save()
-
-    @classmethod
-    def is_donewithfeedback(cls, user):
-        log = cls.objects.filter(user=user, directory="feedback")
-        if len(log) is 0:
-            return False
-        else:
-            return True
-
-    @classmethod
-    def get_percentage(cls, user):
-        log = cls.objects.filter(user=user).exclude(
-            directory='').values("directory").annotate(n=models.Count("pk"))
-        percentage = (len(log) * 100) / 15
-        return percentage
-
-
-class RouteLog(models.Model):
-    user_id = models.IntegerField()
-    opened_on = models.DateTimeField(auto_now_add=True)
-    app_id = models.IntegerField()
-    page_name = models.TextField()
+        self.save(state_version=False)
 
 class LogAnything(models.Model):
     app_id = models.IntegerField(null=True)
@@ -585,6 +608,7 @@ class InvitationKeys(models.Model):
     inviter_id = models.IntegerField(blank=True)
     invitee    = models.CharField(max_length=255)
     date       = models.DateTimeField(auto_now_add=True)
+    accepted   = models.BooleanField(default=False)
 
     @classmethod
     def make_invitation_key(cls, user):
@@ -599,7 +623,7 @@ class InvitationKeys(models.Model):
         return invitation
 
 class Customer(models.Model):
-    user_id = models.IntegerField(blank=True)
+    user_id = models.IntegerField(blank=True, null=True)
     name = models.TextField()
     email = models.EmailField(max_length=75)
     company = models.TextField()
@@ -628,3 +652,19 @@ class AppstateSnapshot(models.Model):
     @property
     def state_json(self):
         return self._state_json
+
+class AnalyticsStore(models.Model):
+    owner = models.ForeignKey(User, related_name='analytics_stores')
+    app = models.ForeignKey(App, blank=True, null=True, related_name="analytics_stores")
+
+    analytics_json = models.TextField()
+
+    @property
+    def analytics_data(self):
+        result = {}
+        try:
+            result = simplejson.loads(self.analytics_json)
+        except JSONDecodeError:
+            print "Could not decode %r" % self.analytics_json
+        else:
+            return result

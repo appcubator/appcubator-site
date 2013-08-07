@@ -1,0 +1,156 @@
+.page-view {
+	.context-text {
+	  font-size: 12px;
+	  color: #bbb;
+	  line-height: 15px;
+	  display: block;
+	  cursor: pointer;
+
+	  &:hover {
+	  	color: #999;
+		}
+	}
+} // end .page-view
+
+.page-menu {
+  margin-top: 14px;
+  width: 100%;
+  border-top: 1px solid #ddd;
+
+	.item {
+	  width: 100%;
+	  display: block;
+	  height: 50px;
+	  padding: 14px;
+	  padding-left: 24px;
+	  border-top: 1px solid #efefef;
+	  border-bottom: 1px solid #ddd;
+	  font-weight: bold;
+	  text-shadow: #fff 0 1px;
+	  cursor: pointer;
+
+	  &:hover {
+		  background-color: #e3e3e3;
+		  text-decoration: none;
+		}
+
+		i {
+			display: inline-block;
+		  vertical-align: top;
+		  width: 40px;
+		  height: 40px;
+		  margin-right: 6px;
+		  margin-top: -10px;
+		  background-repeat: no-repeat;
+		  .background-size(100% auto);
+		  background-image: url(/static/img/pages-page-sprite.png);
+
+		  &.icon-edit {
+		  	background-position: left -4px;
+		  }
+		  &.icon-delete {
+		  	background-position: left -48px;
+		  }
+		  &.icon-url {
+		  	background-position: left -90px;
+		  }
+		}
+  } // end .item
+} // end .page-menu
+
+.add-box {
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: top;
+  float: none;
+  text-align: center;
+  font-size: 28px;
+  margin-top: 30px;
+  margin-bottom: 60px;
+
+  img {
+  	float: none;
+  }
+  input {
+  	padding: 10px;
+  }
+} // end .add-box
+
+.url-parts .remove {
+	border-radius: 25px;
+	padding: 2px 9px;
+	background-color: #ccc;
+	color: #fff;
+	font-size: 16px;
+
+	&:hover {
+		background-color: #c95446;
+	}
+} // end .url-parts .remove
+
+
+
+.soft-error-modal {
+  display: inline-block;
+  position: fixed;
+  bottom:0;
+  left:0;
+  width: 400px;
+  height: 240px;
+  background-image: url(/static/img/racoon-softwerror.png);
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: bottom;
+   -webkit-animation: flyUp 0.4s ease-out;
+   z-index: 9999;
+}
+
+.soft-error-modal span {
+  display: inline-block;
+  text-align: left;
+  width: 250px;
+  float: right;
+  padding-right: 16px;
+  padding-top: 24px;
+  font-size: 16px;
+}
+
+.soft-error-modal a {
+  font-weight: bold;
+}
+.soft-error-modal p {
+  display: block;
+}
+
+    @-moz-keyframes flyUp {
+        0% {
+           -webkit-transform: translateY(100px);
+        }
+
+        100% {
+
+            -webkit-transform:  translateY(0);
+        }
+    }
+
+    @-webkit-keyframes flyUp {
+        0% {
+             -webkit-transform: translateY(80px);
+        }
+        90% {
+             -webkit-transform: translateY(-10px);
+        }
+        100% {
+            -webkit-transform:  translateY(0);
+        }
+    }
+
+    @-ms-keyframes flyUp {
+        0% {
+            -webkit-transform:  translateY(100px);
+        }
+        100% {
+            -webkit-transform:  translateY(0);
+        }
+    }

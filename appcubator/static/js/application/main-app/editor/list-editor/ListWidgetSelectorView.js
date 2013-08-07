@@ -170,6 +170,8 @@ function() {
       this.listenTo(widgetModel.get('layout'), 'change', function() {
         self.setLayout(self.selectDiv, widgetModel);
       });
+
+      this.hideNode(this.hoverDiv);
       this.setLayout(this.selectDiv, widgetModel);
       this.selectDiv.appendChild(this.widgetEditorView.setModel(widgetModel).render().el);
     },
@@ -192,6 +194,10 @@ function() {
       var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
       elem.style.width = '';
       elem.style.height = '';
+
+      if(deltaHeight <= 8) deltaHeight = 15;
+      if(deltaWidth <= 8) deltaWidth = 15;
+
       this.selectedEl.get('layout').set('width', deltaWidth);
       this.selectedEl.get('layout').set('height', deltaHeight);
       this.selectedEl.get('layout').set('left', left);
@@ -213,8 +219,8 @@ function() {
       var top = Math.round((ui.position.top / 1));
       var left = Math.round((ui.position.left / 1));
 
-      if(top < 0) top = 0;
-      if(left < 0) left = 0;
+      if(top < 0) top = 1;
+      if(left < 0) left = 1;
 
       model.get('layout').set('top', top);
 
@@ -222,8 +228,8 @@ function() {
         model.get('layout').trigger('change:left');
       }
       model.get('layout').set('left', left);
+
       this.newSelected(model);
-      this.setLayout(e.target, model);
     },
 
     deselect: function() {
@@ -320,7 +326,7 @@ function() {
     clear: function() { },
 
     hideNode: function(node) {
-      if(!node) return;
+      if(!node)  { return; }
       node.style.height = 0;
       node.style.width = 0;
       $(node).hide();

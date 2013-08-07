@@ -57,13 +57,18 @@ function(
         if(type == "file") { formFieldModel.displayType = "file-uploader"; }
         if(type == "date") { formFieldModel.displayType = "date-picker"; }
 
+        if(_.contains(["file", "image"], type)) {
+           formFieldModel.placeholder = "Upload "+util.capitaliseFirstLetter(type);
+         }
+
         var ind = this.get('fields').models.length - 1;
         this.get('fields').push(formFieldModel, {at: ind});
       }, this);
     },
 
     fillWithEditProps: function(entity) {
-      entity.get('fields').each(function(fieldModel) {
+      entity.getFieldsColl().each(function(fieldModel) {
+
         var type = fieldModel.get('type');
         var formFieldModel = { field_name: fieldModel.get('name'),
                                displayType: "single-line-text",
@@ -77,6 +82,9 @@ function(
         if(type == "image") { formFieldModel.displayType = "image-uploader"; }
         if(type == "file") { formFieldModel.displayType = "file-uploader"; }
         if(type == "date") { formFieldModel.displayType = "date-picker"; }
+
+        if(_.contains(["file", "image"], type)) // #functional
+           formFieldModel.placeholder = "Update "+type;
 
         var ind = this.get('fields').models.length - 1;
         this.get('fields').push(formFieldModel, {at: ind});

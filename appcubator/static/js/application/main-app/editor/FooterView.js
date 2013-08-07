@@ -9,7 +9,7 @@ function(FooterEditorView) {
     type: null,
 
     events: {
-      'mousedown .footer' : 'showFooterEditor'
+      'mousedown' : 'showFooterEditor'
     },
 
     initialize: function(footerModel) {

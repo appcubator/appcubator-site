@@ -42,7 +42,7 @@
       "jquery" : "{{ STATIC_URL }}js/libs/jquery/jquery",
       "jquery-ui" : "{{ STATIC_URL }}js/libs/jquery-ui/jquery-ui",
       "jquery.filedrop" : "{{ STATIC_URL }}js/libs/jquery/jquery.filedrop",
-      "jquery.flexslider" : "{{ STATIC_URL }}js/libs/jquery/jquery.flexslider-min",
+      "jquery.hotkeys" : "{{ STATIC_URL }}js/libs/jquery/jquery.hotkeys",
       "underscore" : "{{ STATIC_URL }}js/libs/underscore-amd/underscore",
       "backbone" : "{{ STATIC_URL }}js/libs/backbone-amd/backbone",
       "util" : "{{ STATIC_URL }}js/libs/util/util",
@@ -105,7 +105,10 @@
 <div class="container hoff1" id="entities-page">
   <div class="span58">
     <h2 class="pheader">User Tables</h2>
-    <input class="right" id="add-role-form" style="display: none; height: 45px" placeholder="New User Role">
+    <form id="add-role-form" class="right new-table-form" style="display: none; height: 45px">
+      <input type="submit" class="done-btn" value="Done">
+      <input type="text" placeholder="New User Role">
+    </form>
     <div class="button right" id="add-role">
       <span class="add-icon"></span><span>Add User Role</span>
     </div>
@@ -117,7 +120,10 @@
   <div class="span58 hi1"></div>
   <div class="span58 hoff2">
     <h2 class="pheader">Tables</h2>
-    <input class="right" id="add-entity-form" style="display: none; height: 45px" placeholder="New Table">
+    <form style="display: none; height: 45px" class="right new-table-form" id="add-entity-form">
+      <input type="submit" class="done-btn" value="Done">
+      <input type="text" placeholder="New Table">
+    </form>
     <div class="button right" id="add-entity">
       <span class="add-icon"></span><span>Add Table</span>
     </div>

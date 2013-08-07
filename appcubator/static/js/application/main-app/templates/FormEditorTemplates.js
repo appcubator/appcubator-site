@@ -3,7 +3,7 @@ var FormEditorTemplates = { };
 var FieldTypes = {
   "single-line-text" : '<input type="text" placeholder="<%= field.get(\'placeholder\') %>" disabled>',
   "paragraph-text"   : '<textarea placeholder="<%= field.get(\'placeholder\') %>" disabled></textarea>',
-  "dropdown"         : '<select class="drowdown"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><option><%= option %></option><% }); %></select>',
+  "dropdown"         : '<select class="dropdown"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><option><%= option %></option><% }); %></select>',
   "option-boxes"     : '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value=""> <label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
   "password-text"    : '<input type="password" placeholder="<%= field.get(\'placeholder\') %>">',
   "email-text"       : '<div class="email"><input type="text" placeholder="<%= field.get(\'placeholder\') %>"></div>',
@@ -81,7 +81,7 @@ FormEditorTemplates.template = [
   '<div class="add-field-panel"><div class="btn add-field-button"><span class="icon"></span>Add a New Field</div></div>',
   '<div class="action-panel panel">',
   '</div>',
-  '<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>'
+  '<div class="bottom-sect"><div class="q-mark"></div><div class="btn done">Done</div></div>'
 ].join('\n');
 
 FormEditorTemplates.actionPane = [
@@ -185,34 +185,34 @@ FormEditorTemplates.newField = [
   '<input class="new-field-name" type="text" placeholder="Field name...">',
   '</label>',
   '<label><b>Type of the Field</b><br>',
-    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="text" checked="true">Text</label>',
-    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="number">Number</label>',
-    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="email">Email</label>',
-    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="image">Image</label>',
-    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="date">Date</label>',
-    '<label for="required" class="radio"><input type="radio" name="field-type" id="required" value="file">File</label>',
+    '<input type="radio" name="field-type" id="type-text" value="text" checked="true"><label for="type-text" class="radio">Text</label><br  />',
+    '<input type="radio" name="field-type" id="type-number" value="number"><label for="type-number" class="radio">Number</label><br  />',
+    '<input type="radio" name="field-type" id="type-email" value="email"><label for="type-email" class="radio">Email</label><br  />',
+    '<input type="radio" name="field-type" id="type-image" value="image"><label for="type-image" class="radio">Image</label><br  />',
+    '<input type="radio" name="field-type" id="type-date" value="date"><label for="type-date" class="radio">Date</label><br  />',
+    '<input type="radio" name="field-type" id="type-file" value="file"><label for="type-file" class="radio">File</label><br  />',
   '</label>',
   '<input type="submit" class="btn" value="Done">',
 '</form>'
 ].join('\n');
 
 FormEditorTemplates.details = [
-  '<label><b>Label</b><br>',
+  '<div class="label"><b>Label</b><br>',
   '<input class="field-label-input" id="field-label-<%= field.cid %>" type="text" placeholder="Field Label..." value="<%= field.get(\'label\') %>">',
-  '</label>',
-  '<label><b>Placeholder</b><br>',
+  '</div>',
+  '<div class="label"><b>Placeholder</b><br>',
   '<input class="field-placeholder-input" type="text" id="field-placeholder-<%= field.cid %>" placeholder="Field Placeholder..." value="<%= field.get(\'placeholder\') %>">',
-  '</label>',
-  '<label><b>Required</b><br>',
-  '<label for="required" class="radio"><input type="radio" name="required" id="required" value="yes" checked="<%= field.get(\'required\') %>">Yes</label>',
-  '<label for="not-required" class="radio"><input type="radio" name="required" id="not-required" value="no" >No</label>',
-  '</label>',
-  '<label><b>Display Type</b>',
+  '</div>',
+  '<div class="label"><b>Required</b><br>',
+  '<input type="radio" name="required" id="required" value="yes" <% if(field.get(\'required\')) print("checked"); %>><label for="required" class="radio">Yes</label>',
+  '<input type="radio" name="required" id="not-required" value="no"><label for="not-required" class="radio">No</label>',
+  '</div>',
+  '<div class="label"><b>Display Type</b>',
     '<ul class="field-types">',
     FormEditorTemplates.displayTypes,
     '</ul>',
-  '</label>',
-  '<label class="options-list"></label>'
+  '</div>',
+  '<div class="label options-list"></div>'
 ].join('\n');
 
 FormEditorTemplates.routeTemplate = [
@@ -220,7 +220,7 @@ FormEditorTemplates.routeTemplate = [
     '<span><strong><%= route.get("role") %></strong> goes to </span>',
     '<select class="redirect-page" id="redirect-select-<%= route.cid %>">',
       '<% _(pages).each(function(page) { var selected = ""; if("internal://"+page.name == route.get("redirect")) { selected = "selected"; } %>',
-      '<option value="internal://<%= page.name %>" <%= selected %>><%= page.name %></option>',
+      '<option value="<%= page.val %>" <%= selected %>><%= page.name %></option>',
       '<% }); %>',
     '</select>',
   '</div>'

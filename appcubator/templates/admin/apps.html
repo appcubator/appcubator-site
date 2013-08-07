@@ -2,28 +2,34 @@
 {% block content %}
   <h2>Apps</h2>
   <hr>
-  <table class="table table-striped">
+  <table id="apps" class="table table-striped table-hover table-bordered">
     <thead>
       <tr>
-        <th>#</th>
+        <th data-sort-type="number">App ID</th>
         <th>Name</th>
         <th>Owner</th>
         <th>Subdomain</th>
-        <th>App State</th>
-        <th>UIE State</th>
-        <th>Deployment ID</th>
       </tr>
     </thead>
     <tbody>
-      {% for app in apps reversed%}
+      {% for app in apps reversed %}
       <tr>
-        <td><a href="/stay/up/to/get/lucky/apps/{{ app.pk }}">{{ app.pk }}</a></td>
-        <td><a href="/stay/up/to/get/lucky/apps/{{ app.pk }}">{{ app.name }}</a></td>
-        <td>{{ app.owner }}</td>
-        <td>{{ app.subdomain }}</td>
-        <td>{{ app.deployment_id }}</td>
+        <td><a href="{% url appcubator.admin_views.admin_app app.pk %}">{{ app.pk }}</a></td>
+        <td><a href="{% url appcubator.admin_views.admin_app app.pk %}">{{ app.name }}</a></td>
+        <td><a href="{% url appcubator.admin_views.admin_user app.owner.id %}">{{ app.owner }}</td>
+        {% if app.deployment_id %}
+          <td><a href="{{app.url}}">{{ app.subdomain }}</a></td>
+        {% else %}
+          <td>{{ app.subdomain }}</td>
+        {% endif %}
       </tr>
       {% endfor %}
     </tbody>
   </table>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  $('#apps').sortableTable({initialColumn: 1});
+</script>
 {% endblock %}

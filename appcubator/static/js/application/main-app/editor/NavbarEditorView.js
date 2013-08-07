@@ -22,6 +22,7 @@ function(LinkEditorView) {
 
       this.model  = model;
       this.links = this.model.get('links');
+      this.listenTo(this.links, 'reset', this.renderLinkEditorViews);
       this.render();
     },
 
@@ -44,12 +45,17 @@ function(LinkEditorView) {
 
       this.renderLinkEditorViews();
 
+      this.$('#link-editors').sortable({
+        stop: this.changedOrder,
+        axis: 'y'
+      });
+
       return this;
     },
 
     renderLinkEditorViews: function() {
       var self = this;
-      this.$linksList = this.$el.find('#link-editors');
+      this.$linksList = this.$el.find('#link-editors').empty();
       this.links.each(this.addLinkEditorView);
     },
 
@@ -83,6 +89,17 @@ function(LinkEditorView) {
       if(newBrandName) {
         this.model.set('brandName', newBrandName);
       }
+    },
+
+    changedOrder: function(e, ui) {
+      var self = this;
+      var sortedIDs = this.$('#link-editors').sortable("toArray");
+
+      var newLinkEditors = _(sortedIDs).map(function(id) {
+        return self.links.get(id.replace('link-',''));
+      });
+
+      this.links.reset(newLinkEditors);
     },
 
     cancelSubmit: function() {

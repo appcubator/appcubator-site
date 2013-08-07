@@ -11,15 +11,12 @@ function(Backbone) {
       'click .create-theme'        : 'createTheme',
       'click .create-mobile-theme' : 'createMobileTheme',
       'submit .create-form'        : 'createFormSubmitted',
-      'submit .create-mobile-form' : 'createMobileFormSubmitted'
+      'submit .create-mobile-form' : 'createMobileFormSubmitted',
+      'click .delete-theme-btn'          : 'deleteTheme'
     },
 
     initialize   : function(widgetsCollection) {
-       _.bindAll(this, 'render',
-                       'createTheme',
-                       'createMobileTheme',
-                       'createFormSubmitted',
-                       'createMobileFormSubmitted');
+      _.bindAll(this);
       this.render();
     },
 
@@ -49,7 +46,7 @@ function(Backbone) {
               '<a href="/theme/{{ theme.pk }}/">',
                 '<span><%= name %></span>',
                 '<form method="POST" action="/theme/<%= id %>/delete/">',
-                  '<input type="submit"  class="btn btn-warning right" value="Delete">',
+                  '<input type="submit"  class="btn btn-warning right delete-theme-btn" value="Delete">',
                 '</form>',
               '</a>',
             '</li>'
@@ -76,9 +73,7 @@ function(Backbone) {
             '<li class="hi5 hoff1 span40 pane border">',
               '<a href="/theme/{{ theme.pk }}/">',
                 '<span><%= name %></span>',
-                '<form method="POST" action="/theme/<%= id %>/delete/">',
-                  '<input type="submit"  class="btn btn-warning right" value="Delete">',
-                '</form>',
+                  '<input type="submit"  class="btn btn-warning right delete-theme-btn" value="Delete">',
               '</a>',
             '</li>'
           ].join('\n');
@@ -91,6 +86,22 @@ function(Backbone) {
       e.preventDefault();
       $(e.target).hide();
       $('.create-theme-text').fadeIn();
+    },
+
+    deleteTheme: function(e) {
+      e.preventDefault();
+      var themeId = e.currentTarget.id.replace('theme-delete-','');
+      $.ajax({
+        type: "POST",
+        url: '/theme/'+ themeId +'/delete/',
+        data: { name : name },
+        success: function(data) {
+          
+        },
+        dataType: "JSON"
+      });
+
+      $('#theme-'+themeId).remove();
     }
   });
 

@@ -1339,9 +1339,7 @@
     // an element from the `id`, `className` and `tagName` properties.
     _ensureElement: function() {
       if (!this.el) {
-        // Edited by icanberk
-        var attrs = {};
-        //var attrs = _.extend({}, _.result(this, 'attributes'));
+        var attrs = _.extend({}, _.result(this, 'attributes'));
         if (this.id) attrs.id = _.result(this, 'id');
         if (this.className) attrs['class'] = _.result(this, 'className');
         var $el = Backbone.$('<' + _.result(this, 'tagName') + '>').attr(attrs);

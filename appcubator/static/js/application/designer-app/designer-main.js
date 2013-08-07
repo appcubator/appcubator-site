@@ -25,11 +25,14 @@ require.config({
     "backbone": {
       exports: "Backbone",
       deps: ["underscore", "jquery"]
-    }
+    },
+    "bootstrap" : {
+      deps: ["jquery"]
+    },
   }
 
 });
 
-require(["ThemesView", '../../libs/keymaster/keymaster'], function(ThemesView) {
+require(["ThemesView", '../../libs/keymaster/keymaster', 'bootstrap'], function(ThemesView) {
   var editorView = new ThemesView();
 });

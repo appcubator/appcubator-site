@@ -6,7 +6,7 @@ from django.shortcuts import redirect,render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, TutorialLog
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts
 
 import requests
 import traceback
@@ -44,8 +44,23 @@ def add_statics_to_context(context, app):
 
 @login_required
 @single_theme
+def deletethemestaticfile(request, theme, staticfile_id):
+  if request.method != 'DELETE':
+    return HttpResponse("Method not allowed", status=405)
+  if staticfile_id is not None:
+    try:
+      static = StaticFile.objects.get(pk=staticfile_id)
+    except:
+      return HttpResponse("Invalid StaticFile id", status=405)
+    static.delete()
+    return HttpResponse("deleted static file", status=200)
+  else:
+    return HttpResponse("Method not allowed", status=405)
+
+@login_required
+@single_theme
 def themestaticfiles(request, theme):
-  if request.method != 'GET' and request.method != 'POST':
+  if request.method != 'GET' and request.method != 'POST' and request.method != 'DELETE':
     return HttpResponse("Method not allowed", status=405)
   if request.method == 'GET':
     sf = StaticFile.objects.filter(theme=theme).values('name','url','type')
@@ -53,8 +68,8 @@ def themestaticfiles(request, theme):
   if request.method == 'POST':
     sf_form = ThemeStaticFileForm(theme, request.POST)
     if sf_form.is_valid():
-      sf_form.save()
-      return JSONResponse({})
+      new_static_file = sf_form.save()
+      return JSONResponse({'id': new_static_file.id })
     else:
       return JSONResponse({ "error": "One of the fields was not valid." })
 
@@ -128,11 +143,10 @@ def theme_page_editor(request, theme_id, page_id):
 def theme_edit(request, theme):
   if 'name' in request.POST:
     theme.name = request.POST['name']
-
   if 'uie_state' in request.POST:
-    uie_json = request.body
+    uie_json = request.POST['uie_state']
     theme.uie_state = simplejson.loads(uie_json)
-
+    print theme.uie_state["fonts"]
   theme.save()
   return HttpResponse("ok")
 

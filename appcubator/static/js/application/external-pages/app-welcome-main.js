@@ -65,6 +65,7 @@ require([
   "editor/MouseDispatcher",
   "heyoffline",
   "backbone",
+  "mixins/BackboneConvenience",
   "bootstrap",
   "util",
   "comp"
@@ -137,6 +138,7 @@ function (AppModel,
     require(['app/QuickTour'], function(QuickTour) {
       window.QuickTour = QuickTour;
       QuickTour.start();
+      util.log_to_server('started quick tour', {}, appId);
       $(document).one('keypress', function(e) {
         QuickTour.stop(false);
       });
@@ -147,8 +149,13 @@ function (AppModel,
 
   });
 
-  $('.fixed-bg .twitter-guide').click(function(e) {
-    /*...*/
+  $('.fixed-bg .walkthrough-twitter').click(function(e) {
+    $('.fixed-bg .row .welcome-icon').not('.row.twitter-chooser .welcome-icon').fadeOut('fast', function() {
+      $('.twitter-chooser').fadeIn('fast');
+      $('#question').html('Which one would you prefer?');
+    });
+
+    return false;
   });
 
   $('.fixed-bg .newapp').click(function(e) {

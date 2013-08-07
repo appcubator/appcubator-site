@@ -1,7 +1,228 @@
 {% extends "admin/admin-base.html" %}
 {% block content %}
-  <h1>Y U SO RATCHET</h1>
-  <h3>Deployments</h3>
-  <p><strong>Average deploy time: </strong> {{avg_deployment_time}} seconds</p>
-  <p>Number of Deployed Apps</p>
+  <div class="row">
+    <div class="span6">
+      <h3>Active Users</h3>
+      <div id="active-users" class="chart">
+        <svg></svg>
+      </div>
+    </div>
+    <div class="span6">
+      <h3>User Signups</h3>
+      <div id="user-signups" class="chart">
+        <svg></svg>
+      </div>
+    </div>
+  </div>
+  <br>
+	<hr>
+  <div class="row">
+    <div class="span4">
+      <h3>Active Users Today</h3>
+      <!-- active users this week -->
+      <table id="active-users-today" class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr>
+            <th data-sort-type="number">ID</th>
+            <th>Name</th>
+            <th data-sort-type="number">Apps</th>
+            <th data-sort-type="number">Pageviews</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for obj in users_today %}
+          <tr>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.user_id }}</a></td>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.name }}</a></td>
+            <td>{{ obj.num_apps }}</td>
+            <td>{{ obj.num_logs }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="span4">
+      <h3>Active Users This Week</h3>
+      <!-- active users this week -->
+      <table id="active-users-week" class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr>
+            <th data-sort-type="number">ID</th>
+            <th>Name</th>
+            <th data-sort-type="number">Apps</th>
+            <th data-sort-type="number">Pageviews</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for obj in users_last_week %}
+          <tr>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.user_id }}</a></td>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.name }}</a></td>
+            <td>{{ obj.num_apps }}</td>
+            <td>{{ obj.num_logs }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="span4">
+      <h3>Top 10 Users</h3>
+      <!-- all-time most active users -->
+      <table id="most-active-users" class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr>
+            <th data-sort-type="number">ID</th>
+            <th>Name</th>
+            <th data-sort-type="number">Apps</th>
+            <th data-sort-type="number">Pageviews</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for obj in most_active_users %}
+          <tr>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.user_id }}</a></td>
+            <td><a href="{% url appcubator.admin_views.admin_user obj.user_id %}">{{ obj.user.first_name }} {{ obj.user.last_name }}</a></td>
+            <td>{{ obj.num_apps }}</td>
+            <td>{{ obj.num_logs }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span4">
+      <h3>Deployment Stats</h3>
+      <p><strong>Avg. deploy time: </strong> {{avg_deployment_time}} seconds</p>
+      <p><strong>Total deployed apps: </strong> {{ num_deployed_apps }}</p>
+    </div>
+    <div class="span8">
+      <h3>Cumulative User Signups</h3>
+      <div id="user-signups-cumulative" class="chart">
+        <svg></svg>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  $('#active-users-today').sortableTable({initialColumn: 4});
+	$('#active-users-week').sortableTable({initialColumn: 4});
+	$('#most-active-users').sortableTable({initialColumn: 4});
+
+  var active_users_data = {{ active_users|safe }};
+  var user_signups_data = {{ user_signups|safe }};
+  var user_signups_cumulative_data = {{ user_signups_cumulative|safe }};
+  //var active_users_data = {"07/07/13": 0, "07/04/13": 0, "07/02/13": 0, "07/21/13": 5, "07/06/13": 0, "07/24/13": 23, "07/17/13": 12, "07/12/13": 5, "07/29/13": 19, "07/23/13": 12, "07/22/13": 15, "07/01/13": 0, "06/26/13": 0, "07/27/13": 10, "07/09/13": 0, "07/20/13": 10, "06/27/13": 0, "06/30/13": 0, "07/14/13": 53, "07/10/13": 0, "07/13/13": 128, "07/28/13": 9, "07/15/13": 27, "07/18/13": 13, "07/11/13": 0, "06/28/13": 0, "06/29/13": 0, "07/05/13": 0, "07/26/13": 16, "07/25/13": 14, "07/08/13": 0, "07/16/13": 19, "07/19/13": 11, "07/03/13": 0};
+
+  //var user_signups_data = [{'day_joined': '2013-06-26', 'num_users': 2},{'day_joined': '2013-06-27', 'num_users': 2},{'day_joined': '2013-07-03', 'num_users': 2},{'day_joined': '2013-07-04', 'num_users': 5},{'day_joined': '2013-07-05', 'num_users': 1},{'day_joined': '2013-07-07', 'num_users': 1},{'day_joined': '2013-07-08', 'num_users': 1},{'day_joined': '2013-07-09', 'num_users': 2},{'day_joined': '2013-07-10', 'num_users': 1},{'day_joined': '2013-07-11', 'num_users': 2},{'day_joined': '2013-07-13', 'num_users': 57},{'day_joined': '2013-07-14', 'num_users': 103},{'day_joined': '2013-07-15', 'num_users': 20},{'day_joined': '2013-07-16', 'num_users': 8},{'day_joined': '2013-07-17', 'num_users': 3},{'day_joined': '2013-07-18', 'num_users': 1},{'day_joined': '2013-07-19', 'num_users': 3},{'day_joined': '2013-07-20', 'num_users': 1},{'day_joined': '2013-07-22', 'num_users': 4},{'day_joined': '2013-07-23', 'num_users': 3},{'day_joined': '2013-07-24', 'num_users': 10},{'day_joined': '2013-07-25', 'num_users': 2},{'day_joined': '2013-07-26', 'num_users': 3},{'day_joined': '2013-07-27', 'num_users': 1},{'day_joined': '2013-07-28', 'num_users': 2},{'day_joined': '2013-07-29', 'num_users': 5},{'day_joined': '2013-07-30', 'num_users': 5}];
+  /*
+   * Active Users Chart
+   */
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart()
+        .x(function(d) { return d.label.toLocaleDateString() })
+        .y(function(d) { return d.value })
+        .staggerLabels(true)
+        .tooltips(true);
+
+    chart.reduceXTicks(true);
+
+    chart.xAxis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+    chart.yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#active-users svg')
+        .datum(parseActiveUsersData(active_users_data))
+      .transition().duration(500)
+        .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  /*
+   * Cumulative User Signups Chart
+   */
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart()
+        .x(function(d) { return d.label.toLocaleDateString() })
+        .y(function(d) { return d.value })
+        .staggerLabels(true)
+        .tooltips(true);
+
+    chart.reduceXTicks(true);
+
+    chart.xAxis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+    chart.yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#user-signups-cumulative svg')
+        .datum(parseActiveUsersData(user_signups_cumulative_data))
+      .transition().duration(500)
+        .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function parseActiveUsersData(data) {
+    var values = [];
+    for(key in data) {
+      values.push({
+        'label': new Date(key),
+        'value': data[key]
+      });
+    }
+    values.sort(function(v1, v2) {
+      return (v1.label <= v2.label) ? -1 : 1;
+    });
+    return [{
+      "key": "Active Users",
+      "values": values
+    }];
+  }
+
+  /*
+   * User signups chart
+   */
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart()
+        .x(function(d) { return d.label.toLocaleDateString() })
+        .y(function(d) { return d.value })
+
+    chart.xAxis.tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+    chart.yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#user-signups svg')
+        .datum(parseUserSignupsData(user_signups_data))
+      .transition().duration(500)
+        .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function parseUserSignupsData(data) {
+    var values = [];
+    _(data).each(function(d) {
+      values.push({
+        'label': new Date(d['day_joined']),
+        'value': d['num_users']
+      })
+    });
+
+    values.sort(function(v1, v2) {
+      return (v1.label <= v2.label) ? -1 : 1;
+    });
+    return [{
+      "key": "User Signups",
+      "values": values
+    }];
+  }
+</script>
 {% endblock %}

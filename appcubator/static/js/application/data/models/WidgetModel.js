@@ -153,8 +153,19 @@ function(DataModel, LayoutModel) {
       return null;
     },
 
+
     getSearchQuery: function () {
       return this.get('data').get('searchQuery');
+    },
+
+    isBox: function() {
+      if(this.get('type') == "node" && this.get('data').get('nodeType') == "boxes") return true;
+      return false;
+    },
+
+    isList: function() {
+      if(this.get('type') == "loop") return true;
+      return false;
     },
 
     toJSON : function() {

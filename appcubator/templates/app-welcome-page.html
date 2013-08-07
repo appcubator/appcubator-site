@@ -14,7 +14,7 @@
     <div class="span36 offset8 intro">
       <img class="welcome" src="{{ STATIC_URL }}img/welcome-marker.png">
       <p>We are happy to see you using Appcubator and would like to help you get started as smoothly as possible.</p>
-      <p>How would you like to proceed?</p>
+      <p id="question">How would you like to proceed?</p>
     </div>
   </div>
   <div class="row hoff2 span48 offset8">
@@ -26,7 +26,7 @@
         We will give you a quick tour of what Appcubator is and how it works in general.
       </div>
     </a>
-    <a class="welcome-icon walkthrough-twitter" href="{% url appcubator.views.app_new_walthrough %}">
+    <div class="welcome-icon walkthrough-twitter" href="#">
       <img src="{{ STATIC_URL }}img/walkthrough-twitter.png">
       <p>Walkthrough Building Twitter</p>
       <div class="info-text qt-text">
@@ -34,7 +34,7 @@
         This is for you if you're one of those people who likes to learn by doing. <br  />
         We will walk you through building a clone of Twitter.com in 8 minutes!
       </div>
-    </a>
+    </div>
   </div>
   <div class="row span48 offset8">
     <a href="/documentation" class="welcome-icon read-tutorials">
@@ -54,6 +54,24 @@
       </div>
     </a>
   </div>
+  <div class="row span48 offset8 twitter-chooser" style="display: none">
+      <!-- simple twitter tutorial -->
+      <a class="welcome-icon wide" href="{% url appcubator.views.app_new_walkthrough walkthrough='simpleWalkthrough' %}">
+        <img src="{{ STATIC_URL }}img/walkthrough-twitter.png">
+        <div class="explain-text qt-text">
+          <span class="title">Simple Walkthrough</span>
+          Skip the details, and dive into designing your own Twitter!
+        </div>
+      </a>
+      <!-- in-depth twitter tutorial -->
+      <a class="welcome-icon wide" href="{% url appcubator.views.app_new_walkthrough walkthrough='walkthrough' %}">
+        <img src="{{ STATIC_URL }}img/walkthrough-twitter.png">
+        <div class="explain-text qt-text">
+          <span class="title">In-Depth Walkthrough</span>
+          Go through the complete process of building Twitter with tables and relations using Appcubator.
+        </div>
+      </a>
+    </div>
   <div class="question-cont">
     <img src="{{ STATIC_URL }}img/question-market.png">
     <p>Yes, there is an actual person here :)</p>
@@ -83,9 +101,5 @@
 </script>
 <script data-main="{{ STATIC_URL }}js/application/external-pages/app-welcome-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() {
-
-
-  });
 </script>
 {% endblock %}

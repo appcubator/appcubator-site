@@ -13,12 +13,12 @@ function(TableModel, FieldModel, FieldsCollection, Backbone) {
       if(typeof bone === "string") {
         bone = appState.users;
       }
-
       this.set('fields', new FieldsCollection(bone.fields || []));
+      this.isUser = true;
     },
 
     getFieldsColl: function() {
-      var arr = _.union(this.get('fields').models, v1State.get('users').predefinedFields);
+      var arr = _.union(v1State.get('users').predefinedFields, this.get('fields').models);
       return new Backbone.Collection(arr);
     },
 

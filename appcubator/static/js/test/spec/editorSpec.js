@@ -16,7 +16,8 @@ define([
   "editor/KeyDispatcher",
   "editor/MouseDispatcher",
   "comp",
-  "backbone"
+  "backbone",
+  "mixins/BackboneConvenience"
   ],
   function( EditorView,
     AppModel,
@@ -40,7 +41,7 @@ define([
 
     var AppRouter = {};
     $('.page').fadeOut();
-    AppRouter.tutorialDirectory = [5];
+    AppRouter.tutorialPage = "Editor";
 
     if(AppRouter.view) AppRouter.view.remove();
     var cleanDiv = document.createElement('div');
@@ -578,7 +579,7 @@ define([
       it('updates the brandName', function() {
         var old_brandname = model.get('brandName') || v1State.get('name');
         model.set('brandName', "DERPY");
-        var brandName = document.getElementById('brand-name').innerText;
+        var brandName = document.getElementById('brand-name').innerHTML;
         expect("DERPY").toEqual(brandName);
       });
 
@@ -598,7 +599,7 @@ define([
         var finalLength = after.length;
         expect(finalLength).toEqual(initialLength + 1);
         var lastLink = after.last()[0].children[0];
-        expect(lastLink.innerText).toEqual('DERPTASTIC');
+        expect(lastLink.innerHTML).toEqual('DERPTASTIC');
       });
 
       it('removes links from navbar', function() {
@@ -617,12 +618,12 @@ define([
       it('renders the custom text', function() {
         //set brandName to appState name to start
         var view_customText = footer.$('#customText').text();
-        var model_customText = model.get('customText') || "Add custom footer text here";
+        var model_customText = model.get('customText') || "Powered by Appcubator";
         expect(model_customText).toEqual(view_customText);
       });
 
       it('updates the custom text', function() {
-        var old_customText = model.get('customText') || "Add custom footer text here";
+        var old_customText = model.get('customText') || "Powered by Appcubator";
         model.set('customText', "DERPY");
         var view_customText = footer.$('#customText').text();
         expect("DERPY").toEqual(view_customText);
@@ -644,7 +645,7 @@ define([
         var finalLength = after.length;
         expect(finalLength).toEqual(initialLength + 1);
         var lastLink = after.last()[0].children[0];
-        expect(lastLink.innerText).toEqual('DERPTASTIC');
+        expect(lastLink.innerHTML).toEqual('DERPTASTIC');
       });
 
       it('removes links from footer', function() {

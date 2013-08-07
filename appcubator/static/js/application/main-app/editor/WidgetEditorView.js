@@ -27,6 +27,7 @@ function(WidgetContentEditor,
     tagName : 'div',
     css : 'widget-editor',
     location: "bottom",
+    subviews: [],
 
     events : {
       'click .edit-slides-button' : 'openSlideEditor',
@@ -44,22 +45,21 @@ function(WidgetContentEditor,
 
     initialize: function(){
       _.bindAll(this);
-
+      this.subviews = [];
       util.loadCSS(this.css);
-      var self = this;
       this.model = null;
     },
 
     setModel: function(widgetModel) {
       if(this.model) {
-        this.model.unbind('startEditing', this.startedEditing);
-        this.model.unbind('stopEditing', this.stoppedEditing);
+        this.stopListening(this.model, 'startEditing', this.startedEditing);
+        this.stopListening(this.model, 'stopEditing', this.stoppedEditing);
       }
 
       this.model = widgetModel;
 
-      this.model.bind('startEditing', this.startedEditing);
-      this.model.bind('stopEditing', this.stoppedEditing);
+      this.listenTo(this.model, 'startEditing', this.startedEditing);
+      this.listenTo(this.model, 'stopEditing', this.stoppedEditing);
 
       return this;
     },
@@ -75,7 +75,10 @@ function(WidgetContentEditor,
         if(action == "login" || action == "thirdpartylogin") {
           this.widgetClassPickerView = new WidgetClassPickerView(this.model);
           this.layoutEditor = new WidgetLayoutEditor(this.model);
-          this.widgetClassPickerView.bind('change', this.classChanged);
+          this.subviews.push(this.layoutEditor);
+          this.subviews.push(this.widgetClassPickerView);
+
+          this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
           this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
@@ -86,7 +89,10 @@ function(WidgetContentEditor,
         if(action == "authentication" || action == "signup") {
           this.widgetClassPickerView = new WidgetClassPickerView(this.model);
           this.layoutEditor = new WidgetLayoutEditor(this.model);
-          this.widgetClassPickerView.bind('change', this.classChanged);
+          this.subviews.push(this.layoutEditor);
+          this.subviews.push(this.widgetClassPickerView);
+
+          this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
           this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
@@ -103,12 +109,24 @@ function(WidgetContentEditor,
         }
 
         if(action == "show" || action == "loop") {
+          this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+          this.subviews.push(this.widgetClassPickerView);
+
+          this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+
+          this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
           this.el.appendChild(this.renderButtonWithText('query-editor-btn', 'Edit Query'));
+          this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
         }
 
         if(action == "searchlist") {
+          this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+          this.subviews.push(this.widgetClassPickerView);
+          this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+          this.el.appendChild(this.widgetClassPickerView.el);
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
+          this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
         }
 
         if(action == "searchbox") {
@@ -116,14 +134,30 @@ function(WidgetContentEditor,
         }
 
         if(this.model.hasForm() && action != "login" && action != "signup") {
+          this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+          this.layoutEditor = new WidgetLayoutEditor(this.model);
+
+          this.subviews.push(this.widgetClassPickerView);
+          this.subviews.push(this.layoutEditor);
+
+          this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
+          this.el.appendChild(this.layoutEditor.el);
+          this.el.appendChild(this.widgetClassPickerView.el);
+          this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
         }
       }
       else {
         this.widgetClassPickerView = new WidgetClassPickerView(this.model);
         this.layoutEditor = new WidgetLayoutEditor(this.model);
         this.contentEditor = new WidgetContentEditor(this.model);
-        this.widgetClassPickerView.bind('change', this.classChanged);
+
+        this.subviews.push(this.widgetClassPickerView);
+        this.subviews.push(this.layoutEditor);
+        this.subviews.push(this.contentEditor);
+
+        this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
         this.el.appendChild(this.widgetClassPickerView.el);
         this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
@@ -135,13 +169,13 @@ function(WidgetContentEditor,
       this.$el.removeClass('right');
       this.$el.removeClass('bottom');
 
+      var location = this.getLocation();
+      this.location = location;
+
       if(action == "show" || this.model.get('type') == "loop") {
-        var location = this.getLocation();
-        this.location = location;
         this.el.className += ' '+location;
       }
       else {
-        this.location = 'bottom';
         this.$el.removeClass('right');
       }
 
@@ -215,6 +249,8 @@ function(WidgetContentEditor,
       this.listGalleryView.className = 'elements-list';
 
       var galleryView = new RowGalleryView(this.model, this.location);
+      this.subviews.push(galleryView);
+
       this.listGalleryView.appendChild(galleryView.render().el);
       this.el.appendChild(this.listGalleryView);
     },
@@ -254,6 +290,7 @@ function(WidgetContentEditor,
       if(this.contentEditor) this.contentEditor.clear();
       if(this.layoutEditor) this.layoutEditor.clear();
       if(this.infoEditor) this.infoEditor.clear();
+      _(this.subviews).each(function(subview) { subview.close(); });
       this.el.innerHTML = '';
       this.el.style.width = '';
       this.$el.hide();
@@ -271,6 +308,7 @@ function(WidgetContentEditor,
       this.$el.find('.section-edit-row-btn').fadeIn();
       this.$el.find('.section-delete-button').fadeIn();
       this.$el.find('.section-pick-style').fadeIn();
+      this.$el.find('.section-edit-login-form-btn').fadeIn();
     },
 
     hideSubviews: function() {
@@ -278,6 +316,7 @@ function(WidgetContentEditor,
       if(this.contentEditor) this.contentEditor.$el.hide();
       if(this.layoutEditor) this.layoutEditor.$el.hide();
       if(this.infoEditor) this.infoEditor.$el.hide();
+      this.$el.find('.section-edit-login-form-btn').hide();
       this.$el.find('.section-style-editor').hide();
       this.$el.find('.section-form-editor-btn').hide();
       this.$el.find('.section-query-editor-btn').hide();
@@ -290,12 +329,19 @@ function(WidgetContentEditor,
     getLocation: function() {
       var layout = this.model.get('layout');
       var rightCoor = layout.get('left') + layout.get('width');
+
+      if(layout.get('height') < 22) {
+        return "bottom";
+      }
+
       if((12 - rightCoor) < 2) return "left";
       return "right";
     },
 
     clickedDelete: function() {
-      if(this.model) this.model.remove();
+      if(this.model)  {
+        this.model.remove();
+      }
     },
 
     clicked: function(e) {

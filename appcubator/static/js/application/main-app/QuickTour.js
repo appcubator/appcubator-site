@@ -1,5 +1,6 @@
 define([
-	'tourist'
+	'tourist',
+	'util'
 ],
 function() {
 	var steps = [
@@ -107,6 +108,7 @@ function() {
 			at: "right center",
 			nextButton: true,
 			setup: function(tour, options) {
+				util.log_to_server('finished quick tour', {}, appId);
 				return { target: $('.search-bar') };
 			},
 

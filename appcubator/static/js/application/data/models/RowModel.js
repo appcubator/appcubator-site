@@ -49,7 +49,7 @@ define([
 
         if(displayType == "images") {
           layout = {left : 0, top: nmrImageElements*90 + 5, height: 90, width: 90};
-          content_ops.content_src = '{{loop.'+ entity.get('name') +'.'+fieldModel.get('name')+'}}';
+          content_ops.src_content = '{{loop.'+ entity.get('name') +'.'+fieldModel.get('name')+'}}';
           nmrImageElements++;
         }
         else {
@@ -64,6 +64,30 @@ define([
       var rowHeight = Math.ceil(height / 15);
       if(rowHeight < 10) rowHeight = 10;
       this.get('layout').set('height', rowHeight);
+    },
+
+    resizeElements: function(rowWidth) {
+      rowWidth = rowWidth * 80;
+      this.get('uielements').each(function(element) {
+        var width = element.get('layout').get('width');
+        var left = element.get('layout').get('left');
+        if((width + left) <= rowWidth) return;
+        if(width < 50) {
+          if(left >= 0) {
+            left = rowWidth - width;
+            //if(left < 0) return element.remove();
+          }
+          else {
+            return element.remove();
+          }
+        }
+        else {
+          width = rowWidth-left;
+          //if(width < 10) return element.remove();
+        }
+        element.get('layout').set('width', width);
+        element.get('layout').set('left', left);
+      });
     },
 
     toJSON: function() {
