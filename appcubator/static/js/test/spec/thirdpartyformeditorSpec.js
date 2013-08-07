@@ -41,7 +41,7 @@ define([
 
     var AppRouter = {};
     $('.page').fadeOut();
-    AppRouter.tutorialDirectory = [5];
+    AppRouter.tutorialPage = "Editor";
 
     if(AppRouter.view) AppRouter.view.remove();
     var cleanDiv = document.createElement('div');

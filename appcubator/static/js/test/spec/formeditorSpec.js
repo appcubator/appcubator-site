@@ -41,7 +41,7 @@ define([
 
     var AppRouter = {};
     $('.page').fadeOut();
-    AppRouter.tutorialDirectory = [5];
+    AppRouter.tutorialPage = "Editor";
 
     if(AppRouter.view) AppRouter.view.remove();
     var cleanDiv = document.createElement('div');
@@ -431,7 +431,7 @@ define([
       //   var cid = form.get('fields').first().cid;
       //   var nmrOfOptions = $('#field-' + cid).find('select.dropdown').find('option').length;
 
-      //   expect(nmrOfOptions).toEqual(5); 
+      //   expect(nmrOfOptions).toEqual(5);
       // });
 
       // it("image should have a button", function() {
