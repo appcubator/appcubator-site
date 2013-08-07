@@ -29,6 +29,27 @@ h4 {
   margin-top: 22px;
 }
 
+h5 {
+  display: block;
+  font-size: 26px;
+  line-height: 30px;
+  font-family: "proxima-nova";
+  font-weight: lighter;
+  color: #0f3d50;
+  margin-top: 22px;
+  border-bottom: 1px solid #0f3d50;
+}
+
+h6 {
+  font-size: 20px;
+  line-height: 30px;
+  font-family: "proxima-nova";
+  font-weight: lighter;
+  display: block;
+  color: #0f3d50;
+  margin-top: 22px;
+}
+
 body {
   background-color: #eee;
   background-image: url(../img/noisy.png);

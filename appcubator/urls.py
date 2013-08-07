@@ -47,6 +47,7 @@ urlpatterns = patterns('',
 
     url(r'^resources/$',                   base_views.resources),
     url(r'^resources/screencast/(\d+)/$',  base_views.screencast),
+    url(r'^resources/designer-guide/$',    base_views.designer_guide),
 )
 
 urlpatterns += patterns('appcubator.log_views',

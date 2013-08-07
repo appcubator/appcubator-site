@@ -344,3 +344,8 @@ def screencast(request, screencast_id=1):
     page_context = {}
     page_context["title"] = "Screecast " + screencast_id
     return render(request, 'screencast-' + screencast_id + '.html', page_context)
+
+def designer_guide(request):
+    page_context = {}
+    page_context["title"] = "Designer Guide"
+    return render(request, 'designer-guide.html', page_context)
