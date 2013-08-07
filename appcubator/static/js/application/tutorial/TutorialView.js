@@ -2,20 +2,20 @@ define([
   'answer',
   'backbone',
   './TutorialDict',
+  './TutorialTemplates',
   'util'
 ],
 function() {
 
   var TutorialView = Backbone.View.extend({
     tagName: 'div',
-    className: 'tutorial-view',
+    className: 'tutorial-view hide',
     css : "tutorial",
     expanded: false,
 
-    addr : [0],
-
     events : {
       "click #tutorial-menu-list li" : "clickedMenuItem",
+      'scroll #tutorial-menu-list' : 'menuScrolled',
       "submit .tutorial-q-form" : "submittedQuestion",
       "click .answer-slide"     : "showAnswer",
       'click .tutorial-content .prev' : 'prevBtnClicked',
@@ -25,22 +25,23 @@ function() {
       "click .btn-navbar"       : "toggleMenu"
     },
 
-    initialize: function(directory) {
+    initialize: function(options) {
       _.bindAll(this);
-      this.addr = (directory) ? directory : [0];
+      this.titles = _.pluck(TutorialDirectory, 'title');
+      var initial = options.initial || 0;
+      this.addr = this.getIndex(initial);
 
       util.loadCSS(this.css);
       this.render();
-      this.chooseSlide(this.addr, true);
-      this.reader = new answer();
-      this.parseAnswers(TutorialDirectory);
+      this.chooseSlide();
+      /*this.reader = new answer();
+      this.parseAnswers(TutorialDirectory);*/
     },
 
     render : function(img, text) {
       this.renderBg();
       this.renderLeftMenu();
       this.renderMainModal();
-      this.el.style.display = "none";
       document.body.appendChild(this.el);
       this.$el.fadeIn('fast');
       return this;
@@ -67,40 +68,47 @@ function() {
     renderLeftMenu: function() {
       var menuDiv = document.createElement('div');
       menuDiv.className = 'tutorial-menu';
-      menuDiv.innerHTML = '<div class="bottom-arrow"></div>';
-      var menuUl  = document.createElement('ul');
-      menuUl.id = "tutorial-menu-list";
-      $(menuUl).scroll(this.menuScrolled);
+      //menuDiv.appendChild(this.createSearchField());
 
-      var searchLi = document.createElement('div');
-      searchLi.innerHTML = '<form class="tutorial-q-form"><input type="text" class="q-input" placeholder="Type your question..."><input class="btn" type="submit" value="?"></form>';
-      searchLi.className = "search-bar";
-
-      this.appendMenuItem(menuUl, TutorialDirectory);
-
-      //menuDiv.appendChild(searchLi);
-      menuDiv.appendChild(menuUl);
+      var tutorials = _(TutorialDirectory).map(function(t) {
+        return {
+          title: t.title,
+          cls: (t.isSubSection) ? 'submenu' : ''
+        };
+      });
+      var menuHtml = _.template(TutorialTemplates.menuTemp, {tutorials: tutorials});
+      menuDiv.innerHTML += menuHtml;
       this.el.appendChild(menuDiv);
     },
 
-    appendMenuItem: function (node, arr, pInd) {
-      var self =  this;
-      var prefix = "";
-      if(pInd) prefix = pInd + "-";
+    createSearchField: function() {
+      var searchLi = document.createElement('div');
+      searchLi.innerHTML = _.template(TutorialTemplates.searchFieldTemp, {});
+      searchLi.className = "search-bar";
+      return searchLi;
+    },
 
-      _.each(arr, function(item, ind) {
-        var itemNode = document.createElement('li');
-        itemNode.innerText = item.title;
-        itemNode.id = prefix + ind;
-        node.appendChild(itemNode);
-
-        // append subheadings if they exist
-        if(item.contents) {
-          var menuUl = document.createElement('ul');
-          self.appendMenuItem(menuUl, item.contents, ind);
-          node.appendChild(menuUl);
+    /*
+     * Given a section title, return the index in the tutorial directory
+     * If title, is not a string, assume it is already an array index
+     */
+    getIndex: function(title) {
+      if(_.isString(title)) {
+        index = this.titles.indexOf(title);
+        if(index > -1) {
+          return index;
         }
-      });
+        else {
+          return 0;
+        }
+      }
+      else {
+        return title;
+      }
+    },
+
+    getSection: function(title) {
+      return TutorialDirectory[this.getIndex(title)];
     },
 
     parseAnswers: function(dict) {
@@ -113,54 +121,39 @@ function() {
     },
 
     clickedMenuItem: function(e) {
-      var addr = (e.target.id).split('-');
-      addr = _(addr).map(function(ind) {
-        return parseInt(ind, 10);
-      });
-      this.chooseSlide(addr, false);
+      var addr = (e.target.id).replace('tutorial-','');
+      this.chooseSlide(parseInt(addr, 10));
     },
 
-    chooseSlide: function(addr, isNew) {
-      var self = this;
-      this.addr = addr;
+    chooseSlide: function(addr) {
+      if(addr) {
+        this.addr = addr;
+      }
       this.selectMenu();
-
-      // if a slide is already displayed
-      if(!isNew) {
-          var obj = TutorialDirectory[addr[0]];
-          if(addr.length == 2) {
-            obj = obj.contents[addr[1]];
-          }
-          self.showSlide(obj, addr);
-      }
-      //if there is no current slide yet
-      else {
-        var obj = TutorialDirectory[addr[0]];
-        if(addr.length == 2) {
-          obj = obj.contents[addr[1]];
-        }
-        this.showSlide(obj, addr);
-      }
+      this.showSlide(addr);
     },
 
     selectMenu: function (addr) {
-      var addrStr = this.addr.join('-');
+      if(addr) {
+        this.addr = addr;
+      }
       this.$el.find('.selected').removeClass('selected');
-      $('#'+addrStr).addClass('selected');
+      $('#tutorial-'+this.addr).addClass('selected');
     },
 
-    showSlide: function(obj, addr) {
-      var header = '<header><h1>'+ obj.title + '</h1><a class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">'+
-          '<span class="icon-bar"></span>'+
-          '<span class="icon-bar"></span>'+
-          '<span class="icon-bar"></span></a>';
-      header += '<span class="pull-right">';
-      if(addr[0] !== 0) header += '<a class="prev btn" href="#">&laquo; Prev</a>';
-      if(addr[0] !== TutorialDirectory.length - 1) header += '<a class="next btn offset1" href="#">Next &raquo;</a>';
-      header += '</span></header>';
-
-      var content = '<div class="text-cont">' + util.getHTML(obj.view) +'</div>';
-      $('.tutorial-content').html(header + content);
+    showSlide: function(addr) {
+      if(addr) {
+        this.addr = addr;
+      }
+      var obj = this.getSection(this.addr);
+      data = {
+        title: obj.title,
+        content: util.getHTML(obj.view),
+        showPrevBtn: !(addr === 0),
+        showNextBtn: !(addr === TutorialDirectory.length - 1)
+      };
+      contentHTML = _.template(TutorialTemplates.slideTemp, data);
+      $('.tutorial-content').html(contentHTML);
       util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
     },
 
@@ -181,63 +174,6 @@ function() {
 
       $('.tutorial-content').html('');
       $('.tutorial-content').html(title + '<ul class="text-cont">'+resultItems+'</ul>');
-    },
-
-    selectNext: function () {
-      var self = this;
-      var ind1 = this.addr[0];
-      if(this.addr.length == 2) {
-        var ind2 = this.addr[1];
-      }
-      if(self.addr.length == 1) {
-        if(TutorialDirectory[ind1].contents) {
-          self.addr = [ind1, 0];
-        }
-        else if(TutorialDirectory[ind1 + 1]) {
-          self.addr = [ind1+1];
-        }
-      }
-      else {
-        if(TutorialDirectory[ind1].contents[ind2 + 1]) {
-          self.addr = [ind1, ind2+1];
-        }
-        else if(TutorialDirectory[ind1 + 1]) {
-          self.addr = [ind1 + 1];
-        }
-      }
-      if(this.addr.length == 2) {
-        this.chooseSlide(this.addr, false);
-      }
-      else {
-        this.chooseSlide(this.addr, false);
-      }
-    },
-
-    selectPrevious: function () {
-      var self = this;
-      var ind1 = this.addr[0];
-      if(this.addr.length == 2) {
-        var ind2 = this.addr[1];
-      }
-      if(self.addr.length == 1) {
-        if(TutorialDirectory[ind1 - 1]) {
-          self.addr = [ind1-1];
-        }
-      }
-      else {
-        if(TutorialDirectory[ind1].contents[ind2 - 1]) {
-          self.addr = [ind1, ind2-1];
-        }
-        else if(TutorialDirectory[ind1 - 1]) {
-          self.addr = [ind1 - 1];
-        }
-      }
-      if(this.addr.length == 2) {
-        this.chooseSlide(this.addr, false);
-      }
-      else {
-        this.chooseSlide(this.addr, false);
-      }
     },
 
     submittedQuestion: function(e) {
@@ -298,6 +234,7 @@ function() {
         $('.bottom-arrow').fadeIn();
       }
     },
+
     slideDown: function() {
       var self = this;
       this.$el.find('#tutorial-menu-list').animate({
@@ -307,12 +244,12 @@ function() {
 
     prevBtnClicked: function(e) {
       e.preventDefault();
-      this.selectPrevious();
+      this.chooseSlide(this.addr - 1);
     },
 
     nextBtnClicked: function(e) {
       e.preventDefault();
-      this.selectNext();
+      this.chooseSlide(this.addr + 1);
     },
 
     toggleMenu: function() {
