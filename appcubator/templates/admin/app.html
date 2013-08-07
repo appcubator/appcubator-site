@@ -113,6 +113,9 @@
         }
         else {
           $('.deploy.modal .modal-body').text("Data successfully saved!");
+          setTimeout(function() {
+            window.location.reload(true);
+          }, 200);
         }
       },
       error: function(jqXHR) {
