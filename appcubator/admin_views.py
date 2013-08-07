@@ -61,14 +61,14 @@ def admin_customers(request):
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
     page_context = {}
-    page_context["users"] = ExtraUserData.objects.all()
+    page_context["users"] = User.objects.all()
     return render(request, 'admin/users.html', page_context)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_user(request, user_id):
     user_id = long(user_id)
-    user = get_object_or_404(ExtraUserData, id=user_id)
+    user = get_object_or_404(User, id=user_id)
     logs = LogAnything.objects.filter(user_id=user_id)
     apps = App.objects.filter(owner=user_id)
     page_context = {}
@@ -256,7 +256,7 @@ def recent_users(long_ago=timedelta(days=1), limit=10):
         users = users[:limit]
     result = []
     for user_id in users:
-        user = ExtraUserData.objects.get(user__id=long(user_id)).user
+        user = User.objects.get(id=long(user_id))
         num_logs = LogAnything.objects.filter(timestamp__gte=time_ago, user_id=user_id).count()
         fullName = "%s %s" % (user.first_name, user.last_name)
         num_apps = user.apps.count()
@@ -274,7 +274,7 @@ def logs_per_user(limit=10):
                 .values_list('user_id', flat=True).distinct()
     result = []
     for user_id in users:
-        user = ExtraUserData.objects.get(user__id=long(user_id)).user
+        user = User.objects.get(id=long(user_id))
         num_logs = LogAnything.objects.filter(user_id=user_id).count()
         obj = {}
         obj['user_id'] = user_id
