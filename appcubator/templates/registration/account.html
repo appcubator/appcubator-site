@@ -22,26 +22,30 @@
   </div>
   <div class="row hoff1 span48 offset2">
     <div class="span48 pane padding" id="account-info">
-      <form action="/account/" method="POST" class="span22">
-        <h3 class="">Profile Info</h3><br  />
-        <h4 class="">Name</h4><br  />
-        <input type="text" class="span8 hoff1" placeholder="First Name" name="first_name" value="{{ user.first_name }}">
-        <input type="text" class="span8 hoff1" placeholder="Last Name" name="last_name" value="{{ user.last_name }}"><br  />
-        <div class="span8 form-error field-name-first_name"></div>
-        <div class="span8 form-error field-name-last_name"></div><br />
-        <h4 class="">Email</h4><br  />
-        <input type="text" class="span16 hoff1" placeholder="Email" name="email" value="{{ user.email }}"><br  />
-        <div class="span16 form-error field-name-email"></div><br />
-        <input type="submit" class="btn" value="Save Changes">
-      </form>
+      <div class="span22">
+        <h3 class="span20">Profile Info</h3>
+        <form action="/account/" method="POST" class="span22">
+            <h4 class="span20 hoff1">Name</h4>
+            <input type="text" class="span10" placeholder="First Name" name="first_name" value="{{ user.first_name }}">
+            <input type="text" class="span10" placeholder="Last Name" name="last_name" value="{{ user.last_name }}">
+            <div class="span10 form-error field-name-first_name hide"></div>
+            <div class="span10 form-error field-name-last_name hide"></div>
+            <h4 class="span20 hoff1">Email</h4>
+            <input type="text" class="span20" placeholder="Email" name="email" value="{{ user.email }}">
+            <div class="span20 form-error field-name-email hide"></div>
+            <input type="submit" class="btn btn-blue small" value="Save Changes">
+        </form>
+      </div>
       <div class="span20 offset2">
-        <h3 class="">Password</h3><br  />
-        <form action="/account/set_password/" method="POST">
-          <input type="password" class="span16 hoff1" name="password1" placeholder="New Password..."><br />
-          <div class="span16 form-error field-name-password1"></div><br />
-          <input type="password" class="span16" name="password2" placeholder="Confirm Password..."><br />
-          <div class="span16 form-error field-name-password2"></div><br />
-          <input type="submit" class="btn" value="Change Password">
+        <h3 class="">Change Password</h3><br  />
+        <form action="/accounts/password/change/" method="POST" class="no-ajax">
+          {% csrf_token %}
+          <h4 class="span20 hoff1">Old Password</h4>
+          <input type="password" class="span20" name="old_password" id="id_old_password" placeholder="Old Password..."><br />
+          <h4 class="span20 hoff1">New Password</h4>
+          <input type="password" class="span20" name="new_password1" id="id_new_password1" placeholder="New Password..."><br />
+          <input type="password" class="span20" name="new_password2" id="id_new_password2" placeholder="Confirm Password..."><br />
+          <input type="submit" class="btn btn-blue small" value="Save Changes">
         </form>
       </div>
     </div>
@@ -89,22 +93,24 @@
       {% include "payment/_change_card_form.html" %}
       {% include "payment/_cancel_form.html" %}
     </div>
-  </div>
-  <div class="span48 pane hoff4 padding" id="advanced-settings">
-    <h3>Advanced Settings</h3><br  />
-    <small>This section is designated for developers. You generally don't need to edit anything.</small>
-    <h4>SSH Keys</h4>
-    <ul class="hoff2 span42">
-      <li id="add-key-btn">+ Add a new key.</li>
-      <li style="display:none" id='add-key-panel'>
-        <form action="/setpubkey/" method="post">
-          <input type="text" name="title" class="span20" placeholder="Title..."><br  />
-          <textarea name="key" class="span20" placeholder="Key..."></textarea><br  />
-          <input type="submit" class="btn btn-info" value="Add key">
-        </form>
-      </li>
-    </ul>
-  </div>
+
+    <div class="span48 pane hoff4 padding" id="advanced-settings">
+      <h3>Advanced Settings</h3><br  />
+      <small>This section is designated for developers. You generally don't need to edit anything.</small>
+      <h4>SSH Keys</h4>
+      <ul class="hoff2 span42">
+        <li id="add-key-btn">+ Add a new key.</li>
+        <li style="display:none" id='add-key-panel'>
+          <form action="/setpubkey/" method="post">
+            <input type="text" name="title" class="span20" placeholder="Title..."><br  />
+            <textarea name="key" class="span20" placeholder="Key..."></textarea><br  />
+            <input type="submit" class="btn btn-info" value="Add key">
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div><!-- end main content -->
+
   <div class="hi4 hoff4 span4"></div>
 
   </div>

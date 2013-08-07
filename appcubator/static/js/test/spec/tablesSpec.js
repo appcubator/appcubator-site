@@ -42,7 +42,7 @@ define([
     mouseDispatcher  = new MouseDispatcher();
 
     var AppRouter = {};
-    AppRouter.tutorialDirectory = [2];
+    AppRouter.tutorialPage = "Tables";
 
     if(AppRouter.view) AppRouter.view.remove();
     var cleanDiv = document.createElement('div');

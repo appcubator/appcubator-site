@@ -32,7 +32,7 @@ define([
             "app/:appid/*anything/"            : "index"
         },
 
-        tutorialDirectory: [0],
+        tutorialPage: 0,
 
         initialize: function() {
             var self = this;
@@ -59,7 +59,7 @@ define([
         index: function (appId, tutorial) {
             var self = this;
             require(['app/OverviewPageView'], function(OverviewPageView){
-                self.tutorialDirectory = [0];
+                self.tutorialPage = "Introduction";
                 self.changePage(OverviewPageView, tutorial, function() {
                 });
                 olark('api.box.show');
@@ -69,7 +69,7 @@ define([
         info: function(appId, tutorial) {
             var self = this;
             require(['app/AppInfoView'], function(InfoView){
-                self.tutorialDirectory = [7];
+                self.tutorialPage = "Application Settings";
                 self.changePage(InfoView, tutorial, function() {
                     $('.menu-app-info').addClass('active');
                 });
@@ -80,7 +80,7 @@ define([
         tables: function(appId, tutorial) {
             var self = this;
             require(['app/entities/EntitiesView'], function(EntitiesView){
-                self.tutorialDirectory = [1];
+                self.tutorialPage = "Tables Page";
                 self.changePage(EntitiesView, tutorial, function() {
                     self.trigger('entities-loaded');
                     $('.menu-app-entities').addClass('active');
@@ -91,7 +91,7 @@ define([
 
         themes: function(appId, tutorial) {
             var self = this;
-            self.tutorialDirectory = [4];
+            self.tutorialPage = "Themes";
             require(['app/ThemesGalleryView'], function(ThemesGalleryView){
                 self.changePage(ThemesGalleryView, tutorial, function() {
                     self.trigger('themes-loaded');
@@ -103,7 +103,7 @@ define([
 
         pages: function(appId, tutorial) {
             var self = this;
-            self.tutorialDirectory = [2];
+            self.tutorialPage = "Pages";
             require(['app/pages/PagesView'], function(PagesView){
                 $('.page').fadeIn();
                 self.changePage(PagesView, tutorial, function() {
@@ -116,9 +116,9 @@ define([
 
         editor: function(appId, pageId) {
             var self = this;
-            self.tutorialDirectory = [3];
 
-            console.log("EDITOOOOR");
+            self.tutorialPage = "Editor";
+
             require(['editor/EditorView'], function(EditorView){
                 $('.page').fadeOut();
                 if(v1.view) v1.view.close();
@@ -139,7 +139,7 @@ define([
         mobileEditor: function(appId, pageId) {
             var self = this;
             $('.page').fadeOut();
-            self.tutorialDirectory = [3];
+            self.tutorialPage = "Editor";
             require(['m-editor/MobileEditorView'], function(MobileEditorView){
                 if(v1.view) v1.view.close();
                 var cleanDiv = document.createElement('div');
@@ -156,7 +156,7 @@ define([
 
         emails: function(appId, tutorial) {
             var self = this;
-            self.tutorialDirectory = [6];
+            self.tutorialPage = "Emails";
             this.changePage(EmailsView, tutorial, function() {
                 $('.menu-app-emails').addClass('active');
             });
@@ -313,12 +313,12 @@ define([
         },
 
         showTutorial: function(dir) {
-            var inp = (dir) ? [dir] : this.tutorialDirectory;
+            var inp = (dir) ? dir : this.tutorialPage;
             if(this.tutorialIsVisible) {
-                this.tutorial.chooseSlide(inp, false);
+                this.tutorial.chooseSlide(inp);
             }
             else {
-                this.tutorial = new TutorialView(inp);
+                this.tutorial = new TutorialView({initial: inp});
                 this.tutorialIsVisible = true;
             }
         },
