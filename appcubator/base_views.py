@@ -9,7 +9,7 @@ from django import forms
 from django.utils import simplejson
 from copy import deepcopy
 
-from models import Customer, InvitationKeys, AnalyticsStore, App
+from models import Customer, InvitationKeys, AnalyticsStore, App, PubKey
 from appcubator.email.sendgrid_email import send_email, send_template_email
 
 import requests
@@ -150,6 +150,35 @@ def account(request):
         else:
             user.save()
             return HttpResponse(simplejson.dumps({"redirect_to": "/account/"}), mimetype="application/json")
+
+
+@login_required
+@require_POST
+def setpubkey(request):
+    try:
+        name = request.POST['title']
+        key = request.POST['key']
+    except KeyError:
+        return HttpResponse("", status=400)
+
+    # find and update, or create
+    try:
+        pubkey = request.user.pubkeys.get(name=name)
+    except PubKey.DoesNotExist:
+        pubkey = PubKey(name=name, pubkey=key, user=request.user)
+    else:
+        pubkey.name = name
+        pubkey.key = key
+
+    #validate
+    try:
+        pubkey.full_clean()
+    except ValidationError, e:
+        return HttpResponse(simplejson.dumps(e.message_dict), mimetype="application/json")
+
+    pubkey.save()
+    PubKey.sync_pubkeys_of_user(request.user)
+    return HttpResponse("ok")
 
 
 @login_required

@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^termsofservice/$',           base_views.terms_of_service),
     url(r'^faq/$',                      base_views.faq),
     url(r'^account/$',                  base_views.account),
+    url(r'^setpubkey/$',                base_views.setpubkey),
     url(r'^ping/$',                     base_views.ping),
     url(r'^whatisthis/$',               base_views.marketing),
 
