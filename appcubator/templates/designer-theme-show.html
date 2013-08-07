@@ -106,11 +106,11 @@ var themeId = null;
 var appId = null;
 
 {% if themeId %}
-var url = '/theme/'+themeId;
 var themeId = {{ themeId }};
+var url = '/theme/'+themeId;
 {% elif appId%}
-var url = '/app/' + appId;
 var appId = {{ appId }};
+var url = '/app/' + appId;
 {% endif %}
 
 var statics = {{ statics|safe }};
