@@ -8,10 +8,10 @@
     <section id="info" class="span2">
       <h3>Info</h3>
         <p><strong>ID</strong> {{ user.pk }}</p>
-        <p><strong>Name</strong> {{ user.user.first_name }} {{ user.user.last_name }}</p>
-        <p><strong>Email</strong> {{ user.user.email }}</p>
+        <p><strong>Name</strong> {{ user.first_name }} {{ user.last_name }}</p>
+        <p><strong>Email</strong> {{ user.email }}</p>
         <p><strong>Number of Apps</strong> {{ apps|length }}</p>
-        <p><strong>Noob?</strong> {{ user.noob }}</p>
+        <p><strong>Noob?</strong> {{ user.extradata.noob }}</p>
     </section>
 
     <div id="user-logs-graph" class="span10">
