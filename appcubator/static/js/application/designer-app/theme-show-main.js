@@ -24,6 +24,9 @@ require.config({
   },
 
   shim: {
+    "util.filepicker": {
+      deps: ['util']
+    },
     "jquery-ui": {
       exports: "$",
       deps: ['jquery']

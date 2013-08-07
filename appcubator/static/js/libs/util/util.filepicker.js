@@ -1,4 +1,6 @@
-define(['https://api.filepicker.io/v1/filepicker.js'],
+define([
+  'https://api.filepicker.io/v1/filepicker.js'
+],
   function() {
 
     util.filepicker = {
