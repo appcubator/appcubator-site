@@ -90,9 +90,7 @@ function(WidgetModel) {
     },
 
     showVertical: function(coor) {
-      console.log(coor);
       coor = Math.round(coor *10)/10;
-      console.log(coor);
       if(this.verticalLinesDict[coor]) {
         $(this.verticalLinesDict[coor]).addClass('show');
       }

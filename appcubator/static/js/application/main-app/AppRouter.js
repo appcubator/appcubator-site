@@ -36,7 +36,7 @@ define([
 
         initialize: function() {
             var self = this;
-            AppRouter.view = null;
+            v1.view = null;
             _.bindAll(this);
             $('#save').on('click', this.save);
             $('#tutorial').on('click', function(e) {
@@ -48,12 +48,12 @@ define([
                     new InvitationsView();
                 });
                 e.preventDefault();
-            })
+            });
 
-      keyDispatcher.bindComb('meta+s', this.save);
-      keyDispatcher.bindComb('ctrl+s', this.save);
+            keyDispatcher.bindComb('meta+s', this.save);
+            keyDispatcher.bindComb('ctrl+s', this.save);
 
-      var autoSave = setInterval(this.save, 30000);
+            var autoSave = setInterval(this.save, 30000);
         },
 
         index: function (appId, tutorial) {
@@ -116,21 +116,23 @@ define([
 
         editor: function(appId, pageId) {
             var self = this;
+
             self.tutorialPage = "Editor";
+
             require(['editor/EditorView'], function(EditorView){
                 $('.page').fadeOut();
-                if(AppRouter.view) AppRouter.view.close();
+                if(v1.view) v1.view.close();
                 var cleanDiv = document.createElement('div');
                 cleanDiv.className = "clean-div editor-page";
                 $(document.body).append(cleanDiv);
 
-                AppRouter.view  = new EditorView({pageId: pageId});
-                AppRouter.view.setElement(cleanDiv).render();
+                v1.view  = new EditorView({pageId: pageId});
+                v1.view.setElement(cleanDiv).render();
 
                 self.trigger('editor-loaded');
 
                 olark('api.box.hide');
-                self.changeTitle(AppRouter.view.title);
+                self.changeTitle(v1.view.title);
             });
         },
 
@@ -139,16 +141,16 @@ define([
             $('.page').fadeOut();
             self.tutorialPage = "Editor";
             require(['m-editor/MobileEditorView'], function(MobileEditorView){
-                if(AppRouter.view) AppRouter.view.close();
+                if(v1.view) v1.view.close();
                 var cleanDiv = document.createElement('div');
                 cleanDiv.className = "clean-div editor-page";
                 $(document.body).append(cleanDiv);
 
-                AppRouter.view  = new MobileEditorView({pageId: pageId});
-                AppRouter.view.setElement(cleanDiv).render();
+                v1.view  = new MobileEditorView({pageId: pageId});
+                v1.view.setElement(cleanDiv).render();
 
                 olark('api.box.hide');
-                self.changeTitle(AppRouter.view.title);
+                self.changeTitle(v1.view.title);
             });
         },
 
@@ -161,16 +163,16 @@ define([
         },
 
         changePage: function(newView, tutorial, post_render) {
-            if(AppRouter.view) AppRouter.view.close();
+            if(v1.view) v1.view.close();
             var cleanDiv = document.createElement('div');
             cleanDiv.className = "clean-div";
             var mainContainer = document.getElementById('main-container');
             mainContainer.appendChild(cleanDiv);
 
-            AppRouter.view = new newView();
-            AppRouter.view.setElement(cleanDiv).render();
+            v1.view = new newView();
+            v1.view.setElement(cleanDiv).render();
             $('.active').removeClass('active');
-            this.changeTitle(AppRouter.view.title);
+            this.changeTitle(v1.view.title);
             $("html, body").animate({ scrollTop: 0 });
             $('.page').fadeIn();
             $('.pull-right.dropd').removeClass('open');
