@@ -5,7 +5,7 @@ function(){
 
   var UIElementEditingView = Backbone.View.extend({
     tagName : 'div',
-    className : 'element-view',
+    className : 'element-view hoff2',
     width: 660,
     padding: 0,
 
@@ -34,18 +34,17 @@ function(){
     setUpAce: function () {
       this.styleEditor = ace.edit("style-" + this.model.cid);
       this.styleEditor.getSession().setMode("ace/mode/css");
-      this.styleEditor.setValue(this.model.get('style'));
-
+      this.styleEditor.setValue(this.model.get('style'), -1);
       this.styleEditor.getSession().on('change', this.styleChanged);
 
       this.hoverStyleEditor = ace.edit("hover-style-" + this.model.cid);
       this.hoverStyleEditor.getSession().setMode("ace/mode/css");
-      this.hoverStyleEditor.setValue(this.model.get('hoverStyle'));
+      this.hoverStyleEditor.setValue(this.model.get('hoverStyle'), -1);
       this.hoverStyleEditor.getSession().on('change', this.hoverStyleChanged);
 
       this.activeStyleEditor = ace.edit("active-style-" + this.model.cid);
       this.activeStyleEditor.getSession().setMode("ace/mode/css");
-      this.activeStyleEditor.setValue(this.model.get('activeStyle'));
+      this.activeStyleEditor.setValue(this.model.get('activeStyle'), -1);
       this.activeStyleEditor.getSession().on('change', this.activeStyleChanged);
 
     },

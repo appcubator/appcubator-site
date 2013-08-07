@@ -7,6 +7,7 @@ require.config({
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "util" : "../../libs/util/util",
+    "util.filepicker" : "../../libs/util/util.filepicker",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "designer-app" : "./",
     "editor" : "../main-app/editor",
@@ -58,7 +59,42 @@ require([
   "ace"
 ],
 function(ThemeEditView, ThemeModel, KeyDispatcher) {
+  
   keyDispatcher  = new KeyDispatcher();
   var themeModel = new ThemeModel(themeState);
   var galleryView = new ThemeEditView(themeModel);
+  keyDispatcher.bindComb('meta+s', galleryView.save);
+  keyDispatcher.bindComb('ctrl+s', galleryView.save);
+
+  var WebsiteRouter = Backbone.Router.extend({
+
+    routes: {
+      "app/:appid/edit_theme/:page_name/"   : "showElement"
+    },
+
+    initialize: function() {
+      _.bindAll(this);
+      document.addEventListener("touchstart", function(){}, true);
+      console.log("INITTT");
+    },
+
+    showElement: function(appId, elementName) {
+      console.log(elementName);
+      galleryView.showElement(elementName);
+    }
+  });
+
+  var WebsiteApp = new WebsiteRouter();
+  Backbone.history.start({pushState: true});
+
+  $(document).on('click', 'a[rel!="external"]', function(e) {
+      var href = e.currentTarget.getAttribute('href') || "";
+      // if internal link, navigate with router
+      console.log("yolo [ush" + href);
+      if(href.indexOf('/app/'+appId+'/') === 0) {
+        WebsiteApp.navigate(href, {trigger: true});
+        return false;
+      }
+  });
+
 });

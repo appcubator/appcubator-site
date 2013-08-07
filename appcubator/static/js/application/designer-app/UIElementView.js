@@ -5,11 +5,11 @@ function(UIElementEditingView) {
 
   var UIElementView = Backbone.View.extend({
     el: null,
-    className: 'widgetWrapper pane-inline  border hi12 span44 hoff1',
+    className: 'widgetWrapper pane-inline border hi15 span44 hoff2',
     isExpanded: false,
 
     events : {
-      'click .upper-area' : 'toggleElement',
+      'click'             : 'toggleElement',
       'click .remove'     : 'removeUIE',
       'keyup .class_name' : 'classNameChaged'
     },
@@ -27,17 +27,17 @@ function(UIElementEditingView) {
       this.el.id = 'elem-' + this.model.cid;
 
       var upperDiv = document.createElement('div');
-      upperDiv.className = "upper-area";
+      upperDiv.className = "upper-area row";
       var class_name = this.model.get('class_name');
       upperDiv.innerHTML =[
-        '<div class="class-menu">',
-          '<input type="text" name="className" class="class_name" value="'+class_name+'" placeholder="className...">',
-          '<div class="btn btn-info">Expand Edit Panel</div>',
-          '<div class="btn btn-delete remove">Remove Element</div>',
+        '<div class="class-menu span41 hoff1">',
+          '<span class="offset1">Class Name:</span><input type="text" name="className" class="class_name span16" value="'+class_name+'" placeholder="className...">',
+          '<div class="span12 right edit-text">Click to expand edit panel.</div>',
+          '<span class="remove-relation remove">×</span>',
         '</div>'].join('\n');
 
       this.tempNodeDiv = document.createElement('div');
-      this.tempNodeDiv.className = "temp-node-area";
+      this.tempNodeDiv.className = "temp-node-area offset1 span40 hoff1";
       this.tempNodeDiv.innerHTML = _.template(ThemeTemplates.tempNode, {info: this.model.attributes});
 
       upperDiv.appendChild(this.tempNodeDiv);
@@ -51,26 +51,26 @@ function(UIElementEditingView) {
 
     reRenderStyleTags: function(e) {
       var styleTag = document.getElementById(this.model.cid + '-' + 'style');
-      styleTag.innerHTML = '.' +this.model.get('class_name') + '{' + this.model.get('style')  + '}';
+      styleTag.innerHTML = '#' +this.model.get('class_name') + '{' + this.model.get('style')  + '}';
       var hoverTag = document.getElementById(this.model.cid + '-' + 'hover-style');
-      hoverTag.innerHTML = '.' +this.model.get('class_name') + ':hover {' + this.model.get('hoverStyle')  + '}';
+      hoverTag.innerHTML = '#' +this.model.get('class_name') + ':hover {' + this.model.get('hoverStyle')  + '}';
       var activeTag = document.getElementById(this.model.cid + '-' + 'active-style');
-      activeTag.innerHTML = '.' +this.model.get('class_name') + ':active {' + this.model.get('activeStyle')  + '}';
+      activeTag.innerHTML = '#' +this.model.get('class_name') + ':active {' + this.model.get('activeStyle')  + '}';
     },
 
     renderStyle: function() {
 
       var styleTag = document.createElement('style');
       styleTag.id = this.model.cid + '-' + 'style';
-      styleTag.innerHTML = '.' +this.model.get('class_name') + '{' + this.model.get('style') + '}';
+      styleTag.innerHTML = '#' +this.model.get('class_name') + '{' + this.model.get('style') + '}';
 
       var hoverStyleTag = document.createElement('style');
       hoverStyleTag.id = this.model.cid + '-' + 'hover-style';
-      hoverStyleTag.innerHTML = '.' +this.model.get('class_name') + ':hover {' + this.model.get('hoverStyle') + '}';
+      hoverStyleTag.innerHTML = '#' +this.model.get('class_name') + ':hover {' + this.model.get('hoverStyle') + '}';
 
       var activeStyleTag = document.createElement('style');
       activeStyleTag.id = this.model.cid + '-' + 'active-style';
-      activeStyleTag.innerHTML = '.' +this.model.get('class_name') + ':active {' + this.model.get('activeStyle') + '}';
+      activeStyleTag.innerHTML = '#' +this.model.get('class_name') + ':active {' + this.model.get('activeStyle') + '}';
 
       document.head.appendChild(styleTag);
       document.head.appendChild(hoverStyleTag);
@@ -89,10 +89,21 @@ function(UIElementEditingView) {
 
     },
 
-    toggleElement: function () {
-      console.log('toggle');
-      if(!this.isExpanded) this.expandElement();
-      else this.shrinkElement();
+    toggleElement: function (e) {
+
+      if(e.target.tagName == "INPUT") return;
+      if(e.target.className.indexOf('ace_') === 0) return;
+      console.log(e.target);
+
+      var btn = this.$el.find('.edit-text').first();
+      if(!this.isExpanded) {
+        this.expandElement();
+        btn.html('Close Edit Panel');
+      }
+      else {
+        this.shrinkElement();
+        btn.html('Expand Edit Panel');
+      }
     },
 
     expandElement: function () {
@@ -107,7 +118,7 @@ function(UIElementEditingView) {
     shrinkElement: function () {
       this.expandedView.close();
       this.isExpanded = false;
-      this.el.style.height = '180px';
+      this.el.style.height = '225px';
     },
 
     classNameChaged: function(e) {
