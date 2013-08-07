@@ -212,6 +212,9 @@ define([
       nextButton: true,
       url: '/editor/0/',
       setup: function(tour, options) {
+        console.log(v1);
+        console.log(v1.view);
+        v1.view.galleryEditor.expandAllSections();
         $('#item-gallery').animate({
           scrollTop: $("#entity-user-facebook").offset().top - 110
         }, 200);
