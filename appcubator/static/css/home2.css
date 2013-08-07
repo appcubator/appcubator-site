@@ -1464,3 +1464,37 @@ li .summary h3 {
 .sign-up-form label {
   display: inline-block;
 }
+
+.slide-documentation {
+
+}
+
+.slide-documentation h4 {
+  margin-bottom: 24px;
+}
+.slide-documentation h5 {
+  margin-bottom: 16px;
+}
+.slide-documentation h6 {
+  font-weight: bold;
+  margin-bottom: 14px;
+  margin-top: 16px;
+}
+
+.slide-documentation p.image {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.slide-documentation p.example {
+  margin-left: 32px;
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+
+.slide-documentation p.image img {
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  padding:16px;
+}
