@@ -8,8 +8,21 @@
   <meta name="author" content="">
   <link href="{{ STATIC_URL }}css/reset.css" id="css-reset" rel="stylesheet">
   <link href="{{ STATIC_URL }}css/bootstrap-website.css" rel="stylesheet">
-  <link type="text/css" href="{{ STATIC_URL }}css/tutorial-page.css" id="css-racoon" rel="stylesheet"/>
   <link type="text/css" href="{{ STATIC_URL }}css/prettyCheckable.css" id="css-prettycheckable" rel="stylesheet"/>
+  {% if DEBUG %}
+  <link rel="stylesheet/less" href="{{ STATIC_URL }}css/documentation.less" id="css-racoon">
+  <script>
+  less = {
+    env: 'development',
+    relativeUrls: true,
+    dumpLineNumbers: 'mediaQuery'
+  };
+  </script>
+  <script src="{{ STATIC_URL }}js/libs/less.min.js" type="text/javascript"></script>
+  {% else %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/documentation.css" id="css-racoon">
+  {% endif %}
+
   <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -29,20 +42,39 @@
         </div>
         <div class="logo-text">Appcubator</div>
         <div class="banner offsetr1 pull-right">Documentation</div>
-
       </div>
       <div class="racoon hoff1">
         {% autoescape off %}
-          {{ content }}
+          {% if content %}
+            {{ content }}
+          {% elif results and results|length > 0%}
+            {% for page in results %}
+              <div class="results-section">
+                <h3>
+                  <a href="/documentation/{{ page.filename }}/">{{ page.title }}</a>
+                </h3>
+                <p>{{ page.content }}</p>
+              </div>
+            {% endfor %}
+          {% else %}
+            <h2>No Results</h2>
+          {% endif %}
         {% endautoescape %}
       </div>
-      <div class="left-arrow">Previous Page</div>
-      <div class="right-arrow">Next Page</div>
+      {% if content %}
+      <div class="prev arrow">Previous Page</div>
+      <div class="next arrow">Next Page</div>
+      {% endif %}
     </div>
 
-        <!-- Left Menu -->
+    <!-- Left Menu -->
     <ul class="menu-list">
       <span class="title">Documentation</span>
+      <form action="/documentation/search/" method="GET" class="row">
+        <input class="search hoff1 span10" name="q" type="text" placeholder="Search...">
+        <img src="{{ STATIC_URL }}img/search-icon.png">
+        <button type="submit" class="hide" value="Search"></button>
+      </form>
      {% include "documentation/html/menu.html" %}
     </ul>
   </div>

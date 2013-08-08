@@ -47,6 +47,7 @@ urlpatterns = patterns('',
 
     url(r'^resources/$',                   base_views.resources),
     url(r'^resources/screencast/(\d+)/$',  base_views.screencast),
+    url(r'^resources/designer-guide/$',    base_views.designer_guide),
 )
 
 urlpatterns += patterns('appcubator.log_views',
@@ -65,7 +66,7 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/new/walkthrough/indepth/$', 'app_new_walkthrough', {"walkthrough": 'walkthrough'}),
     url(r'^app/(\d+)/racoon/$', 'app_new_racoon'),
     url(r'^app/(\d+)/delete/$', 'app_delete'),
-    url(r'^app/(\d+)/edit_theme/$', 'app_edit_theme'),
+    url(r'^app/(\d+)/edit_theme/', 'app_edit_theme'),
 
     # analytics
     url(r'^app/(\d+)/analytics/$', 'get_analytics'),
@@ -107,6 +108,7 @@ urlpatterns += patterns('appcubator.views',
 
     url(r'^feedback/$', 'documentation_page', {"page_name": "feedback"}),
     url(r'^documentation/$', 'documentation_page', {"page_name": "intro"}),
+    url(r'^documentation/search/', 'documentation_search'),
     url(r'^documentation/([^/]+)/$', 'documentation_page'),
 
     # the rest
@@ -136,7 +138,6 @@ urlpatterns += patterns('appcubator.theme_views',
     url(r'^designer/$', 'designer_page'),
     url(r'^theme/new/web/$', 'theme_new_web'),
     url(r'^theme/new/mobile/$', 'theme_new_mobile'),
-    url(r'^theme/(\d+)/$', 'theme_show'),
     url(r'^theme/(\d+)/info/$', 'theme_info'),
     url(r'^theme/(\d+)/settings/$', 'theme_settings'),
     url(r'^theme/(\d+)/edit/$', 'theme_edit'),
@@ -144,7 +145,12 @@ urlpatterns += patterns('appcubator.theme_views',
     url(r'^theme/(\d+)/clone/$', 'theme_clone'),
     url(r'^theme/(\d+)/delete/$', 'theme_delete'),
     url(r'^theme/(\d+)/editor/(\d+)$', 'theme_page_editor'),
-    url(r'^theme/(\d+)/static/$', 'themestaticfiles'), # a GET returns the apps statics, a POST creates a static file entry.
+    # GET returns the apps statics, POST creates a new static file entry,
+    # DELETE delete a static file
+    url(r'^theme/(\d+)/static/(\d+)$', 'deletethemestaticfile'),
+    url(r'^theme/(\d+)/static/$', 'themestaticfiles'),
+
+    url(r'^theme/(\d+)/', 'theme_show'),
 )
 
 urlpatterns += patterns('appcubator.test_views',

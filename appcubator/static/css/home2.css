@@ -29,6 +29,27 @@ h4 {
   margin-top: 22px;
 }
 
+h5 {
+  display: block;
+  font-size: 26px;
+  line-height: 30px;
+  font-family: "proxima-nova";
+  font-weight: lighter;
+  color: #0f3d50;
+  margin-top: 22px;
+  border-bottom: 1px solid #0f3d50;
+}
+
+h6 {
+  font-size: 20px;
+  line-height: 30px;
+  font-family: "proxima-nova";
+  font-weight: lighter;
+  display: block;
+  color: #0f3d50;
+  margin-top: 22px;
+}
+
 body {
   background-color: #eee;
   background-image: url(../img/noisy.png);
@@ -1442,4 +1463,38 @@ li .summary h3 {
 
 .sign-up-form label {
   display: inline-block;
+}
+
+.slide-documentation {
+
+}
+
+.slide-documentation h4 {
+  margin-bottom: 24px;
+}
+.slide-documentation h5 {
+  margin-bottom: 16px;
+}
+.slide-documentation h6 {
+  font-weight: bold;
+  margin-bottom: 14px;
+  margin-top: 16px;
+}
+
+.slide-documentation p.image {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.slide-documentation p.example {
+  margin-left: 32px;
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+
+.slide-documentation p.image img {
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  padding:16px;
 }

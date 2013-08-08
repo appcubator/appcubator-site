@@ -205,17 +205,34 @@
       border-top: 1px solid #fefefe;
       background-color: #f3f3f3;
 
-      &:hover {
+      &:hover, &.submenu:hover {
         background-color: #ededed;
       }
 
-      &.selected {
+      &.selected, &.submenu.selected {
         background-color: #fff;
+      }
+
+      &:not(.submenu) + &.submenu {
+        border-bottom: 1px solid #ccc;
+      }
+
+      &.submenu {
+        padding-left: 32px;
+        font-weight: normal;
+        font-size: 12px;
+        border-top: none;
+        border-bottom: none;
+        background-color: #f9f9f9;
+      }
+
+      &.submenu + &:not(.submenu) {
+        border-top: 1px solid #fefefe;
       }
     }
 
     // .tutorial-menu ul ul
-    ul {
+    /*ul {
       height: auto;
       border-bottom: 1px solid #ccc;
       border-top: 1px solid #fefefe;
@@ -230,7 +247,7 @@
         border-top: none;
         background-color: #f9f9f9;
       }
-    }
+    }*/
   } // end .tutorial-menu ul
 
 

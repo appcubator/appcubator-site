@@ -1,4 +1,6 @@
-define(['https://api.filepicker.io/v1/filepicker.js'],
+define([
+  'https://api.filepicker.io/v1/filepicker.js'
+],
   function() {
 
     util.filepicker = {
@@ -37,27 +39,40 @@ define(['https://api.filepicker.io/v1/filepicker.js'],
           mimetypes: ['image/*'],
           container: 'modal',
           services:['COMPUTER', 'GMAIL', 'DROPBOX', 'INSTAGRAM', 'IMAGE_SEARCH', 'URL', 'FACEBOOK']
-        },
-        function(FPFiles){
-          for (var i = 0; i < FPFiles.length; i++) {
-            var f = FPFiles[i];
+        }, function(FPFiles){
+          var createNewStatic = function(f, isLastFile, cb) {
             /* f has the following properties:
             url, filename, mimetype, size, isWriteable */
-            $.post('/theme/'+ themeId +'/static/',{
-              name: f.filename,
-              url:  f.url,
-              type: f.mimetype,
+            $.ajax({
+              type: 'POST',
+              url: '/theme/'+ themeId +'/static/',
+              data: {
+                name: f.filename,
+                url:  f.url,
+                type: f.mimetype,
+              },
               error: function(d) {
-                //alert("Something went wrong with the file upload! Data: "+f);
+                alert("Something went wrong with the file upload! Data: "+d);
+              },
+              success: function(data) {
+                if(data.id) {
+                  f.id = data.id;
+                }
+                if (isLastFile) {
+                  cb();
+                }
               }
             });
+          };
+          var numFiles = FPFiles.length
+          for (var i = 0; i < numFiles; i++) {
+            createNewStatic(FPFiles[i], (i === numFiles-1), function() {
+              callback(FPFiles, success);
+            });
           }
-          callback(FPFiles, success);
-        },
-        function(FPError){
+        }, function(FPError){
           console.log(FPError.toString());
-        }
-        );
+        });
       }
     };
 

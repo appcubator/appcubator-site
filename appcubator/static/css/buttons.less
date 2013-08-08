@@ -420,40 +420,64 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
   cursor: pointer;
   vertical-align: top;
   margin-left: 4px;
-}
 
-.small.done-btn {
-  font-size: 10px;
-  background-color: #036a6e;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  line-height: 10px;
-  height: 20px;
-  text-align: center;
-  padding: 5px;
-  padding-left: 12px;
-  padding-right: 12px;
-  cursor: pointer;
-  margin-top: 6px;
-  vertical-align: top;
+  &.small {
+    font-size: 10px;
+    background-color: #036a6e;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    line-height: 10px;
+    height: 20px;
+    text-align: center;
+    padding: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+    cursor: pointer;
+    margin-top: 6px;
+    vertical-align: top;
+  }
 }
 
 .btn-blue {
   display: inline-block;
   background-color: #0f2d40;
   border-radius: 6px;
-  color: #fff;
+  color: #fff !important;
   font-size: 14px;
   padding: 14px 20px;
   font-family: 'verb_regularregular';
   background-image: none !important;
   text-shadow: none;
   line-height: 18px;
+
+  &:hover {
+    background-color: #0f1d30;
+  }
+
+  &.small {
+    height: 20px;
+    line-height: 0;
+  }
 }
 
-.btn-blue:hover {
-  background-color: #0f1d30;
+.remove-relation {
+  position: absolute;
+  display: none;
+  top: 7px;
+  right: 7px;
+  border-radius: 50%;
+  padding: 0px 6px;
+  font-size: 16px;
+  height: 28px;
+  width: 28px;
+  line-height: 28px;
+  text-align: center;
   color: #fff;
+  background-color: #aaa;
+
+  &:hover {
+    background-color: #c95446;
+  }
 }
 

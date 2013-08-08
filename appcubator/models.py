@@ -308,17 +308,24 @@ class App(models.Model):
         }
         return post_data
 
-    def _transport_app(self, appdir, retry_on_404=True):
+    def _write_tar_from_app_dir(self, appdir):
+        """
+        Given the directory of the app, tar it up and return the path to the tar.
+        """
         contents = os.listdir(appdir)
         # tar it up
         t = tarfile.open(os.path.join(appdir, 'payload.tar'), 'w')
-        try:
-            for fname in contents:
-                t.add(os.path.join(appdir, fname), arcname=fname)
-            t.close()
-            f = open(os.path.join(appdir, 'payload.tar'), "r")
+        for fname in contents:
+            t.add(os.path.join(appdir, fname), arcname=fname)
+        t.close()
+        return os.path.join(appdir, 'payload.tar')
 
-            # send the whole shibam to deployment server
+    def _transport_app(self, appdir, retry_on_404=True):
+        # tar it up
+        tar_path = self._write_tar_from_app_dir(appdir)
+        f = open(tar_path, "r")
+        try:
+            # catapult the tar over to the deployment server
             files = {'file':f}
             post_data = self.get_deploy_data()
             if self.deployment_id is None:
@@ -352,6 +359,30 @@ class App(models.Model):
 
             return result
 
+        elif r.status_code == 400:
+            try: # make sure we know this is the "subdomain is taken error"
+                for e_str in r.json()['errors']['subdomain']:
+                    if 'taken' not in e_str:
+                        raise Exception(r.text)
+            except KeyError: # otherwise, let it be known that this error is unknown.
+                raise Exception(r.text)
+
+
+            def increment(s):
+                last_char = s[-1]
+                if last_char in "123456780":
+                    last_char = str(int(last_char) + 1)
+                    s = s[:-1] + last_char
+                else:
+                    s = s + '2'
+                return s
+
+            old_subdomain = self.subdomain
+            self.subdomain = increment(old_subdomain)
+            logger.info("Subdomain %r was taken, so we changed to %r and we're trying again." % (old_subdomain, self.subdomain))
+            self.save()
+            return self.deploy(retry_on_404=retry_on_404)
+
         elif r.status_code == 404:
             assert retry_on_404
             logger.warn("The deployment was not found, so I'm setting deployment id to None")
@@ -360,7 +391,7 @@ class App(models.Model):
             return self._transport_app(appdir, retry_on_404=False)
 
         else:
-          return {'errors': r.content}
+            raise Exception("Deployment server error: %r" % r.text)
 
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()

@@ -25,6 +25,11 @@ from payments.views import subscribe
 import requests
 import traceback
 import datetime
+import os
+import string
+import nltk
+import json
+import re
 from datetime import datetime
 
 
@@ -328,6 +333,47 @@ def documentation_page(request, page_name):
         'page_name': page_name
     }
     return render(request, 'documentation/documentation-base.html', data)
+
+def documentation_search(request):
+    query = request.GET['q']
+    if query is None or query is "":
+        return redirect(documentation_page)
+    query = query.replace(' ',"|")
+    query_regex = re.compile('%s'%query)
+    search_dir = settings.DOCUMENTATION_SEARCH_DIR
+    # read ALL the documentation texts
+    # TODO: do this ONCE, maybe on server startup
+    results = []
+    for docfile in os.listdir(search_dir):
+        count = 0
+        dir_path = os.path.join(search_dir, docfile)
+        with open(dir_path, 'r') as curr_file:
+            raw_text = curr_file.read()
+            raw_text_clean = nltk.clean_html(raw_text)
+            # title is the first <h2></h2> header
+            raw_text_linebreaks = raw_text_clean.split('\n')
+            title = raw_text_linebreaks[0]
+            # content is everything after the first <h2></h2> header
+            # excerpt first 140 characters only yo
+            len_title = len(raw_text_linebreaks[0])
+            excerpt = "%s..." % raw_text_clean[len_title:140]
+            # TODO: I don't think this is being applied, but it works without it
+            # possible optimization for later
+            raw_text = re.sub(r"^[#,-[]!:()]$", "", raw_text_clean)
+            tokens = nltk.word_tokenize(raw_text)
+            # search ALL the file's tokens
+            for t in tokens:
+                if(re.match(query_regex, t)):
+                    count += 1
+        if count > 0:
+            d = {}
+            d['filename'] = docfile.replace('.html','')
+            d['title'] = title
+            d['content'] = excerpt
+            d['count'] = count
+            results.append(d)
+    results.sort(key=lambda r: r['count'], reverse=True)
+    return render(request, 'documentation/documentation-base.html', {'results': results})
 
 @login_required
 def uie_state(request, app_id):

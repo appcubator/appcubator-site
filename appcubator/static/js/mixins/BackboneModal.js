@@ -72,7 +72,6 @@ function(Backbone) {
         div.style.minHeight = '300px';
         div.style.maxHeight = '630px';
       }
-      div.style.overflow = 'scroll';
       div.style.top = '50%';
       div.style.left = '50%';
       div.style.marginLeft= '-'+ (this.width/2) +'px';
@@ -100,6 +99,7 @@ function(Backbone) {
       span.style.right = '15px';
       span.style.top = '15px';
       span.innerText = '×';
+      span.style.zIndex = '1000';
       div.appendChild(span);
 
       var content = document.createElement('div');
@@ -107,7 +107,6 @@ function(Backbone) {
       content.style.height = '100%';
       content.style.position = "relative";
       content.style.padding = (this.padding||0) + 'px';
-
       div.appendChild(content);
 
       document.body.appendChild(div);
@@ -125,7 +124,6 @@ function(Backbone) {
       this.undelegateEvents();
       if(this.callback) this.callback();
       if(this.onClose) this.onClose();
-      // fadeOut(function() { $(this).remove(); });
       $(self.modalWindow).fadeOut(100);
       $(self.backgroundDiv).hide();
 

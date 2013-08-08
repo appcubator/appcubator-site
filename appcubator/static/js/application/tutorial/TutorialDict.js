@@ -2,119 +2,116 @@ var TutorialDirectory = [
   {
     title : "Introduction",
     view  : "tutorial-intro",
-    contents: null
+    isSubSection: false
+  },
+  {
+    title : "Tables Page",
+    view  : "tutorial-tables-page",
+    isSubSection: false
+  },
+  {
+    title : "User Tables",
+    view  : "tutorial-user-tables",
+    isSubSection : true
   },
   {
     title : "Tables",
-    view  : "tutorial-tables-page",
-    contents: [
-      {
-        title : "User Tables",
-        view  : "tutorial-user-tables",
-        contents : null
-      },
-      {
-        title : "Tables",
-        view  : "tutorial-tables",
-        contents: null
-      },
-      {
-        title : "Relationships",
-        view  : "tutorial-relationships",
-        contents : null
-      }
-    ]
+    view  : "tutorial-tables",
+    isSubSection: true
+  },
+  {
+    title : "Relationships",
+    view  : "tutorial-relationships",
+    isSubSection : true
   },
   {
     title : "Pages",
     view  : "tutorial-pages",
-    contents : null
+    isSubSection : false
   },
   {
     title : "Editor",
     view  : "tutorial-editor",
-    contents : [
-      {
-        title : "Design Elements",
-        view  : "tutorial-design-elements",
-        contents : null
-      },
-      {
-        title : "Images",
-        view  : "tutorial-images",
-        contents : null
-      },
-      {
-        title : "Login",
-        view  : "tutorial-login",
-        contents : null
-      },
-      {
-        title : "Sign Up",
-        view  : "tutorial-sign-up",
-        contents : null
-      },
-      {
-        title : "Page Content",
-        view  : "tutorial-page-content",
-        contents : null
-      },
-      {
-        title : "Forms",
-        view  : "tutorial-forms",
-        contents : null
-      },
-      {
-        title : "Lists",
-        view  : "tutorial-lists",
-        contents : null
-      },
-      {
-        title : "Search",
-        view  : "tutorial-search",
-        contents : null
-      }
-    ]
+    isSubSection : false
+  },
+  {
+    title : "Design Elements",
+    view  : "tutorial-design-elements",
+    isSubSection : true
+  },
+  {
+    title : "Images",
+    view  : "tutorial-images",
+    isSubSection : true
+  },
+  {
+    title : "Login",
+    view  : "tutorial-login",
+    isSubSection : true
+  },
+  {
+    title : "Sign Up",
+    view  : "tutorial-sign-up",
+    isSubSection : true
+  },
+  {
+    title : "Page Content",
+    view  : "tutorial-page-content",
+    isSubSection : true
+  },
+  {
+    title : "Forms",
+    view  : "tutorial-forms",
+    isSubSection : true
+  },
+  {
+    title : "Lists",
+    view  : "tutorial-lists",
+    isSubSection : true
+  },
+  {
+    title : "Search",
+    view  : "tutorial-search",
+    isSubSection : true
   },
   {
     title : "Themes",
     view  : "tutorial-themes",
-    contents : null
+    isSubSection : false
   },
   {
     title : "Deploy",
     view  : "tutorial-deploy",
-    contents : null
+    isSubSection : false
   },
   {
     title : "Emails",
     view  : "tutorial-emails",
-    contents : null
+    isSubSection : false
   },
   {
     title : "Application Settings",
     view  : "tutorial-application-settings",
-    contents : [
-      {
-        title : "Domain Settings",
-        view  : "tutorial-domain-settings",
-        contents : null
-      },
-      {
-        title : "SEO Optimization",
-        view  : "tutorial-seo-optimization",
-        contents : null
-      },
-      {
-        title : "Deleting Your Application",
-        view  : "tutorial-deleting-your-application",
-        contents : null
-      },
-    ]
+    isSubSection : false
+  },
+  {
+    title : "Domain Settings",
+    view  : "tutorial-domain-settings",
+    isSubSection : true
+  },
+  {
+    title : "SEO Optimization",
+    view  : "tutorial-seo-optimization",
+    isSubSection : true
+  },
+  {
+    title : "Deleting Your Application",
+    view  : "tutorial-deleting-your-application",
+    isSubSection : true
   },
   {
     title : "Feedback",
     view  : "feedback-form-page",
-    contents : null
+    isSubSection : false
   }
 ];

@@ -32,11 +32,11 @@ define([
             "app/:appid/*anything/"            : "index"
         },
 
-        tutorialDirectory: [0],
+        tutorialPage: 0,
 
         initialize: function() {
             var self = this;
-            AppRouter.view = null;
+            v1.view = null;
             _.bindAll(this);
             $('#save').on('click', this.save);
             $('#tutorial').on('click', function(e) {
@@ -48,18 +48,18 @@ define([
                     new InvitationsView();
                 });
                 e.preventDefault();
-            })
+            });
 
-      keyDispatcher.bindComb('meta+s', this.save);
-      keyDispatcher.bindComb('ctrl+s', this.save);
+            keyDispatcher.bindComb('meta+s', this.save);
+            keyDispatcher.bindComb('ctrl+s', this.save);
 
-      var autoSave = setInterval(this.save, 30000);
+            var autoSave = setInterval(this.save, 30000);
         },
 
         index: function (appId, tutorial) {
             var self = this;
             require(['app/OverviewPageView'], function(OverviewPageView){
-                self.tutorialDirectory = [0];
+                self.tutorialPage = "Introduction";
                 self.changePage(OverviewPageView, tutorial, function() {
                 });
                 olark('api.box.show');
@@ -69,7 +69,7 @@ define([
         info: function(appId, tutorial) {
             var self = this;
             require(['app/AppInfoView'], function(InfoView){
-                self.tutorialDirectory = [7];
+                self.tutorialPage = "Application Settings";
                 self.changePage(InfoView, tutorial, function() {
                     $('.menu-app-info').addClass('active');
                 });
@@ -80,7 +80,7 @@ define([
         tables: function(appId, tutorial) {
             var self = this;
             require(['app/entities/EntitiesView'], function(EntitiesView){
-                self.tutorialDirectory = [1];
+                self.tutorialPage = "Tables Page";
                 self.changePage(EntitiesView, tutorial, function() {
                     self.trigger('entities-loaded');
                     $('.menu-app-entities').addClass('active');
@@ -91,7 +91,7 @@ define([
 
         themes: function(appId, tutorial) {
             var self = this;
-            self.tutorialDirectory = [4];
+            self.tutorialPage = "Themes";
             require(['app/ThemesGalleryView'], function(ThemesGalleryView){
                 self.changePage(ThemesGalleryView, tutorial, function() {
                     self.trigger('themes-loaded');
@@ -103,7 +103,7 @@ define([
 
         pages: function(appId, tutorial) {
             var self = this;
-            self.tutorialDirectory = [2];
+            self.tutorialPage = "Pages";
             require(['app/pages/PagesView'], function(PagesView){
                 $('.page').fadeIn();
                 self.changePage(PagesView, tutorial, function() {
@@ -116,61 +116,63 @@ define([
 
         editor: function(appId, pageId) {
             var self = this;
-            self.tutorialDirectory = [3];
+
+            self.tutorialPage = "Editor";
+
             require(['editor/EditorView'], function(EditorView){
                 $('.page').fadeOut();
-                if(AppRouter.view) AppRouter.view.close();
+                if(v1.view) v1.view.close();
                 var cleanDiv = document.createElement('div');
                 cleanDiv.className = "clean-div editor-page";
                 $(document.body).append(cleanDiv);
 
-                AppRouter.view  = new EditorView({pageId: pageId});
-                AppRouter.view.setElement(cleanDiv).render();
+                v1.view  = new EditorView({pageId: pageId});
+                v1.view.setElement(cleanDiv).render();
 
                 self.trigger('editor-loaded');
 
                 olark('api.box.hide');
-                self.changeTitle(AppRouter.view.title);
+                self.changeTitle(v1.view.title);
             });
         },
 
         mobileEditor: function(appId, pageId) {
             var self = this;
             $('.page').fadeOut();
-            self.tutorialDirectory = [3];
+            self.tutorialPage = "Editor";
             require(['m-editor/MobileEditorView'], function(MobileEditorView){
-                if(AppRouter.view) AppRouter.view.close();
+                if(v1.view) v1.view.close();
                 var cleanDiv = document.createElement('div');
                 cleanDiv.className = "clean-div editor-page";
                 $(document.body).append(cleanDiv);
 
-                AppRouter.view  = new MobileEditorView({pageId: pageId});
-                AppRouter.view.setElement(cleanDiv).render();
+                v1.view  = new MobileEditorView({pageId: pageId});
+                v1.view.setElement(cleanDiv).render();
 
                 olark('api.box.hide');
-                self.changeTitle(AppRouter.view.title);
+                self.changeTitle(v1.view.title);
             });
         },
 
         emails: function(appId, tutorial) {
             var self = this;
-            self.tutorialDirectory = [6];
+            self.tutorialPage = "Emails";
             this.changePage(EmailsView, tutorial, function() {
                 $('.menu-app-emails').addClass('active');
             });
         },
 
         changePage: function(newView, tutorial, post_render) {
-            if(AppRouter.view) AppRouter.view.close();
+            if(v1.view) v1.view.close();
             var cleanDiv = document.createElement('div');
             cleanDiv.className = "clean-div";
             var mainContainer = document.getElementById('main-container');
             mainContainer.appendChild(cleanDiv);
 
-            AppRouter.view = new newView();
-            AppRouter.view.setElement(cleanDiv).render();
+            v1.view = new newView();
+            v1.view.setElement(cleanDiv).render();
             $('.active').removeClass('active');
-            this.changeTitle(AppRouter.view.title);
+            this.changeTitle(v1.view.title);
             $("html, body").animate({ scrollTop: 0 });
             $('.page').fadeIn();
             $('.pull-right.dropd').removeClass('open');
@@ -228,7 +230,7 @@ define([
                 dataType: "JSON"
             });
 
-            var holdOnTimer = setTimeout(function() { 
+            var holdOnTimer = setTimeout(function() {
                 if(!isDeployed) hold_on_callback.call();
                 clearTimeout(holdOnTimer);
             }, 10000);
@@ -311,12 +313,12 @@ define([
         },
 
         showTutorial: function(dir) {
-            var inp = (dir) ? [dir] : this.tutorialDirectory;
+            var inp = (dir) ? dir : this.tutorialPage;
             if(this.tutorialIsVisible) {
-                this.tutorial.chooseSlide(inp, false);
+                this.tutorial.chooseSlide(inp);
             }
             else {
-                this.tutorial = new TutorialView(inp);
+                this.tutorial = new TutorialView({initial: inp});
                 this.tutorialIsVisible = true;
             }
         },
