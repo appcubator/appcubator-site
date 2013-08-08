@@ -11,6 +11,7 @@ function(
   ActionModel) {
 
   var FormModel = Backbone.Model.extend({
+    
     initialize: function(bone) {
 
       this.set('name', bone.name);
@@ -41,6 +42,19 @@ function(
       }
     },
 
+    addAction: function(newActionModel) {
+      var isUnique = true;
+
+      this.get('actions').each(function(actionModel) {
+        console.log(actionModel.attributes);
+        console.log(newActionModel.attributes);
+        if(_.isEqual(actionModel.attributes, newActionModel.attributes)) isUnique = false; return;
+      }, this);
+
+      if(isUnique) { this.get('actions').push(newActionModel); }
+      return this.get('actions');
+    },
+
     fillWithProps: function(entity) {
       entity.getFieldsColl().each(function(fieldModel) {
         var type = fieldModel.get('type');
@@ -51,6 +65,7 @@ function(
                                options: "",
                                placeholder: fieldModel.get('name') };
 
+        if(type == "fk" && fieldModel.get('entity_name') == "User") { this.addToCurrentUser(fieldModel); }
         if(type == "fk"||type == "m2m"||type == "o2o") { return; }
         if(type == "email") { formFieldModel.displayType = "email-text"; }
         if(type == "image") { formFieldModel.displayType = "image-uploader"; }
@@ -58,12 +73,21 @@ function(
         if(type == "date") { formFieldModel.displayType = "date-picker"; }
 
         if(_.contains(["file", "image"], type)) {
-           formFieldModel.placeholder = "Upload "+util.capitaliseFirstLetter(type);
-         }
+          formFieldModel.placeholder = "Upload "+util.capitaliseFirstLetter(type);
+        }
 
         var ind = this.get('fields').models.length - 1;
         this.get('fields').push(formFieldModel, {at: ind});
       }, this);
+    },
+
+    addToCurrentUser: function(field) {
+      var nlDescr = "Add to CurrentUser." + field.get('related_name');
+      var action = { "type": "relation",
+                     "set_fk": "Form." + this.get('entity') + '.' + field.get('name'),
+                     "to_object": "CurrentUser",
+                     "nl_description": nlDescr};
+      this.addAction(action);
     },
 
     fillWithEditProps: function(entity) {
