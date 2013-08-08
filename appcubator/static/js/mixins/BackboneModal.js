@@ -104,6 +104,7 @@ function(Backbone) {
 
       var content = document.createElement('div');
       content.style.width = '100%';
+      if(!this.title) content.style.height = '100%';
       content.style.position = "relative";
       content.style.padding = (this.padding||0) + 'px';
       div.appendChild(content);

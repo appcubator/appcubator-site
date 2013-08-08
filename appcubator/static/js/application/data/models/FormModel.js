@@ -108,7 +108,6 @@ function(
       });
 
       entity.get('fields').each(function(field) {
-        console.log(field);
         if(field.get('entity_name') == "User") {
           var nlDescr = "Add to CurrentUser." + field.get('related_name');
           var action = { "type": "relation",
@@ -123,7 +122,6 @@ function(
 
       _(pageContextEntities).each(function(entityName) {
         entity.get('fields').each(function(field) {
-          console.log(field);
           if(field.get('entity_name') == entityName) {
             var nlDescr = "Add to Page."+ entityName+"." + field.get('related_name');
             var action = { "type": "relation",
