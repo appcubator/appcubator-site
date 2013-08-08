@@ -259,12 +259,9 @@ Templates.rowNode = [
 ].join('\n');
 
 Templates.listNode = [
-  '<div>',
+  '<div><% for(var ii = 0; ii < nmrRows; ii ++) { %>',
     Templates.rowNode,
-    Templates.rowNode,
-    Templates.rowNode,
-    Templates.rowNode,
-  '</div>'
+  '<% } %></div>'
 ].join('\n');
 
 

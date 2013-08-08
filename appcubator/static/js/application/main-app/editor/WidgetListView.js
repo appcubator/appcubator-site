@@ -42,6 +42,8 @@ function( WidgetContainerView,
       this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "add", this.placeWidget, true, true);
       this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "add", this.renderShadowElements);
       this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "remove", this.renderShadowElements);
+      this.listenTo(this.model.get('data').get('container_info').get('query'), "change", this.renderShadowElements);
+
       this.listenTo(this.model, 'deselected', function() {
         this.model.trigger('editModeOff');
       }, this);
@@ -99,9 +101,15 @@ function( WidgetContainerView,
     renderShadowElements: function() {
       var row = this.model.get('data').get('container_info').get('row');
       var uielements = _.map(row.get('uielements').models, function(obj) { return obj.attributes; });
+      var nmrRows = 4;
+      if(this.model.get('data').get('container_info').get('query').get('numberOfRows') > 0) {
+        nmrRows = this.model.get('data').get('container_info').get('query').get('numberOfRows') - 1;
+      }
+
       this.shadowElements.innerHTML = _.template(Templates.listNode, {layout: row.get('layout'),
                                                           uielements: uielements,
-                                                          isListOrGrid: row.get('isListOrGrid')});
+                                                          isListOrGrid: row.get('isListOrGrid'),
+                                                          nmrRows: nmrRows});
 
       if(this.editMode) { $('.fdededfcbcbcd .shadow-x').addClass('trans'); }
       return this.shadowElements;
