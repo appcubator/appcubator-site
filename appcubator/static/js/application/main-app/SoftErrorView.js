@@ -46,7 +46,12 @@ function(Backbone) {
 
       var speech = document.createElement('span');
       speech.innerHTML = this.text + this.resolve(this.path);
+      var button = document.createElement('div');
+      button.className = 'btn-info btn';
+      button.innerHTML = 'OK, Got it!';
+
       this.el.appendChild(speech);
+      this.el.appendChild(button);
       document.body.appendChild(this.el);
       console.log(this.el);
       return this;
