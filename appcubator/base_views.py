@@ -378,3 +378,8 @@ def designer_guide(request):
     page_context = {}
     page_context["title"] = "Designer Guide"
     return render(request, 'designer-guide.html', page_context)
+
+def developer_guide(request):
+    page_context = {}
+    page_context["title"] = "Developer Guide"
+    return render(request, 'developer-guide.html', page_context)
