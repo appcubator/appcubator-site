@@ -30,7 +30,7 @@ logger = logging.getLogger('appcubator.models')
 
 class PubKey(models.Model):
     user = models.ForeignKey(User, related_name="pubkeys")
-    pubkey = models.TextField(unique=True)
+    pubkey = models.TextField(unique=True, max_length=600)
     name = models.CharField(max_length=40, default="unnamed")
 
     # audit fields
