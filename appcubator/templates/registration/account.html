@@ -101,12 +101,23 @@
       <ul class="hoff2 span42">
         <li id="add-key-btn">+ Add a new key.</li>
         <li style="display:none" id='add-key-panel'>
-          <form action="/setpubkey/" method="post">
+          <form class="no-ajax" action="/setpubkey/" method="post">
+            {% csrf_token %}
             <input type="text" name="title" class="span20" placeholder="Title..."><br  />
             <textarea name="key" class="span20" placeholder="Key..."></textarea><br  />
             <input type="submit" class="btn btn-info" value="Add key">
           </form>
         </li>
+        {% for pubkey in user.pubkeys.all %}
+        <li>
+          <form class="no-ajax" action="/setpubkey/" method="post">
+            {% csrf_token %}
+            <input type="text" name="title" class="span20" placeholder="Title..." value="{{pubkey.name}}"><br  />
+            <textarea name="key" class="span20" placeholder="Key...">{{pubkey.pubkey}}</textarea><br  />
+            <input type="submit" class="btn btn-info" value="Edit key">
+          </form>
+        </li>
+        {% endfor %}
       </ul>
     </div>
   </div><!-- end main content -->

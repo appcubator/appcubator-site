@@ -178,7 +178,7 @@ def setpubkey(request):
 
     pubkey.save()
     PubKey.sync_pubkeys_of_user(request.user)
-    return HttpResponse("ok")
+    return redirect(account)
 
 
 @login_required
