@@ -589,9 +589,12 @@ def app_deploy(request, app_id):
         raise Http404
     result = app.deploy(git_user=app.owner.extradata.git_user_id())
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
-    status = 500 if 'errors' in result else 200
-    if status == 500:
+    if 'errors' in result:
         raise Exception(result)
+    elif 'branch' in result and 'files' in result:
+        status = 409
+    else:
+        status = 200
     return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 
 

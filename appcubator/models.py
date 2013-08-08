@@ -419,6 +419,16 @@ class App(models.Model):
             self.save(state_version=False)
             return self._transport_app(appdir, retry_on_404=False)
 
+        # merge conflict with custom code
+        elif r.status_code == 409:
+            result = {}
+            response_content = r.json()
+            logger.debug("Deployment response content: %r" % response_content)
+            result['files'] = response_content['files']
+            result['branch'] = response_content['branch']
+            result['site_url'] = self.url()
+            return result
+
         else:
             raise Exception("Deployment server error: %r" % r.text)
 
