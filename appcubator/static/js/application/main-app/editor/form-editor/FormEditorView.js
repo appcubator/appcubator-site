@@ -148,8 +148,6 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
     selectedNew: function(fieldModel) {
       var html = _.template(FormEditorTemplates.details, {field : fieldModel});
 
-      console.log(html);
-
       this.selected = fieldModel;
       this.listenTo(this.selected, 'change:displayType', this.reRenderDisplayType);
       this.listenTo(this.selected, 'change:placeholder', this.reRenderDisplayType);

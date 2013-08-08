@@ -366,7 +366,8 @@
             "cons_attribs": {},
             "class_name": "defaul-list",
             "content": null,
-            "tagName": "div"
+            "tagName": "div",
+            "style": "overflow-y:scroll;"
         }
     ],
     "fonts": [],

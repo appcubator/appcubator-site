@@ -376,7 +376,7 @@
       "isSingle": false,
       "cons_attribs": {},
       "class_name": "default-list",
-      "style": ".row { border-bottom: 1px solid #ccc; }\n",
+      "style": ".row { border-bottom: 1px solid #ccc; }\n overflow-y:scroll;",
       "content": null,
       "tagName": "div"
     }

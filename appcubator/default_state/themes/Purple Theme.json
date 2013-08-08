@@ -159,7 +159,7 @@
    ],
    "lists":[
       {
-         "style":"background-color: #fff;\nborder: 1px solid #ccc;\nborder-radius: 4px;\n\n.row {\n    border-bottom: 1px solid #ccc;\n}",
+         "style":"overflow-y:scroll;\n background-color: #fff;\nborder: 1px solid #ccc;\nborder-radius: 4px;\n\n.row {\n    border-bottom: 1px solid #ccc;\n}",
          "isSingle":false,
          "cons_attribs":{
 
@@ -169,7 +169,7 @@
          "tagName":"div"
       },
       {
-         "style":"\n.row {\n    border-bottom: 1px solid #ccc;\n}\n",
+         "style":"overflow-y:scroll; \n\n.row {\n    border-bottom: 1px solid #ccc;\n}\n",
          "isSingle":false,
          "cons_attribs":{
 
