@@ -17,9 +17,44 @@ scope: r_fullprofile r_emailaddress
 
 <div class="sliding-panel">
   <div class="slide-aboutus slide-documentation">
-    <h4>How to Use the Theme Editor</h4>
-    <p>Theme editor gives you full control over your interface. It requires knowledge of CSS. It uses LESS to compile the styles on the generated app, but it's not a required skill.</p>
-    <p class="image"><img src="https://www.filepicker.io/api/file/r3WVLeS2QY6vXSuAk3op"></p>
+    <h4>Custom Code Integration</h4>
+    <h5>Overview</h5>
+    <p>One of the benefits of Appcubator is that it generates developer-friendly source code, so that you can modify it and easily implement custom logic, html, or javascript.</p>
+    <p>Integration is as easy as pushing to a git repo. When you git push, Appcubator will automatically update your live deployment with the code in the master branch.</p>
+    <h5>Sections</h5>
+    <ol>
+        <li>Basic concepts</li>
+        <li>Add your public key</li>
+        <li>Clone the repo</li>
+        <li>Modify the code, and git commit</li>
+        <li>Git push</li>
+    </ol>
+    <h5>Basic concepts</h5>
+    <p>
+        You app has a git repo for version control, and a live, deployed copy of your source code.
+        To integrate your custom code, you have to clone the git repo, make a commit to the master branch, and git push.
+        After this point, when you press Test run, Appcubator will safely update your code to reflect your changes in the editor.
+        If Appcubator tries to generate code that conflicts with your custom code changes, it will save the merge conflict in a separate branch of the repo.
+        Then you will have the opportunity to mark a resolution, and push your resolution back to master.
+    </p>
+    <h5>Add your public key</h5>
+    <p>
+        In order to be able to clone the git repo, you need to tell us your ssh public key, so can ensure that unauthorized people can't download or modify your code.
+        You can enter your public key(s) in the account settings page <a href="/account/">here</a>.
+    </p>
+    <!--<p class="image"><img src="https://www.filepicker.io/api/file/r3WVLeS2QY6vXSuAk3op"></p>-->
+    <h5>Clone the repo</h5>
+    <p>We will tell you the repo name</p>
+    <code>git clone REPO_NAME</code>
+    <h5>Modify the code, and git commit</h5>
+    <p>
+    Make changes to your code in the git repo. When you do <code>git status</code> you should see an output like this: IMAGE HERE.
+    To save these changes to the git repo, simply do <code>git commit -a -m "some memorable message about the changes"</code>. The output should look like this:
+ IMAGE HERE.
+    </p>
+    <h5>Git push</h5>
+     Now, to update the live version of your site, do <code>git push</code>
+     <!--
     <p>You can access the theme editor on the top right menu of your application. You'll be directed to the Theme Editor when you click the "Theme Editor" button.</p>
     <h5>Base CSS</h5>
     <p>Base CSS is the CSS that will directly be injected to your page. It should include the overall styling of your page, such as the styling of the body tag, navigation bar or footer.</p>
@@ -59,11 +94,12 @@ scope: r_fullprofile r_emailaddress
     <h5>Adding UI Element Styles</h5>
     <h6>How to add fonts</h6>
     <h6>How to add images and icons</h6>
+    -->
 
     <hr>
     <div class="feed">
       <p>Please don't hesitate to ask your questions or comment below. We'll answer as soon as possible!</p>
-      <div class="fb-comments" data-href="http://appcubator.com/resources/designer-guide/" data-width="600"></div>
+      <div class="fb-comments" data-href="http://appcubator.com/resources/developer-guide/" data-width="600"></div>
       <div id="fb-root"></div>
     </div>
   </div>
