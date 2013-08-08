@@ -407,7 +407,7 @@
     ],
     "forms": [
         {
-            "style": "\ninput[type=\"text\"],\ninput[type=\"password\"] {\n    width: 100%;\n}\n\ninput[type=\"radio\"] {\n    margin-left: 4px;\n    margin-right: 4px;\n}\n\ntextarea {\n    width: 100%;\n    min-height: 60px;\n}\n\nlabel {\n    display: block;\n}\n\n.option {\n    display:block;\n}\n\n.option label {\n    display: inline-block;\n}\n\ninput[type=\"radio\"] {\n    display: inline-block;\n}\n\n.btn {\n    margin-top: 6px;\n}\n\n",
+            "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n    width: 100%;\n}\n\ninput[type=\"radio\"] {\n    margin-left: 4px;\n    margin-right: 4px;\n}\n\ntextarea {\n    width: 100%;\n    min-height: 60px;\n}\n\nlabel {\n    display: block;\n}\n\n.option {\n    display:block;\n}\n\n.option label {\n    display: inline-block;\n}\n\ninput[type=\"radio\"] {\n    display: inline-block;\n}\n\n.btn {\n    margin-top: 6px;\n}\n\n",
             "isSingle": false,
             "cons_attribs": {},
             "hoverStyle": "",
@@ -417,7 +417,7 @@
             "activeStyle": ""
         },
         {
-            "style": "",
+            "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n    width: 100%;\n}\n\ninput[type=\"radio\"] {\n    margin-left: 4px;\n    margin-right: 4px;\n}\n\ntextarea {\n    width: 100%;\n    min-height: 60px;\n}\n\nlabel {\n    display: block;\n}\n\n.option {\n    display:block;\n}\n\n.option label {\n    display: inline-block;\n}\n\ninput[type=\"radio\"] {\n    display: inline-block;\n}\n\n.btn {\n    margin-top: 6px;\n}\n\n",
             "isSingle": false,
             "cons_attribs": {},
             "hoverStyle": "",

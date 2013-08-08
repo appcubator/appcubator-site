@@ -450,7 +450,7 @@
    ],
    "forms":[
       {
-         "style":"input[type=\"text\"],\ninput[type=\"password\"] {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n\n.option {\n    display:block;\n}\n\n.option label {\n    display: inline-block;\n}\n\ninput[type=\"radio\"] {\n    display: inline-block;\n    margin-left: 6px;\n}\n\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n    margin-top: 12px;\n}\n.btn:hover {\n background-color: rgb(127, 78, 119);\n}",
+         "style":"input[type=\"text\"],\ninput[type=\"password\"], textarea {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n\n.option {\n    display:block;\n}\n\n.option label {\n    display: inline-block;\n}\n\ninput[type=\"radio\"] {\n    display: inline-block;\n    margin-left: 6px;\n}\n\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n    margin-top: 12px;\n}\n.btn:hover {\n background-color: rgb(127, 78, 119);\n}",
          "isSingle":false,
          "cons_attribs":{
 
@@ -462,7 +462,7 @@
          "activeStyle":""
       },
       {
-         "style":"input[type=\"text\"],\ninput[type=\"password\"] {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n}\n.btn:hover {\n background-color: rgb(127, 78, 119);\n}",
+         "style":"input[type=\"text\"],\ninput[type=\"password\"], textarea {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n}\n.btn:hover {\n background-color: rgb(127, 78, 119);\n}",
          "isSingle":false,
          "cons_attribs":{
 
