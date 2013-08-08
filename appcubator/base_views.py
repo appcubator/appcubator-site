@@ -168,7 +168,7 @@ def setpubkey(request):
         pubkey = PubKey(name=name, pubkey=key, user=request.user)
     else:
         pubkey.name = name
-        pubkey.key = key
+        pubkey.pubkey = key
 
     #validate
     try:
