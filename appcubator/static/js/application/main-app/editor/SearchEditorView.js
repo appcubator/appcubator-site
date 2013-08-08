@@ -29,7 +29,7 @@ define([
             '</div>');
 
           v1State.get('pages').each(function(pageM) {
-            var selected = ("internal://" + pageM.get('name')) == this.model.get('searchPage')? 'selected' : '';
+            var selected = (String(this.model.get('searchPage')).indexOf("internal://" + pageM.get('name')) === 0)? 'selected' : '';
             this.$el.find('.search-direct').append('<option value="internal://'+ pageM.get('name') +'" '+selected+'>'+ pageM.get('name') +'</option>');
           }, this);
 
@@ -51,7 +51,7 @@ define([
         fieldChanged: function(e) {
           var checkbox = e.target;
           var fieldCid = e.target.value;
-          console.log(fieldCid);
+
           var fieldM = this.entity.get('fields').get(fieldCid);
 
           if(e.target.checked) {

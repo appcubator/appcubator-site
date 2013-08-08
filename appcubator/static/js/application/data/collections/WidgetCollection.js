@@ -208,6 +208,9 @@ function(WidgetModel,
         widget.data.searchQuery = {};
         widget.data.searchQuery.searchOn = _.clone(entity.get('name'));
         widget.data.searchQuery.searchPage = "internal://Homepage";
+        if(v1State.getCurrentPage()) {
+            widget.data.searchQuery.searchPage = v1State.getCurrentPage().getLinkLang();
+        }
         widget.data.searchQuery.searchFields = [];
 
         var widgetContainerModel = new WidgetContainerModel(widget);
