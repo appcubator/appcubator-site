@@ -16,7 +16,7 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
     initialize: function(bone) {
       bone = bone||{};
       var self = this;
-      if(bone.url && bone.url.urlparts.length == 0) {
+      if(bone.url && bone.url.urlparts.length === 0) {
         // homepage shouldn't have a customizable url
         if(this.get('name') === 'Homepage') {
           bone.url.urlparts = [];
@@ -107,6 +107,10 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
 
     getLinkLang: function(contextArgs) {
       var str = "internal://" + this.get('name');
+      var entities = this.getContextEntities();
+      if(entities.length) {
+        str += '/?' + entities[0] + '=' + this.getPageContextDatalang();
+      }
       return str;
     },
 

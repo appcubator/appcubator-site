@@ -377,7 +377,7 @@
       "class_name": "form-default",
       "content": null,
       "tagName": "form",
-      "style": "\ninput[type=\"text\"],\ninput[type=\"password\"] {\n    width: 100%;\n}\n",
+      "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n    width: 100%;\n}\n",
       "hoverStyle": "",
       "activeStyle": ""
     },
@@ -386,7 +386,7 @@
       "content": null,
       "cons_attribs": {},
       "isSingle": false,
-      "style": "",
+      "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n    width: 100%;\n}\n",
       "hoverStyle": "",
       "activeStyle": "",
       "class_name": "form-with-bg"
@@ -397,7 +397,7 @@
       "isSingle": false,
       "cons_attribs": {},
       "class_name": "default-list",
-      "style": ".row { border-bottom: 1px solid #ccc; }\n",
+      "style": ".row { border-bottom: 1px solid #ccc; }\n overflow-y:scroll;",
       "content": null,
       "tagName": "div"
     }

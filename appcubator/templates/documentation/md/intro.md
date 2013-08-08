@@ -6,7 +6,6 @@ As you build your web application, you can refer back to this guide by clicking 
 
 <div class="images">
 	<img height="50" class="img-polaroid" src="{{ STATIC_URL }}img/tutorial/q-mark1.png">
-
 </div>
 
-By the end, you will have a live, working application, and you will even be able to download the django code for your application! We expect this tutorial to take ~20 minutes.
+For more learning material, you can visit [Resources Page](/resources/).

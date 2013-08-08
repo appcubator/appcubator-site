@@ -372,7 +372,7 @@
   ],
   "forms": [
     {
-      "style": "input[type=\"text\"],\ninput[type=\"password\"] {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n\n.option {\n    display:block;\n}\n\n.option label {\n    display: inline-block;\n}\n\ninput[type=\"radio\"] {\n    display: inline-block;\n    margin-left: 6px;\n}\n\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n    margin-top: 12px;\n\n    background-color: #8eab45;\n    color: #fff;\n    -webkit-box-shadow: #b0c775 0 2px 0 0 inset,rgba(255,255,255,0) 0 7px 0;\n    -moz-box-shadow: #b0c775 0 2px 0 0 inset,rgba(255,255,255,0) 0 7px 0;\n    box-shadow: #b0c775 0 2px 0 0 inset,rgba(255,255,255,0) 0 7px 0;\n    -webkit-border-radius: 3px;\n}\n\n.btn:hover {\n    background-color: #7e9b35;\n}",
+      "style": "input[type=\"text\"],\ninput[type=\"password\"], textarea {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n\n.option {\n    display:block;\n}\n\n.option label {\n    display: inline-block;\n}\n\ninput[type=\"radio\"] {\n    display: inline-block;\n    margin-left: 6px;\n}\n\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n    margin-top: 12px;\n\n    background-color: #8eab45;\n    color: #fff;\n    -webkit-box-shadow: #b0c775 0 2px 0 0 inset,rgba(255,255,255,0) 0 7px 0;\n    -moz-box-shadow: #b0c775 0 2px 0 0 inset,rgba(255,255,255,0) 0 7px 0;\n    box-shadow: #b0c775 0 2px 0 0 inset,rgba(255,255,255,0) 0 7px 0;\n    -webkit-border-radius: 3px;\n}\n\n.btn:hover {\n    background-color: #7e9b35;\n}",
       "isSingle": false,
       "cons_attribs": {},
       "hoverStyle": "",
@@ -382,7 +382,7 @@
       "activeStyle": ""
     },
     {
-      "style": "input[type=\"text\"],\ninput[type=\"password\"] {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n}\n.btn:hover {\n background-color: rgb(127, 78, 119);\n}",
+      "style": "input[type=\"text\"],\ninput[type=\"password\"], textarea {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n}\n.btn:hover {\n background-color: rgb(127, 78, 119);\n}",
       "isSingle": false,
       "cons_attribs": {},
       "hoverStyle": "",
@@ -394,7 +394,7 @@
   ],
   "lists": [
     {
-      "style": "background-color: #fff;\nborder: 1px solid #ccc;\nborder-radius: 4px;\n\n.row {\n    border-bottom: 1px solid #ccc;\n}",
+      "style": "overflow-y:scroll; \n background-color: #fff;\nborder: 1px solid #ccc;\nborder-radius: 4px;\n\n.row {\n    border-bottom: 1px solid #ccc;\n}",
       "isSingle": false,
       "cons_attribs": {},
       "class_name": "default-list",
@@ -402,7 +402,7 @@
       "tagName": "div"
     },
     {
-      "style": "\n.row {\n    border-bottom: 1px solid #ccc;\n}\n",
+      "style": "overflow-y:scroll; \n\n.row {\n    border-bottom: 1px solid #ccc;\n}\n",
       "isSingle": false,
       "cons_attribs": {},
       "hoverStyle": "",

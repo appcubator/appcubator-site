@@ -97,6 +97,7 @@ loader: "static.olark.com/jsclient/loader0.js",name:"olark",methods:["configure"
 /* custom configuration goes here (www.olark.com/documentation) */
 olark.identify('6509-786-10-1962');/*]]>*/</script><noscript><a href="https://www.olark.com/site/6509-786-10-1962/contact" title="Contact us" target="_blank">Questions? Feedback?</a> powered by <a href="http://www.olark.com?welcome" title="Olark live chat software">Olark live chat software</a></noscript>
 
+{% if not DEBUG %}
 <script type='text/javascript'>
     window.Muscula = { settings:{
         logId:"8babd49a-93ba-43de-8f2e-4550a7acfd36", suppressErrors: false, branding: 'none'
@@ -111,6 +112,7 @@ olark.identify('6509-786-10-1962');/*]]>*/</script><noscript><a href="https://ww
         return window.Muscula.settings.suppressErrors===undefined;}
     })();
 </script>
+{% endif %}
 <!-- end olark code -->
 {% include "documentation-texts.html" %}
 </body>

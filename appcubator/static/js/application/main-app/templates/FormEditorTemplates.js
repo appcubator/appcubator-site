@@ -15,7 +15,7 @@ var FieldTypes = {
 
 
 FormEditorTemplates.field = [
-'<li id="field-<%= field.cid %>" class="field-li-item sortable li-<%= field.get(\'displayType\')%>"><label class="header"><%= field.get(\'label\') %> <% if(field.get(\'required\')) { %>*<% } %></label><span class="form-item">',
+'<li id="field-<%= field.cid %>" class="field-li-item sortable li-<%= field.get(\'displayType\')%>"><label class="header"><%= field.get(\'label\') %> <% if(field.get(\'required\') && field.get(\'displayType\') != "button") { %>*<% } %></label><span class="form-item">',
   '<% if(field.get(\'displayType\') == "single-line-text") { %>',
     FieldTypes['single-line-text'],
   '<% } %>',
@@ -50,7 +50,7 @@ FormEditorTemplates.field = [
 ].join('\n');
 
 FormEditorTemplates.submitField = [
-'<li id="field-<%= field.cid %>" class="field-li-item sortable li-<%= field.get(\'displayType\')%>"><label class="header"><%= field.get(\'label\') %> <% if(field.get(\'required\')) { %>*<% } %></label><span class="form-item">',
+'<li id="field-<%= field.cid %>" class="field-li-item sortable li-<%= field.get(\'displayType\')%>"><label class="header"><%= field.get(\'label\') %></label><span class="form-item">',
 '<div class="btn"><%= field.get(\'placeholder\') %></div>',
 '</span><span class="drag-icon"></span></li>'
 ].join('\n');
