@@ -84,13 +84,13 @@ function(FormFieldModel, ActionModel, TutorialView) {
     relationalActionClicked: function(e) {
       var actionCid = (e.target.id||e.target.parentNode.id).replace('action-','');
       var actionModel = this.possibleRelationalActions.get(actionCid);
-      this.model.get('actions').push(actionModel);
+      this.model.addAction(actionModel);
     },
 
     emailActionClicked: function(e) {
       var actionCid = (e.target.id||e.target.parentNode.id).replace('action-','');
       var actionModel = this.possibleEmailActions.get(actionCid);
-      this.model.get('actions').push(actionModel);
+      this.model.addAction(actionModel);
     },
 
     currentActionClicked: function(e) {
