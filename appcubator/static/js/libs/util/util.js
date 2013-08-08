@@ -27,18 +27,19 @@ define(['jquery'], function() {
     },
 
     setCursor: function(node,pos){
-      var node = (typeof node == "string" ||
-        node instanceof String) ? document.getElementById(node) : node;
+      var node = (typeof node == "string" || node instanceof String) ? document.getElementById(node) : node;
       if(!node){
         return false;
-      }else if(node.createTextRange){
+      }
+      else if(node.createTextRange){
         var textRange = node.createTextRange();
         textRange.collapse(true);
         textRange.moveEnd(pos);
         textRange.moveStart(pos);
         textRange.select();
         return true;
-      }else if(node.setSelectionRange){
+      }
+      else if(node.setSelectionRange){
         node.setSelectionRange(pos,pos);
         return true;
       }
@@ -194,6 +195,7 @@ define(['jquery'], function() {
 
     pluralize: function(str) {
       if(str && str.length > 0) {
+        if(str === "pass" || str === "Pass" || str ==="PASS") return str;
         var lastChar = str.charAt(str.length - 1);
         return (lastChar === 's' || lastChar === "S") ? str + 'es' : str + 's';
       }
