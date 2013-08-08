@@ -100,33 +100,30 @@
   "buttons": [
     {
       "style": "display: inline-block;\npadding: 4px 12px;\nmargin-bottom: 0;\nfont-size: 14px;\nline-height: 20px;\ncolor: #333333;\ntext-align: center;\ntext-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\nvertical-align: middle;\ncursor: pointer;\nbackground-color: #f5f5f5;\nbackground-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\nbackground-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\nbackground-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\nbackground-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\nbackground-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\nbackground-repeat: repeat-x;\nborder: 1px solid #cccccc;\nborder-color: #e6e6e6 #e6e6e6 #bfbfbf;\nborder-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\nborder-bottom-color: #b3b3b3;\n-webkit-border-radius: 4px;\n-moz-border-radius: 4px;\nborder-radius: 4px;\nfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);\nfilter: progid:DXImageTransform.Microsoft.gradient(enabled=false);\n-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\n-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\nbox-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);",
-      "isSingle": true,
+      "isSingle": false,
+      "content": "Button1",
       "content_attribs": {
-        "value": "Button1"
+        "href": "internal://Homepage"
       },
       "hoverStyle": "",
       "class_name": "btn",
-      "content": null,
-      "tagName": "input",
-      "activeStyle": "",
-      "cons_attribs": {
-        "type": "submit"
-      }
+      "tagName": "a",
+      "activeStyle": ""
     },
     {
       "style": "",
       "isSingle": true,
       "content_attribs": {
-        "value": "Button1"
+        "href": "internal://Homepage"
       },
       "hoverStyle": "",
       "class_name": "btn-2",
       "content": null,
-      "tagName": "input",
-      "activeStyle": "",
-      "cons_attribs": {
-        "tagType": "submit"
-      }
+      "hoverStyle": "",
+      "class_name": "btn",
+      "content": "Button1",
+      "tagName": "a",
+      "activeStyle": ""
     },
     {
       "style": "",
