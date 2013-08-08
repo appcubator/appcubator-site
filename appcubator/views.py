@@ -594,7 +594,7 @@ def app_deploy(request, app_id):
     elif 'branch' in result and 'files' in result:
         #status = 409
         # damn jquery
-        status = 409
+        status = 200
     else:
         status = 200
     return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
