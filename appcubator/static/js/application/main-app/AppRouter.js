@@ -211,6 +211,24 @@ define([
                         new ErrorDialogueView(content);
                         util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.errors}, appId);
                     }
+                    else if(data.files && data.branch) {
+                        var text = "<h1>Merge Conflict</h1>";
+                        text += "\n<p>We tried to generate the code but we couldn't resolve a conflict between our code and your code.</p>";
+                        text += "\n<p>To fix this, please resolve the conflict and push a commit with your fix in <span class=\"branch\">master</span>.</p>";
+                        text += "\n<p>We stored the conflict details in <span class=\"branch\">"+data.branch+"</span>.</p>";
+                        text += "\n<div>";
+                        text += "\n  <h2>Affected files</h2>";
+                        text += "\n  <ol>";
+                        for (var i = 0; i < data.files.length; i++) {
+                            text += "\n    <li class=\"file\">"+data.files[i]+"</li>";
+                        }
+                        text += "\n  </ol>";
+                        text += "\n<div>";
+
+                        var content = { text: text };
+                        new SimpleModalView(content);
+                        util.log_to_server('deployed app', {status: 'merge conflict', deploy_time: deploy_time + " seconds", message: data}, appId);
+                    }
                     else {
                       new DeployView(data);
                       util.log_to_server('deployed app', {status: 'success', deploy_time: deploy_time + " seconds"}, appId);

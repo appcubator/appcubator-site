@@ -28,6 +28,30 @@ import logging
 logger = logging.getLogger('appcubator.models')
 
 
+class PubKey(models.Model):
+    user = models.ForeignKey(User, related_name="pubkeys")
+    pubkey = models.TextField(max_length=600)
+    name = models.CharField(max_length=40, default="unnamed")
+
+    # audit fields
+    created_on = models.DateTimeField(auto_now_add = True)
+    updated_on = models.DateTimeField(auto_now = True)
+
+    @classmethod
+    def sync_pubkeys_of_user(cls, user):
+        """
+        Calls to deployment server to sync this user's pubkeys.
+        Returns HttpResponse of deployment API
+        """
+        pubkeys = user.pubkeys.order_by('-created_on')
+        payload = simplejson.dumps([p.pubkey for p in pubkeys])
+        r = requests.post("http://%s/user/%s/pubkeys/" % (settings.DEPLOYMENT_HOSTNAME, user.extradata.git_user_id()),
+            data={'public_keys': payload},
+            headers={'X-Requested-With': 'XMLHttpRequest'})
+        return r
+
+
+
 # ADDITIONAL USER DATA CAN BE STORED HERE
 class ExtraUserData(models.Model):
     user = models.OneToOneField(User, related_name="extradata")
@@ -43,6 +67,9 @@ class ExtraUserData(models.Model):
                 u.extradata
             except cls.DoesNotExist, e:
                 cls(user=u, noob=0).save()
+
+    def git_user_id(self): # TODO fix in staging and dev case. (unique on id, hostname)
+        return "user%d" % self.user.id
 
 from django.db.models.signals import post_save
 
@@ -300,12 +327,14 @@ class App(models.Model):
         css_string = t.render(context)
         return css_string
 
-    def get_deploy_data(self):
+    def get_deploy_data(self, git_user=None):
         post_data = {
             "subdomain": self.hostname(),
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
+        if git_user is not None:
+            post_data['user_id'] = git_user
         return post_data
 
     def _write_tar_from_app_dir(self, appdir):
@@ -320,14 +349,14 @@ class App(models.Model):
         t.close()
         return os.path.join(appdir, 'payload.tar')
 
-    def _transport_app(self, appdir, retry_on_404=True):
+    def _transport_app(self, appdir, retry_on_404=True, git_user=None):
         # tar it up
         tar_path = self._write_tar_from_app_dir(appdir)
         f = open(tar_path, "r")
         try:
             # catapult the tar over to the deployment server
             files = {'file':f}
-            post_data = self.get_deploy_data()
+            post_data = self.get_deploy_data(git_user=git_user)
             if self.deployment_id is None:
                 r = requests.post("http://%s/deployment/" % settings.DEPLOYMENT_HOSTNAME, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
             else:
@@ -390,14 +419,24 @@ class App(models.Model):
             self.save(state_version=False)
             return self._transport_app(appdir, retry_on_404=False)
 
+        # merge conflict with custom code
+        elif r.status_code == 409:
+            result = {}
+            response_content = r.json()
+            logger.debug("Deployment response content: %r" % response_content)
+            result['files'] = response_content['files']
+            result['branch'] = response_content['branch']
+            result['site_url'] = self.url()
+            return result
+
         else:
             raise Exception("Deployment server error: %r" % r.text)
 
-    def deploy(self, retry_on_404=True):
+    def deploy(self, retry_on_404=True, git_user=None):
         tmpdir = self.write_to_tmpdir()
         try:
             logger.info("Deployed to %s" % tmpdir)
-            r = self._transport_app(tmpdir, retry_on_404=retry_on_404)
+            r = self._transport_app(tmpdir, retry_on_404=retry_on_404, git_user=git_user)
         finally:
             # because hard disk space doesn't grow on trees.
             shutil.rmtree(tmpdir)

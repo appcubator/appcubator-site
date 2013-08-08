@@ -32,5 +32,6 @@ django-forms-bootstrap
 django-stripe-payments
 pyyaml==3.10
 nltk==2.0.4
+sh==1.08
 
 mysql-python==1.2.4
