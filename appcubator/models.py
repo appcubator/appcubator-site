@@ -282,7 +282,7 @@ class App(models.Model):
         return tmp_project_dir
 
     def hostname(self):
-        if not settings.PRODUCTION:
+        if not settings.PRODUCTION: # debug and staging
             return "%s.staging.appcubator.com" % self.subdomain
         else:
             return "%s.appcubator.com" % self.subdomain
