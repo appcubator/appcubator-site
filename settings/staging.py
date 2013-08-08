@@ -5,8 +5,9 @@ from settings.common import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-PRODUCTION = True
+
 STAGING = True
+PRODUCTION = False
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),

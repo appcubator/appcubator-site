@@ -182,7 +182,7 @@ def app_page(request, app_id):
                     'apps': app.owner.apps.all(),
                     'user': app.owner,
                     'staging': settings.STAGING,
-                    'staging': settings.PRODUCTION,
+                    'production': settings.PRODUCTION,
                     'is_deployed': 1 if app.deployment_id != None else 0}
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)
@@ -593,31 +593,6 @@ def check_availability(request, domain):
 @require_POST
 @login_required
 @csrf_exempt
-def register_domain(request, domain):
-    # Protect against trolls
-    assert len(domain) < 50
-
-    # Check domain cap
-    if request.user.domains.count() >= DomainRegistration.MAX_FREE_DOMAINS:
-        return JSONResponse({"error": 0})
-
-    # Try to register
-    try:
-        d = DomainRegistration.register_domain(
-            domain, test_only=settings.DEBUG)
-    except Exception, e:
-        return JSONResponse({"errors": str(e)})
-
-    # TODO afterwards in a separate worker
-    d.configure_dns(domain, staging=settings.STAGING)
-
-    # Give client the domain info
-    return JSONResponse(d.domain_info)
-
-
-@require_POST
-@login_required
-@csrf_exempt
 def sub_check_availability(request, subdomain):
     data = {'subdomain': subdomain}
     form = forms.ChangeSubdomain(data)
@@ -650,4 +625,29 @@ def yomomma(request, number):
 def webgeekjokes(request):
     r = requests.get("http://www.webgeekjokes.tumblr.com/random")
     return JSONResponse(r.text)
+
+# this is old.
+@require_POST
+@login_required
+@csrf_exempt
+def register_domain(request, domain):
+    # Protect against trolls
+    assert len(domain) < 50
+
+    # Check domain cap
+    if request.user.domains.count() >= DomainRegistration.MAX_FREE_DOMAINS:
+        return JSONResponse({"error": 0})
+
+    # Try to register
+    try:
+        d = DomainRegistration.register_domain(
+            domain, test_only=settings.DEBUG)
+    except Exception, e:
+        return JSONResponse({"errors": str(e)})
+
+    # TODO afterwards in a separate worker
+    d.configure_dns(domain, staging=settings.STAGING)
+
+    # Give client the domain info
+    return JSONResponse(d.domain_info)
 
