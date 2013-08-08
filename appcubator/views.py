@@ -592,6 +592,8 @@ def app_deploy(request, app_id):
     if 'errors' in result:
         raise Exception(result)
     elif 'branch' in result and 'files' in result:
+        #status = 409
+        # damn jquery
         status = 409
     else:
         status = 200
