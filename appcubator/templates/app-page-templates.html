@@ -1,8 +1,16 @@
 <script type="text/template" id="app-main-page">
-    <div class="row hoff1 span58">
-      <h2 class="span48 pheader">{{ app.name }} Overview</h2>
-      <div class="pane deploy-pane span10 hi3 right">
-        <div class="hi3 span10 deploy" id="deploy"><span class="icon"></span><h4>Go To App</h4></div>
+    <div class="row hoff1 span58 overview-pane">
+      <div class="span46">
+        <h2 class="pheader">{{ app.name }} Overview</h2><br>
+        <a href="{{ app.site_url }}" class="link">{{ app_url }} <div href="#" class="edit-btn btn">Edit</div></a><br>
+        <span class="description hi3" id="app-description">Yoloapp makes people happy.</span>
+      </div>
+      <div class="span12 hi10 right">
+        <div class="pane-btn">
+          <div class="hi3 span12 deploy pane" id="deploy"><span class="icon"></span><h4>Share App</h4></div><br>
+          <div class="hi3 span12 deploy data pane" id="deploy"><span class="icon"></span><h4>See Your Data</h4></div><br>
+          <div class="hi3 span12 deploy download pane" id="deploy"><span class="icon"></span><h4>Download Code</h4></div><br>
+        </div>
       </div>
       <hr class="span58 pheader">
     </div>

@@ -8,7 +8,7 @@ h3 {
 
   h4 {
     line-height: 45px;
-    margin-left: 10px;
+    margin-left: 4px;
     vertical-align: top;
   }
 
@@ -16,7 +16,7 @@ h3 {
     background-image: url('/static/img/go-to-icon.png');
     background-repeat: no-repeat;
     height: 45px;
-    width: 45px;
+    width: 40px;
     background-position: center;
     display: inline-block;
 
@@ -194,3 +194,62 @@ h3 {
 
   } // end .analytics
 
+
+.overview-pane {
+  a {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+    border: 1px solid #d3d3d3;
+    padding: 10px 18px;
+    font-weight: bold;
+    margin-top: 6px;
+  }
+
+  a.link {
+    -webkit-transition: width 200ms ease;
+    -moz-transition: width 200ms ease;
+    -o-transition: width 200ms ease;
+    -ms-transition: width 200ms ease;
+    transition: width 200ms ease;
+  }
+
+  .edit-btn {
+    display: none;
+    margin: 0;
+    height: 26px;
+    line-height: 26px;
+    margin-top: -5px;
+    padding-top: 0px;
+  }
+
+  a.link:hover .edit-btn {
+    display: inline-block;
+  }
+
+  .description {
+    font-style: italic;
+    margin-top: 12px;
+    font-size: 16px;
+  }
+
+  .pane-btn {
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 4px;
+    -webkit-box-shadow: 0 1px 3px #b9bbbe;
+    box-shadow: 0 1px 3px #b9bbbe;
+  }
+
+  .pane-btn .pane {
+    border-radius: 0;
+  }
+
+  .download .icon {
+    background-image: url('/static/img/download-icon-blue.png');
+  }
+
+  .data .icon {
+    background-image: url('/static/img/data-icon.png');
+  }
+}
