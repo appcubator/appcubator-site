@@ -219,7 +219,7 @@ define([
                         text += "\n<div>";
                         text += "\n  <h2>Affected files</h2>";
                         text += "\n  <ol>";
-                        for (var i = 0; data.files.length; i++) {
+                        for (var i = 0; i < data.files.length; i++) {
                             text += "\n    <li class=\"file\">"+data.files[i]+"</li>";
                         }
                         text += "\n  </ol>";
