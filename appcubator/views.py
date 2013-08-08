@@ -587,7 +587,7 @@ def app_deploy(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    result = app.deploy()
+    result = app.deploy(git_user=app.owner.extradata.git_user_id())
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     status = 500 if 'errors' in result else 200
     if status == 500:
@@ -657,7 +657,7 @@ def sub_register_domain(request, app_id, subdomain):
     form = forms.ChangeSubdomain({'subdomain': subdomain}, app=app)
     if form.is_valid():
         app = form.save(state_version=False)
-        result = app.deploy()
+        result = app.deploy(git_user=app.owner.extradata.git_user_id())
         status = 500 if 'errors' in result else 200
         return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 
