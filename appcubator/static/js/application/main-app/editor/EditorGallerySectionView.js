@@ -62,7 +62,7 @@ function(
     addHeaderItem: function(text, target) {
       var li = document.createElement('li');
       li.className = 'gallery-header ui-draggable open';
-      li.innerHTML = text + '<img class="qmark" src="/static/img/help_b.png">';
+      li.innerHTML = text + '<span class="qmark">?</span>';
       var icon = document.createElement('img');
       icon.className="icon";
       icon.src="/static/img/right-arrow.png";
@@ -90,19 +90,7 @@ function(
 
     showSectionTutorial: function(e) {
       e.stopPropagation();
-      var headerText = $(e.target.parentNode).text();
-      if(headerText === 'Design Elements') {
-        v1.showTutorial('Design Elements');
-      }
-      else if(headerText === 'Authentication') {
-        v1.showTutorial('Login');
-      }
-      else if(headerText === 'Table Data') {
-        v1.showTutorial('Form');
-      }
-      else if(headerText === 'Page Context Data') {
-        v1.showTutorial('Page Context');
-      }
+      v1.showTutorial(this.name);
     }
 
   });

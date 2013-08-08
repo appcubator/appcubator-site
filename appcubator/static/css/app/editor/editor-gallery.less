@@ -217,12 +217,21 @@ background-color: rgba(255,255,255,0.4);
     border: none;
   }
 
-  img.qmark {
-    margin-left: 15px;
-    margin-top: -3px;
-    height: 17px;
-    width: auto;
+  span.qmark {
+    height: 24px;
+    line-height: 24px;
+    width: 30px;
+    float: right;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
     .border-radius(10px);
+  }
+
+  span.qmark:hover {
+    transform: scale(1.4);
+    -ms-transform: scale(1.4); /* IE 9 */
+    -webkit-transform: scale(1.4); /* Safari and Chrome */
   }
 
   .icon {
