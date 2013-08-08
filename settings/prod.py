@@ -6,6 +6,7 @@ import os
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+
 PRODUCTION = True
 STAGING = False
 
