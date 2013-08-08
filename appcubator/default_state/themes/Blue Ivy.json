@@ -89,33 +89,27 @@
   "buttons": [
     {
       "style": "",
-      "isSingle": true,
+      "isSingle": false,
       "content_attribs": {
-        "value": "Button1"
+        "href": "internal://Homepage"
       },
       "hoverStyle": "",
       "class_name": "btn-1",
-      "content": null,
-      "tagName": "input",
-      "activeStyle": "",
-      "cons_attribs": {
-        "type": "submit"
-      }
+      "content": "Button 1",
+      "tagName": "a",
+      "activeStyle": ""
     },
     {
       "style": "",
-      "isSingle": true,
+      "isSingle": false,
       "content_attribs": {
-        "value": "Button1"
+        "href": "internal://Homepage"
       },
       "hoverStyle": "",
       "class_name": "btn-2",
-      "content": null,
-      "tagName": "input",
-      "activeStyle": "",
-      "cons_attribs": {
-        "tagType": "submit"
-      }
+      "content": "Button 1",
+      "tagName": "a",
+      "activeStyle": ""
     },
     {
       "style": "",
