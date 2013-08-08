@@ -43,14 +43,13 @@ define([
             }
           }, this);
 
+          this.$el.append(fieldsList);
+
           this.model.get('searchFields').each(function(field) {
             var box = document.getElementById('search-for-' + field.get('value'));
             if(box) box.checked = true;
           });
 
-          this.$el.append(fieldsList);
-
-          //this.$el.append('<div class="btn done-btn">Done</div>')
           return this;
         },
 
