@@ -15,6 +15,7 @@ define([
         css: 'searc-editor',
 
         padding: 0,
+        height: 400,
 
         initialize: function(searchModel) {
           _.bindAll(this);
@@ -33,9 +34,12 @@ define([
             this.$el.find('.search-direct').append('<option value="internal://'+ pageM.get('name') +'" '+selected+'>'+ pageM.get('name') +'</option>');
           }, this);
 
+          var fieldsList = document.createElement('div');
+          fieldsList.className = 'fields-list';
+
           this.entity.get('fields').each(function(fieldM) {
             if(fieldM.get('type') !== 'fk') {
-              this.$el.append('<div class="field"><input type="checkbox" value="'+ fieldM.cid +'" id="search-for-'+ fieldM.get('name') +'"><label for="search-for-'+ fieldM.get('name') +'">'+fieldM.get('name')+'</label></div>');
+              fieldsList.innerHTML += '<div class="field"><input type="checkbox" value="'+ fieldM.cid +'" id="search-for-'+ fieldM.get('name') +'"><label for="search-for-'+ fieldM.get('name') +'">'+fieldM.get('name')+'</label></div>';
             }
           }, this);
 
@@ -43,6 +47,8 @@ define([
             var box = document.getElementById('search-for-' + field.get('value'));
             if(box) box.checked = true;
           });
+
+          this.$el.append(fieldsList);
 
           //this.$el.append('<div class="btn done-btn">Done</div>')
           return this;
