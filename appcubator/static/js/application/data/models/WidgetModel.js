@@ -168,6 +168,12 @@ function(DataModel, LayoutModel) {
       return false;
     },
 
+    isCustomWidget: function() {
+      if(this.get('data').has('cssC') ||
+         this.get('data').has('jsC')  ||
+         this.get('data').has('htmlC')) return true;
+    },
+
     toJSON : function() {
       var json = _.clone(this.attributes);
       json = _.omit(json, 'selected', 'deletable', 'context');

@@ -8,6 +8,7 @@ define([
   'editor/form-editor/FormEditorView',
   'editor/form-editor/LoginFormEditorView',
   'editor/QueryEditorView',
+  'editor/CustomWidgetEditorModal',
   'mixins/BackboneUI',
   'util'
 ],
@@ -19,7 +20,8 @@ function(WidgetContentEditor,
          RowGalleryView,
          FormEditorView,
          LoginFormEditorView,
-         QueryEditorView) {
+         QueryEditorView,
+         CustomWidgetEditorModal ) {
 
   var WidgetEditorView = Backbone.UIView.extend({
     className : 'widget-editor fadeIn',
@@ -40,6 +42,7 @@ function(WidgetContentEditor,
       'click .done-editing'       : 'closeEditingMode',
       'click .delete-button'      : 'clickedDelete',
       'click .done-text-editing'  : 'clickedDoneTextEditing',
+      'click .edit-custom-widget-btn' : 'openCustomWidgetEditor',
       'click'                     : 'clicked'
     },
 
@@ -149,20 +152,27 @@ function(WidgetContentEditor,
         }
       }
       else {
-        this.widgetClassPickerView = new WidgetClassPickerView(this.model);
-        this.layoutEditor = new WidgetLayoutEditor(this.model);
-        this.contentEditor = new WidgetContentEditor(this.model);
 
-        this.subviews.push(this.widgetClassPickerView);
-        this.subviews.push(this.layoutEditor);
-        this.subviews.push(this.contentEditor);
 
-        this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+        if(this.model.isCustomWidget()) {
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-custom-widget-btn', 'Edit Custom Widget'));
+        }
+        else {
+          this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+          this.layoutEditor = new WidgetLayoutEditor(this.model);
+          this.contentEditor = new WidgetContentEditor(this.model);
 
-        this.el.appendChild(this.widgetClassPickerView.el);
-        this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
-        this.el.appendChild(this.layoutEditor.el);
-        this.el.appendChild(this.contentEditor.el);
+          this.subviews.push(this.widgetClassPickerView);
+          this.subviews.push(this.layoutEditor);
+          this.subviews.push(this.contentEditor);
+
+          this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+
+          this.el.appendChild(this.widgetClassPickerView.el);
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
+          this.el.appendChild(this.layoutEditor.el);
+          this.el.appendChild(this.contentEditor.el);
+        }
       }
 
       this.$el.removeClass('left');
@@ -257,6 +267,10 @@ function(WidgetContentEditor,
 
     openSearchEditor: function() {
       new SearchEditorView(this.model.get('data').get('searchQuery'));
+    },
+
+    openCustomWidgetEditor: function() {
+      new CustomWidgetEditorModal(this.model);
     },
 
     closeEditingMode: function() {

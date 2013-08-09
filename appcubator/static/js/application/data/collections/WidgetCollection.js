@@ -125,9 +125,10 @@ function(WidgetModel,
 
         widget.data = {};
         widget.data.nodeType = 'custom-widget';
-        widget.data.htmlC = '';
-        widget.data.cssC = '';
-        widget.data.jsC = '';
+        widget.data.tagName = 'div';
+        widget.data.htmlC = null;
+        widget.data.cssC = null;
+        widget.data.jsC = null;
 
         var widgetModel = new WidgetModel(widget);
         return this.push(widgetModel);

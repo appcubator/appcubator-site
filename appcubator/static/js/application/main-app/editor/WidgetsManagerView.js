@@ -7,6 +7,7 @@ define([
   'editor/WidgetFormView',
   'editor/WidgetSelectorView',
   'editor/WidgetCustomView',
+  'editor/CustomWidgetEditorModal',
   'backbone'
 ],
 function( WidgetView,
@@ -15,7 +16,9 @@ function( WidgetView,
           WidgetEditorView,
           WidgetListView,
           WidgetFormView,
-          WidgetSelectorView) {
+          WidgetSelectorView,
+          WidgetCustomView,
+          CustomWidgetEditorModal) {
 
   var WidgetManagerView = Backbone.View.extend({
     el : $('#page'),
@@ -116,8 +119,9 @@ function( WidgetView,
     },
 
     placeCustomWidget: function(widgetModel, isNew) {
-      var curWidget= new WidgetCustomView(containerWidgetModel);
-      if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
+      var curWidget= new WidgetCustomView(widgetModel);
+      this.widgetsContainer.appendChild(curWidget.render().el);
+      if(isNew) new CustomWidgetEditorModal(widgetModel);
       return curWidget;
     },
 
