@@ -42,7 +42,8 @@ function( WidgetContainerView,
       this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "add", this.placeWidget, true, true);
       this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "add", this.renderShadowElements);
       this.listenTo(this.model.get('data').get('container_info').get('row').get('uielements'), "remove", this.renderShadowElements);
-      this.listenTo(this.model.get('data').get('container_info').get('query'), "change", this.renderShadowElements);
+      // THIS IS BROKEN
+      //this.listenTo(this.model.get('data').get('container_info').get('query'), "change", this.renderShadowElements);
 
       this.listenTo(this.model, 'deselected', function() {
         this.model.trigger('editModeOff');
