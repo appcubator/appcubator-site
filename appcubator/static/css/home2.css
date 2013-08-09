@@ -1474,11 +1474,12 @@ li .summary h3 {
 }
 .slide-documentation h5 {
   margin-bottom: 16px;
+  margin-top: 56px;
 }
 .slide-documentation h6 {
   font-weight: bold;
   margin-bottom: 14px;
-  margin-top: 16px;
+  margin-top: 46px;
 }
 
 .slide-documentation p.image {
@@ -1491,6 +1492,13 @@ li .summary h3 {
   margin-left: 32px;
   margin-top: 20px;
   margin-bottom: 24px;
+  padding-left: 16px;
+  border-left: 3px solid #ccd;
+}
+
+.slide-documentation p.example span {
+  font-weight: bold;
+  margin-bottom: 16px;
 }
 
 .slide-documentation p.image img {
