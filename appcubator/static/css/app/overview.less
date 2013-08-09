@@ -16,7 +16,7 @@ h3 {
     background-image: url('/static/img/go-to-icon.png');
     background-repeat: no-repeat;
     height: 45px;
-    width: 40px;
+    width: 45px;
     background-position: center;
     display: inline-block;
 
@@ -50,7 +50,7 @@ h3 {
   -webkit-background-size: 100px auto;
   -moz-background-size: 100px auto;
   background-size: 100px auto;
-  height: 270px;
+  height: 240px;
   overflow: hidden;
 
   -webkit-transition: height linear 0.4s;
@@ -212,25 +212,46 @@ h3 {
     -o-transition: width 200ms ease;
     -ms-transition: width 200ms ease;
     transition: width 200ms ease;
+    height: 42px;
+  }
+
+  .description:hover .edit-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
   }
 
   .edit-btn {
     display: none;
     margin: 0;
-    height: 26px;
-    line-height: 26px;
+    height: 30px;
+    line-height: 30px;
     margin-top: -5px;
     padding-top: 0px;
+    vertical-align: top;
   }
 
-  a.link:hover .edit-btn {
+  a.link:hover .edit-btn,
+  .description:hover .edit-btn {
     display: inline-block;
+    margin-left: 6px;
+  }
+
+  a.pane {
+    padding: 0;
+    margin: 0;
+    border: 0;
   }
 
   .description {
+    position: relative;
     font-style: italic;
     margin-top: 12px;
-    font-size: 16px;
+    font-size: 15px;
+    height: 46px;
+    line-height: 23px;
+    // border-radius: 3px;
+    // border: 1px solid #ccc;
   }
 
   .pane-btn {

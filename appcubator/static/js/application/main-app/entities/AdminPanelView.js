@@ -20,13 +20,13 @@ function() {
     },
 
     render: function() {
+      console.log("YALOOOOOO");
       var template = util.getHTML('admin-panel');
       if(!appUrl) {
         this.el.innerHTML = '<div style="padding:40px">You app needs to be deployed first.</div>';
         return;
       }
       this.el.innerHTML = _.template(template, { username:"admin", pwd: "password", url: appUrl + 'admin/'});
-
       return this;
     },
 

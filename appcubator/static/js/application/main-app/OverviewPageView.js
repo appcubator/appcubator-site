@@ -1,10 +1,12 @@
 define([
   'app/AnalyticsView',
   'mixins/SimpleModalView',
+  'app/ShareModalView',
+  'app/entities/AdminPanelView',
   'app/templates/MainTemplates',
   'util'
 ],
-function(AnalyticsView, SimpleModalView) {
+function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
 
   var OverviewPageView = Backbone.View.extend({
     css: 'app-page',
@@ -12,7 +14,10 @@ function(AnalyticsView, SimpleModalView) {
     events : {
       'click .tutorial'        : 'showTutorial',
       'click .feedback'        : 'showFeedback',
-      'click #deploy'          : 'deploy'
+      'click #deploy'          : 'deploy',
+      'click .browse'          : 'browse',
+      'click #share'           : 'share',
+      'click .edit-btn'        : 'settings'
     },
 
     initialize: function() {
@@ -49,6 +54,19 @@ function(AnalyticsView, SimpleModalView) {
         $('#deploy').find('h4').html('Go To App');
         clearInterval(threeDots.timer);
       });
+    },
+
+    share: function() {
+      new ShareModalView();
+    },
+
+    browse: function() {
+      new AdminPanelView();
+    },
+
+    settings: function(e) {
+      e.preventDefault();
+      v1.navigate('/app/' + appId + '/info/#domain-settings');
     },
 
     showTutorial: function() {
