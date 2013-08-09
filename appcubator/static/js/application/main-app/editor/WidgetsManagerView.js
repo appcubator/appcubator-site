@@ -6,6 +6,7 @@ define([
   'editor/WidgetListView',
   'editor/WidgetFormView',
   'editor/WidgetSelectorView',
+  'editor/WidgetCustomView',
   'backbone'
 ],
 function( WidgetView,
@@ -69,6 +70,9 @@ function( WidgetView,
       else if(model.get('data').has('container_info') || model.get('data').get('action') == "thirdpartylogin") {
         widget = this.placeContainer(model, isNew);
       }
+      else if(model.get('data').get('nodeType') == 'custom-widget') {
+        widget = this.placeCustomWidget(model, isNew);
+      }
       else {
         widget = this.placeWidget(model, isNew);
       }
@@ -108,6 +112,12 @@ function( WidgetView,
       if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
       else util.get('full-container').appendChild(curWidget.render().el);
       if(isNew) curWidget.autoResize();
+      return curWidget;
+    },
+
+    placeCustomWidget: function(widgetModel, isNew) {
+      var curWidget= new WidgetCustomView(containerWidgetModel);
+      if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
       return curWidget;
     },
 

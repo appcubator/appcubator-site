@@ -118,6 +118,21 @@ function(WidgetModel,
         return this.push(widgetModel);
       },
 
+      createCustomWidget: function(layout) {
+        var widget = {};
+        widget.type = "node";
+        widget.layout = layout;
+
+        widget.data = {};
+        widget.data.nodeType = 'custom-widget';
+        widget.data.htmlC = '';
+        widget.data.cssC = '';
+        widget.data.jsC = '';
+
+        var widgetModel = new WidgetModel(widget);
+        return this.push(widgetModel);
+      },
+
       createCreateForm: function(layout, entity) {
         var widget = {};
         widget.type = "form";

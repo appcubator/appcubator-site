@@ -103,6 +103,7 @@ define([
       }, this);
 
       self.appendLambdaCreate();
+      self.appendCustomWidget();
     },
 
     appendUIElement: function(elementModel) {
@@ -132,6 +133,25 @@ define([
       var id='type-create-form';
       var icon = 'create-form-icon';
       var text = 'Create Form';
+
+      var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
+      var self = this;
+      $(li).draggable({
+        cursor  : "move",
+        cursorAt: { top: 0, left: 0 },
+        helper: "clone",
+        start : function(e) {
+          self.dragActive = true;
+        },
+        stop: self.dropped
+      });
+    },
+
+    appendCustomWidget: function() {
+      var className = 'uielement';
+      var id='type-custom-widget';
+      var icon = 'yolo';
+      var text = 'Custom Widget';
 
       var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
       var self = this;
@@ -349,6 +369,8 @@ define([
         case "lambda-create-form":
           v1State.getCurrentPage().trigger('creat-form-dropped');
           return new PickCreateFormEntityView(layout, id);
+        case "custom-widget":
+          return this.createCustomWidget(layout, id);
         default:
           throw "Unknown type dropped to the editor.";
       }
@@ -514,6 +536,10 @@ define([
 
       if(type == "facebookshare") {
         return this.widgetsCollection.createFacebookShare(layout);
+      }
+
+      if(type == "custom-widget") {
+        return this.widgetsCollection.createCustomWidget(layout);
       }
 
       var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, {});
