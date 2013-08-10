@@ -1,7 +1,7 @@
 define([
-  'tourist'
+  "tourist-omer"
   ],
-  function() {
+  function(TouristOmer) {
 
     var findPos = function (obj) {
       var curleft = curtop = 0;
@@ -56,7 +56,8 @@ define([
      */
      {
       target: $('.qm-btn'),
-      content: '<h3>Questions?</h3><p>If you have questions during the walkthrough, click the question marks for more info.</p>',
+      content: 'If you have questions during the walkthrough, click the question marks for more info.',
+      title: "Questions",
       my: "right center",
       at: "left center",
       url: '/',
@@ -593,7 +594,9 @@ define([
     var ind = v1State.get('simpleWalkthrough');
     ind--;
     var currentSteps = steps.slice(ind);
-    var quickTour = new Tourist.Tour({
+
+    console.log(TouristOmer);
+    var quickTour = new TouristOmer.Tour({
       steps: currentSteps
     });
 

@@ -23,6 +23,7 @@ require.config({
     "list" : "../../libs/list",
     "snap" : "../../libs/snap.min",
     "tourist": "../../libs/tourist.min",
+    "tourist-omer": "../../libs/touris-omer",
     "models" : "../data/models",
     "collections" : "../data/collections",
     "tutorial" : "../tutorial",
@@ -61,6 +62,10 @@ require.config({
       exports: "Tourist",
       deps: ["backbone"]
     },
+    "tourist-omer": {
+      exports: "TouristOmer",
+      deps: ["tourist"]
+    },
     "util.filepicker": {
       exports: "util"
     }
@@ -85,7 +90,8 @@ require([
   "util",
   "comp",
   "xrayquire",
-  "mixins/BackboneConvenience"
+  "mixins/BackboneConvenience",
+  "tourist-omer"
 ],
 function (AppModel,
           PageCollection,
