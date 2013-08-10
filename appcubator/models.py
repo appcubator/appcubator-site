@@ -82,6 +82,17 @@ def create_user_profile(sender, instance, created, **kwargs):
         instance.extradata
     except ExtraUserData.DoesNotExist, e:
         ExtraUserData(user=instance).save()
+    """
+    Match with the customer if its in the db
+    """
+    try:
+        customer = Customer(email=instance.username)
+        customer.user_id = long(instance.pk)
+        customer.save()
+    except:
+        customer = Customer.create_first_time(instance.name, instance.email, "", "", "", "", "")
+        customer.user_id = long(instance.pk)
+        customer.save()
 
 post_save.connect(create_user_profile, sender=User)
 
@@ -672,11 +683,13 @@ class Customer(models.Model):
     sign_up_date = models.DateTimeField(auto_now_add=True)
     sign_up_fee = models.IntegerField()
     sent_welcome_email = models.BooleanField(default=False)
+    contact_history = models.TextField()
+    notes = models.TextField()
 
     @classmethod
     def create_first_time(cls, name, email, company, extra_info, description, sign_up_fee, consulting):
         customer = cls(user_id=0, name=name, email=email, company=company, consulting=consulting,
-                       extra_info=extra_info, project_description=description, sign_up_fee=sign_up_fee)
+                       extra_info=extra_info, project_description=description, sign_up_fee=sign_up_fee, contact_history='[]', notes= '')
         customer.save()
 
 class AppstateSnapshot(models.Model):
