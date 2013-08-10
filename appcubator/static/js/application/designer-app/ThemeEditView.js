@@ -17,7 +17,8 @@ define([
       'keyup #base-css'             : 'baseChanged',
       'keyup #fonts-editor'         : 'fontsChanged',
       'click #upload-static'        : 'uploadStatic',
-      'click #theme-statics .remove': 'deleteStaticFile'
+      'click #theme-statics .remove': 'deleteStaticFile',
+      'click .static-file'          : 'clickedStatic'
     },
 
     initialize: function(themeModel) {
@@ -127,7 +128,7 @@ define([
     },
 
     appendStaticFile: function(file) {
-      util.get('theme-statics').innerHTML += '<div id="themestatic-'+file.id+'" class="span12 offsetr1 hoff1"><img src="'+ file.url +'"><p class="name">' + file.name+'</p><a href="#'+file.id+'" class="btn btn-danger remove">Delete</a></div>';
+      util.get('theme-statics').innerHTML += '<div id="themestatic-'+file.id+'" class="static-file span12 offsetr1 hoff1"><img src="'+ file.url +'"><p class="name">' + file.name+'</p><a href="#'+file.id+'" class="btn btn-danger remove">Delete</a></div>';
     },
 
     deleteStaticFile: function(e) {
@@ -168,6 +169,12 @@ define([
         file.name = file.filename;
         self.appendStaticFile(file);
       });
+    },
+
+    clickedStatic: function(e) {
+      var $el = $(e.currentTarget).find('img');
+      link = $el.attr('src');
+      util.copyToClipboard(link);
     },
 
     save: function(e) {
