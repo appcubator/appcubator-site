@@ -432,11 +432,11 @@ class App(models.Model):
         else:
             raise Exception("Deployment server error: %r" % r.text)
 
-    def deploy(self, retry_on_404=True, git_user=None):
+    def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
         try:
             logger.info("Deployed to %s" % tmpdir)
-            r = self._transport_app(tmpdir, retry_on_404=retry_on_404, git_user=git_user)
+            r = self._transport_app(tmpdir, retry_on_404=retry_on_404, git_user=self.owner.extradata.git_user_id())
         finally:
             # because hard disk space doesn't grow on trees.
             shutil.rmtree(tmpdir)
