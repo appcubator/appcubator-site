@@ -6,7 +6,9 @@ function() {
   var CustomWidgetEditorModal = Backbone.ModalView.extend({
     className : 'custom-widget-editor',
     width  : 540,
+    height: 540,
     title: "Custom Widget Editor",
+    doneButton: true,
 
     events : {
       'keydown #edit-css-inp' : 'cssEdited',
@@ -26,7 +28,7 @@ function() {
       var cssStr  = this.model.get('data').get('cssC')||'';
       var jsStr   = this.model.get('data').get('jsC')||'';
 
-      this.el.innerHTML = '<textarea id="edit-html-inp">'+htmlStr+'</textarea><br><textarea id="edit-js-inp">'+jsStr+'</textarea><br><textarea id="edit-css-inp">'+cssStr+'</textarea>';
+      this.el.innerHTML = 'HTML<br><textarea id="edit-html-inp">'+htmlStr+'</textarea><br>JS<br><textarea id="edit-js-inp">'+jsStr+'</textarea><br>CSS<br><textarea id="edit-css-inp">'+cssStr+'</textarea>';
       
       return this;
     },
@@ -44,6 +46,10 @@ function() {
     htmlEdited: function(e) {
       if(!e.currentTarget.value.length) return;
       this.model.get('data').set('htmlC', e.currentTarget.value);
+    },
+
+    onClose: function() {
+      this.model.trigger('custom_edited');
     }
 
   });

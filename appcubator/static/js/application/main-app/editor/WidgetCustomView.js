@@ -22,6 +22,8 @@ function( WidgetView ) {
     initialize: function(widgetModel) {
       WidgetCustomView.__super__.initialize.call(this, widgetModel);
       _.bindAll(this);
+
+      this.listenTo(this.model, 'custom_edited', this.rePlaceAll);
     },
 
     reRender: function() {
@@ -67,6 +69,12 @@ function( WidgetView ) {
       return this;
     },
 
+    rePlaceAll: function() {
+      this.placeHTML();
+      this.placeCSS();
+      this.placeJS();
+    },
+
     placeHTML: function() {
       if(this.model.get('data').get('html')) {
         this.el.innerHTML = this.model.get('data').get('html');
@@ -75,10 +83,31 @@ function( WidgetView ) {
 
     placeJS: function() {
 
+      var jsTag = 'custom-js-widget-' + this.model.cid;
+      if(jsTag) $(jsTag).remove();
+
+      jsTag = document.createElement('script');
+      jsTag.id = 'custom-js-widget-' + this.model.cid;
+      jsTag.setAttribute("type","text/javascript");
+      jsTag.text = this.model.get('data').get('jsC');
+      document.body.appendChild(jsTag);
     },
 
     placeCSS: function() {
+      var styleTag = document.getElementById('custom-css-widget-' + this.model.cid);
+      if(styleTag) $(styleTag).remove();
 
+      var style = document.createElement('style');
+      style.id = 'custom-css-widget-' + this.model.cid;
+      style.type = 'text/css';
+      var css = this.model.get('data').get('cssC');
+      css = String(css).replace('body', '.fdededfcbcbcd');
+      if (style.styleSheet){
+        style.styleSheet.cssText = css;
+      } else {
+        style.appendChild(document.createTextNode(css));
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
     }
 
   });
