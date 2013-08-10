@@ -8,7 +8,10 @@ function(LinkEditorView) {
   var FooterEditorView = Backbone.ModalView.extend({
     className : 'footer-editor-modal',
     width: 600,
+    height: 600,
     padding: 0,
+    doneButton: true,
+    title: 'Footer Editor',
 
     events: {
       'click .done-btn' : 'closeModal',
@@ -40,7 +43,6 @@ function(LinkEditorView) {
       this.$linksList = this.$el.find('#link-editors');
 
       this.el.appendChild(editorDiv);
-      this.$el.append('<div class="bottom-sect"><div class="q-mark"></div><div class="btn done-btn">Done</div></div>');
 
       this.renderLinkEditorViews();
 
