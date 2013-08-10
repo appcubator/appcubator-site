@@ -11,9 +11,9 @@ function() {
     doneButton: true,
 
     events : {
-      'keydown #edit-css-inp' : 'cssEdited',
-      'keydown #edit-js-inp'  : 'jsEdited',
-      'keydown #edit-html-inp': 'htmlEdited'
+      // 'keydown #edit-css-inp' : 'cssEdited',
+      // 'keydown #edit-js-inp'  : 'jsEdited',
+      // 'keydown #edit-html-inp': 'htmlEdited'
     },
 
     initialize: function(widgetModel){
@@ -33,22 +33,10 @@ function() {
       return this;
     },
 
-    cssEdited: function(e) {
-      if(!e.currentTarget.value.length) return;
-      this.model.get('data').set('cssC', e.currentTarget.value);
-    },
-
-    jsEdited: function(e) {
-      if(!e.currentTarget.value.length) return;
-      this.model.get('data').set('jsC', e.currentTarget.value);
-    },
-
-    htmlEdited: function(e) {
-      if(!e.currentTarget.value.length) return;
-      this.model.get('data').set('htmlC', e.currentTarget.value);
-    },
-
     onClose: function() {
+      this.model.get('data').set('cssC', $('#edit-css-inp').val());
+      this.model.get('data').set('jsC', $('#edit-js-inp').val());
+      this.model.get('data').set('htmlC', $('#edit-html-inp').val());
       this.model.trigger('custom_edited');
     }
 

@@ -32,10 +32,6 @@ function( WidgetView ) {
     },
 
     render: function() {
-      this.form = document.createElement('form');
-      this.el.appendChild(this.form);
-      this.form.innerHTML = '';
-
       var width = this.model.get('layout').get('width');
       var height = this.model.get('layout').get('height');
 
@@ -76,8 +72,8 @@ function( WidgetView ) {
     },
 
     placeHTML: function() {
-      if(this.model.get('data').get('html')) {
-        this.el.innerHTML = this.model.get('data').get('html');
+      if(this.model.get('data').get('htmlC')) {
+        this.el.innerHTML = this.model.get('data').get('htmlC');
       }
     },
 
@@ -86,11 +82,32 @@ function( WidgetView ) {
       var jsTag = 'custom-js-widget-' + this.model.cid;
       if(jsTag) $(jsTag).remove();
 
-      jsTag = document.createElement('script');
-      jsTag.id = 'custom-js-widget-' + this.model.cid;
-      jsTag.setAttribute("type","text/javascript");
-      jsTag.text = this.model.get('data').get('jsC');
-      document.body.appendChild(jsTag);
+      var appendJSTag = function() {
+        console.log(this);
+
+        var customJSTemp = [
+          'function($) {  "use strict"; ',
+          // 'try {',
+          '<%= code %>',
+          // '} catch(err) { console.log("Error executing custom js."); }',
+          '}(window.jQuery);'
+        ].join('\n');
+
+        try {
+          jsTag = document.createElement('script');
+          jsTag.id = 'custom-js-widget-' + this.model.cid;
+          jsTag.setAttribute("type","text/javascript");
+          // console.log(_.template(customJSTemp, { code: this.model.get('data').get('jsC') }));
+          jsTag.text = this.model.get('data').get('jsC');
+
+          document.body.appendChild(jsTag);
+        }
+        catch(err) {
+          console.log('Error adding custom js:' + err);
+        }
+      };
+
+      this.listenTo(v1, 'editor-loaded', appendJSTag, this);
     },
 
     placeCSS: function() {
