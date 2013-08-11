@@ -90,6 +90,20 @@ define([
         //v1.unbind('editor-loaded');
       }
     },
+    {
+      ind     : 5,
+      title   : 'Pick a Quick Template',
+      content : 'Templates will give you a quick layout to start with. We\'ll go with the simple one for now and click the "Blank Page"',
+      loc     : "left center, right center",
+      url     : '/pages/',
+      target  : $('#page-3'),
+      setup: function(tour, options) {
+        $('#page-3').one('click', tour.next);
+      },
+      teardown: function() {
+        //v1.unbind('editor-loaded');
+      }
+    },
     /*
      * Welcome to Editor
      */
@@ -174,7 +188,11 @@ define([
       content : '<em>Drag this facebook login button onto the page.</em>',
       loc     : "right center, left center",
       url     : '/editor/0/',
+      target  : $('#entity-user-facebook'),
       waitUntil: "#entity-user-facebook",
+      prepare : function() {
+        $('#item-gallery').scrollTop($("#entity-user-facebook").offset().top - 110);
+      },
       setup: function(tour, options) {
         facebookDropped = function(uielem) {
           if(uielem.get('data').get('action') == "thirdpartylogin") {
@@ -185,8 +203,7 @@ define([
         v1State.get('pages').models[0].get('uielements').bind('add', facebookDropped);
 
         return { target: function() {
-          $('#item-gallery').scrollTop($("#entity-user-facebook").offset().top - 110);
-          return $('#entity-user-facebook');
+          return ;
         }() };
       },
       teardown: function() {

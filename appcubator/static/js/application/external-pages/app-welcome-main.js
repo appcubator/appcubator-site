@@ -19,6 +19,7 @@ require.config({
     "answer" : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
     "tourist": "../../libs/tourist.min",
+    "tourist-omer": "../../libs/touris-omer",
     "list" : "../../libs/list",
     "models" : "../data/models",
     "collections" : "../data/collections",
@@ -49,6 +50,10 @@ require.config({
     "tourist": {
       exports: "Tourist",
       deps: ["jquery", "backbone", "bootstrap"]
+    },
+    "tourist-omer": {
+      exports: "TouristOmer",
+      deps: ["tourist"]
     }
   }
 
