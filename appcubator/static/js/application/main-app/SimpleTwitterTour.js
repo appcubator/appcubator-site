@@ -3,67 +3,17 @@ define([
   ],
   function(TouristOmer) {
 
-    var findPos = function (obj) {
-      var curleft = curtop = 0;
-
-      if(obj.style.position == "fixed") return [1,1];
-      if (obj.offsetParent) {
-        do {
-          curleft += obj.offsetLeft;
-          curtop += obj.offsetTop;
-        } while (obj = obj.offsetParent);
-      }
-
-      return [curleft,curtop];
-    };
-
-    var incrementStep = function() {
-      v1State.set('simpleWalkthrough', v1State.get('simpleWalkthrough') + 1);
-    }
-
-    var timer = {};
-
-    var waitUntilAppears = function(selector, callbackFn, cont_args, count) {
-      clearTimeout(timer);
-      var cnt = (count || 0);
-
-      el = document.querySelector(selector);
-      if(el && !el.tagName) { el = el[0]; }
-
-      var repeat = function() {
-        cnt++;
-        timer = window.setTimeout(function() {
-          waitUntilAppears.call(this, selector, callbackFn, cont_args, cnt);
-        }, 500);
-      };
-
-      var fail = function() {
-        alert('There has been a problem with the flow of the Walkthrough. Please refresh your page. Don\'t worry, you\'ll start from where you left off!');
-      };
-
-      if(cnt > 60) return fail();
-      if(!el) return repeat();
-
-      var pos = findPos(el);
-
-      if($(el).height() === 0 || $(el).width() === 0 || pos[0] === 0 || pos[1] === 0) return repeat();
-      callbackFn.apply(undefined, cont_args);
-    };
-
     var steps = [
     /*
      * Question btn
      */
      {
-      target: $('.qm-btn'),
-      content: 'If you have questions during the walkthrough, click the question marks for more info.',
-      title: "Questions",
-      my: "right center",
-      at: "left center",
-      url: '/',
-      teardown: function() {
-        incrementStep();
-      },
+      ind     : 1,
+      title   : 'Questions',
+      content : 'If you have questions during the walkthrough, click the question marks for more info.',
+      loc     : "right center, left center",
+      target  : $('.qm-btn'),
+      url     : '/',
       nextButton: true,
       highlightTarget: true
     },
@@ -71,42 +21,40 @@ define([
      * Done with Tables. Going to pages.
      */
      {
-      content: '<h3>Let\'s get started!</h3><p><em>Click on <strong>Pages</strong> to start editing your pages.</em></p>',
-      my: "top center",
-      at: "bottom center",
-      target: $('.menu-app-pages'),
+      ind     : 2,
+      title   : 'Let\'s get started!',
+      content : '<em>Click on <strong>Pages</strong> to start editing your pages.</em>',
+      loc     : "top center, bottom center",
+      target  : $('.menu-app-pages'),
       url: '/tables/',
       setup: function(tour, options) {
         v1.bind('pages-loaded', function() {
           tour.next();
         });
-      },
-      teardown: function() {
-        v1.unbind('pages-loaded');
-        incrementStep();
       }
     },
     {
-      content: '<h3>Pages</h3><p>Here you can edit and delete your site\'s pages.</p>',
-      my: "left top",
-      at: "right top",
-      url: '/pages/',
+      ind     : 3,
+      title   : 'Pages',
+      content : 'Here you can edit and delete your site\'s pages.',
+      loc     : "left top, right top",
+      url     : '/pages/',
+      target  : $('.page-view'),
       nextButton: true,
       setup: function(tour, options) {
-        return { target: $('.page-view').first() };
-      },
-      teardown: function() {
-        incrementStep();
+        // return { target: .first() };
       }
     },
     /*
      * Add New Page
      */
     {
-      content: '<h3>A New Page</h3><p>Let\'s create a new page.</p><p><em>Click this button and enter <strong>Tweet Feed</strong></em></p>',
-      my: "left top",
-      at: "right top",
-      url: '/pages/',
+      ind     : 4,
+      title   : 'A New Page',
+      content : 'Let\'s create a new page.</p><p><em>Click this button and enter <strong>Tweet Feed</strong></em>',
+      loc     : "left top, right top",
+      url     : '/pages/',
+      target  : $('#create-page-box'),
       setup: function(tour, options) {
         feedPageAdded = function(page) {
           console.log(page);
@@ -119,53 +67,49 @@ define([
           }
         };
         v1State.get('pages').bind('add', feedPageAdded);
-        return { target: $('#create-page-box') };
+        //return { target };
       },
       teardown: function() {
         v1State.get('pages').unbind('add', feedPageAdded);
-        incrementStep();
       }
     },
     /*
      * Click Edit Page
      */
     {
-      content: '<h3>Editing a Page</h3><p>Here you can edit your home page. <p><em>Click <strong>Edit Page</strong></em></p>',
-      my: "left top",
-      at: "right top",
-      url: '/pages/',
+      ind     : 5,
+      title   : 'Editing a Page',
+      content : 'Here you can edit your home page. <em>Click <strong>Edit Page</strong></em>',
+      loc     : "left top, right top",
+      url     : '/pages/',
+      target  : $('.page-view'),
       setup: function(tour, options) {
-        waitUntilAppears('.search-panel', function(tour, options) { tour.next(); }, [tour, options]);
-        return { target: $('.page-view').first() };
+        $('.page-view').one('click', tour.next);
       },
       teardown: function() {
-        v1.unbind('editor-loaded');
-        incrementStep();
+        //v1.unbind('editor-loaded');
       }
     },
     /*
      * Welcome to Editor
      */
     {
-      content: '<h3>Welcome to Editor</h3><p>What you see is what you get. You can drag elements onto the page and play around with them.</p>',
-      my: "right top",
-      at: "left bottom",
+      ind     : 6,
+      title   : 'Welcome to Editor',
+      content : 'What you see is what you get. You can drag elements onto the page and play around with them.',
+      loc     : "right top, left bottom",
       nextButton: true,
-      url: '/editor/0/',
-      setup: function(tour, options) {
-        return { target: $('.search-panel').first() };
-      },
-      teardown: function() {
-        incrementStep();
-      }
+      url      : '/editor/0/',
+      target   : $('.search-panel')
     },
     /*
      * Save Early, ssave often
      */
     {
-      content: '<h3>Saving Your Progress</h3><p>Save early, save often. We periodically autosave for you.</p>',
-      my: "top center",
-      at: "bottom center",
+      ind     : 7,
+      title   : 'Saving Your Progress',
+      content : 'Save early, save often. We periodically autosave for you.',
+      loc: "top center, bottom center",
       nextButton: true,
       url: '/editor/0/',
       setup: function(tour, options) {
@@ -174,18 +118,16 @@ define([
         }, 200);
         v1.save();
         return { target: $('#editor-save') };
-      },
-      teardown: function() {
-        incrementStep();
       }
     },
     /*
      * Drag header element
      */
     {
-      content: '<h3>Drag\'n\'Drop</h3><p><em>Drag this header element to the page.</em></p>',
-      my: "right center",
-      at: "left center",
+      ind     : 8,
+      title   : 'Drag\'n\'Drop',
+      content : '<em>Drag this header element to the page.</em>',
+      loc     : "right center, left center",
       url: '/editor/0/',
       setup: function(tour, options) {
 
@@ -200,16 +142,16 @@ define([
       },
       teardown: function() {
         v1State.getCurrentPage().get('uielements').unbind('add', headerDragged);
-        incrementStep();
       }
     },
     /*
      * Editing Elements
      */
     {
-      content: '<h3>Editing Elements</h3><p>Click the text to edit it.<br>Then, click "Pick Style" to choose your style.</p>',
-      my: "left center",
-      at: "right center",
+      ind     : 9,
+      title   : 'Editing Elements',
+      content : 'Click the text to edit it.<br>Then, click "Pick Style" to choose your style.',
+      loc: "left center, right center",
       nextButton: true,
       url: '/editor/0/',
       setup: function(tour, options) {
@@ -221,19 +163,17 @@ define([
         }, 200);
 
         return { target: $('.pick-style') };
-      },
-      teardown: function() {
-        
       }
     },
     /*
      * Drag facebook login
      */
     {
-      content: '<h3>Time to get some users!</h3><p><em>Drag this facebook login button onto the page.</em></p>',
-      my: "right center",
-      at: "left center",
-      url: '/editor/0/',
+      ind     : 10,
+      title   : 'Time to get some users!',
+      content : '<em>Drag this facebook login button onto the page.</em>',
+      loc     : "right center, left center",
+      url     : '/editor/0/',
       waitUntil: "#entity-user-facebook",
       setup: function(tour, options) {
         facebookDropped = function(uielem) {
@@ -244,23 +184,23 @@ define([
         };
         v1State.get('pages').models[0].get('uielements').bind('add', facebookDropped);
 
-        return { target: function() { 
+        return { target: function() {
           $('#item-gallery').scrollTop($("#entity-user-facebook").offset().top - 110);
-          return $('#entity-user-facebook'); 
+          return $('#entity-user-facebook');
         }() };
       },
       teardown: function() {
         v1State.getCurrentPage().get('uielements').unbind('add', facebookDropped);
-
       }
     },
     /*
      * Customize facebook login btn
      */
     {
-      content: '<h3>Customizing functionality</h3><p>Some elements, like this Facebook button, can be customized.</p><p><em>Select it and click <strong>Edit Login</strong></em></p>',
-      my: "left center",
-      at: "right center",
+      ind     : 11,
+      title   : 'Customizing functionality',
+      content : 'Some elements, like this Facebook button, can be customized.</p><p><em>Select it and click <strong>Edit Login</strong></em>',
+      loc     : "left center, right center",
       url: '/editor/0/',
       setup: function(tour, options) {
         var elem = $(".facebook-login-btn")[0];
@@ -269,18 +209,16 @@ define([
               waitUntilAppears('.login-route-editor', tour.next);
             });
         return { target: $(elem) };
-      },
-      teardown: function() {
-
       }
     },
     /*
      * change action after login
      */
     {
-      content: '<h3>Customizing functionality</h3><p>Here, you can select where the user goes after login. Please change it to the "Tweet Feed" page.</em></p>',
-      my: "right center",
-      at: "left center",
+      ind     : 12,
+      title   : 'Customizing functionality',
+      content : 'Here, you can select where the user goes after login. Please change it to the "Tweet Feed" page.</em>',
+      loc     : "right center, left center",
       url: '/editor/0/',
       setup: function(tour, options) {
         tour.loginButton.get('data').get('loginRoutes').models[0].bind('change', tour.next);
@@ -290,20 +228,17 @@ define([
         tour.loginButton.get('data').get('loginRoutes').models[0].unbind('change', tour.next);
         $('.modal-bg').remove();
         $('.login-route-editor.modal').remove();
-        incrementStep();
-        incrementStep();
-        incrementStep();
-        incrementStep();
       }
     },
     /*
      * Change to Tweet Feed Page
      */
     {
-      content: '<h3>On to the next page!</h3><p>Hover over "Homepage" to see your pages and easily navigate to "Tweet Feed" by clicking on it.</em></p>',
+      ind     : 13,
+      title   : 'On to the next page!',
+      content : 'Hover over "Homepage" to see your pages and easily navigate to "Tweet Feed" by clicking on it.</em>',
       // TODO make the gradients more noticable
-      my: "left top",
-      at: "right center",
+      loc     : "left top, right center",
       url: '/editor/0/',
       setup: function(tour, options) {
         v1.bind('editor-loaded', function() {
@@ -313,7 +248,6 @@ define([
         return {target:  $('.menu-button.pages')};
       },
       teardown: function() {
-        incrementStep();
         v1.unbind('editor-loaded');
       }
     },
@@ -321,25 +255,24 @@ define([
      * Tweet feed page
      */
     {
-      content: '<h3>Tweet Feed Page</h3><p>On this page, we will a “Create Form" and put a Twitter feed. Let\'s start with the form first.</p>',
-      my: "top center",
-      at: "bottom center",
+      ind     : 14,
+      title   : 'Tweet Feed Page',
+      content : 'On this page, we will a “Create Form" and put a Twitter feed. Let\'s start with the form first.',
+      loc     : "top center, bottom center",
       nextButton: true,
       url: '/editor/1/',
       setup: function(tour, options) {
         return { target: $('.menu-button.pages') };
-      },
-      teardown: function() {
-        incrementStep();
       }
     },
     /*
      * Add Tweet Create form
      */
     {
-      content: '<h3>Create Form</h3><p><em>Drag this form on to the left side of the page.</em></p>',
-      my: "right center",
-      at: "left center",
+      ind     : 15,
+      title   : 'Create Form',
+      content : '<em>Drag this form on to the left side of the page.</em>',
+      loc     : "right center, left center",
       url: '/editor/1/',
       setup: function(tour, options) {
 
@@ -353,17 +286,17 @@ define([
       },
       teardown: function() {
         v1State.getCurrentPage().unbind('creat-form-dropped', checkForNewOption);
-        incrementStep();
       }
     },
     /*
      *
      */
     {
-      content: '<h3>What to create?</h3><p><em>Select <strong>Add a new entity</strong>, and enter <strong>Tweet</strong></em></p>',
-      my: "right center",
-      at: "left center",
-      url: '/editor/1/',
+      ind     : 16,
+      title   : 'What to create?',
+      content : '<em>Select <strong>Add a new entity</strong>, and enter <strong>Tweet</strong></em>',
+      loc     : "right center, left center",
+      url     : '/editor/1/',
       setup: function(tour, options) {
         tweetTableCreated = function(table) {
           if(table.get('name') == "Tweet") {
@@ -380,105 +313,93 @@ define([
       },
       teardown: function() {
         v1State.get('tables').bind('add', tweetTableCreated);
-        incrementStep();
       }
     },
     {
-      content: '<h3>Editing the Form</h3><p>We have this blank form now and we need to add some fields to it. Click on <em>Edit Form</em> button.</p>',
-      my: "top center",
-      at: "bottom center",
-      url: '/editor/1/',
+      ind     : 17,
+      title   : 'Editing the Form',
+      content : 'We have this blank form now and we need to add some fields to it. Click on <em>Edit Form</em> button.',
+      loc     : "top center, bottom center",
+      url     : '/editor/1/',
       setup: function(tour, options) {
         $('.form-editor-btn').first().one('click', function() {
           // setTimeout(tour.next, 400);
           waitUntilAppears('.form-editor-title', tour.next);
         });
         return { target: $('.form-editor-btn') };
-      },
-      teardown: function() {
-        incrementStep();
       }
     },
     {
-      content: '<h3>Form Editor</h3><p>Form editor let\'s you edit your forms and add new fields to it.</p>',
-      my: "left top",
-      at: "right top",
-      url: '/editor/1/',
+      ind     : 18,
+      title   : 'Form Editor',
+      content : 'Form editor let\'s you edit your forms and add new fields to it.',
+      loc     : "left top, right top",
+      url     : '/editor/1/',
       nextButton: true,
       setup: function(tour, options) {
         return { target: $('.form-editor-title') };
-      },
-      teardown: function() {
-        incrementStep();
       }
     },
     {
-      content: '<h3>Add a New Field</h3><p>Create a new form field by clicking on <em>Add a New Field</em> button.</p>',
-      my: "bottom center",
-      at: "top center",
-      url: '/editor/1/',
+      ind     : 19,
+      title   : 'Add a New Field',
+      content : 'Create a new form field by clicking on <em>Add a New Field</em> button.',
+      loc     : "bottom center, top center",
+      url     : '/editor/1/',
       setup: function(tour, options) {
         $('.btn.add-field-button').one('click', function() {
           waitUntilAppears('#option-0', tour.next);
         });
         return { target: $('.btn.add-field-button') };
-      },
-      teardown: function() {
-        incrementStep();
       }
     },
     {
-      content: '<h3>Creating a Form Field</h3><p>Since we don\'t have and fields defined before, we should create a new one. Click on <em>Create A New Field</em></p>',
-      my: "top left",
-      at: "bottom left",
-      url: '/editor/1/',
+      ind     : 20,
+      title   : 'Creating a Form Field',
+      content : 'Since we don\'t have and fields defined before, we should create a new one. Click on <em>Create A New Field</em>',
+      loc     : "top left, bottom left",
+      url     : '/editor/1/',
       setup: function(tour, options) {
         $('#option-0').one('change', function() {
           waitUntilAppears('.new-field-form', tour.next);
         });
         return { target: $('#option-0') };
-      },
-      teardown: function() {
-        incrementStep();
       }
     },
     {
-      content: '<h3>We want to Save Some Text</h3><p>We want to save the text content of a tweet here, so we can just name the field as "Content" and click <em>Done</em></p>',
-      my: "left top",
-      at: "right top",
-      url: '/editor/1/',
+      ind     : 21,
+      title   : 'We want to Save Some Text',
+      content : 'We want to save the text content of a tweet here, so we can just name the field as "Content" and click <em>Done</em>',
+      loc     : "left top, right top",
+      url     : '/editor/1/',
       setup: function(tour, options) {
         $('.new-field-form').one('submit', tour.next);
         return { target: $('.new-field-form') };
-      },
-      teardown: function() {
-        incrementStep();
       }
     },
     {
-      content: '<h3>We have an awesome form now</h3><p>We\'re basically done with our form, but you can customize it further, change the label to "Tweet" etc. When you\'re done click on <em>Done</em> to coninue.</p>',
-      my: "bottom right",
-      at: "top right",
-      url: '/editor/1/',
+      ind     : 22,
+      title   : 'We have an awesome form now',
+      content : 'We\'re basically done with our form, but you can customize it further, change the label to "Tweet" etc. When you\'re done click on <em>Done</em> to coninue.',
+      loc     : "bottom right, top right",
+      url     : '/editor/1/',
       setup: function(tour, options) {
         $('#item-gallery').animate({
           scrollTop: $(".entity-list").offset().top - 90
         }, 200);
         $('.btn.done').one('click', tour.next);
         return { target: $('.btn.done')};
-      },
-      teardown: function() {
-        incrementStep();
       }
     },
     /*
      * Creating a List
      */
     {
-      content: '<h3>Twitter Feed</h3><p><em>Drag a <strong>Tweet List</strong> onto the page.</em></p>',
-      my: "right center",
-      at: "left center",
-      url: '/editor/1/',
+      ind     : 23,
+      title   : 'Twitter Feed',
+      content : '<em>Drag a <strong>Tweet List</strong> onto the page.</em>',
+      loc     : "right center, left center",
+      url     : '/editor/1/',
       setup: function(tour, options) {
         draggedTweetList = function(uielem) {
           if(uielem.get('type') == "loop") {
@@ -491,14 +412,14 @@ define([
       },
       teardown: function() {
         v1State.getCurrentPage().get('uielements').unbind('add', draggedTweetList);
-        incrementStep();
       }
     },
     {
-      content: '<h3>About this "list"</h3><p>"Edit Row" allows you to edit each row\'s appearance and content.<br>"Edit Query" allows you to filter and sort the Tweets.</p><p><em>Click on "Edit Row"</em></p>',
-      my: "top center",
-      at: "bottom center",
-      url: '/editor/1/',
+      ind     : 24,
+      title   : 'About this "list"',
+      content : '"Edit Row" allows you to edit each row\'s appearance and content.<br>"Edit Query" allows you to filter and sort the Tweets.</p><p><em>Click on "Edit Row"</em>',
+      loc     : "top center, bottom center",
+      url     : '/editor/1/',
       setup: function(tour, options) {
 
         $('.edit-row-btn').one('click', function() {
@@ -508,31 +429,27 @@ define([
         });
 
         return { target: $('#widget-editor') };
-      },
-      teardown: function() {
-        incrementStep();
       }
     },
     {
-      content: '<h3>The Green Row</h3><p>The green area of the list represents a single row. Drag\'N\'Drop works here too.</p>',
-      my: "top center",
-      at: "bottom center",
+      ind     : 25,
+      title   : 'The Green Row',
+      content : 'The green area of the list represents a single row. Drag\'N\'Drop works here too.',
+      loc     : "top center, bottom center",
+      url     : '/editor/1/',
       nextButton: true,
-      url: '/editor/1/',
       setup: function(tour, options) {
 
         return { target: $('.highlighted').first() };
-      },
-      teardown: function() {
-        incrementStep();
       }
     },
     {
-      content: '<h3>Editing Row Content</h3><p><em>Drag a header element into the green row.</em></p>',
-      my: "bottom center",
-      at: "top center",
+      ind     : 26,
+      title   : 'Editing Row Content',
+      content : '<em>Drag a header element into the green row.</em>',
+      loc     : "bottom center, top center",
+      url     : '/editor/1/',
       nextButton: true,
-      url: '/editor/1/',
       setup: function(tour, options) {
 
         $('#item-gallery').scrollTop(0);
@@ -549,15 +466,15 @@ define([
       },
       teardown: function(tour, options) {
         tour.pageLoop.get('data').get('container_info').get('row').get('uielements').unbind('add', tweetStuffDragged);
-        incrementStep();
       }
     },
     {
       // TODO see how this looks and make shorter if necessary
-      content: '<h3>Cool!</h3><p>You successfully made a Twitter feed. You can make things look a little nicer if you want: resize things in the row, pick styles for the elements.</p><p><em>When done, Click "Done Editing" to switch off editing mode.</em></p>',
-      my: "right center",
-      at: "left center",
-      url: '/editor/1/',
+      ind     : 27,
+      title   : 'Cool!',
+      content : 'You successfully made a Twitter feed. You can make things look a little nicer if you want: resize things in the row, pick styles for the elements.</p><p><em>When done, Click "Done Editing" to switch off editing mode.</em>',
+      loc     : "right center, left center",
+      url     : '/editor/1/',
       setup: function(tour, options) {
         tour.pageLoop.bind('deselected', function() {
           tour.next();
@@ -569,21 +486,20 @@ define([
       },
       teardown: function(tour, options) {
         tour.pageLoop.unbind('deselected');
-        incrementStep();
       }
     },
     // TODO associate the Tweet with the user in the modal
     {
-      content: '<h3>Almost there!</h3><p>Press "Test Run" and you will see your site up and running!</p>',
-      my: "top center",
-      at: "bottom center",
+      ind     : 28,
+      title   : 'Almost there!',
+      content : 'Press "Test Run" and you will see your site up and running!',
+      loc     : "top center, bottom center",
       nextButton: true,
       url: '/editor/1/',
       setup: function(tour, options) {
         return { target: $('.save-run-group') };
       },
       teardown: function() {
-        incrementStep();
         //last step done, delete walkthrough attribute
         delete v1State.attributes.simpleWalkthrough;
         util.log_to_server('finished simple twitter walkthrough', {}, appId);
@@ -591,17 +507,17 @@ define([
     }
     ];
 
-    var ind = v1State.get('simpleWalkthrough');
-    ind--;
+    var ind = v1State.get('simpleWalkthrough') - 1;
     var currentSteps = steps.slice(ind);
 
-    console.log(TouristOmer);
-    var quickTour = new TouristOmer.Tour({
-      steps: currentSteps
-    });
 
-    v1State.on('change:simpleWalkthrough', function(model) {
-      util.log_to_server('simple twitter walkthrough step', { step: model.attributes.simpleWalkthrough}, appId);
+    var quickTour = new TouristOmer.Tour({
+      steps     : currentSteps,
+      onEachStep: function(step) {
+        console.log(step);
+        v1State.set('simpleWalkthrough', step.ind);
+        util.log_to_server('simple twitter walkthrough step', { step: v1State.attributes.simpleWalkthrough}, appId);
+      }
     });
 
     quickTour.currentStep = currentSteps[0];
