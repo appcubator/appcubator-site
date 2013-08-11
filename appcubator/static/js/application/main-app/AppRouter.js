@@ -192,13 +192,16 @@ define([
         },
 
         deploy: function(callback, hold_on_callback) {
+            if(v1.disableSave === true) return;
             var self = this;
             var isDeployed = false;
             var before_deploy = new Date().getTime();
+            v1.disableSave = true;
             $.ajax({
                 type: "POST",
                 url: '/app/'+appId+'/deploy/',
                 success: function(data) {
+                    v1.disableSave = false;
                     isDeployed = true;
                     var deploy_time = (new Date().getTime() - before_deploy)/1000;
                     if(callback) callback();
@@ -236,6 +239,7 @@ define([
                     }
                 },
                 error: function(data) {
+                    v1.disableSave = false;
                     isDeployed = true;
                     var deploy_time = (new Date().getTime() - before_deploy)/1000;
                     var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
