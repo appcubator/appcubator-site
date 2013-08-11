@@ -150,7 +150,7 @@ define([
     appendCustomWidget: function() {
       var className = 'uielement';
       var id='type-custom-widget';
-      var icon = 'yolo';
+      var icon = 'custom-widget';
       var text = 'Custom Widget';
 
       var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
