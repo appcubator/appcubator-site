@@ -11,7 +11,6 @@ from email.sendgrid_email import send_email
 from models import DomainRegistration
 
 from app_builder.analyzer import App as AnalyzedApp
-from app_builder.utils import get_xl_data, add_xl_data, get_model_data
 
 import requests
 import traceback

@@ -1,24 +1,28 @@
-from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_GET, require_POST
+from django.http import HttpResponse, Http404
 from django.utils import simplejson
 from django.shortcuts import redirect, render, render_to_response, get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
-from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.http import Http404
-from django.contrib.auth.models import User
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore
-from email.sendgrid_email import send_email, send_template_email
+
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_GET, require_POST
+
+from django.forms import ModelForm
+
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
 
 import forms
 
+from email.sendgrid_email import send_email, send_template_email
+
+from django.conf import settings
+
+# codegen
 import app_builder.analyzer as analyzer
 from app_builder.analyzer import App as AnalyzedApp
-from app_builder.utils import get_xl_data, add_xl_data, get_model_data
 
 from payments.views import subscribe
 
@@ -60,7 +64,6 @@ def app_welcome(request):
 def app_noob_page(request):
     #log url route
     user_id = request.user.id
-    page_name = 'welcome'
     app_id = 0
     log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "welcome"})
     log.save()
@@ -478,29 +481,6 @@ def app_emails(request, app_id):
     page_context = {'app': app, 'title': 'Emails', 'app_id': app_id}
     return render(request, 'app-emails.html', page_context)
 
-def _get_analytics(deployment_id):
-    """
-        Send a post request to get analytics from the deployment corresponding to deployment_id.
-        Then upsert it into the analytics store.
-    """
-    r = requests.post("http://%s/analytics/%d/" % (settings.DEPLOYMENT_HOSTNAME, deployment_id))
-    # HACK to get rid of double quotes.
-    analytics_json = '%s' % r.text
-    try:
-        app = App.objects.get(deployment_id=deployment_id)
-    except App.DoesNotExist:
-        return
-    old_analytics = AnalyticsStore.objects.all().filter(app=app)
-    # Create analytics for the app if needed, otherwise update the analytics.
-    if len(old_analytics) == 0:
-        analytics_store = AnalyticsStore(app=app, owner=app.owner, analytics_json=analytics_json)
-        analytics_store.save()
-    elif len(old_analytics) == 1:
-        old_analytics_store = old_analytics[0]
-        old_analytics_store.analytics_json = analytics_json
-        old_analytics_store.save()
-
-
 @require_GET
 @login_required
 @csrf_exempt
@@ -519,9 +499,6 @@ def get_analytics(request, app_id):
         return JSONResponse({})
     data = analytics_data.analytics_data
     return JSONResponse(data)
-
-
-from django.forms import ModelForm
 
 
 class StaticFileForm(ModelForm):
