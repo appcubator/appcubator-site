@@ -338,9 +338,11 @@ def documentation_page(request, page_name):
     return render(request, 'documentation/documentation-base.html', data)
 
 def documentation_search(request):
-    query = request.GET['q']
-    if query is None or query is "":
+    if 'q' not in request.GET or request.GET['q'] is "":
         return redirect(documentation_page)
+
+    query = request.GET['q']
+
     query = query.replace(' ',"|")
     query_regex = re.compile('%s'%query)
     search_dir = settings.DOCUMENTATION_SEARCH_DIR

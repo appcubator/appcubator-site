@@ -1364,6 +1364,47 @@ img.startx {
   margin-top: 10px;
 }
 
+.guides {
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+.guides li {
+  width: 48%;
+  display: inline-block;
+  margin-right: 1%;
+  height: 230px;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-top: 24px;
+  vertical-align: top;
+}
+
+.guides li a {
+  display: inline-block;
+  height: 100%;
+}
+
+.guides li .picture {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 190px;
+  vertical-align: top;
+  float: left;
+  margin-top: 20px;
+  overflow: hidden;
+  margin-left: 20px;
+  padding-top: 40px;
+  padding-right: 16px;
+}
+
+.guides li .summary {
+  padding-top: 40px;
+}
+
+
 li .summary h3 {
   margin-top: 0;
 }
