@@ -1,24 +1,28 @@
-from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_GET, require_POST
+from django.http import HttpResponse, Http404
 from django.utils import simplejson
 from django.shortcuts import redirect, render, render_to_response, get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
-from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.http import Http404
-from django.contrib.auth.models import User
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore
-from email.sendgrid_email import send_email, send_template_email
+
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_GET, require_POST
+
+from django.forms import ModelForm
+
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
 
 import forms
 
+from email.sendgrid_email import send_email, send_template_email
+
+from django.conf import settings
+
+# codegen
 import app_builder.analyzer as analyzer
 from app_builder.analyzer import App as AnalyzedApp
-from app_builder.utils import get_xl_data, add_xl_data, get_model_data
 
 from payments.views import subscribe
 
@@ -60,7 +64,6 @@ def app_welcome(request):
 def app_noob_page(request):
     #log url route
     user_id = request.user.id
-    page_name = 'welcome'
     app_id = 0
     log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "welcome"})
     log.save()
@@ -335,9 +338,11 @@ def documentation_page(request, page_name):
     return render(request, 'documentation/documentation-base.html', data)
 
 def documentation_search(request):
-    query = request.GET['q']
-    if query is None or query is "":
+    if 'q' not in request.GET or request.GET['q'] is "":
         return redirect(documentation_page)
+
+    query = request.GET['q']
+
     query = query.replace(' ',"|")
     query_regex = re.compile('%s'%query)
     search_dir = settings.DOCUMENTATION_SEARCH_DIR
@@ -500,7 +505,6 @@ def _get_analytics(deployment_id):
         old_analytics_store.analytics_json = analytics_json
         old_analytics_store.save()
 
-
 @require_GET
 @login_required
 @csrf_exempt
@@ -509,6 +513,7 @@ def get_analytics(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if app.deployment_id is None:
         raise Http404
+    
     _get_analytics(app.deployment_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
@@ -519,9 +524,6 @@ def get_analytics(request, app_id):
         return JSONResponse({})
     data = analytics_data.analytics_data
     return JSONResponse(data)
-
-
-from django.forms import ModelForm
 
 
 class StaticFileForm(ModelForm):
@@ -587,7 +589,7 @@ def app_deploy(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    result = app.deploy(git_user=app.owner.extradata.git_user_id())
+    result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     if 'errors' in result:
         raise Exception(result)
@@ -662,7 +664,7 @@ def sub_register_domain(request, app_id, subdomain):
     form = forms.ChangeSubdomain({'subdomain': subdomain}, app=app)
     if form.is_valid():
         app = form.save(state_version=False)
-        result = app.deploy(git_user=app.owner.extradata.git_user_id())
+        result = app.deploy()
         status = 500 if 'errors' in result else 200
         return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 

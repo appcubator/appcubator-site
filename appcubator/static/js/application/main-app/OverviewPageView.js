@@ -66,7 +66,7 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
 
     settings: function(e) {
       e.preventDefault();
-      v1.navigate('/app/' + appId + '/info/#domain-settings');
+      v1.navigate('/app/' + appId + '/info/', {trigger:true}); // can't go directly to domain settings section due to limitations of route function
     },
 
     showTutorial: function() {

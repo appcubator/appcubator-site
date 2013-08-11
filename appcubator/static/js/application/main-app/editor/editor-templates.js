@@ -22,7 +22,6 @@ Templates.tempNode = [
 ].join('\n');
 
 Templates.NavbarEditor = [
-  '<h3>Navbar Editor</h3>',
   '<div>',
     '<legend>Main Title</legend>',
     '<input type="text" name="edit-brandName" id="edit-brandname" value="<%= brandName %>">',
@@ -33,7 +32,6 @@ Templates.NavbarEditor = [
 ].join('\n');
 
 Templates.FooterEditor = [
-  '<h3>Footer Editor</h3>',
   '<div>',
     '<legend>Custom Footer Text</legend>',
     '<input type="text" id="edit-customText" value="<%= customText %>">',
