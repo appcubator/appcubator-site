@@ -483,6 +483,28 @@ def app_emails(request, app_id):
     page_context = {'app': app, 'title': 'Emails', 'app_id': app_id}
     return render(request, 'app-emails.html', page_context)
 
+def _get_analytics(deployment_id):
+    """
+        Send a post request to get analytics from the deployment corresponding to deployment_id.
+        Then upsert it into the analytics store.
+    """
+    r = requests.post("http://%s/analytics/%d/" % (settings.DEPLOYMENT_HOSTNAME, deployment_id))
+    # HACK to get rid of double quotes.
+    analytics_json = '%s' % r.text
+    try:
+        app = App.objects.get(deployment_id=deployment_id)
+    except App.DoesNotExist:
+        return
+    old_analytics = AnalyticsStore.objects.all().filter(app=app)
+    # Create analytics for the app if needed, otherwise update the analytics.
+    if len(old_analytics) == 0:
+        analytics_store = AnalyticsStore(app=app, owner=app.owner, analytics_json=analytics_json)
+        analytics_store.save()
+    elif len(old_analytics) == 1:
+        old_analytics_store = old_analytics[0]
+        old_analytics_store.analytics_json = analytics_json
+        old_analytics_store.save()
+
 @require_GET
 @login_required
 @csrf_exempt
@@ -491,6 +513,7 @@ def get_analytics(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if app.deployment_id is None:
         raise Http404
+    
     _get_analytics(app.deployment_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
