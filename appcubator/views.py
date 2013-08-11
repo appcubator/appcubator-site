@@ -338,47 +338,46 @@ def documentation_page(request, page_name):
     return render(request, 'documentation/documentation-base.html', data)
 
 def documentation_search(request):
-    if 'q' not in request.GET or request.GET['q'] is "":
+    query = request.GET.get('q', '').strip()
+    if query == '':
         return redirect(documentation_page)
 
-    query = request.GET['q']
-
+    # FIXME not safe
     query = query.replace(' ',"|")
     query_regex = re.compile('%s'%query)
-    search_dir = settings.DOCUMENTATION_SEARCH_DIR
-    # read ALL the documentation texts
-    # TODO: do this ONCE, maybe on server startup
+
     results = []
-    for docfile in os.listdir(search_dir):
+    # search each file and if exists a match, add to list of results.
+    for docfile in os.listdir(settings.DOCUMENTATION_SEARCH_DIR):
+        # read the file
+        with open(os.path.join(settings.DOCUMENTATION_SEARCH_DIR, docfile), 'r') as curr_file:
+            raw_html = curr_file.read()
+
+        # tokenize
+        text = nltk.clean_html(raw_html)
+        tokens = nltk.word_tokenize(text)
+
+        # find query-token matches
         count = 0
-        dir_path = os.path.join(search_dir, docfile)
-        with open(dir_path, 'r') as curr_file:
-            raw_text = curr_file.read()
-            raw_text_clean = nltk.clean_html(raw_text)
-            # title is the first <h2></h2> header
-            raw_text_linebreaks = raw_text_clean.split('\n')
-            title = raw_text_linebreaks[0]
-            # content is everything after the first <h2></h2> header
-            # excerpt first 140 characters only yo
-            len_title = len(raw_text_linebreaks[0])
-            excerpt = "%s..." % raw_text_clean[len_title:140]
-            # TODO: I don't think this is being applied, but it works without it
-            # possible optimization for later
-            raw_text = re.sub(r"^[#,-[]!:()]$", "", raw_text_clean)
-            tokens = nltk.word_tokenize(raw_text)
-            # search ALL the file's tokens
-            for t in tokens:
-                if(re.match(query_regex, t)):
-                    count += 1
+        for t in tokens:
+            if(re.match(query_regex, t)):
+                count += 1
+
+        # if matches -> add this doc entry to the results
         if count > 0:
+            title = text.split('\n')[0]
+            excerpt = "%s..." % text[len(title):140]
+
             d = {}
             d['filename'] = docfile.replace('.html','')
             d['title'] = title
             d['content'] = excerpt
             d['count'] = count
             results.append(d)
-    results.sort(key=lambda r: r['count'], reverse=True)
-    return render(request, 'documentation/documentation-base.html', {'results': results})
+
+    # sort and display results
+    sorted_results = sorted(results, key=lambda r: r['count'], reverse=True)
+    return render(request, 'documentation/documentation-base.html', {'results': sorted_results})
 
 @login_required
 def uie_state(request, app_id):
