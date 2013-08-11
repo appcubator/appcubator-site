@@ -83,7 +83,6 @@ function( WidgetView ) {
       if(jsTag) $(jsTag).remove();
 
       var appendJSTag = function() {
-        console.log(this);
 
         var customJSTemp = [
           'function($) {  "use strict"; ',
@@ -125,6 +124,14 @@ function( WidgetView ) {
         style.appendChild(document.createTextNode(css));
       }
       document.getElementsByTagName('head')[0].appendChild(style);
+    },
+
+    close: function() {
+      var jsTag = 'custom-js-widget-' + this.model.cid;
+      if(jsTag) $(jsTag).remove();
+      var styleTag = document.getElementById('custom-css-widget-' + this.model.cid);
+      if(styleTag) $(styleTag).remove();
+      WidgetCustomView.__super__.close.call(this);
     }
 
   });

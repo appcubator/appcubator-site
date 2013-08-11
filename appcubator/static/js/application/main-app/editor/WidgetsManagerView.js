@@ -127,7 +127,7 @@ function( WidgetView,
 
     close: function() {
       this.widgetSelectorView.close();
-      Backbone.View.prototype.remove.call(this);
+      WidgetManagerView.__super__.close.call(this);
     }
   });
 
