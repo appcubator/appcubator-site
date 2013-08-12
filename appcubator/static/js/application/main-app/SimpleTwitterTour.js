@@ -264,9 +264,9 @@ define([
       title   : 'Tweet Feed Page',
       content : 'On this page, we will a “Create Form" and put a Twitter feed. Let\'s start with the form first.',
       loc     : "top center, bottom center",
-      nextButton: true,
       url     : '/editor/1/',
-      target  : $('.menu-button.pages')
+      target  : $('.menu-button.pages'),
+      nextButton: true
     },
     /*
      * Add Tweet Create form
