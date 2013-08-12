@@ -138,23 +138,14 @@ function (AppModel,
 
     if(v1State.has('simpleWalkthrough')) {
       require(['app/SimpleTwitterTour'], function(QuickTour) {
+        console.log(QuickTour);
         if(!QuickTour.currentStep) return;
         var url = QuickTour.currentStep.url;
 
-        if(QuickTour.currentStep.waitUntil) {
-          util.waitUntilAppears(QuickTour.currentStep.waitUntil, function() {
-            v1.navigate('app/'+appId+url, {trigger: true});
-            setTimeout(function() {
-              QuickTour.start();
-            }, 1000);
-          });
-        }
-        else {
-          v1.navigate('app/'+appId+url, {trigger: true});
-          setTimeout(function() {
+        v1.navigate('app/'+appId+url, {trigger: true});
+        setTimeout(function() {
             QuickTour.start();
-          }, 1000);
-        }
+        }, 1000);
 
       });
     }

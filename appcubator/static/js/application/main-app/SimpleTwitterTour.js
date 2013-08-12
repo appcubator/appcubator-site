@@ -91,13 +91,15 @@ define([
       }
     },
     {
-      ind     : 5,
-      title   : 'Pick a Quick Template',
+      ind     : 6,
+      title   : 'Pick a Template',
       content : 'Templates will give you a quick layout to start with. We\'ll go with the simple one for now and click the "Blank Page"',
       loc     : "left center, right center",
-      url     : '/pages/',
+      url     : '/editor/0/',
       target  : $('#page-3'),
-      setup: function(tour, options) {
+      prepareTime : 300,
+      setup   : function(tour, options) {
+        console.log(tour);
         $('#page-3').one('click', tour.next);
       },
       teardown: function() {
@@ -108,7 +110,7 @@ define([
      * Welcome to Editor
      */
     {
-      ind     : 6,
+      ind     : 7,
       title   : 'Welcome to Editor',
       content : 'What you see is what you get. You can drag elements onto the page and play around with them.',
       loc     : "right top, left bottom",
@@ -120,29 +122,30 @@ define([
      * Save Early, ssave often
      */
     {
-      ind     : 7,
+      ind     : 8,
       title   : 'Saving Your Progress',
       content : 'Save early, save often. We periodically autosave for you.',
-      loc: "top center, bottom center",
+      loc     : "top center, bottom center",
       nextButton: true,
-      url: '/editor/0/',
+      url     : '/editor/0/',
+      target  : $('#editor-save'),
       setup: function(tour, options) {
-        $('#item-gallery').animate({
-          scrollTop: $("#type-headerTexts").offset().top - 110
-        }, 200);
         v1.save();
-        return { target: $('#editor-save') };
       }
     },
     /*
      * Drag header element
      */
     {
-      ind     : 8,
+      ind     : 9,
       title   : 'Drag\'n\'Drop',
       content : '<em>Drag this header element to the page.</em>',
       loc     : "right center, left center",
-      url: '/editor/0/',
+      url     : '/editor/0/',
+      target  : $('#type-headerTexts'),
+      prepare : function() {
+        $('#item-gallery').scrollTop($("#type-headerTexts").offset().top);
+      },
       setup: function(tour, options) {
 
         headerDragged = function(uielem) {
@@ -151,8 +154,6 @@ define([
           }
         };
         v1State.getCurrentPage().get('uielements').bind('add', headerDragged);
-
-        return { target: $('#type-headerTexts') };
       },
       teardown: function() {
         v1State.getCurrentPage().get('uielements').unbind('add', headerDragged);
@@ -162,36 +163,32 @@ define([
      * Editing Elements
      */
     {
-      ind     : 9,
+      ind     : 10,
       title   : 'Editing Elements',
       content : 'Click the text to edit it.<br>Then, click "Pick Style" to choose your style.',
-      loc: "left center, right center",
+      loc     : "left center, right center",
       nextButton: true,
-      url: '/editor/0/',
-      setup: function(tour, options) {
-        console.log(v1);
-        console.log(v1.view);
-        v1.view.galleryEditor.expandAllSections();
-        $('#item-gallery').animate({
-          scrollTop: $("#entity-user-facebook").offset().top - 110
-        }, 200);
-
-        return { target: $('.pick-style') };
-      }
+      url     : '/editor/0/',
+      target  : $('.pick-style')
     },
     /*
      * Drag facebook login
      */
     {
-      ind     : 10,
+      ind     : 11,
       title   : 'Time to get some users!',
       content : '<em>Drag this facebook login button onto the page.</em>',
       loc     : "right center, left center",
       url     : '/editor/0/',
       target  : $('#entity-user-facebook'),
       waitUntil: "#entity-user-facebook",
+      prepareTime : 220,
       prepare : function() {
-        $('#item-gallery').scrollTop($("#entity-user-facebook").offset().top - 110);
+        v1.view.galleryEditor.expandAllSections();
+        var timer = setTimeout(function() {
+          $('#item-gallery').scrollTop($("#entity-user-facebook").offset().top - 100);
+          clearTimeout(timer);
+        }, 200);
       },
       setup: function(tour, options) {
         facebookDropped = function(uielem) {
@@ -201,10 +198,6 @@ define([
           }
         };
         v1State.get('pages').models[0].get('uielements').bind('add', facebookDropped);
-
-        return { target: function() {
-          return ;
-        }() };
       },
       teardown: function() {
         v1State.getCurrentPage().get('uielements').unbind('add', facebookDropped);
@@ -214,32 +207,29 @@ define([
      * Customize facebook login btn
      */
     {
-      ind     : 11,
+      ind     : 12,
       title   : 'Customizing functionality',
       content : 'Some elements, like this Facebook button, can be customized.</p><p><em>Select it and click <strong>Edit Login</strong></em>',
       loc     : "left center, right center",
-      url: '/editor/0/',
+      url     : '/editor/0/',
+      target  : $(".facebook-login-btn"),
       setup: function(tour, options) {
         var elem = $(".facebook-login-btn")[0];
-        $('.edit-login-form-btn').first().on('click', function() {
-              // setTimeout(tour.next, 400);
-              waitUntilAppears('.login-route-editor', tour.next);
-            });
-        return { target: $(elem) };
+        $('.edit-login-form-btn').first().on('click', tour.next);
       }
     },
     /*
      * change action after login
      */
     {
-      ind     : 12,
+      ind     : 13,
       title   : 'Customizing functionality',
       content : 'Here, you can select where the user goes after login. Please change it to the "Tweet Feed" page.</em>',
       loc     : "right center, left center",
-      url: '/editor/0/',
+      url     : '/editor/0/',
+      target  : $('.login-route-editor'),
       setup: function(tour, options) {
         tour.loginButton.get('data').get('loginRoutes').models[0].bind('change', tour.next);
-        return { target: $('.login-route-editor') };
       },
       teardown: function(tour, options) {
         tour.loginButton.get('data').get('loginRoutes').models[0].unbind('change', tour.next);
@@ -251,18 +241,16 @@ define([
      * Change to Tweet Feed Page
      */
     {
-      ind     : 13,
+      ind     : 14,
       title   : 'On to the next page!',
       content : 'Hover over "Homepage" to see your pages and easily navigate to "Tweet Feed" by clicking on it.</em>',
-      // TODO make the gradients more noticable
       loc     : "left top, right center",
-      url: '/editor/0/',
+      url     : '/editor/0/',
+      target  : $('.menu-button.pages'),
       setup: function(tour, options) {
         v1.bind('editor-loaded', function() {
           tour.next();
         });
-
-        return {target:  $('.menu-button.pages')};
       },
       teardown: function() {
         v1.unbind('editor-loaded');
@@ -272,44 +260,36 @@ define([
      * Tweet feed page
      */
     {
-      ind     : 14,
+      ind     : 15,
       title   : 'Tweet Feed Page',
       content : 'On this page, we will a “Create Form" and put a Twitter feed. Let\'s start with the form first.',
       loc     : "top center, bottom center",
       nextButton: true,
-      url: '/editor/1/',
-      setup: function(tour, options) {
-        return { target: $('.menu-button.pages') };
-      }
+      url     : '/editor/1/',
+      target  : $('.menu-button.pages')
     },
     /*
      * Add Tweet Create form
      */
     {
-      ind     : 15,
+      ind     : 16,
       title   : 'Create Form',
       content : '<em>Drag this form on to the left side of the page.</em>',
       loc     : "right center, left center",
-      url: '/editor/1/',
+      url     : '/editor/1/',
+      target  : $('#type-create-form'),
       setup: function(tour, options) {
-
-        checkForNewOption = function() {
-          waitUntilAppears('#new-option', tour.next);
-        };
-
-        v1State.getCurrentPage().bind('creat-form-dropped', checkForNewOption);
-
-        return { target: $('#type-create-form') };
+        v1State.getCurrentPage().bind('creat-form-dropped', tour.next);
       },
-      teardown: function() {
-        v1State.getCurrentPage().unbind('creat-form-dropped', checkForNewOption);
+      teardown: function(tour, options) {
+        v1State.getCurrentPage().unbind('creat-form-dropped', tour.next);
       }
     },
     /*
      *
      */
     {
-      ind     : 16,
+      ind     : 17,
       title   : 'What to create?',
       content : '<em>Select <strong>Add a new entity</strong>, and enter <strong>Tweet</strong></em>',
       loc     : "right center, left center",
@@ -527,6 +507,7 @@ define([
     var ind = v1State.get('simpleWalkthrough') - 1;
     var currentSteps = steps.slice(ind);
 
+    console.log(currentSteps);
 
     var quickTour = new TouristOmer.Tour({
       steps     : currentSteps,

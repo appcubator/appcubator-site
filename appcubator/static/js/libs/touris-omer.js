@@ -42,11 +42,6 @@ define([
       if(!el) return repeat();
 
       var pos = findPos(el);
-
-      console.log(el);
-      console.log($(el).height());
-      console.log($(el).width());
-      console.log(pos);
       if($(selector).length === 0 || $(el).height() === 0 || $(el).width() === 0 || pos[0] <= 1 || pos[1] <= 1) return repeat();
       callbackFn.apply(undefined, cont_args);
     };
@@ -86,30 +81,30 @@ define([
       this.hide();
       if (step) {
 
-        console.log(step.target);
 
         var self = this;
+        if(step.prepare) { step.prepare.call(this); }
 
-        console.log(step.target.selector);
+        var goToNext = function() {
+          waitUntilAppears(step.target.selector, function() {
 
-        waitUntilAppears(step.target.selector, function() {
+            step.target = $(step.target.selector);
 
-          step.target = $(step.target.selector);
-          console.log(step.target);
 
-          console.log("YAOOO");
+            self._setTarget(step.target || false, step);
+            self._setZIndex('');
+            self._renderContent(step, self._buildContentElement(step));
+            if (step.target) {
+              self.show();
+            }
+            if (step.zIndex) {
+              self._setZIndex(step.zIndex, step);
+            }
+          });
+        };
 
-          self._setTarget(step.target || false, step);
-          self._setZIndex('');
-          console.log('yalloo');
-          self._renderContent(step, self._buildContentElement(step));
-          if (step.target) {
-            self.show();
-          }
-          if (step.zIndex) {
-            self._setZIndex(step.zIndex, step);
-          }
-        });
+        if(step.prepareTime) { console.log('prep time'); setTimeout(function() { goToNext(); }, step.prepareTime); }
+        else { goToNext(); }
 
       }
       return this;
@@ -118,7 +113,6 @@ define([
 
     Tourist.Tip.Bootstrap.prototype._renderContent = function(step, contentElement) {
       var at, my;
-      console.log(step.loc.split(','));
 
       my = String(step.loc.split(',')[0]).trim() || 'left center';
       at = String(step.loc.split(',')[1]).trim() || 'right center';
