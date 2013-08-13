@@ -211,11 +211,6 @@ class App(models.Model):
 
         return super(App, self).save(*args, **kwargs)
 
-    def clean(self):
-        print "calling clean on %d" % self.id
-        if self.owner.apps.filter(name=self.name).exists():
-            raise ValidationError('You have another app with the same name.')
-
     @classmethod
     def provision_subdomain(cls, subdomain):
         subdomain = clean_subdomain(subdomain)
@@ -306,6 +301,9 @@ class App(models.Model):
         return reverse('views.app_page', args=[str(self.id)])
 
     def clean(self):
+        print "calling clean on %d" % self.id
+        if self.owner.apps.filter(name=self.name).exclude(id=self.id).exists():
+            raise ValidationError('You have another app with the same name.')
         try:
             simplejson.loads(self._state_json)
         except simplejson.JSONDecodeError, e:
@@ -314,6 +312,8 @@ class App(models.Model):
             simplejson.loads(self._uie_state_json)
         except simplejson.JSONDecodeError, e:
             raise ValidationError(e.msg)
+        if self.gitrepo_name != clean_subdomain(self.gitrepo_name):
+            self.gitrepo_name = App.provision_gitrepo_name(self.gitrepo_name)
 
     def write_to_tmpdir(self, for_user=False):
         from app_builder.analyzer import App as AnalyzedApp
