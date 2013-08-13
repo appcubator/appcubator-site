@@ -312,14 +312,16 @@ def invitations(request, app_id):
         name = request.POST['name']
         email = request.POST['email']
         subject = "%s has invited you to check out Appcubator!" % user_name
+        invitation = InvitationKeys.create_invitation(request.user, email)
 
         message = ('Dear {name},\n\n'
                    'Check out what I\'ve build using Appcubator:\n\n'
                    '<a href="{hostname}">{hostname}</a>\n\n'
-                   'Appcubator is the only visual web editor that can build rich web applications without hiring a developer or knowing how to code. It is also free to build an app, forever. See what others have built and try to create a web app of your own.\n\n'
+                   'Appcubator is the only visual web editor that can build rich web applications without hiring a developer or knowing how to code. It is also free to build an app, forever.\n'
+                   'You can signup here: <a href="http://appcubator.com/signup?k={invitation_key}">Appcubator Signup</a>\n\n'
                    'Best,\n{user_name}\n\n\n')
-        message = message.format(name=name, hostname=app.hostname(), user_name=user_name)
-        invitation = InvitationKeys.create_invitation(request.user, email)
+
+        message = message.format(name=name, hostname=app.hostname(), user_name=user_name, invitation_key=invitation.api_key)
         template_context = { "text": message }
         send_template_email(request.user.email, email, subject, "", "emails/base_boxed_basic_query.html", template_context)
         return HttpResponse(message)
