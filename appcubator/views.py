@@ -101,12 +101,14 @@ def app_new(request, is_racoon = False):
         data = {}
         data['name'] = request.POST.get('name', '')
         data['subdomain'] = request.POST.get('name', '')
+        data['owner'] = request.user.id
+
         # dev modifications
         if not settings.STAGING and not settings.PRODUCTION:
             data['subdomain'] = 'dev-%s-%s' % (request.user.username.split('@')[0], data['subdomain'])
 
-        data['owner'] = request.user.id
         form = forms.AppNew(data)
+
         if form.is_valid():
             app = form.save(commit=False)
             s = app.state
@@ -182,8 +184,6 @@ def app_page(request, app_id):
     mobile_themes = [t.to_dict() for t in mobile_themes]
 
     page_context = {'app': app,
-                    'app_url': app.url(),
-                    'app_id': long(app_id),
                     'title': 'The Garage',
                     'themes': simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
@@ -662,9 +662,8 @@ def sub_register_domain(request, app_id, subdomain):
         raise Http404
     form = forms.ChangeSubdomain({'subdomain': subdomain}, app=app)
     if form.is_valid():
+        # the below line calls the model's save method, which will update deployment server automatically.
         app = form.save(state_version=False)
-        result = app.deploy()
-        status = 500 if 'errors' in result else 200
         return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 
     return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")

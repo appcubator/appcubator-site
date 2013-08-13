@@ -152,29 +152,66 @@ def clean_subdomain(subdomain):
     return subdomain
 
 
+# should move these to some deployment module
+class DeploymentError(Exception):
+    """Should be raised whenever the deployment server does not return 200"""
+    pass
+def update_deployment_info(deployment_id, subdomain, gitrepo_name):
+    payload = { 'subdomain': subdomain,
+                'gitrepo_name': gitrepo_name }
+    deployment_url = 'http://%s/deployment/%d/info/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
+    r = requests.post(deployment_url, data=payload, headers={'X-Requested-With': 'XMLHttpRequest'})
+    if r.status_code != 200:
+        logger.error("Update deployment info failed: %r" % r.__dict__)
+        raise DeploymentError()
+# end deployment related code
+
+
 class App(models.Model):
     name = models.CharField(max_length=100)
     owner = models.ForeignKey(User, related_name='apps')
 
+    deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
+    # cached deployment info
     subdomain = models.CharField(max_length=50, blank=True)
+    gitrepo_name = models.CharField(max_length=50, blank=True)
 
     _state_json = models.TextField(blank=True, default=get_default_app_state)
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
     _mobile_uie_state_json = models.TextField(blank=True, default=get_default_mobile_uie_state)
 
-    deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
+
+    def __init__(self, *args, **kwargs):
+        super(App, self).__init__(*args, **kwargs)
+        self._original_subdomain = self.subdomain
+        self._original_gitrepo_name = self.gitrepo_name
+
+    def update_deployment_info(self):
+        # calls method outside of this class
+        update_deployment_info(self.deployment_id, self.subdomain, self.gitrepo_name)
 
     def save(self, state_version=True, *args, **kwargs):
+        """
+        If the deployment info (subdomain and gitrepo name) were changed since init,
+        this will POST to the deployment server to update it.
+        There for it may raise a DeploymentError
+        """
         # increment version id
         s = self.state
         if state_version:
             s['version_id'] = s.get('version_id', 0) + 1
         self.state = s
 
+        # update the deployment info on the server if it changed.
+        if self.deployment_id is not None:
+            if self._original_subdomain != self.subdomain or self._original_gitrepo_name != self.gitrepo_name:
+
+                # update call to deployment server
+                self.update_deployment_info()
+
         return super(App, self).save(*args, **kwargs)
 
     def clean(self):
-        from django.core.exceptions import ValidationError
         print "calling clean on %d" % self.id
         if self.owner.apps.filter(name=self.name).exists():
             raise ValidationError('You have another app with the same name.')
@@ -191,6 +228,19 @@ class App(models.Model):
         subdomain = subdomain[-min(len(subdomain), 40):] # take the last min(40, len subdomain) chars.
 
         return subdomain
+
+    @classmethod
+    def provision_gitrepo_name(cls, gitrepo_name):
+        gitrepo_name = clean_subdomain(gitrepo_name)
+
+        # prevent duplicate gitrepo_names
+        while cls.objects.filter(gitrepo_name__iexact=gitrepo_name).exists():
+            gitrepo_name += str(random.randint(1,9))
+
+        # the above process may have caused string to grow, so trim if too long
+        gitrepo_name = gitrepo_name[-min(len(gitrepo_name), 40):] # take the last min(40, len gitrepo_name) chars.
+
+        return gitrepo_name
 
 
     def get_state(self):
