@@ -28,6 +28,7 @@ define([
       target  : $('.menu-app-pages'),
       url: '/tables/',
       setup: function(tour, options) {
+        console.log(tour);
         v1.bind('pages-loaded', function() {
           tour.next();
         });
@@ -97,9 +98,8 @@ define([
       loc     : "left center, right center",
       url     : '/editor/0/',
       target  : $('#page-3'),
-      prepareTime : 300,
+      prepareTime : 400,
       setup   : function(tour, options) {
-        console.log(tour);
         $('#page-3').one('click', tour.next);
       },
       teardown: function() {
@@ -294,11 +294,12 @@ define([
       content : '<em>Select <strong>Add a new entity</strong>, and enter <strong>Tweet</strong></em>',
       loc     : "right center, left center",
       url     : '/editor/1/',
+      target: $('#new-option'),
       setup: function(tour, options) {
         tweetTableCreated = function(table) {
           if(table.get('name') == "Tweet") {
             tour.tweetTable = table;
-            waitUntilAppears('.form-editor-btn', tour.next);
+            tour.next();
           }
           else {
             alert('Name of the table should be "Tweet"');
@@ -306,160 +307,140 @@ define([
           }
         };
         v1State.get('tables').bind('add', tweetTableCreated);
-        return { target: $('#new-option') };
       },
       teardown: function() {
         v1State.get('tables').bind('add', tweetTableCreated);
       }
     },
     {
-      ind     : 17,
+      ind     : 18,
       title   : 'Editing the Form',
       content : 'We have this blank form now and we need to add some fields to it. Click on <em>Edit Form</em> button.',
       loc     : "top center, bottom center",
       url     : '/editor/1/',
+      target  : $('.form-editor-btn'),
       setup: function(tour, options) {
-        $('.form-editor-btn').first().one('click', function() {
-          // setTimeout(tour.next, 400);
-          waitUntilAppears('.form-editor-title', tour.next);
-        });
-        return { target: $('.form-editor-btn') };
+        $('.form-editor-btn').first().one('click', tour.next);
       }
     },
     {
-      ind     : 18,
+      ind     : 19,
       title   : 'Form Editor',
       content : 'Form editor let\'s you edit your forms and add new fields to it.',
       loc     : "left top, right top",
       url     : '/editor/1/',
       nextButton: true,
-      setup: function(tour, options) {
-        return { target: $('.form-editor-title') };
-      }
+      target: $('.form-editor-title')
     },
     {
-      ind     : 19,
+      ind     : 20,
       title   : 'Add a New Field',
       content : 'Create a new form field by clicking on <em>Add a New Field</em> button.',
       loc     : "bottom center, top center",
       url     : '/editor/1/',
+      target: $('.btn.add-field-button'),
       setup: function(tour, options) {
         $('.btn.add-field-button').one('click', function() {
-          waitUntilAppears('#option-0', tour.next);
+          tour.next();
         });
-        return { target: $('.btn.add-field-button') };
-      }
-    },
-    {
-      ind     : 20,
-      title   : 'Creating a Form Field',
-      content : 'Since we don\'t have and fields defined before, we should create a new one. Click on <em>Create A New Field</em>',
-      loc     : "top left, bottom left",
-      url     : '/editor/1/',
-      setup: function(tour, options) {
-        $('#option-0').one('change', function() {
-          waitUntilAppears('.new-field-form', tour.next);
-        });
-        return { target: $('#option-0') };
       }
     },
     {
       ind     : 21,
-      title   : 'We want to Save Some Text',
-      content : 'We want to save the text content of a tweet here, so we can just name the field as "Content" and click <em>Done</em>',
-      loc     : "left top, right top",
+      title   : 'Creating a Form Field',
+      content : 'Since we don\'t have and fields defined before, we should create a new one. Click on <em>Create A New Field</em>',
+      loc     : "top left, bottom left",
       url     : '/editor/1/',
+      target  : $('#option-0'),
       setup: function(tour, options) {
-        $('.new-field-form').one('submit', tour.next);
-        return { target: $('.new-field-form') };
+        $('#option-0').one('change', tour.next);
       }
     },
     {
       ind     : 22,
+      title   : 'We want to Save Some Text',
+      content : 'We want to save the text content of a tweet here, so we can just name the field as "Content" and click <em>Done</em>',
+      loc     : "left top, right top",
+      url     : '/editor/1/',
+      target  : $('.new-field-form'),
+      setup   : function(tour, options) {
+        $('.new-field-form').one('submit', tour.next);
+      }
+    },
+    {
+      ind     : 23,
       title   : 'We have an awesome form now',
       content : 'We\'re basically done with our form, but you can customize it further, change the label to "Tweet" etc. When you\'re done click on <em>Done</em> to coninue.',
       loc     : "bottom right, top right",
       url     : '/editor/1/',
-      setup: function(tour, options) {
-        $('#item-gallery').animate({
-          scrollTop: $(".entity-list").offset().top - 90
-        }, 200);
+      target  : $('.btn.done'),
+      setup   : function(tour, options) {
+
         $('.btn.done').one('click', tour.next);
-        return { target: $('.btn.done')};
+        return { };
       }
     },
     /*
      * Creating a List
      */
     {
-      ind     : 23,
+      ind     : 24,
       title   : 'Twitter Feed',
       content : '<em>Drag a <strong>Tweet List</strong> onto the page.</em>',
       loc     : "right center, left center",
       url     : '/editor/1/',
+      target  : $('.entity-list'),
+      prepare : function() {
+        $('#item-gallery').scrollTop($(".entity-list").offset().top - 90);
+      },
       setup: function(tour, options) {
         draggedTweetList = function(uielem) {
           if(uielem.get('type') == "loop") {
             tour.pageLoop = uielem;
-            waitUntilAppears('.edit-row-btn', tour.next);
+            tour.next();
           }
         };
         v1State.getCurrentPage().get('uielements').bind('add', draggedTweetList);
-        return { target: $('.entity-list') };
       },
       teardown: function() {
         v1State.getCurrentPage().get('uielements').unbind('add', draggedTweetList);
       }
     },
     {
-      ind     : 24,
+      ind     : 25,
       title   : 'About this "list"',
       content : '"Edit Row" allows you to edit each row\'s appearance and content.<br>"Edit Query" allows you to filter and sort the Tweets.</p><p><em>Click on "Edit Row"</em>',
       loc     : "top center, bottom center",
       url     : '/editor/1/',
-      setup: function(tour, options) {
-
+      target  : $('#widget-editor'),
+      setup   : function(tour, options) {
         $('.edit-row-btn').one('click', function() {
-          setTimeout(function() {
             tour.next();
-          }, 300);
         });
-
-        return { target: $('#widget-editor') };
-      }
-    },
-    {
-      ind     : 25,
-      title   : 'The Green Row',
-      content : 'The green area of the list represents a single row. Drag\'N\'Drop works here too.',
-      loc     : "top center, bottom center",
-      url     : '/editor/1/',
-      nextButton: true,
-      setup: function(tour, options) {
-
-        return { target: $('.highlighted').first() };
       }
     },
     {
       ind     : 26,
+      title   : 'The Green Row',
+      content : 'The green area of the list represents a single row. Drag\'N\'Drop works here too.',
+      loc     : "top center, bottom center",
+      url     : '/editor/1/',
+      target  : $('.highlighted'),
+      nextButton: true
+    },
+    {
+      ind     : 27,
       title   : 'Editing Row Content',
       content : '<em>Drag a header element into the green row.</em>',
       loc     : "bottom center, top center",
       url     : '/editor/1/',
       nextButton: true,
+      target: $('.row-elements-list'),
       setup: function(tour, options) {
-
-        $('#item-gallery').scrollTop(0);
-        $('#item-gallery').animate({
-          scrollTop: $(".entity-create-form").offset().top - 90
-        }, 200);
-
         tweetStuffDragged = function() {
           tour.next();
         };
-
         tour.pageLoop.get('data').get('container_info').get('row').get('uielements').bind('add', tweetStuffDragged);
-        return { target: $('.row-elements-list') };
       },
       teardown: function(tour, options) {
         tour.pageLoop.get('data').get('container_info').get('row').get('uielements').unbind('add', tweetStuffDragged);
@@ -467,11 +448,18 @@ define([
     },
     {
       // TODO see how this looks and make shorter if necessary
-      ind     : 27,
+      ind     : 28,
       title   : 'Cool!',
       content : 'You successfully made a Twitter feed. You can make things look a little nicer if you want: resize things in the row, pick styles for the elements.</p><p><em>When done, Click "Done Editing" to switch off editing mode.</em>',
       loc     : "right center, left center",
       url     : '/editor/1/',
+      target: $('.done-editing'),
+      prepare : function() {
+        // $('#item-gallery').scrollTop(0);
+        // $('#item-gallery').animate({
+        //   scrollTop: $(".entity-create-form").offset().top - 90
+        // }, 200);
+      },
       setup: function(tour, options) {
         tour.pageLoop.bind('deselected', function() {
           tour.next();
@@ -479,7 +467,7 @@ define([
         $('.done-editing').one('click', function() {
           tour.next();
         });
-        return { target: $('.done-editing') };
+        return {  };
       },
       teardown: function(tour, options) {
         tour.pageLoop.unbind('deselected');
@@ -487,15 +475,13 @@ define([
     },
     // TODO associate the Tweet with the user in the modal
     {
-      ind     : 28,
+      ind     : 29,
       title   : 'Almost there!',
       content : 'Press "Test Run" and you will see your site up and running!',
       loc     : "top center, bottom center",
       nextButton: true,
-      url: '/editor/1/',
-      setup: function(tour, options) {
-        return { target: $('.save-run-group') };
-      },
+      url   : '/editor/1/',
+      target: $('.save-run-group'),
       teardown: function() {
         //last step done, delete walkthrough attribute
         delete v1State.attributes.simpleWalkthrough;
