@@ -7,6 +7,7 @@
       <tr>
         <th data-sort-type="number">Customer ID</th>
         <th>Name</th>
+        <th>User ID</th>
         <th>Email</th>
         <th>Company</th>
         <th>Consulting</th>
@@ -19,6 +20,7 @@
       {% for customer in customers reversed %}
       <tr>
         <td>{{ customer.pk }}</td>
+        <td>{{ customer.user_id }}</td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
         <td>{{ customer.company }}</td>
