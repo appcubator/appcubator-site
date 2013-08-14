@@ -596,7 +596,7 @@ def app_deploy(request, app_id):
         raise Exception(result)
     elif 'branch' in result and 'files' in result:
         #status = 409
-        # damn jquery
+        # damn jquery. the frontend code is not easy to modify to if/else based on status code.
         status = 200
     else:
         status = 200

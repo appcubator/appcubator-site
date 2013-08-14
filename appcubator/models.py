@@ -153,9 +153,11 @@ def clean_subdomain(subdomain):
 
 
 # should move these to some deployment module
+
 class DeploymentError(Exception):
     """Should be raised whenever the deployment server does not return 200"""
     pass
+
 def update_deployment_info(deployment_id, subdomain, gitrepo_name):
     payload = { 'subdomain': subdomain,
                 'gitrepo_name': gitrepo_name }
@@ -173,8 +175,8 @@ class App(models.Model):
 
     deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
     # cached deployment info
-    subdomain = models.CharField(max_length=50, blank=True)
-    gitrepo_name = models.CharField(max_length=50, blank=True)
+    subdomain = models.CharField(max_length=50, blank=True, unique=True)
+    gitrepo_name = models.CharField(max_length=50, blank=True, unique=True)
 
     _state_json = models.TextField(blank=True, default=get_default_app_state)
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
@@ -379,6 +381,7 @@ class App(models.Model):
     def get_deploy_data(self, git_user=None):
         post_data = {
             "subdomain": self.hostname(),
+            "gitrepo_name": self.gitrepo_name,
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
@@ -436,30 +439,6 @@ class App(models.Model):
                 pass # this is the fast_deploy case
 
             return result
-
-        elif r.status_code == 400:
-            try: # make sure we know this is the "subdomain is taken error"
-                for e_str in r.json()['errors']['subdomain']:
-                    if 'taken' not in e_str:
-                        raise Exception(r.text)
-            except KeyError: # otherwise, let it be known that this error is unknown.
-                raise Exception(r.text)
-
-
-            def increment(s):
-                last_char = s[-1]
-                if last_char in "123456780":
-                    last_char = str(int(last_char) + 1)
-                    s = s[:-1] + last_char
-                else:
-                    s = s + '2'
-                return s
-
-            old_subdomain = self.subdomain
-            self.subdomain = increment(old_subdomain)
-            logger.info("Subdomain %r was taken, so we changed to %r and we're trying again." % (old_subdomain, self.subdomain))
-            self.save()
-            return self.deploy(retry_on_404=retry_on_404)
 
         elif r.status_code == 404:
             assert retry_on_404
