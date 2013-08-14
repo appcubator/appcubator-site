@@ -301,7 +301,6 @@ class App(models.Model):
         return reverse('views.app_page', args=[str(self.id)])
 
     def clean(self):
-        print "calling clean on %d" % self.id
         if self.owner.apps.filter(name=self.name).exclude(id=self.id).exists():
             raise ValidationError('You have another app with the same name.')
         try:
