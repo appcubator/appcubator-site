@@ -23,7 +23,7 @@ require.config({
     "list" : "../../libs/list",
     "snap" : "../../libs/snap.min",
     "tourist": "../../libs/tourist.min",
-    "tourist-omer": "../../libs/touris-omer",
+    "tourist-omer": "../../libs/tourist-omer",
     "models" : "../data/models",
     "collections" : "../data/collections",
     "tutorial" : "../tutorial",

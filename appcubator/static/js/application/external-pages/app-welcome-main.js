@@ -155,12 +155,12 @@ function (AppModel,
   });
 
   $('.fixed-bg .walkthrough-twitter').click(function(e) {
-    $('.fixed-bg .row .welcome-icon').not('.row.twitter-chooser .welcome-icon').fadeOut('fast', function() {
-      $('.twitter-chooser').fadeIn('fast');
-      $('#question').html('Which one would you prefer?');
-    });
+    // $('.fixed-bg .row .welcome-icon').not('.row.twitter-chooser .welcome-icon').fadeOut('fast', function() {
+    //   $('.twitter-chooser').fadeIn('fast');
+    //   $('#question').html('Which one would you prefer?');
+    // });
 
-    return false;
+    // return false;
   });
 
   $('.fixed-bg .newapp').click(function(e) {
