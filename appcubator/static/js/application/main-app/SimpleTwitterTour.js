@@ -261,6 +261,17 @@ define([
      */
     {
       ind     : 15,
+      title   : 'Pick a Template',
+      content : 'Quickly pick a template again!',
+      loc     : "left center, right center",
+      url     : '/editor/1/',
+      target  : $('#page-3'),
+      setup   : function(tour, options) {
+        $('.page-template').one('click', tour.next);
+      }
+    },
+    {
+      ind     : 15,
       title   : 'Tweet Feed Page',
       content : 'On this page, we will a “Create Form" and put a Twitter feed. Let\'s start with the form first.',
       loc     : "top center, bottom center",
