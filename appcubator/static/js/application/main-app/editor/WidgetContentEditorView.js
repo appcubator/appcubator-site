@@ -88,8 +88,13 @@ function(SelectView) {
         return newObj;
       });
       statics_list.push({val: "new-image", name: "Upload New Image"});
+
+      var curValName = this.model.get('data').get('content_attribs').get('src');
+      if(this.model.get('data').get('content_attribs').has('src_content')) {
+        curValName = this.model.get('data').get('content_attribs').get('src_content');
+      }
       var curVal = {
-        name: this.model.get('data').get('content_attribs').get('src'),
+        name: curValName,
         val: this.model.get('data').get('content_attribs').get('src')
       };
       var selecView = new SelectView(statics_list, curVal, true);
