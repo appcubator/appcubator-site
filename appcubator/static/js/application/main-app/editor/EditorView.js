@@ -77,11 +77,6 @@ function( PageModel,
       keyDispatcher.bindComb('meta+shift+z', redoController.redo);
       keyDispatcher.bindComb('ctrl+shift+z', redoController.redo);
 
-      keyDispatcher.bindComb('meta+c', this.copy);
-      keyDispatcher.bindComb('ctrl+c', this.copy);
-      keyDispatcher.bindComb('meta+v', this.paste);
-      keyDispatcher.bindComb('ctrl+v', this.paste);
-
       g_guides = this.guides;
 
       this.navbar  = new NavbarView(this.model.get('navbar'));
@@ -147,32 +142,6 @@ function( PageModel,
       olark('api.box.expand');
     },
 
-    copy: function(e) {
-      if(keyDispatcher.textEditing === true) return;
-      if(this.marqueeView.multiSelectorView.contents.length) {
-        this.contents = [];
-        _(this.marqueeView.multiSelectorView.contents).each(function(model) {
-          this.contents.push(model.toJSON());
-        }, this);
-      }
-      else if(this.widgetsManager.widgetSelectorView.selectedEl){
-        this.contents = [];
-        this.contents.push(this.widgetsManager.widgetSelectorView.selectedEl.toJSON());
-      }
-    },
-
-    paste: function(e) {
-      if(keyDispatcher.textEditing === true) return;
-      if(!this.contents) return;
-
-      _(this.contents).each(function(cont) {
-        cont.layout.left++;
-        cont.layout.top++;
-        cont.layout.top++;
-      });
-      this.widgetsCollection.add(this.contents);
-    },
-
     deploy: function(options) {
       var url = '/app/'+appId+'/deploy/';
       var self = this;
@@ -227,10 +196,6 @@ function( PageModel,
 
       keyDispatcher.unbind('meta+z', redoController.redo);
       keyDispatcher.unbind('ctrl+z', redoController.redo);
-      keyDispatcher.unbind('meta+c', this.copy);
-      keyDispatcher.unbind('ctrl+c', this.copy);
-      keyDispatcher.unbind('meta+v', this.paste);
-      keyDispatcher.unbind('ctrl+v', this.paste);
 
       Backbone.View.prototype.close.call(this);
     }
