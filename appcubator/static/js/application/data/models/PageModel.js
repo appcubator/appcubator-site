@@ -66,8 +66,8 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
 
     getContextSentence: function () {
       var entities = [];
-      _(this.get('url').get('urlparts')).each(function(urlPart) {
-        if (/{{([^\}]+)}}/g.exec(urlPart)) entities.push(/\{\{([^\}]+)\}\}/g.exec(urlPart)[1]);
+      this.get('url').get('urlparts').each(function(urlPart) {
+        if (/{{([^\}]+)}}/g.exec(urlPart.get('value'))) entities.push(/\{\{([^\}]+)\}\}/g.exec(urlPart.get('value'))[1]);
       });
 
       if(entities.length === 0) {
