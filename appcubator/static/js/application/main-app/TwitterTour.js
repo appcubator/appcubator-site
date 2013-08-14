@@ -646,7 +646,7 @@ teardown: function() {
     },
     // TODO associate the Tweet with the user in the modal
     {
-      content: '<h3>Almost there!</h3><p>Press "Test Run" and you will see your site up and running!</p>',
+      content: '<h3>Almost there!</h3><p>Press "Publish" and you will see your site up and running!</p>',
       my: "top center",
       at: "bottom center",
       nextButton: true,

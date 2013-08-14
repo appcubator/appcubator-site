@@ -488,7 +488,7 @@ define([
     {
       ind     : 29,
       title   : 'Almost there!',
-      content : 'Press "Test Run" and you will see your site up and running!',
+      content : 'Press "Publish" and you will see your site up and running!',
       loc     : "top center, bottom center",
       nextButton: true,
       url   : '/editor/1/',

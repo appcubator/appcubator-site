@@ -158,7 +158,8 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       // this.$el.find('.details-panel').hide();
 
       this.$el.find('.details-panel').html(html);
-      if(fieldModel.get('displayType') == "option-boxes" || fieldModel.get('displayType') == "dropdown") {
+
+      if(fieldModel.get('displayType') == "option-boxes" || fieldModel.get('type') == "dropdown") {
         curOptions = fieldModel.get('options');
         this.$el.find('.options-list').append('<b>Options</b><input class="options-input" placeholder="E.g. Cars,Birds,Trains..." type="text" value="' + curOptions + '">');
       }
@@ -167,7 +168,7 @@ function(FormFieldModel, ActionEditorView, TutorialView) {
       this.$el.find('#field-' + fieldModel.cid).addClass('selected');
       // this.$el.find('.details-panel').fadeIn().css('display', 'inline-block');
       this.$el.find('.drag-icon').css({opacity: 0}).animate({opacity: 1});
-      if(this.model.get("action") == "edit") {
+      if(this.model.get("action") == "edit" && fieldModel.get('displayType') != "button") {
         this.$el.find('.field-placeholder-input').prop('disabled', true);
         this.$el.find('.field-placeholder-input').attr('disabled', 'disabled');
       }

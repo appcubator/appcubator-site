@@ -56,7 +56,7 @@ def app_welcome(request):
         return redirect(app_noob_page)
 
     if request.user.apps.count() == 0:
-        return redirect(app_new)
+        return redirect(app_noob_page)
     else:
         return redirect(app_page, request.user.apps.latest('id').id)
 

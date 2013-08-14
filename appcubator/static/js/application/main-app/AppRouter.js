@@ -53,6 +53,11 @@ define([
             keyDispatcher.bindComb('meta+s', this.save);
             keyDispatcher.bindComb('ctrl+s', this.save);
 
+            keyDispatcher.bindComb('meta+c', this.copy);
+            keyDispatcher.bindComb('ctrl+c', this.copy);
+            keyDispatcher.bindComb('meta+v', this.paste);
+            keyDispatcher.bindComb('ctrl+v', this.paste);
+
             var autoSave = setInterval(this.save, 30000);
         },
 
@@ -366,6 +371,35 @@ define([
                 newTitle = " | " + title;
             }
             document.title = "Appcubator" + newTitle;
+        },
+
+        copy: function(e) {
+          if(keyDispatcher.textEditing === true) return;
+          if(this.view.marqueeView.multiSelectorView.contents.length) {
+            this.contents = [];
+            _(this.view.marqueeView.multiSelectorView.contents).each(function(model) {
+              this.contents.push(model.toJSON());
+            }, this);
+          }
+          else if(this.view.widgetsManager.widgetSelectorView.selectedEl){
+            this.contents = [];
+            this.contents.push(this.view.widgetsManager.widgetSelectorView.selectedEl.toJSON());
+          }
+        },
+
+        paste: function(e) {
+          if(keyDispatcher.textEditing === true) return;
+          if(!this.contents) return;
+
+          _(this.contents).each(function(cont) {
+            cont.layout.left++;
+            cont.layout.top++;
+            cont.layout.top++;
+          });
+
+          if(this.view.widgetsCollection) {
+            this.view.widgetsCollection.add(this.contents);
+          }
         }
     });
 

@@ -72,7 +72,7 @@ function(WidgetEditorView,
     },
 
     mousemove: function(e) {
-      e.returnValue = false;
+      if(keyDispatcher.textEditing !== true) e.returnValue = false;
       if(!this.isDrawing) return;
 
       var coorX = e.pageX;
