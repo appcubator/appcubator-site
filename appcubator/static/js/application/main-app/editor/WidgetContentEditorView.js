@@ -169,6 +169,7 @@ function(SelectView) {
       }
 
       this.model.get('data').get('content_attribs').set('style', curStyle);
+      mouseDispatcher.isMousedownActive = false;
     },
 
     toggleBold: function(e) {
