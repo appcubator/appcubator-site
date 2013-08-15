@@ -37,9 +37,9 @@ def admin_home(request):
     beginning = int(time.mktime(beginning.timetuple()))
 
     # active users
-    page_context["users_today"] = recent_users(long_ago=timedelta(days=1))
-    page_context["users_last_week"] = recent_users(long_ago=timedelta(days=7))
-    page_context["most_active_users"] = logs_per_user()
+    page_context["users_today"] = recent_users(long_ago=timedelta(days=1), limit=20)
+    page_context["users_last_week"] = recent_users(long_ago=timedelta(days=7), limit=50)
+    page_context["most_active_users"] = logs_per_user(limit=100)
     page_context['active_users'] = active_users_json(request, beginning, now, 'day').content
     page_context['user_signups_cumulative'] = user_signups_cumulative_json(request, beginning, now, 'day').content
     page_context['user_signups'] = user_signups_json(request).content
@@ -264,7 +264,7 @@ def recent_users(long_ago=timedelta(days=1), limit=10):
     result.sort(key=lambda x: x['num_logs'], reverse=True)
     # limit results to top [limit]
     if len(result) > limit:
-        result = result[:10]
+        result = result[:limit]
     return result
 
 # Top [limit] users with most page visits
@@ -285,7 +285,7 @@ def logs_per_user(limit=10):
     result.sort(key=lambda x: x['num_logs'], reverse=True)
     # limit results to top [limit]
     if len(result) > limit:
-        result = result[:10]
+        result = result[:limit]
     return result
 
 # def avg_deployment_time():
