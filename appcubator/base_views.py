@@ -374,6 +374,16 @@ def screencast(request, screencast_id=1):
     page_context["title"] = "Screecast " + screencast_id
     return render(request, 'screencast-' + screencast_id + '.html', page_context)
 
+def sample_app(request, sample_id=1):
+    page_context = {}
+    page_context["title"] = "Sample App " + sample_id
+    return render(request, 'sample-app-' + sample_id + '.html', page_context)
+
+def sample_app_part(request, sample_id=1, part_id=1):
+    page_context = {}
+    page_context["title"] = "Sample App " + sample_id + ' Part ' + part_id
+    return render(request, 'sample-app-' + sample_id + '-part-' + part_id +'.html', page_context)
+
 def designer_guide(request):
     page_context = {}
     page_context["title"] = "Designer Guide"

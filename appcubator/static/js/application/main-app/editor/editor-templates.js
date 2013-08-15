@@ -23,21 +23,35 @@ Templates.tempNode = [
 
 Templates.NavbarEditor = [
   '<div>',
-    '<legend>Main Title</legend>',
-    '<input type="text" name="edit-brandName" id="edit-brandname" value="<%= brandName %>">',
-    '<legend class="hoff1">Links</legend>',
-    '<ul id="link-editors"></ul>',
-    '<button class="btn btn-primary btn-small add-link">Add Link</button>',
+    '<div class="clone">Click here to clone navigation bar from another page</div>',
+    '<div class="hoff1">',
+      '<h4 class="offset1">Main Title</h4><input type="text" name="edit-brandName" id="edit-brandname" value="<%= brandName %>">',
+    '</div>',
+    '<hr>',
+    '<h4 class="hoff1 offset1">Links</h4>',
+    '<div class="links-list">',
+      '<ul id="link-editors"></ul>',
+      '<div class="well well-small add-link">',
+      'Add Link',
+      '</div>',
+    '</div>',
   '</div>'
 ].join('\n');
 
 Templates.FooterEditor = [
   '<div>',
-    '<legend>Custom Footer Text</legend>',
-    '<input type="text" id="edit-customText" value="<%= customText %>">',
-    '<legend class="hoff1">Links</legend>',
-    '<ul id="link-editors"></ul>',
-    '<button class="btn btn-primary btn-small add-link">Add Link</button>',
+    '<div class="clone">Click here to clone footer from another page</div>',
+    '<div class="hoff1">',
+      '<h4 class="offset1">Custom Footer Text</h4><input type="text" name="edit-customText" class="span12" id="edit-customText" value="<%= customText %>">',
+    '</div>',
+    '<hr>',
+    '<h4 class="hoff1 offset1">Links</h4>',
+    '<div class="links-list">',
+      '<ul id="link-editors"></ul>',
+      '<div class="well well-small add-link">',
+      'Add Link',
+      '</div>',
+    '</div>',
   '</div>'
 ].join('\n');
 

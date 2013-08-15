@@ -2514,7 +2514,6 @@ ul.list {
  * NAVBAR EDITOR, FOOTER EDITOR
  */
 #navbar-editor .add-link, #footer-editor .add-link {
-  margin-top: 20px;
 }
 #navbar-editor,#footer-editor {
   width: 600px;
@@ -2531,16 +2530,8 @@ ul.list {
   border-bottom: 1px solid #ccc;
 }
 
-#navbar-editor > div,#footer-editor > div {
-  padding: 15px;
-}
-
 #edit-brandname,#edit-customText {
   margin-left: 15px;
-}
-
-#edit-customText {
-  width: 90%;
 }
 
 #navbar-editor h4 {
@@ -2550,6 +2541,17 @@ ul.list {
 #navbar-editor .links-title {
   padding: 10px;
   padding-left: 15px;
+}
+
+#navbar-editor .clone,
+#footer-editor .clone {
+  padding: 10px;
+  background-color: #DFEFFF;
+  height: 46px;
+}
+
+#navbar-editor .clone select {
+  vertical-align: top;
 }
 
 .well-small.add-link {
@@ -2562,15 +2564,13 @@ ul.list {
   margin-bottom: 0px;
 }
 
-#navbar-editor .links-section {
-  overflow: scroll;
-  height: 390px;
+#navbar-editor .links-list {
+  overflow-y: scroll;
+  height: 310px;
 }
 
 #link-editors {
   padding: 0 15px 5px;
-  height: 250px;
-  overflow: scroll;
 
   .select-container {
     position: relative;
