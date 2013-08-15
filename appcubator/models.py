@@ -44,9 +44,11 @@ class PubKey(models.Model):
         Returns HttpResponse of deployment API
         """
         pubkeys = user.pubkeys.order_by('-created_on')
-        payload = simplejson.dumps([p.pubkey for p in pubkeys])
+        pubkeys_json = simplejson.dumps([p.pubkey for p in pubkeys])
+        gitname_repos_json = simplejson.dumps([a.deployment_id for a in user.apps.exclude(deployment_id=None)])
         r = requests.post("http://%s/user/%s/pubkeys/" % (settings.DEPLOYMENT_HOSTNAME, user.extradata.git_user_id()),
-            data={'public_keys': payload},
+            data={'public_keys': pubkeys_json,
+                  'gitname_repos_json': gitname_repos_json},
             headers={'X-Requested-With': 'XMLHttpRequest'})
         return r
 
