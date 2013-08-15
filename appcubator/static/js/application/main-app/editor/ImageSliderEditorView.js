@@ -10,6 +10,9 @@ function() {
     width  : 800,
     height: 600,
     padding: 0,
+    title: 'Image Slider Editor',
+    doneButton: true,
+
     events : {
       'click li.add-image' : 'clickedAddImage',
       'click li .remove'   : 'clickedRemove',
@@ -30,7 +33,7 @@ function() {
       this.collection.each(this.appendImage);
       // render 'add image' button
       var addImageTempl = [
-        '<li class="add-image pane span10 offset1" style="height: 246px; text-align: center;">',
+        '<li class="add-image pane span10 offset1 hoff1" style="height: 246px; text-align: center;">',
           '<h3 class="hoff2">Add Image</h3>',
           '<img src="/static/img/add.png" class="span3 add-img">',
         '</li>'

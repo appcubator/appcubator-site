@@ -332,14 +332,14 @@ Templates.twitterfeedTemp = [
 Templates.facebookshareTemp = ['<img src="/static/img/fb-share-sample.png" width="300" >'].join('\n');
 
 Templates.sliderEditorTemp = [
-  '<h2>Image Slider Editor</h2>',
   '<div class="row">',
-  '<ul class="slider-images hoff1"></ul>',
+  '<ul class="slider-images" style="height:490px; overflow-y: scroll;">',
+  '</ul>',
   '</div>'
 ].join('\n');
 
 Templates.sliderImageEditorTemp = [
-  '<li id="image-editor-<%= cid %>" class="span10 offset1">',
+  '<li id="image-editor-<%= cid %>" class="span11 offset1 hoff1">',
     '<div class="thumbnail">',
       //'<img src="<%= image %>>',
       '<img src="<%= image %>">',

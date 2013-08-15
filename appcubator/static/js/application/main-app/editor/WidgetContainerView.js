@@ -62,6 +62,10 @@ function( QueryEditorView,
       this.el.className += ' widget-wrapper span'+width;
       this.el.id = 'widget-wrapper-' + this.model.cid;
 
+      if(this.model.get('layout').get('alignment')) {
+        this.el.style.textAlign = this.model.get('layout').get('alignment');
+      }
+
       if(this.model.get('layout').has('l_padding')) {
         this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
       }

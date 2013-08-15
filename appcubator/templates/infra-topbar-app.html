@@ -28,22 +28,27 @@
           </li>
           <li class="pull-right dropd">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.get_full_name }}<b class="caret"></b></a>
-            <ul class="v1 dropdown-menu">
+            <div class="v1 dropdown-menu">
               <!-- <li class="header-panel"></li> -->
-              {% if app %}
-              <li><a href="{% url appcubator.views.app_page app.id %}info/">App Settings</a></li>
-              <li><a href="{% url appcubator.views.app_edit_theme app.id %}" rel="external" target="_blank">Theme Editor</a></li>
+              <ul>{% if app %}
+                <li><a href="{% url appcubator.views.app_page app.id %}info/">App Settings</a></li>
+                <li><a href="{% url appcubator.views.app_edit_theme app.id %}" rel="external" target="_blank">Theme Editor</a></li>
               {% endif %}
               <li><a href="#invitations" class="toggle-invitations-modal">Invitations</a></li>
               <li class="header">My Applications</li>
-              {% for a in users_apps %}
-              <li><a href="{% url appcubator.views.app_page a.id %}" rel="external">{{ a.name }}</a></li>
-              {% endfor %}
-              <li><a href="{% url appcubator.views.app_new %}" rel="external">Create New</a></li>
-              <li class="header">Account Details</li>
-              <li><a href="/account">Account Settings</a></li>
-              <li><a href="/logout">Logout</a></li>
-            </ul>
+              </ul>
+              <ul class="my-apps">
+                {% for a in users_apps %}
+                <li><a href="{% url appcubator.views.app_page a.id %}" rel="external">{{ a.name }}</a></li>
+                {% endfor %}
+              </ul>
+              <ul>
+                <li class="header">Account Details</li>
+                <li><a href="{% url appcubator.views.app_new %}" rel="external">Create A New App</a></li>
+                <li><a href="/account">Account Settings</a></li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+            </div>
           </li>
         </ul>
       </div>

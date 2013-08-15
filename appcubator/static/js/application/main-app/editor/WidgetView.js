@@ -306,6 +306,7 @@ define([
 
     mousedown: function(e) {
       //e.stopPropagation();
+      mouseDispatcher.isMousedownActive = true;
     },
 
     close: function () {

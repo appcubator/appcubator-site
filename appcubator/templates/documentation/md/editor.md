@@ -11,11 +11,11 @@ What is the Editor Toolbar?
 
 - Remember to utilize the "Save" function often to record your progress. 
 
-- The "Test Run" function allows you to deply your application to your custom domain or *.appcubator.com subdomain. 
+- The "Publish" function allows you to deply your application to your custom domain or *.appcubator.com subdomain. 
 
-Why should I be doing "Test Runs"
+Why should I be doing "Publish"?
 
-- You should be periodically using the Test Run button as you are building your application to make sure that your application is deploying correctly. This will also update the code on your live domain. 
+- You should be periodically using the Publish button as you are building your application to make sure that your application is deploying correctly. This will also update the code on your live domain. 
 
 - It is a good idea to test your build progress as you integrate more functionality into your web application.
 

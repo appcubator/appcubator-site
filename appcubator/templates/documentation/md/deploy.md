@@ -6,7 +6,7 @@ And We are Live! Share your new Web App with your friends!
 
 Deploying your Application
 
-- Press "Test Run" in the editor or "Go to App" to deploy your app to your subdomain or custom domain. And you're live!
+- Press "Publish" in the editor or "Go to App" to deploy your app to your subdomain or custom domain. And you're live!
 
 ![alt text](http://appcubator.com/static/img/tutorial/Deploy_2.png)
  

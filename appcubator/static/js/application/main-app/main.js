@@ -23,6 +23,7 @@ require.config({
     "list" : "../../libs/list",
     "snap" : "../../libs/snap.min",
     "tourist": "../../libs/tourist.min",
+    "tourist-omer": "../../libs/tourist-omer",
     "models" : "../data/models",
     "collections" : "../data/collections",
     "tutorial" : "../tutorial",
@@ -61,6 +62,10 @@ require.config({
       exports: "Tourist",
       deps: ["backbone"]
     },
+    "tourist-omer": {
+      exports: "TouristOmer",
+      deps: ["tourist"]
+    },
     "util.filepicker": {
       exports: "util"
     }
@@ -85,7 +90,8 @@ require([
   "util",
   "comp",
   "xrayquire",
-  "mixins/BackboneConvenience"
+  "mixins/BackboneConvenience",
+  "tourist-omer"
 ],
 function (AppModel,
           PageCollection,
@@ -132,23 +138,14 @@ function (AppModel,
 
     if(v1State.has('simpleWalkthrough')) {
       require(['app/SimpleTwitterTour'], function(QuickTour) {
+        console.log(QuickTour);
         if(!QuickTour.currentStep) return;
         var url = QuickTour.currentStep.url;
 
-        if(QuickTour.currentStep.waitUntil) {
-          util.waitUntilAppears(QuickTour.currentStep.waitUntil, function() {
-            v1.navigate('app/'+appId+url, {trigger: true});
-            setTimeout(function() {
-              QuickTour.start();
-            }, 1000);
-          });
-        }
-        else {
-          v1.navigate('app/'+appId+url, {trigger: true});
-          setTimeout(function() {
+        v1.navigate('app/'+appId+url, {trigger: true});
+        setTimeout(function() {
             QuickTour.start();
-          }, 1000);
-        }
+        }, 1000);
 
       });
     }

@@ -201,7 +201,7 @@ function( PageModel,
       $.ajax(url, {
         type: "POST",
         complete: function() {
-          util.get('deploy').innerHTML = '<span>Test Run</span>';
+          util.get('deploy').innerHTML = '<span>Publish</span>';
         },
         success: function(data) {
           self.renderDeployResponse(true, data, self);
