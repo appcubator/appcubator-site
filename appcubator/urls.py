@@ -46,12 +46,12 @@ urlpatterns = patterns('',
     url(r'^payments/',                  include('appcubator.payments.urls')),
     url(r'^app/(\d+)/payment/$',        payment_views.app_payment),
 
-    url(r'^resources/$',                        base_views.resources),
-    url(r'^resources/screencast/(\d+)/$',       base_views.screencast),
-    url(r'^resources/sample/(\d+)/$',           base_views.sample_app),
-    url(r'^resources/sample/(\d+)/part/(\d+)$', base_views.sample_app_part),
-    url(r'^resources/designer-guide/$',         base_views.designer_guide),
-    url(r'^resources/developer-guide/$',        base_views.developer_guide),
+    url(r'^resources/$',                         base_views.resources),
+    url(r'^resources/screencast/(\d+)/$',        base_views.screencast),
+    url(r'^resources/sample/(\d+)/$',            base_views.sample_app),
+    url(r'^resources/sample/(\d+)/part/(\d+)/$', base_views.sample_app_part),
+    url(r'^resources/designer-guide/$',          base_views.designer_guide),
+    url(r'^resources/developer-guide/$',         base_views.developer_guide),
 )
 
 urlpatterns += patterns('appcubator.log_views',

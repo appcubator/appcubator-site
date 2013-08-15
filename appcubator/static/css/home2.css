@@ -1369,6 +1369,14 @@ img.startx {
   margin-top: 10px;
 }
 
+.sample-apps.parts li {
+  height: auto;
+  padding-bottom: 15px;
+}
+.sample-apps.parts li .summary {
+  width: 100%;
+}
+
 .guides {
   margin-bottom: 40px;
   margin-top: 20px;
