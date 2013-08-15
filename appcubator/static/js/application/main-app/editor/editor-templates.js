@@ -23,6 +23,7 @@ Templates.tempNode = [
 
 Templates.NavbarEditor = [
   '<div>',
+    '<div class="clone">Click here to clone navigation bar from another page</div>',
     '<div class="hoff1">',
       '<h4 class="offset1">Main Title</h4><input type="text" name="edit-brandName" id="edit-brandname" value="<%= brandName %>">',
     '</div>',
