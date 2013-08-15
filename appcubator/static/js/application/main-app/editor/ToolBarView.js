@@ -8,18 +8,19 @@ function(PageModel) {
     subviews: [],
 
     events: {
-      'mouseover .menu-button.pages' : 'expandPages',
-      'mouseout .menu-button.pages'  : 'shrinkPages',
-      'click .go-to-page'    : 'clickedGoToPage',
-      'click a.back'        : 'navigateBack'
+      'mouseover #menu-pages' : 'expandPages',
+      'mouseout #menu-pages'  : 'shrinkPages',
+      'click .go-to-page'     : 'clickedGoToPage',
+      'click a.back'          : 'navigateBack'
     },
 
     initialize: function(navbarModel) {
       _.bindAll(this);
 
-      this.nmrFields = v1State.get('pages').length;
+      this.nmrFields = v1State.get('pages').length + 1;
+      if(this.nmrFields > 6) this.nmrFields = 6;
       this.listenTo(v1State.get('pages'), 'add remove', function() {
-        this.nmrFields = v1State.get('pages').length;
+        this.nmrFields = v1State.get('pages').length + 1;
       }, this);
 
     },
@@ -27,19 +28,21 @@ function(PageModel) {
 
     render: function() {
 
+      util.get('current-page').innerHTML = v1State.get('pages').models[pageId].get('name');
       this.pageList = util.get('page-list');
+      //$('#page-list').height(0);
 
-      this.pageList.innerHTML += '<li>'+ v1State.get('pages').models[pageId].get('name') +'</li>';
+      //this.pageList.innerHTML += '<li>'+ v1State.get('pages').models[pageId].get('name') +'</li>';
 
       v1State.get('pages').each(function(page, ind) {
         if(pageId == ind) return;
         this.renderPageItem(ind, page.get('name'));
       }, this);
 
-      this.createBox = new Backbone.NameBox({tagName: 'li', className:'new-page', txt:'New Page'}).render();
+      this.createBox = new Backbone.NameBox({el: util.get('create-page'), txt:'New Page'}).render();
       this.createBox.on('submit', this.createPage);
 
-      util.get('page-list').appendChild(this.createBox.el);
+      //util.get('create-page').appendChild(this.createBox.el);
 
       return this;
     },
@@ -62,18 +65,18 @@ function(PageModel) {
 
       var self = this;
       v1.save(null, function() {
-        $('<li class="go-to-page" id="page-'+pageInd+'"><a>'+name+'</a></li>').insertBefore($('#page-list').find(".new-page"));
-          self.expandPages();
+        $('#page-list').append('<li class="go-to-page" id="page-'+pageInd+'"><a>'+name+'</a></li>');
+        self.expandPages();
       });
     },
 
     expandPages: function () {
-      $('#page-list').height((this.nmrFields + 1) * 42);
+      $('#menu-pages').height((this.nmrFields) * 42);
     },
 
     shrinkPages: function(e) {
       if(util.isMouseOn(e.pageX, e.pageY, this.pageList)) return;
-      $('#page-list').height(40);
+      $('#menu-pages').height(42);
       this.createBox.reset();
     },
 

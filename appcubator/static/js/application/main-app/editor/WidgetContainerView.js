@@ -1,13 +1,11 @@
 define([
   'editor/QueryEditorView',
   'editor/WidgetView',
-  'editor/SubWidgetView',
   'dicts/constant-containers',
   'editor/editor-templates'
 ],
 function( QueryEditorView,
-          WidgetView,
-          SubWidgetView) {
+          WidgetView) {
 
   var WidgetContainerView = WidgetView.extend({
     el: null,
@@ -132,7 +130,7 @@ function( QueryEditorView,
     },
 
     placeWidget: function(model, a) {
-      var widgetView = new SubWidgetView(model);
+      alert('hey');
       this.el.appendChild(widgetView.el);
       model.get('layout').bind('change', this.reRender);
     },

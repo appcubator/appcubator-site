@@ -1750,6 +1750,8 @@ border-radius: 27px;
 
 .menu-button.pages {
   border-top: 0px solid #3b4555;
+  width: 269px;
+  overflow: hidden;
 }
 
 .save-run-group .menu-button:first-child,
@@ -1922,11 +1924,22 @@ li.model span.title {
   width: 269px;
   padding: 0;
   background-color: #2b3545;
-  height: 42px;
   overflow: hidden;
   margin: 0;
-  max-height: 210px;
+  max-height: 168px;
   overflow-y: scroll;
+  vertical-align: top;
+}
+
+.menu-button.pages div.page-item {
+  width: 269px;
+  height: 42px;
+  padding: 0 10px;
+  display: inline-block;
+  vertical-align: top;
+  border-top: 1px solid #3b4555;
+  border-bottom: 1px solid #1b2535;
+  background-color: #2b3545;
 }
 
 .pages ul li {
