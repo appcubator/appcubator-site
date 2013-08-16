@@ -23,7 +23,7 @@ Templates.tempNode = [
 
 Templates.NavbarEditor = [
   '<div>',
-    '<div class="clone">Click here to clone navigation bar from another page</div>',
+    '<div class="clone">Click here to clone navigation bar from another page.</div>',
     '<div class="hoff1">',
       '<h4 class="offset1">Main Title</h4><input type="text" name="edit-brandName" id="edit-brandname" value="<%= brandName %>">',
     '</div>',
@@ -40,7 +40,7 @@ Templates.NavbarEditor = [
 
 Templates.FooterEditor = [
   '<div>',
-    '<div class="clone">Click here to clone footer from another page</div>',
+    '<div class="clone">Click here to clone footer from another page.</div>',
     '<div class="hoff1">',
       '<h4 class="offset1">Custom Footer Text</h4><input type="text" name="edit-customText" class="span12" id="edit-customText" value="<%= customText %>">',
     '</div>',

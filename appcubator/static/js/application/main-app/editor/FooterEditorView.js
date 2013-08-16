@@ -106,6 +106,7 @@ function(LinkEditorView) {
     showCloneOptions: function() {
       var select = document.createElement('select');
       select.className = 'clone-page';
+      select.innerHTML += '<option value="pick-page">Choose a Page</option>';
       v1State.get('pages').each(function(pageM) {
         select.innerHTML += '<option value="page-'+pageM.cid+'">'+ pageM.get('name') +'</option>';
       });
@@ -114,6 +115,8 @@ function(LinkEditorView) {
     },
 
     clonePage: function(e) {
+      if(e.currentTarget.value == 'pick-page') return;
+
       var cid = String(e.currentTarget.value).replace('page-','');
       var pageM = v1State.get('pages').get(cid);
 
