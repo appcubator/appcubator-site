@@ -1360,11 +1360,18 @@ img.startx {
   max-width: none;
 }
 
-.screencasts li .summary,
-.sample-apps li .summary {
+.screencasts li .summary {
   display: inline-block;
   vertical-align: top;
   margin-left: 20px;
+  width: 380px;
+  margin-top: 10px;
+}
+
+.sample-apps li .summary {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 20px;
   width: 380px;
   margin-top: 10px;
 }
