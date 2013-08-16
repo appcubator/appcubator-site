@@ -21,28 +21,25 @@ function(PageModel) {
       if(this.nmrFields > 6) this.nmrFields = 6;
       this.listenTo(v1State.get('pages'), 'add remove', function() {
         this.nmrFields = v1State.get('pages').length + 1;
+        if(this.nmrFields > 6) this.nmrFields = 6;
       }, this);
 
     },
-
 
     render: function() {
 
       util.get('current-page').innerHTML = v1State.get('pages').models[pageId].get('name');
       this.pageList = util.get('page-list');
-      //$('#page-list').height(0);
-
-      //this.pageList.innerHTML += '<li>'+ v1State.get('pages').models[pageId].get('name') +'</li>';
 
       v1State.get('pages').each(function(page, ind) {
         if(pageId == ind) return;
         this.renderPageItem(ind, page.get('name'));
       }, this);
 
-      this.createBox = new Backbone.NameBox({el: util.get('create-page'), txt:'New Page'}).render();
+      this.createBox = new Backbone.NameBox({txt:'New Page'}).render();
       this.createBox.on('submit', this.createPage);
 
-      //util.get('create-page').appendChild(this.createBox.el);
+      util.get('create-page').appendChild(this.createBox.el);
 
       return this;
     },
@@ -67,6 +64,7 @@ function(PageModel) {
       v1.save(null, function() {
         $('#page-list').append('<li class="go-to-page" id="page-'+pageInd+'"><a>'+name+'</a></li>');
         self.expandPages();
+        util.scrollToBottom($('#page-list'));
       });
     },
 
@@ -75,7 +73,7 @@ function(PageModel) {
     },
 
     shrinkPages: function(e) {
-      if(util.isMouseOn(e.pageX, e.pageY, this.pageList)) return;
+      if(util.isMouseOn(e.pageX, e.pageY, this.el)) return;
       $('#menu-pages').height(42);
       this.createBox.reset();
     },
