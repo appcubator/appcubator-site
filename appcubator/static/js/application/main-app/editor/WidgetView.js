@@ -222,7 +222,7 @@ define([
     },
 
     hovered: function() {
-      if(this.editMode) return;
+      if(this.editMode || mouseDispatcher.isMousedownActive) return;
       if(this.model.isBox()) return;
       this.hovered = true;
       this.model.trigger('hovered');
