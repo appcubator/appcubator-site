@@ -103,7 +103,7 @@ define([
       this.el.id = 'widget-wrapper-' + this.model.cid;
 
       if(this.model.isFullWidth()) this.switchOnFullWidth();
-      if(this.model.isBox()) this.el.style.zIndex = 999;
+      if(this.model.isBgElement()) this.el.style.zIndex = 999;
 
       return this;
     },
@@ -125,7 +125,7 @@ define([
       if(!this.editMode) {
         this.model.trigger('selected');
         this.el.style.zIndex = 2003;
-        if(this.model.isBox()) this.el.style.zIndex = 1000;
+        if(this.model.isBgElement()) this.el.style.zIndex = 1000;
       }
     },
 
@@ -223,7 +223,7 @@ define([
 
     hovered: function() {
       if(this.editMode || mouseDispatcher.isMousedownActive) return;
-      if(this.model.isBox()) return;
+      if(this.model.isBgElement()) return;
       this.hovered = true;
       this.model.trigger('hovered');
     },
