@@ -20,7 +20,8 @@ define([
       'click .delete' : 'remove',
       'mouseover'     : 'hovered',
       'mouseout'      : 'unhovered',
-      'mousedown'     : 'mousedown'
+      'mousedown'     : 'mousedown',
+      'mouseup'       : 'mouseup'
     },
 
     initialize: function(widgetModel){
@@ -52,9 +53,13 @@ define([
         this.model.trigger('stopEditing');
       }, this);
       this.listenTo(this.model, "stopEditing", this.switchEditModeOff);
+      this.listenTo(this.model, "cancelEditing", this.cancelEditing);
 
       keyDispatcher.bind('meta+return', function() {
         self.model.trigger('stopEditing');
+      });
+      keyDispatcher.bind('esc', function() {
+        self.model.trigger('cancelEditing');
       });
 
     },
@@ -280,6 +285,18 @@ define([
       util.unselectText();
     },
 
+    cancelEditing: function() {
+      if(this.editMode === false) return;
+
+      this.editMode = false;
+      this.$el.removeClass('textediting');
+      var el = $(this.el.firstChild);
+      this.model.get('data').trigger('change:content');
+      el.attr('contenteditable', 'false');
+      keyDispatcher.textEditing = false;
+      util.unselectText();
+    },
+
     autoResize: function(hGrid, vGrid) {
       var horizontalGrid = (hGrid || this.positionHorizontalGrid);
       var verticalGrid = (vGrid || this.positionVerticalGrid);
@@ -307,6 +324,10 @@ define([
     mousedown: function(e) {
       //e.stopPropagation();
       mouseDispatcher.isMousedownActive = true;
+    },
+
+    mouseup: function() {
+      mouseDispatcher.isMousedownActive = false;
     },
 
     close: function () {
