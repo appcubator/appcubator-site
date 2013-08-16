@@ -276,7 +276,7 @@
   ],
   "lines": [
     {
-      "style": "border-color:#49afcd;",
+      "style": "border:none; border-top: 1px solid #0054a6;",
       "isSingle": true,
       "cons_attribs": {},
       "hoverStyle": "",
@@ -286,7 +286,7 @@
       "activeStyle": ""
     },
     {
-      "style": "border-color:#ccc;",
+      "style": "border:none; border-top: 1px solid #ccc;",
       "isSingle": true,
       "cons_attribs": {},
       "hoverStyle": "",
