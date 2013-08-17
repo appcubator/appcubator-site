@@ -53,13 +53,13 @@ function(WidgetContentEditor,
     setModel: function(widgetModel) {
       if(this.model) {
         this.stopListening(this.model, 'startEditing', this.startedEditing);
-        this.stopListening(this.model, 'stopEditing', this.stoppedEditing);
+        this.stopListening(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
       }
 
       this.model = widgetModel;
 
       this.listenTo(this.model, 'startEditing', this.startedEditing);
-      this.listenTo(this.model, 'stopEditing', this.stoppedEditing);
+      this.listenTo(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
 
       return this;
     },

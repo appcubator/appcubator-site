@@ -1750,6 +1750,8 @@ border-radius: 27px;
 
 .menu-button.pages {
   border-top: 0px solid #3b4555;
+  width: 269px;
+  overflow: hidden;
 }
 
 .save-run-group .menu-button:first-child,
@@ -1922,11 +1924,22 @@ li.model span.title {
   width: 269px;
   padding: 0;
   background-color: #2b3545;
-  height: 42px;
   overflow: hidden;
   margin: 0;
-  max-height: 210px;
+  max-height: 168px;
   overflow-y: scroll;
+  vertical-align: top;
+}
+
+.menu-button.pages div.page-item {
+  width: 269px;
+  height: 42px;
+  padding: 0 10px;
+  display: inline-block;
+  vertical-align: top;
+  border-top: 1px solid #3b4555;
+  border-bottom: 1px solid #1b2535;
+  background-color: #2b3545;
 }
 
 .pages ul li {
@@ -2503,6 +2516,13 @@ ul.list {
   border-bottom-color: #a2a2a2;
   .border-radius(4px);
   .box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05));
+
+  &:hover {
+    background-color: #0f2d40;
+    background-image: none;
+    color: #fff;
+    text-shadow: none;
+  }
 }
 
 #edit-footer-btn {
@@ -2547,11 +2567,15 @@ ul.list {
 #footer-editor .clone {
   padding: 10px;
   background-color: #DFEFFF;
-  height: 46px;
+  height: 56px;
+  cursor: pointer;
+  line-height: 36px;
 }
 
 #navbar-editor .clone select {
   vertical-align: top;
+  width: 200px;
+  margin-left: 12px;
 }
 
 .well-small.add-link {

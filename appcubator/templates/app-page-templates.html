@@ -233,8 +233,11 @@
         <a href="{% url appcubator.views.app_page app.id %}gallery/" class="themes"></a>
         <a href="{% url appcubator.views.app_page app.id %}tables/" class="tables"></a>
       </div>
-      <div class="menu-button pages"><ul id="page-list"></ul><div class="menu-button dropdown-arrow">
+      <div class="menu-button pages" id="menu-pages">
+        <div id="current-page" class="page-item"></div><ul id="page-list"></ul><div id="create-page" class="page-item">
       </div></div>
+      <div class="menu-button dropdown-arrow">
+      </div>
     </div>
     <div class="right-group">
       <div class="menu-button question">Ask a Question</div>

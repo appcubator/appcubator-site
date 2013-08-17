@@ -25,7 +25,7 @@ function(Backbone) {
 
     render: function() {
       if(this.txt) {
-        this.el.innerHTML += this.txt;
+        this.el.innerHTML += '<div class="box-button text">' + this.txt + '</div>';
       }
       if(!this.$el.find('form').length) {
         this.el.innerHTML +="<form style='display:none;'><input type='text' placeholder='Name...'></form>";

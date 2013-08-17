@@ -20,7 +20,8 @@ define([
       'click .delete' : 'remove',
       'mouseover'     : 'hovered',
       'mouseout'      : 'unhovered',
-      'mousedown'     : 'mousedown'
+      'mousedown'     : 'mousedown',
+      'mouseup'       : 'mouseup'
     },
 
     initialize: function(widgetModel){
@@ -52,9 +53,13 @@ define([
         this.model.trigger('stopEditing');
       }, this);
       this.listenTo(this.model, "stopEditing", this.switchEditModeOff);
+      this.listenTo(this.model, "cancelEditing", this.cancelEditing);
 
       keyDispatcher.bind('meta+return', function() {
         self.model.trigger('stopEditing');
+      });
+      keyDispatcher.bind('esc', function() {
+        self.model.trigger('cancelEditing');
       });
 
     },
@@ -98,7 +103,7 @@ define([
       this.el.id = 'widget-wrapper-' + this.model.cid;
 
       if(this.model.isFullWidth()) this.switchOnFullWidth();
-      if(this.model.isBox()) this.el.style.zIndex = 999;
+      if(this.model.isBgElement()) this.el.style.zIndex = 999;
 
       return this;
     },
@@ -120,7 +125,7 @@ define([
       if(!this.editMode) {
         this.model.trigger('selected');
         this.el.style.zIndex = 2003;
-        if(this.model.isBox()) this.el.style.zIndex = 1000;
+        if(this.model.isBgElement()) this.el.style.zIndex = 1000;
       }
     },
 
@@ -217,8 +222,8 @@ define([
     },
 
     hovered: function() {
-      if(this.editMode) return;
-      if(this.model.isBox()) return;
+      if(this.editMode || mouseDispatcher.isMousedownActive) return;
+      if(this.model.isBgElement()) return;
       this.hovered = true;
       this.model.trigger('hovered');
     },
@@ -280,6 +285,18 @@ define([
       util.unselectText();
     },
 
+    cancelEditing: function() {
+      if(this.editMode === false) return;
+
+      this.editMode = false;
+      this.$el.removeClass('textediting');
+      var el = $(this.el.firstChild);
+      this.model.get('data').trigger('change:content');
+      el.attr('contenteditable', 'false');
+      keyDispatcher.textEditing = false;
+      util.unselectText();
+    },
+
     autoResize: function(hGrid, vGrid) {
       var horizontalGrid = (hGrid || this.positionHorizontalGrid);
       var verticalGrid = (vGrid || this.positionVerticalGrid);
@@ -307,6 +324,10 @@ define([
     mousedown: function(e) {
       //e.stopPropagation();
       mouseDispatcher.isMousedownActive = true;
+    },
+
+    mouseup: function() {
+      mouseDispatcher.isMousedownActive = false;
     },
 
     close: function () {

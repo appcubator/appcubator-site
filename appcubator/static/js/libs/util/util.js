@@ -213,6 +213,10 @@ define(['jquery'], function() {
       $('html, body').animate({ scrollTop: height }, 'slow', 'swing');
     },
 
+    scrollToBottom: function($el) {
+      $el.animate({ scrollTop: $el[0].scrollHeight }, 'slow', 'swing');
+    },
+
     isAlphaNumeric: function(str) {
       var patt=/^[a-z0-9\s]+$/i;
       return patt.test(str);
