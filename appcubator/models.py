@@ -44,9 +44,11 @@ class PubKey(models.Model):
         Returns HttpResponse of deployment API
         """
         pubkeys = user.pubkeys.order_by('-created_on')
-        payload = simplejson.dumps([p.pubkey for p in pubkeys])
+        pubkeys_json = simplejson.dumps([p.pubkey for p in pubkeys])
+        gitname_repos_json = simplejson.dumps([a.deployment_id for a in user.apps.exclude(deployment_id=None)])
         r = requests.post("http://%s/user/%s/pubkeys/" % (settings.DEPLOYMENT_HOSTNAME, user.extradata.git_user_id()),
-            data={'public_keys': payload},
+            data={'public_keys': pubkeys_json,
+                  'gitname_repos_json': gitname_repos_json},
             headers={'X-Requested-With': 'XMLHttpRequest'})
         return r
 
@@ -152,32 +154,66 @@ def clean_subdomain(subdomain):
     return subdomain
 
 
+# should move these to some deployment module
+
+class DeploymentError(Exception):
+    """Should be raised whenever the deployment server does not return 200"""
+    pass
+
+def update_deployment_info(deployment_id, subdomain, gitrepo_name):
+    payload = { 'subdomain': subdomain,
+                'gitrepo_name': gitrepo_name }
+    deployment_url = 'http://%s/deployment/%d/info/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
+    r = requests.post(deployment_url, data=payload, headers={'X-Requested-With': 'XMLHttpRequest'})
+    if r.status_code != 200:
+        logger.error("Update deployment info failed: %r" % r.__dict__)
+        raise DeploymentError()
+# end deployment related code
+
+
 class App(models.Model):
     name = models.CharField(max_length=100)
     owner = models.ForeignKey(User, related_name='apps')
 
-    subdomain = models.CharField(max_length=50, blank=True)
+    deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
+    # cached deployment info
+    subdomain = models.CharField(max_length=50, blank=True, unique=True)
+    gitrepo_name = models.CharField(max_length=50, blank=True, unique=True)
 
     _state_json = models.TextField(blank=True, default=get_default_app_state)
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
     _mobile_uie_state_json = models.TextField(blank=True, default=get_default_mobile_uie_state)
 
-    deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
+
+    def __init__(self, *args, **kwargs):
+        super(App, self).__init__(*args, **kwargs)
+        self._original_subdomain = self.subdomain
+        self._original_gitrepo_name = self.gitrepo_name
+
+    def update_deployment_info(self):
+        # calls method outside of this class
+        update_deployment_info(self.deployment_id, self.subdomain, self.gitrepo_name)
 
     def save(self, state_version=True, *args, **kwargs):
+        """
+        If the deployment info (subdomain and gitrepo name) were changed since init,
+        this will POST to the deployment server to update it.
+        There for it may raise a DeploymentError
+        """
         # increment version id
         s = self.state
         if state_version:
             s['version_id'] = s.get('version_id', 0) + 1
         self.state = s
 
-        return super(App, self).save(*args, **kwargs)
+        # update the deployment info on the server if it changed.
+        if self.deployment_id is not None:
+            if self._original_subdomain != self.subdomain or self._original_gitrepo_name != self.gitrepo_name:
 
-    def clean(self):
-        from django.core.exceptions import ValidationError
-        print "calling clean on %d" % self.id
-        if self.owner.apps.filter(name=self.name).exists():
-            raise ValidationError('You have another app with the same name.')
+                # update call to deployment server
+                self.update_deployment_info()
+
+        return super(App, self).save(*args, **kwargs)
 
     @classmethod
     def provision_subdomain(cls, subdomain):
@@ -191,6 +227,19 @@ class App(models.Model):
         subdomain = subdomain[-min(len(subdomain), 40):] # take the last min(40, len subdomain) chars.
 
         return subdomain
+
+    @classmethod
+    def provision_gitrepo_name(cls, gitrepo_name):
+        gitrepo_name = clean_subdomain(gitrepo_name)
+
+        # prevent duplicate gitrepo_names
+        while cls.objects.filter(gitrepo_name__iexact=gitrepo_name).exists():
+            gitrepo_name += str(random.randint(1,9))
+
+        # the above process may have caused string to grow, so trim if too long
+        gitrepo_name = gitrepo_name[-min(len(gitrepo_name), 40):] # take the last min(40, len gitrepo_name) chars.
+
+        return gitrepo_name
 
 
     def get_state(self):
@@ -256,6 +305,8 @@ class App(models.Model):
         return reverse('views.app_page', args=[str(self.id)])
 
     def clean(self):
+        if self.owner.apps.filter(name=self.name).exclude(id=self.id).exists():
+            raise ValidationError('You have another app with the same name.')
         try:
             simplejson.loads(self._state_json)
         except simplejson.JSONDecodeError, e:
@@ -264,6 +315,8 @@ class App(models.Model):
             simplejson.loads(self._uie_state_json)
         except simplejson.JSONDecodeError, e:
             raise ValidationError(e.msg)
+        if self.gitrepo_name != clean_subdomain(self.gitrepo_name):
+            self.gitrepo_name = App.provision_gitrepo_name(self.gitrepo_name)
 
     def write_to_tmpdir(self, for_user=False):
         from app_builder.analyzer import App as AnalyzedApp
@@ -330,6 +383,7 @@ class App(models.Model):
     def get_deploy_data(self, git_user=None):
         post_data = {
             "subdomain": self.hostname(),
+            "gitrepo_name": self.gitrepo_name,
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
@@ -387,30 +441,6 @@ class App(models.Model):
                 pass # this is the fast_deploy case
 
             return result
-
-        elif r.status_code == 400:
-            try: # make sure we know this is the "subdomain is taken error"
-                for e_str in r.json()['errors']['subdomain']:
-                    if 'taken' not in e_str:
-                        raise Exception(r.text)
-            except KeyError: # otherwise, let it be known that this error is unknown.
-                raise Exception(r.text)
-
-
-            def increment(s):
-                last_char = s[-1]
-                if last_char in "123456780":
-                    last_char = str(int(last_char) + 1)
-                    s = s[:-1] + last_char
-                else:
-                    s = s + '2'
-                return s
-
-            old_subdomain = self.subdomain
-            self.subdomain = increment(old_subdomain)
-            logger.info("Subdomain %r was taken, so we changed to %r and we're trying again." % (old_subdomain, self.subdomain))
-            self.save()
-            return self.deploy(retry_on_404=retry_on_404)
 
         elif r.status_code == 404:
             assert retry_on_404
