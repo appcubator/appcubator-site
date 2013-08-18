@@ -87,7 +87,9 @@ function(SelectView) {
         newObj.name = obj.name;
         return newObj;
       });
-      statics_list.push({val: "new-image", name: "Upload New Image"});
+      statics_list = _.union({val: "new-image", name: "Upload New Image"}, statics_list);
+
+      console.log(statics_list);
 
       var curValName = this.model.get('data').get('content_attribs').get('src');
       if(this.model.get('data').get('content_attribs').has('src_content')) {
@@ -97,7 +99,7 @@ function(SelectView) {
         name: curValName,
         val: this.model.get('data').get('content_attribs').get('src')
       };
-      var selecView = new SelectView(statics_list, curVal, true);
+      var selecView = new SelectView(statics_list, curVal, true, { maxHeight: 5});
       selecView.bind('change', this.changeSrc);
       li.appendChild(selecView.el);
       return li;

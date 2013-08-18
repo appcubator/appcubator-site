@@ -15,7 +15,7 @@ function(Backbone) {
       'click .updown-handle' : 'toggle'
     },
 
-    initialize: function(list, currentVal, isNameVal) {
+    initialize: function(list, currentVal, isNameVal, options) {
       _.bindAll(this, 'render',
                       'expand',
                       'shrink',
@@ -25,7 +25,7 @@ function(Backbone) {
       this.list = list;
       this.currentVal = currentVal;
       this.isNameVal = isNameVal || false;
-
+      this.options = options;
       this.render();
       return this;
     },
@@ -68,6 +68,8 @@ function(Backbone) {
       if(this.currentVal && !_.contains(this.list, this.currentVal)) {
         length += 1;
       }
+
+      if(this.options.maxHeight) length = this.options.maxHeight;
 
       this.el.style.height = length * 40 + 'px';
       this.expanded = true;
