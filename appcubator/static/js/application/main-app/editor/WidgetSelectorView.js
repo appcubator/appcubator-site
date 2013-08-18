@@ -352,9 +352,7 @@ function() {
 
     doubleClicked: function(e) {
       if(!this.isMouseOn(e) || this.selectedEl.editModeOn) return;
-
-      if(this.selectedEl.getForm()) return;
-      if(this.selectedEl.getLoginRoutes()) return;
+      this.selectedEl.trigger('doubleClicked');
 
       if(this.selectedEl.getContent()) {
         this.selectedEl.trigger('startEditing');
