@@ -1,7 +1,7 @@
 {% extends "infra-html.html" %}
 {% block css %}
-<link type="text/css" href="/app/{{ app_id}}/uiestate.less" id="css-uiestate" rel="stylesheet"/>
-<link type="text/css" href="/app/{{ app_id}}/mobile_uiestate.less" id="css-mobile-uiestate" rel="stylesheet"/>
+<link type="text/css" href="/app/{{ app.id}}/uiestate.less" id="css-uiestate" rel="stylesheet"/>
+<link type="text/css" href="/app/{{ app.id}}/mobile_uiestate.less" id="css-mobile-uiestate" rel="stylesheet"/>
 {% endblock %}
 
 {% block topbar %}
@@ -19,8 +19,9 @@
 
   {% block js %}
   <script type="text/javascript">
-    var appId = {{ app_id }};
-    var appUrl = "{{ app_url }}";
+    var appId = {{ app.id }};
+    var appUrl = "{{ app.url }}";
+    var appGitRepo = "{{ app.git_repo }}";
     var appState = {{ app.state_json|safe }};
     var uieState = {{ app.uie_state_json|safe }};
     var mobileUieState = {{ app.mobile_uie_state_json|safe }};
