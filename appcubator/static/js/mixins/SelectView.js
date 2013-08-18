@@ -25,7 +25,7 @@ function(Backbone) {
       this.list = list;
       this.currentVal = currentVal;
       this.isNameVal = isNameVal || false;
-      this.options = options;
+      this.options = (options||{});
       this.render();
       return this;
     },

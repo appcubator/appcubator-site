@@ -1,9 +1,9 @@
 define(function(require, exports, module) {
     'use strict';
 
-    require("mixins/SimpleModalView");
-    require("mixins/ErrorDialogueView");
-    require("mixins/SimpleDialogueView");
+    var SimpleModalView    = require("mixins/SimpleModalView");
+    var ErrorDialogueView  = require("mixins/ErrorDialogueView");
+    var SimpleDialogueView = require("mixins/SimpleDialogueView");
 
     var TutorialView = require("tutorial/TutorialView"),
         EmailsView = require("app/emails/EmailsView"),
@@ -52,6 +52,14 @@ define(function(require, exports, module) {
             keyDispatcher.bindComb('ctrl+v', this.paste);
 
             var autoSave = setInterval(this.save, 30000);
+
+            this.listenTo(v1State.get('tables'), 'add', this.entityAdded);
+        },
+
+        entityAdded: function(entityModel) {
+            var pageName = entityModel.get('name') + ' Page';
+            var newPage = { name: pageName, url: { urlparts:[ pageName.replace(/ /g, '_'), '{{'+ entityModel.get('name') +'}}'] } };
+            v1State.get('pages').push(newPage);
         },
 
         index: function(appId, tutorial) {
