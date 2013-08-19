@@ -70,7 +70,7 @@ function(SelectView) {
 
       this.hrefLi.innerHTML = '';
       this.hrefLi.appendChild(new comp().div('Links To').classN('header-div').el);
-      var selecView = new SelectView(listOfPages, href, true);
+      var selecView = new SelectView(listOfPages, href, true, {maxHeight: 5});
       selecView.bind('change', this.changeHref, this);
       this.hrefLi.appendChild(selecView.el);
 
