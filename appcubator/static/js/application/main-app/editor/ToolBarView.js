@@ -41,6 +41,7 @@ function(PageModel) {
 
       util.get('create-page').appendChild(this.createBox.el);
 
+      this.menuPages = document.getElementById('menu-pages');
       return this;
     },
 
@@ -73,7 +74,9 @@ function(PageModel) {
     },
 
     shrinkPages: function(e) {
-      if(util.isMouseOn(e.pageX, e.pageY, this.el)) return;
+      console.log(this.menuPages);
+      console.log(util.isMouseOn(e.pageX, e.pageY, this.menuPages));
+      if(util.isMouseOn(e.pageX, e.pageY, this.menuPages )) return;
       $('#menu-pages').height(42);
       this.createBox.reset();
     },
