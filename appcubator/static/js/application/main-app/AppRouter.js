@@ -446,15 +446,27 @@ define(function(require, exports, module) {
             }
         },
 
-        getDeploymentStatus: function(callback) {
+        getDeploymentStatus: function(successCallback, failCallback) {
             $.ajax({
                 type: "POST",
                 url: '/app/' + appId + '/deploy/status/',
                 data: JSON.stringify(appState),
-                complete: function(data) {
+                success: function(data) {
                     console.log(data);
+                    if(data.done) {
+                        successCallback.call();
+                    }
+                    else {
+                        failCallback.call();
+                    }
                 },
                 dataType: "JSON"
+            });
+        },
+
+        whenDeployed: function(successCallback) {
+            v1.getDeploymentStatus(successCallback, function() {
+                setTimeout(function() { v1.whenDeployed(successCallback); }, 1500);
             });
         }
 
