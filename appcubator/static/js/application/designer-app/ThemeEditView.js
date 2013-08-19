@@ -67,9 +67,9 @@ function(UIElementListView, ErrorDialogueView) {
     render: function() {
       var self = this;
 
-      //this.editor = ace.edit("base-css");
-      //this.editor.getSession().setMode("ace/mode/css");
-      //this.editor.setValue(this.model.get('basecss'), -1);
+      this.editor = ace.edit("base-css");
+      this.editor.getSession().setMode("ace/mode/css");
+      this.editor.setValue(this.model.get('basecss'), -1);
       this.initFonts();
 
       _(statics).each(this.appendStaticFile, this);

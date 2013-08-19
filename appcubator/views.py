@@ -576,7 +576,7 @@ def delete_static(request, app_id, static_id):
         raise Http404
     sf = StaticFile.objects.filter(pk = static_id, app=app)
     sf.delete()
-    return (200, 'ok')
+    return HttpResponse("ok")
 
 
 @login_required
