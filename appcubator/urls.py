@@ -76,7 +76,8 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/analytics/$', 'get_analytics'),
 
     # statix
-    url(r'^app/(\d+)/static/$', 'staticfiles'), # a GET returns the apps statics, a POST creates a static file entry.
+    url(r'^app/(\d+)/static/$',              'staticfiles'), # a GET returns the apps statics, a POST creates a static file entry.
+    url(r'^app/(\d+)/static/(\d+)/delete/$', 'delete_static'), 
 
     # getting/setting state
     url(r'^app/(\d+)/state/$', 'app_state'),

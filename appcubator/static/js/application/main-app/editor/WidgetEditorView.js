@@ -54,12 +54,14 @@ function(WidgetContentEditor,
       if(this.model) {
         this.stopListening(this.model, 'startEditing', this.startedEditing);
         this.stopListening(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
+        this.stopListening(this.model, 'doubleClicked', this.doubleClicked);
       }
 
       this.model = widgetModel;
 
       this.listenTo(this.model, 'startEditing', this.startedEditing);
       this.listenTo(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
+      this.listenTo(this.model, 'doubleClicked', this.doubleClicked);
 
       return this;
     },
@@ -336,6 +338,12 @@ function(WidgetContentEditor,
 
       if((12 - rightCoor) < 2) return "left";
       return "right";
+    },
+
+    doubleClicked: function() {
+      if(this.model.getForm()) { this.openFormEditor(); }
+      if(this.model.getLoginRoutes())  { this.openLoginEditor(); }
+      if(this.model.get('type') == "imageslider") { this.openSlideEditor(); }
     },
 
     clickedDelete: function() {
