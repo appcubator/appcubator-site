@@ -45,10 +45,10 @@ class PubKey(models.Model):
         """
         pubkeys = user.pubkeys.order_by('-created_on')
         pubkeys_json = simplejson.dumps([p.pubkey for p in pubkeys])
-        gitname_repos_json = simplejson.dumps([a.deployment_id for a in user.apps.exclude(deployment_id=None)])
+        gitrepo_names_json = simplejson.dumps([a.gitrepo_name for a in user.apps.exclude(deployment_id=None)])
         r = requests.post("http://%s/user/%s/pubkeys/" % (settings.DEPLOYMENT_HOSTNAME, user.extradata.git_user_id()),
             data={'public_keys': pubkeys_json,
-                  'gitname_repos_json': gitname_repos_json},
+                  'gitrepo_names': gitrepo_names_json},
             headers={'X-Requested-With': 'XMLHttpRequest'})
         return r
 
@@ -315,6 +315,9 @@ class App(models.Model):
             simplejson.loads(self._uie_state_json)
         except simplejson.JSONDecodeError, e:
             raise ValidationError(e.msg)
+        # Initial gitrepo name value. gets called on new app.
+        if self.gitrepo_name == '':
+            self.gitrepo_name = "%s-%s" % (self.owner.username.split('@')[0], self.name)
         if self.gitrepo_name != clean_subdomain(self.gitrepo_name):
             self.gitrepo_name = App.provision_gitrepo_name(self.gitrepo_name)
 
@@ -342,6 +345,9 @@ class App(models.Model):
 
     def url(self):
         return "http://%s/" % self.hostname()
+
+    def git_url(self):
+        return "git@%s:%s.git" % (settings.DEPLOYMENT_HOSTNAME, self.gitrepo_name)
 
     def zip_bytes(self):
         tmpdir = self.write_to_tmpdir(for_user=True)
@@ -431,7 +437,9 @@ class App(models.Model):
                 pass
             if 'errors' in response_content:
                 result['errors'] = response_content['errors']
+
             result['site_url'] = self.url()
+            result['git_url'] = self.git_url()
 
             try:
                 syncdb_data = [ u for u in response_content['script_results'] if 'syncdb.py' in u['script'] ][0]
@@ -457,6 +465,8 @@ class App(models.Model):
             result['files'] = response_content['files']
             result['branch'] = response_content['branch']
             result['site_url'] = self.url()
+            result['git_url'] = self.git_url()
+
             return result
 
         else:
