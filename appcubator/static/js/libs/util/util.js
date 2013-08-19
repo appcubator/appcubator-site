@@ -353,6 +353,7 @@ define(['jquery'], function() {
     copyToClipboard: function(text) {
       window.prompt ("Copy to clipboard: Ctrl+C/Cmd+C, Enter", text);
     }
+
   };
 
   function csrfSafeMethod(method) {

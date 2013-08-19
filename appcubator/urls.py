@@ -93,7 +93,8 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/mobile_uiestate.css$', 'mobile_css_sheet'),
 
     # deploy
-    url(r'^app/(\d+)/deploy/$', 'app_deploy'),
+    url(r'^app/(\d+)/deploy/$',        'app_deploy'),
+    url(r'^app/(\d+)/deploy/status/$', 'app_deploy_status'),
 
     #zip
     url(r'^app/(\d+)/zip/$', 'app_zip'),

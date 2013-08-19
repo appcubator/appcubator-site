@@ -444,7 +444,20 @@ define(function(require, exports, module) {
             if (this.view.widgetsCollection) {
                 this.view.widgetsCollection.add(this.contents);
             }
+        },
+
+        getDeploymentStatus: function(callback) {
+            $.ajax({
+                type: "POST",
+                url: '/app/' + appId + '/deploy/status/',
+                data: JSON.stringify(appState),
+                complete: function(data) {
+                    console.log(data);
+                },
+                dataType: "JSON"
+            });
         }
+
     });
 
     return AppRouter;

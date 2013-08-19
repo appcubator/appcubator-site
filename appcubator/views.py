@@ -15,6 +15,7 @@ from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
 
 import forms
+import random
 
 from email.sendgrid_email import send_email, send_template_email
 
@@ -611,6 +612,14 @@ def app_deploy(request, app_id):
     else:
         status = 200
     return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+
+
+def app_deploy_status(request, app_id):
+    deploy_status = {}
+    deploy_status["message"] = "Yolo"
+    deploy_status["done"]    = random.random() * 10 % 5 == 0
+
+    return HttpResponse(simplejson.dumps(deploy_status), status=200, mimetype="application/json")
 
 
 @require_POST
