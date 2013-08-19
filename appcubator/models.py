@@ -168,6 +168,8 @@ def update_deployment_info(deployment_id, subdomain, gitrepo_name):
     if r.status_code != 200:
         logger.error("Update deployment info failed: %r" % r.__dict__)
         raise DeploymentError()
+
+    return r
 # end deployment related code
 
 
@@ -192,9 +194,10 @@ class App(models.Model):
 
     def update_deployment_info(self):
         # calls method outside of this class
-        update_deployment_info(self.deployment_id, self.subdomain, self.gitrepo_name)
+        r = update_deployment_info(self.deployment_id, self.subdomain, self.gitrepo_name)
+        return r
 
-    def save(self, state_version=True, *args, **kwargs):
+    def save(self, state_version=True, update_deploy_server=True, *args, **kwargs):
         """
         If the deployment info (subdomain and gitrepo name) were changed since init,
         this will POST to the deployment server to update it.
@@ -207,7 +210,7 @@ class App(models.Model):
         self.state = s
 
         # update the deployment info on the server if it changed.
-        if self.deployment_id is not None:
+        if update_deploy_server and self.deployment_id is not None:
             if self._original_subdomain != self.subdomain or self._original_gitrepo_name != self.gitrepo_name:
 
                 # update call to deployment server
@@ -418,7 +421,11 @@ class App(models.Model):
             files = {'file':f}
             post_data = self.get_deploy_data(git_user=git_user)
             if self.deployment_id is None:
-                r = requests.post("http://%s/deployment/" % settings.DEPLOYMENT_HOSTNAME, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
+                try:
+                    r = requests.post("http://%s/deployment/" % settings.DEPLOYMENT_HOSTNAME, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
+                except Exception:
+                    print r.request.__dict__
+
             else:
                 r = requests.post("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
 
