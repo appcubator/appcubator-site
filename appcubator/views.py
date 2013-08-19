@@ -101,12 +101,15 @@ def app_new(request, is_racoon = False):
     elif request.method == 'POST':
         data = {}
         data['name'] = request.POST.get('name', '')
-        data['subdomain'] = request.POST.get('name', '')
         data['owner'] = request.user.id
+
+        # use this short username
+        username = request.user.username.split('@')[0]
+        data['subdomain'] = "%s-%s" % (username, request.POST.get('name', ''))
 
         # dev modifications
         if not settings.STAGING and not settings.PRODUCTION:
-            data['subdomain'] = 'dev-%s-%s' % (request.user.username.split('@')[0], data['subdomain'])
+            data['subdomain'] = 'dev-%s-%s' % (username, data['subdomain'])
 
         form = forms.AppNew(data)
 
