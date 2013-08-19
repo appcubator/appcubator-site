@@ -161,14 +161,13 @@ class DeploymentError(Exception):
     pass
 
 def update_deployment_info(deployment_id, subdomain, gitrepo_name):
-    # payload = { 'subdomain': subdomain,
-    #             'gitrepo_name': gitrepo_name }
-    # deployment_url = 'http://%s/deployment/%d/info/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
-    # r = requests.post(deployment_url, data=payload, headers={'X-Requested-With': 'XMLHttpRequest'})
-    # if r.status_code != 200:
-    #     logger.error("Update deployment info failed: %r" % r.__dict__)
-    #     raise DeploymentError()
-    return None
+    payload = { 'subdomain': subdomain,
+                'gitrepo_name': gitrepo_name }
+    deployment_url = 'http://%s/deployment/%d/info/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
+    r = requests.post(deployment_url, data=payload, headers={'X-Requested-With': 'XMLHttpRequest'})
+    if r.status_code != 200:
+        logger.error("Update deployment info failed: %r" % r.__dict__)
+        raise DeploymentError()
 # end deployment related code
 
 
