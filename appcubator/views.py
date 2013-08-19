@@ -568,6 +568,16 @@ def staticfiles(request, app_id):
             else:
                 return JSONResponse({"error": "One of the fields was not valid."})
 
+@login_required
+def delete_static(request, app_id, static_id):
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
+    sf = StaticFile.objects.filter(pk = static_id, app=app)
+    sf.delete()
+    return (200, 'ok')
+
 
 @login_required
 @require_GET

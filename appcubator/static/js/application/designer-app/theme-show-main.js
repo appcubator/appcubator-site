@@ -59,7 +59,7 @@ require([
   "editor/KeyDispatcher",
   "mixins/BackboneConvenience",
   "bootstrap",
-  "ace"
+  //"ace"
 ],
 function(ThemeEditView, ThemeModel, KeyDispatcher) {
   
