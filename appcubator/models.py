@@ -186,8 +186,8 @@ def get_deployment_status(deployment_id):
 
     # get data out
     d = r.json()
-    status = r['status']
-    message = r['message'] # not doing anything w this yet but know it exists.
+    status = d['status']
+    message = d['message'] # not doing anything w this yet but know it exists.
     assert status in (0, 1, 2)
 
     return status

@@ -297,12 +297,6 @@ def app_save_state(request, app, require_valid=True):
         app.save()
         return (200, {'version_id': app.state.get('version_id', 0)})
 
-def app_deploy_status(request, app_id):
-    app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
-        raise Http404
-    return JsonResponse({ 'status': app.get_deployment_status() })
-
 @login_required
 @csrf_exempt
 def invitations(request, app_id):
@@ -604,24 +598,27 @@ def app_zip(request, app_id):
 
 
 @login_required
-@require_POST
 @csrf_exempt
 def app_deploy(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
     app.full_clean()
-    result = app.deploy()
-    result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
-    if 'errors' in result:
-        raise Exception(result)
-    elif 'branch' in result and 'files' in result:
-        #status = 409
-        # damn jquery. the frontend code is not easy to modify to if/else based on status code.
-        status = 200
-    else:
-        status = 200
-    return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+
+    if request.method == 'GET':
+        return JsonResponse({ 'status': app.get_deployment_status() })
+    elif request.method == 'POST':
+        result = app.deploy()
+        result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
+        if 'errors' in result:
+            raise Exception(result)
+        elif 'branch' in result and 'files' in result:
+            #status = 409
+            # damn jquery. the frontend code is not easy to modify to if/else based on status code.
+            status = 200
+        else:
+            status = 200
+        return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 
 
 def app_deploy_status(request, app_id):
