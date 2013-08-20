@@ -416,7 +416,8 @@ define([
       var field = entity.getFieldsColl().get(hash[2]);
 
       var nested_field = nested_entity.getFieldsColl().get(hash[3]);
-      var displayType = this.getFieldType(field);
+
+      var displayType = this.getFieldType(nested_field);
       var editorContext = this.editorContext ? this.editorContext : "page";
 
       var content_ops = {};
@@ -424,13 +425,13 @@ define([
 
       if(displayType == "links") {
         content_ops.content = 'Download '+field.get('name');
-        content_ops.href = '{{' + editorContext +'.'+ entityM.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
+        content_ops.href = '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
       }
       else if(displayType == "images") {
-        content_ops.src_content =  '{{' + editorContext +'.'+ entityM.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
+        content_ops.src_content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
       }
       else {
-        content_ops.content = '{{' + editorContext +'.'+ entityM.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
+        content_ops.content = '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
       }
 
       return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
