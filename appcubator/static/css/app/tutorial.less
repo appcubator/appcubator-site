@@ -95,6 +95,37 @@
     }
   } // end .tutorial-content > header
 
+  .full-page-button {
+    display: inline-block;
+    height: 32px;
+    vertical-align: top;
+    margin-left: 20px;
+    padding: 0;
+    width: 44px;
+    line-height: 32px;
+    overflow: hidden;
+    .transition(width 0.1s linear);
+    color: #999;
+    font-weight: bold;
+
+    .icon {
+      display: inline-block;
+      width: 28px;
+      height: 100%;
+      background-image: url('/static/img/go-to-icon.png');
+      background-repeat: no-repeat;
+      height: 32px;
+      width: 32px;
+      background-size: 100% auto;
+      float: left;
+      margin-right: 12px;
+    }
+
+    &:hover {
+      width: 150px;
+    }
+  }
+
   // .tutorial-content ul
   ul {
     list-style: disc;

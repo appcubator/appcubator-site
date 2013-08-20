@@ -70,7 +70,7 @@ function(SelectView) {
 
       this.hrefLi.innerHTML = '';
       this.hrefLi.appendChild(new comp().div('Links To').classN('header-div').el);
-      var selecView = new SelectView(listOfPages, href, true);
+      var selecView = new SelectView(listOfPages, href, true, {maxHeight: 5});
       selecView.bind('change', this.changeHref, this);
       this.hrefLi.appendChild(selecView.el);
 
@@ -88,8 +88,6 @@ function(SelectView) {
         return newObj;
       });
       statics_list = _.union({val: "new-image", name: "Upload New Image"}, statics_list);
-
-      console.log(statics_list);
 
       var curValName = this.model.get('data').get('content_attribs').get('src');
       if(this.model.get('data').get('content_attribs').has('src_content')) {
@@ -111,10 +109,8 @@ function(SelectView) {
       var curStyle = (this.model.get('data').get('content_attribs').get('style')||'font-size:default;');
 
       var currentFont;
-      console.log(curStyle);
       if(/font-size:([^]+);/g.exec(curStyle)) {
         currentFont = /font-size:([^]+);/g.exec(curStyle)[1];
-        console.log(currentFont);
       }
       else {
         currentFont = "font-size:default;";
@@ -126,7 +122,6 @@ function(SelectView) {
       var sizeSelect = new comp().select('').id(hash).classN('font-picker');
 
       _(['default', '10px', '14px', '16px', '18px', '20px', '32px', '36px','48px', '72px']).each(function(val) {
-        console.log(sizeSelect.el);
         sizeSelect.el.innerHTML += '<option value="font-size:' + val + ';">'+val+'</option>';
       });
 
@@ -139,8 +134,6 @@ function(SelectView) {
       li.appendChild(sizeDiv);
       li.appendChild(optionsDiv);
 
-      console.log(sizeDiv);
-      console.log($(sizeDiv).find('option[value="font-size:'+currentFont+';"]'));
       $(sizeDiv).find('option[value="font-size:'+currentFont+';"]').prop('selected', true);
       return li;
     },
@@ -168,16 +161,12 @@ function(SelectView) {
       }
       var curStyle = this.model.get('data').get('content_attribs').get('style');
 
-      console.log(curStyle);
-
       if(/font-size:([^]+);/g.exec(curStyle)) {
         curStyle = curStyle.replace(/(font-size:)(.*?)(;)/gi, e.target.value);
       }
       else {
         curStyle = curStyle + ' ' + e.target.value;
       }
-
-      console.log(curStyle);
 
       this.model.get('data').get('content_attribs').set('style', curStyle);
       mouseDispatcher.isMousedownActive = false;

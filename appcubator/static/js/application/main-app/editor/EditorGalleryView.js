@@ -302,6 +302,8 @@ define([
       var className = targetEl.className;
       var id = targetEl.id;
 
+      util.log_to_server("widget dropped", id, appId);
+
       return this.createElement(layout, className, id);
     },
 
