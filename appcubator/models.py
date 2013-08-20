@@ -189,6 +189,10 @@ def get_deployment_status(deployment_id):
     status = d['status']
     message = d['message'] # not doing anything w this yet but know it exists.
     assert status in (0, 1, 2)
+    if status == 2:
+        # clear the result from the server so next time it will be 0
+        deployment_url = 'http://%s/deployment/%d/task/result/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
+        r2 = requests.get(deployment_url, headers={'X-Requested-With': 'XMLHttpRequest'})
 
     return status
 # end deployment related code
