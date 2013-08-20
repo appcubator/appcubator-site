@@ -159,7 +159,6 @@ function(DataModel, LayoutModel) {
     },
 
     isBgElement: function() {
-      console.log(this);
       if( (this.get('type') == "node" && this.get('data').get('nodeType') == "boxes") ||
           (this.get('type') == "imageslider")) return true;
       return false;

@@ -105,7 +105,7 @@ define(['jquery'], function() {
         cssFile.setAttribute('href', '/static/css/' + css + '.css');
         cssFile.setAttribute('rel', 'stylesheet');
         cssFile.id = 'css-' + css;
-        console.log("loading " + css);
+        //console.log("loading " + css);
         //document.getElementsByTagName('head')[0].appendChild(cssFile);
       }
     },

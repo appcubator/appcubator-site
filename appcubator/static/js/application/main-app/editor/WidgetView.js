@@ -177,8 +177,6 @@ define([
     },
 
     changedHeight: function(a) {
-      console.log(this.model.get('layout').get('height'));
-      console.log(this.model.get('layout').get('height') * (this.positionVerticalGrid));
       this.setHeight(this.model.get('layout').get('height') * (this.positionVerticalGrid));
     },
 
