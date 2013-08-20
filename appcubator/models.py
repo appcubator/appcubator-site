@@ -160,8 +160,8 @@ class DeploymentError(Exception):
     """Should be raised whenever the deployment server does not return 200"""
     pass
 
-def update_deployment_info(deployment_id, subdomain, gitrepo_name):
-    payload = { 'hostname': subdomain,
+def update_deployment_info(deployment_id, hostname, gitrepo_name):
+    payload = { 'hostname': hostname,
                 'gitrepo_name': gitrepo_name }
     deployment_url = 'http://%s/deployment/%d/info/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
     r = requests.post(deployment_url, data=payload, headers={'X-Requested-With': 'XMLHttpRequest'})
@@ -194,7 +194,7 @@ class App(models.Model):
 
     def update_deployment_info(self):
         # calls method outside of this class
-        r = update_deployment_info(self.deployment_id, self.subdomain, self.gitrepo_name)
+        r = update_deployment_info(self.deployment_id, self.hostname(), self.gitrepo_name)
         return r
 
     def save(self, state_version=True, update_deploy_server=True, *args, **kwargs):
