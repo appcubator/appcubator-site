@@ -24,6 +24,8 @@ function(AppGenerator) {
     staticSelected : function(e) {
       var tempId = String(e.currentTarget.id).replace('page-','');
       this.model.get('uielements').add(page_templates[tempId].uielements);
+      
+      util.log_to_server("template selected", "static", appId);
       this.closeModal();
     },
 
@@ -33,6 +35,8 @@ function(AppGenerator) {
 
       var appGen = new AppGenerator();
       this.model.get('uielements').add(appGen.generateInfoPage(tableModel), false);
+
+      util.log_to_server("template selected", "info", appId);
       this.closeModal();
     },
 
@@ -43,6 +47,8 @@ function(AppGenerator) {
       console.log(tableModel);
       var appGen = new AppGenerator();
       this.model.get('uielements').add(appGen.generateListPage(tableModel), false);
+      
+      util.log_to_server("template selected", "list", appId);
       this.closeModal();
     },
 
