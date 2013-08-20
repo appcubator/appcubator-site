@@ -161,7 +161,7 @@ class DeploymentError(Exception):
     pass
 
 def update_deployment_info(deployment_id, subdomain, gitrepo_name):
-    payload = { 'subdomain': subdomain,
+    payload = { 'hostname': subdomain,
                 'gitrepo_name': gitrepo_name }
     deployment_url = 'http://%s/deployment/%d/info/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
     r = requests.post(deployment_url, data=payload, headers={'X-Requested-With': 'XMLHttpRequest'})
@@ -391,7 +391,7 @@ class App(models.Model):
 
     def get_deploy_data(self, git_user=None):
         post_data = {
-            "subdomain": self.hostname(),
+            "hostname": self.hostname(),
             "gitrepo_name": self.gitrepo_name,
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
@@ -751,6 +751,7 @@ class AnalyticsStore(models.Model):
         try:
             result = simplejson.loads(self.analytics_json)
         except JSONDecodeError:
-            print "Could not decode %r" % self.analytics_json
+            logger.debug("Could not decode %r" % self.analytics_json)
+            return None
         else:
             return result
