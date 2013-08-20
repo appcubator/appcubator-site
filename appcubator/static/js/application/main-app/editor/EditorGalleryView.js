@@ -424,13 +424,13 @@ define([
 
       if(displayType == "links") {
         content_ops.content = 'Download '+fieldM.get('name');
-        content_ops.href = '{{' + editorContext +'.'+ entityM.get('name') +'.'+fieldM.get('name')+'}}';
+        content_ops.href = '{{' + editorContext +'.'+ entityM.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
       }
       else if(displayType == "images") {
-        content_ops.src_content =  '{{' + editorContext +'.'+ entityM.get('name') +'.'+fieldM.get('name')+'}}';
+        content_ops.src_content =  '{{' + editorContext +'.'+ entityM.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
       }
       else {
-        content_ops.content = '{{' + editorContext +'.'+ entityM.get('name') +'.'+fieldM.get('name')+'}}';
+        content_ops.content = '{{' + editorContext +'.'+ entityM.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
       }
 
       return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
