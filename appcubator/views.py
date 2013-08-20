@@ -604,6 +604,8 @@ def app_deploy(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
+    app.full_clean()
+    app.save()
     result = app.deploy()
     result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
     if 'errors' in result:
