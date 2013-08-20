@@ -433,7 +433,7 @@ define([
         content_ops.content = '{{' + editorContext +'.'+ entityM.get('name') +'.'+fieldM.get('name')+'}}';
       }
 
-      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content_ops);
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
     },
 
     createCreateForm: function(layout, id) {
