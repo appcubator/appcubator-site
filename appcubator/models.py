@@ -170,6 +170,27 @@ def update_deployment_info(deployment_id, hostname, gitrepo_name):
         raise DeploymentError()
 
     return r
+
+def get_deployment_status(deployment_id):
+    """
+    Returns 0, 1, or 2.
+     0 = No task running
+     1 = Running
+     2 = Task done, plz collect result.
+    """
+    deployment_url = 'http://%s/deployment/%d/task/status/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
+    r = requests.get(deployment_url, headers={'X-Requested-With': 'XMLHttpRequest'})
+    if r.status_code != 200:
+        logger.error("Get deployment status failed: %r" % r.__dict__)
+        raise DeploymentError()
+
+    # get data out
+    d = r.json()
+    status = r['status']
+    message = r['message'] # not doing anything w this yet but know it exists.
+    assert status in (0, 1, 2)
+
+    return status
 # end deployment related code
 
 
@@ -196,6 +217,18 @@ class App(models.Model):
         # calls method outside of this class
         r = update_deployment_info(self.deployment_id, self.hostname(), self.gitrepo_name)
         return r
+
+    def get_deployment_status(self):
+        """
+        Returns 0, 1, or 2.
+         0 = No task running
+         1 = Running
+         2 = Task done, plz collect result.
+        """
+        if self.deployment_id is None:
+            return 0
+        s = get_deployment_status(self.deployment_id)
+        return s
 
     def save(self, state_version=True, update_deploy_server=True, *args, **kwargs):
         """

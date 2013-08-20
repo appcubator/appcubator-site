@@ -38,6 +38,11 @@ import re
 from datetime import datetime
 
 
+def JsonResponse(serializable_obj, **kwargs):
+    """Just a convenience function, in the middle of horrible code"""
+    return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)
+
+
 def add_statics_to_context(context, app):
     context['statics'] = simplejson.dumps(list(
         StaticFile.objects.filter(app=app).values()))
@@ -247,10 +252,10 @@ def app_state(request, app_id, validate=True):
         raise Http404
     if request.method == 'GET':
         state = app_get_state(request, app)
-        return JSONResponse(state)
+        return JsonResponse(state)
     elif request.method == 'POST':
         status, data = app_save_state(request, app, require_valid=validate)
-        return JSONResponse(data, status=status)
+        return JsonResponse(data, status=status)
     else:
         return HttpResponse("GET or POST only", status=405)
 
@@ -292,6 +297,12 @@ def app_save_state(request, app, require_valid=True):
         app.save()
         return (200, {'version_id': app.state.get('version_id', 0)})
 
+def app_deploy_status(request, app_id):
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
+    return JsonResponse({ 'status': app.get_deployment_status() })
+
 @login_required
 @csrf_exempt
 def invitations(request, app_id):
@@ -302,7 +313,7 @@ def invitations(request, app_id):
         json = []
         for i in invitations:
             json.append({"invitee": i.invitee, "date": str(i.date.date()), "accepted": i.accepted})
-        return JSONResponse(json)
+        return JsonResponse(json)
     # send an invitation from {{user_id}} to a friend
     else:
         user = get_object_or_404(User, pk=user_id)
@@ -392,7 +403,7 @@ def uie_state(request, app_id):
         raise Http404
     if request.method == 'GET':
         state = app_get_uie_state(request, app)
-        return JSONResponse(state)
+        return JsonResponse(state)
     elif request.method == 'POST':
         status, message = app_save_uie_state(request, app)
         return HttpResponse(message, status=status)
@@ -407,7 +418,7 @@ def mobile_uie_state(request, app_id):
         raise Http404
     if request.method == 'GET':
         state = app_get_uie_state(request, app)
-        return JSONResponse(state)
+        return JsonResponse(state)
     elif request.method == 'POST':
         status, message = app_save_mobile_uie_state(request, app)
         return HttpResponse(message, status=status)
@@ -526,9 +537,9 @@ def get_analytics(request, app_id):
     try:
         analytics_data = AnalyticsStore.objects.get(app=app)
     except AnalyticsStore.DoesNotExist:
-        return JSONResponse({})
+        return JsonResponse({})
     data = analytics_data.analytics_data
-    return JSONResponse(data)
+    return JsonResponse(data)
 
 
 class StaticFileForm(ModelForm):
@@ -546,11 +557,6 @@ class StaticFileForm(ModelForm):
         return super(StaticFileForm, self).save(*args, **kwargs)
 
 
-def JSONResponse(serializable_obj, **kwargs):
-    """Just a convenience function, in the middle of horrible code"""
-    return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)
-
-
 @login_required
 def staticfiles(request, app_id):
     if request.method != 'GET' and request.method != 'POST':
@@ -563,14 +569,14 @@ def staticfiles(request, app_id):
         if request.method == 'GET':
             sf = StaticFile.objects.filter(
                 app=app).values('name', 'url', 'type')
-            return JSONResponse(list(sf))
+            return JsonResponse(list(sf))
         if request.method == 'POST':
             sf_form = StaticFileForm(app, request.POST)
             if sf_form.is_valid():
                 sf_form.save()
-                return JSONResponse({})
+                return JsonResponse({})
             else:
-                return JSONResponse({"error": "One of the fields was not valid."})
+                return JsonResponse({"error": "One of the fields was not valid."})
 
 @login_required
 def delete_static(request, app_id, static_id):
@@ -662,9 +668,9 @@ def check_availability(request, domain):
     domain_is_available = DomainRegistration.check_availability(domain)
 
     if domain_is_available:
-        return JSONResponse(True)
+        return JsonResponse(True)
     else:
-        return JSONResponse(False)
+        return JsonResponse(False)
 
 
 @require_POST
@@ -674,8 +680,8 @@ def sub_check_availability(request, subdomain):
     data = {'subdomain': subdomain}
     form = forms.ChangeSubdomain(data)
     if form.is_valid():
-        return JSONResponse(True)
-    return JSONResponse(False)
+        return JsonResponse(True)
+    return JsonResponse(False)
 
 
 @require_POST
@@ -700,7 +706,7 @@ def yomomma(request, number):
 
 def webgeekjokes(request):
     r = requests.get("http://www.webgeekjokes.tumblr.com/random")
-    return JSONResponse(r.text)
+    return JsonResponse(r.text)
 
 # this is old.
 @require_POST
@@ -712,18 +718,18 @@ def register_domain(request, domain):
 
     # Check domain cap
     if request.user.domains.count() >= DomainRegistration.MAX_FREE_DOMAINS:
-        return JSONResponse({"error": 0})
+        return JsonResponse({"error": 0})
 
     # Try to register
     try:
         d = DomainRegistration.register_domain(
             domain, test_only=settings.DEBUG)
     except Exception, e:
-        return JSONResponse({"errors": str(e)})
+        return JsonResponse({"errors": str(e)})
 
     # TODO afterwards in a separate worker
     d.configure_dns(domain, staging=settings.STAGING)
 
     # Give client the domain info
-    return JSONResponse(d.domain_info)
+    return JsonResponse(d.domain_info)
 
