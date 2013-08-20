@@ -186,9 +186,14 @@ function( PageModel,
     },
 
     setupPageHeight: function() {
-      var height = (this.model.getHeight() + 4) * 15;
-      if(height < 800) height = 800;
-      this.$el.find('#elements-container').css('height', height);
+      var $container = this.$el.find('#elements-container');
+      var oldHeight = this.currentHeight;
+
+      this.currentHeight = (this.model.getHeight() + 4) * 15;
+      if(this.currentHeight < 800) this.currentHeight = 800;
+      $container.css('height', this.currentHeight);
+
+      if(this.currentHeight > oldHeight) { util.scrollToBottom($('#page')); }
     },
 
     close: function() {
