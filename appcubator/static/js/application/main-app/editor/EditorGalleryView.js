@@ -416,14 +416,14 @@ define([
       var field = entity.getFieldsColl().get(hash[2]);
 
       var nested_field = nested_entity.getFieldsColl().get(hash[3]);
-      var displayType = this.getFieldType(fieldM);
+      var displayType = this.getFieldType(field);
       var editorContext = this.editorContext ? this.editorContext : "page";
 
       var content_ops = {};
       content_ops.content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ field.get('name') + '.' +nested_field.get('name')+'}}';
 
       if(displayType == "links") {
-        content_ops.content = 'Download '+fieldM.get('name');
+        content_ops.content = 'Download '+field.get('name');
         content_ops.href = '{{' + editorContext +'.'+ entityM.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
       }
       else if(displayType == "images") {
