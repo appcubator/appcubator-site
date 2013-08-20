@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^account/$',                  base_views.account),
     url(r'^setpubkey/$',                base_views.setpubkey),
     url(r'^ping/$',                     base_views.ping),
+    url(r'^csvusers/$',                 base_views.csvusers),
     url(r'^whatisthis/$',               base_views.marketing),
 
     # only creates beta invite
