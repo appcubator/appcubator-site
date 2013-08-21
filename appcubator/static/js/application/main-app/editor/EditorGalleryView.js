@@ -277,7 +277,7 @@ define([
     },
 
     removeSection: function(sectionView) {
-      sectionView.close()
+      sectionView.close();
       this.sections.splice(this.sections.indexOf(sectionView), 1);
       this.subviews.splice(this.subviews.indexOf(sectionView), 1);
     },
@@ -292,7 +292,7 @@ define([
         if(util.isRectangleIntersectElement(e.pageX, e.pageY, e.pageX+80, e.pageY+80, itemGallery)) return;
       }
       else {
-        // top = how much its scrolled / 15 
+        top =  Math.round($('#page').scrollTop() / this.positionVerticalGrid);
       }
 
       var layout = { top: top, left: left };
