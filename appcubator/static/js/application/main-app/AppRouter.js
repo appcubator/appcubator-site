@@ -450,16 +450,21 @@ define(function(require, exports, module) {
 
         getDeploymentStatus: function(successCallback, failCallback) {
             $.ajax({
-                type: "POST",
-                url: '/app/' + appId + '/deploy/status/',
-                data: JSON.stringify(appState),
+                type: "GET",
+                url: '/app/' + appId + '/deploy/',
                 success: function(data) {
-                    console.log(data);
-                    if(data.done) {
-                        successCallback.call();
+                    if(data.status !== undefined) {
+                        if (data.status == 0)
+                            alert('something is wrong... deployment seems to not have gotten the memo.');
+                        else if (data.status == 1)
+                            failCallback.call(); // deployment task is still running
+                        else if (data.status == 2)
+                            successCallback.call();
+                        else
+                            alert('Deploy status route returned a bad value.');
                     }
                     else {
-                        failCallback.call();
+                        alert('Deploy status route returned a bad value.');
                     }
                 },
                 dataType: "JSON"
