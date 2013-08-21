@@ -291,6 +291,9 @@ define([
         top  = this.findTop(e, ui);
         if(util.isRectangleIntersectElement(e.pageX, e.pageY, e.pageX+80, e.pageY+80, itemGallery)) return;
       }
+      else {
+        // top = how much its scrolled / 15 
+      }
 
       var layout = { top: top, left: left };
 
