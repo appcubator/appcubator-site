@@ -70,8 +70,21 @@ define([
     },
 
     render: function() {
+      this.arrangeLayout();
+
+      this.el.innerHTML = this.renderElement();
+
+      if(this.model.isFullWidth()) this.switchOnFullWidth();
+      if(this.model.isBgElement()) this.el.style.zIndex = 999;
+
+      return this;
+    },
+
+    arrangeLayout: function() {
       var width = this.model.get('layout').get('width');
       var height = this.model.get('layout').get('height');
+
+      this.el.id = 'widget-wrapper-' + this.model.cid;
 
       // if(this.model.get('type') == 'box') {this.el.style.zIndex = 0;}
       this.setTop((this.positionVerticalGrid) * (this.model.get('layout').get('top')));
@@ -98,14 +111,6 @@ define([
       if(this.model.get('layout').has('b_padding')) {
         this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
       }
-
-      this.el.innerHTML = this.renderElement();
-      this.el.id = 'widget-wrapper-' + this.model.cid;
-
-      if(this.model.isFullWidth()) this.switchOnFullWidth();
-      if(this.model.isBgElement()) this.el.style.zIndex = 999;
-
-      return this;
     },
 
     renderElement: function() {
