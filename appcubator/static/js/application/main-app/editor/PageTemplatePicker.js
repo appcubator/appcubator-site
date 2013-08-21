@@ -5,7 +5,7 @@ define([
 ],
 function(AppGenerator) {
 
-  var PageStylePicker = Backbone.ModalView.extend({
+  var PageTemplatePicker = Backbone.ModalView.extend({
     className : 'page-template-picker',
     width  : 700,
     height : 480,
@@ -32,6 +32,10 @@ function(AppGenerator) {
     infoSelected: function(e) {
       var tableId = String(e.currentTarget.id).replace('table-info-','');
       var tableModel = v1State.get('tables').get(tableId);
+
+      if(!this.model.hasContext(tableModel)) {
+        this.model.addToContext(tableModel);
+      }
 
       var appGen = new AppGenerator();
       this.model.get('uielements').add(appGen.generateInfoPage(tableModel), false);
@@ -72,5 +76,5 @@ function(AppGenerator) {
     }
   });
 
-  return PageStylePicker;
+  return PageTemplatePicker;
 });
