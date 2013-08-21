@@ -215,7 +215,7 @@ define(function(require, exports, module) {
                     v1.disableSave = false;
                     isDeployed = true;
                     var deploy_time = (new Date().getTime() - before_deploy) / 1000;
-                    if (callback) callback();
+                    if (callback) v1.whenDeployed(callback);
                     // open a modal based on deploy response
                     if (data.errors) {
                         var content = {
@@ -256,12 +256,14 @@ define(function(require, exports, module) {
                             message: data
                         }, appId);
                     } else {
-                        new DeployView(data);
-                        util.log_to_server('deployed app', {
-                            status: 'success',
-                            deploy_time: deploy_time + " seconds"
-                        }, appId);
-                        self.trigger('deployed');
+                        v1.whenDeployed(function() {
+                            new DeployView(data);
+                            util.log_to_server('deployed app', {
+                                status: 'success',
+                                deploy_time: deploy_time + " seconds"
+                            }, appId);
+                            self.trigger('deployed');
+                        });
                     }
                 },
                 error: function(data) {
