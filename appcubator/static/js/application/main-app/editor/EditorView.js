@@ -8,7 +8,7 @@ define([
   'editor/WidgetsManagerView',
   'editor/WidgetEditorView',
   'editor/EditorGalleryView',
-  'editor/PageStylePicker',
+  'editor/PageTemplatePicker',
   'editor/NavbarView',
   'editor/FooterView',
   'editor/GuideView',
@@ -28,7 +28,7 @@ function( PageModel,
           WidgetsManagerView,
           WidgetEditorView,
           EditorGalleryView,
-          PageStylePicker,
+          PageTemplatePicker,
           NavbarView,
           FooterView,
           GuideView,
@@ -92,6 +92,8 @@ function( PageModel,
                         this.toolBar,
                         this.navbar,
                         this.footer ];
+
+      this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
     },
 
     render: function() {
@@ -118,7 +120,7 @@ function( PageModel,
       $('#loading-gif').fadeOut().remove();
 
       if(!this.model.get('uielements').length) {
-        new PageStylePicker(this.model);
+        new PageTemplatePicker(this.model);
       }
 
       return this;

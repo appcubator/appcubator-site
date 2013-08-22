@@ -1578,7 +1578,54 @@ width: 945px;
   overflow: visible;
   background-color: rgba(124, 192, 213, 0.0);
   overflow: hidden;
+
+  animation: blurpIn 0.2s linear;
+  -webkit-animation: blurpIn 0.2s linear;
 }
+
+@keyframes blurpIn {
+  0% {
+    -webkit-transform: scale(0.3);
+  }
+
+  65% {
+    -webkit-transform: scale(1.1);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@-moz-keyframes blurpIn {
+  0% {
+    -webkit-transform: scale(0.3);
+  }
+
+  65% {
+    -webkit-transform: scale(1.1);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@-webkit-keyframes blurpIn {
+  0% {
+    -webkit-transform: scale(0.3);
+  }
+
+  65% {
+    -webkit-transform: scale(1.1);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+
 
 .widget-wrapper.textediting {
   border: 1px dashed #ccc;
