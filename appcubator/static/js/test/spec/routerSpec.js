@@ -34,10 +34,11 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
 
       it('calls the info page route', function() {
         spyOn(AppRouter.prototype, 'info').andCallThrough();
-        router = new AppRouter();
+        v1 = {};
+        v1 = new AppRouter();
         Backbone.history.start({pushState: true});
 
-        router.navigate('app/1/info/', {trigger: true});
+        v1.navigate('app/1/info/', {trigger: true});
 
         expect(router).toBeDefined();
         expect(AppRouter.prototype.info).toHaveBeenCalled();
@@ -45,10 +46,11 @@ function(AppModel, AppRouter, KeyDispatcher, MouseDispatcher) {
 
       it('calls the info page tutorial', function() {
 /*        spyOn(AppRouter.prototype, 'showTutorial').andCallThrough();*/
-        router = new AppRouter();
+        v1 = {};
+        v1 = new AppRouter();
         Backbone.history.start({pushState: true});
 
-        router.navigate('app/1/info/tutorial/', {trigger: true});
+        v1.navigate('app/1/info/tutorial/', {trigger: true});
 
         expect(router).toBeDefined();
 /*        expect(AppRouter.prototype.showTutorial).toHaveBeenCalled();*/

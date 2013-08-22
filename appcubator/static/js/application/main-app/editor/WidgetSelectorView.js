@@ -352,13 +352,11 @@ function() {
 
     doubleClicked: function(e) {
       if(!this.isMouseOn(e) || this.selectedEl.editModeOn) return;
-
-      if(this.selectedEl.getForm()) return;
-      if(this.selectedEl.getLoginRoutes()) return;
+      this.selectedEl.trigger('doubleClicked');
 
       if(this.selectedEl.getContent()) {
         this.selectedEl.trigger('startEditing');
-        this.listenTo(this.selectedEl, 'stopEditing', this.stoppedEditing);
+        this.listenTo(this.selectedEl, 'stopEditing cancelEditing', this.stoppedEditing);
         this.selectDiv.style.height = 0;
         this.selectDiv.style.width = 0;
         var top = ((this.selectedEl.get('layout').get('top') * 15) - 2) + ((this.selectedEl.get('layout').get('height') * 15) + 4);

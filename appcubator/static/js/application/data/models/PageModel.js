@@ -51,6 +51,14 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
       return height;
     },
 
+    addToContext: function(tableM) {
+      this.get('url').get('urlparts').push({value: '{{'+ tableM.get('name') + '}}'});
+    },
+
+    hasContext: function(tableM) {
+      return this.doesContainEntityName(tableM.get('name'));
+    },
+
     doesContainEntityName: function(entityName) {
       return _.contains(this.get('url').get('urlparts').pluck('value'), '{{' + entityName + '}}');
     },
@@ -66,8 +74,8 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
 
     getContextSentence: function () {
       var entities = [];
-      _(this.get('url').get('urlparts')).each(function(urlPart) {
-        if (/{{([^\}]+)}}/g.exec(urlPart)) entities.push(/\{\{([^\}]+)\}\}/g.exec(urlPart)[1]);
+      this.get('url').get('urlparts').each(function(urlPart) {
+        if (/{{([^\}]+)}}/g.exec(urlPart.get('value'))) entities.push(/\{\{([^\}]+)\}\}/g.exec(urlPart.get('value'))[1]);
       });
 
       if(entities.length === 0) {

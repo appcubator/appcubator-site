@@ -1,10 +1,12 @@
 define([
   'designer-app/UIElementListView',
+  'mixins/ErrorDialogueView',
   'fontselect',
   'util',
   'util.filepicker',
   'designer-app/ThemeTemplates'
-],function(UIElementListView) {
+],
+function(UIElementListView, ErrorDialogueView) {
 
   var UIElementAttributesModel = Backbone.Model.extend({ });
 
@@ -136,8 +138,8 @@ define([
       var imgNode = e.target.parentNode;
       var id = parseInt(imgNode.id.replace('themestatic-',''), 10);
       $.ajax({
-        type: 'DELETE',
-        url: url+'/static/'+id,
+        type: 'POST',
+        url: url+'/static/'+id+'/delete/',
         success: function() {
           console.log('successfully deleted!');
           util.get('theme-statics').removeChild(imgNode);

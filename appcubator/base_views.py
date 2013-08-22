@@ -9,7 +9,7 @@ from django import forms
 from django.utils import simplejson
 from copy import deepcopy
 
-from models import Customer, InvitationKeys, AnalyticsStore, App, PubKey
+from models import User, Customer, InvitationKeys, AnalyticsStore, App, PubKey
 from appcubator.email.sendgrid_email import send_email, send_template_email
 
 import requests
@@ -374,6 +374,16 @@ def screencast(request, screencast_id=1):
     page_context["title"] = "Screecast " + screencast_id
     return render(request, 'screencast-' + screencast_id + '.html', page_context)
 
+def sample_app(request, sample_id=1):
+    page_context = {}
+    page_context["title"] = "Sample App " + sample_id
+    return render(request, 'sample-app-' + sample_id + '.html', page_context)
+
+def sample_app_part(request, sample_id=1, part_id=1):
+    page_context = {}
+    page_context["title"] = "Sample App " + sample_id + ' Part ' + part_id
+    return render(request, 'sample-app-' + sample_id + '-part-' + part_id +'.html', page_context)
+
 def designer_guide(request):
     page_context = {}
     page_context["title"] = "Designer Guide"
@@ -383,3 +393,15 @@ def developer_guide(request):
     page_context = {}
     page_context["title"] = "Developer Guide"
     return render(request, 'developer-guide.html', page_context)
+
+def csvusers(request):
+    lines = []
+    for u in User.objects.all():
+        lines.append(u','.join([u.first_name, u.last_name, u.email]))
+    if request.is_ajax():
+        return HttpResponse(u'\n'.join(lines))
+    else:
+        return HttpResponse(u'<br>'.join(lines))
+
+
+

@@ -8,7 +8,7 @@ define([
   'editor/WidgetsManagerView',
   'editor/WidgetEditorView',
   'editor/EditorGalleryView',
-  'editor/PageStylePicker',
+  'editor/PageTemplatePicker',
   'editor/NavbarView',
   'editor/FooterView',
   'editor/GuideView',
@@ -28,7 +28,7 @@ function( PageModel,
           WidgetsManagerView,
           WidgetEditorView,
           EditorGalleryView,
-          PageStylePicker,
+          PageTemplatePicker,
           NavbarView,
           FooterView,
           GuideView,
@@ -77,11 +77,6 @@ function( PageModel,
       keyDispatcher.bindComb('meta+shift+z', redoController.redo);
       keyDispatcher.bindComb('ctrl+shift+z', redoController.redo);
 
-      keyDispatcher.bindComb('meta+c', this.copy);
-      keyDispatcher.bindComb('ctrl+c', this.copy);
-      keyDispatcher.bindComb('meta+v', this.paste);
-      keyDispatcher.bindComb('ctrl+v', this.paste);
-
       g_guides = this.guides;
 
       this.navbar  = new NavbarView(this.model.get('navbar'));
@@ -97,6 +92,8 @@ function( PageModel,
                         this.toolBar,
                         this.navbar,
                         this.footer ];
+
+      this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
     },
 
     render: function() {
@@ -123,7 +120,7 @@ function( PageModel,
       $('#loading-gif').fadeOut().remove();
 
       if(!this.model.get('uielements').length) {
-        new PageStylePicker(this.model);
+        new PageTemplatePicker(this.model);
       }
 
       return this;
@@ -147,32 +144,6 @@ function( PageModel,
       olark('api.box.expand');
     },
 
-    copy: function(e) {
-      if(keyDispatcher.textEditing === true) return;
-      if(this.marqueeView.multiSelectorView.contents.length) {
-        this.contents = [];
-        _(this.marqueeView.multiSelectorView.contents).each(function(model) {
-          this.contents.push(model.toJSON());
-        }, this);
-      }
-      else if(this.widgetsManager.widgetSelectorView.selectedEl){
-        this.contents = [];
-        this.contents.push(this.widgetsManager.widgetSelectorView.selectedEl.toJSON());
-      }
-    },
-
-    paste: function(e) {
-      if(keyDispatcher.textEditing === true) return;
-      if(!this.contents) return;
-
-      _(this.contents).each(function(cont) {
-        cont.layout.left++;
-        cont.layout.top++;
-        cont.layout.top++;
-      });
-      this.widgetsCollection.add(this.contents);
-    },
-
     deploy: function(options) {
       var url = '/app/'+appId+'/deploy/';
       var self = this;
@@ -181,7 +152,7 @@ function( PageModel,
       util.get('deploy-text').appendChild(threeDots.el);
       
       var success_callback = function() {
-        util.get('deploy-text').innerHTML = 'Test Run';
+        util.get('deploy-text').innerHTML = 'Publish';
         clearInterval(threeDots.timer);
       };
 
@@ -217,9 +188,14 @@ function( PageModel,
     },
 
     setupPageHeight: function() {
-      var height = (this.model.getHeight() + 4) * 15;
-      if(height < 800) height = 800;
-      this.$el.find('#elements-container').css('height', height);
+      var $container = this.$el.find('#elements-container');
+      var oldHeight = this.currentHeight;
+
+      this.currentHeight = (this.model.getHeight() + 4) * 15;
+      if(this.currentHeight < 800) this.currentHeight = 800;
+      $container.css('height', this.currentHeight);
+
+      if(this.currentHeight > oldHeight) { util.scrollToBottom($('#page')); }
     },
 
     close: function() {
@@ -227,10 +203,6 @@ function( PageModel,
 
       keyDispatcher.unbind('meta+z', redoController.redo);
       keyDispatcher.unbind('ctrl+z', redoController.redo);
-      keyDispatcher.unbind('meta+c', this.copy);
-      keyDispatcher.unbind('ctrl+c', this.copy);
-      keyDispatcher.unbind('meta+v', this.paste);
-      keyDispatcher.unbind('ctrl+v', this.paste);
 
       Backbone.View.prototype.close.call(this);
     }

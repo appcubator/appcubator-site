@@ -1219,6 +1219,8 @@ a.label:hover,a.badge:hover {
 .carousel-inner > .item {
   position: relative;
   display: none;
+  height: 100%;
+  text-align: center;
 
   -webkit-transition: 0.6s ease-in-out left;
   -moz-transition: 0.6s ease-in-out left;
@@ -1228,8 +1230,9 @@ a.label:hover,a.badge:hover {
 }
 
 .carousel-inner > .item > img {
-  display: block;
+  display: inline-block;
   line-height: 1;
+  height: 100%;
 }
 
 .carousel-inner > .active,
@@ -1575,7 +1578,54 @@ width: 945px;
   overflow: visible;
   background-color: rgba(124, 192, 213, 0.0);
   overflow: hidden;
+
+  animation: blurpIn 0.2s linear;
+  -webkit-animation: blurpIn 0.2s linear;
 }
+
+@keyframes blurpIn {
+  0% {
+    -webkit-transform: scale(0.3);
+  }
+
+  65% {
+    -webkit-transform: scale(1.1);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@-moz-keyframes blurpIn {
+  0% {
+    -webkit-transform: scale(0.3);
+  }
+
+  65% {
+    -webkit-transform: scale(1.1);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@-webkit-keyframes blurpIn {
+  0% {
+    -webkit-transform: scale(0.3);
+  }
+
+  65% {
+    -webkit-transform: scale(1.1);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+
 
 .widget-wrapper.textediting {
   border: 1px dashed #ccc;
@@ -1750,6 +1800,8 @@ border-radius: 27px;
 
 .menu-button.pages {
   border-top: 0px solid #3b4555;
+  width: 269px;
+  overflow: hidden;
 }
 
 .save-run-group .menu-button:first-child,
@@ -1922,11 +1974,22 @@ li.model span.title {
   width: 269px;
   padding: 0;
   background-color: #2b3545;
-  height: 42px;
   overflow: hidden;
   margin: 0;
-  max-height: 210px;
+  max-height: 168px;
   overflow-y: scroll;
+  vertical-align: top;
+}
+
+.menu-button.pages div.page-item {
+  width: 269px;
+  height: 42px;
+  padding: 0 10px;
+  display: inline-block;
+  vertical-align: top;
+  border-top: 1px solid #3b4555;
+  border-bottom: 1px solid #1b2535;
+  background-color: #2b3545;
 }
 
 .pages ul li {
@@ -2503,6 +2566,13 @@ ul.list {
   border-bottom-color: #a2a2a2;
   .border-radius(4px);
   .box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05));
+
+  &:hover {
+    background-color: #0f2d40;
+    background-image: none;
+    color: #fff;
+    text-shadow: none;
+  }
 }
 
 #edit-footer-btn {
@@ -2514,7 +2584,6 @@ ul.list {
  * NAVBAR EDITOR, FOOTER EDITOR
  */
 #navbar-editor .add-link, #footer-editor .add-link {
-  margin-top: 20px;
 }
 #navbar-editor,#footer-editor {
   width: 600px;
@@ -2531,16 +2600,8 @@ ul.list {
   border-bottom: 1px solid #ccc;
 }
 
-#navbar-editor > div,#footer-editor > div {
-  padding: 15px;
-}
-
 #edit-brandname,#edit-customText {
   margin-left: 15px;
-}
-
-#edit-customText {
-  width: 90%;
 }
 
 #navbar-editor h4 {
@@ -2550,6 +2611,21 @@ ul.list {
 #navbar-editor .links-title {
   padding: 10px;
   padding-left: 15px;
+}
+
+#navbar-editor .clone,
+#footer-editor .clone {
+  padding: 10px;
+  background-color: #DFEFFF;
+  height: 56px;
+  cursor: pointer;
+  line-height: 36px;
+}
+
+#navbar-editor .clone select {
+  vertical-align: top;
+  width: 200px;
+  margin-left: 12px;
 }
 
 .well-small.add-link {
@@ -2562,15 +2638,13 @@ ul.list {
   margin-bottom: 0px;
 }
 
-#navbar-editor .links-section {
-  overflow: scroll;
-  height: 390px;
+#navbar-editor .links-list {
+  overflow-y: scroll;
+  height: 310px;
 }
 
 #link-editors {
   padding: 0 15px 5px;
-  height: 250px;
-  overflow: scroll;
 
   .select-container {
     position: relative;
@@ -2631,6 +2705,14 @@ ul.list {
 ul.template-icons {
   list-style: none;
   list-style-type: none;
+}
+
+.page-template-picker {
+  overflow-y: scroll;
+}
+
+.page-template-picker .template-icons {
+  padding-bottom: 30px;
 }
 
 .template-icons .page-template {

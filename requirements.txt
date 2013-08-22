@@ -29,7 +29,7 @@ django-grappelli==2.4.5
 fabric==1.6.1
 django-tracking==0.4.1
 django-forms-bootstrap
-django-stripe-payments
+django-stripe-payments==2.0b22
 pyyaml==3.10
 nltk==2.0.4
 sh==1.08

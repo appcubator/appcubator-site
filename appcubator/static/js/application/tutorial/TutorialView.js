@@ -146,13 +146,15 @@ function() {
         this.addr = addr;
       }
       var obj = this.getSection(this.addr);
-      data = {
+      context = {
         title: obj.title,
         content: util.getHTML(obj.view),
         showPrevBtn: !(addr === 0),
         showNextBtn: !(addr === TutorialDirectory.length - 1)
       };
-      contentHTML = _.template(TutorialTemplates.slideTemp, data);
+      context.link = '/documentation/' + obj.view + '/';
+
+      contentHTML = _.template(TutorialTemplates.slideTemp, context);
       $('.tutorial-content').html(contentHTML);
       util.log_to_server('viewed tutorial page', {page: obj.title}, appId);
     },

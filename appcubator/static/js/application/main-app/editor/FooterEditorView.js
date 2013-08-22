@@ -16,7 +16,9 @@ function(LinkEditorView) {
     events: {
       'click .done-btn' : 'closeModal',
       'click .add-link' : 'addLinkEditorClicked',
-      'keyup #edit-customText' : 'updateCustomText'
+      'keyup #edit-customText' : 'updateCustomText',
+      'click .clone'       : 'showCloneOptions',
+      'change .clone-page' : 'clonePage'
     },
     initialize: function(model) {
       var self = this;
@@ -99,6 +101,30 @@ function(LinkEditorView) {
       });
 
       this.links.reset(newLinkEditors);
+    },
+
+    showCloneOptions: function() {
+      var select = document.createElement('select');
+      select.className = 'clone-page';
+      select.innerHTML += '<option value="pick-page">Choose a Page</option>';
+      v1State.get('pages').each(function(pageM) {
+        select.innerHTML += '<option value="page-'+pageM.cid+'">'+ pageM.get('name') +'</option>';
+      });
+      this.$el.find('.clone').html('Which page would you like to clone from?');
+      this.$el.find('.clone').append(select);
+    },
+
+    clonePage: function(e) {
+      if(e.currentTarget.value == 'pick-page') return;
+
+      var cid = String(e.currentTarget.value).replace('page-','');
+      var pageM = v1State.get('pages').get(cid);
+
+      this.model.get('links').reset();
+      this.model.get('links').add(pageM.get('footer').get('links').toJSON());
+      this.model.set('customText', pageM.get('footer').get('customText'));
+
+      this.closeModal();
     }
 
   });

@@ -17,14 +17,7 @@ class AppNew(forms.ModelForm):
     def clean_subdomain(self):
         subdomain = self.cleaned_data['subdomain']
 
-        subdomain = models.clean_subdomain(subdomain)
-
-        # prevent duplicate subdomains
-        while App.objects.filter(subdomain__iexact=subdomain).exists():
-            subdomain += str(random.randint(1,9))
-
-        # the above process may have caused string to grow, so trim if too long
-        subdomain = subdomain[-min(len(subdomain), 40):] # take the last min(40, len subdomain) chars.
+        subdomain = App.provision_subdomain(subdomain)
 
         self.cleaned_data['subdomain'] = subdomain
         return subdomain

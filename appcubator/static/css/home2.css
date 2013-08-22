@@ -1304,12 +1304,13 @@ img.startx {
   display: none;
 }
 
-.screencasts {
+.screencasts, .sample-apps {
   margin-bottom: 40px;
   margin-top: 20px;
 }
 
-.screencasts li {
+.screencasts li,
+.sample-apps li {
   width: 100%;
   height: 230px;
   border-radius: 4px;
@@ -1318,7 +1319,8 @@ img.startx {
   margin-top: 24px;
 }
 
-.screencasts li .picture {
+.screencasts li .picture,
+.sample-apps li .picture {
   display: inline-block;
   position: relative;
   width: 250px;
@@ -1346,11 +1348,13 @@ img.startx {
   font-size: 24px;
 }
 
-.screencasts li .picture:hover .layover{
+.sample-apps li .picture:hover .layover,
+.screencasts li .picture:hover .layover {
   display: inline-block;
 }
 
-.screencasts li .picture img {
+.screencasts li .picture img,
+.sample-apps li .picture img {
   display: inline-block;
   height: 100%;
   max-width: none;
@@ -1362,6 +1366,22 @@ img.startx {
   margin-left: 20px;
   width: 380px;
   margin-top: 10px;
+}
+
+.sample-apps li .summary {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 20px;
+  width: 380px;
+  margin-top: 10px;
+}
+
+.sample-apps.parts li {
+  height: auto;
+  padding-bottom: 15px;
+}
+.sample-apps.parts li .summary {
+  width: 100%;
 }
 
 .guides {

@@ -23,21 +23,35 @@ Templates.tempNode = [
 
 Templates.NavbarEditor = [
   '<div>',
-    '<legend>Main Title</legend>',
-    '<input type="text" name="edit-brandName" id="edit-brandname" value="<%= brandName %>">',
-    '<legend class="hoff1">Links</legend>',
-    '<ul id="link-editors"></ul>',
-    '<button class="btn btn-primary btn-small add-link">Add Link</button>',
+    '<div class="clone">Click here to clone navigation bar from another page.</div>',
+    '<div class="hoff1">',
+      '<h4 class="offset1">Main Title</h4><input type="text" name="edit-brandName" id="edit-brandname" value="<%= brandName %>">',
+    '</div>',
+    '<hr>',
+    '<h4 class="hoff1 offset1">Links</h4>',
+    '<div class="links-list">',
+      '<ul id="link-editors"></ul>',
+      '<div class="well well-small add-link">',
+      'Add Link',
+      '</div>',
+    '</div>',
   '</div>'
 ].join('\n');
 
 Templates.FooterEditor = [
   '<div>',
-    '<legend>Custom Footer Text</legend>',
-    '<input type="text" id="edit-customText" value="<%= customText %>">',
-    '<legend class="hoff1">Links</legend>',
-    '<ul id="link-editors"></ul>',
-    '<button class="btn btn-primary btn-small add-link">Add Link</button>',
+    '<div class="clone">Click here to clone footer from another page.</div>',
+    '<div class="hoff1">',
+      '<h4 class="offset1">Custom Footer Text</h4><input type="text" name="edit-customText" class="span12" id="edit-customText" value="<%= customText %>">',
+    '</div>',
+    '<hr>',
+    '<h4 class="hoff1 offset1">Links</h4>',
+    '<div class="links-list">',
+      '<ul id="link-editors"></ul>',
+      '<div class="well well-small add-link">',
+      'Add Link',
+      '</div>',
+    '</div>',
   '</div>'
 ].join('\n');
 
@@ -332,14 +346,14 @@ Templates.twitterfeedTemp = [
 Templates.facebookshareTemp = ['<img src="/static/img/fb-share-sample.png" width="300" >'].join('\n');
 
 Templates.sliderEditorTemp = [
-  '<h2>Image Slider Editor</h2>',
   '<div class="row">',
-  '<ul class="slider-images hoff1"></ul>',
+  '<ul class="slider-images" style="height:490px; overflow-y: scroll;">',
+  '</ul>',
   '</div>'
 ].join('\n');
 
 Templates.sliderImageEditorTemp = [
-  '<li id="image-editor-<%= cid %>" class="span10 offset1">',
+  '<li id="image-editor-<%= cid %>" class="span11 offset1 hoff1">',
     '<div class="thumbnail">',
       //'<img src="<%= image %>>',
       '<img src="<%= image %>">',

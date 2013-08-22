@@ -1,32 +1,33 @@
 require.config({
   paths: {
-    "jquery" : "../../libs/jquery/jquery",
-    "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
+    "jquery"          : "../../libs/jquery/jquery",
+    "jquery-ui"       : "../../libs/jquery-ui/jquery-ui",
     "jquery.filedrop" : "../../libs/jquery/jquery.filedrop",
-    "jquery.hotkeys" : "../../libs/jquery/jquery.hotkeys",
-    "underscore" : "../../libs/underscore-amd/underscore",
-    "backbone" : "../../libs/backbone-amd/backbone",
-    "heyoffline": "../../libs/heyoffline",
-    "util" : "../../libs/util/util",
+    "jquery.hotkeys"  : "../../libs/jquery/jquery.hotkeys",
+    "underscore"      : "../../libs/underscore-amd/underscore",
+    "backbone"        : "../../libs/backbone-amd/backbone",
+    "heyoffline"      : "../../libs/heyoffline",
+    "util"            : "../../libs/util/util",
     "util.filepicker" : "../../libs/util/util.filepicker",
-    "comp": "../../libs/util/comp",
-    "bootstrap" : "../../libs/bootstrap/bootstrap",
-    "app" : "../main-app",
-    "editor" : "../main-app/editor",
-    "m-editor" : "../main-app/mobile-editor",
-    "dicts" : "../main-app/dicts",
-    "mixins" : "../../mixins",
-    "key" : "../../libs/keymaster/keymaster",
-    "mousetrap" : "../../libs/mousetrap.min",
-    "answer" : "../../libs/answer/answer",
+    "comp"            : "../../libs/util/comp",
+    "bootstrap"       : "../../libs/bootstrap/bootstrap",
+    "app"             : "../main-app",
+    "editor"          : "../main-app/editor",
+    "m-editor"        : "../main-app/mobile-editor",
+    "dicts"           : "../main-app/dicts",
+    "mixins"          : "../../mixins",
+    "key"             : "../../libs/keymaster/keymaster",
+    "answer"          : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
-    "list" : "../../libs/list",
-    "snap" : "../../libs/snap.min",
-    "tourist": "../../libs/tourist.min",
-    "models" : "../data/models",
-    "collections" : "../data/collections",
-    "tutorial" : "../tutorial",
-    "xrayquire" : "../../libs/xrayquire"
+    "list"            : "../../libs/list",
+    "snap"            : "../../libs/snap.min",
+    "tourist"         : "../../libs/tourist.min",
+    "tourist-omer"    : "../../libs/tourist-omer",
+    "models"          : "../data/models",
+    "collections"     : "../data/collections",
+    "tutorial"        : "../tutorial",
+    "wizard"          : "../wizard",
+    "xrayquire"       : "../../libs/xrayquire"
   },
 
   shim: {
@@ -61,6 +62,10 @@ require.config({
       exports: "Tourist",
       deps: ["backbone"]
     },
+    "tourist-omer": {
+      exports: "TouristOmer",
+      deps: ["tourist"]
+    },
     "util.filepicker": {
       exports: "util"
     }
@@ -85,7 +90,8 @@ require([
   "util",
   "comp",
   "xrayquire",
-  "mixins/BackboneConvenience"
+  "mixins/BackboneConvenience",
+  "tourist-omer"
 ],
 function (AppModel,
           PageCollection,
@@ -132,23 +138,14 @@ function (AppModel,
 
     if(v1State.has('simpleWalkthrough')) {
       require(['app/SimpleTwitterTour'], function(QuickTour) {
+        console.log(QuickTour);
         if(!QuickTour.currentStep) return;
         var url = QuickTour.currentStep.url;
 
-        if(QuickTour.currentStep.waitUntil) {
-          util.waitUntilAppears(QuickTour.currentStep.waitUntil, function() {
-            v1.navigate('app/'+appId+url, {trigger: true});
-            setTimeout(function() {
-              QuickTour.start();
-            }, 1000);
-          });
-        }
-        else {
-          v1.navigate('app/'+appId+url, {trigger: true});
-          setTimeout(function() {
+        v1.navigate('app/'+appId+url, {trigger: true});
+        setTimeout(function() {
             QuickTour.start();
-          }, 1000);
-        }
+        }, 1000);
 
       });
     }

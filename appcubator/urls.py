@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^account/$',                  base_views.account),
     url(r'^setpubkey/$',                base_views.setpubkey),
     url(r'^ping/$',                     base_views.ping),
+    url(r'^csvusers/$',                 base_views.csvusers),
     url(r'^whatisthis/$',               base_views.marketing),
 
     # only creates beta invite
@@ -44,12 +45,14 @@ urlpatterns = patterns('',
     url(r'^send_invitation/(\d+)/$',    base_views.send_invitation_to_customer),
     url(r'^backend/',                   include('app_builder.urls')),
     url(r'^payments/',                  include('appcubator.payments.urls')),
-    url(r'^app/(\d+)/payment/$',       payment_views.app_payment),
+    url(r'^app/(\d+)/payment/$',        payment_views.app_payment),
 
-    url(r'^resources/$',                   base_views.resources),
-    url(r'^resources/screencast/(\d+)/$',  base_views.screencast),
-    url(r'^resources/designer-guide/$',    base_views.designer_guide),
-    url(r'^resources/developer-guide/$',    base_views.developer_guide),
+    url(r'^resources/$',                         base_views.resources),
+    url(r'^resources/screencast/(\d+)/$',        base_views.screencast),
+    url(r'^resources/sample/(\d+)/$',            base_views.sample_app),
+    url(r'^resources/sample/(\d+)/part/(\d+)/$', base_views.sample_app_part),
+    url(r'^resources/designer-guide/$',          base_views.designer_guide),
+    url(r'^resources/developer-guide/$',         base_views.developer_guide),
 )
 
 urlpatterns += patterns('appcubator.log_views',
@@ -74,7 +77,8 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/analytics/$', 'get_analytics'),
 
     # statix
-    url(r'^app/(\d+)/static/$', 'staticfiles'), # a GET returns the apps statics, a POST creates a static file entry.
+    url(r'^app/(\d+)/static/$',              'staticfiles'), # a GET returns the apps statics, a POST creates a static file entry.
+    url(r'^app/(\d+)/static/(\d+)/delete/$', 'delete_static'), 
 
     # getting/setting state
     url(r'^app/(\d+)/state/$', 'app_state'),
@@ -90,7 +94,8 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/mobile_uiestate.css$', 'mobile_css_sheet'),
 
     # deploy
-    url(r'^app/(\d+)/deploy/$', 'app_deploy'),
+    url(r'^app/(\d+)/deploy/$',        'app_deploy'),
+    url(r'^app/(\d+)/deploy/status/$', 'app_deploy_status'),
 
     #zip
     url(r'^app/(\d+)/zip/$', 'app_zip'),
@@ -110,7 +115,7 @@ urlpatterns += patterns('appcubator.views',
 
     url(r'^feedback/$', 'documentation_page', {"page_name": "feedback"}),
     url(r'^documentation/$', 'documentation_page', {"page_name": "intro"}),
-    url(r'^documentation/search/', 'documentation_search'),
+    url(r'^documentation/search/$', 'documentation_search'),
     url(r'^documentation/([^/]+)/$', 'documentation_page'),
 
     # the rest

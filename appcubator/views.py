@@ -15,6 +15,7 @@ from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
 
 import forms
+import random
 
 from email.sendgrid_email import send_email, send_template_email
 
@@ -37,6 +38,11 @@ import re
 from datetime import datetime
 
 
+def JsonResponse(serializable_obj, **kwargs):
+    """Just a convenience function, in the middle of horrible code"""
+    return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)
+
+
 def add_statics_to_context(context, app):
     context['statics'] = simplejson.dumps(list(
         StaticFile.objects.filter(app=app).values()))
@@ -56,7 +62,7 @@ def app_welcome(request):
         return redirect(app_noob_page)
 
     if request.user.apps.count() == 0:
-        return redirect(app_new)
+        return redirect(app_noob_page)
     else:
         return redirect(app_page, request.user.apps.latest('id').id)
 
@@ -100,13 +106,18 @@ def app_new(request, is_racoon = False):
     elif request.method == 'POST':
         data = {}
         data['name'] = request.POST.get('name', '')
-        data['subdomain'] = request.POST.get('name', '')
+        data['owner'] = request.user.id
+
+        # use this short username
+        username = request.user.username.split('@')[0]
+        data['subdomain'] = "%s-%s" % (username, request.POST.get('name', ''))
+
         # dev modifications
         if not settings.STAGING and not settings.PRODUCTION:
-            data['subdomain'] = 'dev-%s-%s' % (request.user.username.split('@')[0], data['subdomain'])
+            data['subdomain'] = 'dev-%s-%s' % (username, data['subdomain'])
 
-        data['owner'] = request.user.id
         form = forms.AppNew(data)
+
         if form.is_valid():
             app = form.save(commit=False)
             s = app.state
@@ -182,8 +193,6 @@ def app_page(request, app_id):
     mobile_themes = [t.to_dict() for t in mobile_themes]
 
     page_context = {'app': app,
-                    'app_url': app.url(),
-                    'app_id': long(app_id),
                     'title': 'The Garage',
                     'themes': simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
@@ -243,10 +252,10 @@ def app_state(request, app_id, validate=True):
         raise Http404
     if request.method == 'GET':
         state = app_get_state(request, app)
-        return JSONResponse(state)
+        return JsonResponse(state)
     elif request.method == 'POST':
         status, data = app_save_state(request, app, require_valid=validate)
-        return JSONResponse(data, status=status)
+        return JsonResponse(data, status=status)
     else:
         return HttpResponse("GET or POST only", status=405)
 
@@ -298,7 +307,7 @@ def invitations(request, app_id):
         json = []
         for i in invitations:
             json.append({"invitee": i.invitee, "date": str(i.date.date()), "accepted": i.accepted})
-        return JSONResponse(json)
+        return JsonResponse(json)
     # send an invitation from {{user_id}} to a friend
     else:
         user = get_object_or_404(User, pk=user_id)
@@ -312,14 +321,16 @@ def invitations(request, app_id):
         name = request.POST['name']
         email = request.POST['email']
         subject = "%s has invited you to check out Appcubator!" % user_name
+        invitation = InvitationKeys.create_invitation(request.user, email)
 
         message = ('Dear {name},\n\n'
                    'Check out what I\'ve build using Appcubator:\n\n'
                    '<a href="{hostname}">{hostname}</a>\n\n'
-                   'Appcubator is the only visual web editor that can build rich web applications without hiring a developer or knowing how to code. It is also free to build an app, forever. See what others have built and try to create a web app of your own.\n\n'
+                   'Appcubator is the only visual web editor that can build rich web applications without hiring a developer or knowing how to code. It is also free to build an app, forever.\n'
+                   'You can signup here: <a href="http://appcubator.com/signup?k={invitation_key}">Appcubator Signup</a>\n\n'
                    'Best,\n{user_name}\n\n\n')
-        message = message.format(name=name, hostname=app.hostname(), user_name=user_name)
-        invitation = InvitationKeys.create_invitation(request.user, email)
+
+        message = message.format(name=name, hostname=app.hostname(), user_name=user_name, invitation_key=invitation.api_key)
         template_context = { "text": message }
         send_template_email(request.user.email, email, subject, "", "emails/base_boxed_basic_query.html", template_context)
         return HttpResponse(message)
@@ -338,47 +349,46 @@ def documentation_page(request, page_name):
     return render(request, 'documentation/documentation-base.html', data)
 
 def documentation_search(request):
-    if 'q' not in request.GET or request.GET['q'] is "":
+    query = request.GET.get('q', '').strip()
+    if query == '':
         return redirect(documentation_page)
 
-    query = request.GET['q']
-
+    # FIXME not safe
     query = query.replace(' ',"|")
     query_regex = re.compile('%s'%query)
-    search_dir = settings.DOCUMENTATION_SEARCH_DIR
-    # read ALL the documentation texts
-    # TODO: do this ONCE, maybe on server startup
+
     results = []
-    for docfile in os.listdir(search_dir):
+    # search each file and if exists a match, add to list of results.
+    for docfile in os.listdir(settings.DOCUMENTATION_SEARCH_DIR):
+        # read the file
+        with open(os.path.join(settings.DOCUMENTATION_SEARCH_DIR, docfile), 'r') as curr_file:
+            raw_html = curr_file.read()
+
+        # tokenize
+        text = nltk.clean_html(raw_html)
+        tokens = nltk.word_tokenize(text)
+
+        # find query-token matches
         count = 0
-        dir_path = os.path.join(search_dir, docfile)
-        with open(dir_path, 'r') as curr_file:
-            raw_text = curr_file.read()
-            raw_text_clean = nltk.clean_html(raw_text)
-            # title is the first <h2></h2> header
-            raw_text_linebreaks = raw_text_clean.split('\n')
-            title = raw_text_linebreaks[0]
-            # content is everything after the first <h2></h2> header
-            # excerpt first 140 characters only yo
-            len_title = len(raw_text_linebreaks[0])
-            excerpt = "%s..." % raw_text_clean[len_title:140]
-            # TODO: I don't think this is being applied, but it works without it
-            # possible optimization for later
-            raw_text = re.sub(r"^[#,-[]!:()]$", "", raw_text_clean)
-            tokens = nltk.word_tokenize(raw_text)
-            # search ALL the file's tokens
-            for t in tokens:
-                if(re.match(query_regex, t)):
-                    count += 1
+        for t in tokens:
+            if(re.match(query_regex, t)):
+                count += 1
+
+        # if matches -> add this doc entry to the results
         if count > 0:
+            title = text.split('\n')[0]
+            excerpt = "%s..." % text[len(title):140]
+
             d = {}
             d['filename'] = docfile.replace('.html','')
             d['title'] = title
             d['content'] = excerpt
             d['count'] = count
             results.append(d)
-    results.sort(key=lambda r: r['count'], reverse=True)
-    return render(request, 'documentation/documentation-base.html', {'results': results})
+
+    # sort and display results
+    sorted_results = sorted(results, key=lambda r: r['count'], reverse=True)
+    return render(request, 'documentation/documentation-base.html', {'results': sorted_results})
 
 @login_required
 def uie_state(request, app_id):
@@ -387,7 +397,7 @@ def uie_state(request, app_id):
         raise Http404
     if request.method == 'GET':
         state = app_get_uie_state(request, app)
-        return JSONResponse(state)
+        return JsonResponse(state)
     elif request.method == 'POST':
         status, message = app_save_uie_state(request, app)
         return HttpResponse(message, status=status)
@@ -402,7 +412,7 @@ def mobile_uie_state(request, app_id):
         raise Http404
     if request.method == 'GET':
         state = app_get_uie_state(request, app)
-        return JSONResponse(state)
+        return JsonResponse(state)
     elif request.method == 'POST':
         status, message = app_save_mobile_uie_state(request, app)
         return HttpResponse(message, status=status)
@@ -521,9 +531,9 @@ def get_analytics(request, app_id):
     try:
         analytics_data = AnalyticsStore.objects.get(app=app)
     except AnalyticsStore.DoesNotExist:
-        return JSONResponse({})
+        return JsonResponse({})
     data = analytics_data.analytics_data
-    return JSONResponse(data)
+    return JsonResponse(data)
 
 
 class StaticFileForm(ModelForm):
@@ -541,11 +551,6 @@ class StaticFileForm(ModelForm):
         return super(StaticFileForm, self).save(*args, **kwargs)
 
 
-def JSONResponse(serializable_obj, **kwargs):
-    """Just a convenience function, in the middle of horrible code"""
-    return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)
-
-
 @login_required
 def staticfiles(request, app_id):
     if request.method != 'GET' and request.method != 'POST':
@@ -558,14 +563,24 @@ def staticfiles(request, app_id):
         if request.method == 'GET':
             sf = StaticFile.objects.filter(
                 app=app).values('name', 'url', 'type')
-            return JSONResponse(list(sf))
+            return JsonResponse(list(sf))
         if request.method == 'POST':
             sf_form = StaticFileForm(app, request.POST)
             if sf_form.is_valid():
                 sf_form.save()
-                return JSONResponse({})
+                return JsonResponse({})
             else:
-                return JSONResponse({"error": "One of the fields was not valid."})
+                return JsonResponse({"error": "One of the fields was not valid."})
+
+@login_required
+def delete_static(request, app_id, static_id):
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
+    sf = StaticFile.objects.filter(pk = static_id, app=app)
+    sf.delete()
+    return HttpResponse("ok")
 
 
 @login_required
@@ -583,23 +598,35 @@ def app_zip(request, app_id):
 
 
 @login_required
-@require_POST
 @csrf_exempt
 def app_deploy(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    result = app.deploy()
-    result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
-    if 'errors' in result:
-        raise Exception(result)
-    elif 'branch' in result and 'files' in result:
-        #status = 409
-        # damn jquery
-        status = 200
-    else:
-        status = 200
-    return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+    app.full_clean()
+
+    if request.method == 'GET':
+        return JsonResponse({ 'status': app.get_deployment_status() })
+    elif request.method == 'POST':
+        result = app.deploy()
+        result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
+        if 'errors' in result:
+            raise Exception(result)
+        elif 'branch' in result and 'files' in result:
+            #status = 409
+            # damn jquery. the frontend code is not easy to modify to if/else based on status code.
+            status = 200
+        else:
+            status = 200
+        return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+
+
+def app_deploy_status(request, app_id):
+    deploy_status = {}
+    deploy_status["message"] = "Yolo"
+    deploy_status["done"]    = random.randint(0, 9) % 5 == 0
+
+    return HttpResponse(simplejson.dumps(deploy_status), status=200, mimetype="application/json")
 
 
 @require_POST
@@ -638,9 +665,9 @@ def check_availability(request, domain):
     domain_is_available = DomainRegistration.check_availability(domain)
 
     if domain_is_available:
-        return JSONResponse(True)
+        return JsonResponse(True)
     else:
-        return JSONResponse(False)
+        return JsonResponse(False)
 
 
 @require_POST
@@ -650,8 +677,8 @@ def sub_check_availability(request, subdomain):
     data = {'subdomain': subdomain}
     form = forms.ChangeSubdomain(data)
     if form.is_valid():
-        return JSONResponse(True)
-    return JSONResponse(False)
+        return JsonResponse(True)
+    return JsonResponse(False)
 
 
 @require_POST
@@ -663,9 +690,8 @@ def sub_register_domain(request, app_id, subdomain):
         raise Http404
     form = forms.ChangeSubdomain({'subdomain': subdomain}, app=app)
     if form.is_valid():
+        # the below line calls the model's save method, which will update deployment server automatically.
         app = form.save(state_version=False)
-        result = app.deploy()
-        status = 500 if 'errors' in result else 200
         return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 
     return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")
@@ -677,7 +703,7 @@ def yomomma(request, number):
 
 def webgeekjokes(request):
     r = requests.get("http://www.webgeekjokes.tumblr.com/random")
-    return JSONResponse(r.text)
+    return JsonResponse(r.text)
 
 # this is old.
 @require_POST
@@ -689,18 +715,18 @@ def register_domain(request, domain):
 
     # Check domain cap
     if request.user.domains.count() >= DomainRegistration.MAX_FREE_DOMAINS:
-        return JSONResponse({"error": 0})
+        return JsonResponse({"error": 0})
 
     # Try to register
     try:
         d = DomainRegistration.register_domain(
             domain, test_only=settings.DEBUG)
     except Exception, e:
-        return JSONResponse({"errors": str(e)})
+        return JsonResponse({"errors": str(e)})
 
     # TODO afterwards in a separate worker
     d.configure_dns(domain, staging=settings.STAGING)
 
     # Give client the domain info
-    return JSONResponse(d.domain_info)
+    return JsonResponse(d.domain_info)
 

@@ -158,8 +158,9 @@ function(DataModel, LayoutModel) {
       return this.get('data').get('searchQuery');
     },
 
-    isBox: function() {
-      if(this.get('type') == "node" && this.get('data').get('nodeType') == "boxes") return true;
+    isBgElement: function() {
+      if( (this.get('type') == "node" && this.get('data').get('nodeType') == "boxes") ||
+          (this.get('type') == "imageslider")) return true;
       return false;
     },
 

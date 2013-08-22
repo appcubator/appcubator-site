@@ -26,7 +26,7 @@
         We will give you a quick tour of what Appcubator is and how it works in general.
       </div>
     </a>
-    <div class="welcome-icon walkthrough-twitter" href="#">
+    <a class="welcome-icon walkthrough-twitter" href="{% url appcubator.views.app_new_walkthrough walkthrough='simpleWalkthrough' %}">
       <img src="{{ STATIC_URL }}img/walkthrough-twitter.png">
       <p>Walkthrough Building Twitter</p>
       <div class="info-text qt-text">
@@ -34,15 +34,15 @@
         This is for you if you're one of those people who likes to learn by doing. <br  />
         We will walk you through building a clone of Twitter.com in 8 minutes!
       </div>
-    </div>
+    </a>
   </div>
   <div class="row span48 offset8">
-    <a href="/documentation" class="welcome-icon read-tutorials">
+    <a href="/resources" rel="external" target="_blank" class="welcome-icon read-tutorials">
       <img src="{{ STATIC_URL }}img/read-tutorial.png">
-      <p>Read Documentation</p>
+      <p>See Resources</p>
       <div class="info-text qt-text">
-        <span class="title">Read Documentation</span>
-        Read through Appcubator tutorials and watch the quick videos. This is the best way to learn how to use Appcubator.
+        <span class="title">See Resources</span>
+        Access to plenty of resources about Appcubator: sample apps, tutorials and screen-casts. This is the best way to learn how to use Appcubator.
       </div>
     </a>
     <a href="/app/new/" class="welcome-icon start-building">

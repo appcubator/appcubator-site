@@ -70,7 +70,7 @@ function(SelectView) {
 
       this.hrefLi.innerHTML = '';
       this.hrefLi.appendChild(new comp().div('Links To').classN('header-div').el);
-      var selecView = new SelectView(listOfPages, href, true);
+      var selecView = new SelectView(listOfPages, href, true, {maxHeight: 5});
       selecView.bind('change', this.changeHref, this);
       this.hrefLi.appendChild(selecView.el);
 
@@ -87,12 +87,17 @@ function(SelectView) {
         newObj.name = obj.name;
         return newObj;
       });
-      statics_list.push({val: "new-image", name: "Upload New Image"});
+      statics_list = _.union({val: "new-image", name: "Upload New Image"}, statics_list);
+
+      var curValName = this.model.get('data').get('content_attribs').get('src');
+      if(this.model.get('data').get('content_attribs').has('src_content')) {
+        curValName = this.model.get('data').get('content_attribs').get('src_content');
+      }
       var curVal = {
-        name: this.model.get('data').get('content_attribs').get('src'),
+        name: curValName,
         val: this.model.get('data').get('content_attribs').get('src')
       };
-      var selecView = new SelectView(statics_list, curVal, true);
+      var selecView = new SelectView(statics_list, curVal, true, { maxHeight: 5});
       selecView.bind('change', this.changeSrc);
       li.appendChild(selecView.el);
       return li;
@@ -117,7 +122,7 @@ function(SelectView) {
       var sizeSelect = new comp().select('').id(hash).classN('font-picker');
 
       _(['default', '10px', '14px', '16px', '18px', '20px', '32px', '36px','48px', '72px']).each(function(val) {
-        sizeSelect.option(val).valProp('font-size:' + val + ';');
+        sizeSelect.el.innerHTML += '<option value="font-size:' + val + ';">'+val+'</option>';
       });
 
       sizeDiv.innerHTML = '<span class="key">Font Size</span>';
@@ -157,13 +162,14 @@ function(SelectView) {
       var curStyle = this.model.get('data').get('content_attribs').get('style');
 
       if(/font-size:([^]+);/g.exec(curStyle)) {
-        curStyle = curStyle.replace(/(font-size:)(.*?)(;)/gi, "$1"+ e.target.value +"$3");
+        curStyle = curStyle.replace(/(font-size:)(.*?)(;)/gi, e.target.value);
       }
       else {
-        curStyle = curStyle + ' font-size:' + e.target.value +';';
+        curStyle = curStyle + ' ' + e.target.value;
       }
 
       this.model.get('data').get('content_attribs').set('style', curStyle);
+      mouseDispatcher.isMousedownActive = false;
     },
 
     toggleBold: function(e) {

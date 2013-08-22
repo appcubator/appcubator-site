@@ -1,8 +1,9 @@
 <script type="text/template" id="app-main-page">
     <div class="row hoff1 span58 overview-pane">
+      <div class="span58 overlay-notice">Our deployment service is currently under maintenance, but it will be back working soon. You can still build your app, but there might be problems with publishing the updates. We are sorry for the inconvenience.</div>
       <div class="span46">
         <h2 class="pheader">{{ app.name }} Overview</h2><br>
-        <a target="_blank" href="{{ app_url }}" class="link">{{ app_url }} <div href="#" class="edit-btn btn">Edit</div></a><br>
+        <a target="_blank" href="{{ app.url }}" class="link">{{ app.url }} <div href="#" class="edit-btn btn">Edit</div></a><br>
       </div>
       <div class="span12 hi10 right">
         <div class="pane-btn">
@@ -220,7 +221,7 @@
   <div class="section-select">
 
     <div class="save-run-group">
-      <div class="menu-button run" id="deploy"><span class="play-btn"><span class="play-btn-icon"></span></span><span id="deploy-text">Test Run</span>
+      <div class="menu-button run" id="deploy"><span class="play-btn"><span class="play-btn-icon"></span></span><span id="deploy-text">Publish</span>
       </div><div class="menu-button save" id="editor-save">
         <span>Save</span>
       </div>
@@ -233,8 +234,11 @@
         <a href="{% url appcubator.views.app_page app.id %}gallery/" class="themes"></a>
         <a href="{% url appcubator.views.app_page app.id %}tables/" class="tables"></a>
       </div>
-      <div class="menu-button pages"><ul id="page-list"></ul><div class="menu-button dropdown-arrow">
+      <div class="menu-button pages" id="menu-pages">
+        <div id="current-page" class="page-item"></div><ul id="page-list"></ul><div id="create-page" class="page-item">
       </div></div>
+      <div class="menu-button dropdown-arrow">
+      </div>
     </div>
     <div class="right-group">
       <div class="menu-button question">Ask a Question</div>
@@ -294,7 +298,7 @@
     <div class="save-run-group">
       <div class="menu-button save" id="editor-save">
       <span>Save</span>
-      </div><div class="menu-button run" id="deploy"><span>Test Run</span>
+      </div><div class="menu-button run" id="deploy"><span>Publish</span>
     </div>
     </div>
     <div class="menu-button help"></div>
@@ -404,6 +408,11 @@
     <div class="download-pane">
       <img src="{{ STATIC_URL }}img/download-icon.png">
       <a rel="external" href="<%= zip_url %>">The code you have written is available to download here.</a>
+    </div>
+    <div class="download-pane">
+      <img src="{{ STATIC_URL }}img/download-icon.png">
+      <p>Or clone via git.</p>
+      <p>git clone <%= git_url %></p>
     </div>
   </div>
 

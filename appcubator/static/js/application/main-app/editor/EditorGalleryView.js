@@ -297,7 +297,7 @@ define([
     },
 
     removeSection: function(sectionView) {
-      sectionView.close()
+      sectionView.close();
       this.sections.splice(this.sections.indexOf(sectionView), 1);
       this.subviews.splice(this.subviews.indexOf(sectionView), 1);
     },
@@ -311,6 +311,9 @@ define([
         top  = this.findTop(e, ui);
         if(util.isRectangleIntersectElement(e.pageX, e.pageY, e.pageX+80, e.pageY+80, itemGallery)) return;
       }
+      else {
+        top =  Math.round($('#page').scrollTop() / this.positionVerticalGrid);
+      }
 
       var layout = { top: top, left: left };
 
@@ -321,6 +324,8 @@ define([
 
       var className = targetEl.className;
       var id = targetEl.id;
+
+      util.log_to_server("widget dropped", id, appId);
 
       return this.createElement(layout, className, id);
     },
@@ -436,18 +441,25 @@ define([
       var field = entity.getFieldsColl().get(hash[2]);
 
       var nested_field = nested_entity.getFieldsColl().get(hash[3]);
-      var type = this.getFieldType(nested_field);
+
+      console.log(nested_field);
+      var displayType = this.getFieldType(nested_field);
       var editorContext = this.editorContext ? this.editorContext : "page";
 
       var content_ops = {};
-      content_ops.content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+ field.get('name') + '.' +nested_field.get('name')+'}}';
 
-      if(type == "links") {
-        content_ops.content = 'Download '+ field.get('name');
-        content_ops.href = '{{'+editorContext+'.'+entity.get('name')+'.'+field.get('name')+'.'+nested_field.get('name')+'}}';
+      if(displayType == "links") {
+        content_ops.content = 'Download '+field.get('name');
+        content_ops.href = '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
+      }
+      else if(displayType == "images") {
+        content_ops.src_content =  '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
+      }
+      else {
+        content_ops.content = '{{' + editorContext +'.'+ entity.get('name') +'.'+field.get('name')+ '.' +nested_field.get('name')+'}}';
       }
 
-      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content_ops);
+      return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
     },
 
     createCreateForm: function(layout, id) {
@@ -573,6 +585,9 @@ define([
     },
 
     getFieldType: function (fieldModel) {
+
+      console.log(fieldModel);
+  
       switch(fieldModel.get('type')) {
         case "text":
         case "date":

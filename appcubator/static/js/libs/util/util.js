@@ -105,7 +105,7 @@ define(['jquery'], function() {
         cssFile.setAttribute('href', '/static/css/' + css + '.css');
         cssFile.setAttribute('rel', 'stylesheet');
         cssFile.id = 'css-' + css;
-        console.log("loading " + css);
+        //console.log("loading " + css);
         //document.getElementsByTagName('head')[0].appendChild(cssFile);
       }
     },
@@ -211,6 +211,10 @@ define(['jquery'], function() {
     scrollToElement: function($el) {
       var height = $el.offset().top - 90;
       $('html, body').animate({ scrollTop: height }, 'slow', 'swing');
+    },
+
+    scrollToBottom: function($el) {
+      $el.animate({ scrollTop: $el[0].scrollHeight }, 'slow', 'swing');
     },
 
     isAlphaNumeric: function(str) {
@@ -349,6 +353,7 @@ define(['jquery'], function() {
     copyToClipboard: function(text) {
       window.prompt ("Copy to clipboard: Ctrl+C/Cmd+C, Enter", text);
     }
+
   };
 
   function csrfSafeMethod(method) {

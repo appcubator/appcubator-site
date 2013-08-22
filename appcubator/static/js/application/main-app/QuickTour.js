@@ -1,15 +1,15 @@
 define([
-	'tourist',
+  "tourist-omer",
 	'util'
 ],
 function() {
 	var steps = [
 		//tables pane
 		{
+			title  : 'Tables',
+			content: 'Click here to organize your different data entities and relationships',
 			target: $('.menu-app-entities'),
-			content: '<h3>Tables</h3><p>Click here to organize your different data entities and relationships</p>',
-			my: "top center",
-			at: "bottom center",
+			loc: "top center, bottom center",
 			closeButton: true,
 			setup: function(tour, options) {
 				$('.menu-app-entities').addClass('active');
@@ -23,10 +23,10 @@ function() {
 		},
 		//Themes pane
 		{
+			title   : 'Design & Themes',
 			target: $('.menu-app-themes'),
-			content: '<h3>Design & Themes</h3><p>Click here to choose between different web and mobile themes for your site by clicking here</p>',
-			my: "top center",
-			at: "bottom center",
+			content : 'Click here to choose between different web and mobile themes for your site by clicking here.',
+			loc: "top center, bottom center",
 			closeButton: true,
 			setup: function(tour, options) {
 				$('.menu-app-themes').addClass('active');
@@ -42,9 +42,9 @@ function() {
 		//Pages pane
 		{
 			target: $('.menu-app-pages'),
-			content: '<h3>Pages</h3><p>Click here to manage your site\'s pages and their layout.</p>',
-			my: "top center",
-			at: "bottom center",
+			title   : 'Pages',
+			content : 'Click here to manage your site\'s pages and their layout.',
+			loc: "top center, bottom center",
 			closeButton: true,
 			setup: function(tour, options) {
 				$('.menu-app-pages').addClass('active');
@@ -77,45 +77,47 @@ function() {
 		//Save btn
 		{
 			target: $('.save-btn'),
-			content: '<p>Click here to save any changes you make by clicking here</p>',
-			my: "right center",
-			at: "left center",
+			title   : '',
+			content : 'Click here to save any changes you make by clicking here',
+			loc: "right center, left center",
 			closeButton: true,
 			setup: function(tour, options) {
 				$('.save-btn').one('click', function(e) {
 					tour.next();
 				});
+			},
+			teardown: function() {
+				$('.fixed-bg.welcome').fadeIn();
 			}
+
 		},
 
 		//Tutorial btn
-		{
-			target: $('.qm-btn#tutorial'),
-			content: '<p>Click this button at any point for in-depth help</p>',
-			my: "right center",
-			at: "left center",
-			setup: function(tour, options) {
-				$('').addClass('active');
-				$('.qm-btn').one('click', function(e) {
-					setTimeout(tour.next, 300);
-				});
-			}
-		},
+		// {
+		// 	target: $('.qm-btn#tutorial'),
+		// 	content: '<p>Click this button at any point for in-depth help</p>',
+		// 	loc: "right center, left center",
+		// 	setup: function(tour, options) {
+		// 		$('').addClass('active');
+		// 		$('.qm-btn').one('click', function(e) {
+		// 			setTimeout(tour.next, 300);
+		// 		});
+		// 	}
+		// },
 
-		{
-			content: '<p>Feel free to ask your questions here! We promise to reply really fast!</p>',
-			my: "left center",
-			at: "right center",
-			nextButton: true,
-			setup: function(tour, options) {
-				util.log_to_server('finished quick tour', {}, appId);
-				return { target: $('.search-bar') };
-			},
+		// {
+		// 	content: '<p>Feel free to ask your questions here! We promise to reply really fast!</p>',
+		// 	loc: "left center, right center",
+		// 	nextButton: true,
+		// 	setup: function(tour, options) {
+		// 		util.log_to_server('finished quick tour', {}, appId);
+		// 		return { target: $('.search-bar') };
+		// 	},
 
-			teardown: function() {
-				$('.fixed-bg').fadeIn();
-			}
-		}
+		// 	teardown: function() {
+		// 		$('.fixed-bg.welcome').fadeIn();
+		// 	}
+		// }
 	];
 
 
