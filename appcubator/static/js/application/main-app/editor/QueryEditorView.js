@@ -126,7 +126,7 @@ function() {
       var queryM = this.possibleQueries.get(cid);
 
       if(e.target.checked) {
-        this.model.get('where').push(queryM);
+        this.model.get('where').push(queryM.toJSON());
       }
       else {
         this.model.get('where').each(function(whereModel) {
