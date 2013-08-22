@@ -494,7 +494,7 @@ class App(models.Model):
 
             return result
 
-        elif r.status_code == 404:
+        elif r.status_code == 404 or (r.status_code == 502 and requests.get("http://%s/lskdjflskjf/" % settings.DEPLOYMENT_HOSTNAME).status_code == 404):
             assert retry_on_404
             logger.warn("The deployment was not found, so I'm setting deployment id to None")
             self.deployment_id = None
