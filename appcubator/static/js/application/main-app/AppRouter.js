@@ -450,8 +450,8 @@ define(function(require, exports, module) {
 
         getDeploymentStatus: function(successCallback, failCallback) {
             $.ajax({
-                type: "POST",
-                url: '/app/' + appId + '/deploy/status/',
+                type: "GET",
+                url: '/app/' + appId + '/deploy/',
                 data: JSON.stringify(appState),
                 success: function(data) {
                     console.log(data);
