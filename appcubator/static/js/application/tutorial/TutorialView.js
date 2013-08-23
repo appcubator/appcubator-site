@@ -1,5 +1,4 @@
 define([
-  'answer',
   'backbone',
   './TutorialDict',
   './TutorialTemplates',

@@ -11,7 +11,7 @@ function( WidgetContainerView,
 
   var WidgetListView = WidgetContainerView.extend({
     el: null,
-    className: 'container-create',
+    className: 'widget-wrapper',
     tagName : 'div',
     entity: null,
     type: null,

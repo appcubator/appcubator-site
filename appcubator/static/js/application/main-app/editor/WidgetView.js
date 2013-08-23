@@ -237,15 +237,16 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
         isMouseOn: function(e) {
             var self = this;
 
-            mouseX = e.pageX;
-            mouseY = e.pageY;
+            var mouseX = e.pageX;
+            var mouseY = e.pageY;
             var div = $('#widget-wrapper-' + this.model.cid);
             if (!div.offset()) return false;
 
-            divTop = div.offset().top,
-            divLeft = div.offset().left,
-            divRight = divLeft + div.width(),
-            divBottom = divTop + div.height();
+            var divTop    = div.offset().top;
+            var divLeft   = div.offset().left;
+            var divRight  = divLeft + div.width();
+            var divBottom = divTop + div.height();
+
             if (mouseX >= divLeft && mouseX <= divRight && mouseY >= divTop && mouseY <= divBottom) {
                 $('#hover-div').bind('mouseout', function(e) {
                     self.unhovered(e);
@@ -279,7 +280,7 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
             this.editMode = false;
             this.$el.removeClass('textediting');
             var el = $(this.el.firstChild);
-            val = el[0].innerText;
+            var val = el[0].innerText;
             this.model.get('data').set('content', val);
             el.attr('contenteditable', 'false');
             keyDispatcher.textEditing = false;
@@ -313,6 +314,11 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
             if (horizontalGrid == 1 && verticalGrid == 1) {
                 nHeight = (nHeight < 30) ? 30 : nHeight;
                 nWidth = (nWidth < 120) ? 120 : nWidth;
+            }
+            else {
+                if(nWidth + this.model.get('layout').get('left') > 12) {
+                    nWidth = 12 - this.model.get('layout').get('left');
+                }
             }
 
             if (!nHeight) nHeight = 2;

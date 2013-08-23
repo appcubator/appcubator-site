@@ -48,7 +48,7 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
 
     deploy: function() {
       var threeDots = util.threeDots();
-      $('#deploy').find('h4').html('Deploying').append(threeDots.el);
+      $('#deploy').find('h4').html('Publishing').append(threeDots.el);
 
       v1.deploy(function() {
         $('#deploy').find('h4').html('Go To App');

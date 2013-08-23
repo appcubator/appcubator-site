@@ -564,7 +564,7 @@ define([
       offsetLeft+= 20;
       var left = Math.round((e.pageX - offsetLeft)/this.positionHorizontalGrid);
       if(left < 0) left = 0;
-      if(left + 4 > 12) left = 8;
+      if(left + 1 > 12) left = 11;
 
       return left;
     },

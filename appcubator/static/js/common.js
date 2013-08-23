@@ -11,7 +11,6 @@ require.config({
     "util.filepicker" : "./libs/util/util.filepicker",
     "comp": "./libs/util/comp",
     "bootstrap" : "./libs/bootstrap/bootstrap",
-    "key" : "./libs/keymaster/keymaster",
     "answer" : "./libs/answer/answer",
     "prettyCheckable" : "./libs/jquery/prettyCheckable",
     "list" : "./libs/list",
