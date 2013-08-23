@@ -526,11 +526,14 @@ class App(models.Model):
             shutil.rmtree(tmpdir)
         return r
 
+    def delete_deployment(self):
+        r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
+        return r
+
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:
             try:
-                r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
-
+                r = self.delete_deployment()
             except Exception:
                 logger.error("Could not reach appcubator server.")
             else:

@@ -452,7 +452,6 @@ define(function(require, exports, module) {
             $.ajax({
                 type: "GET",
                 url: '/app/' + appId + '/deploy/',
-                data: JSON.stringify(appState),
                 success: function(data) {
                     console.log(data);
                     if(data.done) {
