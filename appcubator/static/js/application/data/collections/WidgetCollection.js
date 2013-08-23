@@ -120,7 +120,7 @@ function(WidgetModel,
 
       createCustomWidget: function(layout) {
         var widget = {};
-        widget.type = "node";
+        widget.type = "custom";
         widget.layout = layout;
 
         widget.data = {};
