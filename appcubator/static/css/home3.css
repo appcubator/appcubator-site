@@ -95,16 +95,19 @@ body {
   border-right: 1px solid #aaa;
 }
 
-.left-panel h1 {
+.large-header h1 {
+  display: inline-block;
+  line-height: 100px;
   font-size: 32px;
-  width: 100%;
-  margin-top: 10px;
+  margin-top: 0px;
   text-align: center;
   font-family: 'verb_regularregular';
   text-shadow: #ddd 0 1px 1px;
+  vertical-align: top;
+  margin-left: 14px;
 }
 
-.left-panel h1 img {
+.large-header h1 img {
   margin-right: 6px;
 }
 
@@ -158,16 +161,24 @@ body {
 */  text-align: center;
 }
 
+.large-header {
+  margin-top: 120px;
+  height: 100px;
+}
+
 .sliding-panel .large-text {
   display: inline-block;
-  color: #fff;
+  color: #0f2d40;
+
+/*  background-color: #0f2d40;
+*/
   font-size: 36px;
   line-height: 48px;
-  margin-top: 160px;
+  margin-top: 20px;
   text-align: center;
   vertical-align: middle;
-  text-shadow: black 0 1px 1px;
-  max-width: 580px;
+/*  text-shadow: black 0 1px 1px;
+*/  max-width: 580px;
   width: 100%;
 }
 
@@ -193,7 +204,6 @@ body {
   background-position: 0 0;
 }
 
-.slide h1,
 .slide h2 {
   font-family: "proxima-nova";
   font-weight: bold;
@@ -206,9 +216,9 @@ body {
 
 
 .three-div {
-  margin: 20px 160px;
+  margin: 60px 160px;
   height: 70px;
-  color: #fff;
+  color: #0f2d40;
 }
 
 .three-div .view {
@@ -216,8 +226,23 @@ body {
   width: 33%;
   height: 70px;
   text-align: center;
+  vertical-align: top;
 }
 
+.three-div .view span {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.navbar {
+  position: fixed;
+  top:0;
+  left: 0;
+  background-color: #0f2d40;
+  height: 56px;
+  width: 100%;
+  z-index: 1;
+}
 
 .slide-intro {
   position: relative;
@@ -229,7 +254,7 @@ body {
   width: 100%;
 /*  background-image: url(/static/img/bg2.jpg);
 */  background-repeat: no-repeat;
-  background-color: #0f2d40;
+  background-color: #fff;
 }
 
 .slide-intro.developer {
