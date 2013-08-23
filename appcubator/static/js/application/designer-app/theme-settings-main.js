@@ -12,8 +12,6 @@ require.config({
     "m-editor" : "./mobile-editor",
     "dicts" : "./dicts",
     "mixins" : "../../mixins",
-    "key" : "../../libs/keymaster/keymaster",
-    "answer" : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
     "list" : "../../libs/list",
     "models" : "../data/models",
