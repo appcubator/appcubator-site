@@ -29,7 +29,7 @@ body {
         <p>Created: {{ d.created_on }}</p>
       </div>
       <textarea id="appstate-{{d.id}}" placeholder="appstate" class="span32 hi15 offset2">{{ d.app_state_json }}</textarea>
-      <input type="submit" class=" deploy btn btn-primary" id="deploy-{{d.id}}"value="Deploy">
+      <input type="submit" class=" deploy btn btn-primary" id="deploy-{{d.id}}" value="Publish">
     </li>
     {% endfor %}
     <li class="container" id="container-X">
@@ -39,7 +39,7 @@ body {
         <p>Created: </p>
       </div>
       <textarea id="appstate-X" placeholder="appstate" class="span32 hi15 offset2"></textarea>
-      <input type="submit" class=" deploy btn btn-primary" id="deploy-x"value="Deploy">
+      <input type="submit" class=" deploy btn btn-primary" id="deploy-x" value="Publish">
     </li>
   </ul>
   <script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery/jquery.js"></script>

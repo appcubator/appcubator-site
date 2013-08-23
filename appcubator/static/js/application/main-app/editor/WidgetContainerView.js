@@ -9,7 +9,7 @@ function( QueryEditorView,
 
   var WidgetContainerView = WidgetView.extend({
     el: null,
-    className: 'container-create',
+    className: 'container-create widget-wrapper',
     tagName : 'div',
     entity: null,
     type: null,

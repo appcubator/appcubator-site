@@ -147,7 +147,7 @@ function( PageModel,
     deploy: function(options) {
       var url = '/app/'+appId+'/deploy/';
       var self = this;
-      util.get('deploy-text').innerHTML = 'Deploying';
+      util.get('deploy-text').innerHTML = 'Publishing';
       var threeDots = util.threeDots();
       util.get('deploy-text').appendChild(threeDots.el);
       

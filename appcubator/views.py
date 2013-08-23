@@ -621,14 +621,6 @@ def app_deploy(request, app_id):
         return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
 
 
-def app_deploy_status(request, app_id):
-    deploy_status = {}
-    deploy_status["message"] = "Yolo"
-    deploy_status["done"]    = random.randint(0, 9) % 5 == 0
-
-    return HttpResponse(simplejson.dumps(deploy_status), status=200, mimetype="application/json")
-
-
 @require_POST
 @csrf_exempt
 def send_hosted_email(request):
