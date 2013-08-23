@@ -73,7 +73,7 @@ function( WidgetView,
       else if(model.get('data').has('container_info') || model.get('data').get('action') == "thirdpartylogin") {
         widget = this.placeContainer(model, isNew);
       }
-      else if(model.get('data').get('nodeType') == 'custom-widget') {
+      else if(model.get('data').get('type') == 'custom') {
         widget = this.placeCustomWidget(model, isNew);
       }
       else {
