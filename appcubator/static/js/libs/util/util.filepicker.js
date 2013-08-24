@@ -1,5 +1,5 @@
 define([
-  //'https://api.filepicker.io/v1/filepicker.js'
+  'https://api.filepicker.io/v1/filepicker.js'
 ],
   function() {
 
