@@ -208,6 +208,8 @@ define(function(require, exports, module) {
             var isDeployed = false;
             var before_deploy = new Date().getTime();
             v1.disableSave = true;
+
+            console.log("YOLO")
             $.ajax({
                 type: "POST",
                 url: '/app/' + appId + '/deploy/',
@@ -461,7 +463,7 @@ define(function(require, exports, module) {
                 url: '/app/' + appId + '/deploy/',
                 success: function(data) {
                     console.log(data);
-                    if(data.done) {
+                    if(data.status == 2) {
                         successCallback.call();
                     }
                     else {
