@@ -51,6 +51,14 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
       return height;
     },
 
+    addToContext: function(tableM) {
+      this.get('url').get('urlparts').push({value: '{{'+ tableM.get('name') + '}}'});
+    },
+
+    hasContext: function(tableM) {
+      return this.doesContainEntityName(tableM.get('name'));
+    },
+
     doesContainEntityName: function(entityName) {
       return _.contains(this.get('url').get('urlparts').pluck('value'), '{{' + entityName + '}}');
     },

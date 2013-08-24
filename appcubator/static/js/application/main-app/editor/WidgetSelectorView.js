@@ -293,7 +293,7 @@ function() {
       e.preventDefault();
     },
 
-    moveSelectedUp: function() {
+    moveSelectedUp: function(e) {
       if(!this.selectedEl) return;
       if(keyDispatcher.textEditing === true) return;
       if(this.selectedEl.getRow() && this.selectedEl.editMode === true) return;
@@ -302,7 +302,7 @@ function() {
       e.preventDefault();
     },
 
-    moveSelectedLeft: function() {
+    moveSelectedLeft: function(e) {
       if(!this.selectedEl) return;
       if(keyDispatcher.textEditing === true) return;
       if(this.selectedEl.getRow() && this.selectedEl.editMode === true) return;
@@ -311,7 +311,7 @@ function() {
       e.preventDefault();
     },
 
-    moveSelectedRight: function() {
+    moveSelectedRight: function(e) {
       if(!this.selectedEl) return;
       if(keyDispatcher.textEditing === true) return;
       if(this.selectedEl.getRow() && this.selectedEl.editMode === true) return;

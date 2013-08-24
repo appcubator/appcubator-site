@@ -1,8 +1,0 @@
-{
-  "name": "backbone-amd",
-  "version": "0.9.10",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/amdjs/backbone"
-  }
-}

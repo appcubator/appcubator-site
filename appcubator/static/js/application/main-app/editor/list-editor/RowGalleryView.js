@@ -54,6 +54,7 @@ function(EditorGallerySectionView,
 
       this.el.innerHTML += '<div class="bottom-arrow"></div>';
 
+      this.$el.find('li:not(.ui-draggable)').on('click', this.dropped);
       this.$el.find('li:not(.ui-draggable)').draggable({
         cursor: "move",
         cursorAt: { top: 0, left: 0 },
@@ -64,7 +65,6 @@ function(EditorGallerySectionView,
         stop: self.dropped
       });
 
-      //this.$el.find('li').on('click', self.dropped);
       this.switchEditingModeOn();
 
       return this;
@@ -76,8 +76,7 @@ function(EditorGallerySectionView,
       this.uiElemsSection = this.addNewSection('Design Elements');
 
       collection.each(function(element) {
-        if(element.get('className') == "buttons" ||
-           element.get('className') == "textInputs" ||
+        if(element.get('className') == "textInputs" ||
            element.get('className') == "textAreas" ||
            element.get('className') == "dropdowns" ||
            element.get('className') == "imageslider" ||
@@ -123,6 +122,8 @@ function(EditorGallerySectionView,
     },
 
     dropped : function(e, ui) {
+      console.log("DROPPED!");
+
       var left = 0; var top = 1;
       if(e.type != 'click') {
         left = this.findLeft(e, ui);
@@ -174,6 +175,9 @@ function(EditorGallerySectionView,
       var text = elementModel.get('text');
 
       var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
+      console.log(li);
+      console.log("bindclik");
+      $(li).on('click', this.dropped);
     }
   });
 

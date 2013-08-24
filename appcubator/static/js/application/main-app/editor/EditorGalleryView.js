@@ -277,7 +277,7 @@ define([
     },
 
     removeSection: function(sectionView) {
-      sectionView.close()
+      sectionView.close();
       this.sections.splice(this.sections.indexOf(sectionView), 1);
       this.subviews.splice(this.subviews.indexOf(sectionView), 1);
     },
@@ -290,6 +290,9 @@ define([
         left = this.findLeft(e, ui);
         top  = this.findTop(e, ui);
         if(util.isRectangleIntersectElement(e.pageX, e.pageY, e.pageX+80, e.pageY+80, itemGallery)) return;
+      }
+      else {
+        top =  Math.round($('#page').scrollTop() / this.positionVerticalGrid);
       }
 
       var layout = { top: top, left: left };
@@ -535,7 +538,7 @@ define([
       offsetLeft+= 20;
       var left = Math.round((e.pageX - offsetLeft)/this.positionHorizontalGrid);
       if(left < 0) left = 0;
-      if(left + 4 > 12) left = 8;
+      if(left + 1 > 12) left = 11;
 
       return left;
     },

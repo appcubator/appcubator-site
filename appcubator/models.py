@@ -494,7 +494,7 @@ class App(models.Model):
 
             return result
 
-        elif r.status_code == 404:
+        elif r.status_code == 404 or (r.status_code == 502 and requests.get("http://%s/lskdjflskjf/" % settings.DEPLOYMENT_HOSTNAME).status_code == 404):
             assert retry_on_404
             logger.warn("The deployment was not found, so I'm setting deployment id to None")
             self.deployment_id = None
@@ -526,11 +526,14 @@ class App(models.Model):
             shutil.rmtree(tmpdir)
         return r
 
+    def delete_deployment(self):
+        r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
+        return r
+
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:
             try:
-                r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
-
+                r = self.delete_deployment()
             except Exception:
                 logger.error("Could not reach appcubator server.")
             else:

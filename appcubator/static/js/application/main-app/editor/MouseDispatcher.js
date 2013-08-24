@@ -1,7 +1,4 @@
-define([
-  'key'
-],
-function () {
+define([ ], function () {
 
   var MousDispatcher = function() {
     this.isMousedownActive = false;

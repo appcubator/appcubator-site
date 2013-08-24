@@ -7,7 +7,6 @@ require.config({
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "app" : "../",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
-    "answer" : "../../libs/answer/answer",
   },
 
   shim: {

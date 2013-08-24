@@ -196,7 +196,7 @@ function( PageModel,
       if(options.local) url = url + 'local/';
 
       var self = this;
-      util.get('deploy').innerHTML = '<span>Deploying...</span>';
+      util.get('deploy').innerHTML = '<span>Publishing...</span>';
 
       $.ajax(url, {
         type: "POST",

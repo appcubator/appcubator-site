@@ -16,8 +16,6 @@ require.config({
     "m-editor"        : "../main-app/mobile-editor",
     "dicts"           : "../main-app/dicts",
     "mixins"          : "../../mixins",
-    "key"             : "../../libs/keymaster/keymaster",
-    "answer"          : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
     "list"            : "../../libs/list",
     "snap"            : "../../libs/snap.min",
@@ -51,9 +49,6 @@ require.config({
     },
     "bootstrap" : {
       deps: ["jquery"]
-    },
-    "answer" : {
-      deps: ["../../libs/answer/lib/natural", "underscore", "jquery"]
     },
     "snap": {
       exports: "Snap"
