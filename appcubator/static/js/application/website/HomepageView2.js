@@ -69,13 +69,13 @@ function(RequestInviteModalView) {
         }
 
         if (newValue <= 70) {
-          $('.motto').css('opacity', 1 - (newValue/70));
+          $('.white-btn').css('opacity', 1 - (newValue/70));
         }
         else if (newValue > 70) {
-          $('.motto').css('opacity', 0);
+          $('.white-btn').css('opacity', 0);
         }
         else {
-          $('.motto').css('opacity', 1);
+          $('.white-btn').css('opacity', 1);
         }
 
         if (newValue <= 90) {

@@ -162,35 +162,35 @@ body {
 }
 
 .large-header {
+  display: inline-block;
   line-height: 60px;
 }
 
 .blue-bar {
   height: 340px;
   background-color: #0f2d40;
+  padding-top: 70px;
+  text-align: center;
 }
 
 .centered-container {
   margin-right: auto;
   margin-left: auto;
-  width: 960px;
+  width: 1020px;
   display: block;
   position: relative;
 }
 .sliding-panel .large-text {
-  display: inline-block;
+  display: block;
   color: #fff;
-
-/*  background-color: #0f2d40;
-*/
   font-size: 36px;
   line-height: 48px;
   margin-top: 20px;
   text-align: center;
   vertical-align: middle;
   max-width: 580px;
-  width: 100%;
-  margin-top: 120px;
+  margin-left: auto;
+  margin-right: auto;  
 }
 
 .sliding-panel .sub-text {
@@ -209,6 +209,21 @@ body {
   margin-top: 28px;
   font-weight: lighter;
   margin: 28px 300px
+}
+
+.white-btn {
+  display: inline-block;
+  background-color: #fff;
+  color: #0f2d40;
+  font-size: 20px;
+  padding: 14px 20px;
+  border-radius: 8px;
+  line-height: 24px;
+  margin-top: 28px;
+  text-align: center;
+  vertical-align: top;
+  cursor: pointer;
+  text-transform: uppercase;
 }
 
 .sliding-panel .title {
@@ -237,7 +252,7 @@ body {
 .three-div {
   margin-right: auto;
   margin-left: auto;
-  width: 960px;
+  width: 1020px;
   display: block;
   position: relative;
   margin-top: 40px;
@@ -284,6 +299,21 @@ body {
   height: 70px;
   width: 100%;
   z-index: 1;
+}
+
+
+.menu {
+  color: #fff;
+  display: inline-block;
+  vertical-align: top;
+  float: right;
+}
+
+.menu li {
+  display: inline-block;
+  line-height: 70px;
+  vertical-align: top;
+  margin-left: 16px;
 }
 
 .slide-intro {
@@ -507,7 +537,7 @@ body {
 
 .slide-info .screen {
   display: inline-block;
-  width: 400px;
+  width: 360px;
   height: 260px;
   position: relative;
   right: 40px;
@@ -518,6 +548,23 @@ body {
   background-size: auto 100%;
   overflow: hidden;
   float: right;
+}
+
+.slide-info .screen .gif-wrapper {
+  display: inline-block;
+  position: absolute;
+  left: 40px;
+  top: 12px;
+  height: 150px;
+  width: 280px;
+  overflow: hidden;
+}
+
+.gif-wrapper img {
+  max-width: none;
+  width: 300px;
+  margin-left: -10px;
+  margin-top: -8px;
 }
 
 .slide-info .screen .video {
@@ -540,6 +587,11 @@ body {
   text-align: center;
   background-image: url(/static/img/bg4.jpg);
   height: 620px;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .large-container .right-side {
@@ -1183,6 +1235,7 @@ img.logo {
 }
 
 .sliding-panel .large-text {
+  display: block;
   font-size: 32px;
   line-height: 40px;
   margin-top: 180px;
