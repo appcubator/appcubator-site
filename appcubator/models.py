@@ -219,7 +219,8 @@ class App(models.Model):
 
     def update_deployment_info(self):
         # calls method outside of this class
-        r = update_deployment_info(self.deployment_id, self.hostname(), self.gitrepo_name)
+        if self.deployment_id is not None:
+            r = update_deployment_info(self.deployment_id, self.hostname(), self.gitrepo_name)
         return r
 
     def get_deployment_status(self):
