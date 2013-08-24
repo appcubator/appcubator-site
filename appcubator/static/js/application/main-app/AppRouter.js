@@ -444,7 +444,14 @@ define(function(require, exports, module) {
             });
 
             if (this.view.widgetsCollection) {
-                this.view.widgetsCollection.add(this.contents);
+                var coll = this.view.widgetsCollection.add(this.contents);
+                if (this.contents.length == 1) {
+                    coll.last(function(widgetModel){ widgetModel.trigger('selected'); });
+                }
+                else if (this.contents.length > 1) {
+                    var newContents = coll.last(this.contents.length);
+                    this.view.marqueeView.multiSelectorView.setContents(newContents);
+                }
             }
         },
 
