@@ -33,7 +33,7 @@ scope: r_fullprofile r_emailaddress
     <ul class="menu">
       <li>FEATURES</li>
       <li>LOGIN</li>
-      <li>SIGNUP</li>
+      <li id="signup-button">SIGNUP</li>
     </ul>
   </div>
 </div>
@@ -44,14 +44,15 @@ scope: r_fullprofile r_emailaddress
       <div class="large-text">
         The Easiest Way to Build Web Apps
       </div>
-      <div class="white-btn">
-        Start Building
-      </div>
+
 <!--       <div class="motto">
         Focus on what you are good at.
       </div> -->
       <div class="sub-text">
-        Forget about Rails, HTML5, JS, CSS, LAMP, JQuery, FTP, SSH and SQL. No prior experience required. 
+        Appcubator generates applications backed by a full LAMP stack, which you could previously only get by writing HTML, CSS, Javascript, Python (or PHP, or Ruby), and SQL.
+      </div>
+            <div class="white-btn">
+        Start Building
       </div>
     </div>
     <div class="three-div">
@@ -75,11 +76,12 @@ scope: r_fullprofile r_emailaddress
   <div class="slide-info slide">
     <div class="row">
       <div class="centered-container">
-        <h2>Imagine.</h2>
+        <h2>Magic.</h2>
         <ul>
-          <li>Start quickly with a template</li>
-          <li>Get Up and Running Instantly</li>
-          <li>Use Visual Editor for Fast Iteration</li>
+          <li>Build your UI with the WYSIWYG drag and drop editor.</li>
+          <li>Pick a theme to make it look better or create your own theme.</li>
+          <li>Add built-in authentication. Add Facebook, or Twitter integration with one click.</li>
+          <li>Set your Models/Tables, including relations. Quickly create your forms and lists.</li>
         </ul>
         <div class="screen no-bg">
           <div class="gif-wrapper">
@@ -90,12 +92,10 @@ scope: r_fullprofile r_emailaddress
     </div>
     <div class="row">
       <div class="centered-container">
-        <h2>Build.</h2>
-        <ul>
-          <li>Start quickly with a template</li>
-          <li>Get Up and Running Instantly</li>
-          <li>Use Visual Editor for Fast Iteration</li>
-        </ul>
+        <h2>What can you build?</h2>
+        <div>
+          You can build any CRUD application with Appcubator.
+        </div>
         <div class="screen">
           <div class="video" id="video-pane"></div>
         </div>
@@ -105,9 +105,9 @@ scope: r_fullprofile r_emailaddress
       <div class="centered-container">
         <h2>Publish.</h2>
         <ul>
-          <li>Start quickly with a template</li>
-          <li>Get Up and Running Instantly</li>
-          <li>Use Visual Editor for Fast Iteration</li>
+          <li>Press "Publish" and it's live.</li>
+          <li>Deploy anywhere on the web, you changes are live in 10 seconds.</li>
+          <li>Track your site and users through our built-in analytics.</li>
         </ul>
         <div class="screen">
           <div class="video" id="video-pane"></div>
@@ -117,40 +117,43 @@ scope: r_fullprofile r_emailaddress
   </div>
   <div class="slide slide-gallery">
     <div class="row">
-      <h2>Anyone Can Build</h2>
-      <div class="gallery">
-        <ul>
-          <li>
-            <div class="content">
-              <span class="title">T15</span>
-              <div class="screenshot"><img src="{{STATIC_URL}}img/app1.png"></div>
-              <p>A private social network for Tepper MBA students. Built by Moises Morgenstern, an MBA student.</p>
-            </div>
-          </li>
-          <li>
-            <div class="content">
-              <span class="title">Payroll</span>
-              <div class="screenshot"><img src="{{STATIC_URL}}img/app2.png"></div>
-              <p>A payroll management webapp for a tutoring company. Built by Jacob Buckman, a college freshman.</p>
-            </div>
-          </li>
-          <li>
-            <div class="content">
-              <span class="title">StudyCloud</span>
-              <div class="screenshot"><img src="{{STATIC_URL}}img/app3.png"></div>
-              <p>A platform for sharing university study materials. Built by Pooja Rambhia, a medical student.</p>
-            </div>
-          </li>
-        </ul>
+      <div class="centered-container">
+        <h2>Anyone Can Build</h2>
+        <div class="gallery">
+          <ul>
+            <li>
+              <div class="content">
+                <span class="title">T15</span>
+                <div class="screenshot"><img src="{{STATIC_URL}}img/app1.png"></div>
+                <p>A private social network for Tepper MBA students. Built by Moises Morgenstern, an MBA student.</p>
+              </div>
+            </li>
+            <li>
+              <div class="content">
+                <span class="title">Payroll</span>
+                <div class="screenshot"><img src="{{STATIC_URL}}img/app2.png"></div>
+                <p>A payroll management webapp for a tutoring company. Built by Jacob Buckman, a college freshman.</p>
+              </div>
+            </li>
+            <li>
+              <div class="content">
+                <span class="title">StudyCloud</span>
+                <div class="screenshot"><img src="{{STATIC_URL}}img/app3.png"></div>
+                <p>A platform for sharing university study materials. Built by Pooja Rambhia, a medical student.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
   <div class="slide-last">
+    <div class="centered-container">
     <div class="large-container">
         <div class="right-side">
           <ul class="pricing">
-            <div class="btn btn-blue hoff1 request-invite" id="request">Request an Invite</div>
-            <li class="free">
+<!--             <div class="btn btn-blue hoff1 request-invite" id="request">Request an Invite</div>
+ -->            <li class="free">
               <span class="title free">Free forever to build</span>
               <span class="content">
                 <p>It's free to sign up, explore and build your app for as long as you want.</p>
@@ -176,6 +179,7 @@ scope: r_fullprofile r_emailaddress
             </li>
           </ul>
         </div>
+    </div>
     </div>
 
   </div>

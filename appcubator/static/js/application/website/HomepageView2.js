@@ -58,6 +58,8 @@ function(RequestInviteModalView) {
       $(window).on('scroll', function(e) {
         var newValue = $(window).scrollTop();
         console.log(newValue);
+
+        $('.blue-bar').css('padding-top', newValue/2 + 70);
         if (newValue <= 40) {
           $('.large-text').css('opacity', 1 - (newValue/40));
         }
@@ -68,15 +70,15 @@ function(RequestInviteModalView) {
           $('.large-text').css('opacity', 1);
         }
 
-        if (newValue <= 70) {
-          $('.white-btn').css('opacity', 1 - (newValue/70));
-        }
-        else if (newValue > 70) {
-          $('.white-btn').css('opacity', 0);
-        }
-        else {
-          $('.white-btn').css('opacity', 1);
-        }
+        // if (newValue <= 70) {
+        //   $('.white-btn').css('opacity', 1 - (newValue/70));
+        // }
+        // else if (newValue > 70) {
+        //   $('.white-btn').css('opacity', 0);
+        // }
+        // else {
+        //   $('.white-btn').css('opacity', 1);
+        // }
 
         if (newValue <= 90) {
           $('.sub-text').css('opacity', 1 - (newValue/90));
@@ -86,6 +88,13 @@ function(RequestInviteModalView) {
         }
         else {
           $('.sub-text').css('opacity', 1);
+        }
+
+        if(newValue > 270) {
+          $("#signup-button").addClass('highlight');
+        }
+        else {
+          $("#signup-button").removeClass('highlight');
         }
 
       });
