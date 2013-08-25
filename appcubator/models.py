@@ -126,10 +126,13 @@ def get_default_theme_state():
     f.close()
     return s
 
-def clean_subdomain(subdomain):
+def clean_subdomain(subdomain, replace_periods=False):
     toks = subdomain.split('.')
     if len(toks) > 1:
-        subdomain = '.'.join([clean_subdomain(t) for t in toks])
+        if replace_periods:
+            subdomain = '-'.join([clean_subdomain(t) for t in toks if t != ''])
+        else:
+            subdomain = '.'.join([clean_subdomain(t) for t in toks if t != ''])
         subdomain = re.sub(r'\.+', '.', subdomain)
         subdomain = re.sub(r'^\.', '', subdomain)
         subdomain = re.sub(r'\.$', '', subdomain)
@@ -271,7 +274,7 @@ class App(models.Model):
 
     @classmethod
     def provision_gitrepo_name(cls, gitrepo_name):
-        gitrepo_name = clean_subdomain(gitrepo_name)
+        gitrepo_name = clean_subdomain(gitrepo_name, replace_periods=True)
 
         # prevent duplicate gitrepo_names
         while cls.objects.filter(gitrepo_name__iexact=gitrepo_name).exists():
@@ -359,7 +362,7 @@ class App(models.Model):
         # Initial gitrepo name value. gets called on new app.
         if self.gitrepo_name == '':
             self.gitrepo_name = "%s-%s" % (self.owner.username.split('@')[0], self.name)
-        if self.gitrepo_name != clean_subdomain(self.gitrepo_name):
+        if self.gitrepo_name != clean_subdomain(self.gitrepo_name, replace_periods=True):
             self.gitrepo_name = App.provision_gitrepo_name(self.gitrepo_name)
 
     def write_to_tmpdir(self, for_user=False):
