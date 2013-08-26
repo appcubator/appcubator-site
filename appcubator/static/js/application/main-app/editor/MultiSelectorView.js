@@ -25,6 +25,7 @@ function() {
     },
 
     setContents: function(arr) {
+      this.unselectAll();
       this.contents = arr;
       this.selectAll();
     },
@@ -104,6 +105,7 @@ function() {
 
     unselectAll: function() {
       _(this.contents).each(function(widgetModel) {
+        widgetModel.trigger('deselect');
         $('#widget-wrapper-'+widgetModel.cid).removeClass('red-border');
       });
     },

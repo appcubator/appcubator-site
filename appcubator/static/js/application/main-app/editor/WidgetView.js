@@ -16,12 +16,12 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
         positionVerticalGrid: 15,
 
         events: {
-            'click': 'select',
-            'click .delete': 'remove',
-            'mouseover': 'hovered',
-            'mouseout': 'unhovered',
-            'mousedown': 'mousedown',
-            'mouseup': 'mouseup'
+            'click'         : 'select',
+            'click .delete' : 'remove',
+            'mouseover'     : 'hovered',
+            'mouseout'      : 'unhovered',
+            'mousedown'     : 'mousedown',
+            'mouseup'       : 'mouseup'
         },
 
         initialize: function(widgetModel) {

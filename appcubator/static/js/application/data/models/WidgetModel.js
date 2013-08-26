@@ -1,190 +1,186 @@
-define(
-[
-  'models/DataModel',
-  'models/LayoutModel',
-  'dicts/constant-containers'
-],
+define(['models/DataModel', 'models/LayoutModel','dicts/constant-containers'],
 function(DataModel, LayoutModel) {
+    'use strict';
 
-  var WidgetModel = Backbone.Model.extend({
-    selected: false,
-    editMode: false,
+    var WidgetModel = Backbone.Model.extend({
+        selected: false,
+        editMode: false,
 
-    initialize: function(bone, isNew) {
-      this.set('type', bone.type||'');
-      this.set('layout', new LayoutModel(this.get('layout')));
-      this.set('data', new DataModel(bone.data||{}, isNew));
+        initialize: function(bone, isNew) {
+            this.set('type', bone.type || '');
+            this.set('layout', new LayoutModel(this.get('layout')));
+            this.set('data', new DataModel(bone.data || {}, isNew));
 
-      this.set('context', new Backbone.Collection(bone.context|| []));
+            this.set('context', new Backbone.Collection(bone.context || []));
 
-      this.bind('editModeOn', function() {
-        this.editMode = true;
-      }, this);
-      this.bind('editModeOff', function() {
-        this.editMode = false;
-      }, this);
-    },
+            this.bind('editModeOn', function() {
+                this.editMode = true;
+            }, this);
+            this.bind('editModeOff', function() {
+                this.editMode = false;
+            }, this);
+        },
 
-    remove :function() {
-      if(this.get('deletable') === false) return;
-      if(this.collection) {
-        this.collection.remove(this);
-      }
-    },
+        remove: function() {
+            if (this.get('deletable') === false) return;
+            if (this.collection) {
+                this.collection.remove(this);
+            }
+        },
 
-    isFullWidth: function() {
-      return this.get('layout').get('isFull') === true;
-    },
+        isFullWidth: function() {
+            return this.get('layout').get('isFull') === true;
+        },
 
-    moveLeft: function() {
-      if(this.isFullWidth()) return;
+        moveLeft: function() {
+            if (this.isFullWidth()) return;
 
-      if(this.get('layout').get('left') < 1 || this.collection.editMode) return;
-      this.get('layout').set('left', this.get('layout').get('left') - 1);
-    },
+            if (this.get('layout').get('left') < 1 || this.collection.editMode) return;
+            this.get('layout').set('left', this.get('layout').get('left') - 1);
+        },
 
-    moveRight: function() {
-      if(this.isFullWidth()) return;
+        moveRight: function() {
+            if (this.isFullWidth()) return;
 
-      if(this.get('layout').get('left') + this.get('layout').get('width') > 11) return;
-      this.get('layout').set('left', this.get('layout').get('left') + 1);
-    },
+            if (this.get('layout').get('left') + this.get('layout').get('width') > 11) return;
+            this.get('layout').set('left', this.get('layout').get('left') + 1);
+        },
 
-    moveUp: function() {
-      if(this.get('layout').get('top') < 1 || this.collection.editMode) return;
-      this.get('layout').set('top', this.get('layout').get('top') - 1);
-    },
+        moveUp: function() {
+            if (this.get('layout').get('top') < 1 || this.collection.editMode) return;
+            this.get('layout').set('top', this.get('layout').get('top') - 1);
+        },
 
-    moveDown: function() {
-      if(this.collection.editMode) return;
-      this.get('layout').set('top', this.get('layout').get('top') + 1);
-    },
+        moveDown: function() {
+            if (this.collection.editMode) return;
+            this.get('layout').set('top', this.get('layout').get('top') + 1);
+        },
 
-    setupPageContext: function(pageModel) {
-      var entityList = pageModel.getContextEntities();
-      var contextList = this.get('context');
+        setupPageContext: function(pageModel) {
+            var entityList = pageModel.getContextEntities();
+            var contextList = this.get('context');
 
-      _(entityList).each(function(entity) {
-        contextList.push({
-          entity: entity,
-          context: 'Page.' + entity
-        });
-      });
+            _(entityList).each(function(entity) {
+                contextList.push({
+                    entity: entity,
+                    context: 'Page.' + entity
+                });
+            });
 
-      return this;
-    },
+            return this;
+        },
 
-    setupLoopContext: function(entityModel) {
-      this.get('context').push({
-        entity: entityModel.get('name'),
-        context: 'loop.' + entityModel.get('name')
-      });
-      return this;
-    },
+        setupLoopContext: function(entityModel) {
+            this.get('context').push({
+                entity: entityModel.get('name'),
+                context: 'loop.' + entityModel.get('name')
+            });
+            return this;
+        },
 
-    getListOfPages: function() {
-      var pagesCollection = v1State.get('pages');
-      var listOfLinks = [];
+        getListOfPages: function() {
+            var pagesCollection = v1State.get('pages');
+            var listOfLinks = [];
 
-      _(pagesCollection.getContextFreePages()).each(function(page) {
-        listOfLinks.push({
-          name: page,
-          val: "internal://" + page
-        });
-      });
-
-
-      this.get('context').each(function(context) {
-        var listOfPages = v1State.get('pages').getPagesWithEntityName(context.get('entity'));
-        _(listOfPages).each(function(pageName) {
-          listOfLinks.push({
-            name: pageName,
-            val: "internal://" + pageName + '/?' + context.get('entity') + '=' + context.get('context')
-          });
-        });
-      });
-
-      listOfLinks.push({
-        name: 'External Link',
-        val: "External Link"
-      });
-
-      return listOfLinks;
-    },
-
-    getAction:function() {
-      if(this.get('data').has('container_info')) return this.get('data').get('container_info').get('action');
-      else return this.get('data').get('action');
-
-      return;
-    },
-
-    getRow: function() {
-      if(!this.get('data').has('container_info')) return null;
-      return this.get('data').get('container_info').get('row');
-    },
-
-    getContent: function() {
-      return this.get('data').get('content');
-    },
-
-    getForm: function() {
-      if(!this.get('data').has('container_info')) return null;
-      return this.get('data').get('container_info').get('form');
-    },
-
-    hasForm: function() {
-      if(this.get('data').has('container_info') &&
-         this.get('data').get('container_info').has('form')) return true;
-      return false;
-    },
-
-    getLoginRoutes: function() {
-
-      if(this.get('data').has('loginRoutes')) {
-        return this.get('data').get('loginRoutes');
-      }
-
-      if(this.get('data').has('container_info') &&
-        this.get('data').get('container_info').has('form')) {
-        return this.get('data').get('container_info').get('form').get('loginRoutes');
-      }
-
-      return null;
-    },
+            _(pagesCollection.getContextFreePages()).each(function(page) {
+                listOfLinks.push({
+                    name: page,
+                    val: "internal://" + page
+                });
+            });
 
 
-    getSearchQuery: function () {
-      return this.get('data').get('searchQuery');
-    },
+            this.get('context').each(function(context) {
+                var listOfPages = v1State.get('pages').getPagesWithEntityName(context.get('entity'));
+                _(listOfPages).each(function(pageName) {
+                    listOfLinks.push({
+                        name: pageName,
+                        val: "internal://" + pageName + '/?' + context.get('entity') + '=' + context.get('context')
+                    });
+                });
+            });
 
-    isBgElement: function() {
-      if( (this.get('type') == "node" && this.get('data').get('nodeType') == "boxes") ||
-          (this.get('type') == "imageslider")) return true;
-      return false;
-    },
+            listOfLinks.push({
+                name: 'External Link',
+                val: "External Link"
+            });
 
-    isList: function() {
-      if(this.get('type') == "loop") return true;
-      return false;
-    },
+            return listOfLinks;
+        },
 
-    isCustomWidget: function() {
-      if(this.get('data').has('cssC') ||
-         this.get('data').has('jsC')  ||
-         this.get('data').has('htmlC')) return true;
-    },
+        getAction: function() {
+            if (this.get('data').has('container_info')) return this.get('data').get('container_info').get('action');
+            else return this.get('data').get('action');
 
-    toJSON : function() {
-      var json = _.clone(this.attributes);
-      json = _.omit(json, 'selected', 'deletable', 'context');
+            return;
+        },
 
-      json.data = this.get('data').toJSON();
-      json.layout  = this.get('layout').toJSON();
-      if(json.context) delete json.context;
-      return json;
-    }
-  });
+        getRow: function() {
+            if (!this.get('data').has('container_info')) return null;
+            return this.get('data').get('container_info').get('row');
+        },
 
-  return WidgetModel;
+        getContent: function() {
+            return this.get('data').get('content');
+        },
+
+        getForm: function() {
+            if (!this.get('data').has('container_info')) return null;
+            return this.get('data').get('container_info').get('form');
+        },
+
+        hasForm: function() {
+            if (this.get('data').has('container_info') &&
+                this.get('data').get('container_info').has('form')) return true;
+                return false;
+        },
+
+        getLoginRoutes: function() {
+
+            if (this.get('data').has('loginRoutes')) {
+                return this.get('data').get('loginRoutes');
+            }
+
+            if (this.get('data').has('container_info') &&
+                this.get('data').get('container_info').has('form')) {
+                return this.get('data').get('container_info').get('form').get('loginRoutes');
+            }
+
+            return null;
+        },
+
+
+        getSearchQuery: function() {
+            return this.get('data').get('searchQuery');
+        },
+
+        isBgElement: function() {
+            if ((this.get('type') == "node" && this.get('data').get('nodeType') == "boxes") ||
+                (this.get('type') == "imageslider")) return true;
+                return false;
+        },
+
+        isList: function() {
+            if (this.get('type') == "loop") return true;
+            return false;
+        },
+
+        isCustomWidget: function() {
+            if (this.get('data').has('cssC') ||
+                this.get('data').has('jsC') ||
+                this.get('data').has('htmlC')) return true;
+        },
+
+        toJSON: function() {
+            var json = _.clone(this.attributes);
+            json = _.omit(json, 'selected', 'deletable', 'context');
+
+            json.data = this.get('data').toJSON();
+            json.layout = this.get('layout').toJSON();
+            if (json.context) delete json.context;
+            return json;
+        }
+    });
+
+    return WidgetModel;
 });
