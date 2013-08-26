@@ -82,6 +82,15 @@ def homepage(request):
 
 
 @require_GET
+def homepage_new(request):
+
+    page_context = {}
+    page_context["title"] = "Homepage"
+
+    return render(request, 'website-home-new.html', page_context)
+
+
+@require_GET
 def developer_homepage(request):
     page_context = {}
     page_context["title"] = "Homepage"
