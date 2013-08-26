@@ -4,6 +4,7 @@ define([
   'editor/ImageSliderEditorView',
   'editor/WidgetClassPickerView',
   'editor/SearchEditorView',
+  'editor/FacebookShareEditor',
   'editor/list-editor/RowGalleryView',
   'editor/form-editor/FormEditorView',
   'editor/form-editor/LoginFormEditorView',
@@ -17,6 +18,7 @@ function(WidgetContentEditor,
          ImageSliderEditorView,
          WidgetClassPickerView,
          SearchEditorView,
+         FacebookShareEditor,
          RowGalleryView,
          FormEditorView,
          LoginFormEditorView,
@@ -39,6 +41,7 @@ function(WidgetContentEditor,
       'click .pick-style'         : 'openStylePicker',
       'click .search-editor-btn'  : 'openSearchEditor',
       'click .edit-login-form-btn': 'openLoginEditor',
+      'click .link-to-page-button': 'openFBShareEditor',
       'click .done-editing'       : 'closeEditingMode',
       'click .delete-button'      : 'clickedDelete',
       'click .done-text-editing'  : 'clickedDoneTextEditing',
@@ -107,6 +110,10 @@ function(WidgetContentEditor,
 
         if(action == "imageslider") {
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-slides-button', 'Edit Slides'));
+        }
+
+        if(action == "facebookshare") {
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('link-to-page-button', 'Link to A Facebook Page'));
         }
 
         if(action == "table") {
@@ -241,6 +248,10 @@ function(WidgetContentEditor,
 
     openSlideEditor: function() {
       new ImageSliderEditorView(this.model);
+    },
+
+    openFBShareEditor: function() {
+      new FacebookShareEditor(this.model);
     },
 
     openQueryEditor: function() {
