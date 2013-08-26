@@ -2,7 +2,6 @@ require.config({
   paths: {
     "jquery" : "../../libs/jquery/jquery",
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
-    "jquery.filedrop" : "../../libs/jquery/jquery.filedrop",
     "jquery.hotkeys" : "../../libs/jquery/jquery.hotkeys",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
@@ -16,10 +15,9 @@ require.config({
     "dicts" : "../main-app/dicts",
     "mixins" : "../../mixins",
     "key" : "../../libs/keymaster/keymaster",
-    "answer" : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
     "tourist": "../../libs/tourist.min",
-    "tourist-omer": "../../libs/touris-omer",
+    "tourist-omer": "../../libs/tourist-omer",
     "list" : "../../libs/list",
     "models" : "../data/models",
     "collections" : "../data/collections",
@@ -43,9 +41,6 @@ require.config({
     },
     "bootstrap" : {
       deps: ["jquery"]
-    },
-    "answer" : {
-      deps: ["../../libs/answer/lib/natural", "underscore", "jquery"]
     },
     "tourist": {
       exports: "Tourist",

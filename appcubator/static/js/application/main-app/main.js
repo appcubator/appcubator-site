@@ -2,7 +2,6 @@ require.config({
   paths: {
     "jquery"          : "../../libs/jquery/jquery",
     "jquery-ui"       : "../../libs/jquery-ui/jquery-ui",
-    "jquery.filedrop" : "../../libs/jquery/jquery.filedrop",
     "jquery.hotkeys"  : "../../libs/jquery/jquery.hotkeys",
     "underscore"      : "../../libs/underscore-amd/underscore",
     "backbone"        : "../../libs/backbone-amd/backbone",
