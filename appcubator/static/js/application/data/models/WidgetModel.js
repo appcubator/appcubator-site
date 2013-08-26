@@ -42,7 +42,8 @@ function(DataModel, LayoutModel) {
         moveRight: function() {
             if (this.isFullWidth()) return;
 
-            if (this.get('layout').get('left') + this.get('layout').get('width') > 11) return;
+            var maxWidth = this.collection.grid.maxWidth;
+            if (maxWidth && this.get('layout').get('left') + this.get('layout').get('width') > (maxWidth - 1)) return;
             this.get('layout').set('left', this.get('layout').get('left') + 1);
         },
 

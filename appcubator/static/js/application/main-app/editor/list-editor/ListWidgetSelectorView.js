@@ -1,14 +1,18 @@
 define([
+  'editor/WidgetSelectorView',
   'mixins/BackboneUI',
   'util'
 ],
-function() {
+function(WidgetSelectorView) {
 
-  var ListWidgetSelectorView = Backbone.UIView.extend({
+  var ListWidgetSelectorView = WidgetSelectorView.extend({
     className : 'editor-list',
     tagName : 'div',
     selectedEl : null,
     isMobile : false,
+
+    positionHorizontalGrid : 1,
+    positionVerticalGrid   : 1,
 
     events : {
       'click #list-hover-div'     : 'hoverClicked',
@@ -242,30 +246,30 @@ function() {
       this.hideNode(this.hoverDiv);
     },
 
-    moveSelectedDown: function(e) {
-      if(!this.selectedEl) return;
-      if(keyDispatcher.textEditing === true) return;
-      this.selectedEl.moveDown();
-    },
+    // moveSelectedDown: function(e) {
+    //   if(!this.selectedEl) return;
+    //   if(keyDispatcher.textEditing === true) return;
+    //   this.selectedEl.moveDown();
+    // },
 
-    moveSelectedUp: function() {
-      if(!this.selectedEl) return;
-      if(keyDispatcher.textEditing === true) return;
-      this.selectedEl.moveUp();
-    },
+    // moveSelectedUp: function() {
+    //   if(!this.selectedEl) return;
+    //   if(keyDispatcher.textEditing === true) return;
+    //   this.selectedEl.moveUp();
+    // },
 
-    moveSelectedLeft: function() {
-      if(!this.selectedEl) return;
-      if(keyDispatcher.textEditing === true) return;
-      this.selectedEl.moveLeft();
-    },
+    // moveSelectedLeft: function() {
+    //   if(!this.selectedEl) return;
+    //   if(keyDispatcher.textEditing === true) return;
+    //   this.selectedEl.moveLeft();
+    // },
 
-    moveSelectedRight: function() {
-      if(!this.selectedEl) return;
-      if(keyDispatcher.textEditing === true) return;
+    // moveSelectedRight: function() {
+    //   if(!this.selectedEl) return;
+    //   if(keyDispatcher.textEditing === true) return;
 
-      this.selectedEl.moveRight();
-    },
+    //   this.selectedEl.moveRight();
+    // },
 
     deleteSelected: function(e) {
       if(!this.selectedEl) return;

@@ -34,7 +34,11 @@ define([
 
       initialize   : function(widgetsCollection) {
        _.bindAll(this);
+       
        this.widgetsCollection = widgetsCollection;
+       this.widgetsCollection.grid = {};
+       this.widgetsCollection.grid.maxWidth = 12;
+
        this.sections = [];
        this.subviews = [];
      },

@@ -33,7 +33,12 @@ function(EditorGallerySectionView,
 
       this.entity = entityModel;
       this.row = rowModel;
+
+      /* Setting up the row collection */
       this.widgetsCollection = rowModel.get('uielements');
+      this.widgetsCollection.grid = {};
+      this.widgetsCollection.grid.maxWidth = null;
+
       this.editorContext = "loop";
       this.allList = this.el;
       this.location = location;
@@ -122,8 +127,6 @@ function(EditorGallerySectionView,
     },
 
     dropped : function(e, ui) {
-      console.log("DROPPED!");
-
       var left = 0; var top = 1;
       if(e.type != 'click') {
         left = this.findLeft(e, ui);
@@ -175,8 +178,6 @@ function(EditorGallerySectionView,
       var text = elementModel.get('text');
 
       var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
-      console.log(li);
-      console.log("bindclik");
       $(li).on('click', this.dropped);
     }
   });
