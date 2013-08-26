@@ -75,6 +75,9 @@ function( WidgetView ) {
       if(this.model.get('data').get('htmlC')) {
         this.el.innerHTML = this.model.get('data').get('htmlC');
       }
+      else {
+        this.el.innerHTML = '<div class="custom-text-field">CUSTOM WIDGET</div>';
+      }
     },
 
     placeJS: function() {
