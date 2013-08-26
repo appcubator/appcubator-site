@@ -124,6 +124,7 @@ def app_new(request, is_racoon = False):
             s['name'] = app.name
             app.state = s
             app.save()
+            app.deploy() # this adds it to the deployment queue. non-blocking basically.
             if is_racoon:
                 return redirect(app_new_racoon, app.id)
             else:
@@ -684,7 +685,7 @@ def sub_register_domain(request, app_id, subdomain):
     if form.is_valid():
         # the below line calls the model's save method, which will update deployment server automatically.
         app = form.save(state_version=False)
-        return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+        return HttpResponse(simplejson.dumps({}), status=200, mimetype="application/json")
 
     return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")
 
