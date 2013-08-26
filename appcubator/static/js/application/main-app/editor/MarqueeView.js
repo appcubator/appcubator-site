@@ -117,6 +117,7 @@ function(WidgetEditorView,
 
       this.currentPage.get('uielements').each(function(widget){
         var elem = document.getElementById('widget-wrapper-'+ widget.cid);
+        console.log(Xorigin, Yorigin, Xcor, Ycor);
         if(util.isRectangleIntersectElement(Xorigin, Yorigin, Xcor, Ycor, elem)) {
           $(elem).addClass('red-border');
         }
