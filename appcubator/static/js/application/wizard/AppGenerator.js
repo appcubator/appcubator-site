@@ -120,16 +120,16 @@ function(AppModel,
 
         var layout = {left : hasImageElements*3 + 2, top: nmrElements*3 + 12, height: 3, width: 5};
         var content_ops = {};
-        content_ops.content =  '{{loop.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
+        content_ops.content =  '{{page.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
 
         if(displayType == "links") {
           content_ops.content = 'Download '+fieldModel.get('name');
-          content_ops.href = '{{loop.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
+          content_ops.href = '{{page.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
         }
 
         if(displayType == "images") {
           layout = {left : 2, top: nmrImageElements*9 + 12, height: 9, width: 2};
-          content_ops.src_content = '{{loop.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
+          content_ops.src_content = '{{page.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
           nmrImageElements++;
         }
         else {
