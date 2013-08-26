@@ -1,6 +1,5 @@
 define([
   './RequestInviteModalView',
-  'answer',
   'backbone',
   'util'
 ],

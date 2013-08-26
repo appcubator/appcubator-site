@@ -20,7 +20,6 @@ require.config({
     "mixins" : "../../mixins",
     "key" : "../../libs/keymaster/keymaster",
     "mousetrap" : "../../libs/mousetrap.min",
-    "answer" : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
     "list" : "../../libs/list",
     "snap" : "../../libs/snap.min",
@@ -50,7 +49,6 @@ require([
   './HomepageView2',
   './DeveloperpageView',
   'backbone',
-  'answer',
   'util',
   'prettyCheckable',
   'mixins/BackboneConvenience'
@@ -61,7 +59,7 @@ function(HomepageView, DeveloperpageView) {
 
     routes: {
       "/"                              : "homepage",
-      "home/"                         : "homepage",
+      "beta/"                          : "homepage",
       "developer/"                     : "developerpage",
     },
 

@@ -1,6 +1,5 @@
 define([
   './SignupModalView',
-  'answer',
   'backbone',
   'util'
 ],

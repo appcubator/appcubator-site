@@ -26,7 +26,6 @@ require.config({
 
 require([
   'backbone',
-  'answer',
   './TutorialDict',
   'util'
 ],

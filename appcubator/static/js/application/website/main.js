@@ -4,7 +4,6 @@ require.config({
   paths: {
     "jquery" : "../../libs/jquery/jquery",
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
-    "jquery.filedrop" : "../../libs/jquery/jquery.filedrop",
     "jquery.hotkeys" : "../../libs/jquery/jquery.hotkeys",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
@@ -20,7 +19,6 @@ require.config({
     "mixins" : "../../mixins",
     "key" : "../../libs/keymaster/keymaster",
     "mousetrap" : "../../libs/mousetrap.min",
-    "answer" : "../../libs/answer/answer",
     "prettyCheckable" : "../../libs/jquery/prettyCheckable",
     "list" : "../../libs/list",
     "snap" : "../../libs/snap.min",
@@ -50,7 +48,6 @@ require([
   './HomepageView',
   './DeveloperpageView',
   'backbone',
-  'answer',
   'util',
   'prettyCheckable',
   'mixins/BackboneConvenience'
