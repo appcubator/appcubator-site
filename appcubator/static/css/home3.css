@@ -51,7 +51,7 @@ h6 {
 }
 
 body {
-  background-color: #fff;
+  background-color: #e0e2e3;
 /*  background-image: url(../img/noisy.png);
 */  font-size: 16px;
   line-height: 22px;
@@ -344,7 +344,6 @@ body {
   width: 100%;
 /*  background-image: url(/static/img/bg2.jpg);
 */  background-repeat: no-repeat;
-  background-color: #fff;
 }
 
 .slide-intro.developer {
@@ -365,9 +364,13 @@ body {
   background-color: #e0e2e3;
   display: block;
   text-align: left;
-  border-bottom: 1px solid #0f2d40;
-  border-top: 2px solid #0f2d40;
+/*  border-bottom: 1px solid #0f2d40;
+  border-top: 2px solid #0f2d40;*/
+}
+
+.row .centered-container {
   padding-top: 30px;
+  border-top: 2px solid #0f2d40;;
 }
 
 .row .info {
