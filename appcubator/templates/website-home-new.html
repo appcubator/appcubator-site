@@ -44,10 +44,6 @@ scope: r_fullprofile r_emailaddress
       <div class="large-text">
         The Easiest Way to Build Web Apps
       </div>
-
-<!--       <div class="motto">
-        Focus on what you are good at.
-      </div> -->
       <div class="sub-text">
         Appcubator generates applications backed by a full LAMP stack, which you could previously only get by writing HTML, CSS, Javascript, Python (or PHP, or Ruby), and SQL.
       </div>
@@ -76,13 +72,15 @@ scope: r_fullprofile r_emailaddress
   <div class="slide-info slide">
     <div class="row">
       <div class="centered-container">
-        <h2>Magic.</h2>
-        <ul>
-          <li>Build your UI with the WYSIWYG drag and drop editor.</li>
-          <li>Pick a theme to make it look better or create your own theme.</li>
-          <li>Add built-in authentication. Add Facebook, or Twitter integration with one click.</li>
-          <li>Set your Models/Tables, including relations. Quickly create your forms and lists.</li>
-        </ul>
+        <div class="info">
+          <h2>What is this?</h2>
+          <ul>
+            <li>Build your UI with the WYSIWYG drag and drop editor.</li>
+            <li>Pick a theme to make it look better or create your own theme.</li>
+            <li>Add built-in authentication. Add Facebook, or Twitter integration with one click.</li>
+            <li>Set your Models/Tables, including relations. Quickly create your forms and lists.</li>
+          </ul>
+        </div>
         <div class="screen no-bg">
           <div class="gif-wrapper">
           <img src="{{ STATIC_URL }}img/imagine2.gif">
@@ -92,9 +90,11 @@ scope: r_fullprofile r_emailaddress
     </div>
     <div class="row">
       <div class="centered-container">
-        <h2>What can you build?</h2>
-        <div>
-          You can build any CRUD application with Appcubator.
+        <div class="info">
+          <h2>What can you build?</h2>
+          <div>
+            You can build any CRUD application with Appcubator.
+          </div>
         </div>
         <div class="screen">
           <div class="video" id="video-pane"></div>
@@ -103,12 +103,18 @@ scope: r_fullprofile r_emailaddress
     </div>
     <div class="row">
       <div class="centered-container">
-        <h2>Publish.</h2>
-        <ul>
-          <li>Press "Publish" and it's live.</li>
-          <li>Deploy anywhere on the web, you changes are live in 10 seconds.</li>
-          <li>Track your site and users through our built-in analytics.</li>
-        </ul>
+        <div class="info">
+          <h2>What happens after that?</h2>
+          <ul>
+            <li>Press "Publish" and it's live.</li>
+            <li>instantly hosted at appcubator.com</li>
+            <li>hook it up to a custom domain</li>
+            <li>download your code</li>
+<!--             <li>clone the git repo</li>
+ -->        <li>write custom code</li>
+            <li>host here or anywhere</li>
+          </ul>
+        </div>
         <div class="screen">
           <div class="video" id="video-pane"></div>
         </div>
@@ -149,37 +155,44 @@ scope: r_fullprofile r_emailaddress
   </div>
   <div class="slide-last">
     <div class="centered-container">
-    <div class="large-container">
-        <div class="right-side">
-          <ul class="pricing">
-<!--             <div class="btn btn-blue hoff1 request-invite" id="request">Request an Invite</div>
- -->            <li class="free">
-              <span class="title free">Free forever to build</span>
-              <span class="content">
-                <p>It's free to sign up, explore and build your app for as long as you want.</p>
-                <p class="includes"> Includes 24 hour support, unlimited *.appcubator.com domains, design themes and service integrations.</p>
-              </span>
-              <span class="price">Free</span>
-            </li>
-            <li class="mobile">
-              <span class="title">Production</span>
-              <span class="content">
-                <p>For when you are ready to deploy your app to customers.</p>
-                <p class="includes"> Includes custom domain and branding, analytics to your site, more scalable infrastructure, and a free domain as well as everything on the free plan.</p>
-              </span>
-              <span class="price"><i class="small">$</i>35<i class="small">/mo</i></span>
-            </li>
-            <li class="session">
-              <span class="title">Head Start</span>
-              <span class="content">
-                <p>Short on time? We are happy to help. You can set up a 2 hour video call with someone from our team where we will build  your application and teach you how to use Appcubator for further iterations.</p>
-                <p class="includes"> Includes ~2 hours private video call or Skype session with someone from Appcubator team.</p>
-              </span>
-              <span class="price"><i class="small">$</i>480</span>
-            </li>
-          </ul>
-        </div>
-    </div>
+      <div class="large-container">
+          <div class="right-side">
+            <ul class="pricing">
+<li class="free">
+                <span class="title free">Free forever to build</span>
+                <span class="content">
+                  <p>It's free to sign up, explore and build your app for as long as you want.</p>
+                  <p class="includes"> Includes 24 hour support, unlimited *.appcubator.com domains, design themes and service integrations.</p>
+                </span>
+                <span class="price">Free</span>
+              </li>
+              <li class="mobile">
+                <span class="title">Production</span>
+                <span class="content">
+                  <p>For when you are ready to deploy your app to customers.</p>
+                  <p class="includes"> Includes custom domain and branding, analytics to your site, more scalable infrastructure, and a free domain as well as everything on the free plan.</p>
+                </span>
+                <span class="price"><i class="small">$</i>35<i class="small">/mo</i></span>
+              </li>
+              <li class="session">
+                <span class="title">Head Start</span>
+                <span class="content">
+                  <p>Short on time? We are happy to help. You can set up a 2 hour video call with someone from our team where we will build  your application and teach you how to use Appcubator for further iterations.</p>
+                  <p class="includes"> Includes ~2 hours private video call or Skype session with someone from Appcubator team.</p>
+                </span>
+                <span class="price"><i class="small">$</i>480</span>
+              </li>
+            </ul>
+          </div>
+      </div>
+      <div class="right-container">
+        <div class="btn btn-blue hoff1 request-invite" id="request">Request an Invite</div>
+        <ul>
+          <li>Why should you use it if you are an experienced developer?</li>
+          <li>See More Educational Resources</li>
+          <li>Read About Our Community</li>
+        </ul>        
+      </div>
     </div>
 
   </div>

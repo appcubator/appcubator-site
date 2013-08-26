@@ -51,51 +51,31 @@ function(RequestInviteModalView) {
       var galleryHeight = $('.slide-gallery').offset().top + 40;
       var signupHeight = $('.slide-last').offset().top - 40;
 
-      var $slideIntro = $('.slide-intro');
-      var $slideInfo = $('.slide-info');
-      var $slideLast = $('.slide-last');
+      var $blueBar     = $('.blue-bar');
+      var $whiteButton = $('.white-btn');
+      var $largeText   = $('.large-text');
+      var $subText     = $('.sub-text');
 
       $(window).on('scroll', function(e) {
         var newValue = $(window).scrollTop();
         console.log(newValue);
 
-        $('.blue-bar').css('padding-top', newValue/2 + 70);
-        if (newValue <= 40) {
-          $('.large-text').css('opacity', 1 - (newValue/40));
-        }
-        else if (newValue > 40) {
-          $('.large-text').css('opacity', 0);
-        }
-        else {
-          $('.large-text').css('opacity', 1);
-        }
+        $blueBar.css('padding-top', newValue/2 + 70);
+        
+        if (newValue <= 40) { $largeText.css('opacity', 1 - (newValue/40)); }
+        else if (newValue > 40) { $largeText.css('opacity', 0); }
+        else { $largeText.css('opacity', 1); }
 
-        // if (newValue <= 70) {
-        //   $('.white-btn').css('opacity', 1 - (newValue/70));
-        // }
-        // else if (newValue > 70) {
-        //   $('.white-btn').css('opacity', 0);
-        // }
-        // else {
-        //   $('.white-btn').css('opacity', 1);
-        // }
+        if (newValue <= 70) { $subText.css('opacity', 1 - (newValue/70)); }
+        else if (newValue > 70) { $subText.css('opacity', 0); }
+        else { $subText.css('opacity', 1); }
 
-        if (newValue <= 90) {
-          $('.sub-text').css('opacity', 1 - (newValue/90));
-        }
-        else if (newValue > 90) {
-          $('.sub-text').css('opacity', 0);
-        }
-        else {
-          $('.sub-text').css('opacity', 1);
-        }
+        if (newValue <= 90) { $whiteButton.css('opacity', 1 - (newValue/90)); }
+        else if (newValue > 90) { $whiteButton.css('opacity', 0); }
+        else { $whiteButton.css('opacity', 1); }
 
-        if(newValue > 270) {
-          $("#signup-button").addClass('highlight');
-        }
-        else {
-          $("#signup-button").removeClass('highlight');
-        }
+        if(newValue > 270) { $("#signup-button").addClass('highlight'); }
+        else { $("#signup-button").removeClass('highlight'); }
 
       });
     },
