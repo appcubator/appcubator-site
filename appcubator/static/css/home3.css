@@ -180,6 +180,7 @@ body {
   width: 100%;
   display: block;
   position: relative;
+  text-align: left;
 }
 .sliding-panel .large-text {
   display: block;

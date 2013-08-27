@@ -91,6 +91,14 @@ def homepage_new(request):
 
 
 @require_GET
+def community_page(request):
+
+    page_context = {}
+    page_context["title"] = "Community"
+
+    return render(request, 'website-community.html', page_context)
+
+@require_GET
 def developer_homepage(request):
     page_context = {}
     page_context["title"] = "Homepage"
