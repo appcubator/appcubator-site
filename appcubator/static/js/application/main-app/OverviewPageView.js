@@ -46,16 +46,6 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
       }
     },
 
-    deploy: function() {
-      var threeDots = util.threeDots();
-      $('#deploy').find('h4').html('Publishing').append(threeDots.el);
-
-      v1.deploy(function() {
-        $('#deploy').find('h4').html('Go To App');
-        clearInterval(threeDots.timer);
-      });
-    },
-
     share: function() {
       new ShareModalView();
     },
