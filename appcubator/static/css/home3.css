@@ -605,7 +605,7 @@ body {
 
 .large-container .right-side {
   position: relative;
-  padding: 20px;
+  padding: 30px;
 }
 
 .slide-last .sign-up-form {
@@ -688,7 +688,7 @@ body {
 .pricing .content {
   display: inline-block;
   vertical-align: top;
-  margin-right: 80px;
+  margin-right: 100px;
 }
 
 .pricing li {
