@@ -383,7 +383,7 @@ def send_invitation_to_customer(request, customer_pk):
 def resources(request):
     page_context = {}
     page_context["title"] = "Resources"
-    return render(request, 'resources.html', page_context)
+    return render(request, 'website-resources.html', page_context)
 
 
 def screencast(request, screencast_id=1):

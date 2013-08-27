@@ -1,0 +1,170 @@
+{% extends "infra-out-html.html" %}
+
+{% block css %}
+<script type="text/javascript" src="https://platform.linkedin.com/in.js">
+api_key: etouje3xl27v
+scope: r_fullprofile r_emailaddress
+</script>
+<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
+{% endblock %}
+{% block page %}
+<div id="fb-root"></div>
+<script>
+</script>
+<div class="navbar">
+  <div class="centered-container">
+    <div class="large-header">
+        <a href="/">
+          <div id="box-container">
+            <div id="cube" class="">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </a>
+        <a href="/"><h1>Appcubator</h1></a>
+    </div>
+    <ul class="menu">
+      <li>FEATURES</li>
+      <li>LOGIN</li>
+      <li id="signup-button">SIGNUP</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sliding-panel">
+  <div class="slide slide-intro">
+    <div class="blue-bar community">
+      <div class="large-text">
+        Resources.
+      </div>
+      <div class="icon-menu">
+        <a class="item">
+          <img src="{{ STATIC_URL}}img/featured.png">
+          <span>Screencasts</span>
+        </a>
+        <a class="item">
+          <img src="{{ STATIC_URL}}img/faq.png">
+          <span>Example Apps</span>
+        </a>
+        <a class="item" onclick="javascript:olark('api.box.show'); olark('api.box.expand');">
+          <img src="{{ STATIC_URL}}img/chat.png">
+          <span>Documentation</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="slide-info slide">
+    <div class="centered-container">
+      <h4>Screencasts</h4>
+      <ul class="screencasts">
+        <li>
+          <a class="picture" href="/resources/screencast/1/">
+            <div class="layover">Watch now »</div>
+            <img src="{{ STATIC_URL }}img/screencast1.png">
+          </a>
+          <div class="summary">
+            <h3>Back to Basics</h3>
+            <div>This screencast explains basics of Appcubator: getting started with an app and creating pages.</div>
+            <a href="/resources/screencast/1/" class="btn btn-green hoff1" id="member">Watch Now »</a>
+          </div>
+        </li>
+        <li>
+          <a class="picture" href="/resources/screencast/2/">
+            <div class="layover">Watch now »</div>
+            <img src="{{ STATIC_URL }}img/screencast1.png">
+          </a>
+          <div class="summary">
+            <h3>Making It Look Lively</h3>
+            <div>This screencast explains pages in more detail, show how to make them more interactive and linked with each other.</div>
+            <a href="/resources/screencast/2/" class="btn btn-green hoff1" id="member">Watch Now »</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="centered-container">
+      <h4>Example Apps</h4>
+      <ul class="sample-apps">
+        <li>
+          <a class="picture" href="/resources/sample/1/">
+            <div class="layover">Start now »</div>
+            <img src="{{ STATIC_URL }}img/sampleapp1.png">
+          </a>
+          <div class="summary">
+            <h3>StudyCloud</h3>
+            <div>We broke down StudyCloud app into pieces and made videos explaining each piece.</div>
+            <a href="/resources/sample/1/" class="btn btn-green hoff1" id="member">Start Now »</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="centered-container">
+      <h4>Documentation</h4>
+      <div class="documentation">
+      {% include "documentation/html/menu.html" %}
+      </div>
+      <h4>Advanced Guides</h4>
+      <small>These are targeted for advanced users and developers. They're not required knowledge.</small>
+      <ul class="guides">
+        <li>
+          <a href="/resources/designer-guide/">
+            <div  class="picture">
+              <img src="{{ STATIC_URL }}img/guide-icon.png">
+            </div>
+            <div class="summary">
+              <h3>Designing Themes</h3>
+              <div>This guide explains how to edit the theme of your application as well as creating new themes.</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  {% include "website-footer.html" %}
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script data-main="{{ STATIC_URL }}js/application/website/main2" src="{{ STATIC_URL }}js/libs/require.js"></script>
+<script type="text/template" id="temp-inviteform">
+    <form class="sign-up-form" id="sign-up-form">
+      <div class="left-side">
+        <input type="text" name="name" id="inp-name" placeholder="Full Name">
+        <input type="text" name="email" id="inp-email" placeholder="Email">
+        <input type="text" name="company" id="inp-company" placeholder="Company">
+        <input type="hidden" name="extra-info" id="inp-extra" value="-">
+        <hr>
+        <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
+        <div class="btn btn-blue btn-linkedin">Fill With LinkedIn</div>
+        <% print('<sc'+'ript type="IN/Login"></sc'+'ript>') %>
+      </div>
+      <div class="right-side">
+        <textarea name="description" id="inp-description" placeholder="Technical description of your application. This is for us to attain the feasibility of the project to best direct you. It's totally fine if you just want to check it out."></textarea>
+        <input type="checkbox" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
+        <input type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
+      </div>
+    </form>
+    <div class="thanks-for-signing" style="display:none;">
+      <p>Thank you for signing up!</p>
+      <p>Someone from our team will contact you for details and further steps very soon.</p>
+      <div class="social-share">
+        <span>In the meantime, you can let your friends know about Appcubator!</span>
+        <div class="fb-share">
+          <div class="fb-like" data-href="http://www.appcubator.com" data-send="false" data-width="160" data-show-faces="true" data-font="segoe ui"></div>
+        </div>
+        <div class="twitter-share">
+          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.appcubator.com" data-via="appcubator">Tweet</a>
+          <% print('<sc'+'ript>'); %> <% print('</sc'+'ript>'); %>
+        </div>
+      </div>
+    </div>
+</script>
+{% endblock %}
+

@@ -342,7 +342,6 @@ body {
   position: relative;
   display: inline-block;
   margin-left: 0;
-  min-height: 100%;
   vertical-align: middle;
   text-align: center;
   width: 100%;
@@ -350,12 +349,15 @@ body {
 */  background-repeat: no-repeat;
 }
 
+.slide-intro.full {
+  min-height: 100%;
+}
+
 .slide-intro.developer {
   background-image: url(/static/img/bg6.jpg);
 }
 
 .slide-info{
-  background-color: #fff;
   margin-right: 0px;
   margin-left: 0px;
   margin-top: 20px;
@@ -389,11 +391,11 @@ body {
 .slide-info ul {
   list-style-type: square;
   text-align: left;
-  width: 480px;
   font-size: 18px;
 }
 
 .slide-info ul li {
+  display: inline-block;
   line-height: 20px;
   margin-bottom: 14px;
   margin-top: 14px;
