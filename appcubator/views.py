@@ -49,8 +49,8 @@ def add_statics_to_context(context, app):
     return context
 
 
-@login_required
 @require_GET
+@login_required
 def app_welcome(request):
     if request.user.extradata.noob:
         # case for turning noob mode off
@@ -67,6 +67,8 @@ def app_welcome(request):
         return redirect(app_page, request.user.apps.latest('id').id)
 
 
+@require_GET
+@login_required
 def app_noob_page(request):
     #log url route
     user_id = request.user.id
@@ -88,7 +90,6 @@ def app_noob_page(request):
         'mobile_themes': simplejson.dumps(list(mobile_themes)),
         'apps': request.user.apps.all(),
         'statics': simplejson.dumps([]),
-        'user': request.user
     }
     return render(request, 'app-welcome-page.html', default_data)
 
