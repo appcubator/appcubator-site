@@ -1424,15 +1424,15 @@ img.startx {
   float: right;
   width: 40%;
   text-align: center;
+  padding: 30px 10px;
+  background-color: rgba(250, 250, 255, 0.7);
+  border-radius: 4px;
 }
 
 
 .right-container ul {
   display: inline-block;
-  background-color: rgba(250, 250, 255, 0.7);
-  border-radius: 4px;
   width: 280px;
-  padding: 10px 10px;
 }
 
 .right-container ul li {
