@@ -50,17 +50,31 @@ function(RequestInviteModalView) {
       var galleryHeight = $('.slide-gallery').offset().top + 40;
       var signupHeight = $('.slide-last').offset().top - 40;
 
-      var $slideIntro = $('.slide-intro');
-      var $slideInfo = $('.slide-info');
-      var $slideLast = $('.slide-last');
+      var $blueBar     = $('.blue-bar');
+      var $whiteButton = $('.white-btn');
+      var $largeText   = $('.large-text');
+      var $subText     = $('.sub-text');
 
       $(window).on('scroll', function(e) {
         var newValue = $(window).scrollTop();
-        $slideIntro.css('background-position', '0 '+Math.round(newValue / 5) + 'px');
-        $slideInfo.css('background-position', '0 '+Math.round(newValue / 3) + 'px');
-        if(newValue > 1300) {
-          $slideLast.css('background-position', '0 -'+Math.round((newValue-1300) / 4) + 'px');
-        }
+
+        $blueBar.css('padding-top', newValue/2 + 70);
+        
+        if (newValue <= 40) { $largeText.css('opacity', 1 - (newValue/40)); }
+        else if (newValue > 40) { $largeText.css('opacity', 0); }
+        else { $largeText.css('opacity', 1); }
+
+        if (newValue <= 70) { $subText.css('opacity', 1 - (newValue/70)); }
+        else if (newValue > 70) { $subText.css('opacity', 0); }
+        else { $subText.css('opacity', 1); }
+
+        if (newValue <= 90) { $whiteButton.css('opacity', 1 - (newValue/90)); }
+        else if (newValue > 90) { $whiteButton.css('opacity', 0); }
+        else { $whiteButton.css('opacity', 1); }
+
+        if(newValue > 270) { $("#signup-button").addClass('highlight'); }
+        else { $("#signup-button").removeClass('highlight'); }
+
       });
     },
 

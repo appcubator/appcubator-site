@@ -47,18 +47,19 @@ require.config({
 require([
   './HomepageView',
   './DeveloperpageView',
+  './SignupModalView',
   'backbone',
   'util',
   'prettyCheckable',
   'mixins/BackboneConvenience'
 ],
-function(HomepageView, DeveloperpageView) {
+function(HomepageView, DeveloperpageView, SignupModalView) {
 
   var WebsiteRouter = Backbone.Router.extend({
 
     routes: {
       "/"                              : "homepage",
-      ""                               : "homepage",
+      "beta/"                          : "homepage",
       "developer/"                     : "developerpage",
     },
 
@@ -68,6 +69,7 @@ function(HomepageView, DeveloperpageView) {
       _.bindAll(this);
       this.animateCube();
       this.bindLoginForm();
+      this.bindSignupForm();
       document.addEventListener("touchstart", function(){}, true);
     },
 
@@ -87,6 +89,12 @@ function(HomepageView, DeveloperpageView) {
             $('#id_username').focus();
           });
         });
+    },
+
+    bindSignupForm: function() {
+      $('.signup-button').on('click', function(e) {
+        new SignupModalView();
+      });
     },
 
     animateCube: function() {

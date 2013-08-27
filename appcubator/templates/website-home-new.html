@@ -1,44 +1,10 @@
 {% extends "infra-out-html.html" %}
 
 {% block css %}
-<script type="text/javascript" src="https://platform.linkedin.com/in.js">
-api_key: etouje3xl27v
-scope: r_fullprofile r_emailaddress
-</script>
-<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
 {% endblock %}
 {% block page %}
-<div id="fb-root"></div>
-<script>
-</script>
-<div class="navbar">
-  <div class="centered-container">
-    <div class="large-header">
-        <a href="/">
-          <div id="box-container">
-            <div id="cube" class="">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        </a>
-        <a href="/"><h1>Appcubator</h1></a>
-    </div>
-    <ul class="menu">
-      <li><a href="/resources/">EXAMPLES</a></li>
-      <li><a href="/community/">COMMUNITY</a></li>
-      <li><a href="/login/">LOGIN</a></li>
-      <li id="signup-button">SIGNUP</li>
-    </ul>
-  </div>
-</div>
-
+{% include "website-navbar.html" %}
 <div class="sliding-panel">
   <div class="slide slide-intro full">
     <div class="blue-bar">
@@ -48,7 +14,7 @@ scope: r_fullprofile r_emailaddress
       <div class="sub-text">
        The only visual tool that builds and hosts full stack web apps, backed by developer-friendly code.
       </div>
-            <div class="white-btn">
+      <div class="white-btn signup-button">
         Start Building
       </div>
     </div>
@@ -190,7 +156,7 @@ scope: r_fullprofile r_emailaddress
             </ul>
       </div>
       <div class="right-container">
-        <div class="btn btn-blue hoff1 request-invite" id="request">Signup Now</div>
+        <div class="btn btn-blue hoff1 signup-button request-invite">Signup Now</div>
         <ul>
           <li><a href="/developer/"><i>></i>Why should you use it if you are an experienced developer?</a></li>
           <li><a href="/resources/"><i>></i>See More Educational Resources</a></li>
@@ -207,7 +173,7 @@ scope: r_fullprofile r_emailaddress
 
 {% block js %}
 
-<script data-main="{{ STATIC_URL }}js/application/website/main2" src="{{ STATIC_URL }}js/libs/require.js"></script>
+<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 <script type="text/template" id="temp-inviteform">
     <form class="sign-up-form" id="sign-up-form">
       <div class="left-side">
@@ -225,6 +191,44 @@ scope: r_fullprofile r_emailaddress
         <input type="checkbox" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
         <input type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
       </div>
+    </form>
+    <div class="thanks-for-signing" style="display:none;">
+      <p>Thank you for signing up!</p>
+      <p>Someone from our team will contact you for details and further steps very soon.</p>
+      <div class="social-share">
+        <span>In the meantime, you can let your friends know about Appcubator!</span>
+        <div class="fb-share">
+          <div class="fb-like" data-href="http://www.appcubator.com" data-send="false" data-width="160" data-show-faces="true" data-font="segoe ui"></div>
+        </div>
+        <div class="twitter-share">
+          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.appcubator.com" data-via="appcubator">Tweet</a>
+          <% print('<sc'+'ript>'); %> <% print('</sc'+'ript>'); %>
+        </div>
+      </div>
+    </div>
+</script>
+<script type="text/template" id="temp-signupform">
+    <form class="sign-up-form" method="POST" id="signup" style="margin-top:20px" action="{% url signup_form %}">
+        <div class="left-side">
+          <input type="text" name="name" id="inp-name" placeholder="Full Name">
+          <div class="form-error field-name-first_name"></div>
+
+          <input type="text" name="email" id="inp-email" placeholder="Email">
+          <div class="form-error field-name-email"></div>
+          <div class="form-error field-name-username"></div>
+
+          <input type="hidden" name="extra-info" id="inp-extra" value="-">
+
+          <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
+        </div>
+        <div class="left-side">
+          <input type="password" name="password1" id="inp-name" placeholder="Password">
+          <div class="form-error field-name-password1"></div>
+
+          <input type="password" name="password2" id="inp-email" placeholder="Confirm Password">
+          <div class="form-error field-name-password2"></div>
+          <input style="height:48px;" type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
+        </div>
     </form>
     <div class="thanks-for-signing" style="display:none;">
       <p>Thank you for signing up!</p>

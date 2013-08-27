@@ -33,9 +33,9 @@ define([
       var self = this;
       this.$el.find('#signup').on('submit', function(e) {
         e.preventDefault();
-        url = $(e.target).attr('action');
-
-        obj = {};
+        url = $(e.currentTarget).attr('action');
+        obj = $(e.currentTarget).serialize();
+        console.log(obj);
         obj.name = $("#inp-name").val();
         obj.email = $("#inp-email").val();
         obj.company = $("#inp-company").val();
@@ -64,8 +64,8 @@ define([
           dataType: "JSON"
         });
 
-         self.$el.find('#sign-up-form').hide();
-         self.$el.find('.thanks-for-signing').fadeIn();
+         // self.$el.find('#sign-up-form').hide();
+         // self.$el.find('.thanks-for-signing').fadeIn();
          self.showTweetBtn();
        }
      });

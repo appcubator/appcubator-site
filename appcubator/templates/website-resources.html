@@ -1,42 +1,13 @@
 {% extends "infra-out-html.html" %}
 
 {% block css %}
-<script type="text/javascript" src="https://platform.linkedin.com/in.js">
-api_key: etouje3xl27v
-scope: r_fullprofile r_emailaddress
-</script>
-<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
 {% endblock %}
 {% block page %}
 <div id="fb-root"></div>
 <script>
 </script>
-<div class="navbar">
-  <div class="centered-container">
-    <div class="large-header">
-        <a href="/">
-          <div id="box-container">
-            <div id="cube" class="">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        </a>
-        <a href="/"><h1>Appcubator</h1></a>
-    </div>
-    <ul class="menu">
-      <li>FEATURES</li>
-      <li>LOGIN</li>
-      <li id="signup-button">SIGNUP</li>
-    </ul>
-  </div>
-</div>
+{% include "website-navbar.html" %}
 
 <div class="sliding-panel">
   <div class="slide slide-intro">

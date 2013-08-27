@@ -37,7 +37,7 @@ urlpatterns = patterns('',
     # only creates beta invite
     url(r'^signup_form/$',              base_views.signup_new_customer),
     # actually signs up.
-    url(r'^signup/$',                   base_views.signup),
+    url(r'^signup/$',                   base_views.signup, name='signup_form'),
     # actually signs up, stores source info
     url(r'^signup_hn_form/$',           base_views.signup_from_hn, name='hn_signup_form'),
     url(r'^signup_dn_form/$',           base_views.signup_from_dn, name='dn_signup_form'),

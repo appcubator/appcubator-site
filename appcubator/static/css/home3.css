@@ -395,10 +395,8 @@ body {
 }
 
 .slide-info ul li {
-  display: inline-block;
   line-height: 20px;
-  margin-bottom: 14px;
-  margin-top: 14px;
+  margin-bottom: 12px;
   list-style-type: circle;
   list-style-position: inside;
 }
@@ -659,6 +657,11 @@ body {
 
 .left-side textarea {
   height: 100px;
+}
+
+.right-side {
+  float: right;
+  vertical-align: top;
 }
 
 .sign-up-form .btn-facebook,.sign-up-form .btn-linkedin {
