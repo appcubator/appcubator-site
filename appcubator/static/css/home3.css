@@ -167,7 +167,7 @@ body {
 }
 
 .blue-bar {
-  height: 370px;
+  height: 320px;
   background-color: #0f2d40;
   padding-top: 70px;
   text-align: center;
@@ -219,7 +219,7 @@ body {
   padding: 14px 20px;
   border-radius: 4px;
   line-height: 20px;
-  margin-top: 28px;
+  margin-top: 12px;
   text-align: center;
   vertical-align: top;
   cursor: pointer;
