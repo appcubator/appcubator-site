@@ -251,6 +251,7 @@ body {
 
 
 .three-div {
+  position: relative;
   margin-right: auto;
   margin-left: auto;
   width: 1020px;
@@ -1742,4 +1743,17 @@ li .summary h3 {
   background-color: #fafafa;
   border: 1px solid #ccc;
   padding:16px;
+}
+
+.three-dots, .arrow {
+  position: absolute;
+  font-size: 48px;
+  font-weight: bold;
+  width: 70px;
+  margin-left: -35px;
+  margin-top: 80px;
+}
+
+.three-dots .dot {
+  display: inline-block;
 }
