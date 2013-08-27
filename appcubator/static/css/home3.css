@@ -365,8 +365,8 @@ body {
 
 .slide .row {
   position: relative;
-  margin-top: 0px;
-  height: 450px;
+  margin-top: 0;
+  height: 400px;
   background-color: #e0e2e3;
   display: block;
   text-align: left;
@@ -387,6 +387,7 @@ body {
 
 .slide-info h2 {
   display: block;
+  margin-bottom: 8px;
 }
 
 .slide-info ul {
@@ -424,6 +425,7 @@ body {
   height: 30%;
   display: block;
   width: 100%;
+  margin-top: 16px;
 }
 
 .slide-gallery .gallery ul {
@@ -552,7 +554,7 @@ body {
 
 .slide-info .screen {
   display: inline-block;
-  width: 360px;
+  width: 380px;
   height: 260px;
   position: relative;
   background-position: center;
@@ -564,18 +566,20 @@ body {
 
 .slide-info .screen .gif-wrapper {
   display: inline-block;
-  position: absolute;
-  left: 40px;
   top: 12px;
-  height: 150px;
-  width: 280px;
+  height: 210px;
+  width: 354px;
   overflow: hidden;
+  border-radius: 6px;
+  border: 16px solid rgba(60, 60, 60, 0.4);
+  margin-right: 12px;
+  margin-top: 16px;
 }
 
 .gif-wrapper img {
   max-width: none;
-  width: 300px;
-  margin-left: -10px;
+  width: 348px;
+  margin-left: -13px;
   margin-top: -8px;
 }
 

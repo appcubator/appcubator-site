@@ -1,6 +1,5 @@
 define([
   'backbone',
-  'jquery.filedrop',
   'mixins/BackboneModal'
 ],
 function(Backbone) {
@@ -12,7 +11,7 @@ function(Backbone) {
     height: 500,
 
     events: {
-      'click' : 'openFileInput',
+      'click'             : 'openFileInput',
       'change #pick-file' : 'filePicked'
     },
 
