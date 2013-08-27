@@ -390,7 +390,6 @@ body {
 }
 
 .slide-info ul {
-  list-style-type: square;
   text-align: left;
   font-size: 18px;
 }
@@ -401,7 +400,7 @@ body {
   margin-bottom: 14px;
   margin-top: 14px;
   list-style-type: circle;
-  list-style-position:inside;
+  list-style-position: inside;
 }
 
 
