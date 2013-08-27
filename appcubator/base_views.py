@@ -99,6 +99,15 @@ def community_page(request):
     return render(request, 'website-community.html', page_context)
 
 @require_GET
+def community_faq_page(request):
+
+    page_context = {}
+    page_context["title"] = "Community | FAQ"
+
+    return render(request, 'website-community-faq.html', page_context)
+
+
+@require_GET
 def developer_homepage(request):
     page_context = {}
     page_context["title"] = "Homepage"

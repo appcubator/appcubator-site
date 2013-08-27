@@ -18,6 +18,8 @@ urlpatterns = patterns('',
     url(r'^girlswhocode/$',             base_views.showgwcpage),
     url(r'^developer/$',                base_views.developer_homepage),
     url(r'^community/$',                base_views.community_page),
+    url(r'^community/faq/$',            base_views.community_faq_page),
+
 
     url(r'^aboutus/$',                  base_views.aboutus),
     url(r'^changelog/$',                base_views.changelog),

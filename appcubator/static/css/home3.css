@@ -376,12 +376,12 @@ body {
 
 .row .centered-container {
   padding-top: 30px;
-  border-top: 2px solid #0f2d40;;
+  border-top: 2px solid #0f2d40;
 }
 
 .row .info {
   display: inline-block;
-  max-width: 480px;
+  max-width: 500px;
   width: 100%;
 }
 
@@ -564,6 +564,7 @@ body {
   float: right;
 }
 
+
 .slide-info .screen .gif-wrapper {
   display: inline-block;
   top: 12px;
@@ -574,6 +575,16 @@ body {
   border: 16px solid rgba(60, 60, 60, 0.4);
   margin-right: 12px;
   margin-top: 16px;
+}
+
+.screen a {
+  display: inline-block;
+  width: 354px;
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  margin-top: 14px;
+  font-size: 18px;
 }
 
 .gif-wrapper img {
