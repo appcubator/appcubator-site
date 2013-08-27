@@ -176,7 +176,8 @@ body {
 .centered-container {
   margin-right: auto;
   margin-left: auto;
-  width: 1020px;
+  max-width: 1020px;
+  width: 100%;
   display: block;
   position: relative;
 }
@@ -199,7 +200,7 @@ body {
   text-shadow: black 0 1px 1px;
   margin-top: 28px;
   font-weight: lighter;
-  margin: 28px 300px;
+  margin: 28px 0;
 }
 
 .sliding-panel .motto {
@@ -254,7 +255,8 @@ body {
   position: relative;
   margin-right: auto;
   margin-left: auto;
-  width: 1020px;
+  max-width: 1020px;
+  width: 100%;
   display: block;
   position: relative;
   margin-top: 40px;
@@ -552,7 +554,6 @@ body {
   height: 260px;
   position: relative;
   background-position: center;
-  background-image: url(../img/screen.png);
   background-repeat: no-repeat;
   background-size: auto 100%;
   overflow: hidden;
@@ -1085,10 +1086,22 @@ img.logo {
 
 @media (max-width: 928px) {
   .navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container {
-  width: 100%;
-  padding-left: 10px;
-}
+    width: 100%;
+    padding-left: 10px;
+  }
 
+  .blue-bar {
+    margin-top: -40px;
+    height: 370px;
+  }
+
+  .slide .row {
+    height: auto;
+  }
+
+.three-div .view {
+  display: block;
+}
 .well {
   padding: 0;
 }
@@ -1144,11 +1157,6 @@ img.logo {
   text-align: center;
 }
 
-.row.desc-cont {
-  height: 300px;
-  margin-top: 60px;
-  position: relative;
-}
 
 .description {
   width: 100%;
@@ -1217,12 +1225,6 @@ img.logo {
   padding-top: 40px;
 }
 
-.slide-intro {
-  padding: 0 10px;
-  padding-bottom: 100px;
-  background-image: url(/static/img/bg2.jpg);
-}
-
 .slide-info,.slide3,.slide-last {
   margin-left: 20px;
   margin-right: 20px;
@@ -1232,13 +1234,7 @@ img.logo {
   margin-bottom: 120px;
 }
 
-.slide-info .row,.pricing li {
-  padding: 20px 20px;
-}
 
-.slide-info .row .title {
-  font-size: 26px;
-}
 
 .pricing .content {
   margin-right: 0;
@@ -1248,12 +1244,12 @@ img.logo {
   display: block;
   font-size: 32px;
   line-height: 40px;
-  margin-top: 180px;
 }
 
 .sliding-panel .sub-text {
   font-size: 18px;
-}
+/*  margin: 28px 10px;
+*/}
 
 .sign-up-form .left-side {
   display: block;
@@ -1422,7 +1418,7 @@ img.startx {
   vertical-align: top;
   display: inline-block;
   float: right;
-  width: 40%;
+  width: 34%;
   text-align: center;
   padding: 30px 10px;
   background-color: rgba(250, 250, 255, 0.7);
@@ -1442,10 +1438,25 @@ img.startx {
   padding: 20px 5px;
   color: #0f3d50;
   border-bottom: 1px solid rgba(15, 61, 80, 0.5);
+  cursor: pointer;
+}
+
+.right-container ul li:hover {
+  font-weight: bold;
+transform:translateX(12px);
+-ms-transform:translateX(12px); /* IE 9 */
+-webkit-transform:translateX(12px); /* Safari and Chrome */
 }
 
 .right-container ul li:last-child {
   border-bottom: none;
+}
+
+.right-container ul li i {
+  font-weight: bold;
+  margin-right: 6px;
+  font-size: 16px;
+  margin-left: -18px;
 }
 
 .large-container {
