@@ -475,7 +475,7 @@ body {
   display: block;
 }
 
-.slide-gallery  .gallery li .content:hover {
+.slide-gallery .gallery li .content:hover {
   display: inline-block;
   border: 3px solid #0f2d40;
   animation: blurp 0.2s linear;
@@ -757,14 +757,6 @@ body {
   font-size: 14px;
   margin-top: 6px;
 }
-
-.pricing li:hover {
-/*  max-height: 200px;
-*/}
-
-.pricing li:hover p.includes {
-/*  display: inline-block;
-*/}
 
 .gray-bg {
   position: absolute;
@@ -1091,8 +1083,21 @@ img.logo {
 
 @media (max-width: 928px) {
 
+  .no-mobile {
+    display: none;
+  }
+
   .menu {
     display: none;
+  }
+
+  .three-div .view {
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  .three-div .view a {
+    height: auto;
   }
 
   .navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container {
@@ -1162,6 +1167,12 @@ img.logo {
 
   .video-pane {
     display: none;
+  }
+
+  .three-div .view {
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .span64 {
@@ -1481,9 +1492,10 @@ img.startx {
 
 .right-container ul li:hover {
   font-weight: bold;
-transform:translateX(12px);
--ms-transform:translateX(12px); /* IE 9 */
--webkit-transform:translateX(12px); /* Safari and Chrome */
+}
+
+.right-container ul li a { 
+  text-decoration: none;
 }
 
 .right-container ul li:last-child {
