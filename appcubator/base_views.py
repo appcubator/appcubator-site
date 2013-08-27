@@ -78,7 +78,7 @@ def homepage(request):
     page_context = {}
     page_context["title"] = "Homepage"
 
-    return render(request, 'website-home.html', page_context)
+    return render(request, 'website-home-new.html', page_context)
 
 
 @require_GET
@@ -252,7 +252,7 @@ def signup(request):
             new_user = authenticate(username=req['email'],
                                     password=req['password1'])
             login(request, new_user)
-            return HttpResponse()
+            return HttpResponse(simplejson.dumps({"redirect_to": "/app/"}), mimetype="application/json")
         else:
             return HttpResponse(simplejson.dumps(form.errors), mimetype="application/json")
 

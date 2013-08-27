@@ -35,7 +35,6 @@ define([
         e.preventDefault();
         url = $(e.currentTarget).attr('action');
         obj = $(e.currentTarget).serialize();
-        console.log(obj);
         obj.name = $("#inp-name").val();
         obj.email = $("#inp-email").val();
         obj.company = $("#inp-company").val();
@@ -57,11 +56,30 @@ define([
         }
 
         if(isFilled) {
+          console.log("fill");
          $.ajax({
           url: url,
           type: "POST",
           data: obj,
-          dataType: "JSON"
+          dataType: "JSON",
+          // complete: function(data) {
+          //   if(data.responseText === "ok") {
+          //     location.reload();
+          //   }
+          // }
+          success: function(data, statusStr, xhr) {
+            if (typeof(data.redirect_to) !== 'undefined') {
+              location.href = data.redirect_to;
+            } else {
+              _.each(data, function(val, key, ind) {
+                if(key==='__all__') {
+                  $(self).find('.form-error.field-all').html(val.join('<br />'));
+                } else {
+                  $(self).find('.form-error.field-name-'+key).html(val.join('<br />'));
+                }
+              });
+            }
+          }
         });
 
          // self.$el.find('#sign-up-form').hide();
