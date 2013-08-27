@@ -1769,3 +1769,42 @@ li .summary h3 {
 .three-dots .dot {
   display: inline-block;
 }
+
+.blue-bar.community {
+  height: 370px;
+}
+
+.icon-menu {
+  margin-top: 40px;
+}
+
+.icon-menu .item {
+  display: inline-block;
+  border: 3px solid #fff;
+  border-radius: 4px;
+  margin-right: 50px;
+  color: #fff;
+  width: 140px;
+  height: 140px;
+  vertical-align: top;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.icon-menu .item:hover {
+  animation: blurp 0.2s linear;
+  -webkit-animation: blurp 0.2s linear;
+  -webkit-transform: scale(1.15);
+}
+
+.icon-menu .item img {
+  display: block;
+  width: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.icon-menu .item:last-child {
+  margin-right: 0px;
+}
