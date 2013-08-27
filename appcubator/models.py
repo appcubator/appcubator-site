@@ -163,16 +163,22 @@ class DeploymentError(Exception):
     """Should be raised whenever the deployment server does not return 200"""
     pass
 
+class NotDeployedError(Exception):
+    """Indicates that the deployment id is bogus"""
+    pass
+
 def update_deployment_info(deployment_id, hostname, gitrepo_name):
     payload = { 'hostname': hostname,
                 'gitrepo_name': gitrepo_name }
     deployment_url = 'http://%s/deployment/%d/info/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
     r = requests.post(deployment_url, data=payload, headers={'X-Requested-With': 'XMLHttpRequest'})
-    if r.status_code != 200:
+    if r.status_code == 200:
+        return r
+    elif r.status_code == 404:
+        raise NotDeployedError()
+    else:
         logger.error("Update deployment info failed: %r" % r.__dict__)
         raise DeploymentError()
-
-    return r
 
 def get_deployment_status(deployment_id):
     """
@@ -255,7 +261,11 @@ class App(models.Model):
             if self._original_subdomain != self.subdomain or self._original_gitrepo_name != self.gitrepo_name:
 
                 # update call to deployment server
-                self.update_deployment_info()
+                try:
+                    self.update_deployment_info()
+                except NotDeployedError:
+                    self.deployment_id = None
+                    self.deploy()
 
         return super(App, self).save(*args, **kwargs)
 
@@ -518,7 +528,7 @@ class App(models.Model):
             return result
 
         else:
-            raise Exception("Deployment server error: %r" % r.text)
+            raise DeploymentError("Deployment server error: %r" % r.text)
 
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
@@ -531,8 +541,9 @@ class App(models.Model):
         return r
 
     def delete_deployment(self):
-        r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
-        return r
+        if self.deployment_id is not None:
+            r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
+            return r
 
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:
