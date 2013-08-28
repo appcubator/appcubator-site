@@ -214,6 +214,7 @@ class App(models.Model):
     deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
     # cached deployment info
     subdomain = models.CharField(max_length=50, blank=True, unique=True)
+    custom_domain = models.CharField(max_length=50, blank=False, null=True, unique=True, default=None) # if this is None, then the person is not using custom domain.
     gitrepo_name = models.CharField(max_length=50, blank=True, unique=True)
 
     _state_json = models.TextField(blank=True, default=get_default_app_state)
@@ -225,6 +226,7 @@ class App(models.Model):
         super(App, self).__init__(*args, **kwargs)
         self._original_subdomain = self.subdomain
         self._original_gitrepo_name = self.gitrepo_name
+        self._original_custom_domain = self.custom_domain
 
     def update_deployment_info(self):
         # calls method outside of this class
@@ -258,7 +260,7 @@ class App(models.Model):
 
         # update the deployment info on the server if it changed.
         if update_deploy_server and self.deployment_id is not None:
-            if self._original_subdomain != self.subdomain or self._original_gitrepo_name != self.gitrepo_name:
+            if self._original_subdomain != self.subdomain or self._original_gitrepo_name != self.gitrepo_name or self._original_custom_domain != self.custom_domain:
 
                 # update call to deployment server
                 try:
@@ -392,6 +394,8 @@ class App(models.Model):
         return tmp_project_dir
 
     def hostname(self):
+        if self.custom_domain is not None:
+            return self.custom_domain
         if not settings.PRODUCTION: # debug and staging
             return "%s.staging.appcubator.com" % self.subdomain
         else:
