@@ -28,11 +28,11 @@ function() {
       var self = this;
 
       var temp = [
-        '<div class="facebook-share-editor" style="padding:15px;">',
+        '<div class="facebook-share-editor padding1">',
           'Please add the link of your Facebook Page if you would like to connect it to the Facebook button.',
           '<ul class="no-bullets">',
-            '<li style="width:100%;"><input type="radio" name="link-to-page" class="has-link" id="yes-pagelink" value="true"><input type="text" class="span24" placeholder="Copy Paste the link here..." id="fb-page-link"></li>',
-            '<li style="width:100%;"><input type="radio" name="link-to-page" class="has-link" id="no-pagelink" value="false"><label style="display:inline-block" for="no-pagelink">Just link it to the current page.</label></li>',
+            '<li class="full-width"><input type="radio" name="link-to-page" class="has-link" id="yes-pagelink" value="true"><input type="text" class="span24" placeholder="Copy Paste the link here..." id="fb-page-link"></li>',
+            '<li class="full-width"><input type="radio" name="link-to-page" class="has-link" id="no-pagelink" value="false"><label style="display:inline-block" for="no-pagelink">Just link it to the current page.</label></li>',
           '</ul>',
         '</div>'
       ].join('\n');

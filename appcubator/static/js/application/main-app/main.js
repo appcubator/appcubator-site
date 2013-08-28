@@ -5,6 +5,7 @@ require.config({
     "jquery.hotkeys"  : "../../libs/jquery/jquery.hotkeys",
     "underscore"      : "../../libs/underscore-amd/underscore",
     "backbone"        : "../../libs/backbone-amd/backbone",
+    "react"           : "http://fb.me/react-0.4.1.min",
     "heyoffline"      : "../../libs/heyoffline",
     "util"            : "../../libs/util/util",
     "util.filepicker" : "../../libs/util/util.filepicker",
@@ -62,6 +63,9 @@ require.config({
     },
     "util.filepicker": {
       exports: "util"
+    },
+    "react" : {
+      exports: "React"
     }
   },
 
@@ -80,6 +84,7 @@ require([
   "editor/MouseDispatcher",
   "heyoffline",
   "backbone",
+  "react",
   "bootstrap",
   "util",
   "comp",
@@ -95,7 +100,8 @@ function (AppModel,
           KeyDispatcher,
           MouseDispatcher,
           Heyoffline,
-          Backbone) {
+          Backbone,
+          React) {
 
   $(document).ready(function() {
 

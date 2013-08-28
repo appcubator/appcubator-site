@@ -542,6 +542,7 @@ define([
 
     createNode: function(layout, id) {
       var type = id.replace('type-','');
+      
       if(type == "imageslider") {
         return this.widgetsCollection.createImageSlider(layout);
       }
@@ -552,6 +553,10 @@ define([
 
       if(type == "facebookshare") {
         return this.widgetsCollection.createFacebookShare(layout);
+      }
+
+      if(type == "embedvideo") {
+        return this.widgetsCollection.createVideoEmbed(layout);
       }
 
       if(type == "custom-widget") {
