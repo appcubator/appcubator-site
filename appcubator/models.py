@@ -214,7 +214,7 @@ class App(models.Model):
     deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
     # cached deployment info
     subdomain = models.CharField(max_length=50, blank=True, unique=True)
-    custom_domain = models.CharField(max_length=50, blank=False, null=True, unique=True, default=None) # if this is None, then the person is not using custom domain.
+    custom_domain = models.CharField(max_length=50, blank=True, null=True, unique=True, default=None) # if this is None, then the person is not using custom domain.
     gitrepo_name = models.CharField(max_length=50, blank=True, unique=True)
 
     _state_json = models.TextField(blank=True, default=get_default_app_state)
