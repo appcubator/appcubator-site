@@ -1,10 +1,12 @@
 define([
+  'react',
   'editor/QueryEditorView',
   'editor/WidgetView',
   'dicts/constant-containers',
   'editor/editor-templates'
 ],
-function( QueryEditorView,
+function( React,
+          QueryEditorView,
           WidgetView) {
 
   var WidgetContainerView = WidgetView.extend({
@@ -85,7 +87,12 @@ function( QueryEditorView,
 
       if(this.model.get('data').get('container_info').get('action') == "videoembed" ) {
         var videoDiv = document.createElement('div');
-        videoDiv.innerHTML = _.template(Templates.facebookshareTemp, {});
+        var StaticImg = React.createClass({
+            render: function() {
+                return React.DOM.img({src: "/static/img/youtube-static.png" });
+            }
+        });
+        React.renderComponent(StaticImg({}), videoDiv);
         this.el.appendChild(videoDiv);
       }
 

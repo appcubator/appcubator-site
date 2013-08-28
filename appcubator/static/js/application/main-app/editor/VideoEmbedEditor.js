@@ -37,7 +37,13 @@ function(React) {
             },
 
             render: function() {
-                return React.DOM.input({type: "text", value: this.state.value, onChange: this.handleChange });
+                return React.DOM.div({
+                    className: "padding1",
+                    children:[
+                        React.DOM.div({children:"Please copy paste the link of your video to the text box below.", className:"full-width"}),
+                        React.DOM.input({type: "text", value: this.state.value, onChange: this.handleChange, className:"full-width", placeholder: "Example: http://www.youtube.com/watch?v=31AhaWyY1y4"})
+                    ]
+                });
             }
         });
 

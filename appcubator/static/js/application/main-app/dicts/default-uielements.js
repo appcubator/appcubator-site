@@ -78,6 +78,6 @@ var defaultElements = [
   {
     text: "Embed Video",
     className : "embedvideo",
-    el : "<img src='/static/img/fb-share-sample.png'>"
+    el : "<img src='/static/img/youtube-static.png'>"
   }
 ];
