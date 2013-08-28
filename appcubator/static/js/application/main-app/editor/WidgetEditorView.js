@@ -5,6 +5,7 @@ define([
   'editor/WidgetClassPickerView',
   'editor/SearchEditorView',
   'editor/FacebookShareEditor',
+  'editor/VideoEmbedEditor',
   'editor/list-editor/RowGalleryView',
   'editor/form-editor/FormEditorView',
   'editor/form-editor/LoginFormEditorView',
@@ -19,6 +20,7 @@ function(WidgetContentEditor,
          WidgetClassPickerView,
          SearchEditorView,
          FacebookShareEditor,
+         VideoEmbedEditor,
          RowGalleryView,
          FormEditorView,
          LoginFormEditorView,
@@ -42,6 +44,7 @@ function(WidgetContentEditor,
       'click .search-editor-btn'  : 'openSearchEditor',
       'click .edit-login-form-btn': 'openLoginEditor',
       'click .link-to-page-button': 'openFBShareEditor',
+      'click .video-link-button'  : 'openVideoEmbedEditor',
       'click .done-editing'       : 'closeEditingMode',
       'click .delete-button'      : 'clickedDelete',
       'click .done-text-editing'  : 'clickedDoneTextEditing',
@@ -114,6 +117,10 @@ function(WidgetContentEditor,
 
         if(action == "facebookshare") {
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('link-to-page-button', 'Link to A Facebook Page'));
+        }
+
+        if(action == "videoembed") {
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('video-link-button', 'Change Video Content'));
         }
 
         if(action == "table") {
@@ -252,6 +259,10 @@ function(WidgetContentEditor,
 
     openFBShareEditor: function() {
       new FacebookShareEditor(this.model);
+    },
+
+    openVideoEmbedEditor: function() {
+      new VideoEmbedEditor(this.model);
     },
 
     openQueryEditor: function() {

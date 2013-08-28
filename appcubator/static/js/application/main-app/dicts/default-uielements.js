@@ -74,5 +74,10 @@ var defaultElements = [
     text: "FB Share",
     className : "facebookshare",
     el : "<img src='/static/img/fb-share-sample.png'>"
+  },
+  {
+    text: "Embed Video",
+    className : "embedvideo",
+    el : "<img src='/static/img/fb-share-sample.png'>"
   }
 ];
