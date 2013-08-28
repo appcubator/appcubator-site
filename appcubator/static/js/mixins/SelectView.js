@@ -69,7 +69,7 @@ function(Backbone) {
         length += 1;
       }
 
-      if(this.options.maxHeight) length = this.options.maxHeight;
+      if(this.options.maxHeight && length > this.options.maxHeight) length = this.options.maxHeight;
 
       this.el.style.height = length * 40 + 'px';
       this.expanded = true;
