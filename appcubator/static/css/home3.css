@@ -366,17 +366,22 @@ body {
 .slide .row {
   position: relative;
   margin-top: 0;
-  height: 400px;
   background-color: #e0e2e3;
   display: block;
   text-align: left;
-/*  border-bottom: 1px solid #0f2d40;
-  border-top: 2px solid #0f2d40;*/
 }
 
 .row .centered-container {
   padding-top: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 30px;
   border-top: 2px solid #0f2d40;
+}
+
+.slide-info .centered-container h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
 }
 
 .row .info {
