@@ -296,6 +296,7 @@ function(WidgetModel,
         widget.data.nodeType = "videoembed";
         widget.data.container_info = {};
         widget.data.container_info.action = "videoembed";
+        widget.data.container_info.youtubeURL = "http://www.youtube.com/watch?v=hZTx0vXUo34";
 
         var widgetContainerModel = new WidgetContainerModel(widget);
 

@@ -17,25 +17,32 @@ function(React) {
     },
 
     initialize: function(widgetModel){
-      _.bindAll(this);
-      this.model = widgetModel;
-      this.render();
+        _.bindAll(this);
+        this.model = widgetModel;
+        this.render();
     },
 
     render: function() {
-      var self = this;
+        var model = this.model;
 
-      console.log(React);
-      var Hello = React.createClass({
-          render: function() {
-              return React.DOM.div({}, 'Hello ' + this.props.name);
-          }
-      });
-      
-      React.renderComponent(Hello({name: 'World'}), this.el);
+        var URLInput = React.createClass({
 
-      console.log(this.el);
-      return this;
+            getInitialState: function() {
+                return {value: model.get('data').get('container_info').get('youtubeURL')};
+            },
+
+            handleChange: function(event) {
+                this.setState({value: event.target.value});
+                model.get('data').get('container_info').set('youtubeURL', event.target.value);
+            },
+
+            render: function() {
+                return React.DOM.input({type: "text", value: this.state.value, onChange: this.handleChange });
+            }
+        });
+
+        React.renderComponent(URLInput({}), this.el);
+        return this;
     }
 
   });
