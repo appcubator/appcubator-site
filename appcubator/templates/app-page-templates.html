@@ -458,3 +458,72 @@
 <a class="btn btn-info right" target="_blank" href="<%= url %>">Access Admin Panel »</a>
 </div>
 </script>
+
+<script type="text/template" id="garage-temp">
+  <div class="row">
+    <div class="span36 offset8 intro">
+      <img class="welcome" src="{{ STATIC_URL }}img/garage-marker.png">
+      <p>We are happy to see you using Appcubator and would like to help you get started as smoothly as possible.</p>
+      <p id="question">How would you like to proceed?</p>
+    </div>
+  </div>
+  <div class="row hoff2 span48 offset8">
+    <a class="welcome-icon quick-tour">
+      <img src="{{ STATIC_URL }}img/quick-tour.png">
+      <p>Take a Quick Tour</p>
+      <div class="info-text qt-text">
+        <span class="title">Take a Quick Tour</span>
+        We will give you a quick tour of what Appcubator is and how it works in general.
+      </div>
+    </a>
+    <a class="welcome-icon walkthrough-twitter" href="{% url appcubator.views.app_new_walkthrough walkthrough='simpleWalkthrough' %}">
+      <img src="{{ STATIC_URL }}img/walkthrough-twitter.png">
+      <p>Walkthrough Building Twitter</p>
+      <div class="info-text qt-text">
+        <span class="title">Walkthrough Building Twitter</span>
+        This is for you if you're one of those people who likes to learn by doing. <br  />
+        We will walk you through building a clone of Twitter.com in 8 minutes!
+      </div>
+    </a>
+  </div>
+  <div class="row span48 offset8">
+    <a href="/resources" rel="external" target="_blank" class="welcome-icon read-tutorials">
+      <img src="{{ STATIC_URL }}img/read-tutorial.png">
+      <p>See Resources</p>
+      <div class="info-text qt-text">
+        <span class="title">See Resources</span>
+        Access to plenty of resources about Appcubator: sample apps, tutorials and screen-casts. This is the best way to learn how to use Appcubator.
+      </div>
+    </a>
+    <a href="/app/new/" class="welcome-icon start-building">
+      <img src="{{ STATIC_URL }}img/start-building.png">
+      <p>Start Building</p>
+      <div class="info-text qt-text">
+        <span class="title">Start Building</span>
+        If you feel comfortable with Appcubator by now, you can just go ahead and start building! The racoon will help you get started as quickly as possible.
+      </div>
+    </a>
+  </div>
+  <div class="row span48 offset8 twitter-chooser" style="display: none">
+      <!-- simple twitter tutorial -->
+      <a class="welcome-icon wide" href="{% url appcubator.views.app_new_walkthrough walkthrough='simpleWalkthrough' %}">
+        <img src="{{ STATIC_URL }}img/walkthrough-twitter.png">
+        <div class="explain-text qt-text">
+          <span class="title">Simple Walkthrough</span>
+          Skip the details, and dive into designing your own Twitter!
+        </div>
+      </a>
+      <!-- in-depth twitter tutorial -->
+      <a class="welcome-icon wide" href="{% url appcubator.views.app_new_walkthrough walkthrough='walkthrough' %}">
+        <img src="{{ STATIC_URL }}img/walkthrough-twitter.png">
+        <div class="explain-text qt-text">
+          <span class="title">In-Depth Walkthrough</span>
+          Go through the complete process of building Twitter with tables and relations using Appcubator.
+        </div>
+      </a>
+    </div>
+  <div class="question-cont">
+    <img src="{{ STATIC_URL }}img/question-market.png">
+    <p>Yes, there is an actual person here :)</p>
+  </div>
+</script>

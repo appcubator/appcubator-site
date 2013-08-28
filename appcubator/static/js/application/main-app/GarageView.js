@@ -9,40 +9,27 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
 
   var GarageView = Backbone.View.extend({
     css: 'app-page',
+    className: 'fixed-bg welcome garage',
 
     events : {
-      'click .tutorial'        : 'showTutorial',
-      'click .feedback'        : 'showFeedback',
-      'click #deploy'          : 'deploy',
-      'click .browse'          : 'browse',
-      'click #share'           : 'share',
-      'click .edit-btn'        : 'settings'
+      // 'click .tutorial'        : 'showTutorial',
+      // 'click .feedback'        : 'showFeedback',
+      // 'click #deploy'          : 'deploy',
+      // 'click .browse'          : 'browse',
+      // 'click #share'           : 'share',
+      // 'click .edit-btn'        : 'settings'
     },
 
     initialize: function() {
       _.bindAll(this);
-      this.analyticsView = new AnalyticsView();
       this.subviews = [this.analyticsView];
-
-      this.title = "The Garage";
+      this.render();
     },
 
     render: function() {
       var page_context = {};
-      this.el.innerHTML = _.template(util.getHTML('app-main-page'), page_context);
-      this.$('.analytics').append(this.analyticsView.render().el);
-      this.renderNextStep();
-    },
-
-    renderNextStep: function() {
-      var nmrPages = v1State.get('pages').length;
-      var pagesStr = nmrPages > 1 ? ' pages' : ' page';
-      if(nmrPages >= 4) {
-        $('.what-to-do').html('You currently have '+ nmrPages + pagesStr + '.<br><a href="pages/">Add more on the Pages page</a>.');
-      }
-      else {
-        $('.what-to-do').html('You can go to the <a href="tables/">Tables</a> page, and click "Access Data" to browse the data in your app\'s database.');
-      }
+      this.el.innerHTML = _.template(util.getHTML('garage-temp'), page_context);
+      document.body.appendChild(this.el);
     },
 
     deploy: function() {
