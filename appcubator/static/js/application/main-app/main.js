@@ -84,7 +84,6 @@ require([
   "editor/MouseDispatcher",
   "heyoffline",
   "backbone",
-  "react",
   "bootstrap",
   "util",
   "comp",
@@ -100,8 +99,7 @@ function (AppModel,
           KeyDispatcher,
           MouseDispatcher,
           Heyoffline,
-          Backbone,
-          React) {
+          Backbone) {
 
   $(document).ready(function() {
 
