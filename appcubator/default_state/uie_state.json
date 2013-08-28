@@ -207,7 +207,7 @@
     {
       "isSingle": false,
       "cons_attribs": {
-        "style": "border:1px solid #333;"
+        "style": "border:1px solid #333; width: 100%; height: 100%;"
       },
       "class_name": "box-1",
       "content": null,
