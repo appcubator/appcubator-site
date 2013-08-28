@@ -430,6 +430,5 @@
             "tagName": "div",
             "style": "overflow-y:scroll;\n background-color: #eee;\nborder-radius: 4px;\noverflow-y: scroll;\n\n.row {\n    border-bottom: 1px solid #ccc;\n}"
         }
-    ],
-    "img_url": "https://www.filepicker.io/api/file/kb2lc2rRTIqUkfkF44LC"
+    ]
 }
