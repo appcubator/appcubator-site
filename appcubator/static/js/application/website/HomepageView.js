@@ -31,7 +31,7 @@ function(RequestInviteModalView) {
         setTimeout(function() {
           var elem = document.getElementById('video-pane');
           ifrm = document.createElement("IFRAME");
-          ifrm.setAttribute("src", "http://player.vimeo.com/video/70250440");
+          ifrm.setAttribute("src", "https://player.vimeo.com/video/70250440");
           ifrm.style.width = "100%";
           ifrm.style.height = 195+"px";
           elem.appendChild(ifrm);
