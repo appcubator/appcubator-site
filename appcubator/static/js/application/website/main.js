@@ -58,9 +58,9 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
   var WebsiteRouter = Backbone.Router.extend({
 
     routes: {
-      "/"                              : "homepage",
-      "beta/"                          : "homepage",
-      "developer/"                     : "developerpage",
+      ""                    : "homepage",
+      "beta/"               : "homepage",
+      "developer/"            : "developerpage",
     },
 
     cube: $('#cube'),

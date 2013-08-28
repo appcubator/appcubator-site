@@ -14,15 +14,15 @@ define(function(require, exports, module) {
     var AppRouter = Backbone.Router.extend({
 
         routes: {
-            "app/:appid/info/*tutorial": "info",
-            "app/:appid/tables/*tutorial": "tables",
-            "app/:appid/gallery/*tutorial": "themes",
-            "app/:appid/pages/*tutorial": "pages",
-            "app/:appid/editor/:pageid/": "editor",
+            "app/:appid/info/*tutorial"        : "info",
+            "app/:appid/tables/*tutorial"      : "tables",
+            "app/:appid/gallery/*tutorial"     : "themes",
+            "app/:appid/pages/*tutorial"       : "pages",
+            "app/:appid/editor/:pageid/"       : "editor",
             "app/:appid/mobile-editor/:pageid/": "mobileEditor",
-            "app/:appid/emails/*tutorial": "emails",
-            "app/:appid/*tutorial": "index",
-            "app/:appid/*anything/": "index"
+            "app/:appid/emails/*tutorial"      : "emails",
+            "app/:appid/*tutorial"             : "index",
+            "app/:appid/*anything/"            : "index"
         },
 
         tutorialPage: 0,
