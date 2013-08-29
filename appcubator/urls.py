@@ -123,7 +123,7 @@ urlpatterns += patterns('appcubator.views',
     url(r'^documentation/([^/]+)/$', 'documentation_page'),
 
     # the rest
-    url(r'^app/(\d+)/$', 'app_page', {"page_name": "overview"}), # this serves all the app pages
+    url(r'^app/(\d+)/', 'app_page', {"page_name": "overview"}), # this serves all the app pages
     url(r'^app/(\d+)/([^/]+)/$', 'app_page'), # this serves all the app pages
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
