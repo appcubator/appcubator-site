@@ -1,19 +1,9 @@
-{% extends "infra-out-html.html" %}
+{% extends "infra-website.html" %}
 
 {% block css %}
-<script type="text/javascript" src="https://platform.linkedin.com/in.js">
-api_key: etouje3xl27v
-scope: r_fullprofile r_emailaddress
-</script>
-<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
 {% endblock %}
 {% block page %}
-<div id="fb-root"></div>
-<script>
-</script>
-{% include "website-leftpanel.html" %}
+{% include "website-navbar.html" %}
 
 <div class="sliding-panel">
   <div class="slide-aboutus">
@@ -28,6 +18,15 @@ scope: r_fullprofile r_emailaddress
     </div>
     <h3>Team</h3>
     <div class="people">
+      <div class="person">
+        <div class="peep">
+          <img src="{{ STATIC_URL }}img/pp/ilter.jpg">
+        </div>
+        <p>Ilter Canberk</p>
+        <span class="bio">
+          Ilter is responsible of the design and front-end architecture at Appcubator. Previously, Ilter interned at Facebook as a Mobile UI Engineer, where he focused on the Facebook app for iOS 5.0. He studied electrical and computer engineering at Carnegie Mellon University. Ilter is an endorsed coffee aficionado.
+        </span>
+      </div>
       <div class="person">
         <div class="peep">
           <img class="karan" src="{{ STATIC_URL }}img/pp/karan.jpg">
@@ -46,17 +45,6 @@ scope: r_fullprofile r_emailaddress
           Nikhil is responsible for the back-end magic at Appcubator. Previously, Nikhil worked on large scale system infrastructure projects at Google and Yahoo. Nikhil has a bachelor’s degree in computer science from Carnegie Mellon University and is pursuing a masters of computer science from Stanford University. Nikhil is planning on running tough mudder, our thoughts and prayers are with him.
         </span>
       </div>
-
-      <div class="person">
-        <div class="peep">
-          <img class="kedar" src="{{ STATIC_URL }}img/pp/kedar.jpg">
-        </div>
-        <p>Kedar Amladi</p>
-        <span class="bio">
-          Kedar works on the front end design at Appcubator. Previously, Kedar has experience in web development in freelance and startup environments, with expertise in JavaScript and Python. Kedar studied electrical and computer engineering at Carnegie Mellon University. In his spare time, Kedar studies the art of dog breeding.
-        </span>
-      </div>
-
       <div class="person">
         <div class="peep">
           <img class="sagar" src="{{ STATIC_URL }}img/pp/sagar.jpg">
