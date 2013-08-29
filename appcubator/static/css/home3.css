@@ -185,18 +185,32 @@ body {
 
 .centered-container > .one-third {
   display: inline-block;
-  width: 40%;
+  width: 49%;
+  padding: 0 3%;
   vertical-align: top;
 }
 
 .centered-container > .two-third {
   display: inline-block;
-  width: 59%;
+  width: 50%;
   vertical-align: top;
 }
 
-.centered-container > .two-third.right {
+.centered-container > h6 {
+  font-size: 20px;
+  margin-bottom: 30px;
+  border-bottom: none;
+  color: #000;
+  margin-top: 0;
+}
+
+.centered-container > .two-third.right-el {
   padding-left: 30px;
+  padding-top: 15px;
+}
+
+.centered-container .padding-top {
+  padding-top: 15px;
 }
 
 
@@ -393,7 +407,7 @@ body {
   padding-top: 30px;
   padding-left: 15px;
   padding-right: 15px;
-  padding-bottom: 30px;
+  padding-bottom: 45px;
   border-top: 2px solid #0f2d40;
 }
 
