@@ -29,6 +29,7 @@ function(LinkEditorView) {
       this.links = this.model.get('links');
       this.listenTo(this.links, 'reset', this.renderLinkEditorViews);
       this.listenTo(this.links, 'add', this.addLinkEditorView);
+      console.log(this.links);
       this.render();
     },
 
@@ -66,7 +67,16 @@ function(LinkEditorView) {
     },
 
     addLinkEditorClicked: function(e) {
-      var newLink = _.clone(this.model.get('links').last().toJSON());
+      var newLink = {};
+      if(this.model.get('links').last()) {
+        _.clone(this.model.get('links').last().toJSON());
+      }
+      else {
+        newLink = {
+          title: "Homepage",
+          url: "internal://Homepage"
+        };
+      }
       this.model.get('links').push(newLink);
     },
 
