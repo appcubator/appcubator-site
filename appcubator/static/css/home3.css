@@ -183,17 +183,29 @@ body {
   text-align: left;
 }
 
-.centered-container > .one-third {
+.centered-container > .half-left {
   display: inline-block;
   width: 49%;
   padding: 0 3%;
   vertical-align: top;
 }
 
-.centered-container > .two-third {
+.centered-container > .half-right {
   display: inline-block;
   width: 50%;
   vertical-align: top;
+}
+
+.centered-container > .two-third {
+  display: inline-block;
+  vertical-align: top;
+  width: 60%;
+}
+
+.centered-container > .one-third {
+  display: inline-block;
+  vertical-align: top;
+  width: 38%;
 }
 
 .centered-container > h6 {
@@ -204,7 +216,7 @@ body {
   margin-top: 0;
 }
 
-.centered-container > .two-third.right-el {
+.centered-container > .half-right.right-el {
   padding-left: 30px;
   padding-top: 15px;
 }
@@ -454,7 +466,8 @@ body {
 
 .row .info {
   display: inline-block;
-  max-width: 500px;
+  padding-right: 20px;
+  padding-top: 15px;
   width: 100%;
 }
 
