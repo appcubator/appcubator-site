@@ -349,13 +349,17 @@ body {
 .menu li {
   display: inline-block;
   line-height: 20px;
-  padding: 10px;
   margin-top: 15px;
   vertical-align: top;
   margin-left: 12px;
   cursor: pointer;
   border-radius: 4px;
   font-weight: bold;
+}
+
+.menu li a {
+  display: inline-block;
+  padding: 10px;
 }
 
 .menu li:hover {
@@ -743,12 +747,35 @@ body {
   vertical-align: top;
 }
 
+
+.modal.signup h5 {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.sign-up-form input[type="text"]:focus,
+.sign-up-form input[type="password"]:focus,
+.sign-up-form textarea:focus {
+  border: 1px solid #0f2d40;
+}
+
+.sign-up-form .right-side {
+  width: 310px;
+  float: none;
+  display: inline-block;
+  padding-top: 20px;
+}
+
 .sign-up-form .btn-facebook,.sign-up-form .btn-linkedin {
   width: 100%;
 }
 
 .sign-up-form label {
-  display: inline-block;
+  display: inline;
+  float: none;
 }
 
 .sign-up-form .btn-linkedin {
@@ -1816,10 +1843,6 @@ li .summary h3 {
   }
 }
 
-.sign-up-form {
-  padding-top: 10px;
-}
-
 .fbbox {
   background-color: rgba(250, 250, 255, 0.7);
   border-radius: 4px;
@@ -1838,10 +1861,6 @@ li .summary h3 {
 .sign-up-form .left-side input {
   width: 100%;
   height: 42px;
-}
-
-.sign-up-form label {
-  display: inline-block;
 }
 
 .slide-documentation {
