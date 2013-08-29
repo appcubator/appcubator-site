@@ -28,6 +28,7 @@ function(LinkEditorView) {
       this.model  = model;
       this.links = this.model.get('links');
       this.listenTo(this.links, 'reset', this.renderLinkEditorViews);
+      this.listenTo(this.links, 'add', this.addLinkEditorView);
       this.render();
     },
 
@@ -65,9 +66,8 @@ function(LinkEditorView) {
     },
 
     addLinkEditorClicked: function(e) {
-      this.model.get('links').add();
-      var newLink = this.model.get('links').last();
-      this.addLinkEditorView(newLink);
+      var newLink = _.clone(this.model.get('links').last().toJSON());
+      this.model.get('links').push(newLink);
     },
 
     addLinkEditorView: function(linkModel) {
