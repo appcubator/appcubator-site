@@ -1,11 +1,12 @@
 define([
+  'editor/NavbarEditorView',
   'editor/LinkEditorView',
   'mixins/BackboneModal',
   'util'
 ],
-function(LinkEditorView) {
+function(NavbarEditorView, LinkEditorView) {
 
-  var FooterEditorView = Backbone.ModalView.extend({
+  var FooterEditorView = NavbarEditorView.extend({
     className : 'footer-editor-modal',
     width: 600,
     height: 600,
@@ -19,16 +20,6 @@ function(LinkEditorView) {
       'keyup #edit-customText' : 'updateCustomText',
       'click .clone'       : 'showCloneOptions',
       'change .clone-page' : 'clonePage'
-    },
-    initialize: function(model) {
-      var self = this;
-
-      _.bindAll(this);
-
-      this.model  = model;
-      this.links = this.model.get('links');
-      this.listenTo(this.links, 'reset', this.renderLinkEditorViews);
-      this.render();
     },
 
     render: function() {
@@ -56,18 +47,6 @@ function(LinkEditorView) {
       return this;
     },
 
-    renderLinkEditorViews: function() {
-      var self = this;
-      this.$linksList = this.$el.find('#link-editors').empty();
-      this.links.each(this.addLinkEditorView);
-    },
-
-    addLinkEditorClicked: function(e) {
-      e.preventDefault();
-      this.model.get('links').add();
-      var newLink = this.model.get('links').last();
-      this.addLinkEditorView(newLink);
-    },
 
     addLinkEditorView: function(linkModel) {
       // create new link (duplicate of homepage link)
