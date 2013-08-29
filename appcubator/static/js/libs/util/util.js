@@ -144,7 +144,8 @@ define(['jquery'], function() {
       var div = $(elem);
       if(!div.offset()) return false;
 
-      var divTop = div.offset().top;
+      var windowScrollDown = $(window).scrollTop();
+      var divTop = div.offset().top - windowScrollDown;
       var divLeft = div.offset().left;
       var divRight = divLeft + div.width();
       var divBottom = divTop + div.height();
