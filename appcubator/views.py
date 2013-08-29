@@ -179,8 +179,10 @@ def app_new_walkthrough(request, walkthrough):
 
 @require_GET
 @login_required
-def app_page(request, app_id):
+def app_page(request, app_id, page_name="overview"):
     app_id = long(app_id)
+
+    print page_name
     # id of 0 is reserved for sample app
     if(app_id == 0):
         return redirect(app_welcome)
@@ -194,15 +196,16 @@ def app_page(request, app_id):
     mobile_themes = UITheme.get_mobile_themes()
     mobile_themes = [t.to_dict() for t in mobile_themes]
 
-    page_context = {'app': app,
-                    'title': 'The Garage',
-                    'themes': simplejson.dumps(list(themes)),
+    page_context = {'app'          : app,
+                    'title'        : 'The Garage',
+                    'themes'       : simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
-                    'apps': app.owner.apps.all(),
-                    'user': app.owner,
-                    'staging': settings.STAGING,
-                    'production': settings.PRODUCTION,
-                    'is_deployed': 1 if app.deployment_id != None else 0}
+                    'apps'         : app.owner.apps.all(),
+                    'user'         : app.owner,
+                    'staging'      : settings.STAGING,
+                    'production'   : settings.PRODUCTION,
+                    'page_name'    : page_name,
+                    'is_deployed'  : 1 if app.deployment_id != None else 0}
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)
 
@@ -273,7 +276,7 @@ def app_get_state(request, app):
 def app_save_state(request, app, require_valid=True):
     # if the incoming appState's version_id does not match the
     # db's version_id, the incoming appState is an outdated version
-    if not app.isCurrentVersion(simplejson.loads(request.body)):
+    if require_valid is True and not app.isCurrentVersion(simplejson.loads(request.body)):
         return (409, "")
 
     app._state_json = request.body
