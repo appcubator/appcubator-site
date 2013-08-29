@@ -82,6 +82,21 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
     },
 
     bindLoginForm: function() {
+      $('.login-button').on('click', function(e) {
+        e.preventDefault();
+        $('.menu').hide();
+        $('.login-form').fadeIn();
+        $('#id_username').focus();
+      });
+
+      $(window).on('keydown', function(e) {
+        console.log(e.keyCode);
+        if(e.keyCode == 27) {
+          $('.login-form').hide();
+          $('.menu').fadeIn();
+        }
+      });
+
         $('#member').on('click', function(e) {
           $('#bottom-panel').animate({
             bottom : 0
@@ -93,6 +108,7 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
 
     bindSignupForm: function() {
       $('.signup-button').on('click', function(e) {
+        e.preventDefault();
         new SignupModalView();
       });
     },

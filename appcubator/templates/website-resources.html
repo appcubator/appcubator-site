@@ -1,4 +1,4 @@
-{% extends "infra-out-html.html" %}
+{% extends "infra-website.html" %}
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
@@ -15,16 +15,20 @@
       <div class="large-text">
         Resources.
       </div>
-      <div class="icon-menu">
+      <div class="icon-menu" href="#screencasts-section">
         <a class="item">
           <img src="{{ STATIC_URL}}img/screencasts.png">
           <span>Screencasts</span>
         </a>
-        <a class="item">
+        <a class="item" href="#tutorials-section">
+          <img src="{{ STATIC_URL}}img/tutorial.png">
+          <span>Tutorials</span>
+        </a>
+        <a class="item" href="#exampleapps-section">
           <img src="{{ STATIC_URL}}img/example.png">
           <span>Example Apps</span>
         </a>
-        <a class="item" onclick="javascript:olark('api.box.show'); olark('api.box.expand');">
+        <a class="item" href="#documentation-section">
           <img src="{{ STATIC_URL}}img/documentation.png">
           <span>Documentation</span>
         </a>
@@ -32,7 +36,7 @@
     </div>
   </div>
   <div class="slide-info slide">
-    <div class="centered-container">
+    <div class="centered-container" id="screencasts-section">
       <h4>Screencasts</h4>
       <ul class="screencasts">
         <li>
@@ -59,7 +63,36 @@
         </li>
       </ul>
     </div>
-    <div class="centered-container">
+    <div class="centered-container" id="tutorials-section">
+      <h4>Tutorials and Guides</h4>
+<!--       <small>These are targeted for advanced users and developers. They're not required knowledge.</small>
+ -->      
+      <ul class="guides">
+        <li>
+          <a href="/resources/tutorial/build-social-network">
+            <div  class="picture">
+              <img src="{{ STATIC_URL }}img/guide-icon.png">
+            </div>
+            <div class="summary">
+              <h3>How to build a social network?</h3>
+              <div>This guide explains how to edit the theme of your application as well as creating new themes.</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/resources/designer-guide/">
+            <div  class="picture">
+              <img src="{{ STATIC_URL }}img/guide-icon.png">
+            </div>
+            <div class="summary">
+              <h3>Designing Themes</h3>
+              <div>This guide explains how to edit the theme of your application as well as creating new themes.</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="centered-container" id="exampleapps-section">
       <h4>Example Apps</h4>
       <ul class="sample-apps">
         <li>
@@ -75,26 +108,11 @@
         </li>
       </ul>
     </div>
-    <div class="centered-container">
+    <div class="centered-container" id="documentation-section">
       <h4>Documentation</h4>
       <div class="documentation">
       {% include "documentation/html/menu.html" %}
       </div>
-      <h4>Advanced Guides</h4>
-      <small>These are targeted for advanced users and developers. They're not required knowledge.</small>
-      <ul class="guides">
-        <li>
-          <a href="/resources/designer-guide/">
-            <div  class="picture">
-              <img src="{{ STATIC_URL }}img/guide-icon.png">
-            </div>
-            <div class="summary">
-              <h3>Designing Themes</h3>
-              <div>This guide explains how to edit the theme of your application as well as creating new themes.</div>
-            </div>
-          </a>
-        </li>
-      </ul>
     </div>
   </div>
   {% include "website-footer.html" %}
@@ -103,7 +121,7 @@
 
 {% block js %}
 
-<script data-main="{{ STATIC_URL }}js/application/website/main2" src="{{ STATIC_URL }}js/libs/require.js"></script>
+<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 <script type="text/template" id="temp-inviteform">
     <form class="sign-up-form" id="sign-up-form">
       <div class="left-side">

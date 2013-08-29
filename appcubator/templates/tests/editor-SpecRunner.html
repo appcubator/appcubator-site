@@ -36,65 +36,31 @@
 
   var statics = ["image1.png"];
   var v1State = {};
-  var require = {
-
-    paths: {
-      "jquery" : "{{ STATIC_URL }}js/libs/jquery/jquery",
-      "jquery-ui" : "{{ STATIC_URL }}js/libs/jquery-ui/jquery-ui",
-      "jquery.filedrop" : "{{ STATIC_URL }}js/libs/jquery/jquery.filedrop",
-      "jquery.hotkeys" : "{{ STATIC_URL }}js/libs/jquery/jquery.hotkeys",
-      "underscore" : "{{ STATIC_URL }}js/libs/underscore-amd/underscore",
-      "backbone" : "{{ STATIC_URL }}js/libs/backbone-amd/backbone",
-      "util" : "{{ STATIC_URL }}js/libs/util/util",
-      "util.filepicker" : "{{ STATIC_URL }}js/libs/util/util.filepicker",
-      "comp": "{{ STATIC_URL }}js/libs/util/comp",
-      "bootstrap" : "{{ STATIC_URL }}js/libs/bootstrap/bootstrap",
-      "app" : "{{ STATIC_URL }}js/application/main-app",
-      "editor" : "{{ STATIC_URL }}js/application/main-app/editor",
-      "m-editor" : "{{ STATIC_URL }}js/application/main-app/mobile-editor",
-      "dicts" : "{{ STATIC_URL }}js/application/main-app/dicts",
-      "mixins" : "{{ STATIC_URL }}js/mixins",
-      "key" : "{{ STATIC_URL }}js/libs/keymaster/keymaster",
-      "answer" : "{{ STATIC_URL }}js/libs/answer/answer",
-      "prettyCheckable" : "{{ STATIC_URL }}js/libs/jquery/prettyCheckable",
-      "list" : "{{ STATIC_URL }}js/libs/list",
-      "models" : "{{ STATIC_URL }}js/application/data/models",
-      "collections" : "{{ STATIC_URL }}js/application/data/collections",
-      "tutorial" : "{{ STATIC_URL }}js/application/tutorial",
-      "domReady": "{{ STATIC_URL }}js/test/libs/requirejs/domReady",
-    },
-
-    shim: {
-      "jquery-ui": {
-        exports: "$",
-        deps: ['jquery']
-      },
-      "underscore": {
-        exports: "_"
-      },
-      "backbone": {
-        exports: "Backbone",
-        deps: ["underscore", "jquery"]
-      },
-      "bootstrap" : {
-        deps: ["jquery"]
-      },
-      "answer" : {
-        deps: ["{{ STATIC_URL }}js/libs/answer/lib/natural.js", "underscore", "jquery"]
-      }
-    }
-  };
 
   </script>
 
   <!-- include source files here... -->
-  <script type="text/javascript" src="{{ STATIC_URL}}js/libs/requirejs/require.js"></script>
-
 </head>
 
 <body class="sample">
 
+
+{% include "app-page-templates.html" %}
 </body>
+<script type="text/javascript">
+    var appId = {{ app.id }};
+    var appUrl = "{{ app.url }}";
+    var appGitRepo = "{{ app.git_repo }}";
+    var appState = {{ app.state_json|safe }};
+    var uieState = {{ app.uie_state_json|safe }};
+    var mobileUieState = {{ app.mobile_uie_state_json|safe }};
+    var statics = {{ statics|safe }};
+    var themes = {{ themes|safe }};
+    var mobileThemes = {{ mobile_themes|safe }};
+    var staticVersion = "{{STATIC_VERSION}}";
+    var v1 = {};
+    var v1State = {};
+</script>
 
 <script type="text/template" id="editor-page">
  <div class="loading-gif" id="loading-gif"></div>
@@ -165,28 +131,7 @@
   </div>
 
 </script>
-  <script type="text/javascript">
 
-    require(
-    [
-    "{{ STATIC_URL }}js/test/spec/editorSpec.js",
-    "{{ STATIC_URL }}js/test/lib/console-runner.js"
-    ],
-    function( document ){
-        // Set up the HTML reporter - this is reponsible for
-        // aggregating the results reported by Jasmine as the
-        // tests and suites are executed.
-        window.consoleReporter = new jasmine.ConsoleReporter();
-        var consoleReporter = window.consoleReporter;
-        jasmine.getEnv().addReporter(consoleReporter);
-        jasmine.getEnv().addReporter(
-        new jasmine.HtmlReporter()
-        );
+<script data-main="{{ STATIC_URL }}js/test/spec/editorSpec" src="{{ STATIC_URL }}js/libs/require.js"></script>
 
-        // Run all the loaded test specs.
-        jasmine.getEnv().execute();
-
-    });
-
-  </script>
 </html>

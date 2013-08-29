@@ -1,3 +1,75 @@
+require.config({
+  paths: {
+    "jquery"          : "../../libs/jquery/jquery",
+    "jquery-ui"       : "../../libs/jquery-ui/jquery-ui",
+    "jquery.hotkeys"  : "../../libs/jquery/jquery.hotkeys",
+    "underscore"      : "../../libs/underscore-amd/underscore",
+    "backbone"        : "../../libs/backbone-amd/backbone",
+    "react"           : "../../libs/react",
+    "heyoffline"      : "../../libs/heyoffline",
+    "util"            : "../../libs/util/util",
+    "util.filepicker" : "../../libs/util/util.filepicker",
+    "comp"            : "../../libs/util/comp",
+    "bootstrap"       : "../../libs/bootstrap/bootstrap",
+    "app"             : "../../application/main-app",
+    "editor"          : "../../application/main-app/editor",
+    "m-editor"        : "../../application/main-app/mobile-editor",
+    "dicts"           : "../../application/main-app/dicts",
+    "mixins"          : "../../mixins",
+    "prettyCheckable" : "../../libs/jquery/prettyCheckable",
+    "list"            : "../../libs/list",
+    "snap"            : "../../libs/snap.min",
+    "tourist"         : "../../libs/tourist.min",
+    "tourist-omer"    : "../../libs/tourist-omer",
+    "models"          : "../../application/data/models",
+    "collections"     : "../../application/data/collections",
+    "tutorial"        : "../../application/tutorial",
+    "wizard"          : "../../application/wizard",
+    "xrayquire"       : "../../libs/xrayquire"
+  },
+
+  shim: {
+    "jquery-ui": {
+      exports: "$",
+      deps: ['jquery']
+    },
+    "jquery.hotkeys" : {
+      exports: "$",
+      deps: ['jquery']
+    },
+    "underscore": {
+      exports: "_"
+    },
+    "heyoffline": {
+      exports: "Heyoffline"
+    },
+    "backbone": {
+      exports: "Backbone",
+      deps: ["underscore", "jquery"]
+    },
+    "bootstrap" : {
+      deps: ["jquery"]
+    },
+    "snap": {
+      exports: "Snap"
+    },
+    "tourist": {
+      exports: "Tourist",
+      deps: ["backbone"]
+    },
+    "tourist-omer": {
+      exports: "TouristOmer",
+      deps: ["tourist"]
+    },
+    "util.filepicker": {
+      exports: "util"
+    },
+    "react" : {
+      exports: "React"
+    }
+  }
+});
+
 var pageId = 0;
 var g_editorView;
 var g_appState = {};
@@ -15,9 +87,11 @@ define([
   "collections/UserRolesCollection",
   "editor/KeyDispatcher",
   "editor/MouseDispatcher",
+  "react",
   "comp",
   "backbone",
-  "mixins/BackboneConvenience"
+  "mixins/BackboneConvenience",
+  "../lib/console-runner"
   ],
   function( EditorView,
     AppModel,
@@ -26,7 +100,9 @@ define([
     MobilePageCollection,
     UserRolesCollection,
     KeyDispatcher,
-    MouseDispatcher) {
+    MouseDispatcher,
+    react) {
+
 
     util.loadCSS = function(str) { };
 
@@ -58,6 +134,7 @@ define([
     fEvent.pageY = 20;
 
     var getValidation = function(data, callback) {
+      console.log(data);
       $.ajax({
         type: "POST",
         url: "/backend/validate/",
@@ -655,4 +732,17 @@ define([
         expect(finalLength).toEqual(initialLength - 1);
       });
     });
+
+        // Set up the HTML reporter - this is reponsible for
+        // aggregating the results reported by Jasmine as the
+        // tests and suites are executed.
+        window.consoleReporter = new jasmine.ConsoleReporter();
+        var consoleReporter = window.consoleReporter;
+        jasmine.getEnv().addReporter(consoleReporter);
+        jasmine.getEnv().addReporter(
+        new jasmine.HtmlReporter()
+        );
+
+        // Run all the loaded test specs.
+        jasmine.getEnv().execute();
   });

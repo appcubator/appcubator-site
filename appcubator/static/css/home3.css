@@ -51,7 +51,7 @@ h6 {
 }
 
 body {
-  background-color: #e0e2e3;
+  background-color: #e6e8e9;
 /*  background-image: url(../img/noisy.png);
 */  font-size: 16px;
   line-height: 22px;
@@ -182,6 +182,38 @@ body {
   position: relative;
   text-align: left;
 }
+
+.centered-container > .one-third {
+  display: inline-block;
+  width: 49%;
+  padding: 0 3%;
+  vertical-align: top;
+}
+
+.centered-container > .two-third {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+}
+
+.centered-container > h6 {
+  font-size: 20px;
+  margin-bottom: 30px;
+  border-bottom: none;
+  color: #000;
+  margin-top: 0;
+}
+
+.centered-container > .two-third.right-el {
+  padding-left: 30px;
+  padding-top: 15px;
+}
+
+.centered-container .padding-top {
+  padding-top: 15px;
+}
+
+
 .sliding-panel .large-text {
   display: block;
   color: #fff;
@@ -261,12 +293,12 @@ body {
   display: block;
   position: relative;
   margin-top: 40px;
+  margin-bottom: 60px;
 }
 
 .three-div .view {
   display: inline-block;
   width: 33%;
-  height: 70px;
   text-align: center;
   vertical-align: top;
 }
@@ -317,13 +349,17 @@ body {
 .menu li {
   display: inline-block;
   line-height: 20px;
-  padding: 10px;
   margin-top: 15px;
   vertical-align: top;
   margin-left: 12px;
   cursor: pointer;
   border-radius: 4px;
   font-weight: bold;
+}
+
+.menu li a {
+  display: inline-block;
+  padding: 10px;
 }
 
 .menu li:hover {
@@ -335,6 +371,38 @@ body {
 .menu li.highlight {
   border-radius: 4px;
   background-color: #fff;
+  color: #0f2d40;
+}
+
+.navbar .login-form {
+  display: inline-block;
+  float: right;
+  height: 70px;
+  line-height: 70px;
+}
+
+.navbar .login-form input {
+  font-family: "proxima-nova";
+  vertical-align: middle;
+  margin-bottom: 0;
+  height: 42px;
+  line-height: 30px;
+  padding-top: 6px;
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+.navbar .login-form input[type="text"],
+.navbar .login-form input[type="password"] {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.navbar .login-form input[type="submit"] {
+  font-family: "proxima-nova";
+  background-color: #fff;
+  text-transform: uppercase;
+  border-radius: 2px;
   color: #0f2d40;
 }
 
@@ -366,7 +434,7 @@ body {
 .slide .row {
   position: relative;
   margin-top: 0;
-  background-color: #e0e2e3;
+  background-color: #e6e8e9;
   display: block;
   text-align: left;
 }
@@ -375,7 +443,7 @@ body {
   padding-top: 30px;
   padding-left: 15px;
   padding-right: 15px;
-  padding-bottom: 30px;
+  padding-bottom: 60px;
   border-top: 2px solid #0f2d40;
 }
 
@@ -559,8 +627,6 @@ body {
 
 .slide-info .screen {
   display: inline-block;
-  width: 380px;
-  height: 260px;
   position: relative;
   background-position: center;
   background-repeat: no-repeat;
@@ -573,8 +639,7 @@ body {
 .slide-info .screen .gif-wrapper {
   display: inline-block;
   top: 12px;
-  height: 210px;
-  width: 354px;
+  width: 100%;
   overflow: hidden;
   border-radius: 6px;
   border: 16px solid rgba(60, 60, 60, 0.4);
@@ -594,9 +659,7 @@ body {
 
 .gif-wrapper img {
   max-width: none;
-  width: 348px;
-  margin-left: -13px;
-  margin-top: -8px;
+  width: 100%;
 }
 
 .slide-info .screen .video {
@@ -684,12 +747,35 @@ body {
   vertical-align: top;
 }
 
+
+.modal.signup h5 {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.sign-up-form input[type="text"]:focus,
+.sign-up-form input[type="password"]:focus,
+.sign-up-form textarea:focus {
+  border: 1px solid #0f2d40;
+}
+
+.sign-up-form .right-side {
+  width: 310px;
+  float: none;
+  display: inline-block;
+  padding-top: 20px;
+}
+
 .sign-up-form .btn-facebook,.sign-up-form .btn-linkedin {
   width: 100%;
 }
 
 .sign-up-form label {
-  display: inline-block;
+  display: inline;
+  float: none;
 }
 
 .sign-up-form .btn-linkedin {
@@ -1572,22 +1658,27 @@ img.startx {
 
 .screencasts li,
 .sample-apps li {
-  width: 100%;
-  height: 230px;
   border-radius: 4px;
   background-color: #fff;
   border: 1px solid #ccc;
   margin-top: 24px;
+  display: inline-block;
+  width: 49%;
+  text-align: center;
+  padding: 30px 15px;
+}
+
+.screencasts li:nth-child(2),
+.sample-apps li:nth-child(2) {
+  margin-left: 1%;
 }
 
 .screencasts li .picture,
 .sample-apps li .picture {
   display: inline-block;
   position: relative;
-  width: 250px;
   height: 190px;
   vertical-align: top;
-  float: left;
   border-radius: 4px;
   border: 2px solid #0f3d50;
   margin-top: 20px;
@@ -1624,8 +1715,6 @@ img.startx {
 .screencasts li .summary {
   display: inline-block;
   vertical-align: top;
-  margin-left: 20px;
-  width: 380px;
   margin-top: 10px;
 }
 
@@ -1633,7 +1722,6 @@ img.startx {
   display: inline-block;
   vertical-align: top;
   padding: 0 20px;
-  width: 380px;
   margin-top: 10px;
 }
 
@@ -1693,6 +1781,7 @@ li .summary h3 {
 .documentation {
   margin-left: 10px;
   margin-top: 10px;
+  margin-bottom: 60px;
 }
 .documentation h1, .documentation h2, .documentation h3 {
   font-family: "proxima-nova";
@@ -1706,7 +1795,7 @@ li .summary h3 {
   margin: 0;
 }
 
-.documentation h2 {
+.centered-container .documentation h2 {
   display: inline-block;
   font-size: 16px;
   line-height: 30px;
@@ -1755,10 +1844,6 @@ li .summary h3 {
   }
 }
 
-.sign-up-form {
-  padding-top: 10px;
-}
-
 .fbbox {
   background-color: rgba(250, 250, 255, 0.7);
   border-radius: 4px;
@@ -1777,10 +1862,6 @@ li .summary h3 {
 .sign-up-form .left-side input {
   width: 100%;
   height: 42px;
-}
-
-.sign-up-form label {
-  display: inline-block;
 }
 
 .slide-documentation {
@@ -1876,3 +1957,5 @@ li .summary h3 {
 .icon-menu .item:last-child {
   margin-right: 0px;
 }
+
+
