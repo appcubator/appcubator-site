@@ -1781,6 +1781,7 @@ li .summary h3 {
 .documentation {
   margin-left: 10px;
   margin-top: 10px;
+  margin-bottom: 60px;
 }
 .documentation h1, .documentation h2, .documentation h3 {
   font-family: "proxima-nova";
@@ -1794,7 +1795,7 @@ li .summary h3 {
   margin: 0;
 }
 
-.documentation h2 {
+.centered-container .documentation h2 {
   display: inline-block;
   font-size: 16px;
   line-height: 30px;

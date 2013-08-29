@@ -395,6 +395,12 @@ def resources(request):
     return render(request, 'website-resources.html', page_context)
 
 
+def resources_socialnetwork(request):
+    page_context = {}
+    page_context["title"] = "Building a Social Network"
+    return render(request, 'website-resources-socialnetwork.html', page_context)
+
+
 def screencast(request, screencast_id=1):
     page_context = {}
     page_context["title"] = "Screecast " + screencast_id
