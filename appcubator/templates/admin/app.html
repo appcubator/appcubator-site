@@ -99,7 +99,7 @@
   });
 
   function saveState(state, is_appState) {
-    var url = is_appState ? '/app/{{ app_id }}/state/' : '/app/{{ app_id }}/uiestate/';
+    var url = is_appState ? '/app/{{ app_id }}/state/force/' : '/app/{{ app_id }}/uiestate/';
     var data = is_appState ? JSON.stringify(state) : { uie_state : JSON.stringify(state) };
     $.ajax({
       type: 'POST',

@@ -276,7 +276,7 @@ def app_get_state(request, app):
 def app_save_state(request, app, require_valid=True):
     # if the incoming appState's version_id does not match the
     # db's version_id, the incoming appState is an outdated version
-    if not app.isCurrentVersion(simplejson.loads(request.body)):
+    if require_valid is True and not app.isCurrentVersion(simplejson.loads(request.body)):
         return (409, "")
 
     app._state_json = request.body
