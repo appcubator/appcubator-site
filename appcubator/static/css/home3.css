@@ -370,6 +370,38 @@ body {
   color: #0f2d40;
 }
 
+.navbar .login-form {
+  display: inline-block;
+  float: right;
+  height: 70px;
+  line-height: 70px;
+}
+
+.navbar .login-form input {
+  font-family: "proxima-nova";
+  vertical-align: middle;
+  margin-bottom: 0;
+  height: 42px;
+  line-height: 30px;
+  padding-top: 6px;
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+.navbar .login-form input[type="text"],
+.navbar .login-form input[type="password"] {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.navbar .login-form input[type="submit"] {
+  font-family: "proxima-nova";
+  background-color: #fff;
+  text-transform: uppercase;
+  border-radius: 2px;
+  color: #0f2d40;
+}
+
 .slide-intro {
   position: relative;
   display: inline-block;
