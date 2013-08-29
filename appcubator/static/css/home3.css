@@ -293,12 +293,12 @@ body {
   display: block;
   position: relative;
   margin-top: 40px;
+  margin-bottom: 60px;
 }
 
 .three-div .view {
   display: inline-block;
   width: 33%;
-  height: 70px;
   text-align: center;
   vertical-align: top;
 }
@@ -407,7 +407,7 @@ body {
   padding-top: 30px;
   padding-left: 15px;
   padding-right: 15px;
-  padding-bottom: 45px;
+  padding-bottom: 60px;
   border-top: 2px solid #0f2d40;
 }
 
