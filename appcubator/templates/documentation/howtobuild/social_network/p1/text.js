@@ -21,28 +21,23 @@ var s4 = {
           'number of sources. In this example, we\'ll just search the web to find something simple.',
 };
 var s5 = {
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
+    beforeHtml: 'Now we\'ll add the ability for users to login and sign up. ' +
+          'All we have to do is drag the User Login and Sign Up forms onto the page.',
+    afterHtml: 'Here is the result after tweaking the design a bit. These forms work out of the box. ' +
+        'We\'ll add user-related capabilities in the next tutorial.',
 };
 var s6 = {
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
+    beforeHtml: 'Another design tip: you can edit the text and links in your navbar by clicking on it. ',
+    afterHtml: 'This popup window allows you to add/delete links, change the brand text on left side of the navbar, ' +
+          'and clone a navbar from another page.',
 };
 var s7 = {
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
+    beforeHtml: 'The homepage looks good, we\'re ready to see it live! Press Save, then Publish (in the top left corner of the editor).',
+    afterHtml: 'Wait a few seconds, and you should see this success window. Here you can see your live web app, and download a zip of your code.'
 };
 var s8 = {
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
+    beforeHtml: 'The end result is a live web app, with user authentication.',
+    afterHtml: 'Wow! You get all this, and it\'s backed by real code that you can download, as if you actually wrote it.',
 };
 
 var slides = [s1, s2, s3, s4, s4, s5, s6, s7, s8];
