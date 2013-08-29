@@ -182,6 +182,24 @@ body {
   position: relative;
   text-align: left;
 }
+
+.centered-container > .one-third {
+  display: inline-block;
+  width: 40%;
+  vertical-align: top;
+}
+
+.centered-container > .two-third {
+  display: inline-block;
+  width: 59%;
+  vertical-align: top;
+}
+
+.centered-container > .two-third.right {
+  padding-left: 30px;
+}
+
+
 .sliding-panel .large-text {
   display: block;
   color: #fff;
@@ -559,8 +577,6 @@ body {
 
 .slide-info .screen {
   display: inline-block;
-  width: 380px;
-  height: 260px;
   position: relative;
   background-position: center;
   background-repeat: no-repeat;
@@ -573,8 +589,7 @@ body {
 .slide-info .screen .gif-wrapper {
   display: inline-block;
   top: 12px;
-  height: 210px;
-  width: 354px;
+  width: 100%;
   overflow: hidden;
   border-radius: 6px;
   border: 16px solid rgba(60, 60, 60, 0.4);
@@ -594,9 +609,7 @@ body {
 
 .gif-wrapper img {
   max-width: none;
-  width: 348px;
-  margin-left: -13px;
-  margin-top: -8px;
+  width: 100%;
 }
 
 .slide-info .screen .video {
