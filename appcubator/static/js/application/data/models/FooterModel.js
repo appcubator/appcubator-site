@@ -6,9 +6,9 @@ function(LinkCollection) {
   var FooterModel = Backbone.Model.extend({
 
     defaults : {
-      customText : "Powered by Appcubator",
-      isHidden : false,
-      isFixed : true
+      customText: "<a href='http://appcubator.com'>Powered by Appcubator</a>",
+      isHidden  : false,
+      isFixed   : true
     },
 
     initialize: function(bone) {
