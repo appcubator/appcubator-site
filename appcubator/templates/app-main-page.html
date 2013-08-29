@@ -1,0 +1,40 @@
+    <div class="row hoff1 span58 overview-pane">
+      <div class="span46">
+        <h2 class="pheader">{{ app.name }} Overview</h2><br>
+        <a target="_blank" href="{{ app.url }}" class="link">{{ app.url }} <div href="#" class="edit-btn btn">Edit</div></a><br>
+      </div>
+      <div class="span12 hi10 right">
+        <div class="pane-btn">
+          <div class="hi3 span14 deploy pane" id="share"><span class="icon"></span><h4>Share App</h4></div>
+          <div class="hi3 span14 deploy data pane browse"><span class="icon"></span><h4>Browse Data</h4></div>
+          <a href="/app/{{app.pk}}/zip/" rel="external" class="hi3 span14 deploy download pane" id="download"><span class="icon"></span><h4>Download Code</h4></a>
+        </div>
+      </div>
+      <hr class="span58 pheader">
+    </div>
+    <div class="hoff1 span38 notice">
+      <h2 class="hoff1">Next step</h2>
+      <p class="what-to-do">
+
+      </p>
+      <p class="tip hoff1"><strong>Appcubator tip of the day:</strong> You can upload data to your app easily with Excel File through the <a class="browse" href="#">admin interface<a/>.</p>
+    </div>
+    <div class="hoff1 span18 offset2 notice inactive">
+      <h3 class="hoff1">Notifications</h3><div class="notification icon"></div>
+      <ul>
+        <li><input type="checkbox" id="feedback-check" disabled> You can fill the <a class="feedback" href="#">feedback form</a> for a chance to win a free domain.</li>
+        <li><input type="checkbox" disabled checked> Now you can see the analytics about your application in the dashboard below.</li>
+
+      </ul>
+    </div>
+    <div class="span58 hoff0">
+      <div class="row hoff1 analytics" style="position: relative">
+        <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75); padding-top: 10%">
+          <h2>Publish your app to see your site analytics!</h2>
+        </div>
+        <h2>Analytics</h2>
+        <hr class="span58 pheader">
+        <!-- <img class="span58 analytics-demo hoff1" src="{{ STATIC_URL }}img/analytics.png"> -->
+      </div>
+    </div>
+    <div class="span52 offset11 hoff4 hi4"></div>
