@@ -675,6 +675,12 @@ body {
   width: 100%;
 }
 
+.centered-container .video {
+  width: 100%;
+  text-align: center;
+  padding: 30px;
+}
+
 .slide-info .screen .video {
   display: inline-block;
   position: absolute;
@@ -683,6 +689,7 @@ body {
   top: 15px;
   height: 195px;
   width: 360px;
+  text-align: center;
 }
 
 .slide-info .row .title {
