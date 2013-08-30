@@ -393,6 +393,14 @@ body {
   line-height: 70px;
 }
 
+.navbar .login-form .qmark {
+  display: inline-block;
+  color: #fff;
+  margin-left: 6px;
+  font-size: 24px;
+  line-height: 70px;
+}
+
 .navbar .login-form input {
   font-family: "proxima-nova";
   vertical-align: middle;
