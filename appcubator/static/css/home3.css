@@ -462,6 +462,11 @@ body {
 .slide-info .centered-container h2 {
   font-size: 32px;
   margin-bottom: 15px;
+  text-shadow: #fff 0 1px 1px;
+}
+
+.centered-container h3 {
+  text-shadow: #fff 0 1px 1px;
 }
 
 .row .info {
@@ -504,6 +509,7 @@ body {
 .slide-gallery h2 {
   display: block;
   text-align: left;
+  text-shadow: #fff 0 1px 1px;
 }
 
 .slide-gallery .gallery {
@@ -1935,8 +1941,70 @@ li .summary h3 {
   margin-top: 80px;
 }
 
+.signup-button:hover {
+  -webkit-transition: all .16s ease-out;
+  -webkit-transform: scale(1.1);
+}
+
+@keyframes beep {
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  45% {
+    -webkit-transform: scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@-moz-keyframes beep {
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  45% {
+    -webkit-transform: scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@-webkit-keyframes beep {
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  45% {
+    -webkit-transform: scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
 .three-dots .dot {
   display: inline-block;
+  animation: beep 1s infinite;
+  -webkit-animation: beep 1s infinite;
+  animation-delay:1s;
+  -webkit-animation-delay:1s;
+/*  -webkit-transform: scale(1.15);
+*/}
+
+.three-dots .dot:first-child {
+  animation-delay:0.8s;
+  -webkit-animation-delay:0.8s;
+}
+
+.three-dots .dot:last-child {
+  animation-delay:1.2s;
+  -webkit-animation-delay:1.2s;
 }
 
 .blue-bar.community {
