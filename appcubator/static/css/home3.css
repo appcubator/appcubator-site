@@ -511,7 +511,7 @@ body {
 
 
 .slide-gallery .row {
-  height: 420px;
+  height: 450px;
 }
 
 .slide-gallery h2 {
@@ -551,7 +551,7 @@ body {
 .slide-gallery  .gallery li .content {
   display: inline-block;
   height: 270px;
-  max-width: 270px;
+  max-width: 300px;
   width: 100%;
   border-radius: 6px;
   padding-top: 20px;
@@ -636,8 +636,7 @@ body {
 }
 
 .gallery li .content p {
-  opacity: 0;
-  font-size: 10px;
+  font-size: 11px;
   padding: 0 8px;
   transition: opacity 0.2s  ease-in;
   -webkit-transition: opacity 0.2s  ease-in;
