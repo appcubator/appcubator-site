@@ -47,6 +47,32 @@ define([
       callbackFn.apply(undefined, cont_args);
     };
 
+    var waitUntilOnDom = function(selector, callbackFn, cont_args, count) {
+      //clearTimeout(timer);
+      var cnt = (count || 0);
+
+      el = document.querySelector(selector);
+      if(el && !el.tagName) { el = el[0]; }
+
+      var repeat = function() {
+        cnt++;
+        //timer = 
+        window.setTimeout(function() {
+          waitUntilOnDom.call(this, selector, callbackFn, cont_args, cnt);
+        }, 500);
+      };
+
+      var fail = function() {
+        alert('There has been a problem with the flow of the Walkthrough. Please refresh your page. Don\'t worry, you\'ll start from where you left off!');
+      };
+
+      if(cnt > 60) return fail();
+      if(!el) return repeat();
+
+      if($(selector).length === 0) return repeat();
+      callbackFn.apply(undefined, cont_args);
+    };
+
     /* ----------- */
     
     Tourist.Tour.prototype.onChangeCurrentStep = function(model, step) {
@@ -71,7 +97,7 @@ define([
       });
     };
 
-    Tourist.Tip.Base.prototype.template = _.template('<div>\n  <div class="tour-container">\n    <%= close_button %>\n  <h3><%= title %></h3>  <p class="content"><%= content %></p>\n    <p class="tour-counter <%= counter_class %>"><%= counter%></p>\n  </div>\n  <div class="tour-buttons">\n    <%= buttons %>\n  </div>\n</div>');
+    Tourist.Tip.Base.prototype.template = _.template('<div>\n  <div class="tour-container">\n    <%= close_button %>\n  <h3><%= title %></h3>  <p class="content"><%= content %></p>\n<em><p><%= tip %></em></p>    <p class="tour-counter <%= counter_class %>"><%= counter%></p>\n  </div>\n  <div class="tour-buttons">\n    <%= buttons %>\n  </div>\n</div>');
 
     Tourist.Tip.Base.prototype._buildContentElement = function(step) {
       var buttons, content;
@@ -81,6 +107,7 @@ define([
       content = $($.parseHTML(this.template({
         content: step.content,
         title: step.title,
+        tip: step.tip||"",
         buttons: buttons,
         close_button: this._buildCloseButton(step),
         counter: step.final ? '' : "step " + (step.index + 1) + " of " + step.total,
@@ -150,7 +177,6 @@ define([
 
 
         var self = this;
-        if(step.prepare) { step.prepare.call(this); }
 
         var goToNext = function() {
           waitUntilAppears(step.target.selector, function() {
@@ -173,8 +199,11 @@ define([
           });
         };
 
-        if(step.prepareTime) { setTimeout(function() { goToNext(); }, step.prepareTime); }
-        else { goToNext(); }
+        waitUntilOnDom(step.target.selector, function() {
+          if(step.prepare) { step.prepare.call(this); }
+          if(step.prepareTime) { setTimeout(function() { goToNext(); }, step.prepareTime); }
+          else { goToNext(); }
+        });
 
       }
       return this;

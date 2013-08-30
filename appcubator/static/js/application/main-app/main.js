@@ -25,7 +25,8 @@ require.config({
     "collections"     : "../data/collections",
     "tutorial"        : "../tutorial",
     "wizard"          : "../wizard",
-    "xrayquire"       : "../../libs/xrayquire"
+    "xrayquire"       : "../../libs/xrayquire",
+    "ace"             : "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace"
   },
 
   shim: {

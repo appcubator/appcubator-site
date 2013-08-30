@@ -174,15 +174,34 @@
 
 } // end .tutorial-content
 
-@-webkit-keyframes slideInBottom {
-  0% { margin-bottom: -300px; }
-  100% { margin-bottom: 0px; }
-}
+// @-webkit-keyframes slideInBottom {
+//   0% { margin-bottom: -300px; }
+//   100% { margin-bottom: 0px; }
+// }
+
+// @keyframes slideInBottom {
+//   0% { margin-bottom: -300px; }
+//   100% { margin-bottom: 0px; }
+// }
 
 @keyframes slideInBottom {
-  0% { margin-bottom: -300px; }
-  100% { margin-bottom: 0px; }
+  0% { -webkit-transform: translateY(300px); }
+  45% { -webkit-transform: translateY(150px); }
+  100% { -webkit-transform: translateY(0px); }
 }
+
+@-moz-keyframes slideInBottom {
+  0% { -webkit-transform: translateY(300px); }
+  45% { -webkit-transform: translateY(150px); }
+  100% { -webkit-transform: translateY(0px); }
+}
+
+@-webkit-keyframes slideInBottom {
+  0% { -webkit-transform: translateY(300px); }
+  45% { -webkit-transform: translateY(150px); }
+  100% { -webkit-transform: translateY(0px); }
+}
+
 
 
 

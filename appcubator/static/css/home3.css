@@ -393,6 +393,14 @@ body {
   line-height: 70px;
 }
 
+.navbar .login-form .qmark {
+  display: inline-block;
+  color: #fff;
+  margin-left: 6px;
+  font-size: 24px;
+  line-height: 70px;
+}
+
 .navbar .login-form input {
   font-family: "proxima-nova";
   vertical-align: middle;
@@ -462,6 +470,11 @@ body {
 .slide-info .centered-container h2 {
   font-size: 32px;
   margin-bottom: 15px;
+  text-shadow: #fff 0 1px 1px;
+}
+
+.centered-container h3 {
+  text-shadow: #fff 0 1px 1px;
 }
 
 .row .info {
@@ -498,12 +511,13 @@ body {
 
 
 .slide-gallery .row {
-  height: 420px;
+  height: 450px;
 }
 
 .slide-gallery h2 {
   display: block;
   text-align: left;
+  text-shadow: #fff 0 1px 1px;
 }
 
 .slide-gallery .gallery {
@@ -537,7 +551,7 @@ body {
 .slide-gallery  .gallery li .content {
   display: inline-block;
   height: 270px;
-  max-width: 270px;
+  max-width: 300px;
   width: 100%;
   border-radius: 6px;
   padding-top: 20px;
@@ -622,8 +636,7 @@ body {
 }
 
 .gallery li .content p {
-  opacity: 0;
-  font-size: 10px;
+  font-size: 11px;
   padding: 0 8px;
   transition: opacity 0.2s  ease-in;
   -webkit-transition: opacity 0.2s  ease-in;
@@ -675,6 +688,12 @@ body {
   width: 100%;
 }
 
+.centered-container .video {
+  width: 100%;
+  text-align: center;
+  padding: 30px;
+}
+
 .slide-info .screen .video {
   display: inline-block;
   position: absolute;
@@ -683,6 +702,7 @@ body {
   top: 15px;
   height: 195px;
   width: 360px;
+  text-align: center;
 }
 
 .slide-info .row .title {
@@ -1928,8 +1948,70 @@ li .summary h3 {
   margin-top: 80px;
 }
 
+.signup-button:hover {
+  -webkit-transition: all .16s ease-out;
+  -webkit-transform: scale(1.1);
+}
+
+@keyframes beep {
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  45% {
+    -webkit-transform: scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@-moz-keyframes beep {
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  45% {
+    -webkit-transform: scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@-webkit-keyframes beep {
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  45% {
+    -webkit-transform: scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
 .three-dots .dot {
   display: inline-block;
+  animation: beep 1s infinite;
+  -webkit-animation: beep 1s infinite;
+  animation-delay:1s;
+  -webkit-animation-delay:1s;
+/*  -webkit-transform: scale(1.15);
+*/}
+
+.three-dots .dot:first-child {
+  animation-delay:0.8s;
+  -webkit-animation-delay:0.8s;
+}
+
+.three-dots .dot:last-child {
+  animation-delay:1.2s;
+  -webkit-animation-delay:1.2s;
 }
 
 .blue-bar.community {

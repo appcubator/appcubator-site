@@ -52,6 +52,7 @@ function(NavbarEditorView, LinkEditorView) {
       // create new link (duplicate of homepage link)
       var newLink = linkModel;
       var newLinkEditor = new LinkEditorView({ model: newLink});
+      this.subviews.push(newLinkEditor);
       this.$linksList.append(newLinkEditor.render().el);
     },
 

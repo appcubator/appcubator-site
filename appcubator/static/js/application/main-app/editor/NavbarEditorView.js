@@ -24,12 +24,13 @@ function(LinkEditorView) {
       var self = this;
 
       _.bindAll(this);
+      this.subviews = [];
 
       this.model  = model;
       this.links = this.model.get('links');
       this.listenTo(this.links, 'reset', this.renderLinkEditorViews);
       this.listenTo(this.links, 'add', this.addLinkEditorView);
-      console.log(this.links);
+
       this.render();
     },
 
@@ -84,6 +85,7 @@ function(LinkEditorView) {
       // create new link (duplicate of homepage link)
       var newLink = linkModel;
       var newLinkEditor = new LinkEditorView({ model: newLink});
+      this.subviews.push(newLinkEditor);
       this.$linksList.append(newLinkEditor.render().el);
     },
 

@@ -239,7 +239,7 @@ def signup(request):
             api_key = request.GET['k']
             if InvitationKeys.objects.filter(api_key=api_key).exists():
                 return render(request, "registration/signup.html")
-        return render(request, "website-home.html")
+        return render(request, "website-signup.html")
     else:
         req = {}
         req = deepcopy(request.POST)
@@ -249,13 +249,36 @@ def signup(request):
         form = MyUserCreationForm(req)
         if form.is_valid():
             user = form.save()
+            create_customer(request, long(user.pk))
             new_user = authenticate(username=req['email'],
                                     password=req['password1'])
             login(request, new_user)
-            return HttpResponse(simplejson.dumps({"redirect_to": "/app/"}), mimetype="application/json")
+
+            if request.is_ajax():
+                return HttpResponse(simplejson.dumps({"redirect_to": "/app/"}), mimetype="application/json")
+            else:
+                return redirect('/app/')
         else:
             return HttpResponse(simplejson.dumps(form.errors), mimetype="application/json")
 
+@require_POST
+def create_customer(request, user_id):
+    data = request.POST.copy()
+    data['sign_up_fee'] = '36'
+    data['project_description'] = data.get('description', '')
+    data['consulting'] = data.get('interest', '')
+    data['extra_info'] = data.get('extra', '')
+    data['company'] = 'None'
+    data['sent_welcome_email'] = True
+
+    form = NewCustomerForm(data)
+    if form.is_valid():
+        customer = form.save()
+        customer.user_id = user_id
+        customer.save()
+        return True
+
+    return False
 
 def terms_of_service(request):
     page_context = {}
@@ -370,7 +393,6 @@ def signup_from_gwc(request):
 @login_required
 @csrf_exempt
 def send_invitation_to_customer(request, customer_pk):
-    print customer_pk
     customer = get_object_or_404(Customer, pk=customer_pk)
     invitation = InvitationKeys.create_invitation(request.user, customer.email)
     text = "Hello! \n Thanks for your interest in Appcubator. You can signup here: http://appcubator.com/signup?k=%s" % invitation.api_key

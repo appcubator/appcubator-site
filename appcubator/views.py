@@ -181,8 +181,6 @@ def app_new_walkthrough(request, walkthrough):
 @login_required
 def app_page(request, app_id, page_name="overview"):
     app_id = long(app_id)
-
-    print page_name
     # id of 0 is reserved for sample app
     if(app_id == 0):
         return redirect(app_welcome)
