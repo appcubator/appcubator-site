@@ -2,6 +2,7 @@ define(function(require, exports, module) {
     'use strict';
 
     require('app/templates/MainTemplates');
+    require('backbone');
 
     var AppInfoView = Backbone.View.extend({
 
@@ -35,7 +36,9 @@ define(function(require, exports, module) {
             page_context.keywords = this.model.get('keywords');
             page_context.description = this.model.get('description');
 
-            this.el.innerHTML = _.template(util.getHTML('app-info-page'), page_context);
+            if(!htmlPreLoaded) {
+                this.el.innerHTML = _.template(util.getHTML('app-info-page'), page_context);
+            }
 
             this.$nav = $('.navigator .left-nav');
 

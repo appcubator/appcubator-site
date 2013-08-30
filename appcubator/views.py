@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
+from django.template.loader import get_template
 
 from django.forms import ModelForm
 
@@ -194,6 +195,16 @@ def app_page(request, app_id, page_name="overview"):
     mobile_themes = UITheme.get_mobile_themes()
     mobile_themes = [t.to_dict() for t in mobile_themes]
 
+    print page_name
+    try:
+        print "app-" + page_name +"-page.html"
+        temp = get_template("app-" + page_name +"-page.html")
+        template = "app-" + page_name +"-page.html"
+    except:
+        print "Unexpected error:", sys.exc_info()[0]
+        print "nope-overview"
+        template = "app-overview-page.html"
+
     page_context = {'app'          : app,
                     'title'        : 'The Garage',
                     'themes'       : simplejson.dumps(list(themes)),
@@ -202,7 +213,7 @@ def app_page(request, app_id, page_name="overview"):
                     'user'         : app.owner,
                     'staging'      : settings.STAGING,
                     'production'   : settings.PRODUCTION,
-                    'page_name'    : page_name,
+                    'page_template': template,
                     'is_deployed'  : 1 if app.deployment_id != None else 0}
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)

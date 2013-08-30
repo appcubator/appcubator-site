@@ -13,7 +13,7 @@
   <span class="span6 qm-btn" id="tutorial">?</span>
   <span class="span6 scrollUp-btn hidden" id="scrollUp"></span>
 
-  <div class="container hoff7" id="main-container"></div>
+  <div class="container hoff7" id="main-container"><div class="clean-div" id="init-temp">{% include page_template %}</div></div>
   {% include "app-page-templates.html" %}
   {% endblock %}
 
@@ -32,6 +32,7 @@
     var is_deployed = {{ is_deployed }}
     var v1 = {};
     var v1State = {};
+    var htmlPreLoaded = false;
   </script>
   <script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js">
   </script>

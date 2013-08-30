@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     url(r'^aboutus/$',                  base_views.aboutus),
     url(r'^changelog/$',                base_views.changelog),
     # Signup, Login and invites
-    url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^accounts/',                  include('registration.backends.default.urls')),
     url(r'^login/$',                    django.contrib.auth.views.login, {'template_name' : 'registration/login_page.html'}),
     url(r'^logout/$',                   django.contrib.auth.views.logout, {"next_page":"/"}),
     url(r'^connect_with/$',             base_views.get_linkedin),
@@ -123,8 +123,9 @@ urlpatterns += patterns('appcubator.views',
     url(r'^documentation/([^/]+)/$', 'documentation_page'),
 
     # the rest
+    url(r'^app/(\d+)/([^/]+)/', 'app_page'), # this serves all the app pages
+    #url(r'^app/(\d+)/([^/]+)/$', 'app_page'), # this serves all the app pages
     url(r'^app/(\d+)/', 'app_page', {"page_name": "overview"}), # this serves all the app pages
-    url(r'^app/(\d+)/([^/]+)/$', 'app_page'), # this serves all the app pages
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
 )

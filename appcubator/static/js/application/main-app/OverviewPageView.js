@@ -30,7 +30,7 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
 
     render: function() {
       var page_context = {};
-      this.el.innerHTML = _.template(util.getHTML('app-main-page'), page_context);
+      this.el.innerHTML = _.template(util.getHTML('app-overview-page'), page_context);
       this.$('.analytics').append(this.analyticsView.render().el);
       this.renderNextStep();
     },

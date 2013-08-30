@@ -34,7 +34,9 @@ function(EmailCollection, EmailModel, EmailView) {
     },
 
     render: function() {
-      this.el.innerHTML = _.template(util.getHTML('emails-page'), {});
+      if(!htmlPreLoaded) {
+        this.el.innerHTML = _.template(util.getHTML('emails-page'), {});
+      }
       this.listView = this.$el.find('#email-list');
       this.renderEmailList();
       this.renderVariableList();

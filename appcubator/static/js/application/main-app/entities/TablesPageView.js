@@ -44,7 +44,9 @@ function(TableCollection,
 
       render : function() {
 
-        this.$el.html(_.template(util.getHTML('entities-page'), {}));
+        if(!htmlPreLoaded) {
+          this.$el.html(_.template(util.getHTML('entities-page'), {}));
+        }
         this.renderTables();
         this.renderRelations();
 

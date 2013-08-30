@@ -54,6 +54,8 @@ function( PageModel,
       _.bindAll(this);
       this.subviews = [];
 
+      console.log(options);
+
       if(options && options.pageId) pageId = options.pageId;
 
       util.loadCSS('jquery-ui');
@@ -98,8 +100,9 @@ function( PageModel,
 
     render: function() {
 
-      if(!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
-
+      if(!htmlPreLoaded) {
+        if(!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
+      }
       this.toolBar.setElement(document.getElementById('tool-bar')).render();
       this.marqueeView.render();
       this.renderUrlBar();

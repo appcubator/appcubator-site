@@ -1,6 +1,14 @@
 define(function(require, exports, module) {
     'use strict';
 
+
+    var OverviewPageView = require('app/OverviewPageView');
+    var AppInfoView = require('app/AppInfoView');
+    var TablesPageView = require('app/entities/TablesPageView');
+    var ThemesGalleryView = require('app/ThemesGalleryView');
+    var PagesView = require('app/pages/PagesView');
+    var EditorView = require('editor/EditorView');
+
     var SimpleModalView    = require("mixins/SimpleModalView");
     var ErrorDialogueView  = require("mixins/ErrorDialogueView");
     var SimpleDialogueView = require("mixins/SimpleDialogueView");
@@ -9,7 +17,6 @@ define(function(require, exports, module) {
         EmailsView = require("app/emails/EmailsView"),
         DeployView = require("app/DeployView"),
         SoftErrorView = require("app/SoftErrorView");
-
 
     var AppRouter = Backbone.Router.extend({
 
@@ -64,59 +71,49 @@ define(function(require, exports, module) {
 
         index: function(appId, tutorial) {
             var self = this;
-            require(['app/OverviewPageView'], function(OverviewPageView) {
-                self.tutorialPage = "Introduction";
-                self.changePage(OverviewPageView, tutorial, function() {});
-                olark('api.box.show');
-            });
+            self.tutorialPage = "Introduction";
+            self.changePage(OverviewPageView, tutorial, function() {});
+            olark('api.box.show');
         },
 
         info: function(appId, tutorial) {
             var self = this;
-            require(['app/AppInfoView'], function(InfoView) {
-                self.tutorialPage = "Application Settings";
-                self.changePage(InfoView, tutorial, function() {
-                    $('.menu-app-info').addClass('active');
-                });
-                olark('api.box.show');
+            self.tutorialPage = "Application Settings";
+            self.changePage(AppInfoView, tutorial, function() {
+                $('.menu-app-info').addClass('active');
             });
+            olark('api.box.show');
         },
 
         tables: function(appId, tutorial) {
             var self = this;
-            require(['app/entities/EntitiesView'], function(EntitiesView) {
-                self.tutorialPage = "Tables Page";
-                self.changePage(EntitiesView, tutorial, function() {
-                    self.trigger('entities-loaded');
-                    $('.menu-app-entities').addClass('active');
-                });
-                olark('api.box.show');
+            self.tutorialPage = "Tables Page";
+            self.changePage(TablesPageView, tutorial, function() {
+                self.trigger('entities-loaded');
+                $('.menu-app-entities').addClass('active');
             });
+            olark('api.box.show');
         },
 
         themes: function(appId, tutorial) {
             var self = this;
             self.tutorialPage = "Themes";
-            require(['app/ThemesGalleryView'], function(ThemesGalleryView) {
-                self.changePage(ThemesGalleryView, tutorial, function() {
-                    self.trigger('themes-loaded');
-                    $('.menu-app-themes').addClass('active');
-                });
-                olark('api.box.show');
+            self.changePage(ThemesGalleryView, tutorial, function() {
+                self.trigger('themes-loaded');
+                $('.menu-app-themes').addClass('active');
             });
+            olark('api.box.show');
         },
 
         pages: function(appId, tutorial) {
             var self = this;
             self.tutorialPage = "Pages";
-            require(['app/pages/PagesView'], function(PagesView) {
-                $('.page').fadeIn();
-                self.changePage(PagesView, tutorial, function() {
-                    self.trigger('pages-loaded');
-                    $('.menu-app-pages').addClass('active');
-                });
-                olark('api.box.show');
+            $('.page').fadeIn();
+            self.changePage(PagesView, tutorial, function() {
+                self.trigger('pages-loaded');
+                $('.menu-app-pages').addClass('active');
             });
+            olark('api.box.show');
         },
 
         editor: function(appId, pageId) {
@@ -124,43 +121,50 @@ define(function(require, exports, module) {
 
             self.tutorialPage = "Editor";
 
-            require(['editor/EditorView'], function(EditorView) {
-                $('.page').fadeOut();
-                if (v1.view) v1.view.close();
-                var cleanDiv = document.createElement('div');
+            $('.page').fadeOut();
+            if (v1.view) v1.view.close();
+
+            var cleanDiv = {};
+            if(document.getElementById('init-temp')) {
+                cleanDiv = document.getElementById('init-temp');
                 cleanDiv.className = "clean-div editor-page";
-                $(document.body).append(cleanDiv);
+                htmlPreLoaded = true;
+            }
+            else {
+                cleanDiv = document.createElement('div');
+                cleanDiv.className = "clean-div editor-page";
+                htmlPreLoaded = false;
+            }
 
-                v1.view = new EditorView({
-                    pageId: pageId
-                });
-                v1.view.setElement(cleanDiv).render();
+            //$(document.body).append(cleanDiv);
 
-                self.trigger('editor-loaded');
+            v1.view = new EditorView({ pageId: pageId });
+            v1.view.setElement(cleanDiv).render();
 
-                olark('api.box.hide');
-                self.changeTitle(v1.view.title);
-            });
+            self.trigger('editor-loaded');
+
+            olark('api.box.hide');
+            self.changeTitle(v1.view.title);
         },
 
         mobileEditor: function(appId, pageId) {
-            var self = this;
-            $('.page').fadeOut();
-            self.tutorialPage = "Editor";
-            require(['m-editor/MobileEditorView'], function(MobileEditorView) {
-                if (v1.view) v1.view.close();
-                var cleanDiv = document.createElement('div');
-                cleanDiv.className = "clean-div editor-page";
-                $(document.body).append(cleanDiv);
+            // var self = this;
+            // $('.page').fadeOut();
+            // self.tutorialPage = "Editor";
+            // require(['m-editor/MobileEditorView'], function(MobileEditorView) {
+            //     if (v1.view) v1.view.close();
+            //     var cleanDiv = document.createElement('div');
+            //     cleanDiv.className = "clean-div editor-page";
+            //     $(document.body).append(cleanDiv);
 
-                v1.view = new MobileEditorView({
-                    pageId: pageId
-                });
-                v1.view.setElement(cleanDiv).render();
+            //     v1.view = new MobileEditorView({
+            //         pageId: pageId
+            //     });
+            //     v1.view.setElement(cleanDiv).render();
 
-                olark('api.box.hide');
-                self.changeTitle(v1.view.title);
-            });
+            //     olark('api.box.hide');
+            //     self.changeTitle(v1.view.title);
+            // });
         },
 
         emails: function(appId, tutorial) {
@@ -173,10 +177,18 @@ define(function(require, exports, module) {
 
         changePage: function(newView, tutorial, post_render) {
             if (v1.view) v1.view.close();
-            var cleanDiv = document.createElement('div');
-            cleanDiv.className = "clean-div";
-            var mainContainer = document.getElementById('main-container');
-            mainContainer.appendChild(cleanDiv);
+            
+            if(document.getElementById('init-temp')) {
+                cleanDiv = document.getElementById('init-temp');
+                htmlPreLoaded = true;
+            }
+            else {
+                var cleanDiv = document.createElement('div');
+                cleanDiv.className = "clean-div";
+                var mainContainer = document.getElementById('main-container');
+                mainContainer.appendChild(cleanDiv);
+                htmlPreLoaded = false;
+            }
 
             v1.view = new newView();
             v1.view.setElement(cleanDiv).render();

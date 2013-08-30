@@ -16,7 +16,9 @@ function(ThemeDisplayView) {
     },
 
     render: function() {
-      this.$el.html(_.template(util.getHTML('themes-page'), {}));
+      if(!htmlPreLoaded) {
+        this.$el.html(_.template(util.getHTML('themes-page'), {}));
+      }
 
       this.listView = document.createElement('ul');
       this.listView.className = 'theme-gallery';

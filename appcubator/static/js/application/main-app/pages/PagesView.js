@@ -28,7 +28,9 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
     },
 
     render: function() {
-      this.$el.html(_.template(util.getHTML('pages-page'), {}));
+      if(!htmlPreLoaded) {
+        this.$el.html(_.template(util.getHTML('pages-page'), {}));
+      }
       this.listView = document.getElementById('list-pages');
       //this.mobileListView = document.getElementById('list-mobile-pages');
 
