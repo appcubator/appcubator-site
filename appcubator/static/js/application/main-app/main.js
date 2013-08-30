@@ -5,7 +5,7 @@ require.config({
     "jquery.hotkeys"  : "../../libs/jquery/jquery.hotkeys",
     "underscore"      : "../../libs/underscore-amd/underscore",
     "backbone"        : "../../libs/backbone-amd/backbone",
-    "react"           : "https://fb.me/react-0.4.1.min",
+    "react"           : "https://cdnjs.cloudflare.com/ajax/libs/react/0.4.1/react.min",
     "heyoffline"      : "../../libs/heyoffline",
     "util"            : "../../libs/util/util",
     "util.filepicker" : "../../libs/util/util.filepicker",
