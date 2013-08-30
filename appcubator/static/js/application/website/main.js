@@ -70,6 +70,7 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
       this.animateCube();
       this.bindLoginForm();
       this.bindSignupForm();
+      $('input[type=checkbox]').prettyCheckable();
       document.addEventListener("touchstart", function(){}, true);
     },
 

@@ -239,7 +239,7 @@ def signup(request):
             api_key = request.GET['k']
             if InvitationKeys.objects.filter(api_key=api_key).exists():
                 return render(request, "registration/signup.html")
-        return render(request, "website-home.html")
+        return render(request, "website-signup.html")
     else:
         req = {}
         req = deepcopy(request.POST)
@@ -252,7 +252,11 @@ def signup(request):
             new_user = authenticate(username=req['email'],
                                     password=req['password1'])
             login(request, new_user)
-            return HttpResponse(simplejson.dumps({"redirect_to": "/app/"}), mimetype="application/json")
+
+            if request.is_ajax():
+                return HttpResponse(simplejson.dumps({"redirect_to": "/app/"}), mimetype="application/json")
+            else:
+                return redirect('/app/')
         else:
             return HttpResponse(simplejson.dumps(form.errors), mimetype="application/json")
 

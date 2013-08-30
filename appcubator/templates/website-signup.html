@@ -1,0 +1,67 @@
+{% extends "infra-website.html" %}
+
+{% block css %}
+<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
+{% endblock %}
+{% block page %}
+<div id="fb-root"></div>
+<script>
+</script>
+{% include "website-navbar.html" %}
+
+<div class="sliding-panel">
+  <div class="slide slide-intro">
+    <div class="blue-bar" style="height:240px;">
+      <div class="large-text">
+        Sign up for Appcubator.
+      </div>
+      <div class="sub-text">It's free to build as long as you want.</div>
+    </div>
+  </div>
+  <div class="slide-info slide">
+    <div class="row">
+      <div class="centered-container" style="text-align:center;">
+        <form class="sign-up-form" method="POST" id="signup" action="{% url signup_form %}">
+          {% csrf_token %}
+          <div class="left-side">
+            <input type="text" name="name" id="inp-name" placeholder="Full Name">
+            <div class="form-error field-name-first_name"></div>
+
+            <input type="text" name="email" id="inp-email" placeholder="Email">
+            <div class="form-error field-name-email"></div>
+            <div class="form-error field-name-username"></div>
+
+            <input type="hidden" name="extra-info" id="inp-extra" value="-">
+
+            <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
+            <hr>
+            <input type="password" name="password1" id="inp-name" placeholder="Password">
+            <div class="form-error field-name-password1"></div>
+
+            <input type="password" name="password2" id="inp-email" placeholder="Confirm Password">
+            <div class="form-error field-name-password2"></div>
+          </div>
+          <div class="right-side">
+            <textarea name="description" id="inp-description" placeholder="Technical description of your application. This is for us to attain the feasibility of the project to best direct you. It's totally fine if you just want to check it out."></textarea>
+            <input type="checkbox" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
+            <input style="height:48px;" type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="centered-container">
+        <h3>Have any questions? Please reach us at team@appcubator.com</h3>
+      </div>
+    </div>
+  </div>
+  {% include "website-footer.html" %}
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+{% endblock %}
