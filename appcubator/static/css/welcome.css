@@ -253,3 +253,44 @@ a.large-link {
 .right-menu .notifications ul li {
   margin-top: 10px;
 }
+
+.right-menu .white-border {
+  padding: 0;
+  line-height: 60px;
+  border: none;
+  cursor: pointer;
+}
+
+.right-menu .white-border .icon {
+  display: inline-block;
+  width: 45px;
+  height: 60px;
+  background-image: url(../img/garage-icons.png);
+  background-position: 0 7px;
+  background-repeat: no-repeat;
+}
+
+.right-menu .white-border .icon.resources {
+  background-position: -45px 7px;
+}
+
+.right-menu .white-border .icon.community {
+  background-position: -90px 7px;
+}
+
+.right-menu .white-border .icon.settings {
+  background-position: -135px 7px;
+}
+
+.garage .question-cont {
+  right: 30px;
+  bottom: 70px;
+}
+
+.garage .question-cont p {
+  bottom: 70px;
+}
+
+.fixed-bg.welcome.garage {
+  background-color: rgba(0, 0, 0, 0.92);
+}
