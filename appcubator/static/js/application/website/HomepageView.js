@@ -23,7 +23,9 @@ function(RequestInviteModalView) {
     },
 
     render : function(img, text) {
-      this.bindSliders();
+      if($(window).width() > 800) {
+        this.bindSliders();
+      }
 
       $('#request-left-btn').html('Request an Invite');
       $('input[type=checkbox]').prettyCheckable();
@@ -44,6 +46,7 @@ function(RequestInviteModalView) {
     },
 
     bindSliders: function (){
+
       var self = this;
       var xTrans = -30;
       var yTrans = 45;

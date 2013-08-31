@@ -67,11 +67,14 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
 
     initialize: function() {
       _.bindAll(this);
-      this.animateCube();
-      this.bindLoginForm();
-      this.bindSignupForm();
       $('input[type=checkbox]').prettyCheckable();
       document.addEventListener("touchstart", function(){}, true);
+
+      if($(window).width() > 800) {
+        this.animateCube();
+        this.bindLoginForm();
+        this.bindSignupForm();
+      }
     },
 
     homepage: function() {

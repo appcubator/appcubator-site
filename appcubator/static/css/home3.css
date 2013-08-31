@@ -1,15 +1,8 @@
-.IN-widget {
-  display: inline-block;
-  padding: 5px;
-}
-
-.pane p {
+body {
+  background-color: #e6e8e9;
   font-size: 16px;
-  vertical-align: bottom;
-}
-
-.well p {
-  vertical-align: bottom;
+  line-height: 22px;
+  font-family: "proxima-nova";
 }
 
 h2 {
@@ -50,49 +43,12 @@ h6 {
   margin-top: 22px;
 }
 
-body {
-  background-color: #e6e8e9;
-/*  background-image: url(../img/noisy.png);
-*/  font-size: 16px;
-  line-height: 22px;
-  font-family: "proxima-nova";
-}
-
 .logo-text {
   overflow: visible;
 }
 
 .small {
   font-size: 13px;
-}
-
-.preload * {
-  -webkit-transition: none !important;
-  -moz-transition: none !important;
-  -o-transition: none !important;
-  -ms-transition: none !important;
-  transition: none !important;
-}
-
-.IN-widget {
-  display: none !important;
-}
-
-/* New Homepage */
-.left-panel {
-  position: fixed;
-  height: 100%;
-  width: 280px;
-  background-color: #fff;
-  float: left;
-  display: inline-block;
-  left: 0px;
-  bottom: 0px;
-  height: 100%;
-  border-right: 1px solid #f0f0f0;
-  z-index: 2;
-  text-align: center;
-  border-right: 1px solid #aaa;
 }
 
 .large-header h1 {
@@ -111,54 +67,11 @@ body {
   margin-right: 6px;
 }
 
-.left-panel .bottom-panel {
-  position: fixed;
-  left: 0;
-  width: 280px;
-  bottom: -210px;
-  padding-bottom: 20px;
-  text-align: center;
-}
-
-.left-panel .bottom-panel .login {
-  margin-top: 30px;
-}
-
-.left-panel .bottom-panel form {
-  text-align: center;
-}
-
-.left-panel .bottom-panel .login input {
-  width: 232px;
-  height: 42px;
-}
-
-.left-panel .bottom-panel .login a {
-  display: block;
-  text-align: left;
-  margin-left: 10px;
-  margin-bottom: 10px;
-}
-
-.left-panel .bottom-panel .login input[type="text"],.bottom-panel .login input[type="password"] {
-  margin-left: 3px;
-  width: 230px;
-}
-
-.left-panel .buttons .btn {
-  width: 232px;
-  font-size: 16px;
-  padding: 14px 20px;
-  line-height: 16px;
-}
-
-
 .sliding-panel {
   position: relative;
   height: 100%;
   top: 0;
-/*  padding-left: 280px;
-*/  text-align: center;
+  text-align: center;
 }
 
 .large-header {
@@ -1225,7 +1138,7 @@ img.logo {
 @media (max-width: 928px) {
 
   .no-mobile {
-    display: none;
+    display: none !important;
   }
 
   .menu {
@@ -1278,9 +1191,6 @@ img.logo {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-  }
-  .gallery li .content {
-
   }
 
   .slide-gallery .gallery li:first-child {
@@ -1381,18 +1291,6 @@ img.logo {
     display: none;
   }
 
-  #member {
-    display: none;
-  }
-
-  .bottom .arrow {
-    display: none;
-  }
-
-  .bottom .mascot {
-    float: none;
-  }
-
   .footer h2 {
     font-size: 18px;
   }
@@ -1421,10 +1319,8 @@ img.logo {
   }
 
   .slide-last {
-    margin-bottom: 120px;
+    padding-bottom: 60px;
   }
-
-
 
   .pricing .content {
     margin-right: 0;
@@ -1444,11 +1340,6 @@ img.logo {
   .sign-up-form .left-side {
     display: block;
     width: 100%;
-  }
-
-
-  #sign-up {
-    position: static;
   }
 
   .pricing li .title {
@@ -1476,6 +1367,21 @@ img.logo {
   .thanks-for-signing p {
     font-size: 16px;
     margin-bottom: 6px;
+  }
+
+  .centered-container > .half-left,
+  .centered-container > .half-right {
+    width: 100%;
+    display: block;
+  }
+
+  .screen {
+    width: 100%;
+    padding-bottom: 30px;
+  }
+
+  .large-container, .right-container {
+    border-radius: 0 !important;
   }
 
 }
@@ -2068,4 +1974,18 @@ li .summary h3 {
   margin-right: 0px;
 }
 
+/* Smartphones (portrait and landscape) ----------- */
+@media (max-width : 480px) {
+  .navbar {
+    position: absolute;
+  }
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+  .navbar {
+    position: absolute;
+  }
+}
 
