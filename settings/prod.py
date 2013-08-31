@@ -30,7 +30,7 @@ DATABASES = {
        'NAME': 'v1factory',
        'USER': 'root',
        'PASSWORD': 'obscurepassword321',
-       'HOST': '127.0.0.1',
+       'HOST': 'appcubatorsite.ccchupi0ycq8.us-east-1.rds.amazonaws.com',
        'PORT': 3306
    }
 }
