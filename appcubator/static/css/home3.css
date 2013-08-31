@@ -1870,6 +1870,7 @@ li .summary h3 {
 }
 
 .signup-button:hover {
+  text-decoration: none;
   -webkit-transition: all .16s ease-out;
   -webkit-transform: scale(1.1);
 }
@@ -1988,4 +1989,3 @@ only screen and (min-device-pixel-ratio : 1.5) {
     position: absolute;
   }
 }
-
