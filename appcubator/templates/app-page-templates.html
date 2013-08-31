@@ -99,21 +99,22 @@
 </script>
 
 <script type="text/template" id="garage-temp">
-  <div class="hide-btn">×</div>
-  <div class="offset8 left-menu">
+  <div class="hide-btn hide-overlay">×</div>
+  <div class="offset8 span36 left-menu">
     <div class="row">
       <div class="span36 intro">
         <img class="welcome" src="{{ STATIC_URL }}img/garage-marker.png">
       </div>
     </div>
     {% if app %}
-        <div class="title">{{ app.name }}</div>
-        <div class="row hoff2 span48">
+        <div class="app title">{{ app.name }}</div>
+        <div class="row hoff1 span48">
           <a class="white-border span7 hi7" href="{% url appcubator.views.app_page app.id %}info/"><span class="icon"></span>App Settings</a></li>
-          <a class="white-border span7 hi7 offset1" href="{% url appcubator.views.app_edit_theme app.id %}" rel="external" target="_blank"><span class="icon"></span>Theme Editor</a>
+          <a class="white-border span7 hi7 offset2" href="{% url appcubator.views.app_edit_theme app.id %}" rel="external" target="_blank"><span class="icon"></span>Theme Editor</a>
+          <a class="white-border span7 hi7 offset2 hide-overlay" href="#"><span class="icon"></span>Go Back to the App</a>
         </div>
     {% endif %}
-    <div class="row hoff2 span48">
+    <div class="row hoff2 span36">
       <div class="title">Your other Apps:</div>
       {% for a in users_apps %}
         <div class="row">
@@ -122,7 +123,27 @@
           </a>
         </div>
       {% endfor %}
+        <div class="row">
+          <a class="span26 hi4 hoff1 large-link" href="{% url appcubator.views.app_new %}" rel="external">
+            <strong>+ CREATE A NEW APP</strong>
+          </a>
+        </div>
     </div>
+  </div>
+  <div class="offset2 right-menu hoff8 span20">
+    <a class="white-border span20 hi4" href="#">Invite Your Friends</a>
+    <div class="notifications">
+      <div class="title">Notifications</div>
+      <hr>
+      <ul>
+        <li>You can fill the feedback form for a chance to win a free domain.</li>
+        <li>You can even do this.</li>
+        <li>Now you can see the analytics about your application in the dashboard below.</li>
+      </ul>
+    </div>
+    <a class="white-border span20">Resources</a>
+    <a class="white-border span20">Community</a>
+    <a class="white-border span20">Account Settings</a>
   </div>
   <div class="question-cont">
     <img src="{{ STATIC_URL }}img/question-market.png">

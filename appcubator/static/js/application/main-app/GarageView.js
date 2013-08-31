@@ -12,7 +12,7 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
     className: 'fixed-bg welcome garage',
 
     events : {
-      'click .hide-btn ' : 'hide'
+      'click .hide-overlay' : 'hide'
       // 'click .tutorial'        : 'showTutorial',
       // 'click .feedback'        : 'showFeedback',
       // 'click #deploy'          : 'deploy',
