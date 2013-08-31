@@ -202,7 +202,7 @@ a.white-border {
   position: fixed;
   top: 0px;
   right: 50%;
-  margin-right: -430px;
+  margin-right: -466px;
   font-weight: lighter;
   opacity: 0.8;
   color: #fff;
@@ -215,7 +215,7 @@ a.white-border {
   opacity: 1;
 }
 
-.title {
+.left-menu .title {
   color: #fff;
   display: block;
   font-size: 18px;
@@ -296,5 +296,5 @@ a.large-link {
 }
 
 .fixed-bg.welcome.garage {
-  background-color: rgba(0, 0, 0, 0.92);
+  background-color: rgba(0, 0, 0, 0.85);
 }
