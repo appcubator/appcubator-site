@@ -52,7 +52,8 @@ define([
     {
       ind     : 4,
       title   : 'A New Page',
-      content : 'Let\'s create a new page.</p><p><em>Click this button and enter <strong>Tweet Feed</strong></em>',
+      content : 'Let\'s create a new page.',
+      tip     : 'Click this button and enter <strong>Tweet Feed</strong>',
       loc     : "left top, right top",
       url     : '/pages/',
       target  : $('#create-page-box'),
@@ -80,7 +81,8 @@ define([
     {
       ind     : 5,
       title   : 'Editing a Page',
-      content : 'Here you can edit your home page. <em>Click <strong>Edit Page</strong></em>',
+      content : 'Here you can edit your home page.',
+      tip     : 'Click <strong>Edit Page</strong>',
       loc     : "left top, right top",
       url     : '/pages/',
       target  : $('.page-view'),
@@ -144,7 +146,7 @@ define([
       url     : '/editor/0/',
       target  : $('#type-headerTexts'),
       prepare : function() {
-        $('#item-gallery').scrollTop($("#type-headerTexts").offset().top);
+        $('#item-gallery').scrollTop($("#type-headerTexts").offset().top + 30);
       },
       setup: function(tour, options) {
 
@@ -188,7 +190,7 @@ define([
         var timer = setTimeout(function() {
           $('#item-gallery').scrollTop($("#entity-user-facebook").offset().top - 100);
           clearTimeout(timer);
-        }, 200);
+        }, 100);
       },
       setup: function(tour, options) {
         facebookDropped = function(uielem) {
@@ -289,6 +291,9 @@ define([
       loc     : "right center, left center",
       url     : '/editor/1/',
       target  : $('#type-create-form'),
+      prepare : function() {
+        $('#item-gallery').scrollTop($("#type-create-form").offset().top + 30);
+      },
       setup: function(tour, options) {
         v1State.getCurrentPage().bind('creat-form-dropped', tour.next);
       },
@@ -434,7 +439,7 @@ define([
       ind     : 26,
       title   : 'The Green Row',
       content : 'The green area of the list represents a single row. Drag\'N\'Drop works here too.',
-      loc     : "top center, bottom center",
+      loc     : "bottom center, top center",
       url     : '/editor/1/',
       target  : $('.highlighted'),
       nextButton: true

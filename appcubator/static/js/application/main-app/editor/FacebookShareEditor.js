@@ -1,70 +1,72 @@
 define([
+  'react',
   'mixins/BackboneModal',
 ],
-function() {
+function(React) {
 
-  var FacebookShareEditor = Backbone.ModalView.extend({
-    className : 'modal image-slider-editor',
-    width  : 600,
-    height: 400,
-    padding: 0,
-    title: 'Facebook Share Editor',
-    doneButton: true,
+    var FacebookShareEditor = Backbone.ModalView.extend({
+        className : 'modal image-slider-editor',
+        width  : 600,
+        height: 400,
+        padding: 0,
+        title: 'Facebook Share Editor',
+        doneButton: true,
 
-    events : {
-      'keyup #fb-page-link' : 'linkChanged',
-      'focus #fb-page-link' : 'linkChanged',
-      'change .has-link'    : 'hasLinkChanged'
-    },
+        initialize: function(widgetModel){
+          _.bindAll(this);
+          this.model = widgetModel;
+          this.render();
+        },
 
-    initialize: function(widgetModel){
-      _.bindAll(this);
+        render: function() {
+            var model = this.model;
+            var Component = React.createClass({
 
-      this.model = widgetModel;
-      this.render();
-    },
+                getInitialState: function() {
+                    return { hasLink: model.get('data').get('container_info').has('pageLink'),
+                             link: (model.get('data').get('container_info').get('pageLink')||"")};
+                },
 
-    render: function() {
-      var self = this;
+                handleChange: function(event) {
+                    this.setState({hasLink: true});
+                    this.setState({link: event.target.value});
+                    model.get('data').get('container_info').set('pageLink', event.target.value);
+                },
 
-      var temp = [
-        '<div class="facebook-share-editor" style="padding:15px;">',
-          'Please add the link of your Facebook Page if you would like to connect it to the Facebook button.',
-          '<ul class="no-bullets">',
-            '<li style="width:100%;"><input type="radio" name="link-to-page" class="has-link" id="yes-pagelink" value="true"><input type="text" class="span24" placeholder="Copy Paste the link here..." id="fb-page-link"></li>',
-            '<li style="width:100%;"><input type="radio" name="link-to-page" class="has-link" id="no-pagelink" value="false"><label style="display:inline-block" for="no-pagelink">Just link it to the current page.</label></li>',
-          '</ul>',
-        '</div>'
-      ].join('\n');
-      this.el.innerHTML = _.template(temp, {});
+                unsetLink: function() {
+                    this.setState({hasLink: false});
+                    model.get('data').get('container_info').unset('pageLink');
+                },
 
-      if(this.model.get('data').get('container_info').has('pageLink')) {
-        $('#yes-pagelink').prop('checked',true);
-        $('#fb-page-link').val(this.model.get('data').get('container_info').get('pageLink'));
-      }
-      else { $('#no-pagelink').prop('checked',true); }
+                setLink: function() {
+                    this.setState({hasLink: true});
+                    model.get('data').get('container_info').set('pageLink', this.state.link);
+                },
 
-      return this;
-    },
+                render: function() {
+                    return React.DOM.div({
+                        className: "facebook-share-editor padding1",
+                        children:[
+                            React.DOM.div({children:"Please add the link of your Facebook Page if you would like to connect it to the Facebook button.", className:"full-width"}),
+                            React.DOM.ul({className:"no-bullets", children: [
+                                React.DOM.li({className: "full-width", children:[
+                                    React.DOM.input({type: "radio", checked: this.state.hasLink, onChange: this.setLink}),
+                                    React.DOM.input({type: "text", value: this.state.link, onChange: this.handleChange, onFocus: this.setLink, className:"span24", placeholder: "Copy Paste the link here..."})
+                                ]}),
+                                React.DOM.li({className: "full-width", children:[
+                                    React.DOM.input({type: "radio", checked: !this.state.hasLink, onChange: this.unsetLink}),
+                                ]}),
+                            ]})
+                        ]
+                    });
+                }
+            });
 
-    linkChanged: function(e) {
-      var newLink = $('#fb-page-link').val();
-      this.model.get('data').get('container_info').set('pageLink', newLink);
-      $('#yes-pagelink').prop('checked',true);
-    },
+            React.renderComponent(Component({}), this.el);
 
-    linkFocused: function() {
-      $('#yes-pagelink').prop('checked',true);
-    },
-
-    hasLinkChanged: function(e) {
-      if(!e.currentTarget.checked) return;
-
-      if(e.currentTarget.id == "yes-pagelink") { $('#fb-page-link').focus(); }
-      else { this.model.get('data').get('container_info').unset('pageLink'); }
-    }
-
-  });
+            return this;
+        }
+    });
 
   return FacebookShareEditor;
 });

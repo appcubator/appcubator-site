@@ -12,7 +12,7 @@ from payments import views as payment_views
 urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
     url(r'^beta/$',                     base_views.homepage_new),
-    url(r'^showhn/$',                   base_views.showhnpage),
+    url(r'^showhn/$',                   base_views.homepage),
     url(r'^showgsb/$',                  base_views.showgsbpage),
     url(r'^showdn/$',                   base_views.showdnpage),
     url(r'^girlswhocode/$',             base_views.showgwcpage),
@@ -51,12 +51,13 @@ urlpatterns = patterns('',
     url(r'^payments/',                  include('appcubator.payments.urls')),
     url(r'^app/(\d+)/payment/$',        payment_views.app_payment),
 
-    url(r'^resources/$',                         base_views.resources),
-    url(r'^resources/screencast/(\d+)/$',        base_views.screencast),
-    url(r'^resources/sample/(\d+)/$',            base_views.sample_app),
-    url(r'^resources/sample/(\d+)/part/(\d+)/$', base_views.sample_app_part),
-    url(r'^resources/designer-guide/$',          base_views.designer_guide),
-    url(r'^resources/developer-guide/$',         base_views.developer_guide),
+    url(r'^resources/$',                               base_views.resources),
+    url(r'^resources/screencast/(\d+)/$',              base_views.screencast),
+    url(r'^resources/sample/(\d+)/$',                  base_views.sample_app),
+    url(r'^resources/tutorial/build-social-network/$', base_views.resources_socialnetwork),
+    url(r'^resources/sample/(\d+)/part/(\d+)/$',       base_views.sample_app_part),
+    url(r'^resources/designer-guide/$',                base_views.designer_guide),
+    url(r'^resources/developer-guide/$',               base_views.developer_guide),
 )
 
 urlpatterns += patterns('appcubator.log_views',
@@ -122,11 +123,10 @@ urlpatterns += patterns('appcubator.views',
     url(r'^documentation/([^/]+)/$', 'documentation_page'),
 
     # the rest
-    url(r'^app/(\d+)/', 'app_page'), # this serves all the app pages
+    url(r'^app/(\d+)/', 'app_page', {"page_name": "overview"}), # this serves all the app pages
+    url(r'^app/(\d+)/([^/]+)/$', 'app_page'), # this serves all the app pages
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
-    url(r'^yomomma/(\d+)/$', 'yomomma'),
-    url(r'^webgeekjokes/$', 'webgeekjokes'),
 )
 
 urlpatterns += patterns('appcubator.admin_views',

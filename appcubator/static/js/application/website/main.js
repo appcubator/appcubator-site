@@ -58,19 +58,23 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
   var WebsiteRouter = Backbone.Router.extend({
 
     routes: {
-      "/"                              : "homepage",
-      "beta/"                          : "homepage",
-      "developer/"                     : "developerpage",
+      ""                    : "homepage",
+      "beta/"               : "homepage",
+      "developer/"          : "developerpage",
     },
 
     cube: $('#cube'),
 
     initialize: function() {
       _.bindAll(this);
-      this.animateCube();
-      this.bindLoginForm();
-      this.bindSignupForm();
+      $('input[type=checkbox]').prettyCheckable();
       document.addEventListener("touchstart", function(){}, true);
+
+      if($(window).width() > 800) {
+        this.animateCube();
+        this.bindLoginForm();
+        this.bindSignupForm();
+      }
     },
 
     homepage: function() {
@@ -82,6 +86,21 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
     },
 
     bindLoginForm: function() {
+      $('.login-button').on('click', function(e) {
+        e.preventDefault();
+        $('.menu').hide();
+        $('.login-form').fadeIn();
+        $('#id_username').focus();
+      });
+
+      $(window).on('keydown', function(e) {
+        console.log(e.keyCode);
+        if(e.keyCode == 27) {
+          $('.login-form').hide();
+          $('.menu').fadeIn();
+        }
+      });
+
         $('#member').on('click', function(e) {
           $('#bottom-panel').animate({
             bottom : 0
@@ -93,6 +112,7 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
 
     bindSignupForm: function() {
       $('.signup-button').on('click', function(e) {
+        e.preventDefault();
         new SignupModalView();
       });
     },

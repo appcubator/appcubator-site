@@ -6,15 +6,18 @@ function(LinkCollection) {
   var FooterModel = Backbone.Model.extend({
 
     defaults : {
-      customText : "Powered by Appcubator",
-      isHidden : false,
-      isFixed : true
+      customText: "Copyright 2013",
+      isHidden  : false,
+      isFixed   : true
     },
 
     initialize: function(bone) {
 
       //init items collection with links passed from appState
-      this.set('links', new LinkCollection(bone.links||[]));
+      this.set('links', new LinkCollection(bone.links||[ {
+        title: "Powered by Appcubator",
+        url:   "http://appcubator.com" }
+      ]));
       this.links = this.get('links');
 
     },

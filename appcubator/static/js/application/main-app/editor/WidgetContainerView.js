@@ -1,10 +1,12 @@
 define([
+  'react',
   'editor/QueryEditorView',
   'editor/WidgetView',
   'dicts/constant-containers',
   'editor/editor-templates'
 ],
-function( QueryEditorView,
+function( React,
+          QueryEditorView,
           WidgetView) {
 
   var WidgetContainerView = WidgetView.extend({
@@ -78,9 +80,20 @@ function( QueryEditorView,
       }
 
       if(this.model.get('data').get('container_info').get('action') == "facebookshare" ) {
-        var feedDiv = document.createElement('div');
-        feedDiv.innerHTML = _.template(Templates.facebookshareTemp, {});
-        this.el.appendChild(feedDiv);
+        var fbdiv = document.createElement('div');
+        fbdiv.innerHTML = _.template(Templates.facebookshareTemp, {});
+        this.el.appendChild(fbdiv);
+      }
+
+      if(this.model.get('data').get('container_info').get('action') == "videoembed" ) {
+        var videoDiv = document.createElement('div');
+        var StaticImg = React.createClass({
+            render: function() {
+                return React.DOM.img({src: "/static/img/youtube-static.png" });
+            }
+        });
+        React.renderComponent(StaticImg({}), videoDiv);
+        this.el.appendChild(videoDiv);
       }
 
       if(this.model.get('data').get('action') == "thirdpartylogin" ) {

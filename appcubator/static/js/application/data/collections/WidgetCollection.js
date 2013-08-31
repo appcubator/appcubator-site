@@ -288,6 +288,21 @@ function(WidgetModel,
         return this.push(widgetContainerModel);
       },
 
+      createVideoEmbed: function(layout) {
+        var widget = {};
+        widget.type = "videoembed";
+
+        widget.data = {};
+        widget.data.nodeType = "videoembed";
+        widget.data.container_info = {};
+        widget.data.container_info.action = "videoembed";
+        widget.data.container_info.youtubeURL = "http://www.youtube.com/watch?v=hZTx0vXUo34";
+
+        var widgetContainerModel = new WidgetContainerModel(widget);
+
+        return this.push(widgetContainerModel);
+      },
+
       addWidgetContainerModel: function(uielementDict) {
         return this.push(new WidgetContainerModel(uielementDict));
       },

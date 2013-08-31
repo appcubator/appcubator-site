@@ -1,4 +1,4 @@
-{% extends "infra-out-html.html" %}
+{% extends "infra-website.html" %}
 
 {% block css %}
 <script type="text/javascript" src="https://platform.linkedin.com/in.js">
@@ -41,16 +41,40 @@ scope: r_fullprofile r_emailaddress
     <div class="row">
       <div class="centered-container">
         <h2>Skiboa</h2>
-        <div class="info">
-          <p>Skiboa, a site where skiers and snowboarders can compare the prices of season passes and lift tickets across all major Lake Tahoe ski resorts.</p>
-          <p>Every year, hundreds of thousands of people flock to Lake Tahoe to tear it up on the slope, but how do they choose which resort to go to? They have to go on every ski resorts web page, compare the pricing of all of them side by side, read the yelp reviews, and hours get wasted.</p>
-          <p>Skiboa is the first site to aggregate the pricing and deals from all the major Lake Tahoe Ski Resorts into one place where you can conveniently compare across resorts. Amber has frequented the Lake Tahoe resorts and goes snowboarding several times a year, and she’s dedicated to providing the most accurate and comprehensive data she can gets her hands on.</p>
-        </div>
-        <div class="screen no-bg">
-          <div class="gif-wrapper">
-          <img src="{{ STATIC_URL }}img/skiboa.gif">
+        <div class="two-third">
+          <div class="info">
+            <p>Skiboa is a site where skiers and snowboarders can compare the prices of season passes and lift tickets across all major Lake Tahoe ski resorts.</p>
+            <p>Every year, hundreds of thousands of people flock to Lake Tahoe to tear it up on the slope, but how do they choose which resort to go to? They have to go on every ski resorts web page, compare the pricing of all of them side by side, read the yelp reviews, and hours get wasted.</p>
+            <p>Skiboa is the first site to aggregate the pricing and deals from all the major Lake Tahoe Ski Resorts into one place where you can conveniently compare across resorts. Amber has frequented the Lake Tahoe resorts and goes snowboarding several times a year, and she’s dedicated to providing the most accurate and comprehensive data she can gets her hands on.</p>
           </div>
-          <a href="http://www.skiboa.com" target="_blank">http://www.skiboa.com</a>
+        </div>
+        <div class="one-third">
+          <div class="screen no-bg">
+            <div class="gif-wrapper">
+            <img src="{{ STATIC_URL }}img/skiboa.gif">
+            </div>
+            <a href="http://www.skiboa.com" target="_blank">http://www.skiboa.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="centered-container">
+        <h2>Stonehill Tutoring Payroll System</h2>
+        <div class="two-third">
+          <div class="info">
+            <p>Stonehill Tutoring-- Payroll Systems is a site where tutors can submit details about their lessons and current students for managers to track.</p>
+            <p>Stonehill Tutoring (http://www.stonehilltutors.com/) is a SAT tutoring center in New Jersey. Its staff consists of the top students from High Technology High School. Since there are lots of tutors working at different schedules, they needed an internal system to manage existing and register new classes. This helps management track of each lesson and respective payroll.</p>
+            <p>Using this system, Jacob Buckman provided the tutoring company with a better tool to increase the efficiency of his small business. Jacob is now a freshman at Carnegie Mellon. We wish him best of luck with his future endeavors.</p>
+          </div>
+        </div>
+        <div class="one-third">
+          <div class="screen no-bg">
+            <div class="gif-wrapper">
+            <img src="{{ STATIC_URL }}img/payroll.gif">
+            </div>
+            <a href="http://stonehill-payroll.appcubator.com/" target="_blank">http://stonehill-payroll.appcubator.com/</a>
+          </div>
         </div>
       </div>
     </div>
@@ -66,7 +90,7 @@ scope: r_fullprofile r_emailaddress
 
 {% block js %}
 
-<script data-main="{{ STATIC_URL }}js/application/website/main2" src="{{ STATIC_URL }}js/libs/require.js"></script>
+<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 <script type="text/template" id="temp-inviteform">
     <form class="sign-up-form" id="sign-up-form">
       <div class="left-side">

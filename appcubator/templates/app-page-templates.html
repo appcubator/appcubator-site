@@ -1,392 +1,35 @@
 <script type="text/template" id="app-main-page">
-    <div class="row hoff1 span58 overview-pane">
-      <div class="span46">
-        <h2 class="pheader">{{ app.name }} Overview</h2><br>
-        <a target="_blank" href="{{ app.url }}" class="link">{{ app.url }} <div href="#" class="edit-btn btn">Edit</div></a><br>
-      </div>
-      <div class="span12 hi10 right">
-        <div class="pane-btn">
-          <div class="hi3 span14 deploy pane" id="share"><span class="icon"></span><h4>Share App</h4></div>
-          <div class="hi3 span14 deploy data pane browse"><span class="icon"></span><h4>Browse Data</h4></div>
-          <a href="/app/{{app.pk}}/zip/" rel="external" class="hi3 span14 deploy download pane" id="download"><span class="icon"></span><h4>Download Code</h4></a>
-        </div>
-      </div>
-      <hr class="span58 pheader">
-    </div>
-    <div class="hoff1 span38 notice">
-      <h2 class="hoff1">Next step</h2>
-      <p class="what-to-do">
-
-      </p>
-      <p class="tip hoff1"><strong>Appcubator tip of the day:</strong> You can upload data to your app easily with Excel File through the <a class="browse" href="#">admin interface<a/>.</p>
-    </div>
-    <div class="hoff1 span18 offset2 notice inactive">
-      <h3 class="hoff1">Notifications</h3><div class="notification icon"></div>
-      <ul>
-        <li><input type="checkbox" id="feedback-check" disabled> You can fill the <a class="feedback" href="#">feedback form</a> for a chance to win a free domain.</li>
-        <li><input type="checkbox" disabled checked> Now you can see the analytics about your application in the dashboard below.</li>
-
-      </ul>
-    </div>
-    <div class="span58 hoff0">
-      <div class="row hoff1 analytics" style="position: relative">
-        <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75); padding-top: 10%">
-          <h2>Publish your app to see your site analytics!</h2>
-        </div>
-        <h2>Analytics</h2>
-        <hr class="span58 pheader">
-        <!-- <img class="span58 analytics-demo hoff1" src="{{ STATIC_URL }}img/analytics.png"> -->
-      </div>
-    </div>
-    <div class="span52 offset11 hoff4 hi4"></div>
+{% include "app-main-page.html" %}
 </script>
 
 <script type="text/template" id="app-info-page">
-<div class="container">
-  <div class="row hoff1">
-    <div class="span58">
-      <h2 class="pheader">Domain & SEO</h2>
-      <hr class="hoff1">
-      <div class="span12">
-        <div class="navigator">
-          <ul class="left-nav nav">
-            <li><a href="#payment-plan">Payment Plan</a></li>
-            <li><a href="#domain-settings">Domain Settings</a></li>
-            <li><a href="#seo-optimizations">SEO Optimizations</a></li>
-            <li><a href="#danger-zone">Danger Zone</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="span40 offset2" id="payment-plan">
-        <div class="span40 domains w-pane pb2" id="payment-plan">
-          <h3 class="span36 offset2 hoff1">Plan</h3>
-          <hr class="span40">
-          <div class="span36 offset2 hi4 hoff1">
-            <h4>Current plan:</h4>
-            <div>{{ user.customer.current_subscription.plan_display }}</div>
-          </div>
-          <hr class="span40">
-          <div class="span36 offset2">
-            {% if user.customer.current_subscription.plan == "monthly" %}
-            <a href="/account">You can see your finance history from the account setting page.</a>
-            {% else %}
-            <a class="btn" rel="external" href="/app/{{ app.pk }}/payment/">Switch to Pro for only $35 p/month</a>
-            {% endif %}
-          </div>
-        </div>
-
-        <div class="span40 domains w-pane pb2 hoff4" id="domain-settings">
-          <h3 class="span36 offset2 hoff1">Domain Settings</h3>
-          <hr class="span40">
-          <div class="span36 offset2 hi5 hoff1">
-            <h4>Current subdomain:</h4>
-            <div><a href="{{ app.url }}" target="_blank">{{ app.hostname }}</a></div>
-          </div>
-          <hr class="span40">
-          <div class="span36 offset2 hi5 hoff1">
-            <h4>Change subdomain</h4>
-            <form class="register-subdomain-form hi7">
-                <p class="span18"><input type="text" class="span10 register-subdomain-input" placeholder="Your subdomain"/><span style="line-height:50px">.appcubator.com</span></p>
-              <a class="register-subdomain-button btn span13" style="display:none;">Claim subdomain</a>
-            </form>
-          </div>
-        </div>
-
-        <div class="w-pane span40 hoff4 pb2" id="seo-optimizations">
-          <h3 class="span36 offset2 hoff1">SEO Optimizations</h3>
-          <hr class="span40">
-          <div class="hoff1 span36 offset2">
-            <h4 class="span36">Description</h3>
-            <textarea class="span26 hi6" id="app-description" placeholder="Description of the application..."><%= description %></textarea>
-          </div>
-          <hr class="span40">
-          <div class="hoff1 span36 offset2">
-            <h4 class="span36">Keywords</h3>
-            <textarea class="span26 hi6" id="app-keywords" placeholder="Keywords..."><%= keywords %></textarea>
-          </div>
-        </div>
-
-        <div class="w-pane span40 hoff4 pb2" id="danger-zone">
-          <h3 class="span36 offset2 hoff1">Danger Zone</h3>
-          <hr class="span40">
-          <a class="btn btn-danger hoff1 span8 offset2" id="delete">Delete App</a>
-        </div>
-      </div>
-      <div class="hi8 span40"></div>
-
-    </div>
-  </div>
-</div>
+{% include "app-info-page.html" %}
 </script>
 
 <script type="text/template" id="entities-page">
-<div class="container hoff1" id="entities-page">
-  <div class="span58">
-    <h2 class="pheader">User Tables</h2>
-    <div class="tbl-button right" id="add-role">
-      <div class="box-button">
-      <span class="add-icon"></span><span>Add User Table</span>
-      </div>
-      <form id="add-role-form" class="right new-table-form" style="display: none; height: 45px">
-        <input type="submit" class="done-btn" value="Done">
-        <input type="text" placeholder="New User Role">
-      </form>
-    </div>
-  </div>
-  <hr class="span58 pheader">
-  <div class="span58 hoff1" id="users">
-    <div id="user-entity"></div>
-  </div>
-  <div class="span58 hi1"></div>
-  <div class="span58 hoff2">
-    <h2 class="pheader">Tables</h2>
-
-    <div class="tbl-button right" id="add-entity">
-      <div class="box-button">
-      <span class="add-icon"></span><span>Add Table</span>
-      </div>
-      <form style="display: none; height: 45px" class="right new-table-form" id="add-entity-form">
-        <input type="submit" class="done-btn" value="Done">
-        <input type="text" placeholder="New Table">
-      </form>
-    </div>
-    <hr class="span58 hoff1">
-  </div>
-  <div class="span58" id="tables"></div>
-  <div class="span58 hi1"></div>
-  <div class="span58 hoff2">
-    <h2 class="pheader">Relations</h2>
-    <div class="tbl-button right" id="add-relation">
-      <div class="box-button">
-      <span class="add-icon"></span><span>Add Relation</span>
-      </div>
-    </div>
-  </div>
-  <hr class="span58 hoff1">
-  <div class="span58" id="relations"></div>
-  <div class="span58" style="height: 45px;"></div>
-</div>
+{% include "app-entities-page.html" %}
 </script>
 
 <script type="text/template" id="pages-page">
-<div class="span58 hoff1">
-    <div id="web-section">
-      <h2 class="pheader">Pages</h2>
-      <hr class="span58 pheader">
-      <ul class="" id="list-pages">
-      </div>
-      <div class="add-box create-page span18 pane hi22" id="create-page-box">
-        <div class="box-button span18 hoff2">
-          <img src="/static/img/add.png" class="span3 add-img">
-          <h2 class="offset1">Create a New Page</h2>
-        </div>
-        <form class="page-view span18 hi21 offsetr1 create-form" style="display:none;">
-          <div class="hoff2">
-            <input type="text" class="page-name span12" placeholder="Page Name">
-            <input type="submit" class="small done-btn" value="Done">
-          </div>
-          <div class="row offset1 hi6"></div>
-        </form>
-      </div>
-    </div>
-    <!--
-    <div id="mobile-section" class="hoff2 span58">
-      <h2 class="header">Mobile Pages</h2>
-      <hr class="span58">
-      <div class="" id="list-mobile-pages">
-      </div>
-      <div class="add-box create-page span18 pane hi22" id="create-mobile-page-box">
-        <div class="box-button span18 hoff2">
-          <img src="/static/img/add.png" class="span3 add-img">
-          <h2 class="offset1">Create a New Page</h2>
-        </div>
-        <form class="page-view span18 hi21 offsetr1 pane create-form" style="display:none;">
-          <div class="hoff2">
-            <input type="text" class="page-name span12 offset2" placeholder="Page Name">
-          </div>
-          <div class="row offset1 hi6"></div>
-        </form>
-      </div>
-    </div>
-    -->
-</div>
+{% include "app-pages-page.html" %}
 </script>
 
-
 <script type="text/template" id="editor-page">
- <div class="loading-gif" id="loading-gif"></div>
-
-  <!-- Top Menu -->
-  <div class="section-select">
-
-    <div class="save-run-group">
-      <div class="menu-button run" id="deploy"><span class="play-btn"><span class="play-btn-icon"></span></span><span id="deploy-text">Publish</span>
-      </div><div class="menu-button save" id="editor-save">
-        <span>Save</span>
-      </div>
-    </div>
-    <div class="middle-group" id="tool-bar">
-      <div class="navigator menu-button">
-        <a class="back"></a>
-        <a href="{% url appcubator.views.app_page app.id %}pages/" class="pages"></a>
-        <a href="{% url appcubator.views.app_page app.id %}emails/" class="emails"></a>
-        <a href="{% url appcubator.views.app_page app.id %}gallery/" class="themes"></a>
-        <a href="{% url appcubator.views.app_page app.id %}tables/" class="tables"></a>
-      </div>
-      <div class="menu-button pages" id="menu-pages">
-        <div id="current-page" class="page-item"></div><ul id="page-list"></ul><div id="create-page" class="page-item">
-      </div></div>
-      <div class="menu-button dropdown-arrow">
-      </div>
-    </div>
-    <div class="right-group">
-      <div class="menu-button question">Ask a Question</div>
-    </div>
-  </div>
-
-  <!-- Inside-Page -->
-  <div class="page-container">
-    <div class="page-wrapper" id="page-wrapper">
-      <div class="url-bar">http://yourapp.com</div>
-      <div class="page full container fdededfcbcbcd" id="page">
-        <!-- Navbar -->
-        <navbar class="navbar" id="navbar">
-          <div class="navbar-inner">
-            <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
-            <ul class="nav" id="links">
-            </ul>
-            <button id="edit-navbar-btn">Edit Navbar</button>
-          </div>
-        </navbar>
-        <!-- Editing Container -->
-        <div class="container editing" id="full-container"></div>
-        <div class="editing" id="elements-container">
-        <!-- UI Elements -->
-        </div>
-        <!-- Footer -->
-        <footer class="footer" id="footer"></footer>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Right Gallery Panel -->
-  <div id="top-panel-bb" class="right-panel">
-    <div class="top-panel-title">
-      <span>UI Elements</span>
-    </div>
-    <div class="search-panel">
-      <span class="search-icon"></span><input type="text" class="search" placeholder="Search Elements...">
-    </div><div class="item-gallery section" id="item-gallery">
-      <div class="elements-list" id="elements-list">
-        <ul id='all-list' class="list"></ul>
-      </div>
-    </div>
-  </div>
-
+{% include "app-editor-page.html" %}
 </script>
 
 <script type="text/template" id="mobile-editor-page">
- <div class="loading-gif" id="loading-gif"></div>
-
-  <!-- Top Menu -->
-  <div class="section-select">
-    <a href="{% url appcubator.views.app_page app.id %}" class="menu-button home">
-    </a><div class="menu-button pages"><ul id="page-list"></ul>
-    </div>
-    <div class="save-run-group">
-      <div class="menu-button save" id="editor-save">
-      <span>Save</span>
-      </div><div class="menu-button run" id="deploy"><span>Publish</span>
-    </div>
-    </div>
-    <div class="menu-button help"></div>
-  </div>
-
-  <!-- Inside-Page -->
-  <div class="page-container">
-    <div class="mobile-page-wrapper" id="page-wrapper">
-      <div class="url-bar">http://yourapp.com</div>
-      <div class="page full container fspdfwerbckl" id="page">
-        <!--Menu-->
-        <div class="snap-drawers">
-          <div class="snap-drawer snap-drawer-left content">
-            <div id="navbar">
-              <h3 class="title">Menu</h3>
-              <ul class="nav list" id="links"></ul>
-            </div>
-          </div>
-        </div>
-        <div class="snap-content">
-          <!-- Navbar -->
-          <header class="bar-title">
-            <a class="button menu" href="#">Menu</a>
-            <h1 class="title">Title</h1>
-          </header>
-          <!-- Navbar Ends-->
-          <ul class="editing content" id="elements-container">
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Right Gallery Panel -->
-  <div id="top-panel-bb" class="right-panel">
-    <div class="top-panel-title">
-      <span>UI Elements</span>
-    </div>
-    <div class="search-panel">
-      <span class="search-icon"></span><input type="text" class="search" placeholder="Search Elements...">
-    </div><div class="item-gallery section" id="item-gallery">
-      <div class="elements-list" id="elements-list">
-        <ul id='all-list' class="list"></ul>
-      </div>
-    </div>
-  </div>
+{% include "app-mobile-editor-page.html" %}
 </script>
 
 <script type="text/template" id="emails-page">
-  <div class="span58 hoff1">
-    <h2 class="pheader">Emails</h2>
-    <hr class="pheader">
-    <div class="span58 hoff1 emails">
-        <ul id="email-list" class="left-nav span12"></ul>
-      <div class="right-bar span32 offset2">
-        <div>
-          <h3 class="name">Email Name</h3>
-          <input type="text" id="edit-name" style="display: none">
-        </div>
-        <form class="email-paper">
-          <div class="remove">Delete Email</div>
-          <div class="control-group hoff1">
-            <label class="control-label">Subject</label>
-            <input type="text" id="edit-subject" class="subject input-block-level">
-          </div>
-          <div class="control-group">
-            <label class="control-label">Message</label>
-            <textarea class="content input-block-level" id="edit-content" style="height: 300px; overflow: scroll"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="variables-bar span10 offset2">
-        You can drag and drop these custom fields to your email.
-        <ul id="variables-list" class="variables"></ul>
-      </div>
-    </div>
-  </div>
+{% include "app-emails-page.html" %}
 </script>
+
 <script type="text/template" id="themes-page">
-  <div class="span58 hoff1">
-    <h2 class="pheader" id="themes-title">Themes</h2>
-    <a class="tbl-button right" rel="external" target="_blank" href="/app/{{ app.pk }}/edit_theme/">
-      <div class="box-button">
-      <span class="edit-icon"></span><span>Edit Current Theme</span>
-      </div>
-    </a>
-    <hr class="span58 pheader">
-  </div>
+{% include "app-themes-page.html" %}
 </script>
+
 <script type="text/template" id="deploy-panel">
   <a class="app-link" target="_blank" href="<%= site_url %>"><%= site_url %></a>
 
@@ -413,11 +56,7 @@
       <img src="{{ STATIC_URL }}img/download-icon.png">
       <a rel="external" href="<%= zip_url %>">The code you have written is available to download here.</a>
     </div>
-    <div class="download-pane">
-      <img src="{{ STATIC_URL }}img/download-icon.png">
-      <p>Or clone via git.</p>
-      <p>git clone <%= git_url %></p>
-    </div>
+    <!-- <p>git clone <%= git_url %></p> -->
   </div>
 
 </script>

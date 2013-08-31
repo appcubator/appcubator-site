@@ -1,0 +1,69 @@
+ <div class="loading-gif" id="loading-gif"></div>
+
+  <!-- Top Menu -->
+  <div class="section-select">
+
+    <div class="save-run-group">
+      <div class="menu-button run" id="deploy"><span class="play-btn"><span class="play-btn-icon"></span></span><span id="deploy-text">Publish</span>
+      </div><div class="menu-button save" id="editor-save">
+        <span>Save</span>
+      </div>
+    </div>
+    <div class="middle-group" id="tool-bar">
+      <div class="navigator menu-button">
+        <a class="back"></a>
+        <a href="{% url appcubator.views.app_page app.id %}pages/" class="pages"></a>
+        <a href="{% url appcubator.views.app_page app.id %}emails/" class="emails"></a>
+        <a href="{% url appcubator.views.app_page app.id %}gallery/" class="themes"></a>
+        <a href="{% url appcubator.views.app_page app.id %}tables/" class="tables"></a>
+      </div>
+      <div class="menu-button pages" id="menu-pages">
+        <div id="current-page" class="page-item"></div><ul id="page-list"></ul><div id="create-page" class="page-item">
+      </div></div>
+      <div class="menu-button dropdown-arrow">
+      </div>
+    </div>
+    <div class="right-group">
+      <div class="menu-button question">Ask a Question</div>
+    </div>
+  </div>
+
+  <!-- Inside-Page -->
+  <div class="page-container">
+    <div class="page-wrapper" id="page-wrapper">
+      <div class="url-bar">http://yourapp.com</div>
+      <div class="page full container fdededfcbcbcd" id="page">
+        <!-- Navbar -->
+        <navbar class="navbar" id="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
+            <ul class="nav" id="links">
+            </ul>
+            <button id="edit-navbar-btn">Edit Navbar</button>
+          </div>
+        </navbar>
+        <!-- Editing Container -->
+        <div class="container editing" id="full-container"></div>
+        <div class="editing" id="elements-container">
+        <!-- UI Elements -->
+        </div>
+        <!-- Footer -->
+        <footer class="footer" id="footer"></footer>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Right Gallery Panel -->
+  <div id="top-panel-bb" class="right-panel">
+    <div class="top-panel-title">
+      <span>UI Elements</span>
+    </div>
+    <div class="search-panel">
+      <span class="search-icon"></span><input type="text" class="search" placeholder="Search Elements...">
+    </div><div class="item-gallery section" id="item-gallery">
+      <div class="elements-list" id="elements-list">
+        <ul id='all-list' class="list"></ul>
+      </div>
+    </div>
+  </div>

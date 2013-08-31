@@ -4,7 +4,7 @@ define([
   function(BackboneModal) {
     var SignupModalView = Backbone.ModalView.extend({
       padding: 0,
-      width: 550,
+      width: 630,
       className: 'model fancy signup',
 
     //height: 150,
