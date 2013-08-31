@@ -53,7 +53,9 @@ define(function(require, exports, module) {
 
             var autoSave = setInterval(this.save, 30000);
 
-            this.garageView = new GarageView();
+            if(appId !== 0) { this.garageView = new GarageView(); }
+            $('.garage-toggle').on('click', this.garageView.show);
+
             this.listenTo(v1State.get('tables'), 'add', this.entityAdded);
         },
 

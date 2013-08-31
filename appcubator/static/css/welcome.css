@@ -175,6 +175,7 @@ a.welcome-icon:visited,a.welcome-icon:hover {
 .twitter-chooser a .info-text {
   left: 460px;
 }
+
 .twitter-chooser a:hover .info-text {
   display: block;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
@@ -188,4 +189,34 @@ a.welcome-icon:visited,a.welcome-icon:hover {
 
 .notice {
   display: none;
+}
+
+a.white-border {
+  border: 3px solid #fff;
+  border-radius: 4px;
+  color: #fff;
+  padding: 15px;
+}
+
+.hide-btn {
+  position: fixed;
+  top: 0px;
+  right: 50%;
+  margin-right: -430px;
+  font-weight: lighter;
+  opacity: 0.8;
+  color: #fff;
+  font-size: 60px;
+  line-height: 60px;
+  cursor: pointer;
+}
+
+.hide-btn:hover {
+  opacity: 1;
+}
+
+.title {
+  color: #fff;
+  display: block;
+  font-size: 18px;
 }
