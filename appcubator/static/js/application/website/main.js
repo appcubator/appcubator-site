@@ -60,7 +60,7 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
     routes: {
       ""                    : "homepage",
       "beta/"               : "homepage",
-      "developer/"            : "developerpage",
+      "developer/"          : "developerpage",
     },
 
     cube: $('#cube'),
