@@ -117,18 +117,16 @@
       {% endif %}
       <div class="row hoff2 span36">
         <div class="title">Your other Apps:</div>
-        {% for a in users_apps %}
-          {% if forloop.counter < 3 %}
+        {% for a in users_apps|slice:":2" %}
           <div class="row">
             <a class="span26 hi4 hoff1 white-border" href="{% url appcubator.views.app_page a.id %}" rel="external">
               <strong>{{ a.name }}</strong>
             </a>
           </div>
-          {% endif %}
         {% endfor %}
           <div class="row">
             <a class="span26 hi4 hoff1 large-link" href="{% url appcubator.views.app_new %}" rel="external">
-              <strong>+ CREATE A new APP</strong>
+              <strong>+ CREATE A NEW APP</strong>
             </a>
           </div>
       </div>
