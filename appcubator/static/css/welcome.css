@@ -257,8 +257,12 @@ a.large-link {
 .right-menu .white-border {
   padding: 0;
   line-height: 60px;
-  border: none;
+  border-color: transparent;
   cursor: pointer;
+}
+
+.right-menu .white-border:hover {
+  border-color: #fff;
 }
 
 .right-menu .white-border .icon {
