@@ -1,4 +1,21 @@
 {% extends "website-resources-infra.html" %}
 {% block content %}
-  Content here.
+<div id="social-slides">
+Loading slides...
+</div>
+
+<script>
+    var parentEl = document.getElementById('social-slides');
+    function SlideView(parentEl) {
+        this.hello = 'hello';
+        this.parentEl = parentEl;
+        this.render = function() {
+            this.parentEl.innerHTML = 'hi';
+        }
+        return this;
+    }
+    var sv = SlideView(parentEl);
+    sv.render();
+</script>
+
 {% endblock %}
