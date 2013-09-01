@@ -4,18 +4,58 @@
 Loading slides...
 </div>
 
+{% endblock %}
+{% block js %}
 <script>
-    var parentEl = document.getElementById('social-slides');
-    function SlideView(parentEl) {
-        this.hello = 'hello';
-        this.parentEl = parentEl;
-        this.render = function() {
-            this.parentEl.innerHTML = 'hi';
-        }
-        return this;
+    var el = document.getElementById('social-slides');
+    function SlideView(el) {
+        this.el = el;
+        var self = this;
+
+        /* render */
+        self.bindEvents = function () {
+            // haha idk how to do self
+            $('').bind('click', self.prevSlide);
+        };
+        self.render = function() {
+            self.bindEvents();
+            self.el.innerHTML = 'hi';
+        };
+
+        /* accessors */
+        self.getIndexFromTextBox = function(){
+            return 5;
+        };
+        self.getCurrentIndex = function(){
+            return 8;
+        };
+
+        /* on-event callbacks */
+        self.nextSlide = function(e){
+            var i = self.getCurrentIndex();
+            // validate i + 1
+            self._jumpToSlide(i + 1);
+        };
+
+        self.prevSlide = function(e){
+            // validate i - 1
+            self._jumpToSlide(i - 1);
+        };
+
+        self.jumpToSlide = function(e) {
+            var targetIndex = self.getIndexFromTextBox();
+            // TODO validate
+            self._jumpToSlide(targetIndex);
+        };
+
+        /* internal */
+        self._jumpToSlide = function(i) {
+            alert('Going to slide ' + i);
+        };
+
+        return self;
     }
-    var sv = SlideView(parentEl);
+    var sv = SlideView(el);
     sv.render();
 </script>
-
 {% endblock %}
