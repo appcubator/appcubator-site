@@ -6,56 +6,78 @@ Loading slides...
 
 {% endblock %}
 {% block js %}
+<script src="/static/js/libs/jquery/jquery.min.js"></script>
 <script>
     var el = document.getElementById('social-slides');
     function SlideView(el) {
         this.el = el;
         var self = this;
 
+        /* change the slide of the view */
+        self.goToSlide = function(i) {
+            self.currentIndex = i;
+            self.fixPrevNextArrows();
+            self.fixSlideState();
+        };
+        /* fix the DOM when that happens */
+        self.fixSlideState = function () {
+            for (var i = 0; i < self.slideNodes.length; i++) {
+                var s = self.slideNodes[i];
+                if (i == self.currentIndex)
+                    $(s).show();
+                else
+                    $(s).hide();
+            }
+        };
+        self.fixPrevNextArrows = function () {
+            if(self.currentIndex == 0)
+                self.prevArrow.hide();
+            else
+                self.prevArrow.show();
+            if(self.currentIndex == (self.slideNodes.length - 1))
+                self.nextArrow.hide();
+            else
+                self.nextArrow.show();
+        };
+
         /* render */
         self.bindEvents = function () {
             // haha idk how to do self
-            $('').bind('click', self.prevSlide);
+            self.prevArrow.bind('click', self.prevSlide);
+            self.nextArrow.bind('click', self.nextSlide);
         };
         self.render = function() {
+            self.el.innerHTML = '<div class="prev-slide-click">Prev</div>' +
+                                '<div class="slide-container">Image 1</div>' +
+                                '<div class="slide-container">Image 2</div>' +
+                                '<div class="slide-container">Image 3</div>' +
+                                '<div class="next-slide-click">Next</div>';
+            self.currentIndex = 0;
+            self.prevArrow = $(self.el).find('.prev-slide-click');
+            self.nextArrow = $(self.el).find('.next-slide-click');
+            self.slideNodes = $(self.el).find('.slide-container');
+            self.goToSlide(0);
             self.bindEvents();
-            self.el.innerHTML = 'hi';
         };
-
-        /* accessors */
-        self.getIndexFromTextBox = function(){
-            return 5;
-        };
-        self.getCurrentIndex = function(){
-            return 8;
-        };
-
         /* on-event callbacks */
         self.nextSlide = function(e){
-            var i = self.getCurrentIndex();
+            var i = self.currentIndex + 1;
             // validate i + 1
-            self._jumpToSlide(i + 1);
+            if(i >= self.slideNodes.length)
+                return;
+            self.goToSlide(i);
         };
 
         self.prevSlide = function(e){
-            // validate i - 1
-            self._jumpToSlide(i - 1);
-        };
-
-        self.jumpToSlide = function(e) {
-            var targetIndex = self.getIndexFromTextBox();
-            // TODO validate
-            self._jumpToSlide(targetIndex);
-        };
-
-        /* internal */
-        self._jumpToSlide = function(i) {
-            alert('Going to slide ' + i);
+            var i = self.currentIndex - 1;
+            if(i < 0)
+                return;
+            self.goToSlide(i);
         };
 
         return self;
     }
-    var sv = SlideView(el);
+    var sv = new SlideView(el);
     sv.render();
 </script>
 {% endblock %}
