@@ -1,34 +1,70 @@
 {% extends "website-resources-infra.html" %}
 {% block content %}
 <style>
-#social-slides * {
+.slide-view * {
     border: black 1px solid;
 }
-#social-slides .arrow-wrap {
+.slide-view .arrow-wrap {
     height: 50px;
     width: 50px;
     display: inline-block;
 }
-#social-slides .slides-wrap {
+.slide-view .slides-wrap {
     height: 350px;
     width: 500px;
     display: inline-block;
 }
 </style>
-<div id="social-slides">
+<h1>Tutorial - Building a social network</h1>
+<div>
+    <div>
+        <p>In this tutorial, we'll build a fairly standard social network, demoed here:</p>
+        <a href="http://book-face.appcubator.com/">book-face.appcubator.com</a>
+        <p>We'll do all of this without writing code, and in the end, you'll be able to download the frontend and backend code for the web app.</p>
+        <a href="http://book-face.appcubator.com/">
+             <img src="https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7">
+        </a>
+    </div>
+    <div>
+        <ol>
+            <li>User Profiles</li>
+            <li>Wall Posts</li>
+            <li>Friendships</li>
+        </ol>
+    </div>
+</div>
+<h2>User Profiles</h2>
+<div id="social-slides-profiles" class="slide-view">
     <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
     </div><div class="slides-wrap">
         <div class="slide-container">Image 1</div>
         <div class="slide-container">Image 2</div>
         <div class="slide-container">Image 3</div>
-    </div><div class="arrow-wrap"><div class="next-slide-click">Next</div>
+    </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
+</div>
+<h2>Wall posts</h2>
+<div id="social-slides-posts" class="slide-view">
+    <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
+    </div><div class="slides-wrap">
+        <div class="slide-container">Image 1</div>
+        <div class="slide-container">Image 2</div>
+        <div class="slide-container">Image 3</div>
+    </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
+</div>
+<h2>Friendships</h2>
+<div id="social-slides-friendships" class="slide-view">
+    <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
+    </div><div class="slides-wrap">
+        <div class="slide-container">Image 1</div>
+        <div class="slide-container">Image 2</div>
+        <div class="slide-container">Image 3</div>
+    </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
 </div>
 
 {% endblock %}
 {% block js %}
 <script src="/static/js/libs/jquery/jquery.min.js"></script>
 <script>
-    var el = document.getElementById('social-slides');
     function SlideView(el) {
         this.el = el;
         var self = this;
@@ -92,7 +128,14 @@
 
         return self;
     }
-    var sv = new SlideView(el);
-    sv.render();
+    var el_profiles = document.getElementById('social-slides-profiles');
+    var el_posts = document.getElementById('social-slides-posts');
+    var el_friendships = document.getElementById('social-slides-friendships');
+    var sv1 = new SlideView(el_profiles);
+    var sv2 = new SlideView(el_posts);
+    var sv3 = new SlideView(el_friendships);
+    sv1.render();
+    sv2.render();
+    sv3.render();
 </script>
 {% endblock %}
