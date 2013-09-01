@@ -48,12 +48,13 @@ require([
   './HomepageView',
   './DeveloperpageView',
   './SignupModalView',
+  './SlideView',
   'backbone',
   'util',
   'prettyCheckable',
   'mixins/BackboneConvenience'
 ],
-function(HomepageView, DeveloperpageView, SignupModalView) {
+function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
   var WebsiteRouter = Backbone.Router.extend({
 
@@ -61,6 +62,7 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
       ""                    : "homepage",
       "beta/"               : "homepage",
       "developer/"          : "developerpage",
+      "resources/tutorial/build-social-network/" : "socialNetworkPage"
     },
 
     cube: $('#cube'),
@@ -83,6 +85,18 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
 
     developerpage: function() {
       this.view = new DeveloperpageView().render();
+    },
+
+    socialNetworkPage: function(argument) {
+      var el_profiles = document.getElementById('social-slides-profiles');
+      var el_posts = document.getElementById('social-slides-posts');
+      var el_friendships = document.getElementById('social-slides-friendships');
+      var sv1 = new SlideView(el_profiles);
+      var sv2 = new SlideView(el_posts);
+      var sv3 = new SlideView(el_friendships);
+      sv1.render();
+      sv2.render();
+      sv3.render();
     },
 
     bindLoginForm: function() {
