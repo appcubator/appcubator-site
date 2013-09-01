@@ -15,50 +15,58 @@
     display: inline-block;
 }
 </style>
-<h1>Tutorial - Building a social network</h1>
-<div>
+<div class="centered-container">
+    <h4>Tutorial - Building a social network</h4>
     <div>
-        <p>In this tutorial, we'll build a fairly standard social network, demoed here:</p>
-        <a href="http://book-face.appcubator.com/">book-face.appcubator.com</a>
-        <p>We'll do all of this without writing code, and in the end, you'll be able to download the frontend and backend code for the web app.</p>
-        <a href="http://book-face.appcubator.com/">
-             <img src="https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7">
-        </a>
+        <div>
+            <p>In this tutorial, we'll build a fairly standard social network, demoed here:</p>
+            <a href="http://book-face.appcubator.com/">book-face.appcubator.com</a>
+            <p>We'll do all of this without writing code, and in the end, you'll be able to download the frontend and backend code for the web app.</p>
+            <a href="http://book-face.appcubator.com/">
+                 <img src="https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7">
+            </a>
+        </div>
+        <div>
+            <ol>
+                <li>User Profiles</li>
+                <li>Wall Posts</li>
+                <li>Friendships</li>
+            </ol>
+        </div>
     </div>
-    <div>
-        <ol>
-            <li>User Profiles</li>
-            <li>Wall Posts</li>
-            <li>Friendships</li>
-        </ol>
+</div>
+<div class="centered-container">
+    <h2>User Profiles</h2>
+    <div id="social-slides-profiles" class="slide-view">
+        <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
+        </div><div class="slides-wrap">
+            <div class="slide-container">Image 1</div>
+            <div class="slide-container">Image 2</div>
+            <div class="slide-container">Image 3</div>
+        </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
     </div>
 </div>
-<h2>User Profiles</h2>
-<div id="social-slides-profiles" class="slide-view">
-    <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
-    </div><div class="slides-wrap">
-        <div class="slide-container">Image 1</div>
-        <div class="slide-container">Image 2</div>
-        <div class="slide-container">Image 3</div>
-    </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
+<div class="centered-container">
+    <h2>Wall posts</h2>
+    <div id="social-slides-posts" class="slide-view">
+        <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
+        </div><div class="slides-wrap">
+            <div class="slide-container">Image 1</div>
+            <div class="slide-container">Image 2</div>
+            <div class="slide-container">Image 3</div>
+        </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
+    </div>
 </div>
-<h2>Wall posts</h2>
-<div id="social-slides-posts" class="slide-view">
-    <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
-    </div><div class="slides-wrap">
-        <div class="slide-container">Image 1</div>
-        <div class="slide-container">Image 2</div>
-        <div class="slide-container">Image 3</div>
-    </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
-</div>
-<h2>Friendships</h2>
-<div id="social-slides-friendships" class="slide-view">
-    <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
-    </div><div class="slides-wrap">
-        <div class="slide-container">Image 1</div>
-        <div class="slide-container">Image 2</div>
-        <div class="slide-container">Image 3</div>
-    </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
+<div class="centered-container">
+    <h2>Friendships</h2>
+    <div id="social-slides-friendships" class="slide-view">
+        <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
+        </div><div class="slides-wrap">
+            <div class="slide-container">Image 1</div>
+            <div class="slide-container">Image 2</div>
+            <div class="slide-container">Image 3</div>
+        </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
+    </div>
 </div>
 
 {% endblock %}
