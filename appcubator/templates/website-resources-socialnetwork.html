@@ -1,7 +1,27 @@
 {% extends "website-resources-infra.html" %}
 {% block content %}
+<style>
+#social-slides * {
+    border: black 1px solid;
+}
+#social-slides .arrow-wrap {
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+}
+#social-slides .slides-wrap {
+    height: 350px;
+    width: 500px;
+    display: inline-block;
+}
+</style>
 <div id="social-slides">
-Loading slides...
+    <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
+    </div><div class="slides-wrap">
+        <div class="slide-container">Image 1</div>
+        <div class="slide-container">Image 2</div>
+        <div class="slide-container">Image 3</div>
+    </div><div class="arrow-wrap"><div class="next-slide-click">Next</div>
 </div>
 
 {% endblock %}
@@ -31,13 +51,13 @@ Loading slides...
         };
         self.fixPrevNextArrows = function () {
             if(self.currentIndex == 0)
-                self.prevArrow.hide();
+                self.prevArrow.css('visibility', 'hidden');
             else
-                self.prevArrow.show();
+                self.prevArrow.css('visibility', 'visible');
             if(self.currentIndex == (self.slideNodes.length - 1))
-                self.nextArrow.hide();
+                self.nextArrow.css('visibility', 'hidden');
             else
-                self.nextArrow.show();
+                self.nextArrow.css('visibility', 'visible');
         };
 
         /* render */
@@ -47,11 +67,6 @@ Loading slides...
             self.nextArrow.bind('click', self.nextSlide);
         };
         self.render = function() {
-            self.el.innerHTML = '<div class="prev-slide-click">Prev</div>' +
-                                '<div class="slide-container">Image 1</div>' +
-                                '<div class="slide-container">Image 2</div>' +
-                                '<div class="slide-container">Image 3</div>' +
-                                '<div class="next-slide-click">Next</div>';
             self.currentIndex = 0;
             self.prevArrow = $(self.el).find('.prev-slide-click');
             self.nextArrow = $(self.el).find('.next-slide-click');
