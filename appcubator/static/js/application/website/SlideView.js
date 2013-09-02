@@ -10,6 +10,7 @@ function(BackboneModal) {
             self.currentIndex = i;
             self.fixPrevNextArrows();
             self.fixSlideState();
+            self.fixGotoInput();
         };
         /* fix the DOM when that happens */
         self.fixSlideState = function () {
@@ -20,6 +21,10 @@ function(BackboneModal) {
                 else
                     $(s).hide();
             }
+        };
+
+        self.fixGotoInput = function () {
+            $(self.gotoInput).val(self.currentIndex + 1);
         };
 
         self.fixPrevNextArrows = function () {
@@ -44,6 +49,8 @@ function(BackboneModal) {
             self.prevArrow = $(self.el).find('.prev-slide-click');
             self.nextArrow = $(self.el).find('.next-slide-click');
             self.slideNodes = $(self.el).find('.slide-container');
+            self.gotoInput = $(self.el).find('.goto-slide-input');
+            $(self.el).find('.goto-slide-numslides').html(self.slideNodes.length);
             self.goToSlide(0);
             self.bindEvents();
         };
