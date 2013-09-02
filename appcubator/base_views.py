@@ -423,12 +423,24 @@ def resources_socialnetwork(request):
     page_context["title"] = "Building a Social Network"
     import os, os.path
     join = os.path.join
+
     profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p1.json')
     with open(profile_json_path) as f:
         raw_data = simplejson.load(f)
-    goog = 'https://www.google.com/images/srpr/logo4w.png'
-    ts = [(d.get('img_url', goog), d.get('shortText', 'short text'), d.get('longText', 'non')) for d in raw_data]
-    page_context["tut_img_dict"] = { 'profile': ts}
+    profile_data = [(d['img_url'], d['shortText'], d['longText']) for d in raw_data]
+    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p2.json')
+    with open(profile_json_path) as f:
+        raw_data = simplejson.load(f)
+    posts_data = [(d['img_url'], d['shortText'], d['longText']) for d in raw_data]
+    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p2.json')
+    with open(profile_json_path) as f:
+        raw_data = simplejson.load(f)
+    friendships_data = [(d['img_url'], d['shortText'], d['longText']) for d in raw_data]
+
+    page_context["tut_img_dict"] = { 'profile': profile_data,
+                                     'posts': posts_data,
+                                     'friendships': friendships_data
+                                     }
     return render(request, 'website-resources-socialnetwork.html', page_context)
 
 

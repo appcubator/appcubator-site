@@ -30,24 +30,73 @@
     "img_url": "/static/img/documentation/socialnetwork/p1/8.png",
     "shortText": "It's live!",
     "longText": "The forms work, and you can confirm by attempting to submit an empty form."
+},
+{
+    "img_url": "/static/img/documentation/socialnetwork/p2/1.png",
+    "shortText": "Create a new page for User Profiles",
+    "longText": "NYI"
 },{
-    "img_url": "/static/img/documentation/socialnetwork/p1/8.png",
-    "shortText": "It's live!",
-    "longText": "The forms work, and you can confirm by attempting to submit an empty form."
+    "img_url": "/static/img/documentation/socialnetwork/p2/2.png",
+    "shortText": "Add a dynamic User ID to the URL",
+    "longText": "NYI"
 },{
-    "img_url": "/static/img/documentation/socialnetwork/p1/8.png",
-    "shortText": "It's live!",
-    "longText": "The forms work, and you can confirm by attempting to submit an empty form."
+    "img_url": "/static/img/documentation/socialnetwork/p2/4.png",
+    "shortText": "Add Profile pic and About me to the User Table",
+    "longText": "NYI"
 },{
-    "img_url": "/static/img/documentation/socialnetwork/p1/8.png",
-    "shortText": "It's live!",
-    "longText": "The forms work, and you can confirm by attempting to submit an empty form."
+    "img_url": "/static/img/documentation/socialnetwork/p2/5.png",
+    "shortText": "Drag dynamic content onto the page",
+    "longText": "NYI"
 },{
-    "img_url": "/static/img/documentation/socialnetwork/p1/8.png",
-    "shortText": "It's live!",
-    "longText": "The forms work, and you can confirm by attempting to submit an empty form."
+    "img_url": "/static/img/documentation/socialnetwork/p2/6.png",
+    "shortText": "Create a new page and drag an Edit profile form",
+    "longText": "NYI"
 },{
-    "img_url": "/static/img/documentation/socialnetwork/p1/8.png",
-    "shortText": "It's live!",
-    "longText": "The forms work, and you can confirm by attempting to submit an empty form."
+    "img_url": "/static/img/documentation/socialnetwork/p2/7.png",
+    "shortText": "Customize the form",
+    "longText": "NYI"
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p2/8.png",
+    "shortText": "Redirect Sign up form to edit profile form",
+    "longText": "NYI"
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p2/9.png",
+    "shortText": "Add a link to the Edit profile page",
+    "longText": "NYI"
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p2/10.png",
+    "shortText": "Here's the end result!",
+    "longText": "NYI"
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p2/11.png",
+    "shortText": "Trying to edit the profile",
+    "longText": "NYI"
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p2/12.png",
+    "shortText": "It works!",
+    "longText": "NYI"
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p3/1.png",
+    "shortText": "Drag a User list onto a new page",
+    "longText": "NYI"
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p3/2.png",
+    "shortText": "Customize the list using the row editor",
+    "longText": "NYI"
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p3/3.png",
+    "shortText": "Here's the resulting list with a sample user",
+    "longText": "NYI"
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p3/4.png",
+    "shortText": "Link the name of the user to its profile page",
+    "longText": "NYI"
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p3/5.png",
+    "shortText": "Now clicking the link...",
+    "longText": "NYI"
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p3/6.png",
+    "shortText": "goes to the user's profile page!",
+    "longText": "NYI"
 }]

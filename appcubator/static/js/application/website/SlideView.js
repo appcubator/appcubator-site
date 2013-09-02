@@ -24,7 +24,7 @@ function(BackboneModal) {
         };
 
         self.fixGotoInput = function () {
-            $(self.gotoInput).val(self.currentIndex);
+            $(self.gotoInput).val(self.currentIndex + 1);
         };
 
         self.fixPrevNextArrows = function () {
