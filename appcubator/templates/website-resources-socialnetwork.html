@@ -5,41 +5,47 @@
     margin-bottom: 20px;
 }
 .social-network-tut .intro-wrapper {
-    display: inline-block;
-    width: 560px;
-    margin-left: 80px;
-}
-.social-network-tut .nav-wrapper {
-    display: inline-block;
-    width: 160px;
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-left: 220px;
+    display: block;
     vertical-align: top;
-    margin-left: 140px;
-    margin-top: 60px;
+    padding: 30px;
 }
-.social-network-tut .nav-wrapper ol {
+
+a.fancy {
+    display: inline-block;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+ol.nav-wrapper,
+ul.nav-wrapper {
+    display: inline-block;
+    float: left;
+    margin-top: 30px;
+    border-radius: 4px;
+    width: 200px;
     list-style-type: decimal;
     list-style-position: inside;
     background-color:#FFF;
     padding: 20px;
     line-height: 1.5em;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
     border: 1px solid #DDD;
+    vertical-align: top;
 }
 .tutorial-section {
     min-width: 714px;
     width: 80%;
-    border: 1px solid red;
     margin: 20px;
     overflow: hidden; /* onload, hide the overflowing bootstrapped slides */
 }
-.slide-view * {
-    border: black 1px solid;
-}
+
 .slide-view .slides-wrap {
     height: 350px;
-    width: 710px;
     display: inline-block;
 }
 .slide-view .slide-container {
@@ -54,8 +60,13 @@
 }
 .slide-view .slide-container .slide-overlay-text {
     position: absolute;
-    top: 0;
+    width: 100%;
+    background-color: rgba(30, 30, 30, 0.8);
+    min-height: 60px;
+    padding: 15px;
+    bottom: 0;
     left: 0;
+    margin: 0;
     color: white; /* what will be visible on slides? */
 }
 .slide-view .slide-container .slide-panel {
@@ -63,6 +74,7 @@
     vertical-align: top;
     width: 200px;
     height: 100%;
+    margin-left: 30px;
     position: relative;
 }
 .slide-view .nav-section {
@@ -85,15 +97,32 @@
     display: inline-block;
     vertical-align: top;
     width: 100px;
+    height: 45px;
+    line-height: 45px;
 }
+
+.slide-view .goto-slide-wrap span {
+    vertical-align: top;
+}
+
+.slide-view .goto-slide-input {
+    height: 45px;
+}
+
 </style>
 <div class="centered-container social-network-tut">
     <h4>Tutorial - Building a social network</h4>
+    <ol class="nav-wrapper">
+        <h3>Overview</h3>
+        <a><li>User Profiles</li></a>
+        <a><li>Wall Posts</li></a>
+        <a><li>Friendships</li></a>
+    </ol>
     <div class="intro-wrapper">
         <p>In this tutorial, we'll build a fairly standard social network, demoed here:
         <br>
         <br>
-        <a href="http://book-face.appcubator.com/">book-face.appcubator.com</a>
+        <a class="fancy" href="http://book-face.appcubator.com/">book-face.appcubator.com</a>
         <br>
         <br>
         <p>We'll do all of this without writing code, and in the end, you'll be able to download the frontend and backend code for the web app.</p>
@@ -103,14 +132,6 @@
         <a href="http://book-face.appcubator.com/" target="_blank">
              <img src="https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7">
         </a>
-    </div>
-    <div class="nav-wrapper">
-        <ol>
-            <h3>Overview</h3>
-            <a><li>User Profiles</li></a>
-            <a><li>Wall Posts</li></a>
-            <a><li>Friendships</li></a>
-        </ol>
     </div>
 </div>
 <div class="centered-container">
