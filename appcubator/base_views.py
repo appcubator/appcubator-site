@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import forms as auth_forms, authenticate, login
 from django.core.exceptions import ValidationError
 from django import forms
+from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
@@ -420,7 +421,14 @@ def resources(request):
 def resources_socialnetwork(request):
     page_context = {}
     page_context["title"] = "Building a Social Network"
-    page_context["tut_img_dict"] = { 'profile': [('https://www.google.com/images/srpr/logo4w.png', 'Short text', '')]}
+    import os, os.path
+    join = os.path.join
+    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p1.json')
+    with open(profile_json_path) as f:
+        raw_data = simplejson.load(f)
+    goog = 'https://www.google.com/images/srpr/logo4w.png'
+    ts = [(d.get('img_url', goog), d.get('shortText', 'short text'), 'long text') for d in raw_data]
+    page_context["tut_img_dict"] = { 'profile': ts}
     return render(request, 'website-resources-socialnetwork.html', page_context)
 
 
