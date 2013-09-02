@@ -1,17 +1,15 @@
-{% extends "infra-html.html" %}
+{% extends "infra-website.html" %}
+
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/website.css">
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
-<!--     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
- -->
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
 {% endblock %}
-{% block topbar %}
-{% include "infra-topbar-out.html" %}
-{% endblock %}
-
-
 {% block page %}
+<div id="fb-root"></div>
+<script>
+</script>
+{% include "website-navbar.html" %}
+
 <div class="row hoff8">
   <div class="container centered">
     <div class="">
@@ -30,6 +28,8 @@
       {% csrf_token %}
       <input id="id_username" class="span12" type="text" name="username" placeholder="Email..." maxlength="30"><br>
       <input type="password" class="span12 hoff1" name="password" placeholder="Password..." id="id_password"><br>
+      <br>
+        <a class="qmark" href="{% url auth_password_reset %}">Forgot your password?</a>
       <br>
       <input class="btn" type="submit" value="Login"/>
       <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
