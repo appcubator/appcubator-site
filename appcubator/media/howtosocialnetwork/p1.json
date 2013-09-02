@@ -30,73 +30,66 @@
     "img_url": "/static/img/documentation/socialnetwork/p1/8.png",
     "shortText": "It's live!",
     "longText": "The forms work, and you can confirm by attempting to submit an empty form."
-},
-{
+},{
     "img_url": "/static/img/documentation/socialnetwork/p2/1.png",
     "shortText": "Create a new page for User Profiles",
-    "longText": "NYI"
+    "longText": "Pretty self-explanatory. The next step will expand on this."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p2/2.png",
     "shortText": "Add a dynamic User ID to the URL",
-    "longText": "NYI"
+    "longText": "Since the User Profile page is for a specific user, we need to add an ID to the URL that indicates which user the page is for. Then we'll be able to display information from the Page's User onto the page."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p2/4.png",
     "shortText": "Add Profile pic and About me to the User Table",
-    "longText": "NYI"
+    "longText": "Add a profile picture field and about me field to the User table, so that Users can store this information for their profile."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p2/5.png",
     "shortText": "Drag dynamic content onto the page",
-    "longText": "NYI"
+    "longText": "You'll find the Page's User's information in the Page Context section of the UI Element gallery. You can drag those onto the page, and even type the content of those into headers, as done for First Name, Last Name."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p2/6.png",
     "shortText": "Create a new page and drag an Edit profile form",
-    "longText": "NYI"
+    "longText": "This is going to be the page where the User will edit their profile information."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p2/7.png",
     "shortText": "Customize the form",
-    "longText": "NYI"
+    "longText": "We can customize the fields shown, the display-types of the fields, and where the form redirects."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p2/8.png",
     "shortText": "Redirect Sign up form to edit profile form",
-    "longText": "NYI"
+    "longText": "We want to make it so that when the User signs up, they get redirected to the Edit Profile page we just made."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p2/9.png",
     "shortText": "Add a link to the Edit profile page",
-    "longText": "NYI"
-},{
+    "longText": "This is so that the User can access the Edit Profile page."
+},
+{
     "img_url": "/static/img/documentation/socialnetwork/p2/10.png",
     "shortText": "Here's the end result!",
-    "longText": "NYI"
+    "longText": "This is a sample user profile we created."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p2/11.png",
     "shortText": "Trying to edit the profile",
-    "longText": "NYI"
+    "longText": "Change the About me."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p2/12.png",
     "shortText": "It works!",
-    "longText": "NYI"
-},{
+    "longText": "You can see the the About me actually did change."
+},
+{
     "img_url": "/static/img/documentation/socialnetwork/p3/1.png",
     "shortText": "Drag a User list onto a new page",
-    "longText": "NYI"
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p3/2.png",
-    "shortText": "Customize the list using the row editor",
-    "longText": "NYI"
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p3/3.png",
-    "shortText": "Here's the resulting list with a sample user",
-    "longText": "NYI"
+    "longText": "This is how Users will be able to view other Users on the social network."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p3/4.png",
-    "shortText": "Link the name of the user to its profile page",
-    "longText": "NYI"
+    "shortText": "Customize the list using the row editor",
+    "longText": "The key thing we did here is drag a link onto the row, point it to the profile page, and made the content read the User's full name."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p3/5.png",
     "shortText": "Now clicking the link...",
-    "longText": "NYI"
+    "longText": "Testing it out."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p3/6.png",
     "shortText": "goes to the user's profile page!",
-    "longText": "NYI"
+    "longText": "It works! Thanks for reading!"
 }]
