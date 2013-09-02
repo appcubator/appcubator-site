@@ -427,7 +427,7 @@ def resources_socialnetwork(request):
     with open(profile_json_path) as f:
         raw_data = simplejson.load(f)
     goog = 'https://www.google.com/images/srpr/logo4w.png'
-    ts = [(d.get('img_url', goog), d.get('shortText', 'short text'), 'long text') for d in raw_data]
+    ts = [(d.get('img_url', goog), d.get('shortText', 'short text'), d.get('longText', 'non')) for d in raw_data]
     page_context["tut_img_dict"] = { 'profile': ts}
     return render(request, 'website-resources-socialnetwork.html', page_context)
 

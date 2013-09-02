@@ -1,7 +1,7 @@
 {# Just need to pass "data" and "id" to the context #}
 
 <div id="{{ id }}" class="slide-view tutorial-section">
-    <div class="centered-container" style="width:614px">
+    <div class="centered-container" style="width:714px">
         <div class="slides-wrap">
             {% for im_url, short_text, long_text in data %}
             <div class="slide-container">
@@ -9,8 +9,11 @@
                 <p class="slide-overlay-text">{{ short_text }}</p>
                 </div><div class="slide-panel">
                     <p>{{ long_text }}</p>
-                    <div class="arrow-wrap"><div class="prev-slide-click">Prev</div></div>
-                    <div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
+                    <div class="nav-section">
+                        <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
+                        </div><div class="goto-slide-wrap"><input class="goto-slide-input" type="text" size="2"/> of <span class="goto-slide-numslides"></span>
+                        </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
+                    </div>
                 </div>
             </div>
             {% endfor %}
