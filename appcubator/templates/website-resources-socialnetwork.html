@@ -1,6 +1,38 @@
 {% extends "website-resources-infra.html" %}
 {% block content %}
 <style>
+.social-network-tut h4, .social-network-tut h5 {
+    margin-bottom: 20px;
+}
+.social-network-tut .intro-wrapper {
+    display: inline-block;
+    width: 560px;
+    margin-left: 80px;
+}
+.social-network-tut .nav-wrapper {
+    display: inline-block;
+    width: 160px;
+    vertical-align: top;
+    margin-left: 140px;
+    margin-top: 60px;
+}
+.social-network-tut .nav-wrapper ol {
+    list-style-type: decimal;
+    list-style-position: inside;
+    background-color:#FFF;
+    padding: 20px;
+    line-height: 1.5em;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    border: 1px solid #DDD;
+}
+.tutorial-section {
+    min-width: 604px;
+    width: 80%;
+    border: 1px solid red;
+    margin: 20px;
+}
 .slide-view * {
     border: black 1px solid;
 }
@@ -15,39 +47,47 @@
     display: inline-block;
 }
 </style>
-<div class="centered-container">
+<div class="centered-container social-network-tut">
     <h4>Tutorial - Building a social network</h4>
-    <div>
-        <div>
-            <p>In this tutorial, we'll build a fairly standard social network, demoed here:</p>
-            <a href="http://book-face.appcubator.com/">book-face.appcubator.com</a>
-            <p>We'll do all of this without writing code, and in the end, you'll be able to download the frontend and backend code for the web app.</p>
-            <a href="http://book-face.appcubator.com/">
-                 <img src="https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7">
-            </a>
-        </div>
-        <div>
-            <ol>
-                <li>User Profiles</li>
-                <li>Wall Posts</li>
-                <li>Friendships</li>
-            </ol>
+    <div class="intro-wrapper">
+        <p>In this tutorial, we'll build a fairly standard social network, demoed here:
+        <br>
+        <br>
+        <a href="http://book-face.appcubator.com/">book-face.appcubator.com</a>
+        <br>
+        <br>
+        <p>We'll do all of this without writing code, and in the end, you'll be able to download the frontend and backend code for the web app.</p>
+        <br>
+        <br>
+        <p>End result:</p>
+        <a href="http://book-face.appcubator.com/" target="_blank">
+             <img src="https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7">
+        </a>
+    </div>
+    <div class="nav-wrapper">
+        <ol>
+            <h3>Overview</h3>
+            <a><li>User Profiles</li></a>
+            <a><li>Wall Posts</li></a>
+            <a><li>Friendships</li></a>
+        </ol>
+    </div>
+</div>
+<div class="centered-container">
+    <h5>User Profiles</h5>
+    <div id="social-slides-profiles" class="slide-view tutorial-section">
+        <div class="centered-container" style="width:604px">
+            <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
+            </div><div class="slides-wrap">
+                {% for im_url, short_text, long_text in tut_img_dict.profile %}
+                <div class="slide-container" style="background-image: url({{ im_url }})">Image {{ forloop.counter }}: {{ short_text }}</div>
+                {% endfor %}
+            </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
         </div>
     </div>
 </div>
 <div class="centered-container">
-    <h2>User Profiles</h2>
-    <div id="social-slides-profiles" class="slide-view">
-        <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
-        </div><div class="slides-wrap">
-            <div class="slide-container">Image 1</div>
-            <div class="slide-container">Image 2</div>
-            <div class="slide-container">Image 3</div>
-        </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
-    </div>
-</div>
-<div class="centered-container">
-    <h2>Wall posts</h2>
+    <h5>Wall posts</h5>
     <div id="social-slides-posts" class="slide-view">
         <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
         </div><div class="slides-wrap">
@@ -58,7 +98,7 @@
     </div>
 </div>
 <div class="centered-container">
-    <h2>Friendships</h2>
+    <h5>Friendships</h5>
     <div id="social-slides-friendships" class="slide-view">
         <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
         </div><div class="slides-wrap">

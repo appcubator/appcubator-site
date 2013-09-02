@@ -420,6 +420,7 @@ def resources(request):
 def resources_socialnetwork(request):
     page_context = {}
     page_context["title"] = "Building a Social Network"
+    page_context["tut_img_dict"] = { 'profile': [('https://www.google.com/images/srpr/logo4w.png', 'Short text', '')]}
     return render(request, 'website-resources-socialnetwork.html', page_context)
 
 
