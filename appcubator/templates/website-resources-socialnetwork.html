@@ -28,10 +28,11 @@
     border: 1px solid #DDD;
 }
 .tutorial-section {
-    min-width: 604px;
+    min-width: 614px;
     width: 80%;
     border: 1px solid red;
     margin: 20px;
+    overflow: hidden; /* onload, hide the overflowing bootstrapped slides */
 }
 .slide-view * {
     border: black 1px solid;
@@ -40,15 +41,36 @@
     height: 50px;
     width: 50px;
     display: inline-block;
+    vertical-align: top;
+}
+.slide-view .arrow-wrap:hover {
+    cursor: pointer;
 }
 .slide-view .slides-wrap {
     height: 350px;
-    width: 500px;
+    width: 610px;
     display: inline-block;
 }
 .slide-view .slide-container {
     height: 100%;
+}
+.slide-view .slide-container .slide-image {
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    width:500px;
     background-size: 100% auto;
+}
+.slide-view .slide-container .slide-overlay-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white; /* what will be visible on slides? */
+}
+.slide-view .slide-container .slide-panel {
+    display: inline-block;
+    vertical-align:top;
+    width:100px;
 }
 </style>
 <div class="centered-container social-network-tut">
@@ -79,38 +101,15 @@
 </div>
 <div class="centered-container">
     <h5>User Profiles</h5>
-    <div id="social-slides-profiles" class="slide-view tutorial-section">
-        <div class="centered-container" style="width:604px">
-            <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
-            </div><div class="slides-wrap">
-                {% for im_url, short_text, long_text in tut_img_dict.profile %}
-                <div class="slide-container" style="background-image: url({{ im_url }})">Image {{ forloop.counter }}: {{ short_text }}</div>
-                {% endfor %}
-            </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
-        </div>
-    </div>
+    {% include "website-resources-tutorial-section.html" with data=tut_img_dict.profile id="social-slides-profiles" %}
 </div>
 <div class="centered-container">
     <h5>Wall posts</h5>
-    <div id="social-slides-posts" class="slide-view">
-        <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
-        </div><div class="slides-wrap">
-            <div class="slide-container">Image 1</div>
-            <div class="slide-container">Image 2</div>
-            <div class="slide-container">Image 3</div>
-        </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
-    </div>
+    {% include "website-resources-tutorial-section.html" with data=tut_img_dict.profile id="social-slides-posts" %}
 </div>
 <div class="centered-container">
     <h5>Friendships</h5>
-    <div id="social-slides-friendships" class="slide-view">
-        <div class="arrow-wrap"><div class="prev-slide-click">Prev</div>
-        </div><div class="slides-wrap">
-            <div class="slide-container">Image 1</div>
-            <div class="slide-container">Image 2</div>
-            <div class="slide-container">Image 3</div>
-        </div><div class="arrow-wrap"><div class="next-slide-click">Next</div></div>
-    </div>
+    {% include "website-resources-tutorial-section.html" with data=tut_img_dict.profile id="social-slides-friendships" %}
 </div>
 
 {% endblock %}
