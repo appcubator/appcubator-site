@@ -13,7 +13,8 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
 
     events : {
       'click .hide-overlay' : 'hide',
-      'click .see-all'      : 'showAll'
+      'click .see-all'      : 'showAll',
+      'click .hide-all'     : 'hideAll'
       // 'click .tutorial'        : 'showTutorial',
       // 'click .feedback'        : 'showFeedback',
       // 'click #deploy'          : 'deploy',
@@ -46,7 +47,19 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
     showAll: function() {
       $('.three-apps').hide();
       $('.current-app-info').hide();
+      $('.see-all').hide();
       $('.all-apps').fadeIn();
+      $('.hide-all').fadeIn();
+      $('.all-app.title').fadeIn();
+    },
+
+    hideAll: function() {
+      $('.three-apps').fadeIn();
+      $('.current-app-info').fadeIn();
+      $('.see-all').fadeIn();
+      $('.all-apps').hide();
+      $('.hide-all').hide();
+      $('.all-app.title').hide();
     }
 
   });
