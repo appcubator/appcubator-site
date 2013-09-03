@@ -39,10 +39,10 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
       var nmrPages = v1State.get('pages').length;
       var pagesStr = nmrPages > 1 ? ' pages' : ' page';
       if(nmrPages >= 4) {
-        $('.what-to-do').html('You currently have '+ nmrPages + pagesStr + '.<br><a href="pages/">Add more on the Pages page</a>.');
+        $('.what-to-do').html('Next Step: You currently have '+ nmrPages + pagesStr + '. <a href="pages/">Add more on the Pages page</a>.');
       }
       else {
-        $('.what-to-do').html('You can go to the <a href="tables/">Tables</a> page, and click "Access Data" to browse the data in your app\'s database.');
+        $('.what-to-do').html('Next Step: You can go to the <a href="tables/">Tables</a> page, and click "Access Data" to browse the data in your app\'s database.');
       }
     },
 

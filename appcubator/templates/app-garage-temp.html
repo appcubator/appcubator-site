@@ -1,0 +1,68 @@
+  <div class="hide-btn hide-overlay">×</div>
+  <div class="container">
+    <div class="span36 left-menu">
+      <div class="row">
+        <div class="span36 intro">
+          <img class="welcome" src="{{ STATIC_URL }}img/garage-marker.png">
+        </div>
+      </div>
+      <div class="current-app-info">
+      {% if app %}
+          <div class="app title">{{ app.name }}</div>
+          <div class="row hoff1 span48 current-app-links">
+            <a class="white-border span8 hi8 settings hide-overlay" href="{% url appcubator.views.app_page app.id %}info/"><span class="icon"></span>App Settings</a></li>
+            <a class="white-border span8 hi8 offset2 theme" href="{% url appcubator.views.app_edit_theme app.id %}" rel="external" target="_blank"><span class="icon"></span>Theme Editor</a>
+            <a class="white-border span8 hi8 offset2 hide-overlay build" href="#"><span class="icon"></span>Go Back to {{ app.name }}</a>
+          </div>
+      {% endif %}
+      </div>
+      <div class="row span30">
+        <div class="three-apps hoff2">
+        <div class="title">Your other Apps:</div>
+        {% for a in apps|slice:":3" %}
+          <div class="row">
+            <a class="span28 hi4 hoff1 white-border" href="{% url appcubator.views.app_page a.id %}" rel="external">
+              <strong>{{ a.name }}</strong>
+            </a>
+          </div>
+        {% endfor %}
+        </div>
+        <div class="all-app title" style="display:none;">ALL APPS</div>
+        <div class="all-apps span30" style="display:none;">
+        {% for a in apps reversed %}
+          <div class="row">
+            <a class="span28 hi4 hoff1 white-border" href="{% url appcubator.views.app_page a.id %}" rel="external">
+              <strong>{{ a.name }}</strong>
+            </a>
+          </div>
+        {% endfor %}
+        </div>
+        <a href="#" class="see-all">See all apps.</a>
+        <a href="#" class="hide-all" style="display:none;">Go back to {{app.name}}.</a>
+        <div class="row">
+          <a class="span16 hi4 hoff1 large-link" href="{% url appcubator.views.app_new %}" rel="external">
+            <strong>+ CREATE A NEW APP</strong>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="offset4 right-menu hoff8 span18">
+      <a class="white-border span18 hi4" href="#"><span class="icon invite"></span>Invite Your Friends</a>
+      <div class="notifications">
+        <span class="icon resources"><div class="title">Notifications</div>
+        <hr>
+        <ul>
+          <li>You can fill the feedback form for a chance to win a free domain.</li>
+          <li>You can add custom CSS/JS/HTML to your pages usin "Custom Widget".</li>
+          <li>Now you can see the analytics about your application in the dashboard below.</li>
+        </ul>
+      </div>
+      <a class="white-border span18 hi4" href="/resources" target="_blank" rel="external"><span class="icon resources"></span>Resources</a>
+      <a class="white-border span18 hi4" href="/community" target="_blank" rel="external"><span class="icon community"></span>Community</a>
+      <a class="white-border span18 hi4" href="/account" target="_blank" rel="external"><span class="icon settings"></span>Account Settings</a>
+    </div>
+  </div>
+  <div class="question-cont">
+    <img src="{{ STATIC_URL }}img/question-market.png">
+    <p>Yes, there is an actual person here :)</p>
+  </div>

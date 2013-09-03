@@ -5,11 +5,11 @@ define(function(require, exports, module) {
     var ErrorDialogueView  = require("mixins/ErrorDialogueView");
     var SimpleDialogueView = require("mixins/SimpleDialogueView");
 
-    var TutorialView = require("tutorial/TutorialView"),
-        EmailsView = require("app/emails/EmailsView"),
-        DeployView = require("app/DeployView"),
-        SoftErrorView = require("app/SoftErrorView");
-
+    var TutorialView  = require("tutorial/TutorialView"),
+        EmailsView    = require("app/emails/EmailsView"),
+        DeployView    = require("app/DeployView"),
+        SoftErrorView = require("app/SoftErrorView"),
+        GarageView    = require("app/GarageView");
 
     var AppRouter = Backbone.Router.extend({
 
@@ -52,6 +52,9 @@ define(function(require, exports, module) {
             keyDispatcher.bindComb('ctrl+v', this.paste);
 
             var autoSave = setInterval(this.save, 30000);
+
+            if(appId !== 0) { this.garageView = new GarageView(); }
+            $('.garage-toggle').on('click', this.garageView.show);
 
             this.listenTo(v1State.get('tables'), 'add', this.entityAdded);
         },
@@ -492,6 +495,11 @@ define(function(require, exports, module) {
             v1.getDeploymentStatus(successCallback, function() {
                 setTimeout(function() { v1.whenDeployed(successCallback); }, 1500);
             });
+        },
+
+        showGarage: function() {
+            this.garageView.show();
+            olark('api.box.show');
         }
 
     });
