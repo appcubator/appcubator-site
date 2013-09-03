@@ -422,6 +422,10 @@ def resources_socialnetwork(request):
     page_context["title"] = "Building a Social Network"
     return render(request, 'website-resources-socialnetwork.html', page_context)
 
+def resources_whatisawebapp(request):
+    page_context = {}
+    page_context["title"] = "What is a web application?"
+    return render(request, 'website-resources-webapps.html', page_context) 
 
 def screencast(request, screencast_id=1):
     page_context = {}

@@ -353,6 +353,21 @@ define(['jquery'], function() {
 
     copyToClipboard: function(text) {
       window.prompt ("Copy to clipboard: Ctrl+C/Cmd+C, Enter", text);
+    },
+
+    addOverlay: function(el) {
+      var $el = $(el);
+      var overlayEl = document.createElement('div');
+      overlayEl.className = 'global-overlay';
+      var position = $el.offset();
+      overlayEl.style.position = 'fixed';
+      overlayEl.style.top = position.top + 'px';
+      overlayEl.style.left = position.left + 'px';
+      overlayEl.style.width = $el.outerWidth() + 'px';
+      overlayEl.style.height = $el.outerHeight() + 'px';
+      document.body.appendChild(overlayEl);
+      $(overlayEl).one('click', function(e) { $(e.currentTarget).remove(); });
+      return overlayEl;
     }
 
   };
