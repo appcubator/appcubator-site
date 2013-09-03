@@ -4,7 +4,7 @@
 
 <script type="text/template" id="app-info-page">
 {% include "app-info-page.html" %}
-</script>
+</script> 
 
 <script type="text/template" id="entities-page">
 {% include "app-entities-page.html" %}
@@ -107,6 +107,7 @@
           <img class="welcome" src="{{ STATIC_URL }}img/garage-marker.png">
         </div>
       </div>
+      <div class="current-app-info">
       {% if app %}
           <div class="app title">{{ app.name }}</div>
           <div class="row hoff1 span48">
@@ -115,7 +116,9 @@
             <a class="white-border span7 hi7 offset2 hide-overlay" href="#"><span class="icon"></span>Go Back to the App</a>
           </div>
       {% endif %}
-      <div class="row hoff2 span36">
+      </div>
+      <div class="row hoff2 span27">
+        <div class="three-apps">
         <div class="title">Your other Apps:</div>
         {% for a in users_apps|slice:":3" %}
           <div class="row">
@@ -124,8 +127,19 @@
             </a>
           </div>
         {% endfor %}
+        </div>
+        <div class="all-apps span27" style="display:none;">
+        {% for a in users_apps %}
           <div class="row">
-            <a class="span26 hi4 hoff1 large-link" href="{% url appcubator.views.app_new %}" rel="external">
+            <a class="span26 hi4 hoff1 white-border" href="{% url appcubator.views.app_page a.id %}" rel="external">
+              <strong>{{ a.name }}</strong>
+            </a>
+          </div>
+        {% endfor %}
+        </div>
+        <a href="#" class="see-all">See all apps...</a>
+          <div class="row">
+            <a class="span16 hi4 hoff1 large-link" href="{% url appcubator.views.app_new %}" rel="external">
               <strong>+ CREATE A NEW APP</strong>
             </a>
           </div>

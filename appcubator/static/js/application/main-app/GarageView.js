@@ -12,7 +12,8 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
     className: 'fixed-bg welcome garage',
 
     events : {
-      'click .hide-overlay' : 'hide'
+      'click .hide-overlay' : 'hide',
+      'click .see-all'      : 'showAll'
       // 'click .tutorial'        : 'showTutorial',
       // 'click .feedback'        : 'showFeedback',
       // 'click #deploy'          : 'deploy',
@@ -40,6 +41,12 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
 
     show: function() {
       this.$el.show();
+    },
+
+    showAll: function() {
+      $('.three-apps').hide();
+      $('.current-app-info').hide();
+      $('.all-apps').fadeIn();
     }
 
   });

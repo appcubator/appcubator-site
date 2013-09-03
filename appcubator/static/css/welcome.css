@@ -17,6 +17,16 @@ background-repeat: no-repeat;
   margin-top: 0;
 }
 
+.fixed-bg a {
+  color: #fff;
+}
+
+a.see-all {
+  display: inline-block;
+  margin-top: 10px;
+  float: right;
+}
+
 .welcome {
   margin-top: 80px;
 }
@@ -263,6 +273,11 @@ a.large-link {
 
 .right-menu .white-border:hover {
   border-color: #fff;
+}
+
+.all-apps {
+  overflow-y: scroll;
+  height: 460px;
 }
 
 .right-menu .white-border .icon {
