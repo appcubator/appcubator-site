@@ -62,7 +62,9 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       ""                    : "homepage",
       "beta/"               : "homepage",
       "developer/"          : "developerpage",
-      "resources/tutorial/build-social-network/" : "socialNetworkPage"
+      "resources/tutorial/build-social-network/" : "socialNetworkPage",
+      "resources/tutorial/build-social-network/:section/" : "socialSectionScroll",
+      "resources/tutorial/build-social-network/:section/:goto/" : "socialSectionScrollAndGoto",
     },
 
     cube: $('#cube'),
@@ -87,7 +89,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       this.view = new DeveloperpageView().render();
     },
 
-    socialNetworkPage: function(argument) {
+    socialNetworkPage: function() {
       var el_profiles = document.getElementById('social-slides-profiles');
       var el_posts = document.getElementById('social-slides-posts');
       var el_friendships = document.getElementById('social-slides-friendships');
@@ -97,6 +99,21 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       sv1.render();
       sv2.render();
       sv3.render();
+    },
+
+    socialSectionScroll: function(sectionSlug) {
+        var lookupSv = function () {}; // keep the page from crashing
+        var sv = lookupSv(sectionSlug);
+        window.location.href.hash = sectionSlug;
+        return sv;
+    },
+
+    socialSectionScrollAndGoto: function(sectionSlug, gotoSlug) {
+        var lookupSlideNum = function () {}; // keep the page from crashing
+        var sv = this.socialSectionScroll(sectionSlug);
+        var slideNum = lookupSlideNum(gotoSlug);
+        sv.gotoSlide(slideNum);
+        return slideNum;
     },
 
     bindLoginForm: function() {
