@@ -1,4 +1,12 @@
 {% extends "website-resources-infra.html" %}
 {% block content %}
-<img src="{{STATIC_URL}}img/django-appcubator.png">
+<div class="centered-container">
+  <p>It's extremely easy to understand Appcubator, if you are already familiar with Django. Because it uses the same Model-View-Template structure. And the best part is, it generates the Django code for you once you are done with your project. It's all free to download.</p>
+  <img src="{{STATIC_URL}}img/django-appcubator.png" style="width:70%; margin-left:15%;">
+  <h4>Models » Tables</h4>
+  <p>Models are the core part of your application and they are called "Tables" on Appcubator. You can go to the Tables Page to see the relevant sections. Creating a new model is as easy as clicking the "Add Table" button. However, Appcubator also provides you with some convenience.</p>
+  <h5>User Tables</h5>
+  <p>Appcubator creates a User Table for you by default! This table has the minimal required attributes of a user that will also support the authentication system: username, First Name, Last Name, Email and Password. So you don't need to add these properties to your user model yourself.</p>
+  <p>Appcubator also helps you deal with different types of users. For example, if you have Student and Teacher method in your application, you can just create two "User Tables" called "Student" and "Teacher". Later on you will see that Appcubator will provide ways to direct different types of users to different pages and dealing with the permissions for specific user types in your views.</p>
+</div>
 {% endblock %}
