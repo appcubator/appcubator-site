@@ -1,4 +1,5 @@
 [{
+    "section": "Basic Page Design",
     "img_url": "/static/img/documentation/socialnetwork/p1/1.png",
     "shortText": "Make a new app",
     "longText": "After this, you'll be at the Overview page, the control panel for your web app."
@@ -31,6 +32,7 @@
     "shortText": "It's live!",
     "longText": "The forms work, and you can confirm by attempting to submit an empty form."
 },{
+    "section": "User Profile Page",
     "img_url": "/static/img/documentation/socialnetwork/p2/1.png",
     "shortText": "Create a new page for User Profiles",
     "longText": "Pretty self-explanatory. The next step will expand on this."
@@ -47,6 +49,7 @@
     "shortText": "Drag dynamic content onto the page",
     "longText": "You'll find the Page's User's information in the Page Context section of the UI Element gallery. You can drag those onto the page, and even type the content of those into headers, as done for First Name, Last Name."
 },{
+    "section": "Editing the User Profile",
     "img_url": "/static/img/documentation/socialnetwork/p2/6.png",
     "shortText": "Create a new page and drag an Edit profile form",
     "longText": "This is going to be the page where the User will edit their profile information."
@@ -77,6 +80,7 @@
     "longText": "You can see the the About me actually did change."
 },
 {
+    "section": "Listing of Users",
     "img_url": "/static/img/documentation/socialnetwork/p3/1.png",
     "shortText": "Drag a User list onto a new page",
     "longText": "This is how Users will be able to view other Users on the social network."

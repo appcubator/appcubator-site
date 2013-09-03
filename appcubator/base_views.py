@@ -424,18 +424,31 @@ def resources_socialnetwork(request):
     import os, os.path
     join = os.path.join
 
+    def json_to_data(json):
+        """"return a list of (section, <section_name>) tuples,
+            where each section has a list of dicts
+                where each dict has img_url, shortText, longText keys."""
+        sections = []
+        for entry in json:
+            if 'section' in entry:
+                s = ([], entry['section'])
+                sections.append(s)
+            ls, name = sections[-1] # want to append the entry to the last section
+            ls.append(entry)
+        return sections
+
     profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p1.json')
     with open(profile_json_path) as f:
         raw_data = simplejson.load(f)
-    profile_data = [(d['img_url'], d['shortText'], d['longText']) for d in raw_data]
+    profile_data = json_to_data(raw_data)
     profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p2.json')
     with open(profile_json_path) as f:
         raw_data = simplejson.load(f)
-    posts_data = [(d['img_url'], d['shortText'], d['longText']) for d in raw_data]
+    posts_data = json_to_data(raw_data)
     profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p2.json')
     with open(profile_json_path) as f:
         raw_data = simplejson.load(f)
-    friendships_data = [(d['img_url'], d['shortText'], d['longText']) for d in raw_data]
+    friendships_data = json_to_data(raw_data)
 
     page_context["tut_img_dict"] = { 'profile': profile_data,
                                      'posts': posts_data,

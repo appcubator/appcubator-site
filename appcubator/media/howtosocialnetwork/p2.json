@@ -1,4 +1,5 @@
 [{
+    "section": "Section name",
     "img_url": "/static/img/documentation/socialnetwork/p3/1.png",
     "shortText": "Drag a User list onto a new page",
     "longText": "NYI"
