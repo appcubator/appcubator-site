@@ -8,6 +8,7 @@ define([
 function(SimpleModalView, ShareModalView, AdminPanelView) {
 
   var GarageView = Backbone.View.extend({
+    el : document.getElementById('garage-div'),
     css: 'app-page',
     className: 'fixed-bg welcome garage',
 
@@ -25,15 +26,15 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
 
     initialize: function() {
       _.bindAll(this);
-      this.subviews = [this.analyticsView];
       this.render();
       console.trace();
     },
 
     render: function() {
-      var page_context = {};
-      this.el.innerHTML = _.template(util.getHTML('garage-temp'), page_context);
-      document.body.appendChild(this.el);
+      // var page_context = {};
+      // this.el.style.display = 'none';
+      // this.el.innerHTML = _.template(util.getHTML('garage-temp'), page_context);
+      // document.body.appendChild(this.el);
     },
 
     hide: function() {
