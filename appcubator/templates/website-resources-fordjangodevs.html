@@ -5,8 +5,21 @@
   <img src="{{STATIC_URL}}img/django-appcubator.png" style="width:70%; margin-left:15%;">
   <h4>Models » Tables</h4>
   <p>Models are the core part of your application and they are called "Tables" on Appcubator. You can go to the Tables Page to see the relevant sections. Creating a new model is as easy as clicking the "Add Table" button. However, Appcubator also provides you with some convenience.</p>
+  <pre style="width:49%; display:inline-block;">
+    class Flight(models.Model):
+        flight_number = models.TextField(blank=True)
+        date = models.DateTimeField(null=True, blank=True)
+        from_val = models.TextField(blank=True)
+        destination = models.TextField(blank=True)
+        capacity = models.FloatField(null=True, blank=True)
+        date_created = models.DateTimeField(auto_now_add=True)
+        date_modified = models.DateTimeField(auto_now=True)
+  </pre>
+  <img src="{{STATIC_URL}}img/sample-table.png" style="width:49%; float:right;">
   <h5>User Tables</h5>
-  <p>Appcubator creates a User Table for you by default! This table has the minimal required attributes of a user that will also support the authentication system: username, First Name, Last Name, Email and Password. So you don't need to add these properties to your user model yourself.</p>
+  <p>Appcubator creates a User Table for you by default! This table has the minimal required fields of a user that will also support the authentication system: username, First Name, Last Name, Email and Password. So you don't need to add these fields to your user model yourself.</p>
   <p>Appcubator also helps you deal with different types of users. For example, if you have Student and Teacher method in your application, you can just create two "User Tables" called "Student" and "Teacher". Later on you will see that Appcubator will provide ways to direct different types of users to different pages and dealing with the permissions for specific user types in your views.</p>
+  <h5>Relations</h5>
+  <p></p>
 </div>
 {% endblock %}
