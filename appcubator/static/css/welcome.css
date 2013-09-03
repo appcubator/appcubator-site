@@ -280,7 +280,7 @@ a.large-link {
 
 .all-apps {
   overflow-y: scroll;
-  height: 395px;
+  height: 410px;
 }
 
 .right-menu .white-border .icon {
@@ -315,4 +315,30 @@ a.large-link {
 
 .fixed-bg.welcome.garage {
   background-color: rgba(0, 0, 0, 0.85);
+}
+
+.current-app-links .white-border {
+  text-align: center;
+}
+
+.current-app-links .white-border .icon {
+  display: inline-block;
+  width: 75px;
+  height: 45px;
+  background-position: top center;
+  background-size:auto 100%;
+  background-repeat: no-repeat;
+}
+
+.theme .icon {
+  background-image: url(../img/theme-icon.png);
+}
+
+.settings .icon {
+  background-image: url(../img/settings-icon.png);
+}
+
+.build .icon {
+  background-image: url(../img/run.png);
+  background-size:auto 90%;
 }
