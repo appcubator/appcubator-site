@@ -8,73 +8,59 @@ define([
 function(SimpleModalView, ShareModalView, AdminPanelView) {
 
   var GarageView = Backbone.View.extend({
+    el : document.getElementById('garage-div'),
     css: 'app-page',
+    className: 'fixed-bg welcome garage',
 
     events : {
-      'click .tutorial'        : 'showTutorial',
-      'click .feedback'        : 'showFeedback',
-      'click #deploy'          : 'deploy',
-      'click .browse'          : 'browse',
-      'click #share'           : 'share',
-      'click .edit-btn'        : 'settings'
+      'click .hide-overlay' : 'hide',
+      'click .see-all'      : 'showAll',
+      'click .hide-all'     : 'hideAll'
+      // 'click .tutorial'        : 'showTutorial',
+      // 'click .feedback'        : 'showFeedback',
+      // 'click #deploy'          : 'deploy',
+      // 'click .browse'          : 'browse',
+      // 'click #share'           : 'share',
+      // 'click .edit-btn'        : 'settings'
     },
 
     initialize: function() {
       _.bindAll(this);
-      this.analyticsView = new AnalyticsView();
-      this.subviews = [this.analyticsView];
-
-      this.title = "The Garage";
+      this.render();
+      console.trace();
     },
 
     render: function() {
-      var page_context = {};
-      this.el.innerHTML = _.template(util.getHTML('app-main-page'), page_context);
-      this.$('.analytics').append(this.analyticsView.render().el);
-      this.renderNextStep();
+      // var page_context = {};
+      // this.el.style.display = 'none';
+      // this.el.innerHTML = _.template(util.getHTML('garage-temp'), page_context);
+      // document.body.appendChild(this.el);
     },
 
-    renderNextStep: function() {
-      var nmrPages = v1State.get('pages').length;
-      var pagesStr = nmrPages > 1 ? ' pages' : ' page';
-      if(nmrPages >= 4) {
-        $('.what-to-do').html('You currently have '+ nmrPages + pagesStr + '.<br><a href="pages/">Add more on the Pages page</a>.');
-      }
-      else {
-        $('.what-to-do').html('You can go to the <a href="tables/">Tables</a> page, and click "Access Data" to browse the data in your app\'s database.');
-      }
+    hide: function() {
+      this.$el.hide();
     },
 
-    deploy: function() {
-      var threeDots = util.threeDots();
-      $('#deploy').find('h4').html('Publishing').append(threeDots.el);
-
-      v1.deploy(function() {
-        $('#deploy').find('h4').html('Go To App');
-        clearInterval(threeDots.timer);
-      });
+    show: function() {
+      this.$el.show();
     },
 
-    share: function() {
-      new ShareModalView();
+    showAll: function() {
+      $('.three-apps').hide();
+      $('.current-app-info').hide();
+      $('.see-all').hide();
+      $('.all-apps').fadeIn();
+      $('.hide-all').fadeIn();
+      $('.all-app.title').fadeIn();
     },
 
-    browse: function() {
-      new AdminPanelView();
-    },
-
-    settings: function(e) {
-      e.preventDefault();
-      v1.navigate('/app/' + appId + '/info/', {trigger:true}); // can't go directly to domain settings section due to limitations of route function
-    },
-
-    showTutorial: function() {
-      v1.showTutorial();
-    },
-
-    showFeedback: function(e) {
-      v1.showTutorial([8]);
-      e.preventDefault();
+    hideAll: function() {
+      $('.three-apps').fadeIn();
+      $('.current-app-info').fadeIn();
+      $('.see-all').fadeIn();
+      $('.all-apps').hide();
+      $('.hide-all').hide();
+      $('.all-app.title').hide();
     }
 
   });

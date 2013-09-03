@@ -13,8 +13,20 @@ background-repeat: no-repeat;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.82);
-  z-index: 2004;
+  z-index: 3004;
   margin-top: 0;
+}
+
+.fixed-bg a {
+  color: #fff;
+}
+
+a.see-all,
+a.hide-all {
+  display: inline-block;
+  margin-top: 10px;
+  float: right;
+  margin-right: 30px;
 }
 
 .welcome {
@@ -175,6 +187,7 @@ a.welcome-icon:visited,a.welcome-icon:hover {
 .twitter-chooser a .info-text {
   left: 460px;
 }
+
 .twitter-chooser a:hover .info-text {
   display: block;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
@@ -188,4 +201,144 @@ a.welcome-icon:visited,a.welcome-icon:hover {
 
 .notice {
   display: none;
+}
+
+a.white-border {
+  border: 3px solid #fff;
+  border-radius: 4px;
+  color: #fff;
+  padding: 15px;
+}
+
+.hide-btn {
+  position: fixed;
+  top: 0px;
+  right: 50%;
+  margin-right: -466px;
+  font-weight: lighter;
+  opacity: 0.8;
+  color: #fff;
+  font-size: 60px;
+  line-height: 60px;
+  cursor: pointer;
+}
+
+.hide-btn:hover {
+  opacity: 1;
+}
+
+.left-menu .title {
+  color: #fff;
+  display: block;
+  font-size: 18px;
+}
+
+.app.title,
+.all-app.title {
+  text-transform: uppercase;
+  margin-top: 30px;
+  font-size: 24px;
+}
+
+a.large-link {
+  color: #fff;
+  display: block;
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+.right-menu .notifications {
+  display: inline-block;
+  margin-top: 15px;
+  padding-bottom: 30px;
+  color: #fff;
+}
+.right-menu .notifications hr {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.right-menu .notifications ul {
+  list-style-type: square;
+  padding-left: 30px;
+}
+
+.right-menu .notifications ul li {
+  margin-top: 10px;
+}
+
+.right-menu .white-border {
+  padding: 0;
+  line-height: 60px;
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.right-menu .white-border:hover {
+  border-color: #fff;
+}
+
+.all-apps {
+  overflow-y: scroll;
+  height: 410px;
+}
+
+.right-menu .white-border .icon {
+  display: inline-block;
+  width: 45px;
+  height: 60px;
+  background-image: url(../img/garage-icons.png);
+  background-position: 0 7px;
+  background-repeat: no-repeat;
+}
+
+.right-menu .white-border .icon.resources {
+  background-position: -45px 7px;
+}
+
+.right-menu .white-border .icon.community {
+  background-position: -90px 7px;
+}
+
+.right-menu .white-border .icon.settings {
+  background-position: -135px 7px;
+}
+
+.garage .question-cont {
+  right: 30px;
+  bottom: 70px;
+}
+
+.garage .question-cont p {
+  bottom: 70px;
+}
+
+.fixed-bg.welcome.garage {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.current-app-links .white-border {
+  text-align: center;
+}
+
+.current-app-links .white-border .icon {
+  display: inline-block;
+  width: 75px;
+  height: 45px;
+  background-position: top center;
+  background-size:auto 100%;
+  background-repeat: no-repeat;
+}
+
+.theme .icon {
+  background-image: url(../img/theme-icon.png);
+}
+
+.settings .icon {
+  background-image: url(../img/settings-icon.png);
+}
+
+.build .icon {
+  background-image: url(../img/run.png);
+  background-size:auto 90%;
 }

@@ -360,14 +360,14 @@ define(['jquery'], function() {
       var overlayEl = document.createElement('div');
       overlayEl.className = 'global-overlay';
       var position = $el.offset();
-      console.log(position);
       overlayEl.style.position = 'fixed';
       overlayEl.style.top = position.top + 'px';
       overlayEl.style.left = position.left + 'px';
       overlayEl.style.width = $el.outerWidth() + 'px';
       overlayEl.style.height = $el.outerHeight() + 'px';
       document.body.appendChild(overlayEl);
-      console.log(overlayEl);
+      $(overlayEl).one('click', function(e) { $(e.currentTarget).remove(); });
+      return overlayEl;
     }
 
   };

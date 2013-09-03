@@ -203,7 +203,8 @@ def app_page(request, app_id, page_name="overview"):
                     'staging'      : settings.STAGING,
                     'production'   : settings.PRODUCTION,
                     'page_name'    : page_name,
-                    'is_deployed'  : 1 if app.deployment_id != None else 0}
+                    'is_deployed'  : 1 if app.deployment_id != None else 0,
+                    'display_garage' : False}
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)
 
