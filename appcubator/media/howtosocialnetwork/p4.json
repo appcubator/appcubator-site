@@ -32,30 +32,30 @@
     "section": "Newsfeed",
     "img_url": "/static/img/documentation/socialnetwork/p4/11.png",
     "shortText":"Create a new page for the News feed",
-    "longText":""
+    "longText":"Create a new page where we'll put a Newsfeed, or listing of wall posts."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p4/13.png",
-    "shortText":"Drag a Wall post list and design the rows",
-    "longText":""
+    "shortText": "Drag a Wall post list and design the rows",
+    "longText": "Since we set up the relations, there are a lot of elements available to drag onto the page. We dragged on the pictures and names of the sender and receiver."
 },{
     "section": "Demo",
     "img_url": "/static/img/documentation/socialnetwork/p4/14.png",
     "shortText":"Let's try it out using a test account!",
-    "longText":""
+    "longText":"We created two test accounts, and we'll demonstrate that the wall posts and newsfeed actually work."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p4/15.png",
     "shortText":"Go to Isaac Newton's profile",
-    "longText":""
+    "longText":"Keep going..."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p4/16.png",
     "shortText":"Post on his wall",
-    "longText":""
+    "longText":"Keep going..."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p4/19.png",
-    "shortText":"It shows up on his profile",
-    "longText":""
+    "shortText":"The Post showed up on his wall!",
+    "longText":"Keep going..."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p4/20.png",
-    "shortText":"as well as on the newsfeed!",
-    "longText":""
+    "shortText":"The Post is also on the newsfeed!",
+    "longText":"Thanks for reading!"
 }]

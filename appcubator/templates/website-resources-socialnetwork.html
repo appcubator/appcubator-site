@@ -114,14 +114,20 @@ ul.nav-wrapper {
     height: 45px;
 }
 
+h5 { position: relative; }
+h5 a {
+    position: absolute;
+    top: -90px; /* because of the fixed navbar */
+}
+
 </style>
 <div class="centered-container social-network-tut">
     <h4>Tutorial - Building a social network</h4>
     <ol class="nav-wrapper">
         <h3>Overview</h3>
-        <a><li>User Profiles</li></a>
-        <a><li>Wall Posts</li></a>
-        <a><li>Friendships</li></a>
+        <a href="#user-profiles"><li>User Profiles</li></a>
+        <a href="#wall-posts"><li>Wall Posts</li></a>
+        <a href="#friendships"><li>Friendships</li></a>
     </ol>
     <div class="intro-wrapper">
         <p>In this tutorial, we'll build a fairly standard social network, demoed here:
@@ -140,15 +146,15 @@ ul.nav-wrapper {
     </div>
 </div>
 <div class="centered-container">
-    <h5>User Profiles</h5>
+    <h5>User Profiles<a name="user-profiles"></a></h5>
     {% include "website-resources-tutorial-section.html" with data=tut_img_dict.profile id="social-slides-profiles" %}
 </div>
 <div class="centered-container">
-    <h5>Wall posts</h5>
+    <h5>Wall posts<a name="wall-posts"></a></h5>
     {% include "website-resources-tutorial-section.html" with data=tut_img_dict.posts id="social-slides-posts" %}
 </div>
 <div class="centered-container">
-    <h5>Friendships</h5>
+    <h5>Friendships<a name="friendships"></a></h5>
     {% include "website-resources-tutorial-section.html" with data=tut_img_dict.friendships id="social-slides-friendships" %}
 </div>
 
