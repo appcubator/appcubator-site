@@ -427,6 +427,11 @@ def resources_whatisawebapp(request):
     page_context["title"] = "What is a web application?"
     return render(request, 'website-resources-webapps.html', page_context) 
 
+def resources_fordjangodevs(request):
+    page_context = {}
+    page_context["title"] = "What is a web application?"
+    return render(request, 'website-resources-fordjangodevs.html', page_context)
+
 def screencast(request, screencast_id=1):
     page_context = {}
     page_context["title"] = "Screecast " + screencast_id
