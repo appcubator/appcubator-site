@@ -1,100 +1,61 @@
-var s1 = {
-    short: 'Make a Table for Wall posts',
-    beforeHtml: 'Login, and on the top right dropdown menu, click Create a New App to get started.' +
-          'We\'ll call this one Bookface.',
-    afterHtml: 'Now you should be at the Overview page. This is like the control panel for your web app.' +
-          'The top navigation bar will have a link to the Pages page. Go there, and start editing the Homepage.',
-};
-var s2 = {
-    short: 'Add a relation to associate Wall posts with Users who write them',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s3 = {
-    short: 'Add a relation to associate Wall posts with User\'s wall',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s4 = {
-    short: 'Drag a Wall post list onto the Profile page',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s5 = {
-    short: 'Show only the wall posts that belong on the wall',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s6 = {
-    short: 'Drag a Create Wall post form onto the Profile page',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s7 = {
-    short: 'Customize the form and configure the relationships',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s11 = {
-    short: 'Create a new page for the News feed',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s13 = {
-    short: 'Drag a Wall post list and design the rows',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s15 = {
-    short: 'Let\'s try it out using a test account!',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s16 = {
-    short: 'Go to Isaac Newton\'s profile',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s18 = {
-    short: 'Post on his wall',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s19 = {
-    short: 'It shows up on his profile',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-var s20 = {
-    short: 'as well as on the newsfeed!',
-    beforeHtml: '' +
-          '',
-    afterHtml: '' +
-          '',
-};
-
-var slides = [s1, s2, s3, s4, s4, s5, s6, s7, s8];
+[{
+    "section": "Database Design",
+    "img_url": "/static/img/documentation/socialnetwork/p4/1.png",
+    "shortText":"Make a Table for Wall posts",
+    "longText":"Wall posts live in their own table since Users can create them with a form."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/2.png",
+    "shortText":"Add a relation to associate Wall posts with their author Users",
+    "longText":"Add a relation to associate each Wall post with the User who wrote it. The backwards relation is the list of wall posts that the User wrote."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/3.png",
+    "shortText":"Add a relation to associate Wall posts with the wall's User",
+    "longText":"Add a relation to associate each Wall post with the wall/User profile you're posting on. The backwards relation is the list of wall posts on the User's wall."
+},{
+    "section": "Posting on a Wall",
+    "img_url": "/static/img/documentation/socialnetwork/p4/4.png",
+    "shortText":"Drag a Wall post list onto the Profile page",
+    "longText":"This is where we'll display the wall posts."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/5.png",
+    "shortText":"Show only the wall posts that belong on the wall",
+    "longText":"We only want to show the relevant wall posts."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/6.png",
+    "shortText":"Drag a Create Wall post form onto the Profile page",
+    "longText":"This is how Users can post on other Users walls."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/7.png",
+    "shortText": "Customize the form and configure the relationships",
+    "longText": "When the User creates the wall post, we want to correctly add a relation to the wall as well as the currently logged in user. I also switched the display type to a paragraph to encourage longer posts."
+},{
+    "section": "Newsfeed",
+    "img_url": "/static/img/documentation/socialnetwork/p4/11.png",
+    "shortText":"Create a new page for the News feed",
+    "longText":""
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/13.png",
+    "shortText":"Drag a Wall post list and design the rows",
+    "longText":""
+},{
+    "section": "Demo",
+    "img_url": "/static/img/documentation/socialnetwork/p4/14.png",
+    "shortText":"Let's try it out using a test account!",
+    "longText":""
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/15.png",
+    "shortText":"Go to Isaac Newton's profile",
+    "longText":""
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/16.png",
+    "shortText":"Post on his wall",
+    "longText":""
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/19.png",
+    "shortText":"It shows up on his profile",
+    "longText":""
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/20.png",
+    "shortText":"as well as on the newsfeed!",
+    "longText":""
+}]

@@ -441,7 +441,7 @@ def resources_socialnetwork(request):
     with open(profile_json_path) as f:
         raw_data = simplejson.load(f)
     profile_data = json_to_data(raw_data)
-    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p2.json')
+    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p4.json')
     with open(profile_json_path) as f:
         raw_data = simplejson.load(f)
     posts_data = json_to_data(raw_data)
