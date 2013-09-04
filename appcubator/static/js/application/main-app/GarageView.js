@@ -16,12 +16,6 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
       'click .hide-overlay' : 'hide',
       'click .see-all'      : 'showAll',
       'click .hide-all'     : 'hideAll'
-      // 'click .tutorial'        : 'showTutorial',
-      // 'click .feedback'        : 'showFeedback',
-      // 'click #deploy'          : 'deploy',
-      // 'click .browse'          : 'browse',
-      // 'click #share'           : 'share',
-      // 'click .edit-btn'        : 'settings'
     },
 
     initialize: function() {
@@ -31,10 +25,12 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
     },
 
     render: function() {
-      // var page_context = {};
-      // this.el.style.display = 'none';
-      // this.el.innerHTML = _.template(util.getHTML('garage-temp'), page_context);
-      // document.body.appendChild(this.el);
+      var self = this;
+      $(window).on('keydown', function(e) {
+        if(e.keyCode == 27) {
+          self.hide();
+        }
+      });
     },
 
     hide: function() {

@@ -1,0 +1,51 @@
+{% extends "website-resources-infra.html" %}
+{% block content %}
+<div class="centered-container resource slide-documentation">
+  <p>It's extremely easy to understand Appcubator, if you are already familiar with Django. Because it uses the same Model-View-Template structure. And the best part is, it generates the Django code for you once you are done with your project. It's all free to download.</p>
+  <p class="image"><img src="{{STATIC_URL}}img/django-appcubator.png" style="width:70%;"></p>
+  <h4>Models » Tables</h4>
+  <p>Models are the core part of your application and they are called "Tables" on Appcubator. You can go to the Tables Page to see the relevant sections. Creating a new model is as easy as clicking the "Add Table" button. However, Appcubator also provides you with some convenience.</p>
+  <span class="example">
+    <span>A sample model called Flight:</span>
+    <pre style="width:49%; display:inline-block;">
+      class Flight(models.Model):
+          flight_number = models.TextField(blank=True)
+          date = models.DateTimeField(null=True, blank=True)
+          from_val = models.TextField(blank=True)
+          destination = models.TextField(blank=True)
+          capacity = models.FloatField(null=True, blank=True)
+          date_created = models.DateTimeField(auto_now_add=True)
+          date_modified = models.DateTimeField(auto_now=True)
+    </pre>
+    <img src="{{STATIC_URL}}img/sample-table.png" style="width:49%; float:right;">
+  </span>
+  <h5>User Tables</h5>
+  <p>Appcubator creates a User Table for you by default! This table has the minimal required fields of a user that will also support the authentication system: username, First Name, Last Name, Email and Password. So you don't need to add these fields to your user model yourself.</p>
+  <p>Appcubator also helps you deal with different types of users. For example, if you have Student and Teacher method in your application, you can just create two "User Tables" called "Student" and "Teacher". Later on you will see that Appcubator will provide ways to direct different types of users to different pages and dealing with the permissions for specific user types in your views.</p>
+  <h5>Relations</h5>
+  <p>The relations are handled together on a different section of the Tables Page. You need to scroll down to "Relations" part of the page and click on "Add Relation" to create a new relation. Next step is to choose the two models/tables to create the relation between. After that you can define the name of the relation(field name) as well as the related name. </p>
+  <span class="example">
+    <span>A sample relation between Flight model and users</span>
+    <pre style="width:49%; display:inline-block;"><code>
+    class Flight(models.Model):
+        flight_number = models.TextField(blank=True)
+        date = models.DateTimeField(null=True, blank=True)
+        from_val = models.TextField(blank=True)
+        destination = models.TextField(blank=True)
+        capacity = models.FloatField(null=True, blank=True)
+        date_created = models.DateTimeField(auto_now_add=True)
+        date_modified = models.DateTimeField(auto_now=True)
+        <strong>flyer = models.ForeignKey(
+            settings.AUTH_USER_MODEL, related_name='flights', blank=True)</strong>
+    </code></pre>
+    <img src="{{STATIC_URL}}img/sample-relation.png" style="width:49%; float:right;">
+  </span>
+  <h4>Templates » Pages</h4>
+  <p>This is the easiest part of Appcubator. It's definitely the most helpful part if you are a hard-core back-end developer and don't like writing HTML/CSS.</p>
+  <p>You can go to the Pages Page and see your current pages. To add a new page/template it's enought to click "Create a new Page". Next step is to click on "Edit Page" to go to WSIWYG page editor.</p>
+  <p>On the page that shows up, you will see the Gallery on the right. Gallery contains all the elements that can be dropped to the page.</p>
+  <p class="image"><img src="{{STATIC_URL}}img/editor-gallery-screenshot.png" style="width:70%;"></p>
+  <p>Simply add elements to your page and change their position. There is already a grid and a theme picked for you. If you'd like more theme options, you can go to Themes Page for the gallery of themes.</p>
+  <h4>Views » Pages</h4>
+</div>
+{% endblock %}

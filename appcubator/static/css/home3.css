@@ -1826,7 +1826,8 @@ li .summary h3 {
   margin-bottom: 20px;
 }
 
-.slide-documentation p.example {
+.slide-documentation p.example,
+.slide-documentation span.example {
   margin-left: 32px;
   margin-top: 20px;
   margin-bottom: 24px;
@@ -1835,6 +1836,12 @@ li .summary h3 {
 }
 
 .slide-documentation p.example span {
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.slide-documentation span.example span {
+  display: block;
   font-weight: bold;
   margin-bottom: 16px;
 }

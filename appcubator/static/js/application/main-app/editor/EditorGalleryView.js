@@ -448,7 +448,7 @@ define([
 
       console.log(nested_field);
       var displayType = this.getFieldType(nested_field);
-      var editorContext = this.editorContext ? this.editorContext : "page";
+      var editorContext = this.editorContext ? this.editorContext : "Page";
 
       var content_ops = {};
 
