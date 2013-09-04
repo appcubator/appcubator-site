@@ -1,38 +1,50 @@
 [{
     "section": "Database Design",
     "img_url": "/static/img/documentation/socialnetwork/p5/-2.png",
-    "shortText":"Make a Table for Friendships",
-    "longText":"Friendships live in their own table since Users can create them with a form."
+    "shortText": "Make a Table for Friendships",
+    "longText": "Friendships live in their own table, and Users will be able to create them with a form. A form without fields looks like a button, which is what we'll implement in this tutorial."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p5/-1.png",
-    "shortText":"Add a Friendship to User relation for frienders",
-    "longText":""
+    "shortText": "Add a Friendship to User relation for frienders",
+    "longText": "A friendship has two users involved: the friender and friendee. This hints that we need two relations. The first one is the friender of the user."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p5/0.png",
-    "shortText":"Add a Friendship to User relation for friendees",
-    "longText":""
+    "shortText": "Add a Friendship to User relation for friendees",
+    "longText": "Add the second relationship, which is the the friendee, or the person being friended."
 },{
     "section": "Add Friend",
     "img_url": "/static/img/documentation/socialnetwork/p5/1.png",
-    "shortText":"Drag a Friendship create form onto the User Profile page",
-    "longText":""
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p5/2.png",
-    "shortText":"Customize the form relations and redirect",
-    "longText":""
+    "shortText": "Drag a Friendship create form onto the User Profile page",
+    "longText": "When the logged in User submits this form, it'll create a Friendship in the database."
 },{
     "img_url": "/static/img/documentation/socialnetwork/p5/3.png",
-    "shortText": "Create a Friendship Page to serve as a success page",
-    "longText":""
+    "shortText": "Customize the form relations and redirect",
+    "longText": "We want to make the currently logged in user the friender and the Profile Page's user the friendee."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p5/4.png",
+    "shortText": "Decorate the Friendship Page to serve as a success page",
+    "longText": "When you create a database table, a dynamic page is automatically created for your convenience, so you have a Friendship Page. Just to demonstrate the dynamic page, we'll have the add friend form redirect to the friendship page for the recently created friendship."
 
 },{
     "section": "My Friends",
-    "img_url": "/static/img/documentation/socialnetwork/p5/4.png",
-    "shortText": "NYI",
-    "longText":""
+    "img_url": "/static/img/documentation/socialnetwork/p5/5.png",
+    "shortText": "Create a new page with a list of Friendships",
+    "longText": "When you drag the friendship list onto the page, you need to edit the query to only show the Friendships where the friender/requester is the Currently logged in user."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p5/6.png",
+    "shortText": "Design the row",
+    "longText": "We're mainly going to display the information of the Friendee of the Friendship in the row. It's convenient to drag a link that will take the User to the Profile page of the target user."
 },{
     "section": "Demo",
-    "img_url": "/static/img/documentation/socialnetwork/p5/6.png",
-    "shortText": "NYI",
-    "longText":""
+    "img_url": "/static/img/documentation/socialnetwork/p5/8.png",
+    "shortText": "It's live! Let's try it out",
+    "longText": "Go to a User's profile logged in as someone else and add them as a friend."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p5/9.png",
+    "shortText": "Add friend worked and friendship page works",
+    "longText": "Here we can see the dynamic friendship page. Next we'll see the friends list."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p5/10.png",
+    "shortText": "Friend list works",
+    "longText": "Here's the page with my list of friends. Thanks for reading!"
 }]
