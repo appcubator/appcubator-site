@@ -11,6 +11,7 @@ function(BackboneModal) {
             self.fixPrevNextArrows();
             self.fixSlideState();
             self.fixGotoInput();
+            self.fixSelectedSection();
         };
         /* fix the DOM when that happens */
         self.fixSlideState = function () {
@@ -36,6 +37,18 @@ function(BackboneModal) {
                 self.nextArrow.css('visibility', 'hidden');
             else
                 self.nextArrow.css('visibility', 'visible');
+        };
+
+        self.fixSelectedSection = function () {
+            var selectedSection = self.sectionLinks[0];
+            for (var i = 0; i < self.sectionLinks.length; i ++) {
+                var el = self.sectionLinks[i];
+                $(el).removeClass('selected');
+                if ($(el).attr('data-slide-id') <= self.currentIndex) {
+                    selectedSection = el;
+                }
+            }
+            $(selectedSection).addClass('selected');
         };
 
         /* for the slug -> idx resolution in url routing */
