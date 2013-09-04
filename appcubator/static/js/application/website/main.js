@@ -96,24 +96,34 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       var sv1 = new SlideView(el_profiles);
       var sv2 = new SlideView(el_posts);
       var sv3 = new SlideView(el_friendships);
+      this.slideViews = [sv1, sv2, sv3];
+      console.log(this);
       sv1.render();
       sv2.render();
       sv3.render();
     },
 
     socialSectionScroll: function(sectionSlug) {
-        var lookupSv = function () {}; // keep the page from crashing
-        var sv = lookupSv(sectionSlug);
-        window.location.href.hash = sectionSlug;
+        console.log(this);
+        this.socialNetworkPage();
+        var lookupSv = function (sectionSlug) {
+            var i = SLIDEVIEWSLUGS.indexOf(sectionSlug); // global on the social network page html
+            if (i == -1) {
+                alert("Page not found (404)");
+                return this.slideViews[0];
+            }
+            return this.slideViews[i];
+        };
+        var sv = lookupSv.call(this, sectionSlug);
+        window.location.hash = sectionSlug;
         return sv;
     },
 
     socialSectionScrollAndGoto: function(sectionSlug, gotoSlug) {
-        var lookupSlideNum = function () {}; // keep the page from crashing
         var sv = this.socialSectionScroll(sectionSlug);
-        var slideNum = lookupSlideNum(gotoSlug);
-        sv.gotoSlide(slideNum);
-        return slideNum;
+        var slideIdx = sv.getSlideIdxBySectionSlug(gotoSlug);
+        sv.gotoSlide(slideIdx);
+        return slideIdx;
     },
 
     bindLoginForm: function() {

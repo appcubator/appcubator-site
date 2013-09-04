@@ -4,13 +4,13 @@
     <div class="centered-container">
         <div class="slides-wrap">
             {% for section in data %}
-            {% for d in section.0 %}
+            {% for d in section.data %}
             <div class="slide-container">
                 <div class="slide-image" style="background-image: url({{ d.img_url }})">
                 <p class="slide-overlay-text">{{ d.shortText }}</p>
                 </div><div class="slide-panel">
                     {% if forloop.first %}
-                    <h3>{{ section.1 }}</h3>
+                    <h3>{{ section.name }}</h3>
                     {% endif %}
                     <p>{{ d.longText }}</p>
                     <div class="nav-section">
@@ -25,7 +25,7 @@
         </div><div class="slide-nav-wrap">
             <ol class="nav-wrapper">
                 {% for section in data %}
-                <a><li>{{ section.1 }}</li></a>
+                <a data-slide-id="{{ section.slideIdx }}"><li>{{ section.name }}</li></a>
                 {% endfor %}
             </ol>
         </div>

@@ -429,12 +429,11 @@ def resources_socialnetwork(request):
             where each section has a list of dicts
                 where each dict has img_url, shortText, longText keys."""
         sections = []
-        for entry in json:
+        for i, entry in enumerate(json):
             if 'section' in entry:
-                s = ([], entry['section'])
+                s = { "data": [], "name": entry['section'], "slideIdx": i}
                 sections.append(s)
-            ls, name = sections[-1] # want to append the entry to the last section
-            ls.append(entry)
+            sections[-1]['data'].append(entry) # want to append the entry to the last section
         return sections
 
     profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p1.json')

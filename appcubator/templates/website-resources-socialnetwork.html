@@ -145,6 +145,7 @@ h5 a {
         </a>
     </div>
 </div>
+{# These names should also be in SLIDEVIEWSLUGS #}
 <div class="centered-container">
     <h5>User Profiles<a name="user-profiles"></a></h5>
     {% include "website-resources-tutorial-section.html" with data=tut_img_dict.profile id="social-slides-profiles" %}
@@ -158,4 +159,12 @@ h5 a {
     {% include "website-resources-tutorial-section.html" with data=tut_img_dict.friendships id="social-slides-friendships" %}
 </div>
 
+{% endblock %}
+
+
+{% block js %}
+{{ block.super }}
+<script type="text/javascript">
+var SLIDEVIEWSLUGS = ["user-profiles", "wall-posts", "friendships"];
+</script>
 {% endblock %}
