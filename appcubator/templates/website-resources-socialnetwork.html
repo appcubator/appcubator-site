@@ -1,4 +1,175 @@
 {% extends "website-resources-infra.html" %}
 {% block content %}
-  <h4> Coming soon.</h4>
+<style>
+.social-network-tut h4, .social-network-tut h5 {
+    margin-bottom: 20px;
+}
+.social-network-tut .intro-wrapper {
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-left: 220px;
+    display: block;
+    vertical-align: top;
+    padding: 30px;
+}
+
+a.fancy {
+    display: inline-block;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+ol.nav-wrapper,
+ul.nav-wrapper {
+    display: inline-block;
+    float: left;
+    margin-top: 30px;
+    border-radius: 4px;
+    width: 200px;
+    list-style-type: decimal;
+    list-style-position: inside;
+    background-color:#FFF;
+    padding: 20px;
+    line-height: 1.5em;
+    border: 1px solid #DDD;
+    vertical-align: top;
+}
+.tutorial-section {
+    min-width: 714px;
+    width: 100%;
+    margin: 20px;
+    overflow: hidden; /* onload, hide the overflowing bootstrapped slides */
+}
+
+.slide-view .slides-wrap {
+    height: 350px;
+    display: inline-block;
+}
+.slide-view .slide-nav-wrap {
+    display: inline-block;
+    vertical-align: top;
+    width: 100px;
+}
+.slide-view .slide-container {
+    height: 100%;
+}
+.slide-view .slide-container .slide-image {
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    width:500px;
+    background-size: 100% auto;
+}
+.slide-view .slide-container .slide-overlay-text {
+    position: absolute;
+    width: 100%;
+    background-color: rgba(30, 30, 30, 0.8);
+    min-height: 60px;
+    padding: 15px;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    color: white; /* what will be visible on slides? */
+}
+.slide-view .slide-container .slide-panel {
+    display: inline-block;
+    vertical-align: top;
+    width: 200px;
+    height: 100%;
+    margin-left: 30px;
+    position: relative;
+}
+.slide-view .nav-section {
+    height: 50px;
+    width: 204px;
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+}
+.slide-view .arrow-wrap {
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    vertical-align: top;
+}
+.slide-view .arrow-wrap:hover {
+    cursor: pointer;
+}
+.slide-view .goto-slide-wrap {
+    display: inline-block;
+    vertical-align: top;
+    width: 100px;
+    height: 45px;
+    line-height: 45px;
+}
+
+.slide-view .goto-slide-wrap span {
+    vertical-align: top;
+}
+
+.slide-view .goto-slide-input {
+    height: 45px;
+}
+
+.slide-view .slide-nav-wrap a.selected {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+h5 { position: relative; }
+h5 a {
+    position: absolute;
+    top: -90px; /* because of the fixed navbar */
+}
+
+</style>
+<div class="centered-container social-network-tut">
+    <h4>Tutorial - Building a social network</h4>
+    <ol class="nav-wrapper">
+        <h3>Overview</h3>
+        <a href="#user-profiles"><li>User Profiles</li></a>
+        <a href="#wall-posts"><li>Wall Posts</li></a>
+        <a href="#friendships"><li>Friendships</li></a>
+    </ol>
+    <div class="intro-wrapper">
+        <p>In this tutorial, we'll build a fairly standard social network, demoed here:
+        <br>
+        <br>
+        <a class="fancy" href="http://book-face.appcubator.com/">book-face.appcubator.com</a>
+        <br>
+        <br>
+        <p>We'll do all of this without writing code, and in the end, you'll be able to download the frontend and backend code for the web app.</p>
+        <br>
+        <br>
+        <p>End result:</p>
+        <a href="http://book-face.appcubator.com/" target="_blank">
+             <img src="https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7">
+        </a>
+    </div>
+</div>
+{# These names should also be in SLIDEVIEWSLUGS #}
+<div class="centered-container">
+    <h5>User Profiles<a name="user-profiles"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_img_dict.profile id="social-slides-profiles" %}
+</div>
+<div class="centered-container">
+    <h5>Wall posts<a name="wall-posts"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_img_dict.posts id="social-slides-posts" %}
+</div>
+<div class="centered-container">
+    <h5>Friendships<a name="friendships"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_img_dict.friendships id="social-slides-friendships" %}
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+{{ block.super }}
+<script type="text/javascript">
+var SLIDEVIEWSLUGS = ["user-profiles", "wall-posts", "friendships"];
+</script>
 {% endblock %}
