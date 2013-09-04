@@ -40,19 +40,17 @@ function(BackboneModal) {
 
         /* for the slug -> idx resolution in url routing */
         // HACK I hate this code :(
-        self.getSlideIdxBySectionSlug = function () {
-            var slugData = $(self.sectionLinks).map(function(el, i){
-                var i = $(el).attr('data-slide-id');
-                var slug = $(el).find('li').html();
-                return [i, slug];
-            });
+        self.getSlideIdxBySectionSlug = function (input) {
             var slugMap = {};
-            for (var i = 0; i < slugData.length; i++) {
-                var idx = slugData[i][0];
-                var slug = slugData[i][1];
+            $(self.sectionLinks).each(function(i, el){
+                var idx = $(el).attr('data-slide-id');
+                var slug = $(el).attr('data-slug');
                 slugMap[slug] = idx;
-            }
-            alert(slugMap);
+            });
+            console.log(input);
+            i = slugMap[input];
+            console.log(slugMap);
+            return i;
         }
 
         /* render */

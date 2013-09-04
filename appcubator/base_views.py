@@ -429,9 +429,17 @@ def resources_socialnetwork(request):
             where each section has a list of dicts
                 where each dict has img_url, shortText, longText keys."""
         sections = []
+        def slugify(s):
+            s = s.lower()
+            s = re.sub(r'[^a-z0-9]+', '-', s)
+            return s
         for i, entry in enumerate(json):
             if 'section' in entry:
-                s = { "data": [], "name": entry['section'], "slideIdx": i}
+                s = { "data": [],
+                      "name": entry['section'],
+                      "slideIdx": i,
+                      "slug": slugify(entry['section'])
+                      }
                 sections.append(s)
             sections[-1]['data'].append(entry) # want to append the entry to the last section
         return sections

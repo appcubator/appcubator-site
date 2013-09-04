@@ -25,7 +25,7 @@
         </div><div class="slide-nav-wrap">
             <ol class="nav-wrapper">
                 {% for section in data %}
-                <a data-slide-id="{{ section.slideIdx }}"><li>{{ section.name }}</li></a>
+                <a data-slide-id="{{ section.slideIdx }}" data-slug="{{ section.slug }}"><li>{{ section.name }}</li></a>
                 {% endfor %}
             </ol>
         </div>
