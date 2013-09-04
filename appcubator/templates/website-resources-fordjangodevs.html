@@ -6,6 +6,7 @@
   <h4>Models » Tables</h4>
   <p>Models are the core part of your application and they are called "Tables" on Appcubator. You can go to the Tables Page to see the relevant sections. Creating a new model is as easy as clicking the "Add Table" button. However, Appcubator also provides you with some convenience.</p>
   <span class="example">
+    <span>A sample model called Flight:</span>
     <pre style="width:49%; display:inline-block;">
       class Flight(models.Model):
           flight_number = models.TextField(blank=True)
@@ -24,7 +25,7 @@
   <h5>Relations</h5>
   <p>The relations are handled together on a different section of the Tables Page. You need to scroll down to "Relations" part of the page and click on "Add Relation" to create a new relation. Next step is to choose the two models/tables to create the relation between. After that you can define the name of the relation(field name) as well as the related name. </p>
   <span class="example">
-    <p>A sample relation between Flight model and users</p>
+    <span>A sample relation between Flight model and users</span>
     <pre style="width:49%; display:inline-block;"><code>
     class Flight(models.Model):
         flight_number = models.TextField(blank=True)
