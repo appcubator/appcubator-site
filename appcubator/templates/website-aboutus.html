@@ -17,7 +17,7 @@
       <p class="quote">Simple things should be simple, complex things should be possible.<br  />- Alan Kay</p>
     </div>
     <h3>Team</h3>
-    <div class="people">
+    <div id="shuffle-people" class="people">
       <div class="person">
         <div class="peep">
           <img src="{{ STATIC_URL }}img/pp/ilter.jpg">
@@ -33,7 +33,7 @@
         </div>
         <p>Karan Sikka</p>
         <span class="bio">
-          Karan is responsible for the back-end magic at Appcubator. Previously, Karan was a computer programmer at a search engine company called Quixey, where he helped improve search relevance. He studied computer science and computational biology at Carnegie Mellon University. Karan holds the Appcubator team record for pullups.
+          Karan is responsible for the back-end magic at Appcubator. Previously, Karan was a computer programmer at Quixey, where he helped improve search relevance. He studied computer science and computational biology at Carnegie Mellon University. Karan holds the Appcubator team record for pullups.
         </span>
       </div>
       <div class="person">
@@ -45,6 +45,35 @@
           Nikhil is responsible for the back-end magic at Appcubator. Previously, Nikhil worked on large scale system infrastructure projects at Google and Yahoo. Nikhil has a bachelor’s degree in computer science from Carnegie Mellon University and is pursuing a masters of computer science from Stanford University. Nikhil is planning on running tough mudder, our thoughts and prayers are with him.
         </span>
       </div>
+      <script type="text/javascript">
+        console.log('this is karan');
+        var list = document.getElementById("shuffle-people"),
+        button = document.getElementById("shuffle");
+        function shuffle(items)
+        {
+            var cached = items.slice(0), temp, i = cached.length, rand;
+            while(--i)
+            {
+                rand = Math.floor(i * Math.random());
+                temp = cached[rand];
+                cached[rand] = cached[i];
+                cached[i] = temp;
+            }
+            return cached;
+        }
+        function shuffleNodes()
+        {
+            var nodes = list.children, i = 0;
+            nodes = Array.prototype.slice.call(nodes);
+            nodes = shuffle(nodes);
+            while(i < nodes.length)
+            {
+                list.appendChild(nodes[i]);
+                ++i;
+            }
+        }
+        shuffleNodes();
+      </script>
       <div class="person">
         <div class="peep">
           <img class="sagar" src="{{ STATIC_URL }}img/pp/sagar.jpg">
