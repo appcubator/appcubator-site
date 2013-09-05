@@ -1,7 +1,6 @@
 {# Just need to pass "data" and "id" to the context #}
 
 <div id="{{ id }}" class="slide-view tutorial-section">
-    <div class="centered-container">
         <div class="slides-wrap">
             {% for section in data %}
             {% for d in section.data %}
@@ -29,5 +28,4 @@
                 {% endfor %}
             </ol>
         </div>
-    </div>
 </div>
