@@ -48,12 +48,13 @@ require([
   './HomepageView',
   './DeveloperpageView',
   './SignupModalView',
+  './SlideView',
   'backbone',
   'util',
   'prettyCheckable',
   'mixins/BackboneConvenience'
 ],
-function(HomepageView, DeveloperpageView, SignupModalView) {
+function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
   var WebsiteRouter = Backbone.Router.extend({
 
@@ -62,7 +63,10 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
       "beta/"               : "homepage",
       "developer/"          : "developerpage",
       "resources/*content"       : 'resources',
-      "community/*content"       : 'community'
+      "community/*content"       : 'community',
+      "resources/tutorial/build-social-network/" : "socialNetworkPage",
+      "resources/tutorial/build-social-network/:section/" : "socialSectionScroll",
+      "resources/tutorial/build-social-network/:section/:goto/" : "socialSectionScrollAndGoto",
     },
 
     cube: $('#cube'),
@@ -93,6 +97,43 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
 
     community: function() {
       $('#menu-community').addClass('selected');
+    },
+
+    socialNetworkPage: function() {
+      var el_profiles = document.getElementById('social-slides-profiles');
+      var el_posts = document.getElementById('social-slides-posts');
+      var el_friendships = document.getElementById('social-slides-friendships');
+      var sv1 = new SlideView(el_profiles);
+      var sv2 = new SlideView(el_posts);
+      var sv3 = new SlideView(el_friendships);
+      this.slideViews = [sv1, sv2, sv3];
+      console.log(this);
+      sv1.render();
+      sv2.render();
+      sv3.render();
+    },
+
+    socialSectionScroll: function(sectionSlug) {
+        console.log(this);
+        this.socialNetworkPage();
+        var lookupSv = function (sectionSlug) {
+            var i = SLIDEVIEWSLUGS.indexOf(sectionSlug); // global on the social network page html
+            if (i == -1) {
+                alert("Page not found (404)");
+                return this.slideViews[0];
+            }
+            return this.slideViews[i];
+        };
+        var sv = lookupSv.call(this, sectionSlug);
+        window.location.hash = sectionSlug;
+        return sv;
+    },
+
+    socialSectionScrollAndGoto: function(sectionSlug, gotoSlug) {
+        var sv = this.socialSectionScroll(sectionSlug);
+        var slideIdx = sv.getSlideIdxBySectionSlug(gotoSlug);
+        sv.gotoSlide(slideIdx);
+        return slideIdx;
     },
 
     bindLoginForm: function() {

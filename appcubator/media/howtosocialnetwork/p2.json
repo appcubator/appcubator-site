@@ -1,0 +1,61 @@
+[{
+    "section": "Database Design",
+    "img_url": "/static/img/documentation/socialnetwork/p4/1.png",
+    "shortText":"Make a Table for Wall posts",
+    "longText":"Wall posts live in their own table since Users can create them with a form."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/2.png",
+    "shortText":"Add a relation to associate Wall posts with their author Users",
+    "longText":"Add a relation to associate each Wall post with the User who wrote it. The backwards relation is the list of wall posts that the User wrote."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/3.png",
+    "shortText":"Add a relation to associate Wall posts with the wall's User",
+    "longText":"Add a relation to associate each Wall post with the wall/User profile you're posting on. The backwards relation is the list of wall posts on the User's wall."
+},{
+    "section": "Posting on a Wall",
+    "img_url": "/static/img/documentation/socialnetwork/p4/4.png",
+    "shortText":"Drag a Wall post list onto the Profile page",
+    "longText":"This is where we'll display the wall posts."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/5.png",
+    "shortText":"Show only the wall posts that belong on the wall",
+    "longText":"We only want to show the relevant wall posts."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/6.png",
+    "shortText":"Drag a Create Wall post form onto the Profile page",
+    "longText":"This is how Users can post on other Users walls."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/7.png",
+    "shortText": "Customize the form and configure the relationships",
+    "longText": "When the User creates the wall post, we want to correctly add a relation to the wall as well as the currently logged in user. I also switched the display type to a paragraph to encourage longer posts."
+},{
+    "section": "Newsfeed",
+    "img_url": "/static/img/documentation/socialnetwork/p4/11.png",
+    "shortText":"Create a new page for the News feed",
+    "longText":"Create a new page where we'll put a Newsfeed, or listing of wall posts."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/13.png",
+    "shortText": "Drag a Wall post list and design the rows",
+    "longText": "Since we set up the relations, there are a lot of elements available to drag onto the page. We dragged on the pictures and names of the sender and receiver."
+},{
+    "section": "Demo",
+    "img_url": "/static/img/documentation/socialnetwork/p4/14.png",
+    "shortText":"Let's try it out using a test account!",
+    "longText":"We created two test accounts, and we'll demonstrate that the wall posts and newsfeed actually work."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/15.png",
+    "shortText":"Go to Isaac Newton's profile",
+    "longText":"Keep going..."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/16.png",
+    "shortText":"Post on his wall",
+    "longText":"Keep going..."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/19.png",
+    "shortText":"The Post showed up on his wall!",
+    "longText":"Keep going..."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p4/20.png",
+    "shortText":"The Post is also on the newsfeed!",
+    "longText":"Thanks for reading!"
+}]

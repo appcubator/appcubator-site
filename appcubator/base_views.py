@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import forms as auth_forms, authenticate, login
 from django.core.exceptions import ValidationError
 from django import forms
+from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
@@ -420,6 +421,46 @@ def resources(request):
 def resources_socialnetwork(request):
     page_context = {}
     page_context["title"] = "Building a Social Network"
+    import os, os.path
+    join = os.path.join
+
+    def json_to_data(json):
+        """"return a list of (section, <section_name>) tuples,
+            where each section has a list of dicts
+                where each dict has img_url, shortText, longText keys."""
+        sections = []
+        def slugify(s):
+            s = s.lower()
+            s = re.sub(r'[^a-z0-9]+', '-', s)
+            return s
+        for i, entry in enumerate(json):
+            if 'section' in entry:
+                s = { "data": [],
+                      "name": entry['section'],
+                      "slideIdx": i,
+                      "slug": slugify(entry['section'])
+                      }
+                sections.append(s)
+            sections[-1]['data'].append(entry) # want to append the entry to the last section
+        return sections
+
+    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p1.json')
+    with open(profile_json_path) as f:
+        raw_data = simplejson.load(f)
+    profile_data = json_to_data(raw_data)
+    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p2.json')
+    with open(profile_json_path) as f:
+        raw_data = simplejson.load(f)
+    posts_data = json_to_data(raw_data)
+    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p3.json')
+    with open(profile_json_path) as f:
+        raw_data = simplejson.load(f)
+    friendships_data = json_to_data(raw_data)
+
+    page_context["tut_img_dict"] = { 'profile': profile_data,
+                                     'posts': posts_data,
+                                     'friendships': friendships_data
+                                     }
     return render(request, 'website-resources-socialnetwork.html', page_context)
 
 def resources_whatisawebapp(request):

@@ -2005,9 +2005,11 @@ only screen and (min-device-pixel-ratio : 1.5) {
 .tutorial .table {
   display: inline-block;
   width: 215px;
-  background-color: black;
+  background-color: #fff;
   height: 60px;
   float: left;
+  border-radius: 6px;
+  border: 3px solid #ccc;
 }
 
 .tutorial .content {
