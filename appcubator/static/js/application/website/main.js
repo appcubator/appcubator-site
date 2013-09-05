@@ -5,6 +5,7 @@ require.config({
     "jquery" : "../../libs/jquery/jquery",
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
     "jquery.hotkeys" : "../../libs/jquery/jquery.hotkeys",
+    "jquery.scrollspy" : "../../libs/jquery/jquery.scrollspy",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "heyoffline": "../../libs/heyoffline",
@@ -39,6 +40,12 @@ require.config({
     },
     "prettyCheckable" : {
       deps: ["jquery"]
+    },
+    "bootstrap" : {
+      deps: ["jquery"]
+    },
+    "jquery.scrollspy" : {
+      deps: ["jquery"]
     }
   }
 
@@ -52,7 +59,9 @@ require([
   'backbone',
   'util',
   'prettyCheckable',
-  'mixins/BackboneConvenience'
+  'mixins/BackboneConvenience',
+  'bootstrap',
+  'jquery.scrollspy'
 ],
 function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
@@ -93,6 +102,37 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
     resources: function() {
       $('#menu-resources').addClass('selected');
+      $('.table-content').affix({
+        offset: 330
+      });
+      this.bindSections();
+    },
+
+    bindSections: function() {
+      $('.section').each(function() {
+          var el = this;
+          var $el = $(this);
+          var position = $el.position();
+          var $a = $('a[href="#'+ el.id +'"]');
+          $el.scrollspy({
+                min: position.top,
+                max: position.top + $el.height(),
+                onEnter: function(element, position) {
+                  console.log(el.id);
+                  console.log($a);
+                  $a.addClass('active');
+                },
+                onLeave: function(element, position) {
+                  $a.removeClass('active');
+                }
+          });
+
+          $a.on('click', function(e) {
+            e.preventDefault();
+            util.scrollToElement($el);
+          });
+      });
+
     },
 
     community: function() {

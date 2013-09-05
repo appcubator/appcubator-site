@@ -2002,22 +2002,35 @@ only screen and (min-device-pixel-ratio : 1.5) {
   margin-top: 30px;
 }
 
-.tutorial .table {
+.table-content {
+  position: absolute;
+}
+
+.tutorial .table-content {
   display: inline-block;
   width: 215px;
   background-color: #fff;
-  float: left;
   border-radius: 6px;
   border: 3px solid #ccc;
   font-size: 14px;
   padding: 15px 15px;
 }
 
-.tutorial .table li.sub {
+.tutorial .table-content li {
+  cursor: pointer;
+}
+
+.tutorial .table-content li a.active {
+  font-weight: bold;
+}
+
+.tutorial .table-content li.sub {
   margin-left: 15px;
 }
 
 .tutorial .content {
+  position: relative;
+  left: 215px;
   display: inline-block;
   width: 100%;
   max-width: 720px;
