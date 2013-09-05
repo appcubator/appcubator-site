@@ -2018,6 +2018,10 @@ only screen and (min-device-pixel-ratio : 1.5) {
 
 .tutorial .table-content li {
   cursor: pointer;
+  list-style-type: circle;
+  list-style-position: inside;
+  line-height: 20px;
+  margin-bottom: 12px;
 }
 
 .tutorial .table-content li a.active {

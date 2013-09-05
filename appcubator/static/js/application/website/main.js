@@ -232,9 +232,6 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
     faq: function() {
       $('#menu-community').addClass('selected');
-      $('.table-content').affix({
-        offset: 330
-      });
       this.bindSections();
     }
   });
