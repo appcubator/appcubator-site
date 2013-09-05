@@ -71,11 +71,12 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       ""                    : "homepage",
       "beta/"               : "homepage",
       "developer/"          : "developerpage",
-      "resources/*content"       : 'resources',
       "community/*content"       : 'community',
+      
       "resources/tutorial/build-social-network/" : "socialNetworkPage",
       "resources/tutorial/build-social-network/:section/" : "socialSectionScroll",
       "resources/tutorial/build-social-network/:section/:goto/" : "socialSectionScrollAndGoto",
+      "resources/*content"       : 'resources',
     },
 
     cube: $('#cube'),
@@ -140,6 +141,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
     },
 
     socialNetworkPage: function() {
+      this.resources();
       var el_profiles = document.getElementById('social-slides-profiles');
       var el_posts = document.getElementById('social-slides-posts');
       var el_friendships = document.getElementById('social-slides-friendships');
