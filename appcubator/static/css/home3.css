@@ -293,7 +293,8 @@ h6 {
 
 }
 
-.menu li.highlight {
+.menu li.highlight,
+.menu li.selected {
   border-radius: 4px;
   background-color: #fff;
   color: #0f2d40;
@@ -1995,4 +1996,37 @@ only screen and (min-device-pixel-ratio : 1.5) {
   .navbar {
     position: absolute;
   }
+}
+
+.tutorial {
+  margin-top: 30px;
+}
+
+.tutorial .table {
+  display: inline-block;
+  width: 215px;
+  background-color: #fff;
+  float: left;
+  border-radius: 6px;
+  border: 3px solid #ccc;
+  font-size: 14px;
+  padding: 15px 15px;
+}
+
+.tutorial .table li.sub {
+  margin-left: 15px;
+}
+
+.tutorial .content {
+  display: inline-block;
+  width: 100%;
+  max-width: 720px;
+  margin-left: 45px;
+}
+.tutorial .content .section {
+
+}
+
+.tutorial .content .sub-section {
+
 }

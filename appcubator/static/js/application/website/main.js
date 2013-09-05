@@ -62,6 +62,8 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       ""                    : "homepage",
       "beta/"               : "homepage",
       "developer/"          : "developerpage",
+      "resources/*content"       : 'resources',
+      "community/*content"       : 'community',
       "resources/tutorial/build-social-network/" : "socialNetworkPage",
       "resources/tutorial/build-social-network/:section/" : "socialSectionScroll",
       "resources/tutorial/build-social-network/:section/:goto/" : "socialSectionScrollAndGoto",
@@ -87,6 +89,14 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
     developerpage: function() {
       this.view = new DeveloperpageView().render();
+    },
+
+    resources: function() {
+      $('#menu-resources').addClass('selected');
+    },
+
+    community: function() {
+      $('#menu-community').addClass('selected');
     },
 
     socialNetworkPage: function() {

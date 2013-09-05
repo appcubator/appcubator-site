@@ -1,6 +1,18 @@
-{% extends "website-resources-infra.html" %}
-{% block content %}
-<div class="centered-container resource slide-documentation">
+{% extends "website-tutorial-infra.html" %}
+
+{% block tutorial-table-content %}
+<li>Introduction</li>
+<li>Models » Tables</li>
+<li class="sub">User Tables</li>
+<li class="sub">Relations</li>
+<li>Templates » Pages</li>
+<li>Views » Pages</li>
+<li class="sub">Forms</li>
+<li class="sub">Lists</li>
+<li class="sub">URL Routing and Page Data</li>
+{% endblock %}
+
+{% block tutorial-content %}
   <p>It's extremely easy to understand Appcubator, if you are already familiar with Django. Because it uses the same Model-View-Template structure. And the best part is, it generates the Django code for you once you are done with your project. It's all free to download.</p>
   <p class="image"><img src="{{STATIC_URL}}img/django-appcubator.png" style="width:70%;"></p>
   <h4>Models » Tables</h4>
@@ -49,11 +61,17 @@
   <p>Page data, forms and lists(queries) can be found on the gallery as well, but they will be explained in the next section.</p>
   <h4>Views » Pages</h4>
   <h5>Forms</h5>
-  <p>Forms help you create data in your tables and edit already existing data. Two types of forms are "Create Form" and "Edit Form". </p>
+  <p>Forms help you create data in your tables and edit already existing data. Two types of forms are "Create Form" and "Edit Form". You can click on "Edit Form" button to see the form editor and add/remove/change the fields of a form.</p>
   <p>Create form can be used for creating new rows as the name implies</p>
   <p class="image"><img src="{{STATIC_URL}}img/sample-create-form.png" style="width:40%;"></p>
-  <p>Create form can be used for creating new rows as the name implies</p>
+  <p>Edit form can be used for edit already existing objects/rows in your tables. When you drop an Edit Form onto the page, they will automatically be filled with the current data of the object.</p>
   <p class="image"><img src="{{STATIC_URL}}img/sample-edit-form.png" style="width:40%;"></p>
-
-</div>
+  <h5>Lists</h5>
+  <p>Lists are one of the ways to query data from your tables and display it on the page. When you drop a "Flight List", for example, it puts a list of all the Flight models onto the page. You can improve your query by clicking on the "Edit Query" button. To change how your list looks, you should click on "Edit Row" and edit the content of the green row.</p>
+  <p class="image"><img src="{{STATIC_URL}}img/sample-list.png" style="width:60%;"></p>
+  <h5>URL Routing and Page Data</h5>
+  <p>When you create a view, Appcubator automatically assigns a URL for it. However, it's easily editable by clicking on "Edit URL" on "Pages Page" or clicking on the URL of the editing browser in the editor.</p>
+  <p class="image"><img src="{{STATIC_URL}}img/sample-simple-url.png" style="width:40%;"></p>
+  <p>What's more is you can specify the data that will be passed to your page through the URL. For example, you can pass the User that owns the profile, if you're making a profile page. Or if you would like to make a page that belongs to a Flight object, you can add {{Flight}} to the URL. This will automatically pass the primary key of that object.</p>
+  <p class="image"><img src="{{STATIC_URL}}img/sample-context-url.png" style="width:40%;"></p>
 {% endblock %}
