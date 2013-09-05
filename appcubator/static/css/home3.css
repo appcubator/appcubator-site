@@ -1996,3 +1996,29 @@ only screen and (min-device-pixel-ratio : 1.5) {
     position: absolute;
   }
 }
+
+.tutorial {
+  margin-top: 30px;
+}
+
+.tutorial .table {
+  display: inline-block;
+  width: 215px;
+  background-color: black;
+  height: 60px;
+  float: left;
+}
+
+.tutorial .content {
+  display: inline-block;
+  width: 100%;
+  max-width: 720px;
+  margin-left: 45px;
+}
+.tutorial .content .section {
+
+}
+
+.tutorial .content .sub-section {
+
+}
