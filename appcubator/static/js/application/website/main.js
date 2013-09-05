@@ -61,6 +61,8 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
       ""                    : "homepage",
       "beta/"               : "homepage",
       "developer/"          : "developerpage",
+      "resources/*content"       : 'resources',
+      "community/*content"       : 'community'
     },
 
     cube: $('#cube'),
@@ -83,6 +85,14 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
 
     developerpage: function() {
       this.view = new DeveloperpageView().render();
+    },
+
+    resources: function() {
+      $('#menu-resources').addClass('selected');
+    },
+
+    community: function() {
+      $('#menu-community').addClass('selected');
     },
 
     bindLoginForm: function() {

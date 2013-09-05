@@ -293,7 +293,8 @@ h6 {
 
 }
 
-.menu li.highlight {
+.menu li.highlight,
+.menu li.selected {
   border-radius: 4px;
   background-color: #fff;
   color: #0f2d40;
