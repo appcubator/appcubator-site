@@ -4382,7 +4382,8 @@ a.label:hover,a.badge:hover {
   visibility: hidden;
 }
 
-.affix {
+.affix,
+.affix-bottom {
   position: fixed !important;
   width: 180px;
   top: 75px;
