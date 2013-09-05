@@ -37,42 +37,54 @@ scope: r_fullprofile r_emailaddress
       </div>
     </div>
   </div>
-  <div class="slide-info slide">
-    <div class="row">
-      <div class="centered-container">
-        <div id="q-1">
+
+
+  <div class="centered-container slide-documentation tutorial">
+    <ul class="table-content" data-offset-top="400">
+        <li><a href="#q1-section">How customizable is Appcubator?</a></li>
+        <li><a href="#q2-section">How portable is the generated code?</a></li>
+        <li><a href="#q3-section">Do I own my data on Appcubator?</a></li>
+        <li><a href="#q4-section">Can I import my data/excel sheets on Appcubator?</a></li>
+        <li><a href="#q5-section">What is the performance of sites hosted on Appcubator?</a></li>
+        <li><a href="#q6-section">How is Appcubator different from Weebly/Squarespace/Wix or other site builders?</a></li>
+        <li><a href="#q7-section">Why don't you support other languages/frameworks?</a></li>
+        <li><a href="#q8-section">How can I refer my friends/collegues to Appcubator?</a></li>          
+    </ul>
+
+    <div class="content">
+        <div id="q1-section" class="section">
           <strong>How customizable is Appcubator?</strong>
           <span>It is highly customizable. Appcubator is not a new language, or a bizarre wrapper around another language. It's a tool that converts visual inputs into a full stack web application that you'd normally write. So just start with the parts Appcubator provides and add your custom CSS, Javascript or Python code. We've put extra effort into making sure that this process is smooth.</span>
         </div>
-        <div id="q-2">
+        <div id="q2-section" class="hoff2 section">
           <strong>How portable is the generated code?</strong>
           <span>Very. Django is one a very popular web framework is supported by various hosting services such as AWS, Heroku and Dotcloud. Additionally, our generated code is completely human-readable, allowing a Python developer to easily look at the generated code and understand its details. In fact, there are few web consultancies using Appcubator to generate starter code for their projects.</span>
         </div>
-        <div id="q-3">
+        <div id="q3-section" class="hoff2 section">
           <strong>Do I own my data on Appcubator?</strong>
           <span>Absolutely. We give you full access to your data and provide with tools to browse it. You can download it anytime you want and the moment you delete your app, your data is also removed from our servers.</span>
         </div>
-        <div id="q-4">
+        <div id="q4-section" class="hoff2 section">
           <strong>Can I import my data/excel sheets on Appcubator?</strong>
           <span>Yep, we have a fully functional data browser built into your application. So once you create and deploy your application, you can go to the browser and upload your Excel Sheets. We support a variety of formats that include .xls and .xlsx</span>
         </div>
-        <div id="q-5">
+        <div id="q5-section" class="hoff2 section">
           <strong>What is the performance of sites hosted on Appcubator?</strong>
           <span>It will carry you a long way. Appcubator hosting can easily handle up to 1500 users and stay fast. Beyond that, you can easily move your system to AWS or Heroku. If you're on the premium plan, we can support this transition as well.</span>
         </div>
-        <div id="q-6">
+        <div id="q6-section" class="hoff2 section">
           <strong>How is Appcubator different from Weebly/Squarespace/Wix or other site builders?</strong>
           <span>Appcubator is not a *site* builder per se. It is an "application" builder that is designed to handle dynamic data and user input. They are all great services if you're building just a landing page and some static information about your company or yourself.</span>
         </div>
-        <div id="q-7">
+        <div id="q7-section" class="hoff2 section">
           <strong>Why don't you support other languages/frameworks?</strong>
           <span>We would like to! And we'll be working on it. We're currenlty focusing on perfecting the existing flow for building applications for you first. Once this is perfect, we will be able to focus on generating PHP or Rails applications as well.</span>
         </div>
-        <div id="q-8">
+        <div id="q8-section" class="hoff2 section">
           <strong>How can I refer my friends/collegues to Appcubator?</strong>
           <span>You want to refer Appcubator? Great! You can even win a T-shirt from us if you sign up 3 friends. Just go to the Garage page after you signup and click on "Invite Friends" link.</span>
         </div>
-        <h3 style="margin-bottom:30px;">Have questions? Please submit them below. We promise to answer as soon as possible!</h3>
+        <h3 style="margin-bottom:30px;" class="hoff4">Have questions? Please submit them below. We promise to answer as soon as possible!</h3>
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -87,11 +99,6 @@ scope: r_fullprofile r_emailaddress
         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
         
-      </div>
-    </div>
-    <div class="row">
-      <div class="centered-container">
-      </div>
     </div>
   </div>
   {% include "website-footer.html" %}
@@ -101,37 +108,4 @@ scope: r_fullprofile r_emailaddress
 {% block js %}
 
 <script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
-<script type="text/template" id="temp-inviteform">
-    <form class="sign-up-form" id="sign-up-form">
-      <div class="left-side">
-        <input type="text" name="name" id="inp-name" placeholder="Full Name">
-        <input type="text" name="email" id="inp-email" placeholder="Email">
-        <input type="text" name="company" id="inp-company" placeholder="Company">
-        <input type="hidden" name="extra-info" id="inp-extra" value="-">
-        <hr>
-        <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
-        <div class="btn btn-blue btn-linkedin">Fill With LinkedIn</div>
-        <% print('<sc'+'ript type="IN/Login"></sc'+'ript>') %>
-      </div>
-      <div class="right-side">
-        <textarea name="description" id="inp-description" placeholder="Technical description of your application. This is for us to attain the feasibility of the project to best direct you. It's totally fine if you just want to check it out."></textarea>
-        <input type="checkbox" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
-        <input type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
-      </div>
-    </form>
-    <div class="thanks-for-signing" style="display:none;">
-      <p>Thank you for signing up!</p>
-      <p>Someone from our team will contact you for details and further steps very soon.</p>
-      <div class="social-share">
-        <span>In the meantime, you can let your friends know about Appcubator!</span>
-        <div class="fb-share">
-          <div class="fb-like" data-href="http://www.appcubator.com" data-send="false" data-width="160" data-show-faces="true" data-font="segoe ui"></div>
-        </div>
-        <div class="twitter-share">
-          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.appcubator.com" data-via="appcubator">Tweet</a>
-          <% print('<sc'+'ript>'); %> <% print('</sc'+'ript>'); %>
-        </div>
-      </div>
-    </div>
-</script>
 {% endblock %}

@@ -71,11 +71,12 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       ""                    : "homepage",
       "beta/"               : "homepage",
       "developer/"          : "developerpage",
-      "resources/*content"       : 'resources',
+      "resources/*content"  : 'resources',
+      "community/faq/"      : "faq",
       "community/*content"       : 'community',
       "resources/tutorial/build-social-network/" : "socialNetworkPage",
       "resources/tutorial/build-social-network/:section/" : "socialSectionScroll",
-      "resources/tutorial/build-social-network/:section/:goto/" : "socialSectionScrollAndGoto",
+      "resources/tutorial/build-social-network/:section/:goto/" : "socialSectionScrollAndGoto"
     },
 
     cube: $('#cube'),
@@ -227,6 +228,14 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
         var animating = false;
       });
+    },
+
+    faq: function() {
+      $('#menu-community').addClass('selected');
+      $('.table-content').affix({
+        offset: 330
+      });
+      this.bindSections();
     }
   });
 
