@@ -113,18 +113,26 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
           var el = this;
           var $el = $(this);
           var position = $el.position();
+          var $a = $('a[href="#'+ el.id +'"]');
           $el.scrollspy({
                 min: position.top,
                 max: position.top + $el.height(),
                 onEnter: function(element, position) {
                   console.log(el.id);
-                  $('a[href="#'+ el.id +'"]').addClass('active');
+                  console.log($a);
+                  $a.addClass('active');
                 },
                 onLeave: function(element, position) {
-                  $('a[href="#'+ el.id +'"]').removeClass('active');
+                  $a.removeClass('active');
                 }
           });
+
+          $a.on('click', function(e) {
+            e.preventDefault();
+            util.scrollToElement($el);
+          });
       });
+
     },
 
     community: function() {
