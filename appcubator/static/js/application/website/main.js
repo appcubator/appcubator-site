@@ -39,6 +39,9 @@ require.config({
     },
     "prettyCheckable" : {
       deps: ["jquery"]
+    },
+    "bootstrap" : {
+      deps: ["jquery"]
     }
   }
 
@@ -52,7 +55,8 @@ require([
   'backbone',
   'util',
   'prettyCheckable',
-  'mixins/BackboneConvenience'
+  'mixins/BackboneConvenience',
+  'bootstrap'
 ],
 function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
@@ -93,6 +97,10 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
     resources: function() {
       $('#menu-resources').addClass('selected');
+      $('.table-content').scrollspy();
+      $('.table-content').affix({
+        offset: 330
+      });
     },
 
     community: function() {

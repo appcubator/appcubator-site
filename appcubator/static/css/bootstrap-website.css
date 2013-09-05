@@ -4383,7 +4383,7 @@ a.label:hover,a.badge:hover {
 }
 
 .affix {
-  position: fixed;
+  position: fixed !important;
   width: 180px;
   top: 75px;
 }
