@@ -75,9 +75,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       "community/faq/"      : "faq",
       "community/*content"       : 'community',
 
-      "resources/tutorial/build-social-network/" : "socialNetworkPage",
-      "resources/tutorial/build-social-network/:section/" : "socialSectionScroll",
-      "resources/tutorial/build-social-network/:section/:goto/" : "socialSectionScrollAndGoto",
+      "resources/tutorial/*pagename/" : "slideViewPage",
       "resources/*content"       : 'resources',
     },
 
@@ -142,18 +140,16 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       $('#menu-community').addClass('selected');
     },
 
-    socialNetworkPage: function() {
+    slideViewPage: function() {
       this.resources();
-      var el_profiles = document.getElementById('social-slides-profiles');
-      var el_posts = document.getElementById('social-slides-posts');
-      var el_friendships = document.getElementById('social-slides-friendships');
-      var sv1 = new SlideView(el_profiles);
-      var sv2 = new SlideView(el_posts);
-      var sv3 = new SlideView(el_friendships);
-      this.slideViews = [sv1, sv2, sv3];
-      sv1.render();
-      sv2.render();
-      sv3.render();
+      var slideView_els = document.getElementsByClassName('slide-view');
+      var slideViews = [];
+      for (var i = 0; i < slideView_els.length; i++) {
+          var el = slideView_els[i];
+          var sv = new SlideView(el);
+          sv.render();
+          slideViews.push(sv);
+      }
 
       this.bindSlides(this.slideViews);
     },
