@@ -2,6 +2,7 @@ define(function(require, exports, module) {
     'use strict';
 
     require('app/templates/MainTemplates');
+    var Striper = require('app/Striper');
 
     var AppInfoView = Backbone.View.extend({
 
@@ -27,6 +28,7 @@ define(function(require, exports, module) {
 
             this.model = v1State.get('info');
             this.title = "Domain & SEO";
+            this.striper = new Striper();
         },
 
         render: function() {
@@ -55,6 +57,7 @@ define(function(require, exports, module) {
             $('.left-nav').affix({
                 offset: 150
             });
+            this.striper.bindChangePlan('#change-plan-btn','change-plan-form');
             return this;
         },
 
