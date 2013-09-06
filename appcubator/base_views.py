@@ -418,9 +418,19 @@ def resources(request):
     return render(request, 'website-resources.html', page_context)
 
 
-def resources_socialnetwork(request):
+def resources_socialnetwork(request, name=None):
+    if name == None:
+        raise Http404
+    if name not in ["howtosocialnetwork", "custom-code"]:
+        raise Http404
+    title_d = { "howtosocialnetwork": "Building a Social Network",
+                "custom-code": "Writing Custom Code"}
+    template_d = { "howtosocialnetwork": "website-resources-socialnetwork.html",
+                   "custom-code": "website-resources-customcode.html"}
+    num_sections_d = { "howtosocialnetwork": 3,
+                       "custom-code": 1}
     page_context = {}
-    page_context["title"] = "Building a Social Network"
+    page_context["title"] = title_d[name]
     import os, os.path
     join = os.path.join
 
@@ -444,24 +454,13 @@ def resources_socialnetwork(request):
             sections[-1]['data'].append(entry) # want to append the entry to the last section
         return sections
 
-    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p1.json')
-    with open(profile_json_path) as f:
-        raw_data = simplejson.load(f)
-    profile_data = json_to_data(raw_data)
-    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p2.json')
-    with open(profile_json_path) as f:
-        raw_data = simplejson.load(f)
-    posts_data = json_to_data(raw_data)
-    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p3.json')
-    with open(profile_json_path) as f:
-        raw_data = simplejson.load(f)
-    friendships_data = json_to_data(raw_data)
-
-    page_context["tut_img_dict"] = { 'profile': profile_data,
-                                     'posts': posts_data,
-                                     'friendships': friendships_data
-                                     }
-    return render(request, 'website-resources-socialnetwork.html', page_context)
+    page_context["tut_imgs"] = []
+    for i in range(num_sections_d[name]):
+        profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', name, 'p%d.json' % (i+1))
+        with open(profile_json_path) as f:
+            raw_data = simplejson.load(f)
+        page_context["tut_imgs"].append(json_to_data(raw_data))
+    return render(request, template_d[name], page_context)
 
 def resources_whatisawebapp(request):
     page_context = {}
