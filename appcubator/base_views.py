@@ -11,6 +11,10 @@ from django.utils import simplejson
 from copy import deepcopy
 
 from models import User, Customer, InvitationKeys, AnalyticsStore, App, PubKey
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
+from models import get_default_app_state, get_default_theme_state
+from models import get_default_uie_state, get_default_mobile_uie_state
+
 from appcubator.email.sendgrid_email import send_email, send_template_email
 
 import requests
@@ -416,6 +420,26 @@ def resources(request):
     page_context = {}
     page_context["title"] = "Resources"
     return render(request, 'website-resources.html', page_context)
+
+def external_editor(request):
+    themes = UITheme.get_web_themes()
+    themes = [t.to_dict() for t in themes]
+    mobile_themes = UITheme.get_mobile_themes()
+    mobile_themes = [t.to_dict() for t in mobile_themes]
+    page_context = {
+        'app' : { 'id': 0},
+        'default_state': get_default_app_state(),
+        'title': 'My First App',
+        'default_mobile_uie_state': get_default_mobile_uie_state(),
+        'default_uie_state': get_default_app_state(),
+        'themes': simplejson.dumps(list(themes)),
+        'mobile_themes': simplejson.dumps(list(mobile_themes)),
+        'apps': request.user.apps.all(),
+        'statics': simplejson.dumps([]),
+    }
+    page_context["title"] = "Demo Editor"
+
+    return render(request, 'website-external-editor.html', page_context)
 
 def quickstart(request):
     page_context = {}
