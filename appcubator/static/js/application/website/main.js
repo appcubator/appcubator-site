@@ -167,29 +167,6 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       });
     },
 
-    // socialSectionScroll: function(sectionSlug) {
-    //     console.log(this);
-    //     this.socialNetworkPage();
-    //     var lookupSv = function (sectionSlug) {
-    //         var i = SLIDEVIEWSLUGS.indexOf(sectionSlug); // global on the social network page html
-    //         if (i == -1) {
-    //             alert("Page not found (404)");
-    //             return this.slideViews[0];
-    //         }
-    //         return this.slideViews[i];
-    //     };
-    //     var sv = lookupSv.call(this, sectionSlug);
-    //     window.location.hash = sectionSlug;
-    //     return sv;
-    // },
-
-    // socialSectionScrollAndGoto: function(sectionSlug, gotoSlug) {
-    //     var sv = this.socialSectionScroll(sectionSlug);
-    //     var slideIdx = sv.getSlideIdxBySectionSlug(gotoSlug);
-    //     sv.gotoSlide(slideIdx);
-    //     return slideIdx;
-    // },
-
     bindLoginForm: function() {
       $('.login-button').on('click', function(e) {
         e.preventDefault();
