@@ -188,7 +188,6 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       });
 
       $(window).on('keydown', function(e) {
-        console.log(e.keyCode);
         if(e.keyCode == 27) {
           $('.login-form').hide();
           $('.menu').fadeIn();

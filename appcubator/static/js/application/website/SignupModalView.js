@@ -26,6 +26,22 @@ define([
       $('input[type=checkbox]').prettyCheckable();
       // $('input[type=radio]').prettyCheckable();
 
+      $('.btn-facebook').on('click', function() {
+            FB.login(function(response) {
+             if (response.authResponse) {
+              FB.api('/me', function(response) {
+                $("#inp-name").val(response.name);
+                $("#inp-email").val(response.email);
+                $("#inp-company").val(response.work[0].employer.name);
+                $("#inp-extra").val(JSON.stringify(response));
+               });
+             } else {
+               console.log('User cancelled login or did not fully authorize.');
+             }
+           }, {scope: 'email'});
+      });
+
+
       return this;
     },
 
