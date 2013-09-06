@@ -417,6 +417,20 @@ def resources(request):
     page_context["title"] = "Resources"
     return render(request, 'website-resources.html', page_context)
 
+def quickstart(request):
+    page_context = {}
+    page_context["title"] = "Resources"
+    return render(request, 'website-resources.html', page_context)
+
+def tutorials(request):
+    page_context = {}
+    page_context["title"] = "Resources"
+    return render(request, 'website-resources-tutorials.html', page_context)
+
+def documentation(request):
+    page_context = {}
+    page_context["title"] = "Resources"
+    return render(request, 'website-resources-documentation.html', page_context)
 
 def resources_socialnetwork(request, name=None):
     if name == None:

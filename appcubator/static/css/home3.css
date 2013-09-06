@@ -1606,6 +1606,7 @@ img.startx {
   width: 49%;
   text-align: center;
   padding: 30px 15px;
+  height: 420px;
 }
 
 .screencasts li:nth-child(2),

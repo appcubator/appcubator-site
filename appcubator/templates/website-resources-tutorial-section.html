@@ -9,7 +9,7 @@
                 <p class="slide-overlay-text">{{ d.shortText }}</p>
                 </div>
                 <div class="nav-section">
-                    <h3>{{ section.name }}</h3>
+                    <h3 style="display:inline;">{{ section.name }}</h3>
                     <div class="nav-arrows">
                         <div class="arrow-wrap"><div class="prev-slide-click">< Prev</div>
                         </div><div class="goto-slide-wrap"><input class="goto-slide-input" type="text" value="1" size="2"/> of <span class="goto-slide-numslides"></span>
@@ -22,11 +22,5 @@
             </div>
             {% endfor %}
             {% endfor %}
-        </div><!-- <div class="slide-nav-wrap">
-            <ol class="nav-wrapper">
-                {% for section in data %}
-                <a data-slide-id="{{ section.slideIdx }}" data-slug="{{ section.slug }}"><li>{{ section.name }}</li></a>
-                {% endfor %}
-            </ol>
-        </div> -->
+        </div>
 </div>
