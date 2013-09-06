@@ -431,7 +431,7 @@ def external_editor(request):
         'default_state': get_default_app_state(),
         'title': 'My First App',
         'default_mobile_uie_state': get_default_mobile_uie_state(),
-        'default_uie_state': get_default_app_state(),
+        'default_uie_state': get_default_uie_state(),
         'themes': simplejson.dumps(list(themes)),
         'mobile_themes': simplejson.dumps(list(mobile_themes)),
         'apps': request.user.apps.all(),
