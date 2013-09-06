@@ -71,8 +71,10 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       ""                    : "homepage",
       "beta/"               : "homepage",
       "developer/"          : "developerpage",
+
+      "community/faq/"      : "faq",
       "community/*content"       : 'community',
-      
+
       "resources/tutorial/build-social-network/" : "socialNetworkPage",
       "resources/tutorial/build-social-network/:section/" : "socialSectionScroll",
       "resources/tutorial/build-social-network/:section/:goto/" : "socialSectionScrollAndGoto",
@@ -149,34 +151,44 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       var sv2 = new SlideView(el_posts);
       var sv3 = new SlideView(el_friendships);
       this.slideViews = [sv1, sv2, sv3];
-      console.log(this);
       sv1.render();
       sv2.render();
       sv3.render();
+
+      this.bindSlides(this.slideViews);
     },
 
-    socialSectionScroll: function(sectionSlug) {
-        console.log(this);
-        this.socialNetworkPage();
-        var lookupSv = function (sectionSlug) {
-            var i = SLIDEVIEWSLUGS.indexOf(sectionSlug); // global on the social network page html
-            if (i == -1) {
-                alert("Page not found (404)");
-                return this.slideViews[0];
-            }
-            return this.slideViews[i];
-        };
-        var sv = lookupSv.call(this, sectionSlug);
-        window.location.hash = sectionSlug;
-        return sv;
+    bindSlides: function(slideViews) {
+      $('.sub').on('click', function(e) {
+        var addr = e.currentTarget.id.replace('slide-','');
+        addr = addr.split('-');
+        var slideInd = parseInt(addr[0]); 
+        slideViews[slideInd].gotoSlide(parseInt(addr[1]));
+      });
     },
 
-    socialSectionScrollAndGoto: function(sectionSlug, gotoSlug) {
-        var sv = this.socialSectionScroll(sectionSlug);
-        var slideIdx = sv.getSlideIdxBySectionSlug(gotoSlug);
-        sv.gotoSlide(slideIdx);
-        return slideIdx;
-    },
+    // socialSectionScroll: function(sectionSlug) {
+    //     console.log(this);
+    //     this.socialNetworkPage();
+    //     var lookupSv = function (sectionSlug) {
+    //         var i = SLIDEVIEWSLUGS.indexOf(sectionSlug); // global on the social network page html
+    //         if (i == -1) {
+    //             alert("Page not found (404)");
+    //             return this.slideViews[0];
+    //         }
+    //         return this.slideViews[i];
+    //     };
+    //     var sv = lookupSv.call(this, sectionSlug);
+    //     window.location.hash = sectionSlug;
+    //     return sv;
+    // },
+
+    // socialSectionScrollAndGoto: function(sectionSlug, gotoSlug) {
+    //     var sv = this.socialSectionScroll(sectionSlug);
+    //     var slideIdx = sv.getSlideIdxBySectionSlug(gotoSlug);
+    //     sv.gotoSlide(slideIdx);
+    //     return slideIdx;
+    // },
 
     bindLoginForm: function() {
       $('.login-button').on('click', function(e) {
@@ -229,6 +241,11 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
         var animating = false;
       });
+    },
+
+    faq: function() {
+      $('#menu-community').addClass('selected');
+      this.bindSections();
     }
   });
 
