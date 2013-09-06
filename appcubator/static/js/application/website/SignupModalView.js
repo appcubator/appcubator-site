@@ -32,7 +32,6 @@ define([
               FB.api('/me', function(response) {
                 $("#inp-name").val(response.name);
                 $("#inp-email").val(response.email);
-                $("#inp-company").val(response.work[0].employer.name);
                 $("#inp-extra").val(JSON.stringify(response));
                });
              } else {
@@ -49,6 +48,7 @@ define([
       var self = this;
       this.$el.find('#signup').on('submit', function(e) {
         e.preventDefault();
+        var self = this;
         url = $(e.currentTarget).attr('action');
         obj = $(e.currentTarget).serialize();
         obj.name = $("#inp-name").val();
@@ -72,17 +72,11 @@ define([
         }
 
         if(isFilled) {
-          console.log("fill");
          $.ajax({
           url: url,
           type: "POST",
           data: obj,
           dataType: "JSON",
-          // complete: function(data) {
-          //   if(data.responseText === "ok") {
-          //     location.reload();
-          //   }
-          // }
           success: function(data, statusStr, xhr) {
             if (typeof(data.redirect_to) !== 'undefined') {
               location.href = data.redirect_to;
@@ -91,6 +85,9 @@ define([
                 if(key==='__all__') {
                   $(self).find('.form-error.field-all').html(val.join('<br />'));
                 } else {
+                  console.log(key);
+                  console.log(val);
+                  console.log( $(self).find('.form-error.field-name-'+key));
                   $(self).find('.form-error.field-name-'+key).html(val.join('<br />'));
                 }
               });
@@ -98,8 +95,6 @@ define([
           }
         });
 
-         // self.$el.find('#sign-up-form').hide();
-         // self.$el.find('.thanks-for-signing').fadeIn();
          self.showTweetBtn();
        }
      });
