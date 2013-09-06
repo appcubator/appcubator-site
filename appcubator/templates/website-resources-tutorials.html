@@ -1,0 +1,121 @@
+{% extends "website-tutorial-infra.html" %}
+
+{% block tutorial-table-content %}
+<li><a href="#screencasts-section">Screencasts</a></li>
+<li><a href="#exampleapps-section">Example Apps</a></li>
+<li><a href="#guides-section">Guides</a></li>
+{% endblock %}
+
+{% block tutorial-content %}
+    <div class="centered-container section" id="screencasts-section" style="">
+      <h4>Screencasts</h4>
+      <p>We broke down <a href="http://studycloud.appcubator.com" target="_blank">StudyCloud</a> app into pieces and made screencasts explaining each piece.</p>
+      <ul class="screencasts">
+        <li>
+          <div class="summary">
+            <h3>Part 1: Intro and Tables</h3>
+            <div>In this walkthrough, we show a user logging into our interface and setting up their tables for a test sharing website. This video will introduce you to Appcubator and show you how to set up your database.</div>
+            <a href="/resources/sample/1/part/1/" class="btn btn-green hoff1" id="member">Start Now »</a>
+          </div>
+        </li>
+        <li>
+          <div class="summary">
+            <h3>Part 2: Themes and Pages</h3>
+            <div>
+              <p>In this walkthrough, we show how users set up themes and create the pages that they will need for the web application. </p>
+
+              <p>This video will introduce you to: themes, page access, editing your URLs, adding Page IDs to create user/table specific pages (similar to different Facebook profiles for different users), creating new pages.</p>
+          </div>
+            <a href="/resources/sample/1/part/2/" class="btn btn-green hoff1" id="member">Start Now »</a>
+          </div>
+        </li> 
+        <li>
+          <div class="summary">
+            <h3>Part 3: Editor and Design Elements</h3>
+            <div>
+              <p>In this walkthrough, we show how to use our editor to design a homepage with our drag and drop interface.</p>
+
+              <p>This video will show you how to: Use our Drag and Drop Editor, Upload images, Modify Headers and Text Styling, Create and Edit your Navigation Bar</p>
+            </div>
+            <a href="/resources/sample/1/part/3/" class="btn btn-green hoff1" id="member">Start Now »</a>
+          </div>
+        </li>
+        <li>
+          <div class="summary">
+            <h3>Part 4: Add Authentication</h3>
+            <div>
+              <p>In this walkthrough, we show how to use our editor to set up your login and sign up forms with our drag and drop interface.</p>
+
+              <p>This video will show you how to: Use our Drag and Drop Editor, Drop Login and Sign Up Forms, Edit Login and Sign Up Forms (where they direct), Edit your Footer, Test Run your Application</p>
+            </div>
+            <a href="/resources/sample/1/part/4/" class="btn btn-green hoff1" id="member">Start Now »</a>
+          </div>
+        </li>
+        <li>
+          <div class="summary">
+            <h3>Part 5: Search and Lists</h3>
+            <div>
+              <p>In this walkthrough, we show how to use our editor to design a search page where users can search and display information in your database.</p>
+              <p>This video will show you how to: Use our Drag and Drop Editor,  Use Search Forms, Use Search Result Lists, Use the Table {{Tags}} to change how your information is displayed</p>
+            </div>
+            <a href="/resources/sample/1/part/5/" class="btn btn-green hoff1" id="member">Start Now »</a>
+          </div>
+        </li>
+        <li>
+          <div class="summary">
+            <h3>Part 6: Create Forms and Uploads</h3>
+            <div>
+              <p>In this walkthrough, we show how to use our editor to design a create form page.</p>
+              <p>This video will show you how to:Use our Drag and Drop Editor, Create a Link to an internal page, Use a Create Form for users to input information into the database, Modify your create form's layout using the example of an upload test form.</p>
+            </div>
+            <a href="/resources/sample/1/part/6/" class="btn btn-green hoff1" id="member">Start Now »</a>
+          </div>
+        </li>
+        <li>
+          <div class="summary">
+            <h3>Part 7: Profile Page and Page Context Data</h3>
+            <div>
+              <p>In this walkthrough, we show how to use our editor to design a test 'profile page' and how to add page context data. This is data that is specific for one particular tweet, test, or user. Check your URL to make sure you have added your page context id shown in a {{tag}}</p>
+
+              <p>This video will show you how to: Add your Page Context Data to create a table-based 'Profile Page'</p>
+            </div>
+            <a href="/resources/sample/1/part/7/" class="btn btn-green hoff1" id="member">Start Now »</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="centered-container section" id="exampleapps-section">
+      <h4>Example Apps</h4>
+      <ul class="sample-apps">
+        <li>
+          <a href="/resources/tutorial/build-social-network">
+            <div  class="picture">
+              <img src="{{ STATIC_URL }}img/guide-icon.png">
+            </div>
+            <div class="summary">
+              <h3>Building a Social Network</h3>
+              <div>This guide explains how to build a social network using Appcubator.</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="centered-container section" id="guides-section">
+      <h4>Tutorials and Guides</h4>
+<!--       <small>These are targeted for advanced users and developers. They're not required knowledge.</small>
+ -->      
+      <ul class="guides">
+        <li>
+          <a href="/resources/designer-guide/">
+            <div  class="picture">
+              <img src="{{ STATIC_URL }}img/guide-icon.png">
+            </div>
+            <div class="summary">
+              <h3>Designing Themes</h3>
+              <div>This guide explains how to edit the theme of your application as well as creating new themes.</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+{% endblock %}

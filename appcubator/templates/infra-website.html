@@ -27,7 +27,7 @@ scope: r_fullprofile r_emailaddress
 {% block css %}
 {% endblock %}
 </head>
-<body data-spy="scroll" data-target=".navigator">
+<body>
   <!-- fb js sdk code -->
   <div id="fb-root"></div>
   <script>(function(d, s, id) {
@@ -94,39 +94,6 @@ loader: "static.olark.com/jsclient/loader0.js",name:"olark",methods:["configure"
 /* custom configuration goes here (www.olark.com/documentation) */
 olark.identify('6509-786-10-1962');/*]]>*/</script><noscript><a href="https://www.olark.com/site/6509-786-10-1962/contact" title="Contact us" target="_blank">Questions? Feedback?</a> powered by <a href="http://www.olark.com?welcome" title="Olark live chat software">Olark live chat software</a></noscript>
 <!-- end olark code -->
-<script type="text/template" id="temp-inviteform">
-    <form class="sign-up-form" id="sign-up-form">
-      <div class="left-side">
-        <input type="text" name="name" id="inp-name" placeholder="Full Name">
-        <input type="text" name="email" id="inp-email" placeholder="Email">
-        <input type="text" name="company" id="inp-company" placeholder="Company">
-        <input type="hidden" name="extra-info" id="inp-extra" value="-">
-        <hr>
-        <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
-        <div class="btn btn-blue btn-linkedin">Fill With LinkedIn</div>
-        <% print('<sc'+'ript type="IN/Login"></sc'+'ript>') %>
-      </div>
-      <div class="right-side">
-        <textarea name="description" id="inp-description" placeholder="Technical description of your application. This is for us to attain the feasibility of the project to best direct you. It's totally fine if you just want to check it out."></textarea>
-        <input type="checkbox" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
-        <input type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
-      </div>
-    </form>
-    <div class="thanks-for-signing" style="display:none;">
-      <p>Thank you for signing up!</p>
-      <p>Someone from our team will contact you for details and further steps very soon.</p>
-      <div class="social-share">
-        <span>In the meantime, you can let your friends know about Appcubator!</span>
-        <div class="fb-share">
-          <div class="fb-like" data-href="http://www.appcubator.com" data-send="false" data-width="160" data-show-faces="true" data-font="segoe ui"></div>
-        </div>
-        <div class="twitter-share">
-          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.appcubator.com" data-via="appcubator">Tweet</a>
-          <% print('<sc'+'ript>'); %> <% print('</sc'+'ript>'); %>
-        </div>
-      </div>
-    </div>
-</script>
 <script type="text/template" id="temp-signupform">
     <h5>Signup for Appcubator</h5>
     <form class="sign-up-form" method="POST" id="signup" action="{% url signup_form %}">
@@ -150,7 +117,7 @@ olark.identify('6509-786-10-1962');/*]]>*/</script><noscript><a href="https://ww
         </div>
         <div class="right-side">
           <textarea name="description" id="inp-description" placeholder="Technical description of your application. This is for us to attain the feasibility of the project to best direct you. It's totally fine if you just want to check it out."></textarea>
-          <input type="checkbox" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
+          <input type="checkbox" name="interest" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
           <input style="height:48px;" type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
         </div>
     </form>

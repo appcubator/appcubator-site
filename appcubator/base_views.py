@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import forms as auth_forms, authenticate, login
 from django.core.exceptions import ValidationError
 from django import forms
+from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
@@ -249,6 +250,7 @@ def signup(request):
         form = MyUserCreationForm(req)
         if form.is_valid():
             user = form.save()
+            create_customer(request, long(user.pk))
             new_user = authenticate(username=req['email'],
                                     password=req['password1'])
             login(request, new_user)
@@ -260,6 +262,24 @@ def signup(request):
         else:
             return HttpResponse(simplejson.dumps(form.errors), mimetype="application/json")
 
+@require_POST
+def create_customer(request, user_id):
+    data = request.POST.copy()
+    data['sign_up_fee'] = '36'
+    data['project_description'] = data.get('description', '')
+    data['consulting'] = data.get('interest', '')
+    data['extra_info'] = data.get('extra', '')
+    data['company'] = 'None'
+    data['sent_welcome_email'] = True
+
+    form = NewCustomerForm(data)
+    if form.is_valid():
+        customer = form.save()
+        customer.user_id = user_id
+        customer.save()
+        return True
+
+    return False
 
 def terms_of_service(request):
     page_context = {}
@@ -374,7 +394,6 @@ def signup_from_gwc(request):
 @login_required
 @csrf_exempt
 def send_invitation_to_customer(request, customer_pk):
-    print customer_pk
     customer = get_object_or_404(Customer, pk=customer_pk)
     invitation = InvitationKeys.create_invitation(request.user, customer.email)
     text = "Hello! \n Thanks for your interest in Appcubator. You can signup here: http://appcubator.com/signup?k=%s" % invitation.api_key
@@ -398,12 +417,75 @@ def resources(request):
     page_context["title"] = "Resources"
     return render(request, 'website-resources.html', page_context)
 
+def quickstart(request):
+    page_context = {}
+    page_context["title"] = "Resources"
+    return render(request, 'website-resources.html', page_context)
+
+def tutorials(request):
+    page_context = {}
+    page_context["title"] = "Resources"
+    return render(request, 'website-resources-tutorials.html', page_context)
+
+def documentation(request):
+    page_context = {}
+    page_context["title"] = "Resources"
+    return render(request, 'website-resources-documentation.html', page_context)
 
 def resources_socialnetwork(request):
     page_context = {}
     page_context["title"] = "Building a Social Network"
+    import os, os.path
+    join = os.path.join
+
+    def json_to_data(json):
+        """"return a list of (section, <section_name>) tuples,
+            where each section has a list of dicts
+                where each dict has img_url, shortText, longText keys."""
+        sections = []
+        def slugify(s):
+            s = s.lower()
+            s = re.sub(r'[^a-z0-9]+', '-', s)
+            return s
+        for i, entry in enumerate(json):
+            if 'section' in entry:
+                s = { "data": [],
+                      "name": entry['section'],
+                      "slideIdx": i,
+                      "slug": slugify(entry['section'])
+                      }
+                sections.append(s)
+            sections[-1]['data'].append(entry) # want to append the entry to the last section
+        return sections
+
+    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p1.json')
+    with open(profile_json_path) as f:
+        raw_data = simplejson.load(f)
+    profile_data = json_to_data(raw_data)
+    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p2.json')
+    with open(profile_json_path) as f:
+        raw_data = simplejson.load(f)
+    posts_data = json_to_data(raw_data)
+    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p3.json')
+    with open(profile_json_path) as f:
+        raw_data = simplejson.load(f)
+    friendships_data = json_to_data(raw_data)
+
+    page_context["tut_img_dict"] = { 'profile': profile_data,
+                                     'posts': posts_data,
+                                     'friendships': friendships_data
+                                     }
     return render(request, 'website-resources-socialnetwork.html', page_context)
 
+def resources_whatisawebapp(request):
+    page_context = {}
+    page_context["title"] = "What is a web application?"
+    return render(request, 'website-resources-webapps.html', page_context) 
+
+def resources_fordjangodevs(request):
+    page_context = {}
+    page_context["title"] = "Appcubator for Django Developers"
+    return render(request, 'website-resources-fordjangodevs.html', page_context)
 
 def screencast(request, screencast_id=1):
     page_context = {}

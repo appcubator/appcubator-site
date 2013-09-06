@@ -5,6 +5,7 @@ require.config({
     "jquery" : "../../libs/jquery/jquery",
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
     "jquery.hotkeys" : "../../libs/jquery/jquery.hotkeys",
+    "jquery.scrollspy" : "../../libs/jquery/jquery.scrollspy",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "heyoffline": "../../libs/heyoffline",
@@ -39,6 +40,12 @@ require.config({
     },
     "prettyCheckable" : {
       deps: ["jquery"]
+    },
+    "bootstrap" : {
+      deps: ["jquery"]
+    },
+    "jquery.scrollspy" : {
+      deps: ["jquery"]
     }
   }
 
@@ -48,30 +55,44 @@ require([
   './HomepageView',
   './DeveloperpageView',
   './SignupModalView',
+  './SlideView',
   'backbone',
   'util',
   'prettyCheckable',
-  'mixins/BackboneConvenience'
+  'mixins/BackboneConvenience',
+  'bootstrap',
+  'jquery.scrollspy'
 ],
-function(HomepageView, DeveloperpageView, SignupModalView) {
+function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
   var WebsiteRouter = Backbone.Router.extend({
 
     routes: {
       ""                    : "homepage",
       "beta/"               : "homepage",
-      "developer/"            : "developerpage",
+      "developer/"          : "developerpage",
+
+      "community/faq/"      : "faq",
+      "community/*content"       : 'community',
+
+      "resources/tutorial/build-social-network/" : "socialNetworkPage",
+      "resources/tutorial/build-social-network/:section/" : "socialSectionScroll",
+      "resources/tutorial/build-social-network/:section/:goto/" : "socialSectionScrollAndGoto",
+      "resources/*content"       : 'resources',
     },
 
     cube: $('#cube'),
 
     initialize: function() {
       _.bindAll(this);
-      this.animateCube();
-      this.bindLoginForm();
-      this.bindSignupForm();
       $('input[type=checkbox]').prettyCheckable();
       document.addEventListener("touchstart", function(){}, true);
+
+      if($(window).width() > 800) {
+        this.animateCube();
+        this.bindLoginForm();
+        this.bindSignupForm();
+      }
     },
 
     homepage: function() {
@@ -80,6 +101,70 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
 
     developerpage: function() {
       this.view = new DeveloperpageView().render();
+    },
+
+    resources: function() {
+      $('#menu-resources').addClass('selected');
+      $('.table-content').affix({
+        offset: 330
+      });
+      this.bindSections();
+    },
+
+    bindSections: function() {
+      $('.section').each(function() {
+          var el = this;
+          var $el = $(this);
+          var position = $el.position();
+          var $a = $('a[href="#'+ el.id +'"]');
+          $el.scrollspy({
+                min: position.top,
+                max: position.top + $el.height(),
+                onEnter: function(element, position) {
+                  console.log(el.id);
+                  console.log($a);
+                  $a.addClass('active');
+                },
+                onLeave: function(element, position) {
+                  $a.removeClass('active');
+                }
+          });
+
+          $a.on('click', function(e) {
+            e.preventDefault();
+            util.scrollToElement($el);
+          });
+      });
+
+    },
+
+    community: function() {
+      $('#menu-community').addClass('selected');
+    },
+
+    socialNetworkPage: function() {
+      this.resources();
+      var el_profiles = document.getElementById('social-slides-profiles');
+      var el_posts = document.getElementById('social-slides-posts');
+      var el_friendships = document.getElementById('social-slides-friendships');
+      var sv1 = new SlideView(el_profiles);
+      var sv2 = new SlideView(el_posts);
+      var sv3 = new SlideView(el_friendships);
+      this.slideViews = [sv1, sv2, sv3];
+      sv1.render();
+      sv2.render();
+      sv3.render();
+
+      this.bindSlides(this.slideViews);
+    },
+
+    bindSlides: function(slideViews) {
+      $('.sub').on('click', function(e) {
+        var addr = e.currentTarget.id.replace('slide-','');
+        addr = addr.split('-');
+        var slideInd = parseInt(addr[0]); 
+        slideViews[slideInd].gotoSlide(parseInt(addr[1]));
+      });
     },
 
     bindLoginForm: function() {
@@ -133,6 +218,11 @@ function(HomepageView, DeveloperpageView, SignupModalView) {
 
         var animating = false;
       });
+    },
+
+    faq: function() {
+      $('#menu-community').addClass('selected');
+      this.bindSections();
     }
   });
 

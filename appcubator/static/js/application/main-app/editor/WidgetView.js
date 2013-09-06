@@ -328,6 +328,23 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
             this.model.get('layout').set('height', nHeight);
         },
 
+        autoResizeVertical: function(hGrid, vGrid) {
+            var verticalGrid = (vGrid || this.positionVerticalGrid);
+
+            var node = this.el.firstChild;
+
+            var height = $(node).outerHeight(true);
+
+            var nHeight = Math.ceil(height / verticalGrid);
+
+            if (verticalGrid == 1) {
+                nHeight = (nHeight < 30) ? 30 : nHeight;
+            }
+            if (!nHeight) nHeight = 2;
+
+            this.model.get('layout').set('height', nHeight);
+        },
+
         mousedown: function(e) {
             mouseDispatcher.isMousedownActive = true;
         },

@@ -14,6 +14,7 @@ define([
         initialize: function(options) {
           _.bindAll(this);
           this.model = options.model;
+
           this.listenTo(this.model, 'change:title', this.renderTitle, this);
           this.listenTo(this.model, 'change:url', this.renderUrl, this);
 
@@ -22,7 +23,7 @@ define([
             return {
               url: 'internal://' + page.get('name'),
               title: page.get('name')
-            }
+            };
           });
 
           // if the current link is an external link,

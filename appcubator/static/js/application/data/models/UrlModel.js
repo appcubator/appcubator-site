@@ -20,7 +20,7 @@ define(['backbone'], function(Backbone) {
     },
 
     getUrlString: function(appSubdomain) {
-      return (appUrl||'http://yourapp.com') + '/' + this.getAppendixString();
+      return (appUrl||'http://yourapp.com') + this.getAppendixString();
     },
 
     addUrlPart: function(value) {

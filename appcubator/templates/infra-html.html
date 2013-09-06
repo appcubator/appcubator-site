@@ -52,6 +52,8 @@ less = {
     js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=379124615521841";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));</script>
+  {% block overlay-page %}
+  {% endblock %}
   <div class="page">
     <div class="container">
     {% block topbar %}

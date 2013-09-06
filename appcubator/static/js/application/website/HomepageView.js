@@ -18,10 +18,14 @@ function(RequestInviteModalView) {
     initialize: function(directory) {
       _.bindAll(this);
       this.addr = (directory) ? directory : [0];
+      olark('api.box.hide');
+      this.olarkHidden = true;
     },
 
     render : function(img, text) {
-      this.bindSliders();
+      if($(window).width() > 800) {
+        this.bindSliders();
+      }
 
       $('#request-left-btn').html('Request an Invite');
       $('input[type=checkbox]').prettyCheckable();
@@ -43,6 +47,7 @@ function(RequestInviteModalView) {
 
     bindSliders: function (){
 
+      var self = this;
       var xTrans = -30;
       var yTrans = 45;
 
@@ -57,6 +62,13 @@ function(RequestInviteModalView) {
 
       $(window).on('scroll', function(e) {
         var newValue = $(window).scrollTop();
+
+        if(newValue > 5 && self.olarkHidden) {
+          console.log('show');
+          olark('api.box.show');
+          self.olarkHidden = false;
+          $('.scroll-down-note').fadeOut();
+        }
 
         $blueBar.css('padding-top', newValue/2 + 70);
         

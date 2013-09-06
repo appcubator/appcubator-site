@@ -4,18 +4,38 @@
       <hr class="span58 pheader">
       <ul class="" id="list-pages">
       </div>
-      <div class="add-box create-page span18 pane hi22" id="create-page-box">
-        <div class="box-button span18 hoff2">
-          <img src="/static/img/add.png" class="span3 add-img">
-          <h2 class="offset1">Create a New Page</h2>
-        </div>
-        <form class="page-view span18 hi21 offsetr1 create-form" style="display:none;">
-          <div class="hoff2">
-            <input type="text" class="page-name span12" placeholder="Page Name">
-            <input type="submit" class="small done-btn" value="Done">
+      <div class="span18 hoff2" style="margin-bottom: 60px;">
+        <div class="add-box create-page span18 pane hi11" id="create-page-box">
+          <div class="box-button span18 hi11 padding">
+            <h3 class="">Create a New Page</h3>
+            <img src="/static/img/add.png" class="span3 add-img hoff1">
           </div>
-          <div class="row offset1 hi6"></div>
-        </form>
+          <form class="page-view span18 hi21 offsetr1 create-form" style="display:none;">
+            <div class="hoff2">
+              <input type="text" class="page-name span12" placeholder="Page Name">
+              <input type="submit" class="small done-btn" value="Done">
+            </div>
+            <div class="row offset1 hi6"></div>
+          </form>
+        </div>
+        <div class="add-box create-page span18 pane hi10 hoff1" id="clone-page-box">
+          <div class="box-button-clone span18 hi11 padding">
+            <h3 class="">Clone an Existing Page</h3>
+            <img src="/static/img/add.png" class="span3 add-img hoff1">
+          </div>
+          <div class="clone-options" style="display:none;">
+            <span>Select which page to clone.</span>
+            <select id="pages-list-clone">
+            </select>
+          </div>
+          <form class="page-view span18 hi21 offsetr1 clone-name-form" style="display:none;">
+            <div class="hoff2">
+              <input type="text" class="clone-page-name span12" placeholder="Page Name">
+              <input type="submit" class="small done-btn" value="Done">
+            </div>
+            <div class="row offset1 hi6"></div>
+          </form>
+        </div>
       </div>
     </div>
     <!--

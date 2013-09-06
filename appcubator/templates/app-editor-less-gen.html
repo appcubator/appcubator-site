@@ -96,6 +96,12 @@ body {
   {{l.style|safe}}
   }
 
+  {% if l.hoverStyle %}
+  .{{l.class_name|safe}}:hover { 
+  {{l.hoverStyle|safe}}
+  }
+  {% endif %}
+
   {% endfor %}
 
   /* * * * * * * * * * *

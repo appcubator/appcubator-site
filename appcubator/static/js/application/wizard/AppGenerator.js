@@ -155,10 +155,12 @@ function(AppModel,
                                                                              "headerTexts",
                                                                              {content: "List of " + tableM.get('name') });
       var listModel   = widgetCollection.createList({ left:3, height:3, width: 6, top: 11}, tableM);
+      var createFormModel   = widgetCollection.createCreateForm({ left:0, height:3, width: 3, top: 11, l_padding: 15, r_padding: 15}, tableM);
 
       var arr = [];
       arr.push(listModel);
       arr.push(headerModel);
+      arr.push(createFormModel);
 
       return arr;
     },
