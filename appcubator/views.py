@@ -426,6 +426,11 @@ def mobile_uie_state(request, app_id):
 
 @csrf_exempt
 def less_sheet(request, app_id, isMobile=False):
+    print app_id
+    if long(app_id) == 0:
+        print "YOLO"
+        return default_less_sheet(request)
+
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
@@ -437,6 +442,16 @@ def less_sheet(request, app_id, isMobile=False):
 def mobile_less_sheet(request, app_id):
     return less_sheet(request, app_id, True)
 
+@csrf_exempt
+def default_less_sheet(request):
+    from django.template import Context, loader
+    t = loader.get_template('app-editor-less-gen.html')
+    uie_state = simplejson.loads(get_default_uie_state())
+    context = Context({'uie_state': uie_state,
+                       'isMobile': False,
+                       'deploy': False})
+    css_string = t.render(context)
+    return HttpResponse(css_string, mimetype='text/css')
 
 @csrf_exempt
 def css_sheet(request, app_id, isMobile=False):

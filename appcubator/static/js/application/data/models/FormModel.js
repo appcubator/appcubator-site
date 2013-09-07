@@ -46,8 +46,6 @@ function(
       var isUnique = true;
 
       this.get('actions').each(function(actionModel) {
-        console.log(actionModel.attributes);
-        console.log(newActionModel.attributes);
         if(_.isEqual(actionModel.attributes, newActionModel.attributes)) isUnique = false; return;
       }, this);
 

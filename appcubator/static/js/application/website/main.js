@@ -8,6 +8,7 @@ require.config({
     "jquery.scrollspy" : "../../libs/jquery/jquery.scrollspy",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
+    "react"           : "https://cdnjs.cloudflare.com/ajax/libs/react/0.4.1/react.min",
     "heyoffline": "../../libs/heyoffline",
     "util" : "../../libs/util/util",
     "util.filepicker" : "../../libs/util/util.filepicker",
@@ -27,7 +28,9 @@ require.config({
     "models" : "../data/models",
     "collections" : "../data/collections",
     "tutorial" : "../tutorial",
-    "xrayquire" : "../../libs/xrayquire"
+    "xrayquire" : "../../libs/xrayquire",
+    "wizard"          : "../wizard",
+    "ace"             : "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace"
   },
 
   shim: {
@@ -46,6 +49,12 @@ require.config({
     },
     "jquery.scrollspy" : {
       deps: ["jquery"]
+    },
+    "util.filepicker": {
+      exports: "util"
+    },
+    "react" : {
+      exports: "React"
     }
   }
 
@@ -78,7 +87,10 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       "resources/tutorial/build-social-network/" : "socialNetworkPage",
       "resources/tutorial/build-social-network/:section/" : "socialSectionScroll",
       "resources/tutorial/build-social-network/:section/:goto/" : "socialSectionScrollAndGoto",
-      "resources/*content"       : 'resources',
+      "resources/editor/"     : "editor",
+
+      "resources/*content"       : 'resources'
+
     },
 
     cube: $('#cube'),
@@ -176,7 +188,6 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       });
 
       $(window).on('keydown', function(e) {
-        console.log(e.keyCode);
         if(e.keyCode == 27) {
           $('.login-form').hide();
           $('.menu').fadeIn();
@@ -223,6 +234,47 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
     faq: function() {
       $('#menu-community').addClass('selected');
       this.bindSections();
+    },
+
+    editor: function() {
+          var self = this;
+
+            self.tutorialPage = "Editor";
+
+            require(['./ExternalEditorView',
+                     'models/AppModel',
+                     'collections/MobilePageCollection',
+                     'collections/PageCollection',
+                     "editor/KeyDispatcher",
+                     "editor/MouseDispatcher",
+                     "comp"],
+            function(EditorView, AppModel, MobilePageCollection, PageCollection, KeyDispatcher, MouseDispatcher) {
+                $('.page').hide();
+                //if (v1.view) v1.view.close();
+                pageId = 0;
+                v1State = new Backbone.Model();
+                v1State = new AppModel(appState);
+            
+                g_guides = {};
+                keyDispatcher  = new KeyDispatcher();
+                mouseDispatcher  = new MouseDispatcher();
+
+                v1State.lazySet('pages', new PageCollection(appState.pages||[]));
+                v1State.lazySet('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
+
+                var cleanDiv = document.createElement('div');
+                cleanDiv.className = "clean-div editor-page";
+                $(document.body).append(cleanDiv);
+
+                v1.view = new EditorView({
+                    pageId: 0
+                });
+                v1.view.setElement(cleanDiv).render();
+
+                self.trigger('editor-loaded');
+
+                olark('api.box.hide');
+            });
     }
   });
 

@@ -52,6 +52,7 @@ urlpatterns = patterns('',
     url(r'^app/(\d+)/payment/$',        payment_views.app_payment),
 
     url(r'^resources/$',                                           base_views.resources),
+    url(r'^resources/editor/$',                                    base_views.external_editor),
     url(r'^resources/quickstart/$',                                base_views.quickstart),
     url(r'^resources/tutorials/$',                                 base_views.tutorials),
     url(r'^resources/documentation/$',                             base_views.documentation),

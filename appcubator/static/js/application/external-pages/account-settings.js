@@ -38,13 +38,13 @@ function(Striper) {
 
   var PaymentsMain = function() {
     var striper = new Striper();
-    striper.bindPayment('.change-card', 'change-card-form');
+    striper.bindChangeCard('.change-card', 'change-card-form');
     striper.onSuccess = function() {
       window.location = "/account/";
     };
 
-    striper.bindPayment('#change-plan-btn','change-plan-form');
-    striper.bindPayment('#cancel-btn','cancel-form');
+    // striper.bindChangePlan('#change-plan-btn','change-subscription');
+    striper.bindCancel('#cancel-btn','cancel-form');
   };
 
   $(document).ready(new PaymentsMain());

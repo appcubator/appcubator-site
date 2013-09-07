@@ -8,7 +8,7 @@ function(Backbone) {
   Backbone.DialogueView = Backbone.View.extend({
     width: 500,
     height: 160,
-    padding: 30,
+    padding: 0,
     css: 'dialogue',
 
     events : {

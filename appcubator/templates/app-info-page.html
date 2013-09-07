@@ -21,6 +21,11 @@
             <h4>Current plan:</h4>
             <div>{{ user.customer.current_subscription.plan_display }}</div>
           </div>
+          <div>
+          <form method="POST" class="form-inline ajax" data-replace-closest=".change-subscription" id="change-plan-form">
+              {% csrf_token %}
+               <a class="btn" rel="external" href="/app/{{ app.pk }}/payment/">Change</a>
+          </form>
           <hr class="span40">
           <div class="span36 offset2">
             {% if user.customer.current_subscription.plan == "monthly" %}
