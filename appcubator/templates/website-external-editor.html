@@ -4,6 +4,16 @@
 <link type="text/css" href="/app/0/mobile_uiestate.less" id="css-mobile-uiestate" rel="stylesheet"/>
 {% endblock %}
 
+{% block less %}
+<link rel="stylesheet/less" href="{{ STATIC_URL }}css/app/style.less">
+<link rel="stylesheet/less" href="{{ STATIC_URL }}css/app/editor/editor.less">
+{% endblock %}
+{% block css-files %}
+<link rel="stylesheet/less" href="{{ STATIC_URL }}css/app/style.css">
+<link rel="stylesheet/less" href="{{ STATIC_URL }}css/app/editor/editor.css">
+{% endblock %}
+
+
 {% block topbar %}
 {% include "app-navbar.html" %}
 {% endblock %}

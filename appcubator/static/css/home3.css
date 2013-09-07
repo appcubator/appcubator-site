@@ -186,6 +186,11 @@ h6 {
   font-weight: bold;
 }
 
+.blue.white-btn {
+  background-color: #0f2d40;
+  color: #fff;
+}
+
 .sliding-panel .title {
   font-size: 18px;
   font-weight: bold;
