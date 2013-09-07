@@ -32,9 +32,10 @@ require.config({
 
 require([
   'app/Striper',
+  '../main-app/GarageView',
   'bootstrap'
 ],
-function(Striper) {
+function(Striper, GarageView) {
 
   var PaymentsMain = function() {
     var striper = new Striper();
@@ -66,6 +67,9 @@ function(Striper) {
     $('#add-key-btn').hide();
     $('#add-key-panel').fadeIn();
   });
+
+  var garage = new GarageView();
+  $('.garage-toggle').on('click', garage.show);
 
   // @ksikka's code
   $(document).ready(function() {

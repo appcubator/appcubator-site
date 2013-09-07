@@ -1,0 +1,14 @@
+{% extends "infra-html.html" %}
+
+{% block css %}
+{% endblock %}
+
+{% block topbar %}
+{% include "app-navbar.html" %}
+{% endblock %}
+
+{% block overlay-page %}
+<div class="fixed-bg welcome garage" id="garage-div" {% if not display_garage %} style="display:none;" {% endif %}>
+  {% include "app-garage-temp.html" %}
+</div>
+{% endblock %}
