@@ -1621,8 +1621,8 @@ img.startx {
   height: 150px;
 }
 
-.screencasts li:nth-child(2),
-.sample-apps li:nth-child(2) {
+.screencasts li:nth-child(2n),
+.sample-apps li:nth-child(2n) {
   margin-left: 1%;
 }
 
@@ -1726,9 +1726,16 @@ img.startx {
   padding-top: 40px;
 }
 
+.guides li p {
+  padding: 0 20px;
+}
 
 li .summary h3 {
   margin-top: 0;
+}
+
+li a:hover .summary h3 {
+  text-decoration: underline;
 }
 
 .documentation {

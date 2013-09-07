@@ -1,29 +1,21 @@
 {% extends "website-tutorial-infra.html" %}
 
 {% block tutorial-table-content %}
-<li><a href="#screencasts-section">Screencasts</a></li>
 <li><a href="#exampleapps-section">Example Apps</a></li>
+<li><a href="#screencasts-section">Screencasts</a></li>
 <li><a href="#guides-section">Guides</a></li>
 {% endblock %}
 
 {% block tutorial-content %}
-    <div class="centered-container section" id="screencasts-section" style="">
-      <h4>Screencasts</h4>
-      <p>We broke down <a href="http://studycloud.appcubator.com" target="_blank">StudyCloud</a> app into pieces and made screencasts explaining each piece.</p>
-      <ul class="screencasts">
-        {% for part in parts %}
-        {% include "website-resources-screencast-template.html" with sample_num="1" part_num=forloop.counter part_title=part.title part_description=part.description %}
-        {% endfor %}
-      </ul>
-    </div>
+    <h4>Tutorials</h4>
+    <p>Here you can watch Screencasts of an example webapp being built, or skim through slides in the Example Apps section.</p>
+    <p>Done with a basic app on Appcubator and want to take it to the next level? Check out our Custom Code section.</p>
     <div class="centered-container section" id="exampleapps-section">
-      <h4>Example Apps</h4>
+      <h5>Example Apps</h5>
       <ul class="sample-apps">
         <li>
           <a href="/resources/tutorial/build-social-network">
-            <div  class="picture">
-              <img src="{{ STATIC_URL }}img/guide-icon.png">
-            </div>
+            <!-- <div  class="picture"><img src="{{ STATIC_URL }}img/guide-icon.png"></div> -->
             <div class="summary">
               <h3>Building a Social Network</h3>
               <div>This guide explains how to build a social network using Appcubator.</div>
@@ -32,19 +24,33 @@
         </li>
       </ul>
     </div>
+    <div class="centered-container section" id="screencasts-section" style="">
+      <h5>Screencasts</h5>
+      <p>We broke down <a href="http://studycloud.appcubator.com" target="_blank">StudyCloud</a> app into pieces and made screencasts explaining each piece.</p>
+      <ul class="screencasts">
+        {% for part in parts %}
+        {% include "website-resources-screencast-template.html" with sample_num="1" part_num=forloop.counter part_title=part.title part_description=part.description %}
+        {% endfor %}
+      </ul>
+    </div>
     <div class="centered-container section" id="guides-section">
-      <h4>Tutorials and Guides</h4>
-<!--       <small>These are targeted for advanced users and developers. They're not required knowledge.</small>
- -->      
+      <h5>Tutorials and Guides</h5>
       <ul class="guides">
         <li>
           <a href="/resources/designer-guide/">
-            <div  class="picture">
-              <img src="{{ STATIC_URL }}img/guide-icon.png">
-            </div>
+            <div  class="picture"><img src="{{ STATIC_URL }}img/guide-icon.png"></div>
             <div class="summary">
               <h3>Designing Themes</h3>
-              <div>This guide explains how to edit the theme of your application as well as creating new themes.</div>
+              <p>This guide explains how to edit the theme of your application as well as creating new themes.</p>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/resources/deploy-to-cloud/">
+            <div  class="picture"><img src="{{ STATIC_URL }}img/guide-icon.png"></div>
+            <div class="summary">
+              <h3>Deploying</h3>
+              <p>This guide explains how to download your code and host or deploy it on a variety of platforms.</p>
             </div>
           </a>
         </li>

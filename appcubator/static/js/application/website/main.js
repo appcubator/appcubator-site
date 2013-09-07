@@ -87,8 +87,6 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       "resources/tutorial/*pagename/" : "slideViewPage",
       "resources/editor/"             : "editor",
       "resources/*content"            : 'resources'
-
->>>>>>> master
     },
 
     cube: $('#cube'),
