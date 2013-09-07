@@ -1,0 +1,179 @@
+{% extends "website-tutorial-infra.html" %}
+
+{% block css %}
+<style>
+.social-network-tut h4, .social-network-tut h5 {
+    margin-bottom: 20px;
+}
+.social-network-tut .intro-wrapper {
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-left: 220px;
+    display: block;
+    vertical-align: top;
+    padding: 30px;
+}
+
+a.fancy {
+    display: inline-block;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+ol.nav-wrapper,
+ul.nav-wrapper {
+    display: inline-block;
+    float: left;
+    margin-top: 30px;
+    border-radius: 4px;
+    width: 200px;
+    list-style-type: decimal;
+    list-style-position: inside;
+    background-color:#FFF;
+    padding: 20px;
+    line-height: 1.5em;
+    border: 1px solid #DDD;
+    vertical-align: top;
+}
+.tutorial-section {
+    min-width: 714px;
+    width: 100%;
+    margin: 20px;
+    overflow: hidden; /* onload, hide the overflowing bootstrapped slides */
+}
+
+.slide-view .slides-wrap {
+    display: block;
+}
+.slide-view .slide-nav-wrap {
+    display: inline-block;
+    vertical-align: top;
+    width: 100px;
+}
+.slide-view .slide-container {
+    height: 100%;
+}
+.slide-view .slide-container .slide-image {
+    display: block;
+    position: relative;
+    height: 420px;
+    width:100%;
+    background-size: 108% auto;
+    background-position: top center;
+}
+.slide-view .slide-container .slide-overlay-text {
+    position: absolute;
+    width: 100%;
+    background-color: rgba(30, 30, 30, 0.8);
+    min-height: 60px;
+    padding: 15px;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    color: white; /* what will be visible on slides? */
+}
+.slide-view .slide-container .slide-panel {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.slide-view .nav-section {
+    height: 50px;
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+}
+
+.slide-view .nav-section .nav-arrows {
+    float: right;
+}
+
+.slide-view .arrow-wrap {
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    display: inline-block;
+    vertical-align: top;
+    font-weight: bold;
+    color: #0f2d40;
+}
+.slide-view .arrow-wrap:hover {
+    cursor: pointer;
+}
+.slide-view .goto-slide-wrap {
+    display: inline-block;
+    vertical-align: top;
+    width: 100px;
+    height: 45px;
+    line-height: 45px;
+}
+
+.slide-view .goto-slide-wrap span {
+    vertical-align: top;
+}
+
+.slide-view .goto-slide-input {
+    height: 45px;
+}
+
+.slide-view .slide-nav-wrap a.selected {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+h5 { position: relative; }
+h5 a {
+    position: absolute;
+    top: -90px; /* because of the fixed navbar */
+}
+</style>
+{% endblock %}
+
+{% block tutorial-table-content %}
+<li><a href="#overview-section">Heroku</a></li>
+<li><a href="#user-profiles-section">Google App Engine</a></li>
+
+<li class="sub" id="slide-0-0"><a href="#user-profiles-section">Basic Page Design</a></li>
+<li class="sub" id="slide-0-8"><a href="#user-profiles-section">User Profile Page</a></li>
+{% endblock %}
+
+{% block tutorial-content %}
+<div class="section" id="overview-section">
+    <h4>Tutorial - Deploying your Django app to the Cloud</h4>
+    <div class="intro-wrapper">
+        <p>In this tutorial, we'll download the code for the social network we built in the <a href="/resources/build-social-network/">previous tutorial</a> and go over various methods of getting it running in the cloud.
+        <br>
+        <br>
+        <a class="fancy" href="http://book-face.appcubator.com/">finished.book-face.appcubator.com</a>
+        <br>
+        <br>
+    </div>
+</div>
+{# These names should also be in SLIDEVIEWSLUGS #}
+<div class="section" id="user-profiles-section">
+    <h5>Heroku<a name="user-profiles"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+    <h5>Google App Engine<a name="user-profiles"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+    <h5>Amazon Web Services<a name="user-profiles"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+    <h5>Koding<a name="user-profiles"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+    <h5>Run Locally<a name="user-profiles"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+{{ block.super }}
+<script type="text/javascript">
+var SLIDEVIEWSLUGS = ["user-profiles"];
+</script>
+{% endblock %}
