@@ -155,6 +155,8 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
 
     clonePageName: function(e) {
       //this.$el.find('.box-button-clone').fadeIn();
+      var el = document.getElementById('pages-list-clone');
+      this.pageCidToClone = el.value.replace('clone-page-','');
       this.$el.find('.clone-options').hide();
       this.$el.find('.clone-name-form').fadeIn();
       $('.clone-page-name').focus();
@@ -163,15 +165,10 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
     clonePage: function(e) {
       e.preventDefault();
 
-      var el = document.getElementById('pages-list-clone');
-      var cid = el.value.replace('clone-page-','');
-      var pageM = v1State.get('pages').get(cid);
+      var pageM = v1State.get('pages').get(this.pageCidToClone );
       var pageName = $('.clone-page-name').val();
 
       var initModel = pageM.toJSON();
-      console.log(pageM.toJSON());
-      //v1State.get('pages').push(pageM.toJSON());
-
       var pageUrlPart = pageName.replace(/ /g, '_');
       initModel.url.urlparts[0] = pageUrlPart;
       initModel.name = pageName;
@@ -180,6 +177,7 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
 
       this.$el.find('.clone-name-form').hide();
       this.$el.find('.box-button-clone').fadeIn();
+      $('.clone-page-name').val('');
     },
 
     close: function() {
