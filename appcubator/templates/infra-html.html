@@ -14,8 +14,13 @@
 <link type="text/css" href="{{ STATIC_URL }}css/prettyCheckable.css" id="css-prettycheckable" rel="stylesheet"/>
 <!--<link href="{{ STATIC_URL }}css/bootstrap-website.css" id="css-bootstrap-website" rel="stylesheet">-->
 
+{% block css %}
+{% endblock %}
+
 {% if DEBUG %}
-<link rel="stylesheet/less" href="{{ STATIC_URL }}css/app/style.less">
+{% block less %}
+
+{% endblock %}
 <script>
 less = {
   env: 'development',
@@ -25,6 +30,9 @@ less = {
 </script>
 <script src="{{ STATIC_URL }}js/libs/less.min.js" type="text/javascript"></script>
 {% else %}
+{% block css-files %}
+
+{% endblock %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/app/style.css">
 {% endif %}
 
@@ -39,8 +47,6 @@ less = {
   var DEBUG = {% if DEBUG %}true{% else %}false{% endif %};
 </script>
 
-{% block css %}
-{% endblock %}
 </head>
 <body>
   <!-- fb js sdk code -->
