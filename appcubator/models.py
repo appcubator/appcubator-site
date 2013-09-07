@@ -377,7 +377,7 @@ class App(models.Model):
         if self.gitrepo_name != clean_subdomain(self.gitrepo_name, replace_periods=True):
             self.gitrepo_name = App.provision_gitrepo_name(self.gitrepo_name)
 
-    def write_to_tmpdir(self, for_user=False):
+    def write_to_tmpdir(self):
         from app_builder.analyzer import App as AnalyzedApp
         from app_builder.controller import create_codes
         from app_builder.coder import Coder, write_to_fs
@@ -389,7 +389,7 @@ class App(models.Model):
         codes = create_codes(app)
         coder = Coder.create_from_codes(codes)
 
-        tmp_project_dir = write_to_fs(coder, css=self.css(), for_user=for_user)
+        tmp_project_dir = write_to_fs(coder, css=self.css())
 
         return tmp_project_dir
 
@@ -408,7 +408,7 @@ class App(models.Model):
         return "git@%s:%s.git" % (settings.DEPLOYMENT_HOSTNAME, self.gitrepo_name)
 
     def zip_bytes(self):
-        tmpdir = self.write_to_tmpdir(for_user=True)
+        tmpdir = self.write_to_tmpdir()
 
         def zipify(tmpdir):
             filenames = os.listdir(tmpdir)

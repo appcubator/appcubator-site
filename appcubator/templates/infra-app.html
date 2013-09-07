@@ -1,0 +1,20 @@
+{% extends "infra-html.html" %}
+
+{% block less %}
+<link rel="stylesheet/less" href="{{ STATIC_URL }}css/app/style.less">
+<link rel="stylesheet/less" href="{{ STATIC_URL }}css/app/editor/editor.less">
+{% endblock %}
+{% block css-files %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/app/style.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/app/editor/editor.css">
+{% endblock %}
+
+{% block topbar %}
+{% include "app-navbar.html" %}
+{% endblock %}
+
+{% block overlay-page %}
+<div class="fixed-bg welcome garage" id="garage-div" {% if not display_garage %} style="display:none;" {% endif %}>
+  {% include "app-garage-temp.html" %}
+</div>
+{% endblock %}

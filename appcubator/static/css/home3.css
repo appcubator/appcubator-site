@@ -186,6 +186,11 @@ h6 {
   font-weight: bold;
 }
 
+.blue.white-btn {
+  background-color: #0f2d40;
+  color: #fff;
+}
+
 .sliding-panel .title {
   font-size: 18px;
   font-weight: bold;
@@ -208,6 +213,12 @@ h6 {
   font-size: 36px;
 }
 
+.content .section {
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  box-shadow: none;
+}
 
 .three-div {
   position: relative;
@@ -280,6 +291,7 @@ h6 {
   cursor: pointer;
   border-radius: 4px;
   font-weight: bold;
+  font-size: 16px;
 }
 
 .menu li a {

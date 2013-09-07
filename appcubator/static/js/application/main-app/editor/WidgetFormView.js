@@ -46,12 +46,12 @@ function( WidgetContainerView,
       this.formModel.get('fields').bind('add', this.reRender);
       this.formModel.get('fields').bind('change', this.reRender);
       this.formModel.get('fields').each(function(model){ model.bind('change', self.reRender); });
-
     },
 
     reRender: function() {
       this.el.innerHTML  = '';
       this.render();
+      this.autoResizeVertical();
     },
 
     render: function() {
