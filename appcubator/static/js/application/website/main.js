@@ -150,7 +150,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
           sv.render();
           slideViews.push(sv);
       }
-
+      this.slideViews = slideViews;
       this.bindSlides(this.slideViews);
     },
 
