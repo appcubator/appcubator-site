@@ -24,7 +24,7 @@
           <div>
           <form method="POST" class="form-inline ajax" data-replace-closest=".change-subscription" id="change-plan-form">
               {% csrf_token %}
-              <button type="submit" id="change-plan-btn" class="btn btn-primary">Change</button>
+               <a class="btn" rel="external" href="/app/{{ app.pk }}/payment/">Change</a>
           </form>
           <hr class="span40">
           <div class="span36 offset2">

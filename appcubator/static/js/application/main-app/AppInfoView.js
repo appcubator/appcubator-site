@@ -57,7 +57,6 @@ define(function(require, exports, module) {
             $('.left-nav').affix({
                 offset: 150
             });
-            this.striper.bindChangePlan('#change-plan-btn','change-plan-form');
             return this;
         },
 

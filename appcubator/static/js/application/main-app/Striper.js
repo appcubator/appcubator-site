@@ -87,15 +87,13 @@ define([
         e.preventDefault();
         var self = this;
         var form = $('#' + e.data.formId);
-        console.log(form);
-        form.find("input[name=stripe_token]").val(e.data.id);
+        // form.find("input[name=stripe_token]").val(e.id);
         $.ajax({
              type: 'POST',
              url: '/payments/a/change/plan/',
              data: form.serialize(),
              success: function(data, statusStr, xhr) {
               form.remove();
-              // self.showPlanSuccessModal();
             }
         });
       },
@@ -103,7 +101,7 @@ define([
       tokenCancel: function(data) {
         var self = this;
         var form = $('#' + e.data.formId);
-        form.find("input[name=stripe_token]").val(result.id);
+        // form.find("input[name=stripe_token]").val(result.id);
         $.ajax({
              type: 'POST',
              url: '/payments/a/cancel/',

@@ -43,7 +43,7 @@ function(Striper) {
       window.location = "/account/";
     };
 
-    striper.bindChangePlan('#change-plan-btn','change-subscription');
+    // striper.bindChangePlan('#change-plan-btn','change-subscription');
     striper.bindCancel('#cancel-btn','cancel-form');
   };
 
