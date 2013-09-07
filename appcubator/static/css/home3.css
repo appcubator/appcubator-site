@@ -1617,8 +1617,8 @@ img.startx {
   display: inline-block;
   width: 49%;
   text-align: center;
-  padding: 30px 15px;
-  height: 420px;
+  padding: 20px 15px;
+  height: 150px;
 }
 
 .screencasts li:nth-child(2),

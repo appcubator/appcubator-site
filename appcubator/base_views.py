@@ -19,6 +19,8 @@ from appcubator.email.sendgrid_email import send_email, send_template_email
 
 import requests
 import re
+import os, os.path
+join = os.path.join
 
 
 def format_full_details(details):
@@ -450,6 +452,10 @@ def quickstart(request):
 def tutorials(request):
     page_context = {}
     page_context["title"] = "Resources"
+    parts_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', "screencast-text.json")
+    with open(parts_json_path) as f:
+        parts = simplejson.load(f)
+    page_context["parts"] = parts
     return render(request, 'website-resources-tutorials.html', page_context)
 
 def documentation(request):
@@ -473,8 +479,6 @@ def resources_socialnetwork(request, name=None):
                        "deploy-to-cloud": 1}
     page_context = {}
     page_context["title"] = title_d[name]
-    import os, os.path
-    join = os.path.join
 
     def json_to_data(json):
         """"return a list of (section, <section_name>) tuples,
