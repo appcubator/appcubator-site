@@ -204,7 +204,8 @@ def setpubkey(request):
         return HttpResponse(simplejson.dumps(e.message_dict), mimetype="application/json")
 
     pubkey.save()
-    PubKey.sync_pubkeys_of_user(request.user)
+    r = PubKey.sync_pubkeys_of_user(request.user)
+    assert r.status_code == 200, "Pubkey error: %s" % r.text
     return redirect(account)
 
 
