@@ -526,6 +526,10 @@ def screencast(request, screencast_id=1):
 def sample_app(request, sample_id=1):
     page_context = {}
     page_context["title"] = "Sample App " + sample_id
+    parts_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', "screencast-text.json")
+    with open(parts_json_path) as f:
+        parts = simplejson.load(f)
+    page_context["parts"] = parts
     return render(request, 'sample-app-' + sample_id + '.html', page_context)
 
 def sample_app_part(request, sample_id=1, part_id=1):
