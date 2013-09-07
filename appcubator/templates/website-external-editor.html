@@ -1,0 +1,39 @@
+{% extends "infra-html.html" %}
+{% block css %}
+<link type="text/css" href="/app/0/uiestate.less" id="css-uiestate" rel="stylesheet"/>
+<link type="text/css" href="/app/0/mobile_uiestate.less" id="css-mobile-uiestate" rel="stylesheet"/>
+{% endblock %}
+
+{% block topbar %}
+{% include "app-navbar.html" %}
+{% endblock %}
+
+{% block overlay-page %}
+<div class="fixed-bg welcome garage" id="garage-div" {% if not display_garage %} style="display:none;" {% endif %}>
+  {% include "app-garage-temp.html" %}
+</div>
+{% endblock %}
+
+{% block page %}
+  {% include "app-page-templates.html" %}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+    var appId = 0;
+    var appUrl = "sampleapp.com";
+    var appGitRepo = "";
+    var appState = {{ default_state|safe }};
+    var uieState = {{ default_uie_state|safe }};
+    var mobileUieState = {{ default_mobile_uie_state|safe }};
+    var statics = {{ statics|safe }};
+    var themes = {{ themes|safe }};
+    var mobileThemes = {{ mobile_themes|safe }};
+    var staticVersion = "{{STATIC_VERSION}}";
+    var is_deployed = false;
+    var v1 = {};
+    var v1State = {};
+  </script>
+  <script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js">
+  </script>
+{% endblock %}
