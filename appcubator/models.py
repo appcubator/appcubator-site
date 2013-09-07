@@ -12,7 +12,7 @@ import requests
 import simplejson
 import traceback
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 
 import subprocess, shlex
@@ -205,6 +205,66 @@ def get_deployment_status(deployment_id):
 
     return status
 # end deployment related code
+
+
+from random_primary import RandomPrimaryIdModel
+class TempDeployment(RandomPrimaryIdModel):
+    # now the id is random
+    deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
+    # cached deployment info
+    subdomain = models.CharField(max_length=50, blank=True, unique=True)
+
+    # edit this to get different app state by default
+    _state_json = models.TextField(blank=True, default=get_default_app_state)
+    _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
+    _mobile_uie_state_json = models.TextField(blank=True, default=get_default_mobile_uie_state)
+
+    created = models.DateField(auto_add_now=True)
+
+    @staticmethod
+    def get_rand_subdomain(self):
+        """proposes some random subdomain"""
+        t = "temp14"
+        return t
+
+    @classmethod
+    def get_rand_uniq_subdomain(cls):
+        s = cls.get_rand_subdomain()
+        while cls.objects.filter(subdomain=s).exists() or App.objects.filter(subdomain=s).exists():
+            # will terminate if s changes randomly
+            s = cls.get_rand_subdomain()
+        return s
+
+    @classmethod
+    def create(cls):
+        i = cls()
+        i.s = cls.get_rand_uniq_subdomain()
+        i.save()
+        return i
+
+    @classmethod
+    def delete_old(cls):
+        how_many_days = 3
+        dt_n_days_ago = datetime.now()-timedelta(days=how_many_days)
+        for d in cls.objects.filter(created__gte=dt_n_days_ago):
+            d.delete()
+
+    def delete_deployment(self):
+        if self.deployment_id is not None:
+            r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
+            return r
+
+    def delete(self, *args, **kwargs):
+        if self.deployment_id is not None:
+            try:
+                r = self.delete_deployment()
+            except Exception:
+                logger.error("Could not reach appcubator server.")
+            else:
+                if r.status_code != 200:
+                    logger.error("Tried to delete %d, Deployment server returned bad response: %d %r" % (self.deployment_id, r.status_code, r.text))
+        super(App, self).delete(*args, **kwargs)
+
 
 
 class App(models.Model):
