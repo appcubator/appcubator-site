@@ -18,7 +18,7 @@ function(AnalyticsView, SimpleModalView, ShareModalView, DeployModalView, AdminP
       'click #deploy'          : 'deploy',
       'click .browse'          : 'browse',
       'click #share'           : 'share',
-      'click #download'        : 'download',
+      //'click #download'        : 'download',
       'click .edit-btn'        : 'settings'
     },
 

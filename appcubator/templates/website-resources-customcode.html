@@ -136,51 +136,35 @@ h5 a {
 
 {% block tutorial-table-content %}
 <li><a href="#overview-section">Overview</a></li>
-<li><a href="#user-profiles-section">User Profiles</a></li>
+<li><a href="#user-profiles-section">Setting it up</a></li>
 
 <li class="sub" id="slide-0-0"><a href="#user-profiles-section">Basic Page Design</a></li>
 <li class="sub" id="slide-0-8"><a href="#user-profiles-section">User Profile Page</a></li>
-<li class="sub" id="slide-0-12"><a href="#user-profiles-section">Editing the User Profile</a></li>
-<li class="sub" id="slide-0-19"><a href="#user-profiles-section">Listing of Users</a></li>
-
-<li><a href="#wall-posts-section">Wall Posts</a></li>
-
-<li class="sub" id="slide-1-0"><a href="#wall-posts-section">Database Design</a></li>
-<li class="sub" id="slide-1-3"><a href="#wall-posts-section">Posting on a Wall</a></li>
-<li class="sub" id="slide-1-7"><a href="#wall-posts-section">Newsfeed</a></li>
-<li class="sub" id="slide-1-9"><a href="#wall-posts-section">Demo</a></li>
-
-<li><a href="#friendships-section">Friendships</a></li>
-
-<li class="sub" id="slide-2-0"><a href="#friendships-section">Database Design</a></li>
-<li class="sub" id="slide-2-3"><a href="#friendships-section">Add Friend</a></li>
-<li class="sub" id="slide-2-6"><a href="#friendships-section">My Friends</a></li>
-<li class="sub" id="slide-2-8"><a href="#friendships-section">Demo</a></li>
-
 {% endblock %}
 
 {% block tutorial-content %}
 <div class="section" id="overview-section">
-    <h4>Tutorial - Building a social network</h4>
+    <h4>Tutorial - Social Network Custom Code</h4>
     <div class="intro-wrapper">
-        <p>In this tutorial, we'll build a fairly standard social network, demoed here:
+        <p>In this tutorial, we'll download the code for the social network we built in the <a href="/resources/build-social-network/">previous tutorial</a> and modify it to produce a polished finished product.
         <br>
         <br>
-        <a class="fancy" href="http://book-face.appcubator.com/">book-face.appcubator.com</a>
+        <p>You might want to get the Django app running on your computer, or follow one of our <a href="/resources/deploy-cloud/">tutorials</a> to easily deploy it to the cloud.
         <br>
-        <br>
-        <p>We'll do all of this without writing code, and in the end, you'll be able to download the frontend and backend code for the web app.</p>
-        <br>
-        <br>
-        <p>End result:</p>
-        <a href="http://book-face.appcubator.com/" target="_blank">
-             <img src="https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7">
-        </a>
+        <a class="fancy" href="http://book-face.appcubator.com/">finished.book-face.appcubator.com</a>
     </div>
 </div>
 {# These names should also be in SLIDEVIEWSLUGS #}
 <div class="section" id="user-profiles-section">
-    <h5>User Profiles<a name="user-profiles"></a></h5>
+    <h5>Run the Django app<a name="user-profiles"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+    <h5>Redirect Users<a name="user-profiles"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+    <h5>Validate Forms<a name="user-profiles"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+    <h5>Friend Request<a name="user-profiles"></a></h5>
+    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+    <h5>Friend Request<a name="user-profiles"></a></h5>
     {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
 </div>
 

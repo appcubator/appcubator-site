@@ -55,13 +55,17 @@ urlpatterns = patterns('',
     url(r'^resources/quickstart/$',                                base_views.quickstart),
     url(r'^resources/tutorials/$',                                 base_views.tutorials),
     url(r'^resources/documentation/$',                             base_views.documentation),
-    url(r'^resources/screencast/(\d+)/$',                          base_views.screencast),
-    url(r'^resources/sample/(\d+)/$',                              base_views.sample_app),
+    url(r'^resources/screencast/(\d+)/$',                          base_views.screencast), # these are the editor videos
+
     url(r'^resources/tutorial/build-social-network/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'howtosocialnetwork'}),
+    url(r'^resources/tutorial/deploy-to-cloud/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'deploy-to-cloud'}),
     url(r'^resources/tutorial/custom-code/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'custom-code'}),
     url(r'^resources/tutorial/what-is-a-web-app/$',                base_views.resources_whatisawebapp),
     url(r'^resources/tutorial/appcubator-for-django-developers/$', base_views.resources_fordjangodevs),
+
+    url(r'^resources/sample/(\d+)/$',                              base_views.sample_app),
     url(r'^resources/sample/(\d+)/part/(\d+)/$',                   base_views.sample_app_part),
+
     url(r'^resources/designer-guide/$',                            base_views.designer_guide),
     url(r'^resources/developer-guide/$',                           base_views.developer_guide),
 )

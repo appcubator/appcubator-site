@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, Http404
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect,render, get_object_or_404
@@ -435,14 +435,17 @@ def documentation(request):
 def resources_socialnetwork(request, name=None):
     if name == None:
         raise Http404
-    if name not in ["howtosocialnetwork", "custom-code"]:
+    if name not in ["howtosocialnetwork", "custom-code", "deploy-to-cloud"]:
         raise Http404
     title_d = { "howtosocialnetwork": "Building a Social Network",
-                "custom-code": "Writing Custom Code"}
+                "custom-code": "Writing Custom Code",
+                "deploy-to-cloud": "Deploying to the Cloud"}
     template_d = { "howtosocialnetwork": "website-resources-socialnetwork.html",
-                   "custom-code": "website-resources-customcode.html"}
+                   "custom-code": "website-resources-customcode.html",
+                   "deploy-to-cloud": "website-resources-deploy.html"}
     num_sections_d = { "howtosocialnetwork": 3,
-                       "custom-code": 1}
+                       "custom-code": 1,
+                       "deploy-to-cloud": 1}
     page_context = {}
     page_context["title"] = title_d[name]
     import os, os.path

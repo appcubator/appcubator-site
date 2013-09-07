@@ -1,99 +1,14 @@
 [{
-    "section": "Basic Page Design",
+    "section": "Got code?",
     "img_url": "/static/img/documentation/socialnetwork/p1/1.png",
-    "shortText": "Make a new app",
-    "longText": "After this, you'll be at the Overview page, the control panel for your web app."
+    "shortText": "Download or git clone your code",
+    "longText": "You can get your code by downloading a zip, or if you how to use git, you can clone the git repo."
 },{
-    "img_url": "/static/img/documentation/socialnetwork/p1/2.png",
-    "shortText": "Drag UI elements onto the page",
-    "longText": "Click \"Edit Page\" on the Pages page to get to the Page editor. The elements are draggable, resizable, and automatically snap to a grid."
+    "img_url": "/static/img/documentation/socialnetwork/p1/1.png",
+    "shortText": "Get it running on your computer or in the cloud",
+    "longText": "Follow the guide here to get your code up and running."
 },{
-    "img_url": "/static/img/documentation/socialnetwork/p1/3.png",
-    "shortText": "Customize the UI elements",
-    "longText": "Edit text by double clicking the element. Click \"Pick Style\" on the widget editor to quickly change style."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p1/4.png",
-    "shortText": "Add images from anywhere",
-    "longText": "You can upload images from a number of sources: your computer, Instagram, and you can even search the web."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p1/5.png",
-    "shortText": "Add User Login and Signup capabilities",
-    "longText": "Drag and drop the User Login and Sign Up forms onto the page. Click Edit Form to customize them further."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p1/7.png",
-    "shortText": "Customize the navbar",
-    "longText": "You can edit the text and links in your navbar by clicking on it"
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p1/6.png",
-    "shortText": "Save and Publish",
-    "longText": "The homepage looks good, we're ready to see it live. Press Save, then Publish (in the top left corner of the editor). Wait a few seconds, and you should see this success window. Here you can see your live web app, and download a zip of your code."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p1/8.png",
-    "shortText": "It's live!",
-    "longText": "The forms work, and you can confirm by attempting to submit an empty form."
-},{
-    "section": "User Profile Page",
-    "img_url": "/static/img/documentation/socialnetwork/p2/1.png",
-    "shortText": "Create a new page for User Profiles",
-    "longText": "Pretty self-explanatory. The next step will expand on this."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p2/2.png",
-    "shortText": "Add a dynamic User ID to the URL",
-    "longText": "Since the User Profile page is for a specific user, we need to add an ID to the URL that indicates which user the page is for. Then we'll be able to display information from the Page's User onto the page."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p2/4.png",
-    "shortText": "Add Profile pic and About me to the User Table",
-    "longText": "Add a profile picture field and about me field to the User table, so that Users can store this information for their profile."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p2/5.png",
-    "shortText": "Drag dynamic content onto the page",
-    "longText": "You'll find the Page's User's information in the Page Context section of the UI Element gallery. You can drag those onto the page, and even type the content of those into headers, as done for First Name, Last Name."
-},{
-    "section": "Editing the User Profile",
-    "img_url": "/static/img/documentation/socialnetwork/p2/6.png",
-    "shortText": "Create a new page and drag an Edit profile form",
-    "longText": "This is going to be the page where the User will edit their profile information."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p2/7.png",
-    "shortText": "Customize the form",
-    "longText": "We can customize the fields shown, the display-types of the fields, and where the form redirects."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p2/8.png",
-    "shortText": "Redirect Sign up form to edit profile form",
-    "longText": "We want to make it so that when the User signs up, they get redirected to the Edit Profile page we just made."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p2/9.png",
-    "shortText": "Add a link to the Edit profile page",
-    "longText": "This is so that the User can access the Edit Profile page."
-},
-{
-    "img_url": "/static/img/documentation/socialnetwork/p2/10.png",
-    "shortText": "Here's the end result!",
-    "longText": "This is a sample user profile we created."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p2/11.png",
-    "shortText": "Trying to edit the profile",
-    "longText": "Change the About me."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p2/12.png",
-    "shortText": "It works!",
-    "longText": "You can see the the About me actually did change."
-},
-{
-    "section": "Listing of Users",
-    "img_url": "/static/img/documentation/socialnetwork/p3/1.png",
-    "shortText": "Drag a User list onto a new page",
-    "longText": "This is how Users will be able to view other Users on the social network."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p3/4.png",
-    "shortText": "Customize the list using the row editor",
-    "longText": "The key thing we did here is drag a link onto the row, point it to the profile page, and made the content read the User's full name."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p3/5.png",
-    "shortText": "Now clicking the link...",
-    "longText": "Testing it out."
-},{
-    "img_url": "/static/img/documentation/socialnetwork/p3/6.png",
-    "shortText": "goes to the user's profile page!",
-    "longText": "It works! Thanks for reading!"
+    "img_url": "/static/img/documentation/socialnetwork/p1/1.png",
+    "shortText": "Get it running on your computer or in the cloud",
+    "longText": "Follow the guide here to get your code up and running."
 }]
