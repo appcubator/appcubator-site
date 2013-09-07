@@ -1,118 +1,87 @@
 {% extends "website-tutorial-infra.html" %}
 
 {% block tutorial-table-content %}
-<li><a href="#screencasts-section">Screencasts</a></li>
 <li><a href="#exampleapps-section">Example Apps</a></li>
-<li><a href="#guides-section">Guides</a></li>
+<li><a href="#design-section">Design and UI</a></li>
+<li><a href="#custom-section">Custom Code</a></li>
 {% endblock %}
 
 {% block tutorial-content %}
-    <div class="centered-container section" id="screencasts-section" style="">
-      <h4>Screencasts</h4>
-      <p>We broke down <a href="http://studycloud.appcubator.com" target="_blank">StudyCloud</a> app into pieces and made screencasts explaining each piece.</p>
-      <ul class="screencasts">
-        <li>
-          <div class="summary">
-            <h3>Part 1: Intro and Tables</h3>
-            <div>In this walkthrough, we show a user logging into our interface and setting up their tables for a test sharing website. This video will introduce you to Appcubator and show you how to set up your database.</div>
-            <a href="/resources/sample/1/part/1/" class="btn btn-green hoff1" id="member">Start Now »</a>
-          </div>
-        </li>
-        <li>
-          <div class="summary">
-            <h3>Part 2: Themes and Pages</h3>
-            <div>
-              <p>In this walkthrough, we show how users set up themes and create the pages that they will need for the web application. </p>
-
-              <p>This video will introduce you to: themes, page access, editing your URLs, adding Page IDs to create user/table specific pages (similar to different Facebook profiles for different users), creating new pages.</p>
-          </div>
-            <a href="/resources/sample/1/part/2/" class="btn btn-green hoff1" id="member">Start Now »</a>
-          </div>
-        </li> 
-        <li>
-          <div class="summary">
-            <h3>Part 3: Editor and Design Elements</h3>
-            <div>
-              <p>In this walkthrough, we show how to use our editor to design a homepage with our drag and drop interface.</p>
-
-              <p>This video will show you how to: Use our Drag and Drop Editor, Upload images, Modify Headers and Text Styling, Create and Edit your Navigation Bar</p>
-            </div>
-            <a href="/resources/sample/1/part/3/" class="btn btn-green hoff1" id="member">Start Now »</a>
-          </div>
-        </li>
-        <li>
-          <div class="summary">
-            <h3>Part 4: Add Authentication</h3>
-            <div>
-              <p>In this walkthrough, we show how to use our editor to set up your login and sign up forms with our drag and drop interface.</p>
-
-              <p>This video will show you how to: Use our Drag and Drop Editor, Drop Login and Sign Up Forms, Edit Login and Sign Up Forms (where they direct), Edit your Footer, Test Run your Application</p>
-            </div>
-            <a href="/resources/sample/1/part/4/" class="btn btn-green hoff1" id="member">Start Now »</a>
-          </div>
-        </li>
-        <li>
-          <div class="summary">
-            <h3>Part 5: Search and Lists</h3>
-            <div>
-              <p>In this walkthrough, we show how to use our editor to design a search page where users can search and display information in your database.</p>
-              <p>This video will show you how to: Use our Drag and Drop Editor,  Use Search Forms, Use Search Result Lists, Use the Table {{Tags}} to change how your information is displayed</p>
-            </div>
-            <a href="/resources/sample/1/part/5/" class="btn btn-green hoff1" id="member">Start Now »</a>
-          </div>
-        </li>
-        <li>
-          <div class="summary">
-            <h3>Part 6: Create Forms and Uploads</h3>
-            <div>
-              <p>In this walkthrough, we show how to use our editor to design a create form page.</p>
-              <p>This video will show you how to:Use our Drag and Drop Editor, Create a Link to an internal page, Use a Create Form for users to input information into the database, Modify your create form's layout using the example of an upload test form.</p>
-            </div>
-            <a href="/resources/sample/1/part/6/" class="btn btn-green hoff1" id="member">Start Now »</a>
-          </div>
-        </li>
-        <li>
-          <div class="summary">
-            <h3>Part 7: Profile Page and Page Context Data</h3>
-            <div>
-              <p>In this walkthrough, we show how to use our editor to design a test 'profile page' and how to add page context data. This is data that is specific for one particular tweet, test, or user. Check your URL to make sure you have added your page context id shown in a {{tag}}</p>
-
-              <p>This video will show you how to: Add your Page Context Data to create a table-based 'Profile Page'</p>
-            </div>
-            <a href="/resources/sample/1/part/7/" class="btn btn-green hoff1" id="member">Start Now »</a>
-          </div>
-        </li>
-      </ul>
-    </div>
+    <h4>Tutorials</h4>
+    <p>Here you can watch Screencasts of an example webapp being built, or skim through slides in the Example Apps section.</p>
+    <p>Done with a basic app on Appcubator and want to take it to the next level? Check out our Custom Code section.</p>
     <div class="centered-container section" id="exampleapps-section">
-      <h4>Example Apps</h4>
+      <h5>Example Apps</h5>
       <ul class="sample-apps">
         <li>
-          <a href="/resources/tutorial/build-social-network">
-            <div  class="picture">
-              <img src="{{ STATIC_URL }}img/guide-icon.png">
+          <a href="/resources/sample/1/">
+            <div class="summary">
+              <h3>Building StudyCloud</h3>
+              <div>A series of videos of how to build StudyCloud using Appcubator.</div>
             </div>
+          </a>
+        </li>
+        <li>
+          <a href="/resources/tutorial/build-social-network">
+            <!-- <div  class="picture"><img src="{{ static_url }}img/guide-icon.png"></div> -->
             <div class="summary">
               <h3>Building a Social Network</h3>
-              <div>This guide explains how to build a social network using Appcubator.</div>
+              <div>A tutorial on how to build a social network using Appcubator.</div>
             </div>
           </a>
         </li>
       </ul>
     </div>
-    <div class="centered-container section" id="guides-section">
-      <h4>Tutorials and Guides</h4>
-<!--       <small>These are targeted for advanced users and developers. They're not required knowledge.</small>
- -->      
+    <!-- <div class="centered-container section" id="screencasts-section" style="">
+      <h5>Screencasts</h5>
+      <p>We broke down <a href="http://studycloud.appcubator.com" target="_blank">StudyCloud</a> app into pieces and made screencasts explaining each piece.</p>
+      <ul class="screencasts">
+        {% for part in parts %}
+        {% include "website-resources-screencast-template.html" with sample_num="1" part_num=forloop.counter part_title=part.title part_description=part.description %}
+        {% endfor %}
+      </ul>
+    </div> -->
+    <div class="centered-container section" id="design-section">
+      <h5>Design and UI</h5>
       <ul class="guides">
         <li>
           <a href="/resources/designer-guide/">
-            <div  class="picture">
-              <img src="{{ STATIC_URL }}img/guide-icon.png">
-            </div>
+            <div  class="picture"><img src="{{ STATIC_URL }}img/guide-icon.png"></div>
             <div class="summary">
               <h3>Designing Themes</h3>
-              <div>This guide explains how to edit the theme of your application as well as creating new themes.</div>
+              <p>This guide explains how to edit the theme of your application as well as creating new themes.</p>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/resources/designer-guide/">
+            <div  class="picture"><img src="{{ STATIC_URL }}img/guide-icon.png"></div>
+            <div class="summary">
+              <h3>Custom Widgets</h3>
+              <p>This guide explains how to make Custom Widgets to add powerful UI/UX features to your site.</p>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="centered-container section" id="custom-section">
+      <h5>Custom code</h5>
+      <ul class="guides">
+        <li>
+          <a href="/resources/deploy-to-cloud/">
+            <div  class="picture"><img src="{{ STATIC_URL }}img/guide-icon.png"></div>
+            <div class="summary">
+              <h3>Deploying</h3>
+              <p>This guide explains how to download your source code and deploy it on a variety of platforms.</p>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/resources/deploy-to-cloud/">
+            <div  class="picture"><img src="{{ STATIC_URL }}img/guide-icon.png"></div>
+            <div class="summary">
+              <h3>Social Network++</h3>
+              <p>This guide demonstrates the ease of writing custom code to extend your app.</p>
             </div>
           </a>
         </li>

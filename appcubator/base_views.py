@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, Http404
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect,render, get_object_or_404
@@ -19,6 +19,8 @@ from appcubator.email.sendgrid_email import send_email, send_template_email
 
 import requests
 import re
+import os, os.path
+join = os.path.join
 
 
 def format_full_details(details):
@@ -450,6 +452,10 @@ def quickstart(request):
 def tutorials(request):
     page_context = {}
     page_context["title"] = "Resources"
+    parts_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', "screencast-text.json")
+    with open(parts_json_path) as f:
+        parts = simplejson.load(f)
+    page_context["parts"] = parts
     return render(request, 'website-resources-tutorials.html', page_context)
 
 def documentation(request):
@@ -457,11 +463,22 @@ def documentation(request):
     page_context["title"] = "Resources"
     return render(request, 'website-resources-documentation.html', page_context)
 
-def resources_socialnetwork(request):
+def resources_socialnetwork(request, name=None):
+    if name == None:
+        raise Http404
+    if name not in ["howtosocialnetwork", "custom-code", "deploy-to-cloud"]:
+        raise Http404
+    title_d = { "howtosocialnetwork": "Building a Social Network",
+                "custom-code": "Writing Custom Code",
+                "deploy-to-cloud": "Deploying to the Cloud"}
+    template_d = { "howtosocialnetwork": "website-resources-socialnetwork.html",
+                   "custom-code": "website-resources-customcode.html",
+                   "deploy-to-cloud": "website-resources-deploy.html"}
+    num_sections_d = { "howtosocialnetwork": 3,
+                       "custom-code": 1,
+                       "deploy-to-cloud": 1}
     page_context = {}
-    page_context["title"] = "Building a Social Network"
-    import os, os.path
-    join = os.path.join
+    page_context["title"] = title_d[name]
 
     def json_to_data(json):
         """"return a list of (section, <section_name>) tuples,
@@ -483,24 +500,13 @@ def resources_socialnetwork(request):
             sections[-1]['data'].append(entry) # want to append the entry to the last section
         return sections
 
-    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p1.json')
-    with open(profile_json_path) as f:
-        raw_data = simplejson.load(f)
-    profile_data = json_to_data(raw_data)
-    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p2.json')
-    with open(profile_json_path) as f:
-        raw_data = simplejson.load(f)
-    posts_data = json_to_data(raw_data)
-    profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', 'howtosocialnetwork', 'p3.json')
-    with open(profile_json_path) as f:
-        raw_data = simplejson.load(f)
-    friendships_data = json_to_data(raw_data)
-
-    page_context["tut_img_dict"] = { 'profile': profile_data,
-                                     'posts': posts_data,
-                                     'friendships': friendships_data
-                                     }
-    return render(request, 'website-resources-socialnetwork.html', page_context)
+    page_context["tut_imgs"] = []
+    for i in range(num_sections_d[name]):
+        profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', name, 'p%d.json' % (i+1))
+        with open(profile_json_path) as f:
+            raw_data = simplejson.load(f)
+        page_context["tut_imgs"].append(json_to_data(raw_data))
+    return render(request, template_d[name], page_context)
 
 def resources_whatisawebapp(request):
     page_context = {}
@@ -520,6 +526,10 @@ def screencast(request, screencast_id=1):
 def sample_app(request, sample_id=1):
     page_context = {}
     page_context["title"] = "Sample App " + sample_id
+    parts_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', "screencast-text.json")
+    with open(parts_json_path) as f:
+        parts = simplejson.load(f)
+    page_context["parts"] = parts
     return render(request, 'sample-app-' + sample_id + '.html', page_context)
 
 def sample_app_part(request, sample_id=1, part_id=1):

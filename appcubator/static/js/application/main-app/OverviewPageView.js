@@ -2,11 +2,12 @@ define([
   'app/AnalyticsView',
   'mixins/SimpleModalView',
   'app/ShareModalView',
+  'app/DeployModalView',
   'app/entities/AdminPanelView',
   'app/templates/MainTemplates',
   'util'
 ],
-function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
+function(AnalyticsView, SimpleModalView, ShareModalView, DeployModalView, AdminPanelView) {
 
   var OverviewPageView = Backbone.View.extend({
     css: 'app-page',
@@ -17,6 +18,7 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
       'click #deploy'          : 'deploy',
       'click .browse'          : 'browse',
       'click #share'           : 'share',
+      //'click #download'        : 'download',
       'click .edit-btn'        : 'settings'
     },
 
@@ -58,6 +60,10 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
 
     share: function() {
       new ShareModalView();
+    },
+
+    download: function() {
+      new DeployModalView();
     },
 
     browse: function() {
