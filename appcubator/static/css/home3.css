@@ -208,6 +208,12 @@ h6 {
   font-size: 36px;
 }
 
+.content .section {
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  box-shadow: none;
+}
 
 .three-div {
   position: relative;
