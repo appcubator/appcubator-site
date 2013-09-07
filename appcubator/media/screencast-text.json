@@ -1,25 +1,22 @@
 [{
-    "title":"Intro and Tables",
-    "description":"Hi test"
+    "title":"Set up your Database",
+    "description":"How to create tables, fields, relations"
 },{
-    "title":"",
-    "description":""
+    "title":"Pick a theme, create pages",
+    "description":"How to create new pages"
 },{
-    "title":"",
-    "description":""
+    "title":"Design your pages",
+    "description":"How to make your pages look good"
 },{
-    "title":"",
-    "description":""
+    "title":"User Login and Signup",
+    "description":"How to add login and signup forms"
 },{
-    "title":"",
-    "description":""
+    "title":"Search and Lists of Data",
+    "description":"How to add lists of data and a search bar"
 },{
-    "title":"",
-    "description":""
+    "title":"Forms and File Uploads",
+    "description":"How to add a form to create data"
 },{
-    "title":"",
-    "description":""
-},{
-    "title":"",
-    "description":""
+    "title":"User Profiles, Dynamic Pages",
+    "description":"How to make a dynamic profile page"
 }]
