@@ -466,8 +466,10 @@ define(function(require, exports, module) {
                 success: function(data) {
                     console.log(data);
                     if(data.status !== undefined) {
+                        console.log(data.status);
+                        console.log(data);
                         if (data.status === 0) {
-                            alert('something is wrong... deployment seems to not have gotten the memo.');
+                            new ErrorDialogueView({text: 'Something is wrong... deployment seems to not have gotten the memo.'});
                         }
                         else if (data.status == 1) {
                             failCallback.call(); // deployment task is still running
@@ -476,7 +478,7 @@ define(function(require, exports, module) {
                             successCallback.call();
                         }
                         else {
-                            alert('Deploy status route returned a bad value.');
+                            new ErrorDialogueView({text: 'Deploy status route returned a bad value.'});
                         }
                     }
                     else {
