@@ -579,7 +579,7 @@ class App(models.Model):
             is_merge, data = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404, git_user=self.owner.extradata.git_user_id())
             if not is_merge:
                 self.deployment_id = data
-                self.save() # might be unnecessary if nothing has changed.
+                self.save(state_version=False) # might be unnecessary if nothing has changed.
         finally:
             # because hard disk space doesn't grow on trees.
             shutil.rmtree(tmpdir)
