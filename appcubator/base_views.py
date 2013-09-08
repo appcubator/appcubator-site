@@ -449,7 +449,8 @@ def temp_deploy(request):
         # illusion of not saving.
         td._state_json = old_state
         td.save()
-        return HttpResponse("if you're looking at this, you should sign up")
+        d = {"site_url": td.url(), "git_url": td.git_url(), "zip_url": ""}
+        return HttpResponse(simplejson.dumps(d), mimetype="application/json")
 
 @require_GET
 def external_editor(request):
