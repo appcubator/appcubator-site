@@ -10,8 +10,8 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from models import User, Customer, InvitationKeys, AnalyticsStore, App, PubKey
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
+from models import User, Customer, InvitationKeys, AnalyticsStore, App, PubKey, TempDeployment
+from models import StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, User
 from models import get_default_app_state, get_default_theme_state
 from models import get_default_uie_state, get_default_mobile_uie_state
 
@@ -442,7 +442,6 @@ def external_editor(request):
         'default_uie_state': get_default_uie_state(),
         'themes': simplejson.dumps(list(themes)),
         'mobile_themes': simplejson.dumps(list(mobile_themes)),
-        'apps': request.user.apps.all(),
         'statics': simplejson.dumps([]),
     }
     page_context["title"] = "Demo Editor"
