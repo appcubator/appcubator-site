@@ -48,12 +48,12 @@ define(['editor/EditorView'], function(EditorView) {
                 util.get('deploy-text').innerHTML = 'Hold On, It\'s still deploying.';
             };
 
-            if (v1.disableSave === true) return;
+            if (this.disableSave === true) return;
 
             var self = this;
             var isDeployed = false;
             var before_deploy = new Date().getTime();
-            v1.disableSave = true;
+            this.disableSave = true;
 
             $.ajax({
                 type: "POST",
@@ -62,7 +62,7 @@ define(['editor/EditorView'], function(EditorView) {
                     app_state: JSON.stringify(v1State.toJSON())
                 },
                 success: function(data) {
-                    v1.disableSave = false;
+                    self.disableSave = false;
                     var deploy_time = (new Date().getTime() - before_deploy) / 1000;
                     // open a modal based on deploy response
                     if (data.errors) {
@@ -104,7 +104,7 @@ define(['editor/EditorView'], function(EditorView) {
                             message: data
                         }, appId);
                     } else {
-                        v1.whenDeployed(function() {
+                        self.whenDeployed(function() {
                             new DeployView(data);
 
                             success_callback.call(self);
@@ -153,9 +153,10 @@ define(['editor/EditorView'], function(EditorView) {
         },
 
         whenDeployed: function(successCallback) {
-            v1.getDeploymentStatus(successCallback, function() {
+            var self = this;
+            this.getDeploymentStatus(successCallback, function() {
                 setTimeout(function() {
-                    v1.whenDeployed(successCallback);
+                    self.whenDeployed(successCallback);
                 }, 1500);
             });
         }
