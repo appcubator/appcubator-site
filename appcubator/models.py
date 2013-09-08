@@ -203,9 +203,9 @@ class TempDeployment(RandomPrimaryIdModel):
     def mobile_uie_state_json(self):
         return self._mobile_uie_state_json
 
+    """
     @staticmethod
     def get_rand_subdomain():
-        """proposes some random subdomain"""
         t = "temp-%s" % self.id
         return t
 
@@ -216,10 +216,13 @@ class TempDeployment(RandomPrimaryIdModel):
             # will terminate if s changes randomly
             s = cls.get_rand_subdomain()
         return s
+    """
 
     @classmethod
     def create(cls):
         i = cls()
+        i.s = str(random.randint(10000000,90000000))
+        i.save()
         i.s = "temp-%s" % i.id#cls.get_rand_uniq_subdomain()
         i.save()
         return i
