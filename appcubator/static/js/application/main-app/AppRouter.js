@@ -467,7 +467,7 @@ define(function(require, exports, module) {
                     console.log(data);
                     if(data.status !== undefined) {
                         if (data.status === 0) {
-                            alert('something is wrong... deployment seems to not have gotten the memo.');
+                            console.log('Deployment returned 0');
                         }
                         else if (data.status == 1) {
                             failCallback.call(); // deployment task is still running
