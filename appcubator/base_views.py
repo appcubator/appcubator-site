@@ -449,6 +449,7 @@ def temp_deploy(request):
         # illusion of not saving.
         td._state_json = old_state
         td.save()
+        d = {"site_url": td.url(), "git_url": td.git_url()}
         return HttpResponse("if you're looking at this, you should sign up")
 
 @require_GET
