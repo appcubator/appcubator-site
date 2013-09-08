@@ -436,14 +436,13 @@ def find_or_create_temp_deployment(request):
     # if not found, create, deploy, return
     t = TempDeployment.create()
     request.session['temp_deploy_id'] = t.id
-    t.deploy()
     return t
 
 def temp_deploy(request):
+    td = find_or_create_temp_deployment(request)
     if request.method == 'GET':
-        return HttpResponse(simplejson.dumps({ 'status': app.get_deployment_status() }), mimetype="application/json")
+        return HttpResponse(simplejson.dumps({ 'status': td.get_deployment_status() }), mimetype="application/json")
     elif request.method == 'POST':
-        td = find_or_create_temp_deployment(request)
         old_state = td._state_json
         td._state_json = request.POST['app_state']
         td.deploy()
@@ -455,6 +454,7 @@ def temp_deploy(request):
 @require_GET
 def external_editor(request):
     td = find_or_create_temp_deployment(request)
+    td.deploy()
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
     mobile_themes = UITheme.get_mobile_themes()
