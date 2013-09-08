@@ -178,7 +178,7 @@ class TempDeployment(RandomPrimaryIdModel):
     @staticmethod
     def get_rand_subdomain(self):
         """proposes some random subdomain"""
-        t = "temp14"
+        t = "temp-%s" % self.id
         return t
 
     @classmethod
