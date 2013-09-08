@@ -425,6 +425,11 @@ def resources(request):
     return render(request, 'website-resources.html', page_context)
 
 def external_editor(request):
+    # create deployment in session
+    if 'temp_deploy_id' not in request.session:
+        t = TempDeployment.create()
+        request.session['temp_deploy_id'] = t.id
+
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
     mobile_themes = UITheme.get_mobile_themes()
