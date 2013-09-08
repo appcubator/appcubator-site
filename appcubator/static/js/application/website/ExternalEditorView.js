@@ -10,8 +10,8 @@ define(['editor/EditorView'], function(EditorView) {
           'click .url-bar'       : 'clickedUrl'
         },
 
-        initialize: function() {
-            ExternalEditorView.__super__.render.initialize(this);
+        initialize: function(options) {
+            ExternalEditorView.__super__.initialize.apply(this, arguments);
         },
 
         render: function() {
