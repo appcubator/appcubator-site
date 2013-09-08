@@ -10,8 +10,8 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from models import User, Customer, InvitationKeys, AnalyticsStore, App, PubKey
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
+from models import User, Customer, InvitationKeys, AnalyticsStore, App, PubKey, TempDeployment
+from models import StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, User
 from models import get_default_app_state, get_default_theme_state
 from models import get_default_uie_state, get_default_mobile_uie_state
 
@@ -424,20 +424,49 @@ def resources(request):
     page_context["title"] = "Resources"
     return render(request, 'website-resources.html', page_context)
 
+def find_or_create_temp_deployment(request):
+    # create deployment in session
+    if 'temp_deploy_id' in request.session:
+        t_id = request.session['temp_deploy_id']
+        try:
+            t = TempDeployment.objects.get(id=t_id)
+            return t # "found" branch exits here
+        except TempDeployment.DoesNotExist:
+            pass
+    # if not found, create, deploy, return
+    t = TempDeployment.create()
+    request.session['temp_deploy_id'] = t.id
+    return t
+
+def temp_deploy(request):
+    td = find_or_create_temp_deployment(request)
+    if request.method == 'GET':
+        return HttpResponse(simplejson.dumps({ 'status': td.get_deployment_status() }), mimetype="application/json")
+    elif request.method == 'POST':
+        old_state = td._state_json
+        td._state_json = request.POST['app_state']
+        td.deploy()
+        # illusion of not saving.
+        td._state_json = old_state
+        td.save()
+        return HttpResponse("if you're looking at this, you should sign up")
+
+@require_GET
 def external_editor(request):
+    td = find_or_create_temp_deployment(request)
+    td.deploy()
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
     mobile_themes = UITheme.get_mobile_themes()
     mobile_themes = [t.to_dict() for t in mobile_themes]
     page_context = {
-        'app' : { 'id': 0},
+        'app' : { 'id': td.id},
         'default_state': get_default_app_state(),
         'title': 'My First App',
         'default_mobile_uie_state': get_default_mobile_uie_state(),
         'default_uie_state': get_default_uie_state(),
         'themes': simplejson.dumps(list(themes)),
         'mobile_themes': simplejson.dumps(list(mobile_themes)),
-        'apps': request.user.apps.all(),
         'statics': simplejson.dumps([]),
     }
     page_context["title"] = "Demo Editor"
