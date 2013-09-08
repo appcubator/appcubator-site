@@ -265,7 +265,7 @@ class TempDeployment(RandomPrimaryIdModel):
     def get_deploy_data(self, git_user=None):
         post_data = {
             "hostname": self.hostname(),
-            "gitrepo_name": self.gitrepo_name,
+            "gitrepo_name": self.subdomain,
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
@@ -273,11 +273,34 @@ class TempDeployment(RandomPrimaryIdModel):
             post_data['user_id'] = git_user
         return post_data
 
+    def write_to_tmpdir(self):
+        app = AnalyzedApp.create_from_dict(self.state)
+
+        app.api_key = "sljlfksjdflsjdlfkjsdlkfjlsdk"
+        codes = create_codes(app)
+        coder = Coder.create_from_codes(codes)
+
+        tmp_project_dir = write_to_fs(coder, css=self.css())
+
+        return tmp_project_dir
+
+    def hostname(self):
+        if not settings.PRODUCTION: # debug and staging
+            return "%s.staging.appcubator.com" % self.subdomain
+        else:
+            return "%s.appcubator.com" % self.subdomain
+
+    def url(self):
+        return "http://%s/" % self.hostname()
+
+    def git_url(self):
+        return "git@%s:%s.git" % (settings.DEPLOYMENT_HOSTNAME, "thisdoesntexist")
+
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
         try:
             logger.info("Deployed to %s" % tmpdir)
-            is_merge, deployment_id = deploy.transport_app(tmpdir, retry_on_404=retry_on_404)
+            is_merge, deployment_id = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404)
             assert not is_merge
             assert deployment_id == self.deployment_id
         finally:

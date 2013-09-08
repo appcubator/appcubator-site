@@ -454,13 +454,13 @@ def temp_deploy(request):
 @require_GET
 def external_editor(request):
     td = find_or_create_temp_deployment(request)
-    td.deploy()
+    #td.deploy()
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
     mobile_themes = UITheme.get_mobile_themes()
     mobile_themes = [t.to_dict() for t in mobile_themes]
     page_context = {
-        'app' : { 'id': td.id},
+        'app' : { 'id': 0},
         'default_state': get_default_app_state(),
         'title': 'My First App',
         'default_mobile_uie_state': get_default_mobile_uie_state(),
