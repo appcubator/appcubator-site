@@ -86,7 +86,9 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
       "resources/tutorial/*pagename/" : "slideViewPage",
       "resources/editor/"             : "editor",
-      "resources/*content"            : 'resources'
+      "resources/*content"            : 'resources',
+
+      "signup/"              : "signupPage"
     },
 
     cube: $('#cube'),
@@ -269,6 +271,22 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
                 olark('api.box.hide');
             });
+    },
+
+    signupPage: function() {
+        $('.btn-facebook').on('click', function() {
+              FB.login(function(response) {
+               if (response.authResponse) {
+                FB.api('/me', function(response) {
+                  $("#inp-name").val(response.name);
+                  $("#inp-email").val(response.email);
+                  $("#inp-extra").val(JSON.stringify(response));
+                 });
+               } else {
+                 console.log('User cancelled login or did not fully authorize.');
+               }
+             }, {scope: 'email'});
+        });
     }
   });
 
