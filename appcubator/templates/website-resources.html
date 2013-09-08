@@ -1,26 +1,81 @@
-{% extends "website-tutorial-infra.html" %}
+{% extends "infra-website.html" %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
+{% endblock %}
+{% block page %}
+<div id="fb-root"></div>
+<script>
+</script>
+{% include "website-navbar.html" %}
 
-{% block tutorial-table-content %}
-<li><a href="#screencasts-section">Simple App</a></li>
-<li><a href="#exampleapps-section">Relational App</a></li>
+<div class="sliding-panel">
+  <div class="slide slide-intro">
+    <div class="blue-bar community">
+      <div class="large-text">
+        Resources.
+      </div>
+      <div class="icon-menu">
+        <a class="item" href="/resources/quickstart/">
+          <img src="{{ STATIC_URL}}img/screencasts.png">
+          <span>Quickstart</span>
+        </a>
+        <a class="item" href="/resources/tutorials/">
+          <img src="{{ STATIC_URL}}img/example.png">
+          <span>Tutorials</span>
+        </a>
+        <a class="item" href="/resources/documentation/">
+          <img src="{{ STATIC_URL}}img/documentation.png">
+          <span>Documentation</span>
+        </a>
+      </div>
+    </div>
+  </div>
+<div class="slide-info slide">
+    <div class="centered-container" id="screencasts-section" style="padding-top:20px; padding-bottom: 30px;">
+        <div class="forty-left" style="text-align: center;">
+          <span>We recommend that you start with the quick start and check out the tutorials on one of the example apps. Documentation can be a little boring at first.</span>
+          <div class="screen no-bg" style="text-align: center; width:100%;">
+            <img src="{{STATIC_URL}}img/mascot-learning.png" width="260"><br>
+            <h6>Racoon is always here to help you!</h6>
+          </div>
+        </div>
+        <div class="sixty-right" style="padding-left: 30px;">
+            <h2><a href="/resources/quickstart/">QuickStart</a></h2>
+            <ul>
+              <li><a href="/resources/editor/">Build a small app in a minute</a></li>
+              <li><a href="/resources/editor/">Build a relational database in 2 minutes</a></li>
+            </ul>
+            <hr style="margin-bottom:30px; margin-top: 30px;">
+            <h2><a href="/resources/tutorials/">Tutorials</a></h2>
+            <ul>
+              <li><a href="/resources/tutorials/#exampleapps-section">Example Apps</a></li>
+              <li><a href="/resources/tutorials/#design-section">Design and UI</a></li>
+              <li><a href="/resources/tutorials/#custom-section">Custom Code</a></li>
+            </ul>
+            <hr style="margin-bottom:30px; margin-top: 30px;">
+            <h2><a href="/documentation/">Documentation</a></h2>
+            <a href="/resources/documentation/">
+            <ul>
+              <li>Tables</li>
+              <li>Pages</li>
+              <li>Editor</li>
+              <li>Design Elements</li>
+              <li>Themes</li>
+              <li>Deploy</li>
+              <li>Emails</li>
+              <li>Application Settings</li>
+            </ul>
+          </div>
+        </div>
+
+    </div>
+    {% include "website-footer.html" %}
+</div>
 {% endblock %}
 
-{% block tutorial-content %}
-  <div class="centered-container section" id="screencasts-section">
-      <h4>Build a Sample App</h4>
-      <p>This will walk you through a simple app in under a minute.</p>
-      <a class="blue white-btn" href="/resources/editor/" target="_blank">
-        Start Now »
-      </a>
-  </div>
-  <div class="centered-container section" id="screencasts-section" style="margin-bottom: 90px;">
-      <h4>Build an App with Relational Tables</h4>
-      <p>This will walk you through a simple app with relational tables and user authentication in under 2 minutes.</p>
-      <small>This section is coming soon. For now, you can checkout the screencasts about relational tables under Tutorials section.</small>
-<!--       <a class="blue white-btn" href="#">
-        Coming Soon
-      </a> -->
-  </div>
+{% block js %}
+
+<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 {% endblock %}
 

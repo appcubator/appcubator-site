@@ -109,6 +109,19 @@ h6 {
   vertical-align: top;
 }
 
+.centered-container > .forty-left {
+  display: inline-block;
+  width: 39%;
+  vertical-align: top;
+}
+
+.centered-container > .sixty-right {
+  display: inline-block;
+  width: 60%;
+  vertical-align: top;
+}
+
+
 .centered-container > .two-third {
   display: inline-block;
   vertical-align: top;
@@ -232,11 +245,16 @@ h6 {
   margin-bottom: 60px;
 }
 
+.three-div.resources .view {
+  font-size: 18px;
+}
+
 .three-div .view {
   display: inline-block;
   width: 33%;
   text-align: center;
   vertical-align: top;
+  float: none;
 }
 
 .three-div .view img {

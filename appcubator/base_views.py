@@ -447,7 +447,7 @@ def external_editor(request):
 def quickstart(request):
     page_context = {}
     page_context["title"] = "Resources"
-    return render(request, 'website-resources.html', page_context)
+    return render(request, 'website-resources-quickstart.html', page_context)
 
 def tutorials(request):
     page_context = {}
