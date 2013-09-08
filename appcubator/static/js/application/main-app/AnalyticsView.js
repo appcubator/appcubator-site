@@ -34,23 +34,38 @@ define(function(require, exports, module) {
         },
 
         renderData: function(data) {
+            console.log(data);
+
             var self = this;
 
             document.getElementsByClassName('total-users')[0].innerHTML = data.total_users || 0;
             document.getElementsByClassName('total-visitors')[0].innerHTML = data.total_visitors || 0;
             document.getElementsByClassName('total-active-users')[0].innerHTML = data.total_active_users || 0;
-            document.getElementsByClassName('total-active-visitors')[0].innerHTML = data.total_active_visitors || 0;
+            // document.getElementsByClassName('total-active-visitors')[0].innerHTML = data.total_active_visitors || 0;
 
             // filter out requests for 'blacklisted' pages/statics
             var blackList = ['/favicon.ico'];
             var total_page_views = data.total_page_views || 0;
-            if (data.total_page_views_dict) {
-                _(blackList).each(function(item) {
-                    if (item in data.total_page_views_dict) {
-                        total_page_views -= data.total_page_views_dict[item];
-                    }
-                });
-            }
+
+            _.each(_.pick(data.total_page_views_dict, blackList), function(val, key) {
+                console.log(val);
+                console.log(key);
+                total_page_views -= val;
+            });
+
+            _.each(_.omit(data.total_page_views_dict, blackList), function(val, key) {
+                console.log(key + '-' + val);
+                document.getElementsByClassName('total-page-visits')[0].innerHTML = '<span class="analyitcs-title">Page Visits</span><br>';
+                document.getElementsByClassName('total-page-visits')[0].innerHTML += '<em>' + key + '</em> :  ' + val + ' views<br>';
+            });
+
+            // if (data.total_page_views_dict) {
+            //     _(blackList).each(function(item) {
+            //         if (item in data.total_page_views_dict) {
+            //             total_page_views -= data.total_page_views_dict[item];
+            //         }
+            //     });
+            // }
 
             document.getElementsByClassName('total-page-views')[0].innerHTML = total_page_views;
         },
