@@ -173,7 +173,7 @@ class TempDeployment(RandomPrimaryIdModel):
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
     _mobile_uie_state_json = models.TextField(blank=True, default=get_default_mobile_uie_state)
 
-    created = models.DateField(auto_add_now=True)
+    created = models.DateField(auto_now_add=True)
 
     def get_state(self):
         return simplejson.loads(self._state_json)
