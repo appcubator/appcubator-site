@@ -627,14 +627,15 @@ def app_deploy(request, app_id):
     if request.method == 'GET':
         return JsonResponse({ 'status': app.get_deployment_status() })
     elif request.method == 'POST':
-        result = app.deploy()
+
+        result = {}
+        result['site_url'] = app.url()
+        result['git_url'] = app.git_url()
         result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
-        if 'errors' in result:
-            raise Exception(result)
-        elif 'branch' in result and 'files' in result:
-            #status = 409
-            # damn jquery. the frontend code is not easy to modify to if/else based on status code.
-            status = 200
+        is_merge, data = app.deploy()
+        if is_merge:
+            result.update(data)
+            status = 409
         else:
             status = 200
         return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")

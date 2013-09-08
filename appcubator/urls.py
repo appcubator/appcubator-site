@@ -53,6 +53,7 @@ urlpatterns = patterns('',
 
     url(r'^resources/$',                                           base_views.resources),
     url(r'^resources/editor/$',                                    base_views.external_editor),
+    url(r'^resources/editor/publish/$',                            base_views.temp_deploy),
     url(r'^resources/quickstart/$',                                base_views.quickstart),
     url(r'^resources/tutorials/$',                                 base_views.tutorials),
     url(r'^resources/documentation/$',                             base_views.documentation),
