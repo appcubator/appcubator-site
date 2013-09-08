@@ -1,5 +1,7 @@
 define(['editor/EditorView'], function(EditorView) {
 
+    var DeployView    = require("app/DeployView");
+
     var ExternalEditorView = EditorView.extend({
 
         events    : {
@@ -62,10 +64,6 @@ define(['editor/EditorView'], function(EditorView) {
                 success: function(data) {
                     v1.disableSave = false;
                     var deploy_time = (new Date().getTime() - before_deploy) / 1000;
-                    self.whenDeployed(function() {
-                        success_callback.call(self);
-                        isDeployed = true;
-                    });
                     // open a modal based on deploy response
                     if (data.errors) {
                         var content = {
@@ -108,6 +106,10 @@ define(['editor/EditorView'], function(EditorView) {
                     } else {
                         v1.whenDeployed(function() {
                             new DeployView(data);
+
+                            success_callback.call(self);
+                            isDeployed = true;
+
                             util.log_to_server('deployed app', {
                                 status: 'success',
                                 deploy_time: deploy_time + " seconds"
@@ -151,7 +153,6 @@ define(['editor/EditorView'], function(EditorView) {
         },
 
         whenDeployed: function(successCallback) {
-            alert('lmme know');
             v1.getDeploymentStatus(successCallback, function() {
                 setTimeout(function() {
                     v1.whenDeployed(successCallback);
