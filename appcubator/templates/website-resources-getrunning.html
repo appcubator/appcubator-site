@@ -1,0 +1,239 @@
+{% extends "website-tutorial-infra.html" %}
+
+{% block css %}
+<style>
+.social-network-tut h4, .social-network-tut h5 {
+    margin-bottom: 20px;
+}
+.social-network-tut .intro-wrapper {
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-left: 220px;
+    display: block;
+    vertical-align: top;
+    padding: 30px;
+}
+
+a.fancy {
+    display: inline-block;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 12px;
+    border-radius: 4px;
+}
+
+ol.nav-wrapper,
+ul.nav-wrapper {
+    display: inline-block;
+    float: left;
+    margin-top: 30px;
+    border-radius: 4px;
+    width: 200px;
+    list-style-type: decimal;
+    list-style-position: inside;
+    background-color:#FFF;
+    padding: 20px;
+    line-height: 1.5em;
+    border: 1px solid #DDD;
+    vertical-align: top;
+}
+.tutorial-section {
+    min-width: 714px;
+    width: 100%;
+    margin: 20px;
+    overflow: hidden; /* onload, hide the overflowing bootstrapped slides */
+}
+
+.slide-view .slides-wrap {
+    display: block;
+}
+.slide-view .slide-nav-wrap {
+    display: inline-block;
+    vertical-align: top;
+    width: 100px;
+}
+.slide-view .slide-container {
+    height: 100%;
+}
+.slide-view .slide-container .slide-image {
+    display: block;
+    position: relative;
+    height: 420px;
+    width:100%;
+    background-size: 108% auto;
+    background-position: top center;
+}
+.slide-view .slide-container .slide-overlay-text {
+    position: absolute;
+    width: 100%;
+    background-color: rgba(30, 30, 30, 0.8);
+    min-height: 60px;
+    padding: 15px;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    color: white; /* what will be visible on slides? */
+}
+.slide-view .slide-container .slide-panel {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.slide-view .nav-section {
+    height: 50px;
+    width: 100%;
+    display: block;
+    margin-top: 10px;
+}
+
+.slide-view .nav-section .nav-arrows {
+    float: right;
+}
+
+.slide-view .arrow-wrap {
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    display: inline-block;
+    vertical-align: top;
+    font-weight: bold;
+    color: #0f2d40;
+}
+.slide-view .arrow-wrap:hover {
+    cursor: pointer;
+}
+.slide-view .goto-slide-wrap {
+    display: inline-block;
+    vertical-align: top;
+    width: 100px;
+    height: 45px;
+    line-height: 45px;
+}
+
+.slide-view .goto-slide-wrap span {
+    vertical-align: top;
+}
+
+.slide-view .goto-slide-input {
+    height: 45px;
+}
+
+.slide-view .slide-nav-wrap a.selected {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+h5 { position: relative; }
+h5 a {
+    position: absolute;
+    top: -90px; /* because of the fixed navbar */
+}
+</style>
+{% endblock %}
+
+{% block tutorial-table-content %}
+<li><a href="#overview-section">Intro</a></li>
+<li><a href="#user-profiles-section">Setting it up</a></li>
+
+<li class="sub" id="slide-0-0"><a href="#user-profiles-section">Basic Page Design</a></li>
+<li class="sub" id="slide-0-8"><a href="#user-profiles-section">User Profile Page</a></li>
+{% endblock %}
+
+{% block tutorial-content %}
+<div class="section" id="overview-section">
+    <h4>How to run your Django app (on a Mac)</h4>
+    <div class="intro-wrapper">
+        <p>In this tutorial, you'll learn how to run a Django app on your computer. This is an important first step if you want to continue to develop your application.</p>
+        <p>We'll start with the social network we built in the <a target="_blank" href="/resources/tutorials/building-social-network/">Building a Social Network Tutorial</a>, and go through the steps required to run the code on your computer.</p>
+        <p>After this tutorial, you'll be able to <a target="_blank" href="/resources/tutorial/custom-code/">modify the code</a> to produce a finished product, and then <a target="_blank" href="/resources/tutorial/deploy-to-cloud/">deploy your app</a> to the cloud.</p>
+        <br>
+        <p>For these tutorials, we'll assume you have a basic knowledge of how to use the <code>Terminal</code>. For a quick tutorial, scroll all the way down.</p>
+        <br>
+        <p>Tutorial for Windows coming soon!</p>
+    </div>
+</div>
+{# These names should also be in SLIDEVIEWSLUGS #}
+<div class="section" id="user-profiles-section">
+    <h5>Setting up the environment - installing software<a name="user-profiles"></a></h5>
+    <p>Appcubator apps use the Python/Django/Sqlite stack. You can use the official guide <a target="_blank" href="https://docs.djangoproject.com/en/1.5/intro/install/">here</a>, or follow our slides, which are beginner-friendly.</p>
+    <p>Note: This is a very common process and there's more than one way to do it. If you get stuck at any point, just chat with us or send us an email. We'd be happy to help you out.</p>
+    <h6>1. Installing Python, pip, and virtualenv</h6>
+    <p>Below are the summarized notes from <a href="http://dabapps.com/blog/introduction-to-pip-and-virtualenv-python/">this excellent guide</a>.</p>
+    <p>First check if you have <code>Python</code> installed, and if so, what version you have.</p>
+    <pre><code>$ python --version
+Python 2.7.2</code></pre>
+    <p>You should have <code>Python 2.7.#</code> installed. If not, you'll need to upgrade it. Contact us if this is the case.</p>
+    <p>Now check if you have <code>pip</code>.</p>
+    <pre><code>$ pip --version
+pip 1.2.1 from /Library/Python/2.7/site-packages/pip-1.2.1-py2.7.egg (python 2.7)</code></pre>
+    <p>If you see an output like this instead, you'll need to install <code>pip</code>.</p>
+    <pre><code>$ pip --version
+-bash: pip: command not found
+$ sudo easy_install pip
+...</code></pre>
+<p>Now let's make sure <code>pip</code> is up to date</p>
+    <pre><code>$ sudo pip install --upgrade pip
+Password:
+Downloading/unpacking pip from https://pypi.python.org/packages/source/p/pip/pip-1.4.1.tar.gz#md5=6afbb46aeb48abac658d4df742bff714
+  Downloading pip-1.4.1.tar.gz (445kB): 445kB downloaded
+  Running setup.py egg_info for package pip
+...
+Successfully installed pip
+Cleaning up...</code></pre>
+    <p>Now install <code>virtualenv</code>, a tool which makes it easier to cleanly install and remove python packages</p>
+    <pre><code>$ sudo pip install virtualenv
+Downloading/unpacking virtualenv
+  Downloading virtualenv-1.10.1.tar.gz (1.3MB): 1.3MB downloaded
+  Running setup.py egg_info for package virtualenv
+...
+Successfully installed virtualenv
+Cleaning up...</code></pre>
+<p>Congratulations! If you got through all this, you've successfully installed <code>Python</code>, <code>pip</code>, and <code>virtualenv</code>, the most popular tools for <code>Python</code> programming.</p>
+<h6>Installing SQLite</h6>
+<p>Your webapp needs to store data somewhere about the users. We chose the SQLite Database because it's easy to install and gets the job done.</p>
+<p>If you're using a recent version of Mac OS X you should already have this installed. Let's confirm.</p>
+<pre><code>$ sqlite3 --version
+3.7.17 2013-05-20 00:56:22 118a3b35693b134d56ebd780123b7fd6f1497668</code></pre>
+<p>If you see something like this, you're good to go! If you see this instead:</p>
+<pre><code>$ sqlite3
+-bash: sqlite3: command not found</code></pre>
+<p>then you'll need to install sqlite. Contact us for help on that.</p>
+<p>Congratulations! You now have database software installed! We're almost there.</p>
+
+</div>
+<div class="section" id="user-profiles-section">
+    <h5>Running the code<a name="user-profiles"></a></h5>
+    <p>Now that you have all the tools installed, we can get the web app source code up and running.</p>
+    <h6>Download the code</h6>
+    <p>Download the zip and extract the zip file somewhere memorable, like in your Documents on on your Desktop. Or if you know how to use <code>git</code>, or clone the git repository.</p>
+    <h6>Install Django and other packages</h6>
+<pre><code>$ virtualenv venv
+New python executable in venv/bin/python
+Installing Setuptools...done.
+Installing Pip...done.</code></pre>
+<pre><code>$ source venv/bin/activate</code></pre>
+<pre><code>$ pip install -r requirements.txt</code></pre>
+    <h6>Create the database</h6>
+<pre><code>$ python manage.py syncdb</code></pre>
+<pre><code>$ python manage.py migrate</code></pre>
+    <h6>Run the web app</h6>
+<pre><code>$ python manage.py runserver</code></pre>
+    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+</div>
+<div class="section" id="user-profiles-section">
+    <h5>Intro to the Terminal (optional)<a name="user-profiles"></a></h5>
+    <p>To set up a Django app, you'll need to use the terminal (command line). We'll go over the basics of how it works in case you're not familiar with it.</p>
+    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+</div>
+{% endblock %}
+
+
+{% block js %}
+{{ block.super }}
+<script type="text/javascript">
+var SLIDEVIEWSLUGS = ["user-profiles"];
+</script>
+{% endblock %}

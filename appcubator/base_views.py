@@ -499,16 +499,19 @@ def documentation(request):
 def resources_socialnetwork(request, name=None):
     if name == None:
         raise Http404
-    if name not in ["howtosocialnetwork", "custom-code", "deploy-to-cloud"]:
+    if name not in ["howtosocialnetwork", "custom-code", "get-it-running", "deploy-to-cloud"]:
         raise Http404
     title_d = { "howtosocialnetwork": "Building a Social Network",
                 "custom-code": "Writing Custom Code",
+                "get-it-running": "Get your Django app Running",
                 "deploy-to-cloud": "Deploying to the Cloud"}
     template_d = { "howtosocialnetwork": "website-resources-socialnetwork.html",
                    "custom-code": "website-resources-customcode.html",
+                   "get-it-running": "website-resources-getrunning.html",
                    "deploy-to-cloud": "website-resources-deploy.html"}
     num_sections_d = { "howtosocialnetwork": 3,
                        "custom-code": 1,
+                       "get-it-running": 1,
                        "deploy-to-cloud": 1}
     page_context = {}
     page_context["title"] = title_d[name]

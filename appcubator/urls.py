@@ -61,6 +61,7 @@ urlpatterns = patterns('',
 
     url(r'^resources/tutorial/build-social-network/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'howtosocialnetwork'}),
     url(r'^resources/tutorial/deploy-to-cloud/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'deploy-to-cloud'}),
+    url(r'^resources/tutorial/get-it-running/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'get-it-running'}),
     url(r'^resources/tutorial/custom-code/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'custom-code'}),
     url(r'^resources/tutorial/what-is-a-web-app/$',                base_views.resources_whatisawebapp),
     url(r'^resources/tutorial/appcubator-for-django-developers/$', base_views.resources_fordjangodevs),
