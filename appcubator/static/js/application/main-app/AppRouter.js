@@ -36,12 +36,6 @@ define(function(require, exports, module) {
                 self.showTutorial();
                 window.history.pushState(null, null, window.location.href.concat("tutorial/"));
             });
-            $('.toggle-invitations-modal').on('click', function(e) {
-                require(['app/InvitationsView'], function(InvitationsView) {
-                    new InvitationsView();
-                });
-                e.preventDefault();
-            });
 
             keyDispatcher.bindComb('meta+s', this.save);
             keyDispatcher.bindComb('ctrl+s', this.save);
