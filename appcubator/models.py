@@ -220,7 +220,7 @@ class TempDeployment(RandomPrimaryIdModel):
     @classmethod
     def create(cls):
         i = cls()
-        i.s = cls.get_rand_uniq_subdomain()
+        i.s = "temp-%s" % i.id#cls.get_rand_uniq_subdomain()
         i.save()
         return i
 
