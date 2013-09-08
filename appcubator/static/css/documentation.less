@@ -1,7 +1,7 @@
 @import 'base';
 
 body {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "proxima-nova";
   font-weight: normal;
   color: #101010;
 }
@@ -337,14 +337,13 @@ span.q-sent {
   position: absolute;
   left: 0;
   width: 224px;
+  min-height: 100%;
   background-color: #0f2d40;
-  .border-top-right-radius(6px);
-  .border-bottom-right-radius(6px);
   color: #fff;
-  top: 120px;
+  top: 0px;
   padding: 6px;
   padding-left: 20px;
-  .opacity(0.9);
+  // .opacity(0.9);
   .transition(opacity 0.2s);
 
   &:hover {
@@ -375,7 +374,7 @@ span.q-sent {
   }
 
   h1 {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "proxima-nova";
     font-weight: bold;
     font-size: 14px;
     line-height: 20px;
@@ -386,7 +385,7 @@ span.q-sent {
   }
 
   h2 {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "proxima-nova";
     font-weight: normal;
     font-size: 14px;
     line-height: 18px;
@@ -408,6 +407,7 @@ span.q-sent {
   max-width: 780px;
   z-index: 1000;
   position: relative;
+  padding-left: 80px;
 }
 
 .arrow {
@@ -450,10 +450,8 @@ span.q-sent {
     margin-left: auto;
     margin-right: auto;
     max-width: 780px;
-    width: 90%;
+    width: 100%;
     z-index: 1000;
-    border-top-left-radius: 4px;
-    border-bottom-right-radius: 0px;
   }
 
   .menu-list .title {

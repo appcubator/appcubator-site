@@ -2,11 +2,12 @@ define([
   'app/AnalyticsView',
   'mixins/SimpleModalView',
   'app/ShareModalView',
+  'app/DeployModalView',
   'app/entities/AdminPanelView',
   'app/templates/MainTemplates',
   'util'
 ],
-function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
+function(AnalyticsView, SimpleModalView, ShareModalView, DeployModalView, AdminPanelView) {
 
   var OverviewPageView = Backbone.View.extend({
     css: 'app-page',
@@ -17,6 +18,7 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
       'click #deploy'          : 'deploy',
       'click .browse'          : 'browse',
       'click #share'           : 'share',
+      //'click #download'        : 'download',
       'click .edit-btn'        : 'settings'
     },
 
@@ -39,15 +41,19 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView) {
       var nmrPages = v1State.get('pages').length;
       var pagesStr = nmrPages > 1 ? ' pages' : ' page';
       if(nmrPages >= 4) {
-        $('.what-to-do').html('You currently have '+ nmrPages + pagesStr + '.<br><a href="pages/">Add more on the Pages page</a>.');
+        $('.what-to-do').html('Next Step: You currently have '+ nmrPages + pagesStr + '. <a href="pages/">Add more on the Pages page</a>.');
       }
       else {
-        $('.what-to-do').html('You can go to the <a href="tables/">Tables</a> page, and click "Access Data" to browse the data in your app\'s database.');
+        $('.what-to-do').html('Next Step: You can go to the <a href="tables/">Tables</a> page, and click "Access Data" to browse the data in your app\'s database.');
       }
     },
 
     share: function() {
       new ShareModalView();
+    },
+
+    download: function() {
+      new DeployModalView();
     },
 
     browse: function() {

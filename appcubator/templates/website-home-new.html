@@ -1,45 +1,12 @@
-{% extends "infra-out-html.html" %}
+{% extends "infra-website.html" %}
 
 {% block css %}
-<script type="text/javascript" src="https://platform.linkedin.com/in.js">
-api_key: etouje3xl27v
-scope: r_fullprofile r_emailaddress
-</script>
-<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
 {% endblock %}
 {% block page %}
-<div id="fb-root"></div>
-<script>
-</script>
-<div class="navbar">
-  <div class="centered-container">
-    <div class="large-header">
-        <a href="/">
-          <div id="box-container">
-            <div id="cube" class="">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        </a>
-        <a href="/"><h1>Appcubator</h1></a>
-    </div>
-    <ul class="menu">
-      <li>FEATURES</li>
-      <li>LOGIN</li>
-      <li id="signup-button">SIGNUP</li>
-    </ul>
-  </div>
-</div>
-
+{% include "website-navbar.html" %}
 <div class="sliding-panel">
-  <div class="slide slide-intro">
+  <div class="slide slide-intro full">
     <div class="blue-bar">
       <div class="large-text">
         The Easiest Way to Build Web Apps
@@ -47,9 +14,9 @@ scope: r_fullprofile r_emailaddress
       <div class="sub-text">
        The only visual tool that builds and hosts full stack web apps, backed by developer-friendly code.
       </div>
-            <div class="white-btn">
+      <a class="white-btn signup-button" href="/signup">
         Start Building
-      </div>
+      </a>
     </div>
     <div class="three-div">
       <div class="left view">
@@ -57,7 +24,7 @@ scope: r_fullprofile r_emailaddress
         <a href="#"><img src="{{ STATIC_URL }}img/imagine-blue.png"></a>
         <span class="explanation">Visual editor for extremely fast prototyping.</span>
       </div>
-      <span class="three-dots">
+      <span class="three-dots no-mobile">
         <span class="dot">·</span>
         <span class="dot">·</span>
         <span class="dot">·</span>
@@ -65,63 +32,76 @@ scope: r_fullprofile r_emailaddress
       <div class="middle view">
         <span>Back-end</span>
         <a href="#"><img src="{{ STATIC_URL }}img/build-blue.png"></a>
-        <span class="explanation">Create dynamic web apps with Database Tables.</span>
+        <span class="explanation">Relational database for dynamic web apps.</span>
       </div>
-      <span class="arrow">
+      <span class="arrow no-mobile">
         <span>»</span>
       </span>
       <div class="right view">
-        <span>Live MVC App</span>
+        <span>Instantly Live</span>
         <a href="#"><img src="{{ STATIC_URL }}img/publish-blue.png"></a>
-        <span class="explanation">Instant hosting, and downloadable code.</span>
+        <span class="explanation">Instant hosting, downloadable code.</span>
       </div>
+      <span class="scroll-down-note no-mobile">
+        <span>Scroll down to learn more.</span>
+      </span>
     </div>
   </div>
   <div class="slide-info slide">
     <div class="row">
       <div class="centered-container">
-        <h2>Craft beautiful, fully-functional prototypes</h2>
-        <div class="info">
+        <h2>Craft elegant, fully-functional prototypes</h2>
+        <h6>Interactive drag and drop page builder for happy designing. No hassle hosting. No experience required.</h6>
+        <div class="half-left">
+          <div class="screen no-bg">
+            <div class="gif-wrapper">
+            <img src="{{ STATIC_URL }}img/imagine3.gif">
+            </div>
+          </div>
+        </div>
+        <div class="half-right right-el">
+          <div class="info">
             <h3>Design</h3>
-              <ul>
-                <li>Choose from our growing gallery of themes and templates</li>
-                <li>Drag n' drop from our growing collection of UI Elements</li>
-                <li>Upload images or search the web for them</li>
-              </ul>
+            <ul>
+                <li>Try on different styles with Designer Themes</li>
+                <li>Upload and freely position your own images</li>
+            </ul>
             <h3>Functionality</h3>
             <ul>
-              <li>Built in User Authentication, including social integration</li>
-              <li>Create a custom relational database</li>
-              <li>Drag n' drop forms and relational DB queries</li>
+              <li>Ship User Authentication without writing code</li>
+              <li>Create a custom relational database schema</li>
+              <li>Get common forms and relational DB queries</li>
             </ul>
-        </div>
-        <div class="screen no-bg">
-          <div class="gif-wrapper">
-          <img src="{{ STATIC_URL }}img/imagine2.gif">
           </div>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="centered-container">
-        <h2>Don't sacrifice power for simplicity</h2>
-        <div class="info">
-          <div>
-            <h3>Front-end</h3>
-            <ul>
-              <li>Customize the CSS styles of UI Elements</li>
-              <li>Write new UI Elements, with HTML, CSS, and JS</li>
-            </ul>
-            <h3>Back-end</h3>
-            <ul>
-              <li>Download the code, Python and idiomatic Django 1.5</li>
-              <li>Instant hosting at an Appcubator subdomain</li>
-              <li>Host here or anywhere, no strings attached</li>
-            </ul>
+        <h2>Generate industry-standard code</h2>
+        <h6>We generate code backed by popular open-source frameworks, so your work is always portable.</h6>
+        <div class="half-right padding-top">
+          <div class="info">
+            <div>
+              <h3>Modify</h3>
+              <ul>
+                <li>Customize the CSS styles of UI Elements</li>
+                <li>Write HTML, CSS, and Javascript to create custom UIs</li>
+              </ul>
+              <h3>Download</h3>
+              <ul>
+                <li>Download your fully-customizable Python/Django code</li>
+                <li>Host your portable application anywhere</li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div class="screen">
-          <div class="video" id="video-pane"></div>
+        <div class="half-left">
+          <div class="screen no-bg">
+            <div class="gif-wrapper">
+            <img src="{{ STATIC_URL }}img/build.gif">
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -161,7 +141,7 @@ scope: r_fullprofile r_emailaddress
   <div class="slide-last">
     <div class="centered-container">
       <div class="large-container">
-          <div class="right-side">
+            <h2>Pricing</h2>
             <ul class="pricing">
 <li class="free">
                 <span class="title free">Free forever to build</span>
@@ -172,9 +152,9 @@ scope: r_fullprofile r_emailaddress
                 <span class="price">Free</span>
               </li>
               <li class="mobile">
-                <span class="title">Production</span>
+                <span class="title">Production Plan</span>
                 <span class="content">
-                  <p>For when you are ready to deploy your app to customers.</p>
+                  <p>Ability to add custom domain to your app, official support from Appcubator and guaranteed response time of 12 hours.</p>
                   <p class="includes"> Includes custom domain and branding, analytics to your site, more scalable infrastructure, and a free domain as well as everything on the free plan.</p>
                 </span>
                 <span class="price"><i class="small">$</i>35<i class="small">/mo</i></span>
@@ -188,18 +168,15 @@ scope: r_fullprofile r_emailaddress
                 <span class="price"><i class="small">$</i>480</span>
               </li>
             </ul>
-          </div>
-          <div class="fbbox">
-            <div class="fb-like-box" data-href="http://www.facebook.com/appcubator" data-width="400" data-height="90" data-show-faces="true" data-header="false" data-stream="true" data-show-border="false"></div>
-          </div>
       </div>
       <div class="right-container">
-        <div class="btn btn-blue hoff1 request-invite" id="request">Request an Invite</div>
+        <div class="btn btn-blue hoff1 signup-button request-invite">Signup Now</div>
         <ul>
-          <li>Why should you use it if you are an experienced developer?</li>
-          <li>See More Educational Resources</li>
-          <li>Read About Our Community</li>
-        </ul>        
+          <li><a href="/developer/"><i>></i>Why should you use it if you are an experienced developer?</a></li>
+          <li><a href="/resources/"><i>></i>See More Educational Resources</a></li>
+          <li><a href="/community/"><i>></i>Read About Our Community</a></li>
+        </ul>     
+        <div class="fb-like-box" data-href="http://www.facebook.com/appcubator" data-width="300" data-height="90" data-show-faces="true" data-header="false" data-stream="true" data-show-border="false"></div>   
       </div>
     </div>
 
@@ -209,39 +186,6 @@ scope: r_fullprofile r_emailaddress
 {% endblock %}
 
 {% block js %}
-
-<script data-main="{{ STATIC_URL }}js/application/website/main2" src="{{ STATIC_URL }}js/libs/require.js"></script>
-<script type="text/template" id="temp-inviteform">
-    <form class="sign-up-form" id="sign-up-form">
-      <div class="left-side">
-        <input type="text" name="name" id="inp-name" placeholder="Full Name">
-        <input type="text" name="email" id="inp-email" placeholder="Email">
-        <input type="text" name="company" id="inp-company" placeholder="Company">
-        <input type="hidden" name="extra-info" id="inp-extra" value="-">
-        <hr>
-        <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
-        <div class="btn btn-blue btn-linkedin">Fill With LinkedIn</div>
-        <% print('<sc'+'ript type="IN/Login"></sc'+'ript>') %>
-      </div>
-      <div class="right-side">
-        <textarea name="description" id="inp-description" placeholder="Technical description of your application. This is for us to attain the feasibility of the project to best direct you. It's totally fine if you just want to check it out."></textarea>
-        <input type="checkbox" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
-        <input type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
-      </div>
-    </form>
-    <div class="thanks-for-signing" style="display:none;">
-      <p>Thank you for signing up!</p>
-      <p>Someone from our team will contact you for details and further steps very soon.</p>
-      <div class="social-share">
-        <span>In the meantime, you can let your friends know about Appcubator!</span>
-        <div class="fb-share">
-          <div class="fb-like" data-href="http://www.appcubator.com" data-send="false" data-width="160" data-show-faces="true" data-font="segoe ui"></div>
-        </div>
-        <div class="twitter-share">
-          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.appcubator.com" data-via="appcubator">Tweet</a>
-          <% print('<sc'+'ript>'); %> <% print('</sc'+'ript>'); %>
-        </div>
-      </div>
-    </div>
-</script>
+<script src="//cdn.optimizely.com/js/312473184.js"></script>
+<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 {% endblock %}

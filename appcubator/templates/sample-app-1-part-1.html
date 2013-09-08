@@ -1,22 +1,6 @@
-{% extends "infra-out-html.html" %}
-
-{% block css %}
-<script type="text/javascript" src="https://platform.linkedin.com/in.js">
-api_key: etouje3xl27v
-scope: r_fullprofile r_emailaddress
-</script>
-<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home2.css">
-{% endblock %}
-{% block page %}
-<div id="fb-root"></div>
-<script>
-</script>
-{% include "website-leftpanel.html" %}
-
-<div class="sliding-panel">
-  <div class="slide-aboutus">
+{% extends "website-resources-infra.html" %}
+{% block content %}
+<div class="centered-container resource">
     <h4>StudyCloud | Part 1: Intro and Tables</h4>
     <div class="video">
       <iframe width="700" height="415" src="//www.youtube.com/embed/F8YShaSvx9M?rel=0" frameborder="0" allowfullscreen></iframe>
@@ -26,19 +10,7 @@ scope: r_fullprofile r_emailaddress
       <div class="fb-comments" data-href="http://appcubator.com/resources/sample/1/part/1/" data-width="600"></div>
       <div id="fb-root"></div>
     </div>
-  </div>
-  {% include "website-footer.html" %}
 </div>
 {% endblock %}
 
-{% block js %}
-<script type="text/javascript" data-main="{{ STATIC_URL }}js/application/external-pages/website-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=145000778994158";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-</script>
-{% endblock %}
+

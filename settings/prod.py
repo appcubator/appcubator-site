@@ -28,9 +28,9 @@ DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.mysql',
        'NAME': 'v1factory',
-       'USER': 'root',
-       'PASSWORD': 'obscurepassword321',
-       'HOST': '127.0.0.1',
+       'USER': 'appcubator',
+       'PASSWORD': 'longisland3',
+       'HOST': 'appcubatorsite.ccchupi0ycq8.us-east-1.rds.amazonaws.com',
        'PORT': 3306
    }
 }

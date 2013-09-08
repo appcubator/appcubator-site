@@ -15,6 +15,12 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
     css: 'pages',
     subviews: [],
 
+    events: {
+      'click #clone-page-box'    : 'showCloneBox',
+      'change #pages-list-clone' : 'clonePageName',
+      'submit .clone-name-form'  : 'clonePage'
+    },
+
     initialize: function() {
       _.bindAll(this);
 
@@ -130,6 +136,48 @@ function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
         this.mobileListView.appendChild(mobilePageView.render().el);
         this.subviews.push(mobilePageView);
       }
+    },
+
+    showCloneBox: function() {
+      var list = document.getElementById('pages-list-clone');
+      list.innerHTML = '';
+      v1State.get('pages').each(function(pageM) {
+        var liEl = document.createElement('option');
+        liEl.value = 'clone-page-' + pageM.cid;
+        liEl.innerHTML = pageM.get('name');
+        console.log(liEl);
+        list.appendChild(liEl);
+      });
+
+      this.$el.find('.box-button-clone').hide();
+      this.$el.find('.clone-options').fadeIn();
+    },
+
+    clonePageName: function(e) {
+      //this.$el.find('.box-button-clone').fadeIn();
+      var el = document.getElementById('pages-list-clone');
+      this.pageCidToClone = el.value.replace('clone-page-','');
+      this.$el.find('.clone-options').hide();
+      this.$el.find('.clone-name-form').fadeIn();
+      $('.clone-page-name').focus();
+    },
+
+    clonePage: function(e) {
+      e.preventDefault();
+
+      var pageM = v1State.get('pages').get(this.pageCidToClone );
+      var pageName = $('.clone-page-name').val();
+
+      var initModel = pageM.toJSON();
+      var pageUrlPart = pageName.replace(/ /g, '_');
+      initModel.url.urlparts[0] = pageUrlPart;
+      initModel.name = pageName;
+
+      this.collection.add(initModel);
+
+      this.$el.find('.clone-name-form').hide();
+      this.$el.find('.box-button-clone').fadeIn();
+      $('.clone-page-name').val('');
     },
 
     close: function() {

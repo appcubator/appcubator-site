@@ -4,7 +4,7 @@ define([
   function(BackboneModal) {
     var SignupModalView = Backbone.ModalView.extend({
       padding: 0,
-      width: 550,
+      width: 630,
       className: 'model fancy signup',
 
     //height: 150,
@@ -26,6 +26,21 @@ define([
       $('input[type=checkbox]').prettyCheckable();
       // $('input[type=radio]').prettyCheckable();
 
+      $('.btn-facebook').on('click', function() {
+            FB.login(function(response) {
+             if (response.authResponse) {
+              FB.api('/me', function(response) {
+                $("#inp-name").val(response.name);
+                $("#inp-email").val(response.email);
+                $("#inp-extra").val(JSON.stringify(response));
+               });
+             } else {
+               console.log('User cancelled login or did not fully authorize.');
+             }
+           }, {scope: 'email'});
+      });
+
+
       return this;
     },
 
@@ -33,9 +48,9 @@ define([
       var self = this;
       this.$el.find('#signup').on('submit', function(e) {
         e.preventDefault();
-        url = $(e.target).attr('action');
-
-        obj = {};
+        var self = this;
+        url = $(e.currentTarget).attr('action');
+        obj = $(e.currentTarget).serialize();
         obj.name = $("#inp-name").val();
         obj.email = $("#inp-email").val();
         obj.company = $("#inp-company").val();
@@ -61,11 +76,25 @@ define([
           url: url,
           type: "POST",
           data: obj,
-          dataType: "JSON"
+          dataType: "JSON",
+          success: function(data, statusStr, xhr) {
+            if (typeof(data.redirect_to) !== 'undefined') {
+              location.href = data.redirect_to;
+            } else {
+              _.each(data, function(val, key, ind) {
+                if(key==='__all__') {
+                  $(self).find('.form-error.field-all').html(val.join('<br />'));
+                } else {
+                  console.log(key);
+                  console.log(val);
+                  console.log( $(self).find('.form-error.field-name-'+key));
+                  $(self).find('.form-error.field-name-'+key).html(val.join('<br />'));
+                }
+              });
+            }
+          }
         });
 
-         self.$el.find('#sign-up-form').hide();
-         self.$el.find('.thanks-for-signing').fadeIn();
          self.showTweetBtn();
        }
      });

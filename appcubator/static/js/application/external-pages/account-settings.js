@@ -32,19 +32,20 @@ require.config({
 
 require([
   'app/Striper',
+  '../main-app/GarageView',
   'bootstrap'
 ],
-function(Striper) {
+function(Striper, GarageView) {
 
   var PaymentsMain = function() {
     var striper = new Striper();
-    striper.bindPayment('.change-card', 'change-card-form');
+    striper.bindChangeCard('.change-card', 'change-card-form');
     striper.onSuccess = function() {
       window.location = "/account/";
     };
 
-    striper.bindPayment('#change-plan-btn','change-plan-form');
-    striper.bindPayment('#cancel-btn','cancel-form');
+    // striper.bindChangePlan('#change-plan-btn','change-subscription');
+    striper.bindCancel('#cancel-btn','cancel-form');
   };
 
   $(document).ready(new PaymentsMain());
@@ -66,6 +67,9 @@ function(Striper) {
     $('#add-key-btn').hide();
     $('#add-key-panel').fadeIn();
   });
+
+  var garage = new GarageView();
+  $('.garage-toggle').on('click', garage.show);
 
   // @ksikka's code
   $(document).ready(function() {

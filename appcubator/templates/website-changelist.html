@@ -1,14 +1,4 @@
-{% extends "infra-out-html.html" %}
-
-{% block css %}
-<script type="text/javascript" src="https://platform.linkedin.com/in.js">
-api_key: etouje3xl27v
-scope: r_fullprofile r_emailaddress
-</script>
-<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
-{% endblock %}
+{% extends "infra-website.html" %}
 {% block page %}
 <div id="fb-root"></div>
 <script>
@@ -28,7 +18,7 @@ list-style:circle;
   display: block;
 }
 </style>
-{% include "website-leftpanel.html" %}
+{% include "website-navbar.html" %}
 
 <div class="sliding-panel">
   <div class="slide-aboutus">
@@ -56,6 +46,19 @@ list-style:circle;
 
       <li><strong>Improved downloadable code</strong>
       Previously, our downloaded code was missing a few requirements, and was hard to install. We fixed our requirements file and are working on a better README. Reach out to us if you want us to guide you through the process of running the downloaded code on your computer.</li>
+
+      <li><strong>Added more Resources</strong></li>
+
+      <li><strong>Created a Community Page</strong></li>
+
+      <li><strong>Updated the Website</strong></li>
+
+      <li><strong>Convenience Features</strong></li>
+
+      <li><strong>Custom Widgets</strong></li>
+
+      <li><strong>Video Embeds</strong></li>
+
     </ul>
   </div>
   <div class="footer">

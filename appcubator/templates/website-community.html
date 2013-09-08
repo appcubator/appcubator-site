@@ -1,0 +1,115 @@
+{% extends "infra-website.html" %}
+
+{% block css %}
+<script type="text/javascript" src="https://platform.linkedin.com/in.js">
+api_key: etouje3xl27v
+scope: r_fullprofile r_emailaddress
+</script>
+<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
+{% endblock %}
+{% block page %}
+<div id="fb-root"></div>
+<script>
+</script>
+{% include "website-navbar.html" %}
+
+<div class="sliding-panel">
+  <div class="slide slide-intro">
+    <div class="blue-bar community">
+      <div class="large-text">
+        Community.
+      </div>
+      <div class="icon-menu">
+        <a class="item" href="/community/">
+          <img src="{{ STATIC_URL}}img/featured.png">
+          <span>Featured Apps</span>
+        </a>
+        <a class="item" href="/community/faq/">
+          <img src="{{ STATIC_URL}}img/faq.png">
+          <span>Frequently Asked Questions</span>
+        </a>
+        <a class="item" onclick="javascript:olark('api.box.show'); olark('api.box.expand');">
+          <img src="{{ STATIC_URL}}img/chat.png">
+          <span>Chat With Us</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="slide-info slide">
+    <div class="row">
+      <div class="centered-container">
+        <h2>Skiboa</h2>
+        <div class="two-third">
+          <div class="info">
+            <p>Skiboa is a site where skiers and snowboarders can compare the prices of season passes and lift tickets across all major Lake Tahoe ski resorts.</p>
+            <p>Every year, hundreds of thousands of people flock to Lake Tahoe to tear it up on the slope, but how do they choose which resort to go to? They have to go on every ski resorts web page, compare the pricing of all of them side by side, read the yelp reviews, and hours get wasted.</p>
+            <p>Skiboa is the first site to aggregate the pricing and deals from all the major Lake Tahoe Ski Resorts into one place where you can conveniently compare across resorts. Amber has frequented the Lake Tahoe resorts and goes snowboarding several times a year, and she’s dedicated to providing the most accurate and comprehensive data she can gets her hands on.</p>
+          </div>
+        </div>
+        <div class="one-third">
+          <div class="screen no-bg">
+            <div class="gif-wrapper">
+            <img src="{{ STATIC_URL }}img/skiboa.gif">
+            </div>
+            <a href="http://www.skiboa.com" target="_blank">http://www.skiboa.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="centered-container">
+        <h2>Stonehill Tutoring Payroll System</h2>
+        <div class="two-third">
+          <div class="info">
+            <p>Running a tutoring business requires careful tracking of clients, tutors, lessons, etc. Jacob Buckman, one of the founders of Stonehill Tutoring, wanted a better way to manage all this for his business. So he created Payroll Systems, a site that helps him track all aspects of the business to figure out how much to pay the staff.</p>
+            <p><a href="http://www.stonehilltutors.com/">Stonehill Tutoring</a> is a SAT tutoring center in New Jersey. Its staff consists of the top students from High Technology High School. Since there are lots of tutors working at different schedules, they needed an internal system to manage existing and register new classes. This helps management track of each lesson and respective payroll.</p>
+            <p>Using this system, Jacob Buckman increase the efficiency of his small business. Jacob is now a freshman at Carnegie Mellon. We hope his business continues to thrive.</p>
+          </div>
+        </div>
+        <div class="one-third">
+          <div class="screen no-bg">
+            <div class="gif-wrapper">
+            <img src="{{ STATIC_URL }}img/payroll.gif">
+            </div>
+            <a href="http://stonehill-payroll.appcubator.com/" target="_blank">http://stonehill-payroll.appcubator.com/</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="centered-container">
+        <h2>Spice</h2>
+        <div class="two-third">
+          <div class="info">
+            <p>Spice is a recipe builder that is personalized to what is in your fridge. Check the boxes on what you have you in your refrigerator and find a list of dishes that you can make. You can also just choose to search for recipes from their database and add the ingredients you don’t have to your grocery list. Just put in what you have and get custom results of new foods to try making and of course eating! Michelle Gu plans to grow the recipe database and make it easy for you to add your own. Spice it Up!</p>
+            <p>Michelle Gu and her friends are part of a group called Girls Who Code, a summer programming course ran across the US. The program tries to close the gender gap in technology and grow a network of female programmers. It was great to work with them and we love what they are doing.</p>
+          </div>
+        </div>
+        <div class="one-third">
+          <div class="screen no-bg">
+            <div class="gif-wrapper">
+            <img src="{{ STATIC_URL }}img/spice.gif">
+            </div>
+            <a href="http://spice.appcubator.com/" target="_blank">http://spice.appcubator.com/</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="centered-container">
+        <h3>Want your app to be featured here? Please reach us at team@appcubator.com</h3>
+      </div>
+    </div>
+  </div>
+  {% include "website-footer.html" %}
+</div>
+{% endblock %}
+
+{% block js %}
+<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+{% endblock %}

@@ -5,6 +5,7 @@ require.config({
     "jquery.hotkeys"  : "../../libs/jquery/jquery.hotkeys",
     "underscore"      : "../../libs/underscore-amd/underscore",
     "backbone"        : "../../libs/backbone-amd/backbone",
+    "react"           : "https://cdnjs.cloudflare.com/ajax/libs/react/0.4.1/react.min",
     "heyoffline"      : "../../libs/heyoffline",
     "util"            : "../../libs/util/util",
     "util.filepicker" : "../../libs/util/util.filepicker",
@@ -24,7 +25,8 @@ require.config({
     "collections"     : "../data/collections",
     "tutorial"        : "../tutorial",
     "wizard"          : "../wizard",
-    "xrayquire"       : "../../libs/xrayquire"
+    "xrayquire"       : "../../libs/xrayquire",
+    "ace"             : "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace"
   },
 
   shim: {
@@ -62,6 +64,9 @@ require.config({
     },
     "util.filepicker": {
       exports: "util"
+    },
+    "react" : {
+      exports: "React"
     }
   },
 

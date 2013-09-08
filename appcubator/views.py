@@ -49,8 +49,8 @@ def add_statics_to_context(context, app):
     return context
 
 
-@login_required
 @require_GET
+@login_required
 def app_welcome(request):
     if request.user.extradata.noob:
         # case for turning noob mode off
@@ -67,6 +67,8 @@ def app_welcome(request):
         return redirect(app_page, request.user.apps.latest('id').id)
 
 
+@require_GET
+@login_required
 def app_noob_page(request):
     #log url route
     user_id = request.user.id
@@ -88,7 +90,6 @@ def app_noob_page(request):
         'mobile_themes': simplejson.dumps(list(mobile_themes)),
         'apps': request.user.apps.all(),
         'statics': simplejson.dumps([]),
-        'user': request.user
     }
     return render(request, 'app-welcome-page.html', default_data)
 
@@ -124,7 +125,7 @@ def app_new(request, is_racoon = False):
             s['name'] = app.name
             app.state = s
             app.save()
-            app.deploy() # this adds it to the deployment queue. non-blocking basically.
+            #app.deploy() # this adds it to the deployment queue. non-blocking basically.
             if is_racoon:
                 return redirect(app_new_racoon, app.id)
             else:
@@ -178,7 +179,7 @@ def app_new_walkthrough(request, walkthrough):
 
 @require_GET
 @login_required
-def app_page(request, app_id):
+def app_page(request, app_id, page_name="overview"):
     app_id = long(app_id)
     # id of 0 is reserved for sample app
     if(app_id == 0):
@@ -193,15 +194,17 @@ def app_page(request, app_id):
     mobile_themes = UITheme.get_mobile_themes()
     mobile_themes = [t.to_dict() for t in mobile_themes]
 
-    page_context = {'app': app,
-                    'title': 'The Garage',
-                    'themes': simplejson.dumps(list(themes)),
+    page_context = {'app'          : app,
+                    'title'        : 'The Garage',
+                    'themes'       : simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
-                    'apps': app.owner.apps.all(),
-                    'user': app.owner,
-                    'staging': settings.STAGING,
-                    'production': settings.PRODUCTION,
-                    'is_deployed': 1 if app.deployment_id != None else 0}
+                    'apps'         : app.owner.apps.all(),
+                    'user'         : app.owner,
+                    'staging'      : settings.STAGING,
+                    'production'   : settings.PRODUCTION,
+                    'page_name'    : page_name,
+                    'is_deployed'  : 1 if app.deployment_id != None else 0,
+                    'display_garage' : False}
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)
 
@@ -272,7 +275,7 @@ def app_get_state(request, app):
 def app_save_state(request, app, require_valid=True):
     # if the incoming appState's version_id does not match the
     # db's version_id, the incoming appState is an outdated version
-    if not app.isCurrentVersion(simplejson.loads(request.body)):
+    if require_valid is True and not app.isCurrentVersion(simplejson.loads(request.body)):
         return (409, "")
 
     app._state_json = request.body
@@ -423,6 +426,11 @@ def mobile_uie_state(request, app_id):
 
 @csrf_exempt
 def less_sheet(request, app_id, isMobile=False):
+    print app_id
+    if long(app_id) == 0:
+        print "YOLO"
+        return default_less_sheet(request)
+
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
@@ -434,6 +442,16 @@ def less_sheet(request, app_id, isMobile=False):
 def mobile_less_sheet(request, app_id):
     return less_sheet(request, app_id, True)
 
+@csrf_exempt
+def default_less_sheet(request):
+    from django.template import Context, loader
+    t = loader.get_template('app-editor-less-gen.html')
+    uie_state = simplejson.loads(get_default_uie_state())
+    context = Context({'uie_state': uie_state,
+                       'isMobile': False,
+                       'deploy': False})
+    css_string = t.render(context)
+    return HttpResponse(css_string, mimetype='text/css')
 
 @csrf_exempt
 def css_sheet(request, app_id, isMobile=False):
@@ -696,14 +714,6 @@ def sub_register_domain(request, app_id, subdomain):
 
     return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")
 
-
-def yomomma(request, number):
-    r = requests.get("http://www.jokes4us.com/yomamajokes/random/yomama"+number+".html")
-    return HttpResponse(r.text, status=r.status_code)
-
-def webgeekjokes(request):
-    r = requests.get("http://www.webgeekjokes.tumblr.com/random")
-    return JsonResponse(r.text)
 
 # this is old.
 @require_POST

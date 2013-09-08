@@ -1,0 +1,26 @@
+{# Just need to pass "data" to the context #}
+
+<div class="slide-view tutorial-section">
+        <div class="slides-wrap">
+            {% for section in data %}
+            {% for d in section.data %}
+            <div class="slide-container">
+                <div class="slide-image" style="background-image: url({{ d.img_url }})">
+                <p class="slide-overlay-text">{{ d.shortText }}</p>
+                </div>
+                <div class="nav-section">
+                    <h3 style="display:inline;">{{ section.name }}</h3>
+                    <div class="nav-arrows">
+                        <div class="arrow-wrap"><div class="prev-slide-click">< Prev</div>
+                        </div><div class="goto-slide-wrap"><input class="goto-slide-input" type="text" value="1" size="2"/> of <span class="goto-slide-numslides"></span>
+                        </div><div class="arrow-wrap"><div class="next-slide-click">Next ></div></div>
+                    </div>
+                </div>
+                <div class="slide-panel">
+                    <p>{{ d.longText }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+</div>

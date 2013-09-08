@@ -1,0 +1,3 @@
+
+Static files should be served at routes like:
+    /static/img/documentation/socialnetwork/p1/2.png

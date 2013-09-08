@@ -144,7 +144,8 @@ define(['jquery'], function() {
       var div = $(elem);
       if(!div.offset()) return false;
 
-      var divTop = div.offset().top;
+      var windowScrollDown = $(window).scrollTop();
+      var divTop = div.offset().top - windowScrollDown;
       var divLeft = div.offset().left;
       var divRight = divLeft + div.width();
       var divBottom = divTop + div.height();
@@ -352,6 +353,21 @@ define(['jquery'], function() {
 
     copyToClipboard: function(text) {
       window.prompt ("Copy to clipboard: Ctrl+C/Cmd+C, Enter", text);
+    },
+
+    addOverlay: function(el) {
+      var $el = $(el);
+      var overlayEl = document.createElement('div');
+      overlayEl.className = 'global-overlay';
+      var position = $el.offset();
+      overlayEl.style.position = 'fixed';
+      overlayEl.style.top = position.top + 'px';
+      overlayEl.style.left = position.left + 'px';
+      overlayEl.style.width = $el.outerWidth() + 'px';
+      overlayEl.style.height = $el.outerHeight() + 'px';
+      document.body.appendChild(overlayEl);
+      $(overlayEl).one('click', function(e) { $(e.currentTarget).remove(); });
+      return overlayEl;
     }
 
   };

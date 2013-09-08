@@ -1,0 +1,26 @@
+{% extends "website-tutorial-infra.html" %}
+
+
+{% block tutorial-table-content %}
+<li><a href="#screencasts-section">Simple App</a></li>
+<li><a href="#exampleapps-section">Relational App</a></li>
+{% endblock %}
+
+{% block tutorial-content %}
+  <div class="centered-container section" id="screencasts-section">
+      <h4>Build a Sample App</h4>
+      <p>This will walk you through a simple app in under a minute.</p>
+      <a class="blue white-btn" href="/resources/editor/" target="_blank">
+        Start Now »
+      </a>
+  </div>
+  <div class="centered-container section" id="screencasts-section" style="margin-bottom: 90px;">
+      <h4>Build an App with Relational Tables</h4>
+      <p>This will walk you through a simple app with relational tables and user authentication in under 2 minutes.</p>
+      <small>This section is coming soon. For now, you can checkout the screencasts about relational tables under Tutorials section.</small>
+<!--       <a class="blue white-btn" href="#">
+        Coming Soon
+      </a> -->
+  </div>
+{% endblock %}
+

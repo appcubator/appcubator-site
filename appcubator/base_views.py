@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, Http404
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect,render, get_object_or_404
@@ -6,14 +6,21 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import forms as auth_forms, authenticate, login
 from django.core.exceptions import ValidationError
 from django import forms
+from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
 from models import User, Customer, InvitationKeys, AnalyticsStore, App, PubKey
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
+from models import get_default_app_state, get_default_theme_state
+from models import get_default_uie_state, get_default_mobile_uie_state
+
 from appcubator.email.sendgrid_email import send_email, send_template_email
 
 import requests
 import re
+import os, os.path
+join = os.path.join
 
 
 def format_full_details(details):
@@ -78,7 +85,7 @@ def homepage(request):
     page_context = {}
     page_context["title"] = "Homepage"
 
-    return render(request, 'website-home.html', page_context)
+    return render(request, 'website-home-new.html', page_context)
 
 
 @require_GET
@@ -88,6 +95,23 @@ def homepage_new(request):
     page_context["title"] = "Homepage"
 
     return render(request, 'website-home-new.html', page_context)
+
+
+@require_GET
+def community_page(request):
+
+    page_context = {}
+    page_context["title"] = "Community"
+
+    return render(request, 'website-community.html', page_context)
+
+@require_GET
+def community_faq_page(request):
+
+    page_context = {}
+    page_context["title"] = "Community | FAQ"
+
+    return render(request, 'website-community-faq.html', page_context)
 
 
 @require_GET
@@ -186,7 +210,8 @@ def setpubkey(request):
         return HttpResponse(simplejson.dumps(e.message_dict), mimetype="application/json")
 
     pubkey.save()
-    PubKey.sync_pubkeys_of_user(request.user)
+    r = PubKey.sync_pubkeys_of_user(request.user)
+    assert r.status_code == 200, "Pubkey error: %s" % r.text
     return redirect(account)
 
 
@@ -222,7 +247,7 @@ def signup(request):
             api_key = request.GET['k']
             if InvitationKeys.objects.filter(api_key=api_key).exists():
                 return render(request, "registration/signup.html")
-        return render(request, "website-home.html")
+        return render(request, "website-signup.html")
     else:
         req = {}
         req = deepcopy(request.POST)
@@ -232,13 +257,36 @@ def signup(request):
         form = MyUserCreationForm(req)
         if form.is_valid():
             user = form.save()
+            create_customer(request, long(user.pk))
             new_user = authenticate(username=req['email'],
                                     password=req['password1'])
             login(request, new_user)
-            return HttpResponse()
+
+            if request.is_ajax():
+                return HttpResponse(simplejson.dumps({"redirect_to": "/app/"}), mimetype="application/json")
+            else:
+                return redirect('/app/')
         else:
             return HttpResponse(simplejson.dumps(form.errors), mimetype="application/json")
 
+@require_POST
+def create_customer(request, user_id):
+    data = request.POST.copy()
+    data['sign_up_fee'] = '36'
+    data['project_description'] = data.get('description', '')
+    data['consulting'] = data.get('interest', '')
+    data['extra_info'] = data.get('extra', '')
+    data['company'] = 'None'
+    data['sent_welcome_email'] = True
+
+    form = NewCustomerForm(data)
+    if form.is_valid():
+        customer = form.save()
+        customer.user_id = user_id
+        customer.save()
+        return True
+
+    return False
 
 def terms_of_service(request):
     page_context = {}
@@ -353,7 +401,6 @@ def signup_from_gwc(request):
 @login_required
 @csrf_exempt
 def send_invitation_to_customer(request, customer_pk):
-    print customer_pk
     customer = get_object_or_404(Customer, pk=customer_pk)
     invitation = InvitationKeys.create_invitation(request.user, customer.email)
     text = "Hello! \n Thanks for your interest in Appcubator. You can signup here: http://appcubator.com/signup?k=%s" % invitation.api_key
@@ -375,8 +422,101 @@ def send_invitation_to_customer(request, customer_pk):
 def resources(request):
     page_context = {}
     page_context["title"] = "Resources"
-    return render(request, 'resources.html', page_context)
+    return render(request, 'website-resources.html', page_context)
 
+def external_editor(request):
+    themes = UITheme.get_web_themes()
+    themes = [t.to_dict() for t in themes]
+    mobile_themes = UITheme.get_mobile_themes()
+    mobile_themes = [t.to_dict() for t in mobile_themes]
+    page_context = {
+        'app' : { 'id': 0},
+        'default_state': get_default_app_state(),
+        'title': 'My First App',
+        'default_mobile_uie_state': get_default_mobile_uie_state(),
+        'default_uie_state': get_default_uie_state(),
+        'themes': simplejson.dumps(list(themes)),
+        'mobile_themes': simplejson.dumps(list(mobile_themes)),
+        'apps': request.user.apps.all(),
+        'statics': simplejson.dumps([]),
+    }
+    page_context["title"] = "Demo Editor"
+
+    return render(request, 'website-external-editor.html', page_context)
+
+def quickstart(request):
+    page_context = {}
+    page_context["title"] = "Resources"
+    return render(request, 'website-resources-quickstart.html', page_context)
+
+def tutorials(request):
+    page_context = {}
+    page_context["title"] = "Resources"
+    parts_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', "screencast-text.json")
+    with open(parts_json_path) as f:
+        parts = simplejson.load(f)
+    page_context["parts"] = parts
+    return render(request, 'website-resources-tutorials.html', page_context)
+
+def documentation(request):
+    page_context = {}
+    page_context["title"] = "Resources"
+    return render(request, 'website-resources-documentation.html', page_context)
+
+def resources_socialnetwork(request, name=None):
+    if name == None:
+        raise Http404
+    if name not in ["howtosocialnetwork", "custom-code", "deploy-to-cloud"]:
+        raise Http404
+    title_d = { "howtosocialnetwork": "Building a Social Network",
+                "custom-code": "Writing Custom Code",
+                "deploy-to-cloud": "Deploying to the Cloud"}
+    template_d = { "howtosocialnetwork": "website-resources-socialnetwork.html",
+                   "custom-code": "website-resources-customcode.html",
+                   "deploy-to-cloud": "website-resources-deploy.html"}
+    num_sections_d = { "howtosocialnetwork": 3,
+                       "custom-code": 1,
+                       "deploy-to-cloud": 1}
+    page_context = {}
+    page_context["title"] = title_d[name]
+
+    def json_to_data(json):
+        """"return a list of (section, <section_name>) tuples,
+            where each section has a list of dicts
+                where each dict has img_url, shortText, longText keys."""
+        sections = []
+        def slugify(s):
+            s = s.lower()
+            s = re.sub(r'[^a-z0-9]+', '-', s)
+            return s
+        for i, entry in enumerate(json):
+            if 'section' in entry:
+                s = { "data": [],
+                      "name": entry['section'],
+                      "slideIdx": i,
+                      "slug": slugify(entry['section'])
+                      }
+                sections.append(s)
+            sections[-1]['data'].append(entry) # want to append the entry to the last section
+        return sections
+
+    page_context["tut_imgs"] = []
+    for i in range(num_sections_d[name]):
+        profile_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', name, 'p%d.json' % (i+1))
+        with open(profile_json_path) as f:
+            raw_data = simplejson.load(f)
+        page_context["tut_imgs"].append(json_to_data(raw_data))
+    return render(request, template_d[name], page_context)
+
+def resources_whatisawebapp(request):
+    page_context = {}
+    page_context["title"] = "What is a web application?"
+    return render(request, 'website-resources-webapps.html', page_context) 
+
+def resources_fordjangodevs(request):
+    page_context = {}
+    page_context["title"] = "Appcubator for Django Developers"
+    return render(request, 'website-resources-fordjangodevs.html', page_context)
 
 def screencast(request, screencast_id=1):
     page_context = {}
@@ -386,6 +526,10 @@ def screencast(request, screencast_id=1):
 def sample_app(request, sample_id=1):
     page_context = {}
     page_context["title"] = "Sample App " + sample_id
+    parts_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', "screencast-text.json")
+    with open(parts_json_path) as f:
+        parts = simplejson.load(f)
+    page_context["parts"] = parts
     return render(request, 'sample-app-' + sample_id + '.html', page_context)
 
 def sample_app_part(request, sample_id=1, part_id=1):

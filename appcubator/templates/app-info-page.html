@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="row hoff1">
+    <div class="span58">
+      <h2 class="pheader">Domain & SEO</h2>
+      <hr class="hoff1">
+      <div class="span12">
+        <div class="navigator">
+          <ul class="left-nav nav">
+            <li><a href="#payment-plan">Payment Plan</a></li>
+            <li><a href="#domain-settings">Domain Settings</a></li>
+            <li><a href="#seo-optimizations">SEO Optimizations</a></li>
+            <li><a href="#danger-zone">Danger Zone</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="span40 offset2" id="payment-plan">
+        <div class="span40 domains w-pane pb2" id="payment-plan">
+          <h3 class="span36 offset2 hoff1">Plan</h3>
+          <hr class="span40">
+          <div class="span36 offset2 hi4 hoff1">
+            <h4>Current plan:</h4>
+            <div>{{ user.customer.current_subscription.plan_display }}</div>
+          </div>
+          <div>
+          <form method="POST" class="form-inline ajax" data-replace-closest=".change-subscription" id="change-plan-form">
+              {% csrf_token %}
+               <a class="btn" rel="external" href="/app/{{ app.pk }}/payment/">Change</a>
+          </form>
+          <hr class="span40">
+          <div class="span36 offset2">
+            {% if user.customer.current_subscription.plan == "monthly" %}
+            <a href="/account">You can see your finance history from the account setting page.</a>
+            {% else %}
+            <a class="btn" rel="external" href="/app/{{ app.pk }}/payment/">Switch to Pro for only $35 p/month</a>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="span40 domains w-pane pb2 hoff4" id="domain-settings">
+          <h3 class="span36 offset2 hoff1">Domain Settings</h3>
+          <hr class="span40">
+          <div class="span36 offset2 hi5 hoff1">
+            <h4>Current subdomain:</h4>
+            <div><a href="{{ app.url }}" target="_blank">{{ app.hostname }}</a></div>
+          </div>
+          <hr class="span40">
+          <div class="span36 offset2 hi5 hoff1">
+            <h4>Change subdomain</h4>
+            <form class="register-subdomain-form hi7">
+                <p class="span18"><input type="text" class="span10 register-subdomain-input" placeholder="Your subdomain"/><span style="line-height:50px">.appcubator.com</span></p>
+              <a class="register-subdomain-button btn span13" style="display:none;">Claim subdomain</a>
+            </form>
+          </div>
+        </div>
+
+        <div class="w-pane span40 hoff4 pb2" id="seo-optimizations">
+          <h3 class="span36 offset2 hoff1">SEO Optimizations</h3>
+          <hr class="span40">
+          <div class="hoff1 span36 offset2">
+            <h4 class="span36">Description</h3>
+            <textarea class="span26 hi6" id="app-description" placeholder="Description of the application..."><%= description %></textarea>
+          </div>
+          <hr class="span40">
+          <div class="hoff1 span36 offset2">
+            <h4 class="span36">Keywords</h3>
+            <textarea class="span26 hi6" id="app-keywords" placeholder="Keywords..."><%= keywords %></textarea>
+          </div>
+        </div>
+
+        <div class="w-pane span40 hoff4 pb2" id="danger-zone">
+          <h3 class="span36 offset2 hoff1">Danger Zone</h3>
+          <hr class="span40">
+          <a class="btn btn-danger hoff1 span8 offset2" id="delete">Delete App</a>
+        </div>
+      </div>
+      <div class="hi8 span40"></div>
+
+    </div>
+  </div>
+</div>

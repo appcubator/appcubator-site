@@ -1,0 +1,126 @@
+{% extends "infra-website.html" %}
+
+{% block css %}
+<script type="text/javascript" src="https://platform.linkedin.com/in.js">
+api_key: etouje3xl27v
+scope: r_fullprofile r_emailaddress
+</script>
+<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
+{% endblock %}
+{% block page %}
+<div id="fb-root"></div>
+<script>
+</script>
+{% include "website-navbar.html" %}
+
+<div class="sliding-panel">
+  <div class="slide slide-intro">
+    <div class="blue-bar community">
+      <div class="large-text">
+        Community.
+      </div>
+      <div class="icon-menu">
+        <a class="item" href="/community/">
+          <img src="{{ STATIC_URL}}img/featured.png">
+          <span>Featured Apps</span>
+        </a>
+        <a class="item" href="/community/faq/">
+          <img src="{{ STATIC_URL}}img/faq.png">
+          <span>Frequently Asked Questions</span>
+        </a>
+        <a class="item" onclick="javascript:olark('api.box.show'); olark('api.box.expand');">
+          <img src="{{ STATIC_URL}}img/chat.png">
+          <span>Chat With Us</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="centered-container slide-documentation tutorial">
+    <ul class="table-content" data-offset-top="400">
+        <li><a href="#q1-section">Can I make a mobile app with Appcubator?</a></li>
+        <li><a href="#q2-section">I don't have any technical experience, but want to learn. Can I use Appcubator?</a></li>
+        <li><a href="#q3-section">Why should I use Appcubator if I already know a programming language?</a></li>
+        <li><a href="#q4-section">How customizable is Appcubator?</a></li>
+        <li><a href="#q5-section">How portable is the generated code?</a></li>
+        <li><a href="#q6-section">Do I own my data on Appcubator?</a></li>
+        <li><a href="#q7-section">Can I import my data/excel sheets on Appcubator?</a></li>
+        <li><a href="#q8-section">What is the performance of sites hosted on Appcubator?</a></li>
+        <li><a href="#q9-section">How is Appcubator different from Weebly/Squarespace/Wix or other site builders?</a></li>
+        <li><a href="#q10-section">Why don't you support other languages/frameworks?</a></li>
+        <li><a href="#q11-section">How can I refer my friends/collegues to Appcubator?</a></li>          
+    </ul>
+
+    <div class="content">
+        <div id="q1-section" class="section">
+          <strong>Can I make a mobile app with Appcubator?</strong>
+          <span>In the future! We are working on a mobile page editor which we'll make available to you as soon as possible.</span>
+        </div>
+        <div id="q2-section" class="hoff2 section">
+          <strong>I don't have any technical experience, but want to learn. Should I still use Appcubator?</strong>
+          <span>Yes. Appcubator is a great tool to learn web development concepts. In fact, at least half of our users are people who are new to web development. Just dive into our <a href="/resources/">resources</a>.</span>
+        </div>
+        <div id="q3-section" class="hoff2 section">
+          <strong>I already know how to code, why should I use Appcubator?</strong>
+          <span>Making web applications is hard. Even if you are an experienced developer, you might prefer to work on the front-end, back-end or server setup. Appcubator lets you focus on what you enjoy.</span>
+        </div>
+        <div id="q4-section" class="hoff2 section">
+          <strong>How customizable are Appcubator apps?</strong>
+          <span>Fully customizable. Appcubator is not a new language or framework. It generates web application code that you'd normally write. You can download the code, and add your own custom CSS, Javascript or Python code. We've put in extra effort to generate code with good style so you can easily customize it.</span>
+        </div>
+        <div id="q5-section" class="hoff2 section">
+          <strong>How portable is the generated code?</strong>
+          <span>Very. We generate code backed by industry standard, popular technologies like <a href="https://www.djangoproject.com/">Django</a>. You can host your generated app on Amazon AWS, Heroku, Dotcloud and others. See a full list <a href="https://code.djangoproject.com/wiki/DjangoFriendlyWebHosts">here</a>.<!-- This should go somewhere else  The code is readable, so Python developer to easily look at the generated code and understand its details. In fact, there are few web consultancies using Appcubator to generate starter code for their projects. --></span>
+        </div>
+        <div id="q6-section" class="hoff2 section">
+          <strong>What happens to my application's data on Appcubator?</strong>
+          <span>You own it completely. You can browse and download it using the admin panel, and when you delete your app, the data is also deleted.</span>
+        </div>
+        <div id="q7-section" class="hoff2 section">
+          <strong>How can I import data into my app?</strong>
+          <span>Your app comes with a data-browser built-in, so you can upload your Excel, CSV, XML, or JSON data.</span>
+        </div>
+        <div id="q8-section" class="hoff2 section">
+          <strong>What is the performance of sites hosted on Appcubator?</strong>
+          <span>Good. If your site gets slow, we'll scale the performance up for you up to 1500 users. Want more scalable hosting? Our apps are portable, so you can host anywhere, including the industry giants like Amazon for unlimited performance.</span>
+        </div>
+        <div id="q9-section" class="hoff2 section">
+          <strong>How is Appcubator different from Weebly/Squarespace/Wix or other site builders?</strong>
+            <span>Appcubator is not a *site* builder per se. It is an "application" builder that is designed to handle dynamic data and user input.</span>
+        </div>
+        <div id="q10-section" class="hoff2 section">
+          <strong>Do you support other languages/frameworks?</strong>
+          <span>In the future. Our current focus is on refining the flow of building applications for you first. Then we'll work on generating PHP or Rails applications as well.</span>
+        </div>
+        <div id="q11-section" class="hoff2 section">
+          <strong>Can I refer my friends/collegues to Appcubator?</strong>
+          <span>Yes, we'd appreciate if you did! Just go to the Garage page after you signup and click on "Invite Friends" link. If you sign up 3 friends, we'll send you an Appcubator T-Shirt as a token of our appreciation.</span>
+        </div>
+        <h3 style="margin-bottom:30px;" class="hoff4">Have questions? Please submit them below. We promise to answer as soon as possible!</h3>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'appcubator'; // required: replace example with your forum shortname
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
+    </div>
+  </div>
+  {% include "website-footer.html" %}
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+{% endblock %}

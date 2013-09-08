@@ -35,7 +35,7 @@
             },
             "footer": {
                 "isFixed": true,
-                "customText": "Powered by Appcubator",
+                "customText": "<a href='http://appcubator.com'>Powered by Appcubator</a>",
                 "isHidden": false,
                 "links": [
                     {

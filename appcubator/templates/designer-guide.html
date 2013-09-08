@@ -1,26 +1,23 @@
-{% extends "infra-out-html.html" %}
+{% extends "website-tutorial-infra.html" %}
 
-{% block css %}
-<script type="text/javascript" src="https://platform.linkedin.com/in.js">
-api_key: etouje3xl27v
-scope: r_fullprofile r_emailaddress
-</script>
-<script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home2.css">
-{% endblock %}
-{% block page %}
-<div id="fb-root"></div>
-<script>
-</script>
-{% include "website-leftpanel.html" %}
 
-<div class="sliding-panel">
-  <div class="slide-aboutus slide-documentation">
+{% block tutorial-table-content %}
+<li><a href="#themeeditor-section">How to Use the Theme Editor</a></li>
+<li><a href="#basecss-section">Base CSS</a></li>
+<li><a href="#navigationbar-section">How to style Navigation Bar?</a></li>
+<li><a href="#addinguielement-section">Adding UI Element Styles</a></li>
+<li><a href="#customfonts-section">How to add custom fonts</a></li>
+<li><a href="#addimages-section">How to add images and icons</a></li>
+{% endblock%}
+
+{% block tutorial-content %}
+<div class="section" id="themeeditor-section">
     <h4>How to Use the Theme Editor</h4>
     <p>Theme editor gives you full control over your interface. It requires knowledge of CSS. It uses LESS to compile the styles on the generated app, but it's not a required skill.</p>
     <p class="image"><img src="https://www.filepicker.io/api/file/r3WVLeS2QY6vXSuAk3op"></p>
     <p>You can access the theme editor on the top right menu of your application. You'll be directed to the Theme Editor when you click the "Theme Editor" button.</p>
+</div>
+<div class="section" id="basecss-section">
     <h5>Base CSS</h5>
     <p>Base CSS is the CSS that will directly be injected to your page. It should include the overall styling of your page, such as the styling of the body tag, navigation bar or footer.</p>
     <h6>How to style body tag?</h6>
@@ -29,6 +26,8 @@ scope: r_fullprofile r_emailaddress
       <span>Example styling:</span><br>
       <img src="https://www.filepicker.io/api/file/EJd57eLJSZOGEoab2Jnv">
     </p>
+</div>
+<div class="section" id="navigationbar-section">
     <h6>How to style Navigation Bar?</h6>
     <p>Navbar on the generated app has a constant semantic HTML, but you are free to style it however you would like.</p>
     <p>The HTML for the navigation bar looks like the following:<p>
@@ -58,6 +57,8 @@ scope: r_fullprofile r_emailaddress
         &#60;/div>
       </code></pre></p>
       <p>The <i>class</i>s and <i>id</i>s here are always constant, so you can style each part of the footer through those selectors. The template theme will have a simple styling that you can just fill in.</p>
+</div>
+<div class="section" id="addinguielement-section">
       <h5>Adding UI Element Styles</h5>
       <p>The types of UI elements you can create on the editor are already defined and you can create new classes, or "styling"s, for these UI element types. The stylings you create will be available on the editor, when you click the "Edit Style" button on the widget editor.</p>
       <p class="example">
@@ -66,12 +67,16 @@ scope: r_fullprofile r_emailaddress
         <img src="https://www.filepicker.io/api/file/iVjwuCieSQ65vnuZYiiK" style="height:240px; margin-left: 20px"><br>
         <small>P.S. We don't recommend making buttons as ugly as the ones on the above example :) </small>
       </p>
+</div>
+<div class="section" id="customfonts-section">
       <h6>How to add custom fonts</h6>
       <p>It's exteremely easy to add custom fonts to your theme. We have already integrated Google Fonts API, so you can just pick which fonts you'd like to use from the dropdown and start using it in your CSS.</p>
       <p class="image">
         Just click on "Fonts" on the left menu, and ...
         <img src="https://www.filepicker.io/api/file/020MDdmtTeKaM5fv2KHu">
       </p>
+</div>
+<div class="section" id="addimages-section">
       <h6>How to add images and icons</h6>
       <p>Wouldn't it be awesome if you put some nice icons to your theme or provide some more statics? It's easy. You can go to the statics section by clicking the "Statics" on the left menu and you will see the interface where you can upload new statics as well as see your already uploaded statics.</p>
       <p class="image">
@@ -79,27 +84,12 @@ scope: r_fullprofile r_emailaddress
         <img src="https://www.filepicker.io/api/file/lh99JrOuRmSMtPRQHrBB
         ">
       </p>
-    </p>
+</div>
     <hr>
     <div class="feed">
       <p>Please don't hesitate to ask your questions or comment below. We'll answer as soon as possible!</p>
       <div class="fb-comments" data-href="http://appcubator.com/resources/designer-guide/" data-width="600"></div>
       <div id="fb-root"></div>
     </div>
-  </div>
-  {% include "website-footer.html" %}
-</div>
 {% endblock %}
 
-{% block js %}
-<script type="text/javascript" data-main="{{ STATIC_URL }}js/application/external-pages/website-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
-<script>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=145000778994158";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-</script>
-{% endblock %}

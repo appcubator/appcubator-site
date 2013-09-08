@@ -24,10 +24,13 @@ function(LinkEditorView) {
       var self = this;
 
       _.bindAll(this);
+      this.subviews = [];
 
       this.model  = model;
       this.links = this.model.get('links');
       this.listenTo(this.links, 'reset', this.renderLinkEditorViews);
+      this.listenTo(this.links, 'add', this.addLinkEditorView);
+
       this.render();
     },
 
@@ -65,15 +68,24 @@ function(LinkEditorView) {
     },
 
     addLinkEditorClicked: function(e) {
-      this.model.get('links').add();
-      var newLink = this.model.get('links').last();
-      this.addLinkEditorView(newLink);
+      var newLink = {};
+      if(this.model.get('links').last()) {
+        _.clone(this.model.get('links').last().toJSON());
+      }
+      else {
+        newLink = {
+          title: "Homepage",
+          url: "internal://Homepage"
+        };
+      }
+      this.model.get('links').push(newLink);
     },
 
     addLinkEditorView: function(linkModel) {
       // create new link (duplicate of homepage link)
       var newLink = linkModel;
       var newLinkEditor = new LinkEditorView({ model: newLink});
+      this.subviews.push(newLinkEditor);
       this.$linksList.append(newLinkEditor.render().el);
     },
 

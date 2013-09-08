@@ -8,6 +8,7 @@ function(Backbone) {
   var SimpleDialogueView = Backbone.DialogueView.extend({
     tagName: 'div',
     className: 'normal-dialogue',
+    padding: 0,
     events : {
       'click .btn.done' : 'closeModal'
     },

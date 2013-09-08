@@ -1,0 +1,14 @@
+[{
+    "section": "Got code?",
+    "img_url": "/static/img/documentation/socialnetwork/p1/1.png",
+    "shortText": "Download or git clone your code",
+    "longText": "You can get your code by downloading a zip, or if you how to use git, you can clone the git repo."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p1/1.png",
+    "shortText": "Get it running on your computer or in the cloud",
+    "longText": "Follow the guide here to get your code up and running."
+},{
+    "img_url": "/static/img/documentation/socialnetwork/p1/1.png",
+    "shortText": "Get it running on your computer or in the cloud",
+    "longText": "Follow the guide here to get your code up and running."
+}]

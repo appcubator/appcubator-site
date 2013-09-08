@@ -5,24 +5,24 @@ define(function(require, exports, module) {
     var ErrorDialogueView  = require("mixins/ErrorDialogueView");
     var SimpleDialogueView = require("mixins/SimpleDialogueView");
 
-    var TutorialView = require("tutorial/TutorialView"),
-        EmailsView = require("app/emails/EmailsView"),
-        DeployView = require("app/DeployView"),
-        SoftErrorView = require("app/SoftErrorView");
-
+    var TutorialView  = require("tutorial/TutorialView"),
+        EmailsView    = require("app/emails/EmailsView"),
+        DeployView    = require("app/DeployView"),
+        SoftErrorView = require("app/SoftErrorView"),
+        GarageView    = require("app/GarageView");
 
     var AppRouter = Backbone.Router.extend({
 
         routes: {
-            "app/:appid/info/*tutorial": "info",
-            "app/:appid/tables/*tutorial": "tables",
-            "app/:appid/gallery/*tutorial": "themes",
-            "app/:appid/pages/*tutorial": "pages",
-            "app/:appid/editor/:pageid/": "editor",
+            "app/:appid/info/*tutorial"        : "info",
+            "app/:appid/tables/*tutorial"      : "tables",
+            "app/:appid/gallery/*tutorial"     : "themes",
+            "app/:appid/pages/*tutorial"       : "pages",
+            "app/:appid/editor/:pageid/"       : "editor",
             "app/:appid/mobile-editor/:pageid/": "mobileEditor",
-            "app/:appid/emails/*tutorial": "emails",
-            "app/:appid/*tutorial": "index",
-            "app/:appid/*anything/": "index"
+            "app/:appid/emails/*tutorial"      : "emails",
+            "app/:appid/*tutorial"             : "index",
+            "app/:appid/*anything/"            : "index"
         },
 
         tutorialPage: 0,
@@ -52,6 +52,11 @@ define(function(require, exports, module) {
             keyDispatcher.bindComb('ctrl+v', this.paste);
 
             var autoSave = setInterval(this.save, 30000);
+
+            if(appId !== 0) {
+                this.garageView = new GarageView();
+                $('.garage-toggle').on('click', this.garageView.show);
+            }
 
             this.listenTo(v1State.get('tables'), 'add', this.entityAdded);
         },
@@ -441,11 +446,11 @@ define(function(require, exports, module) {
             if (this.view.marqueeView.multiSelectorView.contents.length) {
                 this.contents = [];
                 _(this.view.marqueeView.multiSelectorView.contents).each(function(model) {
-                    this.contents.push(model.toJSON());
+                    this.contents.push(_.clone(model.toJSON()));
                 }, this);
             } else if (this.view.widgetsManager.widgetSelectorView.selectedEl) {
                 this.contents = [];
-                this.contents.push(this.view.widgetsManager.widgetSelectorView.selectedEl.toJSON());
+                this.contents.push(_.clone(this.view.widgetsManager.widgetSelectorView.selectedEl.toJSON()));
             }
         },
 
@@ -460,7 +465,10 @@ define(function(require, exports, module) {
             });
 
             if (this.view.widgetsCollection) {
-                var coll = this.view.widgetsCollection.add(this.contents);
+                console.log("paste");
+                console.log(this.view);
+                console.log(this.contents);
+                var coll = this.view.widgetsCollection.add(_.clone(this.contents));
                 if (this.contents.length == 1) {
                     coll.last(function(widgetModel){ widgetModel.trigger('selected'); });
                 }
@@ -503,6 +511,11 @@ define(function(require, exports, module) {
             v1.getDeploymentStatus(successCallback, function() {
                 setTimeout(function() { v1.whenDeployed(successCallback); }, 1500);
             });
+        },
+
+        showGarage: function() {
+            this.garageView.show();
+            olark('api.box.show');
         }
 
     });

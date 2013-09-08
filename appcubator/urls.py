@@ -12,11 +12,14 @@ from payments import views as payment_views
 urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
     url(r'^beta/$',                     base_views.homepage_new),
-    url(r'^showhn/$',                   base_views.showhnpage),
+    url(r'^showhn/$',                   base_views.homepage),
     url(r'^showgsb/$',                  base_views.showgsbpage),
     url(r'^showdn/$',                   base_views.showdnpage),
     url(r'^girlswhocode/$',             base_views.showgwcpage),
     url(r'^developer/$',                base_views.developer_homepage),
+    url(r'^community/$',                base_views.community_page),
+    url(r'^community/faq/$',            base_views.community_faq_page),
+
 
     url(r'^aboutus/$',                  base_views.aboutus),
     url(r'^changelog/$',                base_views.changelog),
@@ -36,7 +39,7 @@ urlpatterns = patterns('',
     # only creates beta invite
     url(r'^signup_form/$',              base_views.signup_new_customer),
     # actually signs up.
-    url(r'^signup/$',                   base_views.signup),
+    url(r'^signup/$',                   base_views.signup, name='signup_form'),
     # actually signs up, stores source info
     url(r'^signup_hn_form/$',           base_views.signup_from_hn, name='hn_signup_form'),
     url(r'^signup_dn_form/$',           base_views.signup_from_dn, name='dn_signup_form'),
@@ -48,12 +51,24 @@ urlpatterns = patterns('',
     url(r'^payments/',                  include('appcubator.payments.urls')),
     url(r'^app/(\d+)/payment/$',        payment_views.app_payment),
 
-    url(r'^resources/$',                         base_views.resources),
-    url(r'^resources/screencast/(\d+)/$',        base_views.screencast),
-    url(r'^resources/sample/(\d+)/$',            base_views.sample_app),
-    url(r'^resources/sample/(\d+)/part/(\d+)/$', base_views.sample_app_part),
-    url(r'^resources/designer-guide/$',          base_views.designer_guide),
-    url(r'^resources/developer-guide/$',         base_views.developer_guide),
+    url(r'^resources/$',                                           base_views.resources),
+    url(r'^resources/editor/$',                                    base_views.external_editor),
+    url(r'^resources/quickstart/$',                                base_views.quickstart),
+    url(r'^resources/tutorials/$',                                 base_views.tutorials),
+    url(r'^resources/documentation/$',                             base_views.documentation),
+    url(r'^resources/screencast/(\d+)/$',                          base_views.screencast), # these are the editor videos
+
+    url(r'^resources/tutorial/build-social-network/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'howtosocialnetwork'}),
+    url(r'^resources/tutorial/deploy-to-cloud/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'deploy-to-cloud'}),
+    url(r'^resources/tutorial/custom-code/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'custom-code'}),
+    url(r'^resources/tutorial/what-is-a-web-app/$',                base_views.resources_whatisawebapp),
+    url(r'^resources/tutorial/appcubator-for-django-developers/$', base_views.resources_fordjangodevs),
+
+    url(r'^resources/sample/(\d+)/$',                              base_views.sample_app),
+    url(r'^resources/sample/(\d+)/part/(\d+)/$',                   base_views.sample_app_part),
+
+    url(r'^resources/designer-guide/$',                            base_views.designer_guide),
+    url(r'^resources/developer-guide/$',                           base_views.developer_guide),
 )
 
 urlpatterns += patterns('appcubator.log_views',
@@ -119,11 +134,10 @@ urlpatterns += patterns('appcubator.views',
     url(r'^documentation/([^/]+)/$', 'documentation_page'),
 
     # the rest
-    url(r'^app/(\d+)/', 'app_page'), # this serves all the app pages
+    url(r'^app/(\d+)/', 'app_page', {"page_name": "overview"}), # this serves all the app pages
+    url(r'^app/(\d+)/([^/]+)/$', 'app_page'), # this serves all the app pages
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
-    url(r'^yomomma/(\d+)/$', 'yomomma'),
-    url(r'^webgeekjokes/$', 'webgeekjokes'),
 )
 
 urlpatterns += patterns('appcubator.admin_views',

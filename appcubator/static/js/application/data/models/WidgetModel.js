@@ -72,10 +72,23 @@ function(DataModel, LayoutModel) {
         },
 
         setupLoopContext: function(entityModel) {
-            this.get('context').push({
+            var newContext = {
                 entity: entityModel.get('name'),
                 context: 'loop.' + entityModel.get('name')
+            };
+            var isUnique = true;
+
+            this.get('context').each(function(context) {
+                if(_.isEqual(context.toJSON(), newContext)) { isUnique = false; }
             });
+
+            if(isUnique) {
+                this.get('context').push({
+                    entity: entityModel.get('name'),
+                    context: 'loop.' + entityModel.get('name')
+                });
+            }
+
             return this;
         },
 
@@ -90,7 +103,7 @@ function(DataModel, LayoutModel) {
                 });
             });
 
-
+            //context is being added twice
             this.get('context').each(function(context) {
                 var listOfPages = v1State.get('pages').getPagesWithEntityName(context.get('entity'));
                 _(listOfPages).each(function(pageName) {

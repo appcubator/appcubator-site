@@ -3,7 +3,6 @@ define([
   'models/FormModel',
   'app/entities/TableView',
   'app/entities/UserTableView',
-  'app/entities/UploadExcelView',
   'app/entities/ShowDataView',
   'app/templates/TableTemplates',
   'prettyCheckable'
@@ -12,7 +11,6 @@ function( FieldModel,
           FormModel,
           TableView,
           UserTableView,
-          UploadExcelView,
           ShowDataView) {
 
   var TablesView = Backbone.View.extend({

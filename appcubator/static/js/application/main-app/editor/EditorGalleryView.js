@@ -448,7 +448,7 @@ define([
 
       console.log(nested_field);
       var displayType = this.getFieldType(nested_field);
-      var editorContext = this.editorContext ? this.editorContext : "page";
+      var editorContext = this.editorContext ? this.editorContext : "Page";
 
       var content_ops = {};
 
@@ -542,6 +542,7 @@ define([
 
     createNode: function(layout, id) {
       var type = id.replace('type-','');
+      
       if(type == "imageslider") {
         return this.widgetsCollection.createImageSlider(layout);
       }
@@ -552,6 +553,10 @@ define([
 
       if(type == "facebookshare") {
         return this.widgetsCollection.createFacebookShare(layout);
+      }
+
+      if(type == "embedvideo") {
+        return this.widgetsCollection.createVideoEmbed(layout);
       }
 
       if(type == "custom-widget") {
