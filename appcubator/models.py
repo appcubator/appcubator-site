@@ -204,7 +204,7 @@ class TempDeployment(RandomPrimaryIdModel):
         return self._mobile_uie_state_json
 
     @staticmethod
-    def get_rand_subdomain(self):
+    def get_rand_subdomain():
         """proposes some random subdomain"""
         t = "temp-%s" % self.id
         return t
