@@ -59,14 +59,6 @@ define(function(require, exports, module) {
                 document.getElementsByClassName('total-page-visits')[0].innerHTML += '<em>' + key + '</em> :  ' + val + ' views<br>';
             });
 
-            // if (data.total_page_views_dict) {
-            //     _(blackList).each(function(item) {
-            //         if (item in data.total_page_views_dict) {
-            //             total_page_views -= data.total_page_views_dict[item];
-            //         }
-            //     });
-            // }
-
             document.getElementsByClassName('total-page-views')[0].innerHTML = total_page_views;
         },
 
