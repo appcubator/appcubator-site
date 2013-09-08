@@ -5,7 +5,6 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from simplejson import JSONDecodeError
 
-import tarfile
 import os, os.path
 import re
 import requests
@@ -13,7 +12,6 @@ import simplejson
 import traceback
 import sys
 from datetime import datetime, timedelta
-import time
 
 import subprocess, shlex
 import hashlib
@@ -24,7 +22,7 @@ from app_builder.analyzer import App as AnalyzedApp # avoid conflict w site App
 from app_builder.controller import create_codes
 from app_builder.coder import Coder, write_to_fs
 
-
+import deploy
 
 
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
@@ -257,7 +255,7 @@ class TempDeployment(RandomPrimaryIdModel):
         finally:
             # because hard disk space doesn't grow on trees.
             shutil.rmtree(tmpdir)
-        return r
+        return (is_merge, deployment_id)
 
 
 
@@ -285,7 +283,7 @@ class App(models.Model):
     def update_deployment_info(self):
         # calls method outside of this class
         if self.deployment_id is not None:
-            r = update_deployment_info(self.deployment_id, self.hostname(), self.gitrepo_name)
+            r = deploy.update_deployment_info(self.deployment_id, self.hostname(), self.gitrepo_name)
         return r
 
     def get_deployment_status(self):
@@ -297,7 +295,7 @@ class App(models.Model):
         """
         if self.deployment_id is None:
             return 0
-        s = get_deployment_status(self.deployment_id)
+        s = deploy.get_deployment_status(self.deployment_id)
         return s
 
     def save(self, state_version=True, update_deploy_server=True, *args, **kwargs):
@@ -319,7 +317,7 @@ class App(models.Model):
                 # update call to deployment server
                 try:
                     self.update_deployment_info()
-                except NotDeployedError:
+                except deploy.NotDeployedError:
                     self.deployment_id = None
                     self.deploy()
 

@@ -1,6 +1,8 @@
 import requests
 import logging
 from django.conf import settings
+import os
+import tarfile
 logger = logging.getLogger(__name__)
 
 class DeploymentError(Exception):
