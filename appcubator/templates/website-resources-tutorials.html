@@ -54,6 +54,8 @@
           </a>
         </li>
         <li>
+          <div class="coming-soon-wrapper">
+          </div>
           <a href="/resources/designer-guide/">
             <div  class="picture"><img src="{{ STATIC_URL }}img/guide-icon.png"></div>
             <div class="summary">
@@ -65,9 +67,24 @@
       </ul>
     </div>
     <div class="centered-container section" id="custom-section">
+        <style>
+            .coming-soon-wrapper {
+                position:absolute;
+                background-color:white;
+                z-index:5;
+                opacity:.8;
+                width: 345px;
+                height: 230px;
+            }
+            .coming-soon-wrapper:hover * {
+                cursor:default;
+            }
+      </style>
       <h5>Custom code</h5>
       <ul class="guides">
         <li>
+        <div class="coming-soon-wrapper">
+        </div>
           <a href="/resources/deploy-to-cloud/">
             <div  class="picture"><img src="{{ STATIC_URL }}img/guide-icon.png"></div>
             <div class="summary">
@@ -77,6 +94,8 @@
           </a>
         </li>
         <li>
+        <div class="coming-soon-wrapper">
+        </div>
           <a href="/resources/deploy-to-cloud/">
             <div  class="picture"><img src="{{ STATIC_URL }}img/guide-icon.png"></div>
             <div class="summary">
