@@ -2,6 +2,18 @@ define(['editor/EditorView'], function(EditorView) {
 
     var ExternalEditorView = EditorView.extend({
 
+        events    : {
+          'click #editor-save'   : 'save',
+          'click #deploy'        : 'deploy',
+          'click .menu-button.help' : 'help',
+          'click .menu-button.question' : 'question',
+          'click .url-bar'       : 'clickedUrl'
+        },
+
+        initialize: function() {
+            ExternalEditorView.__super__.render.initialize(this);
+        },
+
         render: function() {
             ExternalEditorView.__super__.render.call(this);
 
@@ -19,7 +31,23 @@ define(['editor/EditorView'], function(EditorView) {
         },
 
         deploy: function() {
+
+            var self = this;
+            util.get('deploy-text').innerHTML = 'Publishing';
+            var threeDots = util.threeDots();
+            util.get('deploy-text').appendChild(threeDots.el);
+
+            var success_callback = function() {
+                util.get('deploy-text').innerHTML = 'Publish';
+                clearInterval(threeDots.timer);
+            };
+
+            var hold_on_callback = function() {
+                util.get('deploy-text').innerHTML = 'Hold On, It\'s still deploying.';
+            };
+
             if (v1.disableSave === true) return;
+
             var self = this;
             var isDeployed = false;
             var before_deploy = new Date().getTime();
@@ -27,12 +55,17 @@ define(['editor/EditorView'], function(EditorView) {
 
             $.ajax({
                 type: "POST",
-                url: '/resouces/editor/publish/',
+                url: '/resources/editor/publish/',
+                data: {
+                    app_state: JSON.stringify(v1State.toJSON())
+                },
                 success: function(data) {
                     v1.disableSave = false;
-                    isDeployed = true;
                     var deploy_time = (new Date().getTime() - before_deploy) / 1000;
-                    if (callback) v1.whenDeployed(callback);
+                    self.whenDeployed(function() {
+                        success_callback.call(self);
+                        isDeployed = true;
+                    });
                     // open a modal based on deploy response
                     if (data.errors) {
                         var content = {
@@ -85,13 +118,18 @@ define(['editor/EditorView'], function(EditorView) {
 
                 }
             });
+
+            var holdOnTimer = setTimeout(function() {
+                if (!isDeployed) hold_on_callback.call();
+                clearTimeout(holdOnTimer);
+            }, 10000);
         },
 
         getDeploymentStatus: function(successCallback, failCallback) {
 
             $.ajax({
                 type: "GET",
-                url: '/resouces/editor/publish/',
+                url: '/resources/editor/publish/',
                 success: function(data) {
                     console.log(data);
                     if (data.status !== undefined) {
@@ -113,6 +151,7 @@ define(['editor/EditorView'], function(EditorView) {
         },
 
         whenDeployed: function(successCallback) {
+            alert('lmme know');
             v1.getDeploymentStatus(successCallback, function() {
                 setTimeout(function() {
                     v1.whenDeployed(successCallback);
