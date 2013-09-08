@@ -13,16 +13,31 @@
         Resources.
       </div>
       <div class="icon-menu">
+        {% if quickstart %}
+        <a class="item selected" href="/resources/quickstart/">
+          <img src="{{ STATIC_URL}}img/screencasts-blue.png">
+        {% else %}
         <a class="item" href="/resources/quickstart/">
-          <img src="{{ STATIC_URL}}img/screencasts.png">
+          <img src="{{ STATIC_URL}}img/screencasts.png">        
+        {% endif %}
           <span>Quickstart</span>
         </a>
+        {% if tutorials %}
+        <a class="item selected" href="/resources/tutorials/">
+          <img src="{{ STATIC_URL}}img/example-blue.png">
+        {% else %}
         <a class="item" href="/resources/tutorials/">
           <img src="{{ STATIC_URL}}img/example.png">
+        {% endif %}
           <span>Tutorials</span>
         </a>
+        {% if documentation %}
+        <a class="item selected" href="/resources/documentation/">
+          <img src="{{ STATIC_URL}}img/documentation-blue.png">
+        {% else %}
         <a class="item" href="/resources/documentation/">
           <img src="{{ STATIC_URL}}img/documentation.png">
+        {% endif %}
           <span>Documentation</span>
         </a>
       </div>

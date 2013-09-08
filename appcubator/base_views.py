@@ -447,11 +447,13 @@ def external_editor(request):
 def quickstart(request):
     page_context = {}
     page_context["title"] = "Resources"
+    page_context["quickstart"] = True
     return render(request, 'website-resources-quickstart.html', page_context)
 
 def tutorials(request):
     page_context = {}
     page_context["title"] = "Resources"
+    page_context["tutorials"] = True
     parts_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', "screencast-text.json")
     with open(parts_json_path) as f:
         parts = simplejson.load(f)
@@ -461,6 +463,7 @@ def tutorials(request):
 def documentation(request):
     page_context = {}
     page_context["title"] = "Resources"
+    page_context["documentation"] = True
     return render(request, 'website-resources-documentation.html', page_context)
 
 def resources_socialnetwork(request, name=None):
