@@ -307,6 +307,9 @@ class TempDeployment(RandomPrimaryIdModel):
             assert not is_merge
             if self.deployment_id is not None:
                 assert deployment_id == self.deployment_id
+            else:
+                self.deployment_id = deployment_id
+                self.save()
         finally:
             # because hard disk space doesn't grow on trees.
             shutil.rmtree(tmpdir)
