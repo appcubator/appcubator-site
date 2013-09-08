@@ -175,6 +175,34 @@ class TempDeployment(RandomPrimaryIdModel):
 
     created = models.DateField(auto_add_now=True)
 
+    def get_state(self):
+        return simplejson.loads(self._state_json)
+
+    def set_state(self, val):
+        self._state_json = simplejson.dumps(val)
+
+    state = property(get_state, set_state)
+
+    @property
+    def state_json(self):
+        return self._state_json
+
+    @property
+    def uie_state(self):
+        return simplejson.loads(self._uie_state_json)
+
+    @property
+    def uie_state_json(self):
+        return self._uie_state_json
+
+    @property
+    def mobile_uie_state(self):
+        return simplejson.loads(self._mobile_uie_state_json)
+
+    @property
+    def mobile_uie_state_json(self):
+        return self._mobile_uie_state_json
+
     @staticmethod
     def get_rand_subdomain(self):
         """proposes some random subdomain"""
@@ -249,13 +277,25 @@ class TempDeployment(RandomPrimaryIdModel):
         tmpdir = self.write_to_tmpdir()
         try:
             logger.info("Deployed to %s" % tmpdir)
-            is_merge, deployment_id = deploy.transport_app(tmpdir, retry_on_404=retry_on_404, git_user=self.owner.extradata.git_user_id())
+            is_merge, deployment_id = deploy.transport_app(tmpdir, retry_on_404=retry_on_404)
             assert not is_merge
             assert deployment_id == self.deployment_id
         finally:
             # because hard disk space doesn't grow on trees.
             shutil.rmtree(tmpdir)
         return (is_merge, deployment_id)
+
+    def get_deployment_status(self):
+        """
+        Returns 0, 1, or 2.
+         0 = No task running
+         1 = Running
+         2 = Task done, plz collect result.
+        """
+        if self.deployment_id is None:
+            return 0
+        s = deploy.get_deployment_status(self.deployment_id)
+        return s
 
 
 

@@ -439,16 +439,18 @@ def find_or_create_temp_deployment(request):
     t.deploy()
     return t
 
-@require_POST
 def temp_deploy(request):
-    td = find_or_create_temp_deployment(request)
-    old_state = td._state_json
-    td._state_json = request.POST['app_state']
-    td.deploy()
-    # illusion of not saving.
-    td._state_json = old_state
-    td.save()
-    return HttpResponse("if you're looking at this, you should sign up")
+    if request.method == 'GET':
+        return HttpResponse(simplejson.dumps({ 'status': app.get_deployment_status() }), mimetype="application/json")
+    elif request.method == 'POST':
+        td = find_or_create_temp_deployment(request)
+        old_state = td._state_json
+        td._state_json = request.POST['app_state']
+        td.deploy()
+        # illusion of not saving.
+        td._state_json = old_state
+        td.save()
+        return HttpResponse("if you're looking at this, you should sign up")
 
 @require_GET
 def external_editor(request):
