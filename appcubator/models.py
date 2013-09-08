@@ -20,6 +20,12 @@ import hashlib
 import random
 import shutil
 
+from app_builder.analyzer import App as AnalyzedApp # avoid conflict w site App
+from app_builder.controller import create_codes
+from app_builder.coder import Coder, write_to_fs
+
+
+
 
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
     __file__), os.path.normpath("default_state"))
@@ -241,90 +247,13 @@ class TempDeployment(RandomPrimaryIdModel):
             post_data['user_id'] = git_user
         return post_data
 
-    def _write_tar_from_app_dir(self, appdir):
-        """
-        Given the directory of the app, tar it up and return the path to the tar.
-        """
-        contents = os.listdir(appdir)
-        # tar it up
-        t = tarfile.open(os.path.join(appdir, 'payload.tar'), 'w')
-        for fname in contents:
-            t.add(os.path.join(appdir, fname), arcname=fname)
-        t.close()
-        return os.path.join(appdir, 'payload.tar')
-
-    def _transport_app(self, appdir, retry_on_404=True, git_user=None):
-        # tar it up
-        tar_path = self._write_tar_from_app_dir(appdir)
-        f = open(tar_path, "r")
-        try:
-            # catapult the tar over to the deployment server
-            files = {'file':f}
-            post_data = self.get_deploy_data(git_user=git_user)
-            if self.deployment_id is None:
-                try:
-                    r = requests.post("http://%s/deployment/" % settings.DEPLOYMENT_HOSTNAME, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
-                except Exception:
-                    print r.request.__dict__
-
-            else:
-                r = requests.post("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
-
-        finally:
-            f.close()
-            os.remove(os.path.join(appdir, 'payload.tar'))
-
-        if r.status_code == 200:
-            result = {}
-            response_content = r.json()
-            logger.debug("Deployment response content: %r" % response_content)
-            try:
-                self.deployment_id = response_content['deployment_id']
-                self.save(state_version=False)
-            except KeyError:
-                pass
-            if 'errors' in response_content:
-                result['errors'] = response_content['errors']
-
-            result['site_url'] = self.url()
-            result['git_url'] = self.git_url()
-
-            try:
-                syncdb_data = [ u for u in response_content['script_results'] if 'syncdb.py' in u['script'] ][0]
-                if u'value to use for existing rows' in syncdb_data['stderr']:
-                    assert False, "Migration needs help!!!"
-            except Exception:
-                pass # this is the fast_deploy case
-
-            return result
-
-        elif r.status_code == 404 or (r.status_code == 502 and requests.get("http://%s/lskdjflskjf/" % settings.DEPLOYMENT_HOSTNAME).status_code == 404):
-            assert retry_on_404
-            logger.warn("The deployment was not found, so I'm setting deployment id to None")
-            self.deployment_id = None
-            self.save(state_version=False)
-            return self._transport_app(appdir, retry_on_404=False)
-
-        # merge conflict with custom code
-        elif r.status_code == 409:
-            result = {}
-            response_content = r.json()
-            logger.debug("Deployment response content: %r" % response_content)
-            result['files'] = response_content['files']
-            result['branch'] = response_content['branch']
-            result['site_url'] = self.url()
-            result['git_url'] = self.git_url()
-
-            return result
-
-        else:
-            raise DeploymentError("Deployment server error: %r" % r.text)
-
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
         try:
             logger.info("Deployed to %s" % tmpdir)
-            r = self._transport_app(tmpdir, retry_on_404=retry_on_404, git_user=self.owner.extradata.git_user_id())
+            is_merge, deployment_id = deploy.transport_app(tmpdir, retry_on_404=retry_on_404, git_user=self.owner.extradata.git_user_id())
+            assert not is_merge
+            assert deployment_id == self.deployment_id
         finally:
             # because hard disk space doesn't grow on trees.
             shutil.rmtree(tmpdir)
@@ -503,11 +432,6 @@ class App(models.Model):
             self.gitrepo_name = App.provision_gitrepo_name(self.gitrepo_name)
 
     def write_to_tmpdir(self):
-        from app_builder.analyzer import App as AnalyzedApp
-        from app_builder.controller import create_codes
-        from app_builder.coder import Coder, write_to_fs
-
-
         app = AnalyzedApp.create_from_dict(self.state)
 
         app.api_key = self.api_key
@@ -584,11 +508,14 @@ class App(models.Model):
         tmpdir = self.write_to_tmpdir()
         try:
             logger.info("Deployed to %s" % tmpdir)
-            r = self._transport_app(tmpdir, retry_on_404=retry_on_404, git_user=self.owner.extradata.git_user_id())
+            is_merge, data = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404, git_user=self.owner.extradata.git_user_id())
+            if not is_merge:
+                self.deployment_id = data
+                self.save() # might be unnecessary if nothing has changed.
         finally:
             # because hard disk space doesn't grow on trees.
             shutil.rmtree(tmpdir)
-        return r
+        return (is_merge, data)
 
     def delete_deployment(self):
         if self.deployment_id is not None:

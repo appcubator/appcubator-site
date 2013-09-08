@@ -1,5 +1,6 @@
 import requests
 import logging
+from django.conf import settings
 logger = logging.getLogger(__name__)
 
 class DeploymentError(Exception):
@@ -117,7 +118,7 @@ def transport_app(appdir, deploy_id, deploy_data, retry_on_404=True, git_user=No
         except Exception:
             pass # this is the fast_deploy case
 
-        return  response_content['deployment_id']
+        return (False, response_content['deployment_id'])
 
     elif r.status_code == 404 or (r.status_code == 502 and requests.get("http://%s/lskdjflskjf/" % settings.DEPLOYMENT_HOSTNAME).status_code == 404):
         assert retry_on_404
@@ -132,7 +133,7 @@ def transport_app(appdir, deploy_id, deploy_data, retry_on_404=True, git_user=No
         result['files'] = response_content['files']
         result['branch'] = response_content['branch']
 
-        return result
+        return (True, result)
 
     else:
         raise DeploymentError("Deployment server error: %r" % r.text)
