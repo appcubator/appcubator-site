@@ -95,6 +95,19 @@ def change_card(request):
             data = {"error": e.message}
     return _ajax_response(request, "payment/_change_card_form.html", **data)
 
+def set_new_user_plan(user, default_plan='free'):
+    "Sets the the default plan of the user to the Starter (Free) plan."
+    Customer.create(user=user)
+    try:
+        current_plan = user.customer.current_subscription.plan
+    except CurrentSubscription.DoesNotExist:
+        # It should enter here by default on normal execution.
+        current_plan = default_plan
+    try:
+        user.customer.subscribe(current_plan)
+    except stripe.StripeError, e:
+        return e.message
+    return None
 
 @require_POST
 @login_required
