@@ -215,6 +215,8 @@ function(WidgetContentEditor,
         this.$el.append('<div class="right-arrow"></div>');
       }
 
+      this.model.trigger('display-widget-editor');
+
       return this;
     },
 

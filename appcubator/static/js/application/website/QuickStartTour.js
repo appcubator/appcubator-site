@@ -11,6 +11,7 @@ define([
           loc     : "left center, right center",
           url     : '/editor/0/',
           target  : $('#page-3'),
+          highlightTarget: true,
           prepareTime : 400,
           setup   : function(tour, options) {
             $('#page-3').one('click', tour.next);
@@ -58,6 +59,7 @@ define([
           loc     : "right center, left center",
           url     : '/editor/1/',
           target: $('#new-option'),
+          highlightTarget: true,
           setup: function(tour, options) {
             tweetTableCreated = function(table) {
               if(table.get('name') == "Tweet") {
@@ -81,8 +83,21 @@ define([
           content : 'We have this blank form now and we need to add some fields to it. Click on <em>Edit Form</em> button.',
           loc     : "top center, bottom center",
           url     : '/editor/1/',
+          highlightTarget: true,
           target  : $('.form-editor-btn'),
           setup: function(tour, options) {
+            v1State.getCurrentPage().get('uielements').each(function(widgetM) {
+              console.log(widgetM.isForm());
+              if(widgetM.isForm()) {
+                widgetM.on('selected display-widget-editor', function() {
+                  $('.form-editor-btn').first().one('click', tour.next);
+                });
+
+                widgetM.get('layout').on('change', function() {
+                  $('.form-editor-btn').first().one('click', tour.next);
+                });
+              }
+            }, this);
             $('.form-editor-btn').first().one('click', tour.next);
           }
         },
@@ -92,6 +107,7 @@ define([
           content : 'Form editor let\'s you edit your forms and add new fields to it.',
           loc     : "left top, right top",
           url     : '/editor/1/',
+          highlightTarget: true,
           nextButton: true,
           target: $('.form-editor-title')
         },
@@ -102,6 +118,7 @@ define([
           loc     : "bottom center, top center",
           url     : '/editor/1/',
           target: $('.btn.add-field-button'),
+          highlightTarget: true,
           setup: function(tour, options) {
             $('.btn.add-field-button').one('click', function() {
               tour.next();
@@ -115,6 +132,7 @@ define([
           loc     : "top left, bottom left",
           url     : '/editor/1/',
           target  : $('#option-0'),
+          highlightTarget: true,
           setup: function(tour, options) {
             $('#option-0').one('change', tour.next);
           }
@@ -122,10 +140,11 @@ define([
         {
           ind     : 9,
           title   : 'We want to Save Some Text',
-          content : 'We want to save the text content of a tweet here, so we can just name the field as "Content" and click <em>Done</em>',
+          content : 'We want to save the text content of a tweet here, so we can just name the field as <strong>"Content"</strong> and click <strong>Done</strong>',
           loc     : "left top, right top",
           url     : '/editor/1/',
           target  : $('.new-field-form'),
+          highlightTarget: true,
           setup   : function(tour, options) {
             $('.new-field-form').one('submit', tour.next);
           }
@@ -137,6 +156,7 @@ define([
           loc     : "bottom right, top right",
           url     : '/editor/1/',
           target  : $('.btn.done'),
+          highlightTarget: true,
           setup   : function(tour, options) {
 
             $('.btn.done').one('click', tour.next);
