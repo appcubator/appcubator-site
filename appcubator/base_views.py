@@ -238,6 +238,9 @@ def signup(request):
         if 'k' in request.GET:
             api_key = request.GET['k']
             if InvitationKeys.objects.filter(api_key=api_key).exists():
+                ik = InvitationKeys.objects.filter(api_key=api_key)[0]
+                ik.accepted = True
+                ik.save()
                 return render(request, "registration/signup.html")
         return render(request, "website-signup.html")
     else:
