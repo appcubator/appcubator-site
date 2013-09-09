@@ -523,7 +523,7 @@ h6 {
   border: 3px solid #0f2d40;
   animation: blurp 0.2s linear;
   -webkit-animation: blurp 0.2s linear;
-  -webkit-transform: scale(1.15);
+  -webkit-transform: scale(1.05);
 }
 
 @keyframes blurp {
@@ -532,11 +532,11 @@ h6 {
   }
 
   45% {
-    -webkit-transform: scale(1.2);
+    -webkit-transform: scale(1.07);
   }
 
   100% {
-    -webkit-transform: scale(1.15);
+    -webkit-transform: scale(1.05);
   }
 }
 

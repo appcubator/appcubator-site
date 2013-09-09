@@ -14,9 +14,7 @@
       <div class="sub-text">
        The only visual tool that builds and hosts full stack web apps, backed by developer-friendly code.
       </div>
-      <a class="white-btn signup-button" href="/signup">
-        Start Building
-      </a>
+      <a class="white-btn" href="/resources/editor/" rel="external" target="_blank">See the Demo</a>
     </div>
     <div class="three-div">
       <div class="left view">
@@ -112,27 +110,43 @@
         <h2>With Appcubator, you can build...</h2>
         <div class="gallery">
           <ul>
-            <li>
-              <div class="content">
-                <span class="title">T15</span>
-                <div class="screenshot"><img src="{{STATIC_URL}}img/app1.png"></div>
-                <p>A private social network for Tepper MBA students. Built by Moises Morgenstern, an MBA student.</p>
-              </div>
-            </li>
-            <li>
-              <div class="content">
-                <span class="title">Payroll</span>
-                <div class="screenshot"><img src="{{STATIC_URL}}img/app2.png"></div>
-                <p>A payroll management webapp for a tutoring company. Built by Jacob Buckman, a college freshman.</p>
-              </div>
-            </li>
-            <li>
-              <div class="content">
-                <span class="title">StudyCloud</span>
-                <div class="screenshot"><img src="{{STATIC_URL}}img/app3.png"></div>
-                <p>A platform for sharing university study materials. Built by Pooja Rambhia, a medical student.</p>
-              </div>
-            </li>
+            <style>
+              .gallery .content .description {
+                font-size: 16px; 
+                margin-bottom: 0;
+              }
+              .gallery .content .occupation {
+                font-size: 13px;
+              }
+            </style>
+            <a href="/community/" target="_blank">
+              <li>
+                <div class="content">
+                  <span class="title">T15</span>
+                  <div class="screenshot"><img src="{{STATIC_URL}}img/app1.png"></div>
+                  <p class="description">A private social network</p>
+                  <p class="author">Built by Moises Morgenstern, <span class="occupation">an MBA student.</span></p>
+                </div>
+              </li>
+            </a><a href="/community/" target="_blank">
+              <li>
+                <div class="content">
+                  <span class="title">Payroll</span>
+                  <div class="screenshot"><img src="{{STATIC_URL}}img/app2.png"></div>
+                  <p class="description">A payroll management system.</p>
+                  <p class="author">Built by Jacob Buckman, <span class="occupation">a college freshman.</span></p>
+                </div>
+              </li>
+            </a><a href="/community/" target="_blank">
+              <li>
+                <div class="content">
+                  <span class="title">StudyCloud</span>
+                  <div class="screenshot"><img src="{{STATIC_URL}}img/app3.png"></div>
+                  <p class="description">A university note-sharing platform.</p>
+                  <p class="author">Built by Pooja Rambhia, <span class="occupation">a medical student.</span></p>
+                </div>
+              </li>
+            </a>
           </ul>
         </div>
       </div>
@@ -186,6 +200,6 @@
 {% endblock %}
 
 {% block js %}
-<script src="//cdn.optimizely.com/js/312473184.js"></script>
+<!--<script src="//cdn.optimizely.com/js/312473184.js"></script>-->
 <script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 {% endblock %}
