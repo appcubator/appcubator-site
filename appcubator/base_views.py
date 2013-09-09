@@ -16,6 +16,7 @@ from models import get_default_app_state, get_default_theme_state
 from models import get_default_uie_state, get_default_mobile_uie_state
 
 from appcubator.email.sendgrid_email import send_email, send_template_email
+from appcubator.payments.views import set_new_user_plan
 
 import requests
 import re
@@ -260,6 +261,10 @@ def signup(request):
             create_customer(request, long(user.pk))
             new_user = authenticate(username=req['email'],
                                     password=req['password1'])
+            plan_status = set_new_user_plan(new_user)
+            if plan_status is not None:
+                stripe_error = "We encountered an error with signing you up on your starter plan. Sorry!"
+                return HttpResponse(simplejson.dumps(stripe_error), mimetype="application/json")
             login(request, new_user)
 
             if request.is_ajax():
