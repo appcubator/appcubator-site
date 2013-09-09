@@ -174,6 +174,10 @@ function(DataModel, LayoutModel) {
                 return false;
         },
 
+        isForm: function() {
+            return this.get('type') == "form";
+        },
+
         isList: function() {
             if (this.get('type') == "loop") return true;
             return false;

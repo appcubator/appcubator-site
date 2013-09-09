@@ -37,7 +37,10 @@ def get_deployment_status(deployment_id):
     r = requests.get(deployment_url, headers={'X-Requested-With': 'XMLHttpRequest'})
     if r.status_code != 200:
         logger.error("Get deployment status failed: %r" % r.__dict__)
-        raise DeploymentError()
+        if r.status_code == 404:
+            raise NotDeployedError()
+        else:
+            raise DeploymentError()
 
     # get data out
     d = r.json()
