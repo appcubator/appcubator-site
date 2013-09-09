@@ -11,7 +11,6 @@ from payments import views as payment_views
 
 urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
-    url(r'^beta/$',                     base_views.homepage_new),
     url(r'^showhn/$',                   base_views.homepage),
     url(r'^showgsb/$',                  base_views.showgsbpage),
     url(r'^showdn/$',                   base_views.showdnpage),
