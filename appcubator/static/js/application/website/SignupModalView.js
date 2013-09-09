@@ -12,7 +12,7 @@ define([
       // 'submit form'           : 'onFormSubmit'
     },
 
-    initialize: function(urlModel){
+    initialize: function(){
       _.bindAll(this);
       this.render();
       this.ajaxify();
@@ -25,22 +25,7 @@ define([
 
       $('input[type=checkbox]').prettyCheckable();
       // $('input[type=radio]').prettyCheckable();
-
-      $('.btn-facebook').on('click', function() {
-            FB.login(function(response) {
-             if (response.authResponse) {
-              FB.api('/me', function(response) {
-                $("#inp-name").val(response.name);
-                $("#inp-email").val(response.email);
-                $("#inp-extra").val(JSON.stringify(response));
-               });
-             } else {
-               console.log('User cancelled login or did not fully authorize.');
-             }
-           }, {scope: 'email'});
-      });
-
-
+      this.bindFBBtn();
       return this;
     },
 
@@ -99,6 +84,23 @@ define([
        }
      });
     },
+
+    bindFBBtn: function() {
+      $('.btn-facebook').on('click', function() {
+            FB.login(function(response) {
+             if (response.authResponse) {
+              FB.api('/me', function(response) {
+                $("#inp-name").val(response.name);
+                $("#inp-email").val(response.email);
+                $("#inp-extra").val(JSON.stringify(response));
+               });
+             } else {
+               console.log('User cancelled login or did not fully authorize.');
+             }
+           }, {scope: 'email'});
+      });
+    },
+
     showTweetBtn: function() {
       !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
     }

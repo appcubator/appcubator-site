@@ -1,6 +1,4 @@
-define(['editor/EditorView'], function(EditorView) {
-
-    var DeployView    = require("app/DeployView");
+define(['editor/EditorView', './SignupDeployView'], function(EditorView, SignupDeployView) {
 
     var ExternalEditorView = EditorView.extend({
 
@@ -105,7 +103,8 @@ define(['editor/EditorView'], function(EditorView) {
                         }, appId);
                     } else {
                         self.whenDeployed(function() {
-                            new DeployView(data);
+                            console.log(data);
+                            new SignupDeployView(data);
 
                             success_callback.call(self);
                             isDeployed = true;
