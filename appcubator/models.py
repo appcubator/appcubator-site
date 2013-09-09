@@ -307,9 +307,8 @@ class TempDeployment(RandomPrimaryIdModel):
             assert not is_merge
             if self.deployment_id is not None:
                 logger.warn("Old deployment was not found, created a new deployment.")
-            else:
-                self.deployment_id = deployment_id
-                self.save()
+            self.deployment_id = deployment_id
+            self.save()
         finally:
             # because hard disk space doesn't grow on trees.
             shutil.rmtree(tmpdir)
