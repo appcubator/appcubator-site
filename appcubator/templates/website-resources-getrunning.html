@@ -136,10 +136,15 @@ h5 a {
 
 {% block tutorial-table-content %}
 <li><a href="#overview-section">Intro</a></li>
-<li><a href="#user-profiles-section">Setting it up</a></li>
-
-<li class="sub" id="slide-0-0"><a href="#user-profiles-section">Basic Page Design</a></li>
-<li class="sub" id="slide-0-8"><a href="#user-profiles-section">User Profile Page</a></li>
+<li><a href="#setup-environment-section">Setup environment</a></li>
+    <li class="sub"><a href="#run-code-section-download">Installing Python, pip</a></li>
+    <li class="sub"><a href="#run-code-section-download">Installing SQLite</a></li>
+<li><a href="#run-code-section">Run the code</a></li>
+    <li class="sub"><a href="#run-code-section-download">Download the code</a></li>
+    <li class="sub"><a href="#run-code-section-install">Install packages</a></li>
+    <li class="sub"><a href="#run-code-section-database">Create Database</a></li>
+    <li class="sub"><a href="#run-code-section-uprunning">Up and Running</a></li>
+<li><a href="#terminal-section">Intro to Terminal (coming soon)</a></li>
 {% endblock %}
 
 {% block tutorial-content %}
@@ -155,8 +160,7 @@ h5 a {
         <p>Tutorial for Windows coming soon!</p>
     </div>
 </div>
-{# These names should also be in SLIDEVIEWSLUGS #}
-<div class="section" id="user-profiles-section">
+<div class="section" id="setup-environment-section">
     <h5>Setting up the environment - installing software<a name="user-profiles"></a></h5>
     <p>Appcubator apps use the Python/Django/Sqlite stack. You can use the official guide <a target="_blank" href="https://docs.djangoproject.com/en/1.5/intro/install/">here</a>, or follow our slides, which are beginner-friendly.</p>
     <p>Note: This is a very common process and there's more than one way to do it. If you get stuck at any point, just chat with us or send us an email. We'd be happy to help you out.</p>
@@ -204,8 +208,8 @@ Cleaning up...</code></pre>
 <p>Congratulations! You now have database software installed! We're almost there.</p>
 
 </div>
-<div class="section" id="user-profiles-section">
-    <h5>Running the code<a name="user-profiles"></a></h5>
+<div class="section" id="run-code-section">
+    <h5>Running the code</h5>
     <p>Now that you have all the tools installed, we can get the web app source code up and running.</p>
     <h6>Download the code</h6>
     <p>Download the zip and extract the zip file somewhere memorable, like in your Documents on on your Desktop. Or if you know how to use <code>git</code>, or clone the git repository.</p>
@@ -221,19 +225,20 @@ Installing Pip...done.</code></pre>
 <pre><code>$ python manage.py migrate</code></pre>
     <h6>Run the web app</h6>
 <pre><code>$ python manage.py runserver</code></pre>
-    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
 </div>
-<div class="section" id="user-profiles-section">
-    <h5>Intro to the Terminal (optional)<a name="user-profiles"></a></h5>
+<div class="section" id="terminal-section">
+    <h5>Intro to the Terminal (coming soon)</h5>
     <p>To set up a Django app, you'll need to use the terminal (command line). We'll go over the basics of how it works in case you're not familiar with it.</p>
-    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+    {#{% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}#}
 </div>
 {% endblock %}
 
 
+{#
 {% block js %}
 {{ block.super }}
 <script type="text/javascript">
 var SLIDEVIEWSLUGS = ["user-profiles"];
 </script>
 {% endblock %}
+#}
