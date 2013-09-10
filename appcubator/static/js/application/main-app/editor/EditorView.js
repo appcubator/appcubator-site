@@ -150,7 +150,7 @@ function( PageModel,
       util.get('deploy-text').innerHTML = 'Publishing';
       var threeDots = util.threeDots();
       util.get('deploy-text').appendChild(threeDots.el);
-      
+
       var success_callback = function() {
         util.get('deploy-text').innerHTML = 'Publish';
         clearInterval(threeDots.timer);

@@ -627,6 +627,16 @@ def app_deploy(request, app_id):
     if request.method == 'GET':
         return JsonResponse({ 'status': app.get_deployment_status() })
     elif request.method == 'POST':
+        """
+        # validate the app state
+        try:
+            a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
+        except analyzer.UserInputError, e:
+            app.save()
+            d = e.to_dict()
+            d['version_id'] = app.state.get('version_id', 0)
+            return JsonResponse(d, status=400)
+        """
 
         result = {}
         result['site_url'] = app.url()
