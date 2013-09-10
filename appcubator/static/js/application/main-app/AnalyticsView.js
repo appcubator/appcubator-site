@@ -43,21 +43,19 @@ define(function(require, exports, module) {
             document.getElementsByClassName('total-active-users')[0].innerHTML = data.total_active_users || 0;
             // document.getElementsByClassName('total-active-visitors')[0].innerHTML = data.total_active_visitors || 0;
 
-            // filter out requests for 'blacklisted' pages/statics
-            var blackList = ['/favicon.ico'];
+            var blackList = ['/favicon.ico', '/robots.txt'];
             var total_page_views = data.total_page_views || 0;
 
             _.each(_.pick(data.total_page_views_dict, blackList), function(val, key) {
-                console.log(val);
-                console.log(key);
                 total_page_views -= val;
             });
 
+            var innerHTML = '<span class="analyitcs-title">Page Visits</span><br>';
             _.each(_.omit(data.total_page_views_dict, blackList), function(val, key) {
-                console.log(key + '-' + val);
-                document.getElementsByClassName('total-page-visits')[0].innerHTML = '<span class="analyitcs-title">Page Visits</span><br>';
-                document.getElementsByClassName('total-page-visits')[0].innerHTML += '<em>' + key + '</em> :  ' + val + ' views<br>';
+                innerHTML += '<em>' + key + '</em> :  ' + val + ' views<br>';
             });
+
+            document.getElementsByClassName('total-page-visits')[0].innerHTML = innerHTML;
 
             document.getElementsByClassName('total-page-views')[0].innerHTML = total_page_views;
         },
