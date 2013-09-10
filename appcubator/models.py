@@ -248,7 +248,7 @@ class TempDeployment(RandomPrimaryIdModel):
             else:
                 if r.status_code != 200:
                     logger.error("Tried to delete %d, Deployment server returned bad response: %d %r" % (self.deployment_id, r.status_code, r.text))
-        super(App, self).delete(*args, **kwargs)
+        super(TempDeployment, self).delete(*args, **kwargs)
 
     def css(self, deploy=True, mobile=False):
         """Use uiestate, less, and django templates to generate a string of the CSS"""

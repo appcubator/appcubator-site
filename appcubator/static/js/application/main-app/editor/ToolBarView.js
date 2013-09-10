@@ -74,8 +74,6 @@ function(PageModel) {
     },
 
     shrinkPages: function(e) {
-      console.log(this.menuPages);
-      console.log(util.isMouseOn(e.pageX, e.pageY, this.menuPages));
       if(util.isMouseOn(e.pageX, e.pageY, this.menuPages )) return;
       $('#menu-pages').height(42);
       this.createBox.reset();

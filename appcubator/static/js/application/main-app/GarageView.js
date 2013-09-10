@@ -21,7 +21,6 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
     initialize: function() {
       _.bindAll(this);
       this.render();
-      console.trace();
     },
 
     render: function() {

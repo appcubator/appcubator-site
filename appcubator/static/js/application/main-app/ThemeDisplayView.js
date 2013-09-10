@@ -48,7 +48,7 @@ function() {
           util.unloadCSS('uiestate');
           util.loadDirectory('/app/' + appId + '/uiestate.less', 'uiestate');
           setTimeout(function() {
-            self.reArrangeCSSTag();
+            v1.reArrangeCSSTag();
             self.closeModal();
           }, 800);
         }
@@ -70,20 +70,6 @@ function() {
           });
         }
       });
-    },
-
-    reArrangeCSSTag: function() {
-      var style = document.getElementById("css-uiestate");
-      style.parentNode.removeChild(style);
-
-      var head = document.getElementsByTagName('head')[0];
-      var newStyle = document.createElement('style');
-      newStyle.type = 'text/css'; 
-      newStyle.setAttribute('href', "/app/"+appId+"/uiestate.less");
-      newStyle.id = "css-uiestate";
-      newStyle.setAttribute('rel', 'stylesheet');
-
-      head.appendChild(style);
     }
   });
 
