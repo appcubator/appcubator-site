@@ -1,0 +1,1273 @@
+{
+  "info": {
+    "keywords": "",
+    "description": ""
+  },
+  "tables": [
+    {
+      "fields": [
+        {
+          "type": "file",
+          "name": "Test File"
+        },
+        {
+          "type": "text",
+          "name": "Class Major"
+        },
+        {
+          "type": "number",
+          "name": "Class Number"
+        },
+        {
+          "type": "text",
+          "name": "Name"
+        },
+        {
+          "type": "number",
+          "name": "Year"
+        },
+        {
+          "type": "text",
+          "name": "Professor"
+        },
+        {
+          "related_name": "Tests",
+          "type": "fk",
+          "name": "Owner",
+          "entity_name": "User",
+          "owner_entity": "Test"
+        }
+      ],
+      "name": "Test"
+    }
+  ],
+  "users": [
+    {
+      "fields": [],
+      "name": "User"
+    }
+  ],
+  "mobilePages": [],
+  "version_id": 468,
+  "emails": [
+    {
+      "content": "Dear {{User.username}},\n\nThanks for signing up!\n\nCheers!\n{{AppName}}",
+      "name": "Welcome",
+      "subject": "Thanks for Signing up!"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Homepage",
+      "access_level": "all",
+      "url": {
+        "urlparts": []
+      },
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://About",
+            "title": "About"
+          },
+          {
+            "url": "http://",
+            "title": "Powered by Appcubator"
+          }
+        ],
+        "customText": "StudyCloud has no affiliation with Case Western Reserve University, which was not involved in the production of, and does not endorse this product."
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": null,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://Search",
+            "title": "Search"
+          },
+          {
+            "url": "internal://Upload",
+            "title": "Upload"
+          }
+        ]
+      },
+      "uielements": [
+        {
+          "layout": {
+            "l_padding": 15,
+            "b_padding": 0,
+            "top": 0,
+            "t_padding": 0,
+            "width": 7,
+            "r_padding": 15,
+            "height": 3,
+            "alignment": "left",
+            "left": 0
+          },
+          "type": "node",
+          "data": {
+            "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+            "isSingle": false,
+            "tagName": "h1",
+            "hoverStyle": "",
+            "class_name": "header-2",
+            "content": "Welcome Case Western Reserve University!",
+            "content_attribs": {},
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 18,
+            "t_padding": 0,
+            "width": 1,
+            "r_padding": 0,
+            "height": 7,
+            "alignment": "left",
+            "left": 7
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/8RWDkdDPTYWROLWyjrWl"
+            },
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": "https://www.filepicker.io/api/file/8RWDkdDPTYWROLWyjrWl",
+            "tagName": "img",
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 0,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 7,
+            "alignment": "left",
+            "left": 8
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/ptDT4YnkSSmNYhKSn7So"
+            },
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": "https://www.filepicker.io/api/file/ptDT4YnkSSmNYhKSn7So",
+            "tagName": "img",
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 15,
+            "b_padding": 15,
+            "top": 7,
+            "t_padding": 15,
+            "width": 5,
+            "r_padding": 15,
+            "height": 18,
+            "alignment": "left",
+            "left": 3
+          },
+          "type": "node",
+          "data": {
+            "style": "color:#57264f;\nfont-size: 32px;\nfont-weight: bold;\nfont-family: 'Open Sans', sans-serif;\nline-height: 40px;",
+            "isSingle": false,
+            "content_attribs": {
+              "style": "font-size:18px;"
+            },
+            "hoverStyle": "",
+            "class_name": "header-2",
+            "content": "You must be now sitting there and wondering, \"Why should I share my exam materials with others?\"\n\n\nHave you ever heard about the profound Law of Attraction? Well, it says, \"Whatever you give to others, the same returns back to you in abundance.\"\n",
+            "tagName": "h1",
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 15,
+            "b_padding": 0,
+            "top": 4,
+            "t_padding": 0,
+            "width": 3,
+            "r_padding": 15,
+            "height": 15,
+            "alignment": "left",
+            "left": 0
+          },
+          "type": "form",
+          "data": {
+            "class_name": "form-with-bg",
+            "container_info": {
+              "action": "login",
+              "form": {
+                "name": "local login",
+                "fields": [
+                  {
+                    "type": "text",
+                    "required": true,
+                    "label": "Email or username",
+                    "displayType": "single-line-text",
+                    "placeholder": "Email or username",
+                    "field_name": "username",
+                    "options": ""
+                  },
+                  {
+                    "name": "password",
+                    "placeholder": "Password",
+                    "required": true,
+                    "label": "Password",
+                    "displayType": "password-text",
+                    "type": "password",
+                    "options": ""
+                  },
+                  {
+                    "displayType": "button",
+                    "required": true,
+                    "placeholder": "Login",
+                    "type": "button"
+                  }
+                ],
+                "actions": [],
+                "entity": "User",
+                "action": "login",
+                "loginRoutes": [
+                  {
+                    "redirect": "internal://Search",
+                    "role": "User"
+                  }
+                ]
+              }
+            },
+            "nodeType": "form",
+            "content_attribs": {}
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 15,
+            "b_padding": 0,
+            "top": 6,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 15,
+            "height": 20,
+            "alignment": "left",
+            "left": 8
+          },
+          "type": "form",
+          "data": {
+            "class_name": "default-form",
+            "container_info": {
+              "action": "signup",
+              "form": {
+                "goto": "internal://Search",
+                "fields": [
+                  {
+                    "type": "email",
+                    "required": true,
+                    "label": "Email Address",
+                    "displayType": "email-text",
+                    "placeholder": "Email Address",
+                    "field_name": "Email",
+                    "options": ""
+                  },
+                  {
+                    "name": "name",
+                    "placeholder": "Name",
+                    "required": true,
+                    "label": "Name",
+                    "displayType": "single-line-text",
+                    "type": "text",
+                    "options": ""
+                  },
+                  {
+                    "name": "password",
+                    "placeholder": "Password",
+                    "required": true,
+                    "label": "Password",
+                    "displayType": "password-text",
+                    "type": "password",
+                    "options": ""
+                  },
+                  {
+                    "displayType": "button",
+                    "required": true,
+                    "placeholder": "Sign Up",
+                    "type": "button"
+                  }
+                ],
+                "signupRole": "User",
+                "entity": "User",
+                "isConstant": true,
+                "action": "signup",
+                "actions": [
+                  {
+                    "email_to": "CurrentUser",
+                    "type": "email",
+                    "email": "Welcome",
+                    "nl_description": "Send Welcome Email"
+                  }
+                ],
+                "name": "Sign Up"
+              },
+              "entity": "User"
+            },
+            "nodeType": "form",
+            "content_attribs": {}
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 15,
+            "b_padding": 0,
+            "top": 19,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 15,
+            "height": 3,
+            "alignment": "left",
+            "left": 0
+          },
+          "type": "thirdpartylogin",
+          "data": {
+            "container_info": {
+              "action": "thirdpartylogin"
+            },
+            "nodeType": "form",
+            "class_name": "form-with-bg",
+            "content": "Login w/ Facebook",
+            "content_attribs": {},
+            "provider": "facebook",
+            "action": "thirdpartylogin",
+            "loginRoutes": [
+              {
+                "redirect": "internal://Homepage",
+                "role": "User"
+              }
+            ]
+          }
+        }
+      ],
+      "page_name": "Homepage",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 0
+    },
+    {
+      "name": "Search",
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://About",
+            "title": "About"
+          }
+        ],
+        "customText": "StudyCloud has no affiliation with Case Western Reserve University, which was not involved in the production of, and does not endorse this product."
+      },
+      "url": {
+        "urlparts": [
+          "Search"
+        ]
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": null,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://Search",
+            "title": "Search"
+          },
+          {
+            "url": "internal://Upload",
+            "title": "Upload"
+          }
+        ]
+      },
+      "access_level": "users",
+      "uielements": [
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 0,
+            "t_padding": 0,
+            "width": 6,
+            "r_padding": 0,
+            "height": 3,
+            "alignment": "left",
+            "left": 5
+          },
+          "type": "node",
+          "data": {
+            "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+            "isSingle": false,
+            "tagName": "h1",
+            "hoverStyle": "",
+            "class_name": "header-2",
+            "content": "Test Search Results",
+            "content_attribs": {},
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 5,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 4,
+            "alignment": "left",
+            "left": 0
+          },
+          "type": "search",
+          "data": {
+            "container_info": {
+              "action": "searchbox",
+              "entity": "Test"
+            },
+            "searchQuery": {
+              "searchFields": [
+                "Class Major",
+                "Class Number",
+                "Name"
+              ],
+              "searchPage": "internal://Search",
+              "searchOn": "Test"
+            },
+            "content_attribs": {}
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 3,
+            "t_padding": 0,
+            "width": 7,
+            "r_padding": 0,
+            "height": 31,
+            "alignment": "left",
+            "left": 5
+          },
+          "type": "loop",
+          "data": {
+            "container_info": {
+              "action": "searchlist",
+              "search": {
+                "fieldsToDisplay": [],
+                "sortAccordingTo": "-Date",
+                "where": [],
+                "numberOfRows": -1
+              },
+              "row": {
+                "uielements": [
+                  {
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 60,
+                      "t_padding": 0,
+                      "width": 157,
+                      "r_padding": 0,
+                      "height": 45,
+                      "alignment": "left",
+                      "left": 90
+                    },
+                    "type": "node",
+                    "data": {
+                      "style": "color: #036a6e;",
+                      "isSingle": false,
+                      "content_attribs": {
+                        "href": "{{loop.Test.Test File}}"
+                      },
+                      "hoverStyle": "",
+                      "class_name": "blue-link",
+                      "content": "Download Test File",
+                      "tagName": "a",
+                      "nodeType": "links",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 28,
+                      "t_padding": 0,
+                      "width": 463,
+                      "r_padding": 0,
+                      "height": 45,
+                      "alignment": "left",
+                      "left": 91
+                    },
+                    "type": "node",
+                    "data": {
+                      "style": "",
+                      "isSingle": false,
+                      "content_attribs": {},
+                      "hoverStyle": "",
+                      "class_name": "normal-text",
+                      "content": "Class Info: {{loop.Test.Class Major}} {{loop.Test.Class Number}}",
+                      "tagName": "p",
+                      "nodeType": "texts",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 0,
+                      "t_padding": 0,
+                      "width": 465,
+                      "r_padding": 0,
+                      "height": 45,
+                      "alignment": "left",
+                      "left": 93
+                    },
+                    "type": "node",
+                    "data": {
+                      "style": "",
+                      "isSingle": false,
+                      "content_attribs": {},
+                      "hoverStyle": "",
+                      "class_name": "normal-text",
+                      "content": "Name: {{loop.Test.Name}} by Professor: {{loop.Test.Professor}}",
+                      "tagName": "p",
+                      "nodeType": "texts",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 10,
+                      "t_padding": 0,
+                      "width": 70,
+                      "r_padding": 0,
+                      "height": 130,
+                      "alignment": "left",
+                      "left": 8
+                    },
+                    "type": "node",
+                    "data": {
+                      "style": "",
+                      "isSingle": true,
+                      "content_attribs": {
+                        "src": "https://www.filepicker.io/api/file/DwdpqjOxSmidvJvgMqqK"
+                      },
+                      "hoverStyle": "",
+                      "class_name": "img-normal",
+                      "content": "https://www.filepicker.io/api/file/DwdpqjOxSmidvJvgMqqK",
+                      "tagName": "img",
+                      "nodeType": "images",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 58,
+                      "t_padding": 0,
+                      "width": 120,
+                      "r_padding": 0,
+                      "height": 36,
+                      "alignment": "left",
+                      "left": 385
+                    },
+                    "type": "node",
+                    "data": {
+                      "style": "color: #036a6e;",
+                      "isSingle": false,
+                      "content_attribs": {
+                        "href": "internal://Test Profile/?Test=loop.Test"
+                      },
+                      "hoverStyle": "",
+                      "class_name": "blue-link",
+                      "content": "More Details...",
+                      "tagName": "a",
+                      "nodeType": "links",
+                      "activeStyle": ""
+                    }
+                  }
+                ],
+                "layout": {
+                  "l_padding": 0,
+                  "b_padding": 0,
+                  "top": 0,
+                  "t_padding": 0,
+                  "width": 4,
+                  "r_padding": 0,
+                  "height": 6,
+                  "alignment": "left",
+                  "left": 0
+                },
+                "goesTo": null,
+                "isListOrGrid": "list"
+              },
+              "entity": "Test"
+            },
+            "isSingle": false,
+            "cons_attribs": {},
+            "class_name": "default-list",
+            "style": "background-color: #fff;\nborder: 1px solid #ccc;\nborder-radius: 4px;\n\n.row {\n    border-bottom: 1px solid #ccc;\n}",
+            "content": "",
+            "content_attribs": {},
+            "tagName": "div"
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 2,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "left",
+            "left": 0
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {},
+            "hoverStyle": "",
+            "class_name": "normal-text",
+            "content": "Search by Class (ex. CHEM 223)",
+            "tagName": "p",
+            "nodeType": "texts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 12,
+            "t_padding": 0,
+            "width": 1,
+            "r_padding": 0,
+            "height": 10,
+            "alignment": "left",
+            "left": 0
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/R0wpkRhSoi85MXfqCJ6J",
+              "href": "internal://Upload"
+            },
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": "https://www.filepicker.io/api/file/R0wpkRhSoi85MXfqCJ6J",
+            "tagName": "img",
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 15,
+            "b_padding": 0,
+            "top": 14,
+            "t_padding": 0,
+            "width": 3,
+            "r_padding": 15,
+            "height": 3,
+            "alignment": "left",
+            "left": 1
+          },
+          "type": "node",
+          "data": {
+            "style": "color:#57264f;\nfont-size: 32px;\nfont-weight: bold;\nfont-family: 'Open Sans', sans-serif;\nline-height: 40px;",
+            "isSingle": false,
+            "content_attribs": {
+              "style": "font-size:16px;"
+            },
+            "hoverStyle": "",
+            "class_name": "header-2",
+            "content": "Click to Upload New Test!",
+            "tagName": "h1",
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        }
+      ],
+      "page_name": "Search",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 1
+    },
+    {
+      "name": "Test Profile",
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://About",
+            "title": "About"
+          }
+        ],
+        "customText": "StudyCloud has no affiliation with Case Western Reserve University, which was not involved in the production of, and does not endorse this product. "
+      },
+      "url": {
+        "urlparts": [
+          "Test_Profile",
+          "{{Test}}"
+        ]
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": null,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://Search",
+            "title": "Search"
+          },
+          {
+            "url": "internal://Upload",
+            "title": "Upload"
+          }
+        ]
+      },
+      "access_level": "users",
+      "uielements": [
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 15,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "left",
+            "left": 4
+          },
+          "type": "node",
+          "data": {
+            "style": "color: #036a6e;",
+            "isSingle": false,
+            "content_attribs": {
+              "style": "font-size:18px;",
+              "href": "{{Page.Test.Test File}}"
+            },
+            "hoverStyle": "",
+            "class_name": "blue-link",
+            "content": "Click to Download Test File",
+            "tagName": "a",
+            "nodeType": "links",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 8,
+            "t_padding": 0,
+            "width": 6,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "left",
+            "left": 4
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {},
+            "hoverStyle": "",
+            "class_name": "normal-text",
+            "content": "Class ID: {{Page.Test.Class Major}} {{Page.Test.Class Number}}",
+            "tagName": "p",
+            "nodeType": "texts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 10,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "left",
+            "left": 4
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {},
+            "hoverStyle": "",
+            "class_name": "normal-text",
+            "content": "Professor: {{Page.Test.Professor}}",
+            "tagName": "p",
+            "nodeType": "texts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 12,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "left",
+            "left": 4
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {},
+            "hoverStyle": "",
+            "class_name": "normal-text",
+            "content": "Test Year: {{Page.Test.Year}}",
+            "tagName": "p",
+            "nodeType": "texts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 0,
+            "t_padding": 0,
+            "width": 6,
+            "r_padding": 0,
+            "height": 3,
+            "alignment": "left",
+            "left": 3
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {
+              "style": "font-size:32px;"
+            },
+            "hoverStyle": "",
+            "class_name": "normal-text",
+            "content": "{{Page.Test.Name}}",
+            "tagName": "p",
+            "nodeType": "texts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 4,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "left",
+            "left": 3
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {},
+            "hoverStyle": "",
+            "class_name": "normal-text",
+            "content": "Uploaded by {{page.Test.Owner.Last Name}}",
+            "tagName": "p",
+            "nodeType": "texts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 15,
+            "b_padding": 0,
+            "top": 0,
+            "t_padding": 0,
+            "width": 2,
+            "r_padding": 15,
+            "height": 19,
+            "alignment": "left",
+            "left": 1
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/HY6w20FrRy6ft5KZJX7Q"
+            },
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": "https://www.filepicker.io/api/file/HY6w20FrRy6ft5KZJX7Q",
+            "tagName": "img",
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 0,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "left",
+            "left": 8
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {},
+            "hoverStyle": "",
+            "class_name": "normal-text",
+            "content": "How is it going, {{CurrentUser.First Name}}?",
+            "tagName": "p",
+            "nodeType": "texts",
+            "activeStyle": ""
+          }
+        }
+      ],
+      "page_name": "Test Profile",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 2
+    },
+    {
+      "name": "About",
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://About",
+            "title": "About"
+          }
+        ],
+        "customText": "StudyCloud has no affiliation with Case Western Reserve University, which was not involved in the production of, and does not endorse this product. "
+      },
+      "url": {
+        "urlparts": [
+          "About"
+        ]
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": null,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://Search",
+            "title": "Search"
+          },
+          {
+            "url": "internal://Upload",
+            "title": "Upload"
+          }
+        ]
+      },
+      "access_level": "all",
+      "uielements": [
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 6,
+            "t_padding": 0,
+            "width": 2,
+            "r_padding": 0,
+            "height": 20,
+            "alignment": "left",
+            "left": 1
+          },
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "tagName": "img",
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": "https://www.filepicker.io/api/file/Z1LAoXnVSZiAiFFz0mCl",
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/Z1LAoXnVSZiAiFFz0mCl"
+            },
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 15,
+            "b_padding": 0,
+            "top": 6,
+            "t_padding": 0,
+            "width": 8,
+            "r_padding": 15,
+            "height": 13,
+            "alignment": "center",
+            "left": 3
+          },
+          "data": {
+            "style": "color:#57264f;\nfont-size: 32px;\nfont-weight: bold;\nfont-family: 'Open Sans', sans-serif;\nline-height: 40px;",
+            "isSingle": false,
+            "tagName": "h1",
+            "hoverStyle": "",
+            "class_name": "header-2",
+            "content": "\"StudyCloud came from my frustrations of having to go to sororities the day before tests to only find that the test was missing!\"",
+            "content_attribs": {},
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        }
+      ],
+      "page_name": "About",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 3
+    },
+    {
+      "name": "Upload",
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "links": [],
+        "customText": "Powered by Appcubator"
+      },
+      "url": {
+        "urlparts": [
+          "Upload"
+        ]
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": null,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://Search",
+            "title": "Search"
+          },
+          {
+            "url": "internal://Upload",
+            "title": "Upload"
+          }
+        ]
+      },
+      "access_level": "users",
+      "uielements": [
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 0,
+            "t_padding": 0,
+            "width": 6,
+            "r_padding": 0,
+            "height": 3,
+            "alignment": "center",
+            "left": 3
+          },
+          "type": "node",
+          "data": {
+            "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+            "isSingle": false,
+            "tagName": "h1",
+            "hoverStyle": "",
+            "class_name": "header-2",
+            "content": "Upload Tests",
+            "content_attribs": {},
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 4,
+            "t_padding": 0,
+            "width": 6,
+            "r_padding": 0,
+            "height": 35,
+            "alignment": "left",
+            "left": 2
+          },
+          "type": "form",
+          "data": {
+            "container_info": {
+              "action": "create",
+              "form": {
+                "goto": "internal://Upload",
+                "fields": [
+                  {
+                    "type": "text",
+                    "required": true,
+                    "label": "Test Name",
+                    "displayType": "single-line-text",
+                    "placeholder": "Chirality, Optical Activity",
+                    "field_name": "Name",
+                    "options": ""
+                  },
+                  {
+                    "type": "text",
+                    "required": true,
+                    "label": "Class Major",
+                    "displayType": "single-line-text",
+                    "placeholder": "CHEM",
+                    "field_name": "Class Major",
+                    "options": ""
+                  },
+                  {
+                    "type": "number",
+                    "required": true,
+                    "label": "Class Number",
+                    "displayType": "single-line-text",
+                    "placeholder": "223",
+                    "field_name": "Class Number",
+                    "options": ""
+                  },
+                  {
+                    "type": "number",
+                    "required": true,
+                    "label": "Year",
+                    "displayType": "single-line-text",
+                    "placeholder": "2011",
+                    "field_name": "Year",
+                    "options": ""
+                  },
+                  {
+                    "type": "text",
+                    "required": true,
+                    "label": "Professor",
+                    "displayType": "single-line-text",
+                    "placeholder": "Pearson",
+                    "field_name": "Professor",
+                    "options": ""
+                  },
+                  {
+                    "type": "file",
+                    "required": true,
+                    "label": "Upload Test (.pdf)",
+                    "displayType": "file-uploader",
+                    "placeholder": "Upload File",
+                    "field_name": "Test File",
+                    "options": ""
+                  },
+                  {
+                    "displayType": "button",
+                    "required": true,
+                    "type": "button",
+                    "placeholder": "Submit"
+                  }
+                ],
+                "actions": [
+                  {
+                    "set_fk": "Form.Test.Owner",
+                    "to_object": "CurrentUser",
+                    "type": "relation",
+                    "nl_description": "Add to CurrentUser.Tests"
+                  }
+                ],
+                "entity": "Test",
+                "action": "create",
+                "name": ""
+              },
+              "entity": "Test"
+            },
+            "isSingle": false,
+            "cons_attribs": {},
+            "hoverStyle": "",
+            "class_name": "form-with-bg",
+            "style": "input[type=\"text\"],\ninput[type=\"password\"] {\n    width: 100%;\n}\n\ninput[type=\"text\"]:focus,\ninput[type=\"password\"]:focus {\n  border-color: rgb(87, 38, 79);\n  border-width: 2px;\n  outline: 0;\n  outline: thin dotted \\9;\n  /* IE6-9 */\n\n  -webkit-box-shadow: none;\n     -moz-box-shadow: none;\n          box-shadow: none;\n}\n\n.option {\n    display:block;\n}\n\n.option label {\n    display: inline-block;\n}\n\ninput[type=\"radio\"] {\n    display: inline-block;\n    margin-left: 6px;\n}\n\n.btn {\n    -webkit-transition: background-color 200ms linear;\n    -moz-transition: background-color 200ms linear;\n    -o-transition: background-color 200ms linear;\n    -ms-transition: background-color 200ms linear;\n    transition: background-color 200ms linear;\n    margin-top: 12px;\n}\n.btn:hover {\n background-color: rgb(127, 78, 119);\n}",
+            "content": null,
+            "content_attribs": {},
+            "tagName": "form",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 4,
+            "t_padding": 0,
+            "width": 2,
+            "r_padding": 0,
+            "height": 20,
+            "alignment": "left",
+            "left": 9
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/GdkPRNLwRw2klpppqAmQ"
+            },
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": "https://www.filepicker.io/api/file/GdkPRNLwRw2klpppqAmQ",
+            "tagName": "img",
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        }
+      ],
+      "page_name": "Upload",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 4
+    }
+  ],
+  "name": "StudyCloud"
+}

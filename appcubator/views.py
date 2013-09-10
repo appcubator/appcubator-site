@@ -53,7 +53,8 @@ def add_statics_to_context(context, app):
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
     __file__), os.path.normpath("default_state"))
 APP_TEMPLATES = { "socialnetwork": "",
-                  "marketplace": "" # list the templates here, they get initialized below.
+                  "marketplace": "",
+                  "tutoringsite": "" # list the templates here, they get initialized below.
                   }
 for templname in APP_TEMPLATES:
     with open(join(DEFAULT_STATE_DIR, 'apps', "%s.json" % templname)) as f:

@@ -1,1 +1,1629 @@
-{}
+{
+  "info": {
+    "keywords": "",
+    "description": ""
+  },
+  "tables": [
+    {
+      "fields": [
+        {
+          "type": "text",
+          "name": "Text"
+        },
+        {
+          "related_name": "posts written",
+          "type": "fk",
+          "name": "writer",
+          "entity_name": "User",
+          "owner_entity": "Wall post"
+        },
+        {
+          "related_name": "posts on wall",
+          "type": "fk",
+          "name": "wall owner",
+          "entity_name": "User",
+          "owner_entity": "Wall post"
+        }
+      ],
+      "name": "Wall post"
+    },
+    {
+      "fields": [
+        {
+          "related_name": "friend requested",
+          "type": "fk",
+          "name": "requester",
+          "entity_name": "User",
+          "owner_entity": "Friendship"
+        },
+        {
+          "related_name": "friend accepted",
+          "type": "fk",
+          "name": "accepter",
+          "entity_name": "User",
+          "owner_entity": "Friendship"
+        }
+      ],
+      "name": "Friendship"
+    }
+  ],
+  "users": [
+    {
+      "fields": [
+        {
+          "type": "image",
+          "name": "Profile Pic"
+        },
+        {
+          "type": "text",
+          "name": "About me"
+        }
+      ],
+      "name": "User"
+    }
+  ],
+  "mobilePages": [],
+  "version_id": 2754,
+  "emails": [
+    {
+      "content": "Dear {{User.username}},\n\nThanks for signing up!\n\nCheers!\n{{AppName}}",
+      "name": "Welcome",
+      "subject": "Thanks for Signing up!"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Homepage",
+      "access_level": "all",
+      "url": {
+        "urlparts": []
+      },
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://Homepage",
+            "title": "Homepage"
+          }
+        ],
+        "customText": "Powered by Appcubator"
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": "Bookface",
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://All users",
+            "title": "Users"
+          }
+        ]
+      },
+      "uielements": [
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 2,
+            "t_padding": 0,
+            "width": 5,
+            "r_padding": 0,
+            "height": 3,
+            "alignment": "center",
+            "left": 4
+          },
+          "type": "node",
+          "data": {
+            "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+            "isSingle": false,
+            "tagName": "h1",
+            "hoverStyle": "",
+            "class_name": "header-light",
+            "content": "Welcome to Bookface",
+            "content_attribs": {},
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 12,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 20,
+            "alignment": "left",
+            "left": 1
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "tagName": "img",
+            "hoverStyle": "",
+            "class_name": "img-height-fixed",
+            "content": "https://www.filepicker.io/api/file/I74930CeTj5gLv1098jV",
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/I74930CeTj5gLv1098jV"
+            },
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 5,
+            "t_padding": 0,
+            "width": 5,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "center",
+            "left": 4
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "tagName": "p",
+            "hoverStyle": "",
+            "class_name": "normal-text",
+            "content": "Connect with your friends and write on their walls",
+            "content_attribs": {},
+            "nodeType": "texts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 15,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 14,
+            "alignment": "left",
+            "left": 7
+          },
+          "type": "form",
+          "data": {
+            "class_name": "form-default",
+            "container_info": {
+              "action": "login",
+              "form": {
+                "name": "local login",
+                "fields": [
+                  {
+                    "type": "text",
+                    "required": true,
+                    "label": "Email or username",
+                    "displayType": "single-line-text",
+                    "placeholder": "Email or username",
+                    "field_name": "username",
+                    "options": ""
+                  },
+                  {
+                    "name": "password",
+                    "placeholder": "Password",
+                    "required": true,
+                    "label": "Password",
+                    "displayType": "password-text",
+                    "type": "password",
+                    "options": ""
+                  },
+                  {
+                    "displayType": "button",
+                    "required": true,
+                    "placeholder": "Login",
+                    "type": "button"
+                  }
+                ],
+                "actions": [],
+                "entity": "User",
+                "action": "login",
+                "loginRoutes": [
+                  {
+                    "redirect": "internal://User Profile/?User=CurrentUser",
+                    "role": "User"
+                  }
+                ]
+              }
+            },
+            "nodeType": "form",
+            "content_attribs": {}
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 12,
+            "t_padding": 0,
+            "width": 3,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "left",
+            "left": 7
+          },
+          "type": "node",
+          "data": {
+            "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+            "isSingle": false,
+            "tagName": "h1",
+            "hoverStyle": "",
+            "class_name": "header-1",
+            "content": "Login",
+            "content_attribs": {
+              "style": "font-size:20px;"
+            },
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 32,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 17,
+            "alignment": "left",
+            "left": 7
+          },
+          "type": "form",
+          "data": {
+            "class_name": "form-default",
+            "container_info": {
+              "action": "signup",
+              "form": {
+                "goto": "internal://Edit profile",
+                "fields": [
+                  {
+                    "type": "email",
+                    "required": true,
+                    "label": "Email Address",
+                    "displayType": "email-text",
+                    "placeholder": "Email Address",
+                    "field_name": "Email",
+                    "options": ""
+                  },
+                  {
+                    "name": "name",
+                    "placeholder": "Name",
+                    "required": true,
+                    "label": "Name",
+                    "displayType": "single-line-text",
+                    "type": "text",
+                    "options": ""
+                  },
+                  {
+                    "name": "password",
+                    "placeholder": "Password",
+                    "required": true,
+                    "label": "Password",
+                    "displayType": "password-text",
+                    "type": "password",
+                    "options": ""
+                  },
+                  {
+                    "displayType": "button",
+                    "required": true,
+                    "placeholder": "Sign Up",
+                    "type": "button"
+                  }
+                ],
+                "signupRole": "User",
+                "entity": "User",
+                "isConstant": true,
+                "action": "signup",
+                "actions": [],
+                "name": "Sign Up"
+              },
+              "entity": "User"
+            },
+            "nodeType": "form",
+            "content_attribs": {}
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 29,
+            "t_padding": 0,
+            "width": 1,
+            "r_padding": 0,
+            "height": 3,
+            "alignment": "left",
+            "left": 7
+          },
+          "type": "node",
+          "data": {
+            "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+            "isSingle": false,
+            "tagName": "h1",
+            "hoverStyle": "",
+            "class_name": "header-1",
+            "content": "Sign Up",
+            "content_attribs": {
+              "style": "font-size:20px;"
+            },
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        }
+      ],
+      "page_name": "Homepage",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 0
+    },
+    {
+      "name": "User Profile",
+      "access_level": "all",
+      "url": {
+        "urlparts": [
+          "profile",
+          "{{User}}"
+        ]
+      },
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "customText": "Powered by Appcubator",
+        "links": []
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": "Bookface",
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://All users",
+            "title": "Users"
+          }
+        ]
+      },
+      "uielements": [
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 15,
+            "b_padding": 0,
+            "top": 10,
+            "t_padding": 0,
+            "width": 6,
+            "r_padding": 15,
+            "height": 8,
+            "alignment": "left",
+            "left": 4
+          },
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {},
+            "hoverStyle": "",
+            "class_name": "normal-text",
+            "content": "{{Page.User.About me}}",
+            "tagName": "p",
+            "nodeType": "texts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 3,
+            "t_padding": 0,
+            "width": 2,
+            "r_padding": 0,
+            "height": 13,
+            "alignment": "left",
+            "left": 1
+          },
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "content_attribs": {
+              "src": "{{Page.User.Profile Pic}}"
+            },
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": null,
+            "tagName": "img",
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 3,
+            "t_padding": 0,
+            "width": 7,
+            "r_padding": 0,
+            "height": 3,
+            "alignment": "left",
+            "left": 4
+          },
+          "data": {
+            "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+            "isSingle": false,
+            "content_attribs": {
+              "style": "font-size:20px;"
+            },
+            "hoverStyle": "",
+            "class_name": "header-1",
+            "content": "{{Page.User.First Name}} {{Page.User.Last Name}}\n",
+            "tagName": "h1",
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 8,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "left",
+            "left": 4
+          },
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {},
+            "hoverStyle": "",
+            "class_name": "normal-text",
+            "content": "About me:",
+            "tagName": "p",
+            "nodeType": "texts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 16,
+            "t_padding": 0,
+            "width": 2,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "left",
+            "left": 1
+          },
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {
+              "href": "internal://Edit profile"
+            },
+            "hoverStyle": "",
+            "class_name": "blue-link",
+            "content": "Edit profile",
+            "tagName": "a",
+            "nodeType": "links",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 33,
+            "t_padding": 0,
+            "width": 7,
+            "r_padding": 0,
+            "height": 46,
+            "alignment": "left",
+            "left": 2
+          },
+          "type": "loop",
+          "data": {
+            "container_info": {
+              "action": "show",
+              "query": {
+                "fieldsToDisplay": [],
+                "sortAccordingTo": "-Date",
+                "where": [
+                  {
+                    "field_name": "wall owner",
+                    "equal_to": "Page.User",
+                    "nl_description": "Show Wall posts where wall owner is equal to User of the current page."
+                  }
+                ],
+                "numberOfRows": -1
+              },
+              "row": {
+                "uielements": [
+                  {
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 0,
+                      "t_padding": 0,
+                      "width": 400,
+                      "r_padding": 0,
+                      "height": 45,
+                      "alignment": "left",
+                      "left": 95
+                    },
+                    "type": "node",
+                    "data": {
+                      "style": "",
+                      "isSingle": false,
+                      "tagName": "p",
+                      "hoverStyle": "",
+                      "class_name": "normal-text",
+                      "content": "{{loop.Wall post.Text}}",
+                      "content_attribs": {},
+                      "nodeType": "texts",
+                      "activeStyle": ""
+                    }
+                  }
+                ],
+                "layout": {
+                  "l_padding": 0,
+                  "b_padding": 0,
+                  "top": 0,
+                  "t_padding": 0,
+                  "width": 4,
+                  "r_padding": 0,
+                  "height": 10,
+                  "alignment": "left",
+                  "left": 0
+                },
+                "goesTo": null,
+                "isListOrGrid": "list"
+              },
+              "entity": "Wall post"
+            },
+            "isSingle": false,
+            "cons_attribs": {},
+            "class_name": "default-list",
+            "style": ".row { border-bottom: 1px solid #ccc; }\n overflow-y:scroll;",
+            "content": null,
+            "content_attribs": {},
+            "tagName": "div"
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 23,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 8,
+            "alignment": "left",
+            "left": 2
+          },
+          "type": "form",
+          "data": {
+            "container_info": {
+              "action": "create",
+              "form": {
+                "goto": "internal://Homepage",
+                "fields": [
+                  {
+                    "type": "text",
+                    "required": true,
+                    "label": "Text",
+                    "displayType": "paragraph-text",
+                    "placeholder": "Text",
+                    "field_name": "Text",
+                    "options": ""
+                  },
+                  {
+                    "displayType": "button",
+                    "required": true,
+                    "type": "button",
+                    "placeholder": "Submit"
+                  }
+                ],
+                "actions": [
+                  {
+                    "set_fk": "Form.Wall post.writer",
+                    "to_object": "CurrentUser",
+                    "type": "relation",
+                    "nl_description": "Add to CurrentUser.posts written"
+                  },
+                  {
+                    "set_fk": "Form.Wall post.wall owner",
+                    "to_object": "Page.User",
+                    "type": "relation",
+                    "nl_description": "Add to Page.User.posts on wall"
+                  }
+                ],
+                "entity": "Wall post",
+                "action": "create",
+                "name": ""
+              },
+              "entity": "Wall post"
+            },
+            "isSingle": false,
+            "cons_attribs": {},
+            "hoverStyle": "",
+            "class_name": "form-default",
+            "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n width: 100%;\n}\n",
+            "content": null,
+            "content_attribs": {},
+            "tagName": "form",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 15,
+            "t_padding": 0,
+            "width": 3,
+            "r_padding": 0,
+            "height": 3,
+            "alignment": "left",
+            "left": 8
+          },
+          "type": "form",
+          "data": {
+            "container_info": {
+              "action": "create",
+              "form": {
+                "goto": "internal://Friendship Page/?Friendship=Form.Friendship",
+                "fields": [
+                  {
+                    "displayType": "button",
+                    "required": true,
+                    "type": "button",
+                    "placeholder": "Add as Friend"
+                  }
+                ],
+                "actions": [
+                  {
+                    "set_fk": "Form.Friendship.requester",
+                    "to_object": "CurrentUser",
+                    "type": "relation",
+                    "nl_description": "Add to CurrentUser.friend requested"
+                  },
+                  {
+                    "set_fk": "Form.Friendship.accepter",
+                    "to_object": "Page.User",
+                    "type": "relation",
+                    "nl_description": "Add to Page.User.friend accepted"
+                  }
+                ],
+                "entity": "Friendship",
+                "action": "create",
+                "name": ""
+              },
+              "entity": "Friendship"
+            },
+            "isSingle": false,
+            "cons_attribs": {},
+            "hoverStyle": "",
+            "class_name": "form-default",
+            "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n width: 100%;\n}\n",
+            "content": null,
+            "content_attribs": {},
+            "tagName": "form",
+            "activeStyle": ""
+          }
+        }
+      ],
+      "page_name": "User Profile",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 1
+    },
+    {
+      "name": "Edit profile",
+      "access_level": "all",
+      "url": {
+        "urlparts": [
+          "Edit_profile"
+        ]
+      },
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "customText": "Powered by Appcubator",
+        "links": []
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": "Bookface",
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://All users",
+            "title": "Users"
+          }
+        ]
+      },
+      "uielements": [
+        {
+          "type": "form",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 2,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 22,
+            "alignment": "left",
+            "left": 4
+          },
+          "data": {
+            "class_name": "form-default",
+            "container_info": {
+              "form": {
+                "goto": "internal://User Profile/?User=Form.User",
+                "editOn": "CurrentUser",
+                "actions": [],
+                "entity": "User",
+                "fields": [
+                  {
+                    "type": "text",
+                    "required": true,
+                    "label": "First Name",
+                    "displayType": "single-line-text",
+                    "placeholder": "Prefilled data: ||First Name||",
+                    "field_name": "First Name",
+                    "options": ""
+                  },
+                  {
+                    "type": "text",
+                    "required": true,
+                    "label": "Last Name",
+                    "displayType": "single-line-text",
+                    "placeholder": "Prefilled data: ||Last Name||",
+                    "field_name": "Last Name",
+                    "options": ""
+                  },
+                  {
+                    "type": "image",
+                    "required": true,
+                    "label": "Profile Pic",
+                    "displayType": "image-uploader",
+                    "placeholder": "Update image",
+                    "field_name": "Profile Pic",
+                    "options": ""
+                  },
+                  {
+                    "type": "text",
+                    "required": true,
+                    "label": "About me",
+                    "displayType": "paragraph-text",
+                    "placeholder": "Prefilled data: ||About me||",
+                    "field_name": "About me",
+                    "options": ""
+                  },
+                  {
+                    "displayType": "button",
+                    "required": true,
+                    "type": "button",
+                    "placeholder": "Submit"
+                  }
+                ],
+                "action": "edit",
+                "name": ""
+              },
+              "entity": "User"
+            },
+            "content_attribs": {}
+          }
+        }
+      ],
+      "page_name": "Edit profile",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 2
+    },
+    {
+      "name": "All users",
+      "access_level": "all",
+      "url": {
+        "urlparts": [
+          "All_users"
+        ]
+      },
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "customText": "Powered by Appcubator",
+        "links": []
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": "Bookface",
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://All users",
+            "title": "Users"
+          }
+        ]
+      },
+      "uielements": [
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 1,
+            "t_padding": 0,
+            "width": 6,
+            "r_padding": 0,
+            "height": 3,
+            "alignment": "left",
+            "left": 3
+          },
+          "data": {
+            "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+            "isSingle": false,
+            "content_attribs": {},
+            "hoverStyle": "",
+            "class_name": "header-1",
+            "content": "People you may know\n",
+            "tagName": "h1",
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "type": "loop",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 6,
+            "t_padding": 0,
+            "width": 5,
+            "r_padding": 0,
+            "height": 46,
+            "alignment": "left",
+            "left": 3
+          },
+          "data": {
+            "container_info": {
+              "action": "show",
+              "query": {
+                "fieldsToDisplay": [],
+                "sortAccordingTo": "-Date",
+                "where": [],
+                "numberOfRows": -1
+              },
+              "entity": "User",
+              "row": {
+                "uielements": [
+                  {
+                    "type": "node",
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 8,
+                      "t_padding": 0,
+                      "width": 90,
+                      "r_padding": 0,
+                      "height": 90,
+                      "alignment": "left",
+                      "left": 7
+                    },
+                    "data": {
+                      "style": "",
+                      "isSingle": true,
+                      "content_attribs": {
+                        "src": "{{loop.User.Profile Pic}}"
+                      },
+                      "hoverStyle": "",
+                      "class_name": "img-height-fixed",
+                      "content": "{{loop.User.Profile Pic}}",
+                      "tagName": "img",
+                      "nodeType": "images",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "type": "node",
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 26,
+                      "t_padding": 0,
+                      "width": 275,
+                      "r_padding": 0,
+                      "height": 36,
+                      "alignment": "left",
+                      "left": 108
+                    },
+                    "data": {
+                      "style": "",
+                      "isSingle": false,
+                      "content_attribs": {
+                        "href": "internal://User Profile/?User=loop.User"
+                      },
+                      "hoverStyle": "",
+                      "class_name": "link-1",
+                      "content": "{{loop.User.First Name}} {{loop.User.Last Name}}\n",
+                      "tagName": "a",
+                      "nodeType": "links",
+                      "activeStyle": ""
+                    }
+                  }
+                ],
+                "layout": {
+                  "l_padding": 0,
+                  "b_padding": 0,
+                  "top": 0,
+                  "t_padding": 0,
+                  "width": 4,
+                  "r_padding": 0,
+                  "height": 7,
+                  "alignment": "left",
+                  "left": 0
+                },
+                "isListOrGrid": "list",
+                "goesTo": null
+              }
+            },
+            "isSingle": false,
+            "cons_attribs": {},
+            "class_name": "default-list",
+            "style": ".row { border-bottom: 1px solid #ccc; }\n overflow-y:scroll;",
+            "content": "",
+            "content_attribs": {},
+            "tagName": "div"
+          }
+        },
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 4,
+            "t_padding": 0,
+            "width": 3,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "right",
+            "left": 6
+          },
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {
+              "href": "internal://Newsfeed"
+            },
+            "hoverStyle": "",
+            "class_name": "blue-link",
+            "content": "( See what they're talking about )",
+            "tagName": "a",
+            "nodeType": "links",
+            "activeStyle": ""
+          }
+        }
+      ],
+      "page_name": "All users",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 3
+    },
+    {
+      "name": "Wall post Page",
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "links": [],
+        "customText": "Powered by Appcubator"
+      },
+      "url": {
+        "urlparts": [
+          "Wall_post_Page",
+          "{{Wall post}}"
+        ]
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": null,
+        "isHidden": false,
+        "links": []
+      },
+      "access_level": "all",
+      "uielements": [],
+      "page_name": "Wall post Page",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 4
+    },
+    {
+      "name": "Newsfeed",
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "links": [],
+        "customText": "Powered by Appcubator"
+      },
+      "url": {
+        "urlparts": [
+          "Newsfeed"
+        ]
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": null,
+        "isHidden": false,
+        "links": []
+      },
+      "access_level": "all",
+      "uielements": [
+        {
+          "type": "loop",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 8,
+            "t_padding": 0,
+            "width": 7,
+            "r_padding": 0,
+            "height": 46,
+            "alignment": "left",
+            "left": 3
+          },
+          "data": {
+            "container_info": {
+              "action": "show",
+              "query": {
+                "fieldsToDisplay": [],
+                "sortAccordingTo": "-Date",
+                "where": [],
+                "numberOfRows": -1
+              },
+              "entity": "Wall post",
+              "row": {
+                "uielements": [
+                  {
+                    "type": "node",
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 9,
+                      "t_padding": 0,
+                      "width": 328,
+                      "r_padding": 0,
+                      "height": 89,
+                      "alignment": "left",
+                      "left": 108
+                    },
+                    "data": {
+                      "style": "",
+                      "isSingle": false,
+                      "content_attribs": {},
+                      "hoverStyle": "",
+                      "class_name": "normal-text",
+                      "content": "{{loop.Wall post.Text}}",
+                      "tagName": "p",
+                      "nodeType": "texts",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "type": "node",
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 27,
+                      "t_padding": 0,
+                      "width": 86,
+                      "r_padding": 0,
+                      "height": 78,
+                      "alignment": "left",
+                      "left": 7
+                    },
+                    "data": {
+                      "style": "",
+                      "isSingle": true,
+                      "content_attribs": {
+                        "src": "{{loop.Wall post.writer.Profile Pic}}"
+                      },
+                      "hoverStyle": "",
+                      "class_name": "img-height-fixed",
+                      "content": null,
+                      "tagName": "img",
+                      "nodeType": "images",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "type": "node",
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 25,
+                      "t_padding": 0,
+                      "width": 86,
+                      "r_padding": 0,
+                      "height": 79,
+                      "alignment": "left",
+                      "left": 474
+                    },
+                    "data": {
+                      "style": "",
+                      "isSingle": true,
+                      "content_attribs": {
+                        "src": "{{loop.Wall post.wall owner.Profile Pic}}"
+                      },
+                      "hoverStyle": "",
+                      "class_name": "img-height-fixed",
+                      "content": null,
+                      "tagName": "img",
+                      "nodeType": "images",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "type": "node",
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 2,
+                      "t_padding": 0,
+                      "width": 120,
+                      "r_padding": 0,
+                      "height": 22,
+                      "alignment": "left",
+                      "left": 10
+                    },
+                    "data": {
+                      "style": "",
+                      "isSingle": false,
+                      "content_attribs": {},
+                      "hoverStyle": "",
+                      "class_name": "gray-text",
+                      "content": "From",
+                      "tagName": "p",
+                      "nodeType": "texts",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "type": "node",
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 1,
+                      "t_padding": 0,
+                      "width": 88,
+                      "r_padding": 0,
+                      "height": 26,
+                      "alignment": "right",
+                      "left": 463
+                    },
+                    "data": {
+                      "style": "",
+                      "isSingle": false,
+                      "content_attribs": {},
+                      "hoverStyle": "",
+                      "class_name": "gray-text",
+                      "content": "To",
+                      "tagName": "p",
+                      "nodeType": "texts",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "type": "node",
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 109,
+                      "t_padding": 0,
+                      "width": 244,
+                      "r_padding": 0,
+                      "height": 27,
+                      "alignment": "left",
+                      "left": 11
+                    },
+                    "data": {
+                      "style": "",
+                      "isSingle": false,
+                      "content_attribs": {},
+                      "hoverStyle": "",
+                      "class_name": "gray-text",
+                      "content": "{{loop.Wall post.writer.First Name}}",
+                      "tagName": "p",
+                      "nodeType": "texts",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "type": "node",
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 110,
+                      "t_padding": 0,
+                      "width": 274,
+                      "r_padding": 0,
+                      "height": 26,
+                      "alignment": "right",
+                      "left": 278
+                    },
+                    "data": {
+                      "style": "",
+                      "isSingle": false,
+                      "content_attribs": {},
+                      "hoverStyle": "",
+                      "class_name": "gray-text",
+                      "content": "{{loop.Wall post.wall owner.First Name}}",
+                      "tagName": "p",
+                      "nodeType": "texts",
+                      "activeStyle": ""
+                    }
+                  }
+                ],
+                "layout": {
+                  "l_padding": 0,
+                  "b_padding": 0,
+                  "top": 0,
+                  "t_padding": 0,
+                  "width": 4,
+                  "r_padding": 0,
+                  "height": 10,
+                  "alignment": "left",
+                  "left": 0
+                },
+                "isListOrGrid": "list",
+                "goesTo": null
+              }
+            },
+            "isSingle": false,
+            "cons_attribs": {},
+            "class_name": "default-list",
+            "style": ".row { border-bottom: 1px solid #ccc; }\n overflow-y:scroll;",
+            "content": "",
+            "content_attribs": {},
+            "tagName": "div"
+          }
+        },
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 3,
+            "t_padding": 0,
+            "width": 7,
+            "r_padding": 0,
+            "height": 3,
+            "alignment": "center",
+            "left": 3
+          },
+          "data": {
+            "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+            "isSingle": false,
+            "content_attribs": {},
+            "hoverStyle": "",
+            "class_name": "header-1",
+            "content": "Wall posts\n",
+            "tagName": "h1",
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        }
+      ],
+      "page_name": "Newsfeed",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 5
+    },
+    {
+      "name": "Friendship Page",
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "http://appcubator.com",
+            "title": "Powered by Appcubator"
+          }
+        ],
+        "customText": "Copyright 2013"
+      },
+      "url": {
+        "urlparts": [
+          "Friendship_Page",
+          "{{Friendship}}"
+        ]
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": null,
+        "isHidden": false,
+        "links": []
+      },
+      "access_level": "all",
+      "uielements": [
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 2,
+            "t_padding": 0,
+            "width": 6,
+            "r_padding": 0,
+            "height": 5,
+            "alignment": "left",
+            "left": 2
+          },
+          "type": "node",
+          "data": {
+            "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+            "isSingle": false,
+            "tagName": "h1",
+            "hoverStyle": "",
+            "class_name": "header-1",
+            "content": "{{Page.Friendship.accepter.First Name}} {{Page.Friendship.accepter.Last Name}}\n",
+            "content_attribs": {},
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        },
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 10,
+            "t_padding": 0,
+            "width": 3,
+            "r_padding": 0,
+            "height": 14,
+            "alignment": "left",
+            "left": 2
+          },
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "content_attribs": {
+              "src": "{{Page.Friendship.accepter.Profile Pic}}"
+            },
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": null,
+            "tagName": "img",
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 10,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 2,
+            "alignment": "left",
+            "left": 6
+          },
+          "data": {
+            "style": "",
+            "isSingle": false,
+            "content_attribs": {},
+            "hoverStyle": "",
+            "class_name": "normal-text",
+            "content": "You are friends :)",
+            "tagName": "p",
+            "nodeType": "texts",
+            "activeStyle": ""
+          }
+        }
+      ],
+      "page_name": "Friendship Page",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 6
+    },
+    {
+      "name": "My Friends",
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "http://appcubator.com",
+            "title": "Powered by Appcubator"
+          }
+        ],
+        "customText": "Copyright 2013"
+      },
+      "url": {
+        "urlparts": [
+          "My_Friends"
+        ]
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": null,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "internal://Edit profile",
+            "title": "Edit profile"
+          }
+        ]
+      },
+      "access_level": "all",
+      "uielements": [
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 8,
+            "t_padding": 0,
+            "width": 6,
+            "r_padding": 0,
+            "height": 46,
+            "alignment": "left",
+            "left": 2
+          },
+          "type": "loop",
+          "data": {
+            "container_info": {
+              "action": "show",
+              "query": {
+                "fieldsToDisplay": [],
+                "sortAccordingTo": "-Date",
+                "where": [
+                  {
+                    "field_name": "requester",
+                    "equal_to": "CurrentUser",
+                    "nl_description": "Show Friendships where requester is equal to the current user."
+                  }
+                ],
+                "numberOfRows": -1
+              },
+              "row": {
+                "uielements": [
+                  {
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 16,
+                      "t_padding": 0,
+                      "width": 88,
+                      "r_padding": 0,
+                      "height": 86,
+                      "alignment": "left",
+                      "left": 28
+                    },
+                    "type": "node",
+                    "data": {
+                      "style": "",
+                      "isSingle": true,
+                      "tagName": "img",
+                      "hoverStyle": "",
+                      "class_name": "img-normal",
+                      "content": null,
+                      "content_attribs": {
+                        "src": "{{loop.Friendship.accepter.Profile Pic}}"
+                      },
+                      "nodeType": "images",
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "layout": {
+                      "l_padding": 0,
+                      "b_padding": 0,
+                      "top": 21,
+                      "t_padding": 0,
+                      "width": 351,
+                      "r_padding": 0,
+                      "height": 36,
+                      "alignment": "left",
+                      "left": 129
+                    },
+                    "type": "node",
+                    "data": {
+                      "style": "",
+                      "isSingle": false,
+                      "tagName": "a",
+                      "hoverStyle": "",
+                      "class_name": "link-1",
+                      "content": "{{loop.Friendship.accepter.First Name}} {{loop.Friendship.accepter.Last Name}}\n",
+                      "content_attribs": {
+                        "href": "internal://User Profile/?User=loop.Friendship.accepter"
+                      },
+                      "nodeType": "links",
+                      "activeStyle": ""
+                    }
+                  }
+                ],
+                "layout": {
+                  "l_padding": 0,
+                  "b_padding": 0,
+                  "top": 0,
+                  "t_padding": 0,
+                  "width": 4,
+                  "r_padding": 0,
+                  "height": 8,
+                  "alignment": "left",
+                  "left": 0
+                },
+                "goesTo": null,
+                "isListOrGrid": "list"
+              },
+              "entity": "Friendship"
+            },
+            "isSingle": false,
+            "cons_attribs": {},
+            "class_name": "default-list",
+            "style": ".row { border-bottom: 1px solid #ccc; }\n overflow-y:scroll;",
+            "content": "",
+            "content_attribs": {},
+            "tagName": "div"
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 3,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 3,
+            "alignment": "left",
+            "left": 3
+          },
+          "type": "node",
+          "data": {
+            "style": "font-size: 32px;\nline-height: 34px;\nfont-weight: bold;\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n",
+            "isSingle": false,
+            "tagName": "h1",
+            "hoverStyle": "",
+            "class_name": "header-1",
+            "content": "My Friends",
+            "content_attribs": {},
+            "nodeType": "headerTexts",
+            "activeStyle": ""
+          }
+        }
+      ],
+      "page_name": "My Friends",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 7
+    }
+  ],
+  "name": "Book face"
+}

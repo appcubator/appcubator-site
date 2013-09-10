@@ -43,8 +43,7 @@ function($, GarageView) {
 
   $('#skip-racoon').on('click', function() {
     var url = "/app/new/";
-    if(currentTemplate) url = url + "templates/" +currentTemplate + "/";
-    alert(url);
+    if(currentTemplate) url = url + "template/" +currentTemplate + "/";
     $('form').attr("action", url);
     $('form').submit();
   });
