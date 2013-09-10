@@ -25,12 +25,20 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
     },
 
     render: function() {
-      var self = this;
-      $(window).on('keydown', function(e) {
-        if(e.keyCode == 27) {
-          self.hide();
-        }
-      });
+        var self = this;
+        $(window).on('keydown', function(e) {
+            if(e.keyCode == 27) { self.hide(); }
+        });
+
+        $('.toggle-invitations-modal').on('click', function(e) {
+            require(['app/InvitationsView'], function(InvitationsView) {
+                self.hide();
+                new InvitationsView();
+            });
+            e.preventDefault();
+        });
+
+        return this;
     },
 
     hide: function() {

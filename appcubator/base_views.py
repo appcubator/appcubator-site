@@ -10,12 +10,13 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from models import User, Customer, InvitationKeys, AnalyticsStore, App, PubKey
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
+from models import User, Customer, InvitationKeys, AnalyticsStore, App, PubKey, TempDeployment
+from models import StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, User
 from models import get_default_app_state, get_default_theme_state
 from models import get_default_uie_state, get_default_mobile_uie_state
 
 from appcubator.email.sendgrid_email import send_email, send_template_email
+from appcubator.payments.views import set_new_user_plan
 
 import requests
 import re
@@ -85,16 +86,7 @@ def homepage(request):
     page_context = {}
     page_context["title"] = "Homepage"
 
-    return render(request, 'website-home-new.html', page_context)
-
-
-@require_GET
-def homepage_new(request):
-
-    page_context = {}
-    page_context["title"] = "Homepage"
-
-    return render(request, 'website-home-new.html', page_context)
+    return render(request, 'website-home.html', page_context)
 
 
 @require_GET
@@ -260,6 +252,10 @@ def signup(request):
             create_customer(request, long(user.pk))
             new_user = authenticate(username=req['email'],
                                     password=req['password1'])
+            plan_status = set_new_user_plan(new_user)
+            if plan_status is not None:
+                stripe_error = "We encountered an error with signing you up on your starter plan. Sorry!"
+                return HttpResponse(simplejson.dumps(stripe_error), mimetype="application/json")
             login(request, new_user)
 
             if request.is_ajax():
@@ -424,7 +420,38 @@ def resources(request):
     page_context["title"] = "Resources"
     return render(request, 'website-resources.html', page_context)
 
+def find_or_create_temp_deployment(request):
+    # create deployment in session
+    if 'temp_deploy_id' in request.session:
+        t_id = request.session['temp_deploy_id']
+        try:
+            t = TempDeployment.objects.get(id=t_id)
+            return t # "found" branch exits here
+        except TempDeployment.DoesNotExist:
+            pass
+    # if not found, create, deploy, return
+    t = TempDeployment.create()
+    request.session['temp_deploy_id'] = t.id
+    return t
+
+def temp_deploy(request):
+    td = find_or_create_temp_deployment(request)
+    if request.method == 'GET':
+        return HttpResponse(simplejson.dumps({ 'status': td.get_deployment_status() }), mimetype="application/json")
+    elif request.method == 'POST':
+        old_state = td._state_json
+        td._state_json = request.POST['app_state']
+        td.deploy()
+        # illusion of not saving.
+        td._state_json = old_state
+        td.save()
+        d = {"site_url": td.url(), "git_url": td.git_url(), "zip_url": ""}
+        return HttpResponse(simplejson.dumps(d), mimetype="application/json")
+
+@require_GET
 def external_editor(request):
+    td = find_or_create_temp_deployment(request)
+    #td.deploy()
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
     mobile_themes = UITheme.get_mobile_themes()
@@ -437,7 +464,6 @@ def external_editor(request):
         'default_uie_state': get_default_uie_state(),
         'themes': simplejson.dumps(list(themes)),
         'mobile_themes': simplejson.dumps(list(mobile_themes)),
-        'apps': request.user.apps.all(),
         'statics': simplejson.dumps([]),
     }
     page_context["title"] = "Demo Editor"
@@ -447,11 +473,13 @@ def external_editor(request):
 def quickstart(request):
     page_context = {}
     page_context["title"] = "Resources"
+    page_context["quickstart"] = True
     return render(request, 'website-resources-quickstart.html', page_context)
 
 def tutorials(request):
     page_context = {}
     page_context["title"] = "Resources"
+    page_context["tutorials"] = True
     parts_json_path = join(settings.PROJECT_ROOT_PATH, 'appcubator', 'media', "screencast-text.json")
     with open(parts_json_path) as f:
         parts = simplejson.load(f)
@@ -461,21 +489,25 @@ def tutorials(request):
 def documentation(request):
     page_context = {}
     page_context["title"] = "Resources"
+    page_context["documentation"] = True
     return render(request, 'website-resources-documentation.html', page_context)
 
 def resources_socialnetwork(request, name=None):
     if name == None:
         raise Http404
-    if name not in ["howtosocialnetwork", "custom-code", "deploy-to-cloud"]:
+    if name not in ["howtosocialnetwork", "custom-code", "get-it-running", "deploy-to-cloud"]:
         raise Http404
     title_d = { "howtosocialnetwork": "Building a Social Network",
                 "custom-code": "Writing Custom Code",
+                "get-it-running": "Get your Django app Running",
                 "deploy-to-cloud": "Deploying to the Cloud"}
     template_d = { "howtosocialnetwork": "website-resources-socialnetwork.html",
                    "custom-code": "website-resources-customcode.html",
+                   "get-it-running": "website-resources-getrunning.html",
                    "deploy-to-cloud": "website-resources-deploy.html"}
     num_sections_d = { "howtosocialnetwork": 3,
                        "custom-code": 1,
+                       "get-it-running": 1,
                        "deploy-to-cloud": 1}
     page_context = {}
     page_context["title"] = title_d[name]

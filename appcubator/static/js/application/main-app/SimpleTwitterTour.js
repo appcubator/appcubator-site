@@ -336,6 +336,17 @@ define([
       url     : '/editor/1/',
       target  : $('.form-editor-btn'),
       setup: function(tour, options) {
+        v1State.getCurrentPage().get('uielements').each(function(widgetM) {
+              if(widgetM.isForm()) {
+                widgetM.on('selected display-widget-editor', function() {
+                  $('.form-editor-btn').first().one('click', tour.next);
+                });
+
+                widgetM.get('layout').on('change', function() {
+                  $('.form-editor-btn').first().one('click', tour.next);
+                });
+              }
+        }, this);
         $('.form-editor-btn').first().one('click', tour.next);
       }
     },

@@ -6,7 +6,7 @@ InvitationsTemplates.mainTemp = [
 	'<div class="span20 offset8">',
 		'<input type="text" class="name input-block-level" placeholder="First Name">',
 		'<input type="text" class="email input-block-level" placeholder="Email">',
-		'<input type="submit" class="btn btn-info pull-right btn-block" value="Send">',
+		'<input type="submit" class="btn btn-info pull-right btn-block" value="Invite">',
 	'</div>',
 '</form>',
 '<h2 class="hoff2">Invitations Sent</h2>',

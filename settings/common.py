@@ -179,10 +179,10 @@ LOGGING = {
 }
 
 # Stripe Payments based key
-STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_qbJZ9hMePgdpdZUrkKTskzgz")
-STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_GhzvfBePNCkvC6j23UtZkmTi")
-#STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_fY9VBkCmjBQLk621M0ya73gL")
-#STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_live_QcJadrTVAXeC3DrotELf02KJ")
+#STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_qbJZ9hMePgdpdZUrkKTskzgz")
+#STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_GhzvfBePNCkvC6j23UtZkmTi")
+STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_fY9VBkCmjBQLk621M0ya73gL")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_live_QcJadrTVAXeC3DrotELf02KJ")
 
 
 PAYMENTS_PLANS = {

@@ -11,7 +11,6 @@ from payments import views as payment_views
 
 urlpatterns = patterns('',
     url(r'^$',                          base_views.homepage),
-    url(r'^beta/$',                     base_views.homepage_new),
     url(r'^showhn/$',                   base_views.homepage),
     url(r'^showgsb/$',                  base_views.showgsbpage),
     url(r'^showdn/$',                   base_views.showdnpage),
@@ -53,6 +52,7 @@ urlpatterns = patterns('',
 
     url(r'^resources/$',                                           base_views.resources),
     url(r'^resources/editor/$',                                    base_views.external_editor),
+    url(r'^resources/editor/publish/$',                            base_views.temp_deploy),
     url(r'^resources/quickstart/$',                                base_views.quickstart),
     url(r'^resources/tutorials/$',                                 base_views.tutorials),
     url(r'^resources/documentation/$',                             base_views.documentation),
@@ -60,6 +60,7 @@ urlpatterns = patterns('',
 
     url(r'^resources/tutorial/build-social-network/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'howtosocialnetwork'}),
     url(r'^resources/tutorial/deploy-to-cloud/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'deploy-to-cloud'}),
+    url(r'^resources/tutorial/get-it-running/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'get-it-running'}),
     url(r'^resources/tutorial/custom-code/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'custom-code'}),
     url(r'^resources/tutorial/what-is-a-web-app/$',                base_views.resources_whatisawebapp),
     url(r'^resources/tutorial/appcubator-for-django-developers/$', base_views.resources_fordjangodevs),

@@ -48,7 +48,6 @@ function(AppGenerator) {
       var tableId = String(e.currentTarget.id).replace('table-list-','');
       var tableModel = v1State.get('tables').get(tableId);
 
-      console.log(tableModel);
       var appGen = new AppGenerator();
       this.model.get('uielements').add(appGen.generateListPage(tableModel), false);
       
@@ -72,7 +71,6 @@ function(AppGenerator) {
       });
 
       this.el.appendChild(list);
-      console.log(this.el.innerHTML);
     }
   });
 

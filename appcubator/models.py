@@ -5,20 +5,24 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from simplejson import JSONDecodeError
 
-import tarfile
 import os, os.path
 import re
 import requests
 import simplejson
 import traceback
 import sys
-from datetime import datetime
-import time
+from datetime import datetime, timedelta
 
 import subprocess, shlex
 import hashlib
 import random
 import shutil
+
+from app_builder.analyzer import App as AnalyzedApp # avoid conflict w site App
+from app_builder.controller import create_codes
+from app_builder.coder import Coder, write_to_fs
+
+import deploy
 
 
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
@@ -157,54 +161,171 @@ def clean_subdomain(subdomain, replace_periods=False):
     return subdomain
 
 
-# should move these to some deployment module
+from random_primary import RandomPrimaryIdModel
+class TempDeployment(RandomPrimaryIdModel):
+    # now the id is random
+    deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
+    # cached deployment info
+    subdomain = models.CharField(max_length=50, blank=True, unique=True)
 
-class DeploymentError(Exception):
-    """Should be raised whenever the deployment server does not return 200"""
-    pass
+    # edit this to get different app state by default
+    _state_json = models.TextField(blank=True, default=get_default_app_state)
+    _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
+    _mobile_uie_state_json = models.TextField(blank=True, default=get_default_mobile_uie_state)
 
-class NotDeployedError(Exception):
-    """Indicates that the deployment id is bogus"""
-    pass
+    created = models.DateField(auto_now_add=True)
 
-def update_deployment_info(deployment_id, hostname, gitrepo_name):
-    payload = { 'hostname': hostname,
-                'gitrepo_name': gitrepo_name }
-    deployment_url = 'http://%s/deployment/%d/info/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
-    r = requests.post(deployment_url, data=payload, headers={'X-Requested-With': 'XMLHttpRequest'})
-    if r.status_code == 200:
-        return r
-    elif r.status_code == 404:
-        raise NotDeployedError()
-    else:
-        logger.error("Update deployment info failed: %r" % r.__dict__)
-        raise DeploymentError()
+    def get_state(self):
+        return simplejson.loads(self._state_json)
 
-def get_deployment_status(deployment_id):
+    def set_state(self, val):
+        self._state_json = simplejson.dumps(val)
+
+    state = property(get_state, set_state)
+
+    @property
+    def state_json(self):
+        return self._state_json
+
+    @property
+    def uie_state(self):
+        return simplejson.loads(self._uie_state_json)
+
+    @property
+    def uie_state_json(self):
+        return self._uie_state_json
+
+    @property
+    def mobile_uie_state(self):
+        return simplejson.loads(self._mobile_uie_state_json)
+
+    @property
+    def mobile_uie_state_json(self):
+        return self._mobile_uie_state_json
+
     """
-    Returns 0, 1, or 2.
-     0 = No task running
-     1 = Running
-     2 = Task done, plz collect result.
+    @staticmethod
+    def get_rand_subdomain():
+        t = "temp-%s" % self.id
+        return t
+
+    @classmethod
+    def get_rand_uniq_subdomain(cls):
+        s = cls.get_rand_subdomain()
+        while cls.objects.filter(subdomain=s).exists() or App.objects.filter(subdomain=s).exists():
+            # will terminate if s changes randomly
+            s = cls.get_rand_subdomain()
+        return s
     """
-    deployment_url = 'http://%s/deployment/%d/task/status/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
-    r = requests.get(deployment_url, headers={'X-Requested-With': 'XMLHttpRequest'})
-    if r.status_code != 200:
-        logger.error("Get deployment status failed: %r" % r.__dict__)
-        raise DeploymentError()
 
-    # get data out
-    d = r.json()
-    status = d['status']
-    message = d['message'] # not doing anything w this yet but know it exists.
-    assert status in (0, 1, 2)
-    if status == 2:
-        # clear the result from the server so next time it will be 0
-        deployment_url = 'http://%s/deployment/%d/task/result/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
-        r2 = requests.get(deployment_url, headers={'X-Requested-With': 'XMLHttpRequest'})
+    @classmethod
+    def create(cls):
+        i = cls()
+        i.subdomain = str(random.randint(10000000,90000000))
+        i.save()
+        i.subdomain = "temp-%s" % i.id#cls.get_rand_uniq_subdomain()
+        i.save()
+        return i
 
-    return status
-# end deployment related code
+    @classmethod
+    def delete_old(cls):
+        how_many_days = 3
+        dt_n_days_ago = datetime.now()-timedelta(days=how_many_days)
+        for d in cls.objects.filter(created__gte=dt_n_days_ago):
+            d.delete()
+
+    def delete_deployment(self):
+        if self.deployment_id is not None:
+            r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
+            return r
+
+    def delete(self, *args, **kwargs):
+        if self.deployment_id is not None:
+            try:
+                r = self.delete_deployment()
+            except Exception:
+                logger.error("Could not reach appcubator server.")
+            else:
+                if r.status_code != 200:
+                    logger.error("Tried to delete %d, Deployment server returned bad response: %d %r" % (self.deployment_id, r.status_code, r.text))
+        super(App, self).delete(*args, **kwargs)
+
+    def css(self, deploy=True, mobile=False):
+        """Use uiestate, less, and django templates to generate a string of the CSS"""
+        from django.template import Context, loader
+        t = loader.get_template('app-editor-less-gen.html')
+
+        uie_state = self.uie_state
+        if mobile:
+            uie_state = self.mobile_uie_state
+
+        context = Context({'uie_state': uie_state,
+                           'isMobile': mobile,
+                           'deploy': deploy})
+        css_string = t.render(context)
+        return css_string
+
+    def get_deploy_data(self, git_user=None):
+        post_data = {
+            "hostname": self.hostname(),
+            "gitrepo_name": self.subdomain,
+            "app_json": self.state_json,
+            "deploy_secret": "v1factory rocks!"
+        }
+        if git_user is not None:
+            post_data['user_id'] = git_user
+        return post_data
+
+    def write_to_tmpdir(self):
+        app = AnalyzedApp.create_from_dict(self.state)
+
+        app.api_key = "sljlfksjdflsjdlfkjsdlkfjlsdk"
+        codes = create_codes(app)
+        coder = Coder.create_from_codes(codes)
+
+        tmp_project_dir = write_to_fs(coder, css=self.css())
+
+        return tmp_project_dir
+
+    def hostname(self):
+        if not settings.PRODUCTION: # debug and staging
+            return "%s.staging.appcubator.com" % self.subdomain
+        else:
+            return "%s.appcubator.com" % self.subdomain
+
+    def url(self):
+        return "http://%s/" % self.hostname()
+
+    def git_url(self):
+        return "git@%s:%s.git" % (settings.DEPLOYMENT_HOSTNAME, "thisdoesntexist")
+
+    def deploy(self, retry_on_404=True):
+        tmpdir = self.write_to_tmpdir()
+        try:
+            logger.info("Deployed to %s" % tmpdir)
+            is_merge, deployment_id = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404)
+            assert not is_merge
+            if self.deployment_id is not None:
+                logger.warn("Old deployment was not found, created a new deployment.")
+            self.deployment_id = deployment_id
+            self.save()
+        finally:
+            # because hard disk space doesn't grow on trees.
+            shutil.rmtree(tmpdir)
+        return (is_merge, deployment_id)
+
+    def get_deployment_status(self):
+        """
+        Returns 0, 1, or 2.
+         0 = No task running
+         1 = Running
+         2 = Task done, plz collect result.
+        """
+        if self.deployment_id is None:
+            return 0
+        s = deploy.get_deployment_status(self.deployment_id)
+        return s
+
 
 
 class App(models.Model):
@@ -231,7 +352,7 @@ class App(models.Model):
     def update_deployment_info(self):
         # calls method outside of this class
         if self.deployment_id is not None:
-            r = update_deployment_info(self.deployment_id, self.hostname(), self.gitrepo_name)
+            r = deploy.update_deployment_info(self.deployment_id, self.hostname(), self.gitrepo_name)
         return r
 
     def get_deployment_status(self):
@@ -243,7 +364,7 @@ class App(models.Model):
         """
         if self.deployment_id is None:
             return 0
-        s = get_deployment_status(self.deployment_id)
+        s = deploy.get_deployment_status(self.deployment_id)
         return s
 
     def save(self, state_version=True, update_deploy_server=True, *args, **kwargs):
@@ -265,7 +386,7 @@ class App(models.Model):
                 # update call to deployment server
                 try:
                     self.update_deployment_info()
-                except NotDeployedError:
+                except deploy.NotDeployedError:
                     self.deployment_id = None
                     self.deploy()
 
@@ -378,11 +499,6 @@ class App(models.Model):
             self.gitrepo_name = App.provision_gitrepo_name(self.gitrepo_name)
 
     def write_to_tmpdir(self):
-        from app_builder.analyzer import App as AnalyzedApp
-        from app_builder.controller import create_codes
-        from app_builder.coder import Coder, write_to_fs
-
-
         app = AnalyzedApp.create_from_dict(self.state)
 
         app.api_key = self.api_key
@@ -455,94 +571,18 @@ class App(models.Model):
             post_data['user_id'] = git_user
         return post_data
 
-    def _write_tar_from_app_dir(self, appdir):
-        """
-        Given the directory of the app, tar it up and return the path to the tar.
-        """
-        contents = os.listdir(appdir)
-        # tar it up
-        t = tarfile.open(os.path.join(appdir, 'payload.tar'), 'w')
-        for fname in contents:
-            t.add(os.path.join(appdir, fname), arcname=fname)
-        t.close()
-        return os.path.join(appdir, 'payload.tar')
-
-    def _transport_app(self, appdir, retry_on_404=True, git_user=None):
-        # tar it up
-        tar_path = self._write_tar_from_app_dir(appdir)
-        f = open(tar_path, "r")
-        try:
-            # catapult the tar over to the deployment server
-            files = {'file':f}
-            post_data = self.get_deploy_data(git_user=git_user)
-            if self.deployment_id is None:
-                try:
-                    r = requests.post("http://%s/deployment/" % settings.DEPLOYMENT_HOSTNAME, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
-                except Exception:
-                    print r.request.__dict__
-
-            else:
-                r = requests.post("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
-
-        finally:
-            f.close()
-            os.remove(os.path.join(appdir, 'payload.tar'))
-
-        if r.status_code == 200:
-            result = {}
-            response_content = r.json()
-            logger.debug("Deployment response content: %r" % response_content)
-            try:
-                self.deployment_id = response_content['deployment_id']
-                self.save(state_version=False)
-            except KeyError:
-                pass
-            if 'errors' in response_content:
-                result['errors'] = response_content['errors']
-
-            result['site_url'] = self.url()
-            result['git_url'] = self.git_url()
-
-            try:
-                syncdb_data = [ u for u in response_content['script_results'] if 'syncdb.py' in u['script'] ][0]
-                if u'value to use for existing rows' in syncdb_data['stderr']:
-                    assert False, "Migration needs help!!!"
-            except Exception:
-                pass # this is the fast_deploy case
-
-            return result
-
-        elif r.status_code == 404 or (r.status_code == 502 and requests.get("http://%s/lskdjflskjf/" % settings.DEPLOYMENT_HOSTNAME).status_code == 404):
-            assert retry_on_404
-            logger.warn("The deployment was not found, so I'm setting deployment id to None")
-            self.deployment_id = None
-            self.save(state_version=False)
-            return self._transport_app(appdir, retry_on_404=False)
-
-        # merge conflict with custom code
-        elif r.status_code == 409:
-            result = {}
-            response_content = r.json()
-            logger.debug("Deployment response content: %r" % response_content)
-            result['files'] = response_content['files']
-            result['branch'] = response_content['branch']
-            result['site_url'] = self.url()
-            result['git_url'] = self.git_url()
-
-            return result
-
-        else:
-            raise DeploymentError("Deployment server error: %r" % r.text)
-
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
         try:
             logger.info("Deployed to %s" % tmpdir)
-            r = self._transport_app(tmpdir, retry_on_404=retry_on_404, git_user=self.owner.extradata.git_user_id())
+            is_merge, data = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404, git_user=self.owner.extradata.git_user_id())
+            if not is_merge:
+                self.deployment_id = data
+                self.save(state_version=False) # might be unnecessary if nothing has changed.
         finally:
             # because hard disk space doesn't grow on trees.
             shutil.rmtree(tmpdir)
-        return r
+        return (is_merge, data)
 
     def delete_deployment(self):
         if self.deployment_id is not None:
