@@ -1,7 +1,16 @@
 {% extends "infra-html.html" %}
 
-{% block css %}
+{% block less %}
+  <link type="text/css"  rel="stylesheet/less" href="{{ STATIC_URL }}css/app/style.less">
   <link type="text/css"  rel="stylesheet/less" href="{{ STATIC_URL }}css/app/themes.less">
+{% endblock %}
+
+{% block css-files %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/app/style.css">
+  <link type="text/css"  rel="stylesheet/less" href="{{ STATIC_URL }}css/app/themes.css">
+{% endblock %}
+
+{% block css %}
   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/js/libs/fontselect/fontselect.css" />
 {% endblock %}
 

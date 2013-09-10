@@ -1,214 +1,251 @@
 define([
-  'models/PageModel',
-  'collections/TableCollection',
-  'app/pages/UrlView',
-  'mixins/SimpleModalView',
-  'mixins/ErrorModalView',
-  'mixins/DebugOverlay',
-  'editor/WidgetsManagerView',
-  'editor/WidgetEditorView',
-  'editor/EditorGalleryView',
-  'editor/PageTemplatePicker',
-  'editor/NavbarView',
-  'editor/FooterView',
-  'editor/GuideView',
-  'editor/MarqueeView',
-  'editor/ToolBarView',
-  'tutorial/TutorialView',
-  'app/DeployView',
-  'app/RedoController',
-  'editor/editor-templates'
-],
-function( PageModel,
-          TableCollection,
-          UrlView,
-          SimpleModalView,
-          ErrorModalView,
-          DebugOverlay,
-          WidgetsManagerView,
-          WidgetEditorView,
-          EditorGalleryView,
-          PageTemplatePicker,
-          NavbarView,
-          FooterView,
-          GuideView,
-          MarqueeView,
-          ToolBarView,
-          TutorialView,
-          DeployView,
-          RedoController) {
+        'models/PageModel',
+        'collections/TableCollection',
+        'app/pages/UrlView',
+        'mixins/SimpleModalView',
+        'mixins/ErrorModalView',
+        'mixins/DebugOverlay',
+        'editor/WidgetsManagerView',
+        'editor/WidgetEditorView',
+        'editor/EditorGalleryView',
+        'editor/PageTemplatePicker',
+        'editor/NavbarView',
+        'editor/FooterView',
+        'editor/GuideView',
+        'editor/MarqueeView',
+        'editor/ToolBarView',
+        'tutorial/TutorialView',
+        'app/DeployView',
+        'app/RedoController',
+        'editor/editor-templates'
+    ],
+    function(PageModel,
+        TableCollection,
+        UrlView,
+        SimpleModalView,
+        ErrorModalView,
+        DebugOverlay,
+        WidgetsManagerView,
+        WidgetEditorView,
+        EditorGalleryView,
+        PageTemplatePicker,
+        NavbarView,
+        FooterView,
+        GuideView,
+        MarqueeView,
+        ToolBarView,
+        TutorialView,
+        DeployView,
+        RedoController) {
 
-  var EditorView = Backbone.View.extend({
-    className : 'editor-page',
-    css: "bootstrap-editor",
+        var EditorView = Backbone.View.extend({
+            className: 'editor-page',
+            css: "bootstrap-editor",
 
-    events    : {
-      'click #editor-save'   : 'save',
-      'click #deploy'        : 'deploy',
-      'click .menu-button.help' : 'help',
-      'click .menu-button.question' : 'question',
-      'click .url-bar'       : 'clickedUrl'
-    },
+            events: {
+                'click #editor-save': 'save',
+                'click #deploy': 'deploy',
+                'click .menu-button.help': 'help',
+                'click .menu-button.question': 'question',
+                'click .url-bar': 'clickedUrl'
+            },
 
-    initialize: function(options) {
-      _.bindAll(this);
-      this.subviews = [];
+            initialize: function(options) {
+                _.bindAll(this);
+                this.subviews = [];
 
-      if(options && options.pageId) pageId = options.pageId;
+                if (options && options.pageId) pageId = options.pageId;
 
-      util.loadCSS('jquery-ui');
+                util.loadCSS('jquery-ui');
 
-      this.model             = v1State.get('pages').models[pageId];
-      v1State.currentPage = this.model;
-      v1State.isMobile = false;
+                this.model = v1State.get('pages').models[pageId];
+                v1State.currentPage = this.model;
+                v1State.isMobile = false;
 
-      this.widgetsCollection    = this.model.get('uielements');
+                this.widgetsCollection = this.model.get('uielements');
 
-      this.marqueeView      = new MarqueeView();
-      this.galleryEditor    = new EditorGalleryView(this.widgetsCollection);
-      this.widgetsManager   = new WidgetsManagerView(this.widgetsCollection);
-      this.guides           = new GuideView(this.widgetsCollection);
-      this.toolBar          = new ToolBarView();
+                this.marqueeView = new MarqueeView();
+                this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
+                this.widgetsManager = new WidgetsManagerView(this.widgetsCollection);
+                this.guides = new GuideView(this.widgetsCollection);
+                this.toolBar = new ToolBarView();
 
-      redoController = new RedoController();
+                redoController = new RedoController();
 
-      keyDispatcher.bindComb('meta+z', redoController.undo);
-      keyDispatcher.bindComb('ctrl+z', redoController.undo);
-      keyDispatcher.bindComb('meta+shift+z', redoController.redo);
-      keyDispatcher.bindComb('ctrl+shift+z', redoController.redo);
+                keyDispatcher.bindComb('meta+z', redoController.undo);
+                keyDispatcher.bindComb('ctrl+z', redoController.undo);
+                keyDispatcher.bindComb('meta+shift+z', redoController.redo);
+                keyDispatcher.bindComb('ctrl+shift+z', redoController.redo);
 
-      g_guides = this.guides;
+                g_guides = this.guides;
 
-      this.navbar  = new NavbarView(this.model.get('navbar'));
-      this.footer  = new FooterView(this.model.get('footer'));
-      this.urlModel      = this.model.get('url');
+                this.navbar = new NavbarView(this.model.get('navbar'));
+                this.footer = new FooterView(this.model.get('footer'));
+                this.urlModel = this.model.get('url');
 
-      this.title = "Editor";
+                this.title = "Editor";
 
-      this.subviews = [ this.marqueeView,
-                        this.galleryEditor,
-                        this.widgetsManager,
-                        this.guides,
-                        this.toolBar,
-                        this.navbar,
-                        this.footer ];
+                this.subviews = [this.marqueeView,
+                    this.galleryEditor,
+                    this.widgetsManager,
+                    this.guides,
+                    this.toolBar,
+                    this.navbar,
+                    this.footer
+                ];
 
-      this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
-    },
+                this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
 
-    render: function() {
+                this.startUIStateUpdater();
+            },
 
-      if(!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
+            render: function() {
 
-      this.toolBar.setElement(document.getElementById('tool-bar')).render();
-      this.marqueeView.render();
-      this.renderUrlBar();
-      this.galleryEditor.render();
-      this.widgetsManager.render();
-      this.navbar.setElement('#navbar').render();
-      this.footer.setElement('#footer').render();
-      this.guides.setElement($('#elements-container')).render();
+                if (!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
 
-      $('#elements-container').append(this.marqueeView.el);
+                this.toolBar.setElement(document.getElementById('tool-bar')).render();
+                this.marqueeView.render();
+                this.renderUrlBar();
+                this.galleryEditor.render();
+                this.widgetsManager.render();
+                this.navbar.setElement('#navbar').render();
+                this.footer.setElement('#footer').render();
+                this.guides.setElement($('#elements-container')).render();
 
-      this.setupPageWrapper();
-      this.setupPageHeight();
-      this.setupPageHeightBindings();
+                $('#elements-container').append(this.marqueeView.el);
 
-      window.addEventListener('resize', this.setupPageWrapper);
+                this.setupPageWrapper();
+                this.setupPageHeight();
+                this.setupPageHeightBindings();
 
-      $('#loading-gif').fadeOut().remove();
+                window.addEventListener('resize', this.setupPageWrapper);
 
-      if(!this.model.get('uielements').length) {
-        new PageTemplatePicker(this.model);
-      }
+                $('#loading-gif').fadeOut().remove();
 
-      return this;
-    },
+                if (!this.model.get('uielements').length) {
+                    new PageTemplatePicker(this.model);
+                }
 
-    renderUrlBar: function() {
-      this.$el.find('.url-bar').html(this.urlModel.getUrlString());
-    },
+                return this;
+            },
 
-    save : function(callback) {
-      v1.save();
-      return false;
-    },
+            renderUrlBar: function() {
+                this.$el.find('.url-bar').html(this.urlModel.getUrlString());
+            },
 
-    help: function(e) {
-      new TutorialView([6]);
-    },
+            save: function(callback) {
+                v1.save();
+                return false;
+            },
 
-    question: function (e) {
-      olark('api.box.show');
-      olark('api.box.expand');
-    },
+            help: function(e) {
+                new TutorialView([6]);
+            },
 
-    deploy: function(options) {
-      var url = '/app/'+appId+'/deploy/';
-      var self = this;
-      util.get('deploy-text').innerHTML = 'Publishing';
-      var threeDots = util.threeDots();
-      util.get('deploy-text').appendChild(threeDots.el);
-      
-      var success_callback = function() {
-        util.get('deploy-text').innerHTML = 'Publish';
-        clearInterval(threeDots.timer);
-      };
+            startUIStateUpdater: function() {
+                var self = this;
+                this.UIStateTimer = setInterval(function() {
+                    self.fetchUIState(function(state) {
+                        if (!_.isEqual(state, uieState)) {
+                            self.renewUIEState(state);
+                        }
+                    });
 
-      var hold_on_callback = function() {
-        util.get('deploy-text').innerHTML = 'Hold On, It\'s still deploying.';
-      };
+                }, 1500);
+            },
 
-      var urlSuffix = '/' + self.urlModel.getAppendixString();
-      if(urlSuffix != '/') urlSuffix += '/';
-      v1.deploy(success_callback, hold_on_callback,{ appendToUrl: urlSuffix });
-    },
+            fetchUIState: function(callback) {
+                $.ajax({
+                    type: "GET",
+                    url: '/app/' + appId + '/uiestate/',
+                    statusCode: {
+                        200: callback,
+                        400: callback,
+                    },
+                    dataType: "JSON"
+                });
+            },
 
-    clickedUrl: function() {
-      var newView =  new UrlView(this.urlModel);
-      newView.onClose = this.renderUrlBar;
-    },
+            renewUIEState: function(newState) {
+                uieState = newState;
+                v1.reArrangeCSSTag();
+            },
 
-    setupPageWrapper: function() {
-      var height = window.innerHeight - 90;
-      util.get('page-wrapper').style.height = height+ 'px';
-      this.$el.find('.page.full').css('height', height - 46);
-    },
+            question: function(e) {
+                olark('api.box.show');
+                olark('api.box.expand');
+            },
 
-    setupPageHeightBindings: function () {
-      this.listenTo(this.model.get('uielements'), 'add', function(uielem) {
-        this.setupPageHeight();
-        this.listenTo(uielem.get('layout'),'change', this.setupPageHeight);
-      }, this);
+            deploy: function(options) {
+                var url = '/app/' + appId + '/deploy/';
+                var self = this;
+                util.get('deploy-text').innerHTML = 'Publishing';
+                var threeDots = util.threeDots();
+                util.get('deploy-text').appendChild(threeDots.el);
 
-      this.model.get('uielements').each(function(uielem) {
-        this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
-      }, this);
-    },
+                var success_callback = function() {
+                    util.get('deploy-text').innerHTML = 'Publish';
+                    clearInterval(threeDots.timer);
+                };
 
-    setupPageHeight: function() {
-      var $container = this.$el.find('#elements-container');
-      var oldHeight = this.currentHeight;
+                var hold_on_callback = function() {
+                    util.get('deploy-text').innerHTML = 'Hold On, It\'s still deploying.';
+                };
 
-      this.currentHeight = (this.model.getHeight() + 4) * 15;
-      if(this.currentHeight < 800) this.currentHeight = 800;
-      $container.css('height', this.currentHeight);
+                var urlSuffix = '/' + self.urlModel.getAppendixString();
+                if (urlSuffix != '/') urlSuffix += '/';
+                v1.deploy(success_callback, hold_on_callback, {
+                    appendToUrl: urlSuffix
+                });
+            },
 
-      if(this.currentHeight > oldHeight) { util.scrollToBottom($('#page')); }
-    },
+            clickedUrl: function() {
+                var newView = new UrlView(this.urlModel);
+                newView.onClose = this.renderUrlBar;
+            },
 
-    close: function() {
-      window.removeEventListener('resize', this.setupPageWrapper);
+            setupPageWrapper: function() {
+                var height = window.innerHeight - 90;
+                util.get('page-wrapper').style.height = height + 'px';
+                this.$el.find('.page.full').css('height', height - 46);
+            },
 
-      keyDispatcher.unbind('meta+z', redoController.redo);
-      keyDispatcher.unbind('ctrl+z', redoController.redo);
+            setupPageHeightBindings: function() {
+                this.listenTo(this.model.get('uielements'), 'add', function(uielem) {
+                    this.setupPageHeight();
+                    this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
+                }, this);
 
-      Backbone.View.prototype.close.call(this);
-    }
+                this.model.get('uielements').each(function(uielem) {
+                    this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
+                }, this);
+            },
 
-  });
+            setupPageHeight: function() {
+                var $container = this.$el.find('#elements-container');
+                var oldHeight = this.currentHeight;
 
-  return EditorView;
-});
+                this.currentHeight = (this.model.getHeight() + 4) * 15;
+                if (this.currentHeight < 800) this.currentHeight = 800;
+                $container.css('height', this.currentHeight);
 
+                if (this.currentHeight > oldHeight) {
+                    util.scrollToBottom($('#page'));
+                }
+            },
+
+            close: function() {
+                window.removeEventListener('resize', this.setupPageWrapper);
+
+                clearInterval(this.UIStateTimer);
+
+                keyDispatcher.unbind('meta+z', redoController.redo);
+                keyDispatcher.unbind('ctrl+z', redoController.redo);
+
+                Backbone.View.prototype.close.call(this);
+            }
+
+        });
+
+        return EditorView;
+    });
