@@ -27,7 +27,6 @@ define(function(require, exports, module) {
                 $('.total-visitors', this.el)[0].innerHTML = "?";
                 $('.total-page-views', this.el)[0].innerHTML = "?";
                 $('.total-active-users', this.el)[0].innerHTML = "?";
-                $('.total-active-visitors', this.el)[0].innerHTML = "?";
             }
             this.fetchInfo();
             return this;
