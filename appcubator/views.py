@@ -30,7 +30,8 @@ from payments.views import subscribe
 import requests
 import traceback
 import datetime
-import os
+import os, os.path
+join = os.path.join
 import string
 import nltk
 import json
@@ -47,6 +48,18 @@ def add_statics_to_context(context, app):
     context['statics'] = simplejson.dumps(list(
         StaticFile.objects.filter(app=app).values()))
     return context
+
+
+DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
+    __file__), os.path.normpath("default_state"))
+APP_TEMPLATES = { "socialnetwork": "",
+                  "marketplace": "" # list the templates here, they get initialized below.
+                  }
+for templname in APP_TEMPLATES:
+    with open(join(DEFAULT_STATE_DIR, 'apps', templname)) as f:
+        r = simplejson.load(f)
+    APP_TEMPLATES[templname] = r
+
 
 
 @require_GET
@@ -94,8 +107,14 @@ def app_noob_page(request):
     return render(request, 'app-welcome-page.html', default_data)
 
 
+def app_new_template(request, template_name):
+    return app_new(request, app_template=template_name)
+
 @login_required
-def app_new(request, is_racoon = False):
+def app_new(request, is_racoon = False, app_template=None):
+    """
+    template_name only used for POST request
+    """
     if request.method == 'GET':
         #log url route
         user_id = request.user.id
@@ -105,6 +124,9 @@ def app_new(request, is_racoon = False):
         return render(request, 'apps-new.html')
 
     elif request.method == 'POST':
+        if app_template is not None and app_template not in APP_TEMPLATES:
+            raise Http404
+
         data = {}
         data['name'] = request.POST.get('name', '')
         data['owner'] = request.user.id
@@ -121,7 +143,11 @@ def app_new(request, is_racoon = False):
 
         if form.is_valid():
             app = form.save(commit=False)
-            s = app.state
+            if app_template is not None:
+                # initialize the state w a template
+                s = APP_TEMPLATES[app_template]
+            else:
+                s = app.state
             s['name'] = app.name
             app.state = s
             app.save()
