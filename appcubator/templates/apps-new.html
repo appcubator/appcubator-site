@@ -12,15 +12,16 @@
       <h4 class="span12 hoff1">Name of the app</h4>
       <input class="span16 hoff1" name="name" type="text" placeholder="Easy App" value="{{old_name}}"><hr>
       {% if errors %}{{ errors.name.0 }}{% endif %}
-      <div id="skip-racoon" class="span16 hoff1 btn btn-blue hi3 offset12" >Start Building My App »</div>
      <!--  <input id="guide-btn" type='submit' class="span16 hoff1 btn offset12" type="submit" value="Let Racoon guide me!" style="line-height: 37px;"><br> -->
       </form>
-      <div class="hoff2">
-        <span class="span34 hoff2">You can also start with one of the templates here.</span>
+      <div class="">
+        <span class="span34">You can also start with one of the templates here.</span>
         <div class="span12 hi10 hoff2 app-template" style="background-image:url(https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7);">Social Network</div>
         <div class="span12 hi10 hoff2 offset2 app-template" style="background-image:url({{STATIC_URL}}img/marketplace.png);">Market Place</div>
-        <div class="span12 hi10 hoff2 offset2 app-template">Tutoring Site</div>
+        <div class="span12 hi10 hoff2 offset2 app-template" style="background-image:url({{STATIC_URL}}img/examcloud.png);">Tutoring Site</div>
       </div>
+      <hr class="span40">
+      <div id="skip-racoon" class="span16 hoff1 btn btn-blue hi3 offset12 pull-right" >Start Building My App »</div>
   </div>
   <div class="mascot hoff2 span20 hi16 offset4" id="mascot">
   </div>
