@@ -1551,7 +1551,8 @@ legend + .control-group {
 }
 
 .app-template {
-  border: 2px solid #0f2d40;
+  position: relative;
+  border: 2px solid #ccc;
   border-radius: 4px;
   padding: 15px;
   font-weight: bold;
@@ -1560,6 +1561,26 @@ legend + .control-group {
   font-size: 18px;
   background-position: center;
   text-align: center;
+}
+
+.app-template.selected,
+.app-template:hover {
+  border: 2px solid #0f2d40;
+}
+
+.app-template p {
+  z-index: 1;
+  position: absolute;
+}
+
+.app-template .layover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  z-index: 0;
 }
 
 .no-bullets {

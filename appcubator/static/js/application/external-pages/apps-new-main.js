@@ -30,6 +30,9 @@ require([
   '../main-app/GarageView'
 ],
 function($, GarageView) {
+
+  var currentTemplate = null;
+
   $(function () {
       $('form').on('submit', function(e) {
         $(e.target).on('submit', function(e) {
@@ -39,8 +42,23 @@ function($, GarageView) {
   });
 
   $('#skip-racoon').on('click', function() {
-    $('form').attr("action", "/app/new/");
+    var url = "/app/new/";
+    if(currentTemplate) url = url + currentTemplate + "/";
+    alert(url);
+    $('form').attr("action", url);
     $('form').submit();
+  });
+
+  $('.app-template').click(function(e) {
+    if($(e.currentTarget).hasClass('selected')) {
+      currentTemplate = null;
+      $('.selected').removeClass('selected');
+    }
+    else {
+      $('.selected').removeClass('selected');
+      $(e.currentTarget).addClass('selected');
+      currentTemplate = e.currentTarget.id;
+    }
   });
 
   $('#guide-btn').hover(function() {

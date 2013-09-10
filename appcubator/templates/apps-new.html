@@ -15,13 +15,21 @@
      <!--  <input id="guide-btn" type='submit' class="span16 hoff1 btn offset12" type="submit" value="Let Racoon guide me!" style="line-height: 37px;"><br> -->
       </form>
       <div class="">
-        <span class="span34">You can also start with one of the templates here.</span>
-        <div class="span12 hi10 hoff2 app-template" style="background-image:url(https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7);">Social Network</div>
-        <div class="span12 hi10 hoff2 offset2 app-template" style="background-image:url({{STATIC_URL}}img/marketplace.png);">Market Place</div>
-        <div class="span12 hi10 hoff2 offset2 app-template" style="background-image:url({{STATIC_URL}}img/examcloud.png);">Tutoring Site</div>
+        <span class="span34">Pick a base webapp template below, or start from scratch.</span>
+        <div class="span12 hi10 hoff2 app-template" id="socialnetwork" style="background-image:url(https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7);">
+          <p>Social Network</p>
+          <span class="layover"></span>
+        </div>
+        <div class="span12 hi10 hoff2 offset2 app-template" id="marketplace" style="background-image:url({{STATIC_URL}}img/marketplace.png);">
+          <span class="layover"></span>
+          <p>Market Place</p>
+        </div>
+        <div class="span12 hi10 hoff2 offset2 app-template" id="tutoringsite"  style="background-image:url({{STATIC_URL}}img/examcloud.png);">   <span class="layover"></span>
+          <p>Tutoring Site</p>
+        </div>
       </div>
       <hr class="span40">
-      <div id="skip-racoon" class="span16 hoff1 btn btn-blue hi3 offset12 pull-right" >Start Building My App »</div>
+      <span id="current-temp-text"></span><div id="skip-racoon" class="span16 hoff1 btn btn-blue hi3 offset12 pull-right" >Start Building My App »</div>
   </div>
   <div class="mascot hoff2 span20 hi16 offset4" id="mascot">
   </div>
