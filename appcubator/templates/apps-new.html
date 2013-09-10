@@ -6,7 +6,7 @@
 {% block page %}
 <div class="container hoff3">
   <h2 class="hoff5 span52">Start a New App</h2>
-  <div class="hoff2 span32">
+  <div class="hoff2 span40">
       <form method="post" action="/app/new/">
       {% csrf_token %}
       <h4 class="span12 hoff1">Name of the app</h4>
@@ -15,8 +15,14 @@
       <div id="skip-racoon" class="span16 hoff1 btn btn-blue hi3 offset12" >Start Building My App »</div>
      <!--  <input id="guide-btn" type='submit' class="span16 hoff1 btn offset12" type="submit" value="Let Racoon guide me!" style="line-height: 37px;"><br> -->
       </form>
+      <div class="hoff2">
+        <span class="span34 hoff2">You can also start with one of the templates here.</span>
+        <div class="span12 hi10 hoff2 app-template" style="background-image:url(https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7);">Social Network</div>
+        <div class="span12 hi10 hoff2 offset2 app-template" style="background-image:url({{STATIC_URL}}img/marketplace.png);">Market Place</div>
+        <div class="span12 hi10 hoff2 offset2 app-template">Tutoring Site</div>
+      </div>
   </div>
-  <div class="mascot hoff2 span24 hi16 offset4" id="mascot">
+  <div class="mascot hoff2 span20 hi16 offset4" id="mascot">
   </div>
 </div>
 {% endblock %}
