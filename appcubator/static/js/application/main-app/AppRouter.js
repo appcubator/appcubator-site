@@ -469,7 +469,8 @@ define(function(require, exports, module) {
                         console.log(data.status);
                         console.log(data);
                         if (data.status === 0) {
-                            new ErrorDialogueView({text: 'Something is wrong... deployment seems to not have gotten the memo.'});
+                            // I'll need to figure out a better way soon.
+                            // new ErrorDialogueView({text: 'Something is wrong... deployment seems to not have gotten the memo.'});
                         }
                         else if (data.status == 1) {
                             failCallback.call(); // deployment task is still running
