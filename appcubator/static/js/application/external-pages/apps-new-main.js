@@ -27,7 +27,8 @@ require.config({
 
 require([
   'jquery',
-  '../main-app/GarageView'
+  '../main-app/GarageView',
+  'util'
 ],
 function($, GarageView) {
 
@@ -43,7 +44,10 @@ function($, GarageView) {
 
   $('#skip-racoon').on('click', function() {
     var url = "/app/new/";
-    if(currentTemplate) url = url + "template/" +currentTemplate + "/";
+    if(currentTemplate) {
+      url = url + "template/" +currentTemplate + "/";
+      util.log_to_server("app template", currentTemplate, 0);
+    }
     $('form').attr("action", url);
     $('form').submit();
   });
