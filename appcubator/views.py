@@ -132,6 +132,8 @@ def app_new(request, is_racoon = False):
                 return redirect(app_page, app.id)
 
         return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'errors': form.errors}, status=400)
+    else:
+        return HttpResponse(status=405)
 
 
 @login_required
