@@ -2107,11 +2107,51 @@ only screen and (min-device-pixel-ratio : 1.5) {
   margin-top: 30px;
 }
 
+.docs p {
+  margin-bottom: 10px;
+}
+
 .tutorial .content .section {
-  margin-bottom: 45px;
 
 }
 
-.tutorial .content .sub-section {
+.tutorial .content .section.docs {
+  margin-bottom: 0px;
+  padding-top: 30px;
+  border-top: 1px solid #ccc;
+  border-radius: 0;
+}
 
+.tutorial .content .section.docs h2 {
+  font-size: 18px;
+}
+
+.section.docs img {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.tutorial .content .sub-section.docs {
+  margin-top: 45px;
+  margin-left: 30px;
+}
+
+.tutorial .content .sub-section h2 {
+  font-size: 24px;
+}
+
+.scroll-top {
+  position:fixed;
+  bottom: 0;
+  float: left;
+  height: 36px;
+  width: 210px;
+  background-color: #0f2d40;
+  margin-left: -15px;
+  color: #fff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-align: center;
+  padding: 6px;
+  cursor: pointer;
 }

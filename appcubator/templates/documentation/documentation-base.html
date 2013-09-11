@@ -2,108 +2,110 @@
 
 {% block tutorial-table-content %}
      {% include "documentation/html/menu.html" %}
+     <div class="scroll-top">Scroll to Top</div>
+
 {% endblock %}
 
 
 {% block tutorial-content %}
 {% autoescape off %}
     {% if content == "all" %}
-<div class="section" id="tutorial-intro">
+<div class="section docs" id="tutorial-intro">
   {% include "documentation/html/intro.html" %}
 </div>
 
-<div class="section" id="tutorial-tables-page">
+<div class="section docs" id="tutorial-tables-page">
   {% include "documentation/html/tables_page.html" %}
 </div>
 
-<div class="section" id="tutorial-user-tables">
+<div class="sub-section docs" id="tutorial-user-tables">
   {% include "documentation/html/user_tables.html" %}
 </div>
 
-<div class="section" id="tutorial-tables">
+<div class="sub-section docs" id="tutorial-tables">
   {% include "documentation/html/tables.html" %}
 </div>
 
-<div class="section" id="tutorial-relationships">
+<div class="sub-section docs" id="tutorial-relationships">
   {% include "documentation/html/relationships.html" %}
 </div>
 
-<div class="section" id="tutorial-pages">
+<div class="section docs" id="tutorial-pages">
   {% include "documentation/html/pages.html" %}
 </div>
 
-<div class="section" id="tutorial-editor">
+<div class="section docs" id="tutorial-editor">
   {% include "documentation/html/editor.html" %}
 </div>
 
-<div class="section" id="tutorial-design-elements">
+<div class="sub-section docs" id="tutorial-design-elements">
   {% include "documentation/html/design_elements.html" %}
 </div>
 
-<div class="section" id="tutorial-images">
+<div class="sub-section docs" id="tutorial-images">
   {% include "documentation/html/images.html" %}
 </div>
 
-<div class="section" id="tutorial-login">
+<div class="sub-section docs" id="tutorial-login">
   {% include "documentation/html/login.html" %}
 </div>
 
-<div class="section" id="tutorial-sign-up">
+<div class="sub-section docs" id="tutorial-sign-up">
   {% include "documentation/html/sign_up.html" %}
 </div>
 
-<div class="section" id="tutorial-page-content">
+<div class="sub-section docs" id="tutorial-page-content">
   {% include "documentation/html/page_content.html" %}
 </div>
 
-<div class="section" id="tutorial-forms">
+<div class="sub-section docs" id="tutorial-forms">
   {% include "documentation/html/Forms.html" %}
 </div>
 
-<div class="section" id="tutorial-lists">
+<div class="sub-section docs" id="tutorial-lists">
   {% include "documentation/html/lists.html" %}
 </div>
 
-<div class="section" id="tutorial-search">
+<div class="sub-section docs" id="tutorial-search">
   {% include "documentation/html/search.html" %}
 </div>
 
-<div class="section" id="tutorial-themes">
+<div class="section docs" id="tutorial-themes">
   {% include "documentation/html/themes.html" %}
 </div>
 
-<div class="section" id="tutorial-deploy">
+<div class="section docs" id="tutorial-deploy">
   {% include "documentation/html/deploy.html" %}
 </div>
 
-<div class="section" id="tutorial-emails">
+<div class="section docs" id="tutorial-emails">
   {% include "documentation/html/emails.html" %}
 </div>
 
-<div class="section" id="tutorial-application-settings">
+<div class="section docs" id="tutorial-application-settings">
   {% include "documentation/html/application_settings.html" %}
 </div>
 
-<div class="section" id="tutorial-domain-settings">
+<div class="section docs" id="tutorial-domain-settings">
   {% include "documentation/html/domain_settings.html" %}
 </div>
 
-<div class="section" id="tutorial-seo-optimization">
+<div class="section docs" id="tutorial-seo-optimization">
   {% include "documentation/html/seo_optimization.html" %}
 </div>
 
-<div class="section" id="tutorial-deleting-your-application">
+<div class="section docs" id="tutorial-deleting-your-application">
   {% include "documentation/html/deleting_your_application.html" %}
 </div>
 
-<div class="section" id="feedback-form-page">
+<div class="section docs" id="feedback-form-page">
   {% include "documentation/html/feedback-form-page.html" %}
 </div>
     {% elif content %}
         {{ content }}
     {% elif results and results|length > 0%}
         {% for page in results %}
-            <div class="results-section">
+            <div class="results-section docs">
                 <h3>
                   <a href="/documentation/{{ page.filename }}/">{{ page.title }}</a>
                 </h3>
@@ -114,5 +116,4 @@
         <h2>No Results</h2>
     {% endif %}
 {% endautoescape %}
-
 {% endblock %}

@@ -376,8 +376,13 @@ def documentation_page(request, page_name):
         if page_name == "feedback" and request.user.is_authenticated():
             page_name = "feedback-form-page"
         htmlString = render(request, 'documentation/html/'+page_name+'.html').content
+
+        if page_name == "all":
+            htmlString = "all"
     except Exception, e:
         htmlString = "all"
+
+    print htmlString
     data = {
         'content': htmlString,
         'page_name': page_name

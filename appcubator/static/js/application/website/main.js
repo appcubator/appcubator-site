@@ -86,6 +86,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
       "resources/tutorial/*pagename/" : "slideViewPage",
       "resources/editor/"             : "editor",
+      "resources/documentation/"       : "documentation",
       "resources/*content"            : 'resources',
 
       "signup/"              : "signupPage"
@@ -111,6 +112,13 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
     developerpage: function() {
       this.view = new DeveloperpageView().render();
+    },
+
+    documentation: function() {
+      this.bindSections();
+      $('.scroll-top').on('click', function() {
+        $(window).scrollTop(300);
+      });
     },
 
     resources: function() {
