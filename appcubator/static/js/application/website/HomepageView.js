@@ -60,6 +60,7 @@ function(RequestInviteModalView) {
       var $largeText   = $('.large-text');
       var $subText     = $('.sub-text');
 
+      alert('bind');
       $(window).on('scroll', function(e) {
         var newValue = $(window).scrollTop();
 
@@ -84,7 +85,8 @@ function(RequestInviteModalView) {
         else if (newValue > 90) { $whiteButton.css('opacity', 0); }
         else { $whiteButton.css('opacity', 1); }
 
-        if(newValue > 270) { $("#signup-button").addClass('highlight'); }
+        if(newValue > 270) { console.log("HEy");
+          $('.navbar').removeClass('transparent'); $("#signup-button").addClass('highlight'); }
         else { $("#signup-button").removeClass('highlight'); }
 
       });

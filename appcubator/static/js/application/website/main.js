@@ -107,6 +107,17 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
     homepage: function() {
       this.view = new HomepageView().render();
+      var video = document.getElementById('videotc');
+      var $video = $(video);
+      $video.attr('src', '/static/img/tc+video.mp4');
+      setTimeout(function() {
+        $('.navbar').addClass('transparent');
+        $('.blue-bar').addClass('transparent');
+        setTimeout(function() {
+          $video.removeClass('invisible');
+          video.play();
+        }, 210);
+      }, 400);
     },
 
     developerpage: function() {
