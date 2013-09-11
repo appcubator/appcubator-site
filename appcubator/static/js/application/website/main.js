@@ -244,7 +244,10 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
                      "editor/KeyDispatcher",
                      "editor/MouseDispatcher",
                      "comp"],
-            function(EditorView, AppModel, MobilePageCollection, PageCollection, KeyDispatcher, MouseDispatcher) {
+
+            function(ExternalEditorView, AppModel, MobilePageCollection, PageCollection, KeyDispatcher, MouseDispatcher) {
+
+
                 $('.page').hide();
                 //if (v1.view) v1.view.close();
                 pageId = 0;
@@ -262,7 +265,10 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
                 cleanDiv.className = "clean-div editor-page";
                 $(document.body).append(cleanDiv);
 
-                v1.view = new EditorView({
+                v1.reArrangeCSSTag = function() {};
+                console.log(ExternalEditorView.initialize);
+
+                v1.view = new ExternalEditorView({
                     pageId: 0
                 });
                 v1.view.setElement(cleanDiv).render();

@@ -1,4 +1,5 @@
-define(['editor/EditorView', './SignupDeployView'], function(EditorView, SignupDeployView) {
+define(['editor/EditorView', './SignupDeployView','editor/MarqueeView', 'editor/EditorGalleryView', 'editor/WidgetsManagerView', 'editor/GuideView', 'editor/ToolBarView', 'app/RedoController', 'editor/NavbarView', 'editor/FooterView', 'mixins/SimpleModalView'],
+function(EditorView, SignupDeployView, MarqueeView, EditorGalleryView, WidgetsManagerView, GuideView, ToolBarView, RedoController, NavbarView, FooterView, SimpleModalView) {
 
     var ExternalEditorView = EditorView.extend({
 
@@ -11,7 +12,50 @@ define(['editor/EditorView', './SignupDeployView'], function(EditorView, SignupD
         },
 
         initialize: function(options) {
-            ExternalEditorView.__super__.initialize.apply(this, arguments);
+                _.bindAll(this);
+                this.subviews = [];
+
+                if (options && options.pageId) pageId = options.pageId;
+
+                util.loadCSS('jquery-ui');
+
+                this.model = v1State.get('pages').models[pageId];
+                v1State.currentPage = this.model;
+                v1State.isMobile = false;
+
+                this.widgetsCollection = this.model.get('uielements');
+
+                this.marqueeView = new MarqueeView();
+                this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
+                this.widgetsManager = new WidgetsManagerView(this.widgetsCollection);
+                this.guides = new GuideView(this.widgetsCollection);
+                this.toolBar = new ToolBarView();
+
+                redoController = new RedoController();
+
+                keyDispatcher.bindComb('meta+z', redoController.undo);
+                keyDispatcher.bindComb('ctrl+z', redoController.undo);
+                keyDispatcher.bindComb('meta+shift+z', redoController.redo);
+                keyDispatcher.bindComb('ctrl+shift+z', redoController.redo);
+
+                g_guides = this.guides;
+
+                this.navbar = new NavbarView(this.model.get('navbar'));
+                this.footer = new FooterView(this.model.get('footer'));
+                this.urlModel = this.model.get('url');
+
+                this.title = "Editor";
+
+                this.subviews = [this.marqueeView,
+                    this.galleryEditor,
+                    this.widgetsManager,
+                    this.guides,
+                    this.toolBar,
+                    this.navbar,
+                    this.footer
+                ];
+
+                this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
         },
 
         render: function() {
@@ -27,8 +71,12 @@ define(['editor/EditorView', './SignupDeployView'], function(EditorView, SignupD
         },
 
         save: function(callback) {
-            return false;
+            new SimpleModalView({ text: "<span style='font-size: 24px; line-height: 32px; font-family:\"proxima-nova\";'>Looks like you really liked Appcubator. You need to <a style='display: inline;' href='/signup'>signup</a> to be able to save your progress.</span>"});
         },
+
+        startUIStateUpdater: function() { console.log("START ME"); },
+
+        renewUIEState: function(newState) { console.log("CALL ME"); },
 
         deploy: function() {
 

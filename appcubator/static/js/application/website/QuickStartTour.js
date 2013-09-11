@@ -194,14 +194,20 @@ define([
           title   : 'Cool!',
           content : 'Press "Publish" and you will see your site up and running!',
           loc     : "top center, bottom center",
-          nextButton: true,
           url   : '/editor/1/',
-          target: $('.save-run-group'),
+          target: $('#deploy'),
+          highlightTarget: true,
           prepare: function() {
             $('#page').scrollTop(0);
           },
+          setup: function(tour, options) {
+            $('#deploy').one('click', function() {
+              tour.next();
+            });
+          },
           teardown: function() {
             //last step done, delete walkthrough attribute
+            console.log("DONE!");
             delete v1State.attributes.simpleWalkthrough;
             util.log_to_server('finished simple twitter walkthrough', {}, appId);
           }

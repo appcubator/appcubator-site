@@ -37,7 +37,7 @@ define([
         TutorialView,
         DeployView,
         RedoController) {
-
+        
         var EditorView = Backbone.View.extend({
             className: 'editor-page',
             css: "bootstrap-editor",
@@ -51,6 +51,7 @@ define([
             },
 
             initialize: function(options) {
+                alert('yolo');
                 _.bindAll(this);
                 this.subviews = [];
 
