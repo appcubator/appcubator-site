@@ -139,7 +139,7 @@ define([
                 tour.next();
                 changed = 1;
               }
-            }
+            };
 
             $('#option-0').one('change', changeToNext);
             $('#option-0').one('click', changeToNext);
