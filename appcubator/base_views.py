@@ -553,6 +553,12 @@ def resources_fordjangodevs(request):
     page_context["title"] = "Appcubator for Django Developers"
     return render(request, 'website-resources-fordjangodevs.html', page_context)
 
+def resources_customwidget(request, name=None):
+    page_context = {}
+    page_context["title"] = "Appcubator for Django Developers"
+    return render(request, 'website-resources-customwidget.html', page_context) 
+
+
 def screencast(request, screencast_id=1):
     page_context = {}
     page_context["title"] = "Screecast " + screencast_id

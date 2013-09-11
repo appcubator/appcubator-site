@@ -64,6 +64,7 @@ urlpatterns = patterns('',
     url(r'^resources/tutorial/custom-code/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'custom-code'}),
     url(r'^resources/tutorial/what-is-a-web-app/$',                base_views.resources_whatisawebapp),
     url(r'^resources/tutorial/appcubator-for-django-developers/$', base_views.resources_fordjangodevs),
+    url(r'^resources/tutorial/custom-widget/$', base_views.resources_customwidget),
 
     url(r'^resources/sample/(\d+)/$',                              base_views.sample_app),
     url(r'^resources/sample/(\d+)/part/(\d+)/$',                   base_views.sample_app_part),
