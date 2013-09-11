@@ -97,7 +97,11 @@ def change_card(request):
 
 def stripe_acc_trigger(request):
     "Sets the the default plan of the user to the Starter (Free) plan."
-    response = set_new_user_plan(request.user)
+    response = None
+    if len(Customer.objects.filter(user=request.user)) == 0:
+        response = set_new_user_plan(request.user)
+    else:
+        return HttpResponse("Already exists.")
     if response is not None:
         return HttpResponse("Error: %s" % response)
     else:
