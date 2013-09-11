@@ -184,6 +184,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
     },
 
     bindLoginForm: function() {
+      
       $('.login-button').on('click', function(e) {
         e.preventDefault();
         $('.menu').hide();
