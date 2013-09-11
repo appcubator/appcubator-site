@@ -95,6 +95,14 @@ def change_card(request):
             data = {"error": e.message}
     return _ajax_response(request, "payment/_change_card_form.html", **data)
 
+def stripe_acc_trigger(request):
+    "Sets the the default plan of the user to the Starter (Free) plan."
+    response = set_new_user_plan(request.user)
+    if response is not None:
+        return HttpResponse("Error: %s" % response)
+    else:
+        return HttpResponse("ok")
+
 def set_new_user_plan(user, default_plan='free'):
     "Sets the the default plan of the user to the Starter (Free) plan."
     Customer.create(user=user)
