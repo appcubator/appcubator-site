@@ -398,21 +398,6 @@ define(function(require, exports, module) {
             }
         },
 
-        betaCheck: function(data) {
-            if (data.percentage > 30 && data.feedback === true) {
-                $('.notice').css('height', '118px');
-                $('.notice').html('<h3 class="">Thank you for joining Appcubator Private Beta program!</h3><div>You can claim your free domain from <a class="menu-app-info">Domain & SEO</a> page.</div>');
-                v1.menuBindings();
-            }
-
-            if (data.percentage > 30) {
-                $('#tutorial-check').prop('checked', true);
-            }
-            if (data.feedback === true) {
-                $('#feedback-check').prop('checked', true);
-            }
-        },
-
         changeTitle: function(title) {
             var newTitle = "";
             if (title) {
