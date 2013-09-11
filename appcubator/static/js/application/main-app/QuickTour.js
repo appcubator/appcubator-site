@@ -75,15 +75,15 @@ function() {
 			}
 		},
 		{
-			target  : $('.garage-toggle'),
+			target  : $('.dropd'),
 			title   : 'Garage',
 			content : 'Click here to go back to the garage. It will help you navigate through the site.',
 			loc: "top right, bottom right",
 			closeButton: true,
 			highlightTarget: true,
 			setup: function(tour, options) {
-				alert('ye');
 				$('.garage-toggle').one('click', function(e) {
+					e.preventDefault();
 					tour.next();
 				});
 			},
