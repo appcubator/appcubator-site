@@ -24,7 +24,7 @@ import os, os.path
 join = os.path.join
 
 from django.views.decorators.cache import cache_page
-
+from django.views.decorators.csrf import csrf_protect
 
 def format_full_details(details):
     lines = []
@@ -83,6 +83,7 @@ def changelog(request):
 
 @require_GET
 @cache_page(60*5)
+@csrf_protect
 def homepage(request):
     if request.user.is_authenticated():
         return redirect('/app/')
