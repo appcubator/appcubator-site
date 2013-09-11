@@ -3,6 +3,7 @@ define(function(require, exports, module) {
 
     require('app/templates/MainTemplates');
     var Striper = require('app/Striper');
+    var ErrorDialogueView = require('mixins/ErrorDialogueView');
 
     var AppInfoView = Backbone.View.extend({
 
@@ -144,7 +145,7 @@ define(function(require, exports, module) {
                     }
                 },
                 error: function(resp) {
-                    // TODO error modal
+                    new ErrorDialogueView({text: "There seems to be a problem with the server. Please refresh the page and try again."});
                 },
                 dataType: "JSON"
             });
@@ -168,7 +169,7 @@ define(function(require, exports, module) {
                     }
                 },
                 error: function(resp) {
-                    // TODO error modal
+                    new ErrorDialogueView({text: "There seems to be a problem with the server. Please refresh the page and try again."});
                 },
                 dataType: "JSON"
             });
