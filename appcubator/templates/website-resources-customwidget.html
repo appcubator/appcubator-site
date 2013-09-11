@@ -1,83 +1,54 @@
 {% extends "website-tutorial-infra.html" %}
 
 {% block tutorial-table-content %}
-<li><a href="#howto-section">How to add Custom Widgets?</a></li>
 <li><a href="#what-section">What can you do with Custom Widgets?</a></li>
+<li><a href="#howto-section">How to add Custom Widgets?</a></li>
 <li><a href="#js-section">Adding JS</a></li>
 <li><a href="#html-section">Adding HTML</a></li>
 <li><a href="#css-section">Adding CSS</a></li>
-<li><a href="#example-section">Example Cases</a></li>
+<li><a href="#example-section">Example Uses</a></li>
 {% endblock%}
 
 {% block tutorial-content %}
-<div class="section" id="themeeditor-section">
+<div class="section" id="what-section">
+    <h4>What can you do with Custom Widgets?</h4>
+    <p>Custom Widgets let's you everything that can be achieved with JS, CSS and HTML. There is no limit to it.</p> 
+</div>
+<div class="section" id="howto-section">
     <h4>How to add Custom Widgets?</h4>
-    <p>Theme editor gives you full control over your interface. It requires knowledge of CSS. It uses LESS to compile the styles on the generated app, but it's not a required skill.</p>
-    <p class="image"><img src="https://www.filepicker.io/api/file/r3WVLeS2QY6vXSuAk3op"></p>
-    <p>You can access the theme editor on the top right menu of your application. You'll be directed to the Theme Editor when you click the "Theme Editor" button.</p>
+    <p>Custom widgets let you freely add custom front-end code to your pages. It is on the gallery, under the Design Elements section</p>
+    <p class="image"><img src="https://www.filepicker.io/api/file/Vm0su2zTAixmGqLPcmIZ"></p>
+    <p>When it's dropped on the page, the Custom Widget Editor will show up. Alternatively, you can select it on the editor and click on "Edit Custom Widget" button.</p>
+    <p class="image"><img src="https://www.filepicker.io/api/file/2gKdgDzKQmGrOczIk3UA"></p>
+    <p>On the custom widget editor, there are three sections: JS, HTML and CSS. Each sections contains a code editor that should be used for adding the corresponding code. If there is an error in the code, the editor will not run it or render the HTML.</p>
 </div>
-<div class="section" id="basecss-section">
-    <h5>What can you do with Custom Widgets?</h5>
-    <p>Base CSS is the CSS that will directly be injected to your page. It should include the overall styling of your page, such as the styling of the body tag, navigation bar or footer.</p>
-    <h6>How to style body tag?</h6>
-    <p>To style the &#60;body&#62; tag, it's just enough to add lines on top of the basecss, without any brackets. The lines you write here will automatically be wrapped with <code>body { /* Your CSS */ }</code>.</p>
-    <p class="example">
-      <span>Example styling:</span><br>
-      <img src="https://www.filepicker.io/api/file/EJd57eLJSZOGEoab2Jnv">
-    </p>
-</div>
-<div class="section" id="navigationbar-section">
-    <h6>Adding JS</h6>
-    <p>Navbar on the generated app has a constant semantic HTML, but you are free to style it however you would like.</p>
-    <p>The HTML for the navigation bar looks like the following:<p>
-      <p><pre><code>
-        &#60;div class="navbar" id="navbar">
-        &#60;div class="navbar-inner">
-        &#60;a class="brand" href="/" id="brand-name">Design This For Me? &#60;/a>
-        &#60;ul class="nav" id="items">
-        &#60;li> &#60;a href="#">Item 1 &#60;/a> &#60;/li>
-        &#60;li> &#60;a href="#">Item 2 &#60;/a> &#60;/li>
-        &#60;li class="logout-item pull-right"> &#60;a id="logout" href="#">Logout &#60;/a> &#60;/li>
-        &#60;/ul>
-        &#60;/div>
-        &#60;/div>
-      </code></pre></p>
-      <p>The <i>class</i>s and <i>id</i>s here are always constant, so you can style each part of the navbar through those selectors. The template theme will have a simple styling that you can just fill in.</p>
-      <h6>How to style Footer?</h6>
-      <p><pre><code>
-        &#60;div class="footer">
-        &#60;div class="container">
-        &#60;ul class="footer-links">
-        &#60;li>&#60;a href="#" class="menu-item">Footer Item 1&#60;/a>&#60;/li>
-        &#60;li>&#60;a href="#" class="menu-item">Footer Item 2&#60;/a>&#60;/li>
-        &#60;/ul>
-        &#60;p class="footer-text muted">Powered by Appcubator&#60;/p>
-        &#60;/div>
-        &#60;/div>
-      </code></pre></p>
-      <p>The <i>class</i>s and <i>id</i>s here are always constant, so you can style each part of the footer through those selectors. The template theme will have a simple styling that you can just fill in.</p>
+<div class="section" id="js-section">
+    <h5>Adding JS</h5>
+    <p>You can write your Javascript in the corresponding text editor and it'll be added to your page automatically. Some points to bear in mind while writing Javascript on Appcubator:</p>
+    <ul>
+      <li>Two most popular libraries, jQuery and Underscore are already included in the page. So you don't need to include them again and bloat your code. You can just start using <strong>$</strong> or <strong>_</strong> in your code.</li>
+      <li>JS for each Custom Widget is executed in it's own scope. This means that you can not write two different custom widgets JS interfacing with each other. On the other hand, you are free to interface with DOM elements</li>
+    </ul>
 </div>
 <div class="section" id="addinguielement-section">
       <h5>Adding HTML</h5>
-      <p>The types of UI elements you can create on the editor are already defined and you can create new classes, or "styling"s, for these UI element types. The stylings you create will be available on the editor, when you click the "Edit Style" button on the widget editor.</p>
-      <p class="example">
-        <span>Example styling for buttons:</span><br>
-        <img src="https://www.filepicker.io/api/file/SX8QAPc2SXuUhV9mmvR2" style="height:240px;">
-        <img src="https://www.filepicker.io/api/file/iVjwuCieSQ65vnuZYiiK" style="height:240px; margin-left: 20px"><br>
-        <small>P.S. We don't recommend making buttons as ugly as the ones on the above example :) </small>
-      </p>
+      <p>You can write you HTML in the corresponding text editor and it'll be rendered on your page when you close the editor. The custom HTML is rendered inside a div with widht and height defined by Appcubator's grid system. So if you just want to utilize editor's resizing/moving abilities, you should style your outer element with <code>width:100%</code> and <code>height:100%</code></p>
 </div>
 <div class="section" id="customfonts-section">
       <h6>Adding CSS</h6>
-      <p>It's exteremely easy to add custom fonts to your theme. We have already integrated Google Fonts API, so you can just pick which fonts you'd like to use from the dropdown and start using it in your CSS.</p>
-      <p class="image">
-        Just click on "Fonts" on the left menu, and ...
-        <img src="https://www.filepicker.io/api/file/020MDdmtTeKaM5fv2KHu">
-      </p>
+      <p>You can easily add CSS to style your existing elements or custom HTML you just wrote using Custom Widget. The only limitation right now is that the "position:fixed;" will not work accuratly. We're working on getting around that limitation</p>
 </div>
 <div class="section" id="addimages-section">
-      <h6>Example Cases</h6>
-      <p>Wouldn't it be awesome if you put some nice icons to your theme or provide some more statics? It's easy. You can go to the statics section by clicking the "Statics" on the left menu and you will see the interface where you can upload new statics as well as see your already uploaded statics.</p>
+      <h5>Example Uses</h5>
+      <h6>Getting Fancy With CSS</h6>
+      <p>We will add a jQuery plug.</p>
+      <p class="image">
+        Press Cmd+C or Ctrl+C when you see the prompt below, and you can use it anywhere in your CSS by pasting it. It'll be available everywhere. 
+        <img src="https://www.filepicker.io/api/file/lh99JrOuRmSMtPRQHrBB
+        ">
+      </p>
+      <h6>Example Uses</h6>
+      <p>We will add a jQuery plug.</p>
       <p class="image">
         Press Cmd+C or Ctrl+C when you see the prompt below, and you can use it anywhere in your CSS by pasting it. It'll be available everywhere. 
         <img src="https://www.filepicker.io/api/file/lh99JrOuRmSMtPRQHrBB

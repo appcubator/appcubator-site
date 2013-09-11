@@ -391,6 +391,8 @@ define(['jquery'], function() {
           }
         }
       }
+      console.log(cookieValue);
+      console.log(name);
       return cookieValue;
     }
 
