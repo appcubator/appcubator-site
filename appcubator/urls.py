@@ -49,6 +49,7 @@ urlpatterns = patterns('',
     url(r'^backend/',                   include('app_builder.urls')),
     url(r'^payments/',                  include('appcubator.payments.urls')),
     url(r'^app/(\d+)/payment/$',        payment_views.app_payment),
+    url(r'^trigger_customer/$',         payment_views.stripe_acc_trigger),
 
     url(r'^resources/$',                                           base_views.resources),
     url(r'^resources/editor/$',                                    base_views.external_editor),
