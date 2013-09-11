@@ -263,9 +263,9 @@ def signup(request):
                                     password=req['password1'])
             # Do this via /trigger_customer/ for now.
             # plan_status = set_new_user_plan(new_user)
-            if plan_status is not None:
-                stripe_error = "We encountered an error with signing you up on your starter plan. Sorry!"
-                return HttpResponse(simplejson.dumps(stripe_error), mimetype="application/json")
+            # if plan_status is not None:
+            #     stripe_error = "We encountered an error with signing you up on your starter plan. Sorry!"
+            #     return HttpResponse(simplejson.dumps(stripe_error), mimetype="application/json")
             login(request, new_user)
 
             if request.is_ajax():
