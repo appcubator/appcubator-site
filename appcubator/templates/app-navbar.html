@@ -10,9 +10,13 @@
         <ul class="nav">
           <li class="brand">
             <h1 class="name">
-              <a id="main-menu" href="/app/{{ app.id }}/" {% if navHide != "true" %} rel="external" {% endif %}>
+              <a id="main-menu" {% if app %} href="/app/{{ app.id }}/" {% else %} href="/app/0/" {% endif %} {% if navHide != "true" %} rel="external" {% endif %}>
                 <span class="brand">Appcubator</span>
+                {% if app %}
                 <span class="title">Overview</span>
+                {% else %}
+                <span class="title">Home</span>
+                {% endif %}
               </a>
             </h1>{% if app and navHide != "true" %}<ul class="navigation-menu">
               <li class="menu-app-pages">

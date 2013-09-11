@@ -208,7 +208,6 @@ define(function(require, exports, module) {
             var before_deploy = new Date().getTime();
             v1.disableSave = true;
 
-            console.log("YOLO")
             $.ajax({
                 type: "POST",
                 url: '/app/' + appId + '/deploy/',
