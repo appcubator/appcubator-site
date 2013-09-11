@@ -138,6 +138,12 @@ require([
                 }, 100, "linear");
             });
 
+            $.ajax({
+                type: "POST",
+                url: '/trigger_customer/',
+                success: function(data) {}
+            });
+
             // heyoffline config
             new Heyoffline();
         });
@@ -153,12 +159,5 @@ require([
                 });
             });
         });
-
-        $.ajax({
-            type: "POST",
-            url: '/trigger_customer/',
-            success: function(data) {}
-        });
-
 
     });
