@@ -133,9 +133,18 @@ define([
           target  : $('#option-0'),
           highlightTarget: true,
           setup: function(tour, options) {
-            $('#option-0').one('change', tour.next);
-            $('#option-0').one('click',  tour.next);
-            $('label[for="option-0"]').one('click',  tour.next);
+            var changed = 0;
+            var changeToNext = function() {
+              if(!changed) {
+                tour.next();
+                changed = 1;
+              }
+            }
+
+            $('#option-0').one('change', changeToNext);
+            $('#option-0').one('click', changeToNext);
+            $('label[for="option-0"]').one('click', changeToNext);
+
           }
         },
         {
