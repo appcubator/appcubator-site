@@ -144,6 +144,9 @@ define([
           url     : '/editor/1/',
           target  : $('.new-field-form'),
           highlightTarget: true,
+          prepare: function() {
+            $('.new-field-name').focus();
+          },
           setup   : function(tour, options) {
             $('.new-field-form').one('submit', tour.next);
           }
