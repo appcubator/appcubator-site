@@ -23,6 +23,8 @@ import re
 import os, os.path
 join = os.path.join
 
+from django.views.decorators.cache import cache_page
+
 
 def format_full_details(details):
     lines = []
@@ -65,6 +67,7 @@ class MyUserCreationForm(auth_forms.UserCreationForm):
 
 
 @require_GET
+@cache_page(60*5)
 def aboutus(request):
     page_context = {}
     page_context["title"] = "About Us"
@@ -79,6 +82,7 @@ def changelog(request):
 
 
 @require_GET
+@cache_page(60*5)
 def homepage(request):
     if request.user.is_authenticated():
         return redirect('/app/')
@@ -90,6 +94,7 @@ def homepage(request):
 
 
 @require_GET
+@cache_page(60*5)
 def community_page(request):
 
     page_context = {}
@@ -98,6 +103,7 @@ def community_page(request):
     return render(request, 'website-community.html', page_context)
 
 @require_GET
+@cache_page(60*5)
 def community_faq_page(request):
 
     page_context = {}
@@ -419,6 +425,7 @@ def send_invitation_to_customer(request, customer_pk):
     return HttpResponse("ok")
 
 
+@cache_page(60*5)
 def resources(request):
     page_context = {}
     page_context["title"] = "Resources"
@@ -453,6 +460,7 @@ def temp_deploy(request):
         return HttpResponse(simplejson.dumps(d), mimetype="application/json")
 
 @require_GET
+@cache_page(60*5)
 def external_editor(request):
     td = find_or_create_temp_deployment(request)
     #td.deploy()
@@ -474,6 +482,7 @@ def external_editor(request):
 
     return render(request, 'website-external-editor.html', page_context)
 
+@cache_page(60*5)
 def quickstart(request):
     page_context = {}
     page_context["title"] = "Resources"
@@ -490,12 +499,14 @@ def tutorials(request):
     page_context["parts"] = parts
     return render(request, 'website-resources-tutorials.html', page_context)
 
+@cache_page(60*5)
 def documentation(request):
     page_context = {}
     page_context["title"] = "Resources"
     page_context["documentation"] = True
     return render(request, 'website-resources-documentation.html', page_context)
 
+@cache_page(60*5)
 def resources_socialnetwork(request, name=None):
     if name == None:
         raise Http404
@@ -553,6 +564,12 @@ def resources_fordjangodevs(request):
     page_context = {}
     page_context["title"] = "Appcubator for Django Developers"
     return render(request, 'website-resources-fordjangodevs.html', page_context)
+
+def resources_customwidget(request, name=None):
+    page_context = {}
+    page_context["title"] = "Appcubator for Django Developers"
+    return render(request, 'website-resources-customwidget.html', page_context) 
+
 
 def screencast(request, screencast_id=1):
     page_context = {}

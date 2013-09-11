@@ -133,7 +133,18 @@ define([
           target  : $('#option-0'),
           highlightTarget: true,
           setup: function(tour, options) {
-            $('#option-0').one('change', tour.next);
+            var changed = 0;
+            var changeToNext = function() {
+              if(!changed) {
+                tour.next();
+                changed = 1;
+              }
+            }
+
+            $('#option-0').one('change', changeToNext);
+            $('#option-0').one('click', changeToNext);
+            $('label[for="option-0"]').one('click', changeToNext);
+
           }
         },
         {
@@ -144,6 +155,9 @@ define([
           url     : '/editor/1/',
           target  : $('.new-field-form'),
           highlightTarget: true,
+          prepare: function() {
+            $('.new-field-name').focus();
+          },
           setup   : function(tour, options) {
             $('.new-field-form').one('submit', tour.next);
           }
@@ -157,7 +171,6 @@ define([
           target  : $('.btn.done'),
           highlightTarget: true,
           setup   : function(tour, options) {
-
             $('.btn.done').one('click', tour.next);
             return { };
           }
@@ -194,14 +207,20 @@ define([
           title   : 'Cool!',
           content : 'Press "Publish" and you will see your site up and running!',
           loc     : "top center, bottom center",
-          nextButton: true,
           url   : '/editor/1/',
-          target: $('.save-run-group'),
+          target: $('#deploy'),
+          highlightTarget: true,
           prepare: function() {
             $('#page').scrollTop(0);
           },
+          setup: function(tour, options) {
+            $('#deploy').one('click', function() {
+              tour.next();
+            });
+          },
           teardown: function() {
             //last step done, delete walkthrough attribute
+            console.log("DONE!");
             delete v1State.attributes.simpleWalkthrough;
             util.log_to_server('finished simple twitter walkthrough', {}, appId);
           }
@@ -211,6 +230,7 @@ define([
     var quickTour = new TouristOmer.Tour({
       steps     : steps,
       onEachStep: function(step) {
+        if(!step) return;
         util.log_to_server('quick tour walkthrough step', { step: step.ind}, -1);
       }
     });

@@ -140,7 +140,7 @@ def app_new(request, is_racoon = False, app_template=None):
         if not settings.STAGING and not settings.PRODUCTION:
             data['subdomain'] = 'dev-%s-%s' % (username, data['subdomain'])
 
-        form = forms.AppNew(data)
+        form = forms.AppNew(data, owner=request.user)
 
         if form.is_valid():
             app = form.save(commit=False)
@@ -263,6 +263,9 @@ def app_edit_theme(request, app_id):
     #theme = get_object_or_404(UITheme, pk = theme_id)
     page_context = {'title': 'Current Theme',
                     'appId': long(app_id),
+                    'app'  : app,
+                    'apps' : app.owner.apps.all(),
+                    'navHide': "true",
                     'theme': app._uie_state_json}
     add_statics_to_context(page_context, app)
 
@@ -373,8 +376,13 @@ def documentation_page(request, page_name):
         if page_name == "feedback" and request.user.is_authenticated():
             page_name = "feedback-form-page"
         htmlString = render(request, 'documentation/html/'+page_name+'.html').content
+
+        if page_name == "all":
+            htmlString = "all"
     except Exception, e:
-        htmlString = render(request, 'documentation/html/intro.html').content
+        htmlString = "all"
+
+    print htmlString
     data = {
         'content': htmlString,
         'page_name': page_name

@@ -14,6 +14,10 @@ class AppNew(forms.ModelForm):
     name = forms.CharField(max_length=40)
     subdomain = forms.CharField(max_length=40, min_length=1)
 
+    def __init__(self, *args, **kwargs):
+        self.owner=kwargs.pop('owner', None) # needed for validation of name later on
+        super(AppNew, self).__init__(*args, **kwargs)
+
     def clean_subdomain(self):
         subdomain = self.cleaned_data['subdomain']
 
@@ -24,7 +28,7 @@ class AppNew(forms.ModelForm):
 
     def clean_name(self):
         "Prevent duplicate naming of apps"
-        if App.objects.filter(name__iexact=self.cleaned_data['name']).exists():
+        if App.objects.filter(owner=self.owner, name__iexact=self.cleaned_data['name']).exists():
             raise forms.ValidationError("You already have an app with this name. Please choose a new one.")
         return self.cleaned_data['name']
 

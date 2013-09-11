@@ -56,7 +56,8 @@ urlpatterns = patterns('',
     url(r'^resources/editor/publish/$',                            base_views.temp_deploy),
     url(r'^resources/quickstart/$',                                base_views.quickstart),
     url(r'^resources/tutorials/$',                                 base_views.tutorials),
-    url(r'^resources/documentation/$',                             base_views.documentation),
+    url(r'^resources/documentation/$',                             views.documentation_page, {"page_name": "all"}),
+    url(r'^resources/docs/$',                             base_views.documentation),
     url(r'^resources/screencast/(\d+)/$',                          base_views.screencast), # these are the editor videos
 
     url(r'^resources/tutorial/build-social-network/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'howtosocialnetwork'}),
@@ -65,6 +66,7 @@ urlpatterns = patterns('',
     url(r'^resources/tutorial/custom-code/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'custom-code'}),
     url(r'^resources/tutorial/what-is-a-web-app/$',                base_views.resources_whatisawebapp),
     url(r'^resources/tutorial/appcubator-for-django-developers/$', base_views.resources_fordjangodevs),
+    url(r'^resources/tutorial/custom-widget/$', base_views.resources_customwidget),
 
     url(r'^resources/sample/(\d+)/$',                              base_views.sample_app),
     url(r'^resources/sample/(\d+)/part/(\d+)/$',                   base_views.sample_app_part),
@@ -90,6 +92,7 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/racoon/$', 'app_new_racoon'),
     url(r'^app/(\d+)/delete/$', 'app_delete'),
     url(r'^app/(\d+)/edit_theme/', 'app_edit_theme'),
+    url(r'^app/(\d+)/themeeditor/', 'app_edit_theme'),
 
     # analytics
     url(r'^app/(\d+)/analytics/$', 'get_analytics'),
@@ -131,7 +134,7 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/editor/\d+/debug/$', 'app_json_editor'), # this serves all the app pages
 
     url(r'^feedback/$', 'documentation_page', {"page_name": "feedback"}),
-    url(r'^documentation/$', 'documentation_page', {"page_name": "intro"}),
+    url(r'^documentation/$', 'documentation_page', {"page_name": "all"}),
     url(r'^documentation/search/$', 'documentation_search'),
     url(r'^documentation/([^/]+)/$', 'documentation_page'),
 

@@ -86,6 +86,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
       "resources/tutorial/*pagename/" : "slideViewPage",
       "resources/editor/"             : "editor",
+      "resources/documentation/"       : "documentation",
       "resources/*content"            : 'resources',
 
       "signup/"              : "signupPage"
@@ -111,6 +112,13 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
     developerpage: function() {
       this.view = new DeveloperpageView().render();
+    },
+
+    documentation: function() {
+      this.bindSections();
+      $('.scroll-top').on('click', function() {
+        $(window).scrollTop(300);
+      });
     },
 
     resources: function() {
@@ -176,6 +184,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
     },
 
     bindLoginForm: function() {
+      
       $('.login-button').on('click', function(e) {
         e.preventDefault();
         $('.menu').hide();
@@ -244,7 +253,10 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
                      "editor/KeyDispatcher",
                      "editor/MouseDispatcher",
                      "comp"],
-            function(EditorView, AppModel, MobilePageCollection, PageCollection, KeyDispatcher, MouseDispatcher) {
+
+            function(ExternalEditorView, AppModel, MobilePageCollection, PageCollection, KeyDispatcher, MouseDispatcher) {
+
+
                 $('.page').hide();
                 //if (v1.view) v1.view.close();
                 pageId = 0;
@@ -262,7 +274,10 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
                 cleanDiv.className = "clean-div editor-page";
                 $(document.body).append(cleanDiv);
 
-                v1.view = new EditorView({
+                v1.reArrangeCSSTag = function() {};
+                console.log(ExternalEditorView.initialize);
+
+                v1.view = new ExternalEditorView({
                     pageId: 0
                 });
                 v1.view.setElement(cleanDiv).render();

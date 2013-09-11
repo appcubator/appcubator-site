@@ -37,7 +37,7 @@ define([
         TutorialView,
         DeployView,
         RedoController) {
-
+        
         var EditorView = Backbone.View.extend({
             className: 'editor-page',
             css: "bootstrap-editor",

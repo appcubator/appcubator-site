@@ -10,11 +10,11 @@
         <ul class="nav">
           <li class="brand">
             <h1 class="name">
-              <a id="main-menu" href="/app/{{ app.id }}/">
+              <a id="main-menu" href="/app/{{ app.id }}/" {% if navHide != "true" %} rel="external" {% endif %}>
                 <span class="brand">Appcubator</span>
                 <span class="title">Overview</span>
               </a>
-            </h1>{% if app %}<ul class="navigation-menu">
+            </h1>{% if app and navHide != "true" %}<ul class="navigation-menu">
               <li class="menu-app-pages">
                 <a id="pages-menu" href="/app/{{ app.id }}/pages/"><span class="pages-icon"></span><span>Pages</span></a>
               </li><li class="menu-app-entities">
