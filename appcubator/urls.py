@@ -56,6 +56,7 @@ urlpatterns = patterns('',
     url(r'^resources/quickstart/$',                                base_views.quickstart),
     url(r'^resources/tutorials/$',                                 base_views.tutorials),
     url(r'^resources/documentation/$',                             base_views.documentation),
+    url(r'^resources/docs/$',                             base_views.documentation),
     url(r'^resources/screencast/(\d+)/$',                          base_views.screencast), # these are the editor videos
 
     url(r'^resources/tutorial/build-social-network/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'howtosocialnetwork'}),
