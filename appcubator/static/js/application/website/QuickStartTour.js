@@ -217,6 +217,7 @@ define([
     var quickTour = new TouristOmer.Tour({
       steps     : steps,
       onEachStep: function(step) {
+        if(!step) return;
         util.log_to_server('quick tour walkthrough step', { step: step.ind}, -1);
       }
     });
