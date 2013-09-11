@@ -55,7 +55,7 @@ urlpatterns = patterns('',
     url(r'^resources/editor/publish/$',                            base_views.temp_deploy),
     url(r'^resources/quickstart/$',                                base_views.quickstart),
     url(r'^resources/tutorials/$',                                 base_views.tutorials),
-    url(r'^resources/documentation/$',                             base_views.documentation),
+    url(r'^resources/documentation/$',                             views.documentation_page, {"page_name": "intro"}),
     url(r'^resources/docs/$',                             base_views.documentation),
     url(r'^resources/screencast/(\d+)/$',                          base_views.screencast), # these are the editor videos
 

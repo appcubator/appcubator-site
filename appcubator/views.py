@@ -377,7 +377,7 @@ def documentation_page(request, page_name):
             page_name = "feedback-form-page"
         htmlString = render(request, 'documentation/html/'+page_name+'.html').content
     except Exception, e:
-        htmlString = render(request, 'documentation/html/intro.html').content
+        htmlString = "all"
     data = {
         'content': htmlString,
         'page_name': page_name

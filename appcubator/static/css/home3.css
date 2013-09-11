@@ -1885,11 +1885,13 @@ li a:hover .summary h3 {
   margin-bottom: 16px;
 }
 
-.slide-documentation p.image img {
+.slide-documentation p.image img,
+.slide-documentation p img  {
   background-color: #fafafa;
   border: 1px solid #ccc;
   padding:16px;
 }
+
 
 .three-dots, .arrow, .scroll-down-note {
   position: absolute;
@@ -2060,6 +2062,15 @@ only screen and (min-device-pixel-ratio : 1.5) {
   padding: 15px 15px;
 }
 
+.table-content h1 {
+  cursor: pointer;
+  list-style-type: circle;
+  list-style-position: inside;
+  line-height: 20px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
 .tutorial .table-content li {
   cursor: pointer;
   list-style-type: circle;
@@ -2083,8 +2094,21 @@ only screen and (min-device-pixel-ratio : 1.5) {
   width: 100%;
   max-width: 720px;
   margin-left: 45px;
+  min-height: 500px;
 }
+
+.tutorial .content h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+  text-shadow: #fff 0 1px 1px;
+  color: #0f2d40;
+  font-family: "proxima-nova";
+  font-weight: bold;
+  margin-top: 30px;
+}
+
 .tutorial .content .section {
+  margin-bottom: 45px;
 
 }
 

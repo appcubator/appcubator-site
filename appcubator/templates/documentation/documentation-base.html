@@ -6,112 +6,113 @@
 
 
 {% block tutorial-content %}
-        {% autoescape off %}
-          {% if content %}
-            {{ content }}
-          {% elif results and results|length > 0%}
-            {% for page in results %}
-              <div class="results-section">
+{% autoescape off %}
+    {% if content == "all" %}
+<div class="section" id="tutorial-intro">
+  {% include "documentation/html/intro.html" %}
+</div>
+
+<div class="section" id="tutorial-tables-page">
+  {% include "documentation/html/tables_page.html" %}
+</div>
+
+<div class="section" id="tutorial-user-tables">
+  {% include "documentation/html/user_tables.html" %}
+</div>
+
+<div class="section" id="tutorial-tables">
+  {% include "documentation/html/tables.html" %}
+</div>
+
+<div class="section" id="tutorial-relationships">
+  {% include "documentation/html/relationships.html" %}
+</div>
+
+<div class="section" id="tutorial-pages">
+  {% include "documentation/html/pages.html" %}
+</div>
+
+<div class="section" id="tutorial-editor">
+  {% include "documentation/html/editor.html" %}
+</div>
+
+<div class="section" id="tutorial-design-elements">
+  {% include "documentation/html/design_elements.html" %}
+</div>
+
+<div class="section" id="tutorial-images">
+  {% include "documentation/html/images.html" %}
+</div>
+
+<div class="section" id="tutorial-login">
+  {% include "documentation/html/login.html" %}
+</div>
+
+<div class="section" id="tutorial-sign-up">
+  {% include "documentation/html/sign_up.html" %}
+</div>
+
+<div class="section" id="tutorial-page-content">
+  {% include "documentation/html/page_content.html" %}
+</div>
+
+<div class="section" id="tutorial-forms">
+  {% include "documentation/html/Forms.html" %}
+</div>
+
+<div class="section" id="tutorial-lists">
+  {% include "documentation/html/lists.html" %}
+</div>
+
+<div class="section" id="tutorial-search">
+  {% include "documentation/html/search.html" %}
+</div>
+
+<div class="section" id="tutorial-themes">
+  {% include "documentation/html/themes.html" %}
+</div>
+
+<div class="section" id="tutorial-deploy">
+  {% include "documentation/html/deploy.html" %}
+</div>
+
+<div class="section" id="tutorial-emails">
+  {% include "documentation/html/emails.html" %}
+</div>
+
+<div class="section" id="tutorial-application-settings">
+  {% include "documentation/html/application_settings.html" %}
+</div>
+
+<div class="section" id="tutorial-domain-settings">
+  {% include "documentation/html/domain_settings.html" %}
+</div>
+
+<div class="section" id="tutorial-seo-optimization">
+  {% include "documentation/html/seo_optimization.html" %}
+</div>
+
+<div class="section" id="tutorial-deleting-your-application">
+  {% include "documentation/html/deleting_your_application.html" %}
+</div>
+
+<div class="section" id="feedback-form-page">
+  {% include "documentation/html/feedback-form-page.html" %}
+</div>
+    {% elif content %}
+        {{ content }}
+    {% elif results and results|length > 0%}
+        {% for page in results %}
+            <div class="results-section">
                 <h3>
                   <a href="/documentation/{{ page.filename }}/">{{ page.title }}</a>
                 </h3>
                 <p>{{ page.content }}</p>
-              </div>
-            {% endfor %}
-          {% else %}
-            <h2>No Results</h2>
-          {% endif %}
-        {% endautoescape %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <h2>No Results</h2>
+    {% endif %}
+{% endautoescape %}
 
-        <div type="text/template" id="tutorial-intro">
-  {% include "documentation/html/intro.html" %}
-</div>
-
-<div type="text/template" id="tutorial-tables-page">
-  {% include "documentation/html/tables_page.html" %}
-</div>
-
-<div type="text/template" id="tutorial-user-tables">
-  {% include "documentation/html/user_tables.html" %}
-</div>
-
-<div type="text/template" id="tutorial-tables">
-  {% include "documentation/html/tables.html" %}
-</div>
-
-<div type="text/template" id="tutorial-relationships">
-  {% include "documentation/html/relationships.html" %}
-</div>
-
-<div type="text/template" id="tutorial-pages">
-  {% include "documentation/html/pages.html" %}
-</div>
-
-<div type="text/template" id="tutorial-editor">
-  {% include "documentation/html/editor.html" %}
-</div>
-
-<div type="text/template" id="tutorial-design-elements">
-  {% include "documentation/html/design_elements.html" %}
-</div>
-
-<div type="text/template" id="tutorial-images">
-  {% include "documentation/html/images.html" %}
-</div>
-
-<div type="text/template" id="tutorial-login">
-  {% include "documentation/html/login.html" %}
-</div>
-
-<div type="text/template" id="tutorial-sign-up">
-  {% include "documentation/html/sign_up.html" %}
-</div>
-
-<div type="text/template" id="tutorial-page-content">
-  {% include "documentation/html/page_content.html" %}
-</div>
-
-<div type="text/template" id="tutorial-forms">
-  {% include "documentation/html/Forms.html" %}
-</div>
-
-<div type="text/template" id="tutorial-lists">
-  {% include "documentation/html/lists.html" %}
-</div>
-
-<div type="text/template" id="tutorial-search">
-  {% include "documentation/html/search.html" %}
-</div>
-
-<div type="text/template" id="tutorial-themes">
-  {% include "documentation/html/themes.html" %}
-</div>
-
-<div type="text/template" id="tutorial-deploy">
-  {% include "documentation/html/deploy.html" %}
-</div>
-
-<div type="text/template" id="tutorial-emails">
-  {% include "documentation/html/emails.html" %}
-</div>
-
-<div type="text/template" id="tutorial-application-settings">
-  {% include "documentation/html/application_settings.html" %}
-</div>
-
-<div type="text/template" id="tutorial-domain-settings">
-  {% include "documentation/html/domain_settings.html" %}
-</div>
-
-<div type="text/template" id="tutorial-seo-optimization">
-  {% include "documentation/html/seo_optimization.html" %}
-</div>
-
-<div type="text/template" id="tutorial-deleting-your-application">
-  {% include "documentation/html/deleting_your_application.html" %}
-</div>
-
-<div type="text/template" id="feedback-form-page">
-  {% include "documentation/html/feedback-form-page.html" %}
-</div>
 {% endblock %}
