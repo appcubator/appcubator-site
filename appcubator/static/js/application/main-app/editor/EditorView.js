@@ -51,7 +51,6 @@ define([
             },
 
             initialize: function(options) {
-                alert('yolo');
                 _.bindAll(this);
                 this.subviews = [];
 
