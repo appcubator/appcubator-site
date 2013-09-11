@@ -232,3 +232,9 @@ import re
 static_version_file_path = os.path.join(os.path.dirname(__file__), 'STATIC_VERSION')
 with open(static_version_file_path) as bro:
     CACHE_BUSTING_STRING = re.sub(r'[^0-9A-Za-z_\-]', '', bro.read().split('\n')[0].strip())
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+    }
+}
