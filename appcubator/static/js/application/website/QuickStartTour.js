@@ -134,6 +134,8 @@ define([
           highlightTarget: true,
           setup: function(tour, options) {
             $('#option-0').one('change', tour.next);
+            $('#option-0').one('click',  tour.next);
+            $('label[for="option-0"]').one('click',  tour.next);
           }
         },
         {
@@ -160,7 +162,6 @@ define([
           target  : $('.btn.done'),
           highlightTarget: true,
           setup   : function(tour, options) {
-
             $('.btn.done').one('click', tour.next);
             return { };
           }
