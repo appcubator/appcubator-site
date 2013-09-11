@@ -263,6 +263,9 @@ def app_edit_theme(request, app_id):
     #theme = get_object_or_404(UITheme, pk = theme_id)
     page_context = {'title': 'Current Theme',
                     'appId': long(app_id),
+                    'app'  : app,
+                    'apps' : app.owner.apps.all(),
+                    'navHide': "true",
                     'theme': app._uie_state_json}
     add_statics_to_context(page_context, app)
 

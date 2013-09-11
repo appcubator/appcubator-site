@@ -1,4 +1,4 @@
-{% extends "infra-html.html" %}
+{% extends "infra-app.html" %}
 
 {% block less %}
   <link type="text/css"  rel="stylesheet/less" href="{{ STATIC_URL }}css/app/style.less">
@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block topbar %}
-{% include "infra-topbar-designer.html" %}
+{% include "app-navbar.html" %}
 {% endblock %}
 
 {% block page %}

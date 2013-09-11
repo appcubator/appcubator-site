@@ -11,6 +11,7 @@ require.config({
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "designer-app" : "./",
     "editor" : "../main-app/editor",
+    "app"    : "../main-app",
     "m-editor" : "./mobile-editor",
     "dicts" : "./dicts",
     "mixins" : "../../mixins",
@@ -56,12 +57,13 @@ require([
   "designer-app/ThemeEditView",
   'models/ThemeModel',
   "editor/KeyDispatcher",
+  "app/GarageView",
   "mixins/BackboneConvenience",
   "bootstrap",
   "ace"
 ],
-function(ThemeEditView, ThemeModel, KeyDispatcher) {
-  
+function(ThemeEditView, ThemeModel, KeyDispatcher, GarageView) {
+
   keyDispatcher  = new KeyDispatcher();
   var themeModel = new ThemeModel(themeState);
   var galleryView = new ThemeEditView(themeModel);
@@ -78,7 +80,9 @@ function(ThemeEditView, ThemeModel, KeyDispatcher) {
     initialize: function() {
       _.bindAll(this);
       document.addEventListener("touchstart", function(){}, true);
-      console.log("INITTT");
+
+      this.garageView = new GarageView();
+      $('.garage-toggle').on('click', this.garageView.show);
     },
 
     showElement: function(appId, elementName) {
