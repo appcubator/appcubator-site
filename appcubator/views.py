@@ -140,7 +140,7 @@ def app_new(request, is_racoon = False, app_template=None):
         if not settings.STAGING and not settings.PRODUCTION:
             data['subdomain'] = 'dev-%s-%s' % (username, data['subdomain'])
 
-        form = forms.AppNew(data)
+        form = forms.AppNew(data, owner=request.user)
 
         if form.is_valid():
             app = form.save(commit=False)
