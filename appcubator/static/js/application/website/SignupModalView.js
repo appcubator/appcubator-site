@@ -33,6 +33,11 @@ define([
       var self = this;
       this.$el.find('#signup').on('submit', function(e) {
         e.preventDefault();
+
+        $('#sign-up').hide();
+        $('#passive-button').show();
+        $('#passive-button').append(util.threeDots().el);
+
         var self = this;
         url = $(e.currentTarget).attr('action');
         obj = $(e.currentTarget).serialize();
@@ -63,6 +68,10 @@ define([
           data: obj,
           dataType: "JSON",
           success: function(data, statusStr, xhr) {
+            
+            $('#sign-up').show();
+            $('#passive-button').hide();
+
             if (typeof(data.redirect_to) !== 'undefined') {
               location.href = data.redirect_to;
             } else {

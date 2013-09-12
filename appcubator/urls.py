@@ -49,13 +49,15 @@ urlpatterns = patterns('',
     url(r'^backend/',                   include('app_builder.urls')),
     url(r'^payments/',                  include('appcubator.payments.urls')),
     url(r'^app/(\d+)/payment/$',        payment_views.app_payment),
+    url(r'^trigger_customer/$',         payment_views.stripe_acc_trigger),
 
     url(r'^resources/$',                                           base_views.resources),
     url(r'^resources/editor/$',                                    base_views.external_editor),
     url(r'^resources/editor/publish/$',                            base_views.temp_deploy),
     url(r'^resources/quickstart/$',                                base_views.quickstart),
     url(r'^resources/tutorials/$',                                 base_views.tutorials),
-    url(r'^resources/documentation/$',                             base_views.documentation),
+    url(r'^resources/documentation/$',                             views.documentation_page, {"page_name": "all"}),
+    url(r'^resources/docs/$',                             base_views.documentation),
     url(r'^resources/screencast/(\d+)/$',                          base_views.screencast), # these are the editor videos
 
     url(r'^resources/tutorial/build-social-network/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'howtosocialnetwork'}),
@@ -132,7 +134,7 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/editor/\d+/debug/$', 'app_json_editor'), # this serves all the app pages
 
     url(r'^feedback/$', 'documentation_page', {"page_name": "feedback"}),
-    url(r'^documentation/$', 'documentation_page', {"page_name": "intro"}),
+    url(r'^documentation/$', 'documentation_page', {"page_name": "all"}),
     url(r'^documentation/search/$', 'documentation_search'),
     url(r'^documentation/([^/]+)/$', 'documentation_page'),
 

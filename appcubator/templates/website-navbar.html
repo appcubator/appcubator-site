@@ -25,7 +25,7 @@
       <li><a class="signup-button" href="/signup/">SIGNUP</a></li>
       {% endif %}      
     </ul>
-    <form class="login-form" method="post" action="{% url django.contrib.auth.views.login %}" style="display:none;">{% csrf_token %}
+    <form class="login-form" method="post" action="{% url django.contrib.auth.views.login %}" style="display:none;">
       {% csrf_token %}
       <input id="id_username" class="span10" type="text" name="username" placeholder="Email..." maxlength="30">
       <input type="password" class="span10" name="password" placeholder="Password..." id="id_password">

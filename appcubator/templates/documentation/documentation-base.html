@@ -1,88 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title> Appcubator | Documentation</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link href="{{ STATIC_URL }}css/reset.css" id="css-reset" rel="stylesheet">
-  <link href="{{ STATIC_URL }}css/bootstrap-website.css" rel="stylesheet">
-  <link type="text/css" href="{{ STATIC_URL }}css/prettyCheckable.css" id="css-prettycheckable" rel="stylesheet"/>
-  {% if DEBUG %}
-  <link rel="stylesheet/less" href="{{ STATIC_URL }}css/documentation.less" id="css-racoon">
-  <script>
-  less = {
-    env: 'development',
-    relativeUrls: true,
-    dumpLineNumbers: 'mediaQuery'
-  };
-  </script>
-  <script src="{{ STATIC_URL }}js/libs/less.min.js" type="text/javascript"></script>
-  {% else %}
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/documentation.css" id="css-racoon">
-  {% endif %}
+{% extends "website-tutorial-infra.html" %}
 
-  <script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
-  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
-</head>
-<body>
-  <div class="page" id="page">
-    <!-- Main Content-->
-    <div class="offset2 container-fluid">
-      <div class="top-panel hoff2">
-        <div id="container" class="">
-          <div id="cube" class="animate">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-        <div class="logo-text">Appcubator</div>
-        <div class="banner offsetr1 pull-right">Documentation</div>
-      </div>
-      <div class="racoon hoff1">
-        {% autoescape off %}
-          {% if content %}
-            {{ content }}
-          {% elif results and results|length > 0%}
-            {% for page in results %}
-              <div class="results-section">
+{% block tutorial-table-content %}
+     {% include "documentation/html/menu.html" %}
+     <div class="scroll-top">Scroll to Top</div>
+
+{% endblock %}
+
+
+{% block tutorial-content %}
+{% autoescape off %}
+    {% if content == "all" %}
+<div class="section docs" id="tutorial-intro">
+  {% include "documentation/html/intro.html" %}
+</div>
+
+<div class="section docs" id="tutorial-tables-page">
+  {% include "documentation/html/tables_page.html" %}
+</div>
+
+<div class="sub-section docs" id="tutorial-user-tables">
+  {% include "documentation/html/user_tables.html" %}
+</div>
+
+<div class="sub-section docs" id="tutorial-tables">
+  {% include "documentation/html/tables.html" %}
+</div>
+
+<div class="sub-section docs" id="tutorial-relationships">
+  {% include "documentation/html/relationships.html" %}
+</div>
+
+<div class="section docs" id="tutorial-pages">
+  {% include "documentation/html/pages.html" %}
+</div>
+
+<div class="section docs" id="tutorial-editor">
+  {% include "documentation/html/editor.html" %}
+</div>
+
+<div class="sub-section docs" id="tutorial-design-elements">
+  {% include "documentation/html/design_elements.html" %}
+</div>
+
+<div class="sub-section docs" id="tutorial-images">
+  {% include "documentation/html/images.html" %}
+</div>
+
+<div class="sub-section docs" id="tutorial-login">
+  {% include "documentation/html/login.html" %}
+</div>
+
+<div class="sub-section docs" id="tutorial-sign-up">
+  {% include "documentation/html/sign_up.html" %}
+</div>
+
+<div class="sub-section docs" id="tutorial-page-content">
+  {% include "documentation/html/page_content.html" %}
+</div>
+
+<div class="sub-section docs" id="tutorial-forms">
+  {% include "documentation/html/Forms.html" %}
+</div>
+
+<div class="sub-section docs" id="tutorial-lists">
+  {% include "documentation/html/lists.html" %}
+</div>
+
+<div class="sub-section docs" id="tutorial-search">
+  {% include "documentation/html/search.html" %}
+</div>
+
+<div class="section docs" id="tutorial-themes">
+  {% include "documentation/html/themes.html" %}
+</div>
+
+<div class="section docs" id="tutorial-deploy">
+  {% include "documentation/html/deploy.html" %}
+</div>
+
+<div class="section docs" id="tutorial-emails">
+  {% include "documentation/html/emails.html" %}
+</div>
+
+<div class="section docs" id="tutorial-application-settings">
+  {% include "documentation/html/application_settings.html" %}
+</div>
+
+<div class="section docs" id="tutorial-domain-settings">
+  {% include "documentation/html/domain_settings.html" %}
+</div>
+
+<div class="section docs" id="tutorial-seo-optimization">
+  {% include "documentation/html/seo_optimization.html" %}
+</div>
+
+<div class="section docs" id="tutorial-deleting-your-application">
+  {% include "documentation/html/deleting_your_application.html" %}
+</div>
+
+<div class="section docs" id="feedback-form-page">
+  {% include "documentation/html/feedback-form-page.html" %}
+</div>
+    {% elif content %}
+        {{ content }}
+    {% elif results and results|length > 0%}
+        {% for page in results %}
+            <div class="results-section docs">
                 <h3>
                   <a href="/documentation/{{ page.filename }}/">{{ page.title }}</a>
                 </h3>
                 <p>{{ page.content }}</p>
-              </div>
-            {% endfor %}
-          {% else %}
-            <h2>No Results</h2>
-          {% endif %}
-        {% endautoescape %}
-      </div>
-      {% if content %}
-      <div class="prev arrow">Previous Page</div>
-      <div class="next arrow">Next Page</div>
-      {% endif %}
-    </div>
-
-    <!-- Left Menu -->
-    <ul class="menu-list">
-      <span class="title">Documentation</span>
-      <form action="/documentation/search/" method="GET" class="row">
-        <input class="search hoff1 span10" name="q" type="text" placeholder="Search...">
-        <img src="{{ STATIC_URL }}img/search-icon.png">
-        <button type="submit" class="hide" value="Search"></button>
-      </form>
-     {% include "documentation/html/menu.html" %}
-    </ul>
-  </div>
-  <script type="text/javascript">
-    var pageName = "{{ page_name }}";
-  </script>
-  <script data-main="{{ STATIC_URL }}js/application/tutorial/DocumentationPage-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
-</body>
-</html>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h2>No Results</h2>
+    {% endif %}
+{% endautoescape %}
+{% endblock %}

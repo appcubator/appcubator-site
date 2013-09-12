@@ -3,7 +3,7 @@ define([
   'jquery-ui'
 ],
 
-function(Backbone) {
+function() {
 
   Backbone.ModalView = Backbone.View.extend({
     width: 500,

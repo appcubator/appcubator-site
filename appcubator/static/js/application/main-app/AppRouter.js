@@ -7,6 +7,7 @@ define(function(require, exports, module) {
 
     var TutorialView  = require("tutorial/TutorialView"),
         EmailsView    = require("app/emails/EmailsView"),
+        PluginsView   = require("app/PluginsView"),
         DeployView    = require("app/DeployView"),
         SoftErrorView = require("app/SoftErrorView"),
         GarageView    = require("app/GarageView");
@@ -19,6 +20,7 @@ define(function(require, exports, module) {
             "app/:appid/gallery/*tutorial"     : "themes",
             "app/:appid/pages/*tutorial"       : "pages",
             "app/:appid/editor/:pageid/"       : "editor",
+            "app/:appid/plugins/*tutorial"     : "plugins",
             "app/:appid/mobile-editor/:pageid/": "mobileEditor",
             "app/:appid/emails/*tutorial"      : "emails",
             "app/:appid/*tutorial"             : "index",
@@ -170,6 +172,14 @@ define(function(require, exports, module) {
             });
         },
 
+        plugins: function(appId, tutorial) {
+            var self = this;
+            self.tutorialPage = "Plugins";
+            this.changePage(PluginsView, tutorial, function() {
+                $('.menu-app-plugins').addClass('active');
+            });
+        },
+
         changePage: function(newView, tutorial, post_render) {
             if (v1.view) v1.view.close();
             var cleanDiv = document.createElement('div');
@@ -208,7 +218,6 @@ define(function(require, exports, module) {
             var before_deploy = new Date().getTime();
             v1.disableSave = true;
 
-            console.log("YOLO")
             $.ajax({
                 type: "POST",
                 url: '/app/' + appId + '/deploy/',
@@ -395,21 +404,6 @@ define(function(require, exports, module) {
                     initial: inp
                 });
                 this.tutorialIsVisible = true;
-            }
-        },
-
-        betaCheck: function(data) {
-            if (data.percentage > 30 && data.feedback === true) {
-                $('.notice').css('height', '118px');
-                $('.notice').html('<h3 class="">Thank you for joining Appcubator Private Beta program!</h3><div>You can claim your free domain from <a class="menu-app-info">Domain & SEO</a> page.</div>');
-                v1.menuBindings();
-            }
-
-            if (data.percentage > 30) {
-                $('#tutorial-check').prop('checked', true);
-            }
-            if (data.feedback === true) {
-                $('#feedback-check').prop('checked', true);
             }
         },
 

@@ -1,8 +1,10 @@
-from django.http import HttpResponse, HttpRequest, Http404
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import redirect,render, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
+
+from django.http import HttpResponse, HttpRequest, Http404
+from django.shortcuts import redirect,render, get_object_or_404
 from django.contrib.auth import forms as auth_forms, authenticate, login
 from django.core.exceptions import ValidationError
 from django import forms
@@ -22,9 +24,6 @@ import requests
 import re
 import os, os.path
 join = os.path.join
-
-from django.views.decorators.cache import cache_page
-
 
 def format_full_details(details):
     lines = []
@@ -68,6 +67,7 @@ class MyUserCreationForm(auth_forms.UserCreationForm):
 
 @require_GET
 @cache_page(60*5)
+@csrf_protect
 def aboutus(request):
     page_context = {}
     page_context["title"] = "About Us"
@@ -83,6 +83,7 @@ def changelog(request):
 
 @require_GET
 @cache_page(60*5)
+@csrf_protect
 def homepage(request):
     if request.user.is_authenticated():
         return redirect('/app/')
@@ -95,6 +96,7 @@ def homepage(request):
 
 @require_GET
 @cache_page(60*5)
+@csrf_protect
 def community_page(request):
 
     page_context = {}
@@ -104,6 +106,7 @@ def community_page(request):
 
 @require_GET
 @cache_page(60*5)
+@csrf_protect
 def community_faq_page(request):
 
     page_context = {}
@@ -261,10 +264,11 @@ def signup(request):
             create_customer(request, long(user.pk))
             new_user = authenticate(username=req['email'],
                                     password=req['password1'])
-            plan_status = set_new_user_plan(new_user)
-            if plan_status is not None:
-                stripe_error = "We encountered an error with signing you up on your starter plan. Sorry!"
-                return HttpResponse(simplejson.dumps(stripe_error), mimetype="application/json")
+            # Do this via /trigger_customer/ for now.
+            # plan_status = set_new_user_plan(new_user)
+            # if plan_status is not None:
+            #     stripe_error = "We encountered an error with signing you up on your starter plan. Sorry!"
+            #     return HttpResponse(simplejson.dumps(stripe_error), mimetype="application/json")
             login(request, new_user)
 
             if request.is_ajax():
@@ -425,6 +429,7 @@ def send_invitation_to_customer(request, customer_pk):
 
 
 @cache_page(60*5)
+@csrf_protect
 def resources(request):
     page_context = {}
     page_context["title"] = "Resources"
@@ -460,6 +465,7 @@ def temp_deploy(request):
 
 @require_GET
 @cache_page(60*5)
+@csrf_protect
 def external_editor(request):
     td = find_or_create_temp_deployment(request)
     #td.deploy()
@@ -482,6 +488,7 @@ def external_editor(request):
     return render(request, 'website-external-editor.html', page_context)
 
 @cache_page(60*5)
+@csrf_protect
 def quickstart(request):
     page_context = {}
     page_context["title"] = "Resources"
@@ -499,6 +506,7 @@ def tutorials(request):
     return render(request, 'website-resources-tutorials.html', page_context)
 
 @cache_page(60*5)
+@csrf_protect
 def documentation(request):
     page_context = {}
     page_context["title"] = "Resources"
@@ -506,6 +514,7 @@ def documentation(request):
     return render(request, 'website-resources-documentation.html', page_context)
 
 @cache_page(60*5)
+@csrf_protect
 def resources_socialnetwork(request, name=None):
     if name == None:
         raise Http404

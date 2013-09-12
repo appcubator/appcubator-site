@@ -2155,3 +2155,10 @@ only screen and (min-device-pixel-ratio : 1.5) {
   padding: 6px;
   cursor: pointer;
 }
+
+a.fancy {
+  border: 1px solid #ccc;
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 6px;
+}
