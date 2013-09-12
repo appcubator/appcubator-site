@@ -59,6 +59,7 @@ function(RequestInviteModalView) {
       var $whiteButton = $('.white-btn');
       var $largeText   = $('.large-text');
       var $subText     = $('.sub-text');
+      var $video       = $('#video-box');
 
       $(window).on('scroll', function(e) {
         var newValue = $(window).scrollTop();
@@ -80,9 +81,9 @@ function(RequestInviteModalView) {
         else if (newValue > 70) { $subText.css('opacity', 0); }
         else { $subText.css('opacity', 1); }
 
-        if (newValue <= 90) { $whiteButton.css('opacity', 1 - (newValue/90)); }
-        else if (newValue > 90) { $whiteButton.css('opacity', 0); }
-        else { $whiteButton.css('opacity', 1); }
+        if (newValue <= 90) { $video.css('opacity', 1 - (newValue/90)); $whiteButton.css('opacity', 1 - (newValue/90)); }
+        else if (newValue > 90) { $video.css('opacity', 0); $whiteButton.css('opacity', 0); }
+        else { $video.css('opacity', 1); $whiteButton.css('opacity', 1); }
 
         if(newValue > 270) { $('.navbar').removeClass('transparent');
         $blueBar.removeClass('transparent');
