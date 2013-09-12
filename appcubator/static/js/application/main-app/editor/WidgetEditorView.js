@@ -379,7 +379,7 @@ function(WidgetContentEditor,
     },
 
     doubleClicked: function() {
-      if(this.model.getForm()) { this.openFormEditor(); }
+      if(this.model.getForm() && !this.model.isLoginForm()) { this.openFormEditor(); }
       if(this.model.getLoginRoutes())  { this.openLoginEditor(); }
       if(this.model.get('type') == "imageslider") { this.openSlideEditor(); }
     },
