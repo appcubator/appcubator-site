@@ -94,8 +94,19 @@ def admin_user(request, user_id):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_apps(request):
+    apps_all = App.objects.all()
+    paginator = Paginator(apps_all, 100)
+    page = request.GET.get('page')
+    try:
+        apps = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        apps = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        apps = paginator.page(paginator.num_pages)
     page_context = {}
-    page_context["apps"] = App.objects.all()
+    page_context["apps"] = apps
     return render(request, 'admin/apps.html', page_context)
 
 @login_required

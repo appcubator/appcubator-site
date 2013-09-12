@@ -2,6 +2,14 @@
 {% block content %}
   <h2>Apps</h2>
   <hr>
+  <div class="pagination row">
+    {% if apps.has_previous %}
+      <a class="btn hboff1" href="?page={{ apps.previous_page_number }}">Previous</a>
+    {% endif %}
+    {% if apps.has_next %}
+      <a class="btn pull-right hboff1" href="?page={{ apps.next_page_number }}">Next</a>
+    {% endif %}
+  </div>
   <table id="apps" class="table table-striped table-hover table-bordered">
     <thead>
       <tr>
