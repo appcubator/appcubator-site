@@ -56,7 +56,7 @@
     }
   ],
   "mobilePages": [],
-  "version_id": 108,
+  "version_id": 971,
   "emails": [
     {
       "content": "Dear {{User.username}},\n\nThanks for signing up!\n\nCheers!\n{{AppName}}",
@@ -80,7 +80,7 @@
             "title": "Homepage"
           }
         ],
-        "customText": "Powered by Appcubator"
+        "customText": "<a href='http://appcubator.com'>Powered by Appcubator</a>"
       },
       "navbar": {
         "isFixed": true,
@@ -191,7 +191,7 @@
             "t_padding": 0,
             "width": 9,
             "r_padding": 0,
-            "height": 40,
+            "height": 21,
             "alignment": "left",
             "left": 3
           },
@@ -202,8 +202,8 @@
               "query": {
                 "fieldsToDisplay": [],
                 "sortAccordingTo": "-Date",
-                "where": [],
-                "numberOfRows": -1
+                "numberOfRows": -1,
+                "where": []
               },
               "row": {
                 "uielements": [
@@ -338,6 +338,158 @@
             "nodeType": "links",
             "activeStyle": ""
           }
+        },
+        {
+          "type": "loop",
+          "layout": {
+            "top": 30,
+            "left": 3,
+            "height": 44,
+            "width": 9,
+            "t_padding": 0,
+            "b_padding": 0,
+            "l_padding": 0,
+            "r_padding": 0,
+            "alignment": "left"
+          },
+          "data": {
+            "style": "overflow-y:scroll;\n background-color: #eee;\nborder-radius: 4px;\noverflow-y: scroll;\n\n.row {\n    border-bottom: 1px solid #ccc;\n}",
+            "isSingle": false,
+            "cons_attribs": {},
+            "class_name": "defaul-list",
+            "content": null,
+            "tagName": "div",
+            "container_info": {
+              "entity": "Listing",
+              "action": "show",
+              "row": {
+                "isListOrGrid": "list",
+                "layout": {
+                  "height": 10,
+                  "width": 4,
+                  "top": 0,
+                  "left": 0,
+                  "t_padding": 0,
+                  "b_padding": 0,
+                  "l_padding": 0,
+                  "r_padding": 0,
+                  "alignment": "left"
+                },
+                "uielements": [
+                  {
+                    "type": "node",
+                    "layout": {
+                      "left": 95,
+                      "top": 0,
+                      "height": 45,
+                      "width": 400,
+                      "t_padding": 0,
+                      "b_padding": 0,
+                      "l_padding": 0,
+                      "r_padding": 0,
+                      "alignment": "left"
+                    },
+                    "data": {
+                      "nodeType": "texts",
+                      "style": "",
+                      "isSingle": false,
+                      "tagName": "p",
+                      "hoverStyle": "",
+                      "class_name": "normal-text",
+                      "content": "{{loop.Listing.Title}}",
+                      "content_attribs": {},
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "type": "node",
+                    "layout": {
+                      "left": 95,
+                      "top": 45,
+                      "height": 45,
+                      "width": 400,
+                      "t_padding": 0,
+                      "b_padding": 0,
+                      "l_padding": 0,
+                      "r_padding": 0,
+                      "alignment": "left"
+                    },
+                    "data": {
+                      "nodeType": "texts",
+                      "style": "",
+                      "isSingle": false,
+                      "tagName": "p",
+                      "hoverStyle": "",
+                      "class_name": "normal-text",
+                      "content": "{{loop.Listing.Description}}",
+                      "content_attribs": {},
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "type": "node",
+                    "layout": {
+                      "left": 0,
+                      "top": 5,
+                      "height": 90,
+                      "width": 90,
+                      "t_padding": 0,
+                      "b_padding": 0,
+                      "l_padding": 0,
+                      "r_padding": 0,
+                      "alignment": "left"
+                    },
+                    "data": {
+                      "nodeType": "images",
+                      "style": "",
+                      "isSingle": true,
+                      "tagName": "img",
+                      "hoverStyle": "",
+                      "class_name": "img-normal",
+                      "content": "{{loop.Listing.Photo}}",
+                      "content_attribs": {
+                        "src": "{{loop.Listing.Photo}}"
+                      },
+                      "activeStyle": ""
+                    }
+                  },
+                  {
+                    "type": "node",
+                    "layout": {
+                      "left": 95,
+                      "top": 90,
+                      "height": 45,
+                      "width": 400,
+                      "t_padding": 0,
+                      "b_padding": 0,
+                      "l_padding": 0,
+                      "r_padding": 0,
+                      "alignment": "left"
+                    },
+                    "data": {
+                      "nodeType": "texts",
+                      "style": "",
+                      "isSingle": false,
+                      "tagName": "p",
+                      "hoverStyle": "",
+                      "class_name": "normal-text",
+                      "content": "{{loop.Listing.Price}}",
+                      "content_attribs": {},
+                      "activeStyle": ""
+                    }
+                  }
+                ],
+                "goesTo": null
+              },
+              "query": {
+                "fieldsToDisplay": [],
+                "sortAccordingTo": "-Date",
+                "numberOfRows": 10,
+                "where": []
+              }
+            },
+            "content_attribs": {}
+          }
         }
       ],
       "page_name": "Homepage",
@@ -426,14 +578,14 @@
               "query": {
                 "fieldsToDisplay": [],
                 "sortAccordingTo": "-Date",
+                "numberOfRows": -1,
                 "where": [
                   {
                     "equal_to": "Page.Category",
                     "field_name": "category",
                     "nl_description": "Show Listings where category is equal to Category of the current page."
                   }
-                ],
-                "numberOfRows": -1
+                ]
               },
               "entity": "Listing",
               "row": {
@@ -1034,11 +1186,6 @@
             "left": 4
           },
           "data": {
-            "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n width: 100%;\n}\n",
-            "isSingle": false,
-            "cons_attribs": {},
-            "hoverStyle": "",
-            "class_name": "form-default",
             "container_info": {
               "action": "create",
               "form": {
@@ -1101,6 +1248,11 @@
               },
               "entity": "Listing"
             },
+            "isSingle": false,
+            "cons_attribs": {},
+            "hoverStyle": "",
+            "class_name": "form-default",
+            "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n width: 100%;\n}\n",
             "content": null,
             "activeStyle": "",
             "content_attribs": {},
@@ -1218,23 +1370,17 @@
           },
           "type": "form",
           "data": {
-            "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n    width: 100%;\n}\n\ninput[type=\"radio\"] {\n    margin-left: 4px;\n    margin-right: 4px;\n}\n\ntextarea {\n    width: 100%;\n    min-height: 60px;\n}\n\nlabel {\n    display: block;\n}\n\n.option {\n    display:block;\n}\n\n.option label {\n    display: inline-block;\n}\n\ninput[type=\"radio\"] {\n    display: inline-block;\n}\n\n.btn {\n    margin-top: 6px;\n}\n\n",
-            "content_attribs": {},
-            "isSingle": false,
-            "cons_attribs": {},
-            "hoverStyle": "",
-            "class_name": "form-default",
             "container_info": {
               "action": "create",
               "form": {
                 "goto": "internal://Create Category",
                 "fields": [
                   {
-                    "placeholder": "Name",
+                    "type": "text",
                     "required": true,
                     "label": "Name",
                     "displayType": "single-line-text",
-                    "type": "text",
+                    "placeholder": "Name",
                     "field_name": "Name",
                     "options": ""
                   },
@@ -1252,7 +1398,13 @@
               },
               "entity": "Category"
             },
+            "isSingle": false,
+            "cons_attribs": {},
+            "hoverStyle": "",
+            "class_name": "form-default",
+            "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n    width: 100%;\n}\n\ninput[type=\"radio\"] {\n    margin-left: 4px;\n    margin-right: 4px;\n}\n\ntextarea {\n    width: 100%;\n    min-height: 60px;\n}\n\nlabel {\n    display: block;\n}\n\n.option {\n    display:block;\n}\n\n.option label {\n    display: inline-block;\n}\n\ninput[type=\"radio\"] {\n    display: inline-block;\n}\n\n.btn {\n    margin-top: 6px;\n}\n\n",
             "content": null,
+            "content_attribs": {},
             "tagName": "form",
             "activeStyle": ""
           }
@@ -1271,18 +1423,13 @@
           },
           "type": "loop",
           "data": {
-            "style": "overflow-y:scroll;\n background-color: #eee;\nborder-radius: 4px;\noverflow-y: scroll;\n\n.row {\n    border-bottom: 1px solid #ccc;\n}",
-            "content_attribs": {},
-            "isSingle": false,
-            "cons_attribs": {},
-            "class_name": "defaul-list",
             "container_info": {
               "action": "show",
               "query": {
                 "fieldsToDisplay": [],
                 "sortAccordingTo": "-Date",
-                "where": [],
-                "numberOfRows": -1
+                "numberOfRows": -1,
+                "where": []
               },
               "row": {
                 "uielements": [
@@ -1328,11 +1475,211 @@
               },
               "entity": "Category"
             },
+            "isSingle": false,
+            "cons_attribs": {},
+            "class_name": "defaul-list",
+            "style": "overflow-y:scroll;\n background-color: #eee;\nborder-radius: 4px;\noverflow-y: scroll;\n\n.row {\n    border-bottom: 1px solid #ccc;\n}",
             "content": null,
+            "content_attribs": {},
             "tagName": "div"
           }
         }
-      ]
+      ],
+      "page_name": "Create Category",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 7
+    },
+    {
+      "name": "YOLO PAGE",
+      "footer": {
+        "isFixed": true,
+        "isHidden": false,
+        "links": [
+          {
+            "url": "http://appcubator.com",
+            "title": "Powered by Appcubator"
+          }
+        ],
+        "customText": "Copyright 2013"
+      },
+      "url": {
+        "urlparts": [
+          "YOLO_PAGE"
+        ]
+      },
+      "navbar": {
+        "isFixed": true,
+        "brandName": null,
+        "isHidden": false,
+        "links": []
+      },
+      "access_level": "all",
+      "uielements": [
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 4,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 8,
+            "alignment": "left",
+            "left": 6
+          },
+          "type": "custom",
+          "data": {
+            "htmlC": "",
+            "nodeType": "custom-widget",
+            "tagName": "div",
+            "jsC": "",
+            "cssC": "",
+            "content_attribs": {}
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 5,
+            "t_padding": 0,
+            "width": 2,
+            "r_padding": 0,
+            "height": 9,
+            "alignment": "left",
+            "left": 0
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/Vm0su2zTAixmGqLPcmIZ"
+            },
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": "https://www.filepicker.io/api/file/Vm0su2zTAixmGqLPcmIZ",
+            "tagName": "img",
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "type": "node",
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 5,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 23,
+            "alignment": "left",
+            "left": 4
+          },
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "tagName": "img",
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": "https://www.filepicker.io/api/file/2gKdgDzKQmGrOczIk3UA",
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/2gKdgDzKQmGrOczIk3UA"
+            },
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 26,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 20,
+            "alignment": "left",
+            "left": 1
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/RlI2ug8oTx6SK6k0Jrmf"
+            },
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": "https://www.filepicker.io/api/file/RlI2ug8oTx6SK6k0Jrmf",
+            "tagName": "img",
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 30,
+            "t_padding": 0,
+            "width": 3,
+            "r_padding": 0,
+            "height": 20,
+            "alignment": "left",
+            "left": 6
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/RHIjT0idTaaHX8H9Q6XO"
+            },
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": "https://www.filepicker.io/api/file/RHIjT0idTaaHX8H9Q6XO",
+            "tagName": "img",
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        },
+        {
+          "layout": {
+            "l_padding": 0,
+            "b_padding": 0,
+            "top": 36,
+            "t_padding": 0,
+            "width": 4,
+            "r_padding": 0,
+            "height": 20,
+            "alignment": "left",
+            "left": 8
+          },
+          "type": "node",
+          "data": {
+            "style": "",
+            "isSingle": true,
+            "content_attribs": {
+              "src": "https://www.filepicker.io/api/file/YP54wA3DQ3WnBk1V8JZ7"
+            },
+            "hoverStyle": "",
+            "class_name": "img-normal",
+            "content": "https://www.filepicker.io/api/file/YP54wA3DQ3WnBk1V8JZ7",
+            "tagName": "img",
+            "nodeType": "images",
+            "activeStyle": ""
+          }
+        }
+      ],
+      "page_name": "YOLO PAGE",
+      "user_roles": [
+        "User"
+      ],
+      "ind": 8
     }
   ],
   "name": "Market Place"
