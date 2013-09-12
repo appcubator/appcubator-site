@@ -46,7 +46,7 @@ def admin_home(request):
     users_last_week_timeout = 60*60*6 # refresh every 6 hrs
     most_active_users_timeout = 60*60*6*24 # refresh every 24 hours
 
-    cache.set('users_today', users_today, users_today_timeout)
+    # cache.set('users_today', users_today, users_today_timeout)
     cache.set('users_last_week', users_last_week, users_last_week_timeout)
     cache.set('most_active_users', most_active_users, most_active_users_timeout)
 
