@@ -24,6 +24,7 @@ from datetime import datetime, timedelta, date
 import time
 from django.utils import timezone
 from django.core.serializers.json import DjangoJSONEncoder
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from appcubator.stats import *
 
@@ -60,15 +61,19 @@ def admin_customers(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
-    page = 1
-    limit = 100
-    if p in request.GET:
-        page = int(request.GET.get('p', '0'))
-    if page < 0:
-        page = 0
-    offset = (page-1)*limit
+    users_all = User.objects.order_by('-id')
+    paginator = Paginator(users_all, 100)
+    page = request.GET.get('page')
+    try:
+        users = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
     page_context = {}
-    page_context["users"] = User.objects.order_by('-id')[offset:limit]
+    page_context["users"] = users
     return render(request, 'admin/users.html', page_context)
 
 @login_required
@@ -76,8 +81,18 @@ def admin_users(request):
 def admin_user(request, user_id):
     user_id = long(user_id)
     user = get_object_or_404(User, id=user_id)
-    logs = LogAnything.objects.filter(user_id=user_id)
+    logs_all = LogAnything.objects.filter(user_id=user_id).order_by('-id')
     apps = App.objects.filter(owner=user_id)
+    paginator = Paginator(logs_all, 100)
+    page = request.GET.get('page')
+    try:
+        logs = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        logs = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        logs = paginator.page(paginator.num_pages)
     page_context = {}
     page_context["user"] = user
     page_context["apps"] = apps
@@ -89,8 +104,19 @@ def admin_user(request, user_id):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_apps(request):
+    apps_all = App.objects.order_by('-id')
+    paginator = Paginator(apps_all, 100)
+    page = request.GET.get('page')
+    try:
+        apps = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        apps = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        apps = paginator.page(paginator.num_pages)
     page_context = {}
-    page_context["apps"] = App.objects.all()
+    page_context["apps"] = apps
     return render(request, 'admin/apps.html', page_context)
 
 @login_required
@@ -98,7 +124,17 @@ def admin_apps(request):
 def admin_app(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
-    logs = LogAnything.objects.filter(user_id=app.owner.id, app_id=app_id)
+    logs_all = LogAnything.objects.filter(user_id=app.owner.id, app_id=app_id).order_by('-id')
+    paginator = Paginator(logs_all, 100)
+    page = request.GET.get('page')
+    try:
+        logs = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        logs = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        logs = paginator.page(paginator.num_pages)
     page_context = {}
     page_context["app"] = app
     page_context["app_id"] = app_id
