@@ -61,7 +61,7 @@ def admin_customers(request):
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
     page_context = {}
-    page_context["users"] = User.objects.all()
+    page_context["users"] = User.objects.order_by('-id')[100:]
     return render(request, 'admin/users.html', page_context)
 
 @login_required
