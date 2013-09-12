@@ -25,6 +25,7 @@ import time
 from django.utils import timezone
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.cache import cache
 
 from appcubator.stats import *
 
@@ -282,7 +283,13 @@ def active_users_json(request, t_start, t_end, t_delta):
     tempEnd = tempStart + delta
     data = {}
     while tempEnd < end:
-        data[tempStart.strftime("%m/%d/%y")] = num_active_users(tempStart, tempEnd)
+        key = tempStart.strftime("%m/%d/%y")
+        if tempEnd < datetime.now() - timedelta(days=7):
+            result = cache.get('num_active_users_'+key, num_active_users(tempStart, tempEnd))
+        else:
+            result = num_active_users(tempStart, tempEnd)
+            cache.set('num_active_users_'+key, result)
+        data[key] = result
         tempStart = tempEnd
         tempEnd = tempEnd + delta
     return HttpResponse(json.dumps(data), mimetype="application/json")
