@@ -30,35 +30,49 @@
       <li>JS for each Custom Widget is executed in it's own scope. This means that you can not write two different custom widgets JS interfacing with each other. On the other hand, you are free to interface with DOM elements</li>
     </ul>
 </div>
-<div class="section" id="addinguielement-section">
+<div class="section" id="html-section">
       <h5>Adding HTML</h5>
       <p>You can write you HTML in the corresponding text editor and it'll be rendered on your page when you close the editor. The custom HTML is rendered inside a div with widht and height defined by Appcubator's grid system. So if you just want to utilize editor's resizing/moving abilities, you should style your outer element with <code>width:100%</code> and <code>height:100%</code></p>
 </div>
-<div class="section" id="customfonts-section">
+<div class="section" id="css-section">
       <h6>Adding CSS</h6>
       <p>You can easily add CSS to style your existing elements or custom HTML you just wrote using Custom Widget. The only limitation right now is that the "position:fixed;" will not work accuratly. We're working on getting around that limitation</p>
 </div>
-<div class="section" id="addimages-section">
+<div class="section" id="example-section">
       <h5>Example Uses</h5>
       <h6>Getting Fancy With CSS</h6>
-      <p>We will be adding a *pretty* complicated piece of widget in this example. It is take from Codepen. The link is below</p>
-      <a href="http://team-customwidgets.appcubator.com/ClothingExample/" class="fancy">
-        Tear-able Clothing Example
-      </a>
+      <p>We will be adding a *pretty* complicated piece of widget in this example, taken from <a href="http://codepen.io">Codepen</a>. It is simply achieved by copy-pasting the CSS, HTML, and JS respectively to the related text boxes. The link is below</p>
+      <div class="hi5">
+        <a href="http://team-customwidgets.appcubator.com/ClothingExample/" target="_blank" class="fancy hoff2 span16" style="display:block;">
+          Tear-able Clothing Example
+        </a>
+      </div>
+      <br>
+      <div>
+        <p class="image">
+          Custom Widget Editor
+          <img src="https://www.filepicker.io/api/file/RlI2ug8oTx6SK6k0Jrmf
+          ">
+        </p>
+      </div>
+      <h6>Adding a jQuery plugin</h6>
+      <p>We will add a jQuery plugin to make our textareas WYSIYG in this example. The plugin we'll use is called jgte(<a href="http://jqueryte.com/">http://jqueryte.com/</a>).</p>
       <p class="image">
-        Press Cmd+C or Ctrl+C when you see the prompt below, and you can use it anywhere in your CSS by pasting it. It'll be available everywhere. 
-        <img src="https://www.filepicker.io/api/file/lh99JrOuRmSMtPRQHrBB
-        ">
+        We're adding a simple feedback form on our page first.
+        <img src="https://www.filepicker.io/api/file/RHIjT0idTaaHX8H9Q6XO">
       </p>
-      <h6>Example Uses</h6>
-      <p>We will add a jQuery plug.</p>
+      <p>Then we're dropping a Custom Widget to the page and copy paste the Javascript and CSS from the library.</p>
       <p class="image">
-        Press Cmd+C or Ctrl+C when you see the prompt below, and you can use it anywhere in your CSS by pasting it. It'll be available everywhere. 
-        <img src="https://www.filepicker.io/api/file/lh99JrOuRmSMtPRQHrBB
-        ">
+        We're adding a simple feedback form on our page first.
+        <img src="https://www.filepicker.io/api/file/YP54wA3DQ3WnBk1V8JZ7">
       </p>
+      <p>After that, we're adding <code> $("textarea").jqte();</code> in the JS editor, after the library code.</p>
+      <p>And, our textareas are fancy now! Check it out at the link below.</p>
+      <div class="hi7">
+        <a href="http://team-customwidgets.appcubator.com/Feedback/" target="_blank" class="fancy hoff2 span28" style="display:block; margin-bottom:30px;">http://team-customwidgets.appcubator.com/Feedback/</a>
+      </div>
 </div>
-    <hr>
+    <hr style="display:block;">
     <div class="feed">
       <p>Please don't hesitate to ask your questions or comment below. We'll answer as soon as possible!</p>
       <div class="fb-comments" data-href="http://appcubator.com/resources/designer-guide/" data-width="600"></div>
