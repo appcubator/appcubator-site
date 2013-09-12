@@ -81,8 +81,18 @@ def admin_users(request):
 def admin_user(request, user_id):
     user_id = long(user_id)
     user = get_object_or_404(User, id=user_id)
-    logs = LogAnything.objects.filter(user_id=user_id)
+    logs_all = LogAnything.objects.filter(user_id=user_id).order_by('-id')
     apps = App.objects.filter(owner=user_id)
+    paginator = Paginator(logs_all, 100)
+    page = request.GET.get('page')
+    try:
+        logs = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        logs = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        logs = paginator.page(paginator.num_pages)
     page_context = {}
     page_context["user"] = user
     page_context["apps"] = apps
@@ -114,7 +124,17 @@ def admin_apps(request):
 def admin_app(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
-    logs = LogAnything.objects.filter(user_id=app.owner.id, app_id=app_id)
+    logs_all = LogAnything.objects.filter(user_id=app.owner.id, app_id=app_id).order_by('-id')
+    paginator = Paginator(logs_all, 100)
+    page = request.GET.get('page')
+    try:
+        logs = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        logs = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        logs = paginator.page(paginator.num_pages)
     page_context = {}
     page_context["app"] = app
     page_context["app_id"] = app_id
