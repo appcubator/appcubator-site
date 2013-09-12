@@ -20,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for app in apps reversed %}
+      {% for app in apps %}
       <tr>
         <td><a href="{% url appcubator.admin_views.admin_app app.pk %}">{{ app.pk }}</a></td>
         <td><a href="{% url appcubator.admin_views.admin_app app.pk %}">{{ app.name }}</a></td>

@@ -94,7 +94,7 @@ def admin_user(request, user_id):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_apps(request):
-    apps_all = App.objects.all()
+    apps_all = App.objects.order_by('-id')
     paginator = Paginator(apps_all, 100)
     page = request.GET.get('page')
     try:
