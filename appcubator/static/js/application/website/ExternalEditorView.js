@@ -101,6 +101,16 @@ function(EditorView, SignupDeployView, MarqueeView, EditorGalleryView, WidgetsMa
             var before_deploy = new Date().getTime();
             this.disableSave = true;
 
+            var newState = v1State.toJSON();
+            
+            _.each(newState.pages[0].uielements, function(val, key) {
+                if(val.type && val.type == "form") {
+                    if(val.data && val.data.container_info && val.data.container_info.action == "create") {
+                        val.data.container_info.entity = "Tweet";
+                    }
+                }
+            });
+
             $.ajax({
                 type: "POST",
                 url: '/resources/editor/publish/',
