@@ -33,13 +33,9 @@ function(RequestInviteModalView) {
 
       $(document).ready(function() {
         setTimeout(function() {
-          // var elem = document.getElementById('video-pane');
-          // ifrm = document.createElement("IFRAME");
-          // ifrm.setAttribute("src", "https://player.vimeo.com/video/70250440");
-          // ifrm.style.width = "100%";
-          // ifrm.style.height = 195+"px";
-          // elem.appendChild(ifrm);
-        }, 800);
+          console.log('load');
+          $('#videotc').attr('src','/static/img/tc+video.mp4');
+        }, 200);
       });
 
       return this;
@@ -65,7 +61,6 @@ function(RequestInviteModalView) {
         var newValue = $(window).scrollTop();
 
         if(newValue > 5 && self.olarkHidden) {
-          console.log('show');
           olark('api.box.show');
           self.olarkHidden = false;
           $('.scroll-down-note').fadeOut();

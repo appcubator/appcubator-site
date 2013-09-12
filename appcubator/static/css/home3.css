@@ -197,6 +197,13 @@ h6 {
   cursor: pointer;
   text-transform: uppercase;
   font-weight: bold;
+  border: 3px solid transparent;
+}
+
+.white-btn:hover {
+  border: 3px solid #fff;
+  background-color: #0f2d40;
+  color: #fff;
 }
 
 .blue.white-btn {
