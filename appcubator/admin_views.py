@@ -60,8 +60,15 @@ def admin_customers(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
+    page = 1
+    limit = 100
+    if p in request.GET:
+        page = request.GET['p']
+    if page < 0:
+        page = 0
+    offset = (page-1)*limit
     page_context = {}
-    page_context["users"] = User.objects.order_by('-id')[:100]
+    page_context["users"] = User.objects.order_by('-id')[offset:limit]
     return render(request, 'admin/users.html', page_context)
 
 @login_required
