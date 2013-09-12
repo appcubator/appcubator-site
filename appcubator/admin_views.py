@@ -38,10 +38,22 @@ def admin_home(request):
     beginning = datetime(year=2013, month=6, day=26)
     beginning = int(time.mktime(beginning.timetuple()))
 
+    users_today = cache.get('users_today', recent_users(long_ago=timedelta(days=1), limit=20))
+    users_last_week = cache.get('users_last_week', recent_users(long_ago=timedelta(days=7), limit=50))
+    most_active_users = cache.get('most_active_users', logs_per_user(limit=100))
+
+    users_today_timeout = 3600
+    users_last_week_timeout = 60*60*6 # refresh every 6 hrs
+    most_active_users_timeout = 60*60*6*24 # refresh every 24 hours
+
+    cache.set('users_today', users_today, users_today_timeout)
+    cache.set('users_last_week', users_last_week, users_last_week_timeout)
+    cache.set('most_active_users', most_active_users, most_active_users_timeout)
+
     # active users
-    page_context["users_today"] = recent_users(long_ago=timedelta(days=1), limit=20)
-    page_context["users_last_week"] = recent_users(long_ago=timedelta(days=7), limit=50)
-    page_context["most_active_users"] = logs_per_user(limit=100)
+    page_context["users_today"] = users_today
+    page_context["users_last_week"] = users_last_week
+    page_context["most_active_users"] = most_active_users
     page_context['active_users'] = active_users_json(request, beginning, now, 'day').content
     page_context['user_signups_cumulative'] = user_signups_cumulative_json(request, beginning, now, 'day').content
     page_context['user_signups'] = user_signups_json(request).content
