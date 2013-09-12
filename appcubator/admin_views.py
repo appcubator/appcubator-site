@@ -24,6 +24,7 @@ from datetime import datetime, timedelta, date
 import time
 from django.utils import timezone
 from django.core.serializers.json import DjangoJSONEncoder
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from appcubator.stats import *
 
@@ -60,15 +61,19 @@ def admin_customers(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
-    page = 1
-    limit = 100
-    if 'p' in request.GET:
-        page = int(request.GET['p'])
-    if page < 0:
-        page = 0
-    offset = (page-1)*limit
+    users_all = User.objects.order_by('-id')
+    paginator = Paginator(users_all, 100)
+    page = request.GET.get('page')
+    try:
+        users = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
     page_context = {}
-    page_context["users"] = User.objects.order_by('-id')[offset:limit]
+    page_context["users"] = users
     return render(request, 'admin/users.html', page_context)
 
 @login_required

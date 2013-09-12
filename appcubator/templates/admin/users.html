@@ -2,6 +2,13 @@
 {% block content %}
   <h2>Users</h2>
   <hr>
+  {% if users.has_previous %}
+    <a class="btn" href="?page={{ users.previous_page_number }}">Previous</a>
+  {% endif %}
+  {% if users.has_next %}
+    <a class="btn pull-right" href="?page={{ users.next_page_number }}">Next</a>
+  {% endif %}
+
   <table id="users" class="table table-striped table-hover table-bordered">
     <thead>
       <tr>
