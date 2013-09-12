@@ -153,6 +153,7 @@ olark.identify('6509-786-10-1962');/*]]>*/</script><noscript><a href="https://ww
 <script type="text/template" id="temp-signupdeploy">
     <a class="app-link" target="_blank" href="<%= site_url %>"><%= site_url %></a>
     <form class="sign-up-form" method="POST" id="signup" action="{% url signup_form %}">
+        {% csrf_token %}
         <div class="left-side">
           <input type="text" name="name" id="inp-name" placeholder="Full Name">
           <div class="form-error field-name-first_name"></div>
