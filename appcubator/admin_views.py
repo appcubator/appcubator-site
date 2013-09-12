@@ -62,8 +62,8 @@ def admin_customers(request):
 def admin_users(request):
     page = 1
     limit = 100
-    if p in request.GET:
-        page = int(request.GET.get('p', '0'))
+    if 'p' in request.GET:
+        page = int(request.GET['p'])
     if page < 0:
         page = 0
     offset = (page-1)*limit
