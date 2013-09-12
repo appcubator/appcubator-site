@@ -38,7 +38,7 @@ def admin_home(request):
     beginning = datetime(year=2013, month=6, day=26)
     beginning = int(time.mktime(beginning.timetuple()))
 
-    users_today = cache.get('users_today', recent_users(long_ago=timedelta(days=0), limit=20))
+    users_today = cache.get('users_today', recent_users(long_ago=timedelta(days=0), limit=200))
     users_last_week = cache.get('users_last_week', recent_users(long_ago=timedelta(days=7), limit=50))
     most_active_users = cache.get('most_active_users', logs_per_user(limit=100))
 
