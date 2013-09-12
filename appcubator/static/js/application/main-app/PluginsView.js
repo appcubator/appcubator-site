@@ -46,6 +46,7 @@ function(EmailCollection, EmailModel, EmailView) {
 
     setupDisqus: function() {
           var disqus_shortname = 'appcubator'; // required: replace example with your forum shortname
+          var disqus_url = 'http://appcubator.com/plugins/suggestions/';
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
                 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
