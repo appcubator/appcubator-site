@@ -391,14 +391,11 @@ define(['jquery'], function() {
           }
         }
       }
-      console.log(cookieValue);
-      console.log(name);
       return cookieValue;
     }
 
     $(function () {
       /* adds csrftoke to every ajax request we send */
-      console.log('cd');
       $.ajaxSetup({
         crossDomain: false, // obviates need for sameOrigin test
         beforeSend: function(xhr, settings) {

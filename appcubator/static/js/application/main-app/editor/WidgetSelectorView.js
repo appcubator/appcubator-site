@@ -355,7 +355,7 @@ function() {
       if(!this.isMouseOn(e) || this.selectedEl.editModeOn) return;
       this.selectedEl.trigger('doubleClicked');
 
-      if(this.selectedEl.getContent()) {
+      if(this.selectedEl.getContent() && !this.selectedEl.isLoginForm()) {
         this.selectedEl.trigger('startEditing');
         this.listenTo(this.selectedEl, 'stopEditing cancelEditing', this.stoppedEditing);
         this.selectDiv.style.height = 0;
