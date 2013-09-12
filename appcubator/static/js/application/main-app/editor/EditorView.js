@@ -151,7 +151,7 @@ define([
                         }
                     });
 
-                }, 1500);
+                }, 10000);
             },
 
             fetchUIState: function(callback) {
