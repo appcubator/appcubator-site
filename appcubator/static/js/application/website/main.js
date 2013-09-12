@@ -86,6 +86,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
       "resources/tutorial/*pagename/" : "slideViewPage",
       "resources/editor/"             : "editor",
+      "resources/documentation/"       : "documentation",
       "resources/*content"            : 'resources',
 
       "signup/"              : "signupPage"
@@ -107,21 +108,17 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
     homepage: function() {
       this.view = new HomepageView().render();
-      var video = document.getElementById('videotc');
-      var $video = $(video);
-      $video.attr('src', '/static/img/tc+video.mp4');
-      setTimeout(function() {
-        $('.navbar').addClass('transparent');
-        $('.blue-bar').addClass('transparent');
-        setTimeout(function() {
-          $video.removeClass('invisible');
-          video.play();
-        }, 210);
-      }, 400);
     },
 
     developerpage: function() {
       this.view = new DeveloperpageView().render();
+    },
+
+    documentation: function() {
+      this.bindSections();
+      $('.scroll-top').on('click', function() {
+        $(window).scrollTop(300);
+      });
     },
 
     resources: function() {
@@ -187,6 +184,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
     },
 
     bindLoginForm: function() {
+      
       $('.login-button').on('click', function(e) {
         e.preventDefault();
         $('.menu').hide();

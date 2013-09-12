@@ -8,15 +8,49 @@
 <div class="sliding-panel">
   <div class="slide slide-intro full">
     <div class="blue-bar">
-      <video width="900" height="390" id="videotc" class="invisible" controls>
-      </video>
       <div class="large-text">
         The Easiest Way to Build Web Apps
       </div>
       <div class="sub-text">
        The only visual tool that builds and hosts full stack web apps, backed by developer-friendly code.
       </div>
-      <a class="white-btn" href="/resources/editor/" rel="external" target="_blank">Take a Quick Tour</a>
+      <!--<a class="white-btn" href="/resources/editor/" rel="external" target="_blank">Take a Quick Tour</a>-->
+      <style>
+          .blue-bar {
+              height: 460px;
+          }
+          .blue-bar .lil-box {
+              margin-top:10px;
+              display: inline-block;
+              vertical-align: middle;
+          }
+          .blue-bar .video {
+              margin-right: 60px;
+              width: 250px;
+              height: 190px;
+              border: white solid 3px;
+              -webkit-border-radius: 15px;
+              -moz-border-radius: 15px;
+              border-radius: 15px;
+              overflow:hidden;
+              padding: 5px;
+          }
+          .blue-bar .quick-tour {
+              width: 250px;
+              margin-left: 0px;
+          }
+          .quick-tour p.sub-text {
+              text-align: left;
+              padding: 0 20px;
+          }
+      </style>
+      <div class="video lil-box"><video width="235" height="175" id="videotc" controls>
+          <source src="/static/img/tc+video.mp4" type='video/mp4; codecs="H.264, AAC"'>
+      </video></div>
+      <div class="quick-tour lil-box">
+          <div class="white-btn">Take a Quick Tour</div><p class="sub-text">Lorem ipsum dolor sit amet.<br>Bacon strip and choco donuts</p>
+      </div>
+      <div class="lil-box" style="width:50px;"></div>
     </div>
     <div class="three-div">
       <div class="left view">
