@@ -1,0 +1,172 @@
+{% extends "admin/admin-base.html" %}
+
+{% block css %}
+<style type="text/css">
+  textarea {
+    width: 100%;
+    display: block;
+  }
+  .btn {
+    margin-bottom: 10px;
+    margin-top: -5px;
+  }
+  .editor {
+    position: relative !important;
+    border: 1px solid lightgray;
+    height: 1024px;
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h2>Apps</h2>
+</div>
+  <p><strong>ID:</strong> {{ app.pk }}</p>
+  <p><strong>Name:</strong> {{ app.name }}</p>
+  <p><strong>Owner:</strong> {{ app.owner }}</p>
+  <p><strong>Subdomain:</strong> {{ app.subdomain }}</p>
+  <p><strong>Deployment ID:</strong> {{ app.deployment_id }}</p>
+  <p><button class="btn btn-inverse" id="deploy-app" data-toggle="modal" data-target=".deploy">Deploy App</button></p>
+<div class="row">
+  <div class="span6">
+    <strong>App State</strong>
+    <button id="save-appState" class="btn btn-warning btn-small pull-right" data-toggle="modal" data-target=".deploy">Save App State</button>
+    <!-- <textarea rows="25" id="appState"></textarea> -->
+    <div id="appState" class="editor"></div>
+  </div>
+  <div class="span6">
+    <strong>UIE State</strong>
+    <button id="save-uieState" class="btn btn-warning btn-small pull-right" data-toggle="modal" data-target=".deploy">Save UIE State</button>
+    <!-- <textarea rows="50" id="uieState"></textarea> -->
+    <div id="uieState" class="editor"></div>
+  </div>
+</div>
+<section id="app-logs">
+    <h3>User Logs</h3>
+      <div class="pagination">
+        {% if snaps.has_previous %}
+          <a class="btn" href="?page={{ snaps.previous_page_number }}">Previous</a>
+        {% endif %}
+        {% if snaps.has_next %}
+          <a class="btn pull-right" href="?page={{ snaps.next_page_number }}">Next</a>
+        {% endif %}
+      </div>
+    <table id="logs" class="table table-striped table-hover table-bordered">
+      <thead>
+        <tr>
+          <th data-sort-type="number">App ID</th>
+          <th data-sort-type="timestamp">Timestamp</th>
+          <th>Snap</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for snap in snaps %}
+        <tr>
+          <td class="span1">{{ snap.app_id }}</td>
+          <td class="span2">{{ snap.snapshot_date }}</td>
+          <td class="span2">{{ snap.state_json }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table></section>
+
+<div class="deploy modal hide fade">
+  <div class="modal-body"></div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  var appId = {{ app.pk }}
+  var appState = {{ app.state_json|safe }};
+  var uieState = {{ app.uie_state_json|safe }};
+  appState = JSON.stringify(appState, undefined, 2);
+  uieState = JSON.stringify(uieState, undefined, 2);
+  document.getElementById('appState').innerHTML = appState;
+  document.getElementById('uieState').innerHTML = uieState;
+
+  var appStateEditor = ace.edit("appState");
+  appStateEditor.setTheme("ace/theme/solarized_dark");
+  appStateEditor.getSession().setMode("ace/mode/json");
+
+  var uieStateEditor = ace.edit("uieState");
+  uieStateEditor.setTheme("ace/theme/solarized_dark");
+  uieStateEditor.getSession().setMode("ace/mode/json");
+
+  $('#save-appState').click(function() {
+    saveState(JSON.parse(appStateEditor.getValue()), true);
+  });
+
+  $('#save-uieState').click(function() {
+    console.log(JSON.parse(uieStateEditor.getValue()));
+    saveState(JSON.parse(uieStateEditor.getValue()), false);
+  });
+
+  function saveState(state, is_appState) {
+    var url = is_appState ? '/app/{{ app_id }}/state/force/' : '/app/{{ app_id }}/uiestate/';
+    var data = is_appState ? JSON.stringify(state) : { uie_state : JSON.stringify(state) };
+    $.ajax({
+      type: 'POST',
+      url: url,
+      data: data,
+      success: function(data) {
+        if(data.errors) {
+          var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+          $('.deploy.modal .modal-body').text(content);
+          console.log(data.errors);
+        }
+        else {
+          $('.deploy.modal .modal-body').text("Data successfully saved!");
+          setTimeout(function() {
+            window.location.reload(true);
+          }, 200);
+        }
+      },
+      error: function(jqXHR) {
+        $('.deploy.modal .modal-body').text(jqXHR.responseText);
+      },
+      dataType: "JSON"
+    });
+  }
+
+  $('#deploy-app').click(function() {
+    $('.deploy.modal .modal-body').text("Publishing App...");
+    var before_deploy = new Date().getTime();
+    $.ajax({
+      type: "POST",
+      url: '/app/'+appId+'/deploy/',
+      success: function(data) {
+        var deploy_time = (new Date().getTime() - before_deploy)/1000;
+        // open a modal based on deploy response
+        if(data.errors) {
+          var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+          //if(DEBUG) {
+            content = { text: data.errors };
+          //}
+          $('.deploy.modal .modal-body').text(content);
+          util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.errors}, appId);
+        }
+        else {
+          $('.deploy.modal .modal-body').text("App Successfully Deployed!");
+          //util.log_to_server('deployed app', {status: 'success', deploy_time: deploy_time + " seconds"}, appId);
+        }
+      },
+      error: function(data) {
+        var deploy_time = (new Date().getTime() - before_deploy)/1000;
+        var content = { text: "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon." };
+        //if(DEBUG) {
+          content = { text: data.responseText };
+        //}
+        $('.deploy.modal .modal-body').text(data.responseText + "DERP");
+        //util.log_to_server('deployed app', {status: 'FAILURE', deploy_time: deploy_time + " seconds", message: data.responseText}, appId);
+      },
+      dataType: "JSON"
+    });
+  });
+
+  $('#logs').sortableTable({initialColumn: 2});
+
+</script>
+{% endblock %}
