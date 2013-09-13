@@ -66,6 +66,16 @@ def admin_home(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+def get_snapshots(request, app_id):
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
+    snapshots = AppstateSnapshot.filter(app=app).order_by('snapshot_date')
+    page_context = {}
+    page_context["snapshots"] = snapshots
+    return render(request, 'admin/snapshots.html')
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def admin_customers(request):
     page_context = {}
     page_context["customers"] = Customer.objects.all()
