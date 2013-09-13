@@ -154,6 +154,30 @@ def admin_app(request, app_id):
     page_context["app_logs"] = logs
     return render(request, 'admin/app.html', page_context)
 
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_app_snaps(request, app_id):
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
+    snaps_all = AppstateSnapshot.objects.filter(app=app).order_by('-id')
+    paginator = Paginator(snaps_all, 20)
+    page = request.GET.get('page')
+    try:
+        snaps = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        snaps = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        snaps = paginator.page(paginator.num_pages)
+    page_context = {}
+    page_context["app"] = app
+    page_context["app_id"] = app_id
+    page_context["snaps"] = snaps
+    return render(request, 'admin/app-snaps.html', page_context)
+
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_feedback(request):
