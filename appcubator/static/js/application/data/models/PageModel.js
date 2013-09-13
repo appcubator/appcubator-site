@@ -28,15 +28,7 @@ function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
       this.set('url', new UrlModel(bone.url||{}));
       this.set('navbar', new NavbarModel(bone.navbar||{}));
       this.set('footer', new FooterModel(bone.footer||{}));
-      this.set('uielements', new WidgetCollection());
-      _(bone.uielements).each(function(uielement) {
-        if(uielement.container_info) {
-          this.get('uielements').addWidgetContainerModel(uielement);
-        }
-        else {
-          this.get('uielements').addWidgetModel(uielement);
-        }
-      }, this);
+      this.set('rows', new WideRowCollection(bone.rows));
     },
 
     getHeight: function() {

@@ -3,17 +3,17 @@ define([
 ],
 function() {
 
-  var WideRowView = Backbone.View.extend({
-    className : 'wide-row',
+  var ColumnView = Backbone.View.extend({
+    className : 'column-view',
+    width: 12,
     events: {
 
     },
     initialize: function() {
       _.bindAll(this);
-
     },
 
   });
 
-  return PickCreateFormEntityView;
+  return ColumnView;
 });
