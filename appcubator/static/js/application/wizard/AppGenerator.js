@@ -30,19 +30,6 @@ function(AppModel,
 
     initialize: function(answers) {
       _.bindAll(this);
-
-      // this.answersDict = answers;
-
-      // v1State = new AppModel();
-      // v1State.set('users', this.generateUsers());
-      // v1State.set('tables', this.generateTables());
-      // v1State.set('pages', this.generatePages());
-      // v1State.set('mobilePages', new MobilePageCollection());
-      // v1State.set('info', new AppInfoModel({}));
-      // v1State.set('emails', new EmailCollection({}));
-      // v1State.set('name', appName);
-
-      // this.state  = v1State;
     },
 
     generateUsers: function() {
@@ -120,16 +107,16 @@ function(AppModel,
 
         var layout = {left : hasImageElements*3 + 2, top: nmrElements*3 + 12, height: 3, width: 5};
         var content_ops = {};
-        content_ops.content =  '{{page.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
+        content_ops.content =  '{{Page.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
 
         if(displayType == "links") {
           content_ops.content = 'Download '+fieldModel.get('name');
-          content_ops.href = '{{page.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
+          content_ops.href = '{{Page.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
         }
 
         if(displayType == "images") {
           layout = {left : 2, top: nmrImageElements*9 + 12, height: 9, width: 2};
-          content_ops.src_content = '{{page.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
+          content_ops.src_content = '{{Page.'+ tableM.get('name') +'.'+fieldModel.get('name')+'}}';
           nmrImageElements++;
         }
         else {

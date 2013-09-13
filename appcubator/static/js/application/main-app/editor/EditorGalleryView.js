@@ -25,7 +25,7 @@ define([
       positionVerticalGrid   : 15,
       sections : [],
       subviews : [],
-
+      editorContext: "Page",
       events : {
         'mouseover .bottom-arrow' : 'slideDown',
         'mousemove .bottom-arrow' : 'slideDown',
