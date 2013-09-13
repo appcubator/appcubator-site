@@ -83,6 +83,11 @@ def admin_customers(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+def admin_add_contactlog(request, customer_id):
+    return HttpResponse(json.dumps("OK"), mimetype="application/json")
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
     users_all = User.objects.order_by('-id')
     paginator = Paginator(users_all, 100)
