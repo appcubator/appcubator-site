@@ -62,20 +62,20 @@ define([
                 v1State.currentPage = this.model;
                 v1State.isMobile = false;
 
-                this.widgetsCollection = this.model.get('uielements');
+                this.rowCollection = this.model.get('rows');
 
-                this.marqueeView = new MarqueeView();
-                this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
-                this.widgetsManager = new WidgetsManagerView(this.widgetsCollection);
+                //this.marqueeView = new MarqueeView();
+                //this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
+                this.widgetsManager = new WidgetsManagerView(this.rowCollection);
                 this.guides = new GuideView(this.widgetsCollection);
                 this.toolBar = new ToolBarView();
 
-                redoController = new RedoController();
+                //redoController = new RedoController();
 
-                keyDispatcher.bindComb('meta+z', redoController.undo);
-                keyDispatcher.bindComb('ctrl+z', redoController.undo);
-                keyDispatcher.bindComb('meta+shift+z', redoController.redo);
-                keyDispatcher.bindComb('ctrl+shift+z', redoController.redo);
+                // keyDispatcher.bindComb('meta+z', redoController.undo);
+                // keyDispatcher.bindComb('ctrl+z', redoController.undo);
+                // keyDispatcher.bindComb('meta+shift+z', redoController.redo);
+                // keyDispatcher.bindComb('ctrl+shift+z', redoController.redo);
 
                 g_guides = this.guides;
 
@@ -85,7 +85,8 @@ define([
 
                 this.title = "Editor";
 
-                this.subviews = [this.marqueeView,
+                this.subviews = [
+                    //this.marqueeView,
                     this.galleryEditor,
                     this.widgetsManager,
                     this.guides,
@@ -104,15 +105,15 @@ define([
                 if (!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
 
                 this.toolBar.setElement(document.getElementById('tool-bar')).render();
-                this.marqueeView.render();
+                //this.marqueeView.render();
                 this.renderUrlBar();
-                this.galleryEditor.render();
+                //this.galleryEditor.render();
                 this.widgetsManager.render();
                 this.navbar.setElement('#navbar').render();
                 this.footer.setElement('#footer').render();
-                this.guides.setElement($('#elements-container')).render();
+                //this.guides.setElement($('#elements-container')).render();
 
-                $('#elements-container').append(this.marqueeView.el);
+                //$('#elements-container').append(this.marqueeView.el);
 
                 this.setupPageWrapper();
                 this.setupPageHeight();
@@ -239,8 +240,8 @@ define([
 
                 clearInterval(this.UIStateTimer);
 
-                keyDispatcher.unbind('meta+z', redoController.redo);
-                keyDispatcher.unbind('ctrl+z', redoController.redo);
+                // keyDispatcher.unbind('meta+z', redoController.redo);
+                // keyDispatcher.unbind('ctrl+z', redoController.redo);
 
                 Backbone.View.prototype.close.call(this);
             }

@@ -1,10 +1,10 @@
-define(['backbone'],
+define(['collections/ColumnCollection'],
 
-function() {
+function(ColumnCollection) {
 
     var WideRowModel = Backbone.Model.extend({
         initialize: function(bone) {
-            this.colums = new ColumnCollection([]);
+            this.colums = new ColumnCollection(bone.colums||[]);
         }
     });
 

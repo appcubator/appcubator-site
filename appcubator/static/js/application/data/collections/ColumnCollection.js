@@ -1,7 +1,7 @@
 define([
   'models/ColumnModel'
 ],
-function() {
+function(ColumnModel) {
 
   var ColumnCollection = Backbone.Collection.extend({
     model : ColumnModel
