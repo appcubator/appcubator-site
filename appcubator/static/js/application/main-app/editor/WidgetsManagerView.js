@@ -42,19 +42,19 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            //this.widgetsContainer = document.getElementById('elements-container');
-            //this.widgetsContainer.innerHTML = '';
+            this.el = document.getElementById('full-container');
             this.rowsCollection.each(function(rowM) {
-                //widget.setupPageContext(v1State.getCurrentPage());
+                console.log(rowM);
                 var newRow = this.placeRow(rowM, false);
             }, this);
-            //this.widgetSelectorView.setElement(this.widgetsContainer).render();
+
+            return this;
         },
 
         placeRow: function(rowM) {
             var rowView = new WideRowView(rowM);
             this.el.appendChild(rowView.render().el);
-
+            console.log(this.el);
             this.subviews.push(rowView);
         },
 

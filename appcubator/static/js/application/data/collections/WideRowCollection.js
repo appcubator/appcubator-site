@@ -4,7 +4,10 @@ define([
 function(WideRowModel) {
 
   var WideRowCollection = Backbone.Collection.extend({
-    model : WideRowModel
+    model : WideRowModel,
+    addNewRow: function() {
+      this.add(new WideRowModel());
+    }
   });
 
   return WideRowCollection;

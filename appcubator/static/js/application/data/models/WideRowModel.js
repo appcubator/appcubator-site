@@ -3,8 +3,16 @@ define(['collections/ColumnCollection'],
 function(ColumnCollection) {
 
     var WideRowModel = Backbone.Model.extend({
+        
         initialize: function(bone) {
-            this.colums = new ColumnCollection(bone.colums||[]);
+            _.bindAll(this);
+            bone = bone || {};
+            this.set('columns', new ColumnCollection(bone.columns||[]));
+        },
+
+        getColumns: function() {
+            console.log(this);
+            return this.get('columns');
         }
     });
 

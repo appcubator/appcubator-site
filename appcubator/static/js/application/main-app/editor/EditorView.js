@@ -47,7 +47,8 @@ define([
                 'click #deploy': 'deploy',
                 'click .menu-button.help': 'help',
                 'click .menu-button.question': 'question',
-                'click .url-bar': 'clickedUrl'
+                'click .url-bar': 'clickedUrl',
+                'click #add-row' : 'addRow'
             },
 
             initialize: function(options) {
@@ -212,13 +213,13 @@ define([
             },
 
             setupPageHeightBindings: function() {
-                this.listenTo(this.model.get('uielements'), 'add', function(uielem) {
+                this.listenTo(this.model.get('rows'), 'add', function(rowM) {
                     this.setupPageHeight();
-                    this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
+                    this.listenTo(rowM, 'change:height', this.setupPageHeight);
                 }, this);
 
-                this.model.get('uielements').each(function(uielem) {
-                    this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
+                this.model.get('rows').each(function(rowM) {
+                    this.listenTo(rowM, 'change:height', this.setupPageHeight);
                 }, this);
             },
 
@@ -233,6 +234,10 @@ define([
                 if (this.currentHeight > oldHeight) {
                     util.scrollToBottom($('#page'));
                 }
+            },
+
+            addRow: function() {
+                this.rowCollection.addNewRow();
             },
 
             close: function() {
