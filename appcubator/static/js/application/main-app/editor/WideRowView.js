@@ -1,44 +1,45 @@
-define([
-        'util'
-    ],
-    function() {
+define(function(require, exports, module) {
+    'use strict';
 
-        var WideRowView = Backbone.View.extend({
-            className: 'row wide',
-            style: 'min-height:30px',
-            _container: null,
-            vGrid: 15,
+    require('util');
+    var ColumnView = require('editor/ColumnView');
 
-            events: {
+    var WideRowView = Backbone.View.extend({
+        className: 'row wide',
+        style: 'min-height:30px',
+        _container: null,
+        vGrid: 15,
 
-            },
-            initialize: function(rowM) {
-                _.bindAll(this);
-                this.model = rowM;
-                this.columns = new rowM.getColumns();
-                this.subviews = [];
-            },
+        events: {
 
-            render: function() {
-                var container = document.createElement('div');
-                container.className = "container";
-                this.container = container;
-                this.el.appendChild(container);
+        },
+        initialize: function(wRowM) {
+            _.bindAll(this);
+            this.model = wRowM;
+            this.columns = wRowM.getColumns();
+            this.subviews = [];
+        },
 
-                this.layoutColumns();
+        render: function() {
+            var container = document.createElement('div');
+            container.className = "container";
+            this.container = container;
+            this.el.appendChild(container);
 
-                return this;
-            },
+            this.layoutColumns();
 
-            layoutColumns: function() {
-                this.columns.each(function(columnM) {
-                    var columnView = new ColumnView(columnM);
-                    this.el.appendChild(columnView.render().el);
-                    this.subviews.push(ColumnView);
-                }, this);
-            }
+            return this;
+        },
 
-        });
+        layoutColumns: function() {
+            this.columns.each(function(columnM) {
+                var columnView = new ColumnView(columnM);
+                this.container.appendChild(columnView.render().el);
+                this.subviews.push(ColumnView);
+            }, this);
+        }
 
-        return WideRowView;
     });
+
+    return WideRowView;
+});

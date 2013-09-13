@@ -8,16 +8,26 @@ function() {
     width: 12,
  
     events: {
-
+      'click' : 'splitColumn'
     },
 
-    initialize: function() {
+    initialize: function(columnM) {
       _.bindAll(this);
+      this.model = columnM;
+      this.listenTo(this.model.getWidth(), 'change', this.layout);
     },
 
     render: function() {
-      this.className += (' span'+this.width);
+      this.el.className += (' span'+this.model.getWidth());
       return this;
+    },
+
+    layout: function() {
+      this.el.className += (' span'+this.model.getWidth());
+    },
+
+    splitColumn: function() {
+      this.model.split();
     }
 
   });

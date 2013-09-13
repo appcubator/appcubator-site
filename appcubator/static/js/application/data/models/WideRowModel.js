@@ -11,9 +11,9 @@ function(ColumnCollection) {
         },
 
         getColumns: function() {
-            console.log(this);
-            return this.get('columns');
+          return this.get('columns');
         }
+
     });
 
     return WideRowModel;
