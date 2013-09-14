@@ -111,7 +111,7 @@ function(TableCollection,
           });
 
           if(!v1State.get('tables').isNameUnique(name)) {
-            new ErrorDialogueView({text: 'Page name should be unique.'});
+            new ErrorDialogueView({text: 'Table name should be unique.'});
             return false;
           }
           if(!util.isAlphaNumeric(name)){
