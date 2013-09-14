@@ -366,7 +366,7 @@
   ],
   "forms": [
     {
-      "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n width: 100%;\n}\n",
+      "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea, label {\n width: 100%;\n}\n",
       "isSingle": false,
       "cons_attribs": {},
       "hoverStyle": "",
@@ -376,7 +376,7 @@
       "activeStyle": ""
     },
     {
-      "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea {\n width: 100%;\n}\n",
+      "style": "\ninput[type=\"text\"],\ninput[type=\"password\"], textarea, label {\n width: 100%;\n}\n",
       "isSingle": false,
       "cons_attribs": {},
       "hoverStyle": "",

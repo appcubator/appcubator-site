@@ -83,6 +83,27 @@ def admin_customers(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_add_contactlog(request, customer_id):
+    note = request.POST["note"]
+    customer_id = long(customer_id)
+    customer = get_object_or_404(Customer, id=customer_id)
+    str_info = customer.extra_info
+    if str_info == "":
+        str_info = "[]"
+
+    print str_info
+    contact_list = simplejson.loads(str_info)
+    
+    if contact_list == None or contact_list == "":
+        contact_list = []
+
+    new_log = {}
+    new_log["note"] = note
+    new_log["date"] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+    contact_list.append(new_log)
+
+    customer.extra_info = simplejson.dumps(contact_list)
+    customer.save()
+
     return HttpResponse(json.dumps("OK"), mimetype="application/json")
 
 @login_required
@@ -396,7 +417,7 @@ def logs_per_user(limit=10):
 #     deploy_logs_data = [log.data_json for log in get_logs({'name': "deployed app"})]
 #     deploy_times = []
 #     for d in deploy_logs_data:
-#         if "deploy_time" in d:
+#         if "deploy_time" inf d:
 #             number = float(d["deploy_time"].replace(" seconds", ""))
 #             deploy_times.append(number)
 #     if(len(deploy_times)):
