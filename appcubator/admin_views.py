@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.contrib.auth.models import User
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, Customer, ExtraUserData
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, Customer, ExtraUserData, InvitationKeys
 from django.db.models import Avg, Count
 from email.sendgrid_email import send_email
 from models import DomainRegistration
@@ -220,6 +220,14 @@ def admin_feedback(request):
     feedback = list(LogAnything.objects.filter(name='posted feedback'))
     page_context["feedback"] = feedback
     return render(request, 'admin/feedback.html', page_context)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_invitations(request):
+    page_context = {}
+    invs = InvitationKeys.objects.all()
+    page_context["invitations"] = invs
+    return render(request, 'admin/invitations.html', page_context)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
