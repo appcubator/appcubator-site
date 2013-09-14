@@ -48,7 +48,6 @@ def admin_home(request):
 
     # cache.set('users_today', users_today, users_today_timeout)
     cache.set('users_last_week', users_last_week, users_last_week_timeout)
-    #cache.set('most_active_users', most_active_users, most_active_users_timeout)
 
     # active users
     page_context["users_today"] = users_today
