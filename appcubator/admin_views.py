@@ -40,7 +40,7 @@ def admin_home(request):
 
     users_today = cache.get('users_today', recent_users(long_ago=timedelta(days=0), limit=200))
     users_last_week = cache.get('users_last_week', recent_users(long_ago=timedelta(days=7), limit=50))
-    most_active_users = cache.get('most_active_users', logs_per_user(limit=100))
+    #most_active_users = cache.get('most_active_users', logs_per_user(limit=100))
 
     users_today_timeout = 3600
     users_last_week_timeout = 60*60*6 # refresh every 6 hrs
