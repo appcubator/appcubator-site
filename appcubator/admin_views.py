@@ -370,9 +370,13 @@ def recent_users(long_ago=timedelta(days=1), limit=10):
 
 # Top [limit] users with most page visits
 def logs_per_user(limit=10):
-    users = LogAnything.objects\
+    try:
+        users = LogAnything.objects\
                 .exclude(user_id=None)\
                 .values_list('user_id', flat=True).distinct()
+    except:
+        users = None
+
     result = []
     for user_id in users:
         user = User.objects.get(id=long(user_id))
