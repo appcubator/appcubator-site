@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for inv in invitations %}
+      {% for inv in invitations reversed %}
       <tr>
         <td class="span1">{{ inv.pk }}</td>
         <td class="span2">{{ inv.inviter_id }}</td>

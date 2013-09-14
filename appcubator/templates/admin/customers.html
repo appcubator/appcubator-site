@@ -8,7 +8,7 @@
         <th data-sort-type="number">Customer ID</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Extra Info</th>
+        <th class="span4">Contact History</th>
         <th>Project Description</th>
       </tr>
     </thead>
@@ -35,17 +35,6 @@
           </div>
           <form class="ksikka-send-invitation" method="post" action="/send_invitation/{{ customer.pk }}/">
           <div class="modal-body">
-            <p class="row">
-                <input type="text" class="span10 offset1" placeholder="Subject Line" name="subject"><br  />
-                <textarea class="span10 offset1" name="text">
-                  Thanks for your interest in Appcubator. Below you can find your access link to Appcubator Private Beta program.
-
-                  SIGNUP_LINK
-
-                  Sincerely,
-                  Appcubator Team
-                </textarea>
-            </p>
           </div>
           <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
