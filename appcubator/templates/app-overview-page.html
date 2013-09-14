@@ -1,7 +1,7 @@
     <div class="row hoff1 span58 overview-pane">
       <div class="span46">
         <h2 class="pheader">{{ app.name }} Overview</h2><br>
-        <a target="_blank" href="{{ app.url }}" class="fancy link">{{ app.url }} <div href="#" class="edit-btn btn">Edit</div></a><br>
+        <a target="_blank" {% if is_deployed == 1 %} href="{{ app.url }}" {% endif %} class="fancy link">{{ app.url }}{% if is_deployed == 0 %} (Not Deployed yet.) {% endif %}  <div href="#" class="edit-btn btn">Edit</div></a><br>
         <div class="hoff1 span38 notice">
          
           <span class="what-to-do"> <strong>Next step</strong>

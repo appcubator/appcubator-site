@@ -18,7 +18,6 @@ function(AnalyticsView, SimpleModalView, ShareModalView, DeployModalView, AdminP
       'click #deploy'          : 'deploy',
       'click .browse'          : 'browse',
       'click #share'           : 'share',
-      //'click #download'        : 'download',
       'click .edit-btn'        : 'settings'
     },
 
@@ -32,7 +31,7 @@ function(AnalyticsView, SimpleModalView, ShareModalView, DeployModalView, AdminP
 
     render: function() {
       var page_context = {};
-      this.el.innerHTML = _.template(util.getHTML('app-main-page'), page_context);
+      this.el.innerHTML = _.template(util.getHTML('app-overview-page'), page_context);
       this.$('.analytics').append(this.analyticsView.render().el);
       this.renderNextStep();
     },
