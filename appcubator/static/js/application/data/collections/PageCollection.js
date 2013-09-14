@@ -44,6 +44,13 @@ function(PageModel) {
       return pagesList;
     },
 
+    removePagesWithContext: function(tableM) {
+      var arr = this.getPageModelsWithEntityName(tableM.get('name'));
+      _.each(arr, function(pageM) {
+        this.remove(pageM);
+      }, this);
+    },
+
     isNameUnique: function(pageName) {
       isUnique = true;
       this.each(function(page) {

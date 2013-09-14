@@ -116,6 +116,7 @@ function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView) {
 
     clickedDelete: function(e) {
       v1State.get('tables').remove(this.model.cid);
+      v1State.get('pages').removePagesWithContext(this.model);
     },
 
     clickedPropDelete: function(e) {
@@ -161,9 +162,7 @@ function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView) {
 
       width += 120;
       this.width = width;
-      console.log(width);
       if(this.width < 300) this.width = 300;
-      console.log(this.width);
       this.$el.find('.tbl').width(this.width);
 
       if(width > 870 && !this.hasArrow) {
