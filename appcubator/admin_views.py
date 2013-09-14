@@ -44,16 +44,16 @@ def admin_home(request):
 
     users_today_timeout = 3600
     users_last_week_timeout = 60*60*6 # refresh every 6 hrs
-    most_active_users_timeout = 60*60*6*24 # refresh every 24 hours
+    #most_active_users_timeout = 60*60*6*24 # refresh every 24 hours
 
     # cache.set('users_today', users_today, users_today_timeout)
     cache.set('users_last_week', users_last_week, users_last_week_timeout)
-    cache.set('most_active_users', most_active_users, most_active_users_timeout)
+    #cache.set('most_active_users', most_active_users, most_active_users_timeout)
 
     # active users
     page_context["users_today"] = users_today
     page_context["users_last_week"] = users_last_week
-    page_context["most_active_users"] = most_active_users
+    #page_context["most_active_users"] = most_active_users
     page_context['active_users'] = active_users_json(request, beginning, now, 'day').content
     page_context['user_signups_cumulative'] = user_signups_cumulative_json(request, beginning, now, 'day').content
     page_context['user_signups'] = user_signups_json(request).content
