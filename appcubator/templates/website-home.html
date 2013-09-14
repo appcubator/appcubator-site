@@ -1,41 +1,5 @@
 {% extends "infra-website.html" %}
 
-{% block css %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
-      <style>
-          .blue-bar {
-              height: 460px;
-          }
-          .blue-bar .lil-box {
-              margin-top:10px;
-              display: inline-block;
-              vertical-align: middle;
-          }
-          .blue-bar .video {
-              margin-right: 60px;
-              width: 290px;
-              height: 190px;
-              border: white solid 3px;
-              -webkit-border-radius: 15px;
-              -moz-border-radius: 15px;
-              border-radius: 6px;
-              overflow:hidden;
-              padding: 0px;
-          }
-          .blue-bar .quick-tour {
-              width: 250px;
-              margin-left: 0px;
-          }
-          .quick-tour p.sub-text {
-              text-align: left;
-              padding: 0 20px;
-          }
-
-          #videotc {
-            margin-top: -20px;
-          }
-      </style>
-{% endblock %}
 {% block page %}
 {% include "website-navbar.html" %}
 <div class="sliding-panel">
