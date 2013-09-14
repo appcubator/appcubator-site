@@ -216,6 +216,21 @@ define([
       url     : '/editor/0/',
       target  : $(".facebook-login-btn"),
       setup: function(tour, options) {
+            
+            v1State.getCurrentPage().get('uielements').each(function(widgetM) {
+              if(widgetM.isForm()) {
+                widgetM.on('selected display-widget-editor', function() {
+                  $('.form-editor-btn').first().one('click', tour.next);
+                });
+
+                widgetM.get('layout').on('change', function() {
+                  $('.form-editor-btn').first().one('click', tour.next);
+                });
+              }
+            }, this);
+            $('.form-editor-btn').first().one('click', tour.next);
+
+
         var elem = $(".facebook-login-btn")[0];
         $('.edit-login-form-btn').first().on('click', tour.next);
       }
@@ -380,8 +395,17 @@ define([
       url     : '/editor/1/',
       target  : $('#option-0'),
       setup: function(tour, options) {
-        $('#option-0').one('change', tour.next);
-      }
+            var changed = 0;
+            var changeToNext = function() {
+              if(!changed) {
+                tour.next();
+                changed = 1;
+              }
+            };
+
+            $('#option-0').one('change', changeToNext);
+            $('#option-0').one('click', changeToNext);
+            $('label[for="option-0"]').one('click', changeToNext);      }
     },
     {
       ind     : 22,

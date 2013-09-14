@@ -68,7 +68,7 @@ define([
               }
               else {
                 alert('Name of the table should be "Tweet"');
-                table.remove();
+                v1State.get('tables').remove(table);
               }
             };
             v1State.get('tables').bind('add', tweetTableCreated);

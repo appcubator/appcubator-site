@@ -1,9 +1,5 @@
 {% extends "infra-website.html" %}
 
-
-{% block css %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
-{% endblock %}
 {% block page %}
 <div id="fb-root"></div>
 <script>
@@ -29,11 +25,12 @@
       <input id="id_username" class="span12" type="text" name="username" placeholder="Email..." maxlength="30"><br>
       <input type="password" class="span12 hoff1" name="password" placeholder="Password..." id="id_password"><br>
       <br>
-        <a class="qmark" href="{% url auth_password_reset %}">Forgot your password?</a>
-      <br>
-      <input class="btn" type="submit" value="Login"/>
-      <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
+      <input class="btn span10 hi3" type="submit" value="Login"/>
+      <input type="hidden" name="next" value="{{ next|default:"/app" }}" /><br>
+      <a class="qmark" href="{% url auth_password_reset %}">Forgot your password?</a><br><br>
+      <stron><a class="qmark" href="/signup">Signup here if you don't have an account yet.</a></strong>
     </form>
+
   </div>
 </div>
 {% endblock %}

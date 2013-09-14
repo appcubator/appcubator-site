@@ -24,6 +24,8 @@ from datetime import datetime, timedelta, date
 import time
 from django.utils import timezone
 from django.core.serializers.json import DjangoJSONEncoder
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.cache import cache
 
 from appcubator.stats import *
 
@@ -36,10 +38,21 @@ def admin_home(request):
     beginning = datetime(year=2013, month=6, day=26)
     beginning = int(time.mktime(beginning.timetuple()))
 
+    users_today = cache.get('users_today', recent_users(long_ago=timedelta(days=0), limit=200))
+    users_last_week = cache.get('users_last_week', recent_users(long_ago=timedelta(days=7), limit=50))
+    #most_active_users = cache.get('most_active_users', logs_per_user(limit=100))
+
+    users_today_timeout = 3600
+    users_last_week_timeout = 60*60*6 # refresh every 6 hrs
+    #most_active_users_timeout = 60*60*6*24 # refresh every 24 hours
+
+    # cache.set('users_today', users_today, users_today_timeout)
+    cache.set('users_last_week', users_last_week, users_last_week_timeout)
+
     # active users
-    page_context["users_today"] = recent_users(long_ago=timedelta(days=1), limit=20)
-    page_context["users_last_week"] = recent_users(long_ago=timedelta(days=7), limit=50)
-    page_context["most_active_users"] = logs_per_user(limit=100)
+    page_context["users_today"] = users_today
+    page_context["users_last_week"] = users_last_week
+    #page_context["most_active_users"] = most_active_users
     page_context['active_users'] = active_users_json(request, beginning, now, 'day').content
     page_context['user_signups_cumulative'] = user_signups_cumulative_json(request, beginning, now, 'day').content
     page_context['user_signups'] = user_signups_json(request).content
@@ -52,6 +65,16 @@ def admin_home(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+def get_snapshots(request, app_id):
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
+    snapshots = AppstateSnapshot.filter(app=app).order_by('snapshot_date')
+    page_context = {}
+    page_context["snapshots"] = snapshots
+    return render(request, 'admin/snapshots.html')
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def admin_customers(request):
     page_context = {}
     page_context["customers"] = Customer.objects.all()
@@ -59,9 +82,25 @@ def admin_customers(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+def admin_add_contactlog(request, customer_id):
+    return HttpResponse(json.dumps("OK"), mimetype="application/json")
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
+    users_all = User.objects.order_by('-id')
+    paginator = Paginator(users_all, 100)
+    page = request.GET.get('page')
+    try:
+        users = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
     page_context = {}
-    page_context["users"] = User.objects.all()
+    page_context["users"] = users
     return render(request, 'admin/users.html', page_context)
 
 @login_required
@@ -69,8 +108,18 @@ def admin_users(request):
 def admin_user(request, user_id):
     user_id = long(user_id)
     user = get_object_or_404(User, id=user_id)
-    logs = LogAnything.objects.filter(user_id=user_id)
+    logs_all = LogAnything.objects.filter(user_id=user_id).order_by('-id')
     apps = App.objects.filter(owner=user_id)
+    paginator = Paginator(logs_all, 100)
+    page = request.GET.get('page')
+    try:
+        logs = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        logs = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        logs = paginator.page(paginator.num_pages)
     page_context = {}
     page_context["user"] = user
     page_context["apps"] = apps
@@ -82,8 +131,19 @@ def admin_user(request, user_id):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_apps(request):
+    apps_all = App.objects.order_by('-id')
+    paginator = Paginator(apps_all, 100)
+    page = request.GET.get('page')
+    try:
+        apps = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        apps = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        apps = paginator.page(paginator.num_pages)
     page_context = {}
-    page_context["apps"] = App.objects.all()
+    page_context["apps"] = apps
     return render(request, 'admin/apps.html', page_context)
 
 @login_required
@@ -91,12 +151,46 @@ def admin_apps(request):
 def admin_app(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
-    logs = LogAnything.objects.filter(user_id=app.owner.id, app_id=app_id)
+    logs_all = LogAnything.objects.filter(user_id=app.owner.id, app_id=app_id).order_by('-id')
+    paginator = Paginator(logs_all, 100)
+    page = request.GET.get('page')
+    try:
+        logs = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        logs = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        logs = paginator.page(paginator.num_pages)
     page_context = {}
     page_context["app"] = app
     page_context["app_id"] = app_id
     page_context["app_logs"] = logs
     return render(request, 'admin/app.html', page_context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_app_snaps(request, app_id):
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
+    snaps_all = AppstateSnapshot.objects.filter(app=app).order_by('-id')
+    paginator = Paginator(snaps_all, 20)
+    page = request.GET.get('page')
+    try:
+        snaps = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        snaps = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        snaps = paginator.page(paginator.num_pages)
+    page_context = {}
+    page_context["app"] = app
+    page_context["app_id"] = app_id
+    page_context["snaps"] = snaps
+    return render(request, 'admin/app-snaps.html', page_context)
+
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -239,7 +333,13 @@ def active_users_json(request, t_start, t_end, t_delta):
     tempEnd = tempStart + delta
     data = {}
     while tempEnd < end:
-        data[tempStart.strftime("%m/%d/%y")] = num_active_users(tempStart, tempEnd)
+        key = tempStart.strftime("%m/%d/%y")
+        if tempEnd < datetime.now() - timedelta(days=7):
+            result = cache.get('num_active_users_'+key, num_active_users(tempStart, tempEnd))
+        else:
+            result = num_active_users(tempStart, tempEnd)
+            cache.set('num_active_users_'+key, result)
+        data[key] = result
         tempStart = tempEnd
         tempEnd = tempEnd + delta
     return HttpResponse(json.dumps(data), mimetype="application/json")
@@ -269,9 +369,13 @@ def recent_users(long_ago=timedelta(days=1), limit=10):
 
 # Top [limit] users with most page visits
 def logs_per_user(limit=10):
-    users = LogAnything.objects\
+    try:
+        users = LogAnything.objects\
                 .exclude(user_id=None)\
                 .values_list('user_id', flat=True).distinct()
+    except:
+        users = None
+
     result = []
     for user_id in users:
         user = User.objects.get(id=long(user_id))

@@ -23,9 +23,8 @@
 api_key: etouje3xl27v
 scope: r_fullprofile r_emailaddress
 </script>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home3.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
 {% if DEBUG %}
-<link rel="stylesheet/less" href="{{ STATIC_URL }}css/app/editor/editor.less">
 <script>
 less = {
   env: 'development',
@@ -35,7 +34,6 @@ less = {
 </script>
 <script src="{{ STATIC_URL }}js/libs/less.min.js" type="text/javascript"></script>
 {% else %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/app/editor/editor.css">
 {% endif %}
 {% block css %}
 {% endblock %}

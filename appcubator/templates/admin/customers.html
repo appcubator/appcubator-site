@@ -8,11 +8,8 @@
         <th data-sort-type="number">Customer ID</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Company</th>
-        <th>Consulting</th>
         <th>Extra Info</th>
         <th>Project Description</th>
-        <th>Sent Welcome</th>
       </tr>
     </thead>
     <tbody>
@@ -21,16 +18,15 @@
         <td>{{ customer.pk }}</td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
-        <td>{{ customer.company }}</td>
-        <td>{{ customer.consulting }}</td>
-        <td> <a href="#" class="detailed-info" data-placement="bottom" data-toggle="popover" title="" data-content="{{ customer.extra_info }}" data-original-title="Extra Info">Click to see</a></td>
-        <td>{{ customer.project_description }}</td>
         <td>
-            {% if customer.sent_welcome_email %} Sent
-            {% else %}
-             <a href="#invitation-modal-{{ customer.pk }}" role="button" class="btn" data-toggle="modal">Send Invitation</a>
-            {% endif %}
+          {{ customer.extra_info }}
+          <br>
+          <form action='stay/up/to/get/lucky/customers/{{customer.pk}}/add_contact_log/' method="POST">
+            <input type="text" placeholder="note">
+            <input type="submit" class="btn" value="Contacted">
+          </form>
         </td>
+        <td>{{ customer.project_description }}</td>
         <div id="invitation-modal-{{ customer.pk }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

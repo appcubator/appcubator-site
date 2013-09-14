@@ -46,11 +46,11 @@
 <section id="app-logs">
     <h3>User Logs</h3>
       <div class="pagination">
-        {% if app_logs.has_previous %}
-          <a class="btn" href="?page={{ app_logs.previous_page_number }}">Previous</a>
+        {% if snaps.has_previous %}
+          <a class="btn" href="?page={{ snaps.previous_page_number }}">Previous</a>
         {% endif %}
-        {% if app_logs.has_next %}
-          <a class="btn pull-right" href="?page={{ app_logs.next_page_number }}">Next</a>
+        {% if snaps.has_next %}
+          <a class="btn pull-right" href="?page={{ snaps.next_page_number }}">Next</a>
         {% endif %}
       </div>
     <table id="logs" class="table table-striped table-hover table-bordered">
@@ -58,17 +58,15 @@
         <tr>
           <th data-sort-type="number">App ID</th>
           <th data-sort-type="timestamp">Timestamp</th>
-          <th>Log Type</th>
-          <th>Log Data</th>
+          <th>Snap</th>
         </tr>
       </thead>
       <tbody>
-        {% for log in app_logs %}
+        {% for snap in snaps %}
         <tr>
-          <td class="span1">{{ log.app_id }}</td>
-          <td class="span2">{{ log.timestamp }}</td>
-          <td class="span2">{{ log.name }}</td>
-          <td class="span7">{{ log.data }}</td>
+          <td class="span1">{{ snap.app_id }}</td>
+          <td class="span2">{{ snap.snapshot_date }}</td>
+          <td class="span2">{{ snap.state_json }}</td>
         </tr>
         {% endfor %}
       </tbody>
