@@ -7,8 +7,9 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.contrib.auth.models import User
+
 from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, Customer, ExtraUserData, InvitationKeys
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Q
 from email.sendgrid_email import send_email
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
@@ -80,6 +81,17 @@ def admin_customers(request):
     page_context["customers"] = Customer.objects.all()
     return render(request, 'admin/customers.html', page_context)
 
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_customers_search(request):
+    query = request.GET['q']
+    page_context = {}
+    page_context["customers"] = Customer.objects.filter(Q(name__icontains=query)|Q(email__icontains=query))
+
+    return render(request, 'admin/customers.html', page_context)
+
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_add_contactlog(request, customer_id):
@@ -90,7 +102,6 @@ def admin_add_contactlog(request, customer_id):
     if str_info == "":
         str_info = "[]"
 
-    print str_info
     contact_list = simplejson.loads(str_info)
     
     if contact_list == None or contact_list == "":
