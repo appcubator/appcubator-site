@@ -218,13 +218,9 @@ define(function(require, exports, module) {
             var before_deploy = new Date().getTime(); // global, b/c accessed in an ajax handler
             v1.disableSave = true;
 
-            console.log("in deploy");
-
             var successHandler = function(data, callback){
-                console.log("in success handler");
                 v1.whenDeployed(function() {
                     callback.call();
-                    console.log("in when deployed");
                     new DeployView(data);
                     util.log_to_server('deployed app', {
                         status: 'success',
@@ -232,21 +228,16 @@ define(function(require, exports, module) {
                     }, appId);
                     self.trigger('deployed');
                 });
-                console.log("called callback");
                 return data;
             };
 
             var jqxhrToJson = function(jqxhr){
-                console.log("in jqxhr i got this data");
-                console.log(jqxhr);
                 var data = {};
                 try {
                     data = JSON.parse(jqxhr.responseText);
                 } catch (e) {
-                    data.errors = ["JSON response from server failed to parse"];
+                    data.errors = ["JSON response from server failed to parse", jqxhr.responseText];
                 }
-                console.log("in jqxhr i return this data");
-                console.log(data);
                 return data;
             };
 
@@ -290,7 +281,7 @@ define(function(require, exports, module) {
             };
             var hardErrorHandler = function(data){
                 var content = {};
-                if (DEBUG) content.text = data.responseText;
+                if (DEBUG) content.text = data.errors;
                 else content.text = "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon.";
                 new ErrorDialogueView(content);
                 util.log_to_server('deployed app', {
@@ -303,13 +294,9 @@ define(function(require, exports, module) {
 
             // compose this w the other callbacks
             var completeCallback = function(data) {
-                console.log("in complete callback i got this data");
-                console.log(data);
                 v1.disableSave = false;
                 isDeployed = true;
                 data.deploy_time = (new Date().getTime() - before_deploy) / 1000;
-                console.log("in complete callback i return this data");
-                console.log(data);
                 return data;
             };
 
@@ -317,10 +304,28 @@ define(function(require, exports, module) {
                 type: "POST",
                 url: '/app/' + appId + '/deploy/',
                 statusCode: {
-                    200: _.compose(completeCallback, function(data){ return successHandler(data, callback); }),
-                    400: _.compose(jqxhrToJson, completeCallback, softErrorHandler, callback),
-                    409: _.compose(jqxhrToJson, completeCallback, mergeConflictHandler, callback),
-                    500: _.compose(callback, hardErrorHandler, completeCallback),
+                    200: function(data){
+                        data = completeCallback(data);
+                        data = successHandler(data, callback);
+                    },
+                    400: function(jqxhr){
+                        var data = jqxhrToJson(jqxhr);
+                        data = completeCallback(data);
+                        data = softErrorHandler(data);
+                        data = callback(data);
+                    },
+                    409: function(jqxhr){
+                        var data = jqxhrToJson(jqxhr);
+                        data = completeCallback(data);
+                        data = mergeConflictHandler(data);
+                        data = callback(data);
+                    },
+                    500: function(jqxhr){
+                        var data = jqxhrToJson(jqxhr);
+                        data = completeCallback(data);
+                        data = hardErrorHandler(data);
+                        data = callback(data);
+                    },
                 },
                 dataType: "JSON"
             });
