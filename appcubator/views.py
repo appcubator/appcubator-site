@@ -29,12 +29,10 @@ from payments.views import subscribe
 
 import requests
 import traceback
-import datetime
 import os, os.path
 join = os.path.join
 import string
 import nltk
-import json
 import re
 from datetime import datetime
 
@@ -647,17 +645,21 @@ def app_zip(request, app_id):
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
 
-    try:
-        a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
-    except analyzer.UserInputError, e:
-        d = e.to_dict()
-        return JsonResponse(d, status=400)
+    # AJAX this route to do validate (returns 200 or 409)
+    if request.is_ajax():
+        try:
+            a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
+        except analyzer.UserInputError, e:
+            d = e.to_dict()
+            return JsonResponse(d, status=400)
+        return JsonResponse({})
 
-    zip_bytes = app.zip_bytes()
-    response = HttpResponse(zip_bytes, content_type="application/octet-stream")
-    response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
-    return response
-
+    # browser GET this route to download the file
+    else:
+        zip_bytes = app.zip_bytes()
+        response = HttpResponse(zip_bytes, content_type="application/octet-stream")
+        response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
+        return response
 
 
 @login_required
