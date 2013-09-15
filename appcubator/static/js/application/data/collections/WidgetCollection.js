@@ -192,6 +192,7 @@ function(WidgetModel,
         var moneyFieldName = moneyFieldM.get('name');
 
         widget.data.container_info.amount = editOn + '.' + moneyFieldName;
+        widget.data.content = "Buy for {{" + widget.data.container_info.amount +"}}";
 
         var widgetContainerModel = new WidgetContainerModel(widget);
 
