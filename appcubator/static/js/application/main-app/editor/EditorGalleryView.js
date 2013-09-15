@@ -268,6 +268,9 @@ define([
           id = 'entity-table-' + tableM.cid;
         }
         this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon');
+        
+        if(tableM.hasMoneyField()) { this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", 'Buy '+ tableM.get('name') +' Button', 'money-button-icon'); }
+
         tableM.getFieldsColl().each(function(field) {
           if(field.isRelatedField()) return this.renderRelatedField(field, tableM);
           this.contextEntitySection.addFullWidthItem('context-field-'+tableId+'-'+field.cid, 'context-entity', tableName+' '+field.get('name'), 'plus-icon');
