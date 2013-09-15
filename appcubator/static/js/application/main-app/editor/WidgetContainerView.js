@@ -85,6 +85,14 @@ function( React,
         this.el.appendChild(fbdiv);
       }
 
+      if(this.model.get('data').get('action') == "buy" ) {
+        var buyBtn = document.createElement('div');
+        var info = _.extend(uieState["buttons"][0], { content: 'Buy {{' + this.model.get('data').get('container_info').get('amount') + '}}'});
+        console.log(_.template(Templates.tempNode, { element: info}));
+        buyBtn.innerHTML = _.template(Templates.tempNode, { element: info});
+        this.el.appendChild(buyBtn);
+      }
+
       if(this.model.get('data').get('container_info').get('action') == "videoembed" ) {
         var videoDiv = document.createElement('div');
         var StaticImg = React.createClass({
@@ -100,13 +108,6 @@ function( React,
         var thirdPartyBtn = document.createElement('div');
         thirdPartyBtn.innerHTML = _.template(Templates.thirdPartyLogin, this.model.get('data').toJSON());
         this.el.appendChild(thirdPartyBtn);
-      }
-
-      if(this.model.get('data').get('action') == "buy" ) {
-        var buyBtn = document.createElement('div');
-        var info = _.extend(uieState["buttons"][0], { content: 'Buy {{' + this.model.get('data').get('container_info').get('amount') + '}}'});
-        buyBtn.innerHTML = _.template(Templates.tempNode, { element: info});
-        this.el.appendChild(buyBtn);
       }
 
       this.renderElements();

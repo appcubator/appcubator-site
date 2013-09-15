@@ -195,6 +195,10 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                     this.get('data').has('htmlC')) return true;
             },
 
+            isBuyButton: function() {
+                return this.get('type') === "buybutton";
+            },
+
             toJSON: function() {
                 var json = _.clone(this.attributes);
                 json = _.omit(json, 'selected', 'deletable', 'context');
