@@ -269,7 +269,7 @@ define([
         }
         this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') +' Edit Form', 'create-form-icon');
         
-        if(tableM.hasMoneyField()) { this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", 'Buy '+ tableM.get('name') +' Button', 'money-button-icon'); }
+        if(tableM.hasMoneyField()) { this.contextEntitySection.addFullWidthItem(id, "entity-buy-button", 'Buy '+ tableM.get('name') +' Button', 'money-button-icon'); }
 
         tableM.getFieldsColl().each(function(field) {
           if(field.isRelatedField()) return this.renderRelatedField(field, tableM);
@@ -366,6 +366,8 @@ define([
           return this.createCreateForm(layout, id);
         case "entity-edit-form":
           return this.createEditForm(layout, id);
+        case "entity-buy-button":
+          return this.createBuyButton(layout, id);
         case "entity-table":
           return this.createEntityTable(layout, id);
         case "entity-list":
@@ -493,6 +495,15 @@ define([
       }
 
       return this.widgetsCollection.createEditForm(layout, entity, editOn);
+    },
+
+    createBuyButton: function(layout, id) {
+      var entityType = String(id).replace('entity-','');
+      var entity = {};
+      entity = v1State.get('tables').get(cid);
+      buyOn = "Page." + entity.get('name');
+
+      return this.widgetsCollection.createBuyButton(layout, entity, buyOn);
     },
 
     createEntityTable: function(layout, id) {

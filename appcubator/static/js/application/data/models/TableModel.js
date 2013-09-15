@@ -59,6 +59,17 @@ define([
     getRelationalFields: function() {
       var relationalFields = this.get('fields').filter(function(field) { return field.isRelatedField(); });
       return relationalFields;
+    },
+
+    hasMoneyField: function() {
+      var hasMoneyField = false;
+      this.getFieldsColl().each(function(_fieldM) {
+        if(_fieldM.get('type') == "money") {
+          hasMoneyField = true;
+          return;
+        }
+      }, this);
+      return hasMoneyField;
     }
   });
 
