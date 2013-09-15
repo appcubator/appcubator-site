@@ -281,7 +281,7 @@ define(function(require, exports, module) {
             };
             var hardErrorHandler = function(data){
                 var content = {};
-                if (DEBUG) content.text = data.errors;
+                if (DEBUG) content.text = data.responseText;
                 else content.text = "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon.";
                 new ErrorDialogueView(content);
                 util.log_to_server('deployed app', {
