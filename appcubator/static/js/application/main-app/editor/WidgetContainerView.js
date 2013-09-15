@@ -102,6 +102,13 @@ function( React,
         this.el.appendChild(thirdPartyBtn);
       }
 
+      if(this.model.get('data').get('action') == "buy" ) {
+        var buyBtn = document.createElement('div');
+        var info = _.extend(uieState["buttons"][0], { content: 'Buy {{' + this.model.get('data').get('container_info').get('amount') + '}}'});
+        buyBtn.innerHTML = _.template(Templates.tempNode, { element: info});
+        this.el.appendChild(buyBtn);
+      }
+
       this.renderElements();
 
       return this;

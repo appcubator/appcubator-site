@@ -180,19 +180,21 @@ function(WidgetModel,
 
       createBuyButton: function(layout, entity, editOn) {
         var widget = {};
-        widget.type = "form";
-        widget.layout = layout;
+        widget.type = "buybutton";
 
         widget.data = {};
+        widget.data.action = "buy";
+        widget.data.nodeType = "buybutton";
         widget.data.container_info = {};
-        widget.data.container_info.entity = entity;
-        widget.data.container_info.form = {};
-        widget.data.container_info.form.action = "buy";
-        widget.data.container_info.form.editOn = editOn;
-        widget.data.container_info.form.entity = entity.get('name');
-        widget.data.container_info.form.goto = "internal://Homepage";
+        widget.data.container_info.action = "buy";
+
+        var moneyFieldM = entity.getMoneyField();
+        var moneyFieldName = moneyFieldM.get('name');
+
+        widget.data.container_info.amount = editOn + '.' + moneyFieldName;
 
         var widgetContainerModel = new WidgetContainerModel(widget);
+
         return this.push(widgetContainerModel);
       },
 
