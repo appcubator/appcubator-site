@@ -290,7 +290,7 @@ define(function(require, exports, module) {
             };
             var hardErrorHandler = function(data){
                 var content = {};
-                if (DEBUG) content.text = data.errors;
+                if (DEBUG) content.text = data.responseText;
                 else content.text = "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon.";
                 new ErrorDialogueView(content);
                 util.log_to_server('deployed app', {
@@ -310,7 +310,7 @@ define(function(require, exports, module) {
                 data.deploy_time = (new Date().getTime() - before_deploy) / 1000;
                 console.log("in complete callback i return this data");
                 console.log(data);
-                return data
+                return data;
             };
 
             $.ajax({
@@ -320,7 +320,7 @@ define(function(require, exports, module) {
                     200: _.compose(completeCallback, function(data){ return successHandler(data, callback); }),
                     400: _.compose(jqxhrToJson, completeCallback, softErrorHandler, callback),
                     409: _.compose(jqxhrToJson, completeCallback, mergeConflictHandler, callback),
-                    500: _.compose(jqxhrToJson, completeCallback, hardErrorHandler, callback),
+                    500: _.compose(callback, hardErrorHandler, completeCallback),
                 },
                 dataType: "JSON"
             });
