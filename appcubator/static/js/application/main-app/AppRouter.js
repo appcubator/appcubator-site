@@ -439,9 +439,6 @@ define(function(require, exports, module) {
             });
 
             if (this.view.widgetsCollection) {
-                console.log("paste");
-                console.log(this.view);
-                console.log(this.contents);
                 var coll = this.view.widgetsCollection.add(_.clone(this.contents));
                 if (this.contents.length == 1) {
                     coll.last(function(widgetModel){ widgetModel.trigger('selected'); });
@@ -458,10 +455,7 @@ define(function(require, exports, module) {
                 type: "GET",
                 url: '/app/' + appId + '/deploy/',
                 success: function(data) {
-                    console.log(data);
                     if(data.status !== undefined) {
-                        console.log(data.status);
-                        console.log(data);
                         if (data.status === 0) {
                             // I'll need to figure out a better way soon.
                             // new ErrorDialogueView({text: 'Something is wrong... deployment seems to not have gotten the memo.'});
