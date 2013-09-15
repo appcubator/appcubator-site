@@ -17,6 +17,7 @@ function(AnalyticsView, SimpleModalView, ShareModalView, DeployModalView, AdminP
       'click .feedback'        : 'showFeedback',
       'click #deploy'          : 'deploy',
       'click .browse'          : 'browse',
+      'click .download'        : 'download',
       'click #share'           : 'share',
       'click .edit-btn'        : 'settings'
     },
@@ -62,7 +63,8 @@ function(AnalyticsView, SimpleModalView, ShareModalView, DeployModalView, AdminP
     },
 
     download: function() {
-      new DeployModalView();
+      // new DeployModalView();
+      v1.download();
     },
 
     browse: function() {

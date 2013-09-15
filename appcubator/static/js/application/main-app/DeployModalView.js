@@ -9,6 +9,9 @@ function() {
     className: "deploy-panel",
     width: 600,
     height: 340,
+    padding: 0,
+    title: 'So you think you can code?',
+
     events: {
       'click .download-pane': 'logDownload'
     },
