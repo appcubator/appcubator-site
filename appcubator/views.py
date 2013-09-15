@@ -646,6 +646,13 @@ def app_zip(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
+
+    try:
+        a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
+    except analyzer.UserInputError, e:
+        d = e.to_dict()
+        return JsonResponse(d, status=400)
+
     zip_bytes = app.zip_bytes()
     response = HttpResponse(zip_bytes, content_type="application/octet-stream")
     response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
@@ -664,6 +671,12 @@ def app_deploy(request, app_id):
     if request.method == 'GET':
         return JsonResponse({ 'status': app.get_deployment_status() })
     elif request.method == 'POST':
+
+        try:
+            a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
+        except analyzer.UserInputError, e:
+            d = e.to_dict()
+            return JsonResponse(d, status=400)
 
         result = {}
         result['site_url'] = app.url()
