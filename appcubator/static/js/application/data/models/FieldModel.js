@@ -63,6 +63,16 @@ define(['backbone'], function() {
       "image"  : 'Image',
       "date"   : 'Date',
       "file"   : 'File'
+    },
+
+    validate: function(coll) {
+      var isDupe = coll.any(function(_fieldM) {
+        return _fieldM.get('name') === this.get('name');
+      }, this);
+
+      if(isDupe) { return "Name is not unique."; }
+
+      return true;
     }
   });
 

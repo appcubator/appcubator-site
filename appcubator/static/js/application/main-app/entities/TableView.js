@@ -3,10 +3,11 @@ define([
   'app/entities/UploadExcelView',
   'app/entities/ShowDataView',
   'app/entities/AdminPanelView',
+  'mixins/ErrorDialogueView',
   'app/templates/TableTemplates',
   'prettyCheckable'
 ],
-function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView) {
+function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView, ErrorDialogueView) {
 
   var TableView = Backbone.View.extend({
     el         : null,
@@ -76,6 +77,11 @@ function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView) {
       var name = val;
       if(!name.length) return;
       var newField = new FieldModel({ name: name });
+      var isUnique = newField.validate(this.model.getFieldsColl());
+      if(isUnique !== true) {
+          new ErrorDialogueView({text: 'Field can not be added:' + isUnique });
+          return;
+      }
       this.model.get('fields').push(newField);
     },
 
