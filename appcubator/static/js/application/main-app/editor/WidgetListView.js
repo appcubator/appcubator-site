@@ -97,6 +97,7 @@ define([
                 var listDiv = document.createElement('div');
                 listDiv.className = this.model.get('data').get('class_name');
                 this.listDiv = listDiv;
+                this.editorRow = editorRow;
                 this.listDiv.appendChild(editorRow);
                 this.listDiv.appendChild(this.renderShadowElements());
 
@@ -116,12 +117,19 @@ define([
                     nmrRows = this.model.get('data').get('container_info').get('query').get('numberOfRows') - 1;
                 }
 
-                this.shadowElements.innerHTML = _.template(Templates.listNode, {
-                    layout: row.get('layout'),
-                    uielements: uielements,
-                    isListOrGrid: row.get('isListOrGrid'),
-                    nmrRows: nmrRows
-                });
+                // this.shadowElements.innerHTML = _.template(Templates.listNode, {
+                //     layout: row.get('layout'),
+                //     uielements: uielements,
+                //     isListOrGrid: row.get('isListOrGrid'),
+                //     nmrRows: nmrRows
+                // });
+                this.shadowElements.innerHTML = '';
+                for (var ii = 0; ii < nmrRows; ii++) {
+                    var node = this.editorRow.cloneNode(true);
+                    node.style.position = 'relative';
+                    $(node).removeClass('highlighted');
+                    this.shadowElements.appendChild(node);
+                }
 
                 if (this.editMode) {
                     $('.fdededfcbcbcd .shadow-x').addClass('trans');
