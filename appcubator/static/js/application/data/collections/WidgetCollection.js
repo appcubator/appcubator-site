@@ -108,6 +108,7 @@ function(WidgetModel,
 
         widget.data = {};
         widget.data.nodeType = type;
+        console.log(type);
         widget.data = _.extend(widget.data, uieState[type][0]);
 
         if(content_ops.content) widget.data.content =  content_ops.content;

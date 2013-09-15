@@ -601,6 +601,7 @@ define([
         case "text":
         case "date":
         case "number":
+        case "money":
         case "email":
           return "texts";
         case "image":
