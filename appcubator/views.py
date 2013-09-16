@@ -25,7 +25,7 @@ from django.conf import settings
 import app_builder.analyzer as analyzer
 from app_builder.analyzer import App as AnalyzedApp
 
-from payments.views import subscribe
+from payments.views import subscribe, is_stripe_customer
 
 import requests
 import traceback
@@ -66,7 +66,7 @@ for templname in APP_TEMPLATES:
 def app_welcome(request):
     if request.user.extradata.noob:
         # case for turning noob mode off
-        if request.user.apps.count() > 0:
+        if request.user.apps.count() > 0 and is_stripe_customer(request.user):
             e = request.user.extradata
             e.noob = 0
             e.save()
