@@ -34,7 +34,7 @@ function() {
     },
 
     close: function() {
-      this.g_js.parentNode.removeChild(this.g_js);
+      if(this.g_js) { this.g_js.parentNode.removeChild(this.g_js); }
       DeployView.__super__.close.call(this);
     }
   });
