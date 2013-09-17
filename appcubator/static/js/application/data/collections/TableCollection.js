@@ -5,6 +5,7 @@ define([
 
         var TableCollection = Backbone.Collection.extend({
             model: TableModel,
+            uniqueKeys: ["name"],
 
             createTableWithName: function(nameStr) {
                 return this.push({
@@ -48,18 +49,6 @@ define([
                     if (table.get('name') === name) isUnique = false;
                 });
                 return isUnique;
-            },
-
-            add: function(tableM) {
-                var isDupe = null;
-                var name = tableM.attributes? tableM.get('name') : tableM.name;
-                this.each(function(_tableM) {
-                    if(_tableM.get('name') === name) {
-                        isDupe = _tableM;
-                        return;
-                    }
-                });
-                return (isDupe || Backbone.Collection.prototype.add.call(this, tableM));
             }
 
         });

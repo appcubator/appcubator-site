@@ -5,6 +5,7 @@ function(PageModel) {
 
   var PageCollection = Backbone.Collection.extend({
     model : PageModel,
+    uniqueKeys: ["name"],
 
     getContextFreePages: function() {
       var pagesList = _(this.getContextFreePageModels()).map(function(pageM) { return pageM.get('name'); });
@@ -49,15 +50,8 @@ function(PageModel) {
       _.each(arr, function(pageM) {
         this.remove(pageM);
       }, this);
-    },
-
-    isNameUnique: function(pageName) {
-      isUnique = true;
-      this.each(function(page) {
-        if(page.get('name') === pageName) isUnique = false;
-      });
-      return isUnique;
     }
+
   });
 
   return PageCollection;
