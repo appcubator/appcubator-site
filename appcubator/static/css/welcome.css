@@ -292,6 +292,10 @@ a.large-link {
   background-repeat: no-repeat;
 }
 
+.right-menu .white-border span {
+  vertical-align: top;
+}
+
 .right-menu .white-border .icon.resources {
   background-position: -45px 7px;
 }
