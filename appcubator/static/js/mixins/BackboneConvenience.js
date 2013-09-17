@@ -99,7 +99,8 @@ define([
             }
 
             models = _.difference(models, dupes);
-            return this.set(_.difference(models, dupes), _.defaults(options || {}, addOptions));
+
+            return this.set(models, _.defaults(options || {}, addOptions));
         };
 
         Backbone.Collection.prototype.push = function(model, options) {

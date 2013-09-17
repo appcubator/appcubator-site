@@ -106,7 +106,11 @@ function (AppModel,
 
     v1State = new Backbone.Model();
     v1State = new AppModel(appState);
-    v1State.lazySet('pages', new PageCollection(appState.pages||[]));
+    console.log(new PageCollection(appState.pages||[]));
+
+    console.log('%c Oh my heavens! ', 'background: #222; color: #bada55', 'more text');
+    console.log(appState.pages);
+    v1State.set('pages', new PageCollection(appState.pages||[]));
     v1State.lazySet('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
 
     v1State.on('error', function(message) {
