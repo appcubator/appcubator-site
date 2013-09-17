@@ -65,7 +65,9 @@ define(['backbone'], function() {
       "file"   : 'File'
     },
 
-    validate: function(coll) {
+    validate: function() {
+      var coll = this.collection;
+      if(!coll) return;
       var isDupe = coll.any(function(_fieldM) {
         return _fieldM.get('name') === this.get('name');
       }, this);
