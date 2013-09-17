@@ -10,7 +10,7 @@ define([
                 this.set('elements', new WidgetCollection(bone.elements||[]));
             },
 
-            split: function() {
+            splitHorizontally: function() {
 
                 var width = this.getWidth();
                 if(width == 1) return;

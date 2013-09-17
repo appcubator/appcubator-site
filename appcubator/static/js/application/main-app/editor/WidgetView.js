@@ -128,6 +128,8 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
         select: function(e) {
             if (!this.editMode) {
                 this.model.trigger('selected');
+                v1State.getCurrentPage().trigger('selected', this.model);
+
                 this.el.style.zIndex = 2003;
                 if (this.model.isBgElement()) this.el.style.zIndex = 1000;
             }
@@ -227,6 +229,7 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
             if (this.model.isBgElement()) return;
             this.hovered = true;
             this.model.trigger('hovered');
+            v1State.getCurrentPage().trigger('hovered', this.model);
         },
 
         unhovered: function(e) {

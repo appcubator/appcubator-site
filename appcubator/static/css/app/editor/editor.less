@@ -2761,10 +2761,29 @@ ul.template-icons {
 }
 
 .column-view {
+  position: relative;
   background-color: #ddd;
   height: 100%;
   border-left: 1px solid #000;
   min-height: 60px !important;
+}
+
+.column-view:hover .column-controllers {
+  display: inline-block;
+}
+
+.column-controllers {
+  position: absolute;
+  top: 100%;
+  display: inline-block;
+  background-color: red;
+  z-index: 2000;
+  display: none;
+}
+
+.column-controllers div {
+  display: inline-block;
+  text-align: center;
 }
 
 

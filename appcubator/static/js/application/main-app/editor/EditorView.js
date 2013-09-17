@@ -17,6 +17,7 @@ define([
         'tutorial/TutorialView',
         'app/DeployView',
         'app/RedoController',
+        'editor/WidgetSelectorView',
         'editor/editor-templates'
     ],
     function(PageModel,
@@ -36,8 +37,10 @@ define([
         ToolBarView,
         TutorialView,
         DeployView,
-        RedoController) {
+        RedoController,
+        WidgetSelectorView) {
         
+
         var EditorView = Backbone.View.extend({
             className: 'editor-page',
             css: "bootstrap-editor",
@@ -70,6 +73,7 @@ define([
                 this.widgetsManager = new WidgetsManagerView(this.rowCollection);
                 this.guides = new GuideView(this.widgetsCollection);
                 this.toolBar = new ToolBarView();
+                this.widgetSelectorView = new WidgetSelectorView(this.model);
 
                 //redoController = new RedoController();
 
@@ -93,7 +97,8 @@ define([
                     this.guides,
                     this.toolBar,
                     this.navbar,
-                    this.footer
+                    this.footer,
+                    this.widgetSelectorView
                 ];
 
                 this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
@@ -121,6 +126,9 @@ define([
                 this.navbar.setElement('#navbar').render();
                 this.footer.setElement('#footer').render();
                 //this.guides.setElement($('#elements-container')).render();
+                
+                var rowsContainer = document.getElementById('full-container');
+                this.widgetSelectorView.setElement(rowsContainer).render();
 
                 //$('#elements-container').append(this.marqueeView.el);
 

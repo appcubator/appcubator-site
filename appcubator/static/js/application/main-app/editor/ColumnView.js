@@ -16,7 +16,8 @@ define(function(require, exports, module) {
             width: 12,
 
             events: {
-                'click': 'splitColumn',
+                'click .horizontal-divide': 'splitColumnHorizontally',
+                'click .vertical-divide'  : 'splitColumnVertically',
                 'mouseover': 'hovered',
                 'mousemove': 'hovered',
                 'mouseout': 'unhovered'
@@ -32,6 +33,10 @@ define(function(require, exports, module) {
 
             render: function() {
                 this.el.className += (' span' + this.model.getWidth());
+                this.controllers = document.createElement('div');
+                this.controllers.className = 'column-controllers';
+                this.controllers.innerHTML = '<div class="span2 hi2 vertical-divide">|</div><div class="span2 hi2 horizontal-divide">-</div>';
+                this.el.appendChild(this.controllers);
                 return this;
             },
 
@@ -40,8 +45,12 @@ define(function(require, exports, module) {
                 this.el.className = (this.className + ' span' + this.model.getWidth());
             },
 
-            splitColumn: function() {
-                this.model.split();
+            splitColumnHorizontally: function() {
+                this.model.splitHorizontally();
+            },
+
+            splitColumnVertically: function() {
+                this.model.splitVertically();
             },
 
             hovered: function() {

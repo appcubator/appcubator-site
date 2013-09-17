@@ -22,19 +22,31 @@ function() {
       'mouseup #select-div'  : 'mouseup'
     },
 
-    initialize: function(widgetsCollection){
+    initialize: function(pageM){
       _.bindAll(this);
 
       var self = this;
 
-      this.widgetsCollection    = widgetsCollection;
-      this.listenTo(this.widgetsCollection, 'add', this.bindWidget, true);
+      //this.widgetsCollection    = widgetsCollection;
+      //this.listenTo(this.widgetsCollection, 'add', this.bindWidget, true);
       var WidgetEditorView = require('editor/WidgetEditorView');
       this.widgetEditorView = new WidgetEditorView();
       this.widgetEditorView.isMobile = self.isMobile;
 
-      this.widgetsCollection.each(function(widget) { self.bindWidget(widget, false); });
+      //this.widgetsCollection.each(function(widget) { self.bindWidget(widget, false); });
       this.doKeyBindings();
+
+      this.listenTo(pageM, 'hovered', function(widget) {
+        console.log(widget);
+        self.widgetHover(widget);
+      });
+
+      this.listenTo(pageM, 'selected', function(widget) {
+        if(self.selectedEl && widget && self.selectedEl.cid == widget.cid) return;
+        self.widgetUnhover(widget);
+        self.newSelected(widget);
+      });
+
     },
 
     mousedown: function(e) { mouseDispatcher.isMousedownActive = true; },
@@ -93,19 +105,19 @@ function() {
         self.deselect();
       });
 
-      this.listenTo(widget, 'hovered', function() {
-        self.widgetHover(widget);
-      });
+      // this.listenTo(widget, 'hovered', function() {
+      //   self.widgetHover(widget);
+      // });
 
       this.listenTo(widget, 'unhovered', function() {
         self.widgetUnhover(widget);
       });
 
-      this.listenTo(widget, 'selected', function() {
-        if(self.selectedEl && widget && self.selectedEl.cid == widget.cid) return;
-        self.widgetUnhover(widget);
-        self.newSelected(widget);
-      });
+      // this.listenTo(widget, 'selected', function() {
+      //   if(self.selectedEl && widget && self.selectedEl.cid == widget.cid) return;
+      //   self.widgetUnhover(widget);
+      //   self.newSelected(widget);
+      // });
 
       this.listenTo(widget, 'deselect', function() {
         self.deselect();
