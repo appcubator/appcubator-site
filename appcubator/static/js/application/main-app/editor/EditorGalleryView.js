@@ -424,32 +424,32 @@ define([
             },
 
             createLocalLoginForm: function(layout, id) {
-                return this.widgetsCollection.createLoginForm(layout);
+                return new WidgetCollection().createLoginForm(layout);
             },
 
             createLocalSignupForm: function(layout, id) {
                 var signupRole = id.replace('entity-user-', '');
-                return this.widgetsCollection.createSignupForm(layout, signupRole);
+                return new WidgetCollection().createSignupForm(layout, signupRole);
             },
 
             createThirdPartyLogin: function(layout, id) {
                 var provider = String(id).replace('entity-user-', '').replace('_', ' ');
-                return this.widgetsCollection.createThirdPartyLogin(layout, provider);
+                return new WidgetCollection().createThirdPartyLogin(layout, provider);
             },
 
             createFacebookSignup: function(layout, id) {
                 var signupRole = id.replace('entity-user-', '');
-                return this.widgetsCollection.createThirdPartySignup(layout, "facebook", signupRole);
+                return new WidgetCollection().createThirdPartySignup(layout, "facebook", signupRole);
             },
 
             createTwitterSigup: function(layout, id) {
                 var signupRole = id.replace('entity-user-', '');
-                return this.widgetsCollection.createThirdPartySignup(layout, "twitter", signupRole);
+                return new WidgetCollection().createThirdPartySignup(layout, "twitter", signupRole);
             },
 
             createLinkedInSignup: function(layout, id) {
                 var signupRole = id.replace('entity-user-', '');
-                return this.widgetsCollection.createThirdPartySignup(layout, "linkedin", signupRole);
+                return new WidgetCollection().createThirdPartySignup(layout, "linkedin", signupRole);
             },
 
             createContextEntityNode: function(layout, id) {
@@ -471,7 +471,7 @@ define([
                     content_ops.content = '{{' + editorContext + '.' + entityM.get('name') + '.' + fieldM.get('name') + '}}';
                 }
 
-                return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
+                return new WidgetCollection().createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
             },
 
             createNestedContextEntityNode: function(layout, id) {
@@ -497,13 +497,13 @@ define([
                     content_ops.content = '{{' + editorContext + '.' + entity.get('name') + '.' + field.get('name') + '.' + nested_field.get('name') + '}}';
                 }
 
-                return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
+                return new WidgetCollection().createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
             },
 
             createCreateForm: function(layout, id) {
                 var cid = String(id).replace('entity-', '');
                 var entity = v1State.get('tables').get(cid);
-                return this.widgetsCollection.createCreateForm(layout, entity);
+                return new WidgetCollection().createCreateForm(layout, entity);
             },
 
             createEditForm: function(layout, id) {
@@ -523,31 +523,31 @@ define([
                     editOn = "Page." + entity.get('name');
                 }
 
-                return this.widgetsCollection.createEditForm(layout, entity, editOn);
+                return new WidgetCollection().createEditForm(layout, entity, editOn);
             },
 
             createEntityTable: function(layout, id) {
                 var cid = String(id).replace('entity-', '');
                 var entity = v1State.getTableModelWithCid(cid);
-                return this.widgetsCollection.createTable(layout, entity);
+                return new WidgetCollection().createTable(layout, entity);
             },
 
             createEntityList: function(layout, id) {
                 var cid = String(id).replace('entity-', '');
                 var entity = v1State.getTableModelWithCid(cid);
-                return this.widgetsCollection.createList(layout, entity);
+                return new WidgetCollection().createList(layout, entity);
             },
 
             createSearchBox: function(layout, id) {
                 var cid = String(id).replace('entity-', '');
                 var entity = v1State.getTableModelWithCid(cid);
-                return this.widgetsCollection.createSearchbox(layout, entity);
+                return new WidgetCollection().createSearchbox(layout, entity);
             },
 
             createSearchList: function(layout, id) {
                 var cid = String(id).replace('entity-', '');
                 var entity = v1State.getTableModelWithCid(cid);
-                return this.widgetsCollection.createSearchList(layout, entity);
+                return new WidgetCollection().createSearchList(layout, entity);
             },
 
             createCurrentUserNode: function(layout, id) {
@@ -569,7 +569,7 @@ define([
                     content_ops.content = '{{CurrentUser.' + field.get('name') + '}}';
                 }
 
-                return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content_ops);
+                return new WidgetCollection().createNodeWithFieldTypeAndContent(layout, type, content_ops);
             },
 
             createNode: function(layout, id) {
