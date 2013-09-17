@@ -63,19 +63,8 @@ define(['backbone'], function() {
       "image"  : 'Image',
       "date"   : 'Date',
       "file"   : 'File'
-    },
-
-    validate: function() {
-      var coll = this.collection;
-      if(!coll) return;
-      var isDupe = coll.any(function(_fieldM) {
-        return _fieldM.get('name') === this.get('name');
-      }, this);
-
-      if(isDupe) { return "Name is not unique."; }
-
-      return true;
     }
+
   });
 
   return FieldModel;

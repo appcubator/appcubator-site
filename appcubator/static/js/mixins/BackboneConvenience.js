@@ -62,6 +62,7 @@ define([
 
         Backbone.Collection.prototype.add = function(models, options) {
             /* make things validate by default*/
+            models = _.isArray(models)? models : [models];
             options = _.extend({validate: true}, options);
             var dupes = [];
             var addOptions = {add: true, merge: false, remove: false};
@@ -70,28 +71,28 @@ define([
                 if (!_.isArray(models)) models = models ? [models] : [];
                 
                 _.each(models, function(model) {
-                    
                     this.each(function(_model) {
                         var dupe = null;
-
                         _.each(this.uniqueKeys, function(key) {
                             var _modelVal = _model.attributes ? _model.get(key) : _model[key];
                             if(_modelVal === model.get(key)) {
-                                dupe = _modelVal;
+                                dupe = model;
+                                this.trigger('duplicate', key);
                                 return;
                             }
-                        });
+                        }, this);
 
                         if(dupe) {
                             dupes.push(dupe);
                             return;
                         }
-                    });
+                    }, this);
 
                 }, this);
             }
 
-            return this.set(models, _.defaults(options || {}, addOptions));
+            models = _.difference(models, dupes);
+            return this.set(_.difference(models, dupes), _.defaults(options || {}, addOptions));
         };
 
         Backbone.Collection.prototype.push = function(model, options) {
@@ -104,8 +105,8 @@ define([
                         _.each(this.uniqueKeys, function(key) {
 
                             if(_model.get(key) === model.get(key)) {
-                                console.log("dupe");
                                 dupe = _model;
+                                this.trigger('duplicate', key);
                                 return;
                             }
                         }, this);

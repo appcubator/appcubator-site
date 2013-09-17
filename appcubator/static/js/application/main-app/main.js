@@ -109,6 +109,10 @@ function (AppModel,
     v1State.lazySet('pages', new PageCollection(appState.pages||[]));
     v1State.lazySet('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
 
+    v1State.on('error', function(message) {
+      alert(message);
+    });
+
     g_guides = {};
     keyDispatcher  = new KeyDispatcher();
     mouseDispatcher  = new MouseDispatcher();
