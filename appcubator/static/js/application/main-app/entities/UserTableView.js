@@ -3,11 +3,11 @@ define([
         'app/entities/TableView',
         'app/entities/UploadExcelView',
         'app/entities/ShowDataView',
-        'mixins/ErrorDialogueView',
+        'app/SoftErrorView',
         'app/templates/TableTemplates',
         'prettyCheckable'
     ],
-    function(FieldModel, TableView, UploadExcelView, ShowDataView, ErrorDialogueView) {
+    function(FieldModel, TableView, UploadExcelView, ShowDataView, SoftErrorView) {
 
         var UserTableView = TableView.extend({
             el: null,
@@ -25,12 +25,9 @@ define([
 
                 this.tables = v1State.get('tables').pluck('name');
                 this.otherUserRoles = _(v1State.get('users').pluck('name')).without(this.model.get('name'));
-                this.listenTo(this.fieldsCollection, 'duplicate', function(key, val) {
-                    new ErrorDialogueView({
-                        text: "Duplicate entry should not be duplicate. " + key + " of the field should not be the same: " + val
-                    });
-                });
+                this.bindDupeWarning();
             },
+
 
             render: function() {
                 this.el.innerHTML = _.template(TableTemplates.UserTable, this.model.toJSON());

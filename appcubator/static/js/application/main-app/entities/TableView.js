@@ -3,11 +3,11 @@ define([
         'app/entities/UploadExcelView',
         'app/entities/ShowDataView',
         'app/entities/AdminPanelView',
-        'mixins/ErrorDialogueView',
+        'app/SoftErrorView',
         'app/templates/TableTemplates',
         'prettyCheckable'
     ],
-    function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView, ErrorDialogueView) {
+    function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView, SoftErrorView) {
 
         var TableView = Backbone.View.extend({
             el: null,
@@ -44,12 +44,7 @@ define([
                 this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
                 this.userRoles = v1State.get('users').pluck('name');
                 this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));
-
-                this.listenTo(this.fieldsCollection, 'duplicate', function(key, val) {
-                    new ErrorDialogueView({
-                        text: "Duplicate entry should not be duplicate. " + key + " of the field should not be the same: " + val
-                    });
-                });
+                this.bindDupeWarning();
             },
 
             render: function() {
@@ -72,6 +67,15 @@ define([
                         this.appendField(field);
                     }
                 }, this);
+            },
+
+            bindDupeWarning: function() {
+                this.listenTo(this.fieldsCollection, 'duplicate', function(key, val) {
+                    new SoftErrorView({
+                          text: "Duplicate entry should not be duplicate. " + key + " of the field should not be the same: " + val,
+                          path: ""
+                    });
+                });
             },
 
             clickedAddProperty: function(e) {

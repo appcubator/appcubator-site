@@ -4,7 +4,7 @@ define([
         'app/entities/TableView',
         'app/entities/UserTableView',
         'app/entities/ShowDataView',
-        'mixins/ErrorDialogueView',
+        'app/SoftErrorView',
         'app/templates/TableTemplates',
         'prettyCheckable'
     ],
@@ -13,7 +13,7 @@ define([
         TableView,
         UserTableView,
         ShowDataView,
-        ErrorDialogueView) {
+        SoftErrorView) {
 
         var TablesView = Backbone.View.extend({
             el: null,
@@ -34,8 +34,9 @@ define([
 
                 this.listenTo(this.collection, 'add', this.newTable);
                 this.listenTo(this.collection, 'duplicate', function(key) {
-                    new ErrorDialogueView({
-                        text: "Duplicate entry should not be duplicate. " + key + " of the table should not be the same."
+                    new SoftErrorView({
+                        text: "Duplicate entry should not be duplicate. " + key + " of the table should not be the same.",
+                        path: ""
                     });
                 });
             },
