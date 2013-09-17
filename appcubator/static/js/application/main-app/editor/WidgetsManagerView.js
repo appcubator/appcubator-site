@@ -12,6 +12,7 @@ define(function(require, exports, module) {
         CustomWidgetEditorModal = require('editor/CustomWidgetEditorModal'),
         WideRowView = require('editor/WideRowView');
 
+    require('util');
 
 
     var WidgetManagerView = Backbone.View.extend({

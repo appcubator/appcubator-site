@@ -81,32 +81,32 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
 
             this.el.id = 'widget-wrapper-' + this.model.cid;
 
-            this.setTop((this.positionVerticalGrid) * (this.model.get('layout').get('top')));
-            this.setLeft((this.positionHorizontalGrid) * (this.model.get('layout').get('left')));
-            this.setHeight(height * (this.positionVerticalGrid));
+            // this.setTop((this.positionVerticalGrid) * (this.model.get('layout').get('top')));
+            // this.setLeft((this.positionHorizontalGrid) * (this.model.get('layout').get('left')));
+            // this.setHeight(height * (this.positionVerticalGrid));
 
-            if (this.positionHorizontalGrid == 80) this.el.className += " span" + width;
-            else this.setWidth(width * this.positionHorizontalGrid);
+            // if (this.positionHorizontalGrid == 80) this.el.className += " span" + width;
+            // else this.setWidth(width * this.positionHorizontalGrid);
 
-            this.el.style.textAlign = this.model.get('layout').get('alignment');
+            // this.el.style.textAlign = this.model.get('layout').get('alignment');
 
-            if (this.model.get('layout').has('l_padding')) {
-                this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
-            }
+            // if (this.model.get('layout').has('l_padding')) {
+            //     this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
+            // }
 
-            if (this.model.get('layout').has('r_padding')) {
-                this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
-            }
+            // if (this.model.get('layout').has('r_padding')) {
+            //     this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
+            // }
 
-            if (this.model.get('layout').has('t_padding')) {
-                this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
-            }
+            // if (this.model.get('layout').has('t_padding')) {
+            //     this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
+            // }
 
-            if (this.model.get('layout').has('b_padding')) {
-                this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
-            }
+            // if (this.model.get('layout').has('b_padding')) {
+            //     this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
+            // }
 
-            if (this.model.isFullWidth()) this.switchOnFullWidth();
+            // if (this.model.isFullWidth()) this.switchOnFullWidth();
             if (this.model.isBgElement()) this.el.style.zIndex = 999;
         },
 

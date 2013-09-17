@@ -1,11 +1,13 @@
-define(['backbone'],
+define([
+    'collections/WidgetCollection'],
 
-    function() {
+    function(WidgetCollection) {
 
         var ColumnModel = Backbone.Model.extend({
             initialize: function(bone) {
                 //this.rows = new ColumnCollection([]);
                 this.set('width', bone.width||1);
+                this.set('elements', new WidgetCollection(bone.elements||[]));
             },
 
             split: function() {
@@ -19,6 +21,14 @@ define(['backbone'],
                 var json = {};
                 json.width = width;
                 this.collection.push(json);
+            },
+
+            getElements: function() {
+                return this.get('elements');
+            },
+
+            addElement: function(widgetM) {
+                this.get('elements').push(widgetM);
             },
 
             getWidth: function() {

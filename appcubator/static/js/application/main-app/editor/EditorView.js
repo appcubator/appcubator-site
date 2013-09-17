@@ -66,7 +66,7 @@ define([
                 this.rowCollection = this.model.get('rows');
 
                 //this.marqueeView = new MarqueeView();
-                //this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
+                this.galleryEditor = new EditorGalleryView(this.model);
                 this.widgetsManager = new WidgetsManagerView(this.rowCollection);
                 this.guides = new GuideView(this.widgetsCollection);
                 this.toolBar = new ToolBarView();
@@ -101,6 +101,14 @@ define([
                 this.startUIStateUpdater();
             },
 
+            columnHovered: function(model) {
+                this.currentColumn = model;
+            },
+
+            columnUnovered: function() {
+                this.currentColumn = null;
+            },
+
             render: function() {
 
                 if (!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
@@ -108,7 +116,7 @@ define([
                 this.toolBar.setElement(document.getElementById('tool-bar')).render();
                 //this.marqueeView.render();
                 this.renderUrlBar();
-                //this.galleryEditor.render();
+                this.galleryEditor.render();
                 this.widgetsManager.render();
                 this.navbar.setElement('#navbar').render();
                 this.footer.setElement('#footer').render();

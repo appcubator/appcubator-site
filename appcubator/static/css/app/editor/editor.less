@@ -1575,10 +1575,13 @@ a.label:hover,a.badge:hover {
 
 .widget-wrapper {
   z-index: 1001;
-  position: absolute;
+  // position: absolute;
   overflow: visible;
   background-color: rgba(124, 192, 213, 0.0);
   overflow: hidden;
+
+  display: inline-block;
+  border: none;
 
   animation: blurpIn 0.2s linear;
   -webkit-animation: blurpIn 0.2s linear;
@@ -1639,12 +1642,6 @@ a.label:hover,a.badge:hover {
   margin-top: 6px;
   width: 20px;
   z-index: 1002;
-}
-
-.widget-wrapper {
-  display: inline-block;
-  border: none;
-  position: absolute;
 }
 
 /* Element Selector */

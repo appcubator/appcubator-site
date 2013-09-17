@@ -34,7 +34,7 @@ function(WidgetModel,
             widget.data.content = "Sign In w/ " + provider;
             widget.data.userRole = v1State.get('users').first().get('name');
         }
-        return this.push(widgetModel);
+        return widgetModel;
       },
 
       createThirdPartySignup: function(layout, provider, roleStr) {
@@ -57,7 +57,7 @@ function(WidgetModel,
 
         var widgetModel = new WidgetContainerModel(widget);
 
-        return this.push(widgetModel);
+        return widgetModel;
       },
 
       createLoginForm: function(layout, form) {
@@ -98,7 +98,7 @@ function(WidgetModel,
         widget.data.container_info.form.isConstant = true;
 
         var widgetSignupModel = new WidgetContainerModel(widget);
-        return this.push(widgetSignupModel);
+        return widgetSignupModel;
       },
 
       createNodeWithFieldTypeAndContent: function(layout, type, content_ops) {
@@ -115,7 +115,7 @@ function(WidgetModel,
         if(content_ops.src_content) widget.data.content_attribs.src_content = content_ops.src_content;
 
         var widgetModel = new WidgetModel(widget);
-        return this.push(widgetModel);
+        return widgetModel;
       },
 
       createCustomWidget: function(layout) {
@@ -131,7 +131,7 @@ function(WidgetModel,
         widget.data.jsC = null;
 
         var widgetModel = new WidgetModel(widget);
-        return this.push(widgetModel);
+        return widgetModel;
       },
 
       createCreateForm: function(layout, entity) {
@@ -155,7 +155,7 @@ function(WidgetModel,
 
         var widgetContainerModel = new WidgetContainerModel(widget);
         widgetContainerModel.getForm().fillWithProps(entity);
-        return this.push(widgetContainerModel);
+        return widgetContainerModel;
       },
 
       createEditForm: function(layout, entity, editOn) {
@@ -174,7 +174,7 @@ function(WidgetModel,
 
         var widgetContainerModel = new WidgetContainerModel(widget);
         widgetContainerModel.getForm().fillWithEditProps(entity);
-        return this.push(widgetContainerModel);
+        return widgetContainerModel;
       },
 
       createTable: function(layout, entity) {
@@ -189,7 +189,7 @@ function(WidgetModel,
         widget.data.container_info.query = {};
 
         var widgetContainerModel = new WidgetContainerModel(widget);
-        return this.push(widgetContainerModel);
+        return widgetContainerModel;
       },
 
       createList: function(layout, entity) {
