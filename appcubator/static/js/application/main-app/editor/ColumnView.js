@@ -28,6 +28,8 @@ define(function(require, exports, module) {
                 this.model = columnM;
                 this.listenTo(this.model, 'change:width', this.layout);
                 this.listenTo(this.model.getElements(), 'add', this.placeUIElement);
+                //this.listenTo(this.model.getElements(), 'remove', this.removeElement);
+
                 this.subviews = [];
             },
 
@@ -63,6 +65,7 @@ define(function(require, exports, module) {
 
             // this function decides if widget or container
             placeUIElement: function(model, isNew, extraData) {
+
                 if (extraData && extraData.collection) {
                     isNew = false;
                 }

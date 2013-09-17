@@ -28,6 +28,7 @@ define([
             },
 
             addElement: function(widgetM) {
+                widgetM.removeFromCurrentColumn();
                 this.get('elements').push(widgetM);
             },
 

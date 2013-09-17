@@ -102,16 +102,13 @@ define([
                 ];
 
                 this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
+                this.deepListenTo(this.model, 'hovered', this.columnHovered);
 
                 this.startUIStateUpdater();
             },
 
-            columnHovered: function(model) {
-                this.currentColumn = model;
-            },
-
-            columnUnovered: function() {
-                this.currentColumn = null;
+            columnHovered: function(columnM) {
+                this.model.setCurrentColumn(columnM);
             },
 
             render: function() {

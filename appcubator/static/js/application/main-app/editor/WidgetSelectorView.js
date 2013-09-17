@@ -36,15 +36,27 @@ function() {
       //this.widgetsCollection.each(function(widget) { self.bindWidget(widget, false); });
       this.doKeyBindings();
 
-      this.listenTo(pageM, 'hovered', function(widget) {
-        console.log(widget);
-        self.widgetHover(widget);
+      this.listenTo(pageM, 'hovered', function(widgetM) {
+        console.log(widgetM);
+        self.widgetHover(widgetM);
       });
 
-      this.listenTo(pageM, 'selected', function(widget) {
-        if(self.selectedEl && widget && self.selectedEl.cid == widget.cid) return;
-        self.widgetUnhover(widget);
-        self.newSelected(widget);
+      this.listenTo(pageM, 'selected', function(widgetM) {
+        if(self.selectedEl && widgetM && self.selectedEl.cid == widgetM.cid) return;
+        self.widgetUnhover(widgetM);
+        self.newSelected(widgetM);
+      });
+
+      this.listenTo(pageM, 'unhovered', function(widgetM) {
+        self.widgetUnhover(widgetM);
+      });
+
+      this.listenTo(pageM, 'deselect', function() {
+        self.deselect();
+      });
+
+      this.listenTo(pageM, 'editModeOn', function(widgetM) {
+        self.unbindAll(position);
       });
 
     },
@@ -99,19 +111,19 @@ function() {
     },
 
     bindWidget: function(widget, isNew) {
-      var self = this;
+      // var self = this;
 
-      this.listenTo(widget, 'remove', function() {
-        self.deselect();
-      });
+      // this.listenTo(widget, 'remove', function() {
+      //   self.deselect();
+      // });
 
       // this.listenTo(widget, 'hovered', function() {
       //   self.widgetHover(widget);
       // });
 
-      this.listenTo(widget, 'unhovered', function() {
-        self.widgetUnhover(widget);
-      });
+      // this.listenTo(widget, 'unhovered', function() {
+      //   self.widgetUnhover(widget);
+      // });
 
       // this.listenTo(widget, 'selected', function() {
       //   if(self.selectedEl && widget && self.selectedEl.cid == widget.cid) return;
@@ -119,15 +131,15 @@ function() {
       //   self.newSelected(widget);
       // });
 
-      this.listenTo(widget, 'deselect', function() {
-        self.deselect();
-      });
+      // this.listenTo(widget, 'deselect', function() {
+      //   self.deselect();
+      // });
 
-      this.listenTo(widget, 'editModeOn', function(position) {
-        self.unbindAll(position);
-      });
+      // this.listenTo(widget, 'editModeOn', function(position) {
+      //   self.unbindAll(position);
+      // });
 
-      if(isNew) { widget.trigger('selected'); }
+      // if(isNew) { widget.trigger('selected'); }
     },
 
     unbindAll: function(position) {
@@ -163,10 +175,15 @@ function() {
       if(!widgetModel) return;
       $(node).show();
 
-      node.style.width  = ((widgetModel.get('layout').get('width') * 80) + 2) + 'px';
-      node.style.height = ((widgetModel.get('layout').get('height') * 15) + 2) + 'px';
-      node.style.left   = ((widgetModel.get('layout').get('left') * 80) - 1) + 'px';
-      node.style.top    = ((widgetModel.get('layout').get('top') * 15) - 1) + 'px';
+      var widgetNode = document.getElementById('widget-wrapper-' + widgetModel.cid);
+      $widgetNode = $(widgetNode);
+      var position = $widgetNode.offset();
+      var offsetPosition = $('#full-container').offset();
+
+      node.style.width  = $widgetNode.outerWidth() + 'px';
+      node.style.height = $widgetNode.outerHeight() + 'px';
+      node.style.left   = (position.left - offsetPosition.left) + 'px';
+      node.style.top    = (position.top - offsetPosition.top) + 'px';
       return node;
     },
 
@@ -259,28 +276,34 @@ function() {
     moved: function(e, ui) {
       g_guides.hideAll();
 
+      if(!v1State.getCurrentPage().getCurrentColumn()) return;
+
       model = this.selectedEl;
       if(e.target.id == "hover-div") { model = this.hoveredEl; }
 
-      var top = Math.round((ui.position.top / this.positionVerticalGrid));
-      var left = Math.round((ui.position.left / this.positionHorizontalGrid));
+      console.log(v1State.getCurrentPage().getCurrentColumn());
+      v1State.getCurrentPage().getCurrentColumn().addElement(model);
+      // var top = Math.round((ui.position.top / this.positionVerticalGrid));
+      // var left = Math.round((ui.position.left / this.positionHorizontalGrid));
 
-      if(left < 0) left = 0;
-      if(top < 0) top = 0;
+      // if(left < 0) left = 0;
+      // if(top < 0) top = 0;
 
-      if(model.get('layout').get('left') == left) {
-        model.get('layout').trigger('change:left');
-      }
-      else {
-        model.get('layout').set('left', left);
-      }
+      // if(model.get('layout').get('left') == left) {
+      //   model.get('layout').trigger('change:left');
+      // }
+      // else {
+      //   model.get('layout').set('left', left);
+      // }
 
-      if(model.get('layout').get('top') == top) {
-        model.get('layout').trigger('change:top');
-      }
-      else {
-        model.get('layout').set('top', top);
-      }
+      // if(model.get('layout').get('top') == top) {
+      //   model.get('layout').trigger('change:top');
+      // }
+      // else {
+      //   model.get('layout').set('top', top);
+      // }
+
+
 
       this.selectDiv.appendChild(this.widgetEditorView.setModel(model).render().el);
       this.newSelected(model);
@@ -353,6 +376,7 @@ function() {
     hoverClicked: function(e) {
       if(this.hoveredEl) {
         this.hoveredEl.trigger('selected');
+        v1State.getCurrentPage().trigger('selected', this.hoveredEl);
       }
       mouseDispatcher.isMousedownActive = false;
     },
@@ -386,11 +410,12 @@ function() {
 
       mouseX = e.pageX;
       mouseY = e.pageY;
-      var div = $('#widget-wrapper-' + this.selectedEl.cid);
-      divTop = div.offset().top;
-      divLeft = div.offset().left;
-      divRight = divLeft + div.width();
+      var div   = $('#widget-wrapper-' + this.selectedEl.cid);
+      divTop    = div.offset().top;
+      divLeft   = div.offset().left;
+      divRight  = divLeft + div.width();
       divBottom = divTop + div.height();
+
       if(mouseX >= divLeft && mouseX <= divRight && mouseY >= divTop && mouseY <= divBottom) {
         return true;
       }

@@ -14,6 +14,8 @@ define(function(require, exports, module) {
             "uielements": []
         },
 
+        _currentColumn: null,
+
         initialize: function(bone) {
             bone = bone || {};
             var self = this;
@@ -120,6 +122,14 @@ define(function(require, exports, module) {
         getPageContextDatalang: function() {
             var entities = this.getContextEntities();
             return "Page." + entities[0];
+        },
+
+        setCurrentColumn: function(columnM) {
+            this._currentColumn = columnM;
+        },
+
+        getCurrentColumn: function() {
+            return this._currentColumn;
         },
 
         toJSON: function() {

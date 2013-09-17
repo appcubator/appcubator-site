@@ -44,21 +44,7 @@ define([
 
                 this.sections = [];
                 this.subviews = [];
-
-                this.deepListenTo(this.model, 'hovered', this.columnHovered);
-                this.deepListenTo(this.model, 'unhovered', this.columnUnovered);
             },
-
-            columnHovered: function(model) {
-                console.log("set current column");
-                this.currentColumn = model;
-            },
-
-            columnUnovered: function() {
-                console.log("unset current column");
-                //this.currentColumn = null;
-            },
-
 
             render: function() {
                 var self = this;
@@ -369,7 +355,7 @@ define([
                 util.log_to_server("widget dropped", id, appId);
 
                 var element = this.createElement(layout, className, id);
-                if(this.currentColumn) this.currentColumn.addElement(element);
+                if(this.model.getCurrentColumn()) this.model.getCurrentColumn().addElement(element);
                 return element;
             },
 
