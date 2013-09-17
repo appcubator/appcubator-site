@@ -18,9 +18,12 @@ define(function(require, exports, module) {
             events: {
                 'click .horizontal-divide': 'splitColumnHorizontally',
                 'click .vertical-divide'  : 'splitColumnVertically',
-                'mouseover': 'hovered',
-                'mousemove': 'hovered',
-                'mouseout': 'unhovered'
+                // 'mouseover': 'hovered',
+                // 'mousemove': 'hovered',
+                // 'mouseenter' : 'hovered',
+                // 'mousedown' : 'hovered',
+                // 'mouseup'  : 'hovered',
+                //'': 'unhovered'
             },
 
             initialize: function(columnM) {
@@ -39,6 +42,14 @@ define(function(require, exports, module) {
                 this.controllers.className = 'column-controllers';
                 this.controllers.innerHTML = '<div class="span2 hi2 vertical-divide">|</div><div class="span2 hi2 horizontal-divide">-</div>';
                 this.el.appendChild(this.controllers);
+                this.el.id = "column-view-" + this.cid;
+                var self = this;
+                $( document ).on('mouseover, mouseeenter, mousemove', '#column-view-' +  this.cid, function(e){
+                    self.hovered();
+                });
+                $( document ).on('mouseout', '#column-view-' +  this.cid, function(e){
+                    self.unhovered();
+                });
                 return this;
             },
 
@@ -56,10 +67,12 @@ define(function(require, exports, module) {
             },
 
             hovered: function() {
+                this.$el.addClass('bg');
                 this.model.trigger('hovered', this.model);
             },
 
             unhovered: function() {
+                this.$el.removeClass('bg');
                 this.model.trigger('unhovered');
             },
 

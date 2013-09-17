@@ -89,8 +89,8 @@ define([
                 $(this.allList).find('li:not(.ui-draggable)').draggable({
                     cursor: "move",
                     cursorAt: {
-                        top: 0,
-                        left: 0
+                        top: -3,
+                        left: -3
                     },
                     helper: "clone",
                     start: function(e) {
@@ -129,8 +129,8 @@ define([
                 $(li).draggable({
                     cursor: "move",
                     cursorAt: {
-                        top: 0,
-                        left: 0
+                        top: -8,
+                        left: -8
                     },
                     helper: function(event) {
                         return $(elementModel.get('el')).css('position', 'fixed');
@@ -154,8 +154,8 @@ define([
                 $(li).draggable({
                     cursor: "move",
                     cursorAt: {
-                        top: 0,
-                        left: 0
+                        top: -3,
+                        left: -3
                     },
                     helper: "clone",
                     start: function(e) {
@@ -176,8 +176,8 @@ define([
                 $(li).draggable({
                     cursor: "move",
                     cursorAt: {
-                        top: 0,
-                        left: 0
+                        top: -3,
+                        left: -3
                     },
                     helper: "clone",
                     start: function(e) {
