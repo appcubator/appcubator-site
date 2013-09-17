@@ -46,6 +46,10 @@ define([
             return false;
         };
 
+        Backbone.isString = function(obj) {
+            return toString.call(obj) == '[object String]';
+        };
+
         Backbone.View.prototype.deepListenTo = function(obj, event, handler) {
             if (Backbone.isModel(obj)) {
                 this.listenTo(obj, event, handler);
@@ -75,9 +79,12 @@ define([
                         var dupe = null;
                         _.each(this.uniqueKeys, function(key) {
                             var _modelVal = _model.attributes ? _model.get(key) : _model[key];
-                            if(_modelVal === model.get(key)) {
+                            if(_modelVal === model.get(key) ||
+                                (Backbone.isString(_modelVal) && Backbone.isString(model.get(key)) &&
+                                    _modelVal.toLowerCase() === model.get(key).toLowerCase()
+                                    )) {
                                 dupe = model;
-                                this.trigger('duplicate', key);
+                                this.trigger('duplicate', key, model.get(key));
                                 return;
                             }
                         }, this);
@@ -106,7 +113,7 @@ define([
 
                             if(_model.get(key) === model.get(key)) {
                                 dupe = _model;
-                                this.trigger('duplicate', key);
+                                this.trigger('duplicate', key, model.get(key));
                                 return;
                             }
                         }, this);

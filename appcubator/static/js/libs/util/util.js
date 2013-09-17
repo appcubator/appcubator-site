@@ -368,6 +368,10 @@ define(['jquery'], function() {
       document.body.appendChild(overlayEl);
       $(overlayEl).one('click', function(e) { $(e.currentTarget).remove(); });
       return overlayEl;
+    },
+
+    isString : function (obj) {
+      return toString.call(obj) == '[object String]';
     }
 
   };

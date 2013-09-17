@@ -45,9 +45,9 @@ define([
                 this.userRoles = v1State.get('users').pluck('name');
                 this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));
 
-                this.listenTo(this.fieldsCollection, 'duplicate', function(key) {
+                this.listenTo(this.fieldsCollection, 'duplicate', function(key, val) {
                     new ErrorDialogueView({
-                        text: "Duplicate entry should not be duplicate. " + key + " of the table should not be the same."
+                        text: "Duplicate entry should not be duplicate. " + key + " of the field should not be the same: " + val
                     });
                 });
             },
