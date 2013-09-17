@@ -89,10 +89,6 @@ function() {
       $(hoverDiv).draggable({
         drag: self.moving,
         stop: self.moved,
-        cursorAt: {
-            top: -3,
-            left: -3
-        },
         snapMode : "outer"
       });
 
@@ -100,10 +96,6 @@ function() {
         containment: "parent",
         drag: self.moving,
         stop: self.moved,
-        cursorAt: {
-            top: -3,
-            left: -3
-        },
         snapMode : "outer"
       });
 

@@ -235,7 +235,7 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
         unhovered: function(e) {
             if (this.isMouseOn(e)) return;
             this.model.trigger('unhovered');
-            v1State.getCurrentPage().trigger('unhovered', this.model);
+            v1State.getCurrentPage().trigger('hovered', this.model);
         },
 
         isMouseOn: function(e) {

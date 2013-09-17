@@ -102,13 +102,26 @@ define([
                 ];
 
                 this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
-                this.deepListenTo(this.model, 'hovered', this.columnHovered);
+                this.deepListenTo(this.model, 'column-hovered', this.columnHovered);
+                this.deepListenTo(this.model, 'column-unhovered', this.columnUnhovered);
 
                 this.startUIStateUpdater();
             },
 
             columnHovered: function(columnM) {
+                var element = document.getElementById('column-view-' + columnM.cid);
                 this.model.setCurrentColumn(columnM);
+                $('.bg').removeClass('bg');
+                $(element).addClass('bg');
+            },
+
+            columnUnhovered: function(columnM, e) {
+                var element = document.getElementById('column-view-' + columnM.cid);
+                console.log(element);
+                if(!util.isMouseOn(e.pageX, e.pageY, element)) {
+                    $(element).removeClass('bg');
+                    this.model.setCurrentColumn(null);
+                }
             },
 
             render: function() {

@@ -42,13 +42,13 @@ define(function(require, exports, module) {
                 this.controllers.className = 'column-controllers';
                 this.controllers.innerHTML = '<div class="span2 hi2 vertical-divide">|</div><div class="span2 hi2 horizontal-divide">-</div>';
                 this.el.appendChild(this.controllers);
-                this.el.id = "column-view-" + this.cid;
+                this.el.id = "column-view-" + this.model.cid;
                 var self = this;
-                $( document ).on('mouseover, mouseeenter, mousemove', '#column-view-' +  this.cid, function(e){
-                    self.hovered();
+                $( document ).on('mouseover, mouseeenter, mousemove', '#column-view-' +  this.model.cid, function(e){
+                    self.hovered(e);
                 });
-                $( document ).on('mouseout', '#column-view-' +  this.cid, function(e){
-                    self.unhovered();
+                $( document ).on('mouseout', '#column-view-' +  this.model.cid, function(e){
+                    self.unhovered(e);
                 });
                 return this;
             },
@@ -67,13 +67,11 @@ define(function(require, exports, module) {
             },
 
             hovered: function() {
-                this.$el.addClass('bg');
-                this.model.trigger('hovered', this.model);
+                this.model.trigger('column-hovered', this.model);
             },
 
-            unhovered: function() {
-                this.$el.removeClass('bg');
-                this.model.trigger('unhovered');
+            unhovered: function(e) {
+                this.model.trigger('column-unhovered', this.model, e);
             },
 
             // this function decides if widget or container
