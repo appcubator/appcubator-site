@@ -7,7 +7,7 @@ function(ColumnCollection) {
         initialize: function(bone) {
             _.bindAll(this);
             bone = bone || {};
-            this.set('columns', new ColumnCollection(bone.columns||[]));
+            this.set('columns', new ColumnCollection(bone.columns||[{ width: 12 }]));
         },
 
         getColumns: function() {

@@ -18,6 +18,8 @@ define(function(require, exports, module) {
             this.model = wRowM;
             this.columns = wRowM.getColumns();
             this.subviews = [];
+
+            this.listenTo(this.columns, 'add', this.appendColumn);
         },
 
         render: function() {
@@ -37,6 +39,12 @@ define(function(require, exports, module) {
                 this.container.appendChild(columnView.render().el);
                 this.subviews.push(ColumnView);
             }, this);
+        },
+
+        appendColumn: function(columnM) {
+            var columnView = new ColumnView(columnM);
+            this.container.appendChild(columnView.render().el);
+            this.subviews.push(ColumnView);
         }
 
     });

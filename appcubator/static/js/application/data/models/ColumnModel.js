@@ -9,7 +9,16 @@ define(['backbone'],
             },
 
             split: function() {
+
+                var width = this.getWidth();
+                if(width == 1) return;
+
+                width = Math.floor(width/2);
+                this.set('width', width);
+
                 var json = {};
+                json.width = width;
+                this.collection.push(json);
             },
 
             getWidth: function() {

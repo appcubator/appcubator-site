@@ -14,7 +14,7 @@ function() {
     initialize: function(columnM) {
       _.bindAll(this);
       this.model = columnM;
-      this.listenTo(this.model.getWidth(), 'change', this.layout);
+      this.listenTo(this.model, 'change:width', this.layout);
     },
 
     render: function() {
@@ -23,7 +23,8 @@ function() {
     },
 
     layout: function() {
-      this.el.className += (' span'+this.model.getWidth());
+      console.log('layout');
+      this.el.className = (this.className + ' span'+this.model.getWidth());
     },
 
     splitColumn: function() {
