@@ -83,6 +83,11 @@ define([
                     name: name
                 });
 
+                if(v1State.get('tables').findWhere({name: name})) {
+                    v1State.get('users').trigger('duplicate', "name");
+                    return;
+                }
+
                 v1State.get('users').push(elem);
                 return elem;
             },
@@ -97,8 +102,12 @@ define([
                     fields: []
                 });
 
-                v1State.get('tables').push(elem);
+                if(v1State.get('users').findWhere({name: name})) {
+                    v1State.get('tables').trigger('duplicate', "name");
+                    return;
+                }
 
+                v1State.get('tables').push(elem);
                 return elem;
             },
 
