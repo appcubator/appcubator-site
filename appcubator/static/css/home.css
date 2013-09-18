@@ -931,6 +931,7 @@ img.logo {
   margin-right: 30px;
   font-weight: bold;
   border-top: 1px solid #fff;
+  vertical-align: top;
 }
 
 .sliding-panel .footer ul li {
