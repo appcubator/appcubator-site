@@ -7,8 +7,9 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.contrib.auth.models import User
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, Customer, ExtraUserData
-from django.db.models import Avg, Count
+
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, Customer, ExtraUserData, InvitationKeys
+from django.db.models import Avg, Count, Q
 from email.sendgrid_email import send_email
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
@@ -40,20 +41,19 @@ def admin_home(request):
 
     users_today = cache.get('users_today', recent_users(long_ago=timedelta(days=0), limit=200))
     users_last_week = cache.get('users_last_week', recent_users(long_ago=timedelta(days=7), limit=50))
-    most_active_users = cache.get('most_active_users', logs_per_user(limit=100))
+    #most_active_users = cache.get('most_active_users', logs_per_user(limit=100))
 
     users_today_timeout = 3600
     users_last_week_timeout = 60*60*6 # refresh every 6 hrs
-    most_active_users_timeout = 60*60*6*24 # refresh every 24 hours
+    #most_active_users_timeout = 60*60*6*24 # refresh every 24 hours
 
     # cache.set('users_today', users_today, users_today_timeout)
     cache.set('users_last_week', users_last_week, users_last_week_timeout)
-    cache.set('most_active_users', most_active_users, most_active_users_timeout)
 
     # active users
     page_context["users_today"] = users_today
     page_context["users_last_week"] = users_last_week
-    page_context["most_active_users"] = most_active_users
+    #page_context["most_active_users"] = most_active_users
     page_context['active_users'] = active_users_json(request, beginning, now, 'day').content
     page_context['user_signups_cumulative'] = user_signups_cumulative_json(request, beginning, now, 'day').content
     page_context['user_signups'] = user_signups_json(request).content
@@ -66,10 +66,56 @@ def admin_home(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
+def get_snapshots(request, app_id):
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
+    snapshots = AppstateSnapshot.filter(app=app).order_by('snapshot_date')
+    page_context = {}
+    page_context["snapshots"] = snapshots
+    return render(request, 'admin/snapshots.html')
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def admin_customers(request):
     page_context = {}
     page_context["customers"] = Customer.objects.all()
     return render(request, 'admin/customers.html', page_context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_customers_search(request):
+    query = request.GET['q']
+    page_context = {}
+    page_context["customers"] = Customer.objects.filter(Q(name__icontains=query)|Q(email__icontains=query))
+
+    return render(request, 'admin/customers.html', page_context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_add_contactlog(request, customer_id):
+    note = request.POST["note"]
+    customer_id = long(customer_id)
+    customer = get_object_or_404(Customer, id=customer_id)
+    str_info = customer.extra_info
+    if str_info == "":
+        str_info = "[]"
+
+    contact_list = simplejson.loads(str_info)
+    
+    if contact_list == None or contact_list == "":
+        contact_list = []
+
+    new_log = {}
+    new_log["note"] = note
+    new_log["date"] = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+    contact_list.append(new_log)
+
+    customer.extra_info = simplejson.dumps(contact_list)
+    customer.save()
+
+    return HttpResponse(json.dumps("OK"), mimetype="application/json")
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -154,6 +200,30 @@ def admin_app(request, app_id):
     page_context["app_logs"] = logs
     return render(request, 'admin/app.html', page_context)
 
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_app_snaps(request, app_id):
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
+    snaps_all = AppstateSnapshot.objects.filter(app=app).order_by('-id')
+    paginator = Paginator(snaps_all, 20)
+    page = request.GET.get('page')
+    try:
+        snaps = paginator.page(page)
+    #if page index is invalid, return first page
+    except PageNotAnInteger:
+        snaps = paginator.page(1)
+    #if page index is out of range, return last page
+    except EmptyPage:
+        snaps = paginator.page(paginator.num_pages)
+    page_context = {}
+    page_context["app"] = app
+    page_context["app_id"] = app_id
+    page_context["snaps"] = snaps
+    return render(request, 'admin/app-snaps.html', page_context)
+
+
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_feedback(request):
@@ -161,6 +231,14 @@ def admin_feedback(request):
     feedback = list(LogAnything.objects.filter(name='posted feedback'))
     page_context["feedback"] = feedback
     return render(request, 'admin/feedback.html', page_context)
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def admin_invitations(request):
+    page_context = {}
+    invs = InvitationKeys.objects.all()
+    page_context["invitations"] = invs
+    return render(request, 'admin/invitations.html', page_context)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -331,9 +409,13 @@ def recent_users(long_ago=timedelta(days=1), limit=10):
 
 # Top [limit] users with most page visits
 def logs_per_user(limit=10):
-    users = LogAnything.objects\
+    try:
+        users = LogAnything.objects\
                 .exclude(user_id=None)\
                 .values_list('user_id', flat=True).distinct()
+    except:
+        users = None
+
     result = []
     for user_id in users:
         user = User.objects.get(id=long(user_id))
@@ -354,7 +436,7 @@ def logs_per_user(limit=10):
 #     deploy_logs_data = [log.data_json for log in get_logs({'name': "deployed app"})]
 #     deploy_times = []
 #     for d in deploy_logs_data:
-#         if "deploy_time" in d:
+#         if "deploy_time" inf d:
 #             number = float(d["deploy_time"].replace(" seconds", ""))
 #             deploy_times.append(number)
 #     if(len(deploy_times)):

@@ -40,6 +40,7 @@ function() {
 
     newAnswer: function (name) {
       var entity = v1State.get('tables').push({ name: name});
+      if(!entity) return false;
       var elem = v1State.getCurrentPage().get('uielements').createCreateForm(this.elLayout, entity);
       this.closeModal();
       return elem;

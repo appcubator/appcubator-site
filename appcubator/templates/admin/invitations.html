@@ -1,0 +1,31 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+  <h2>Feedback</h2>
+  <hr>
+  <table id="feedback" class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+        <th data-sort-type="number">Invitation ID</th>
+        <th data-sort-type="timestamp">From</th>
+        <th>To</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for inv in invitations reversed %}
+      <tr>
+        <td class="span1">{{ inv.pk }}</td>
+        <td class="span2">{{ inv.inviter_id }}</td>
+        <td class="span2">{{ inv.invitee }}</td>
+        <td class="span1">{{ inv.accepted }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  $('#feedback').sortableTable({initialColumn: 1})
+</script>
+{% endblock %}

@@ -256,13 +256,17 @@ def signup(request):
         req = {}
         req = deepcopy(request.POST)
         req["username"] = request.POST["email"]
+
+        if len(req["username"]) > 30:
+            req["username"] = req["username"][:30]
+
         req["first_name"] = request.POST["name"].split(" ")[0]
         req["last_name"] = request.POST["name"].split(" ")[-1]
         form = MyUserCreationForm(req)
         if form.is_valid():
             user = form.save()
             create_customer(request, long(user.pk))
-            new_user = authenticate(username=req['email'],
+            new_user = authenticate(username=req['username'],
                                     password=req['password1'])
             # Do this via /trigger_customer/ for now.
             # plan_status = set_new_user_plan(new_user)

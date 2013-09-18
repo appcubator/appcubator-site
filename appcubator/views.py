@@ -25,16 +25,14 @@ from django.conf import settings
 import app_builder.analyzer as analyzer
 from app_builder.analyzer import App as AnalyzedApp
 
-from payments.views import subscribe
+from payments.views import subscribe, is_stripe_customer
 
 import requests
 import traceback
-import datetime
 import os, os.path
 join = os.path.join
 import string
 import nltk
-import json
 import re
 from datetime import datetime
 
@@ -68,7 +66,7 @@ for templname in APP_TEMPLATES:
 def app_welcome(request):
     if request.user.extradata.noob:
         # case for turning noob mode off
-        if request.user.apps.count() > 0:
+        if request.user.apps.count() > 0 and is_stripe_customer(request.user):
             e = request.user.extradata
             e.noob = 0
             e.save()
@@ -646,11 +644,22 @@ def app_zip(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    zip_bytes = app.zip_bytes()
-    response = HttpResponse(zip_bytes, content_type="application/octet-stream")
-    response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
-    return response
 
+    # AJAX this route to do validate (returns 200 or 409)
+    if request.is_ajax():
+        try:
+            a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
+        except analyzer.UserInputError, e:
+            d = e.to_dict()
+            return JsonResponse(d, status=400)
+        return JsonResponse({})
+
+    # browser GET this route to download the file
+    else:
+        zip_bytes = app.zip_bytes()
+        response = HttpResponse(zip_bytes, content_type="application/octet-stream")
+        response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
+        return response
 
 
 @login_required
@@ -664,6 +673,12 @@ def app_deploy(request, app_id):
     if request.method == 'GET':
         return JsonResponse({ 'status': app.get_deployment_status() })
     elif request.method == 'POST':
+
+        try:
+            a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
+        except analyzer.UserInputError, e:
+            d = e.to_dict()
+            return JsonResponse(d, status=400)
 
         result = {}
         result['site_url'] = app.url()

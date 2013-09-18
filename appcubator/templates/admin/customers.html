@@ -2,17 +2,21 @@
 {% block content %}
   <h2>Customers</h2>
   <hr>
+    <form class="navbar-form" role="search" action="/stay/up/to/get/lucky/search/" method="GET">
+      <div class="form-group">
+        <input type="text" name="q" class="form-control" placeholder="Search">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  <hr>
   <table id="customers" class="table table-striped table-hover table-bordered">
     <thead>
       <tr>
         <th data-sort-type="number">Customer ID</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Company</th>
-        <th>Consulting</th>
-        <th>Extra Info</th>
+        <th class="span4">Contact History</th>
         <th>Project Description</th>
-        <th>Sent Welcome</th>
       </tr>
     </thead>
     <tbody>
@@ -21,41 +25,15 @@
         <td>{{ customer.pk }}</td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
-        <td>{{ customer.company }}</td>
-        <td>{{ customer.consulting }}</td>
-        <td> <a href="#" class="detailed-info" data-placement="bottom" data-toggle="popover" title="" data-content="{{ customer.extra_info }}" data-original-title="Extra Info">Click to see</a></td>
-        <td>{{ customer.project_description }}</td>
-        <td>
-            {% if customer.sent_welcome_email %} Sent
-            {% else %}
-             <a href="#invitation-modal-{{ customer.pk }}" role="button" class="btn" data-toggle="modal">Send Invitation</a>
-            {% endif %}
-        </td>
-        <div id="invitation-modal-{{ customer.pk }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Invitation Modal</h3>
-          </div>
-          <form class="ksikka-send-invitation" method="post" action="/send_invitation/{{ customer.pk }}/">
-          <div class="modal-body">
-            <p class="row">
-                <input type="text" class="span10 offset1" placeholder="Subject Line" name="subject"><br  />
-                <textarea class="span10 offset1" name="text">
-                  Thanks for your interest in Appcubator. Below you can find your access link to Appcubator Private Beta program.
-
-                  SIGNUP_LINK
-
-                  Sincerely,
-                  Appcubator Team
-                </textarea>
-            </p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <input type="submit" class="btn btn-primary" value="Send Invitation">
-          </div>
+        <td class="span4">
+          {{ customer.extra_info }}
+          <form action='/stay/up/to/get/lucky/customers/{{customer.pk}}/add_contact_log/' method="POST">
+            {% csrf_token %}
+            <input type="text" name="note" placeholder="note">
+            <input type="submit" class="btn" value="Contacted">
           </form>
-        </div>
+        </td>
+        <td>{{ customer.project_description }}</td>
       </tr>
       {% endfor %}
     </tbody>

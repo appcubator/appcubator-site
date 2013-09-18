@@ -661,3 +661,4 @@ define([
 
         return EditorGalleryView;
     });
+

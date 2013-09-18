@@ -63,7 +63,7 @@ require.config({
 require([
   './HomepageView',
   './DeveloperpageView',
-  './SignupModalView',
+  './SignupDeployView',
   './SlideView',
   'backbone',
   'util',
@@ -211,7 +211,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
     bindSignupForm: function() {
       $('.signup-button').on('click', function(e) {
         e.preventDefault();
-        new SignupModalView();
+        new SignupModalView({site_url: "YOLO.com"});
       });
     },
 

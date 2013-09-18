@@ -88,7 +88,7 @@ function( WidgetView ) {
       var appendJSTag = function() {
 
         var customJSTemp = [
-          'function($) {  "use strict"; ',
+          'function($) {',
           // 'try {',
           '<%= code %>',
           // '} catch(err) { console.log("Error executing custom js."); }',
