@@ -727,6 +727,7 @@ h6 {
   float: none;
   width: 310px;
   padding-top: 20px;
+  text-align: left;
 }
 
 .sign-up-form .btn-facebook,
@@ -734,9 +735,20 @@ h6 {
   width: 100%;
 }
 
+.sign-up-form[type="radio"] {
+  vertical-align: top;
+}
+
 .sign-up-form label {
   display: inline;
   float: none;
+  margin-left: 8px;
+  vertical-align: top;
+  line-height: 30px;
+}
+
+.sign-up-form .prettyradio {
+  display: block;
 }
 
 .sign-up-form .btn-linkedin {

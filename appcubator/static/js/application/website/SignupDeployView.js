@@ -20,10 +20,11 @@ define(['./SignupModalView'],
             render: function() {
                 var self = this;
                 var temp = document.getElementById('temp-signupdeploy').innerHTML;
-                console.log(this.data);
                 this.el.innerHTML = _.template(temp, this.data);
 
                 $('input[type=checkbox]').prettyCheckable();
+                $('input[type=radio]').prettyCheckable();
+
                 this.bindFBBtn();
                 this.ajaxify();
                 this.g_js = {};
