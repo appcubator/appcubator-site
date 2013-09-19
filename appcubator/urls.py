@@ -124,6 +124,8 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/invitations/$', 'invitations'),
 
     # domains
+    url(r'^app/(\d+)/customdomain/(.*)/$', 'hookup_custom_domain'),
+        # this is old stuff
     url(r'^domains/(.*)/available_check/$', 'check_availability'),
     url(r'^domains/(.*)/register/$', 'register_domain'),
     # subdomains
@@ -149,6 +151,7 @@ urlpatterns += patterns('appcubator.admin_views',
     url(r'^stay/up/to/get/lucky/$', 'admin_home'),
     url(r'^stay/up/to/get/lucky/customers/$', 'admin_customers'),
     url(r'^stay/up/to/get/lucky/customers/(\d+)/add_contact_log/$', 'admin_add_contactlog'),
+    url(r'^stay/up/to/get/lucky/search/$', 'admin_customers_search'),
     url(r'^stay/up/to/get/lucky/users/(\d+)$', 'admin_user'),
     url(r'^stay/up/to/get/lucky/users/(\d+)/graph/$', 'user_logs_graph'),
     url(r'^stay/up/to/get/lucky/users/$', 'admin_users'),
@@ -161,6 +164,7 @@ urlpatterns += patterns('appcubator.admin_views',
     url(r'^stay/up/to/get/lucky/usersbydate/$', 'user_signups_json'),
     url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json'),
     url(r'^stay/up/to/get/lucky/logs/$', 'logs'),
+
 )
 
 urlpatterns += patterns('appcubator.theme_views',

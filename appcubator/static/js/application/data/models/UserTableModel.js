@@ -19,7 +19,17 @@ function(TableModel, FieldModel, FieldsCollection, Backbone) {
 
     getFieldsColl: function() {
       var arr = _.union(v1State.get('users').predefinedFields, this.get('fields').models);
-      return new Backbone.Collection(arr);
+      var coll = new FieldsCollection(arr);
+  
+      coll.on('add', function(models) {
+        this.get('fields').add(models);
+      }, this);
+
+      coll.on('remove', function(models) {
+        this.get('fields').remove(models);
+      }, this);
+
+      return coll;
     },
 
     getNormalFields: function() {
