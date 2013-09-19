@@ -35,3 +35,5 @@ nltk==2.0.4
 sh==1.08
 
 mysql-python==1.2.4
+django-threadedcomments
+

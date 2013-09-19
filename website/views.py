@@ -12,13 +12,10 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from models import User, Customer, InvitationKeys, AnalyticsStore, App, PubKey, TempDeployment
-from models import StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, User
-from models import get_default_app_state, get_default_theme_state
-from models import get_default_uie_state, get_default_mobile_uie_state
+from appcubator.models import User, Customer
+from models import Love, Document
 
 from appcubator.email.sendgrid_email import send_email, send_template_email
-from appcubator.payments.views import set_new_user_plan
 
 import requests
 import re
@@ -30,18 +27,6 @@ def format_full_details(details):
     for k, v in details.items():
         lines.append("{}: {}".format(k, v))
     return '\n'.join(lines)
-
-
-def send_login_notification_message(message):
-    return requests.post(
-        "https://api.mailgun.net/v2/v1factory.mailgun.org/messages",
-        auth=("api", "key-8iina6flmh4rtfyeh8kj5ai1maiddha8"),
-        data={
-            "from": "v1Factory Bot <postmaster@v1factory.mailgun.org>",
-            "to": "team@v1factory.com",
-            "subject": "Someone signed on!",
-            "text": message}
-    )
 
 
 # Handle requests
@@ -622,4 +607,74 @@ def csvusers(request):
         return HttpResponse(u'<br>'.join(lines))
 
 
+
+@csrf_protect
+@require_POST
+def toggle_love(request, next=None):
+    """
+    Toggle love.
+    
+    """
+
+    data = request.POST.copy()
+    
+    next = data.get("next", next)
+    content_type = data.get("content_type")
+    object_pk = data.get("object_pk")
+
+    if content_type == None or object_pk == None:
+        return LoveBadRequest("No object specified.")
+
+    try:
+        model = models.get_model(*content_type.split(".", 1))
+        target = model.objects.get(pk=object_pk)
+    except:
+        return LoveBadRequest("An error occured trying to get the target object.")
+
+    form = ToggleLoveForm(target, data=data)
+
+    if form.security_errors():
+        return LoveBadRequest("Form failed security verification:" % escape(str(form.security_errors())))
+
+    # first filter on the object itself
+    filters = form.get_filter_kwargs()
+
+    # either add a user or a session key to our list of filters
+    if request.user.is_authenticated():
+        filters['user'] = request.user
+    else:
+        filters['session_key'] = request.session.session_key
+
+    # if it exists, delete it; if not, create it.
+    try:
+        love = Love.objects.get(**filters)
+        love.delete()
+    except Love.DoesNotExist:
+        love = Love(**filters)
+        love.save()
+
+    # if a next url is set, redirect there
+    if next:
+        return HttpResponseRedirect(next)
+
+    # if not, redirect to the original object's permalink
+    if target.get_absolute_url is not None:
+        return HttpResponseRedirect(target.get_absolute_url())
+
+    # faling both of those, return a 404
+    raise Http404('next not passed to view and get_absolute_url not defined on object')
+
+
+def suggestions(request, sample_id=1):
+    suggestions_doc = Document.objects.get(title="Feature Suggestions")
+
+    if not suggestions_doc:
+        suggestions_doc = Document()
+        suggestions_doc.title = "Feature Suggestions"
+        suggestions_doc.save()
+
+    print suggestions_doc
+    page_context = { }
+    page_context["object"] = suggestions_doc
+    return render(request, 'suggestions.html', page_context)
 
