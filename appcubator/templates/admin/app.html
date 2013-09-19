@@ -23,7 +23,7 @@
 <div class="page-header">
   <h2>Apps</h2>
 </div>
-  <p><strong>ID:</strong> {{ app.pk }}</p>
+  <p><strong>ID:</strong><a href="/app/{{app.pk}}/" target="_blank">{{ app.pk }}</a></p>
   <p><strong>Name:</strong> {{ app.name }}</p>
   <p><strong>Owner:</strong> {{ app.owner }}</p>
   <p><strong>Subdomain:</strong> {{ app.subdomain }}</p>

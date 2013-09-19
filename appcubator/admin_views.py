@@ -85,9 +85,14 @@ def admin_customers(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_customers_search(request):
-    query = request.GET['q']
+    query = request.GET.get('q', '')
     page_context = {}
-    page_context["customers"] = Customer.objects.filter(Q(name__icontains=query)|Q(email__icontains=query))
+    try:
+        query = long(query)
+    except ValueError:
+        page_context["customers"] = Customer.objects.filter(Q(name__icontains=query)|Q(email__icontains=query))
+    else:
+        page_context["customers"] = Customer.objects.filter(id=query)
 
     return render(request, 'admin/customers.html', page_context)
 
@@ -163,6 +168,10 @@ def admin_user(request, user_id):
         logs = paginator.page(paginator.num_pages)
     page_context = {}
     page_context["user"] = user
+    try:
+        page_context["customer"] = Customer.objects.get(user_id=user.id)
+    except Customer.DoesNotExist:
+        page_context["customer"] = None
     page_context["apps"] = apps
     page_context["userlogs"] = logs
     page_context['user_logs_graph'] = user_logs_graph(request, user_id).content

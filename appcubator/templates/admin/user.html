@@ -2,7 +2,9 @@
 {% block content %}
   <div class="page-header">
     <h2>User: {{ user.user.first_name }} {{ user.user.last_name }}</h2>
-    <a href="#">See customer</a>
+    {% if customer != None %}
+    <a href="{% url appcubator.admin_views.admin_customers_search %}?q={{customer.id}}">See customer</a>
+    {% endif %}
   </div>
 
   <div class="row">
