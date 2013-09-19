@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.http import require_GET, require_POST
 from django.utils import simplejson
@@ -120,6 +120,15 @@ def admin_add_contactlog(request, customer_id):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
+    try:
+        user_id = request.GET['user_id']
+        user_id = long(user_id)
+        user = User.objects.get(pk=user_id)
+        return redirect('appcubator.admin_views.admin_user', str(user_id))
+    except (ValueError, User.DoesNotExist):
+        raise Http404
+    except KeyError:
+        pass
     users_all = User.objects.order_by('-id')
     paginator = Paginator(users_all, 100)
     page = request.GET.get('page')
