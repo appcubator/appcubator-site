@@ -116,8 +116,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'appcubator',
     'south',
-    'djcelery',
-    'kombu.transport.django',
     'less',
     'registration',
     'django_forms_bootstrap',
