@@ -150,7 +150,7 @@ def app_new(request, is_racoon = False, app_template=None):
             s['name'] = app.name
             app.state = s
             app.save()
-            #app.deploy() # this adds it to the deployment queue. non-blocking basically.
+            app.deploy() # this adds it to the deployment queue. non-blocking basically.
             if is_racoon:
                 return redirect(app_new_racoon, app.id)
             else:
