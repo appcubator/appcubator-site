@@ -12,7 +12,10 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from appcubator.models import User, Customer
+from appcubator.models import User, Customer, TempDeployment, UITheme 
+from appcubator.models import get_default_uie_state, get_default_mobile_uie_state
+from appcubator.models import get_default_app_state, get_default_theme_state
+
 from models import Love, Document
 
 from appcubator.email.sendgrid_email import send_email, send_template_email
@@ -681,14 +684,14 @@ def toggle_love(request, next=None):
 
 
 def suggestions(request, sample_id=1):
-    suggestions_doc = Document.objects.get(title="Feature Suggestions")
-
-    if not suggestions_doc:
+    
+    try:
+        suggestions_doc = Document.objects.get(title="Feature Suggestions")
+    except Document.DoesNotExist:
         suggestions_doc = Document()
         suggestions_doc.title = "Feature Suggestions"
         suggestions_doc.save()
 
-    print suggestions_doc
     page_context = { }
     page_context["object"] = suggestions_doc
     return render(request, 'suggestions.html', page_context)
