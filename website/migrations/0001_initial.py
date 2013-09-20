@@ -11,7 +11,7 @@ class Migration(SchemaMigration):
         # Adding model 'Document'
         db.create_table('website_document', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.TextField')(max_length=255, null=True, blank=True)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
             ('added_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal('website', ['Document'])
@@ -20,9 +20,9 @@ class Migration(SchemaMigration):
         db.create_table('website_love', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('object_pk', self.gf('django.db.models.fields.TextField')(max_length=255)),
+            ('object_pk', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('session_key', self.gf('django.db.models.fields.TextField')(max_length=255, null=True, blank=True)),
+            ('session_key', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
             ('added_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal('website', ['Love'])
@@ -83,15 +83,15 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Document'},
             'added_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'title': ('django.db.models.fields.TextField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'})
         },
         'website.love': {
             'Meta': {'unique_together': "(('content_type', 'object_pk', 'user', 'session_key'),)", 'object_name': 'Love'},
             'added_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'object_pk': ('django.db.models.fields.TextField', [], {'max_length': '255'}),
-            'session_key': ('django.db.models.fields.TextField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'object_pk': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'session_key': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'})
         }
     }
