@@ -1,5 +1,6 @@
 {% extends "infra-website.html" %}
 {% load threadedcomments_tags %}
+{% load comments % }
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/suggestions.css">
@@ -29,7 +30,7 @@
         {% for close in suggestion.close %}</li></ul>{% endfor %}
     {% endfor %}
     {% get_comment_form for object as form %}
-      <form action="{% comment_form_target for form %}" method="post">
+        <form action="{% url django_comments.views.comments.post_comment %}" method="post">
           {% csrf_token %}
           {% for field in form %}
               {% if field.name == "name" %}
