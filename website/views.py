@@ -22,6 +22,14 @@ import re
 import os, os.path
 join = os.path.join
 
+# codegen
+import app_builder.analyzer as analyzer
+from app_builder.analyzer import App as AnalyzedApp
+
+def JsonResponse(serializable_obj, **kwargs):
+    """Just a convenience function, in the middle of horrible code"""
+    return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)
+
 def format_full_details(details):
     lines = []
     for k, v in details.items():
@@ -445,6 +453,13 @@ def temp_deploy(request):
     elif request.method == 'POST':
         old_state = td._state_json
         td._state_json = request.POST['app_state']
+
+        try:
+            a = AnalyzedApp.create_from_dict(simplejson.loads(td._state_json), api_key="jdflksjdflkjsdlkfjsdlkj")
+        except analyzer.UserInputError, e:
+            d = e.to_dict()
+            return JsonResponse(d, status=400)
+
         td.deploy()
         # illusion of not saving.
         td._state_json = old_state
@@ -457,7 +472,7 @@ def temp_deploy(request):
 @csrf_protect
 def external_editor(request):
     td = find_or_create_temp_deployment(request)
-    #td.deploy()
+    td.deploy()
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
     mobile_themes = UITheme.get_mobile_themes()

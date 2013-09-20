@@ -67,6 +67,8 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/invitations/$', 'invitations'),
 
     # domains
+    url(r'^app/(\d+)/customdomain/(.*)/$', 'hookup_custom_domain'),
+        # this is old stuff
     url(r'^domains/(.*)/available_check/$', 'check_availability'),
     url(r'^domains/(.*)/register/$', 'register_domain'),
     # subdomains

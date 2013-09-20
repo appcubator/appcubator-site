@@ -150,7 +150,9 @@ def app_new(request, is_racoon = False, app_template=None):
             s['name'] = app.name
             app.state = s
             app.save()
-            #app.deploy() # this adds it to the deployment queue. non-blocking basically.
+            # refetch from the db
+            app = App.objects.get(pk=app.id)
+            app.deploy() # this adds it to the deployment queue. non-blocking basically.
             if is_racoon:
                 return redirect(app_new_racoon, app.id)
             else:
@@ -760,6 +762,27 @@ def sub_register_domain(request, app_id, subdomain):
 
     return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")
 
+@require_POST
+@login_required
+def hookup_custom_domain(request, app_id, domain):
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
+
+    def is_valid_hostname(hostname):
+        if len(hostname) > 255:
+            return False
+        if hostname[-1] == ".":
+            hostname = hostname[:-1] # strip exactly one dot from the right, if present
+        allowed = re.compile("(?!-)[A-Z\d-]{1,63}(?<!-)$", re.IGNORECASE)
+        return all(allowed.match(x) for x in hostname.split("."))
+
+    if is_valid_hostname(domain):
+        app.custom_domain = domain
+        app.save(state_version=False)
+        return JsonResponse({})
+    else:
+        return JsonResponse({}, status=400)
 
 # this is old.
 @require_POST
