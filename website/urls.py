@@ -64,5 +64,6 @@ urlpatterns = patterns('views',
     url(r'^resources/developer-guide/$',                           views.developer_guide),
     url(r'^suggestions/$',                                         views.suggestions),
     url(r'^toggle/$',                                              views.toggle_love, {'name': 'love-toggle'}),
-    url(r'^articles/comments/',                                    include('django.contrib.comments.urls')),
+    # url(r'^articles/comments/',                                    include('django.contrib.comments.urls')),
+    url(r'^comments/',                                             include('django.contrib.comments.urls')),
 )

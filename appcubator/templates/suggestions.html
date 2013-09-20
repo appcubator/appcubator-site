@@ -1,5 +1,7 @@
 {% extends "infra-website.html" %}
 {% load threadedcomments_tags %}
+{% load comments % }
+{% load comments i18n %}
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/suggestions.css">
@@ -20,20 +22,24 @@
         {% if suggestion.open %}<ul>{% endif %}
 
         <li id="c{{ comment.id }}" class="main-suggestion">
-          <div>{{ suggestion.comment }}</div>
+          <strong>Suggestion:</strong>
+          <div class="main-text">{{ suggestion.comment }}</div>
           <div class="hi6 sub-comments">
-            <div>Comment on it</div>
-            {% render_comment_form for suggestion %}
+            <div class="comment-btn">Reply</div>
+            <div class="comment-form">
+              <div>Comment on it</div>
+              {% render_comment_form for suggestion %}
+            </div>
           </div>
         </li>
         {% for close in suggestion.close %}</li></ul>{% endfor %}
     {% endfor %}
-    {% render_comment_form for object %}
+    <div class="main-suggestion-form">
+      {% render_comment_form for object %}
+    </div>
+
+
   </div>
-
-
-
-
 
 
   {% include "website-footer.html" %}
