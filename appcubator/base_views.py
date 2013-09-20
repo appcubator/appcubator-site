@@ -487,7 +487,7 @@ def temp_deploy(request):
 @csrf_protect
 def external_editor(request):
     td = find_or_create_temp_deployment(request)
-    #td.deploy()
+    td.deploy()
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
     mobile_themes = UITheme.get_mobile_themes()
