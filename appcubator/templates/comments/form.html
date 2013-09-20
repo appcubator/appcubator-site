@@ -1,4 +1,5 @@
 {% load comments i18n %}
+    {% if user.is_authenticated %}
         <form action="{% comment_form_target %}" method="post">
             {% csrf_token %}
             {% for field in form %}
@@ -16,5 +17,8 @@
                   {% endif %}
             {% endfor %}    
             <label>Posting as {{ user.username }}</label>
-            <input type="submit" class="btn btn-blue" name="submit" value="Comment">
+            <input type="submit" class="btn btn-blue" name="submit" value="{{ btn_text }}">
         </form>
+    {% else %}
+        <div>You need to <strong><a href="/login/">login</a></strong> to be able to suggest features.</div>
+    {% endif %}

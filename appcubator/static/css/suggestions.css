@@ -44,6 +44,8 @@ dt {
 
 .comment-form {
   display: none;
+  text-align: right;
+  margin-top: 15px;
 }
 
 .main-suggestion-form {
@@ -60,4 +62,10 @@ dt {
   display: block;
   width: 100%;
   height: 80px;
+}
+
+.sub-comment {
+  border-bottom: 1px solid #ccc;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }

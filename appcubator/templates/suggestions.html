@@ -12,7 +12,7 @@
 {% include "website-navbar.html" %}
 
 
-<h4 class="hoff6" style="border-bottom-width: 0;">{{ object.title }}</h4>
+<h4 class="hoff7" style="border-bottom-width: 0;">{{ object.title }}</h4>
 
   <div class="slide container">
     {% get_comment_list for object as comment_list %}
@@ -24,18 +24,24 @@
         <li id="c{{ comment.id }}" class="main-suggestion">
           <strong>Suggestion:</strong>
           <div class="main-text">{{ suggestion.comment }}</div>
-          <div class="hi6 sub-comments">
-            <div class="comment-btn">Reply</div>
-            <div class="comment-form">
-              <div>Comment on it</div>
-              {% render_comment_form for suggestion %}
+          <div class="sub-comments">
+            {% get_comment_list for suggestion as subcomment_list %}
+            {% for suggestion_reply in subcomment_list|fill_tree|annotate_tree %}
+              <div class="sub-comment">{{ suggestion_reply.comment }}</div>
+            {% endfor %}
+            <div class="comment-btn" id="reply-to-{{ suggestion.pk }}">Reply</div>
+            <div class="comment-form" id="reply-form-{{ suggestion.pk }}">
+              <div>Comment on this suggestion.</div>
+              {% get_comment_form for suggestion as form %}
+              {% include "comments/form.html" with btn_text="Post Your Comment"%}
             </div>
           </div>
         </li>
         {% for close in suggestion.close %}</li></ul>{% endfor %}
     {% endfor %}
-    <div class="main-suggestion-form">
-      {% render_comment_form for object %}
+    <div class="main-suggestion-form" style="text-align: right;">
+      {% get_comment_form for object as form %}
+      {% include "comments/form.html" with btn_text="Post Your Suggestion" %}
     </div>
 
 
@@ -45,3 +51,9 @@
   {% include "website-footer.html" %}
 </div>
 {% endblock %}
+
+
+{% block js %}
+<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+{% endblock %}
+
