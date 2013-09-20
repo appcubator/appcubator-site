@@ -1,8 +1,41 @@
+{% extends "infra-website.html" %}
 {% load threadedcomments_tags %}
 
-...
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/suggestions.css">
+{% endblock %}
 
-<h2>Comments for {{ object.title }}:</h2>
+{% block page %}
+<div class="sliding-panel">
+{% include "website-navbar.html" %}
 
-{% render_comment_list for object %}
-{% render_comment_form for object %}
+
+<h4 class="hoff6" style="border-bottom-width: 0;">{{ object.title }}</h4>
+
+  <div class="slide container">
+    {% get_comment_list for object as comment_list %}
+    {% for suggestion in comment_list|fill_tree|annotate_tree %}
+        {% ifchanged suggestion.parent_id %}{% else %}</li>{% endifchanged %}
+        {% if not comment.open and not suggestion.close %}</li>{% endif %}
+        {% if suggestion.open %}<ul>{% endif %}
+
+        <li id="c{{ comment.id }}" class="main-suggestion">
+          <div>{{ suggestion.comment }}</div>
+          <div class="hi6 sub-comments">
+            <div>Comment on it</div>
+            {% render_comment_form for suggestion %}
+          </div>
+        </li>
+        {% for close in suggestion.close %}</li></ul>{% endfor %}
+    {% endfor %}
+    {% render_comment_form for object %}
+  </div>
+
+
+
+
+
+
+  {% include "website-footer.html" %}
+</div>
+{% endblock %}

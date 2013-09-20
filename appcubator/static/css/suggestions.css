@@ -1,0 +1,29 @@
+.main-suggestion {
+  border-bottom: 2px solid #0f2d40;
+  min-height: 150px;
+  padding: 30px;
+  width: 550px;
+  text-align: left;
+  display: inline-block;
+}
+
+.sub-comments {
+  border-top: 1px solid #ccc;
+  min-height: 150px;
+  padding: 30px;
+  width: 100%;
+  text-align: left;
+  display: inline-block;
+  padding-left: 60px;
+}
+
+.sub-comments textarea {
+  height: 60px;
+  width: 100%;
+}
+
+
+dt {
+  font-size: 12px;
+  font-weight: bold;
+}
