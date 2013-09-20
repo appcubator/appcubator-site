@@ -1,4 +1,5 @@
-  <form action="{{ form.target }}" method="post">
+  <form action="{% comment_form_target %}" method="post">
+    {{ form.target }}
     {% csrf_token %}
     {% for field in form %}
         {% if field.name == "name" %}
