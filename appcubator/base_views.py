@@ -470,7 +470,7 @@ def temp_deploy(request):
         td._state_json = request.POST['app_state']
 
         try:
-            a = AnalyzedApp.create_from_dict(td._state_json, api_key="jdflksjdflkjsdlkfjsdlkj")
+            a = AnalyzedApp.create_from_dict(simplejson.loads(td._state_json), api_key="jdflksjdflkjsdlkfjsdlkj")
         except analyzer.UserInputError, e:
             d = e.to_dict()
             return JsonResponse(d, status=400)
