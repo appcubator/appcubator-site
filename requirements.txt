@@ -34,6 +34,6 @@ pyyaml==3.10
 nltk==2.0.4
 sh==1.08
 
-mysql-python==1.2.4
-django-threadedcomments
+#mysql-python==1.2.4
+django-threadedcomments==0.9.0
 
