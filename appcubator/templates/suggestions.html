@@ -24,16 +24,16 @@
 
         <li id="c{{ comment.id }}" class="main-suggestion">
           <strong>Suggestion </strong><span class="subtle"> by {{ suggestion.user.first_name }}</span>
-          <div class="loves"> 
-            YO 
+          <span class="loves right" style="text-align: center;"> 
             <form action="/toggle/" method="POST">
               {% csrf_token %}
               {% love_toggle_form suggestion %}
               <input name="next" type="hidden" value="/suggestions/">
-              <input type="submit" value="upvote">
+              <input type="submit" class="upvote {% if user|loves:suggestion %}lovin{% endif %}" value="">
+
             </form>
             {% love_count suggestion %}
-          </div>
+          </span>
 
           <div class="main-text">{{ suggestion.comment }}</div>
           <div class="sub-comments">

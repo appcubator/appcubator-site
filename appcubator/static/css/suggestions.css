@@ -83,3 +83,19 @@ dt {
 .sub-comments .subtle {
   font-size: 12px;
 }
+
+.upvote {
+  display: inline-block;
+  width: 0; 
+  height: 0;
+  padding: 0;
+  border-top-width:0;
+  background-color: transparent;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 15px solid #aaa;
+}
+
+.upvote.lovin {
+  border-bottom-color:#0f3d50;
+}
