@@ -684,14 +684,14 @@ def toggle_love(request, next=None):
 
 
 def suggestions(request, sample_id=1):
-    suggestions_doc = Document.objects.get(title="Feature Suggestions")
-
-    if not suggestions_doc:
+    
+    try:
+        suggestions_doc = Document.objects.get(title="Feature Suggestions")
+    except Document.DoesNotExist:
         suggestions_doc = Document()
         suggestions_doc.title = "Feature Suggestions"
         suggestions_doc.save()
 
-    print suggestions_doc
     page_context = { }
     page_context["object"] = suggestions_doc
     return render(request, 'suggestions.html', page_context)
