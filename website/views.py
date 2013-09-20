@@ -12,7 +12,10 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from appcubator.models import User, Customer
+from appcubator.models import User, Customer, TempDeployment, UITheme 
+from appcubator.models import get_default_uie_state, get_default_mobile_uie_state
+from appcubator.models import get_default_app_state, get_default_theme_state
+
 from models import Love, Document
 
 from appcubator.email.sendgrid_email import send_email, send_template_email
