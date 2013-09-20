@@ -45,7 +45,6 @@ dt {
 .comment-form {
   display: none;
   text-align: right;
-  margin-top: 15px;
 }
 
 .main-suggestion-form {
@@ -68,4 +67,19 @@ dt {
   border-bottom: 1px solid #ccc;
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+.close-reply-form {
+  font-weight: bold;
+  color: #0f3d50;
+  cursor: pointer;;
+}
+
+.subtle {
+  color: #ccc;
+  font-weight: normal;
+}
+
+.sub-comments .subtle {
+  font-size: 12px;
 }

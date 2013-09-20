@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sessions.backends.db import SessionStore
 
-from love.models import Love
-from love.forms import ToggleLoveForm
+from website.models import Love
+from website.forms import ToggleLoveForm
 
 register = template.Library()
 

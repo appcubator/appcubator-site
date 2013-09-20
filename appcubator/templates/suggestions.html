@@ -1,6 +1,7 @@
 {% extends "infra-website.html" %}
 {% load threadedcomments_tags %}
 {% load comments % }
+{% load love %}
 {% load comments i18n %}
 
 {% block css %}
@@ -22,18 +23,34 @@
         {% if suggestion.open %}<ul>{% endif %}
 
         <li id="c{{ comment.id }}" class="main-suggestion">
-          <strong>Suggestion:</strong>
+          <strong>Suggestion </strong><span class="subtle"> by {{ suggestion.user.first_name }}</span>
+          <div class="loves"> 
+            YO 
+            <form action="/toggle/" method="POST">
+              {% csrf_token %}
+              {% love_toggle_form suggestion %}
+              <input name="next" type="hidden" value="/suggestions/">
+              <input type="submit" value="upvote">
+            </form>
+            {% love_count suggestion %}
+          </div>
+
           <div class="main-text">{{ suggestion.comment }}</div>
           <div class="sub-comments">
             {% get_comment_list for suggestion as subcomment_list %}
             {% for suggestion_reply in subcomment_list|fill_tree|annotate_tree %}
               <div class="sub-comment">{{ suggestion_reply.comment }}</div>
+              <span class="subtle">Comment by {{ suggestion_reply.user.first_name }}</span>
             {% endfor %}
-            <div class="comment-btn" id="reply-to-{{ suggestion.pk }}">Reply</div>
-            <div class="comment-form" id="reply-form-{{ suggestion.pk }}">
-              <div>Comment on this suggestion.</div>
-              {% get_comment_form for suggestion as form %}
-              {% include "comments/form.html" with btn_text="Post Your Comment"%}
+            <div class="hoff1">
+              <div class="comment-btn" id="reply-to-{{ suggestion.pk }}">Reply</div>
+              <div class="comment-form" id="reply-form-{{ suggestion.pk }}">
+                <div>Comment on this suggestion.
+                  <span class="close-reply-form" id="close-reply-form-{{ suggestion.pk }}">(x)</span>
+                </div>
+                {% get_comment_form for suggestion as form %}
+                {% include "comments/form.html" with btn_text="Post Your Comment"%}
+              </div>
             </div>
           </div>
         </li>

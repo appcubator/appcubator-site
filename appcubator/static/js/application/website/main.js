@@ -295,6 +295,12 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
           $(e.currentTarget).hide();
           $('#'+suggestionId).fadeIn();
         });
+
+        $('.close-reply-form').on('click', function(e) {
+          var suggestionId = e.currentTarget.id.replace('close-reply-form-','');
+          $('#reply-form-'+suggestionId).hide();
+          $('#reply-to-'+suggestionId).fadeIn();
+        });
     },
 
     signupPage: function() {

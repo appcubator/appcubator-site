@@ -2,8 +2,9 @@ from django.views.decorators.http import require_GET, require_POST, require_http
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
+from django.db import models
 
-from django.http import HttpResponse, HttpRequest, Http404
+from django.http import HttpResponse, HttpRequest, Http404, HttpResponseRedirect
 from django.shortcuts import redirect,render, get_object_or_404
 from django.contrib.auth import forms as auth_forms, authenticate, login
 from django.core.exceptions import ValidationError
@@ -16,9 +17,11 @@ from appcubator.models import User, Customer, TempDeployment, UITheme
 from appcubator.models import get_default_uie_state, get_default_mobile_uie_state
 from appcubator.models import get_default_app_state, get_default_theme_state
 
+from threadedcomments.models import ThreadedComment
 from models import Love, Document
 
 from appcubator.email.sendgrid_email import send_email, send_template_email
+from forms import ToggleLoveForm
 
 import requests
 import re
@@ -647,12 +650,12 @@ def toggle_love(request, next=None):
         model = models.get_model(*content_type.split(".", 1))
         target = model.objects.get(pk=object_pk)
     except:
-        return LoveBadRequest("An error occured trying to get the target object.")
+        return Http404("An error occured trying to get the target object.")
 
     form = ToggleLoveForm(target, data=data)
 
     if form.security_errors():
-        return LoveBadRequest("Form failed security verification:" % escape(str(form.security_errors())))
+        return Http404("Form failed security verification:" % escape(str(form.security_errors())))
 
     # first filter on the object itself
     filters = form.get_filter_kwargs()
