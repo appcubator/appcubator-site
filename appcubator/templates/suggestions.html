@@ -1,6 +1,7 @@
 {% extends "infra-website.html" %}
 {% load threadedcomments_tags %}
 {% load comments % }
+{% load comments i18n %}
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/suggestions.css">
@@ -21,34 +22,22 @@
         {% if suggestion.open %}<ul>{% endif %}
 
         <li id="c{{ comment.id }}" class="main-suggestion">
-          <div>{{ suggestion.comment }}</div>
+          <strong>Suggestion:</strong>
+          <div class="main-text">{{ suggestion.comment }}</div>
           <div class="hi6 sub-comments">
-            <div>Comment on it</div>
-            {% render_comment_form for suggestion %}
+            <div class="comment-btn">Reply</div>
+            <div class="comment-form">
+              <div>Comment on it</div>
+              {% render_comment_form for suggestion %}
+            </div>
           </div>
         </li>
         {% for close in suggestion.close %}</li></ul>{% endfor %}
     {% endfor %}
-    {% get_comment_form for object as form %}
-        <form action="{% url django_comments.views.comments.post_comment %}" method="post">
-          {% csrf_token %}
-          {% for field in form %}
-              {% if field.name == "name" %}
-                  <input id="id_name" type="hidden" name="name" value="{{ user.username }}" />
-                  <label>Posting as {{ user.username }}</label>
-              {% elif field.name == "url" %}
-                  <input id="id_url" type="hidden" name="url" value="" />
-              {% elif field.name == "title" %}
-                  <input id="id_title" type="hidden" name="title" value="" />
-              {% elif field.name == "honeypot" %}
-                  <input id="id_honeypot" type="hidden" name="honeypot" value="" />
-              {% elif field.name  == "email" %}
-                  <input type="hidden" name="email" value="{{ user.email }}" id="id_email" />
-              {% else %}{{ field }}
-              {% endif %}
-          {% endfor %}    
-          <input type="submit" class="btn" name="submit" value="Comment">
-      </form>
+    <div class="main-suggestion-form">
+      {% render_comment_form for object %}
+    </div>
+
 
   </div>
 

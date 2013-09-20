@@ -1,20 +1,20 @@
-  <form action="{% comment_form_target %}" method="post">
-    {{ form.target }}
-    {% csrf_token %}
-    {% for field in form %}
-        {% if field.name == "name" %}
-            <input id="id_name" type="hidden" name="name" value="{{ user.username }}" />
+{% load comments i18n %}
+        <form action="{% comment_form_target %}" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                  {% if field.name == "name" %}
+                      <input id="id_name" type="hidden" name="name" value="{{ user.username }}" />
+                  {% elif field.name == "url" %}
+                      <input id="id_url" type="hidden" name="url" value="" />
+                  {% elif field.name == "title" %}
+                      <input id="id_title" type="hidden" name="title" value="" />
+                  {% elif field.name == "honeypot" %}
+                      <input id="id_honeypot" type="hidden" name="honeypot" value="" />
+                  {% elif field.name  == "email" %}
+                      <input type="hidden" name="email" value="{{ user.email }}" id="id_email" />
+                  {% else %}{{ field }}
+                  {% endif %}
+            {% endfor %}    
             <label>Posting as {{ user.username }}</label>
-        {% elif field.name == "url" %}
-            <input id="id_url" type="hidden" name="url" value="" />
-        {% elif field.name == "title" %}
-            <input id="id_title" type="hidden" name="title" value="" />
-        {% elif field.name == "honeypot" %}
-            <input id="id_honeypot" type="hidden" name="honeypot" value="" />
-        {% elif field.name  == "email" %}
-            <input type="hidden" name="email" value="{{ user.email }}" id="id_email" />
-        {% else %}{{ field }}
-        {% endif %}
-    {% endfor %}    
-        <input type="submit" class="btn" name="submit" value="Comment">
-  </form>
+            <input type="submit" class="btn btn-blue" name="submit" value="Comment">
+        </form>
