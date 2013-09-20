@@ -45,6 +45,8 @@ def _ajax_response(request, template, **kwargs):
                 RequestContext(request, kwargs)
             )
         }
+        if "error" in kwargs:
+            response.update({"error": kwargs["error"]})
         if "location" in kwargs:
             response.update({"location": kwargs["location"]})
         return HttpResponse(json.dumps(response), mimetype="application/json")

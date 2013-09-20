@@ -5,7 +5,7 @@ import views, theme_views, log_views, test_views, admin_views
 import django.views.generic.base
 from django.views.generic.simple import direct_to_template
 from registration.backends.default.views import RegistrationView, ActivationView
-from payments import views as payment_views
+from appcubator_payments import views as payment_views
 import website
 # from django.contrib import admin
 # admin.autodiscover()
@@ -13,7 +13,7 @@ import website
 urlpatterns = patterns('',
     url(r'^', include('website.urls')),
     url(r'^backend/',                   include('app_builder.urls')),
-    url(r'^payments/',                  include('appcubator.payments.urls')),
+    url(r'^payments/',                  include('appcubator.appcubator_payments.urls')),
     url(r'^app/(\d+)/payment/$',        payment_views.app_payment),
     url(r'^trigger_customer/$',         payment_views.stripe_acc_trigger),
 )

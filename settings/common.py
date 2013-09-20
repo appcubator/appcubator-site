@@ -104,7 +104,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "appcubator.context_processors.list_of_users_apps.list_of_users_apps",
     "appcubator.context_processors.list_of_users_apps.debug",
     "appcubator.context_processors.list_of_users_apps.static_cache_busting",
-    "appcubator.payments.views.stripe_context",
+    "appcubator.appcubator_payments.views.stripe_context",
 )
 
 INSTALLED_APPS = (
