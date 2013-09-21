@@ -445,7 +445,7 @@ define([
                 var entityM = v1State.getTableModelWithCid(hash[0]);
                 var fieldM = entityM.getFieldsColl().get(hash[1]);
 
-                var displayType = this.getFieldType(fieldM);
+                var displayType = util.getDisplayType(fieldM);
 
                 var editorContext = this.editorContext ? this.editorContext : "Page";
 
@@ -471,7 +471,7 @@ define([
                 var nested_field = nested_entity.getFieldsColl().get(hash[3]);
 
                 console.log(nested_field);
-                var displayType = this.getFieldType(nested_field);
+                var displayType = this.getDisplayType(nested_field);
                 var editorContext = this.editorContext ? this.editorContext : "Page";
 
                 var content_ops = {};
@@ -552,7 +552,7 @@ define([
                     return (fieldModel.cid == field_id);
                 });
 
-                var type = this.getFieldType(field);
+                var type = this.getDisplayType(field);
 
                 var content_ops = {};
 
@@ -619,26 +619,6 @@ define([
                 li.className = 'gallery-info ui-draggable';
                 li.innerHTML = text;
                 $(this.allList).append(li);
-            },
-
-            getFieldType: function(fieldModel) {
-
-                console.log(fieldModel);
-
-                switch (fieldModel.get('type')) {
-                    case "text":
-                    case "date":
-                    case "number":
-                    case "money":
-                    case "email":
-                        return "texts";
-                    case "image":
-                        return "images";
-                    case "file":
-                        return "links";
-                }
-
-                return type;
             },
 
             expandSection: function(index) {

@@ -241,11 +241,11 @@ define(['jquery'], function() {
         case "number":
         case "money":
         case "email":
-          return "texts";
+            return "texts";
         case "image":
-          return "images";
+            return "images";
         case "file":
-          return "links";
+            return "links";
       }
 
       return null;
