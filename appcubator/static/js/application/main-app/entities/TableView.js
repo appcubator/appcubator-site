@@ -143,6 +143,9 @@ define([
                     new DialogueView({ text: "The related widgets listed below will be deleted with this table. Do you want to proceed? <br><br> " + widgetsNLString}, function() {
                         tableColl.remove(model.cid);
                         v1State.get('pages').removePagesWithContext(model);
+                        _.each(widgets, function(widget) {
+                            widget.widget.collection.remove(widget.widget);
+                        });
                     });
                 }
                 else {
