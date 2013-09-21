@@ -25,8 +25,8 @@
 </div>
   <p><strong>ID:</strong><a href="/app/{{app.pk}}/" target="_blank">{{ app.pk }}</a></p>
   <p><strong>Name:</strong> {{ app.name }}</p>
-  <p><strong>Owner:</strong> {{ app.owner }}</p>
-  <p><strong>Subdomain:</strong> {{ app.subdomain }}</p>
+  <p><strong>Owner:</strong><a href="{% url appcubator.admin_views.admin_user app.owner.id %}">{{ app.owner }}</a></p>
+  <p><strong>Deployed URL:</strong><a href="{{app.url}}" target="_blank">{{ app.hostname }}</a></p>
   <p><strong>Deployment ID:</strong> {{ app.deployment_id }}</p>
   <p><button class="btn btn-inverse" id="deploy-app" data-toggle="modal" data-target=".deploy">Deploy App</button></p>
 <div class="row">
