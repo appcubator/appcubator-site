@@ -517,7 +517,8 @@ define([
             createBuyButton: function(layout, id) {
                 var cid = String(id).replace('entity-table-', '');
                 var entity = v1State.get('tables').get(cid);
-                var buyOn = "Page." + entity.get('name');
+                var editorContext = this.editorContext ? this.editorContext : "Page";
+                var buyOn = editorContext  + "." + entity.get('name');
 
                 return this.widgetsCollection.createBuyButton(layout, entity, buyOn);
             },
