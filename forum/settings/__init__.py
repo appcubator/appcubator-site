@@ -12,13 +12,15 @@ SETTINGS_PACK = Setting('SETTINGS_PACK', "default")
 DJSTYLE_ADMIN_INTERFACE = Setting('DJSTYLE_ADMIN_INTERFACE', True)
 NODE_MAN_FILTERS = Setting('NODE_MAN_FILTERS', [])
 
-APP_URL = djsettings.APP_URL
-APP_BASE_URL = djsettings.APP_BASE_URL
+APP_URL = "https://www.appcubator.com/"
+APP_BASE_URL = "https://www.appcubator.com/"
+"""
 FORCE_SCRIPT_NAME = djsettings.FORCE_SCRIPT_NAME
 OSQA_SKIN = djsettings.OSQA_DEFAULT_SKIN
 LANGUAGE_CODE = djsettings.LANGUAGE_CODE
 ADMIN_MEDIA_PREFIX = djsettings.ADMIN_MEDIA_PREFIX
 ONLINE_USERS = Setting('ONLINE_USERS', {})
+"""
 
 
 from basic import *
