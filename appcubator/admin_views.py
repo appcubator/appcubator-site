@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.http import require_GET, require_POST
 from django.utils import simplejson
@@ -85,9 +85,14 @@ def admin_customers(request):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_customers_search(request):
-    query = request.GET['q']
+    query = request.GET.get('q', '')
     page_context = {}
-    page_context["customers"] = Customer.objects.filter(Q(name__icontains=query)|Q(email__icontains=query))
+    try:
+        query = long(query)
+    except ValueError:
+        page_context["customers"] = Customer.objects.filter(Q(name__icontains=query)|Q(email__icontains=query))
+    else:
+        page_context["customers"] = Customer.objects.filter(id=query)
 
     return render(request, 'admin/customers.html', page_context)
 
@@ -120,6 +125,15 @@ def admin_add_contactlog(request, customer_id):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
+    try:
+        user_id = request.GET['user_id']
+        user_id = long(user_id)
+        user = User.objects.get(pk=user_id)
+        return redirect('appcubator.admin_views.admin_user', str(user_id))
+    except (ValueError, User.DoesNotExist):
+        raise Http404
+    except KeyError:
+        pass
     users_all = User.objects.order_by('-id')
     paginator = Paginator(users_all, 100)
     page = request.GET.get('page')
@@ -154,6 +168,10 @@ def admin_user(request, user_id):
         logs = paginator.page(paginator.num_pages)
     page_context = {}
     page_context["user"] = user
+    try:
+        page_context["customer"] = Customer.objects.get(user_id=user.id)
+    except Customer.DoesNotExist:
+        page_context["customer"] = None
     page_context["apps"] = apps
     page_context["userlogs"] = logs
     page_context['user_logs_graph'] = user_logs_graph(request, user_id).content

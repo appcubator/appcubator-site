@@ -1,78 +1,21 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 import django.contrib.auth.views
-import base_views, views, theme_views, log_views, test_views, admin_views
+import views, theme_views, log_views, test_views, admin_views
 import django.views.generic.base
 from django.views.generic.simple import direct_to_template
 from registration.backends.default.views import RegistrationView, ActivationView
-from payments import views as payment_views
+from appcubator_payments import views as payment_views
+import website
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$',                          base_views.homepage),
-    url(r'^showhn/$',                   base_views.homepage),
-    url(r'^showgsb/$',                  base_views.showgsbpage),
-    url(r'^showdn/$',                   base_views.showdnpage),
-    url(r'^girlswhocode/$',             base_views.showgwcpage),
-    url(r'^developer/$',                base_views.developer_homepage),
-    url(r'^community/$',                base_views.community_page),
-    url(r'^community/faq/$',            base_views.community_faq_page),
-
-
-    url(r'^aboutus/$',                  base_views.aboutus),
-    url(r'^changelog/$',                base_views.changelog),
-    # Signup, Login and invites
-    url(r'^accounts/', include('registration.backends.default.urls')),
-    url(r'^login/$',                    django.contrib.auth.views.login, {'template_name' : 'registration/login_page.html'}),
-    url(r'^logout/$',                   django.contrib.auth.views.logout, {"next_page":"/"}),
-    url(r'^connect_with/$',             base_views.get_linkedin),
-    url(r'^termsofservice/$',           base_views.terms_of_service),
-    url(r'^faq/$',                      base_views.faq),
-    url(r'^account/$',                  base_views.account),
-    url(r'^setpubkey/$',                base_views.setpubkey),
-    url(r'^ping/$',                     base_views.ping),
-    url(r'^csvusers/$',                 base_views.csvusers),
-    url(r'^whatisthis/$',               base_views.marketing),
-
-    # only creates beta invite
-    url(r'^signup_form/$',              base_views.signup_new_customer),
-    # actually signs up.
-    url(r'^signup/$',                   base_views.signup, name='signup_form'),
-    # actually signs up, stores source info
-    url(r'^signup_hn_form/$',           base_views.signup_from_hn, name='hn_signup_form'),
-    url(r'^signup_dn_form/$',           base_views.signup_from_dn, name='dn_signup_form'),
-    url(r'^signup_gsb_form/$',          base_views.signup_from_gsb, name='gsb_signup_form'),
-    url(r'^signup_gwc_form/$',          base_views.signup_from_gwc, name='gwc_signup_form'),
-
-    url(r'^send_invitation/(\d+)/$',    base_views.send_invitation_to_customer),
+    url(r'^', include('website.urls')),
     url(r'^backend/',                   include('app_builder.urls')),
-    url(r'^payments/',                  include('appcubator.payments.urls')),
+    url(r'^payments/',                  include('appcubator.appcubator_payments.urls')),
     url(r'^app/(\d+)/payment/$',        payment_views.app_payment),
     url(r'^trigger_customer/$',         payment_views.stripe_acc_trigger),
-
-    url(r'^resources/$',                                           base_views.resources),
-    url(r'^resources/editor/$',                                    base_views.external_editor),
-    url(r'^resources/editor/publish/$',                            base_views.temp_deploy),
-    url(r'^resources/quickstart/$',                                base_views.quickstart),
-    url(r'^resources/tutorials/$',                                 base_views.tutorials),
-    url(r'^resources/documentation/$',                             views.documentation_page, {"page_name": "all"}),
-    url(r'^resources/docs/$',                             base_views.documentation),
-    url(r'^resources/screencast/(\d+)/$',                          base_views.screencast), # these are the editor videos
-
-    url(r'^resources/tutorial/build-social-network/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'howtosocialnetwork'}),
-    url(r'^resources/tutorial/deploy-to-cloud/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'deploy-to-cloud'}),
-    url(r'^resources/tutorial/get-it-running/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'get-it-running'}),
-    url(r'^resources/tutorial/custom-code/(?:[\w\-]+/)?(?:[\w\-]+/)?$', base_views.resources_socialnetwork, {'name':'custom-code'}),
-    url(r'^resources/tutorial/what-is-a-web-app/$',                base_views.resources_whatisawebapp),
-    url(r'^resources/tutorial/appcubator-for-django-developers/$', base_views.resources_fordjangodevs),
-    url(r'^resources/tutorial/custom-widget/$', base_views.resources_customwidget),
-
-    url(r'^resources/sample/(\d+)/$',                              base_views.sample_app),
-    url(r'^resources/sample/(\d+)/part/(\d+)/$',                   base_views.sample_app_part),
-
-    url(r'^resources/designer-guide/$',                            base_views.designer_guide),
-    url(r'^resources/developer-guide/$',                           base_views.developer_guide),
 )
 
 urlpatterns += patterns('appcubator.log_views',
@@ -139,12 +82,14 @@ urlpatterns += patterns('appcubator.views',
     url(r'^documentation/$', 'documentation_page', {"page_name": "all"}),
     url(r'^documentation/search/$', 'documentation_search'),
     url(r'^documentation/([^/]+)/$', 'documentation_page'),
+    url(r'^resources/documentation/$', 'documentation_page', {"page_name": "all"}),
 
     # the rest
     url(r'^app/(\d+)/', 'app_page', {"page_name": "overview"}), # this serves all the app pages
     url(r'^app/(\d+)/([^/]+)/$', 'app_page'), # this serves all the app pages
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
+
 )
 
 urlpatterns += patterns('appcubator.admin_views',

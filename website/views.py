@@ -2,8 +2,9 @@ from django.views.decorators.http import require_GET, require_POST, require_http
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
+from django.db import models
 
-from django.http import HttpResponse, HttpRequest, Http404
+from django.http import HttpResponse, HttpRequest, Http404, HttpResponseRedirect
 from django.shortcuts import redirect,render, get_object_or_404
 from django.contrib.auth import forms as auth_forms, authenticate, login
 from django.core.exceptions import ValidationError
@@ -12,13 +13,15 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from models import User, Customer, InvitationKeys, AnalyticsStore, App, PubKey, TempDeployment
-from models import StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, User
-from models import get_default_app_state, get_default_theme_state
-from models import get_default_uie_state, get_default_mobile_uie_state
+from appcubator.models import User, Customer, TempDeployment, UITheme 
+from appcubator.models import get_default_uie_state, get_default_mobile_uie_state
+from appcubator.models import get_default_app_state, get_default_theme_state
+
+from threadedcomments.models import ThreadedComment
+from models import Love, Document
 
 from appcubator.email.sendgrid_email import send_email, send_template_email
-from appcubator.payments.views import set_new_user_plan
+from forms import ToggleLoveForm
 
 import requests
 import re
@@ -38,18 +41,6 @@ def format_full_details(details):
     for k, v in details.items():
         lines.append("{}: {}".format(k, v))
     return '\n'.join(lines)
-
-
-def send_login_notification_message(message):
-    return requests.post(
-        "https://api.mailgun.net/v2/v1factory.mailgun.org/messages",
-        auth=("api", "key-8iina6flmh4rtfyeh8kj5ai1maiddha8"),
-        data={
-            "from": "v1Factory Bot <postmaster@v1factory.mailgun.org>",
-            "to": "team@v1factory.com",
-            "subject": "Someone signed on!",
-            "text": message}
-    )
 
 
 # Handle requests
@@ -470,7 +461,7 @@ def temp_deploy(request):
         td._state_json = request.POST['app_state']
 
         try:
-            a = AnalyzedApp.create_from_dict(td._state_json, api_key="jdflksjdflkjsdlkfjsdlkj")
+            a = AnalyzedApp.create_from_dict(simplejson.loads(td._state_json), api_key="jdflksjdflkjsdlkfjsdlkj")
         except analyzer.UserInputError, e:
             d = e.to_dict()
             return JsonResponse(d, status=400)
@@ -487,7 +478,7 @@ def temp_deploy(request):
 @csrf_protect
 def external_editor(request):
     td = find_or_create_temp_deployment(request)
-    #td.deploy()
+    td.deploy()
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
     mobile_themes = UITheme.get_mobile_themes()
@@ -637,4 +628,74 @@ def csvusers(request):
         return HttpResponse(u'<br>'.join(lines))
 
 
+
+@csrf_protect
+@require_POST
+def toggle_love(request, next=None):
+    """
+    Toggle love.
+    
+    """
+
+    data = request.POST.copy()
+    
+    next = data.get("next", next)
+    content_type = data.get("content_type")
+    object_pk = data.get("object_pk")
+
+    if content_type == None or object_pk == None:
+        return LoveBadRequest("No object specified.")
+
+    try:
+        model = models.get_model(*content_type.split(".", 1))
+        target = model.objects.get(pk=object_pk)
+    except:
+        return Http404("An error occured trying to get the target object.")
+
+    form = ToggleLoveForm(target, data=data)
+
+    if form.security_errors():
+        return Http404("Form failed security verification:" % escape(str(form.security_errors())))
+
+    # first filter on the object itself
+    filters = form.get_filter_kwargs()
+
+    # either add a user or a session key to our list of filters
+    if request.user.is_authenticated():
+        filters['user'] = request.user
+    else:
+        filters['session_key'] = request.session.session_key
+
+    # if it exists, delete it; if not, create it.
+    try:
+        love = Love.objects.get(**filters)
+        love.delete()
+    except Love.DoesNotExist:
+        love = Love(**filters)
+        love.save()
+
+    # if a next url is set, redirect there
+    if next:
+        return HttpResponseRedirect(next)
+
+    # if not, redirect to the original object's permalink
+    if target.get_absolute_url is not None:
+        return HttpResponseRedirect(target.get_absolute_url())
+
+    # faling both of those, return a 404
+    raise Http404('next not passed to view and get_absolute_url not defined on object')
+
+
+def suggestions(request, sample_id=1):
+    
+    try:
+        suggestions_doc = Document.objects.get(title="Feature Suggestions")
+    except Document.DoesNotExist:
+        suggestions_doc = Document()
+        suggestions_doc.title = "Feature Suggestions"
+        suggestions_doc.save()
+
+    page_context = { }
+    page_context["object"] = suggestions_doc
+    return render(request, 'suggestions.html', page_context)
 

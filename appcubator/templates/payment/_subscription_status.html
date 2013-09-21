@@ -2,7 +2,11 @@
     {% if subscription %}
         {% if subscription.status == "active" %}
             <div class="alert alert-info">
-                Your subscription will automatically renew in <strong>{{ subscription.current_period_end|timeuntil }}</strong>.
+                You are currently on the <strong>{{ subscription.plan_display }}</strong> plan.<br/>
+                Your subscription will automatically renew in <strong>{{ subscription.current_period_end|timeuntil }}</strong>.<br/>
+                {% if user.customer.card_last_4 == "" %}
+                    You have yet to provide your card details. Please add a card in your <u><a href="/account/">account settings</a></u>.
+                {% endif %}
             </div>
         {% else %}
             {% if subscription.status == "trialing" %}

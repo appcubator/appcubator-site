@@ -93,7 +93,12 @@ define([
              url: '/payments/a/change/plan/',
              data: form.serialize(),
              success: function(data, statusStr, xhr) {
-              form.remove();
+              console.log(data);
+              if (data.error.length > 0) {
+                self.showPlanSuccessModal(data.error);                
+              } else {
+                self.showPlanSuccessModal("You are succesfully subscribed.");
+              }
             }
         });
       },
