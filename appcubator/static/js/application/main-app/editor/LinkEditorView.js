@@ -15,7 +15,7 @@ define([
           _.bindAll(this);
           this.model = options.model;
 
-          this.listenTo(this.model, 'change:title', this.renderTitle, this);
+          //this.listenTo(this.model, 'change:title', this.renderTitle, this);
           this.listenTo(this.model, 'change:url', this.renderUrl, this);
 
           // generate list of link options
@@ -45,8 +45,8 @@ define([
           return this;
         },
 
-        renderTitle: function(model, newTitle) {
-          this.$el.find('input.link-title').val(newTitle);
+        renderTitle: function() {
+          this.$el.find('input.link-title').val(this.model.get('title'));
         },
 
         renderUrl: function(model, newUrl) {
@@ -108,6 +108,8 @@ define([
               this.$urlContainer.show().find('input').focus();
             }
           }
+
+          this.renderTitle();
 
           // cancel if they chose the first option ('choose an option')
           if(selectedIndex == 0) {

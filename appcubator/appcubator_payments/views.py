@@ -45,6 +45,8 @@ def _ajax_response(request, template, **kwargs):
                 RequestContext(request, kwargs)
             )
         }
+        if "error" in kwargs:
+            response.update({"error": kwargs["error"]})
         if "location" in kwargs:
             response.update({"location": kwargs["location"]})
         return HttpResponse(json.dumps(response), mimetype="application/json")
@@ -94,6 +96,9 @@ def change_card(request):
         except stripe.CardError, e:
             data = {"error": e.message}
     return _ajax_response(request, "payment/_change_card_form.html", **data)
+
+def is_stripe_customer(user):
+    return (len(Customer.objects.filter(user=user)) != 0)
 
 def stripe_acc_trigger(request):
     "Sets the the default plan of the user to the Starter (Free) plan."

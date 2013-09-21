@@ -222,6 +222,9 @@ class TempDeployment(RandomPrimaryIdModel):
     def create(cls):
         i = cls()
         i.subdomain = str(random.randint(10000000,90000000))
+        s = i.state
+        s['name'] = "Appcubator Demo"
+        i.state = s
         i.save()
         i.subdomain = "temp-%s" % i.id#cls.get_rand_uniq_subdomain()
         i.save()

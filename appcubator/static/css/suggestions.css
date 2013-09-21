@@ -1,0 +1,101 @@
+.main-suggestion {
+  min-height: 120px;
+  margin-top: 30px;
+  padding: 30px;
+  width: 600px;
+  text-align: left;
+  display: inline-block;
+  background-color: #fff;
+}
+
+.main-suggestion .main-text {
+  font-size: 24px;
+  margin-top: 15px;
+}
+
+.sub-comments {
+  border-top: 1px solid #ccc;
+  min-height: 30px;
+  padding: 30px;
+  width: 100%;
+  text-align: left;
+  display: inline-block;
+  padding-left: 60px;
+  margin-top: 30px;
+}
+
+.sub-comments textarea {
+  height: 60px;
+  width: 100%;
+}
+
+
+dt {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.comment-btn {
+  font-weight: bold;
+  color: #0f3d50;
+  text-align: right;
+  cursor: pointer;
+}
+
+.comment-form {
+  display: none;
+  text-align: right;
+}
+
+.main-suggestion-form {
+  border-top: 2px solid #0f3d50;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  width: 600px;
+  display: inline-block;
+  text-align: left;
+}
+
+.main-suggestion-form textarea {
+  display: block;
+  width: 100%;
+  height: 80px;
+}
+
+.sub-comment {
+  border-bottom: 1px solid #ccc;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.close-reply-form {
+  font-weight: bold;
+  color: #0f3d50;
+  cursor: pointer;;
+}
+
+.subtle {
+  color: #ccc;
+  font-weight: normal;
+}
+
+.sub-comments .subtle {
+  font-size: 12px;
+}
+
+.upvote {
+  display: inline-block;
+  width: 0; 
+  height: 0;
+  padding: 0;
+  border-top-width:0;
+  background-color: transparent;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 15px solid #aaa;
+}
+
+.upvote.lovin {
+  border-bottom-color:#0f3d50;
+}

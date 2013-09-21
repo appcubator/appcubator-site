@@ -64,6 +64,7 @@ define(['backbone'], function() {
       "date"   : 'Date',
       "file"   : 'File'
     }
+
   });
 
   return FieldModel;

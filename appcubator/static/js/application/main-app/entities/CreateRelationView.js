@@ -54,8 +54,12 @@ function(SelectView) {
 
     relationSelected: function(answer) {
       var cids = answer.replace('relation-','').split('-');
+
       var cid1 = cids[0];
+      this.cid1 = cid1;
       var cid2 = cids[1];
+      this.cid2 = cid2;
+
       var table1 = (v1State.get('users').get(cid1)||v1State.get('tables').get(cid1));
       var table2 = (v1State.get('users').get(cid2)||v1State.get('tables').get(cid2));
 
@@ -71,6 +75,17 @@ function(SelectView) {
 
       this.el.innerHTML = '';
       this.el.appendChild(div);
+
+      this.$el.find('select').on('change', this.selectChanged);
+    },
+
+    selectChanged: function(e) {
+      var value = $(e.currentTarget).val();
+      currentSelectCid = e.currentTarget.id.replace('relation-type-', '');
+      otherCid = (currentSelectCid == this.cid1 ? this.cid2 : this.cid1);
+      otherSelect = $('#relation-type-' + otherCid);
+      if(value=="many" && otherSelect.val() != "one") otherSelect.val("one");
+      else if(value=="one" && otherSelect.val() != "many") otherSelect.val("many");
     },
 
     createRelationship: function() {

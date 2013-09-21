@@ -63,7 +63,7 @@ require.config({
 require([
   './HomepageView',
   './DeveloperpageView',
-  './SignupModalView',
+  './SignupDeployView',
   './SlideView',
   'backbone',
   'util',
@@ -89,6 +89,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       "resources/documentation/"       : "documentation",
       "resources/*content"            : 'resources',
 
+      "suggestions/"         : "suggestions",
       "signup/"              : "signupPage"
     },
 
@@ -211,7 +212,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
     bindSignupForm: function() {
       $('.signup-button').on('click', function(e) {
         e.preventDefault();
-        new SignupModalView();
+        new SignupModalView({site_url: "YOLO.com"});
       });
     },
 
@@ -286,6 +287,20 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
                 olark('api.box.hide');
             });
+    },
+
+    suggestions: function() {
+        $('.comment-btn').on('click', function (e) {
+          var suggestionId = e.currentTarget.id.replace('reply-to-','reply-form-');
+          $(e.currentTarget).hide();
+          $('#'+suggestionId).fadeIn();
+        });
+
+        $('.close-reply-form').on('click', function(e) {
+          var suggestionId = e.currentTarget.id.replace('close-reply-form-','');
+          $('#reply-form-'+suggestionId).hide();
+          $('#reply-to-'+suggestionId).fadeIn();
+        });
     },
 
     signupPage: function() {

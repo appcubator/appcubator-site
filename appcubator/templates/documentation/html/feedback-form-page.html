@@ -2,15 +2,15 @@
 
 <p>Help us build a better Appcubator!</p>
 
-<form method="POST" action="#" class="feedback-form" id="feedback-form">
+<form method="POST" action="/log/feedback/" class="feedback-form" id="feedback-form">
   {% csrf_token %}
 <p>
   <label>What did you like about Appcubator?</label>
-  <textarea id="like-appcubator" style="width: 100%; max-width: 400px; margin-top: 15px;"></textarea>
+  <textarea id="like-appcubator" style="width: 100%; max-width: 400px; margin-top: 15px;" name="like"></textarea>
 </p>
 <p>
   <label>What did you dislike about Appcubator? And which parts seemed overly complicated?</label>
-  <textarea id="dislike-appcubator" style="width: 100%; max-width: 400px; margin-top: 15px;"></textarea>
+  <textarea id="dislike-appcubator" style="width: 100%; max-width: 400px; margin-top: 15px;" name="dislike"></textarea>
 </p>
 <p>
   <label>We know that we have a lot more features to integrate into Appcubator such as the payments. What features do you think would be the most useful?</label>

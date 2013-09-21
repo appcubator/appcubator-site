@@ -1,0 +1,76 @@
+{% extends "infra-website.html" %}
+{% load threadedcomments_tags %}
+{% load comments % }
+{% load love %}
+{% load comments i18n %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/suggestions.css">
+{% endblock %}
+
+{% block page %}
+<div class="sliding-panel">
+{% include "website-navbar.html" %}
+
+
+<h4 class="hoff7" style="border-bottom-width: 0;">{{ object.title }}</h4>
+
+  <div class="slide container">
+    {% get_comment_list for object as comment_list %}
+    {% for suggestion in comment_list|fill_tree|annotate_tree %}
+        {% ifchanged suggestion.parent_id %}{% else %}</li>{% endifchanged %}
+        {% if not comment.open and not suggestion.close %}</li>{% endif %}
+        {% if suggestion.open %}<ul>{% endif %}
+
+        <li id="c{{ comment.id }}" class="main-suggestion">
+          <strong>Suggestion </strong><span class="subtle"> by {{ suggestion.user.first_name }}</span>
+          <span class="loves right" style="text-align: center;"> 
+            <form action="/toggle/" method="POST">
+              {% csrf_token %}
+              {% love_toggle_form suggestion %}
+              <input name="next" type="hidden" value="/suggestions/">
+              <input type="submit" class="upvote {% if user|loves:suggestion %}lovin{% endif %}" value="">
+
+            </form>
+            {% love_count suggestion %}
+          </span>
+
+          <div class="main-text">{{ suggestion.comment }}</div>
+          <div class="sub-comments">
+            {% get_comment_list for suggestion as subcomment_list %}
+            {% for suggestion_reply in subcomment_list|fill_tree|annotate_tree %}
+              <div class="sub-comment">{{ suggestion_reply.comment }}</div>
+              <span class="subtle">Comment by {{ suggestion_reply.user.first_name }}</span>
+            {% endfor %}
+            <div class="hoff1">
+              <div class="comment-btn" id="reply-to-{{ suggestion.pk }}">Reply</div>
+              <div class="comment-form" id="reply-form-{{ suggestion.pk }}">
+                <div>Comment on this suggestion.
+                  <span class="close-reply-form" id="close-reply-form-{{ suggestion.pk }}">(x)</span>
+                </div>
+                {% get_comment_form for suggestion as form %}
+                {% include "comments/form.html" with btn_text="Post Your Comment"%}
+              </div>
+            </div>
+          </div>
+        </li>
+        {% for close in suggestion.close %}</li></ul>{% endfor %}
+    {% endfor %}
+    <div class="main-suggestion-form" style="text-align: right;">
+      {% get_comment_form for object as form %}
+      {% include "comments/form.html" with btn_text="Post Your Suggestion" %}
+    </div>
+
+
+  </div>
+
+
+  {% include "website-footer.html" %}
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+{% endblock %}
+

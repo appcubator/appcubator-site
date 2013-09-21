@@ -104,7 +104,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "appcubator.context_processors.list_of_users_apps.list_of_users_apps",
     "appcubator.context_processors.list_of_users_apps.debug",
     "appcubator.context_processors.list_of_users_apps.static_cache_busting",
-    "appcubator.payments.views.stripe_context",
+    "appcubator.appcubator_payments.views.stripe_context",
 )
 
 INSTALLED_APPS = (
@@ -115,6 +115,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'appcubator',
+    'website',
     'south',
     'djcelery',
     'kombu.transport.django',
@@ -122,6 +123,8 @@ INSTALLED_APPS = (
     'registration',
     'django_forms_bootstrap',
     'payments',
+    'threadedcomments',
+    'django.contrib.comments',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -207,6 +210,8 @@ PAYMENTS_PLANS = {
 # SUBSCRIPTION_REQUIRED_REDIRECT='/'
 
 # End keys
+
+COMMENTS_APP = 'threadedcomments'
 
 # Registration window
 ACCOUNT_ACTIVATION_DAYS = 28

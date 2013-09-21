@@ -205,7 +205,6 @@
       "style": "background-color: rgb(243, 243, 243);\nborder-bottom-color: rgb(221, 221, 221);\nborder-bottom-left-radius: 6px;\nborder-bottom-right-radius: 6px;\nborder-bottom-style: solid;\nborder-bottom-width: 1px;\nborder-image-width: 1;\nborder-left-color: rgb(221, 221, 221);\nborder-left-style: solid;\nborder-left-width: 1px;\nborder-right-color: rgb(221, 221, 221);\nborder-right-style: solid;\nborder-right-width: 1px;\nborder-top-color: rgb(221, 221, 221);\nborder-top-left-radius: 6px;\nborder-top-right-radius: 6px;\nborder-top-style: solid;\nborder-top-width: 1px;\ncolor: rgb(51, 51, 51);\nfont-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\nfont-size: 18px;\nfont-weight: 200;\nheight: 275px;\nline-height: 30px;\nwidth: 100%;\nheight: 100%;\n",
       "isSingle": false,
       "cons_attribs": {
-        "style": "border:1px solid #333;"
       },
       "hoverStyle": "",
       "class_name": "box-1",
@@ -217,7 +216,6 @@
       "style": "",
       "isSingle": false,
       "cons_attribs": {
-        "style": "border:1px solud #333;"
       },
       "hoverStyle": "",
       "class_name": "box-2",

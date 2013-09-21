@@ -24,7 +24,9 @@ define([
       this.el.innerHTML = _.template(temp, {});
 
       $('input[type=checkbox]').prettyCheckable();
-      // $('input[type=radio]').prettyCheckable();
+      $('input[type=radio]').prettyCheckable();
+
+      $('#other-input').on('focus', function() { $('input[value="other"]').attr('checked', true); });
       this.bindFBBtn();
       return this;
     },
@@ -40,16 +42,16 @@ define([
 
         var self = this;
         url = $(e.currentTarget).attr('action');
-        obj = $(e.currentTarget).serialize();
+        obj = {};
         obj.name = $("#inp-name").val();
         obj.email = $("#inp-email").val();
-        obj.company = $("#inp-company").val();
-        obj.extra = $("#inp-extra").val();
-        obj.interest = $('#inp-interest').prop('checked');
-        obj.description = $('#inp-description').val();
+        obj.password1 = $("#inp-pwd1").val();
+        obj.password2 = $("#inp-pwd2").val();
+
+        obj.description = $("input[name=description]:checked").val();
+        if(obj.description == "other") { obj.description = $('#other-input').val(); }
 
         var isFilled = true;
-
         for (var key in obj) {
           var val = obj[key];
           if(val === "") {
@@ -69,8 +71,8 @@ define([
           dataType: "JSON",
           success: function(data, statusStr, xhr) {
             
-            $('#sign-up').show();
             $('#passive-button').hide();
+            $('#sign-up').show();
 
             if (typeof(data.redirect_to) !== 'undefined') {
               location.href = data.redirect_to;
@@ -79,17 +81,22 @@ define([
                 if(key==='__all__') {
                   $(self).find('.form-error.field-all').html(val.join('<br />'));
                 } else {
-                  console.log(key);
-                  console.log(val);
-                  console.log( $(self).find('.form-error.field-name-'+key));
                   $(self).find('.form-error.field-name-'+key).html(val.join('<br />'));
                 }
               });
             }
+          },
+          complete: function() {
+            $('#sign-up').show();
+            $('#passive-button').hide();
           }
         });
 
          //self.showTweetBtn();
+       }
+       else {
+            $('#passive-button').hide();
+            $('#sign-up').show();
        }
      });
     },

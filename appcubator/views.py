@@ -25,16 +25,14 @@ from django.conf import settings
 import app_builder.analyzer as analyzer
 from app_builder.analyzer import App as AnalyzedApp
 
-from payments.views import subscribe
+from appcubator_payments.views import subscribe, is_stripe_customer
 
 import requests
 import traceback
-import datetime
 import os, os.path
 join = os.path.join
 import string
 import nltk
-import json
 import re
 from datetime import datetime
 
@@ -68,7 +66,7 @@ for templname in APP_TEMPLATES:
 def app_welcome(request):
     if request.user.extradata.noob:
         # case for turning noob mode off
-        if request.user.apps.count() > 0:
+        if request.user.apps.count() > 0 and is_stripe_customer(request.user):
             e = request.user.extradata
             e.noob = 0
             e.save()
@@ -152,7 +150,9 @@ def app_new(request, is_racoon = False, app_template=None):
             s['name'] = app.name
             app.state = s
             app.save()
-            #app.deploy() # this adds it to the deployment queue. non-blocking basically.
+            # refetch from the db
+            app = App.objects.get(pk=app.id)
+            app.deploy() # this adds it to the deployment queue. non-blocking basically.
             if is_racoon:
                 return redirect(app_new_racoon, app.id)
             else:
@@ -646,11 +646,22 @@ def app_zip(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
-    zip_bytes = app.zip_bytes()
-    response = HttpResponse(zip_bytes, content_type="application/octet-stream")
-    response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
-    return response
 
+    # AJAX this route to do validate (returns 200 or 409)
+    if request.is_ajax():
+        try:
+            a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
+        except analyzer.UserInputError, e:
+            d = e.to_dict()
+            return JsonResponse(d, status=400)
+        return JsonResponse({})
+
+    # browser GET this route to download the file
+    else:
+        zip_bytes = app.zip_bytes()
+        response = HttpResponse(zip_bytes, content_type="application/octet-stream")
+        response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
+        return response
 
 
 @login_required
@@ -664,6 +675,12 @@ def app_deploy(request, app_id):
     if request.method == 'GET':
         return JsonResponse({ 'status': app.get_deployment_status() })
     elif request.method == 'POST':
+
+        try:
+            a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
+        except analyzer.UserInputError, e:
+            d = e.to_dict()
+            return JsonResponse(d, status=400)
 
         result = {}
         result['site_url'] = app.url()
@@ -745,6 +762,27 @@ def sub_register_domain(request, app_id, subdomain):
 
     return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")
 
+@require_POST
+@login_required
+def hookup_custom_domain(request, app_id, domain):
+    app = get_object_or_404(App, id=app_id)
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
+
+    def is_valid_hostname(hostname):
+        if len(hostname) > 255:
+            return False
+        if hostname[-1] == ".":
+            hostname = hostname[:-1] # strip exactly one dot from the right, if present
+        allowed = re.compile("(?!-)[A-Z\d-]{1,63}(?<!-)$", re.IGNORECASE)
+        return all(allowed.match(x) for x in hostname.split("."))
+
+    if is_valid_hostname(domain):
+        app.custom_domain = domain
+        app.save(state_version=False)
+        return JsonResponse({})
+    else:
+        return JsonResponse({}, status=400)
 
 # this is old.
 @require_POST

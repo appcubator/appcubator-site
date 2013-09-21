@@ -5,7 +5,7 @@ require.config({
     "jquery.hotkeys"  : "../../libs/jquery/jquery.hotkeys",
     "underscore"      : "../../libs/underscore-amd/underscore",
     "backbone"        : "../../libs/backbone-amd/backbone",
-    "react"           : "https://cdnjs.cloudflare.com/ajax/libs/react/0.4.1/react.min",
+    "react"           : "../../libs/react",
     "heyoffline"      : "../../libs/heyoffline",
     "util"            : "../../libs/util/util",
     "util.filepicker" : "../../libs/util/util.filepicker",
@@ -106,8 +106,16 @@ function (AppModel,
 
     v1State = new Backbone.Model();
     v1State = new AppModel(appState);
-    v1State.lazySet('pages', new PageCollection(appState.pages||[]));
+    console.log(new PageCollection(appState.pages||[]));
+
+    console.log('%c Oh my heavens! ', 'background: #222; color: #bada55', 'more text');
+    console.log(appState.pages);
+    v1State.set('pages', new PageCollection(appState.pages||[]));
     v1State.lazySet('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
+
+    v1State.on('error', function(message) {
+      alert(message);
+    });
 
     g_guides = {};
     keyDispatcher  = new KeyDispatcher();
