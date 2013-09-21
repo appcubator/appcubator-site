@@ -3,19 +3,11 @@ define(function(require, exports, module) {
 
     require('backbone');
 
-    var WidgetRegister = Backbone.Model.extend({
-        initialize: function(bone) {
-            bone.widgetM.on('remove', this.remove);
-        }
-    });
 
     var EntityManager = Backbone.Model.extend({
 
         initialize: function(options) {
             _.bindAll(this);
-
-            this.pages = options.pages;
-            this.bindExisting(this.pages);
         },
 
         bindExisting: function(pagesColl) {
@@ -64,20 +56,17 @@ define(function(require, exports, module) {
 
         register: function(entityCid, widgetM, pageName) {
             if(!this.has(entityCid)) {
-                this.set(entityCid, new Backbone.Collection({ model: WidgetRegister}));
+                this.set(entityCid, new Backbone.Collection());
             }
-            console.log("REGI");
-            console.log(entityCid);
-            this.get(entityCid).push({ widget: widgetM, pageName: pageName});
+            this.get(entityCid).add({ widget: widgetM, pageName: pageName});
         },
 
-        getWidgetsRelatedToTable: function(tableM) {
-            console.log(tableM.cid);
+        getWidgetsRelatedToTable: function(pagesColl, tableM) {
+            this.bindExisting(pagesColl);
             if(this.get(tableM.cid)) {
                 console.log(this.get(tableM.cid).toJSON());
                 return this.get(tableM.cid).toJSON();
             }
-            console.log("heey");
             return [];
         }
 

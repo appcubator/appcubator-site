@@ -4,14 +4,16 @@ define([
   'collections/TableCollection',
   'collections/PageCollection',
   'collections/MobilePageCollection',
-  'collections/EmailCollection'
+  'collections/EmailCollection',
+  'models/EntityManager'
 ],
 function(AppInfoModel,
          UserRolesCollection,
          TableCollection,
          PageCollection,
          MobilePageCollection,
-         EmailCollection) {
+         EmailCollection,
+         EntityManager) {
 
   var AppModel = Backbone.Model.extend({
 
@@ -70,6 +72,10 @@ function(AppInfoModel,
       }
 
       return AppModel.__super__.get.call(this, key);
+    },
+
+    getWidgetsRelatedToTable: function(tableM) {
+      return new EntityManager().getWidgetsRelatedToTable(this.get('pages'), tableM);
     },
 
     toJSON: function() {

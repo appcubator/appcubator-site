@@ -83,7 +83,6 @@ require([
         "collections/MobilePageCollection",
         "app/AppRouter",
         "app/RouteLogger",
-        "app/EntityManager",
         "editor/KeyDispatcher",
         "editor/MouseDispatcher",
         "heyoffline",
@@ -100,7 +99,6 @@ require([
         MobilePageCollection,
         AppRouter,
         RouteLogger,
-        EntityManager,
         KeyDispatcher,
         MouseDispatcher,
         Heyoffline,
@@ -139,8 +137,6 @@ require([
             Backbone.history.start({
                 pushState: true
             });
-
-            entityManager = new EntityManager({ pages: v1State.get('pages') });
 
 
             if (v1State.has('walkthrough')) {

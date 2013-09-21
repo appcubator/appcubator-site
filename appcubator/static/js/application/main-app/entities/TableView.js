@@ -134,10 +134,13 @@ define([
             },
 
             askToDelete: function(tableColl) {
-                var widgets = entityManager.getWidgetsRelatedToTable(this.model);
+                var widgets = v1State.getWidgetsRelatedToTable(this.model);
                 var model = this.model;
                 if(widgets.length) {
-                    new DialogueView({ text: "The related widgets listed below will be deleted with this table. Do you want to proceed?"}, function() {
+                    console.log(widgets);
+                    var widgetsNL = _.map(widgets, function(widget) { console.log(widget); return widget.widget.get('type')+ ' on '+ widget.pageName; });
+                    var widgetsNLString = widgetsNL.join('\n');
+                    new DialogueView({ text: "The related widgets listed below will be deleted with this table. Do you want to proceed? <br><br> " + widgetsNLString}, function() {
                         tableColl.remove(model.cid);
                         v1State.get('pages').removePagesWithContext(model);
                     });
