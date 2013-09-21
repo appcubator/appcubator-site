@@ -138,15 +138,13 @@ define([
                 var model = this.model;
                 if(widgets.length) {
                     new DialogueView({ text: "The related widgets listed below will be deleted with this table. Do you want to proceed?"}, function() {
-                        tableColl.remove(this.model.cid);
-                        model.remove();
-                        v1State.get('pages').removePagesWithContext(this.model);
+                        tableColl.remove(model.cid);
+                        v1State.get('pages').removePagesWithContext(model);
                     });
                 }
                 else {
-                    tableColl.remove(this.model.cid);
-                    this.model.remove();
-                    v1State.get('pages').removePagesWithContext(this.model);
+                    tableColl.remove(model.cid);
+                    v1State.get('pages').removePagesWithContext(model);
                 }
             },
 

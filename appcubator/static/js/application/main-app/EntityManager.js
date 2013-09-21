@@ -11,14 +11,11 @@ define(function(require, exports, module) {
 
     var EntityManager = Backbone.Model.extend({
 
-        relations : {},
-
         initialize: function(options) {
             _.bindAll(this);
 
             this.pages = options.pages;
             this.bindExisting(this.pages);
-            this.relations = {};
         },
 
         bindExisting: function(pagesColl) {
@@ -66,17 +63,21 @@ define(function(require, exports, module) {
         },
 
         register: function(entityCid, widgetM, pageName) {
-            if(!this.relations[entityCid]) {
-                this.relations[entityCid] = new Backbone.Collection({ model: WidgetRegister});
+            if(!this.has(entityCid)) {
+                this.set(entityCid, new Backbone.Collection({ model: WidgetRegister}));
             }
-
-            this.relations[entityCid].push({ widget: widgetM, pageName: pageName});
+            console.log("REGI");
+            console.log(entityCid);
+            this.get(entityCid).push({ widget: widgetM, pageName: pageName});
         },
 
         getWidgetsRelatedToTable: function(tableM) {
-            if(this.relations[tableM.cid]) {
-                return this.relations[tableM.cid].toJSON();
+            console.log(tableM.cid);
+            if(this.get(tableM.cid)) {
+                console.log(this.get(tableM.cid).toJSON());
+                return this.get(tableM.cid).toJSON();
             }
+            console.log("heey");
             return [];
         }
 

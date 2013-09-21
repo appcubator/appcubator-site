@@ -9,9 +9,10 @@ function(Backbone) {
     tagName: 'div',
     className: 'normal-dialogue',
     padding: 0,
+
     events : {
       'click .btn.ok' : 'okCase',
-      'click .btn.cance' : 'cancelCase'
+      'click .btn.cancel' : 'cancelCase'
     },
 
     initialize: function(data, successCallback) {
@@ -21,9 +22,8 @@ function(Backbone) {
     },
 
     render : function(text) {
-
       if(text) {
-        this.el.innerHTML += '<p>'+text+'</p>';
+        this.el.innerHTML += '<p style="padding:30px;">'+text+'</p>';
       }
 
       this.el.innerHTML += '<div class="bottom-sect"><div class="btn cancel">Cancel</div><div class="btn ok">Ok</div></div>';
