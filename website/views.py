@@ -13,7 +13,7 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from appcubator.models import User, Customer, TempDeployment, UITheme 
+from appcubator.models import User, Customer, TempDeployment, UITheme, InvitationKeys
 from appcubator.models import get_default_uie_state, get_default_mobile_uie_state
 from appcubator.models import get_default_app_state, get_default_theme_state
 
