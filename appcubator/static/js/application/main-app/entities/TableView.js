@@ -4,10 +4,11 @@ define([
         'app/entities/ShowDataView',
         'app/entities/AdminPanelView',
         'app/SoftErrorView',
+        'mixins/DialogueView',
         'app/templates/TableTemplates',
         'prettyCheckable'
     ],
-    function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView, SoftErrorView) {
+    function(FieldModel, UploadExcelView, ShowDataView, AdminPanelView, SoftErrorView, DialogueView) {
 
         var TableView = Backbone.View.extend({
             el: null,
@@ -129,8 +130,28 @@ define([
             },
 
             clickedDelete: function(e) {
-                v1State.get('tables').remove(this.model.cid);
-                v1State.get('pages').removePagesWithContext(this.model);
+                this.askToDelete(v1State.get('tables'));
+            },
+
+            askToDelete: function(tableColl) {
+                var widgets = v1State.getWidgetsRelatedToTable(this.model);
+                var model = this.model;
+                if(widgets.length) {
+                    console.log(widgets);
+                    var widgetsNL = _.map(widgets, function(widget) { console.log(widget); return widget.widget.get('type')+ ' on '+ widget.pageName; });
+                    var widgetsNLString = widgetsNL.join('\n');
+                    new DialogueView({ text: "The related widgets listed below will be deleted with this table. Do you want to proceed? <br><br> " + widgetsNLString}, function() {
+                        tableColl.remove(model.cid);
+                        v1State.get('pages').removePagesWithContext(model);
+                        _.each(widgets, function(widget) {
+                            widget.widget.collection.remove(widget.widget);
+                        });
+                    });
+                }
+                else {
+                    tableColl.remove(model.cid);
+                    v1State.get('pages').removePagesWithContext(model);
+                }
             },
 
             clickedPropDelete: function(e) {
