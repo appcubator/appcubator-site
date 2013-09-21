@@ -317,8 +317,9 @@ def app_save_state(request, app, require_valid=True):
     if not require_valid:
         app.save()
         return (200, {'version_id': app.state.get('version_id', 0)})
+
     try:
-        a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
+        app.parse_and_link_app_state()
     except analyzer.UserInputError, e:
         app.save()
         d = e.to_dict()
@@ -650,7 +651,7 @@ def app_zip(request, app_id):
     # AJAX this route to do validate (returns 200 or 409)
     if request.is_ajax():
         try:
-            a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
+            a = app.parse_and_link_app_state()
         except analyzer.UserInputError, e:
             d = e.to_dict()
             return JsonResponse(d, status=400)
@@ -677,7 +678,7 @@ def app_deploy(request, app_id):
     elif request.method == 'POST':
 
         try:
-            a = AnalyzedApp.create_from_dict(app.state, api_key=app.api_key)
+            a = app.parse_and_link_app_state()
         except analyzer.UserInputError, e:
             d = e.to_dict()
             return JsonResponse(d, status=400)

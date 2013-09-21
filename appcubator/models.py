@@ -341,6 +341,33 @@ class App(models.Model):
     custom_domain = models.CharField(max_length=50, blank=True, null=True, unique=True, default=None) # if this is None, then the person is not using custom domain.
     gitrepo_name = models.CharField(max_length=50, blank=True, unique=True)
 
+    # set on save and deploy calls.
+    error_type = models.IntegerField(default=0)
+    error_message = models.TextField(max_length=255, blank=True)
+
+    def record_compile_error(self, message):
+        self.error_type = 1
+        self.error_message = message
+        self.save(state_version=False)
+
+    def record_compile2_error(self, message):
+        self.error_type = 2
+        self.error_message = message
+        self.save(state_version=False)
+
+    def record_deploy_error(self, message):
+        self.error_type = 3
+        self.error_message = message
+        self.save(state_version=False)
+
+    def clear_error_record(self, src=''):
+        code_map = { 1: 'compile', 2: 'deploy' }
+        # if src = 'compile', don't clear 'deploy' error, and vice versa
+        if self.error_type != 0 and code_map.get(self.error_type, None) == src:
+            self.error_type = 0
+            self.error_message = ''
+            self.save(state_version=False)
+
     _state_json = models.TextField(blank=True, default=get_default_app_state)
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
     _mobile_uie_state_json = models.TextField(blank=True, default=get_default_mobile_uie_state)
@@ -502,15 +529,29 @@ class App(models.Model):
             self.gitrepo_name = App.provision_gitrepo_name(self.gitrepo_name)
 
     def write_to_tmpdir(self):
-        app = AnalyzedApp.create_from_dict(self.state)
+        app = self.parse_and_link_app_state()
 
         app.api_key = self.api_key
-        codes = create_codes(app)
-        coder = Coder.create_from_codes(codes)
+        try:
+            codes = create_codes(app)
+            coder = Coder.create_from_codes(codes)
 
-        tmp_project_dir = write_to_fs(coder, css=self.css())
+            tmp_project_dir = write_to_fs(coder, css=self.css())
+        except Exception:
+            self.record_compile2_error()
+            raise
 
         return tmp_project_dir
+
+    def parse_and_link_app_state(self):
+        try:
+            app = AnalyzedApp.create_from_dict(self.state, self.api_key)
+        except Exception, e:
+            self.record_compile_error(traceback.format_exc())
+            raise
+        else:
+            self.clear_error_record(src='compile')
+            return app
 
     def hostname(self):
         if self.custom_domain is not None:
@@ -582,6 +623,11 @@ class App(models.Model):
             if not is_merge:
                 self.deployment_id = data
                 self.save(state_version=False) # might be unnecessary if nothing has changed.
+        except Exception, e:
+            self.record_deploy_error(traceback.format_exc())
+            raise
+        else:
+            self.clear_error_record(src='deploy')
         finally:
             # because hard disk space doesn't grow on trees.
             shutil.rmtree(tmpdir)

@@ -31,6 +31,6 @@ django-stripe-payments==2.0b22
 pyyaml==3.10
 nltk==2.0.4
 
-mysql-python==1.2.4
+#mysql-python==1.2.4
 django-threadedcomments==0.9.0
 
