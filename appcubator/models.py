@@ -348,12 +348,12 @@ class App(models.Model):
     def record_compile_error(self, message):
         self.error_type = 1
         self.error_message = message
-        self.save(state_version=False, update_fields=('error_type', 'error_message'))
+        self.save(state_version=False)
 
     def record_deploy_error(self, message):
         self.error_type = 2
         self.error_message = message
-        self.save(state_version=False, update_fields=('error_type', 'error_message'))
+        self.save(state_version=False)
 
     def clear_error_record(self, src=''):
         code_map = { 1: 'compile', 2: 'deploy' }
@@ -361,8 +361,7 @@ class App(models.Model):
         if self.error_type != 0 and code_map.get(self.error_type, None) == src:
             self.error_type = 0
             self.error_message = ''
-            self.save(state_version=False, update_fields=('error_type', 'error_message'))
-
+            self.save(state_version=False)
 
     _state_json = models.TextField(blank=True, default=get_default_app_state)
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
