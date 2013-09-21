@@ -319,7 +319,7 @@ def app_save_state(request, app, require_valid=True):
         return (200, {'version_id': app.state.get('version_id', 0)})
 
     try:
-        app.validate_codegen()
+        app.parse_and_link_app_state()
     except analyzer.UserInputError, e:
         app.save()
         d = e.to_dict()
