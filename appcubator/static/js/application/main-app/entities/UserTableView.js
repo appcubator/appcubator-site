@@ -58,11 +58,7 @@ define([
             },
 
             clickedDelete: function(e) {
-                if (v1State.get('users').length <= 1) {
-                    alert('You must have at least one User Role');
-                } else {
-                    v1State.get('users').remove(this.model.cid);
-                }
+                this.askToDelete(v1State.get('users'));
             },
 
             appendField: function(fieldModel) {
