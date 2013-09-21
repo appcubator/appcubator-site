@@ -350,8 +350,13 @@ class App(models.Model):
         self.error_message = message
         self.save(state_version=False)
 
-    def record_deploy_error(self, message):
+    def record_compile2_error(self, message):
         self.error_type = 2
+        self.error_message = message
+        self.save(state_version=False)
+
+    def record_deploy_error(self, message):
+        self.error_type = 3
         self.error_message = message
         self.save(state_version=False)
 
@@ -527,10 +532,14 @@ class App(models.Model):
         app = self.parse_and_link_app_state()
 
         app.api_key = self.api_key
-        codes = create_codes(app)
-        coder = Coder.create_from_codes(codes)
+        try:
+            codes = create_codes(app)
+            coder = Coder.create_from_codes(codes)
 
-        tmp_project_dir = write_to_fs(coder, css=self.css())
+            tmp_project_dir = write_to_fs(coder, css=self.css())
+        except Exception:
+            self.record_compile2_error()
+            raise
 
         return tmp_project_dir
 
