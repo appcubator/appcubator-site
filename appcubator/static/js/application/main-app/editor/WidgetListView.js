@@ -106,10 +106,7 @@ define([
             },
 
             renderShadowElements: function() {
-                var row = this.model.get('data').get('container_info').get('row');
-                var uielements = _.map(row.get('uielements').models, function(obj) {
-                    return obj.attributes;
-                });
+
                 var nmrRows = 4;
 
                 if (this.model.get('data').get('container_info').has('query') &&
@@ -117,15 +114,11 @@ define([
                     nmrRows = this.model.get('data').get('container_info').get('query').get('numberOfRows') - 1;
                 }
 
-                // this.shadowElements.innerHTML = _.template(Templates.listNode, {
-                //     layout: row.get('layout'),
-                //     uielements: uielements,
-                //     isListOrGrid: row.get('isListOrGrid'),
-                //     nmrRows: nmrRows
-                // });
                 this.shadowElements.innerHTML = '';
+                var sampleNode = this.editorRow.cloneNode(true);
+                $('.ui-resizable-handle', sampleNode).remove();
                 for (var ii = 0; ii < nmrRows; ii++) {
-                    var node = this.editorRow.cloneNode(true);
+                    var node = sampleNode.cloneNode(true);
                     node.style.position = 'relative';
                     $(node).removeClass('highlighted');
                     this.shadowElements.appendChild(node);
@@ -174,7 +167,6 @@ define([
                 this.deepListenTo(widgetModel, 'change', this.renderShadowElements);
 
                 if (isNew) {
-                    console.log(widgetView);
                     widgetView.autoResize();
                 }
             },

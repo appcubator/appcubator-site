@@ -106,10 +106,7 @@ function (AppModel,
 
     v1State = new Backbone.Model();
     v1State = new AppModel(appState);
-    console.log(new PageCollection(appState.pages||[]));
 
-    console.log('%c Oh my heavens! ', 'background: #222; color: #bada55', 'more text');
-    console.log(appState.pages);
     v1State.set('pages', new PageCollection(appState.pages||[]));
     v1State.lazySet('mobilePages', new MobilePageCollection(appState.mobilePages||[]));
 
@@ -145,7 +142,6 @@ function (AppModel,
 
     if(v1State.has('simpleWalkthrough')) {
       require(['app/SimpleTwitterTour'], function(QuickTour) {
-        console.log(QuickTour);
         if(!QuickTour.currentStep) return;
         var url = QuickTour.currentStep.url;
 
