@@ -4,14 +4,16 @@ define([
   'collections/TableCollection',
   'collections/PageCollection',
   'collections/MobilePageCollection',
-  'collections/EmailCollection'
+  'collections/EmailCollection',
+  'models/EntityManager'
 ],
 function(AppInfoModel,
          UserRolesCollection,
          TableCollection,
          PageCollection,
          MobilePageCollection,
-         EmailCollection) {
+         EmailCollection,
+         EntityManager) {
 
   var AppModel = Backbone.Model.extend({
 
@@ -58,7 +60,6 @@ function(AppInfoModel,
     },
 
     lazySet: function(key, coll) {
-      console.log(coll);
       this.lazy[key] = coll;
       this.set(key, new Backbone.Collection([]));
     },
@@ -70,6 +71,18 @@ function(AppInfoModel,
       }
 
       return AppModel.__super__.get.call(this, key);
+    },
+
+    getWidgetsRelatedToTable: function(tableM) {
+      return new EntityManager({ pages: this.get('pages') }).getWidgetsRelatedToTable(tableM);
+    },
+
+    getWidgetsRelatedToPage: function(pageM) {
+      return new EntityManager({ pages: this.get('pages') }).getWidgetsRelatedToPage(pageM);
+    },
+
+    getWidgetsRelatedToField: function(fieldM) {
+      return new EntityManager({ pages: this.get('pages') }).getWidgetsRelatedToField(fieldM);
     },
 
     toJSON: function() {

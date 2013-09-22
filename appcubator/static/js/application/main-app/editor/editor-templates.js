@@ -66,7 +66,7 @@ Templates.LinkEditor = [
         '<label>Location</label>',
         '<select class="link-options"></select>',
       '</div>',
-      '<div class="url-container" style="display: none">',
+      '<div class="url-container hoff1" style="display: none">',
         '<label>Url</label>',
         '<input type="url" class="url" id="url" value="<%= url %>">',
       '</div>',

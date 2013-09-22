@@ -659,7 +659,14 @@ def app_zip(request, app_id):
 
     # browser GET this route to download the file
     else:
-        zip_bytes = app.zip_bytes()
+        # the client will not give access to the route unless ajax validation passes first,
+        # but validate anyway in case the user knows the link and GETs it anyway
+        try:
+            zip_bytes = app.zip_bytes()
+        except analyzer.UserInputError, e:
+            d = e.to_dict()
+            return JsonResponse(d, status=400)
+        return JsonResponse({})
         response = HttpResponse(zip_bytes, content_type="application/octet-stream")
         response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
         return response

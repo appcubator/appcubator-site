@@ -25,13 +25,14 @@
         <li id="c{{ comment.id }}" class="main-suggestion">
           <strong>Suggestion </strong><span class="subtle"> by {{ suggestion.user.first_name }}</span>
           <span class="loves right" style="text-align: center;"> 
+            {% if user.is_authenticated %}
             <form action="/toggle/" method="POST">
               {% csrf_token %}
               {% love_toggle_form suggestion %}
               <input name="next" type="hidden" value="/suggestions/">
               <input type="submit" class="upvote {% if user|loves:suggestion %}lovin{% endif %}" value="">
-
             </form>
+            {% endif %}
             {% love_count suggestion %}
           </span>
 

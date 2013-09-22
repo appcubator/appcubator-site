@@ -4,7 +4,7 @@ from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
 from django.db import models
 
-from django.http import HttpResponse, HttpRequest, Http404, HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import redirect,render, get_object_or_404
 from django.contrib.auth import forms as auth_forms, authenticate, login
 from django.core.exceptions import ValidationError
@@ -13,17 +13,15 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from appcubator.models import User, Customer, TempDeployment, UITheme 
+from appcubator.models import User, Customer, TempDeployment, UITheme, InvitationKeys, PubKey
 from appcubator.models import get_default_uie_state, get_default_mobile_uie_state
-from appcubator.models import get_default_app_state, get_default_theme_state
+from appcubator.models import get_default_app_state
 
-from threadedcomments.models import ThreadedComment
 from models import Love, Document
 
-from appcubator.email.sendgrid_email import send_email, send_template_email
+from appcubator.email.sendgrid_email import send_template_email
 from forms import ToggleLoveForm
 
-import requests
 import re
 import os, os.path
 join = os.path.join
@@ -42,13 +40,6 @@ def format_full_details(details):
         lines.append("{}: {}".format(k, v))
     return '\n'.join(lines)
 
-
-# Handle requests
-@require_POST
-@csrf_exempt
-def get_linkedin(request):
-    r = send_login_notification_message(format_full_details(request.POST))
-    return HttpResponse("ok")
 
 
 class MyUserCreationForm(auth_forms.UserCreationForm):
@@ -644,7 +635,7 @@ def toggle_love(request, next=None):
     object_pk = data.get("object_pk")
 
     if content_type == None or object_pk == None:
-        return LoveBadRequest("No object specified.")
+        return Http404("No object specified.")
 
     try:
         model = models.get_model(*content_type.split(".", 1))

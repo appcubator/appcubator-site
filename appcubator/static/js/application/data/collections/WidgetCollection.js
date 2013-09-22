@@ -191,8 +191,10 @@ function(WidgetModel,
         var moneyFieldM = entity.getMoneyField();
         var moneyFieldName = moneyFieldM.get('name');
 
+        widget.data.container_info.business_name = "iltecanberk@gmail.com";
+        widget.data.container_info.item_name = entity.get('fields').first().get('name');
         widget.data.container_info.amount = '{{' + editOn + '.' + moneyFieldName + '}}';
-        widget.data.content = "Buy for {{" + widget.data.container_info.amount +"}}";
+        widget.data.container_info.label = "Buy for " + widget.data.container_info.amount;
 
         var widgetContainerModel = new WidgetContainerModel(widget);
 

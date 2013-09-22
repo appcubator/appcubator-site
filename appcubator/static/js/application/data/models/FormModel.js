@@ -206,6 +206,14 @@ define([
                 return possibleActions;
             },
 
+            removeFieldsConnectedToField: function(fieldM) {
+                this.get('fields').each(function(formFieldM) {
+                    if (formFieldM.get('field_name') == fieldM.get('name')) {
+                        formFieldM.collection.remove(formFieldM);
+                    }
+                });
+            },
+
             getEmailActions: function(argument) {
                 var possibleActions = new ActionCollection();
 
@@ -263,6 +271,7 @@ define([
 
                 this.set('loginRoutes', routes);
             },
+
 
             isConstant: function() {
                 return this.get('isConstant');
