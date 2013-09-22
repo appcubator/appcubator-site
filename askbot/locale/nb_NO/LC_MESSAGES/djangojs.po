@@ -1,0 +1,800 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# injectedreality <transifex@ireality.no>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: askbot\n"
+"Report-Msgid-Bugs-To: http://askbot.org/\n"
+"POT-Creation-Date: 2013-07-13 14:07-0500\n"
+"PO-Revision-Date: 2013-07-15 10:13+0000\n"
+"Last-Translator: injectedreality <transifex@ireality.no>\n"
+"Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/projects/p/askbot/language/nb_NO/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nb_NO\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: media/jquery-openid/jquery.openid.js:73
+#, c-format
+msgid "Are you sure you want to remove your %s login?"
+msgstr "Er du sikker på at du ønsker å fjerne ditt %s innlogging?"
+
+#: media/jquery-openid/jquery.openid.js:90
+msgid "Please add one or more login methods."
+msgstr "Vennligst legg til en eller fler logginmetoder."
+
+#: media/jquery-openid/jquery.openid.js:93
+msgid ""
+"You don't have a method to log in right now, please add one or more by "
+"clicking any of the icons below."
+msgstr "Du har ingen metoder for å logge inn akkurat nå så vennligst legg til en eller fler ved å trykke på ikonene under."
+
+#: media/jquery-openid/jquery.openid.js:135
+msgid "passwords do not match"
+msgstr "passordene stemmer ikke overens"
+
+#: media/jquery-openid/jquery.openid.js:162
+msgid "Show/change current login methods"
+msgstr "Vis/endre dine nåværende loginmetoder"
+
+#: media/jquery-openid/jquery.openid.js:227
+#, c-format
+msgid "Please enter your %s, then proceed"
+msgstr "Vennligst legg inn %s, så fortsett"
+
+#: media/jquery-openid/jquery.openid.js:229
+msgid "Connect your %(provider_name)s account to %(site)s"
+msgstr "Koble %(provider_name)s konto til %(site)s"
+
+#: media/jquery-openid/jquery.openid.js:323
+#, c-format
+msgid "Change your %s password"
+msgstr "Endre ditt %s passord"
+
+#: media/jquery-openid/jquery.openid.js:324
+msgid "Change password"
+msgstr "Endre passord"
+
+#: media/jquery-openid/jquery.openid.js:327
+#, c-format
+msgid "Create a password for %s"
+msgstr "Lage passord for %s"
+
+#: media/jquery-openid/jquery.openid.js:328
+msgid "Create password"
+msgstr "Lage passord"
+
+#: media/jquery-openid/jquery.openid.js:344
+msgid "Create a password-protected account"
+msgstr "Lag en passordbeskyttet konto"
+
+#: media/js/group_messaging.js:102 media/js/group_messaging.js.c:293
+msgid "required"
+msgstr "kreves"
+
+#: media/js/group_messaging.js:139
+msgid "Your message:"
+msgstr "Din melding:"
+
+#: media/js/group_messaging.js:152
+msgid "send"
+msgstr "send"
+
+#: media/js/group_messaging.js:164 media/js/post.js:1809
+#: media/js/post.js.c:3081 media/js/post.js.c:4598 media/js/user.js:888
+msgid "cancel"
+msgstr "abryt"
+
+#: media/js/group_messaging.js:227
+msgid "Reply"
+msgstr "Svar"
+
+#: media/js/group_messaging.js:236 media/js/group_messaging.js.c:743
+msgid "message sent"
+msgstr "melding sendt"
+
+#: media/js/group_messaging.js:271
+msgid "user {{str}} does not exist"
+msgid_plural "users {{str}} do not exist"
+msgstr[0] "bruker {{str}} eksisterer ikke"
+msgstr[1] "brukerne {{str}} eksisterer ikke"
+
+#: media/js/group_messaging.js:278
+msgid "cannot send message to yourself"
+msgstr "kan ikke sende beskjed til deg selv"
+
+#: media/js/group_messaging.js:323
+msgid "Recipient:"
+msgstr "Mottaker:"
+
+#: media/js/live_search.js:196
+msgid "To see search results, 2 or more characters may be required"
+msgstr "For å se søkeresultater så kreves minst to tegn"
+
+#: media/js/live_search.js:218
+msgid "Ask Your Question"
+msgstr "Spør ditt spørsmål"
+
+#: media/js/live_search.js:299
+msgid "Sorry, this tag does not exist"
+msgid_plural "Sorry, these tags do not exist"
+msgstr[0] "Beklager, denne merkelappen eksisterer ikke"
+msgstr[1] "Beklager, disse merkelappene eksisterer ikke"
+
+#: media/js/live_search.js:313
+msgid "search or ask your question"
+msgstr "søk eller spør ditt spørsmål"
+
+#: media/js/post.js:28
+msgid "loading..."
+msgstr "laster..."
+
+#: media/js/post.js:100
+msgid "must be shorter than %(max_chars)s character"
+msgid_plural "must be shorter than %(max_chars)s characters"
+msgstr[0] "må være %(max_chars)s tegn"
+msgstr[1] "må være kortere enn %(max_chars)s tegn"
+
+#: media/js/post.js:154 media/js/post.js.c:1269
+msgid "tags cannot be empty"
+msgstr "legg inn minst en merkelapp"
+
+#: media/js/post.js:160
+msgid "details are required"
+msgstr "detaljer kreves"
+
+#: media/js/post.js:163
+#, c-format
+msgid "details must have > %s character"
+msgid_plural "details must have > %s characters"
+msgstr[0] "tast inn %s tegn til"
+msgstr[1] "tast inn minst %s fler tegn"
+
+#: media/js/post.js:171
+msgid "enter your question"
+msgstr "tast inn ditt spørsmål"
+
+#: media/js/post.js:174
+#, c-format
+msgid "question must have > %s character"
+msgid_plural "question must have > %s characters"
+msgstr[0] "tast inn %s tegn til"
+msgstr[1] "tast inn minst %s fler tegn"
+
+#: media/js/post.js:193
+msgid "content cannot be empty"
+msgstr "legg inn minst en merkelapp"
+
+#: media/js/post.js:196
+#, c-format
+msgid "answer must be > %s character"
+msgid_plural "answer must be > %s characters"
+msgstr[0] "vennligst tast inn %s tegn til"
+msgstr[1] "vennligst tast inn minst %s fler tegn"
+
+#: media/js/post.js:253
+msgid "Back to the question"
+msgstr "Tilbake til spørsmål"
+
+#: media/js/post.js:303
+msgid "draft saved..."
+msgstr "utkast lagret..."
+
+#: media/js/post.js:548
+msgid "insufficient privilege"
+msgstr "ikke nok rettigheter"
+
+#: media/js/post.js:549
+msgid "cannot pick own answer as best"
+msgstr "Beklager men du kan ikke akseptere ditt eget svar"
+
+#: media/js/post.js:552 media/js/post.js.c:1416
+msgid "please login"
+msgstr "vennligst logg inn"
+
+#: media/js/post.js:554
+msgid "anonymous users cannot follow questions"
+msgstr "anonyme brukere kan ikke følge spørsmål"
+
+#: media/js/post.js:555
+msgid "anonymous users cannot subscribe to questions"
+msgstr "anonyme brukere kan ikke abonnere på spørsmål"
+
+#: media/js/post.js:556 media/js/post.js.c:1426
+msgid "anonymous users cannot vote"
+msgstr "anonyme brukere kan ikke stemme"
+
+#: media/js/post.js:558
+msgid "please confirm offensive"
+msgstr "er du sikker på at dette innlegget er støtende, inneholder spam, reklame, osv.?"
+
+#: media/js/post.js:559
+msgid "please confirm removal of offensive flag"
+msgstr "er du sikker på at dette innlegget er støtende, inneholder spam, reklame, osv.?"
+
+#: media/js/post.js:560
+msgid "anonymous users cannot flag offensive posts"
+msgstr "anonyme brukere kan ikke flagge støtende innlegg"
+
+#: media/js/post.js:561
+msgid "confirm delete"
+msgstr "er du sikker på at du ønsker å slette denne?"
+
+#: media/js/post.js:562
+msgid "anonymous users cannot delete/undelete"
+msgstr "anonyme brukere kan ikke slette eller hente tilbake slettede innlegg"
+
+#: media/js/post.js:563
+msgid "post recovered"
+msgstr "ditt innlegg er nå tilbakeført!"
+
+#: media/js/post.js:564
+msgid "post deleted"
+msgstr "ditt innlegg er nå slettet"
+
+#: media/js/post.js:831
+msgid "Follow"
+msgstr "Følg"
+
+#: media/js/post.js:840 media/js/post.js.c:849
+#, c-format
+msgid "%s follower"
+msgid_plural "%s followers"
+msgstr[0] "%s følger"
+msgstr[1] "%s følgere"
+
+#: media/js/post.js:845
+msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
+msgstr "<div>Følger</div><div class=\"unfollow\">Slutt å følge</div>"
+
+#: media/js/post.js:901
+msgid "remove flag"
+msgstr "fjern flagg"
+
+#: media/js/post.js:935 media/js/post.js.c:964
+msgid "flag offensive"
+msgstr "er du sikker på at dette innlegget er støtende, inneholder spam, reklame, osv.?"
+
+#: media/js/post.js:990 media/js/post.js.c:1497
+msgid "undelete"
+msgstr "er du sikker på at du ønsker å slette denne?"
+
+#: media/js/post.js:995 media/js/post.js.c:1501
+msgid "delete"
+msgstr "ditt innlegg er nå slettet"
+
+#: media/js/post.js:1218 media/js/post.js.c:1445
+msgid "sorry, something is not right here"
+msgstr "Noe stemmer ikke helt ..."
+
+#: media/js/post.js:1665
+msgid "add comment"
+msgstr "legg til kommentar"
+
+#: media/js/post.js:1671
+msgid "save comment"
+msgstr "lagre kommentar"
+
+#: media/js/post.js:1711
+#, c-format
+msgid "enter at least %s characters"
+msgstr "tast inn minst %s fler tegn"
+
+#: media/js/post.js:1713
+#, c-format
+msgid "enter at least %s more characters"
+msgstr "tast inn minst %s fler tegn"
+
+#: media/js/post.js:1723
+#, c-format
+msgid "%s characters left"
+msgstr "tast inn minst %s fler tegn"
+
+#: media/js/post.js:1823
+msgid "minor edit (don't send alerts)"
+msgstr "enkel endring (ikke send notifikasjon)"
+
+#: media/js/post.js:1855
+msgid "Are you sure you don't want to post this comment?"
+msgstr "Er du sikker på at du ikke ønsker å poste denne kommentaren?"
+
+#: media/js/post.js:1890 media/js/utils.js:3360 media/js/utils.js.c:3515
+msgid "just now"
+msgstr "akkurat nå"
+
+#: media/js/post.js:1956
+msgid "delete this comment"
+msgstr "trykk for å editere denne kommentaren"
+
+#: media/js/post.js:2271
+msgid "confirm delete comment"
+msgstr "er du sikker på du ønsker å slette denne kommentaren?"
+
+#: media/js/post.js:2409
+msgid "please sign in or register to post comments"
+msgstr "logg inn eller registrer deg for å kunne kommentere"
+
+#: media/js/post.js:2560
+msgid "Please enter question title (>10 characters)"
+msgstr "Vennligst skriv inn spørsmålstittel (>10 tegn)"
+
+#: media/js/post.js:2612 media/js/post.js.c:4626
+msgid "Sorry, you have only read access"
+msgstr "Du har bare lesetilgang"
+
+#: media/js/post.js:3075 media/js/post.js.c:3869 media/js/post.js.c:4058
+msgid "save"
+msgstr "lagre"
+
+#: media/js/post.js:3199
+msgid "Enter the logo url or upload an image"
+msgstr "Skriv inn en logo url eller last opp et bilde"
+
+#: media/js/post.js:3225
+msgid "Do you really want to remove the image?"
+msgstr "Ønsker du virkelig å slette bilde?"
+
+#: media/js/post.js:3341
+msgid "change logo"
+msgstr "endre logo"
+
+#: media/js/post.js:3342
+msgid "add logo"
+msgstr "legge til logo"
+
+#: media/js/post.js:3444
+#, c-format
+msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
+msgstr "merkelapp \"%s\" var allerede lagt til. Ingen grunn å gjenta (trykk \"esc\" for å slette)"
+
+#: media/js/post.js:3453
+#, c-format
+msgid "a maximum of %s tag is allowed"
+msgid_plural "a maximum of %s tags are allowed"
+msgstr[0] "kun %s merkelapp er tillatt"
+msgstr[1] "maks %s merkelapper er tillatt"
+
+#: media/js/post.js:3799
+msgid "Delete category?"
+msgstr "Slette kategori?"
+
+#: media/js/post.js:3888 media/js/utils.js:881
+msgid "edit"
+msgstr "editere"
+
+#: media/js/post.js:3975
+msgid "category name cannot be empty"
+msgstr "legg inn minst en merkelapp"
+
+#: media/js/post.js:4011
+msgid "already exists at the current level!"
+msgstr "eksisterer allerede på nåværende nivå!"
+
+#: media/js/post.js:4047
+msgid "add category"
+msgstr "legg till kategori"
+
+#: media/js/post.js:4594
+msgid "save tags"
+msgstr "lagre merkelapp"
+
+#: media/js/post.js:4689 media/js/post.js.c:4723
+msgid "User name:"
+msgstr "Brukernavn:"
+
+#: media/js/post.js:4710
+msgid "Group name:"
+msgstr "Gruppenavn:"
+
+#: media/js/post.js:4736
+msgid "Shared with the following users:"
+msgstr "Delt med følgende brukere:"
+
+#: media/js/post.js:4742
+msgid "Shared with the following groups:"
+msgstr "Delt med følgende grupper:"
+
+#: media/js/tag_selector.js:14
+msgid "Tag \"<span></span>\" matches:"
+msgstr "Merkelapp \"<span></span>\" er lik:"
+
+#: media/js/tag_selector.js:84
+#, c-format
+msgid "and %s more, not shown..."
+msgstr "og %s mer er ikke vist ..."
+
+#: media/js/user.js:15
+msgid "Please select at least one item"
+msgstr "Velg minst en ting"
+
+#: media/js/user.js:59
+msgid "Delete this notification?"
+msgid_plural "Delete these notifications?"
+msgstr[0] "Slette denne notifikasjonen?"
+msgstr[1] "Slette disse notifikasjonene?"
+
+#: media/js/user.js:66
+msgid "Close this entry?"
+msgid_plural "Close these entries?"
+msgstr[0] "Lukke dette innlegget?"
+msgstr[1] "Lukke disse innleggene?"
+
+#: media/js/user.js:74
+msgid "Remove all flags and approve this entry?"
+msgid_plural "Remove all flags and approve these entries?"
+msgstr[0] "Fjern alle flagg og godkjenne dette innlegget?"
+msgstr[1] "Fjern alle flagg og godkjenne disse innleggene?"
+
+#: media/js/user.js:223
+msgid "Post deleted"
+msgstr "ditt innlegg er nå slettet"
+
+#: media/js/user.js:225
+msgid "Post approved"
+msgstr "ditt innlegg er nå tilbakeført!"
+
+#: media/js/user.js:246
+msgid "Accept"
+msgstr "Godkjenn"
+
+#: media/js/user.js:255
+msgid "Reject"
+msgstr "Avvis"
+
+#: media/js/user.js:270
+msgid "add new reject reason"
+msgstr "legg til grunn for avvisning"
+
+#: media/js/user.js:375
+msgid "Looks there are some things to fix:"
+msgstr "Ser ut til at det er noen ting som må fikses:"
+
+#: media/js/user.js:443
+msgid "Please provide description."
+msgstr "Vennligst legg til beskrivelse."
+
+#: media/js/user.js:446
+msgid "Please provide details."
+msgstr "Vennligst legg ved detaljer."
+
+#: media/js/user.js:560
+msgid "A reason must be selected to delete one."
+msgstr "En grunn må velges for å slette en."
+
+#: media/js/user.js:659
+msgid "A reason must be selected to reject post."
+msgstr "En grunn må velges for å avvise et innlegg"
+
+#: media/js/user.js:708
+msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
+msgstr "Vennligst <a href=\"%(signin_url)s\">logg inn</a> for å følge %(username)s"
+
+#: media/js/user.js:740
+#, c-format
+msgid "unfollow %s"
+msgstr "slutt å følge %s"
+
+#: media/js/user.js:743
+#, c-format
+msgid "following %s"
+msgstr "følger %s"
+
+#: media/js/user.js:749
+#, c-format
+msgid "follow %s"
+msgstr "følg %s"
+
+#: media/js/user.js:883
+msgid "add group"
+msgstr "legg til gruppe"
+
+#: media/js/user.js:963
+msgid "add"
+msgstr "legg til"
+
+#: media/js/utils.js:99
+msgid "and"
+msgstr "og"
+
+#: media/js/utils.js:117
+msgid "click to close"
+msgstr "trykk for å lukke"
+
+#: media/js/utils.js:880
+msgid "click to edit this comment"
+msgstr "trykk for å endre denne kommentaren"
+
+#: media/js/utils.js:905
+msgid "convert to answer"
+msgstr "konverter til svar"
+
+#: media/js/utils.js:958
+msgid "Ok"
+msgstr "Ok"
+
+#: media/js/utils.js:959 media/js/utils.js.c:1407
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: media/js/utils.js:1219
+#, c-format
+msgid "Uploaded file: %s"
+msgstr "Opplastet fil: %s"
+
+#: media/js/utils.js:1234
+msgid "Choose a different image"
+msgstr "Velg et annet bilde"
+
+#: media/js/utils.js:1236
+msgid "Choose a different file"
+msgstr "Velg en annen fil"
+
+#: media/js/utils.js:1250
+msgid "Oops, looks like we had an error. Sorry."
+msgstr "Oops. Ser ut til at vi hadde en feil. Beklager."
+
+#: media/js/utils.js:1311
+msgid "Choose an image to insert"
+msgstr "Velg et bilde å legge inn"
+
+#: media/js/utils.js:1313
+msgid "Choose a file to insert"
+msgstr "Velg en fil å legge inn"
+
+#: media/js/utils.js:1326
+msgid "Allowed file types are:"
+msgstr "Lovlige filtyper er:"
+
+#: media/js/utils.js:1332
+#: media/js/tinymce/plugins/askbot_attachment/editor_plugin.js:35
+msgid "Or paste file url here"
+msgstr "Eller lim inn filurl her"
+
+#: media/js/utils.js:1406
+msgid "Save"
+msgstr "Lagre"
+
+#: media/js/utils.js:1478
+msgid "saved"
+msgstr "lagret"
+
+#: media/js/utils.js:1602
+msgid "enabled"
+msgstr "aktivert"
+
+#: media/js/utils.js:1604
+msgid "disabled"
+msgstr "deaktivert"
+
+#: media/js/utils.js:2038
+msgid "group name"
+msgstr "gruppenavn"
+
+#: media/js/utils.js:2046
+msgid "add new group"
+msgstr "legg til ny gruppe"
+
+#: media/js/utils.js:2138
+msgid "Group %(name)s already exists. Group names are case-insensitive."
+msgstr "Gruppe %(name)s eksisterer allerede. Gruppenavn er uavhengig av store og små bokstaver."
+
+#: media/js/utils.js:2311
+#, c-format
+msgid "see questions tagged '%s'"
+msgstr "se spørsmål med merkelapp '%s'"
+
+#: media/js/utils.js:3358
+msgid "ago"
+msgstr "siden"
+
+#: media/js/utils.js:3359
+msgid "from now"
+msgstr "fra nå"
+
+#: media/js/utils.js:3361
+msgid "about a minute"
+msgstr "omtrent et minutt"
+
+#: media/js/utils.js:3362
+#, c-format
+msgid "%d minutes"
+msgstr "%d minutter"
+
+#: media/js/utils.js:3363
+msgid "about an hour"
+msgstr "omtrent en time"
+
+#: media/js/utils.js:3364
+#, c-format
+msgid "%d hours"
+msgstr "%d timer"
+
+#: media/js/utils.js:3365 media/js/utils.js.c:3493
+msgid "yesterday"
+msgstr "i går"
+
+#: media/js/utils.js:3366
+#, c-format
+msgid "%d days"
+msgstr "%d dager"
+
+#: media/js/utils.js:3367
+msgid "about a month"
+msgstr "omtrent en måned"
+
+#: media/js/utils.js:3368
+#, c-format
+msgid "%d months"
+msgstr "%d måneder"
+
+#: media/js/utils.js:3369
+msgid "about a year"
+msgstr "omtrent et år"
+
+#: media/js/utils.js:3370
+#, c-format
+msgid "%d years"
+msgstr "%d år"
+
+#: media/js/utils.js:3468
+msgid "Jan"
+msgstr "Jan"
+
+#: media/js/utils.js:3469
+msgid "Feb"
+msgstr "Feb"
+
+#: media/js/utils.js:3470
+msgid "Mar"
+msgstr "Mar"
+
+#: media/js/utils.js:3471
+msgid "Apr"
+msgstr "Apr"
+
+#: media/js/utils.js:3472
+msgid "May"
+msgstr "Mai"
+
+#: media/js/utils.js:3473
+msgid "Jun"
+msgstr "Jun"
+
+#: media/js/utils.js:3474
+msgid "Jul"
+msgstr "Jul"
+
+#: media/js/utils.js:3475
+msgid "Aug"
+msgstr "Aug"
+
+#: media/js/utils.js:3476
+msgid "Sep"
+msgstr "Sep"
+
+#: media/js/utils.js:3477
+msgid "Oct"
+msgstr "Okt"
+
+#: media/js/utils.js:3478
+msgid "Nov"
+msgstr "Nov"
+
+#: media/js/utils.js:3479
+msgid "Dec"
+msgstr "Des"
+
+#: media/js/utils.js:3491
+msgid "2 days ago"
+msgstr "2 dager siden"
+
+#: media/js/utils.js:3498
+#, c-format
+msgid "%s hour ago"
+msgid_plural "%s hours ago"
+msgstr[0] "%s time siden"
+msgstr[1] "%s timer siden"
+
+#: media/js/utils.js:3508
+#, c-format
+msgid "%s min ago"
+msgid_plural "%s mins ago"
+msgstr[0] "%s minutt siden"
+msgstr[1] "%s minutter siden"
+
+#: media/js/tinymce/plugins/askbot_attachment/editor_plugin.js:71
+msgid "Insert a file"
+msgstr "Legg til fil"
+
+#: media/js/tinymce/plugins/askbot_imageuploader/editor_plugin.js:70
+msgid "Insert image"
+msgstr "legg inn en lenke til bildet, feks. http://www.example.com/image.jpg eller last opp en bildefil"
+
+#: media/js/wmd/wmd.js:31
+msgid "bold"
+msgstr "fet"
+
+#: media/js/wmd/wmd.js:32
+msgid "italic"
+msgstr "kursiv"
+
+#: media/js/wmd/wmd.js:33
+msgid "link"
+msgstr "lenke"
+
+#: media/js/wmd/wmd.js:34
+msgid "quote"
+msgstr "apostroffer"
+
+#: media/js/wmd/wmd.js:35
+msgid "preformatted text"
+msgstr "formatert tekst"
+
+#: media/js/wmd/wmd.js:36
+msgid "image"
+msgstr "bilde"
+
+#: media/js/wmd/wmd.js:37
+msgid "attachment"
+msgstr "tilbehør"
+
+#: media/js/wmd/wmd.js:38
+msgid "numbered list"
+msgstr "nummerert liste"
+
+#: media/js/wmd/wmd.js:39
+msgid "bulleted list"
+msgstr "punktliste"
+
+#: media/js/wmd/wmd.js:40
+msgid "heading"
+msgstr "tittel"
+
+#: media/js/wmd/wmd.js:41
+msgid "horizontal bar"
+msgstr "horsisontal boks"
+
+#: media/js/wmd/wmd.js:42
+msgid "undo"
+msgstr "angre"
+
+#: media/js/wmd/wmd.js:43 media/js/wmd/wmd.js.c:1169
+msgid "redo"
+msgstr "gjenta"
+
+#: media/js/wmd/wmd.js:54
+msgid "enter image url"
+msgstr "legg inn en lenke til bildet, feks. http://www.example.com/image.jpg eller last opp en bildefil"
+
+#: media/js/wmd/wmd.js:55
+msgid "enter url"
+msgstr "legg inn nettaddresse, feks. http://www.example.com \"Sidetittel\""
+
+#: media/js/wmd/wmd.js:56
+msgid "upload file attachment"
+msgstr "Vennligst velg eller last opp fil:"
+
+#: media/js/wmd/wmd.js:1836
+msgid "image description"
+msgstr "bildebeskrivelse"
+
+#: media/js/wmd/wmd.js:1839
+msgid "file name"
+msgstr "filnavn"
+
+#: media/js/wmd/wmd.js:1843
+msgid "link text"
+msgstr "lenketekst"
+
+#~ msgid "post a comment"
+#~ msgstr "save comment"
+
+#~ msgid "%s content minchars"
+#~ msgstr "please enter more than %s characters"
+
+#~ msgid "%s title minchars"
+#~ msgstr "please enter at least %s characters"
