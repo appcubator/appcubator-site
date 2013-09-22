@@ -154,6 +154,7 @@ INSTALLED_APPS = (
     'django.contrib.comments',
 
     'askbot',
+    'askbot.deps.livesettings',
     'compressor',
     'group_messaging',
     'tinymce',
@@ -304,6 +305,9 @@ if 'ASKBOT_CSS_DEVEL' in locals() and ASKBOT_CSS_DEVEL == True:
     COMPRESS_PRECOMPILERS = (
         ('text/less', 'lessc {infile} {outfile}'),
     )
+
+ASKBOT_ALLOWED_UPLOAD_FILE_TYPES = ('.jpg', '.jpeg', '.gif', '.bmp', '.png', '.tiff')
+ASKBOT_MAX_UPLOAD_FILE_SIZE = 1024 * 1024 #result in bytes
 
 COMPRESS_JS_FILTERS = []
 COMPRESS_PARSER = 'compressor.parser.HtmlParser'
