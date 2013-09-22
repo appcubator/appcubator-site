@@ -81,6 +81,10 @@ function(AppInfoModel,
       return new EntityManager({ pages: this.get('pages') }).getWidgetsRelatedToPage(pageM);
     },
 
+    getWidgetsRelatedToField: function(fieldM) {
+      return new EntityManager({ pages: this.get('pages') }).getWidgetsRelatedToField(fieldM);
+    },
+
     toJSON: function() {
       var json = _.clone(this.attributes);
       json.info = json.info.toJSON();

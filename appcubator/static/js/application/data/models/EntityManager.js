@@ -35,6 +35,15 @@ define(function(require, exports, module) {
             return _.union(widgetsWithGoto, widgetsWithHref);
         },
 
+
+        getWidgetsRelatedToField:  function(fieldM) {
+            var widgetsWithField = this.searchCollectionForKey(this.pages, "field_name", function(val) {
+                return val == fieldM.get('name');
+            });
+
+            return widgetsWithField;
+        },
+
         searchCollectionForKey: function(pagesColl, key, truthTest) {
             var self = this;
             var widgets = [];
@@ -65,6 +74,9 @@ define(function(require, exports, module) {
                     }
                     else if(Backbone.isModel(val)) {
                         checkIfEntity(val);
+                    }
+                    else if(Backbone.isCollection(val)) {
+                        val.each(checkIfEntity);
                     }
                 });
             };

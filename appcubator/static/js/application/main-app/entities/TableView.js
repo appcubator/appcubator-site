@@ -137,8 +137,8 @@ define([
                 var widgets = v1State.getWidgetsRelatedToTable(this.model);
                 var model = this.model;
                 if(widgets.length) {
-                    console.log(widgets);
-                    var widgetsNL = _.map(widgets, function(widget) { console.log(widget); return widget.widget.get('type')+ ' on '+ widget.pageName; });
+
+                    var widgetsNL = _.map(widgets, function(widget) { return widget.widget.get('type')+ ' on '+ widget.pageName; });
                     var widgetsNLString = widgetsNL.join('\n');
                     new DialogueView({ text: "The related widgets listed below will be deleted with this table. Do you want to proceed? <br><br> " + widgetsNLString}, function() {
                         tableColl.remove(model.cid);
@@ -147,6 +147,7 @@ define([
                             widget.widget.collection.remove(widget.widget);
                         });
                     });
+
                 }
                 else {
                     tableColl.remove(model.cid);
@@ -156,6 +157,14 @@ define([
 
             clickedPropDelete: function(e) {
                 var cid = String(e.target.id || e.target.parentNode.id).replace('delete-', '');
+
+                var model = this.fieldsCollection.get(cid);
+                var widgets = v1State.getWidgetsRelatedToField(model);
+    
+                _.each(widgets, function(widget) {
+                    widget.widget.getForm().removeFieldsConnectedToField(model);
+                });
+
                 this.fieldsCollection.remove(cid);
                 $('#column-' + cid).remove();
             },
