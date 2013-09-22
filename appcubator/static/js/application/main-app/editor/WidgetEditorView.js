@@ -11,6 +11,7 @@ define([
   'editor/form-editor/LoginFormEditorView',
   'editor/QueryEditorView',
   'editor/CustomWidgetEditorModal',
+  'mixins/GenericModelFieldEditor',
   'mixins/BackboneUI',
   'util'
 ],
@@ -25,7 +26,8 @@ function(WidgetContentEditor,
          FormEditorView,
          LoginFormEditorView,
          QueryEditorView,
-         CustomWidgetEditorModal ) {
+         CustomWidgetEditorModal,
+         GenericModelFieldEditor ) {
 
   var WidgetEditorView = Backbone.UIView.extend({
     className : 'widget-editor fadeIn',
@@ -49,6 +51,7 @@ function(WidgetContentEditor,
       'click .delete-button'      : 'clickedDelete',
       'click .done-text-editing'  : 'clickedDoneTextEditing',
       'click .edit-custom-widget-btn' : 'openCustomWidgetEditor',
+      'click .edit-itemname-btn'  : 'clickedEditItemName',
       'click'                     : 'clicked'
     },
 
@@ -301,6 +304,22 @@ function(WidgetContentEditor,
 
     openCustomWidgetEditor: function() {
       new CustomWidgetEditorModal(this.model);
+    },
+
+    clickedEditItemName: function() {
+      var self = this;
+      new GenericModelFieldEditor({
+        model: self.model,
+        key: "item_name",
+        radioOptions: v1State.getTableModelWithName(self.model.get('data').get('entity')).get('fields').map(function(field) {
+          if(field.get('type') != "text") return null;
+          return {
+            text: field.get('name'),
+            val: field.get('name')
+          };
+        }),
+        question: "What should show up as the name of the item on Paypal?"
+      });
     },
 
     closeEditingMode: function() {
