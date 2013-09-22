@@ -24,7 +24,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.abspath(os.path.dirname(__file__) + "/../collected_media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -35,7 +35,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.abspath(os.path.dirname(__file__) + "/dist_static")
+STATIC_ROOT = os.path.abspath(os.path.dirname(__file__) + "/../appcubator/dist_static")
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -139,8 +139,11 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
+    'django.contrib.humanize',
+    'django.contrib.sitemaps',
+    'django.contrib.messages',
     'appcubator',
     'website',
     'south',
