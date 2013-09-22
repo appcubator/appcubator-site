@@ -60,7 +60,6 @@ function(AppInfoModel,
     },
 
     lazySet: function(key, coll) {
-      console.log(coll);
       this.lazy[key] = coll;
       this.set(key, new Backbone.Collection([]));
     },
@@ -75,11 +74,11 @@ function(AppInfoModel,
     },
 
     getWidgetsRelatedToTable: function(tableM) {
-      return new EntityManager().getWidgetsRelatedToTable(this.get('pages'), tableM);
+      return new EntityManager({ pages: this.get('pages') }).getWidgetsRelatedToTable(tableM);
     },
 
     getWidgetsRelatedToPage: function(pageM) {
-      return new EntityManager().getWidgetsRelatedToPage(this.get('pages'), tableM);
+      return new EntityManager({ pages: this.get('pages') }).getWidgetsRelatedToPage(pageM);
     },
 
     toJSON: function() {

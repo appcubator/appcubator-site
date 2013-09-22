@@ -1,11 +1,12 @@
 define([
         'app/pages/UrlView',
         'mixins/SimpleModalView',
+        'mixins/DialogueView',
         'app/templates/PageTemplates',
         'util',
         'backbone'
     ],
-    function(UrlView, SimpleModalView) {
+    function(UrlView, SimpleModalView, DialogueView) {
 
         var PageView = Backbone.View.extend({
             el: null,
@@ -82,6 +83,7 @@ define([
 
                     return;
                 }
+                this.askToDelete();
                 // this.model.collection.remove(this.model);
                 // this.remove();
             },
@@ -93,8 +95,7 @@ define([
                 var widgets = v1State.getWidgetsRelatedToPage(this.model);
 
                 if(widgets.length) {
-                    console.log(widgets);
-                    var widgetsNL = _.map(widgets, function(widget) { console.log(widget); return widget.widget.get('type')+ ' on '+ widget.pageName; });
+                    var widgetsNL = _.map(widgets, function(widget) { return widget.widget.get('type')+ ' on '+ widget.pageName; });
                     var widgetsNLString = widgetsNL.join('\n');
                     new DialogueView({ text: "The related widgets listed below will be deleted with this page. Do you want to proceed? <br><br> " + widgetsNLString}, function() {
                         

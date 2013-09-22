@@ -8,29 +8,59 @@ define(function(require, exports, module) {
 
         initialize: function(options) {
             _.bindAll(this);
+            this.pages = options.pages;
         },
 
-        searchCollection: function(pagesColl) {
-            var self = this;
+        getWidgetsRelatedToTable: function(tableM) {
+            var widgetsWithEntity = this.searchCollectionForKey(this.pages, "entity", function(val) {
+                if(Backbone.isModel(val)) {
+                    return val.cid == tableM.cid;
+                }
+                else {
+                    var table = v1State.getTableModelWithName(val);
+                    return val == table.cid;
+                }
+            });
 
+            return widgetsWithEntity;
+        },
+
+        getWidgetsRelatedToPage:  function(pageM) {
+            var widgetsWithGoto = this.searchCollectionForKey(this.pages, "goto", function(val) {
+                return val == "internal://" + pageM.get('name');
+            });
+            var widgetsWithHref = this.searchCollectionForKey(this.pages, "href", function(val) {
+                return val == "internal://" + pageM.get('name');
+            });
+            return _.union(widgetsWithGoto, widgetsWithHref);
+        },
+
+        searchCollectionForKey: function(pagesColl, key, truthTest) {
+            var self = this;
+            var widgets = [];
             pagesColl.each(function(pageM) {
+                var pageName = pageM.get('name');
                 pageM.get('uielements').each(function(widgetM) {
-                    self.searchForEntity(widgetM, pageM);
+                    var widget = self.searchForKeyInWidget(widgetM, key, truthTest);
+
+                    if(widget) {
+                        widgets.push({ widget: widgetM, pageName: pageName});
+                    }
+
                 });
             });
 
-            return this;
+            return widgets;
         },
 
-        searchForEntity: function(widgetM, pageM) {
-
-            var entity = null;
+        searchForKeyInWidget: function(widgetM, key, truthTest) {
+            var lookingFor = null;
 
             var checkIfEntity = function(model) {
-                _.each(model.attributes, function(val, key) {
-                    if(entity) return;
-                    if(key == "entity") {
-                        entity = val;
+                _.each(model.attributes, function(val, attribKey) {
+                    if(lookingFor) return;
+                    if(attribKey == key && truthTest(val)) {
+                        lookingFor = val;
                         return;
                     }
                     else if(Backbone.isModel(val)) {
@@ -41,40 +71,7 @@ define(function(require, exports, module) {
 
             checkIfEntity(widgetM);
 
-            if(entity) {
-                if(Backbone.isModel(entity)) {
-                    this.register(entity.cid, widgetM, pageM.get('name'));
-                }
-                else {
-                    entity = v1State.getTableModelWithName(entity);
-                    if(Backbone.isModel(entity)) {
-                        this.register(entity.cid, widgetM, pageM.get('name'));
-                    }
-                }
-            }
-        },
-
-        register: function(cid, widgetM, pageName) {
-            if(!this.has(entityCid)) {
-                this.set(entityCid, new Backbone.Collection());
-            }
-            this.get(entityCid).add({ widget: widgetM, pageName: pageName});
-        },
-
-        getWidgetsRelatedToTable: function(pagesColl, tableM) {
-            this.searchCollectionForKey(pagesColl, "entity");
-            if(this.get(tableM.cid)) {
-                return this.get(tableM.cid).toJSON();
-            }
-            return [];
-        },
-
-        getWidgetsRelatedToPage:  function(pagesColl, pageM) {
-            this.searchCollectionForKey(pagesColl, "goto");
-            if(this.get(pageM.cid)) {
-                return this.get(pageM.cid).toJSON();
-            }
-            return [];
+            return lookingFor;
         }
 
     });
