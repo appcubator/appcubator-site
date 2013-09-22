@@ -540,7 +540,7 @@ class App(models.Model):
 
             tmp_project_dir = write_to_fs(coder, css=self.css())
         except Exception:
-            self.record_compile2_error()
+            self.record_compile2_error(traceback.format_exc())
             raise
 
         return tmp_project_dir
