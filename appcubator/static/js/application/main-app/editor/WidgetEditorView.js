@@ -152,6 +152,10 @@ function(WidgetContentEditor,
           this.el.appendChild(this.renderButtonWithDeleteButtonandText('search-editor-btn', 'Edit Search Options'));
         }
 
+        if(action == "buy") {
+          this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-itemname-btn', 'Edit Item Name'));
+        }
+
         if(this.model.hasForm() && action != "login" && action != "signup") {
           this.widgetClassPickerView = new WidgetClassPickerView(this.model);
           this.layoutEditor = new WidgetLayoutEditor(this.model);
