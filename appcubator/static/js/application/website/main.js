@@ -63,7 +63,7 @@ require.config({
 require([
   './HomepageView',
   './DeveloperpageView',
-  './SignupDeployView',
+  './SignupModalView',
   './SlideView',
   'backbone',
   'util',
