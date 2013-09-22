@@ -10,7 +10,7 @@ define(function(require, exports, module) {
             _.bindAll(this);
         },
 
-        bindExisting: function(pagesColl) {
+        searchCollection: function(pagesColl) {
             var self = this;
 
             pagesColl.each(function(pageM) {
@@ -54,7 +54,7 @@ define(function(require, exports, module) {
             }
         },
 
-        register: function(entityCid, widgetM, pageName) {
+        register: function(cid, widgetM, pageName) {
             if(!this.has(entityCid)) {
                 this.set(entityCid, new Backbone.Collection());
             }
@@ -62,10 +62,17 @@ define(function(require, exports, module) {
         },
 
         getWidgetsRelatedToTable: function(pagesColl, tableM) {
-            this.bindExisting(pagesColl);
+            this.searchCollectionForKey(pagesColl, "entity");
             if(this.get(tableM.cid)) {
-                console.log(this.get(tableM.cid).toJSON());
                 return this.get(tableM.cid).toJSON();
+            }
+            return [];
+        },
+
+        getWidgetsRelatedToPage:  function(pagesColl, pageM) {
+            this.searchCollectionForKey(pagesColl, "goto");
+            if(this.get(pageM.cid)) {
+                return this.get(pageM.cid).toJSON();
             }
             return [];
         }
