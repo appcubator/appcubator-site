@@ -309,7 +309,7 @@ function(WidgetContentEditor,
     clickedEditItemName: function() {
       var self = this;
       new GenericModelFieldEditor({
-        model: self.model,
+        model: self.model.get('data').get('container_info'),
         key: "item_name",
         radioOptions: v1State.getTableModelWithName(self.model.get('data').get('entity')).get('fields').map(function(field) {
           if(field.get('type') != "text") return null;

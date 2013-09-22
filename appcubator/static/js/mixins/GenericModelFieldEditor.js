@@ -36,35 +36,27 @@ function(React) {
                     },
 
                     handleChange: function(event) {
-                        this.setState({hasLink: true});
-                        this.setState({link: event.target.value});
-                        model.get('data').get('container_info').set('pageLink', event.target.value);
+                        this.setState({currentVal: event.target.value});
+                        model.set(key, event.target.value);
                     },
 
-                    unsetLink: function() {
-                        this.setState({hasLink: false});
-                        model.get('data').get('container_info').unset('pageLink');
-                    },
-
-                    setLink: function() {
-                        this.setState({hasLink: true});
-                        model.get('data').get('container_info').set('pageLink', this.state.link);
-                    },
 
                     render: function() {
                         var optionsEls = _.map(options.radioOptions, function(radioOpt) {
-                                console.log(radioOpt);
-                                return React.DOM.li({className: "full-width", children:[
-                                    React.DOM.input({type: "radio", checked: (this.state.currentVal == radioOpt.val), onChange: this.handleChange}),
-                                    React.DOM.label({value: radioOpt.text, className:"span24" })
+                                
+                                if(radioOpt === null) return null;
+
+                                return React.DOM.li({className: "full-width hi2", children:[
+                                    React.DOM.input({type: "radio", checked: (this.state.currentVal == radioOpt.val), onChange: this.handleChange, className: "span2"}),
+                                    React.DOM.label({children: radioOpt.text, className:"span30" })
                                 ]});
                         }, this);
-
+                        optionsEls = _.reject(optionsEls, function(el) { return el === null; });
                         return React.DOM.div({
                             className: "padding1",
                             children:[
                                 React.DOM.div({children: options.question, className:"full-width"}),
-                                React.DOM.ul({className:"no-bullets", children: optionsEls})
+                                React.DOM.ul({className:"no-bullets full-width", children: optionsEls})
                             ]
                         });
                     }
