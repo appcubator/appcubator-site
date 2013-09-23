@@ -55,10 +55,9 @@ function(PageModel) {
     },
 
     createPage: function(name) {
-      var pageUrlPart = name.replace(/ /g, '_');
-      var pageUrl = { urlparts : [pageUrlPart] };
       var pageInd = v1State.get('pages').length;
-      var pageModel = new PageModel({ name: name, url: pageUrl});
+      var pageModel = new PageModel({ name: name });
+      pageModel.setupUrl(name);
       v1State.get('pages').push(pageModel);
 
       var self = this;
