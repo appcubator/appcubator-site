@@ -15,7 +15,7 @@ function(React) {
           _.bindAll(this);
           this.options = options;
           this.model = options.model;
-          this.key =  options;
+          this.key =  options.key;
           this.title = options.title;
           this.render();
         },
@@ -32,14 +32,15 @@ function(React) {
                 Component =  React.createClass({
 
                     getInitialState: function() {
+                        console.log(model.get(key));
                         return { currentVal : model.get(key) };
                     },
 
                     handleChange: function(event) {
                         this.setState({currentVal: event.target.value});
                         model.set(key, event.target.value);
+                        console.log(key, event.target.value);
                     },
-
 
                     render: function() {
                         var optionsEls = _.map(options.radioOptions, function(radioOpt) {
@@ -47,10 +48,13 @@ function(React) {
                                 if(radioOpt === null) return null;
 
                                 return React.DOM.li({className: "full-width hi2", children:[
-                                    React.DOM.input({type: "radio", checked: (this.state.currentVal == radioOpt.val), onChange: this.handleChange, className: "span2"}),
-                                    React.DOM.label({children: radioOpt.text, className:"span30" })
+                                    React.DOM.label({ className:"span30", children: [
+                                        radioOpt.text,
+                                        React.DOM.input({type: "radio", value: radioOpt.val, checked: (this.state.currentVal == radioOpt.val), onChange: this.handleChange, className: "span2"})
+                                    ] })
                                 ]});
                         }, this);
+
                         optionsEls = _.reject(optionsEls, function(el) { return el === null; });
                         return React.DOM.div({
                             className: "padding1",
