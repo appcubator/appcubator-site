@@ -227,7 +227,7 @@ define([
                 var $container = this.$el.find('#elements-container');
                 var oldHeight = this.currentHeight;
 
-                this.currentHeight = (this.model.getHeight() + 4) * 15;
+                this.currentHeight = (this.model.getHeight() + 12) * 15;
                 if (this.currentHeight < 800) this.currentHeight = 800;
                 $container.css('height', this.currentHeight);
 
