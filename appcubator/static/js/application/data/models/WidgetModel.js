@@ -210,6 +210,10 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                     this.get('data').has('htmlC')) return true;
             },
 
+            getBottom: function() {
+                return this.get('layout').get('height') + this.get('layout').get('top');
+            },
+
             toJSON: function() {
                 var json = _.clone(this.attributes);
                 json = _.omit(json, 'selected', 'deletable', 'context');

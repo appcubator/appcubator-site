@@ -95,6 +95,7 @@ define([
                 ];
 
                 this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
+                this.listenTo(this.model, 'scroll', this.scrollTo);
 
                 this.startUIStateUpdater();
             },
@@ -234,6 +235,23 @@ define([
                 if (this.currentHeight > oldHeight) {
                     util.scrollToBottom($('#page'));
                 }
+            },
+
+            scrollTo: function(widget) {
+
+                var pageHeight = window.innerHeight - 90 - 46;
+                var pageTop = $('#page').scrollTop();
+                console.log(pageTop);
+                var pageHeightUnit = Math.floor(pageHeight / 15);
+                var topUnit = Math.floor(pageTop / 15);
+
+                console.log((pageHeightUnit + topUnit));
+                console.log(widget.getBottom());
+
+                if((widget.getBottom() + 6) > (pageHeightUnit + topUnit)) {
+                    $('#page').scrollTop((widget.getBottom() - pageHeightUnit + widget.get('layout').get('height') + 1) * 15);
+                }
+
             },
 
             close: function() {

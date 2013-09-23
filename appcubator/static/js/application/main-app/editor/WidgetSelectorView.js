@@ -290,6 +290,11 @@ function() {
       if(keyDispatcher.textEditing === true) return;
       if(this.selectedEl.getRow() && this.selectedEl.editMode === true) return;
 
+
+      // if(this.selectedEl.getBottom() > v1State.getCurrentPage().getHeight()) {
+        v1State.getCurrentPage().trigger('scroll', this.selectedEl);
+      // }
+
       this.selectedEl.moveDown();
       e.preventDefault();
     },
