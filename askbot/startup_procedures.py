@@ -997,7 +997,7 @@ def run_startup_tests():
     test_versions()
     test_askbot_url()
     test_avatar()
-    test_cache_backend()
+    #test_cache_backend()
     #test_celery()
     test_compressor()
     test_custom_user_profile_tab()
