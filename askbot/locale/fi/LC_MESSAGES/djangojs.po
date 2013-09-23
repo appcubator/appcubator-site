@@ -1,0 +1,802 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Hannu Sehm <hannu@kipax.fi>, 2012
+# Otto Nuoranne <otto.nuoranne@hotmail.com>, 2012
+# Pekka Järvinen <pekka.jarvinen@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: askbot\n"
+"Report-Msgid-Bugs-To: http://askbot.org/\n"
+"POT-Creation-Date: 2013-07-13 14:07-0500\n"
+"PO-Revision-Date: 2013-07-31 10:59+0000\n"
+"Last-Translator: Pekka Järvinen <pekka.jarvinen@gmail.com>\n"
+"Language-Team: Finnish (http://www.transifex.com/projects/p/askbot/language/fi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: media/jquery-openid/jquery.openid.js:73
+#, c-format
+msgid "Are you sure you want to remove your %s login?"
+msgstr "Oletko varma että haluat poistaa %s:n sisäänkirjautumisen?"
+
+#: media/jquery-openid/jquery.openid.js:90
+msgid "Please add one or more login methods."
+msgstr "Lisää yksi tai useampi sisäänkirjautumistapa"
+
+#: media/jquery-openid/jquery.openid.js:93
+msgid ""
+"You don't have a method to log in right now, please add one or more by "
+"clicking any of the icons below."
+msgstr "Sinulle i tällä hetkellä ole yhtäkään sisäänkirjautumistapaa, ole hyvä ja lisää yksi tai useampi klikkaamalla jotakin alla olevista kuvakkeista."
+
+#: media/jquery-openid/jquery.openid.js:135
+msgid "passwords do not match"
+msgstr "salasanat eivät täsmää"
+
+#: media/jquery-openid/jquery.openid.js:162
+msgid "Show/change current login methods"
+msgstr "Näytä/muokkaa tämänhetkisiä sisäänkirjautumistapoja"
+
+#: media/jquery-openid/jquery.openid.js:227
+#, c-format
+msgid "Please enter your %s, then proceed"
+msgstr "Kirjoita tähän %s ja jatka sitten"
+
+#: media/jquery-openid/jquery.openid.js:229
+msgid "Connect your %(provider_name)s account to %(site)s"
+msgstr "Yhdistä %(provider_name)s-tilisi sivuun %(site)s"
+
+#: media/jquery-openid/jquery.openid.js:323
+#, c-format
+msgid "Change your %s password"
+msgstr "Vaihda %s-salasanaasi"
+
+#: media/jquery-openid/jquery.openid.js:324
+msgid "Change password"
+msgstr "Vaihda salasanaa"
+
+#: media/jquery-openid/jquery.openid.js:327
+#, c-format
+msgid "Create a password for %s"
+msgstr "Luo salasana %s:lle"
+
+#: media/jquery-openid/jquery.openid.js:328
+msgid "Create password"
+msgstr "Luo salasana"
+
+#: media/jquery-openid/jquery.openid.js:344
+msgid "Create a password-protected account"
+msgstr "Luo salasanalla suojattu tili"
+
+#: media/js/group_messaging.js:102 media/js/group_messaging.js.c:293
+msgid "required"
+msgstr "pakollinen"
+
+#: media/js/group_messaging.js:139
+msgid "Your message:"
+msgstr "Viestisi:"
+
+#: media/js/group_messaging.js:152
+msgid "send"
+msgstr "lähetä"
+
+#: media/js/group_messaging.js:164 media/js/post.js:1809
+#: media/js/post.js.c:3081 media/js/post.js.c:4598 media/js/user.js:888
+msgid "cancel"
+msgstr "peruuta"
+
+#: media/js/group_messaging.js:227
+msgid "Reply"
+msgstr "Vastaa"
+
+#: media/js/group_messaging.js:236 media/js/group_messaging.js.c:743
+msgid "message sent"
+msgstr "viesti lähetetty"
+
+#: media/js/group_messaging.js:271
+msgid "user {{str}} does not exist"
+msgid_plural "users {{str}} do not exist"
+msgstr[0] "käyttäjää {{str}} ei ole"
+msgstr[1] "käyttäjät {{str}} eivät ole olemassa"
+
+#: media/js/group_messaging.js:278
+msgid "cannot send message to yourself"
+msgstr "et voi lähettää viestiä itsellesi"
+
+#: media/js/group_messaging.js:323
+msgid "Recipient:"
+msgstr "Vastaanottaja:"
+
+#: media/js/live_search.js:196
+msgid "To see search results, 2 or more characters may be required"
+msgstr "Nähdäksesi hakutulokset, 2 tai useampi merkki saattaa olla vaadittu"
+
+#: media/js/live_search.js:218
+msgid "Ask Your Question"
+msgstr "Esitä kysymys"
+
+#: media/js/live_search.js:299
+msgid "Sorry, this tag does not exist"
+msgid_plural "Sorry, these tags do not exist"
+msgstr[0] "Tämä tagi ei ole olemassa"
+msgstr[1] "Nämä tagit eivät ole olemassa"
+
+#: media/js/live_search.js:313
+msgid "search or ask your question"
+msgstr "etsi tai kysy kysymyksesi"
+
+#: media/js/post.js:28
+msgid "loading..."
+msgstr "ladataan..."
+
+#: media/js/post.js:100
+msgid "must be shorter than %(max_chars)s character"
+msgid_plural "must be shorter than %(max_chars)s characters"
+msgstr[0] "pitää olla lyhyempi kuin %(max_chars)s merkki"
+msgstr[1] "pitää olla lyhyempi kuin %(max_chars)s merkkiä"
+
+#: media/js/post.js:154 media/js/post.js.c:1269
+msgid "tags cannot be empty"
+msgstr "anna vähintään yksi tagi"
+
+#: media/js/post.js:160
+msgid "details are required"
+msgstr "yksityiskohtia vaaditaan"
+
+#: media/js/post.js:163
+#, c-format
+msgid "details must have > %s character"
+msgid_plural "details must have > %s characters"
+msgstr[0] "syötä vielä vähintään %s merkki"
+msgstr[1] "syötä vielä vähintään %s merkkiä"
+
+#: media/js/post.js:171
+msgid "enter your question"
+msgstr "syötä kysymyksesi"
+
+#: media/js/post.js:174
+#, c-format
+msgid "question must have > %s character"
+msgid_plural "question must have > %s characters"
+msgstr[0] "syötä vähintään %s merkki"
+msgstr[1] "syötä vähintään %s merkkiä"
+
+#: media/js/post.js:193
+msgid "content cannot be empty"
+msgstr "anna vähintään yksi tagi"
+
+#: media/js/post.js:196
+#, c-format
+msgid "answer must be > %s character"
+msgid_plural "answer must be > %s characters"
+msgstr[0] "syötä vähintään %s merkki"
+msgstr[1] "syötä vähintään %s merkkiä"
+
+#: media/js/post.js:253
+msgid "Back to the question"
+msgstr "Takaisin kysymykseen"
+
+#: media/js/post.js:303
+msgid "draft saved..."
+msgstr "luonnos tallennettu..."
+
+#: media/js/post.js:548
+msgid "insufficient privilege"
+msgstr "ei käyttöoikeutta"
+
+#: media/js/post.js:549
+msgid "cannot pick own answer as best"
+msgstr "et voi hyväksyä omaa vastaustasi parhaaksi"
+
+#: media/js/post.js:552 media/js/post.js.c:1416
+msgid "please login"
+msgstr "ole hyvä ja kirjaudu sisään"
+
+#: media/js/post.js:554
+msgid "anonymous users cannot follow questions"
+msgstr "anonyymit käyttäjät eivät voi seurata kysymyksiä"
+
+#: media/js/post.js:555
+msgid "anonymous users cannot subscribe to questions"
+msgstr "anonyymit käyttäjät eivät voi kirjoittautua kysymysten tilaajiksi"
+
+#: media/js/post.js:556 media/js/post.js.c:1426
+msgid "anonymous users cannot vote"
+msgstr "kirjaudu sisään, jotta voit käyttää tätä ominaisuutta "
+
+#: media/js/post.js:558
+msgid "please confirm offensive"
+msgstr "oletko varma, että tämä on roskaposti, loukkaava tai muuta hyväksymätöntä?"
+
+#: media/js/post.js:559
+msgid "please confirm removal of offensive flag"
+msgstr "oletko varma, että tämä on roskaposti, loukkaava tai muuta hyväksymätöntä?"
+
+#: media/js/post.js:560
+msgid "anonymous users cannot flag offensive posts"
+msgstr "anonyymit käyttäjät eivät voi liputtaa merkintöjä loukkaaviksi"
+
+#: media/js/post.js:561
+msgid "confirm delete"
+msgstr "oletko varma, että haluat poistaa tämän?"
+
+#: media/js/post.js:562
+msgid "anonymous users cannot delete/undelete"
+msgstr "kirjaudu sisään, jotta voit käyttää tätä ominaisuutta"
+
+#: media/js/post.js:563
+msgid "post recovered"
+msgstr "postauksesi on palautettu!"
+
+#: media/js/post.js:564
+msgid "post deleted"
+msgstr "postauksesi on poistettu"
+
+#: media/js/post.js:831
+msgid "Follow"
+msgstr "Seuraa"
+
+#: media/js/post.js:840 media/js/post.js.c:849
+#, c-format
+msgid "%s follower"
+msgid_plural "%s followers"
+msgstr[0] "%s seuraaja"
+msgstr[1] "%s seuraajaa"
+
+#: media/js/post.js:845
+msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
+msgstr "<div>Seurataan</div><div class=\"unfollow\">Lopeta seuraaminen</div>"
+
+#: media/js/post.js:901
+msgid "remove flag"
+msgstr "poista lippu"
+
+#: media/js/post.js:935 media/js/post.js.c:964
+msgid "flag offensive"
+msgstr "oletko varma, että tämä on roskaposti, loukkaava tai muuta hyväksymätöntä?"
+
+#: media/js/post.js:990 media/js/post.js.c:1497
+msgid "undelete"
+msgstr "oletko varma, että haluat poistaa tämän?"
+
+#: media/js/post.js:995 media/js/post.js.c:1501
+msgid "delete"
+msgstr "postauksesi on poistettu"
+
+#: media/js/post.js:1218 media/js/post.js.c:1445
+msgid "sorry, something is not right here"
+msgstr "anteeksi, jotain on mennyt pieleen"
+
+#: media/js/post.js:1665
+msgid "add comment"
+msgstr "lisää kommentti"
+
+#: media/js/post.js:1671
+msgid "save comment"
+msgstr "tallenna kommentti"
+
+#: media/js/post.js:1711
+#, c-format
+msgid "enter at least %s characters"
+msgstr "syötä vähintään %s merkkiä"
+
+#: media/js/post.js:1713
+#, c-format
+msgid "enter at least %s more characters"
+msgstr "syötä vähintään %s merkkiä"
+
+#: media/js/post.js:1723
+#, c-format
+msgid "%s characters left"
+msgstr "syötä vähintään %s merkkiä"
+
+#: media/js/post.js:1823
+msgid "minor edit (don't send alerts)"
+msgstr "pieni muokkaus (älä lähetä sähköpostihuomautusta)"
+
+#: media/js/post.js:1855
+msgid "Are you sure you don't want to post this comment?"
+msgstr "Oletko varma, ettet halua julkaista tätä kommenttia?"
+
+#: media/js/post.js:1890 media/js/utils.js:3360 media/js/utils.js.c:3515
+msgid "just now"
+msgstr "juuri nyt"
+
+#: media/js/post.js:1956
+msgid "delete this comment"
+msgstr "muokkaa kommenttia klikkaamalla"
+
+#: media/js/post.js:2271
+msgid "confirm delete comment"
+msgstr "oletko varma, että haluat poistaa tämän kommentin?"
+
+#: media/js/post.js:2409
+msgid "please sign in or register to post comments"
+msgstr "kirjaudu sisään tai rekisteröidy jättääksesi kommentteja"
+
+#: media/js/post.js:2560
+msgid "Please enter question title (>10 characters)"
+msgstr "Kirjoita tähän kysymyksen otsikko (>10 merkkiä)"
+
+#: media/js/post.js:2612 media/js/post.js.c:4626
+msgid "Sorry, you have only read access"
+msgstr "Sinulla on vain lukuoikeus"
+
+#: media/js/post.js:3075 media/js/post.js.c:3869 media/js/post.js.c:4058
+msgid "save"
+msgstr "tallenna"
+
+#: media/js/post.js:3199
+msgid "Enter the logo url or upload an image"
+msgstr "Syötä logon URL-osoite tai lähetä kuva"
+
+#: media/js/post.js:3225
+msgid "Do you really want to remove the image?"
+msgstr "Oletko varma, että haluat poistaa tämän kuvan?"
+
+#: media/js/post.js:3341
+msgid "change logo"
+msgstr "vaihda logo"
+
+#: media/js/post.js:3342
+msgid "add logo"
+msgstr "lisää logo"
+
+#: media/js/post.js:3444
+#, c-format
+msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
+msgstr "tagi \"%s\" on jo lisätty, ei tarvetta toistaa (paina \"escape\"-näppäintä poistaaksesi)"
+
+#: media/js/post.js:3453
+#, c-format
+msgid "a maximum of %s tag is allowed"
+msgid_plural "a maximum of %s tags are allowed"
+msgstr[0] "Maksimissaan %s tagi on hyväksytty"
+msgstr[1] "Maksimissaan %s tagia on hyväksytty"
+
+#: media/js/post.js:3799
+msgid "Delete category?"
+msgstr "Poista kategoria?"
+
+#: media/js/post.js:3888 media/js/utils.js:881
+msgid "edit"
+msgstr "muokkaa"
+
+#: media/js/post.js:3975
+msgid "category name cannot be empty"
+msgstr "anna vähintään yksi tagi"
+
+#: media/js/post.js:4011
+msgid "already exists at the current level!"
+msgstr "on jo olemassa tällä tasolla!"
+
+#: media/js/post.js:4047
+msgid "add category"
+msgstr "lisää kategoria"
+
+#: media/js/post.js:4594
+msgid "save tags"
+msgstr "tallenna tagit"
+
+#: media/js/post.js:4689 media/js/post.js.c:4723
+msgid "User name:"
+msgstr "Käyttäjänimi:"
+
+#: media/js/post.js:4710
+msgid "Group name:"
+msgstr "Ryhmän nimi:"
+
+#: media/js/post.js:4736
+msgid "Shared with the following users:"
+msgstr "Jaettu seuraavien käyttäjien kanssa:"
+
+#: media/js/post.js:4742
+msgid "Shared with the following groups:"
+msgstr "Jaettu seuraavien ryhmien kanssa:"
+
+#: media/js/tag_selector.js:14
+msgid "Tag \"<span></span>\" matches:"
+msgstr "Tagi \"<span></span>\" yhteensopivuus:"
+
+#: media/js/tag_selector.js:84
+#, c-format
+msgid "and %s more, not shown..."
+msgstr "ja %s tässä näkymätöntä lisää..."
+
+#: media/js/user.js:15
+msgid "Please select at least one item"
+msgstr "Valitse ainakin yksi"
+
+#: media/js/user.js:59
+msgid "Delete this notification?"
+msgid_plural "Delete these notifications?"
+msgstr[0] "Haluatko poistaa tämän huomautuksen?"
+msgstr[1] "Haluatko poistaa nämä huomautukset?"
+
+#: media/js/user.js:66
+msgid "Close this entry?"
+msgid_plural "Close these entries?"
+msgstr[0] "Sulje tämä?"
+msgstr[1] "Sulje nämä?"
+
+#: media/js/user.js:74
+msgid "Remove all flags and approve this entry?"
+msgid_plural "Remove all flags and approve these entries?"
+msgstr[0] "Poista kaikki liput ja hyväksy tämä?"
+msgstr[1] "Poista kaikki liput ja hyväksy nämä?"
+
+#: media/js/user.js:223
+msgid "Post deleted"
+msgstr "poistettu"
+
+#: media/js/user.js:225
+msgid "Post approved"
+msgstr "Palautettu!"
+
+#: media/js/user.js:246
+msgid "Accept"
+msgstr "Hyväksy"
+
+#: media/js/user.js:255
+msgid "Reject"
+msgstr "Hylkää"
+
+#: media/js/user.js:270
+msgid "add new reject reason"
+msgstr "lisää uusi hylkäyssyy"
+
+#: media/js/user.js:375
+msgid "Looks there are some things to fix:"
+msgstr "Joitain asioita täytyy korjata:"
+
+#: media/js/user.js:443
+msgid "Please provide description."
+msgstr "Syötä kuvaus."
+
+#: media/js/user.js:446
+msgid "Please provide details."
+msgstr "Anna yksityiskohtia."
+
+#: media/js/user.js:560
+msgid "A reason must be selected to delete one."
+msgstr "Poistamisen syy pitää valita."
+
+#: media/js/user.js:659
+msgid "A reason must be selected to reject post."
+msgstr "Syy pitää valita"
+
+#: media/js/user.js:708
+msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
+msgstr "Ole hyvä ja <a href=\"%(signin_url)s\">kirjaudu sisään</a> seurataksesi käyttäjää %(username)s"
+
+#: media/js/user.js:740
+#, c-format
+msgid "unfollow %s"
+msgstr "lopeta %s:n seuraaminen"
+
+#: media/js/user.js:743
+#, c-format
+msgid "following %s"
+msgstr "seurataan %s"
+
+#: media/js/user.js:749
+#, c-format
+msgid "follow %s"
+msgstr "seuraa %s"
+
+#: media/js/user.js:883
+msgid "add group"
+msgstr "lisää ryhmä"
+
+#: media/js/user.js:963
+msgid "add"
+msgstr "lisää"
+
+#: media/js/utils.js:99
+msgid "and"
+msgstr "ja"
+
+#: media/js/utils.js:117
+msgid "click to close"
+msgstr "sulje klikkaamalla"
+
+#: media/js/utils.js:880
+msgid "click to edit this comment"
+msgstr "muokkaa kommenttia klikkaamalla"
+
+#: media/js/utils.js:905
+msgid "convert to answer"
+msgstr "muunna vastaukseksi"
+
+#: media/js/utils.js:958
+msgid "Ok"
+msgstr "Ok"
+
+#: media/js/utils.js:959 media/js/utils.js.c:1407
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: media/js/utils.js:1219
+#, c-format
+msgid "Uploaded file: %s"
+msgstr "Lähetettiin tiedosto: %s"
+
+#: media/js/utils.js:1234
+msgid "Choose a different image"
+msgstr "Valitse muu kuva"
+
+#: media/js/utils.js:1236
+msgid "Choose a different file"
+msgstr "Valitse eri tiedosto"
+
+#: media/js/utils.js:1250
+msgid "Oops, looks like we had an error. Sorry."
+msgstr "Tapahtui virhe. Anteeksi."
+
+#: media/js/utils.js:1311
+msgid "Choose an image to insert"
+msgstr "Valitse liitettävä kuva"
+
+#: media/js/utils.js:1313
+msgid "Choose a file to insert"
+msgstr "Valitse liitettävä tiedosto"
+
+#: media/js/utils.js:1326
+msgid "Allowed file types are:"
+msgstr "Hyväksytyt tiedostotyypit:"
+
+#: media/js/utils.js:1332
+#: media/js/tinymce/plugins/askbot_attachment/editor_plugin.js:35
+msgid "Or paste file url here"
+msgstr "Tai liitä tiedoston URL-osoite tähän"
+
+#: media/js/utils.js:1406
+msgid "Save"
+msgstr "Tallenna"
+
+#: media/js/utils.js:1478
+msgid "saved"
+msgstr "tallennettu"
+
+#: media/js/utils.js:1602
+msgid "enabled"
+msgstr "päällä"
+
+#: media/js/utils.js:1604
+msgid "disabled"
+msgstr "poissa"
+
+#: media/js/utils.js:2038
+msgid "group name"
+msgstr "ryhmän nimi"
+
+#: media/js/utils.js:2046
+msgid "add new group"
+msgstr "lisää ryhmä"
+
+#: media/js/utils.js:2138
+msgid "Group %(name)s already exists. Group names are case-insensitive."
+msgstr "Ryhmä nimeltä %(name)s on jo olemassa. Kirjainkoolla ei ole väliä ryhmien nimissä."
+
+#: media/js/utils.js:2311
+#, c-format
+msgid "see questions tagged '%s'"
+msgstr "katso kysymyksiä, joilla on tagi '%s'"
+
+#: media/js/utils.js:3358
+msgid "ago"
+msgstr "sitten"
+
+#: media/js/utils.js:3359
+msgid "from now"
+msgstr "nykyhetkestä"
+
+#: media/js/utils.js:3361
+msgid "about a minute"
+msgstr "noin minuutti"
+
+#: media/js/utils.js:3362
+#, c-format
+msgid "%d minutes"
+msgstr "%d minuuttia"
+
+#: media/js/utils.js:3363
+msgid "about an hour"
+msgstr "noin tunti"
+
+#: media/js/utils.js:3364
+#, c-format
+msgid "%d hours"
+msgstr "%d tuntia"
+
+#: media/js/utils.js:3365 media/js/utils.js.c:3493
+msgid "yesterday"
+msgstr "eilen"
+
+#: media/js/utils.js:3366
+#, c-format
+msgid "%d days"
+msgstr "%d päivää"
+
+#: media/js/utils.js:3367
+msgid "about a month"
+msgstr "noin kuukausi"
+
+#: media/js/utils.js:3368
+#, c-format
+msgid "%d months"
+msgstr "%d kuukautta"
+
+#: media/js/utils.js:3369
+msgid "about a year"
+msgstr "noin vuosi"
+
+#: media/js/utils.js:3370
+#, c-format
+msgid "%d years"
+msgstr "%d vuotta"
+
+#: media/js/utils.js:3468
+msgid "Jan"
+msgstr "Tam"
+
+#: media/js/utils.js:3469
+msgid "Feb"
+msgstr "Hel"
+
+#: media/js/utils.js:3470
+msgid "Mar"
+msgstr "Maa"
+
+#: media/js/utils.js:3471
+msgid "Apr"
+msgstr "Huh"
+
+#: media/js/utils.js:3472
+msgid "May"
+msgstr "Tou"
+
+#: media/js/utils.js:3473
+msgid "Jun"
+msgstr "Kes"
+
+#: media/js/utils.js:3474
+msgid "Jul"
+msgstr "Hei"
+
+#: media/js/utils.js:3475
+msgid "Aug"
+msgstr "Elo"
+
+#: media/js/utils.js:3476
+msgid "Sep"
+msgstr "Syy"
+
+#: media/js/utils.js:3477
+msgid "Oct"
+msgstr "Lok"
+
+#: media/js/utils.js:3478
+msgid "Nov"
+msgstr "Mar"
+
+#: media/js/utils.js:3479
+msgid "Dec"
+msgstr "Jou"
+
+#: media/js/utils.js:3491
+msgid "2 days ago"
+msgstr "kaksi päivää sitten"
+
+#: media/js/utils.js:3498
+#, c-format
+msgid "%s hour ago"
+msgid_plural "%s hours ago"
+msgstr[0] "%s tunti sitten"
+msgstr[1] "%s tuntia sitten"
+
+#: media/js/utils.js:3508
+#, c-format
+msgid "%s min ago"
+msgid_plural "%s mins ago"
+msgstr[0] "%s minuutti sitten"
+msgstr[1] "%s minuuttia sitten"
+
+#: media/js/tinymce/plugins/askbot_attachment/editor_plugin.js:71
+msgid "Insert a file"
+msgstr "Liitä tiedosto"
+
+#: media/js/tinymce/plugins/askbot_imageuploader/editor_plugin.js:70
+msgid "Insert image"
+msgstr "syötä kuvan URL-osoite, esim. http://www.example.com/image.jpg tai lähetä kuvatiedosto"
+
+#: media/js/wmd/wmd.js:31
+msgid "bold"
+msgstr "lihavoitu"
+
+#: media/js/wmd/wmd.js:32
+msgid "italic"
+msgstr "kursivoitu"
+
+#: media/js/wmd/wmd.js:33
+msgid "link"
+msgstr "linkki"
+
+#: media/js/wmd/wmd.js:34
+msgid "quote"
+msgstr "lainaus"
+
+#: media/js/wmd/wmd.js:35
+msgid "preformatted text"
+msgstr "esimuotoiltu teksti"
+
+#: media/js/wmd/wmd.js:36
+msgid "image"
+msgstr "kuva"
+
+#: media/js/wmd/wmd.js:37
+msgid "attachment"
+msgstr "liite"
+
+#: media/js/wmd/wmd.js:38
+msgid "numbered list"
+msgstr "numeroitu lista"
+
+#: media/js/wmd/wmd.js:39
+msgid "bulleted list"
+msgstr "lista ranskalaisilla viivoilla"
+
+#: media/js/wmd/wmd.js:40
+msgid "heading"
+msgstr "otsikko"
+
+#: media/js/wmd/wmd.js:41
+msgid "horizontal bar"
+msgstr "vaakasuora palkki"
+
+#: media/js/wmd/wmd.js:42
+msgid "undo"
+msgstr "peruuta"
+
+#: media/js/wmd/wmd.js:43 media/js/wmd/wmd.js.c:1169
+msgid "redo"
+msgstr "tee uudelleen"
+
+#: media/js/wmd/wmd.js:54
+msgid "enter image url"
+msgstr "Anna kuvan URL-osoite, esim. http://www.example.com/image.jpg \"kuvan otsikko\""
+
+#: media/js/wmd/wmd.js:55
+msgid "enter url"
+msgstr "Anna URL-osoite, esim. http://www.example.com \"sivun otsikko\""
+
+#: media/js/wmd/wmd.js:56
+msgid "upload file attachment"
+msgstr "Valitse ja lataa tiedosto:"
+
+#: media/js/wmd/wmd.js:1836
+msgid "image description"
+msgstr "kuvaus"
+
+#: media/js/wmd/wmd.js:1839
+msgid "file name"
+msgstr "tiedostonimi"
+
+#: media/js/wmd/wmd.js:1843
+msgid "link text"
+msgstr "linkin teksti"
+
+#~ msgid "post a comment"
+#~ msgstr "save comment"
+
+#~ msgid "%s content minchars"
+#~ msgstr "please enter more than %s characters"
+
+#~ msgid "%s title minchars"
+#~ msgstr "please enter at least %s characters"
