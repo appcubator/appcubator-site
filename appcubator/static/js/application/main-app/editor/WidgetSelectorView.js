@@ -233,11 +233,12 @@ function() {
   
       this.widgetEditorView.clear();
 
+      var cid = model.cid;
       g_guides.hideAll();
-      g_guides.showVertical(ui.position.left / this.positionHorizontalGrid);
-      g_guides.showVertical(ui.position.left / this.positionHorizontalGrid + model.get('layout').get('width'));
-      g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid);
-      g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'));
+      g_guides.showVertical(ui.position.left / this.positionHorizontalGrid, cid);
+      g_guides.showVertical(ui.position.left / this.positionHorizontalGrid + model.get('layout').get('width'), cid);
+      g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
+      g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
 
       var elem = util.get('widget-wrapper-' + model.cid);
       elem.style.top = ui.position.top + 2 + 'px';

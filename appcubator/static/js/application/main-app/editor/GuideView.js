@@ -29,52 +29,65 @@ function(WidgetModel) {
       var self = this;
       self.widgetsCollection.each(function(widget) {
         var layout = widget.get('layout');
-        self.placeHorizontal(layout.get('top'));
-        self.placeHorizontal((layout.get('top') + layout.get('height')));
-        self.placeVertical(layout.get('left'));
-        self.placeVertical(layout.get('left') + layout.get('width'));
+        var cid = widget.cid;
+        self.placeHorizontal(layout.get('top'), cid);
+        self.placeHorizontal((layout.get('top') + layout.get('height')), cid);
+        self.placeVertical(layout.get('left'), cid);
+        self.placeVertical(layout.get('left') + layout.get('width'), cid);
       });
     },
 
-    placeHorizontal: function(nmr) {
-      if(this.horizontalLinesDict[nmr]) return;
+    placeHorizontal: function(nmr, cid) {
+      var lineObj = (this.horizontalLinesDict[nmr]||{});
 
-      var line = document.createElement('div');
-      line.className = 'guide-line-horizontal';
-      line.style.top = (nmr * this.positionVerticalGrid) + 'px';
+      if(!lineObj.line) {
+        line = document.createElement('div');
+        line.className = 'guide-line-horizontal';
+        line.style.top = (nmr * this.positionVerticalGrid) + 'px';
+        lineObj.line = line;
+        this.$el.append(line);
+      }
 
-      this.horizontalLinesDict[nmr] = line;
-      this.$el.append(line);
+      lineObj.models = lineObj.models||[];
+      lineObj.models.push(cid);
+
+      this.horizontalLinesDict[nmr] = lineObj;
     },
 
-    placeVertical: function(nmr) {
-      if(this.verticalLinesDict[nmr]) return;
+    placeVertical: function(nmr, cid) {
+      var lineObj = (this.verticalLinesDict[nmr]||{});
 
-      var line = document.createElement('div');
-      line.className = 'guide-line-vertical';
-      line.style.left = (nmr * this.positionHorizontalGrid) + 'px';
+      if(!lineObj.line) {
+        line = document.createElement('div');
+        line.className = 'guide-line-vertical';
+        line.style.left = (nmr * this.positionHorizontalGrid) + 'px';
+        lineObj.line = line;
+        this.$el.append(line);
+      }
 
-      this.verticalLinesDict[nmr] = line;
-      this.$el.append(line);
+      lineObj.models = lineObj.models||[];
+      lineObj.models.push(cid);
+
+      this.verticalLinesDict[nmr] = lineObj;
     },
 
     showAll: function() {
       _(this.horizontalLinesDict).each(function(val, key) {
-        $(val).addClass('show');
+        $(val.line).addClass('show');
       });
 
       _(this.verticalLinesDict).each(function(val, key) {
-        $(val).addClass('show');
+        $(val.line).addClass('show');
       });
     },
 
     hideAll : function() {
       _(this.horizontalLinesDict).each(function(val, key) {
-        $(val).removeClass('show');
+        $(val.line).removeClass('show');
       });
 
       _(this.verticalLinesDict).each(function(val, key) {
-        $(val).removeClass('show');
+        $(val.line).removeClass('show');
       });
     },
 
@@ -89,17 +102,23 @@ function(WidgetModel) {
       }
     },
 
-    showVertical: function(coor) {
-      coor = Math.round(coor *10)/10;
-      if(this.verticalLinesDict[coor]) {
-        $(this.verticalLinesDict[coor]).addClass('show');
+    showVertical: function(coor, cid) {
+      coor = Math.round(Math.round(coor *10/10));
+
+      if(this.verticalLinesDict[coor] &&
+        !(this.verticalLinesDict[coor].models.length == 1 && this.verticalLinesDict[coor].models[0] == cid)) {
+          
+        $(this.verticalLinesDict[coor].line).addClass('show');
       }
     },
 
-    showHorizontal: function(coor) {
+    showHorizontal: function(coor, cid) {
       coor = Math.round(coor*10)/10;
-      if(this.horizontalLinesDict[coor]) {
-        $(this.horizontalLinesDict[coor]).addClass('show');
+
+      if(this.horizontalLinesDict[coor] &&
+        !(this.horizontalLinesDict[coor].models.length == 1 && this.horizontalLinesDict[coor].models[0] == cid)) {
+
+        $(this.horizontalLinesDict[coor].line).addClass('show');
       }
     }
 
