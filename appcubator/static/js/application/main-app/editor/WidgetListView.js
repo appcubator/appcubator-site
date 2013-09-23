@@ -156,6 +156,7 @@ function( WidgetContainerView,
       var elem = util.get('widget-wrapper-' + this.model.cid);
       elem.style.width = '';
       elem.style.height = '';
+      if(deltaHeight < 2) deltaHeight = 2;
       this.model.get('data').get('container_info').get('row').get('layout').set('height', deltaHeight);
     },
 
