@@ -235,10 +235,28 @@ function() {
 
       var cid = model.cid;
       g_guides.hideAll();
-      g_guides.showVertical(ui.position.left / this.positionHorizontalGrid, cid);
-      g_guides.showVertical(ui.position.left / this.positionHorizontalGrid + model.get('layout').get('width'), cid);
-      g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
-      g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
+
+
+      var valLeft = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid, cid);
+      var valRight =g_guides.showVertical(ui.position.left / this.positionHorizontalGrid + model.get('layout').get('width'), cid);
+      
+      if(valLeft) {
+        ui.position.left = valLeft * this.positionHorizontalGrid;
+      }
+      if(valRight) {
+        ui.position.left = (valRight - model.get('layout').get('width')) * this.positionHorizontalGrid;
+      }
+
+
+      var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
+      var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
+
+      if(valTop) {
+        ui.position.top = valTop * this.positionVerticalGrid;
+      }
+      if(valBottom) {
+        ui.position.top = (valBottom - model.get('layout').get('height')) * this.positionVerticalGrid - 2;
+      }
 
       var elem = util.get('widget-wrapper-' + model.cid);
       elem.style.top = ui.position.top + 2 + 'px';

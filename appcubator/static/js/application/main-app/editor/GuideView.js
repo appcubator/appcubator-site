@@ -166,21 +166,26 @@ define([
             },
 
             showVertical: function(coor, cid) {
-                coor = Math.round(Math.round(coor * 10 / 10));
+                var coorRounded = Math.round(coor);
+                var delta = coorRounded - coor;
 
-                if (this.verticalLinesDict[coor] && !(this.verticalLinesDict[coor].models.length == 1 && this.verticalLinesDict[coor].models[0] == cid)) {
-
-                    $(this.verticalLinesDict[coor].line).addClass('show');
+                if (this.verticalLinesDict[coorRounded] && !(this.verticalLinesDict[coorRounded].models.length == 1 && this.verticalLinesDict[coorRounded].models[0] == cid)) {
+                    $(this.verticalLinesDict[coorRounded].line).addClass('show');
+                    if(delta > -0.15 && delta < 0.15) return coorRounded;
                 }
             },
 
             showHorizontal: function(coor, cid) {
-                coor = Math.round(coor * 10) / 10;
+                var coorRounded = Math.round(coor);
+                var delta = coorRounded - coor;
 
-                if (this.horizontalLinesDict[coor] && !(this.horizontalLinesDict[coor].models.length == 1 && this.horizontalLinesDict[coor].models[0] == cid)) {
-
-                    $(this.horizontalLinesDict[coor].line).addClass('show');
+                if (this.horizontalLinesDict[coorRounded] && !(this.horizontalLinesDict[coorRounded].models.length == 1 && this.horizontalLinesDict[coorRounded].models[0] == cid)) {
+                    $(this.horizontalLinesDict[coorRounded].line).addClass('show');
+                    if(delta > -0.5 && delta < 0.5) return coorRounded;
                 }
+
+
+                return null;
             }
 
         });
