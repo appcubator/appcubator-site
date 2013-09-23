@@ -8,7 +8,7 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
 
             initialize: function(bone, isNew) {
                 this.set('type', bone.type || '');
-                this.set('layout', new LayoutModel(this.get('layout')));
+                this.set('layout', new LayoutModel(bone.layout||{}));
                 this.set('data', new DataModel(bone.data || {}, isNew));
 
                 this.set('context', new Backbone.Collection(bone.context || []));

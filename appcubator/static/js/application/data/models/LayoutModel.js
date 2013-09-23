@@ -7,8 +7,8 @@ define(['backbone'], function(Backbone) {
       'width'  : 4,
       't_padding' : 0,
       'b_padding' : 0,
-      'l_padding' : 0,
-      'r_padding' : 0,
+      'l_padding' : 15,
+      'r_padding' : 15,
       'alignment' : 'left'
     },
     toJSON: function() {

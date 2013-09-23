@@ -16,7 +16,7 @@ function(WidgetModel,
 
         widget.type = "thirdpartylogin";
         widget.layout = layout;
-
+    
         widget.data = {};
         widget.data.nodeType = "form";
         widget.data.class_name = uieState["forms"][0].class_name;
