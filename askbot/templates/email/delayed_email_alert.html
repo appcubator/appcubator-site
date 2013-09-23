@@ -1,0 +1,16 @@
+{% block content %}
+<p>{% trans %}Dear {{ name }},{% endtrans %}</p>
+<p>{% trans num=questions|length %}The following question has been updated {{ site_name }}:{% pluralize num %}The following {{ num }} questions have been updated on {{ site_name }}:{% endtrans %}</p>
+<ul>
+{% for q in questions %}
+    <li>
+        <a href="{{ q['url'] }}?sort=latest">{{ q['title'] }}</a>
+        <font color="#777777">({{ q['info'] }})</font>
+    </li>
+{% endfor %}
+</ul>
+{% include "email/change_settings_info.html" %}
+{% endblock %}
+{% block footer %}
+    {% include "email/footer.html" %}
+{% endblock %}
