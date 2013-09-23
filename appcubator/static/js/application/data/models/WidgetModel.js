@@ -105,14 +105,29 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                     });
                 });
 
-                //context is being added twice
                 this.get('context').each(function(context) {
-                    var listOfPages = v1State.get('pages').getPagesWithEntityName(context.get('entity'));
+                    var entityName = context.get('entity');
+                    var entityModel = v1State.getTableModelWithName(entityName);
+
+                    var listOfPages = v1State.get('pages').getPagesWithEntityName(entityName);
                     _(listOfPages).each(function(pageName) {
                         listOfLinks.push({
                             name: pageName,
                             val: "internal://" + pageName + '/?' + context.get('entity') + '=' + context.get('context')
                         });
+                    });
+
+                    entityModel.getFieldsColl().each(function(field) {
+                        if(field.get('type') == "fk") {
+                            var fieldEntityName = field.get('entity_name');
+                            var listOfIntPages = v1State.get('pages').getPagesWithEntityName(fieldEntityName);
+                            _(listOfIntPages).each(function(pageName) {
+                                listOfLinks.push({
+                                    name: pageName + " with "+ entityName+"."+field.get('name'),
+                                    val: "internal://" + pageName + '/?' + fieldEntityName + '=' + context.get('context') +"."+ field.get('name')
+                                });
+                            });
+                        }
                     });
                 });
 
