@@ -139,8 +139,9 @@ define([
             },
 
             setupUrl: function(name) {
+                name = name.toLowerCase().replace(/ /g, '_');
+                name = name.replace(/[^a-zA-Z0-9\s]+/g, '_');
                 var urlparts = { value: name.toLowerCase().replace(/ /g, '_') };
-                console.log( this.get('url').get('urlparts'));
                 this.get('url').get('urlparts').reset([urlparts]);
             },
 
