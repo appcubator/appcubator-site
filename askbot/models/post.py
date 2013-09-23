@@ -725,12 +725,14 @@ class Post(models.Model):
             cache.cache.set(cache_key, True, django_settings.NOTIFICATION_DELAY_TIME)
 
         from askbot.tasks import send_instant_notifications_about_activity_in_post
+        """
         send_instant_notifications_about_activity_in_post.apply_async((
                                 update_activity,
                                 self,
                                 notify_sets['for_email']),
                                 countdown = django_settings.NOTIFICATION_DELAY_TIME
                             )
+        """
 
     def make_private(self, user, group_id=None):
         """makes post private within user's groups

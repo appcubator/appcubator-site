@@ -4,6 +4,7 @@ import datetime
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.utils.html import escape
+import pytz
 
 def get_from_dict_or_object(source, key):
     try:
@@ -84,7 +85,7 @@ def not_a_robot_request(request):
 
 def diff_date(date, use_on_prefix = False):
     now = datetime.datetime.now()#datetime(*time.localtime()[0:6])#???
-    diff = now - date
+    diff = pytz.UTC.localize(now) - date
     days = diff.days
     hours = int(diff.seconds/3600)
     minutes = int(diff.seconds/60)

@@ -3301,7 +3301,9 @@ def notify_author_of_published_revision(
     #only email about first revision
     if revision.should_notify_author_about_publishing(was_approved):
         from askbot.tasks import notify_author_of_published_revision_celery_task
+        """
         notify_author_of_published_revision_celery_task.delay(revision)
+        """
 
 
 #todo: move to utils
@@ -3341,6 +3343,7 @@ def record_post_update_activity(
 
     from askbot import tasks
 
+    """
     tasks.record_post_update_celery_task.delay(
         post_id=post.id,
         post_content_type_id=ContentType.objects.get_for_model(post).id,
@@ -3351,6 +3354,7 @@ def record_post_update_activity(
         created=created,
         diff=diff,
     )
+    """
 
 
 def record_award_event(instance, created, **kwargs):
@@ -3768,7 +3772,9 @@ def tweet_new_post(sender, user=None, question=None, answer=None, form_data=None
     """seends out tweets about the new post"""
     from askbot.tasks import tweet_new_post_task
     post = question or answer
+    """
     tweet_new_post_task.delay(post.id)
+    """
 
 #signal for User model save changes
 django_signals.pre_save.connect(make_admin_if_first_user, sender=User)

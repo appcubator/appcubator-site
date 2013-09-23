@@ -276,7 +276,8 @@ with open(static_version_file_path) as bro:
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT': 6000,
     }
 }
 AUTHENTICATION_BACKENDS = (

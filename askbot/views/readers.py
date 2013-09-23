@@ -526,11 +526,13 @@ def question(request, id):#refactor - long subroutine. display question body, an
 
         #2) run the slower jobs in a celery task
         from askbot import tasks
+        """
         tasks.record_question_visit.delay(
             question_post = question_post,
             user_id = request.user.id,
             update_view_count = update_view_count
         )
+        """
 
     paginator_data = {
         'is_paginated' : (objects_list.count > const.ANSWERS_PAGE_SIZE),
