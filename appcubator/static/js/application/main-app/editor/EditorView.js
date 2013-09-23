@@ -103,6 +103,8 @@ define([
 
                 if (!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
 
+                document.body.style.overflow = "hidden";
+
                 this.toolBar.setElement(document.getElementById('tool-bar')).render();
                 this.marqueeView.render();
                 this.renderUrlBar();
@@ -236,6 +238,7 @@ define([
 
             close: function() {
                 window.removeEventListener('resize', this.setupPageWrapper);
+                document.body.style.overflow = "";
 
                 clearInterval(this.UIStateTimer);
 
