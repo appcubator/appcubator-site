@@ -1,5 +1,6 @@
 define([
         'models/PageModel',
+        'models/UrlModel',
         'collections/PageCollection',
         'app/pages/UrlView',
         'app/pages/PageView',
@@ -7,7 +8,7 @@ define([
         'mixins/BackboneNameBox',
         'jquery-ui'
     ],
-    function(PageModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
+    function(PageModel, UrlModel, PageCollection, UrlView, PageView, ErrorDialogueView) {
 
         var PagesView = Backbone.View.extend({
 
@@ -65,15 +66,10 @@ define([
             },
 
             createPage: function(name, b) {
-                var pageUrlPart = name.replace(/ /g, '_');
-                var pageUrl = {
-                    urlparts: [pageUrlPart]
-                };
-
-                this.collection.push({
+                var pageM = this.collection.push({
                     name: name,
-                    url: pageUrl
                 });
+                pageM.setupUrl(name);
 
                 v1.save();
             },

@@ -5,6 +5,7 @@ define(['backbone'], function(Backbone) {
 
     initialize: function(bone) {
       var urlparts = [];
+
       if(bone.urlparts) {
         urlparts = _(bone.urlparts).map(function(value) {
           return {
