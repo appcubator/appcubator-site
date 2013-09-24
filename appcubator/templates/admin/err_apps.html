@@ -1,0 +1,32 @@
+{% extends "admin/admin-base.html" %}
+{% block content %}
+  <h2>App Errors</h2>
+  <hr>
+  <table id="err_apps" class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+        <th data-sort-type="number">App ID</th>
+        <th>App Name</th>
+        <th>Error Type</th>
+        <th>Error Trace</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for err_app in err_apps %}
+      <tr>
+        <td>{{ err_app.id }}</td>
+        <td>{{ err_app.name }}</td>
+        <td>{{ err_app.get_error_type_name }}</td>
+        <td>{{ err_app.error_message }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  // $('#users').sortableTable({initialColumn: 1});
+</script>
+{% endblock %}
+
