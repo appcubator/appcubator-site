@@ -16,5 +16,5 @@ def should_update_avatar_data(request):
         if updated_at is None:
             return True
         else:
-            return (pytz.UTC.localize(datetime.now()) - updated_at).days > 0
+            return (pytz.UTC.localize(datetime.now()) - pytz.UTC.localize(updated_at)).days > 0
     return False
