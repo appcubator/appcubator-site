@@ -138,6 +138,13 @@ define([
                 }
             },
 
+            setupUrl: function(name) {
+                name = name.toLowerCase().replace(/ /g, '_');
+                name = name.replace(/[^a-zA-Z0-9\s]+/g, '_');
+                var urlparts = { value: name.toLowerCase().replace(/ /g, '_') };
+                this.get('url').get('urlparts').reset([urlparts]);
+            },
+
             toJSON: function() {
                 var json = _.clone(this.attributes);
                 json.url = this.get('url').toJSON();

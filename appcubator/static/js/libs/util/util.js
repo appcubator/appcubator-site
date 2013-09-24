@@ -215,6 +215,7 @@ define(['jquery'], function() {
     },
 
     scrollToBottom: function($el) {
+      $el.stop(true, false);
       $el.animate({ scrollTop: $el[0].scrollHeight }, 'slow', 'swing');
     },
 

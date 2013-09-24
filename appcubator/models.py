@@ -153,6 +153,8 @@ def clean_subdomain(subdomain, replace_periods=False):
         subdomain = re.sub(r'\-$', '', subdomain)
         # trim if too long
         subdomain = subdomain[:min(len(subdomain), 40)]
+        # if name starts with number, replace it with an a
+        subdomain = re.sub(r'^[0-9]', 'a', subdomain)
 
     # fix if too short
     if len(subdomain) == 0:
@@ -538,7 +540,7 @@ class App(models.Model):
 
             tmp_project_dir = write_to_fs(coder, css=self.css())
         except Exception:
-            self.record_compile2_error()
+            self.record_compile2_error(traceback.format_exc())
             raise
 
         return tmp_project_dir

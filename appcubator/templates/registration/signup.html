@@ -23,7 +23,7 @@ scope: r_fullprofile r_emailaddress
         <img class="span12 hoff2" src="{{ STATIC_URL}}img/mascot.png" width="180">
       </div>
       <div class="sign-up-container span22 hoff1 offset4">
-        <form method="POST" class="left" id="signup" class="span46 offset6" action="{% url appcubator.base_views.signup %}">
+        <form method="POST" class="left" id="signup" class="span46 offset6" action="{% url website.views.signup %}">
           <div class="left">
             <input class="span10" id="inp-name" name="name" type="text" placeholder="Name..."><br>
             <div class="form-error field-name-first_name"></div>
