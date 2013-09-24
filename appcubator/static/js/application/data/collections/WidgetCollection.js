@@ -119,8 +119,8 @@ function(WidgetModel,
         widget.data.nodeType = type;
         widget.data = _.extend(widget.data, uieState[type][0]);
 
-        if(widget.data.content_attribs.src) {
-            widget.data.content_attribs.src = this.stockPhotos[Math.floor(Math.random()*this.stockPhotos.length)]; 
+        if(widget.data.content_attribs && widget.data.content_attribs.src) {
+            widget.data.content_attribs.src = this.stockPhotos[Math.floor(Math.random()*this.stockPhotos.length)];
             layout.width = 4;
             layout.height = 8;
         }
