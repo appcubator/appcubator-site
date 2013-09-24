@@ -649,27 +649,17 @@ def app_zip(request, app_id):
         raise Http404
 
     # AJAX this route to do validate (returns 200 or 409)
-    if request.is_ajax():
-        try:
-            a = app.parse_and_link_app_state()
-        except analyzer.UserInputError, e:
-            d = e.to_dict()
-            return JsonResponse(d, status=400)
-        return JsonResponse({})
+    try:
+        a = app.parse_and_link_app_state()
+    except analyzer.UserInputError, e:
+        d = e.to_dict()
+        return JsonResponse(d, status=400)
 
     # browser GET this route to download the file
-    else:
-        # the client will not give access to the route unless ajax validation passes first,
-        # but validate anyway in case the user knows the link and GETs it anyway
-        try:
-            zip_bytes = app.zip_bytes()
-        except analyzer.UserInputError, e:
-            d = e.to_dict()
-            return JsonResponse(d, status=400)
-        return JsonResponse({})
-        response = HttpResponse(zip_bytes, content_type="application/octet-stream")
-        response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
-        return response
+    zip_bytes = app.zip_bytes()
+    response = HttpResponse(zip_bytes, content_type="application/octet-stream")
+    response['Content-Disposition'] = 'attachment; filename="%s.zip"' % app.subdomain
+    return response
 
 
 @login_required

@@ -196,8 +196,11 @@ define([
                 this.editMode = false;
                 this.$el.removeClass('selected');
                 this.widgetSelectorView.deselect();
-                if (this.highlighted && $(this.editorRow).hasClass('ui-resizable-handle')) $(this.editorRow).resizable("destroy");
-                this.$el.find('.row').first().removeClass('highlighted');
+                  if(this.highlighted && $(this.editorRow).hasClass('ui-resizable'))  {
+                    $(this.editorRow).resizable("destroy");
+                    this.$el.find('.row').first().removeClass('highlighted');
+                  }
+                      this.$el.find('.row').first().removeClass('highlighted');
                 $('.shadow-x.trans').removeClass('trans');
                 this.highlighted = false;
             }

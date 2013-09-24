@@ -285,11 +285,6 @@ define([
                         id = 'entity-table-' + tableM.cid;
                     }
                     this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') + ' Edit Form', 'create-form-icon');
-
-                    if (tableM.hasMoneyField()) {
-                        this.contextEntitySection.addFullWidthItem(id, "entity-buy-button", 'Buy ' + tableM.get('name') + ' Button', 'money-button-icon');
-                    }
-
                     tableM.getFieldsColl().each(function(field) {
                         if (field.isRelatedField()) return this.renderRelatedField(field, tableM);
                         this.contextEntitySection.addFullWidthItem('context-field-' + tableId + '-' + field.cid, 'context-entity', tableName + ' ' + field.get('name'), 'plus-icon');
@@ -383,12 +378,12 @@ define([
                         return this.createContextEntityNode(layout, id);
                     case "context-nested-entity":
                         return this.createNestedContextEntityNode(layout, id);
+                    case "entity-buy-button":
+                        return this.createBuyButton(layout, id);
                     case "entity-create-form":
                         return this.createCreateForm(layout, id);
                     case "entity-edit-form":
                         return this.createEditForm(layout, id);
-                    case "entity-buy-button":
-                        return this.createBuyButton(layout, id);
                     case "entity-table":
                         return this.createEntityTable(layout, id);
                     case "entity-list":
@@ -445,7 +440,7 @@ define([
                 var entityM = v1State.getTableModelWithCid(hash[0]);
                 var fieldM = entityM.getFieldsColl().get(hash[1]);
 
-                var displayType = util.getDisplayType(fieldM);
+                var displayType = this.getFieldType(fieldM);
 
                 var editorContext = this.editorContext ? this.editorContext : "Page";
 
@@ -470,8 +465,7 @@ define([
 
                 var nested_field = nested_entity.getFieldsColl().get(hash[3]);
 
-                console.log(nested_field);
-                var displayType = this.getDisplayType(nested_field);
+                var displayType = this.getFieldType(nested_field);
                 var editorContext = this.editorContext ? this.editorContext : "Page";
 
                 var content_ops = {};
@@ -514,15 +508,6 @@ define([
                 return this.widgetsCollection.createEditForm(layout, entity, editOn);
             },
 
-            createBuyButton: function(layout, id) {
-                var cid = String(id).replace('entity-table-', '');
-                var entity = v1State.get('tables').get(cid);
-                var editorContext = this.editorContext ? this.editorContext : "Page";
-                var buyOn = editorContext  + "." + entity.get('name');
-
-                return this.widgetsCollection.createBuyButton(layout, entity, buyOn);
-            },
-
             createEntityTable: function(layout, id) {
                 var cid = String(id).replace('entity-', '');
                 var entity = v1State.getTableModelWithCid(cid);
@@ -553,7 +538,7 @@ define([
                     return (fieldModel.cid == field_id);
                 });
 
-                var type = this.getDisplayType(field);
+                var type = this.getFieldType(field);
 
                 var content_ops = {};
 
@@ -568,6 +553,16 @@ define([
 
                 return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content_ops);
             },
+
+            createBuyButton: function(layout, id) {
+                var cid = String(id).replace('entity-table-', '');
+                var entity = v1State.get('tables').get(cid);
+                var editorContext = this.editorContext ? this.editorContext : "Page";
+                var buyOn = editorContext + "." + entity.get('name');
+
+                return this.widgetsCollection.createBuyButton(layout, entity, buyOn);
+            },
+
 
             createNode: function(layout, id) {
                 var type = id.replace('type-', '');
@@ -620,6 +615,23 @@ define([
                 li.className = 'gallery-info ui-draggable';
                 li.innerHTML = text;
                 $(this.allList).append(li);
+            },
+
+            getFieldType: function(fieldModel) {
+
+                switch (fieldModel.get('type')) {
+                    case "text":
+                    case "date":
+                    case "number":
+                    case "email":
+                        return "texts";
+                    case "image":
+                        return "images";
+                    case "file":
+                        return "links";
+                }
+
+                return type;
             },
 
             expandSection: function(index) {

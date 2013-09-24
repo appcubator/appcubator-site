@@ -66,8 +66,10 @@ function(RequestInviteModalView) {
           $('.scroll-down-note').fadeOut();
         }
 
-        $blueBar.css('padding-top', newValue/2 + 70);
-        
+        if(newValue < 270) {
+          $blueBar.css('padding-top', newValue/2 + 70);
+        }
+
         if (newValue <= 40) { $largeText.css('opacity', 1 - (newValue/40)); }
         else if (newValue > 40) { $largeText.css('opacity', 0); }
         else { $largeText.css('opacity', 1); }

@@ -381,10 +381,6 @@ h6 {
   background-repeat: no-repeat;
 }
 
-.slide-intro.full {
-  min-height: 100%;
-}
-
 .slide-intro.developer {
   background-image: url(/static/img/bg6.jpg);
 }
@@ -590,6 +586,7 @@ h6 {
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto 100%;
+  width: 100%;
 }
 
 .slide-info .screen .gif-wrapper {

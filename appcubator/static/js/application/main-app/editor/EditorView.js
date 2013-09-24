@@ -95,6 +95,7 @@ define([
                 ];
 
                 this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
+                this.listenTo(this.model, 'scroll', this.scrollTo);
 
                 this.startUIStateUpdater();
             },
@@ -102,6 +103,8 @@ define([
             render: function() {
 
                 if (!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
+
+                document.body.style.overflow = "hidden";
 
                 this.toolBar.setElement(document.getElementById('tool-bar')).render();
                 this.marqueeView.render();
@@ -225,7 +228,7 @@ define([
                 var $container = this.$el.find('#elements-container');
                 var oldHeight = this.currentHeight;
 
-                this.currentHeight = (this.model.getHeight() + 4) * 15;
+                this.currentHeight = (this.model.getHeight() + 12) * 15;
                 if (this.currentHeight < 800) this.currentHeight = 800;
                 $container.css('height', this.currentHeight);
 
@@ -234,8 +237,23 @@ define([
                 }
             },
 
+            scrollTo: function(widget) {
+
+                var pageHeight = window.innerHeight - 90 - 46;
+                var pageTop = $('#page').scrollTop();
+
+                var pageHeightUnit = Math.floor(pageHeight / 15);
+                var topUnit = Math.floor(pageTop / 15);
+
+                if((widget.getBottom() + 6) > (pageHeightUnit + topUnit)) {
+                    $('#page').scrollTop((widget.getBottom() - pageHeightUnit + widget.get('layout').get('height') + 1) * 15);
+                }
+
+            },
+
             close: function() {
                 window.removeEventListener('resize', this.setupPageWrapper);
+                document.body.style.overflow = "";
 
                 clearInterval(this.UIStateTimer);
 

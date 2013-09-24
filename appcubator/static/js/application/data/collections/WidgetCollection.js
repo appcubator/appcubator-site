@@ -11,12 +11,21 @@ function(WidgetModel,
       
       model: WidgetModel,
 
+      stockPhotos: [
+        "https://i.istockimg.com/file_thumbview_approve/19012355/2/stock-photo-19012355-world-globe-on-a-school-desk.jpg",
+        "https://i.istockimg.com/file_thumbview_approve/21149086/2/stock-photo-21149086-futuristic-digital-tablet-in-the-hands.jpg",
+        "https://i.istockimg.com/file_thumbview_approve/20571269/2/stock-illustration-20571269-school-grunge-pattern.jpg",
+        "https://i.istockimg.com/file_thumbview_approve/18120560/2/stock-photo-18120560-students-at-computer-class.jpg",
+        "https://i.istockimg.com/file_thumbview_approve/17096161/2/stock-photo-17096161-chalkboard-with-book.jpg",
+        "https://i.istockimg.com/file_thumbview_approve/3516561/2/stock-photo-3516561-back-to-school-with-copyspace.jpg"
+      ],
+
       createThirdPartyLogin: function(layout, provider) {
         var widget = {};
 
         widget.type = "thirdpartylogin";
         widget.layout = layout;
-
+    
         widget.data = {};
         widget.data.nodeType = "form";
         widget.data.class_name = uieState["forms"][0].class_name;
@@ -111,6 +120,11 @@ function(WidgetModel,
         console.log(type);
         widget.data = _.extend(widget.data, uieState[type][0]);
 
+        if(widget.data.content_attribs.src) {
+            widget.data.content_attribs.src = this.stockPhotos[Math.floor(Math.random()*this.stockPhotos.length)]; 
+            layout.width = 4;
+            layout.height = 8;
+        }
         if(content_ops.content) widget.data.content =  content_ops.content;
         if(content_ops.href) widget.data.content_attribs.href = content_ops.href;
         if(content_ops.src_content) widget.data.content_attribs.src_content = content_ops.src_content;

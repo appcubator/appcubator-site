@@ -105,6 +105,9 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
         this.bindLoginForm();
         this.bindSignupForm();
       }
+      else {
+        this.hideVideo();
+      }
     },
 
     homepage: function() {
@@ -207,6 +210,13 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
             $('#id_username').focus();
           });
         });
+    },
+
+    hideVideo: function() {
+      $('.video.lil-box').hide();
+      $('.quick-tour.lil-box').hide();
+      $('.hidden.signup-button').show();
+      $('.hidden.signup-button').css('opacity', 1);
     },
 
     bindSignupForm: function() {

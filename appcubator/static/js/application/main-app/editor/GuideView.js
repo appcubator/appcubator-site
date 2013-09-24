@@ -1,109 +1,194 @@
 define([
-  'models/WidgetModel'
-],
-function(WidgetModel) {
+        'models/WidgetModel'
+    ],
+    function(WidgetModel) {
 
-  var GuideView = Backbone.View.extend({
-    events : {
+        var GuideView = Backbone.View.extend({
+            events: {
 
-    },
+            },
 
-    nmrLines: 0,
-    horizontalLinesDict: {},
-    verticalLinesDict: {},
-    show: false,
-    positionHorizontalGrid : 80,
-    positionVerticalGrid   : 15,
+            nmrLines: 0,
+            horizontalLinesDict: {},
+            verticalLinesDict: {},
+            show: false,
+            positionHorizontalGrid: 80,
+            positionVerticalGrid: 15,
 
-    initialize: function(widgetsCollection) {
-      _.bindAll(this);
+            initialize: function(widgetsCollection) {
+                _.bindAll(this);
 
-      var self = this;
+                var self = this;
+                this.widgetsCollection = widgetsCollection;
+                keyDispatcher.bind(';', this.toggleGuides);
 
-      this.widgetsCollection = widgetsCollection;
+                _widgetsVerticalDict = {};
+                _widgetsHorizontalDict = {};
 
-      keyDispatcher.bind(';', this.toggleGuides);
-    },
+                this.listenTo(this.widgetsCollection, 'add', this.placeWidget);
+                this.listenTo(this.widgetsCollection, 'remove', this.removeWidget);
+            },
 
-    render: function() {
-      var self = this;
-      self.widgetsCollection.each(function(widget) {
-        var layout = widget.get('layout');
-        self.placeHorizontal(layout.get('top'));
-        self.placeHorizontal((layout.get('top') + layout.get('height')));
-        self.placeVertical(layout.get('left'));
-        self.placeVertical(layout.get('left') + layout.get('width'));
-      });
-    },
+            render: function() {
+                this.widgetsCollection.each(this.placeWidget);
+            },
 
-    placeHorizontal: function(nmr) {
-      if(this.horizontalLinesDict[nmr]) return;
+            placeWidget: function(widget) {
+                this.placeWidgetLines(widget);
+                this.listenTo(widget.get('layout'), 'change', function() {
+                    this.changedPosition(widget);
+                }, this);
+            },
 
-      var line = document.createElement('div');
-      line.className = 'guide-line-horizontal';
-      line.style.top = (nmr * this.positionVerticalGrid) + 'px';
+            placeWidgetLines: function(widget) {
+                var layout = widget.get('layout');
+                var cid = widget.cid;
+                this.placeHorizontal(layout.get('top'), cid);
+                this.placeHorizontal((layout.get('top') + layout.get('height')), cid);
+                this.placeVertical(layout.get('left'), cid);
+                this.placeVertical(layout.get('left') + layout.get('width'), cid);
+            },
 
-      this.horizontalLinesDict[nmr] = line;
-      this.$el.append(line);
-    },
+            removeWidget: function(widget) {
 
-    placeVertical: function(nmr) {
-      if(this.verticalLinesDict[nmr]) return;
+                var vKeysToOmit = [];
+                _(this.verticalLinesDict).each(function(lineObj, key) {
+                    lineObj.models = _.without(lineObj.models, widget.cid);
+                    if (!lineObj.models.length) {
+                        vKeysToOmit.push(key);
+                        $(lineObj.line).remove();
+                    }
+                });
 
-      var line = document.createElement('div');
-      line.className = 'guide-line-vertical';
-      line.style.left = (nmr * this.positionHorizontalGrid) + 'px';
+                this.verticalLinesDict = _.omit(this.verticalLinesDict, vKeysToOmit);
 
-      this.verticalLinesDict[nmr] = line;
-      this.$el.append(line);
-    },
+                var hKeysToOmit = [];
+                _(this.horizontalLinesDict).each(function(lineObj, key) {
+                    lineObj.models = _.without(lineObj.models, widget.cid);
+                    if (!lineObj.models.length) {
+                        $(lineObj.line).remove();
+                        hKeysToOmit.push(key);
+                    }
+                });
 
-    showAll: function() {
-      _(this.horizontalLinesDict).each(function(val, key) {
-        $(val).addClass('show');
-      });
+                this.horizontalLinesDict = _.omit(this.horizontalLinesDict, hKeysToOmit);
+            },
 
-      _(this.verticalLinesDict).each(function(val, key) {
-        $(val).addClass('show');
-      });
-    },
+            changedPosition: function(widget) {
 
-    hideAll : function() {
-      _(this.horizontalLinesDict).each(function(val, key) {
-        $(val).removeClass('show');
-      });
+                var vKeysToOmit = [];
+                _(this.verticalLinesDict).each(function(lineObj, key) {
+                    lineObj.models = _.without(lineObj.models, widget.cid);
+                    if (!lineObj.models.length) {
+                        vKeysToOmit.push(key);
+                        $(lineObj.line).remove();
+                    }
+                });
 
-      _(this.verticalLinesDict).each(function(val, key) {
-        $(val).removeClass('show');
-      });
-    },
+                this.verticalLinesDict = _.omit(this.verticalLinesDict, vKeysToOmit);
 
-    toggleGuides: function() {
-      if(this.show) {
-        this.hideAll();
-        this.show = false;
-      }
-      else{
-        this.showAll();
-        this.show = true;
-      }
-    },
+                var hKeysToOmit = [];
+                _(this.horizontalLinesDict).each(function(lineObj, key) {
+                    lineObj.models = _.without(lineObj.models, widget.cid);
+                    if (!lineObj.models.length) {
+                        $(lineObj.line).remove();
+                        hKeysToOmit.push(key);
+                    }
+                });
 
-    showVertical: function(coor) {
-      coor = Math.round(coor *10)/10;
-      if(this.verticalLinesDict[coor]) {
-        $(this.verticalLinesDict[coor]).addClass('show');
-      }
-    },
+                this.horizontalLinesDict = _.omit(this.horizontalLinesDict, hKeysToOmit);
 
-    showHorizontal: function(coor) {
-      coor = Math.round(coor*10)/10;
-      if(this.horizontalLinesDict[coor]) {
-        $(this.horizontalLinesDict[coor]).addClass('show');
-      }
-    }
+                this.placeWidgetLines(widget);
+            },
 
-  });
+            placeHorizontal: function(nmr, cid) {
+                var lineObj = (this.horizontalLinesDict[nmr] || {});
 
-  return GuideView;
-});
+                if (!lineObj.line) {
+                    line = document.createElement('div');
+                    line.className = 'guide-line-horizontal';
+                    line.style.top = (nmr * this.positionVerticalGrid) + 'px';
+                    lineObj.line = line;
+                    this.$el.append(line);
+                }
+
+                lineObj.models = lineObj.models || [];
+                lineObj.models.push(cid);
+
+                this.horizontalLinesDict[nmr] = lineObj;
+            },
+
+            placeVertical: function(nmr, cid) {
+                var lineObj = (this.verticalLinesDict[nmr] || {});
+
+                if (!lineObj.line) {
+                    line = document.createElement('div');
+                    line.className = 'guide-line-vertical';
+                    line.style.left = (nmr * this.positionHorizontalGrid) + 'px';
+                    lineObj.line = line;
+                    this.$el.append(line);
+                }
+
+                lineObj.models = lineObj.models || [];
+                lineObj.models.push(cid);
+
+                this.verticalLinesDict[nmr] = lineObj;
+            },
+
+            showAll: function() {
+                _(this.horizontalLinesDict).each(function(val, key) {
+                    $(val.line).addClass('show');
+                });
+
+                _(this.verticalLinesDict).each(function(val, key) {
+                    $(val.line).addClass('show');
+                });
+            },
+
+            hideAll: function() {
+                _(this.horizontalLinesDict).each(function(val, key) {
+                    $(val.line).removeClass('show');
+                });
+
+                _(this.verticalLinesDict).each(function(val, key) {
+                    $(val.line).removeClass('show');
+                });
+            },
+
+            toggleGuides: function() {
+                if (this.show) {
+                    this.hideAll();
+                    this.show = false;
+                } else {
+                    this.showAll();
+                    this.show = true;
+                }
+            },
+
+            showVertical: function(coor, cid) {
+                var coorRounded = Math.round(coor);
+                var delta = coorRounded - coor;
+
+                if (this.verticalLinesDict[coorRounded] && !(this.verticalLinesDict[coorRounded].models.length == 1 && this.verticalLinesDict[coorRounded].models[0] == cid)) {
+                    $(this.verticalLinesDict[coorRounded].line).addClass('show');
+                    if(delta > -0.15 && delta < 0.15) return coorRounded;
+                }
+            },
+
+            showHorizontal: function(coor, cid) {
+                var coorRounded = Math.round(coor);
+                var delta = coorRounded - coor;
+
+                if (this.horizontalLinesDict[coorRounded] && !(this.horizontalLinesDict[coorRounded].models.length == 1 && this.horizontalLinesDict[coorRounded].models[0] == cid)) {
+                    $(this.horizontalLinesDict[coorRounded].line).addClass('show');
+                    if(delta > -0.5 && delta < 0.5) return coorRounded;
+                }
+
+
+                return null;
+            }
+
+        });
+
+        return GuideView;
+    });

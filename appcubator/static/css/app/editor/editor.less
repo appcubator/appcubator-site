@@ -1579,11 +1579,13 @@ width: 945px;
 }
 
 .widget-wrapper {
+  display: inline-block;
   z-index: 1001;
   position: absolute;
   overflow: visible;
   background-color: rgba(124, 192, 213, 0.0);
   overflow: hidden;
+  border: 1px solid transparent;
 
   animation: blurpIn 0.2s linear;
   -webkit-animation: blurpIn 0.2s linear;
@@ -1646,11 +1648,6 @@ width: 945px;
   z-index: 1002;
 }
 
-.widget-wrapper {
-  display: inline-block;
-  border: none;
-  position: absolute;
-}
 
 /* Element Selector */
 .section-select {
@@ -2494,7 +2491,7 @@ ul.list {
   left: 0;
   width: 100%;
   height: 1px;
-  border-top: 1px dashed #ccc;
+  border-top: 1px dashed #0072bc;
 }
 
 .guide-line-horizontal.show {
@@ -2507,7 +2504,7 @@ ul.list {
   top: 0;
   height: 100%;
   width: 1px;
-  border-left: 1px dashed #ccc;
+  border-left: 1px dashed #0072bc;
 }
 
 .guide-line-vertical.show {
@@ -2516,11 +2513,11 @@ ul.list {
 
 .marquee-view {
   position: absolute;
-  border: 2px solid #bbb;
+  border: 2px dashed #bbb;
 }
 
 .red-border {
-  background-color: rgba(124, 192, 213, 0.12);
+  border: 1px solid #0072bc;
 }
 
 .modal.deploy img {
