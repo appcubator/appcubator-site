@@ -192,7 +192,57 @@ function() {
     },
 
     resizing: function(e, ui) {
-      var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
+      var cid = this.selectedEl.cid;
+      var model = this.selectedEl;
+
+      var elem = util.get('widget-wrapper-' + cid);
+
+
+      g_guides.hideAll();
+      
+      var valLeft = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid, cid);
+      var valRight =g_guides.showVertical((ui.position.left +ui.size.width)/ this.positionHorizontalGrid, cid);
+      
+      if(valLeft) {
+        var deltaLeft = ui.position.left - (valLeft * this.positionHorizontalGrid);
+        ui.size.width = ui.size.width + deltaLeft;
+        ui.element.width(ui.size.width);
+        ui.position.left = (valLeft * this.positionHorizontalGrid);
+        ui.element.css('left', ui.position.left);
+      }
+      if(valRight) {
+        var deltaRight = valRight * this.positionHorizontalGrid - (ui.position.left + ui.size.width);
+        ui.size.width = ui.size.width + deltaRight;
+        ui.element.width(ui.size.width);
+      }
+
+
+      var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
+      var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
+
+      if(valTop) {
+        var deltaTop = (valTop * this.positionVerticalGrid) - ui.position.top;
+
+        console.log(deltaTop);
+        //ui.size.height = ui.size.height + deltaTop;
+
+                console.log(ui.size.height);
+
+       // ui.element.height(ui.size.height + deltaTop);
+        ui.position.top = (valTop * this.positionVerticalGrid);
+        // ui.element.css('top', valTop * this.positionVerticalGrid);
+
+
+        // ui.size.height = (valTop + model.get('layout').get('height'))  * this.positionVerticalGrid;
+        // ui.position.top = (valTop)  * this.positionVerticalGrid;
+        // console.log(valTop);
+      }
+      if(valBottom) {
+        var deltaBottom =  ui.position.top = (valTop * this.positionVerticalGrid);
+        //ui.size.height = (valBottom + model.get('layout').get('height')) * this.positionVerticalGrid - 2;
+      }
+
+
       elem.style.width = ui.size.width - 4 + 'px';
       elem.style.height = (ui.size.height - 4) + 'px';
       elem.style.left = ui.position.left + 2 + 'px';
@@ -201,6 +251,8 @@ function() {
     },
 
     resized: function(e, ui) {
+      g_guides.hideAll();
+
       var left = Math.round((ui.position.left / this.positionHorizontalGrid));
       var top  = Math.round((ui.position.top  / this.positionVerticalGrid));
 
