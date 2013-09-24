@@ -76,6 +76,26 @@ require.config({
 require.config({
     urlArgs: "bust=" + staticVersion
 });
+
+require.onError = function (err) {
+    if (err.requireType === 'timeout' || err.requireType === "scripterror") {
+        var el = document.createElement('a');
+        el.style.width = '100%';
+        el.style.position = 'fixed';
+        el.style.top = '120px';
+        el.style.textAlign = 'center';
+        el.style.cursor = 'pointer';
+        el.innerHTML =  '<img src="/static/img/mascot-timeout.png">';
+        el.addEventListener('click', function(){
+            location.reload();
+        });
+        document.body.appendChild(el);
+    } else {
+        throw err;
+    }
+};
+
+
 //libs
 require([
         "models/AppModel",
