@@ -241,12 +241,9 @@ define([
 
                 var pageHeight = window.innerHeight - 90 - 46;
                 var pageTop = $('#page').scrollTop();
-                console.log(pageTop);
+
                 var pageHeightUnit = Math.floor(pageHeight / 15);
                 var topUnit = Math.floor(pageTop / 15);
-
-                console.log((pageHeightUnit + topUnit));
-                console.log(widget.getBottom());
 
                 if((widget.getBottom() + 6) > (pageHeightUnit + topUnit)) {
                     $('#page').scrollTop((widget.getBottom() - pageHeightUnit + widget.get('layout').get('height') + 1) * 15);

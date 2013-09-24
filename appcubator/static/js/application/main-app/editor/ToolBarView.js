@@ -11,7 +11,9 @@ function(PageModel) {
       'mouseover #menu-pages' : 'expandPages',
       'mouseout #menu-pages'  : 'shrinkPages',
       'click .go-to-page'     : 'clickedGoToPage',
-      'click a.back'          : 'navigateBack'
+      'click a.back'          : 'navigateBack',
+      'mouseover .dropdown-arrow' : 'expandPages',
+      'mouseout .dropdown-arrow' : 'shrinkPages'
     },
 
     initialize: function(navbarModel) {

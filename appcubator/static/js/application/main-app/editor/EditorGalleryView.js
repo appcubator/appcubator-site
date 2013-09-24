@@ -446,7 +446,6 @@ define([
 
       var nested_field = nested_entity.getFieldsColl().get(hash[3]);
 
-      console.log(nested_field);
       var displayType = this.getFieldType(nested_field);
       var editorContext = this.editorContext ? this.editorContext : "Page";
 
@@ -594,8 +593,6 @@ define([
     },
 
     getFieldType: function (fieldModel) {
-
-      console.log(fieldModel);
   
       switch(fieldModel.get('type')) {
         case "text":
