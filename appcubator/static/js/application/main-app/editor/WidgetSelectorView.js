@@ -222,31 +222,16 @@ function() {
 
       if(valTop) {
         var deltaTop = (valTop * this.positionVerticalGrid) - ui.position.top;
-
-        console.log(deltaTop);
-        //ui.size.height = ui.size.height + deltaTop;
-
-                console.log(ui.size.height);
-
-       // ui.element.height(ui.size.height + deltaTop);
-        ui.position.top = (valTop * this.positionVerticalGrid);
-        // ui.element.css('top', valTop * this.positionVerticalGrid);
-
-
-        // ui.size.height = (valTop + model.get('layout').get('height'))  * this.positionVerticalGrid;
-        // ui.position.top = (valTop)  * this.positionVerticalGrid;
-        // console.log(valTop);
       }
       if(valBottom) {
         var deltaBottom =  ui.position.top = (valTop * this.positionVerticalGrid);
-        //ui.size.height = (valBottom + model.get('layout').get('height')) * this.positionVerticalGrid - 2;
       }
 
 
-      elem.style.width = ui.size.width - 4 + 'px';
-      elem.style.height = (ui.size.height - 4) + 'px';
-      elem.style.left = ui.position.left + 2 + 'px';
-      elem.style.top  = ui.position.top + 2 + 'px';
+      elem.style.width = ui.size.width - 2 + 'px';
+      elem.style.height = (ui.size.height - 2) + 'px';
+      elem.style.left = ui.position.left + 1 + 'px';
+      elem.style.top  = ui.position.top + 1 + 'px';
 
     },
 
@@ -311,8 +296,8 @@ function() {
       }
 
       var elem = util.get('widget-wrapper-' + model.cid);
-      elem.style.top = ui.position.top + 2 + 'px';
-      elem.style.left = ui.position.left + 2 + 'px';
+      elem.style.top = ui.position.top + 1 + 'px';
+      elem.style.left = ui.position.left + 1 + 'px';
     },
 
     moved: function(e, ui) {
