@@ -664,4 +664,4 @@ define([
 
 
         return EditorGalleryView;
-    }); >>> >>> > master
+    });
