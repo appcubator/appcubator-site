@@ -52,9 +52,7 @@ define([
                 this.subviews.push(createBox);
                 createBox.on('submit', this.createPage);
 
-                $("#list-pages").sortable();
-                $("#list-pages").disableSelection();
-
+                $("#list-pages").sortable({ cancel: "select" });
             },
 
             renderAddMobile: function() {
