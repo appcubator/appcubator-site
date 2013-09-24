@@ -14,7 +14,8 @@ def prod():
 def build_static():
   code_dir = '/var/www/appcubator-site/appcubator'
   with cd(code_dir):
-    run("./static/build/build.sh")
+    with prefix('source ../venv/bin/activate'):
+      run("./static/build/build.sh")
 
 repo_path = {
         'site': '/var/www/appcubator-site',
