@@ -415,4 +415,3 @@ define([
         return WidgetEditorView;
 
     });
->>>>>>> master

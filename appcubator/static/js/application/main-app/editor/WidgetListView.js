@@ -1,5 +1,4 @@
 define([
-<<<<<<< HEAD
         'editor/WidgetContainerView',
         'editor/WidgetView',
         'editor/list-editor/ListWidgetSelectorView',
