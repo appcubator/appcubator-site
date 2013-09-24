@@ -141,6 +141,10 @@ class Loader(BaseLoader):
     """
     is_usable = True
     def load_template(self, template_name, template_dirs = None):
+        if '404' in template_name or '500' in template_name:
+            print "I hate you"
+            raise TemplateDoesNotExist
+
         try:
             return get_askbot_template(template_name), template_name
         except TemplateNotFound:
