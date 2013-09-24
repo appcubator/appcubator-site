@@ -347,6 +347,19 @@ class App(models.Model):
     error_type = models.IntegerField(default=0)
     error_message = models.TextField(max_length=255, blank=True)
 
+    def get_error_type_name(self):
+        err_type = self.error_type
+        if err_type == 0:
+            return "No Error"
+        elif err_type == 1:
+            return "compile"
+        elif err_type == 2:
+            return "compile2"
+        elif err_type == 3:
+            return "deploy"
+        else:
+            return "Unknown"
+
     def record_compile_error(self, message):
         self.error_type = 1
         self.error_message = message
