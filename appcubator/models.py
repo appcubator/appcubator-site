@@ -539,7 +539,7 @@ class App(models.Model):
             raise ValidationError(e.msg)
         # Initial gitrepo name value. gets called on new app.
         if self.gitrepo_name == '':
-            self.gitrepo_name = "%s-%s" % (self.owner.username.split('@')[0], self.name)
+            self.gitrepo_name = "%s-%s" % (self.owner.email.split('@')[0], self.name)
         if self.gitrepo_name != clean_subdomain(self.gitrepo_name, replace_periods=True):
             self.gitrepo_name = App.provision_gitrepo_name(self.gitrepo_name)
 
