@@ -1,5 +1,11 @@
 from collections import defaultdict
 import datetime
+
+from django.utils import timezone
+import pytz
+utc=pytz.UTC
+make_aware = utc.localize
+
 import operator
 import logging
 
@@ -134,7 +140,7 @@ class PostQuerySet(models.query.QuerySet):
                     question = question,
                     activity_type = activity_type
                 )
-                now = datetime.datetime.now()
+                now = timezone.now()
                 if now < activity.active_at + recurrence_delay:
                     continue
             except Activity.DoesNotExist:
@@ -144,7 +150,7 @@ class PostQuerySet(models.query.QuerySet):
                     activity_type = activity_type,
                     content_object = question,
                 )
-            activity.active_at = datetime.datetime.now()
+            activity.active_at = timezone.now()
             activity.save()
             question_list.append(question)
         return question_list
@@ -182,7 +188,7 @@ class PostManager(BaseQuerySetManager):
         return self.create_new(
                             None,#this post type is threadless
                             author,
-                            datetime.datetime.now(),
+                            timezone.now(),
                             text,
                             wiki = True,
                             post_type = 'tag_wiki'
@@ -346,7 +352,7 @@ class Post(models.Model):
     groups = models.ManyToManyField(Group, through='PostToGroup', related_name = 'group_posts')#used for group-private posts
 
     author = models.ForeignKey(User, related_name='posts')
-    added_at = models.DateTimeField(default=datetime.datetime.now)
+    added_at = models.DateTimeField(default=timezone.now)
 
     #denormalized data: the core approval of the posts is made
     #in the revisions. In the revisions there is more data about
@@ -986,7 +992,7 @@ class Post(models.Model):
                 by_email = False):
 
         if added_at is None:
-            added_at = datetime.datetime.now()
+            added_at = timezone.now()
         if None in (comment, user):
             raise Exception('arguments comment and user are required')
 
@@ -1707,7 +1713,7 @@ class Post(models.Model):
         if text is None:
             text = self.get_latest_revision().text
         if edited_at is None:
-            edited_at = datetime.datetime.now()
+            edited_at = timezone.now()
         if edited_by is None:
             raise Exception('edited_by is required')
 
@@ -1776,7 +1782,7 @@ class Post(models.Model):
         )
 
         if edited_at is None:
-            edited_at = datetime.datetime.now()
+            edited_at = timezone.now()
         self.thread.set_last_activity(last_activity_at=edited_at, last_activity_by=edited_by)
 
     def _question__apply_edit(self, edited_at=None, edited_by=None, title=None,\
@@ -1795,7 +1801,7 @@ class Post(models.Model):
         if tags is None:
             tags = latest_revision.tagnames
         if edited_at is None:
-            edited_at = datetime.datetime.now()
+            edited_at = timezone.now()
 
         # Update the Question tag associations
         if latest_revision.tagnames != tags:
@@ -2302,7 +2308,7 @@ class AnonymousAnswer(DraftContent):
     question = models.ForeignKey(Post, related_name='anonymous_answers')
 
     def publish(self, user):
-        added_at = datetime.datetime.now()
+        added_at = timezone.now()
         Post.objects.create_new_answer(
             thread=self.question.thread,
             author=user,

@@ -2,6 +2,7 @@
 used in AskBot"""
 import re
 import datetime
+from django.utils import timezone
 from django import forms
 from askbot import const
 from askbot.const import message_keys
@@ -1145,7 +1146,7 @@ class AnswerForm(PostAsSomeoneForm, PostPrivatelyForm):
             body_text = text,
             wiki = wiki,
             is_private = is_private,
-            timestamp = datetime.datetime.now(),
+            timestamp = timezone.now(),
         )
 
 class VoteForm(forms.Form):
