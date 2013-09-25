@@ -24,6 +24,30 @@ from app_builder.coder import Coder, write_to_fs
 
 import deploy
 
+def email_to_uniq_username(email):
+  """
+  Used for creating initial usernames for users
+
+  Assumes entering email is valid
+  Crosses fingers that result is valid username :]
+  """
+  def uniqify(s):
+    append = True
+    while User.objects.filter(username__iexact=s).exists():
+      if append:
+        s += u"1"
+        append = False
+      else:
+        last_char = s[-1]
+        last_char = unicode(int(last_char)+1)
+        s = s[:-1] + last_char
+        if last_char == u"9":
+          append = True
+    return s
+
+  try_username = email.split("@")[0]
+  username = uniqify(try_username)
+  return username
 
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
     __file__), os.path.normpath("default_state"))
