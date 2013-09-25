@@ -74,7 +74,7 @@ def admin_app_errors(request):
         if app.error_type !=0 and len(app.error_message) > 0:
             err_apps.append(app)
     page_context["err_apps"] = err_apps
-    return render(request, 'admin/err_apps.html')
+    return render(request, 'admin/err_apps.html', page_context)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
