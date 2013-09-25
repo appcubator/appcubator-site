@@ -30,7 +30,7 @@ class Migration(DataMigration):
 
     def backwards(self, orm):
         "Write your backwards methods here."
-        User = orm['appcubator.User']
+        User = orm['auth.User']
         for u in User.objects.filter(is_active=True):
             u.username = u.email
             u.save()
