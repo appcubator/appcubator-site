@@ -31,6 +31,7 @@ define([
 
             render: function() {
                 this.widgetsCollection.each(this.placeWidget);
+                this.setupDummyLines();
             },
 
             placeWidget: function(widget) {
@@ -47,6 +48,12 @@ define([
                 this.placeHorizontal((layout.get('top') + layout.get('height')), cid);
                 this.placeVertical(layout.get('left'), cid);
                 this.placeVertical(layout.get('left') + layout.get('width'), cid);
+            },
+
+            setupDummyLines: function() {
+                for(var ii = 0; ii <= 12; ii++) {
+                    this.placeVertical(ii, "dum");
+                }
             },
 
             removeWidget: function(widget) {
@@ -171,7 +178,7 @@ define([
 
                 if (this.verticalLinesDict[coorRounded] && !(this.verticalLinesDict[coorRounded].models.length == 1 && this.verticalLinesDict[coorRounded].models[0] == cid)) {
                     $(this.verticalLinesDict[coorRounded].line).addClass('show');
-                    if(delta > -0.15 && delta < 0.15) return coorRounded;
+                    if(delta > -0.15 && delta < 0.15 && this.verticalLinesDict[coorRounded].models.length != 1) return coorRounded;
                 }
             },
 
