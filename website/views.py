@@ -16,6 +16,7 @@ from copy import deepcopy
 from appcubator.models import User, Customer, TempDeployment, UITheme, InvitationKeys, PubKey
 from appcubator.models import get_default_uie_state, get_default_mobile_uie_state
 from appcubator.models import get_default_app_state
+import appcubator.models as appcubator_models
 
 from models import Love, Document
 
@@ -245,7 +246,11 @@ def signup(request):
     else:
         req = {}
         req = deepcopy(request.POST)
-        req["username"] = request.POST["email"]
+        try:
+            req["username"] = appcubator_models.email_to_uniq_username(request.POST["email"])
+        except Exception:
+            req["username"] = request.POST.get("email", "")
+
 
         if len(req["username"]) > 30:
             req["username"] = req["username"][:30]
@@ -646,6 +651,8 @@ def toggle_love(request, next=None):
     form = ToggleLoveForm(target, data=data)
 
     if form.security_errors():
+        def escape(s):
+          return s.replace("<", "&lt;").replace(">", "&gt;")
         return Http404("Form failed security verification:" % escape(str(form.security_errors())))
 
     # first filter on the object itself

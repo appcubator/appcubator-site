@@ -17,7 +17,11 @@
         <td>{{ err_app.id }}</td>
         <td>{{ err_app.name }}</td>
         <td>{{ err_app.get_error_type_name }}</td>
-        <td>{{ err_app.error_message }}</td>
+        <td>
+          <pre>
+            {{ err_app.error_message }}
+          </pre>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

@@ -4,14 +4,13 @@ import django.contrib.auth.views
 import views, theme_views, log_views, test_views, admin_views
 import django.views.generic.base
 from django.views.generic.simple import direct_to_template
-from registration.backends.default.views import RegistrationView, ActivationView
 from appcubator_payments import views as payment_views
 import website
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
 
 urlpatterns = patterns('',
     url(r'^forum/', include('askbot.urls')),
+    # url(r'^admin/', include(admin.site.urls)),
 )
 
 urlpatterns += patterns('',

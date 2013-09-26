@@ -24,6 +24,30 @@ from app_builder.coder import Coder, write_to_fs
 
 import deploy
 
+def email_to_uniq_username(email):
+  """
+  Used for creating initial usernames for users
+
+  Assumes entering email is valid
+  Crosses fingers that result is valid username :]
+  """
+  def uniqify(s):
+    append = True
+    while User.objects.filter(username__iexact=s).exists():
+      if append:
+        s += u"1"
+        append = False
+      else:
+        last_char = s[-1]
+        last_char = unicode(int(last_char)+1)
+        s = s[:-1] + last_char
+        if last_char == u"9":
+          append = True
+    return s
+
+  try_username = email.split("@")[0]
+  username = uniqify(try_username)
+  return username
 
 DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
     __file__), os.path.normpath("default_state"))
@@ -539,7 +563,7 @@ class App(models.Model):
             raise ValidationError(e.msg)
         # Initial gitrepo name value. gets called on new app.
         if self.gitrepo_name == '':
-            self.gitrepo_name = "%s-%s" % (self.owner.username.split('@')[0], self.name)
+            self.gitrepo_name = "%s-%s" % (self.owner.email.split('@')[0], self.name)
         if self.gitrepo_name != clean_subdomain(self.gitrepo_name, replace_periods=True):
             self.gitrepo_name = App.provision_gitrepo_name(self.gitrepo_name)
 
