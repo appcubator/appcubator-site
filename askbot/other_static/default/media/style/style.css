@@ -475,8 +475,8 @@ body.user-messages {
 .scope-selector {
   display: block;
   float: left;
-  font-size: 20px;
-  color: #7a7a6b;
+  font-size: 16px;
+  color: #0f2d40;
   height: 55px;
   line-height: 55px;
   margin-left: 16px;
