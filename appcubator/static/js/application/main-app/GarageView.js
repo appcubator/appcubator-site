@@ -10,7 +10,7 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
   var GarageView = Backbone.View.extend({
     el : document.getElementById('garage-div'),
     css: 'app-page',
-    className: 'fixed-bg welcome garage',
+    className: 'welcome garage',
 
     events : {
       'click .hide-overlay' : 'hide',
