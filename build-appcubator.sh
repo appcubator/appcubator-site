@@ -7,7 +7,7 @@ apt-get -y install software-properties-common python-software-properties debconf
 add-apt-repository -y ppa:ondrej/mysql
 apt-get -y update
 #apt-get -y install mysql-client-5.6 mysql-server-5.6
-apt-get -y install vim curl screen
+apt-get -y install vim curl screen zip
 
 apt-get -y install python-pip git python-dev
 pip install virtualenv
