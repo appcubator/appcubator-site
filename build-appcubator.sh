@@ -19,5 +19,10 @@ source /vagrant/venv/bin/activate && pip install -r requirements.txt
 
 pip install /appcubator-codegen
 
+curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+source /root/.profile
+nvm install 0.10.15
+npm install -g less
+
 #source /var/www/appcubator-site/venv/bin/activate && cd /var/www/appcubator-site && ./manage.py syncdb --noinput
 #source /var/www/appcubator-site/venv/bin/activate && cd /var/www/appcubator-site && ./manage.py migrate --noinput
