@@ -21,7 +21,6 @@ background-repeat: no-repeat;
   color: #fff;
 }
 
-a.see-all,
 a.hide-all {
   display: inline-block;
   margin-top: 10px;
@@ -244,7 +243,7 @@ a.white-border {
 .app.title,
 .all-app.title {
   text-transform: uppercase;
-  margin-top: 30px;
+  margin-top: 0px;
   font-size: 24px;
 }
 
@@ -334,7 +333,7 @@ a.large-link {
   display: none;
   z-index: 3000;
   background-color: rgba(0, 0, 0, 0.85);
-  width: 600px;
+  width: 540px;
   height: 480px;
   position: fixed;
   top: 0px;
@@ -344,7 +343,21 @@ a.large-link {
   border: 3px solid #fff;
   padding: 30px;
   margin-top: 60px;
+
+  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  -moz-box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  -o-box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
+
+
+.garage .bottom-sect,
+.world .bottom-sect {
+  border-top: 1px solid #fff;
+  color: #fff;
+  padding-top: 15px;
+}
+
 
 .dropd.open .garage,
 .dropd.open .world  {

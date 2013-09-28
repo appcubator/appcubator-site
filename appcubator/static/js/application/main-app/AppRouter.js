@@ -50,13 +50,16 @@ define(function(require, exports, module) {
 
             var autoSave = setInterval(this.save, 30000);
 
+            this.worldView = new WorldView();
+
             if(appId !== 0) {
                 this.garageView = new GarageView();
-                $('.garage-toggle').on('click', this.garageView.show);
+                $('.garage-toggle').on('click', this.garageView.toggle);
+                $('.garage-toggle').on('click', this.worldView.hide);
+                $('.world-toggle').on('click', this.garageView.hide);
             }
 
-            this.worldView = new WorldView();
-            $('.world-toggle').on('click', this.worldView.show);
+            $('.world-toggle').on('click', this.worldView.toggle);
 
             this.listenTo(v1State.get('tables'), 'add', this.entityAdded);
         },

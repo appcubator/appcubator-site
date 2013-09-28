@@ -1,25 +1,22 @@
-  <div class="hide-btn hide-overlay">×</div>
   <div class="container">
-    <div class="right-menu span18">
-      <a class="white-border span18 hi4 toggle-invitations-modal" href="#">
-        <span class="icon invite"></span>
-        <span>Invite Your Friends</span></a>
-      <a class="white-border span18 hi4" href="/resources" target="_blank" rel="external">
-        <span class="icon resources"></span>
-        <span>Resources</span></a>
-      <a class="white-border span18 hi4" href="/community" target="_blank" rel="external">
-        <span class="icon community"></span>
-        <span>Community</span></a>
-      <a class="white-border span18 hi4" href="/account" rel="external">
-        <span class="icon settings"></span>
-        <span>Account Settings</span>
-      </a>
-      <a class="white-border span18 hi4" href="/logout" rel="external">
-        <span class="span3"></span>
-        Logout ({{user.username}})
-      </a>
-
+    <div class="row">
+          <a class="span32 hi4 large-link white-border" href="{% url appcubator.views.app_new %}" rel="external">
+            <strong>COMMUNITY Q&A FORUM </strong>
+          </a>
     </div>
+
+    <div class="row hoff1">
+      <div class="right-menu span15">
+        <a class="white-border span14 hi4 toggle-invitations-modal" href="#">
+          <span class="icon invite"></span>
+          <span>Invite Your Friends</span></a>
+        <a class="white-border span14 hi4" href="/resources" target="_blank" rel="external">
+          <span class="icon resources"></span>
+          <span>Resources</span></a>
+        <a class="white-border span14 hi4" href="/community" target="_blank" rel="external">
+          <span class="icon community"></span>
+          <span>Community</span></a>
+      </div>
       <div class="notifications">
         <span class="icon resources"><div class="title">Notifications</div>
         <hr>
@@ -29,4 +26,15 @@
           <li>Now you can see the analytics about your application in the dashboard below.</li>
         </ul>
       </div>
+    </div>
+
+    <div class="bottom-sect hi4 hoff2 span32 row">
+          <a class=" span18 hi4" href="/account" rel="external">
+            <span class="icon settings"></span>
+            <span>Account Settings ({{user.username}})</span>
+          </a>
+          <a class="hi4 right" href="/logout" rel="external">
+            Logout 
+          </a>
+    </div>
   </div>

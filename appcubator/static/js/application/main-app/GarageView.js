@@ -11,6 +11,7 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
     el : document.getElementById('garage-div'),
     css: 'app-page',
     className: 'welcome garage',
+    expanded: false,
 
     events : {
       'click .hide-overlay' : 'hide',
@@ -42,10 +43,23 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
 
     hide: function() {
       this.$el.hide();
+      $('.garage-toggle').removeClass('active');
+      this.expanded = false;
     },
 
     show: function() {
       this.$el.show();
+      $('.garage-toggle').addClass('active');
+      this.expanded = true;
+    },
+
+    toggle: function() {
+      if(this.expanded) {
+        this.hide();
+      }
+      else {
+        this.show();
+      }
     },
 
     showAll: function() {
