@@ -321,7 +321,8 @@ a.large-link {
   bottom: 70px;
 }
 
-.garage {
+.garage,
+.world {
   z-index: 3000;
   background-color: rgba(0, 0, 0, 0.85);
   width: 600px;
