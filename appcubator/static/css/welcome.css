@@ -214,6 +214,10 @@ a.white-border {
   padding: 15px;
 }
 
+.world .hide-btn {
+  margin-right: -406px;
+}
+
 .hide-btn {
   position: fixed;
   top: 0px;
@@ -251,23 +255,27 @@ a.large-link {
   margin-top: 15px;
 }
 
-.right-menu .notifications {
+.world .notifications {
+  width: 240px;
+}
+
+.notifications {
   display: inline-block;
   margin-top: 15px;
   padding-bottom: 30px;
   color: #fff;
 }
-.right-menu .notifications hr {
+.notifications hr {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-.right-menu .notifications ul {
+.notifications ul {
   list-style-type: square;
   padding-left: 30px;
 }
 
-.right-menu .notifications ul li {
+.notifications ul li {
   margin-top: 10px;
 }
 
@@ -323,6 +331,7 @@ a.large-link {
 
 .garage,
 .world {
+  display: none;
   z-index: 3000;
   background-color: rgba(0, 0, 0, 0.85);
   width: 600px;
@@ -334,6 +343,12 @@ a.large-link {
   border-radius: 6px;
   border: 3px solid #fff;
   padding: 30px;
+  margin-top: 60px;
+}
+
+.dropd.open .garage,
+.dropd.open .world  {
+  display: block;
 }
 
 .current-app-links .white-border {

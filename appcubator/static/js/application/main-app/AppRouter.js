@@ -58,7 +58,6 @@ define(function(require, exports, module) {
             this.worldView = new WorldView();
             $('.world-toggle').on('click', this.worldView.show);
 
-
             this.listenTo(v1State.get('tables'), 'add', this.entityAdded);
         },
 
