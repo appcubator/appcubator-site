@@ -87,6 +87,8 @@ urlpatterns += patterns('appcubator.views',
     url(r'^documentation/([^/]+)/$', 'documentation_page'),
     url(r'^resources/documentation/$', 'documentation_page', {"page_name": "all"}),
 
+    url(r'^', include('appcubator.plugins.urls')),
+
     # the rest
     url(r'^app/(\d+)/', 'app_page', {"page_name": "overview"}), # this serves all the app pages
     url(r'^app/(\d+)/([^/]+)/$', 'app_page'), # this serves all the app pages

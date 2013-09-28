@@ -31,7 +31,6 @@ django-stripe-payments==2.0b22
 pyyaml==3.10
 nltk==2.0.4
 
-
 # askbot requirements:
 django-tinymce==1.5.1
 django-compressor==1.2

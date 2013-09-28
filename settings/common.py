@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.messages',
     'appcubator',
+    'appcubator.plugins',
     'website',
     'south',
     'less',
