@@ -380,4 +380,3 @@ define([
 
         return WidgetCollection;
     });
->>>>>>> master
