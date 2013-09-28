@@ -131,7 +131,7 @@ def app_new(request, is_racoon = False, app_template=None):
         data['owner'] = request.user.id
 
         # use this short username
-        username = request.user.username.split('@')[0]
+        username = request.user.email.split('@')[0]
         data['subdomain'] = "%s-%s" % (username, request.POST.get('name', ''))
 
         # dev modifications

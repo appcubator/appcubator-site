@@ -4,14 +4,13 @@ import django.contrib.auth.views
 import views, theme_views, log_views, test_views, admin_views
 import django.views.generic.base
 from django.views.generic.simple import direct_to_template
-from registration.backends.default.views import RegistrationView, ActivationView
 from appcubator_payments import views as payment_views
 import website
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
 
 urlpatterns = patterns('',
     url(r'^forum/', include('askbot.urls')),
+    # url(r'^admin/', include(admin.site.urls)),
 )
 
 urlpatterns += patterns('',
@@ -104,6 +103,7 @@ urlpatterns += patterns('appcubator.admin_views',
     url(r'^stay/up/to/get/lucky/users/(\d+)$', 'admin_user'),
     url(r'^stay/up/to/get/lucky/users/(\d+)/graph/$', 'user_logs_graph'),
     url(r'^stay/up/to/get/lucky/users/$', 'admin_users'),
+    url(r'^stay/up/to/get/lucky/apps/errors/$', 'admin_app_errors'),
     url(r'^stay/up/to/get/lucky/apps/(\d+)$', 'admin_app'),
     url(r'^stay/up/to/get/lucky/apps/(\d+)/snaps$', 'admin_app_snaps'),
     url(r'^stay/up/to/get/lucky/apps/$', 'admin_apps'),

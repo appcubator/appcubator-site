@@ -17,7 +17,7 @@ urlpatterns = patterns('views',
     url(r'^aboutus/$',                  views.aboutus),
     url(r'^changelog/$',                views.changelog),
     # Signup, Login and invites
-    url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^accounts/', include('appcubator.registration_urls')),
     url(r'^login/$',                    django.contrib.auth.views.login, {'template_name' : 'registration/login_page.html'}),
     url(r'^logout/$',                   django.contrib.auth.views.logout, {"next_page":"/"}),
     url(r'^termsofservice/$',           views.terms_of_service),

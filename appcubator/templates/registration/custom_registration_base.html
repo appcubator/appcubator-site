@@ -1,4 +1,4 @@
-{% extends "infra-html.html" %}
+{% extends "infra-app.html" %}
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/animate.css">
@@ -14,14 +14,14 @@
   <div class="container centered">
         <h2 class="hoff5">
         	{% block title %}
-        	{% endblock %}
+		{% endblock %}
         </h2>
   </div>
 </div>
 <div class="row">
   <div class="container centered hoff2">
   	{% block content %}
-		{% endblock %}
+	{% endblock %}
   </div>
 </div>
 {% endblock %}

@@ -168,7 +168,6 @@ define([
                     }
                 } else {
 
-
                     if (this.model.isCustomWidget()) {
                         this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-custom-widget-btn', 'Edit Custom Widget'));
                     } else {

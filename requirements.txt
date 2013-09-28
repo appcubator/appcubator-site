@@ -31,9 +31,7 @@ django-stripe-payments==2.0b22
 pyyaml==3.10
 nltk==2.0.4
 
-<<<<<<< HEAD
-#mysql-python==1.2.4
-=======
+
 # askbot requirements:
 django-tinymce==1.5.1
 django-compressor==1.2
@@ -59,6 +57,6 @@ lamson==1.3.4
 
 
 mysql-python==1.2.4
->>>>>>> master
+
 django-threadedcomments==0.9.0
 

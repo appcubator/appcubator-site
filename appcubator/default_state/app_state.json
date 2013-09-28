@@ -28,10 +28,7 @@
                 "isFixed": true,
                 "brandName": null,
                 "isHidden": false,
-                "links": [{
-                        "url": "internal://Homepage",
-                        "title": "Homepage"
-                    }]
+                "links": []
             },
             "footer": {
                 "isFixed": true,
