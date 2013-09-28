@@ -1834,7 +1834,7 @@ border-radius: 27px;
 
 .right-group {
   position: absolute;
-  width: 188px;
+  width: 308px;
   right: 4px;
   top: 4px;
   height: 42px;
@@ -1844,6 +1844,27 @@ border-radius: 27px;
   border-bottom: 1px solid #3b4555;
   border-radius: 6px;
 }
+  
+.right-group .world-toggle {
+  display: inline-block;
+  background-image: url(/static/img/world-icon.png);
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: auto;
+  width: 60px;
+  height: 100%;
+}
+
+.right-group .garage-toggle {
+  display: inline-block;
+  background-size: auto;
+  background-image: url(/static/img/garage-icon.png);
+  background-repeat: no-repeat;
+  background-position: right;
+  width: 60px;
+  height: 100%;
+}
+
 
 .widgets {
   display: none;
@@ -1957,8 +1978,10 @@ li.model span.title {
 
 .menu-button.question {
   background-image: url('/static/img/help_b.png');
+  height: 100%;
   padding-left: 40px;
   width: 186px;
+  float: right;
 }
 
 .pages {

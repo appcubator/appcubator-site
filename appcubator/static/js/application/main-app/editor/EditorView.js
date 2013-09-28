@@ -129,6 +129,14 @@ define([
                     new PageTemplatePicker(this.model);
                 }
 
+                if(appId !== 0) {
+                    $('.garage-toggle').on('click', v1.garageView.toggle);
+                    $('.garage-toggle').on('click', v1.worldView.hide);
+                    $('.world-toggle').on('click', v1.garageView.hide);
+                }
+
+                $('.world-toggle').on('click', v1.worldView.toggle);
+                
                 return this;
             },
 
