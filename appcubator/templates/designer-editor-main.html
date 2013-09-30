@@ -1,4 +1,5 @@
 <html lang="en">
+{% load embed_json %}
 
 <head>
 <meta charset="utf-8">
@@ -89,10 +90,10 @@
 
 </body>
   <script type="text/javascript">
-    var themeState = {{ theme_state|safe }};
-    var uieState = {{ theme_state|safe }};
-    var pageId = {{ page_id|safe }};
-    var themeId = {{ theme_id|safe }};
+    var themeState = {{ theme_state|fix_solidus|safe }};
+    var uieState = {{ theme_state|fix_solidus|safe }};
+    var pageId = {{ page_id|fix_solidus|safe }};
+    var themeId = {{ theme_id|fix_solidus|safe }};
     var statics = [];
     var GRID_WIDTH = 80;
     var GRID_HEIGHT = 15;

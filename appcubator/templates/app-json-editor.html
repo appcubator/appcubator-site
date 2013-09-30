@@ -1,3 +1,4 @@
+{% load embed_json %}
 <!DOCTYPE HTML>
 
 <html>
@@ -64,7 +65,7 @@
 
 <script type="text/javascript" src="{{ STATIC_URL }}jsoneditor/app.js"></script>
 <script type="text/javascript">
-    var APPSTATE = {{ app.state_json|safe }};
+    var APPSTATE = {{ app.state_json|fix_solidus|safe }};
     var app_id = {{ app_id }}
     app.load();
     app.resize();
