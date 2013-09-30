@@ -85,6 +85,13 @@ function( React,
         this.el.appendChild(fbdiv);
       }
 
+      if(this.model.get('data').get('action') == "buy" ) {
+        var buyBtn = document.createElement('div');
+        var info = _.extend(uieState["buttons"][0], { content: this.model.get('data').get('container_info').get('label')});
+        buyBtn.innerHTML = _.template(Templates.tempNode, { element: info});
+        this.el.appendChild(buyBtn);
+      }
+
       if(this.model.get('data').get('container_info').get('action') == "videoembed" ) {
         var videoDiv = document.createElement('div');
         var StaticImg = React.createClass({

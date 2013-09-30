@@ -572,7 +572,10 @@ class App(models.Model):
 
         app.api_key = self.api_key
         try:
-            codes = create_codes(app)
+            codes = create_codes(app,
+                        uid=self.uid(),
+                        email=self.owner.email,
+                        provider_data=self.get_plugin_data())
             coder = Coder.create_from_codes(codes)
 
             tmp_project_dir = write_to_fs(coder, css=self.css())
@@ -642,6 +645,32 @@ class App(models.Model):
                            'deploy': deploy})
         css_string = t.render(context)
         return css_string
+
+    def uid(self):
+        # avoid generating secret keys if not in production
+        if settings.DEBUG:
+            return "we got a cool kid over here."
+
+        return str(self.id)
+
+    def get_plugin_data(self):
+        provider_data_rows = self.providerdata_set.values('provider_key__provider__internal_name',
+                                                          'provider_key__internal_name',
+                                                          'value')
+        provider_map = {}
+        for d in provider_data_rows:
+            provider = d['provider_key__provider__internal_name']
+
+            if provider not in provider_map:
+                provider_map[provider] = {}
+
+            this_provider_dict = provider_map[provider]
+            provider_key = d['provider_key__internal_name']
+            assert provider_key not in this_provider_dict, "this would violate the single value to key principle"
+            this_provider_dict[provider_key] = d['value']
+
+        print "PLUGIN DATA: ", provider_map
+        return provider_map
 
     def get_deploy_data(self, git_user=None):
         post_data = {
