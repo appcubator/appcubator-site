@@ -11,7 +11,7 @@ from models import Provider, ProviderKey, ProviderData
 
 from django.core.exceptions import ValidationError
 
-def plugin_data(request, app_id, provider_id, key_name):
+def plugin_data(request, app_id, provider_id, key_internal_name):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
@@ -19,7 +19,7 @@ def plugin_data(request, app_id, provider_id, key_name):
     provider = get_object_or_404(Provider, id=provider_id)
     provider_key = get_object_or_404(ProviderKey,
                                         provider=provider,
-                                        name=key_name)
+                                        internal_name=key_internal_name)
 
     provider_data = ProviderData.objects.filter(provider_key=provider_key, app=app)
 
