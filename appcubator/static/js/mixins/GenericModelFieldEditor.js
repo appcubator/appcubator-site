@@ -10,6 +10,7 @@ function(React) {
         height: 400,
         padding: 0,
         doneButton: true,
+        contentHeight: "auto",
 
         initialize: function(options){
           _.bindAll(this);

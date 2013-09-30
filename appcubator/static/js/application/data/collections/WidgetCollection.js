@@ -214,8 +214,10 @@ define([
 
 
             createBuyButton: function(layout, entity, editOn) {
+
                 var widget = {};
                 widget.type = "buybutton";
+                widget.layout = layout;
 
                 widget.data = {};
                 widget.data.action = "buy";
@@ -256,6 +258,8 @@ define([
                 var widget = {};
                 widget.type = "loop";
                 widget.layout = layout;
+                widget.layout.l_padding = 0;
+                widget.layout.r_padding = 0;
 
                 widget.data = {};
                 widget.data = _.extend(widget.data, (uieState["lists"][0] || {
