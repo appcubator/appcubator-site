@@ -20,6 +20,7 @@ function(WidgetEditorView,
     initialize: function(){
       _.bindAll(this);
       this.multiSelectorView = new MultiSelectorView();
+      g_multiSelectorView = this.multiSelectorView;
       this.subviews.push(this.multiSelectorView);
     },
 
@@ -117,7 +118,6 @@ function(WidgetEditorView,
 
       this.currentPage.get('uielements').each(function(widget){
         var elem = document.getElementById('widget-wrapper-'+ widget.cid);
-        console.log(Xorigin, Yorigin, Xcor, Ycor);
         if(util.isRectangleIntersectElement(Xorigin, Yorigin, Xcor, Ycor, elem)) {
           $(elem).addClass('red-border');
         }
