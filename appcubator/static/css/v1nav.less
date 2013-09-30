@@ -314,3 +314,160 @@
 .garage-toggle:hover, .garage-toggle.active {
   background-position: -60px 0px;
 }
+
+.garage .question-cont {
+  right: 30px;
+  bottom: 70px;
+}
+
+.garage .question-cont p {
+  bottom: 70px;
+}
+
+.garage,
+.world {
+  display: none;
+  z-index: 3000;
+  background-color: rgba(0, 0, 0, 0.85);
+  width: 540px;
+  height: 480px;
+  position: fixed;
+  top: 0px;
+  right: 50%;
+  margin-right: -480px;
+  border-radius: 6px;
+  border: 3px solid #fff;
+  padding: 30px;
+  margin-top: 60px;
+
+  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  -moz-box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  -o-box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+
+  animation: expandTopRight 0.16s ease-in-out;
+  -webkit-animation: expandTopRight 0.16s ease-in-out;
+}
+
+@keyframes expandTopRight {
+  0% {
+    -webkit-transform-origin: 100% 100%;
+    -webkit-transform: scale(0.3);
+  }
+
+  65% {
+    -webkit-transform-origin: 100% 100%;
+
+    -webkit-transform: scale(0.8);
+  }
+
+  100% {
+    -webkit-transform-origin: 100% 100%;
+    -webkit-transform: scale(1);
+  }
+}
+
+
+@-webkit-keyframes expandTopRight {
+  0% {
+    -webkit-transform-origin: 50% 0%;
+    -webkit-transform: scale(1, 0.4);
+    top: -20px;
+    opacity: 0.6;
+  }
+
+  35% {
+    -webkit-transform-origin: 50% 0%;
+    -webkit-transform: scale(1,0.9);
+  }
+
+  100% {
+    -webkit-transform-origin: 50% 0%;
+    -webkit-transform: scale(1,1);
+    top: 0px;
+    opacity: 1;
+  }
+}
+
+/*@-webkit-keyframes slideFromTop {
+  0% {
+    -webkit-transform: translate(0px, -10px);
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+  }
+}*/
+
+
+
+
+
+.garage.editor,
+.world.editor {
+  left: 100%;
+  margin-left: -580px;
+  margin-right: 0;
+}
+
+.garage .up-arrow,
+.world .up-arrow {
+position: absolute;
+top: -29px;
+right: 4px;
+font-weight: lighter;
+opacity: 0.8;
+color: #fff;
+font-size: 60px;
+line-height: 60px;
+cursor: pointer;
+display: inline-block;
+}
+
+.world .up-arrow {
+right: 64px;
+}
+
+.garage.editor .up-arrow,
+.world.editor .up-arrow {
+right: 158px;
+}
+
+.world.editor .up-arrow {
+right: 218px;
+}
+
+
+
+.garage .bottom-sect,
+.world .bottom-sect {
+  border-top: 1px solid #fff;
+  color: #fff;
+  padding-top: 15px;
+}
+
+
+.dropd.open .garage,
+.dropd.open .world  {
+  display: block;
+}
+
+.current-app-links .white-border {
+  text-align: center;
+}
+
+.current-app-links .white-border .icon {
+  display: inline-block;
+  width: 75px;
+  height: 90px;
+  background-position: center left;
+  background-size: 80% auto;
+  background-repeat: no-repeat;
+}
+
+.theme .icon {
+  background-image: url(../img/theme-icon.png);
+}
+
+.settings .icon {
+  background-image: url(../img/settings-icon.png);
+}
