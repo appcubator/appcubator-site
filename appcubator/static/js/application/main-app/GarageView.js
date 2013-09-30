@@ -45,12 +45,16 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
       this.$el.hide();
       $('.garage-toggle').removeClass('active');
       this.expanded = false;
+
+      $(document).off('mousedown', this.bindOutsideClick);
     },
 
     show: function() {
       this.$el.show();
       $('.garage-toggle').addClass('active');
       this.expanded = true;
+
+      $(document).on('mousedown', this.bindOutsideClick);
     },
 
     toggle: function() {
@@ -60,6 +64,12 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
       else {
         this.show();
       }
+    },
+
+    bindOutsideClick: function(e) {
+        if (!util.isMouseOn(e.pageX, e.pageY, this.el, 30)) {
+            this.hide();
+        }
     },
 
     setEnvironmentEditor: function() {

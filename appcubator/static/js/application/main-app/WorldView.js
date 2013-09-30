@@ -9,6 +9,7 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
 
   var WorldView = Backbone.View.extend({
     el : document.getElementById('world-div'),
+    id : 'world-div',
     css: 'app-page',
     className: 'welcome garage',
     expanded: false,
@@ -37,20 +38,28 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
             });
             e.preventDefault();
         });
+    },
 
-        return this;
+    bindOutsideClick: function(e) {
+        if (!util.isMouseOn(e.pageX, e.pageY, this.el, 30)) {
+            this.hide();
+        }
     },
 
     hide: function() {
       this.$el.hide();
       $('.world-toggle').removeClass('active');
       this.expanded = false;
+
+      $(document).off('mousedown', this.bindOutsideClick);
     },
 
     show: function() {
       this.$el.show();
       $('.world-toggle').addClass('active');
       this.expanded = true;
+
+      $(document).on('mousedown', this.bindOutsideClick);
     },
 
     toggle: function() {
