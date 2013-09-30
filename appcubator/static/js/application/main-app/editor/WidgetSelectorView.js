@@ -4,6 +4,9 @@ define([
     ],
     function() {
 
+        var PADDING = 2;
+        var ALIGNMENT = 1;
+
         var WidgetSelectorView = Backbone.UIView.extend({
             className: 'editor-page',
             tagName: 'div',
@@ -159,10 +162,10 @@ define([
                 if (!widgetModel) return;
                 $(node).show();
 
-                node.style.width = ((widgetModel.get('layout').get('width') * 80) + 2) + 'px';
-                node.style.height = ((widgetModel.get('layout').get('height') * 15) + 2) + 'px';
-                node.style.left = ((widgetModel.get('layout').get('left') * 80) - 1) + 'px';
-                node.style.top = ((widgetModel.get('layout').get('top') * 15) - 1) + 'px';
+                node.style.width = ((widgetModel.get('layout').get('width') * 80) + PADDING) + 'px';
+                node.style.height = ((widgetModel.get('layout').get('height') * 15) + PADDING) + 'px';
+                node.style.left = ((widgetModel.get('layout').get('left') * 80) - ALIGNMENT) + 'px';
+                node.style.top = ((widgetModel.get('layout').get('top') * 15) - ALIGNMENT) + 'px';
                 return node;
             },
 
@@ -214,8 +217,8 @@ define([
                 if (valLeft) {
                     var deltaLeft = ui.position.left - (valLeft * this.positionHorizontalGrid);
                     ui.size.width = ui.size.width + deltaLeft;
-                    ui.element.width(ui.size.width);
-                    ui.position.left = (valLeft * this.positionHorizontalGrid);
+                    ui.element.width(ui.size.width + PADDING);
+                    ui.position.left = (valLeft * this.positionHorizontalGrid) - ALIGNMENT;
                     ui.element.css('left', ui.position.left);
                 }
                 if (valRight) {
@@ -236,10 +239,10 @@ define([
                 }
 
 
-                elem.style.width = ui.size.width - 2 + 'px';
-                elem.style.height = (ui.size.height - 2) + 'px';
-                elem.style.left = ui.position.left + 1 + 'px';
-                elem.style.top = ui.position.top + 1 + 'px';
+                elem.style.width = ui.size.width + PADDING + 'px';
+                elem.style.height = (ui.size.height + PADDING) + 'px';
+                elem.style.left = ui.position.left - ALIGNMENT + 'px';
+                elem.style.top = ui.position.top - ALIGNMENT + 'px';
 
             },
 
@@ -296,7 +299,7 @@ define([
                     ui.position.left = valLeft * this.positionHorizontalGrid;
                 }
                 if (valRight) {
-                    ui.position.left = (valRight - model.get('layout').get('width')) * this.positionHorizontalGrid;
+                    ui.position.left = (valRight - model.get('layout').get('width')) * this.positionHorizontalGrid - ALIGNMENT;
                 }
 
 
@@ -311,8 +314,8 @@ define([
                 }
 
                 var elem = util.get('widget-wrapper-' + model.cid);
-                elem.style.top = ui.position.top + 1 + 'px';
-                elem.style.left = ui.position.left + 1 + 'px';
+                elem.style.top = ui.position.top + ALIGNMENT + 'px';
+                elem.style.left = ui.position.left + ALIGNMENT + 'px';
             },
 
             moved: function(e, ui) {
