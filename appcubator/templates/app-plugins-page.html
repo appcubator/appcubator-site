@@ -5,7 +5,7 @@
     <div class="span58 hoff1 emails">
         <ul id="email-list" class="left-nav span12">
           <li id="ganalytics-btn">Google Analytics</li>
-          <li id="paypal-btn">Paypal</li>
+          <li id="paypal-btn">Paypal (Payments)</li>
           <li id="suggestions-btn">Suggestions</li>
         </ul>
       <div class="right-bar span40 offset2" id="disqus-thread" style="display:none;">
@@ -21,8 +21,13 @@
       </div>
       <div class="right-bar span40 offset2 overlay" id="paypal" style="display:none;">
         <div><small>Coming soon.</small></div><br>
-        Paypal ID:<br> <input type="text" placholder="Paypal ID"><br>
-        <input type="submit" class="blue-btn btn" value="Activate">
-      </div>      
+                                                                {# below is pluginkey.internal_name #}
+        <form method="POST" action="/app/{{ app.id }}/plugins/1/PAYPAL_EMAIL/">
+            Paypal ID:<br>{# this is pluginkey.display_name #}
+            {% csrf_token %}
+            <input type="text" placeholder="Paypal ID" name="value" value="{{ app.providerdata_set.all.0.value }}"><br>
+            <input type="submit" class="blue-btn btn" value="Activate">
+        </form>
+      </div>
     </div>
 </div>

@@ -71,6 +71,7 @@ TableTemplates.Property = [
       '<option value="image" <% if(type =="image") %> selected <% %>>Image</option>',
       '<option value="date" <% if(type =="date") %> selected <% %>>Date</option>',
       '<option value="file" <% if(type =="file") %> selected <% %>>File</option>',
+      '<option value="money" <% if(type =="money") %> selected <% %>>USD($)</option>',
     '</select>',
   '</div>',
   '<div class="hi4 prop-cross" id="delete-<%- cid %>">',

@@ -212,6 +212,33 @@ define([
                 return this.push(widgetContainerModel);
             },
 
+
+            createBuyButton: function(layout, entity, editOn) {
+
+                var widget = {};
+                widget.type = "buybutton";
+                widget.layout = layout;
+
+                widget.data = {};
+                widget.data.action = "buy";
+                widget.data.nodeType = "buybutton";
+                widget.data.container_info = {};
+                widget.data.container_info.action = "buy";
+
+                var moneyFieldM = entity.getMoneyField();
+                var moneyFieldName = moneyFieldM.get('name');
+
+                widget.data.entity = entity.get('name');
+                widget.data.container_info.business_name = ""; // tells codegen to use the PAYPAL_EMAIL plugin value
+                widget.data.container_info.item_name = entity.get('fields').first().get('name');
+                widget.data.container_info.amount = '{{' + editOn + '.' + moneyFieldName + '}}';
+                widget.data.container_info.label = "Buy for " + widget.data.container_info.amount;
+
+                var widgetContainerModel = new WidgetContainerModel(widget);
+
+                return this.push(widgetContainerModel);
+            },
+
             createTable: function(layout, entity) {
                 var widget = {};
                 widget.type = "loop";
@@ -231,6 +258,8 @@ define([
                 var widget = {};
                 widget.type = "loop";
                 widget.layout = layout;
+                widget.layout.l_padding = 0;
+                widget.layout.r_padding = 0;
 
                 widget.data = {};
                 widget.data = _.extend(widget.data, (uieState["lists"][0] || {

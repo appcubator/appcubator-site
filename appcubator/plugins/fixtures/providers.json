@@ -1,0 +1,22 @@
+[
+    {
+        "pk": 1,
+        "model": "plugins.provider",
+        "fields": {
+            "url": "http://paypal.com/",
+            "display_name": "Paypal",
+            "internal_name": "PAYPAL",
+            "img": "http://cdn.androidcentral.com/sites/androidcentral.com/files/articleimage/Jared%20DiPane/2010/03/paypal-logo-header-157218.jpg"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "plugins.providerkey",
+        "fields": {
+            "description": "The email address of your Paypal account.",
+            "display_name": "PayPal Email",
+            "internal_name": "PAYPAL_EMAIL",
+            "provider": 1
+        }
+    }
+]

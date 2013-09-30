@@ -244,50 +244,6 @@ Templates.tempUIElement = [
   '<% }; %>'
 ].join('\n');
 
-
-Templates.tempUIElementSized = [
-  '<div style="position:absolute; left: <%= element.layout.get(\'left\') %>px; top:<%= element.layout.get(\'top\') %>px; width:<%= element.layout.get(\'width\')%>px; height:<%=element.layout.get(\'height\') %>px; text-align:<%=element.layout.get(\'alignment\')%>;">',
-  '<<%= element.data.get(\'tagName\') %>',
-  'class = "<%= element.data.get(\'class_name\') %>"',
-  '<% if(element.data.get(\'cons_attribs\')) { %>',
-  '<% _(element.data.get(\'cons_attribs\').attributes).each(function(val, key) { %>',
-  '<%=key%> = "<%=val%>"<% }); %>',
-  '<% } %>',
-  '<% _(element.data.get(\'content_attribs\').attributes).each(function(val, key) { %>',
-  '<%=key%> = "<%=val%>"<% }); %> style="">',
-  '<% if(!element.data.get(\'isSingle\')) { %>',
-  '<%= element.data.get(\'content\') %>',
-  '</<%= element.data.get(\'tagName\') %>>',
-  '<% }; %>',
-  '</div>'
-].join('\n');
-
-Templates.rowNode = [
-  '<div <% if(isListOrGrid == "list") { %> class="row hi<%= layout.get(\'height\')%> block shadow-x" <% } else { %> class="row span<%= layout.get(\'width\') %> hi<%= layout.get(\'height\') %> shadow-x" <% } %> style="position:relative;">',
-    '<% _(uielements).each(function(element){ %>',
-      Templates.tempUIElementSized,
-    '<% }); %>',
-  '</div>'
-].join('\n');
-
-Templates.listNode = [
-  '<div><% for(var ii = 0; ii < nmrRows; ii ++) { %>',
-    Templates.rowNode,
-  '<% } %></div>'
-].join('\n');
-
-
-/*Templates.sliderTemp = [
-  '<ul class="flex slides">',
-    '<% _(slides).each(function(slide) { %>',
-    '<li>',
-      '<img src="<%= slide.image %>" />',
-      '<p class="flex-caption"><%= slide.text %><p/>',
-    '</li>',
-    '<% }); %>',
-  '</ul>'
-].join('\n');*/
-
 Templates.sliderTemp = [
   '<div id="slider-<%= cid %>" class="carousel slide">',
     '<ol class="carousel-indicators">',

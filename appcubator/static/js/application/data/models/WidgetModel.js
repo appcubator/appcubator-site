@@ -212,6 +212,10 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                     this.get('data').has('htmlC')) return true;
             },
 
+            isBuyButton: function() {
+                return this.get('type') === "buybutton";
+            },
+
             getBottom: function() {
                 return this.get('layout').get('height') + this.get('layout').get('top');
             },

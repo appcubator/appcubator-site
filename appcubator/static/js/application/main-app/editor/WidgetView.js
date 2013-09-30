@@ -309,11 +309,17 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
             var width = $(node).outerWidth(true);
 
             var nHeight = Math.ceil(height / verticalGrid);
-            var nWidth = Math.ceil(width / horizontalGrid);
+            var nWidth = Math.ceil((width + 30) / horizontalGrid);
 
             if (horizontalGrid == 1 && verticalGrid == 1) {
                 nHeight = (nHeight < 30) ? 30 : nHeight;
                 nWidth = (nWidth < 120) ? 120 : nWidth;
+
+                if(this.model.isBuyButton()) {
+                    nWidth = 260;
+                    nHeight = 40;
+                }
+
             }
             else {
                 if(nWidth + this.model.get('layout').get('left') > 12) {
