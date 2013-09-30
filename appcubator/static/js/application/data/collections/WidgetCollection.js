@@ -229,7 +229,7 @@ define([
                 var moneyFieldName = moneyFieldM.get('name');
 
                 widget.data.entity = entity.get('name');
-                widget.data.container_info.business_name = "iltecanberk@gmail.com";
+                widget.data.container_info.business_name = ""; // tells codegen to use the PAYPAL_EMAIL plugin value
                 widget.data.container_info.item_name = entity.get('fields').first().get('name');
                 widget.data.container_info.amount = '{{' + editOn + '.' + moneyFieldName + '}}';
                 widget.data.container_info.label = "Buy for " + widget.data.container_info.amount;
