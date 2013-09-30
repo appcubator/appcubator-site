@@ -274,6 +274,7 @@ define([
                 }
 
 
+
                 _(pageContext).each(function(tableName) {
                     var tableM = v1State.getTableModelWithName(tableName);
                     if (!tableM) throw "Error with page context";
@@ -285,6 +286,11 @@ define([
                         id = 'entity-table-' + tableM.cid;
                     }
                     this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') + ' Edit Form', 'create-form-icon');
+                    
+                    if (tableM.hasMoneyField()) {
+                        this.contextEntitySection.addFullWidthItem(id, "entity-buy-button", 'Buy ' + tableM.get('name') + ' Button', 'money-button-icon');
+                    }
+
                     tableM.getFieldsColl().each(function(field) {
                         if (field.isRelatedField()) return this.renderRelatedField(field, tableM);
                         this.contextEntitySection.addFullWidthItem('context-field-' + tableId + '-' + field.cid, 'context-entity', tableName + ' ' + field.get('name'), 'plus-icon');
