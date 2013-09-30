@@ -149,6 +149,7 @@ define([
                 var self = this;
                 this.UIStateTimer = setInterval(function() {
                     self.fetchUIState(function(state) {
+                        console.log(state);
                         if (!_.isEqual(state, uieState)) {
                             self.renewUIEState(state);
                         }
@@ -170,6 +171,7 @@ define([
             },
 
             renewUIEState: function(newState) {
+                console.log("YE");
                 uieState = newState;
                 v1.reArrangeCSSTag();
             },

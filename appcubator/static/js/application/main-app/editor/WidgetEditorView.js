@@ -11,6 +11,7 @@ define([
         'editor/form-editor/LoginFormEditorView',
         'editor/QueryEditorView',
         'editor/CustomWidgetEditorModal',
+        'mixins/GenericModelFieldEditor',
         'mixins/BackboneUI',
         'util'
     ],
@@ -25,7 +26,8 @@ define([
         FormEditorView,
         LoginFormEditorView,
         QueryEditorView,
-        CustomWidgetEditorModal) {
+        CustomWidgetEditorModal,
+        GenericModelFieldEditor ) {
 
         var WidgetEditorView = Backbone.UIView.extend({
             className: 'widget-editor fadeIn',
@@ -49,6 +51,7 @@ define([
                 'click .delete-button': 'clickedDelete',
                 'click .done-text-editing': 'clickedDoneTextEditing',
                 'click .edit-custom-widget-btn': 'openCustomWidgetEditor',
+                'click .edit-itemname-btn'  : 'clickedEditItemName',
                 'click': 'clicked'
             },
 
@@ -150,6 +153,10 @@ define([
 
                     if (action == "searchbox") {
                         this.el.appendChild(this.renderButtonWithDeleteButtonandText('search-editor-btn', 'Edit Search Options'));
+                    }
+
+                    if(action == "buy") {
+                        this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-itemname-btn', 'Edit Item Name'));
                     }
 
                     if (this.model.hasForm() && action != "login" && action != "signup") {
@@ -306,6 +313,24 @@ define([
 
             clickedDoneTextEditing: function() {
                 this.model.trigger('stopEditing');
+            },
+
+            clickedEditItemName: function() {
+                var self = this;
+                
+                new GenericModelFieldEditor({
+                    title: "Item Name Editor",
+                    model: self.model.get('data').get('container_info'),
+                    key: "item_name",
+                    radioOptions: v1State.getTableModelWithName(self.model.get('data').get('entity')).get('fields').map(function(field) {
+                      if(field.get('type') != "text") return null;
+                      return {
+                        text: field.get('name'),
+                        val: field.get('name')
+                      };
+                    }),
+                    question: "What should show up as the name of the item on Paypal?"
+                });
             },
 
             classChanged: function() {
