@@ -376,6 +376,7 @@ a.large-link {
     -webkit-transform-origin: 50% 0%;
     -webkit-transform: scale(1, 0.4);
     top: -20px;
+    opacity: 0.6;
   }
 
   35% {
@@ -387,6 +388,7 @@ a.large-link {
     -webkit-transform-origin: 50% 0%;
     -webkit-transform: scale(1,1);
     top: 0px;
+    opacity: 1;
   }
 }
 
