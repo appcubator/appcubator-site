@@ -1,3 +1,4 @@
+{% load embed_json %}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
   "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -95,10 +96,10 @@
   <!-- include source files here... -->
    <script type="text/javascript">
     var appId = {{ app_id }};
-    var mobileUieState = {{ app.mobile_uie_state_json|safe }};
-    var statics = {{ statics|safe }};
-    var themes = {{ themes|safe }};
-    var mobileThemes = {{ mobile_themes|safe }};
+    var mobileUieState = {{ app.mobile_uie_state_json|fix_solidus|safe }};
+    var statics = {{ statics|fix_solidus|safe }};
+    var themes = {{ themes|fix_solidus|safe }};
+    var mobileThemes = {{ mobile_themes|fix_solidus|safe }};
     var GRID_WIDTH = 80;
     var GRID_HEIGHT = 15;
 

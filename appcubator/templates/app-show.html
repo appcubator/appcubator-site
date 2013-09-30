@@ -1,4 +1,5 @@
 {% extends "infra-app.html" %}
+{% load embed_json %}
 {% block css %}
 <link type="text/css" href="/app/{{ app.id}}/uiestate.less" id="css-uiestate" rel="stylesheet"/>
 <link type="text/css" href="/app/{{ app.id}}/mobile_uiestate.less" id="css-mobile-uiestate" rel="stylesheet"/>
@@ -30,12 +31,12 @@
     var appId = {{ app.id }};
     var appUrl = "{{ app.url }}";
     var appGitRepo = "{{ app.git_repo }}";
-    var appState = {{ app.state_json|safe }};
-    var uieState = {{ app.uie_state_json|safe }};
-    var mobileUieState = {{ app.mobile_uie_state_json|safe }};
-    var statics = {{ statics|safe }};
-    var themes = {{ themes|safe }};
-    var mobileThemes = {{ mobile_themes|safe }};
+    var appState = {{ app.state_json|fix_solidus|safe }};
+    var uieState = {{ app.uie_state_json|fix_solidus|safe }};
+    var mobileUieState = {{ app.mobile_uie_state_json|fix_solidus|safe }};
+    var statics = {{ statics|fix_solidus|safe }};
+    var themes = {{ themes|fix_solidus|safe }};
+    var mobileThemes = {{ mobile_themes|fix_solidus|safe }};
     var staticVersion = "{{STATIC_VERSION}}";
     var is_deployed = {{ is_deployed }}
     var v1 = {};

@@ -1,4 +1,5 @@
 {% extends "infra-app.html" %}
+{% load embed_json %}
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/welcome.css">
@@ -90,12 +91,12 @@
 <script src="{{ STATIC_URL }}js/libs/bootstrap/bootstrap.js"></script>
 <script type="text/javascript">
     var appId = 0;
-    var appState = {{ default_state|safe }};
-    var uieState = {{ default_uie_state|safe }};
-    var mobileUieState = {{ default_mobile_uie_state|safe }};
-    var statics = {{ statics|safe }};
-    var themes = {{ themes|safe }};
-    var mobileThemes = {{ mobile_themes|safe }};
+    var appState = {{ default_state|fix_solidus|safe }};
+    var uieState = {{ default_uie_state|fix_solidus|safe }};
+    var mobileUieState = {{ default_mobile_uie_state|fix_solidus|safe }};
+    var statics = {{ statics|fix_solidus|safe }};
+    var themes = {{ themes|fix_solidus|safe }};
+    var mobileThemes = {{ mobile_themes|fix_solidus|safe }};
     var GRID_WIDTH = 80;
     var GRID_HEIGHT = 15;
 </script>

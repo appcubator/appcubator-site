@@ -1,4 +1,5 @@
 {% extends "admin/admin-base.html" %}
+{% load embed_json %}
 
 {% block css %}
 <style type="text/css">
@@ -120,8 +121,8 @@
 
 
   var appId = {{ app.pk }}
-  var appState = {{ app.state_json|safe }};
-  var uieState = {{ app.uie_state_json|safe }};
+  var appState = {{ app.state_json|fix_solidus|safe }};
+  var uieState = {{ app.uie_state_json|fix_solidus|safe }};
   appState = JSON.stringify(appState, undefined, 2);
   uieState = JSON.stringify(uieState, undefined, 2);
   document.getElementById('appState').innerHTML = appState;
