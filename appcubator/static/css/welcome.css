@@ -215,25 +215,6 @@ a.white-border {
   margin-right: -406px;
 }
 
-.garage .up-arrow,
-.world .up-arrow {
-  position: fixed;
-  top: 34px;
-  right: 50%;
-  margin-right: -472px;
-  font-weight: lighter;
-  opacity: 0.8;
-  color: #fff;
-  font-size: 60px;
-  line-height: 60px;
-  cursor: pointer;
-}
-
-.world .up-arrow {
-  margin-right: -412px;
-}
-
-
 
 .hide-btn {
   position: fixed;
@@ -367,6 +348,50 @@ a.large-link {
   -o-box-shadow: 0 2px 4px rgba(0,0,0,0.6);
   box-shadow: 0 2px 4px rgba(0,0,0,0.6);
 }
+
+.garage.editor,
+.world.editor {
+  left: 100%;
+  margin-left: -580px;
+  margin-right: 0;
+}
+
+.garage .up-arrow,
+.world .up-arrow {
+  position: fixed;
+  top: 34px;
+  right: 50%;
+  margin-right: -472px;
+  font-weight: lighter;
+  opacity: 0.8;
+  color: #fff;
+  font-size: 60px;
+  line-height: 60px;
+  cursor: pointer;
+}
+
+.world .up-arrow {
+  margin-right: -412px;
+}
+
+.garage.editor .up-arrow,
+.world.editor .up-arrow {
+  position: fixed;
+  top: 34px;
+  left: 100%;
+  margin-left: -250px;
+  font-weight: lighter;
+  opacity: 0.8;
+  color: #fff;
+  font-size: 60px;
+  line-height: 60px;
+  cursor: pointer;
+}
+
+.world.editor .up-arrow {
+  margin-left: -310px;
+}
+
 
 
 .garage .bottom-sect,

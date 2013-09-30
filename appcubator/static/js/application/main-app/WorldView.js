@@ -62,6 +62,14 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
       }
     },
 
+    setEnvironmentEditor: function() {
+      this.el.className += ' editor';
+    },
+
+    unsetEnvironmentEditor: function() {
+      this.el.className.replace('editor', '');
+    },
+
     showAll: function() {
       $('.three-apps').hide();
       $('.current-app-info').hide();

@@ -130,6 +130,8 @@ define([
                 }
 
                 if(appId !== 0) {
+                    v1.garageView.setEnvironmentEditor();
+                    v1.worldView.setEnvironmentEditor();
                     $('.garage-toggle').on('click', v1.garageView.toggle);
                     $('.garage-toggle').on('click', v1.worldView.hide);
                     $('.world-toggle').on('click', v1.garageView.hide);
@@ -262,6 +264,12 @@ define([
             },
 
             close: function() {
+
+                v1.garageView.unsetEnvironmentEditor();
+                v1.garageView.hide();
+                v1.worldView.unsetEnvironmentEditor();
+                v1.worldView.hide();
+
                 window.removeEventListener('resize', this.setupPageWrapper);
                 document.body.style.overflow = "";
 
