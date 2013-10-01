@@ -11,7 +11,11 @@ import datetime
 from django.utils import timezone
 import pytz
 utc=pytz.UTC
-make_aware = utc.localize
+def make_aware(dt):
+    try:
+        return utc.localize(dt)
+    except ValueError:
+        return dt
 
 import logging
 import urllib

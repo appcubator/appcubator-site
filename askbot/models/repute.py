@@ -3,7 +3,11 @@ import datetime
 from django.utils import timezone
 import pytz
 utc=pytz.UTC
-make_aware = utc.localize
+def make_aware(dt):
+    try:
+        return utc.localize(dt)
+    except ValueError:
+        return dt
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic

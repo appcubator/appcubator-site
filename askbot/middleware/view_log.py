@@ -6,9 +6,6 @@ Included here is the ViewLogMiddleware
 import datetime
 
 from django.utils import timezone
-import pytz
-utc=pytz.UTC
-make_aware = utc.localize
 
 from askbot.models import signals
 
