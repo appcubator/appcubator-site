@@ -83,14 +83,23 @@ function(
 
     expand: function() {
       this.header.className +=' open';
-      $(this.list).clearQueue(true);
+      
+      // try {
+      //   $(this.list).clearQueue(true);
+      // }
+      // catch(err) {}
       $(this.list).slideDown(200);
       this.isExpanded = true;
     },
 
     hide: function() {
       $(this.header).removeClass('open');
-      $(this.list).clearQueue(true);
+      
+      // try {
+      //   $(this.list).clearQueue(true);
+      // }
+      // catch(err) {}
+
       $(this.list).slideUp(200);
       this.isExpanded = false;
     },
