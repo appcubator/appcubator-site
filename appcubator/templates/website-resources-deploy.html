@@ -135,11 +135,11 @@ h5 a {
 {% endblock %}
 
 {% block tutorial-table-content %}
-<li><a href="#overview-section">Heroku</a></li>
-<li><a href="#user-profiles-section">Google App Engine</a></li>
-
-<li class="sub" id="slide-0-0"><a href="#user-profiles-section">Basic Page Design</a></li>
-<li class="sub" id="slide-0-8"><a href="#user-profiles-section">User Profile Page</a></li>
+<li><a href="#overview-section">Overview</a></li>
+<li><a href="#download-section">Download code</a></li>
+<li><a href="#setup-section">Setup Heroku</a></li>
+<li><a href="#push-section">Push your code</a></li>
+<li><a href="#tips-section">Heroku Tips</a></li>
 {% endblock %}
 
 {% block tutorial-content %}
@@ -154,7 +154,7 @@ h5 a {
     </div>
 </div>
 {# These names should also be in SLIDEVIEWSLUGS #}
-<div class="section">
+<div class="section" id="download-section">
     <h5>1. Download your code<a name="user-profiles"></a></h5>
     <p>Download your code from the Appcubator Overview page. If you know how to use git, just clone the repo. If not, don't worry, just download and extract the zip to a folder of your choice.</p>
     <p>
@@ -165,7 +165,7 @@ h5 a {
     </p>
     <p>In your terminal/command-line, <code>cd</code> into your app's directory and continue to the next step.</p>
 </div>
-<div class="section">
+<div class="section" id="setup-section">
     <h5>2. Setup Git and Heroku<a name="user-profiles"></a></h5>
     <p>Now that you've downloaded your code, we'll get it setup for running on Heroku.</p>
     <p>First, make a git repository (if you didn't already) by running <code>git init .</code> in your app's directory.</p>
@@ -180,7 +180,7 @@ http://appcubator-bookface.herokuapp.com/ | git@heroku.com:appcubator-bookface.g
     <p>At this point you should have Heroku configured to use the settings file at <code>settings/heroku.py</code></p>
     <p><em>Technical detail:</em> When you push this code in the next step, Heroku will first see that you have a requirements.txt file, install the required software, then run the command in the Procfile which will start the web server.</p>
 </div>
-<div class="section">
+<div class="section" id="push-section">
     <h5>3. Push code to Heroku (first time)<a name="user-profiles"></a></h5>
     <p>If you haven't done so already, add all your files to the git repository:</p>
     <pre><code>git add .
@@ -195,7 +195,7 @@ $ heroku run python manage.py migrate</code></pre>
     <pre><code>$ heroku open</code></pre>
     <p><em>Technical detail:</em> Heroku provides apps with a <a href="http://www.postgresql.org/" target="_blank">Postgres database</a></p>
 </div>
-<div class="section">
+<div class="section" id="tips-section">
     <h5>4. General tips while using Heroku<a name="user-profiles"></a></h5>
     <p>To see your application's log output on Heroku, use the following command:</p>
     <pre><code>$ heroku logs --tail</code></pre>
