@@ -28,6 +28,7 @@ function(AppInfoModel,
       this.set('users', new UserRolesCollection(aState.users));
       this.set('tables', new TableCollection(aState.tables));
       this.set('emails', new EmailCollection(aState.emails));
+
     },
 
     getCurrentPage: function() {
