@@ -62,6 +62,8 @@ define(function(require, exports, module) {
             $('.world-toggle').on('click', this.worldView.toggle);
 
             this.listenTo(v1State.get('tables'), 'add', this.entityAdded);
+
+            this.autoAddLinksToNavbar();
         },
 
         entityAdded: function(entityModel) {
@@ -632,6 +634,18 @@ define(function(require, exports, module) {
             olark('api.box.show');
         },
 
+
+        autoAddLinksToNavbar: function() {
+          this.listenTo(v1State.get('pages'), 'add', function(pageM) {
+            if(!pageM.isContextFree()) return;
+            var homePageNav = v1State.get('pages').first().get('navbar');
+            homePageNav.get('links').push({
+                url  : 'internal://' + pageM.get('name'),
+                title: pageM.get('name')
+            });
+
+          }, this);
+        },
 
         reArrangeCSSTag: function() {
           var style = document.getElementById("css-uiestate");

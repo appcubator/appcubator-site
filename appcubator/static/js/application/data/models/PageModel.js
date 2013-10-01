@@ -145,6 +145,10 @@ define([
                 this.get('url').get('urlparts').reset([urlparts]);
             },
 
+            isContextFree: function() {
+                return (!this.get('url').get('urlparts').some(function(part) { return (/\{\{([^\}]+)\}\}/g).test(part.get('value')); }));
+            },
+
             toJSON: function() {
                 var json = _.clone(this.attributes);
                 json.url = this.get('url').toJSON();

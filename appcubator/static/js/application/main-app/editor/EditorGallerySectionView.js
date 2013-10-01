@@ -15,12 +15,17 @@ function(
 
     events : {
       'click .gallery-header .qmark' : 'showSectionTutorial',
-      'click .gallery-header' : 'toggle'
+      'click .gallery-header' : 'toggle',
+      'mouseover'   : 'expand',
+      'mouseenter'  : 'expand',
+      'mouseleave'  : 'mouseleave'
     },
+
     isExpanded: true,
 
-    initialize: function() {
+    initialize: function(options) {
       _.bindAll(this);
+      this.parentView = options.parentView;
       return this;
     },
 
@@ -78,14 +83,30 @@ function(
 
     expand: function() {
       this.header.className +=' open';
+      
+      try {
+        $(this.list).clearQueue();
+      }
+      catch(err) {}
+
       $(this.list).slideDown(200);
       this.isExpanded = true;
     },
 
     hide: function() {
       $(this.header).removeClass('open');
+      
+      try {
+        $(this.list).clearQueue();
+      }
+      catch(err) {}
+
       $(this.list).slideUp(200);
       this.isExpanded = false;
+    },
+
+    mouseleave: function(e) {
+      if(!this.parentView.dragActive) this.hide();
     },
 
     showSectionTutorial: function(e) {

@@ -315,7 +315,8 @@ define([
             },
 
             addNewSection: function(name) {
-                var sectionView = new EditorGallerySectionView();
+                var self = this;
+                var sectionView = new EditorGallerySectionView({ parentView: self });
                 sectionView.name = name;
                 this.subviews.push(sectionView);
                 this.sections.push(sectionView);
@@ -330,6 +331,8 @@ define([
             },
 
             dropped: function(e, ui) {
+                this.dragActive = false;
+
                 var left = 0;
                 var top = 1;
                 var itemGallery = document.getElementById('item-gallery');
@@ -545,7 +548,9 @@ define([
                     return (fieldModel.cid == field_id);
                 });
 
-                var type = util.getDisplayType(field);
+                console.log(field);
+                var type = util.getDisplayType(field.get('type'));
+                console.log(type);
 
                 var content_ops = {};
 
