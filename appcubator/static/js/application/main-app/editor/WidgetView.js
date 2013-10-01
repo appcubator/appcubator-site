@@ -259,10 +259,12 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
         },
 
         switchEditModeOn: function() {
-
+            console.log("Siwtt");
             if (this.model.get('data').get('content')) {
+                console.log("YEEE");
                 this.editMode = true;
                 var el = $(this.el.firstChild);
+                console.log(el);
                 this.el.firstChild.style.zIndex = 2003;
                 this.$el.addClass('textediting');
                 el.attr('contenteditable', 'true');

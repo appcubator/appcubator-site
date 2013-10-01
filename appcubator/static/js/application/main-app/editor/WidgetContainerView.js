@@ -45,6 +45,8 @@ function( React,
       if(this.model.get('data').get('container_info').has('query')) {
         this.model.get('data').get('container_info').get('query').bind('change', this.reRender);
       }
+
+      this.listenTo(this.model, "startEditing", this.switchEditModeOn, this);
     },
 
     render: function() {
@@ -86,10 +88,8 @@ function( React,
       }
 
       if(this.model.get('data').get('action') == "buy" ) {
-        var buyBtn = document.createElement('div');
         var info = _.extend(uieState["buttons"][0], { content: this.model.get('data').get('content')});
-        buyBtn.innerHTML = _.template(Templates.tempNode, { element: info});
-        this.el.appendChild(buyBtn);
+        this.el.innerHTML = _.template(Templates.tempNode, { element: info});
       }
 
       if(this.model.get('data').get('container_info').get('action') == "videoembed" ) {
@@ -138,11 +138,8 @@ function( React,
       if(this.model.get('data').get('container_info').get('action') === "table-gal") {
         new QueryEditorView(this.model, 'table');
       }
-    },
-
-    switchEditModeOn: function() {
-      // start editing code
     }
+
   });
 
   return WidgetContainerView;
