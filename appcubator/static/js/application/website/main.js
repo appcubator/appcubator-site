@@ -84,7 +84,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       "community/faq/"      : "faq",
       "community/*content"  : 'community',
 
-      "resources/tutorial/*pagename/" : "slideViewPage",
+      "resources/tutorials/*pagename/" : "slideViewPage",
       "resources/editor/"             : "editor",
       "resources/documentation/"       : "documentation",
       "resources/*content"            : 'resources',

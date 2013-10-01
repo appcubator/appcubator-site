@@ -144,29 +144,63 @@ h5 a {
 
 {% block tutorial-content %}
 <div class="section" id="overview-section">
-    <h4>Tutorial - Deploying your Django app to the Cloud</h4>
+    <h4>Tutorial - Deploying to Heroku</h4>
     <div class="intro-wrapper">
-        <p>In this tutorial, we'll download the code for the social network we built in the <a href="/resources/build-social-network/">previous tutorial</a> and go over various methods of getting it running in the cloud.
-        <br>
-        <br>
-        <a class="fancy" href="http://book-face.appcubator.com/">finished.book-face.appcubator.com</a>
-        <br>
-        <br>
+        <p>Heroku (pronounced her-OH-koo) is a way of easily running web apps on servers in the cloud. You can use it while developing or in production.</p>
+        <p>Appcubator-generated Django apps are preconfigured to run on Heroku, so you can get up and running quickly.</p>
+
+        <p>To get started you should first <a href="https://id.heroku.com/signup/www-header" target="_blank">signup for Heroku</a> and <a href="https://toolbelt.heroku.com/">install the Heroku Toolbelt</a>.
+           Once this is done, you can follow this tutorial to get your application up and running on Heroku.</p>
     </div>
 </div>
 {# These names should also be in SLIDEVIEWSLUGS #}
-<div class="section" id="user-profiles-section">
-    <h5>Heroku<a name="user-profiles"></a></h5>
-    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
-    <h5>Google App Engine<a name="user-profiles"></a></h5>
-    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
-    <h5>Amazon Web Services<a name="user-profiles"></a></h5>
-    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
-    <h5>Koding<a name="user-profiles"></a></h5>
-    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
-    <h5>Run Locally<a name="user-profiles"></a></h5>
-    {% include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" %}
+<div class="section">
+    <h5>1. Download your code<a name="user-profiles"></a></h5>
+    <p>Download your code from the Appcubator Overview page. If you know how to use git, just clone the repo. If not, don't worry, just download and extract the zip to a folder of your choice.</p>
+    <p>
+        We'll refer to the path to your app as the app's directory. An example for Mac:
+        <pre><code>/Users/appcubator/Projects/appcubator-bookface</code></pre>
+        A Windows example:
+        <pre><code>C:\Users\Appcubator\Projects\appcubator-bookface</code></pre>
+    </p>
+    <p>In your terminal/command-line, <code>cd</code> into your app's directory and continue to the next step.</p>
 </div>
+<div class="section">
+    <h5>2. Setup Git and Heroku<a name="user-profiles"></a></h5>
+    <p>Now that you've downloaded your code, we'll get it setup for running on Heroku.</p>
+    <p>First, make a git repository (if you didn't already) by running <code>git init .</code> in your app's directory.</p>
+    <p>Then, open the <code>requirements.txt</code> file and uncomment the lines as specified in the file.</p>
+    <p>Then run <code>heroku create [desired subdomain]</code>, and if you set up heroku correctly before, you should see some output like this:
+    <pre><samp>$ heroku create appcubator-bookface
+Creating appcubator-bookface... done, stack is cedar
+http://appcubator-bookface.herokuapp.com/ | git@heroku.com:appcubator-bookface.git
+</samp></pre></p>
+    <p>Now configure heroku to use the special heroku settings provided by Appcubator.</p>
+    <pre><code>$ heroku config:set DJANGO_SETTINGS_MODULE=settings.heroku</code></pre>
+    <p>At this point you should have Heroku configured to use the settings file at <code>settings/heroku.py</code></p>
+    <p><em>Technical detail:</em> When you push this code in the next step, Heroku will first see that you have a requirements.txt file, install the required software, then run the command in the Procfile which will start the web server.</p>
+</div>
+<div class="section">
+    <h5>3. Push code to Heroku (first time)<a name="user-profiles"></a></h5>
+    <p>If you haven't done so already, add all your files to the git repository:</p>
+    <pre><code>git add .
+git commit -am "first commit"</code></pre>
+    <p>Now, let's push the code to heroku and initialize the database.</p>
+    <pre><code>$ git push heroku master</code></pre>
+    <p>The first time you do this, you should see a very long output. It means that Heroku is installing the required software for your app, which is good.</p>
+    <p>To set up the database:</p>
+    <pre><code>$ heroku run python manage.py syncdb --noinput
+$ heroku run python manage.py migrate</code></pre>
+    <p>At this point, your code is hosted on heroku's servers, required software packages are installed, and your database is setup. Put more simply, your app is live and ready to go! Here's a convenient way to go the URL in your browser:</p>
+    <pre><code>$ heroku open</code></pre>
+    <p><em>Technical detail:</em> Heroku provides apps with a <a href="http://www.postgresql.org/" target="_blank">Postgres database</a></p>
+</div>
+<div class="section">
+    <h5>4. General tips while using Heroku<a name="user-profiles"></a></h5>
+    <p>To see your application's log output on Heroku, use the following command:</p>
+    <pre><code>$ heroku logs --tail</code></pre>
+</div>
+{# include "website-resources-tutorial-section.html" with data=tut_imgs.0 id="social-slides-profiles" #}
 
 {% endblock %}
 
