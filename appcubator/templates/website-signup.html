@@ -17,7 +17,7 @@
   </div>
   <div class="slide-info slide">
     <div class="row">
-      <div class="centered-container" style="text-align:center;">
+      <div class="centered-container" style="text-align:center; border-top-width: 0;">
         <form class="sign-up-form" method="POST" id="signup" action="{% url signup_form %}">
           {% csrf_token %}
           <div class="left-side">
@@ -32,15 +32,20 @@
 
             <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
             <hr>
-            <input type="password" name="password1" id="inp-name" placeholder="Password">
+            <input type="password" name="password1" id="inp-pwd1" placeholder="Password">
             <div class="form-error field-name-password1"></div>
 
-            <input type="password" name="password2" id="inp-email" placeholder="Confirm Password">
+            <input type="password" name="password2" id="inp-pwd2" placeholder="Confirm Password">
             <div class="form-error field-name-password2"></div>
           </div>
           <div class="right-side">
-            <textarea name="description" id="inp-description" placeholder="Technical description of your application. This is for us to attain the feasibility of the project to best direct you. It's totally fine if you just want to check it out."></textarea>
-            <input type="checkbox" name="interest" id="inp-interest" data-label="I'm also interested in the <span id='s-session'>Head Start</span> session.">
+            I am a(n)<br>
+            <input type="radio" name="description" id="student" value="student" checked data-label="Student">
+            <input type="radio" name="description" id="freelancer" value="freelancer" data-label="Freelancer">
+            <input type="radio" name="description" id="business-owner" value="business-owner" data-label="Small business owner">
+            <input type="radio" name="description" id="fulltime-developer" value="fulltime-developer" data-label="Full-time Developer">
+            <input type="radio" name="description" id="entrepreneur" value="entrepreneur" data-label="Entrepreneur">
+            <input type="radio" name="description" id="other" value="other" data-label="<input type='text' placeholder='Other' id='other-input'>">
             <input style="height:48px;" type="submit" class="btn btn-blue span10" id="sign-up" value="Sign Me Up »">
             <div style="height:48px; display:none;" class="btn btn-blue span10" id="passive-button"></div>
           </div>
@@ -59,5 +64,94 @@
 
 {% block js %}
 
-<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+<script src="{{ STATIC_URL }}js/libs/jquery/jquery.js"></script>
+<script src="{{ STATIC_URL }}js/libs/jquery/prettyCheckable.js"></script>
+<script type="text/javascript">
+        $('.btn-facebook').on('click', function() {
+              FB.login(function(response) {
+               if (response.authResponse) {
+                FB.api('/me', function(response) {
+                  $("#inp-name").val(response.name);
+                  $("#inp-email").val(response.email);
+                  $("#inp-extra").val(JSON.stringify(response));
+                 });
+               } else {
+                 console.log('User cancelled login or did not fully authorize.');
+               }
+             }, {scope: 'email'});
+        });
+
+        $('input[type=checkbox]').prettyCheckable();
+        $('input[type=radio]').prettyCheckable();
+</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/libs/underscore-amd/underscore-min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/libs/util/util-nonamd.js"></script>
+<script type="text/javascript">
+    $('#signup').on('submit', function(e) {
+        e.preventDefault();
+
+        $('#sign-up').hide();
+        $('#passive-button').show();
+        $('#passive-button').append("...");
+
+        var self = this;
+        url = $(e.currentTarget).attr('action');
+        obj = {};
+        obj.name = $("#inp-name").val();
+        obj.email = $("#inp-email").val();
+        obj.password1 = $("#inp-pwd1").val();
+        obj.password2 = $("#inp-pwd2").val();
+
+        obj.description = $("input[name=description]:checked").val();
+        if(obj.description == "other") { obj.description = $('#other-input').val(); }
+
+        var isFilled = true;
+        for (var key in obj) {
+          var val = obj[key];
+          if(val === "") {
+            isFilled = false;
+            $("#inp-" + key).addClass('required-border');
+          }
+          else {
+            $("#inp-" + key).removeClass('required-border');
+          }
+        }
+
+        if(isFilled) {
+         $.ajax({
+          url: url,
+          type: "POST",
+          data: obj,
+          dataType: "JSON",
+          success: function(data, statusStr, xhr) {
+            
+            $('#passive-button').hide();
+            $('#sign-up').show();
+
+            if (typeof(data.redirect_to) !== 'undefined') {
+              location.href = data.redirect_to;
+            } else {
+              _.each(data, function(val, key, ind) {
+                if(key==='__all__') {
+                  $(self).find('.form-error.field-all').html(val.join('<br />'));
+                } else {
+                  $(self).find('.form-error.field-name-'+key).html(val.join('<br />'));
+                }
+              });
+            }
+          },
+          complete: function() {
+            $('#sign-up').show();
+            $('#passive-button').hide();
+          }
+        });
+
+         //self.showTweetBtn();
+       }
+       else {
+            $('#passive-button').hide();
+            $('#sign-up').show();
+       }
+     });
+</script>
 {% endblock %}

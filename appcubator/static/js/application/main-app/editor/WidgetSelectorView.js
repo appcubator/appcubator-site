@@ -217,14 +217,14 @@ define([
 
                 if (valLeft) {
                     var deltaLeft = ui.position.left - (valLeft * this.positionHorizontalGrid);
-                    ui.size.width = ui.size.width + deltaLeft;
+                    ui.size.width = ui.size.width + deltaLeft - ALIGNMENT;
                     ui.element.width(ui.size.width + PADDING);
                     ui.position.left = (valLeft * this.positionHorizontalGrid) - ALIGNMENT;
                     ui.element.css('left', ui.position.left);
                 }
                 if (valRight) {
                     var deltaRight = valRight * this.positionHorizontalGrid - (ui.position.left + ui.size.width);
-                    ui.size.width = ui.size.width + deltaRight;
+                    ui.size.width = ui.size.width + deltaRight  - ALIGNMENT;
                     ui.element.width(ui.size.width);
                 }
 
@@ -242,8 +242,8 @@ define([
 
                 elem.style.width = ui.size.width + PADDING + 'px';
                 elem.style.height = (ui.size.height + PADDING) + 'px';
-                elem.style.left = ui.position.left - ALIGNMENT + 'px';
-                elem.style.top = ui.position.top - ALIGNMENT + 'px';
+                elem.style.left = ui.position.left + ALIGNMENT + 'px';
+                elem.style.top = ui.position.top + ALIGNMENT + 'px';
 
             },
 

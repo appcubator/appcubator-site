@@ -314,19 +314,19 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
     },
 
     signupPage: function() {
-        $('.btn-facebook').on('click', function() {
-              FB.login(function(response) {
-               if (response.authResponse) {
-                FB.api('/me', function(response) {
-                  $("#inp-name").val(response.name);
-                  $("#inp-email").val(response.email);
-                  $("#inp-extra").val(JSON.stringify(response));
-                 });
-               } else {
-                 console.log('User cancelled login or did not fully authorize.');
-               }
-             }, {scope: 'email'});
-        });
+        // $('.btn-facebook').on('click', function() {
+        //       FB.login(function(response) {
+        //        if (response.authResponse) {
+        //         FB.api('/me', function(response) {
+        //           $("#inp-name").val(response.name);
+        //           $("#inp-email").val(response.email);
+        //           $("#inp-extra").val(JSON.stringify(response));
+        //          });
+        //        } else {
+        //          console.log('User cancelled login or did not fully authorize.');
+        //        }
+        //      }, {scope: 'email'});
+        // });
     }
   });
 
