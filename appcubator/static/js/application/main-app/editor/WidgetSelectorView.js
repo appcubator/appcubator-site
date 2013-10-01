@@ -72,6 +72,7 @@ define([
                 });
 
                 $(hoverDiv).draggable({
+                    containment: "parent",
                     drag: self.moving,
                     stop: self.moved,
                     snapMode: "outer"
