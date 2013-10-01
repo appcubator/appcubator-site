@@ -133,6 +133,7 @@ define([
                 widget.layout = layout;
 
                 widget.data = {};
+                console.log(type);
                 widget.data.nodeType = type;
                 widget.data = _.extend(widget.data, uieState[type][0]);
 
