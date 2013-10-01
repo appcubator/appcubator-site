@@ -181,7 +181,6 @@ define([
             },
 
             renewUIEState: function(newState) {
-                console.log("YE");
                 uieState = newState;
                 v1.reArrangeCSSTag();
             },
