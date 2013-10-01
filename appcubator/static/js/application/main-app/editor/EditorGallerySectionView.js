@@ -84,10 +84,11 @@ function(
     expand: function() {
       this.header.className +=' open';
       
-      // try {
-      //   $(this.list).clearQueue(true);
-      // }
-      // catch(err) {}
+      try {
+        $(this.list).clearQueue();
+      }
+      catch(err) {}
+
       $(this.list).slideDown(200);
       this.isExpanded = true;
     },
@@ -95,10 +96,10 @@ function(
     hide: function() {
       $(this.header).removeClass('open');
       
-      // try {
-      //   $(this.list).clearQueue(true);
-      // }
-      // catch(err) {}
+      try {
+        $(this.list).clearQueue();
+      }
+      catch(err) {}
 
       $(this.list).slideUp(200);
       this.isExpanded = false;
