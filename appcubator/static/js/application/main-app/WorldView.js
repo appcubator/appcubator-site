@@ -7,8 +7,9 @@ define([
 ],
 function(SimpleModalView, ShareModalView, AdminPanelView) {
 
-  var GarageView = Backbone.View.extend({
-    el : document.getElementById('garage-div'),
+  var WorldView = Backbone.View.extend({
+    el : document.getElementById('world-div'),
+    id : 'world-div',
     css: 'app-page',
     className: 'welcome garage',
     expanded: false,
@@ -37,13 +38,17 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
             });
             e.preventDefault();
         });
+    },
 
-        return this;
+    bindOutsideClick: function(e) {
+        if (!util.isMouseOn(e.pageX, e.pageY, this.el, 30)) {
+            this.hide();
+        }
     },
 
     hide: function() {
       this.$el.hide();
-      $('.garage-toggle').removeClass('active');
+      $('.world-toggle').removeClass('active');
       this.expanded = false;
 
       $(document).off('mousedown', this.bindOutsideClick);
@@ -51,7 +56,7 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
 
     show: function() {
       this.$el.show();
-      $('.garage-toggle').addClass('active');
+      $('.world-toggle').addClass('active');
       this.expanded = true;
 
       $(document).on('mousedown', this.bindOutsideClick);
@@ -64,12 +69,6 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
       else {
         this.show();
       }
-    },
-
-    bindOutsideClick: function(e) {
-        if (!util.isMouseOn(e.pageX, e.pageY, this.el, 30)) {
-            this.hide();
-        }
     },
 
     setEnvironmentEditor: function() {
@@ -100,5 +99,5 @@ function(SimpleModalView, ShareModalView, AdminPanelView) {
 
   });
 
-  return GarageView;
+  return WorldView;
 });

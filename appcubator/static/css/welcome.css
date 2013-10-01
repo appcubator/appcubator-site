@@ -21,16 +21,17 @@ background-repeat: no-repeat;
   color: #fff;
 }
 
-a.see-all,
 a.hide-all {
   display: inline-block;
   margin-top: 10px;
-  float: right;
-  margin-right: 30px;
 }
 
 .welcome {
   margin-top: 80px;
+}
+
+.welcome.garage-logo {
+  margin-top: 0px;
 }
 
 .question-cont {
@@ -210,6 +211,11 @@ a.white-border {
   padding: 15px;
 }
 
+.world .hide-btn {
+  margin-right: -406px;
+}
+
+
 .hide-btn {
   position: fixed;
   top: 0px;
@@ -236,7 +242,7 @@ a.white-border {
 .app.title,
 .all-app.title {
   text-transform: uppercase;
-  margin-top: 30px;
+  margin-top: 0px;
   font-size: 24px;
 }
 
@@ -247,23 +253,27 @@ a.large-link {
   margin-top: 15px;
 }
 
-.right-menu .notifications {
+.world .notifications {
+  width: 240px;
+}
+
+.notifications {
   display: inline-block;
   margin-top: 15px;
   padding-bottom: 30px;
   color: #fff;
 }
-.right-menu .notifications hr {
+.notifications hr {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-.right-menu .notifications ul {
+.notifications ul {
   list-style-type: square;
   padding-left: 30px;
 }
 
-.right-menu .notifications ul li {
+.notifications ul li {
   margin-top: 10px;
 }
 
@@ -280,7 +290,7 @@ a.large-link {
 
 .all-apps {
   overflow-y: scroll;
-  height: 410px;
+  height: 195px;
 }
 
 .right-menu .white-border .icon {
@@ -308,39 +318,6 @@ a.large-link {
   background-position: -135px 7px;
 }
 
-.garage .question-cont {
-  right: 30px;
-  bottom: 70px;
-}
-
-.garage .question-cont p {
-  bottom: 70px;
-}
-
-.fixed-bg.welcome.garage {
-  background-color: rgba(0, 0, 0, 0.85);
-}
-
-.current-app-links .white-border {
-  text-align: center;
-}
-
-.current-app-links .white-border .icon {
-  display: inline-block;
-  width: 75px;
-  height: 45px;
-  background-position: top center;
-  background-size:auto 100%;
-  background-repeat: no-repeat;
-}
-
-.theme .icon {
-  background-image: url(../img/theme-icon.png);
-}
-
-.settings .icon {
-  background-image: url(../img/settings-icon.png);
-}
 
 .build .icon {
   background-image: url(../img/run.png);

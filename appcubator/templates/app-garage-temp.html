@@ -1,34 +1,18 @@
-  <div class="hide-btn hide-overlay">×</div>
+  <img src="{{ STATIC_URL }}img/up-arrow-black.png" class="up-arrow">
   <div class="container">
-    <div class="span36 left-menu">
-      <div class="row">
-        <div class="span36 intro">
-          <img class="welcome" src="{{ STATIC_URL }}img/garage-marker.png">
-        </div>
-      </div>
+    <div class="span32 left-menu">
       <div class="current-app-info">
       {% if app %}
           <div class="app title">{{ app.name }}</div>
           <div class="row hoff1 span48 current-app-links">
-            <a class="white-border span8 hi8 settings hide-overlay" href="{% url appcubator.views.app_page app.id %}info/"><span class="icon"></span>App Settings</a></li>
-            <a class="white-border span8 hi8 offset2 theme" href="{% url appcubator.views.app_edit_theme app.id %}" rel="external" target="_blank"><span class="icon"></span>Theme Editor</a>
-            <a class="white-border span8 hi8 offset2 hide-overlay build" href="#"><span class="icon"></span>Go Back to {{ app.name }}</a>
+            <a class="white-border span15 hi8 settings hide-overlay" href="{% url appcubator.views.app_page app.id %}info/"><span class="icon"></span>App Settings</a></li>
+            <a class="white-border span15 hi8 offset2 theme" href="{% url appcubator.views.app_edit_theme app.id %}" rel="external" target="_blank"><span class="icon"></span>Theme Editor</a>
           </div>
       {% endif %}
       </div>
       <div class="row span30">
-        <div class="three-apps hoff2">
-        <div class="title">Your other Apps:</div>
-        {% for a in apps|slice:":3" %}
-          <div class="row">
-            <a class="span28 hi4 hoff1 white-border" href="{% url appcubator.views.app_page a.id %}" rel="external">
-              <strong>{{ a.name }}</strong>
-            </a>
-          </div>
-        {% endfor %}
-        </div>
         <div class="all-app title" style="display:none;">ALL APPS</div>
-        <div class="all-apps span30" style="display:none;">
+        <div class="all-apps span32" style="display:none;">
         {% for a in apps reversed %}
           <div class="row">
             <a class="span28 hi4 hoff1 white-border" href="{% url appcubator.views.app_page a.id %}" rel="external">
@@ -37,46 +21,27 @@
           </div>
         {% endfor %}
         </div>
-        <a href="#" class="see-all">See all apps.</a>
-        <a href="#" class="hide-all" style="display:none;">Go back to {{app.name}}.</a>
+        <a href="#" class="see-all white-border row span32 hoff1">SEE ALL YOUR APPS.</a>
         <div class="row">
-          <a class="span16 hi4 hoff1 large-link" href="{% url appcubator.views.app_new %}" rel="external">
+          <a class="span32 hi4 large-link white-border" href="{% url appcubator.views.app_new %}" rel="external">
             <strong>+ CREATE A NEW APP</strong>
+          </a>
+        </div>
+        <div class="row">
+          <a class="span32 hi4 hoff1 large-link white-border hide-all" style="display:none;" href="#">
+            <strong>< Go back to {{app.name}}</strong>
+          </a>
+        </div>
+        <div class="bottom-sect hi4 hoff2 span32">
+          <a class=" span18 hi4" href="/account" rel="external">
+            <span class="icon settings"></span>
+            <span>Account Settings ({{user.username}})</span>
+          </a>
+          <a class="hi4 right" href="/logout" rel="external">
+            Logout 
           </a>
         </div>
       </div>
     </div>
-    <div class="offset4 right-menu hoff6 span18">
-      <a class="white-border span18 hi4 toggle-invitations-modal" href="#">
-        <span class="icon invite"></span>
-        <span>Invite Your Friends</span></a>
-      <div class="notifications">
-        <span class="icon resources"><div class="title">Notifications</div>
-        <hr>
-        <ul>
-          <li>You can fill the <a rel="external" target="_blank" href="https://www.appcubator.com/feedback/">feedback form</a> for a chance to win a free domain.</li>
-          <li>You can add custom CSS/JS/HTML to your pages using "Custom Widget".</li>
-          <li>Now you can see the analytics about your application in the dashboard below.</li>
-        </ul>
-      </div>
-      <a class="white-border span18 hi4" href="/resources" target="_blank" rel="external">
-        <span class="icon resources"></span>
-        <span>Resources</span></a>
-      <a class="white-border span18 hi4" href="/community" target="_blank" rel="external">
-        <span class="icon community"></span>
-        <span>Community</span></a>
-      <a class="white-border span18 hi4" href="/account" rel="external">
-        <span class="icon settings"></span>
-        <span>Account Settings</span>
-      </a>
-      <a class="white-border span18 hi4" href="/logout" rel="external">
-        <span class="span3"></span>
-        Logout ({{user.username}})
-      </a>
 
-    </div>
-  </div>
-  <div class="question-cont">
-    <img src="{{ STATIC_URL }}img/question-market.png">
-    <p>Yes, there is an actual person here :)</p>
   </div>

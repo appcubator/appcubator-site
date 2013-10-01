@@ -10,8 +10,11 @@
 {% endblock %}
 
 {% block overlay-page %}
-<div class="fixed-bg welcome garage" id="garage-div" {% if not display_garage %} style="display:none;" {% endif %}>
+<div class="welcome garage" id="garage-div" {% if not display_garage %} style="display:none;" {% endif %}>
   {% include "app-garage-temp.html" %}
+</div>
+<div class="welcome world" id="world-div" {% if not display_garage %} style="display:none;" {% endif %}>
+  {% include "app-world-temp.html" %}
 </div>
 {% endblock %}
 

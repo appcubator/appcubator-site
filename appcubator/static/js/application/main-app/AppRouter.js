@@ -10,7 +10,8 @@ define(function(require, exports, module) {
         PluginsView   = require("app/PluginsView"),
         DeployView    = require("app/DeployView"),
         SoftErrorView = require("app/SoftErrorView"),
-        GarageView    = require("app/GarageView");
+        GarageView    = require("app/GarageView"),
+        WorldView     = require("app/WorldView");
 
     var AppRouter = Backbone.Router.extend({
 
@@ -49,10 +50,16 @@ define(function(require, exports, module) {
 
             var autoSave = setInterval(this.save, 30000);
 
+            this.worldView = new WorldView();
+
             if(appId !== 0) {
                 this.garageView = new GarageView();
-                $('.garage-toggle').on('click', this.garageView.show);
+                $('.garage-toggle').on('click', this.garageView.toggle);
+                $('.garage-toggle').on('click', this.worldView.hide);
+                $('.world-toggle').on('click', this.garageView.hide);
             }
+
+            $('.world-toggle').on('click', this.worldView.toggle);
 
             this.listenTo(v1State.get('tables'), 'add', this.entityAdded);
         },
