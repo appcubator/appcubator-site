@@ -185,6 +185,14 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                 return this.get('data').get('searchQuery');
             },
 
+            isNode: function() {
+                return this.get('type') == "node";
+            },
+
+            isImage: function() {
+                return (this.isNode() && this.get('data').get('nodeType') == "images");
+            },
+
             isBgElement: function() {
                 if ((this.get('type') == "node" && this.get('data').get('nodeType') == "boxes") ||
                     (this.get('type') == "imageslider")) return true;

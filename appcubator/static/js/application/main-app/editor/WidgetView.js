@@ -112,16 +112,16 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
 
         renderElement: function() {
             var temp = Templates.tempNode;
-            var node_context = _.clone(this.model.get('data').attributes);
+            var node_context = this.model.get('data').toJSON();
             if (node_context.content) {
                 node_context.content = node_context.content.replace(/\n\r?/g, '<br />');
             }
-            if (this.model.get('data').get('content_attribs')) {
-                node_context.content_attribs = this.model.get('data').get('content_attribs').attributes;
-            }
+            if(node_context.content_attribs.href) node_context.content_attribs.href = "#";
+            
             var el = _.template(temp, {
                 element: node_context
             });
+
             return el;
         },
 
@@ -259,12 +259,9 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
         },
 
         switchEditModeOn: function() {
-            console.log("Siwtt");
             if (this.model.get('data').get('content')) {
-                console.log("YEEE");
                 this.editMode = true;
                 var el = $(this.el.firstChild);
-                console.log(el);
                 this.el.firstChild.style.zIndex = 2003;
                 this.$el.addClass('textediting');
                 el.attr('contenteditable', 'true');
@@ -309,6 +306,11 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
 
             var height = $(node).outerHeight(true);
             var width = $(node).outerWidth(true);
+
+            if(this.model.isImage())  {
+                width = Math.max(240, width);
+                height = Math.max(150, height);
+            }
 
             var nHeight = Math.ceil(height / verticalGrid);
             var nWidth = Math.ceil((width + 30) / horizontalGrid);
