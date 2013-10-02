@@ -120,7 +120,10 @@ def app_new(request, is_racoon = False, app_template=None):
         app_id = 0
         log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "newapp"})
         log.save()
-        return render(request, 'apps-new.html')
+
+        page_context = {'apps' : request.user.apps.all() }
+
+        return render(request, 'apps-new.html', page_context)
 
     elif request.method == 'POST':
         if app_template is not None and app_template not in APP_TEMPLATES:
