@@ -87,16 +87,22 @@
 
 </script>
 <script type="text/template" id="download-panel">
-  <div class="left-pane">
-    <img src="{{ STATIC_URL}}img/happy_engineer.png">
+  <div class="left-pane span11 hoff3" style="text-align: center;">
+    <img src="{{ STATIC_URL}}img/fork.png">
   </div>
-  <div class="right-pane">
-    <p>Download a zip</p>
-    <a href="#" class="share-on-facebook">Download</a>
-    <p>Git URL</p>
-    <input type="text" value="git@git.appcubator.com" />
-    <p>Read more about how to modify the generated code</p>
-    <a href="/resources/">Read</a>
+  <div class="right-pane span24 hoff2">
+    <div>
+    <h4>Download <strong>ZIP</strong></h4>
+    <div class="download-pane hoff1"> <img src="/static/img/download-icon.png"> 
+      <a rel="external" href="/app/2/zip/">The code you have written is available to download here.</a>
+    </div>
+    </div>
+    <hr>
+    <div>
+    <h4>Clone the <strong>GIT</strong> repo</h4>
+    <input type="text" class="span24 hoff1 clone-url" value="<%= clone_url %>" readonly="readonly">
+    </div>
+    <a href="/resources/tutorials/deploy-to-cloud/" rel="external">See the guide on how to easily deploy to cloud.</a>
   </div>
 </script>
 <script type="text/template" id="admin-panel">
@@ -112,10 +118,6 @@
 <div class="bottom-sect">
 <a class="btn btn-info right" target="_blank" href="<%= url %>">Access Admin Panel »</a>
 </div>
-</script>
-
-<script type="text/template" id="garage-temp">
-
 </script>
 
 <script type="text/template" id="temp-signupdeploy">
@@ -161,4 +163,3 @@
         </div>
     </form>
 </script>
-
