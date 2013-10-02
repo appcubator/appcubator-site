@@ -291,6 +291,8 @@ define([
                         this.contextEntitySection.addFullWidthItem(id, "entity-buy-button", 'Buy ' + tableM.get('name') + ' Button', 'money-button-icon');
                     }
 
+                    this.contextEntitySection.addFullWidthItem(id, "entity-delete-button", 'Delete ' + tableM.get('name') + ' Button', 'plus-icon');
+
                     tableM.getFieldsColl().each(function(field) {
                         if (field.isRelatedField()) return this.renderRelatedField(field, tableM);
                         this.contextEntitySection.addFullWidthItem('context-field-' + tableId + '-' + field.cid, 'context-entity', tableName + ' ' + field.get('name'), 'plus-icon');
@@ -389,6 +391,8 @@ define([
                         return this.createNestedContextEntityNode(layout, id);
                     case "entity-buy-button":
                         return this.createBuyButton(layout, id);
+                    case "entity-delete-button":
+                        return this.createDeleteButton(layout, id);
                     case "entity-create-form":
                         return this.createCreateForm(layout, id);
                     case "entity-edit-form":
@@ -575,6 +579,14 @@ define([
                 return this.widgetsCollection.createBuyButton(layout, entity, buyOn);
             },
 
+            createDeleteButton: function(layout, id) {
+                var cid = String(id).replace('entity-table-', '');
+                var entity = v1State.getTableModelWithCid(cid);
+                var editorContext = this.editorContext ? this.editorContext : "Page";
+                var deleteOn = editorContext + "." + entity.get('name');
+
+                return this.widgetsCollection.createDeleteButton(layout, entity, deleteOn);
+            },
 
             createNode: function(layout, id) {
                 var type = id.replace('type-', '');

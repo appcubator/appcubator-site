@@ -241,6 +241,26 @@ define([
                 return this.push(widgetContainerModel);
             },
 
+            createDeleteButton: function(layout, entity, editOn) {
+
+                var widget = {};
+                widget.type = "buybutton";
+                widget.layout = layout;
+
+                widget.data = {};
+                widget.data.action = "delete";
+                widget.data.nodeType = "deletebutton";
+                widget.data.container_info = {};
+                widget.data.container_info.action = "buy";
+
+                widget.data.entity = entity.get('name');
+                widget.data.content = "Delete " + entity.get('name');
+
+                var widgetContainerModel = new WidgetContainerModel(widget);
+
+                return this.push(widgetContainerModel);
+            },
+
             createTable: function(layout, entity) {
                 var widget = {};
                 widget.type = "loop";

@@ -109,6 +109,9 @@ define([
                         'context-entity', entityName + ' ' + field.get('name'),
                         'plus-icon');
                 }, this);
+
+                this.contextEntitySection.addHalfWidthItem(id, "entity-delete-button", 'Delete ' + tableM.get('name') + ' Button', 'plus-icon');
+
             },
 
             renderContextEntityElements: function() {
