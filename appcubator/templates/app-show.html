@@ -30,7 +30,7 @@
   <script type="text/javascript">
     var appId = {{ app.id }};
     var appUrl = "{{ app.url }}";
-    var appGitRepo = "{{ app.git_repo }}";
+    var appGitRepo = "{{ app.git_url }}";
     var appState = {{ app.state_json|fix_solidus|safe }};
     var uieState = {{ app.uie_state_json|fix_solidus|safe }};
     var mobileUieState = {{ app.mobile_uie_state_json|fix_solidus|safe }};
