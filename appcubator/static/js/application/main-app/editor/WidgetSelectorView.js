@@ -451,7 +451,7 @@ define([
                 }
 
                 if (this.selectedEl.isBox()) {
-                    util.guideText("You should drop some text here.");
+                    util.guideText(e, "You should drop some text here.");
                 }
             },
 
