@@ -579,6 +579,11 @@ define([
             createNode: function(layout, id) {
                 var type = id.replace('type-', '');
 
+                if (type == "boxes" || type == "imageslider" || type == "custom-widget") {
+                    layout.l_padding = 0;
+                    layout.r_padding = 0;
+                }
+
                 if (type == "imageslider") {
                     return this.widgetsCollection.createImageSlider(layout);
                 }
@@ -597,11 +602,6 @@ define([
 
                 if (type == "custom-widget") {
                     return this.widgetsCollection.createCustomWidget(layout);
-                }
-
-                if (type == "boxes" || type == "imageslider" || type == "custom-widget") {
-                    layout.l_padding = 0;
-                    layout.r_padding = 0;
                 }
 
                 var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, {});
