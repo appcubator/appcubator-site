@@ -2606,17 +2606,13 @@ ul.list {
 /*
  * NAVBAR EDITOR, FOOTER EDITOR
  */
-#navbar-editor .add-link, #footer-editor .add-link {
-}
-#navbar-editor,#footer-editor {
+
+.nav-editor {
   width: 600px;
   height: 500px;
 }
-#navbar-editor {
 
-}
-
-#navbar-editor h3 {
+.nav-editor h3 {
   display: block;
   padding-left: 15px;
   line-height: 60px;
@@ -2627,17 +2623,16 @@ ul.list {
   margin-left: 15px;
 }
 
-#navbar-editor h4 {
+.nav-editor h4 {
   margin-right: 15px;
 }
 
-#navbar-editor .links-title {
+.nav-editor .links-title {
   padding: 10px;
   padding-left: 15px;
 }
 
-#navbar-editor .clone,
-#footer-editor .clone {
+.nav-editor .clone {
   padding: 10px;
   background-color: #DFEFFF;
   height: 56px;
@@ -2645,7 +2640,7 @@ ul.list {
   line-height: 36px;
 }
 
-#navbar-editor .clone select {
+.nav-editor .clone select {
   vertical-align: top;
   width: 200px;
   margin-left: 12px;
@@ -2657,13 +2652,13 @@ ul.list {
   cursor: pointer;
 }
 
-#navbar-editor legend[for=links],#footer-editor legend[for=links] {
+.nav-editor legend[for=links],#footer-editor legend[for=links] {
   margin-bottom: 0px;
 }
 
-#navbar-editor .links-list {
+.nav-editor .links-list {
   overflow-y: scroll;
-  height: 306px;
+  height: 305px;
 }
 
 #link-editors {
@@ -2722,7 +2717,7 @@ ul.list {
 }
 
 .navbar-editor-modal label {
-  display: inline-block;
+  display: block;
 }
 
 ul.template-icons {

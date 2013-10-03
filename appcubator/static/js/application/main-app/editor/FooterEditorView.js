@@ -7,7 +7,7 @@ define([
 function(NavbarEditorView, LinkEditorView) {
 
   var FooterEditorView = NavbarEditorView.extend({
-    className : 'footer-editor-modal',
+    className : 'footer-editor-modal nav-editor',
     width: 600,
     height: 600,
     padding: 0,
@@ -54,6 +54,7 @@ function(NavbarEditorView, LinkEditorView) {
       var newLinkEditor = new LinkEditorView({ model: newLink});
       this.subviews.push(newLinkEditor);
       this.$linksList.append(newLinkEditor.render().el);
+      util.scrollToBottom($('.links-list'));
     },
 
     resized: function() {
