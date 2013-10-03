@@ -89,13 +89,22 @@ define([
             },
 
             askToDelete :function() {
+
+                var translateTypetoNL = function(str) {
+                    if(str == "node") {
+                        str = "Widget";
+                    }
+
+                    return str;
+                };
+
                 var coll = this.model.collection;
                 var model = this.model;
 
                 var widgets = v1State.getWidgetsRelatedToPage(this.model);
 
                 if(widgets.length) {
-                    var widgetsNL = _.map(widgets, function(widget) { return widget.widget.get('type')+ ' on '+ widget.pageName; });
+                    var widgetsNL = _.map(widgets, function(widget) { return translateTypetoNL(widget.widget.get('type')) + ' on '+ widget.pageName; });
                     var widgetsNLString = widgetsNL.join('\n');
                     new DialogueView({ text: "The related widgets listed below will be deleted with this page. Do you want to proceed? <br><br> " + widgetsNLString}, function() {
                         
