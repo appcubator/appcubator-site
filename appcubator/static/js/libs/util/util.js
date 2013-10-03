@@ -389,6 +389,15 @@ define(['jquery'], function() {
             return overlayEl;
         },
 
+        guideText: function(text) {
+            var div = document.createElement('div');
+            div.innerHTML = text;
+            div.style.color = "#ddd";
+            $(div).delay(200).fadeOut(function() {
+                console.log("disappeard");
+            });
+        },
+
         isString: function(obj) {
             return toString.call(obj) == '[object String]';
         }
