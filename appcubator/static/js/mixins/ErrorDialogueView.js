@@ -19,6 +19,21 @@ function(Backbone) {
       this.callback = callback;
     },
 
+    _countdownToRefresh : function() {
+        /* This only works for the DeployView, because there is a span w ID = countdown-ksikka. */
+        var cntEl = document.getElementById("countdown-ksikka");
+        function countdown() {
+          var n = parseInt(cntEl.innerHTML);
+          if (n == 0) {
+            window.location.reload(true);
+          } else {
+            cntEl.innerHTML = n-1;
+            window.setTimeout(countdown, 1000);
+          }
+        }
+        window.setTimeout(countdown, 1000);
+    },
+
     render : function(img, text) {
       console.log(text);
       if(img) { this.el.innerHTML += '<img src="/static/img/'+img+'">'; }
