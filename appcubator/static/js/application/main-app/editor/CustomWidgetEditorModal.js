@@ -32,7 +32,7 @@ define([
                     '<div class="sect"><div class="sub-title">» HTML</div><div id="edit-html-inp" style="background-color:#eee; height: 300px; width:540px; position:relative;"></div></div>',
                     '<div class="sect"><div class="sub-title">» JS</div><div id="edit-js-inp" style="position:relative; background-color:#eee; height: 300px; width:540px;"></div></div>',
                     '<div class="sect"><div class="sub-title">» CSS</div><div id="edit-css-inp" style="position:relative; background-color:#eee; height: 300px; width:540px;"></div></div>',
-                    '<a style="width:100%; display:block; text-align: center; padding: 8px; color: #666;" href="/resources/tutorial/custom-widget/" rel="external" target="_blank">Guide on using the Custom Widget</a>'
+                    '<a style="position: relative; width:100%; display:block; text-align: center; padding: 8px; color: #666; top:20px;" href="/resources/tutorials/custom-widget/" rel="external" target="_blank">Guide on using the Custom Widget</a>'
                 ].join('\n');
 
                 this.el.innerHTML = content;

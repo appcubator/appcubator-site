@@ -132,12 +132,12 @@ define([
                 if(appId !== 0) {
                     v1.garageView.setEnvironmentEditor();
                     v1.worldView.setEnvironmentEditor();
-                    $('.garage-toggle').on('click', v1.garageView.toggle);
-                    $('.garage-toggle').on('click', v1.worldView.hide);
-                    $('.world-toggle').on('click', v1.garageView.hide);
+                    $('.garage-toggle.menu-button').on('click', v1.garageView.toggle);
+                    $('.garage-toggle.menu-button').on('click', v1.worldView.hide);
+                    $('.world-toggle.menu-button').on('click', v1.garageView.hide);
                 }
 
-                $('.world-toggle').on('click', v1.worldView.toggle);
+                $('.world-toggle.menu-button').on('click', v1.worldView.toggle);
                 
                 return this;
             },
