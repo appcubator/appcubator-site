@@ -345,7 +345,7 @@ define(function(require, exports, module) {
             }, 10000);
         },
 
-        download: function() {
+        download: function(callback) {
             var jqxhrToJson = function(jqxhr){
                 var data = {};
                 try {
@@ -408,7 +408,7 @@ define(function(require, exports, module) {
                 return data;
             };
 
-            var downloadApp = function() {
+            var downloadApp = function(callback) {
                 var url =  '/app/' + appId + '/zip/';
                 var hiddenIFrameID = 'hiddenDownloader',
                 iframe = document.getElementById(hiddenIFrameID);
@@ -419,6 +419,7 @@ define(function(require, exports, module) {
                     document.body.appendChild(iframe);
                 }
                 iframe.src = url;
+                callback();
             };
 
             $.ajax({
@@ -427,7 +428,7 @@ define(function(require, exports, module) {
                 statusCode: {
                     200: function(data){
                         util.log_to_server('code downloaded', {}, appId);
-                        downloadApp();
+                        downloadApp(callback);
                     },
                     400: function(jqxhr){
                         var data = jqxhrToJson(jqxhr);
@@ -498,9 +499,17 @@ define(function(require, exports, module) {
                 var content = {
                     text: "Looks like you (or someone else) made a change to your app in another browser window. Please make sure you only use one window with Appcubator or you may end up overwriting your app with an older version. Please refresh the browser to get the updated version of your app."
                 };
-                new ErrorDialogueView(content, function() {
+                if (BROWSER_VERSION_ERROR_HAPPENED_BEFORE) {
+                    content.text += '<br><br><br>Refreshing in <span id="countdown-ksikka">6</span> seconds...\n'
+                }
+                var errorModal = new ErrorDialogueView(content, function() {
                     v1.disableSave = false;
                 });
+                if (BROWSER_VERSION_ERROR_HAPPENED_BEFORE) {
+                    errorModal._countdownToRefresh();
+                }
+                // global
+                BROWSER_VERSION_ERROR_HAPPENED_BEFORE = true;
             };
             var hardErrorHandler = function(jqxhr) {
                 v1.disableSave = true;

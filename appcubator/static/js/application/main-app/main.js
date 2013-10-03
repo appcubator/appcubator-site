@@ -227,6 +227,9 @@ require([
 
             // heyoffline config
             new Heyoffline();
+
+            // initialize this global variable for use in handling browser version conflicts
+            BROWSER_VERSION_ERROR_HAPPENED_BEFORE = false;
         });
     });
 
