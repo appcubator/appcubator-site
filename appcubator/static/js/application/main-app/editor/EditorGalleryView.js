@@ -20,6 +20,7 @@ define([
             allList: util.get('all-list'),
             curId: 'all-elements',
             dragActive: false,
+            slideDownActive: false,
             css: 'editor-gallery',
             positionHorizontalGrid: 80,
             positionVerticalGrid: 15,
@@ -655,9 +656,15 @@ define([
             },
 
             slideDown: function() {
+                var self = this;
                 var itemGallery = document.getElementById('item-gallery');
                 var h = $(itemGallery).scrollTop();
+                this.slideDownActive = true;
                 $(itemGallery).scrollTop(h + 14);
+                var tmr = setTimeout(function() {
+                    self.slideDownActive = false;
+                    clearTimeout(tmr);
+                }, 200);
             }
 
         });
