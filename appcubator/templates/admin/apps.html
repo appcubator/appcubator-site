@@ -17,6 +17,7 @@
         <th>Name</th>
         <th>Owner</th>
         <th>Subdomain</th>
+        <th>Num Pages</th>
       </tr>
     </thead>
     <tbody>
@@ -26,10 +27,11 @@
         <td><a href="{% url appcubator.admin_views.admin_app app.pk %}">{{ app.name }}</a></td>
         <td><a href="{% url appcubator.admin_views.admin_user app.owner.id %}">{{ app.owner }}</td>
         {% if app.deployment_id %}
-          <td><a href="{{app.url}}">{{ app.subdomain }}</a></td>
+          <td><a href="{{app.url}}" target="_blank">{{ app.subdomain }}</a></td>
         {% else %}
           <td>{{ app.subdomain }}</td>
         {% endif %}
+        <td>{{app.state.pages|length}}</td>
       </tr>
       {% endfor %}
     </tbody>
