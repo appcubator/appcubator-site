@@ -679,15 +679,15 @@ def app_deploy(request, app_id):
 
         try:
             a = app.parse_and_link_app_state()
+            result = {}
+            result['site_url'] = app.url()
+            result['git_url'] = app.git_url()
+            result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
+            is_merge, data = app.deploy()
         except analyzer.UserInputError, e:
             d = e.to_dict()
             return JsonResponse(d, status=400)
 
-        result = {}
-        result['site_url'] = app.url()
-        result['git_url'] = app.git_url()
-        result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
-        is_merge, data = app.deploy()
         if is_merge:
             result.update(data)
             status = 409
