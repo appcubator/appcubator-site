@@ -1,10 +1,11 @@
 define([
   'mixins/SimpleDialogueView',
+  'mixins/ErrorDialogueView',
   'jquery',
   'backbone',
   'https://checkout.stripe.com/v2/checkout.js'
 ],
-  function(SimpleDialogueView) {
+  function(SimpleDialogueView, ErrorDialogueView) {
 
     var Striper = Backbone.View.extend({
 
@@ -56,8 +57,12 @@ define([
              url: '/payments/a/subscribe/',
              data: this.form.serialize(),
              success: function(data, statusStr, xhr) {
-              form.remove();
-              self.showPlanSuccessModal();
+              if (data.error && data.error.length > 0) {
+                self.showPlanErrorModal(data.error);
+              } else {
+                form.remove();
+                self.showPlanSuccessModal();
+              }
             }
         });
       },
@@ -66,19 +71,21 @@ define([
         var self = this;
         var form = this.form;
         this.form.find("input[name=stripe_token]").val(result.id);
-        console.log("Calling AJAX");
         $.ajax({
              type: 'POST',
              url: '/payments/a/change/card/',
              data: this.form.serialize(),
              success: function(data, statusStr, xhr) {
               console.log(data);
-              form.remove();
-              location.reload();
-              // self.showPlanSuccessModal(data.html);
+              if (data.error && data.error.length > 0) {
+                self.showPlanErrorModal(data.error);
+              } else {
+                form.remove();
+                location.reload();
+              }
             },
             complete: function (data) {
-              console.log(data);
+              console.log(data);  
             }
         });
       },
@@ -94,8 +101,8 @@ define([
              data: form.serialize(),
              success: function(data, statusStr, xhr) {
               console.log(data);
-              if (data.error.length > 0) {
-                self.showPlanSuccessModal(data.error);                
+              if (data.error && data.error.length > 0) {
+                self.showPlanErrorModal(data.error);
               } else {
                 self.showPlanSuccessModal("You are succesfully subscribed.");
               }
@@ -113,9 +120,18 @@ define([
              data: form.serialize(),
              success: function(data, statusStr, xhr) {
               form.remove();
-              // self.showPlanSuccessModal();
+              // self.showPlanSuccessModal("Your payment plan has been cancelled.");
             }
         });
+      },
+
+      showPlanErrorModal: function(html) {
+        var self = this;
+        var text = (html);
+        var modal = new ErrorDialogueView({ text: text});
+        modal.onClose = function() {
+          location.reload();
+        };
       },
 
       showPlanSuccessModal: function(html) {
