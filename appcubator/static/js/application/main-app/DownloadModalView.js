@@ -34,11 +34,16 @@ define([
             },
 
             cloneInputClicked: function() {
-                util.copyToClipboard(appGitRepo);
+                //util.copyToClipboard(appGitRepo);
+                $('.clone-url').select();
             },
 
             downloaded: function() {
-                v1.download();
+                $(".download-pane .loading-wheel").css('visibility','visible')
+                var hideWheel = function() {
+                    $(".download-pane .loading-wheel").css('visibility','hidden');
+                }
+                v1.download(hideWheel);
             }
         });
 

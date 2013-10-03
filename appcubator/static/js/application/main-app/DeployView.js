@@ -10,7 +10,7 @@ function() {
     width: 620,
     height: 370,
     events: {
-      'click .download-pane': 'logDownload'
+      'click .download-pane': 'downloaded'
     },
     theme: null,
 
@@ -29,8 +29,12 @@ function() {
       return this;
     },
 
-    logDownload: function() {
-      util.log_to_server('code downloaded', {}, appId);
+    downloaded: function() {
+        $(".download-pane .loading-wheel").css('visibility','visible')
+        var hideWheel = function() {
+            $(".download-pane .loading-wheel").css('visibility','hidden');
+        }
+        v1.download(hideWheel);
     },
 
     close: function() {

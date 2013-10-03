@@ -57,7 +57,8 @@
     <br  />
     <div class="download-pane">
       <img src="{{ STATIC_URL }}img/download-icon.png">
-      <a rel="external" href="<%= zip_url %>">The code you have written is available to download here.</a>
+      <a href="#">The code you have written is available to download here.</a>
+      <span class="loading-wheel"></span>
     </div>
     <!-- <p>git clone <%= git_url %></p> -->
   </div>
@@ -93,9 +94,11 @@
   <div class="right-pane span24 hoff2">
     <div>
     <h4>Download <strong>ZIP</strong></h4>
-    <div class="download-pane hoff1"> <img src="/static/img/download-icon.png"> 
-      <a rel="external" href="/app/2/zip/">The code you have written is available to download here.</a>
-    </div>
+    <div class="download-pane hoff1" style="position:relative">
+        <img src="/static/img/download-icon.png"> 
+        <a href="#">The code you have written is available to download here.</a>
+        <span class="loading-wheel"></span>
+      </div>
     </div>
     <hr>
     <div>

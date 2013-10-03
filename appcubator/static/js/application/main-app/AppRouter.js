@@ -345,7 +345,7 @@ define(function(require, exports, module) {
             }, 10000);
         },
 
-        download: function() {
+        download: function(callback) {
             var jqxhrToJson = function(jqxhr){
                 var data = {};
                 try {
@@ -408,7 +408,7 @@ define(function(require, exports, module) {
                 return data;
             };
 
-            var downloadApp = function() {
+            var downloadApp = function(callback) {
                 var url =  '/app/' + appId + '/zip/';
                 var hiddenIFrameID = 'hiddenDownloader',
                 iframe = document.getElementById(hiddenIFrameID);
@@ -419,6 +419,7 @@ define(function(require, exports, module) {
                     document.body.appendChild(iframe);
                 }
                 iframe.src = url;
+                callback();
             };
 
             $.ajax({
@@ -427,7 +428,7 @@ define(function(require, exports, module) {
                 statusCode: {
                     200: function(data){
                         util.log_to_server('code downloaded', {}, appId);
-                        downloadApp();
+                        downloadApp(callback);
                     },
                     400: function(jqxhr){
                         var data = jqxhrToJson(jqxhr);
