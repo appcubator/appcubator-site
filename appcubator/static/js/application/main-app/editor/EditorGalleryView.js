@@ -20,6 +20,7 @@ define([
             allList: util.get('all-list'),
             curId: 'all-elements',
             dragActive: false,
+            slideDownActive: false,
             css: 'editor-gallery',
             positionHorizontalGrid: 80,
             positionVerticalGrid: 15,
@@ -579,6 +580,11 @@ define([
             createNode: function(layout, id) {
                 var type = id.replace('type-', '');
 
+                if (type == "boxes" || type == "imageslider" || type == "custom-widget") {
+                    layout.l_padding = 0;
+                    layout.r_padding = 0;
+                }
+
                 if (type == "imageslider") {
                     return this.widgetsCollection.createImageSlider(layout);
                 }
@@ -650,9 +656,15 @@ define([
             },
 
             slideDown: function() {
+                var self = this;
                 var itemGallery = document.getElementById('item-gallery');
                 var h = $(itemGallery).scrollTop();
+                this.slideDownActive = true;
                 $(itemGallery).scrollTop(h + 14);
+                var tmr = setTimeout(function() {
+                    self.slideDownActive = false;
+                    clearTimeout(tmr);
+                }, 200);
             }
 
         });

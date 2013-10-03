@@ -45,7 +45,7 @@ require([
 
         $('#skip-racoon').on('click', function() {
             var url = "/app/new/";
-            if (currentTemplate) {
+            if (currentTemplate && currentTemplate != "simple") {
                 url = url + "template/" + currentTemplate + "/";
                 util.log_to_server("app template", currentTemplate, 0);
             }

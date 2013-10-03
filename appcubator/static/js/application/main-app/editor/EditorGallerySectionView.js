@@ -22,6 +22,7 @@ function(
     },
 
     isExpanded: true,
+    timer: null,
 
     initialize: function(options) {
       _.bindAll(this);
@@ -106,7 +107,12 @@ function(
     },
 
     mouseleave: function(e) {
-      if(!this.parentView.dragActive) this.hide();
+      if(this.timer) clearTimeout(this.timer);
+      var self = this;
+      this.timer = setTimeout(function() {
+        if(!self.parentView.dragActive && !self.parentView.slideDownActive) self.hide();
+        if(self.timer) clearTimeout(self.timer);
+      }, 130);
     },
 
     showSectionTutorial: function(e) {
