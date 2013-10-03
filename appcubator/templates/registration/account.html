@@ -8,7 +8,7 @@
             <li><a href="#account-info">Account Info</a></li>
             <li><a href="#payment-history">Payment History</a></li>
             <li><a href="#payment-settings">Payment Settings</a></li>
-            <li><a href="#advanced-settings">Advanced Settings</a></li>
+            <li><a href="#advanced-settings">SSH Keys</a></li>
           </ul>
         </div>
   </div>
@@ -29,20 +29,20 @@
         </form>
       </div>
       <div class="span20 offset2">
-        <h3 class="">Change Password</h3><br  />
+        <h3 class="">Change Password</h3><br>
         <form action="/accounts/password/change/" method="POST" class="no-ajax">
           {% csrf_token %}
           <h4 class="span20 hoff1">Old Password</h4>
-          <input type="password" class="span20" name="old_password" id="id_old_password" placeholder="Old Password..."><br />
+          <input type="password" class="span20" name="old_password" id="id_old_password" placeholder="Old Password..."><br>
           <h4 class="span20 hoff1">New Password</h4>
-          <input type="password" class="span20" name="new_password1" id="id_new_password1" placeholder="New Password..."><br />
-          <input type="password" class="span20" name="new_password2" id="id_new_password2" placeholder="Confirm Password..."><br />
+          <input type="password" class="span20" name="new_password1" id="id_new_password1" placeholder="New Password..."><br>
+          <input type="password" class="span20" name="new_password2" id="id_new_password2" placeholder="Confirm Password..."><br>
           <input type="submit" class="btn btn-blue small" value="Save Changes">
         </form>
       </div>
     </div>
     <div class="span48 pane hoff4 padding" id="payment-history">
-      <h3>Payment History</h3><br  />
+      <h3>Payment History</h3><br>
       {% include "payment/_subscription_status.html" %}
       <h4>Your transaction history</h4>
       {% if user.customer.invoices.all %}
@@ -87,29 +87,39 @@
     </div>
 
     <div class="span48 pane hoff4 padding" id="advanced-settings">
-      <h3>Advanced Settings</h3><br  />
-      <small>This section is designated for developers. You generally don't need to edit anything.</small>
-      <h4>SSH Keys</h4>
+        <style>
+            #advanced-settings li {
+                margin: 20px 0 20px 0;
+            }
+            #advanced-settings  {
+                margin: 20px 0 20px 0;
+            }
+      </style>
+      <h3>SSH Keys</h3><br>
       <ul class="hoff2 span42">
-        <li id="add-key-btn">+ Add a new key.</li>
+
+        {% for pubkey in user.pubkeys.all %}
+        <li>
+          {{forloop.counter}}. {{pubkey.name}}
+          <form class="no-ajax" action="/setpubkey/" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="title" class="span20" placeholder="Name..." value="{{pubkey.name}}"><br>
+            <textarea name="key" class="span40" placeholder="Public key...">{{pubkey.pubkey}}</textarea><br>
+            <input type="submit" onClick="this.disabled=true; this.value='Working...'; this.form.submit();" class="btn btn-info" value="Update this key">
+          </form>
+        </li>
+        <hr>
+        {% endfor %}
+
+        <li id="add-key-btn"><button class="btn btn-info">+ Add a new key</button></li>
         <li style="display:none" id='add-key-panel'>
           <form class="no-ajax" action="/setpubkey/" method="post">
             {% csrf_token %}
-            <input type="text" name="title" class="span20" placeholder="Title..."><br  />
-            <textarea name="key" class="span20" placeholder="Key..."></textarea><br  />
-            <input type="submit" class="btn btn-info" value="Add key">
+            <input type="text" name="title" class="span20" placeholder="Name..."><br>
+            <textarea name="key" class="span40" placeholder="Public key..."></textarea><br>
+            <input type="submit" onClick="this.disabled=true; this.value='Working...'; this.form.submit();" class="btn btn-info" value="Add key">
           </form>
         </li>
-        {% for pubkey in user.pubkeys.all %}
-        <li>
-          <form class="no-ajax" action="/setpubkey/" method="post">
-            {% csrf_token %}
-            <input type="text" name="title" class="span20" placeholder="Title..." value="{{pubkey.name}}"><br  />
-            <textarea name="key" class="span20" placeholder="Key...">{{pubkey.pubkey}}</textarea><br  />
-            <input type="submit" class="btn btn-info" value="Edit key">
-          </form>
-        </li>
-        {% endfor %}
       </ul>
     </div>
   </div><!-- end main content -->
