@@ -599,6 +599,11 @@ define([
                     return this.widgetsCollection.createCustomWidget(layout);
                 }
 
+                if (type == "boxes" || type == "imageslider" || type == "custom-widget") {
+                    layout.l_padding = 0;
+                    layout.r_padding = 0;
+                }
+
                 var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, {});
                 widget.setupPageContext(v1State.getCurrentPage());
                 return widget;
