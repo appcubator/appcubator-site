@@ -14,7 +14,6 @@ function(TableModel, FieldModel, FieldsCollection, Backbone) {
         bone = appState.users;
       }
       this.set('fields', new FieldsCollection(bone.fields || []));
-      this.isUser = true;
     },
 
     getFieldsColl: function() {
@@ -36,6 +35,10 @@ function(TableModel, FieldModel, FieldsCollection, Backbone) {
       var normalFields = this.get('fields').filter(function(field) { return !field.isRelatedField(); });
       normalFields = _.union(normalFields, v1State.get('users').predefinedFields);
       return normalFields;
+    },
+
+    isUser: function() {
+      return true;
     },
 
     toJSON: function () {

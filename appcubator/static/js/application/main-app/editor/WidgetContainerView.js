@@ -92,6 +92,11 @@ function( React,
         this.el.innerHTML = _.template(Templates.tempNode, { element: info});
       }
 
+      if(this.model.get('type') == "deletebutton" ) {
+        var delete_info = _.extend(uieState["buttons"][0], { content: this.model.get('data').get('content')});
+        this.el.innerHTML = _.template(Templates.tempNode, { element: delete_info});
+      }
+
       if(this.model.get('data').get('container_info').get('action') == "videoembed" ) {
         var videoDiv = document.createElement('div');
         var StaticImg = React.createClass({

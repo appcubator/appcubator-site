@@ -281,7 +281,8 @@ define([
                     if (!tableM) throw "Error with page context";
                     var tableId = tableM.cid;
                     var id = '';
-                    if (tableM.isUser) {
+
+                    if (tableM.isUser()) {
                         id = 'entity-user-' + tableM.cid;
                     } else {
                         id = 'entity-table-' + tableM.cid;
@@ -552,11 +553,7 @@ define([
                 var field = _(v1State.get('pages').models[pageId].getFields()).find(function(fieldModel) {
                     return (fieldModel.cid == field_id);
                 });
-
-                console.log(field);
                 var type = util.getDisplayType(field.get('type'));
-                console.log(type);
-
                 var content_ops = {};
 
                 if (type == "links") {

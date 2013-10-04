@@ -110,7 +110,13 @@ define([
                         'plus-icon');
                 }, this);
 
-                this.contextEntitySection.addHalfWidthItem(id, "entity-delete-button", 'Delete ' + tableM.get('name') + ' Button', 'plus-icon');
+                var id = '';
+                if (self.entity.isUser()) {
+                        id = 'entity-user-' + self.entity.cid;
+                } else {
+                        id = 'entity-table-' + self.entity.cid;
+                }
+                this.contextEntitySection.addHalfWidthItem(id, "entity-delete-button", 'Delete ' + self.entity.get('name') + ' Button', 'plus-icon');
 
             },
 

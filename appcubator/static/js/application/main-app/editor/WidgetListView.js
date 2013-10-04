@@ -153,7 +153,7 @@ define([
                 widgetModel.setupLoopContext(this.entityModel);
                 var widgetView = {};
 
-                if (!widgetModel.isBuyButton()) {
+                if (!widgetModel.get('data').has('container_info')) {
                     widgetView = new WidgetView(widgetModel);
                 } else {
                     widgetView = new WidgetContainerView(widgetModel);

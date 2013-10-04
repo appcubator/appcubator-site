@@ -133,7 +133,6 @@ define([
                 widget.layout = layout;
 
                 widget.data = {};
-                console.log(type);
                 widget.data.nodeType = type;
                 widget.data = _.extend(widget.data, uieState[type][0]);
 
@@ -244,14 +243,14 @@ define([
             createDeleteButton: function(layout, entity, editOn) {
 
                 var widget = {};
-                widget.type = "buybutton";
+                widget.type = "deletebutton";
                 widget.layout = layout;
 
                 widget.data = {};
                 widget.data.action = "delete";
                 widget.data.nodeType = "deletebutton";
                 widget.data.container_info = {};
-                widget.data.container_info.action = "buy";
+                widget.data.container_info.action = "delete";
 
                 widget.data.entity = entity.get('name');
                 widget.data.content = "Delete " + entity.get('name');
