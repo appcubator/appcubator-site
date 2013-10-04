@@ -26,7 +26,7 @@ function(Backbone) {
         this.el.innerHTML += '<p style="padding:30px;">'+text+'</p>';
       }
 
-      this.el.innerHTML += '<div class="bottom-sect"><div class="btn cancel">Cancel</div><div class="btn ok">Ok</div></div>';
+      this.el.innerHTML += '<div class="bottom-sect"><div class="btn cancel">Cancel</div><div class="btn ok offset1">Ok</div></div>';
 
       return this;
     },
