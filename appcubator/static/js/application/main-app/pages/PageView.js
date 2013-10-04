@@ -84,8 +84,6 @@ define([
                     return;
                 }
                 this.askToDelete();
-                // this.model.collection.remove(this.model);
-                // this.remove();
             },
 
             askToDelete :function() {
