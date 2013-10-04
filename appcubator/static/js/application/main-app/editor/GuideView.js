@@ -22,8 +22,8 @@ define([
                 this.widgetsCollection = widgetsCollection;
                 keyDispatcher.bind(';', this.toggleGuides);
 
-                _widgetsVerticalDict = {};
-                _widgetsHorizontalDict = {};
+                this.horizontalLinesDict = {};
+                this.verticalLinesDict = {};
 
                 this.listenTo(this.widgetsCollection, 'add', this.placeWidget);
                 this.listenTo(this.widgetsCollection, 'remove', this.removeWidget);
@@ -195,6 +195,11 @@ define([
 
 
                 return null;
+            },
+
+            close: function() {
+                keyDispatcher.unbind(';', this.toggleGuides);
+                Backbone.View.prototype.close.call(this);
             }
 
         });

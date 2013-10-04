@@ -268,7 +268,7 @@ define([
                 v1.garageView.hide();
                 v1.worldView.unsetEnvironmentEditor();
                 v1.worldView.hide();
-
+                g_guides = null;
                 window.removeEventListener('resize', this.setupPageWrapper);
                 document.body.style.overflow = "";
 
