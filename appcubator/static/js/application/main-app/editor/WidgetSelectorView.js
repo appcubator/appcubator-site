@@ -449,6 +449,10 @@ define([
                     var top = ((this.selectedEl.get('layout').get('top') * 15) - 2) + ((this.selectedEl.get('layout').get('height') * 15) + 4);
                     this.selectDiv.style.top = top + 'px';
                 }
+
+                if (this.selectedEl.isBox()) {
+                    util.guideText(e, "You should drop some text here.");
+                }
             },
 
             stoppedEditing: function() {

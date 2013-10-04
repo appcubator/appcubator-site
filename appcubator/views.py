@@ -120,7 +120,10 @@ def app_new(request, is_racoon = False, app_template=None):
         app_id = 0
         log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "newapp"})
         log.save()
-        return render(request, 'apps-new.html')
+
+        page_context = {'apps' : request.user.apps.all() }
+
+        return render(request, 'apps-new.html', page_context)
 
     elif request.method == 'POST':
         if app_template is not None and app_template not in APP_TEMPLATES:
@@ -676,15 +679,15 @@ def app_deploy(request, app_id):
 
         try:
             a = app.parse_and_link_app_state()
+            result = {}
+            result['site_url'] = app.url()
+            result['git_url'] = app.git_url()
+            result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
+            is_merge, data = app.deploy()
         except analyzer.UserInputError, e:
             d = e.to_dict()
             return JsonResponse(d, status=400)
 
-        result = {}
-        result['site_url'] = app.url()
-        result['git_url'] = app.git_url()
-        result['zip_url'] = reverse('appcubator.views.app_zip', args=(app_id,))
-        is_merge, data = app.deploy()
         if is_merge:
             result.update(data)
             status = 409

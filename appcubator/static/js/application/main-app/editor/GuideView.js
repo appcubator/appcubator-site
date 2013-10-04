@@ -163,6 +163,8 @@ define([
             },
 
             toggleGuides: function() {
+                if(keyDispatcher.textEditing) return;
+
                 if (this.show) {
                     this.hideAll();
                     this.show = false;

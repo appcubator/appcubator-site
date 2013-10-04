@@ -20,7 +20,6 @@ function() {
     },
 
     render: function() {
-      console.log("YALOOOOOO");
       var template = util.getHTML('admin-panel');
       if(!appUrl) {
         this.el.innerHTML = '<div style="padding:40px">You app needs to be deployed first.</div>';

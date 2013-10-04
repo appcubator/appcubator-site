@@ -193,6 +193,10 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                 return (this.isNode() && this.get('data').get('nodeType') == "images");
             },
 
+            isBox: function() {
+                return (this.isNode() && this.get('data').get('nodeType') == "boxes");
+            },
+
             isBgElement: function() {
                 if ((this.get('type') == "node" && this.get('data').get('nodeType') == "boxes") ||
                     (this.get('type') == "imageslider")) return true;

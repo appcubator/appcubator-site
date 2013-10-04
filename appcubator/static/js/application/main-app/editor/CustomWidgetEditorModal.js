@@ -29,25 +29,30 @@ define([
                 var jsStr = this.model.get('data').get('jsC') || '';
 
                 var content = [
-                    '<div class="sect"><div class="sub-title">» HTML</div><div id="edit-html-inp" style="background-color:#eee; height: 300px; width:540px; position:relative;"></div></div>',
-                    '<div class="sect"><div class="sub-title">» JS</div><div id="edit-js-inp" style="position:relative; background-color:#eee; height: 300px; width:540px;"></div></div>',
-                    '<div class="sect"><div class="sub-title">» CSS</div><div id="edit-css-inp" style="position:relative; background-color:#eee; height: 300px; width:540px;"></div></div>',
-                    '<a style="width:100%; display:block; text-align: center; padding: 8px; color: #666;" href="/resources/tutorial/custom-widget/" rel="external" target="_blank">Guide on using the Custom Widget</a>'
+                    '<div class="sect"><div class="sub-title" id="e-html">» HTML</div><div id="edit-html-inp" style="background-color:#eee; height: 300px; width:540px; position:relative;"></div></div>',
+                    '<div class="sect"><div class="sub-title" id="e-js">» JS</div><div id="edit-js-inp" style="position:relative; background-color:#eee; height: 300px; width:540px;"></div></div>',
+                    '<div class="sect"><div class="sub-title" id="e-css">» CSS</div><div id="edit-css-inp" style="position:relative; background-color:#eee; height: 300px; width:540px;"></div></div>',
+                    '<a style="position: relative; width:100%; display:block; text-align: center; padding: 8px; color: #666; margin-top:20px;" href="/resources/tutorials/custom-widget/" rel="external" target="_blank">Guide on using the Custom Widget</a>'
                 ].join('\n');
 
                 this.el.innerHTML = content;
+                this.el.style.overflow = "hidden";
+                this.el.style.height = "438px";
 
-                this.CSSeditor = ace.edit("edit-css-inp");
-                this.CSSeditor.getSession().setMode("ace/mode/css");
-                this.CSSeditor.setValue(cssStr, -1);
 
-                this.HTMLeditor = ace.edit("edit-html-inp");
-                this.HTMLeditor.getSession().setMode("ace/mode/html");
-                this.HTMLeditor.setValue(htmlStr, -1);
+                this.editors = {};
 
-                this.JSeditor = ace.edit("edit-js-inp");
-                this.JSeditor.getSession().setMode("ace/mode/javascript");
-                this.JSeditor.setValue(jsStr, -1);
+                this.editors["e-css"] = ace.edit("edit-css-inp");
+                this.editors["e-css"].getSession().setMode("ace/mode/css");
+                this.editors["e-css"].setValue(cssStr, -1);
+
+                this.editors["e-html"] = ace.edit("edit-html-inp");
+                this.editors["e-html"].getSession().setMode("ace/mode/html");
+                this.editors["e-html"].setValue(htmlStr, -1);
+
+                this.editors["e-js"] = ace.edit("edit-js-inp");
+                this.editors["e-js"].getSession().setMode("ace/mode/javascript");
+                this.editors["e-js"].setValue(jsStr, -1);
 
                 return this;
             },
@@ -56,6 +61,7 @@ define([
                 if($(e.currentTarget.parentNode).hasClass('expanded')) return this.shrink(e);
                 this.$el.find('.expanded').removeClass('expanded');
                 $(e.currentTarget.parentNode).addClass('expanded');
+                this.editors[e.currentTarget.id].focus();
             },
 
             shrink: function(e) {
@@ -63,9 +69,9 @@ define([
             },
 
             onClose: function() {
-                this.model.get('data').set('cssC', this.CSSeditor.getValue());
-                this.model.get('data').set('jsC', this.JSeditor.getValue());
-                this.model.get('data').set('htmlC', this.HTMLeditor.getValue());
+                this.model.get('data').set('cssC', this.editors["e-css"].getValue());
+                this.model.get('data').set('jsC', this.editors["e-js"].getValue());
+                this.model.get('data').set('htmlC', this.editors["e-html"].getValue());
                 this.model.trigger('custom_edited');
             }
 

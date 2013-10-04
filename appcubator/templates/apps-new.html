@@ -5,31 +5,37 @@
 
 {% block page %}
 <div class="container hoff3">
-  <h2 class="hoff5 span52">Start a New App</h2>
-  <div class="hoff2 span40">
+  <h2 class="hoff3 span52">Start a New App</h2>
+  <div class="hoff1 span40">
       <form method="post" action="/app/new/">
       {% csrf_token %}
       <h4 class="span12 hoff1">Name of the app</h4>
-      <input class="span16 hoff1" name="name" type="text" placeholder="Easy App" value="{{old_name}}"><hr>
+      <input class="span16 hoff1" name="name" type="text" placeholder="Easy App" value="{{old_name}}">
+      <hr>
       {% if errors %}{{ errors.name.0 }}{% endif %}
      <!--  <input id="guide-btn" type='submit' class="span16 hoff1 btn offset12" type="submit" value="Let Racoon guide me!" style="line-height: 37px;"><br> -->
       </form>
-      <div class="">
-        <span class="span34">Pick a base webapp template below, or start from scratch.</span>
-        <div class="span12 hi10 hoff2 app-template" id="socialnetwork" style="background-image:url(https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7);">
+      <h4 class="span34">Pick a base app template below, or start with the simple one.</h4>
+      <div class="span41 hi18 hoff1" style="background-color:#fff; overflow-y: scroll; border-radius: 4px; border: 2px solid #ccc;">
+        <div class="span12 hi10 hoff2 app-template offset1 selected" id="simple" style="background-image:url(https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7);">
+          <p>Simple</p>
+          <span class="layover"></span>
+        </div>
+        <div class="span12 hi10 hoff2 app-template offset1" id="socialnetwork" style="background-image:url(https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7);">
           <p>Social Network</p>
           <span class="layover"></span>
         </div>
-        <div class="span12 hi10 hoff2 offset2 app-template" id="marketplace" style="background-image:url({{STATIC_URL}}img/marketplace.png);">
+        <div class="span12 hi10 hoff2 offset1 app-template" id="marketplace" style="background-image:url({{STATIC_URL}}img/marketplace.png);">
           <span class="layover"></span>
           <p>Market Place</p>
         </div>
-        <div class="span12 hi10 hoff2 offset2 app-template" id="tutoringsite"  style="background-image:url({{STATIC_URL}}img/examcloud.png);">   <span class="layover"></span>
+        <div class="span12 hi10 hoff2 offset1 app-template" id="tutoringsite"  style="background-image:url({{STATIC_URL}}img/examcloud.png);">   <span class="layover"></span>
           <p>Tutoring Site</p>
         </div>
+        <div class="hoff1 span40"></div>
       </div>
       <hr class="span40">
-      <span id="current-temp-text"></span><div id="skip-racoon" class="span16 hoff1 btn btn-blue hi3 offset12 pull-right" >Start Building My App »</div>
+      <span id="current-temp-text"></span><div id="skip-racoon" class="span15 btn btn-blue hi3 offset12 pull-right" >Start Building My App »</div>
   </div>
   <div class="mascot hoff2 span20 hi16 offset4" id="mascot">
   </div>

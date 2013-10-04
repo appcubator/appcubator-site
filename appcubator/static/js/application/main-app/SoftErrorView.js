@@ -1,15 +1,15 @@
 define([
-  'backbone',
-  'jquery-ui'
+  'mixins/BackboneModal'
 ],
 
-function(Backbone) {
+function(BackboneModal) {
 
   var SoftErrorView = Backbone.View.extend({
     className: 'soft-error-modal',
     events : {
       'click' : 'close'
     },
+    top: false,
 
     initialize: function(options, closeCallback) {
       _.bindAll(this);
@@ -57,6 +57,19 @@ function(Backbone) {
 
     render: function() {
 
+      var div = document.createElement('div');
+      div.className = "modal-bg fadeIn";
+      div.style.position = 'fixed';
+      div.style.width = '100%';
+      div.style.height = '100%';
+      div.style.top = '0';
+      div.style.left = '0';
+      div.style.backgroundColor = '#222';
+      div.style.opacity = '0.6';
+      div.style.zIndex = 3000;
+      document.body.appendChild(div);
+      this.bgDiv = div;
+
       var speech = document.createElement('span');
       speech.innerHTML = this.text + this.resolve(this.path);
       var button = document.createElement('div');
@@ -71,6 +84,7 @@ function(Backbone) {
     },
 
     close: function() {
+      $(this.bgDiv).remove();
       if(this.overlayEl) $(this.overlayEl).remove();
       this.stopListening(v1, 'editor-loaded');
       this.closeCallback();

@@ -6,7 +6,7 @@ define([
 function(LinkEditorView) {
 
   var NavbarEditorView = Backbone.ModalView.extend({
-    className : 'navbar-editor-modal',
+    className : 'navbar-editor-modal nav-editor',
     width: 600,
     height: 600,
     padding: 0,
@@ -87,6 +87,9 @@ function(LinkEditorView) {
       var newLinkEditor = new LinkEditorView({ model: newLink});
       this.subviews.push(newLinkEditor);
       this.$linksList.append(newLinkEditor.render().el);
+
+      console.log(this.$linksList);
+      util.scrollToBottom($('.links-list'));
     },
 
     resized: function() {
