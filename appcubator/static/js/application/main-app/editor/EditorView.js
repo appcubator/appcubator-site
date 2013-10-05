@@ -214,7 +214,7 @@ define([
             },
 
             clickedUrl: function() {
-                var newView = new UrlView(this.urlModel);
+                var newView = new UrlView(this.urlModel, this.model);
                 newView.onClose = this.renderUrlBar;
             },
 

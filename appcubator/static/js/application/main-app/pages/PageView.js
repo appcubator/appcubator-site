@@ -52,7 +52,7 @@ define([
                 if (this.model.get('name') === 'Homepage') {
                     return false;
                 }
-                var newView = new UrlView(this.urlModel);
+                var newView = new UrlView(this.urlModel, this.model);
             },
 
             renderMenu: function() {
@@ -105,18 +105,15 @@ define([
                 var widgetsNLString = "";
                 if(widgets.length) {
                     var widgetsNL = _.map(widgets, function(widget) { return translateTypetoNL(widget.widget.get('type')) + ' on '+ widget.pageName; });
-                    widgetsNLString = widgetsNL.join('\n');
+                    widgetsNLString = widgetsNL.join('<br>');
                     
                 }
 
                 var linksNLString = "";
                 if(links.length) {
-                    console.log("yiasfasdf");
                     var linksNL = _.map(links, function(link) { return  'Link on '+ link.section + ' of '+ link.pageName; });
-                    linksNLString = linksNL.join('\n');
+                    linksNLString = linksNL.join('<br>');
                 }
-
-                console.log(linksNLString);
 
                 if(!links.length && !widgets.length) {
                     coll.remove(model);
