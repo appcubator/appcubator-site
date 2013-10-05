@@ -31,7 +31,7 @@
               <h1 class="hoff1">{{ a.name }}</h1>
               <br>
               <a target="_blank" {% if is_deployed == 1 %} href="{{ a.url }}" {% endif %} class="fancy link">{{ a.url }}{% if is_deployed == 0 %} (Not Deployed yet.) {% endif %}  <div href="#" class="edit-btn btn hi2">Edit</div></a><br>
-              <i>Last Updated: Yesterday</i>
+              <i>Last Updated: {{ a.last_update }}</i>
             </div>
           </div>
           <hr class="span46 pheader hoff1"> <!-- <img class="span58 analytics-demo hoff1" src="/static/img/analytics.png"> -->

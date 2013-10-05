@@ -541,6 +541,14 @@ class App(models.Model):
     def urls(self):
         return self.state['urls']
 
+    @property
+    def last_update(self):
+        snapshot = AppstateSnapshot.objects.filter(app=self).latest('snapshot_date')
+        if snapshot:
+            return snapshot.snapshot_date
+        else:
+            return None
+
     def isCurrentVersion(self, new_state):
         """Returns True if new_state is the same version as self.state's."""
         current_version_id = self.state.get('version_id', 0)
