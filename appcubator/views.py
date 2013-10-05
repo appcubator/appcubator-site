@@ -166,6 +166,24 @@ def app_new(request, is_racoon = False, app_template=None):
         return HttpResponse(status=405)
 
 
+@require_GET
+@login_required
+def apps_dashboard(request):
+
+    themes = UITheme.get_web_themes()
+    themes = [t.to_dict() for t in themes]
+    mobile_themes = UITheme.get_mobile_themes()
+    mobile_themes = [t.to_dict() for t in mobile_themes]
+
+    page_context = {'themes'       : simplejson.dumps(list(themes)),
+                    'mobile_themes': simplejson.dumps(list(mobile_themes)),
+                    'apps'         : request.user.apps.all(),
+                    'staging'      : settings.STAGING,
+                    'production'   : settings.PRODUCTION }
+
+    return render(request, 'app-dashboard.html', page_context)
+
+
 @login_required
 def app_new_racoon(request, app_id):
     #log url route
