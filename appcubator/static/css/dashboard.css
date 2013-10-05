@@ -1,0 +1,94 @@
+.board {
+  position: relative;
+  display: none;
+  background-color: #f3f3f3;
+  background: -webkit-linear-gradient(#f3f3f3,#efefef);
+  background: -moz-linear-gradient(#f3f3f3,#efefef);
+  background: -o-linear-gradient(#f3f3f3,#efefef);
+  background: -ms-linear-gradient(#f3f3f3,#efefef);
+  background: linear-gradient(#f3f3f3,#efefef);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px #b9bbbe;
+  box-shadow: 0 1px 3px #b9bbbe;
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 60px;
+  padding: 30px;
+}
+
+.board.current {
+  display: inline-block;
+}
+
+
+.board .logo {
+  border: 1px solid #ccc;
+  -moz-box-shadow:    inset 0 0 4px #666;
+  -webkit-box-shadow: inset 0 0 4px #666;
+  box-shadow:         inset 0 0 4px #666;
+  border-radius: 4px;
+}
+
+.board h1 {
+  font-size: 32px;
+  font-family: "proxima-nova";
+  font-weight: bold;
+}
+.board h2 {
+  font-size: 24px;
+  display: block;
+  font-family: "proxima-nova";
+  font-weight: bold;
+}
+
+a.fancy {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  border: 1px solid #d3d3d3;
+  padding: 10px 18px;
+  font-weight: bold;
+  margin-top: 6px;
+  cursor: pointer;
+  height: 42px;
+}
+
+a.fancy .edit-btn {
+  display: none;
+  margin: 0;
+  height: 30px;
+  line-height: 30px;
+  margin-top: -5px;
+  padding-top: 0px;
+  vertical-align: top;
+}
+
+a.fancy:hover .edit-btn {
+  display: inline-block;
+}
+
+.btn-info.edit {
+  display: block;
+  text-align: center;
+  height: 45px;
+  line-height: 45px;
+  font-size: 18px;
+  padding: 0;
+  margin-top: 30px;
+}
+
+.analytics .span14 {
+  text-align: center;
+}
+
+.left-nav {
+background-color: #2b3545;
+color: #eee;
+padding: 0px;
+border-radius: 4px;
+-webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.065);
+-moz-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.065);
+box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.065);
+overflow: hidden;
+margin-bottom: 10px;
+}

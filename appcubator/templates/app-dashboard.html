@@ -1,6 +1,7 @@
 {% extends "infra-app.html" %}
 {% load embed_json %}
 {% block css %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/dashboard.css">
 <link type="text/css" href="/app/{{ app.id}}/uiestate.less" id="css-uiestate" rel="stylesheet"/>
 <link type="text/css" href="/app/{{ app.id}}/mobile_uiestate.less" id="css-mobile-uiestate" rel="stylesheet"/>
 {% endblock %}
@@ -12,15 +13,57 @@
 {% block page %}
   
   <div class="container hoff6">
-    <ul class="span9">
+    <div class="span12">
+      <h3>Your Apps</h3>
+      <ul class="left-nav nav span12 apps-list hoff1">
+      {% for a in apps reversed %}
+          <li {% if forloop.last %} class='selected'{% endif %}><a href="#">{{ a.name }}</a></li>
+      {% endfor %}
+      </ul>
+      <a>Community Forum</a>
+    </div>
+    <div class="span50 offset2 hoff1">
     {% for a in apps reversed %}
-        <li {% if forloop.last %} class='selected'{% endif %}>{{ a.name }}</li>
-    {% endfor %}
-    </ul>
-    <div class="span40">
-    {% for a in apps reversed %}
-        <div {% if forloop.last %} class='current'{% endif %}>
-              <strong>{{ a.name }}</strong>
+        <div class="board {% if forloop.last %}current{% endif %}">
+          <div class="header hi9">
+            <div class="logo span8 hi8"><img src="{{ STATIC_URL }}img/placeholder.png"></div>
+            <div class="span34 offset2 hi8">
+              <h1 class="hoff1">{{ a.name }}</h1>
+              <br>
+              <a target="_blank" {% if is_deployed == 1 %} href="{{ a.url }}" {% endif %} class="fancy link">{{ a.url }}{% if is_deployed == 0 %} (Not Deployed yet.) {% endif %}  <div href="#" class="edit-btn btn hi2">Edit</div></a><br>
+              <i>Last Updated: Yesterday</i>
+            </div>
+          </div>
+          <hr class="span46 pheader hoff1"> <!-- <img class="span58 analytics-demo hoff1" src="/static/img/analytics.png"> -->
+          <div class="row hoff1">
+            <div class="row hoff1 analytics" style="position: relative"> <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75); padding-top: 10%"> <h2>Publish your app to see your site analytics!</h2> </div>
+            <h2 class="span46 hoff1">Analytics</h2> 
+            <div class="span30">
+            <div class="row hoff1">
+            <div class="span14 hi10">
+            <strong class="total-active-users">0</strong>
+            <span class="analyitcs-title">Active Users</span>
+            </div>
+            <div class="span14 offset1 hi10">
+            <strong class="total-page-views">0</strong>
+            <span class="analyitcs-title">Total Page Views</span>
+            </div>
+            </div>
+            <div class="row hoff1">
+            <div class="span14 hi10">
+            <strong class="total-users">1</strong>
+            <span class="analyitcs-title">Total Users</span>
+            </div>
+            <div class="span14 offset1 hi10">
+            <strong class="total-visitors">0</strong>
+            <span class="analyitcs-title">Total Visitors</span>
+            </div>
+            </div>
+            </div>
+            <div class="span14 hi21 hoff1 total-page-visits"><span class="analyitcs-title">Page Visits</span><br></div></div>
+          </div>
+          <hr class="span46 pheader hoff1">
+          <a class="btn btn-info edit span20" target="_blank" href="http://dev-ilter-ilter-hertasdfqwre.staging.appcubator.com/admin/">Start Editing »</a>
         </div>
     {% endfor %}
     </div>
