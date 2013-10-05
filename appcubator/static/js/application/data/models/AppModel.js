@@ -82,6 +82,10 @@ function(AppInfoModel,
       return new EntityManager({ pages: this.get('pages') }).getWidgetsRelatedToPage(pageM);
     },
 
+    getNavLinkRelatedToPage: function(pageM) {
+      return new EntityManager({ pages: this.get('pages') }).getLinksRelatedToPage(pageM);
+    },
+
     getWidgetsRelatedToField: function(fieldM) {
       return new EntityManager({ pages: this.get('pages') }).getWidgetsRelatedToField(fieldM);
     },

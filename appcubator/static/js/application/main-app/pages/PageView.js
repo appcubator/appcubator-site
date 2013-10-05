@@ -52,7 +52,7 @@ define([
                 if (this.model.get('name') === 'Homepage') {
                     return false;
                 }
-                var newView = new UrlView(this.urlModel);
+                var newView = new UrlView(this.urlModel, this.model);
             },
 
             renderMenu: function() {
@@ -84,20 +84,43 @@ define([
                     return;
                 }
                 this.askToDelete();
-                // this.model.collection.remove(this.model);
-                // this.remove();
             },
 
             askToDelete :function() {
+
+                var translateTypetoNL = function(str) {
+                    if(str == "node") {
+                        str = "Widget";
+                    }
+
+                    return str;
+                };
+
                 var coll = this.model.collection;
                 var model = this.model;
 
                 var widgets = v1State.getWidgetsRelatedToPage(this.model);
+                var links = v1State.getNavLinkRelatedToPage(this.model);
 
+                var widgetsNLString = "";
                 if(widgets.length) {
-                    var widgetsNL = _.map(widgets, function(widget) { return widget.widget.get('type')+ ' on '+ widget.pageName; });
-                    var widgetsNLString = widgetsNL.join('\n');
-                    new DialogueView({ text: "The related widgets listed below will be deleted with this page. Do you want to proceed? <br><br> " + widgetsNLString}, function() {
+                    var widgetsNL = _.map(widgets, function(widget) { return translateTypetoNL(widget.widget.get('type')) + ' on '+ widget.pageName; });
+                    widgetsNLString = widgetsNL.join('<br>');
+                    
+                }
+
+                var linksNLString = "";
+                if(links.length) {
+                    var linksNL = _.map(links, function(link) { return  'Link on '+ link.section + ' of '+ link.pageName; });
+                    linksNLString = linksNL.join('<br>');
+                }
+
+                if(!links.length && !widgets.length) {
+                    coll.remove(model);
+                }
+                else {
+
+                    new DialogueView({ text: "The related widgets listed below will be deleted with this page. Do you want to proceed? <br><br> " + widgetsNLString + linksNLString}, function() {
                         
                         coll.remove(model.cid);
 
@@ -105,12 +128,12 @@ define([
                             widget.widget.collection.remove(widget.widget);
                         });
 
+                        _.each(links, function(link) {
+                            link.link.collection.remove(link.link);
+                        });
                     });
                 }
-                else {
-                    coll.remove(model.cid);
-                }
-
+    
             },
 
             goToEditor: function(e) {

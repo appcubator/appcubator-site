@@ -133,7 +133,6 @@ define([
                 widget.layout = layout;
 
                 widget.data = {};
-                console.log(type);
                 widget.data.nodeType = type;
                 widget.data = _.extend(widget.data, uieState[type][0]);
 
@@ -299,6 +298,7 @@ define([
 
                 var widgetContainerModel = new WidgetContainerModel(widget);
                 widgetContainerModel.getSearchQuery().fillWithFields(entity);
+                widgetContainerModel.createSearchTarget();
 
                 return this.push(widgetContainerModel);
             },

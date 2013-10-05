@@ -68,9 +68,7 @@ function(NavbarEditorView, LinkEditorView) {
 
     updateCustomText: function(e) {
       var newCustomText = e.target.value;
-      if(newCustomText) {
-        this.model.set('customText', newCustomText);
-      }
+      this.model.set('customText', newCustomText||"");
     },
 
     changedOrder: function(e, ui) {

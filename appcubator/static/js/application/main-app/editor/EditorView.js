@@ -214,7 +214,7 @@ define([
             },
 
             clickedUrl: function() {
-                var newView = new UrlView(this.urlModel);
+                var newView = new UrlView(this.urlModel, this.model);
                 newView.onClose = this.renderUrlBar;
             },
 
@@ -268,7 +268,7 @@ define([
                 v1.garageView.hide();
                 v1.worldView.unsetEnvironmentEditor();
                 v1.worldView.hide();
-
+                g_guides = null;
                 window.removeEventListener('resize', this.setupPageWrapper);
                 document.body.style.overflow = "";
 

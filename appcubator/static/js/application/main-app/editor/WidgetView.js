@@ -118,6 +118,10 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
             }
             if(node_context.content_attribs.href) node_context.content_attribs.href = "#";
             
+            console.log(node_context.content_attribs.src);
+            if(node_context.content_attribs.src && node_context.content_attribs.src.indexOf('{{') == 0) {
+                node_context.content_attribs.src = "/static/img/placeholder.png";
+            }
             var el = _.template(temp, {
                 element: node_context
             });

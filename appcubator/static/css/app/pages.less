@@ -93,25 +93,28 @@
   display: inline-block;
   position: fixed;
   bottom:0;
-  left:0;
-  width: 400px;
-  height: 240px;
+  left: 50%;
+  margin-left:  -400px;
+  width: 700px;
+  height: 400px;
   background-image: url(/static/img/racoon-softwerror.png);
   background-repeat: no-repeat;
   background-size: auto 100%;
+  background-color: transparent;
   background-position: bottom;
-   -webkit-animation: flyUp 0.4s ease-out;
-   z-index: 9999;
+  -webkit-animation: flyUp 0.4s ease-out;
+  z-index: 9999;
 }
 
 .soft-error-modal span {
   display: inline-block;
   text-align: left;
-  width: 250px;
-  float: right;
+  width: 480px;
   padding-right: 16px;
   padding-top: 24px;
-  font-size: 16px;
+  margin-left: 204px;
+  margin-top: 60px;
+  font-size: 18px;
 }
 
 .soft-error-modal a {
@@ -121,17 +124,20 @@
 .soft-error-modal .btn {
   position: absolute;
   bottom: 50px;
-  left: 170px;
+  left: 50%;
+  margin-left: -90px;
   width: 180px;
   height: 48px;
   line-height: 48px;
-  font-size: 18px;
+  font-size: 20px;
   display: inline-block;
   padding: 0;
 }
 
 .soft-error-modal p {
   display: block;
+  margin-top: 15px;
+  font-size: 24px;
 }
 
     @-moz-keyframes flyUp {

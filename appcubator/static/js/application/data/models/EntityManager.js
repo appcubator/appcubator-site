@@ -26,36 +26,73 @@ define(function(require, exports, module) {
         },
 
         getWidgetsRelatedToPage:  function(pageM) {
-            var widgetsWithGoto = this.searchCollectionForKey(this.pages, "goto", function(val) {
+            var widgetsWithGoto = this.searchPageWidgetCollectionForKey(this.pages, "goto", function(val) {
                 return val == "internal://" + pageM.get('name');
             });
-            var widgetsWithHref = this.searchCollectionForKey(this.pages, "href", function(val) {
+            var widgetsWithHref = this.searchPageWidgetCollectionForKey(this.pages, "href", function(val) {
                 return val == "internal://" + pageM.get('name');
             });
+
             return _.union(widgetsWithGoto, widgetsWithHref);
         },
 
+        getLinksRelatedToPage: function(pageM) {
+            var linksWithUrl= this.searchPageNavCollectionForKey(this.pages, "url", function(val) {
+                return val == "internal://" + pageM.get('name');
+            });
+
+            return linksWithUrl;
+        },
 
         getWidgetsRelatedToField:  function(fieldM) {
-            var widgetsWithField = this.searchCollectionForKey(this.pages, "field_name", function(val) {
+            var widgetsWithField = this.searchPageWidgetCollectionForKey(this.pages, "field_name", function(val) {
                 return val == fieldM.get('name');
             });
 
             return widgetsWithField;
         },
 
-        searchCollectionForKey: function(pagesColl, key, truthTest) {
+        searchPageNavCollectionForKey: function(pagesColl, key, truthTest) {
             var self = this;
-            var widgets = [];
+            var links = [];
+
+            console.log(pagesColl);
+
             pagesColl.each(function(pageM) {
                 var pageName = pageM.get('name');
+                pageM.get('navbar').get('links').each(function(navLinkM) {
+                    var navlink = self.searchForKeyInWidget(navLinkM, key, truthTest);
+                    if(navlink) {
+                        links.push({ link: navLinkM, pageName: pageName, section: "navigation bar" });
+                    }
+                });
+                pageM.get('footer').get('links').each(function(navLinkM) {
+                    var navlink = self.searchForKeyInWidget(navLinkM, key, truthTest);
+
+                    if(navlink) {
+                        links.push({ link: navLinkM, pageName: pageName, section: "footer" });
+                    }
+                });
+            });
+
+            return links;
+        },
+
+        searchPageWidgetCollectionForKey: function(pagesColl, key, truthTest) {
+            var self = this;
+            var widgets = [];
+
+            console.log(pagesColl);
+
+            pagesColl.each(function(pageM) {
+                var pageName = pageM.get('name');
+
                 pageM.get('uielements').each(function(widgetM) {
                     var widget = self.searchForKeyInWidget(widgetM, key, truthTest);
 
                     if(widget) {
                         widgets.push({ widget: widgetM, pageName: pageName});
                     }
-
                 });
             });
 

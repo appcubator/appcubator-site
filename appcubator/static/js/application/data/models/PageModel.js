@@ -125,6 +125,11 @@ define([
                 return str;
             },
 
+            getDataLang: function() {
+                var str = "internal://" + this.get('name');
+                return str;
+            },
+
             getPageContextDatalang: function() {
                 var entities = this.getContextEntities();
                 return "Page." + entities[0];
@@ -147,6 +152,16 @@ define([
 
             isContextFree: function() {
                 return (!this.get('url').get('urlparts').some(function(part) { return (/\{\{([^\}]+)\}\}/g).test(part.get('value')); }));
+            },
+
+            hasSearchList: function(searchOn) {
+                var hasSearchList = false;
+                this.get('uielements').each(function(widgetM) {
+                    if(widgetM.isSearchList() && widgetM.get('data').get('container_info').get('entity').get('name') == searchOn) {
+                        hasSearchList = true;
+                    }
+                });
+                return hasSearchList;
             },
 
             toJSON: function() {
