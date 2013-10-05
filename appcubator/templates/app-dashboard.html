@@ -13,16 +13,17 @@
 {% block page %}
   
   <div class="container hoff6">
-    <div class="span12">
-      <h3>Your Apps</h3>
-      <ul class="left-nav nav span12 apps-list hoff1">
+    <div class="span14">
+      <span class="title">Your Apps</span>
+      <ul class="left-nav nav span15 apps-list hoff1">
       {% for a in apps reversed %}
           <li {% if forloop.last %} class='selected'{% endif %}><a href="#">{{ a.name }}</a></li>
       {% endfor %}
       </ul>
       <a>Community Forum</a>
+      <a>Learning Resources</a>
     </div>
-    <div class="span50 offset2 hoff1">
+    <div class="span50 hoff1">
     {% for a in apps reversed %}
         <div class="board {% if forloop.last %}current{% endif %}">
           <div class="header hi9">
@@ -34,6 +35,11 @@
               <i>Last Updated: {{ a.last_update }}</i>
             </div>
           </div>
+          <hr class="span46 pheader hoff1">
+            <div class="hi5 span46">
+              <a class="btn big span10" target="_blank" href="http://dev-ilter-ilter-hertasdfqwre.staging.appcubator.com/admin/">Clone App</a>
+              <a class="btn btn-info big edit span20 offset1" target="_blank" href="http://dev-ilter-ilter-hertasdfqwre.staging.appcubator.com/admin/">Start Editing »</a>
+            </div>
           <hr class="span46 pheader hoff1"> <!-- <img class="span58 analytics-demo hoff1" src="/static/img/analytics.png"> -->
           <div class="row hoff1">
             <div class="row hoff1 analytics" style="position: relative"> <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75); padding-top: 10%"> <h2>Publish your app to see your site analytics!</h2> </div>
@@ -62,8 +68,6 @@
             </div>
             <div class="span14 hi21 hoff1 total-page-visits"><span class="analyitcs-title">Page Visits</span><br></div></div>
           </div>
-          <hr class="span46 pheader hoff1">
-          <a class="btn btn-info edit span20" target="_blank" href="http://dev-ilter-ilter-hertasdfqwre.staging.appcubator.com/admin/">Start Editing »</a>
         </div>
     {% endfor %}
     </div>
