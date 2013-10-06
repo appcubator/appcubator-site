@@ -55,7 +55,7 @@ define([
         {
           ind     : 4,
           title   : 'What to create?',
-          content : '<em>Select <strong>Add a new entity</strong>, and enter <strong>Tweet</strong></em>',
+          content : '<em>Select <strong>Add a new table</strong>, and enter <strong>Tweet</strong></em>',
           loc     : "right center, left center",
           url     : '/editor/1/',
           target: $('#new-option'),

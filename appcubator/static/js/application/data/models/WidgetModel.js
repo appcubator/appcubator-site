@@ -228,6 +228,10 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                 return this.get('type') === "buybutton";
             },
 
+            isSearchList: function() {
+                return this.get('data').has('container_info') && this.get('data').get('container_info').get('action') == "searchlist";
+            },
+
             getBottom: function() {
                 return this.get('layout').get('height') + this.get('layout').get('top');
             },
