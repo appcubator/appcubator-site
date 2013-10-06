@@ -461,6 +461,13 @@ class App(models.Model):
 
         return super(App, self).save(*args, **kwargs)
 
+    def clone(self, *args, **kwargs):
+        cloned_app = self
+        cloned_app.pk = None
+        cloned_app.subdomain = self.subdomain + '_clone'
+        cloned_app.name = self.name + '_clone'
+        return cloned_app
+
     @classmethod
     def provision_subdomain(cls, subdomain):
         subdomain = clean_subdomain(subdomain)

@@ -168,15 +168,30 @@ def app_new(request, is_racoon = False, app_template=None):
 
 @login_required
 def app_clone(request, app_id = False):
-    """
-    template_name only used for POST request
-    """
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
 
-    app = App.clone()
-    app.owner = request.user;
-    app.save();
-    
-    return redirect(apps_dashboard, app.id)
+    data = {}
+    data['name'] = app.name + '_clone'
+    data['owner'] = request.user.id
+    data['subdomain'] = app.subdomain + '_clone'
+
+    form = forms.AppNew(data, owner=request.user)
+
+    if form.is_valid():
+        new_app = form.save(commit=False)
+
+        new_app.state = app.state
+        new_app.save()
+            # refetch from the db
+        new_app = App.objects.get(pk=new_app.id)
+        # new_app.deploy()
+        # this adds it to the deployment queue. non-blocking basically.
+
+        return redirect(apps_dashboard)
+    else:
+        return HttpResponse(status=405)
+
 
 @require_GET
 @login_required
