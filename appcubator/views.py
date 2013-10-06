@@ -166,6 +166,18 @@ def app_new(request, is_racoon = False, app_template=None):
         return HttpResponse(status=405)
 
 
+@login_required
+def app_clone(request, app_id = False):
+    """
+    template_name only used for POST request
+    """
+
+    app = App.clone()
+    app.owner = request.user;
+    app.save();
+    
+    return redirect(apps_dashboard, app.id)
+
 @require_GET
 @login_required
 def apps_dashboard(request):
