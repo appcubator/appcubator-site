@@ -22,9 +22,12 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView, Downloa
       'click .edit-btn'        : 'settings'
     },
 
-    initialize: function() {
+    initialize: function(options) {
       _.bindAll(this);
-      this.analyticsView = new AnalyticsView();
+
+      this.appId = (options.appId || appId);
+      console.log(this.appId);
+      this.analyticsView = new AnalyticsView({ appId: this.appId});
       this.subviews = [this.analyticsView];
 
       this.title = "The Garage";
@@ -32,20 +35,20 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView, Downloa
 
     render: function() {
       var page_context = {};
-      this.el.innerHTML = _.template(util.getHTML('app-overview-page'), page_context);
-      this.$('.analytics').append(this.analyticsView.render().el);
+      //this.el.innerHTML = _.template(util.getHTML('app-overview-page'), page_context);
+      //this.$('.analytics').append(this.analyticsView.render().el);
       this.renderNextStep();
     },
 
     renderNextStep: function() {
-      var nmrPages = v1State.get('pages').length;
-      var pagesStr = nmrPages > 1 ? ' pages' : ' page';
-      if(nmrPages >= 4) {
-        $('.what-to-do').html('Next Step: You currently have '+ nmrPages + pagesStr + '. <a href="pages/">Add more on the Pages page</a>.');
-      }
-      else {
-        $('.what-to-do').html('Next Step: You can go to the <a href="tables/">Tables</a> page, and click "Access Data" to browse the data in your app\'s database.');
-      }
+      // var nmrPages = v1State.get('pages').length;
+      // var pagesStr = nmrPages > 1 ? ' pages' : ' page';
+      // if(nmrPages >= 4) {
+      //   $('.what-to-do').html('Next Step: You currently have '+ nmrPages + pagesStr + '. <a href="pages/">Add more on the Pages page</a>.');
+      // }
+      // else {
+      //   $('.what-to-do').html('Next Step: You can go to the <a href="tables/">Tables</a> page, and click "Access Data" to browse the data in your app\'s database.');
+      // }
     },
 
     deploy: function() {

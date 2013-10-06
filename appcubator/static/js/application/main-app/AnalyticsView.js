@@ -2,7 +2,7 @@ define(function(require, exports, module) {
     'use strict';
 
     require('app/templates/AnalyticsTemplates');
-
+    require('backbone');
 
     var AnalyticsView = Backbone.View.extend({
 
@@ -10,24 +10,32 @@ define(function(require, exports, module) {
         className: 'row hoff1',
         events: {},
 
-        initialize: function() {
+        initialize: function(options) {
             var self = this;
             _.bindAll(this);
+
+            this.appId = (options.appId||appId);
             this.render();
-            v1.on('deployed', function() {
-                self.$('.coming-soon-overlay').hide();
-            });
+            
+            var v1 = (v1||null);
+            if (v1) {
+                v1.on('deployed', function() {
+                    self.$('.coming-soon-overlay').hide();
+                });
+            }
         },
 
         render: function() {
-            this.el.innerHTML = _.template(AnalyticsTemplates.main_stats, {});
-            if (!window.is_deployed) {
-                $('.analytics .coming-soon-overlay').show();
-                $('.total-users', this.el)[0].innerHTML = "?";
-                $('.total-visitors', this.el)[0].innerHTML = "?";
-                $('.total-page-views', this.el)[0].innerHTML = "?";
-                $('.total-active-users', this.el)[0].innerHTML = "?";
-            }
+            this.setElement(document.getElementById('dashboard-' + this.appId));
+            console.log(this.el );
+            //this.el.innerHTML = _.template(AnalyticsTemplates.main_stats, {});
+            // if (!window.is_deployed) {
+            //     $('.analytics .coming-soon-overlay').show();
+            //     $('.total-users', this.el)[0].innerHTML = "?";
+            //     $('.total-visitors', this.el)[0].innerHTML = "?";
+            //     $('.total-page-views', this.el)[0].innerHTML = "?";
+            //     $('.total-active-users', this.el)[0].innerHTML = "?";
+            // }
             this.fetchInfo();
             return this;
         },
@@ -37,9 +45,16 @@ define(function(require, exports, module) {
 
             var self = this;
 
-            document.getElementsByClassName('total-users')[0].innerHTML = data.total_users || 0;
-            document.getElementsByClassName('total-visitors')[0].innerHTML = data.total_visitors || 0;
-            document.getElementsByClassName('total-active-users')[0].innerHTML = data.total_active_users || 0;
+            console.log(this.$el.find('.total-visitors'));
+            console.log(this.$el);
+            console.log(this.el);
+
+            this.$el.find('.total-users').html(data.total_users || 0);
+            this.$el.find('.total-visitors').html(data.total_visitors || 0);
+            this.$el.find('.total-active-users').html(data.total_active_users || 0);
+
+            // document.getElementsByClassName('total-visitors')[0].innerHTML = ;
+            // document.getElementsByClassName('total-active-users')[0].innerHTML = ;
             // document.getElementsByClassName('total-active-visitors')[0].innerHTML = data.total_active_visitors || 0;
 
             var blackList = ['/favicon.ico', '/robots.txt'];
@@ -54,16 +69,18 @@ define(function(require, exports, module) {
                 innerHTML += '<em>' + key + '</em> :  ' + val + ' views<br>';
             });
 
-            document.getElementsByClassName('total-page-visits')[0].innerHTML = innerHTML;
+            this.$el.find('.total-page-visits').html(innerHTML);
+            this.$el.find('.total-page-views').html(total_page_views);
 
-            document.getElementsByClassName('total-page-views')[0].innerHTML = total_page_views;
         },
 
         fetchInfo: function() {
             var self = this;
+            console.trace();
+            console.log(self.appId);
             $.ajax({
                 type: "GET",
-                url: '/app/' + appId + '/analytics/',
+                url: '/app/' + self.appId + '/analytics/',
                 success: function(data) {
                     self.renderData(data);
                 },

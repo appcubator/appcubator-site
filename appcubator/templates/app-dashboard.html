@@ -12,20 +12,22 @@
 
 {% block page %}
   
-  <div class="container hoff6">
+  <div class="container hoff6" id="dashboards">
     <div class="span14">
       <span class="title">Your Apps</span>
       <ul class="left-nav nav span15 apps-list hoff1">
       {% for a in apps reversed %}
-          <li {% if forloop.last %} class='selected'{% endif %}><a href="#">{{ a.name }}</a></li>
+          <li class='menu-item {% if forloop.last %}selected{% endif %}' id="menu-item-{{ a.pk }}">
+            <a class="" href="#">{{ a.name }}</a>
+          </li>
       {% endfor %}
       </ul>
-      <a>Community Forum</a>
-      <a>Learning Resources</a>
+      <a href="#">Community Forum</a><br>
+      <a href="#">Learning Resources</a>
     </div>
     <div class="span50 hoff1">
     {% for a in apps reversed %}
-        <div class="board {% if forloop.last %}current{% endif %}">
+        <div class="board {% if forloop.last %}current{% endif %}" id="dashboard-{{ a.pk }}">
           <div class="header hi9">
             <div class="logo span8 hi8"><img src="{{ STATIC_URL }}img/placeholder.png"></div>
             <div class="span34 offset2 hi8">
@@ -93,6 +95,6 @@
     // var v1 = {};
     // var v1State = {};
   </script>
-  <script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js">
+  <script data-main="{{ STATIC_URL }}js/application/external-pages/dashboard" src="{{ STATIC_URL }}js/libs/require.js">
   </script>
 {% endblock %}
