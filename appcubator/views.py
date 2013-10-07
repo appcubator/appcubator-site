@@ -185,29 +185,11 @@ def app_new(request, is_racoon = False, app_template=None):
 @login_required
 def app_clone(request, app_id = False):
     app_id = long(app_id)
-    app = get_object_or_404(App, id=app_id)
 
-    data = {}
-    data['name'] = app.name + '_clone'
-    data['owner'] = request.user.id
-    data['subdomain'] = app.subdomain + '_clone'
-
-    form = forms.AppNew(data, owner=request.user)
-
+    form = forms.AppClone({ "app": app_id })
     if form.is_valid():
-        new_app = form.save(commit=False)
 
-        new_app.state = app.state
-        new_app.save()
-        new_app = App.objects.get(pk=new_app.id)
-
-        keys = ProviderData.objects.filter(app=app)
-        for k in keys:
-            pd = ProviderData()
-            pd.app = app
-            pd.provider_key = k.provider_key
-            pd.value = k.value
-            pd.save()
+        new_app = form.save()
 
         # this adds it to the deployment queue. non-blocking basically.
         new_app = App.objects.get(pk=new_app.id)

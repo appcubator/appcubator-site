@@ -35,6 +35,21 @@ class AppNew(forms.ModelForm):
             raise forms.ValidationError("You already have an app with this name. Please choose a new one.")
         return self.cleaned_data['name']
 
+class AppClone(forms.Form):
+    app = forms.ModelChoiceField()
+
+    def clean(self):
+        app = self.cleaned_data['app']
+        if app.owner.apps.count() >= 5:
+            raise forms.ValidationError("App limit exceeded.")
+        return self.cleaned_data
+
+    def save(self):
+        app = self.cleaned_data['app']
+        app_clone = app.clone()
+        return app_clone
+
+
 class ChangeSubdomain(forms.Form):
     subdomain = forms.CharField(max_length=40)
 

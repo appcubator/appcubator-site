@@ -461,13 +461,6 @@ class App(models.Model):
 
         return super(App, self).save(*args, **kwargs)
 
-    def clone(self, *args, **kwargs):
-        cloned_app = self
-        cloned_app.pk = None
-        cloned_app.subdomain = self.subdomain + '_clone'
-        cloned_app.name = self.name + '_clone'
-        return cloned_app
-
     @classmethod
     def provision_subdomain(cls, subdomain):
         subdomain = clean_subdomain(subdomain)
@@ -476,8 +469,8 @@ class App(models.Model):
         while cls.objects.filter(subdomain__iexact=subdomain).exists():
             subdomain += str(random.randint(1,9))
 
-        # the above process may have caused string to grow, so trim if too long
-        subdomain = subdomain[-min(len(subdomain), 40):] # take the last min(40, len subdomain) chars.
+            # the above process may have caused string to grow, so trim if too long
+            subdomain = subdomain[-min(len(subdomain), 40):] # take the last min(40, len subdomain) chars.
 
         return subdomain
 
@@ -489,11 +482,36 @@ class App(models.Model):
         while cls.objects.filter(gitrepo_name__iexact=gitrepo_name).exists():
             gitrepo_name += str(random.randint(1,9))
 
-        # the above process may have caused string to grow, so trim if too long
-        gitrepo_name = gitrepo_name[-min(len(gitrepo_name), 40):] # take the last min(40, len gitrepo_name) chars.
+            # the above process may have caused string to grow, so trim if too long
+            gitrepo_name = gitrepo_name[-min(len(gitrepo_name), 40):] # take the last min(40, len gitrepo_name) chars.
 
         return gitrepo_name
 
+    @classmethod
+    def provision_app_name(cls, app_name, user_id):
+        app_name = clean_subdomain(app_name, replace_periods=True)
+
+        # prevent duplicate app_names
+        while cls.objects.filter(owner_id = user_id, name__iexact=app_name).exists():
+            app_name += str(random.randint(1,9))
+
+            # the above process may have caused string to grow, so trim if too long
+            app_name = app_name[-min(len(app_name), 40):] # take the last min(40, len app_name) chars.
+
+        return app_name
+
+    def clone(self):
+        new_app_name = App.provision_app_name(self.name)
+        new_subdomain = App.provision_subdomain(self.name)
+        new_gitrepo_name = App.provision_gitrepo_name(self.name)
+        cloned_app = App(name=new_app_name,
+                         subdomain=new_subdomain,
+                         gitrepo_name=new_gitrepo_name,
+                         owner=self.owner)
+        cloned_app.save()
+        from plugins.models import copy_provider_data
+        copy_provider_data(self, cloned_app)
+        return cloned_app
 
     def get_state(self):
         return simplejson.loads(self._state_json)
