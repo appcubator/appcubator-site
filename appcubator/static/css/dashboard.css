@@ -130,3 +130,16 @@ a.fancy:hover .edit-btn {
 .left-div a {
   padding-left: 15px;
 }
+
+.menu-item {
+  position: relative;
+}
+
+.selected:after {
+  position: absolute;
+  content: "»";
+  color : #fff;
+  right: 30px;
+  top: 10px;
+  font-size: 24px;
+}

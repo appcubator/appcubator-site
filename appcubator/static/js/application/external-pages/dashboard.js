@@ -58,6 +58,8 @@ function(OverviewPageView, GarageView, WorldView) {
         changePage: function(e) {
             var appId = e.currentTarget.id.replace('menu-item-','');
             $('.current').removeClass('current');
+            $('.selected').removeClass('selected');
+            $('#menu-item-' + appId).addClass('selected');
             $('#dashboard-' + appId).addClass('current');
 
             this.dashboardView = new OverviewPageView({ appId: appId });
