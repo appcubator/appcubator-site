@@ -5,7 +5,8 @@ define([
   'app/entities/AdminPanelView',
   'app/DownloadModalView',
   'app/templates/MainTemplates',
-  'util'
+  'util',
+  'util.filepicker'
 ],
 function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView, DownloadModalView) {
 
@@ -19,7 +20,8 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView, Downloa
       'click .browse'          : 'browse',
       'click .download'        : 'download',
       'click #share'           : 'share',
-      'click .edit-btn'        : 'settings'
+      'click .edit-btn'        : 'settings',
+      'click .logo'            : 'changeLogo'
     },
 
     initialize: function(options) {
@@ -38,7 +40,7 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView, Downloa
       var page_context = {};
       //this.el.innerHTML = _.template(util.getHTML('app-overview-page'), page_context);
       //this.$('.analytics').append(this.analyticsView.render().el);
-      this.renderNextStep();
+      this.setLogoImage();
     },
 
     renderNextStep: function() {
@@ -74,18 +76,30 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView, Downloa
       new AdminPanelView();
     },
 
+    changeLogo: function() {
+      var self = this;
+      util.filepicker.openSinglePick(function(file) {
+        app.info.logo = file.url;
+
+        console.log(file);
+        self.setLogoImage();
+        $.ajax({
+                type: "POST",
+                url: '/app/' + self.appId + '/state/',
+                data: JSON.stringify(app),
+                dataType: "JSON"
+        });
+
+      });
+    },
+
+    setLogoImage: function() {
+      this.$el.find('.logo-img').attr('src', app.info.logo);
+    },
+
     settings: function(e) {
       e.preventDefault();
       v1.navigate('/app/' + appId + '/info/', {trigger:true}); // can't go directly to domain settings section due to limitations of route function
-    },
-
-    showTutorial: function() {
-      v1.showTutorial();
-    },
-
-    showFeedback: function(e) {
-      v1.showTutorial([8]);
-      e.preventDefault();
     }
 
   });
