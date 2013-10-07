@@ -143,3 +143,19 @@ a.fancy:hover .edit-btn {
   top: 10px;
   font-size: 24px;
 }
+
+.clone-icon {
+  background-image: url(../img/clone-icon.png);
+  height: 45px;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.download-icon {
+  background-image: url(../img/download-icon-arrow-blue.png);
+  height: 45px;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}

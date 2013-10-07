@@ -25,6 +25,7 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView, Downloa
     initialize: function(options) {
       _.bindAll(this);
 
+      var options = (options || {});
       this.appId = (options.appId || appId);
       console.log(this.appId);
       this.analyticsView = new AnalyticsView({ appId: this.appId});
