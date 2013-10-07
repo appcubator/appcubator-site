@@ -1,5 +1,7 @@
 {% extends "infra-app.html" %}
 {% load embed_json %}
+{% load humanize %}
+
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/dashboard.css">
 <link type="text/css" href="/app/{{ app.id}}/uiestate.less" id="css-uiestate" rel="stylesheet"/>
@@ -30,22 +32,22 @@
     {% for a in apps reversed %}
         <div class="board {% if forloop.last %}current{% endif %}" id="dashboard-{{ a.pk }}">
           <div class="header hi9">
-            <div class="logo span8 hi8"><img src="{{ STATIC_URL }}img/placeholder.png"></div>
-            <div class="span34 offset2 hi8">
+            <div class="logo span8 hi8"><img src="{{ STATIC_URL }}img/placeholder.png" class="logo-img"></div>
+            <div class="span34 offset2 hi9">
               <h1 class="hoff1">{{ a.name }}</h1>
               <br>
-              <a target="_blank" {% if is_deployed == 1 %} href="{{ a.url }}" {% endif %} class="fancy link">{{ a.url }}{% if is_deployed == 0 %} (Not Deployed yet.) {% endif %}  <div href="#" class="edit-btn btn hi2">Edit</div></a><br>
-              <i class="hoff1 span34">Last Updated: {{ a.last_update }}</i>
+              <a target="_blank" {% if is_deployed == 1 %} href="{{ a.url }}" {% endif %} class="fancy link">{{ a.url }}{% if is_deployed == 0 %} (Not Deployed yet.) {% endif %}  <div href="/app/{{ a.url }}/info/" class="edit-btn btn hi2">Edit</div></a><br>
+              <i class="hoff1 span34">Last Updated {{ a.last_update|naturaltime }}</i>
             </div>
           </div>
-          <hr class="span46 pheader hoff1">
+          <hr class="span46 pheader">
 <!--             <div class="span12 hi10">
               <div class="pane-btn">
                 <div class="hi3 span14 deploy pane" id="share"><span class="icon"></span><h4>Share App</h4></div>
                 <div class="hi3 span14 deploy data pane browse"><span class="icon"></span><h4>Browse Data</h4></div> <div href="/app/7/zip/" class="hi3 span14 deploy download pane" id="download"><span class="icon"></span><h4>Download Code</h4></div>
               </div>
             </div> -->
-            <div class="hi5 span46">
+            <div class="hi4 span46">
               <a class="btn big span4" href="/app/{{ a.pk }}/clone/"><div class="clone-icon"></div></a>
               <a class="btn big span4 offset1 download" href="#"><div class="download-icon"></div></a>
               <a class="btn big span10 offset1 browse" href="#">Browse Data</a>
@@ -58,27 +60,27 @@
             <h2 class="span46 hoff1">Analytics</h2> 
             <div class="span30">
             <div class="row hoff1">
-            <div class="span14 hi10">
-            <strong class="total-active-users">0</strong>
-            <span class="analyitcs-title">Active Users</span>
+            <div class="span14 hi8">
+              <strong class="total-active-users">0</strong>
+              <span class="analyitcs-title">Active Users</span>
             </div>
-            <div class="span14 offset1 hi10">
-            <strong class="total-page-views">0</strong>
-            <span class="analyitcs-title">Total Page Views</span>
+            <div class="span14 offset1 hi8">
+              <strong class="total-page-views">0</strong>
+              <span class="analyitcs-title">Total Page Views</span>
             </div>
             </div>
             <div class="row hoff1">
-            <div class="span14 hi10">
-            <strong class="total-users">1</strong>
-            <span class="analyitcs-title">Total Users</span>
+            <div class="span14 hi8">
+              <strong class="total-users">1</strong>
+              <span class="analyitcs-title">Total Users</span>
             </div>
-            <div class="span14 offset1 hi10">
-            <strong class="total-visitors">0</strong>
-            <span class="analyitcs-title">Total Visitors</span>
+            <div class="span14 offset1 hi8">
+              <strong class="total-visitors">0</strong>
+              <span class="analyitcs-title">Total Visitors</span>
             </div>
             </div>
             </div>
-            <div class="span14 hi21 hoff1 total-page-visits"><span class="analyitcs-title">Page Visits</span><br></div></div>
+            <div class="span14 hi19 hoff1 total-page-visits"><span class="analyitcs-title">Page Visits</span><br></div></div>
           </div>
         </div>
     {% endfor %}
@@ -104,6 +106,7 @@
       apps[{{a.pk}}] = {{ a.state_json|fix_solidus|safe }};
       app_urls[{{a.pk}}] = "{{ a.url }}";
       {% if forloop.last %}
+      var app =  {{ a.state_json|fix_solidus|safe }};;
       var initAppId = {{ a.pk }};
       var appUrl = "{{ a.url }}";
       {% endif %}

@@ -4,6 +4,7 @@ require.config({
         "bootstrap": "../../libs/bootstrap/bootstrap",
         "app": "../main-app",
         "util": "../../libs/util/util",
+        "util.filepicker": "../../libs/util/util.filepicker",
         "mixins": "../../mixins",
         "backbone": "../../libs/backbone-amd/backbone",
         "underscore": "../../libs/underscore-amd/underscore",
@@ -64,6 +65,7 @@ function(OverviewPageView, GarageView, WorldView) {
 
             if(this.dashboardView) this.dashboardView.undelegateEvents();
             appUrl = app_urls[appId];
+            app = apps[appId];
             this.dashboardView = new OverviewPageView({ appId: appId });
             this.dashboardView.setElement(document.getElementById('dashboard-' + appId)).render();
         }
