@@ -489,7 +489,7 @@ class App(models.Model):
 
     @classmethod
     def provision_app_name(cls, app_name, user_id):
-        app_name = clean_subdomain(app_name, replace_periods=True)
+        app_name = app_name[:100] # max char, this is the only cleaning we have to do.
 
         # prevent duplicate app_names
         while cls.objects.filter(owner_id = user_id, name__iexact=app_name).exists():
