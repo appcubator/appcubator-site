@@ -108,3 +108,25 @@ a.fancy:hover .edit-btn {
   display: block;
   padding: 15px;
 }
+
+.logo {
+
+}
+
+.new {
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  text-shadow: rgb(255, 255, 255) 0 1px 0;
+  margin-bottom: 15px;
+}
+
+.new strong {
+  font-size: 24px;
+  font-weight:  bold;
+  margin-right: 15px;
+}
+
+.left-div a {
+  padding-left: 15px;
+}

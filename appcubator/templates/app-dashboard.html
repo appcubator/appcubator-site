@@ -13,7 +13,7 @@
 {% block page %}
   
   <div class="container hoff6" id="dashboards">
-    <div class="span14">
+    <div class="span14 left-div">
       <span class="title">Your Apps</span>
       <ul class="left-nav nav span15 apps-list hoff1">
       {% for a in apps reversed %}
@@ -22,6 +22,7 @@
           </li>
       {% endfor %}
       </ul>
+      <a href="/app/new/" class="new"><strong>+</strong>New App</a>
       <a href="#">Community Forum</a><br>
       <a href="#">Learning Resources</a>
     </div>
