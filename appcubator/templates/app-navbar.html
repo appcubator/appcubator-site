@@ -32,10 +32,17 @@
               </li>
             </ul>{% endif %}
           </li>
+          {% if app %}
           <li class="pull-right dropd">
             <a href="#" class="garage-toggle">
             </a>
           </li>
+          {% else %}
+          <li class="pull-right dropd">
+            <a href="/apps/" class="g-toggle">
+            </a>
+          </li>
+          {% endif %}
           <li class="pull-right dropd">
             <a href="#" class="world-toggle">
             </a>
