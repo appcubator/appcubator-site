@@ -67,18 +67,33 @@ for templname in APP_TEMPLATES:
 @login_required
 def app_welcome(request):
     if request.user.extradata.noob:
+
         # case for turning noob mode off
         if request.user.apps.count() > 0 and is_stripe_customer(request.user):
             e = request.user.extradata
             e.noob = 0
             e.save()
             return redirect(app_page, request.user.apps.all()[0].id)
+
         return redirect(app_noob_page)
 
     if request.user.apps.count() == 0:
-        return redirect(app_noob_page)
-    else:
-        return redirect(app_page, request.user.apps.latest('id').id)
+        return redirect(app_new)
+
+
+    # render dashboard
+    themes = UITheme.get_web_themes()
+    themes = [t.to_dict() for t in themes]
+    mobile_themes = UITheme.get_mobile_themes()
+    mobile_themes = [t.to_dict() for t in mobile_themes]
+
+    page_context = {'themes'       : simplejson.dumps(list(themes)),
+                    'mobile_themes': simplejson.dumps(list(mobile_themes)),
+                    'apps'         : request.user.apps.all(),
+                    'staging'      : settings.STAGING,
+                    'production'   : settings.PRODUCTION }
+
+    return render(request, 'app-dashboard.html', page_context)
 
 
 @require_GET
@@ -114,7 +129,7 @@ def app_new_template(request, template_name):
 @login_required
 def app_new(request, is_racoon = False, app_template=None):
     """
-    template_name only used for POST request
+    app_template only used for POST request
     """
     if request.method == 'GET':
         #log url route
@@ -136,12 +151,11 @@ def app_new(request, is_racoon = False, app_template=None):
         data['owner'] = request.user.id
 
         # use this short username
-        username = request.user.email.split('@')[0]
-        data['subdomain'] = "%s-%s" % (username, request.POST.get('name', ''))
+        data['subdomain'] = "%s-%s" % (request.user.username, request.POST.get('name', ''))
 
         # dev modifications
         if not settings.STAGING and not settings.PRODUCTION:
-            data['subdomain'] = 'dev-%s-%s' % (username, data['subdomain'])
+            data['subdomain'] = 'dev-' + data['subdomain']
 
         form = forms.AppNew(data, owner=request.user)
 
@@ -155,13 +169,13 @@ def app_new(request, is_racoon = False, app_template=None):
             s['name'] = app.name
             app.state = s
             app.save()
-            # refetch from the db
+
+            # refetch from the db. this is a weird hack that makes deploy magically work.
             app = App.objects.get(pk=app.id)
-            app.deploy() # this adds it to the deployment queue. non-blocking basically.
-            if is_racoon:
-                return redirect(app_new_racoon, app.id)
-            else:
-                return redirect(app_page, app.id)
+            # this adds it to the deployment queue. non-blocking basically.
+            app.deploy()
+
+            return redirect(app_page, app.id)
 
         return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'errors': form.errors}, status=400)
     else:
@@ -195,33 +209,13 @@ def app_clone(request, app_id = False):
             pd.value = k.value
             pd.save()
 
-        new_app.deploy()
         # this adds it to the deployment queue. non-blocking basically.
+        new_app = App.objects.get(pk=new_app.id)
+        new_app.deploy()
 
-        print "done"
-        return redirect(apps_dashboard)
+        return redirect(app_welcome)
     else:
-        print form.errors
-        return HttpResponse(status=405)
-
-
-@require_GET
-@login_required
-def apps_dashboard(request):
-
-    themes = UITheme.get_web_themes()
-    themes = [t.to_dict() for t in themes]
-    mobile_themes = UITheme.get_mobile_themes()
-    mobile_themes = [t.to_dict() for t in mobile_themes]
-
-    page_context = {'themes'       : simplejson.dumps(list(themes)),
-                    'mobile_themes': simplejson.dumps(list(mobile_themes)),
-                    'apps'         : request.user.apps.all(),
-                    'staging'      : settings.STAGING,
-                    'production'   : settings.PRODUCTION }
-
-    return render(request, 'app-dashboard.html', page_context)
-
+        return JsonResponse(form.errors, status=400)
 
 @login_required
 def app_new_racoon(request, app_id):
