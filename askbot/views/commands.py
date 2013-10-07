@@ -426,6 +426,8 @@ def vote(request):
 
         data = simplejson.dumps(response_data)
 
+    except AttributeError:
+        raise
     except Exception, e:
         response_data['message'] = unicode(e)
         response_data['success'] = 0
