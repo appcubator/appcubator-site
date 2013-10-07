@@ -1,6 +1,7 @@
 {% from "macros.html" import user_country_flag, tag_list_widget, timeago, user_primary_group %}
 <div class="short-summary{% if extra_class %} {{extra_class}}{% endif %}" id="question-{{question.id}}">
     <div class="counts">
+        {# hiding this views stuff b/c it's not working for some reason
         <div class="views
              {% if thread.view_count == 0 -%}
                 no-views
@@ -12,6 +13,7 @@
             {% trans cnt=thread.view_count %}view{% pluralize %}views{% endtrans %}
             </div>
         </div>
+        #}
         {% set answer_count = thread.get_answer_count(visitor) %}
         <div class="answers
                 {% if answer_count == 0 -%}
