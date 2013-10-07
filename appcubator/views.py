@@ -14,6 +14,8 @@ from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
 
+from plugins.models import ProviderData
+
 import forms
 import random
 
@@ -183,13 +185,23 @@ def app_clone(request, app_id = False):
 
         new_app.state = app.state
         new_app.save()
-            # refetch from the db
         new_app = App.objects.get(pk=new_app.id)
-        # new_app.deploy()
+
+        keys = ProviderData.objects.filter(app=app)
+        for k in keys:
+            pd = ProviderData()
+            pd.app = app
+            pd.provider_key = k.provider_key
+            pd.value = k.value
+            pd.save()
+
+        new_app.deploy()
         # this adds it to the deployment queue. non-blocking basically.
 
+        print "done"
         return redirect(apps_dashboard)
     else:
+        print form.errors
         return HttpResponse(status=405)
 
 

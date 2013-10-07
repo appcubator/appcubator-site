@@ -81,7 +81,10 @@
 
 {% block js %}
   <script type="text/javascript">
-    // var appId = {{ app.id }};
+    {% for a in apps reversed %}
+      {% if forloop.last %}var initAppId = {{ a.pk }};{% endif %}
+    {% endfor %}
+
     // var appUrl = "{{ app.url }}";
     // var appGitRepo = "{{ app.git_url }}";
     // var appState = {{ app.state_json|fix_solidus|safe }};

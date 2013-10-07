@@ -46,7 +46,13 @@ function(OverviewPageView, GarageView, WorldView) {
 
         initialize: function() {
             this.render();
-            console.log("INIT");
+        },
+
+        render: function() {
+
+            this.dashboardView = new OverviewPageView({ appId: initAppId });
+            this.dashboardView.setElement(document.getElementById('dashboard-' + initAppId)).render();
+
         },
 
         changePage: function(e) {
@@ -54,7 +60,6 @@ function(OverviewPageView, GarageView, WorldView) {
             $('.current').removeClass('current');
             $('#dashboard-' + appId).addClass('current');
 
-            console.log(appId);
             this.dashboardView = new OverviewPageView({ appId: appId });
             this.dashboardView.setElement(document.getElementById('dashboard-' + appId)).render();
         }
