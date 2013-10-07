@@ -493,7 +493,20 @@ class App(models.Model):
 
         # prevent duplicate app_names
         while cls.objects.filter(owner_id = user_id, name__iexact=app_name).exists():
-            app_name += str(random.randint(1,9))
+            toks = app_name.split(" ")
+            last_tok = toks[-1]
+            try:
+                i = int(last_tok)
+            except ValueError:
+                toks.append(unicode(2))
+            else:
+                if i <= 1:
+                    toks.append(unicode(2))
+                else:
+                    i += 1
+                    toks[-1] = unicode(i)
+
+            app_name = " ".join(toks)
 
             # the above process may have caused string to grow, so trim if too long
             app_name = app_name[-min(len(app_name), 40):] # take the last min(40, len app_name) chars.
