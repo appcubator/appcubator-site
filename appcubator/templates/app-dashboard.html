@@ -84,6 +84,8 @@
     {% endfor %}
     </div>
   </div>
+
+  {% include "app-panel-templates.html" %}
 {% endblock %}
 
 {% block templates %}
@@ -95,6 +97,19 @@
       {% if forloop.last %}var initAppId = {{ a.pk }};{% endif %}
     {% endfor %}
 
+    var apps = {};
+    var app_urls = {};
+
+    {% for a in apps reversed %}
+      apps[{{a.pk}}] = {{ a.state_json|fix_solidus|safe }};
+      app_urls[{{a.pk}}] = "{{ a.url }}";
+      {% if forloop.last %}
+      var initAppId = {{ a.pk }};
+      var appUrl = "{{ a.url }}";
+      {% endif %}
+    {% endfor %}
+
+    
     // var appUrl = "{{ app.url }}";
     // var appGitRepo = "{{ app.git_url }}";
     // var appState = {{ app.state_json|fix_solidus|safe }};

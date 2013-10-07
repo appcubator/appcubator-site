@@ -1,4 +1,5 @@
 define([
+  'mixins/BackboneConvenience',
   'mixins/BackboneModal',
   'util'
 ],

@@ -62,6 +62,8 @@ function(OverviewPageView, GarageView, WorldView) {
             $('#menu-item-' + appId).addClass('selected');
             $('#dashboard-' + appId).addClass('current');
 
+            if(this.dashboardView) this.dashboardView.undelegateEvents();
+            appUrl = app_urls[appId];
             this.dashboardView = new OverviewPageView({ appId: appId });
             this.dashboardView.setElement(document.getElementById('dashboard-' + appId)).render();
         }
