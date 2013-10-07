@@ -36,7 +36,7 @@ class AppNew(forms.ModelForm):
         return self.cleaned_data['name']
 
 class AppClone(forms.Form):
-    app = forms.ModelChoiceField()
+    app = forms.ModelChoiceField(queryset=App.objects.all())
 
     def clean(self):
         app = self.cleaned_data['app']

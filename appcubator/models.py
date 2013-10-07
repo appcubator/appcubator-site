@@ -501,7 +501,7 @@ class App(models.Model):
         return app_name
 
     def clone(self):
-        new_app_name = App.provision_app_name(self.name)
+        new_app_name = App.provision_app_name(self.name, self.owner_id)
         new_subdomain = App.provision_subdomain(self.name)
         new_gitrepo_name = App.provision_gitrepo_name(self.name)
         cloned_app = App(name=new_app_name,
