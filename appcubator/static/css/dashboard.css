@@ -174,3 +174,22 @@ a.fancy:hover .edit-btn {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.setting-btn {
+  display: inline-block;
+  position: absolute;
+  width: 45px;
+  height: 30px;
+  top: 30px;
+  right: 30px;
+  border-radius: 4px;
+  background-image: url(../img/settings-gray.png);
+  background-position: left;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.setting-btn:hover {
+  border: 1px solid #bbb;
+  background-position: right;
+}

@@ -36,9 +36,11 @@
             <div class="span32 offset2 hi9">
               <h1 class="hoff1">{{ a.name }}</h1>
               <br>
-              <a target="_blank" {% if is_deployed == 1 %} href="{{ a.url }}" {% endif %} class="fancy link">{{ a.url }}{% if is_deployed == 0 %} (Not Deployed yet.) {% endif %}  <div href="/app/{{ a.url }}/info/" class="edit-btn btn hi2">Edit</div></a><br>
+              <a target="_blank" {% if is_deployed == 1 %} href="{{ a.url }}" {% endif %} class="fancy link">{{ a.url }}{% if is_deployed == 0 %} (Not Deployed yet.) {% endif %}
+                <div class="edit-btn btn hi2">Edit</div></a><br>
               <i class="hoff1 span34">Last Updated {{ a.last_update|naturaltime }}</i>
             </div>
+            <div class="setting-btn"></div>
           </div>
           <hr class="span46 pheader">
 <!--             <div class="span12 hi10">
