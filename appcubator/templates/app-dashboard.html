@@ -39,12 +39,12 @@
                 <div class="edit-btn btn hi2">Edit</div></a><br>
               <i class="hoff1 span34">Last Updated {{ a.last_update|naturaltime }}</i>
             </div>
-            <a class="setting-btn" href="/app/{{ a.pk }}/info/"></a>
+            <a class="setting-btn" title="App Settings" href="/app/{{ a.pk }}/info/"></a>
           </div>
           <hr class="span46 pheader">
             <div class="hi4 span46">
               <a class="btn big span4" href="/app/{{ a.pk }}/clone/" title="Clone App"><div class="clone-icon"></div></a>
-              <a class="btn big span4 offset1 download" href="#"><div class="download-icon"></div></a>
+              <a class="btn big span4 offset1 download" href="#" title="Download Code"><div class="download-icon"></div></a>
               <a class="btn big span10 offset1 browse" href="#">Browse Data</a>
               <a class="btn big span10 offset1" id="share" href="#">Share</a>
               <a class="btn btn-info big edit span14 offset1" target="_blank" href="/app/{{ a.pk }}/">Start Editing »</a>

@@ -185,26 +185,27 @@ a.fancy:hover .edit-btn {
 }
 
 /* tooltip */
+
   .ui-tooltip, .arrow:after {
-    background: black;
-    border: 2px solid white;
+    background: black !important;
+    border:    solid white;
   }
   .ui-tooltip {
     padding: 10px 20px;
-    color: white;
+    color: #fff !important;
     border-radius: 20px;
-    font: bold 14px "Helvetica Neue", Sans-Serif;
-    text-transform: uppercase;
-    box-shadow: 0 0 7px black;
+    font: 10px "Helvetica Neue", Sans-Serif;
+    background-image: none;
+    background-color: red;
   }
   .arrow {
-    width: 70px;
-    height: 16px;
+    width: 50px;
+    height: 14px;
     overflow: hidden;
     position: absolute;
     left: 50%;
     margin-left: -35px;
-    bottom: -16px;
+    bottom: -14px;
   }
   .arrow.top {
     top: -16px;
@@ -218,9 +219,8 @@ a.fancy:hover .edit-btn {
     position: absolute;
     left: 20px;
     top: -20px;
-    width: 25px;
-    height: 25px;
-    box-shadow: 6px 5px 9px -9px black;
+    width: 20px;
+    height: 20px;
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
