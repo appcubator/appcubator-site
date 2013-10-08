@@ -43,8 +43,11 @@
           </div>
           <hr class="span46 pheader">
             <div class="hi4 span46">
-              <a class="btn big span4" href="/app/{{ a.pk }}/clone/" title="Clone App"><div class="clone-icon"></div></a>
-              <a class="btn big span4 offset1 download" href="#" title="Download Code"><div class="download-icon"></div></a>
+              <form style="display:inline" method="POST" action="/app/{{ a.pk }}/clone/">
+                  {% csrf_token %}
+                  <button type="submit" class="btn big span4" title="Clone App"><div class="clone-icon"></div></button>
+              </form>
+              <a class="btn big span4 offset1 download"  title="Download Code" href="#"><div class="download-icon"></div></a>
               <a class="btn big span10 offset1 browse" href="#">Browse Data</a>
               <a class="btn big span10 offset1" id="share" href="#">Share</a>
               <a class="btn btn-info big edit span14 offset1" target="_blank" href="/app/{{ a.pk }}/">Start Editing »</a>

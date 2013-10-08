@@ -5,7 +5,7 @@
       {% if app %}
           <div class="app title">{{ app.name }}</div>
           <div class="row hoff1 span48 current-app-links">
-            <a class="white-border span15 hi8 settings hide-overlay" href="{% url appcubator.views.app_page app.id %}info/"><span class="icon"></span>App Settings</a></li>
+            <a class="white-border span15 hi8 settings hide-overlay" href="{% url appcubator.views.app_dashboard app.id %}info/"><span class="icon"></span>App Settings</a></li>
             <a class="white-border span15 hi8 offset2 theme" href="{% url appcubator.views.app_edit_theme app.id %}" rel="external" target="_blank"><span class="icon"></span>Theme Editor</a>
           </div>
       {% endif %}
