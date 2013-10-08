@@ -1,6 +1,7 @@
 require.config({
     paths: {
         "jquery": "../../libs/jquery/jquery",
+        "jquery-ui": "../../libs/jquery-ui/jquery-ui",
         "bootstrap": "../../libs/bootstrap/bootstrap",
         "app": "../main-app",
         "util": "../../libs/util/util",
@@ -24,6 +25,10 @@ require.config({
         },
         "jquery": {
             exports: "$"
+        },
+        "jquery-ui": {
+            exports: "$",
+            deps: ['jquery']
         }
     }
 
@@ -74,6 +79,21 @@ function(OverviewPageView, GarageView, WorldView) {
   $(document).ready(function() {
     new DashboardsView();
     Backbone.history.start({pushState: true});
+
+    $( document ).tooltip({
+      position: {
+        my: "center bottom-20",
+        at: "center top",
+        using: function( position, feedback ) {
+          $( this ).css( position );
+          $( "<div>" )
+            .addClass( "arrow" )
+            .addClass( feedback.vertical )
+            .addClass( feedback.horizontal )
+            .appendTo( this );
+        }
+      }
+    });
   });
 
 });

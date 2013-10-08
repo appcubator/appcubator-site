@@ -11,25 +11,14 @@
       {% endif %}
       </div>
       <div class="row span30">
-        <div class="all-app title" style="display:none;">ALL APPS</div>
-        <div class="all-apps span32" style="display:none;">
-        {% for a in apps reversed %}
-          <div class="row">
-            <a class="span28 hi4 hoff1 white-border" href="{% url appcubator.views.app_page a.id %}" rel="external">
-              <strong>{{ a.name }}</strong>
-            </a>
-          </div>
-        {% endfor %}
-        </div>
-        <a href="#" class="see-all white-border row span32 hoff1">SEE ALL YOUR APPS.</a>
         <div class="row">
-          <a class="span32 hi4 large-link white-border" href="{% url appcubator.views.app_new %}" rel="external">
-            <strong>+ CREATE A NEW APP</strong>
+          <a class="span32 hi4 large-link white-border" href="/app/" rel="external">
+            <strong>GO TO DASHBOARD</strong>
           </a>
         </div>
         <div class="row">
-          <a class="span32 hi4 hoff1 large-link white-border hide-all" style="display:none;" href="#">
-            <strong>< Go back to {{app.name}}</strong>
+          <a class="span32 hi4 large-link white-border" href="{% url appcubator.views.app_new %}" rel="external">
+            <strong>+ CREATE A NEW APP</strong>
           </a>
         </div>
         <div class="bottom-sect hi4 hoff2 span32">

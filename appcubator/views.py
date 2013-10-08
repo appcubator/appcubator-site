@@ -81,6 +81,10 @@ def app_welcome(request):
         return redirect(app_new)
 
 
+    return app_dashboard(request, app_id = False)
+
+
+def app_dashboard(request, app_id = False):
     # render dashboard
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
@@ -92,6 +96,19 @@ def app_welcome(request):
                     'apps'         : request.user.apps.all(),
                     'staging'      : settings.STAGING,
                     'production'   : settings.PRODUCTION }
+
+    if app_id:
+        app_id = long(app_id)
+        # id of 0 is reserved for sample app
+        if(app_id == 0):
+            return redirect(app_welcome)
+
+        app = get_object_or_404(App, id=app_id)
+
+        if not request.user.is_superuser and app.owner.id != request.user.id:
+            raise Http404
+
+        page_context['app'] = app
 
     return render(request, 'app-dashboard.html', page_context)
 
