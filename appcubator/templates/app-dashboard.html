@@ -16,12 +16,11 @@
   
   <div class="container hoff6" id="dashboards">
     <div class="span14 left-div">
-<!--       <span class="title">Your Apps</span>
- -->      <ul class="left-nav nav span15 apps-list hoff2">
+      <ul class="left-nav nav span15 apps-list hoff2">
       {% for a in apps reversed %}
-          <li class='menu-item {% if forloop.last %}selected{% endif %}' id="menu-item-{{ a.pk }}">
-            <a class="" href="#">{{ a.name }}</a>
-          </li>
+        <li class='menu-item {% if forloop.last %}selected{% endif %}' id="menu-item-{{ a.pk }}">
+          <a class="" href="#">{{ a.name }}</a>
+        </li>
       {% endfor %}
       </ul>
       <a href="/app/new/" class="new"><strong>+</strong>New App</a>
@@ -43,12 +42,6 @@
             <a class="setting-btn" href="/app/{{ a.pk }}/info/"></a>
           </div>
           <hr class="span46 pheader">
-<!--             <div class="span12 hi10">
-              <div class="pane-btn">
-                <div class="hi3 span14 deploy pane" id="share"><span class="icon"></span><h4>Share App</h4></div>
-                <div class="hi3 span14 deploy data pane browse"><span class="icon"></span><h4>Browse Data</h4></div> <div href="/app/7/zip/" class="hi3 span14 deploy download pane" id="download"><span class="icon"></span><h4>Download Code</h4></div>
-              </div>
-            </div> -->
             <div class="hi4 span46">
               <a class="btn big span4" href="/app/{{ a.pk }}/clone/"><div class="clone-icon"></div></a>
               <a class="btn big span4 offset1 download" href="#"><div class="download-icon"></div></a>
