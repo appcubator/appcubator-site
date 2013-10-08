@@ -85,6 +85,12 @@ def app_welcome(request):
     return redirect(app_dashboard, str(request.user.apps.latest('id').id))
 
 
+def user_page(request, username):
+    print request.user.username
+    if request.user.username == username:
+        return app_dashboard(request, str(request.user.apps.latest('id').id))
+    return redirect("/")
+
 def app_dashboard(request, app_id):
     # render dashboard
     themes = UITheme.get_web_themes()
