@@ -73,18 +73,19 @@ def app_welcome(request):
             e = request.user.extradata
             e.noob = 0
             e.save()
-            return redirect(app_page, request.user.apps.all()[0].id)
-
-        return redirect(app_noob_page)
+            # moves on w rest of procedure
+        # else redirect to noob page
+        else:
+            return redirect(app_noob_page)
 
     if request.user.apps.count() == 0:
         return redirect(app_new)
 
 
-    return app_dashboard(request, app_id = False)
+    return redirect(app_dashboard, str(request.user.apps.latest('id').id))
 
 
-def app_dashboard(request, app_id = False):
+def app_dashboard(request, app_id):
     # render dashboard
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
@@ -97,18 +98,17 @@ def app_dashboard(request, app_id = False):
                     'staging'      : settings.STAGING,
                     'production'   : settings.PRODUCTION }
 
-    if app_id:
-        app_id = long(app_id)
-        # id of 0 is reserved for sample app
-        if(app_id == 0):
-            return redirect(app_welcome)
+    app_id = long(app_id)
+    # id of 0 is reserved for sample app
+    if(app_id == 0):
+        return redirect(app_welcome)
 
-        app = get_object_or_404(App, id=app_id)
+    app = get_object_or_404(App, id=app_id)
 
-        if not request.user.is_superuser and app.owner.id != request.user.id:
-            raise Http404
+    if not request.user.is_superuser and app.owner.id != request.user.id:
+        raise Http404
 
-        page_context['app'] = app
+    page_context['app'] = app
 
     return render(request, 'app-dashboard.html', page_context)
 
@@ -194,19 +194,21 @@ def app_new(request, is_racoon = False, app_template=None):
 
             return redirect(app_page, app.id)
 
-        return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'errors': form.errors}, status=400)
+        return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'other_errors': form.non_field_errors, 'errors': form.errors}, status=400)
     else:
         return HttpResponse(status=405)
 
 
 @login_required
-def app_clone(request, app_id = False):
+@require_POST
+def app_clone(request, app_id):
     app_id = long(app_id)
 
     form = forms.AppClone({ "app": app_id })
     if form.is_valid():
 
         new_app = form.save()
+        print "new app: %d" % new_app.id
 
         # this adds it to the deployment queue. non-blocking basically.
         new_app = App.objects.get(pk=new_app.id)
@@ -214,21 +216,9 @@ def app_clone(request, app_id = False):
 
         return redirect(app_welcome)
     else:
-        return JsonResponse(form.errors, status=400)
-
-@login_required
-def app_new_racoon(request, app_id):
-    #log url route
-    user_id = request.user.id
-    log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "racoon"})
-    log.save()
-    page_context = {}
-    app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
-        raise Http404
-    page_context['app_id'] = long(app_id)
-    page_context['app_name'] = app.name
-    return render(request, 'app-new-racoon.html', page_context)
+        if request.is_ajax():
+            return JsonResponse(form.errors, status=400)
+        return redirect(app_dashboard, str(request.user.apps.latest('id').id))
 
 
 @login_required

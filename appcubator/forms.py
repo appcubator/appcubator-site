@@ -11,7 +11,7 @@ class AppLimitReached(forms.ValidationError):
     """ Raised when free user tries to create an app above free limit """
 
     def __init__(self):
-        super(AppLimitReached, self).__init__("<a href=\"/account/\">Upgrade to the premium plan to make another app, and get more.</a>")
+        super(AppLimitReached, self).__init__("<a href=\"/account/\">Upgrade to the premium plan to make more apps.</a>")
 
 class AppNew(forms.ModelForm):
 
@@ -41,8 +41,8 @@ class AppNew(forms.ModelForm):
         return self.cleaned_data['name']
 
     def clean(self):
-        app = self.cleaned_data['app']
-        if app.owner.apps.count() == MAX_FREE_APPS and app.owner.customer.current_subscription.plan == 'free':
+        owner = self.owner
+        if owner.apps.count() == MAX_FREE_APPS and owner.customer.current_subscription.plan == 'free':
             raise AppLimitReached()
         return self.cleaned_data
 
