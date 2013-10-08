@@ -1,22 +1,13 @@
 <div class="v1nav navbar logo-text navbar-inverse navbar-fixed-top ">
   <div class="hi4 navbar-inner">
     <div class="container">
-      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
       <div class="nav-collapse collapse navbar-responsive-collapse">
         <ul class="nav">
           <li class="brand">
             <h1 class="name">
-              <a id="main-menu" {% if app %} href="/app/{{ app.id }}/" {% else %} href="/app/0/" {% endif %} {% if navHide == "true" %} rel="external" {% endif %}>
+              <a id="main-menu" href="/app/" onclick="window.open(this.href, this.href); return false" rel="external">
                 <span class="brand">Appcubator</span>
-                {% if app %}
-                <span class="title">Overview</span>
-                {% else %}
-                <span class="title">Home</span>
-                {% endif %}
+                <span class="title">Dashboard</span>
               </a>
             </h1>{% if app and navHide != "true" %}<ul class="navigation-menu">
               <li class="menu-app-pages">
@@ -39,7 +30,7 @@
           </li>
           {% else %}
           <li class="pull-right dropd">
-            <a href="/apps/" class="g-toggle">
+            <a href="/app/" class="g-toggle">
             </a>
           </li>
           {% endif %}
