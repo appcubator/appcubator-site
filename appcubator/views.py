@@ -86,7 +86,6 @@ def app_welcome(request):
 
 
 def user_page(request, username):
-    print request.user.username
     if request.user.username == username:
         return app_dashboard(request, str(request.user.apps.latest('id').id))
     return redirect("/")
