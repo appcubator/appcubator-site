@@ -9,7 +9,6 @@ require.config({
         "mixins": "../../mixins",
         "backbone": "../../libs/backbone-amd/backbone",
         "underscore": "../../libs/underscore-amd/underscore",
-        "jquery-ui": "../../libs/jquery-ui/jquery-ui"
     },
 
     shim: {
@@ -29,6 +28,10 @@ require.config({
         "jquery-ui": {
             exports: "$",
             deps: ['jquery']
+        },
+        "util.filepicker": {
+            deps: ['util'],
+            exports: "util"
         }
     }
 

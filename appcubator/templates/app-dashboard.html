@@ -18,7 +18,7 @@
     <div class="span14 left-div">
       <ul class="left-nav nav span15 apps-list hoff2">
       {% for a in apps %}
-        <li class='menu-item {% if forloop.last and app == false or app.pk == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
+        <li class='menu-item {% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
           <a class="" href="#">{{ a.name }}</a>
         </li>
       {% endfor %}
@@ -29,7 +29,7 @@
     </div>
     <div class="span50 hoff1">
     {% for a in apps reversed %}
-        <div class="board {% if forloop.last and app == false or app.pk == a.pk %}current{% endif %}" id="dashboard-{{ a.pk }}">
+        <div class="board {% if app_id == a.pk %}current{% endif %}" id="dashboard-{{ a.pk }}">
           <div class="header hi9">
             <div class="logo span12 hi8"><img src="{{ STATIC_URL }}img/placeholder.png" class="logo-img"></div>
             <div class="span32 offset2 hi9">

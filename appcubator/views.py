@@ -102,13 +102,8 @@ def app_dashboard(request, app_id):
     # id of 0 is reserved for sample app
     if(app_id == 0):
         return redirect(app_welcome)
-
-    app = get_object_or_404(App, id=app_id)
-
-    if not request.user.is_superuser and app.owner.id != request.user.id:
-        raise Http404
-
-    page_context['app'] = app
+    
+    page_context['app_id'] = app_id
 
     return render(request, 'app-dashboard.html', page_context)
 
