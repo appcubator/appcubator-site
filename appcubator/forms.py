@@ -11,7 +11,7 @@ class AppLimitReached(forms.ValidationError):
     """ Raised when free user tries to create an app above free limit """
 
     def __init__(self):
-        super(AppLimitReached, self).__init__("You can create %d apps for free with Appcubator, upgrade to the premium plan to make more." % MAX_FREE_APPS)
+        super(AppLimitReached, self).__init__("<a href=\"/account/\">Upgrade to the premium plan to make another app, and get more.</a>")
 
 class AppNew(forms.ModelForm):
 
