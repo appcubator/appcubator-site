@@ -11,20 +11,27 @@
       {% csrf_token %}
       <h4 class="span12 hoff1">Name of the app</h4>
       <input class="span16 hoff1" name="name" type="text" placeholder="Easy App" value="{{old_name}}">
-      <hr>
       {% if errors %}
+      <div class="error-content">
+      <br>
       {% for k, v in errors.items %}
           {% for val in values %}
           {{ val }}<br>
           {% endfor %}
       {% endfor %}
+      </div>
       {% endif %}
-
       {% if other_errors %}
+      <div class="error-content">
+      <br>
       {% for val in other_errors %}
           {{ val|safe }}<br>
       {% endfor %}
+      </div>
       {% endif %}
+      <hr>
+
+
       </form>
       <h4 class="span34">Pick a base app template below, or start with the simple one.</h4>
       <div class="span41 hi18 hoff1" style="background-color:#fff; overflow-y: scroll; border-radius: 4px; border: 2px solid #ccc;">

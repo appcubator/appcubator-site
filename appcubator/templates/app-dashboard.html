@@ -16,11 +16,11 @@
   
   <div class="container hoff6" id="dashboards">
     <div class="span14 left-div">
-      <ul>
+      <div class="error-content span12 offset1 hoff2">
       {% for message in messages %}
-          <li>{{ message|safe }}</li>
+          {{ message|safe }}
       {% endfor %}
-      </ul>
+      </div>
       <ul class="left-nav nav span15 apps-list hoff2">
       {% if messages %}
       {% endif %}
