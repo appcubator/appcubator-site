@@ -26,6 +26,26 @@ urlpatterns += patterns('appcubator.log_views',
     url(r'^log/anything/$', 'log_anything'),
 )
 
+urlpatterns += patterns('appcubator.admin_views',
+    url(r'^stay/up/to/get/lucky/$', 'admin_home'),
+    url(r'^stay/up/to/get/lucky/customers/$', 'admin_customers'),
+    url(r'^stay/up/to/get/lucky/customers/(\d+)/add_contact_log/$', 'admin_add_contactlog'),
+    url(r'^stay/up/to/get/lucky/search/$', 'admin_customers_search'),
+    url(r'^stay/up/to/get/lucky/users/(\d+)$', 'admin_user'),
+    url(r'^stay/up/to/get/lucky/users/(\d+)/graph/$', 'user_logs_graph'),
+    url(r'^stay/up/to/get/lucky/users/$', 'admin_users'),
+    url(r'^stay/up/to/get/lucky/apps/errors/$', 'admin_app_errors'),
+    url(r'^stay/up/to/get/lucky/apps/(\d+)$', 'admin_app'),
+    url(r'^stay/up/to/get/lucky/apps/(\d+)/snaps$', 'admin_app_snaps'),
+    url(r'^stay/up/to/get/lucky/apps/$', 'admin_apps'),
+    url(r'^stay/up/to/get/lucky/invitations/$', 'admin_invitations'),
+    url(r'^stay/up/to/get/lucky/feedback/$', 'admin_feedback'),
+    url(r'^stay/up/to/get/lucky/walkthroughs/$', 'admin_walkthroughs'),
+    url(r'^stay/up/to/get/lucky/usersbydate/$', 'user_signups_json'),
+    url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json'),
+    url(r'^stay/up/to/get/lucky/logs/$', 'logs'),
+)
+
 urlpatterns += patterns('appcubator.views',
     url(r'filepick', django.views.generic.base.TemplateView.as_view(template_name="dev/filepicker-test.html")),
 
@@ -98,27 +118,6 @@ urlpatterns += patterns('appcubator.views',
     url(r'^sendhostedemail/$', 'send_hosted_email'),
 
     url(r'^(.*)/$', 'user_page')
-)
-
-urlpatterns += patterns('appcubator.admin_views',
-    url(r'^stay/up/to/get/lucky/$', 'admin_home'),
-    url(r'^stay/up/to/get/lucky/customers/$', 'admin_customers'),
-    url(r'^stay/up/to/get/lucky/customers/(\d+)/add_contact_log/$', 'admin_add_contactlog'),
-    url(r'^stay/up/to/get/lucky/search/$', 'admin_customers_search'),
-    url(r'^stay/up/to/get/lucky/users/(\d+)$', 'admin_user'),
-    url(r'^stay/up/to/get/lucky/users/(\d+)/graph/$', 'user_logs_graph'),
-    url(r'^stay/up/to/get/lucky/users/$', 'admin_users'),
-    url(r'^stay/up/to/get/lucky/apps/errors/$', 'admin_app_errors'),
-    url(r'^stay/up/to/get/lucky/apps/(\d+)$', 'admin_app'),
-    url(r'^stay/up/to/get/lucky/apps/(\d+)/snaps$', 'admin_app_snaps'),
-    url(r'^stay/up/to/get/lucky/apps/$', 'admin_apps'),
-    url(r'^stay/up/to/get/lucky/invitations/$', 'admin_invitations'),
-    url(r'^stay/up/to/get/lucky/feedback/$', 'admin_feedback'),
-    url(r'^stay/up/to/get/lucky/walkthroughs/$', 'admin_walkthroughs'),
-    url(r'^stay/up/to/get/lucky/usersbydate/$', 'user_signups_json'),
-    url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json'),
-    url(r'^stay/up/to/get/lucky/logs/$', 'logs'),
-
 )
 
 urlpatterns += patterns('appcubator.theme_views',
