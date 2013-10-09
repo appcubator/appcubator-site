@@ -97,10 +97,8 @@
           background-position: right;
           background-size: 2px 1px;
           background-repeat: repeat-y;
+          width: 124px;
 
-          &:hover {
-            .box-shadow(inset 0px 0px 3px 0 rgba(90, 90, 90, 0.4));
-          }
 
           a {
             display: inline-block;
@@ -108,7 +106,11 @@
             padding-left: 12px;
             height: 60px;
             line-height: 60px;
-            width: 124px;
+            width: 121px;
+
+            &:hover {
+              .box-shadow(inset 0px 0px 3px 0 rgba(120, 120, 120, 0.4));
+            }
 
             .info-icon, .entities-icon,
             .gallery-icon, .pages-icon, .emails-icon, .plugins-icon {
@@ -454,7 +456,25 @@ right: 218px;
 }
 
 .current-app-links .white-border {
-  text-align: center;
+  text-align: left;
+}
+
+.current-app-links .white-border .text {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 110px;
+}
+
+.current-app-links .white-border .title {
+  font-size: 18px;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: 10px;
+}
+
+.current-app-links .white-border p {
+  display: inline-block;
+  vertical-align: top;
 }
 
 .current-app-links .white-border .icon {
