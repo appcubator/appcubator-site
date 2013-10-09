@@ -194,9 +194,10 @@ a.fancy:hover .edit-btn {
     padding: 10px 20px;
     color: #fff !important;
     border-radius: 20px;
-    font: 10px "Helvetica Neue", Sans-Serif;
+    font: 11px "Helvetica Neue", Sans-Serif !important;
     background-image: none;
     background-color: red;
+    box-shadow: none !important;
   }
   .arrow {
     width: 50px;
@@ -226,6 +227,7 @@ a.fancy:hover .edit-btn {
     -ms-transform: rotate(45deg);
     -o-transform: rotate(45deg);
     tranform: rotate(45deg);
+    border-width: 1px !important;
   }
   .arrow.top:after {
     bottom: -20px;

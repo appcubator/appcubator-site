@@ -97,7 +97,8 @@ def app_dashboard(request, app_id):
     mobile_themes = UITheme.get_mobile_themes()
     mobile_themes = [t.to_dict() for t in mobile_themes]
 
-    page_context = {'themes'       : simplejson.dumps(list(themes)),
+    page_context = {'title'        : 'Dashboard',
+                    'themes'       : simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
                     'apps'         : request.user.apps.all(),
                     'staging'      : settings.STAGING,
