@@ -30,6 +30,10 @@
   border-radius: 4px;
 }
 
+.board .logo img {
+  position: absolute;
+}
+
 .board .logo:hover:after {
   content: "Click to Change the Logo";
   text-align: center;

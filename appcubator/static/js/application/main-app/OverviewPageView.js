@@ -80,8 +80,6 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView, Downloa
       var self = this;
       util.filepicker.openSinglePick(function(file) {
         app.info.logo = file.url;
-
-        console.log(file);
         self.setLogoImage();
         $.ajax({
                 type: "POST",

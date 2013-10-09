@@ -30,7 +30,7 @@
           </li>
           {% else %}
           <li class="pull-right dropd">
-            <a href="/app/" class="g-toggle">
+            <a href="{% url appcubator.views.user_page user.username %}" class="g-toggle" onclick="window.open(this.href, this.href); return false" rel="external">
             </a>
           </li>
           {% endif %}

@@ -74,6 +74,7 @@ function(OverviewPageView, GarageView, WorldView) {
             if(this.dashboardView) this.dashboardView.undelegateEvents();
             appUrl = app_urls[appId];
             app = apps[appId];
+            appGitRepo = app_gitRepos[appId];
             this.dashboardView = new OverviewPageView({ appId: appId });
             this.dashboardView.setElement(document.getElementById('dashboard-' + appId)).render();
         }

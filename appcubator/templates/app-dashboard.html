@@ -24,14 +24,14 @@
       {% endfor %}
       </ul>
       <a href="/app/new/" class="new"><strong>+</strong>New App</a>
-      <a href="#">Community Forum</a><br>
-      <a href="#">Learning Resources</a>
+      <a href="/forum/" target="_blank">Community Forum</a><br>
+      <a href="/resources/" target="_blank" class="hoff1">Learning Resources</a>
     </div>
     <div class="span50 hoff1">
     {% for a in apps reversed %}
         <div class="board {% if app_id == a.pk %}current{% endif %}" id="dashboard-{{ a.pk }}">
           <div class="header hi9">
-            <div class="logo span12 hi8"><img src="{{ STATIC_URL }}img/placeholder.png" class="logo-img"></div>
+            <div class="logo span12 hi8"><img src="{{ STATIC_URL }}img/placeholder-logo.png" class="logo-img"></div>
             <div class="span32 offset2 hi9">
               <h1 class="hoff1">{{ a.name }}</h1>
               <br>
@@ -93,20 +93,23 @@
 
 {% block js %}
   <script type="text/javascript">
-    {% for a in apps reversed %}
+    {% for a in apps %}
       {% if forloop.last %}var initAppId = {{ a.pk }};{% endif %}
     {% endfor %}
 
     var apps = {};
     var app_urls = {};
-
-    {% for a in apps reversed %}
+    var app_gitRepos = {};
+    {% for a in apps %}
       apps[{{a.pk}}] = {{ a.state_json|fix_solidus|safe }};
       app_urls[{{a.pk}}] = "{{ a.url }}";
+      app_gitRepos[{{a.pk}}] = "{{ a.git_url }}"
       {% if forloop.last %}
       var app =  {{ a.state_json|fix_solidus|safe }};;
       var initAppId = {{ a.pk }};
       var appUrl = "{{ a.url }}";
+      var appGitRepo = "{{ a.git_url }}"
+
       {% endif %}
     {% endfor %}
 
