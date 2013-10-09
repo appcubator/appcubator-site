@@ -7,12 +7,16 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
+from django.contrib import messages
+
 from django.forms import ModelForm
 
 from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
+
+from plugins.models import ProviderData
 
 import forms
 import random
@@ -65,18 +69,51 @@ for templname in APP_TEMPLATES:
 @login_required
 def app_welcome(request):
     if request.user.extradata.noob:
+
         # case for turning noob mode off
         if request.user.apps.count() > 0 and is_stripe_customer(request.user):
             e = request.user.extradata
             e.noob = 0
             e.save()
-            return redirect(app_page, request.user.apps.all()[0].id)
-        return redirect(app_noob_page)
+            # moves on w rest of procedure
+        # else redirect to noob page
+        else:
+            return redirect(app_noob_page)
 
     if request.user.apps.count() == 0:
-        return redirect(app_noob_page)
-    else:
-        return redirect(app_page, request.user.apps.latest('id').id)
+        return redirect(app_new)
+
+
+    return redirect(user_page, request.user.username)
+
+
+def user_page(request, username):
+    if request.user.username == username:
+        return app_dashboard(request, str(request.user.apps.latest('id').id))
+    return redirect("/")
+
+def app_dashboard(request, app_id):
+    # render dashboard
+    themes = UITheme.get_web_themes()
+    themes = [t.to_dict() for t in themes]
+    mobile_themes = UITheme.get_mobile_themes()
+    mobile_themes = [t.to_dict() for t in mobile_themes]
+
+    page_context = {'title'        : 'Dashboard',
+                    'themes'       : simplejson.dumps(list(themes)),
+                    'mobile_themes': simplejson.dumps(list(mobile_themes)),
+                    'apps'         : request.user.apps.all(),
+                    'staging'      : settings.STAGING,
+                    'production'   : settings.PRODUCTION }
+
+    app_id = long(app_id)
+    # id of 0 is reserved for sample app
+    if(app_id == 0):
+        return redirect(app_welcome)
+
+    page_context['app_id'] = app_id
+
+    return render(request, 'app-dashboard.html', page_context)
 
 
 @require_GET
@@ -112,7 +149,7 @@ def app_new_template(request, template_name):
 @login_required
 def app_new(request, is_racoon = False, app_template=None):
     """
-    template_name only used for POST request
+    app_template only used for POST request
     """
     if request.method == 'GET':
         #log url route
@@ -134,12 +171,11 @@ def app_new(request, is_racoon = False, app_template=None):
         data['owner'] = request.user.id
 
         # use this short username
-        username = request.user.email.split('@')[0]
-        data['subdomain'] = "%s-%s" % (username, request.POST.get('name', ''))
+        data['subdomain'] = "%s-%s" % (request.user.username, request.POST.get('name', ''))
 
         # dev modifications
         if not settings.STAGING and not settings.PRODUCTION:
-            data['subdomain'] = 'dev-%s-%s' % (username, data['subdomain'])
+            data['subdomain'] = 'dev-' + data['subdomain']
 
         form = forms.AppNew(data, owner=request.user)
 
@@ -153,32 +189,42 @@ def app_new(request, is_racoon = False, app_template=None):
             s['name'] = app.name
             app.state = s
             app.save()
-            # refetch from the db
-            app = App.objects.get(pk=app.id)
-            app.deploy() # this adds it to the deployment queue. non-blocking basically.
-            if is_racoon:
-                return redirect(app_new_racoon, app.id)
-            else:
-                return redirect(app_page, app.id)
 
-        return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'errors': form.errors}, status=400)
+            # refetch from the db. this is a weird hack that makes deploy magically work.
+            app = App.objects.get(pk=app.id)
+            # this adds it to the deployment queue. non-blocking basically.
+            app.deploy()
+
+            return redirect(app_page, app.id)
+
+        return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'other_errors': form.non_field_errors, 'errors': form.errors}, status=400)
     else:
         return HttpResponse(status=405)
 
 
 @login_required
-def app_new_racoon(request, app_id):
-    #log url route
-    user_id = request.user.id
-    log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "racoon"})
-    log.save()
-    page_context = {}
-    app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
-        raise Http404
-    page_context['app_id'] = long(app_id)
-    page_context['app_name'] = app.name
-    return render(request, 'app-new-racoon.html', page_context)
+@require_POST
+def app_clone(request, app_id):
+    app_id = long(app_id)
+
+    form = forms.AppClone({ "app": app_id })
+    if form.is_valid():
+
+        new_app = form.save()
+        print "new app: %d" % new_app.id
+
+        # this adds it to the deployment queue. non-blocking basically.
+        new_app = App.objects.get(pk=new_app.id)
+        new_app.deploy()
+
+        return redirect(app_welcome)
+    else:
+        if request.is_ajax():
+            return JsonResponse(form.errors, status=400)
+        for k, v in form.errors.iteritems():
+            for message in v:
+                messages.error(request, message)
+        return redirect(user_page, request.user.username)
 
 
 @login_required

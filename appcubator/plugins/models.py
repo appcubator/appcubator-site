@@ -49,3 +49,19 @@ class ProviderData(models.Model):
     app = models.ForeignKey(App)
     provider_key = models.ForeignKey(ProviderKey)
     value = models.CharField(max_length=255)
+
+
+def copy_provider_data(app1, app2, overwrite=False):
+    """ Copy plugin data from app1 to app2
+          if overwrite=true, Overwrites existing plugin data on app1 """
+
+    for pd1 in app1.providerdata_set.all():
+
+        # don't overwrite provider_key data if already exists on app2
+        if not overwrite and app2.providerdata_set.filter(provider_key=pd1.provider_key).exists():
+            continue
+
+        pd2 = ProviderData(app=app2,
+                          provider_key=pd1.provider_key,
+                          value=pd1.value)
+        pd2.save()

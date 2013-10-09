@@ -24,8 +24,8 @@ define(function(require, exports, module) {
             "app/:appid/plugins/*tutorial"     : "plugins",
             "app/:appid/mobile-editor/:pageid/": "mobileEditor",
             "app/:appid/emails/*tutorial"      : "emails",
-            "app/:appid/*tutorial"             : "index",
-            "app/:appid/*anything/"            : "index"
+            "app/:appid/*tutorial"             : "pages",
+            "app/:appid/*anything/"            : "pages"
         },
 
         tutorialPage: 0,

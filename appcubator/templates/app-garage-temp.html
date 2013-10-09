@@ -5,31 +5,32 @@
       {% if app %}
           <div class="app title">{{ app.name }}</div>
           <div class="row hoff1 span48 current-app-links">
-            <a class="white-border span15 hi8 settings hide-overlay" href="{% url appcubator.views.app_page app.id %}info/"><span class="icon"></span>App Settings</a></li>
-            <a class="white-border span15 hi8 offset2 theme" href="{% url appcubator.views.app_edit_theme app.id %}" rel="external" target="_blank"><span class="icon"></span>Theme Editor</a>
+            <a class="white-border span15 hi8 settings hide-overlay" href="{% url appcubator.views.app_page app.id %}info/">
+              <span class="icon"></span>
+              <div class="text">
+                <span class="title">App Settings</span>
+                <p>Change settings for your app or delete it.</p>
+              </div>
+            </a>
+            <a class="white-border span15 hi8 offset2 theme" href="{% url appcubator.views.app_edit_theme app.id %}" rel="external" target="_blank">
+              <span class="icon"></span>
+              <div class="text">
+                <span class="title">Theme Editor</span>
+                <p>Customize the styling of your app.</p>
+              </div>
+            </a>
           </div>
       {% endif %}
       </div>
       <div class="row span30">
-        <div class="all-app title" style="display:none;">ALL APPS</div>
-        <div class="all-apps span32" style="display:none;">
-        {% for a in apps reversed %}
-          <div class="row">
-            <a class="span28 hi4 hoff1 white-border" href="{% url appcubator.views.app_page a.id %}" rel="external">
-              <strong>{{ a.name }}</strong>
-            </a>
-          </div>
-        {% endfor %}
-        </div>
-        <a href="#" class="see-all white-border row span32 hoff1">SEE ALL YOUR APPS.</a>
         <div class="row">
-          <a class="span32 hi4 large-link white-border" href="{% url appcubator.views.app_new %}" rel="external">
-            <strong>+ CREATE A NEW APP</strong>
+          <a class="span32 hi4 large-link white-border" href="{% url appcubator.views.user_page user.username %}" rel="external">
+            <strong>GO TO DASHBOARD</strong>
           </a>
         </div>
         <div class="row">
-          <a class="span32 hi4 hoff1 large-link white-border hide-all" style="display:none;" href="#">
-            <strong>< Go back to {{app.name}}</strong>
+          <a class="span32 hi4 large-link white-border" href="{% url appcubator.views.app_new %}" rel="external">
+            <strong>+ CREATE A NEW APP</strong>
           </a>
         </div>
         <div class="bottom-sect hi4 hoff2 span32">

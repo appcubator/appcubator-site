@@ -77,7 +77,7 @@ def changelog(request):
 @csrf_protect
 def homepage(request):
     if request.user.is_authenticated():
-        return redirect('/app/')
+        return redirect('/%s/' % request.user.username)
 
     page_context = {}
     page_context["title"] = "Homepage"

@@ -30,12 +30,12 @@ urlpatterns += patterns('appcubator.views',
     url(r'filepick', django.views.generic.base.TemplateView.as_view(template_name="dev/filepicker-test.html")),
 
     url(r'^app/$', 'app_welcome'),
+
     url(r'^app/0/$', 'app_noob_page'),
     url(r'^app/new/$', 'app_new'),
     url(r'^app/new/template/(\w+)/$', 'app_new_template'),
     url(r'^app/new/walkthrough/simple/$', 'app_new_walkthrough', {"walkthrough": 'simpleWalkthrough'}),
     url(r'^app/new/walkthrough/indepth/$', 'app_new_walkthrough', {"walkthrough": 'walkthrough'}),
-    url(r'^app/(\d+)/racoon/$', 'app_new_racoon'),
     url(r'^app/(\d+)/delete/$', 'app_delete'),
     url(r'^app/(\d+)/edit_theme/', 'app_edit_theme'),
     url(r'^app/(\d+)/themeeditor/', 'app_edit_theme'),
@@ -50,6 +50,7 @@ urlpatterns += patterns('appcubator.views',
     # getting/setting state
     url(r'^app/(\d+)/state/$', 'app_state'),
     url(r'^app/(\d+)/state/force/$', 'app_state', {"validate": False}),
+    url(r'^app/(\d+)/clone/$', 'app_clone'),
 
     # getting/setting uie state
     url(r'^app/(\d+)/uiestate/$', 'uie_state'),
@@ -90,11 +91,13 @@ urlpatterns += patterns('appcubator.views',
     url(r'^', include('appcubator.plugins.urls')),
 
     # the rest
-    url(r'^app/(\d+)/', 'app_page', {"page_name": "overview"}), # this serves all the app pages
-    url(r'^app/(\d+)/([^/]+)/$', 'app_page'), # this serves all the app pages
+    url(r'^app/(\d+)/', 'app_page'),
+    #url(r'^app/(\d+)/', 'app_page', {"page_name": "overview"}), # this serves all the app pages
+    #url(r'^app/(\d+)/([^/]+)/$', 'app_page'), # this serves all the app pages
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
 
+    url(r'^(.*)/$', 'user_page')
 )
 
 urlpatterns += patterns('appcubator.admin_views',

@@ -4,9 +4,14 @@ from django.contrib.contenttypes.models import ContentType
 import models
 from models import App
 from django import forms
-import re
-import random
 
+MAX_FREE_APPS = 5
+
+class AppLimitReached(forms.ValidationError):
+    """ Raised when free user tries to create an app above free limit """
+
+    def __init__(self):
+        super(AppLimitReached, self).__init__("<a href=\"/account/\">Upgrade to the premium plan to make more apps.</a>")
 
 class AppNew(forms.ModelForm):
 
@@ -34,6 +39,27 @@ class AppNew(forms.ModelForm):
         if App.objects.filter(owner=self.owner, name__iexact=self.cleaned_data['name']).exists():
             raise forms.ValidationError("You already have an app with this name. Please choose a new one.")
         return self.cleaned_data['name']
+
+    def clean(self):
+        owner = self.owner
+        if owner.apps.count() >= MAX_FREE_APPS and owner.customer.current_subscription.plan == 'free':
+            raise AppLimitReached()
+        return self.cleaned_data
+
+class AppClone(forms.Form):
+    app = forms.ModelChoiceField(queryset=App.objects.all())
+
+    def clean(self):
+        app = self.cleaned_data['app']
+        if app.owner.apps.count() >= MAX_FREE_APPS and app.owner.customer.current_subscription.plan == 'free':
+            raise AppLimitReached()
+        return self.cleaned_data
+
+    def save(self):
+        app = self.cleaned_data['app']
+        app_clone = app.clone()
+        return app_clone
+
 
 class ChangeSubdomain(forms.Form):
     subdomain = forms.CharField(max_length=40)
@@ -63,5 +89,5 @@ class ToggleLoveForm(CommentSecurityForm):
     def get_filter_kwargs(self):
         return {
             'content_type': ContentType.objects.get_for_model(self.target_object),
-            'object_pk': force_unicode(self.target_object._get_pk_val()),
+            'object_pk': self.target_object._get_pk_val(),
         }

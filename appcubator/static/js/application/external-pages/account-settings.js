@@ -32,10 +32,10 @@ require.config({
 
 require([
   'app/Striper',
-  '../main-app/GarageView',
+  '../main-app/WorldView',
   'bootstrap'
 ],
-function(Striper, GarageView) {
+function(Striper, WorldView) {
 
   var PaymentsMain = function() {
     var striper = new Striper();
@@ -68,8 +68,8 @@ function(Striper, GarageView) {
     $('#add-key-panel').fadeIn();
   });
 
-  var garage = new GarageView();
-  $('.garage-toggle').on('click', garage.show);
+  var worldView = new WorldView();
+  $('.world-toggle').on('click', worldView.toggle);
 
   // @ksikka's code
   $(document).ready(function() {

@@ -469,8 +469,8 @@ class App(models.Model):
         while cls.objects.filter(subdomain__iexact=subdomain).exists():
             subdomain += str(random.randint(1,9))
 
-        # the above process may have caused string to grow, so trim if too long
-        subdomain = subdomain[-min(len(subdomain), 40):] # take the last min(40, len subdomain) chars.
+            # the above process may have caused string to grow, so trim if too long
+            subdomain = subdomain[-min(len(subdomain), 40):] # take the last min(40, len subdomain) chars.
 
         return subdomain
 
@@ -482,11 +482,49 @@ class App(models.Model):
         while cls.objects.filter(gitrepo_name__iexact=gitrepo_name).exists():
             gitrepo_name += str(random.randint(1,9))
 
-        # the above process may have caused string to grow, so trim if too long
-        gitrepo_name = gitrepo_name[-min(len(gitrepo_name), 40):] # take the last min(40, len gitrepo_name) chars.
+            # the above process may have caused string to grow, so trim if too long
+            gitrepo_name = gitrepo_name[-min(len(gitrepo_name), 40):] # take the last min(40, len gitrepo_name) chars.
 
         return gitrepo_name
 
+    @classmethod
+    def provision_app_name(cls, app_name, user_id):
+        app_name = app_name[:100] # max char, this is the only cleaning we have to do.
+
+        # prevent duplicate app_names
+        while cls.objects.filter(owner_id = user_id, name__iexact=app_name).exists():
+            toks = app_name.split(" ")
+            last_tok = toks[-1]
+            try:
+                i = int(last_tok)
+            except ValueError:
+                toks.append(unicode(2))
+            else:
+                if i <= 1:
+                    toks.append(unicode(2))
+                else:
+                    i += 1
+                    toks[-1] = unicode(i)
+
+            app_name = " ".join(toks)
+
+            # the above process may have caused string to grow, so trim if too long
+            app_name = app_name[-min(len(app_name), 40):] # take the last min(40, len app_name) chars.
+
+        return app_name
+
+    def clone(self):
+        new_app_name = App.provision_app_name(self.name, self.owner_id)
+        new_subdomain = App.provision_subdomain(self.name)
+        new_gitrepo_name = App.provision_gitrepo_name(self.name)
+        cloned_app = App(name=new_app_name,
+                         subdomain=new_subdomain,
+                         gitrepo_name=new_gitrepo_name,
+                         owner=self.owner)
+        cloned_app.save()
+        from plugins.models import copy_provider_data
+        copy_provider_data(self, cloned_app)
+        return cloned_app
 
     def get_state(self):
         return simplejson.loads(self._state_json)
@@ -540,6 +578,14 @@ class App(models.Model):
     @property
     def urls(self):
         return self.state['urls']
+
+    @property
+    def last_update(self):
+        snapshot = AppstateSnapshot.objects.filter(app=self).latest('snapshot_date')
+        if snapshot:
+            return snapshot.snapshot_date
+        else:
+            return None
 
     def isCurrentVersion(self, new_state):
         """Returns True if new_state is the same version as self.state's."""
