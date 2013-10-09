@@ -16,7 +16,14 @@
   
   <div class="container hoff6" id="dashboards">
     <div class="span14 left-div">
+      <ul>
+      {% for message in messages %}
+          <li>{{ message|safe }}</li>
+      {% endfor %}
+      </ul>
       <ul class="left-nav nav span15 apps-list hoff2">
+      {% if messages %}
+      {% endif %}
       {% for a in apps %}
         <li class='menu-item {% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
           <a class="" href="#">{{ a.name }}</a>

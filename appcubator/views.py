@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
+from django.contrib import messages
+
 from django.forms import ModelForm
 
 from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
@@ -82,7 +84,7 @@ def app_welcome(request):
         return redirect(app_new)
 
 
-    return redirect(app_dashboard, str(request.user.apps.latest('id').id))
+    return redirect(user_page, request.user.username)
 
 
 def user_page(request, username):
@@ -108,7 +110,7 @@ def app_dashboard(request, app_id):
     # id of 0 is reserved for sample app
     if(app_id == 0):
         return redirect(app_welcome)
-    
+
     page_context['app_id'] = app_id
 
     return render(request, 'app-dashboard.html', page_context)
@@ -219,7 +221,10 @@ def app_clone(request, app_id):
     else:
         if request.is_ajax():
             return JsonResponse(form.errors, status=400)
-        return redirect(app_dashboard, str(request.user.apps.latest('id').id))
+        for k, v in form.errors.iteritems():
+            for message in v:
+                messages.error(request, message)
+        return redirect(user_page, request.user.username)
 
 
 @login_required
