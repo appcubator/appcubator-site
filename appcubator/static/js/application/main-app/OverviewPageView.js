@@ -92,7 +92,9 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView, Downloa
     },
 
     setLogoImage: function() {
-      this.$el.find('.logo-img').attr('src', app.info.logo);
+      if(app.info.logo) {
+        this.$el.find('.logo').css('backgroundImage', 'url(' + app.info.logo + ')');
+      }
     },
 
     settings: function(e) {

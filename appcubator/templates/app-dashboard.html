@@ -38,7 +38,7 @@
     {% for a in apps reversed %}
         <div class="board {% if app_id == a.pk %}current{% endif %}" id="dashboard-{{ a.pk }}">
           <div class="header hi9">
-            <div class="logo span12 hi8"><img src="{{ STATIC_URL }}img/placeholder-logo.png" class="logo-img"></div>
+            <div class="logo span12 hi8" style="background-image:url({{ STATIC_URL }}img/placeholder-logo.png);"></div>
             <div class="span32 offset2 hi9">
               <h1 class="hoff1">{{ a.name }}</h1>
               <br>
