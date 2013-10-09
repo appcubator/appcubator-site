@@ -42,7 +42,7 @@ class AppNew(forms.ModelForm):
 
     def clean(self):
         owner = self.owner
-        if owner.apps.count() == MAX_FREE_APPS and owner.customer.current_subscription.plan == 'free':
+        if owner.apps.count() >= MAX_FREE_APPS and owner.customer.current_subscription.plan == 'free':
             raise AppLimitReached()
         return self.cleaned_data
 
@@ -51,7 +51,7 @@ class AppClone(forms.Form):
 
     def clean(self):
         app = self.cleaned_data['app']
-        if app.owner.apps.count() == MAX_FREE_APPS and app.owner.customer.current_subscription.plan == 'free':
+        if app.owner.apps.count() >= MAX_FREE_APPS and app.owner.customer.current_subscription.plan == 'free':
             raise AppLimitReached()
         return self.cleaned_data
 
