@@ -88,9 +88,25 @@ def app_welcome(request):
 
 
 def user_page(request, username):
-    if request.user.username == username:
-        return app_dashboard(request, str(request.user.apps.latest('id').id))
-    return redirect("/")
+    if request.user.username != username:
+        return redirect("/")
+
+    if request.user.extradata.noob:
+
+        # case for turning noob mode off
+        if request.user.apps.count() > 0 and is_stripe_customer(request.user):
+            e = request.user.extradata
+            e.noob = 0
+            e.save()
+            # moves on w rest of procedure
+        # else redirect to noob page
+        else:
+            return redirect(app_noob_page)
+
+    if request.user.apps.count() == 0:
+        return redirect(app_new)
+
+    return app_dashboard(request, str(request.user.apps.latest('id').id))
 
 def app_dashboard(request, app_id):
     # render dashboard
