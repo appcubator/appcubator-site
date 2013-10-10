@@ -57,7 +57,7 @@ function(AppGenerator) {
 
     render: function() {
       var self = this;
-      this.el.innerHTML = "<h2>Choose a page template to start with?</h2>";
+      this.el.innerHTML = "<h2>Choose a page template to start with:</h2>";
 
       var list = document.createElement('ul');
       list.className = 'template-icons';
