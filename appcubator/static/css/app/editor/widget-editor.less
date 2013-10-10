@@ -369,6 +369,26 @@ h3.edit-url {
   background-position: center center;
 }
 
+.icon-list {
+  background-image: url('/static/img/list_bullets_icon&48.png');
+  background-repeat: no-repeat;
+  .background-size(auto 50%);
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+
+.icon-list-alt {
+  background-image: url('/static/img/list_num_icon&48.png');
+  background-repeat: no-repeat;
+  .background-size(auto 50%);
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+
 .padding.tb {
   background-image: url('/static/img/tb-padding.png');
   background-repeat: no-repeat;
@@ -388,9 +408,12 @@ h3.edit-url {
 .btn-group {
   display: inline-block;
   vertical-align: top;
+  margin-top: 2px;
+  margin-left: 2px;
 }
 
-.btn-group .option-button {
+.btn-group .option-button,
+.btn-group select {
   margin: 2px;
   vertical-align: top;
 }

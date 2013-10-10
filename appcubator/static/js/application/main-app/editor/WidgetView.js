@@ -265,13 +265,13 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
         switchEditModeOn: function() {
             if (this.model.get('data').get('content')) {
                 this.editMode = true;
-                var el = $(this.el.firstChild);
+                //var el = $(this.el.firstChild);
                 this.el.firstChild.style.zIndex = 2003;
                 this.$el.addClass('textediting');
                 //el.attr('contenteditable', 'true');
                 //el.focus();
 
-                el.freshereditor({
+                this.$el.freshereditor({
                     toolbar_selector: ".widget-editor",
                     excludes: ['removeFormat',
                                'insertheading1',
@@ -290,13 +290,11 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
                                'blockquote',
                                'justifyfull']
                 });
-                el.freshereditor("edit", true);
-                el.on('change', function(e) {
-                   console.log(el);
-                   console.log("content changed");
+                this.$el.freshereditor("edit", true);
+                this.$el.on('change', function(e) {
                 });
 
-                util.selectText(el);
+                util.selectText(this.$el);
 
                 keyDispatcher.textEditing = true;
             }
@@ -309,11 +307,12 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
 
             this.editMode = false;
             this.$el.removeClass('textediting');
-            var el = $(this.el.firstChild);
-            var val = el[0].innerHTML;
+            //var el = $(this.el.firstChild);
+            var val = this.$el.html();
+            //el[0].innerHTML;
             this.model.get('data').set('content', val);
 
-            el.freshereditor("edit", false);
+            this.$el.freshereditor("edit", false);
 
             keyDispatcher.textEditing = false;
             util.unselectText();
