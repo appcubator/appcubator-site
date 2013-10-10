@@ -1,4 +1,4 @@
-define([ 'backbone', 'mixins/BackboneUI'],  function() {
+define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
 
     'use strict';
 
@@ -268,9 +268,33 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
                 var el = $(this.el.firstChild);
                 this.el.firstChild.style.zIndex = 2003;
                 this.$el.addClass('textediting');
-                el.attr('contenteditable', 'true');
-                el.focus();
+                //el.attr('contenteditable', 'true');
+                //el.focus();
+
+                el.freshereditor({
+                    toolbar_selector: ".widget-editor",
+                    excludes: ['removeFormat',
+                               'insertheading1',
+                               'insertheading2',
+                               'insertheading3',
+                               'insertheading4',
+                               'fontname',
+                               'code',
+                               'superscript',
+                               'subscript',
+                               'forecolor',
+                               'backcolor',
+                               'strikethrough',
+                               'insertimage']
+                });
+                el.freshereditor("edit", true);
+                el.on('change', function(e) {
+                   console.log(el);
+                   console.log("content changed");
+                });
+
                 util.selectText(el);
+
                 keyDispatcher.textEditing = true;
             }
 
@@ -283,9 +307,11 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
             this.editMode = false;
             this.$el.removeClass('textediting');
             var el = $(this.el.firstChild);
-            var val = el[0].innerText;
+            var val = el[0].innerHTML;
             this.model.get('data').set('content', val);
-            el.attr('contenteditable', 'false');
+
+            el.freshereditor("edit", false);
+
             keyDispatcher.textEditing = false;
             util.unselectText();
         },

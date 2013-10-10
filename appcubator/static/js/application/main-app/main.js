@@ -3,6 +3,8 @@ require.config({
         "jquery": "../../libs/jquery/jquery",
         "jquery-ui": "../../libs/jquery-ui/jquery-ui",
         "jquery.hotkeys": "../../libs/jquery/jquery.hotkeys",
+        "jquery.freshereditor": "../../libs/jquery/jquery.freshereditor",
+        "shortcut": "../../libs/shortcut",
         "underscore": "../../libs/underscore-amd/underscore",
         "backbone": "../../libs/backbone-amd/backbone",
         "react": "../../libs/react",
@@ -37,6 +39,10 @@ require.config({
         "jquery.hotkeys": {
             exports: "$",
             deps: ['jquery']
+        },
+        "jquery.freshereditor": {
+            exports: "$",
+            deps: ['jquery', 'shortcut']
         },
         "underscore": {
             exports: "_"
