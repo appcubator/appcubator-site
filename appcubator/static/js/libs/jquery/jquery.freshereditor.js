@@ -91,22 +91,22 @@
           ], [
             {
               name: 'justifyleft',
-              label: "<i class='icon-align-left' style='margin-top:2px;'></i>",
+              label: "<i class='icon-align-left'></i>",
               title: 'Left justify',
               classname: 'toolbar_justifyleft'
             }, {
               name: 'justifycenter',
-              label: "<i class='icon-align-center' style='margin-top:2px;'></i>",
+              label: "<i class='icon-align-center'></i>",
               title: 'Center justify',
               classname: 'toolbar_justifycenter'
             }, {
               name: 'justifyright',
-              label: "<i class='icon-align-right' style='margin-top:2px;'></i>",
+              label: "<i class='icon-align-right'></i>",
               title: 'Right justify',
               classname: 'toolbar_justifyright'
             }, {
               name: 'justifyfull',
-              label: "<i class='icon-align-justify' style='margin-top:2px;'></i>",
+              label: "<i class='icon-align-justify'></i>",
               title: 'Full justify',
               classname: 'toolbar_justifyfull'
             }

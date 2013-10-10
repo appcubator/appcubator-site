@@ -285,7 +285,10 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
                                'forecolor',
                                'backcolor',
                                'strikethrough',
-                               'insertimage']
+                               'insertimage',
+                               'insertparagraph',
+                               'blockquote',
+                               'justifyfull']
                 });
                 el.freshereditor("edit", true);
                 el.on('change', function(e) {
