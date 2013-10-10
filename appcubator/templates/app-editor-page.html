@@ -36,25 +36,14 @@
       <div class="url-bar">http://yourapp.com</div>
       <div class="page full container fdededfcbcbcd" id="page">
         <!-- Navbar -->
-        <div class="navbar navbar-fixed-top" id="navbar">
-          
-          <button id="edit-navbar-btn">Edit Navbar</button>
-
+        <navbar class="navbar" id="navbar">
           <div class="navbar-inner">
-            <div class="container">
-              <a class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-                 <span class="icon-bar"></span>
-                 <span class="icon-bar"></span>
-                 <span class="icon-bar"></span>
-              </a>
-              <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
-              <div class="nav-collapse collapse" data-toggle="collapse">
-                <ul class="nav" id="links">
-                </ul>
-              </div>
-            </div>
+            <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
+            <ul class="nav" id="links">
+            </ul>
+            <button id="edit-navbar-btn">Edit Navbar</button>
           </div>
-        </div>
+        </navbar>
         <!-- Editing Container -->
         <div class="container editing" id="full-container"></div>
         <div class="editing" id="elements-container">
