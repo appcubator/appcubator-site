@@ -1,34 +1,22 @@
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.http import require_GET, require_POST
-from django.utils import simplejson
-import json
-from django.shortcuts import redirect, render, render_to_response, get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
-from django.conf import settings
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
+from django.db.models import Count, Q
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, Customer, ExtraUserData, InvitationKeys
-from django.db.models import Avg, Count, Q
-from email.sendgrid_email import send_email
-from models import DomainRegistration
-from models import get_default_uie_state, get_default_mobile_uie_state
-from models import get_default_app_state, get_default_theme_state
+import simplejson
+from django.core.serializers.json import DjangoJSONEncoder
 
-import requests
-import traceback
-import datetime
-import shlex
-import subprocess
-import os
+from appcubator.models import App, AppstateSnapshot, LogAnything, Customer, InvitationKeys
+
 from datetime import datetime, timedelta, date
 import time
 from django.utils import timezone
-from django.core.serializers.json import DjangoJSONEncoder
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.cache import cache
 
-from appcubator.stats import *
+from stats import *
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -95,6 +83,7 @@ def customers(request):
 
 
 @login_required
+@require_GET
 @user_passes_test(lambda u: u.is_superuser)
 def customers_search(request):
     query = request.GET.get('q', '')
@@ -110,6 +99,7 @@ def customers_search(request):
 
 
 @login_required
+@require_POST
 @user_passes_test(lambda u: u.is_superuser)
 def add_contactlog(request, customer_id):
     note = request.POST["note"]
@@ -132,20 +122,19 @@ def add_contactlog(request, customer_id):
     customer.extra_info = simplejson.dumps(contact_list)
     customer.save()
 
-    return HttpResponse(json.dumps("OK"), mimetype="application/json")
+    return HttpResponse(simplejson.dumps("OK"), mimetype="application/json")
 
 @login_required
+@require_GET
 @user_passes_test(lambda u: u.is_superuser)
 def users(request):
-    try:
+
+    if 'user_id' in request.GET:
         user_id = request.GET['user_id']
         user_id = long(user_id)
-        user = User.objects.get(pk=user_id)
+        user = get_object_or_404(User, pk=user_id)
         return redirect('appcubator.admin_views.admin_user', str(user_id))
-    except (ValueError, User.DoesNotExist):
-        raise Http404
-    except KeyError:
-        pass
+
     users_all = User.objects.order_by('-id')
     paginator = Paginator(users_all, 100)
     page = request.GET.get('page')
@@ -162,6 +151,7 @@ def users(request):
     return render(request, 'admin/users.html', page_context)
 
 @login_required
+@require_GET
 @user_passes_test(lambda u: u.is_superuser)
 def user(request, user_id):
     user_id = long(user_id)
@@ -191,6 +181,7 @@ def user(request, user_id):
     return render(request, 'admin/user.html', page_context)
 
 @login_required
+@require_GET
 @user_passes_test(lambda u: u.is_superuser)
 def apps(request):
     apps_all = App.objects.order_by('-id')
@@ -209,6 +200,7 @@ def apps(request):
     return render(request, 'admin/apps.html', page_context)
 
 @login_required
+@require_GET
 @user_passes_test(lambda u: u.is_superuser)
 def app(request, app_id):
     app_id = long(app_id)
@@ -232,6 +224,7 @@ def app(request, app_id):
 
 
 @login_required
+@require_GET
 @user_passes_test(lambda u: u.is_superuser)
 def app_snaps(request, app_id):
     app_id = long(app_id)
@@ -303,7 +296,7 @@ def walkthroughs(request):
     page_context["p_finished_simple_walkthrough"] = percentage(num_finished_simple_walkthrough, num_started_simple_walkthrough)
     page_context['avg_last_step_simple'] = get_avg_last_walkthrough_step(started_simple_walkthrough, 'simple')
     page_context['avg_last_step_indepth'] = get_avg_last_walkthrough_step(started_indepth_walkthrough, 'in-depth')
-    return render(request, 'admin/walkthroughs.html', {'data_json': json.dumps(page_context), 'data': page_context})
+    return render(request, 'admin/walkthroughs.html', {'data_json': simplejson.dumps(page_context), 'data': page_context})
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -314,9 +307,10 @@ def user_logs_graph(request, user_id):
                 .annotate(num_logs=Count('id'))\
                 .order_by('date')
     result = [{'date': str(x['date']), 'num_logs': x['num_logs']} for x in logs]
-    return HttpResponse(json.dumps(result), mimetype="application/json")
+    return HttpResponse(simplejson.dumps(result), mimetype="application/json")
 
 @login_required
+@require_GET
 @user_passes_test(lambda u: u.is_superuser)
 def logs(request):
     logs = get_logs(request.GET).values('id', 'user_id', 'app_id', 'name', 'timestamp', 'data')
@@ -336,7 +330,7 @@ def user_signups_json(request):
     # format date objects as strings for JSON serialization
     result = [{'day_joined': str(x['day_joined']), 'num_users': x['num_users']} for x in list(users)]
     #result = [{str(x['day_joined']): x['num_users']} for x in users]
-    return HttpResponse(json.dumps(result), mimetype="application/json")
+    return HttpResponse(simplejson.dumps(result), mimetype="application/json")
 
 @login_required
 @user_passes_test(lambda u:u.is_superuser)
@@ -371,7 +365,7 @@ def user_signups_cumulative_json(request, t_start, t_end, t_delta):
         data[tempStart.strftime("%m/%d/%y")] = num_users_joined(None, tempEnd, cumulative=True)
         tempStart = tempEnd
         tempEnd = tempEnd + delta
-    return HttpResponse(json.dumps(data), mimetype="application/json")
+    return HttpResponse(simplejson.dumps(data), mimetype="application/json")
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
@@ -412,7 +406,7 @@ def active_users_json(request, t_start, t_end, t_delta):
         data[key] = result
         tempStart = tempEnd
         tempEnd = tempEnd + delta
-    return HttpResponse(json.dumps(data), mimetype="application/json")
+    return HttpResponse(simplejson.dumps(data), mimetype="application/json")
 
 
 # active users this past week/day/month
@@ -515,4 +509,4 @@ def num_active_users(min, max=datetime.now()):
 
 
 def JSONResponse(data, **kwargs):
-    return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), mimetype="application/json", **kwargs)
+    return HttpResponse(simplejson.dumps(data, cls=DjangoJSONEncoder), mimetype="application/json", **kwargs)

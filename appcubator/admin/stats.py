@@ -1,5 +1,7 @@
 """Util Functions for running DB queries for statistics purposes"""
-from models import *
+
+from appcubator.models import App, LogAnything
+
 from django.db.models import Avg, Count
 from datetime import datetime, timedelta, date
 import time
