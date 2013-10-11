@@ -387,17 +387,17 @@ class App(models.Model):
     def record_compile_error(self, message):
         self.error_type = 1
         self.error_message = message
-        self.save(state_version=False)
+        self.save()
 
     def record_compile2_error(self, message):
         self.error_type = 2
         self.error_message = message
-        self.save(state_version=False)
+        self.save()
 
     def record_deploy_error(self, message):
         self.error_type = 3
         self.error_message = message
-        self.save(state_version=False)
+        self.save()
 
     def clear_error_record(self, src=''):
         code_map = { 1: 'compile', 2: 'deploy' }
@@ -405,7 +405,7 @@ class App(models.Model):
         if self.error_type != 0 and code_map.get(self.error_type, None) == src:
             self.error_type = 0
             self.error_message = ''
-            self.save(state_version=False)
+            self.save()
 
     _state_json = models.TextField(blank=True, default=get_default_app_state)
     _uie_state_json = models.TextField(blank=True, default=get_default_uie_state)
@@ -436,17 +436,29 @@ class App(models.Model):
         s = deploy.get_deployment_status(self.deployment_id)
         return s
 
-    def save(self, state_version=True, update_deploy_server=True, *args, **kwargs):
+    def is_new_version(self):
+        """ True iff the saving state is same as last saved state """
+        new_version = simplejson.loads(self.get_last_snapshot()._state_json) != self.state
+        return new_version
+
+    def save(self, increment_version_if_changed=True, update_deploy_server=True, log_state_if_changed=True, *args, **kwargs):
         """
         If the deployment info (subdomain and gitrepo name) were changed since init,
         this will POST to the deployment server to update it.
         There for it may raise a DeploymentError
         """
-        # increment version id
-        s = self.state
-        if state_version:
-            s['version_id'] = s.get('version_id', 0) + 1
-        self.state = s
+
+        if self.is_new_version():
+
+            if increment_version_if_changed:
+                s = self.state
+                s['version_id'] = s.get('version_id', 0) + 1
+                self.state = s
+
+            if log_state_if_changed:
+                appstate_snapshot = AppstateSnapshot(owner=self.owner,
+                    app=self, name=self.name, snapshot_date=datetime.now(), _state_json=self._state_json)
+                appstate_snapshot.save()
 
         # update the deployment info on the server if it changed.
         if update_deploy_server and self.deployment_id is not None:
@@ -579,9 +591,14 @@ class App(models.Model):
     def urls(self):
         return self.state['urls']
 
+
+    def get_last_snapshot(self):
+        snapshot = AppstateSnapshot.objects.filter(app=self).latest('snapshot_date')
+        return snapshot
+
     @property
     def last_update(self):
-        snapshot = AppstateSnapshot.objects.filter(app=self).latest('snapshot_date')
+        snapshot = self.get_last_snapshot()
         if snapshot:
             return snapshot.snapshot_date
         else:
@@ -736,7 +753,7 @@ class App(models.Model):
             is_merge, data = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404, git_user=self.owner.extradata.git_user_id())
             if not is_merge:
                 self.deployment_id = data
-                self.save(state_version=False) # might be unnecessary if nothing has changed.
+                self.save() # might be unnecessary if nothing has changed.
         except Exception, e:
             self.record_deploy_error(traceback.format_exc())
             raise
@@ -949,7 +966,7 @@ class DomainRegistration(models.Model):
         DomainRegistration.api.configure_domain_records(
             self.domain, staging=staging)
         self.dns_configured = 1
-        self.save(state_version=False)
+        self.save()
 
 class LogAnything(models.Model):
     app_id = models.IntegerField(null=True)

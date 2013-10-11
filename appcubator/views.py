@@ -11,7 +11,7 @@ from django.contrib import messages
 
 from django.forms import ModelForm
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
@@ -379,25 +379,20 @@ def app_save_state(request, app, require_valid=True):
     app.state['name'] = app.name
     app.full_clean()
 
-    if not require_valid:
-        app.save()
-        return (200, {'version_id': app.state.get('version_id', 0)})
+    # require valid => check for valid, potentially raise an error, else continue
+    # change? if so log.
+    if require_valid:
+        try:
+            app.parse_and_link_app_state()
+        except analyzer.UserInputError, e:
+            app.save()
+            d = e.to_dict()
+            d['version_id'] = app.state.get('version_id', 0)
+            return (400, d)
 
-    try:
-        app.parse_and_link_app_state()
-    except analyzer.UserInputError, e:
-        app.save()
-        d = e.to_dict()
-        d['version_id'] = app.state.get('version_id', 0)
-        return (400, d)
-    # raise on normal exceptions.
-    else:
-        # Save the app state for future use
-        appstate_snapshot = AppstateSnapshot(owner=request.user,
-            app=app, name=app.name, snapshot_date=datetime.now(), _state_json=request.body)
-        appstate_snapshot.save()
-        app.save()
-        return (200, {'version_id': app.state.get('version_id', 0)})
+    app.save()
+
+    return (200, {'version_id': app.state.get('version_id', 0)})
 
 @login_required
 @csrf_exempt
@@ -590,7 +585,7 @@ def app_save_uie_state(request, app):
         app.full_clean()
     except Exception, e:
         return (400, str(e))
-    app.save(state_version=False)
+    app.save()
     return (200, 'ok')
 
 
@@ -602,7 +597,7 @@ def app_save_mobile_uie_state(request, app):
         app.full_clean()
     except Exception, e:
         return (400, str(e))
-    app.save(state_version=False)
+    app.save()
     return (200, 'ok')
 
 
@@ -820,7 +815,7 @@ def sub_register_domain(request, app_id, subdomain):
     form = forms.ChangeSubdomain({'subdomain': subdomain}, app=app)
     if form.is_valid():
         # the below line calls the model's save method, which will update deployment server automatically.
-        app = form.save(state_version=False)
+        app = form.save()
         return HttpResponse(simplejson.dumps({}), status=200, mimetype="application/json")
 
     return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")
@@ -842,7 +837,7 @@ def hookup_custom_domain(request, app_id, domain):
 
     if is_valid_hostname(domain):
         app.custom_domain = domain
-        app.save(state_version=False)
+        app.save()
         return JsonResponse({})
     else:
         return JsonResponse({}, status=400)
