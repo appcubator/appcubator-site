@@ -1,23 +1,16 @@
-from django.http import HttpResponse, HttpRequest
-from django.views.decorators.http import require_GET, require_POST, require_http_methods
+from django.http import HttpResponse
+from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import redirect,render, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import forms as auth_forms, authenticate, login
+from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-from django.utils import simplejson
 
-from django import forms
-from django.utils import simplejson
-from copy import deepcopy
 import time
-from models import App
+from appcubator.models import App
 
 from appcubator.email.sendgrid_email import send_email
 
-import sys
-import requests
+import simplejson
+
 import shlex
 import subprocess
 import os
@@ -106,6 +99,7 @@ def test_router(request, test_app):
 
 
 @csrf_exempt
+@require_POST
 def run_front_end_tests(request, domain="staging.appcubator.com", branch="staging"):
 
     p = subprocess.Popen(shlex.split("git pull origin %s" % branch) ,

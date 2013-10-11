@@ -1,4 +1,4 @@
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
 import simplejson
 
 def JsonResponse(serializable_obj, **kwargs):

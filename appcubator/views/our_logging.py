@@ -1,20 +1,12 @@
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_POST
 from django.utils import simplejson
-from django.shortcuts import redirect, render, render_to_response, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from django.conf import settings
 
 from appcubator.models import LogAnything
-from email.sendgrid_email import send_email
-from appcubator.models import DomainRegistration
-
-from app_builder.analyzer import App as AnalyzedApp
 
 import requests
-import traceback
-import datetime
 
 def JSONResponse(serializable_obj, **kwargs):
     """Just a convenience function, in the middle of horrible code"""
@@ -42,6 +34,7 @@ def log_feedback(request):
     like = request.POST['like']
     dislike = request.POST['dislike']
     features = request.POST['features']
+    app_id = request.POST.get('__app_id', None)
 
     message =  user + " says.\n\n Like: \n" + like + \
         "\n\n Dislike: \n" + dislike + "\n\n Feature request: \n" + features

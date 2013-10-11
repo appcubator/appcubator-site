@@ -67,10 +67,10 @@ def welcome(request):
             # moves on w rest of procedure
         # else redirect to noob page
         else:
-            return redirect(app_noob_page)
+            return redirect(noob_page)
 
     if request.user.apps.count() == 0:
-        return redirect(app_new)
+        return redirect(new)
 
 
     return redirect(user_page, request.user.username)
@@ -90,12 +90,12 @@ def user_page(request, username):
             # moves on w rest of procedure
         # else redirect to noob page
         else:
-            return redirect(app_noob_page)
+            return redirect(noob_page)
 
     if request.user.apps.count() == 0:
-        return redirect(app_new)
+        return redirect(new)
 
-    return app_dashboard(request, str(request.user.apps.latest('id').id))
+    return dashboard(request, str(request.user.apps.latest('id').id))
 
 def dashboard(request, app_id):
     # render dashboard
@@ -114,7 +114,7 @@ def dashboard(request, app_id):
     app_id = long(app_id)
     # id of 0 is reserved for sample app
     if(app_id == 0):
-        return redirect(app_welcome)
+        return redirect(welcome)
 
     page_context['app_id'] = app_id
 
@@ -149,7 +149,7 @@ def noob_page(request):
 
 
 def new_template(request, template_name):
-    return app_new(request, app_template=template_name)
+    return new(request, app_template=template_name)
 
 @login_required
 def new(request, is_racoon = False, app_template=None):
@@ -200,7 +200,7 @@ def new(request, is_racoon = False, app_template=None):
             # this adds it to the deployment queue. non-blocking basically.
             app.deploy()
 
-            return redirect(app_page, app.id)
+            return redirect(page, app.id)
 
         return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'other_errors': form.non_field_errors, 'errors': form.errors}, status=400)
     else:
@@ -222,7 +222,7 @@ def clone(request, app_id):
         new_app = App.objects.get(pk=new_app.id)
         new_app.deploy()
 
-        return redirect(app_welcome)
+        return redirect(welcome)
     else:
         if request.is_ajax():
             return JsonResponse(form.errors, status=400)
@@ -257,7 +257,7 @@ def new_walkthrough(request, walkthrough):
     log = LogAnything(user_id=user_id, app_id=a.id, name=log_name, data={})
     log.save()
 
-    return redirect(app_page, a.id)
+    return redirect(page, a.id)
 
 
 @require_GET
@@ -266,7 +266,7 @@ def page(request, app_id, page_name="overview"):
     app_id = long(app_id)
     # id of 0 is reserved for sample app
     if(app_id == 0):
-        return redirect(app_welcome)
+        return redirect(welcome)
 
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
@@ -336,15 +336,15 @@ def delete(request, app_id):
 
 
 @login_required
-def app_state(request, app_id, validate=True):
+def state(request, app_id, validate=True):
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
         raise Http404
     if request.method == 'GET':
-        state = app_get_state(request, app)
+        state = get_state(request, app)
         return JsonResponse(state)
     elif request.method == 'POST':
-        status, data = app_save_state(request, app, require_valid=validate)
+        status, data = save_state(request, app, require_valid=validate)
         return JsonResponse(data, status=status)
     else:
         return HttpResponse("GET or POST only", status=405)
@@ -487,10 +487,10 @@ def uie_state(request, app_id):
     if not app.is_editable_by_user(request.user):
         raise Http404
     if request.method == 'GET':
-        state = app_get_uie_state(request, app)
+        state = get_uie_state(request, app)
         return JsonResponse(state)
     elif request.method == 'POST':
-        status, message = app_save_uie_state(request, app)
+        status, message = save_uie_state(request, app)
         return HttpResponse(message, status=status)
     else:
         return HttpResponse("GET or POST only", status=405)
@@ -502,10 +502,10 @@ def mobile_uie_state(request, app_id):
     if not app.is_editable_by_user(request.user):
         raise Http404
     if request.method == 'GET':
-        state = app_get_uie_state(request, app)
+        state = get_uie_state(request, app)
         return JsonResponse(state)
     elif request.method == 'POST':
-        status, message = app_save_mobile_uie_state(request, app)
+        status, message = save_mobile_uie_state(request, app)
         return HttpResponse(message, status=status)
     else:
         return HttpResponse("GET or POST only", status=405)
