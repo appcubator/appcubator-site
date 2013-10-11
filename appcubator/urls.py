@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 import django.contrib.auth.views
-import views, theme_views, log_views, test_views, admin_views
+import views, log_views, test_views
 import django.views.generic.base
 from django.views.generic.simple import direct_to_template
 
@@ -103,23 +103,9 @@ urlpatterns += patterns('appcubator.views.app',
     url(r'^(.*)/$', 'user_page')
 )
 
-urlpatterns += patterns('appcubator.theme_views',
+urlpatterns += patterns('appcubator.themes.views',
     url(r'^designer/$', 'designer_page'),
-    url(r'^theme/new/web/$', 'theme_new_web'),
-    url(r'^theme/new/mobile/$', 'theme_new_mobile'),
-    url(r'^theme/(\d+)/info/$', 'theme_info'),
-    url(r'^theme/(\d+)/settings/$', 'theme_settings'),
-    url(r'^theme/(\d+)/edit/$', 'theme_edit'),
-    url(r'^theme/(\d+)/edit_image/$', 'theme_image_edit'),
-    url(r'^theme/(\d+)/clone/$', 'theme_clone'),
-    url(r'^theme/(\d+)/delete/$', 'theme_delete'),
-    url(r'^theme/(\d+)/editor/(\d+)$', 'theme_page_editor'),
-    # GET returns the apps statics, POST creates a new static file entry,
-    # DELETE delete a static file
-    url(r'^theme/(\d+)/static/(\d+)$', 'deletethemestaticfile'),
-    url(r'^theme/(\d+)/static/$', 'themestaticfiles'),
-
-    url(r'^theme/(\d+)/', 'theme_show'),
+    url(r'^theme/$', include('appcubator.themes.urls')),
 )
 
 urlpatterns += patterns('appcubator.test_views',

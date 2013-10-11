@@ -4,7 +4,6 @@ from django.views.decorators.http import require_GET, require_POST
 from django.utils import simplejson
 from django.shortcuts import redirect,render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from django.conf import settings
 
 from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts
 
@@ -83,7 +82,7 @@ def designer_page(request):
 
 @require_POST
 @login_required
-def theme_new_web(request):
+def new_web(request):
   if request.method=="POST":
     name = request.POST['name']
     theme = UITheme(name=name, designer=request.user, web_or_mobile='W')
@@ -93,7 +92,7 @@ def theme_new_web(request):
 
 @require_POST
 @login_required
-def theme_new_mobile(request):
+def new_mobile(request):
   if request.method=="POST":
     name = request.POST['name']
     theme = UITheme.create_mobile_theme(name, request.user)
@@ -102,7 +101,7 @@ def theme_new_mobile(request):
 
 @login_required
 @single_theme
-def theme_show(request, theme):
+def show(request, theme):
   #theme = get_object_or_404(UITheme, pk = theme_id)
   page_context = { 'title' : theme.name , 'themeId': theme.pk, 'theme' : theme._uie_state_json, 'statics' : simplejson.dumps(list(theme.statics.values()))}
   return render(request, 'designer-theme-show.html', page_context)
@@ -110,7 +109,7 @@ def theme_show(request, theme):
 
 @login_required
 @single_theme
-def theme_settings(request, theme):
+def settings(request, theme):
   #theme = get_object_or_404(UITheme, pk = theme_id)
   page_context = { 'title' : theme.name , 'themeId': theme.pk, 'theme' : theme, 'statics' : simplejson.dumps(list(theme.statics.values()))}
   return render(request, 'designer-theme-settings.html', page_context)
@@ -118,14 +117,14 @@ def theme_settings(request, theme):
 
 @require_POST
 @login_required
-def theme_info(request, theme_id):
+def info(request, theme_id):
   theme = get_object_or_404(UITheme, pk = theme_id)
   page_context = { 'themeInfo' : theme.to_dict(), 'theme' : theme.uie_state }
   return HttpResponse(simplejson.dumps(page_context), mimetype="application/json")
 
 
 @login_required
-def theme_page_editor(request, theme_id, page_id):
+def page_editor(request, theme_id, page_id):
   theme_id = long(theme_id)
   theme = get_object_or_404(UITheme, pk = theme_id)
   page_context = { 'theme': theme,
@@ -140,7 +139,7 @@ def theme_page_editor(request, theme_id, page_id):
 @require_POST
 @login_required
 @single_theme
-def theme_edit(request, theme):
+def edit(request, theme):
   if 'name' in request.POST:
     theme.name = request.POST['name']
   if 'uie_state' in request.POST:
@@ -153,7 +152,7 @@ def theme_edit(request, theme):
 @require_POST
 @login_required
 @single_theme
-def theme_image_edit(request, theme):
+def image_edit(request, theme):
   img = request.POST['img']
   theme.image = img
   theme.save()
@@ -162,7 +161,7 @@ def theme_image_edit(request, theme):
 @require_POST
 @login_required
 @single_theme
-def theme_clone(request, theme):
+def clone(request, theme):
   # want to start a new theme from an existing theme
   new_theme = theme.clone(user=request.user)
   return HttpResponse(simplejson.dumps(new_theme.to_dict), mimetype="application/json")
@@ -171,7 +170,7 @@ def theme_clone(request, theme):
 @require_POST
 @login_required
 @single_theme
-def theme_delete(request, theme):
+def delete(request, theme):
   # want to get a specific theme
   theme.delete()
   return HttpResponse("ok")
