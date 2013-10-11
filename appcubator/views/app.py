@@ -20,14 +20,14 @@ import simplejson
 import os, os.path
 join = os.path.join
 
-from email.sendgrid_email import send_email, send_template_email
-from our_payments.views import is_stripe_customer#, subscribe
+from appcubator.email.sendgrid_email import send_email, send_template_email
+from appcubator.our_payments.views import is_stripe_customer#, subscribe
 
 from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User
-from appcubator.themes.models import StaticFile, UITheme
 from appcubator.models import DomainRegistration
-from appcubator.models import get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
-import forms
+from appcubator.themes.models import StaticFile, UITheme
+from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
+import appcubator.forms
 
 # from codegen
 import app_builder.analyzer as analyzer
@@ -41,8 +41,6 @@ def add_statics_to_context(context, app):
     return context
 
 
-DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
-    __file__), os.path.normpath("default_state"))
 APP_TEMPLATES = { "socialnetwork": "",
                   "marketplace": "",
                   "tutoringsite": "" # list the templates here, they get initialized below.

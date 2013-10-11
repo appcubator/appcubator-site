@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-urlpatterns += patterns('appcubator.admin.views',
+urlpatterns = patterns('appcubator.admin.views',
     url(r'^customers/$', 'customers'),
     url(r'^customers/(\d+)/add_contact_log/$', 'add_contactlog'),
     url(r'^search/$', 'customers_search'),
