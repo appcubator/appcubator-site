@@ -317,12 +317,8 @@
         });
         $("a.toolbar-cmd").on('click', function() {
 
-          console.log("YOLOOOOO");
-
           var ceNode, cmd, dummy, range;
           cmd = $(this).attr('command');
-
-          console.log(cmd);
 
           if ($(this).attr('userinput') === 'yes') {
             methods[cmd].apply(this);
@@ -405,7 +401,6 @@
           }, {
             keys: 'Ctrl+b',
             method: function() {
-              console.log("BOOOLD");
               return document.execCommand('bold', false, null);
             }
           }, {

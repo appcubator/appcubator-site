@@ -72,6 +72,8 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
         render: function() {
             this.arrangeLayout();
             this.el.innerHTML = this.renderElement();
+            this.innerEl = this.el.firstChild;
+            this.$innerEl = $(this.innerEl);
             return this;
         },
 
@@ -271,7 +273,7 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
                 //el.attr('contenteditable', 'true');
                 //el.focus();
 
-                this.$el.freshereditor({
+                this.$innerEl.freshereditor({
                     toolbar_selector: ".widget-editor",
                     excludes: ['removeFormat',
                                'insertheading1',
@@ -290,11 +292,9 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
                                'blockquote',
                                'justifyfull']
                 });
-                this.$el.freshereditor("edit", true);
-                this.$el.on('change', function(e) {
-                });
+                this.$innerEl.freshereditor("edit", true);
 
-                util.selectText(this.$el);
+                util.selectText(this.$innerEl);
 
                 keyDispatcher.textEditing = true;
             }
@@ -308,11 +308,13 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
             this.editMode = false;
             this.$el.removeClass('textediting');
             //var el = $(this.el.firstChild);
-            var val = this.$el.html();
+            var val = this.$innerEl.html();
+            this.$innerEl.freshereditor("edit", false);
+
+            console.log(val);
             //el[0].innerHTML;
             this.model.get('data').set('content', val);
 
-            this.$el.freshereditor("edit", false);
 
             keyDispatcher.textEditing = false;
             util.unselectText();
