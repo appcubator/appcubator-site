@@ -440,7 +440,10 @@ class App(models.Model):
 
     def is_new_version(self):
         """ True iff the saving state is same as last saved state """
-        new_version = simplejson.loads(self.get_last_snapshot()._state_json) != self.state
+        last_snap = self.get_last_snapshot()
+        if last_snap is None:
+            return True
+        new_version = simplejson.loads(last_snap._state_json) != self.state
         return new_version
 
     def save(self, increment_version_if_changed=True, update_deploy_server=True, log_state_if_changed=True, *args, **kwargs):
@@ -595,7 +598,10 @@ class App(models.Model):
 
 
     def get_last_snapshot(self):
-        snapshot = AppstateSnapshot.objects.filter(app=self).latest('snapshot_date')
+        try:
+            snapshot = AppstateSnapshot.objects.filter(app=self).latest('snapshot_date')
+        except AppstateSnapshot.DoesNotExist:
+            return None
         return snapshot
 
     @property
