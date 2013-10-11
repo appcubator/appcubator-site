@@ -5,10 +5,14 @@ import views
 
 urlpatterns = patterns('views',
     url(r'^$',                          views.homepage),
-    url(r'^showhn/$',                   views.homepage),
-    url(r'^showgsb/$',                  views.showgsbpage),
-    url(r'^showdn/$',                   views.showdnpage),
-    url(r'^girlswhocode/$',             views.showgwcpage),
+
+    url(r'^500/$',                          views.five_hundred_test),
+    url(r'^404/$',                          views.five_hundred_test, {"code":404}),
+
+    #url(r'^showhn/$',                   views.homepage),
+    #url(r'^showgsb/$',                  views.showgsbpage),
+    #url(r'^showdn/$',                   views.showdnpage),
+    #url(r'^girlswhocode/$',             views.showgwcpage),
     url(r'^developer/$',                views.developer_homepage),
     url(r'^community/$',                views.community_page),
     url(r'^community/faq/$',            views.community_faq_page),
