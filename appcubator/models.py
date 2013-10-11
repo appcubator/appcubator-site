@@ -371,6 +371,8 @@ class App(models.Model):
     error_type = models.IntegerField(default=0)
     error_message = models.TextField(max_length=255, blank=True)
 
+    created_on = models.DateTimeField(auto_now_add=True)
+
     def get_error_type_name(self):
         err_type = self.error_type
         if err_type == 0:
