@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'appcubator',
     'appcubator.plugins',
+    'appcubator.admin',
     'website',
     'south',
     'less',

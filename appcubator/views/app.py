@@ -1,6 +1,7 @@
 from django.http import HttpResponse, Http404
-from django.utils import simplejson
-from django.shortcuts import redirect, render, render_to_response, get_object_or_404
+from . import JsonResponse
+
+from django.shortcuts import redirect, render, get_object_or_404
 from django.core.urlresolvers import reverse
 
 from django.contrib.auth.decorators import login_required
@@ -11,39 +12,26 @@ from django.contrib import messages
 
 from django.forms import ModelForm
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
-from models import DomainRegistration
-from models import get_default_uie_state, get_default_mobile_uie_state
-from models import get_default_app_state, get_default_theme_state
-
-from plugins.models import ProviderData
-
-import forms
-import random
-
-from email.sendgrid_email import send_email, send_template_email
-
-from django.conf import settings
-
-# codegen
-import app_builder.analyzer as analyzer
-from app_builder.analyzer import App as AnalyzedApp
-
-from our_payments.views import subscribe, is_stripe_customer
-
+import re
 import requests
-import traceback
+import nltk
+import simplejson
+
 import os, os.path
 join = os.path.join
-import string
-import nltk
-import re
-from datetime import datetime
 
+from email.sendgrid_email import send_email, send_template_email
+from our_payments.views import is_stripe_customer#, subscribe
 
-def JsonResponse(serializable_obj, **kwargs):
-    """Just a convenience function, in the middle of horrible code"""
-    return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User
+from models import DomainRegistration
+from models import get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
+import forms
+
+# from codegen
+import app_builder.analyzer as analyzer
+
+from django.conf import settings
 
 
 def add_statics_to_context(context, app):
@@ -58,6 +46,7 @@ APP_TEMPLATES = { "socialnetwork": "",
                   "marketplace": "",
                   "tutoringsite": "" # list the templates here, they get initialized below.
                   }
+
 for templname in APP_TEMPLATES:
     with open(join(DEFAULT_STATE_DIR, 'apps', "%s.json" % templname)) as f:
         r = simplejson.load(f)
@@ -67,7 +56,7 @@ for templname in APP_TEMPLATES:
 
 @require_GET
 @login_required
-def app_welcome(request):
+def welcome(request):
     if request.user.extradata.noob:
 
         # case for turning noob mode off
@@ -108,7 +97,7 @@ def user_page(request, username):
 
     return app_dashboard(request, str(request.user.apps.latest('id').id))
 
-def app_dashboard(request, app_id):
+def dashboard(request, app_id):
     # render dashboard
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
@@ -134,7 +123,7 @@ def app_dashboard(request, app_id):
 
 @require_GET
 @login_required
-def app_noob_page(request):
+def noob_page(request):
     #log url route
     user_id = request.user.id
     app_id = 0
@@ -159,11 +148,11 @@ def app_noob_page(request):
     return render(request, 'app-welcome-page.html', default_data)
 
 
-def app_new_template(request, template_name):
+def new_template(request, template_name):
     return app_new(request, app_template=template_name)
 
 @login_required
-def app_new(request, is_racoon = False, app_template=None):
+def new(request, is_racoon = False, app_template=None):
     """
     app_template only used for POST request
     """
@@ -220,7 +209,7 @@ def app_new(request, is_racoon = False, app_template=None):
 
 @login_required
 @require_POST
-def app_clone(request, app_id):
+def clone(request, app_id):
     app_id = long(app_id)
 
     form = forms.AppClone({ "app": app_id })
@@ -244,7 +233,7 @@ def app_clone(request, app_id):
 
 
 @login_required
-def app_new_walkthrough(request, walkthrough):
+def new_walkthrough(request, walkthrough):
     app_name = "Twitter Demo"
     a = App(name=app_name, owner=request.user, subdomain=App.provision_subdomain('%s-walkthrough' % request.user.username))
     # set the name in the app state
@@ -273,7 +262,7 @@ def app_new_walkthrough(request, walkthrough):
 
 @require_GET
 @login_required
-def app_page(request, app_id, page_name="overview"):
+def page(request, app_id, page_name="overview"):
     app_id = long(app_id)
     # id of 0 is reserved for sample app
     if(app_id == 0):
@@ -305,7 +294,7 @@ def app_page(request, app_id, page_name="overview"):
 
 @require_GET
 @login_required
-def app_json_editor(request, app_id):
+def json_editor(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
@@ -319,7 +308,7 @@ def app_json_editor(request, app_id):
 
 
 @login_required
-def app_edit_theme(request, app_id):
+def edit_theme(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
@@ -338,7 +327,7 @@ def app_edit_theme(request, app_id):
 
 @require_POST
 @login_required
-def app_delete(request, app_id):
+def delete(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not request.user.is_superuser and app.owner.id != request.user.id:
         raise Http404
@@ -363,13 +352,13 @@ def app_state(request, app_id, validate=True):
 
 @require_GET
 @login_required
-def app_get_state(request, app):
+def get_state(request, app):
     return app.state
 
 
 @require_POST
 @login_required
-def app_save_state(request, app, require_valid=True):
+def save_state(request, app, require_valid=True):
     # if the incoming appState's version_id does not match the
     # db's version_id, the incoming appState is an outdated version
     if require_valid is True and not app.isCurrentVersion(simplejson.loads(request.body)):
@@ -440,7 +429,7 @@ def documentation_page(request, page_name):
 
         if page_name == "all":
             htmlString = "all"
-    except Exception, e:
+    except Exception:
         htmlString = "all"
 
     print htmlString
@@ -573,13 +562,13 @@ def mobile_css_sheet(request, app_id):
 
 @require_GET
 @login_required
-def app_get_uie_state(request, app):
+def get_uie_state(request, app):
     return app.uie_state
 
 
 @require_POST
 @login_required
-def app_save_uie_state(request, app):
+def save_uie_state(request, app):
     app._uie_state_json = request.POST['uie_state']
     try:
         app.full_clean()
@@ -591,7 +580,7 @@ def app_save_uie_state(request, app):
 
 @require_POST
 @login_required
-def app_save_mobile_uie_state(request, app):
+def save_mobile_uie_state(request, app):
     app._mobile_uie_state_json = request.POST['uie_state']
     try:
         app.full_clean()
@@ -601,7 +590,7 @@ def app_save_mobile_uie_state(request, app):
     return (200, 'ok')
 
 
-def app_emails(request, app_id):
+def emails(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
@@ -710,7 +699,7 @@ def app_zip(request, app_id):
 
     # AJAX this route to do validate (returns 200 or 409)
     try:
-        a = app.parse_and_link_app_state()
+        app.parse_and_link_app_state()
     except analyzer.UserInputError, e:
         d = e.to_dict()
         return JsonResponse(d, status=400)
@@ -724,7 +713,7 @@ def app_zip(request, app_id):
 
 @login_required
 @csrf_exempt
-def app_deploy(request, app_id):
+def deploy(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
         raise Http404
@@ -735,7 +724,7 @@ def app_deploy(request, app_id):
     elif request.method == 'POST':
 
         try:
-            a = app.parse_and_link_app_state()
+            app.parse_and_link_app_state()
             result = {}
             result['site_url'] = app.url()
             result['git_url'] = app.git_url()

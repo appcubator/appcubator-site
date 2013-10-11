@@ -32,7 +32,7 @@ from appcubator.stats import *
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_home(request):
+def home(request):
     page_context = {}
     now = datetime.utcnow()
     now = int(time.mktime(now.timetuple()))
@@ -66,7 +66,7 @@ def admin_home(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_app_errors(request):
+def app_errors(request):
     page_context = {}
     apps = App.objects.all()
     err_apps = []
@@ -88,7 +88,7 @@ def get_snapshots(request, app_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_customers(request):
+def customers(request):
     page_context = {}
     page_context["customers"] = Customer.objects.all()
     return render(request, 'admin/customers.html', page_context)
@@ -96,7 +96,7 @@ def admin_customers(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_customers_search(request):
+def customers_search(request):
     query = request.GET.get('q', '')
     page_context = {}
     try:
@@ -111,7 +111,7 @@ def admin_customers_search(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_add_contactlog(request, customer_id):
+def add_contactlog(request, customer_id):
     note = request.POST["note"]
     customer_id = long(customer_id)
     customer = get_object_or_404(Customer, id=customer_id)
@@ -136,7 +136,7 @@ def admin_add_contactlog(request, customer_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_users(request):
+def users(request):
     try:
         user_id = request.GET['user_id']
         user_id = long(user_id)
@@ -163,7 +163,7 @@ def admin_users(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_user(request, user_id):
+def user(request, user_id):
     user_id = long(user_id)
     user = get_object_or_404(User, id=user_id)
     logs_all = LogAnything.objects.filter(user_id=user_id).order_by('-id')
@@ -192,7 +192,7 @@ def admin_user(request, user_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_apps(request):
+def apps(request):
     apps_all = App.objects.order_by('-id')
     paginator = Paginator(apps_all, 100)
     page = request.GET.get('page')
@@ -210,7 +210,7 @@ def admin_apps(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_app(request, app_id):
+def app(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
     logs_all = LogAnything.objects.filter(user_id=app.owner.id, app_id=app_id).order_by('-id')
@@ -233,7 +233,7 @@ def admin_app(request, app_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_app_snaps(request, app_id):
+def app_snaps(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
     snaps_all = AppstateSnapshot.objects.filter(app=app).order_by('-id')
@@ -256,7 +256,7 @@ def admin_app_snaps(request, app_id):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_feedback(request):
+def feedback(request):
     page_context = {}
     feedback = list(LogAnything.objects.filter(name='posted feedback'))
     page_context["feedback"] = feedback
@@ -264,7 +264,7 @@ def admin_feedback(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_invitations(request):
+def invitations(request):
     page_context = {}
     invs = InvitationKeys.objects.all()
     page_context["invitations"] = invs
@@ -272,7 +272,7 @@ def admin_invitations(request):
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
-def admin_walkthroughs(request):
+def walkthroughs(request):
     num_users = User.objects.all().count()
     started_quicktour = unique_user_logs(get_logs({'name': 'started quick tour'}))
     started_indepth_walkthrough = unique_user_logs(get_logs({'name': 'started in-depth twitter walkthrough'}))
