@@ -1,16 +1,16 @@
+import os, os.path
+
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from simplejson import JSONDecodeError
 
-import os, os.path
+from django.contrib.auth.models import User
+
 import re
 import requests
 import simplejson
 import traceback
-import sys
 from datetime import datetime, timedelta
 
 import subprocess, shlex
@@ -18,12 +18,17 @@ import hashlib
 import random
 import shutil
 
+from utils import RandomPrimaryIdModel
+from appcubator.default_data import DEFAULT_STATE_DIR, get_default_app_state, get_default_uie_state, get_default_mobile_uie_state
+
 from app_builder.analyzer import App as AnalyzedApp # avoid conflict w site App
 from app_builder.controller import create_codes
 from app_builder.coder import Coder, write_to_fs
 
-from utils import RandomPrimaryIdModel
 import deploy
+
+from django.conf import settings
+
 
 def email_to_uniq_username(email):
   """
@@ -49,9 +54,6 @@ def email_to_uniq_username(email):
   try_username = email.split("@")[0]
   username = uniqify(try_username)
   return username
-
-DEFAULT_STATE_DIR = os.path.join(os.path.dirname(
-    __file__), os.path.normpath("default_state"))
 
 import logging
 logger = logging.getLogger('appcubator.models')
@@ -96,7 +98,7 @@ class ExtraUserData(models.Model):
         for u in User.objects.all():
             try:
                 u.extradata
-            except cls.DoesNotExist, e:
+            except cls.DoesNotExist:
                 cls(user=u, noob=0).save()
 
     def git_user_id(self): # TODO fix in staging and dev case. (unique on id, hostname)
@@ -111,34 +113,10 @@ def create_user_profile(sender, instance, created, **kwargs):
     """
     try:
         instance.extradata
-    except ExtraUserData.DoesNotExist, e:
+    except ExtraUserData.DoesNotExist:
         ExtraUserData(user=instance).save()
 
 post_save.connect(create_user_profile, sender=User)
-
-
-def get_default_data(filename):
-    f = open(os.path.join(DEFAULT_STATE_DIR, filename))
-    s = f.read()
-    # makes sure it's actually valid
-    simplejson.loads(s)
-    f.close()
-    return s
-
-def get_default_app_state():
-    f = open(os.path.join(DEFAULT_STATE_DIR, "app_state.json"))
-    s = f.read()
-    simplejson.loads(s)  # makes sure it's actually valid
-    f.close()
-    return s
-
-
-def get_default_theme_state():
-    f = open(os.path.join(DEFAULT_STATE_DIR, "flat_ui_theme.json"))
-    s = f.read()
-    simplejson.loads(s)  # makes sure it's actually valid
-    f.close()
-    return s
 
 def clean_subdomain(subdomain, replace_periods=False):
     toks = subdomain.split('.')
@@ -339,7 +317,6 @@ class TempDeployment(RandomPrimaryIdModel):
             return 0
         s = deploy.get_deployment_status(self.deployment_id)
         return s
-
 
 
 class App(models.Model):
@@ -644,7 +621,7 @@ class App(models.Model):
     def parse_and_link_app_state(self):
         try:
             app = AnalyzedApp.create_from_dict(self.state, self.api_key)
-        except Exception, e:
+        except Exception:
             self.record_compile_error(traceback.format_exc())
             raise
         else:
@@ -747,7 +724,7 @@ class App(models.Model):
             if not is_merge:
                 self.deployment_id = data
                 self.save() # might be unnecessary if nothing has changed.
-        except Exception, e:
+        except Exception:
             self.record_deploy_error(traceback.format_exc())
             raise
         else:

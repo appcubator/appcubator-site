@@ -1,20 +1,15 @@
+from django.db import models
+from django.contrib.auth.models import User
 
+import os, os.path
+import sys
+import traceback
+import simplejson
 
+from appcubator.default_data import DEFAULT_STATE_DIR, get_default_data
+from appcubator.default_data import get_default_uie_state, get_default_mobile_uie_state
 
-def get_default_uie_state():
-    f = open(os.path.join(DEFAULT_STATE_DIR, "uie_state.json"))
-    s = f.read()
-    simplejson.loads(s)  # makes sure it's actually valid
-    f.close()
-    return s
-
-
-def get_default_mobile_uie_state():
-    f = open(os.path.join(DEFAULT_STATE_DIR, "mobile_uie_state.json"))
-    s = f.read()
-    simplejson.loads(s)  # makes sure it's actually valid
-    f.close()
-    return s
+from appcubator.models import App
 
 
 class UITheme(models.Model):
