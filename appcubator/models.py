@@ -22,6 +22,7 @@ from app_builder.analyzer import App as AnalyzedApp # avoid conflict w site App
 from app_builder.controller import create_codes
 from app_builder.coder import Coder, write_to_fs
 
+from utils import RandomPrimaryIdModel
 import deploy
 
 def email_to_uniq_username(email):
@@ -187,7 +188,6 @@ def clean_subdomain(subdomain, replace_periods=False):
     return subdomain
 
 
-from random_primary import RandomPrimaryIdModel
 class TempDeployment(RandomPrimaryIdModel):
     # now the id is random
     deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
