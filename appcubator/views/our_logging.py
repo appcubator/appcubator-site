@@ -6,9 +6,9 @@ from django.shortcuts import redirect, render, render_to_response, get_object_or
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
-from models import LogAnything
+from appcubator.models import LogAnything
 from email.sendgrid_email import send_email
-from models import DomainRegistration
+from appcubator.models import DomainRegistration
 
 from app_builder.analyzer import App as AnalyzedApp
 

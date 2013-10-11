@@ -23,9 +23,9 @@ join = os.path.join
 from email.sendgrid_email import send_email, send_template_email
 from our_payments.views import is_stripe_customer#, subscribe
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User
-from models import DomainRegistration
-from models import get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
+from appcubator.models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User
+from appcubator.models import DomainRegistration
+from appcubator.models import get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
 import forms
 
 # from codegen
