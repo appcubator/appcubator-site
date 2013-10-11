@@ -118,7 +118,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "appcubator.context_processors.list_of_users_apps.list_of_users_apps",
     "appcubator.context_processors.list_of_users_apps.debug",
     "appcubator.context_processors.list_of_users_apps.static_cache_busting",
-    "appcubator.appcubator_payments.views.stripe_context",
+    "appcubator.our_payments.views.stripe_context",
 
     'django.core.context_processors.request',
     'askbot.context.application_settings',
