@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 import django.contrib.auth.views
-import views, log_views, test_views
+import views
 import django.views.generic.base
 from django.views.generic.simple import direct_to_template
 
@@ -108,7 +108,7 @@ urlpatterns += patterns('appcubator.themes.views',
     url(r'^theme/$', include('appcubator.themes.urls')),
 )
 
-urlpatterns += patterns('appcubator.test_views',
+urlpatterns += patterns('appcubator.views.test',
     url(r'^test/editor/$', 'test_editor'),
     url(r'^test/formeditor/$', 'test_formeditor'),
     url(r'^test/thirdparty/$', 'test_thirdpartyforms'),

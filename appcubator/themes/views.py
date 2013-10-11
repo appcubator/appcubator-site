@@ -5,7 +5,8 @@ from django.utils import simplejson
 from django.shortcuts import redirect,render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts
+from appcubator.models import App, ApiKeyUses, ApiKeyCounts
+from models import UITheme, StaticFile
 
 import requests
 import traceback

@@ -13,10 +13,10 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from appcubator.models import User, Customer, TempDeployment, UITheme, InvitationKeys, PubKey
-from appcubator.models import get_default_uie_state, get_default_mobile_uie_state
-from appcubator.models import get_default_app_state
-import appcubator.models as appcubator_models
+from appcubator.models import User, Customer, TempDeployment, InvitationKeys, PubKey
+from appcubator.themes.models import UITheme
+from appcubator.default_data import get_default_uie_state, get_default_mobile_uie_state, get_default_app_state
+import appcubator.models
 
 from models import Love, Document
 
@@ -251,7 +251,7 @@ def signup(request):
         req = {}
         req = deepcopy(request.POST)
         try:
-            req["username"] = appcubator_models.email_to_uniq_username(request.POST["email"])
+            req["username"] = appcubator.models.email_to_uniq_username(request.POST["email"])
         except Exception:
             req["username"] = request.POST.get("email", "")
 
