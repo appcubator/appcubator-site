@@ -133,7 +133,7 @@ def users(request):
         user_id = request.GET['user_id']
         user_id = long(user_id)
         user = get_object_or_404(User, pk=user_id)
-        return redirect('appcubator.admin_views.admin_user', str(user_id))
+        return redirect('appcubator.admin.views.user', str(user_id))
 
     users_all = User.objects.order_by('-id')
     paginator = Paginator(users_all, 100)

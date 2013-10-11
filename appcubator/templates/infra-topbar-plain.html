@@ -23,7 +23,7 @@
               {% if app %}
               <li><a href="{% url appcubator.views.app.dashboard app.id %}info/"></span>App settings</a></li>
                 {% if user.is_superuser and app.pk %}
-                <li><a href="{% url appcubator.admin_views.admin_app app.pk %}"></span>Admin</a></li>
+                <li><a href="{% url appcubator.admin.views.app app.pk %}"></span>Admin</a></li>
                 {% endif %}
               {% endif %}
               <li class="header">My Applications</li>
