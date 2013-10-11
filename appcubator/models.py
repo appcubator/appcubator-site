@@ -763,6 +763,17 @@ class App(models.Model):
                     logger.error("Tried to delete %d, Deployment server returned bad response: %d %r" % (self.deployment_id, r.status_code, r.text))
         super(App, self).delete(*args, **kwargs)
 
+    def is_editable_by_user(self, user):
+        """ Returns True iff the given user is allowed to edit this app. """
+        if self.owner.id == user.id:
+            return True
+        if user.is_superuser:
+            return True
+        if self.collaborations.filter(user=user).exists():
+            return True
+
+        return False
+
 
 class UITheme(models.Model):
     name = models.CharField(max_length=255, blank=True)
@@ -1017,3 +1028,8 @@ class AnalyticsStore(models.Model):
             return None
         else:
             return result
+
+class Collaboration(models.Model):
+    user = models.ForeignKey(User, related_name="collaborations")
+    app = models.ForeignKey(App, related_name="collaborations")
+
