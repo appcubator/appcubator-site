@@ -784,11 +784,13 @@ class App(models.Model):
 
     def is_editable_by_user(self, user):
         """ Returns True iff the given user is allowed to edit this app. """
+        if not user.is_authenticated():
+            return False
         if self.owner.id == user.id:
             return True
         if user.is_superuser:
             return True
-        if self.collaborations.filter(user=user).exists():
+        if self.collaborations.filter(userd=user).exists():
             return True
 
         return False
