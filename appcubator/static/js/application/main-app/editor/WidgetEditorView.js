@@ -52,7 +52,8 @@ define([
                 'click .done-text-editing': 'clickedDoneTextEditing',
                 'click .edit-custom-widget-btn': 'openCustomWidgetEditor',
                 'click .edit-itemname-btn'  : 'clickedEditItemName',
-                'click': 'clicked'
+                'click': 'clicked',
+                'change select' : 'mouseup'
             },
 
             initialize: function() {
@@ -438,6 +439,14 @@ define([
 
             clicked: function(e) {
                 e.stopPropagation();
+            },
+
+            mousedown: function(e) {
+                mouseDispatcher.isMousedownActive = true;
+            },
+
+            mouseup: function() {
+                mouseDispatcher.isMousedownActive = false;
             }
 
         });

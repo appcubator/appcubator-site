@@ -20,7 +20,7 @@ define([
                 'click #hover-div'     : 'hoverClicked',
                 'click #select-div'    : 'doubleClicked',
                 'mousedown #hover-div' : 'mousedown',
-                'mousedown #select-div': 'mousedown',
+                'mousedown #select-div': 'selectMousedown',
                 'mouseup #hover-div'   : 'mouseup',
                 'mouseup #select-div'  : 'mouseup'
             },
@@ -42,9 +42,15 @@ define([
                 this.doKeyBindings();
             },
 
+            selectMousedown: function (e) {
+                //if(!this.isMouseOn(e)) { return true; }
+                this.mousedown();
+            },
+
             mousedown: function(e) {
                 mouseDispatcher.isMousedownActive = true;
             },
+
             mouseup: function(e) {
                 mouseDispatcher.isMousedownActive = false;
             },
@@ -82,7 +88,8 @@ define([
                     containment: "parent",
                     drag: self.moving,
                     stop: self.moved,
-                    snapMode: "outer"
+                    snapMode: "outer",
+                    cancel: '#widget-editor'
                 });
 
 
@@ -228,7 +235,6 @@ define([
 
                 var elem = util.get('widget-wrapper-' + cid);
 
-
                 g_guides.hideAll();
 
                 var valLeft = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid, cid);
@@ -236,20 +242,16 @@ define([
 
                 if (valLeft) {
                     var deltaLeft = ui.position.left - (valLeft * this.positionHorizontalGrid) + ALIGNMENT;
-                    console.log(deltaLeft);
-                    //ui.size.width = ui.size.width + deltaLeft;
-                    //ui.element.width(ui.size.width + PADDING);
+                    ui.size.width = ui.size.width + deltaLeft;
+                    ui.element.width(ui.size.width + PADDING);
                     ui.position.left = (valLeft * this.positionHorizontalGrid) - ALIGNMENT;
                     ui.element.css('left', ui.position.left);
                 }
                 if (valRight) {
-                    console.log("YOLOO");
                     var deltaRight = valRight * this.positionHorizontalGrid - (ui.position.left + ui.size.width);
-                    console.log(deltaRight);
                     ui.size.width = ui.size.width + deltaRight  - ALIGNMENT;
                     ui.element.width(ui.size.width);
                 }
-
 
                 var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
                 var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
@@ -261,10 +263,10 @@ define([
                     var deltaBottom = ui.position.top = (valTop * this.positionVerticalGrid);
                 }
 
-                //elem.style.width = ui.size.width + PADDING + 'px';
+                elem.style.width  = (ui.size.width + PADDING) + 'px';
                 elem.style.height = (ui.size.height + PADDING) + 'px';
-                elem.style.left = ui.position.left + ALIGNMENT + 'px';
-                elem.style.top = ui.position.top + ALIGNMENT + 'px';
+                elem.style.left   = (ui.position.left + ALIGNMENT) + 'px';
+                elem.style.top    = (ui.position.top + ALIGNMENT) + 'px';
 
             },
 
@@ -296,6 +298,7 @@ define([
             },
 
             moving: function(e, ui) {
+
                 if (e.target.id == "hover-div") {
                     model = this.hoveredEl;
                     if (!g_multiSelectorView.isEmpty()) {
@@ -479,6 +482,8 @@ define([
             },
 
             isMouseOn: function(e) {
+                if(!this.selectedEl) return false;
+
                 var self = this;
 
                 mouseX = e.pageX;
@@ -512,10 +517,6 @@ define([
                 keyDispatcher.unbind('backspace', this.deleteSelected);
                 this.deselect();
                 $('.page.full').off('mousedown', this.clickedPage);
-
-                //$(this.selectDiv).show().resizable("destroy");
-                //$(this.hoverDiv).show().draggable("destroy");
-                //$(this.selectDiv).show().draggable("destroy");
 
                 Backbone.View.prototype.close.call(this);
             }

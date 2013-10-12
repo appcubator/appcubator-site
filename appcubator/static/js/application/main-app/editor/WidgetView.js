@@ -74,6 +74,7 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
             this.el.innerHTML = this.renderElement();
             this.innerEl = this.el.firstChild;
             this.$innerEl = $(this.innerEl);
+
             return this;
         },
 
@@ -127,7 +128,7 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
             var el = _.template(temp, {
                 element: node_context
             });
-
+            console.log(el);
             return el;
         },
 
@@ -394,10 +395,6 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
         },
         mouseup: function() {
             mouseDispatcher.isMousedownActive = false;
-        },
-
-        close: function() {
-            WidgetView.__super__.remove.call(this);
         }
 
     });

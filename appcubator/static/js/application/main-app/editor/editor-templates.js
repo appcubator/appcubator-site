@@ -9,17 +9,17 @@ Templates.tempMeta = [
 
 
 Templates.tempNode = [
-  '<<%= element.tagName %>',
-  'class = "<%= element.class_name %>"',
+  '<<%= element.tagName %> ',
+  'class = "<%= element.class_name %>" ',
   '<% _(element.cons_attribs).each(function(val, key) { %>',
-  '<%=key%> = "<%=val%>"<% }); %>',
+  '<%=key%>="<%=val%>"<% }); %> ',
   '<% _(element.content_attribs).each(function(val, key) { %>',
-  '<%=key%> = "<%=val%>"<% }); %>>',
+  '<%=key%>="<%=val%>"<% }); %>> ',
   '<% if(!element.isSingle) { %>',
   '<%= element.content %>',
   '</<%= element.tagName %>>',
   '<% }; %>'
-].join('\n');
+].join('');
 
 Templates.NavbarEditor = [
   '<div>',
