@@ -307,12 +307,8 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
 
             this.editMode = false;
             this.$el.removeClass('textediting');
-            //var el = $(this.el.firstChild);
             var val = this.$innerEl.html();
             this.$innerEl.freshereditor("edit", false);
-
-            console.log(val);
-            //el[0].innerHTML;
             this.model.get('data').set('content', val);
 
 

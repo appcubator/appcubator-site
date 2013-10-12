@@ -300,6 +300,8 @@ define(function(require, exports, module) {
 
         moving: function(e, ui) {
 
+            var model = null;
+
             if (e.target.id == "hover-div") {
                 model = this.hoveredEl;
                 if (!g_multiSelectorView.isEmpty()) {
@@ -348,7 +350,7 @@ define(function(require, exports, module) {
             var self = this;
             g_guides.hideAll();
 
-            model = this.selectedEl;
+            var model = this.selectedEl;
             if (e.target.id == "hover-div") {
                 model = this.hoveredEl;
                 if (!g_multiSelectorView.isEmpty()) {
