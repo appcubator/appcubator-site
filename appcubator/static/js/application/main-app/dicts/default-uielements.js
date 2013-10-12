@@ -20,7 +20,7 @@ var defaultElements = [
   {
     text: "Text",
     className : "texts",
-    el : "<p>Default text!</p>"
+    el : "<did>Default text!</div>"
   },
 
   {

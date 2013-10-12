@@ -1,4 +1,4 @@
-define([ 'backbone', 'mixins/BackboneUI'],  function() {
+define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
 
     'use strict';
 
@@ -72,6 +72,9 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
         render: function() {
             this.arrangeLayout();
             this.el.innerHTML = this.renderElement();
+            this.innerEl = this.el.firstChild;
+            this.$innerEl = $(this.innerEl);
+
             return this;
         },
 
@@ -118,8 +121,7 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
             }
             if(node_context.content_attribs.href) node_context.content_attribs.href = "#";
             
-            console.log(node_context.content_attribs.src);
-            if(node_context.content_attribs.src && node_context.content_attribs.src.indexOf('{{') == 0) {
+            if(node_context.content_attribs.src && node_context.content_attribs.src.indexOf('{{') === 0) {
                 node_context.content_attribs.src = "/static/img/placeholder.png";
             }
             var el = _.template(temp, {
@@ -265,12 +267,35 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
         switchEditModeOn: function() {
             if (this.model.get('data').get('content')) {
                 this.editMode = true;
-                var el = $(this.el.firstChild);
+                //var el = $(this.el.firstChild);
                 this.el.firstChild.style.zIndex = 2003;
                 this.$el.addClass('textediting');
-                el.attr('contenteditable', 'true');
-                el.focus();
-                util.selectText(el);
+                //el.attr('contenteditable', 'true');
+                //el.focus();
+
+                this.$innerEl.freshereditor({
+                    toolbar_selector: ".widget-editor",
+                    excludes: ['removeFormat',
+                               'insertheading1',
+                               'insertheading2',
+                               'insertheading3',
+                               'insertheading4',
+                               'fontname',
+                               'code',
+                               'superscript',
+                               'subscript',
+                               'forecolor',
+                               'backcolor',
+                               'strikethrough',
+                               'insertimage',
+                               'insertparagraph',
+                               'blockquote',
+                               'justifyfull']
+                });
+                this.$innerEl.freshereditor("edit", true);
+
+                util.selectText(this.$innerEl);
+
                 keyDispatcher.textEditing = true;
             }
 
@@ -282,10 +307,11 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
 
             this.editMode = false;
             this.$el.removeClass('textediting');
-            var el = $(this.el.firstChild);
-            var val = el[0].innerText;
+            var val = this.$innerEl.html();
+            this.$innerEl.freshereditor("edit", false);
             this.model.get('data').set('content', val);
-            el.attr('contenteditable', 'false');
+
+
             keyDispatcher.textEditing = false;
             util.unselectText();
         },
@@ -364,10 +390,6 @@ define([ 'backbone', 'mixins/BackboneUI'],  function() {
         },
         mouseup: function() {
             mouseDispatcher.isMousedownActive = false;
-        },
-
-        close: function() {
-            WidgetView.__super__.remove.call(this);
         }
 
     });

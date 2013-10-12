@@ -33,7 +33,7 @@
       "hoverStyle": "",
       "class_name": "normal-text",
       "content": "Default text!",
-      "tagName": "p",
+      "tagName": "div",
       "activeStyle": ""
     },
     {
@@ -43,7 +43,7 @@
       "hoverStyle": "",
       "class_name": "gray-text",
       "content": "Default text!",
-      "tagName": "p",
+      "tagName": "div",
       "activeStyle": ""
     }
   ],
