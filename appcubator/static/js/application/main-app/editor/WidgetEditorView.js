@@ -52,7 +52,8 @@ define([
                 'click .done-text-editing': 'clickedDoneTextEditing',
                 'click .edit-custom-widget-btn': 'openCustomWidgetEditor',
                 'click .edit-itemname-btn'  : 'clickedEditItemName',
-                'click': 'clicked'
+                'click': 'clicked',
+                'change select' : 'mouseup'
             },
 
             initialize: function() {
@@ -347,6 +348,7 @@ define([
             },
 
             stoppedEditing: function() {
+                $('.btn-toolbar').remove();
                 $('.section-done-text-editing').remove();
                 this.showSubviews();
             },
@@ -355,6 +357,8 @@ define([
                 if (this.contentEditor) this.contentEditor.clear();
                 if (this.layoutEditor) this.layoutEditor.clear();
                 if (this.infoEditor) this.infoEditor.clear();
+                $('.btn-toolbar').remove();
+
                 _(this.subviews).each(function(subview) {
                     subview.close();
                 });
@@ -435,6 +439,14 @@ define([
 
             clicked: function(e) {
                 e.stopPropagation();
+            },
+
+            mousedown: function(e) {
+                mouseDispatcher.isMousedownActive = true;
+            },
+
+            mouseup: function() {
+                mouseDispatcher.isMousedownActive = false;
             }
 
         });
