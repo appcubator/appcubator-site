@@ -29,7 +29,7 @@
         {
             "style": "",
             "isSingle": false,
-            "tagName": "p",
+            "tagName": "div",
             "hoverStyle": "",
             "class_name": "normal-text",
             "content": "Default text!",
@@ -39,7 +39,7 @@
         {
             "style": "color: #666;",
             "isSingle": false,
-            "tagName": "p",
+            "tagName": "div",
             "hoverStyle": "",
             "class_name": "gray-text",
             "content": "Default text!",

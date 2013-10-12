@@ -28,7 +28,7 @@
   ],
   "texts": [
     {
-      "tagName": "p",
+      "tagName": "div",
       "content_attribs": null,
       "content": "Default text!",
       "isSingle": false,
@@ -38,7 +38,7 @@
       "class_name": "normal-text"
     },
     {
-      "tagName": "p",
+      "tagName": "div",
       "content_attribs": null,
       "content": "Default text!",
       "isSingle": false,

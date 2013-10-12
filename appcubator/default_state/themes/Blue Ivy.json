@@ -34,7 +34,7 @@
       "hoverStyle": "",
       "class_name": "txt",
       "content": "Default text!",
-      "tagName": "span",
+      "tagName": "div",
       "activeStyle": ""
     },
     {
@@ -44,7 +44,7 @@
       "hoverStyle": "",
       "class_name": "small-txt",
       "content": "Default text!",
-      "tagName": "span",
+      "tagName": "div",
       "activeStyle": ""
     }
   ],
