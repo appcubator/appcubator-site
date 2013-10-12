@@ -39,11 +39,15 @@ define([
             },
 
             downloaded: function() {
-                $(".download-pane .loading-wheel").css('visibility','visible')
+                $(".download-pane .loading-wheel").css('visibility','visible');
+
                 var hideWheel = function() {
                     $(".download-pane .loading-wheel").css('visibility','hidden');
-                }
-                v1.download(hideWheel);
+                };
+
+                var v1 = v1||null;
+                if(v1) v1.download(hideWheel);
+                else if(dboard) dboard.download(hideWheel);
             }
         });
 
