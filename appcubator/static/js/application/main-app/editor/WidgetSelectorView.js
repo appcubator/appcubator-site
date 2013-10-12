@@ -17,12 +17,12 @@ define([
             positionVerticalGrid: 15,
 
             events: {
-                'click #hover-div': 'hoverClicked',
-                'click #select-div': 'doubleClicked',
-                'mousedown #hover-div': 'mousedown',
+                'click #hover-div'     : 'hoverClicked',
+                'click #select-div'    : 'doubleClicked',
+                'mousedown #hover-div' : 'mousedown',
                 'mousedown #select-div': 'mousedown',
-                'mouseup #hover-div': 'mouseup',
-                'mouseup #select-div': 'mouseup'
+                'mouseup #hover-div'   : 'mouseup',
+                'mouseup #select-div'  : 'mouseup'
             },
 
             initialize: function(widgetsCollection) {
@@ -147,10 +147,29 @@ define([
                     this.selectDiv.style.left = (((widget.get('layout').get('left')) * 80) - 16) + 'px';
                 }
             },
+
             makeSelectDivInvisible: function() {
+
                 this.selectDiv.style.height = 0;
                 this.selectDiv.style.width = 0;
                 this.selectDiv.style.borderWidth = 0;
+                var widgetModel = this.selectedEl;
+
+                switch(this.widgetEditorView.location) {
+                    case "right":
+                        var leftVal = 0;
+                        leftVal += ((widgetModel.get('layout').get('left') * 80) - ALIGNMENT);
+                        leftVal += ((widgetModel.get('layout').get('width') * 80) + PADDING);
+                        this.selectDiv.style.left = leftVal + 'px';
+                        break;
+                    case "bottom":
+                        var topVal = 0;
+                        topVal += ((widgetModel.get('layout').get('top') * this.positionVerticalGrid) - ALIGNMENT);
+                        topVal += ((widgetModel.get('layout').get('height') * this.positionVerticalGrid) + PADDING);
+                        this.selectDiv.style.top = topVal + 'px';
+                        break;
+                }
+
                 $(this.selectDiv).find('.ui-resizable-handle').hide();
             },
 
@@ -216,14 +235,17 @@ define([
                 var valRight = g_guides.showVertical((ui.position.left + ui.size.width) / this.positionHorizontalGrid, cid);
 
                 if (valLeft) {
-                    var deltaLeft = ui.position.left - (valLeft * this.positionHorizontalGrid);
-                    ui.size.width = ui.size.width + deltaLeft - ALIGNMENT;
-                    ui.element.width(ui.size.width + PADDING);
+                    var deltaLeft = ui.position.left - (valLeft * this.positionHorizontalGrid) + ALIGNMENT;
+                    console.log(deltaLeft);
+                    //ui.size.width = ui.size.width + deltaLeft;
+                    //ui.element.width(ui.size.width + PADDING);
                     ui.position.left = (valLeft * this.positionHorizontalGrid) - ALIGNMENT;
                     ui.element.css('left', ui.position.left);
                 }
                 if (valRight) {
+                    console.log("YOLOO");
                     var deltaRight = valRight * this.positionHorizontalGrid - (ui.position.left + ui.size.width);
+                    console.log(deltaRight);
                     ui.size.width = ui.size.width + deltaRight  - ALIGNMENT;
                     ui.element.width(ui.size.width);
                 }
@@ -239,8 +261,7 @@ define([
                     var deltaBottom = ui.position.top = (valTop * this.positionVerticalGrid);
                 }
 
-
-                elem.style.width = ui.size.width + PADDING + 'px';
+                //elem.style.width = ui.size.width + PADDING + 'px';
                 elem.style.height = (ui.size.height + PADDING) + 'px';
                 elem.style.left = ui.position.left + ALIGNMENT + 'px';
                 elem.style.top = ui.position.top + ALIGNMENT + 'px';
@@ -444,10 +465,7 @@ define([
                 if (this.selectedEl.getContent() && !this.selectedEl.isLoginForm()) {
                     this.selectedEl.trigger('startEditing');
                     this.listenTo(this.selectedEl, 'stopEditing cancelEditing', this.stoppedEditing);
-                    this.selectDiv.style.height = 0;
-                    this.selectDiv.style.width = 0;
-                    var top = ((this.selectedEl.get('layout').get('top') * 15) - 2) + ((this.selectedEl.get('layout').get('height') * 15) + 4);
-                    this.selectDiv.style.top = top + 'px';
+                    this.makeSelectDivInvisible();
                 }
 
                 if (this.selectedEl.isBox()) {
@@ -456,6 +474,7 @@ define([
             },
 
             stoppedEditing: function() {
+                this.makeSelectDivVisible();
                 this.setLayout(this.selectDiv, this.selectedEl);
             },
 
