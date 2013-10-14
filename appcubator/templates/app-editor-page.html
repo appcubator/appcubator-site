@@ -34,24 +34,8 @@
   <div class="page-container">
     <div class="page-wrapper" id="page-wrapper">
       <div class="url-bar">http://yourapp.com</div>
-      <div class="page full container fdededfcbcbcd" id="page">
-        <!-- Navbar -->
-        <navbar class="navbar" id="navbar">
-          <div class="navbar-inner">
-            <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
-            <ul class="nav" id="links">
-            </ul>
-            <button id="edit-navbar-btn">Edit Navbar</button>
-          </div>
-        </navbar>
-        <!-- Editing Container -->
-        <div class="container editing" id="full-container"></div>
-        <div class="editing" id="elements-container">
-        <!-- UI Elements -->
-        </div>
-        <!-- Footer -->
-        <footer class="footer" id="footer"></footer>
-      </div>
+      <iframe class="page full container fdededfcbcbcd" id="page" src="/app/{{ app.id }}/editor/0/">
+      </iframe>
     </div>
   </div>
 

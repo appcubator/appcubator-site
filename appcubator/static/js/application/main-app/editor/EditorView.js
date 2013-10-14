@@ -101,21 +101,31 @@ define([
             },
 
             render: function() {
-
+                var self = this;
                 if (!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
 
                 document.body.style.overflow = "hidden";
 
                 this.toolBar.setElement(document.getElementById('tool-bar')).render();
-                this.marqueeView.render();
                 this.renderUrlBar();
                 this.galleryEditor.render();
-                this.widgetsManager.render();
-                this.navbar.setElement('#navbar').render();
-                this.footer.setElement('#footer').render();
-                this.guides.setElement($('#elements-container')).render();
 
-                $('#elements-container').append(this.marqueeView.el);
+                /* Access to elements inside iframe */
+                var iframe = document.getElementById('page');
+                var inter = window.setInterval(function() {
+                    if (iframe.contentWindow.document.readyState === "complete") {
+
+                        var innerDoc =iframe.contentDocument || iframe.contentWindow.document;
+                        window.clearInterval(inter);
+                        self.marqueeView.render();
+                        self.widgetsManager.setElement(iframe).render();
+                        self.navbar.setElement(innerDoc.getElementById('navbar')).render();
+                        console.log(innerDoc.getElementById('footer'));
+                        self.footer.setElement(innerDoc.getElementById('footer')).render();
+                        self.guides.setElement(innerDoc.getElementById('elements-container')).render();
+                        $(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
+                    }
+                }, 100);
 
                 this.setupPageWrapper();
                 this.setupPageHeight();

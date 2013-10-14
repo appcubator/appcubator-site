@@ -143,7 +143,7 @@ define([
                         trigger: true
                     });
                 } else {
-                    v1.navigate("app/" + appId + "/editor/" + this.ind + '/', {
+                    v1.navigate("app/" + appId + "/page/" + this.ind + '/', {
                         trigger: true
                     });
                 }

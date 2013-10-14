@@ -100,6 +100,8 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/subdomain/(.*)/$', 'sub_register_domain'),
 
     # special json editor route
+    url(r'^app/(\d+)/editor/\d+/$', 'app_editor_iframe'), # this serves all the app pages
+
     url(r'^app/(\d+)/editor/\d+/debug/$', 'app_json_editor'), # this serves all the app pages
 
     url(r'^feedback/$', 'documentation_page', {"page_name": "feedback"}),

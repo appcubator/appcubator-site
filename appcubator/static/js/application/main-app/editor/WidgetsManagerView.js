@@ -21,7 +21,6 @@ function( WidgetView,
           CustomWidgetEditorModal) {
 
   var WidgetManagerView = Backbone.View.extend({
-    el : $('#page'),
     widgetsContainer : null,
     events : {
 
@@ -44,12 +43,16 @@ function( WidgetView,
     },
 
     render: function() {
-      this.widgetsContainer = document.getElementById('elements-container');
+
+      var innerDoc = this.el.contentDocument || this.el.contentWindow.document;
+      this.widgetsContainer = innerDoc.getElementById('elements-container');
       this.widgetsContainer.innerHTML = '';
+      
       this.widgetsCollection.each(function(widget) {
         widget.setupPageContext(v1State.getCurrentPage());
         var newWidgetView = this.placeUIElement(widget, false);
       }, this);
+
       this.widgetSelectorView.setElement(this.widgetsContainer).render();
     },
 
