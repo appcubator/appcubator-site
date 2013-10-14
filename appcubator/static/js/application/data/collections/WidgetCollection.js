@@ -142,6 +142,9 @@ define([
                     layout.height = 8;
                 }
 
+                /* Ghetto fix */
+                if(widget.data.tagName == "p") widget.data.tagName = "div";
+
                 if (type == "texts" && widget.data.content) {
                     widget.data.content = this.loremIpsum();
                 }
