@@ -117,7 +117,8 @@ urlpatterns += patterns('appcubator.views',
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
 
-    url(r'^(.*)/$', 'user_page')
+    # USERNAME ROUTE moved down to the bottom to avoid conflict w other routes
+
 )
 
 urlpatterns += patterns('appcubator.theme_views',
@@ -153,16 +154,10 @@ urlpatterns += patterns('',
     url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
 )
 
-# production (hosted) deployments
-"""
-if settings.PRODUCTION:
-  urlpatterns += patterns('deployment.views',
-      url(r'^deployment/$', 'list_deployments'), # list the deployments and their statuses
-      url(r'^deployment/available_check/$', 'available_check'), # check if the domain is available
-      url(r'^deployment/push/$', 'deploy_code'), # push the new code into the directory
-      url(r'^deployment/delete/$', 'delete_deployment'), # push the new code into the directory
-  )
-  """
+# USERNAME ROUTE
+urlpatterns += patterns('appcubator.views',
+    url(r'^(.*)/$', 'user_page')
+)
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
