@@ -591,11 +591,19 @@ def css_sheet(request, app_id, isMobile=False):
     uie_state = app.uie_state
     if isMobile:
         uie_state = app.mobile_uie.state
-    page_context = {'uie_state': uie_state,
-                    'title': 'Editor',
-                    'app_id': app_id}
-    add_statics_to_context(page_context, app)
-    return render(request, 'app-editor-css-gen.html', page_context, mimetype='text/css')
+
+    if 'basecss' in uie_state:
+        uie_state["basecss"] = uie_state["basecss"].replace('body', '&')
+
+    from django.template import loader, Context
+    context = Context({'uie_state': uie_state,
+                       'isMobile': False,
+                       'deploy': False})
+    t = loader.get_template('app-editor-css-gen.html')
+    css_string = t.render(context)
+
+    return HttpResponse(css_string, mimetype='text/css')
+
 
 @csrf_exempt
 def mobile_css_sheet(request, app_id):
