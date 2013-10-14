@@ -159,17 +159,6 @@ urlpatterns += patterns('appcubator.views',
     url(r'^(.*)/$', 'user_page')
 )
 
-# production (hosted) deployments
-"""
-if settings.PRODUCTION:
-  urlpatterns += patterns('deployment.views',
-      url(r'^deployment/$', 'list_deployments'), # list the deployments and their statuses
-      url(r'^deployment/available_check/$', 'available_check'), # check if the domain is available
-      url(r'^deployment/push/$', 'deploy_code'), # push the new code into the directory
-      url(r'^deployment/delete/$', 'delete_deployment'), # push the new code into the directory
-  )
-  """
-
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns += staticfiles_urlpatterns()
