@@ -59,17 +59,19 @@ define(function(require, exports, module) {
         render: function() {
             var self = this;
 
+            this.elContainer = this.el.getElementById('elements-container');
+
             var hoverDiv = document.createElement('div');
             hoverDiv.id = "hover-div";
             this.hoverDiv = hoverDiv;
             this.hideNode(hoverDiv);
-            this.el.appendChild(hoverDiv);
+            this.elContainer.appendChild(hoverDiv);
 
             var selectDiv = document.createElement('div');
             selectDiv.id = "select-div";
             this.selectDiv = selectDiv;
             this.hideNode(selectDiv);
-            this.el.appendChild(selectDiv);
+            this.elContainer.appendChild(selectDiv);
 
             $(selectDiv).resizable({
                 handles: "n, e, s, w, nw, ne, sw, se",
@@ -234,7 +236,7 @@ define(function(require, exports, module) {
             var cid = this.selectedEl.cid;
             var model = this.selectedEl;
 
-            var elem = util.get('widget-wrapper-' + cid);
+            var elem = this.el.getElementById('widget-wrapper-' + cid);
 
             g_guides.hideAll();
 
@@ -282,7 +284,7 @@ define(function(require, exports, module) {
 
             var deltaHeight = Math.round((ui.size.height + 2) / this.positionVerticalGrid);
             var deltaWidth = Math.round((ui.size.width + 2) / this.positionHorizontalGrid);
-            var elem = util.get('widget-wrapper-' + this.selectedEl.cid);
+            var elem = this.el.getElementById('widget-wrapper-' + this.selectedEl.cid);
             elem.style.width = '';
             elem.style.height = '';
 
@@ -299,7 +301,8 @@ define(function(require, exports, module) {
         },
 
         moving: function(e, ui) {
-
+            console.log(e);
+            alert('ye');
             var model = null;
 
             if (e.target.id == "hover-div") {
@@ -341,7 +344,7 @@ define(function(require, exports, module) {
                 ui.position.top = (valBottom - model.get('layout').get('height')) * this.positionVerticalGrid - 2;
             }
 
-            var elem = util.get('widget-wrapper-' + model.cid);
+            var elem = this.el.getElementById('widget-wrapper-' + model.cid);
             elem.style.top = ui.position.top + ALIGNMENT + 'px';
             elem.style.left = ui.position.left + ALIGNMENT + 'px';
         },
@@ -491,7 +494,7 @@ define(function(require, exports, module) {
 
             var mouseX = e.pageX;
             var mouseY = e.pageY;
-            var div = $('#widget-wrapper-' + this.selectedEl.cid);
+            var div = $(this.el.getElementById('widget-wrapper-' + this.selectedEl.cid));
             var divTop = div.offset().top;
             var divLeft = div.offset().left;
             var divRight = divLeft + div.width();

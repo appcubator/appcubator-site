@@ -112,23 +112,26 @@ define([
 
                 /* Access to elements inside iframe */
                 var iframe = document.getElementById('page');
+                this.iframe = iframe;
+
                 var inter = window.setInterval(function() {
                     if (iframe.contentWindow.document.readyState === "complete") {
 
-                        var innerDoc =iframe.contentDocument || iframe.contentWindow.document;
+                        var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        self.iframedoc = innerDoc;
                         window.clearInterval(inter);
                         self.marqueeView.render();
                         self.widgetsManager.setElement(iframe).render();
                         self.navbar.setElement(innerDoc.getElementById('navbar')).render();
-                        console.log(innerDoc.getElementById('footer'));
                         self.footer.setElement(innerDoc.getElementById('footer')).render();
                         self.guides.setElement(innerDoc.getElementById('elements-container')).render();
                         $(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
+
+                        self.setupPageHeight();
                     }
                 }, 100);
 
                 this.setupPageWrapper();
-                this.setupPageHeight();
                 this.setupPageHeightBindings();
 
                 window.addEventListener('resize', this.setupPageWrapper);
@@ -251,7 +254,7 @@ define([
             },
 
             setupPageHeight: function() {
-                var $container = this.$el.find('#elements-container');
+                var $container = $(this.iframedoc.getElementById('elements-container'));
                 var oldHeight = this.currentHeight;
 
                 this.currentHeight = (this.model.getHeight() + 12) * 15;

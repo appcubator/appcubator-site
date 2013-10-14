@@ -53,7 +53,7 @@ function( WidgetView,
         var newWidgetView = this.placeUIElement(widget, false);
       }, this);
 
-      this.widgetSelectorView.setElement(this.widgetsContainer).render();
+      this.widgetSelectorView.setElement(innerDoc).render();
     },
 
     addWidgets: function(arrWidgets) {
