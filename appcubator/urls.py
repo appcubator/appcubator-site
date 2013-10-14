@@ -117,7 +117,8 @@ urlpatterns += patterns('appcubator.views',
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
 
-    url(r'^(.*)/$', 'user_page')
+    # USERNAME ROUTE moved down to the bottom to avoid conflict w other routes
+
 )
 
 urlpatterns += patterns('appcubator.theme_views',
@@ -151,6 +152,11 @@ urlpatterns += patterns('appcubator.test_views',
 
 urlpatterns += patterns('',
     url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
+)
+
+# USERNAME ROUTE
+urlpatterns += patterns('appcubator.views',
+    url(r'^(.*)/$', 'user_page')
 )
 
 # production (hosted) deployments
