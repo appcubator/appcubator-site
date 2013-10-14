@@ -11,7 +11,7 @@ from django.contrib import messages
 
 from django.forms import ModelForm
 
-from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, AppstateSnapshot, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
+from models import App, StaticFile, UITheme, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, Customer, ExtraUserData, AnalyticsStore, User
 from models import DomainRegistration
 from models import get_default_uie_state, get_default_mobile_uie_state
 from models import get_default_app_state, get_default_theme_state
@@ -88,9 +88,25 @@ def app_welcome(request):
 
 
 def user_page(request, username):
-    if request.user.username == username:
-        return app_dashboard(request, str(request.user.apps.latest('id').id))
-    return redirect("/")
+    if request.user.username != username:
+        return redirect("/")
+
+    if request.user.extradata.noob:
+
+        # case for turning noob mode off
+        if request.user.apps.count() > 0 and is_stripe_customer(request.user):
+            e = request.user.extradata
+            e.noob = 0
+            e.save()
+            # moves on w rest of procedure
+        # else redirect to noob page
+        else:
+            return redirect(app_noob_page)
+
+    if request.user.apps.count() == 0:
+        return redirect(app_new)
+
+    return app_dashboard(request, str(request.user.apps.latest('id').id))
 
 def app_dashboard(request, app_id):
     # render dashboard
@@ -264,7 +280,7 @@ def app_page(request, app_id, page_name="overview"):
         return redirect(app_welcome)
 
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
 
     themes = UITheme.get_web_themes()
@@ -292,7 +308,7 @@ def app_page(request, app_id, page_name="overview"):
 def app_json_editor(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
 
     page_context = {'app': app,
@@ -306,7 +322,7 @@ def app_json_editor(request, app_id):
 def app_edit_theme(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
 
     #theme = get_object_or_404(UITheme, pk = theme_id)
@@ -333,7 +349,7 @@ def app_delete(request, app_id):
 @login_required
 def app_state(request, app_id, validate=True):
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
     if request.method == 'GET':
         state = app_get_state(request, app)
@@ -363,25 +379,20 @@ def app_save_state(request, app, require_valid=True):
     app.state['name'] = app.name
     app.full_clean()
 
-    if not require_valid:
-        app.save()
-        return (200, {'version_id': app.state.get('version_id', 0)})
+    # require valid => check for valid, potentially raise an error, else continue
+    # change? if so log.
+    if require_valid:
+        try:
+            app.parse_and_link_app_state()
+        except analyzer.UserInputError, e:
+            app.save()
+            d = e.to_dict()
+            d['version_id'] = app.state.get('version_id', 0)
+            return (400, d)
 
-    try:
-        app.parse_and_link_app_state()
-    except analyzer.UserInputError, e:
-        app.save()
-        d = e.to_dict()
-        d['version_id'] = app.state.get('version_id', 0)
-        return (400, d)
-    # raise on normal exceptions.
-    else:
-        # Save the app state for future use
-        appstate_snapshot = AppstateSnapshot(owner=request.user,
-            app=app, name=app.name, snapshot_date=datetime.now(), _state_json=request.body)
-        appstate_snapshot.save()
-        app.save()
-        return (200, {'version_id': app.state.get('version_id', 0)})
+    app.save()
+
+    return (200, {'version_id': app.state.get('version_id', 0)})
 
 @login_required
 @csrf_exempt
@@ -484,7 +495,7 @@ def documentation_search(request):
 @login_required
 def uie_state(request, app_id):
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
     if request.method == 'GET':
         state = app_get_uie_state(request, app)
@@ -499,7 +510,7 @@ def uie_state(request, app_id):
 @login_required
 def mobile_uie_state(request, app_id):
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
     if request.method == 'GET':
         state = app_get_uie_state(request, app)
@@ -520,7 +531,7 @@ def less_sheet(request, app_id, isMobile=False):
 
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
     css_string = app.css(deploy=False, mobile=isMobile)
     return HttpResponse(css_string, mimetype='text/css')
@@ -544,7 +555,7 @@ def default_less_sheet(request):
 def css_sheet(request, app_id, isMobile=False):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
     uie_state = app.uie_state
     if isMobile:
@@ -582,7 +593,7 @@ def app_save_uie_state(request, app):
         app.full_clean()
     except Exception, e:
         return (400, str(e))
-    app.save(state_version=False)
+    app.save()
     return (200, 'ok')
 
 
@@ -594,14 +605,14 @@ def app_save_mobile_uie_state(request, app):
         app.full_clean()
     except Exception, e:
         return (400, str(e))
-    app.save(state_version=False)
+    app.save()
     return (200, 'ok')
 
 
 def app_emails(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
 
     page_context = {'app': app, 'title': 'Emails', 'app_id': app_id}
@@ -637,9 +648,9 @@ def get_analytics(request, app_id):
     app = get_object_or_404(App, id=app_id)
     if app.deployment_id is None:
         raise Http404
-    
+
     _get_analytics(app.deployment_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
     analytics_data = None
     try:
@@ -672,7 +683,7 @@ def staticfiles(request, app_id):
     else:
         app_id = long(app_id)
         app = get_object_or_404(App, id=app_id)
-        if not request.user.is_superuser and app.owner.id != request.user.id:
+        if not app.is_editable_by_user(request.user):
             raise Http404
         if request.method == 'GET':
             sf = StaticFile.objects.filter(
@@ -690,7 +701,7 @@ def staticfiles(request, app_id):
 def delete_static(request, app_id, static_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
     sf = StaticFile.objects.filter(pk = static_id, app=app)
     sf.delete()
@@ -702,7 +713,7 @@ def delete_static(request, app_id, static_id):
 @csrf_exempt
 def app_zip(request, app_id):
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
 
     # AJAX this route to do validate (returns 200 or 409)
@@ -723,7 +734,7 @@ def app_zip(request, app_id):
 @csrf_exempt
 def app_deploy(request, app_id):
     app = get_object_or_404(App, id=app_id)
-    if not request.user.is_superuser and app.owner.id != request.user.id:
+    if not app.is_editable_by_user(request.user):
         raise Http404
     app.full_clean()
 
@@ -812,7 +823,7 @@ def sub_register_domain(request, app_id, subdomain):
     form = forms.ChangeSubdomain({'subdomain': subdomain}, app=app)
     if form.is_valid():
         # the below line calls the model's save method, which will update deployment server automatically.
-        app = form.save(state_version=False)
+        app = form.save()
         return HttpResponse(simplejson.dumps({}), status=200, mimetype="application/json")
 
     return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")
@@ -834,7 +845,7 @@ def hookup_custom_domain(request, app_id, domain):
 
     if is_valid_hostname(domain):
         app.custom_domain = domain
-        app.save(state_version=False)
+        app.save()
         return JsonResponse({})
     else:
         return JsonResponse({}, status=400)

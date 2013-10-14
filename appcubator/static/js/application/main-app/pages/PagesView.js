@@ -36,7 +36,6 @@ define([
                 this.$el.html(_.template(util.getHTML('pages-page'), {}));
                 this.listView = document.getElementById('list-pages');
 
-                console.log(this.collection);
                 if (this.collection.length === 0) {
 
                 } else {
@@ -119,7 +118,6 @@ define([
                     var liEl = document.createElement('option');
                     liEl.value = 'clone-page-' + pageM.cid;
                     liEl.innerHTML = pageM.get('name');
-                    console.log(liEl);
                     list.appendChild(liEl);
                 });
 
@@ -146,6 +144,7 @@ define([
                 var pageUrlPart = pageName.replace(/ /g, '_');
                 initModel.url.urlparts[0] = pageUrlPart;
                 initModel.name = pageName;
+                initModel = new PageModel(initModel);
 
                 this.collection.add(initModel);
 

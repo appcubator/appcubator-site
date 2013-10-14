@@ -41,6 +41,10 @@ def format_full_details(details):
         lines.append("{}: {}".format(k, v))
     return '\n'.join(lines)
 
+def five_hundred_test(request, code = 500):
+    if code == 500 and not settings.DEBUG:
+        raise Exception()
+    return render(request, "%d.html"%code)
 
 
 class MyUserCreationForm(auth_forms.UserCreationForm):

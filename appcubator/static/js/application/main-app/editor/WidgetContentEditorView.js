@@ -31,7 +31,7 @@ function(SelectView) {
         this.model.get('type') != "images" &&
         this.model.get('type') != "buttons") {
 
-        this.el.appendChild(this.renderFontPicker());
+        //this.el.appendChild(this.renderFontPicker());
       }
 
       if(this.model.get('data').get('content_attribs').has('href')) {
@@ -131,8 +131,8 @@ function(SelectView) {
       optionsDiv.className = 'font-options';
       optionsDiv.innerHTML = '<span id="toggle-bold" class="option-button"><strong>B</strong></span>';
 
-      li.appendChild(sizeDiv);
-      li.appendChild(optionsDiv);
+      // li.appendChild(sizeDiv);
+      // li.appendChild(optionsDiv);
 
       $(sizeDiv).find('option[value="font-size:'+currentFont+';"]').prop('selected', true);
       return li;

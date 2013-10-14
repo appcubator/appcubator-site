@@ -160,6 +160,11 @@ define([
                 this.UIStateTimer = setInterval(function() {
                     self.fetchUIState(function(state) {
                         console.log(state);
+                        /* crappy fix */
+                        _.each(state.texts, function (text) {
+                            text.tagName = "div";
+                        });
+
                         if (!_.isEqual(state, uieState)) {
                             self.renewUIEState(state);
                         }
