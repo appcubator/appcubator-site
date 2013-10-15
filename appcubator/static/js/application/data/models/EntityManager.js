@@ -12,7 +12,7 @@ define(function(require, exports, module) {
         },
 
         getWidgetsRelatedToTable: function(tableM) {
-            var widgetsWithEntity = this.searchPageWidgetCollectionForKey(this.pages, "entity", function(val) {
+            var widgetsWithEntity = this.searchCollectionForKey(this.pages, "entity", function(val) {
                 if(Backbone.isModel(val)) {
                     return val.cid == tableM.cid;
                 }
