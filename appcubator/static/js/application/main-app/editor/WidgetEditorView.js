@@ -110,7 +110,9 @@ define(function(require, exports, module) {
                 }
 
                 if (action == "facebookshare") {
+                    this.layoutEditor = new WidgetLayoutEditorView(this.model);
                     this.el.appendChild(this.renderButtonWithDeleteButtonandText('link-to-page-button', 'Link to A Facebook Page'));
+                    this.el.appendChild(this.layoutEditor.el);
                 }
 
                 if (action == "videoembed") {
@@ -147,7 +149,9 @@ define(function(require, exports, module) {
                 }
 
                 if (action == "buy") {
+                    this.layoutEditor = new WidgetLayoutEditorView(this.model);
                     this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-itemname-btn', 'Edit Item Name'));
+                    this.el.appendChild(this.layoutEditor.el);
                 }
 
                 if (this.model.hasForm() && action != "login" && action != "signup") {

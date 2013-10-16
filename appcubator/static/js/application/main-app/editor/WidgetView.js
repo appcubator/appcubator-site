@@ -265,6 +265,7 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
         },
 
         switchEditModeOn: function() {
+            console.log("switchEditModeOn");
             if (this.model.get('data').get('content')) {
                 this.editMode = true;
                 //var el = $(this.el.firstChild);
@@ -273,10 +274,9 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
                 //el.attr('contenteditable', 'true');
                 //el.focus();
 
-                this.$innerEl.freshereditor({
-                    toolbar_selector: ".widget-editor",
-                    excludes: ['removeFormat',
-                               'insertheading1',
+                var excludes = [
+                    'removeFormat',
+                    'insertheading1',
                                'insertheading2',
                                'insertheading3',
                                'insertheading4',
@@ -290,8 +290,29 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
                                'insertimage',
                                'insertparagraph',
                                'blockquote',
-                               'justifyfull']
+                               'justifyfull'
+                ];
+
+                if(this.model.isBuyButton()) {
+                    excludes = _.union(excludes, [
+                        'FontSize',
+                        'justifyleft',
+                        'justifyright',
+                        'justifycenter',
+                        'createlink',
+                        'bold',
+                        'italic',
+                        'underline',
+                        'insertunorderedlist',
+                        'insertorderedlist'
+                    ]);
+                }
+                
+                this.$innerEl.freshereditor({
+                    toolbar_selector: ".widget-editor",
+                    excludes: excludes
                 });
+
                 this.$innerEl.freshereditor("edit", true);
 
                 util.selectText(this.$innerEl);
