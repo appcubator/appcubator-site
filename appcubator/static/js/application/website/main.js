@@ -6,6 +6,8 @@ require.config({
     "jquery-ui" : "../../libs/jquery-ui/jquery-ui",
     "jquery.hotkeys" : "../../libs/jquery/jquery.hotkeys",
     "jquery.scrollspy" : "../../libs/jquery/jquery.scrollspy",
+    "jquery.freshereditor": "../../libs/jquery/jquery.freshereditor",
+    "shortcut": "../../libs/shortcut",
     "underscore" : "../../libs/underscore-amd/underscore",
     "backbone" : "../../libs/backbone-amd/backbone",
     "react"           : "https://cdnjs.cloudflare.com/ajax/libs/react/0.4.1/react.min",
@@ -50,6 +52,10 @@ require.config({
     "jquery.scrollspy" : {
       deps: ["jquery"]
     },
+    "jquery.freshereditor": {
+      exports: "$",
+      deps: ['jquery', 'shortcut']
+    },
     "util.filepicker": {
       exports: "util"
     },
@@ -70,7 +76,8 @@ require([
   'prettyCheckable',
   'mixins/BackboneConvenience',
   'bootstrap',
-  'jquery.scrollspy'
+  'jquery.scrollspy',
+  'jquery.freshereditor'
 ],
 function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
