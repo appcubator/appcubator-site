@@ -18,10 +18,12 @@ require.config({
         "dicts": "../../main-app/dicts",
         "mixins": "../../../mixins",
         "prettyCheckable": "../../libs/jquery/prettyCheckable",
-        "list": "../../libs/list",
+        "list": "../../../libs/list",
         "snap": "../../libs/snap.min",
         "models": "../../data/models",
-        "collections": "../../data/collections"
+        "collections": "../../data/collections",
+        "ace": "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace",
+        "tutorial": "../../tutorial"
     },
 
     shim: {
@@ -90,6 +92,7 @@ require([
         "collections/PageCollection",
         "collections/MobilePageCollection",
         "editor/WidgetView",
+        "editor/WidgetsManagerView",
         "editor/KeyDispatcher",
         "editor/MouseDispatcher",
         "heyoffline",
@@ -102,56 +105,23 @@ require([
         PageCollection,
         MobilePageCollection,
         WidgetView,
+        WidgetsManagerView,
         KeyDispatcher,
         MouseDispatcher,
         Heyoffline,
         Backbone) {
 
+        v1State = top.v1State;
+        g_guides = top.g_guides;
+        uieState = top.uieState;
+
         keyDispatcher = top.keyDispatcher;
         mouseDispatcher = top.mouseDispatcher;
 
         var proxy = {
-
-            widgetsContainer :  document.getElementById('elements-container'),
-
-            placeWidget: function(widgetModel, isNew) {
-                var curWidget = new WidgetView(widgetModel);
-                if (!widgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-                else util.get('full-container').appendChild(curWidget.render().el);
-                if (isNew) curWidget.autoResize();
-
-                return curWidget;
-            },
-
-            placeContainer: function(containerWidgetModel, isNew) {
-              var curWidget = new WidgetContainerView(containerWidgetModel);
-              if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-              else util.get('full-container').appendChild(curWidget.render().el);
-              if(isNew) curWidget.autoResize();
-              return curWidget;
-            },
-
-            placeList: function(containerWidgetModel, isNew) {
-              var curWidget= new WidgetListView(containerWidgetModel);
-              if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-              else util.get('full-container').appendChild(curWidget.render().el);
-              if(isNew) curWidget.autoResize();
-              return curWidget;
-            },
-
-            placeForm: function(containerWidgetModel, isNew) {
-              var curWidget= new WidgetFormView(containerWidgetModel);
-              if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-              else util.get('full-container').appendChild(curWidget.render().el);
-              if(isNew) curWidget.autoResize();
-              return curWidget;
-            },
-
-            placeCustomWidget: function(widgetModel, isNew) {
-              var curWidget= new WidgetCustomView(widgetModel);
-              this.widgetsContainer.appendChild(curWidget.render().el);
-              if(isNew) new CustomWidgetEditorModal(widgetModel);
-              return curWidget;
+            setupWidgetsManager: function (widgetsCollection) {
+                this.widgetsManager = new WidgetsManagerView(widgetsCollection);
+                return this.widgetsManager;
             }
         };
 

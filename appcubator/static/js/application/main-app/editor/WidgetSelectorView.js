@@ -101,7 +101,7 @@ define(function(require, exports, module) {
             hoverDiv.style.position = "absolute";
             selectDiv.style.position = "absolute";
 
-            //$('.page.full').on('mousedown', this.clickedPage);
+            $(document).on('mousedown', this.clickedPage);
 
             return this;
         },

@@ -5,7 +5,6 @@ define([
         'mixins/SimpleModalView',
         'mixins/ErrorModalView',
         'mixins/DebugOverlay',
-        'editor/WidgetsManagerView',
         'editor/WidgetEditorView',
         'editor/EditorGalleryView',
         'editor/PageTemplatePicker',
@@ -25,7 +24,6 @@ define([
         SimpleModalView,
         ErrorModalView,
         DebugOverlay,
-        WidgetsManagerView,
         WidgetEditorView,
         EditorGalleryView,
         PageTemplatePicker,
@@ -66,7 +64,7 @@ define([
 
                 this.marqueeView = new MarqueeView();
                 this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
-                this.widgetsManager = new WidgetsManagerView(this.widgetsCollection);
+                this.widgetsManager = {};
                 this.guides = new GuideView(this.widgetsCollection);
                 this.toolBar = new ToolBarView();
 
@@ -142,18 +140,18 @@ define([
                 var self = this;
                 var iframe = document.getElementById('page');
 
-                console.log(proxy);
+                this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
 
-                        var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-                        self.iframedoc = innerDoc;
-                        self.marqueeView.render();
-                        self.widgetsManager.setElement(iframe).render(proxy);
-                        self.navbar.setElement(innerDoc.getElementById('navbar')).render();
-                        self.footer.setElement(innerDoc.getElementById('footer')).render();
-                        self.guides.setElement(innerDoc.getElementById('elements-container')).render();
-                        $(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
+                var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+                self.iframedoc = innerDoc;
+                self.marqueeView.render();
+                self.widgetsManager.render();
+                self.navbar.setElement(innerDoc.getElementById('navbar')).render();
+                self.footer.setElement(innerDoc.getElementById('footer')).render();
+                self.guides.setElement(innerDoc.getElementById('elements-container')).render();
+                $(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
 
-                        self.setupPageHeight();
+                self.setupPageHeight();
             },
 
             renderUrlBar: function() {

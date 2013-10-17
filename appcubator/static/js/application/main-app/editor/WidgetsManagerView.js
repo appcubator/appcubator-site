@@ -2,7 +2,6 @@ define([
   'editor/WidgetView',
   'editor/WidgetContainerView',
   'models/WidgetModel',
-  'editor/WidgetEditorView',
   'editor/WidgetListView',
   'editor/WidgetFormView',
   'editor/WidgetSelectorView',
@@ -13,7 +12,6 @@ define([
 function( WidgetView,
           WidgetContainerView,
           WidgetModel,
-          WidgetEditorView,
           WidgetListView,
           WidgetFormView,
           WidgetSelectorView,
@@ -21,10 +19,15 @@ function( WidgetView,
           CustomWidgetEditorModal) {
 
   var WidgetManagerView = Backbone.View.extend({
+    
+    el: document.body,
+
     widgetsContainer : null,
+    
     events : {
 
     },
+    
     subviews: [],
 
     initialize: function(widgetsCollection) {
@@ -42,24 +45,21 @@ function( WidgetView,
       this.listenTo(this.widgetsCollection, 'add',  function() { util.askBeforeLeave(); });
     },
 
-    render: function(proxy) {
-      this.proxy = proxy;
-      
-      var innerDoc = this.el.contentDocument || this.el.contentWindow.document;
-      this.widgetsContainer = innerDoc.getElementById('elements-container');
+    render: function() {
+      this.widgetsContainer = document.getElementById('elements-container');
       this.widgetsContainer.innerHTML = '';
       
       this.widgetsCollection.each(function(widget) {
-        widget.setupPageContext(v1State.getCurrentPage());
+        widget.setupPageContext(top.v1State.getCurrentPage());
         var newWidgetView = this.placeUIElement(widget, false);
       }, this);
 
 
-      this.widgetSelectorView.setElement(innerDoc).render();
+      this.widgetSelectorView.setElement(document).render();
     },
 
     addWidgets: function(arrWidgets) {
-      widget.setupPageContext(v1State.getCurrentPage());
+      widget.setupPageContext(top.v1State.getCurrentPage());
       var newWidgetView = this.placeUIElement(widget, false);
     },
 
@@ -70,23 +70,66 @@ function( WidgetView,
       model.setupPageContext(v1State.getCurrentPage());
       var widget = {};
       if(model.get('data').has('container_info') && model.get('data').get('container_info').has('row')) {
-        widget = this.proxy.placeList(model, isNew);
+        widget = this.placeList(model, isNew);
       }
       else if(model.hasForm()) {
-        widget = this.proxy.placeForm(model, isNew);
+        widget = this.placeForm(model, isNew);
       }
       else if(model.get('data').has('container_info') || model.get('data').get('action') == "thirdpartylogin") {
-        widget = this.proxy.placeContainer(model, isNew);
+        widget = this.placeContainer(model, isNew);
       }
       else if(model.get('type') == 'custom') {
-        widget = this.proxy.placeCustomWidget(model, isNew);
+        widget = this.placeCustomWidget(model, isNew);
       }
       else {
-        widget = this.proxy.placeWidget(model, isNew);
+        widget = this.placeWidget(model, isNew);
       }
 
       this.subviews.push(widget);
       return widget;
+    },
+
+    placeWidget: function(widgetModel, isNew) {
+      var curWidget = new WidgetView(widgetModel);
+
+      if(!widgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
+      else util.get('full-container').appendChild(curWidget.render().el);
+      if(isNew) curWidget.autoResize();
+
+      curWidget.delegateEvents();
+
+      return curWidget;
+    },
+
+    placeContainer: function(containerWidgetModel, isNew) {
+      var curWidget = new WidgetContainerView(containerWidgetModel);
+      if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
+      else util.get('full-container').appendChild(curWidget.render().el);
+      if(isNew) curWidget.autoResize();
+      return curWidget;
+    },
+
+    placeList: function(containerWidgetModel, isNew) {
+      var curWidget= new WidgetListView(containerWidgetModel);
+      if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
+      else util.get('full-container').appendChild(curWidget.render().el);
+      if(isNew) curWidget.autoResize();
+      return curWidget;
+    },
+
+    placeForm: function(containerWidgetModel, isNew) {
+      var curWidget= new WidgetFormView(containerWidgetModel);
+      if(!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
+      else util.get('full-container').appendChild(curWidget.render().el);
+      if(isNew) curWidget.autoResize();
+      return curWidget;
+    },
+
+    placeCustomWidget: function(widgetModel, isNew) {
+      var curWidget= new WidgetCustomView(widgetModel);
+      this.widgetsContainer.appendChild(curWidget.render().el);
+      if(isNew) new CustomWidgetEditorModal(widgetModel);
+      return curWidget;
     },
 
     close: function() {

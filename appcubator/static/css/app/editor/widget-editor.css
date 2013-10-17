@@ -1,0 +1,479 @@
+#widget-editor {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 2006;
+  max-height: 400px;
+  padding: 0;
+  margin-top: 12px;
+  overflow: visible;
+  font: normal 16px/20px "proxima-nova", Arial, sans-serif;
+  color: #fff;
+  text-align: left;
+  background-color: #2b3545;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+#widget-editor.right {
+  top: 0;
+  left: 100%;
+  margin-top: 0;
+  margin-left: 16px;
+}
+
+#widget-editor.left {
+  top: 0;
+  left: 0;
+  margin-top: 0;
+  margin-left: -270px;
+}
+
+#widget-editor .font-picker {
+  width: 70px;
+  margin-left: 8px;
+}
+
+#widget-editor .top-arrow {
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 12px;
+  margin-top: -12px;
+  margin-left: 24px;
+  background-image: url(/static/img/top-blue-arrow.png);
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+
+#widget-editor .left-arrow {
+  position: absolute;
+  top: -15px;
+  left: 0;
+  width: 12px;
+  height: 30px;
+  margin-top: 24px;
+  margin-left: -12px;
+  background-image: url(/static/img/left-blue-arrow.png);
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+
+#widget-editor .right-arrow {
+  position: absolute;
+  top: -15px;
+  left: 100%;
+  width: 12px;
+  height: 30px;
+  margin-top: 24px;
+  margin-right: -12px;
+  background-image: url(/static/img/right-blue-arrow.png);
+  background-position: top right;
+  background-repeat: no-repeat;
+}
+
+#widget-editor .pad {
+  padding: 5px;
+}
+
+#widget-editor ul {
+  min-width: 240px;
+  padding: 0;
+  margin: 0;
+}
+
+#widget-editor .tool-tip-box {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  display: inline-block;
+  padding: 6px;
+  margin-left: 10px;
+  font-weight: bold;
+  background-color: rgba(30, 30, 30, 0.8);
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+#widget-editor .padding:hover {
+  background-color: #1b2535;
+}
+
+.content-editor .key {
+  height: 30px;
+  margin-top: 10px;
+  margin-left: 3%;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+.content-editor li,
+.class-picker li {
+  display: inline-block;
+  width: 100%;
+  list-style: none;
+  border-top: 1px solid #3b4555;
+  border-bottom: 1px solid #1b2535;
+}
+
+.layout-editor ul li.selected,
+.content-editor ul li.selected,
+.padding-picker .selected,
+.alignment-picker .selected,
+.option-button.selected {
+  background-color: #1b2535;
+}
+
+.layout-editor {
+  top: 0;
+  right: 260px;
+  z-index: 1270 !important;
+  width: 240px;
+  font-size: 12px;
+  line-height: 14px;
+  background-color: #2b3545;
+}
+
+.layout-editor div.padding,
+.layout-editor div.a-pick {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  margin-right: 1px;
+  margin-left: 1px;
+  text-align: center;
+  border: 1px solid #1b2535;
+  border-top: 1px solid #3b4555;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+.layout-editor ul li.selected {
+  background-color: #1b2535;
+}
+
+.size-picker {
+  display: inline-block;
+  width: 156px;
+  margin-top: 6px;
+  margin-left: 4px;
+}
+
+.option-button {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 34px;
+  text-align: center;
+  vertical-align: top;
+  cursor: pointer;
+  border: 1px solid #1b2535;
+  border-top: 1px solid #3b4555;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+.option-button.delete-button {
+  display: inline-block;
+  margin-left: 6px;
+}
+
+.option-button:hover {
+  background-color: #1b2535;
+}
+
+.font-options {
+  display: inline-block;
+  padding: 4px;
+  vertical-align: top;
+}
+
+strong {
+  font-weight: bold !important;
+}
+
+select.url-part {
+  display: inline-block;
+  width: 76px;
+  padding: 4px 2px;
+  margin: 0;
+  text-align: left;
+}
+
+h3.edit-url {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.list-editor-container {
+  position: relative;
+  display: inline-block;
+  width: 500px;
+  height: 600px;
+  vertical-align: top;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ccc;
+}
+
+.list-action-editor {
+  display: inline-block;
+  width: 156px;
+  height: 600px;
+  vertical-align: top;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ccc;
+}
+
+.query-view-panel {
+  -ms-overflow-y: scroll;
+      overflow-y: scroll;
+}
+
+.type-pick {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  margin: 4px;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+.content-editor {
+  top: 0;
+  right: 480px;
+  z-index: 1270 !important;
+  width: 240px;
+  padding: 0;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 14px;
+  list-style: none;
+  background-color: #2b3545;
+  border-right: 1px solid #1b2535;
+  border-left: 1px solid #3b4555;
+}
+
+#content-editor select {
+  width: 94%;
+  margin-left: 3%;
+}
+
+.header-div {
+  width: 100%;
+  height: 20px;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 18px;
+  text-align: center;
+  background-color: #283141;
+  background-image: -moz-linear-gradient(top, #2b3545, #232a3a);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2b3545), to(#232a3a));
+  background-image: -webkit-linear-gradient(top, #2b3545, #232a3a);
+  background-image: -o-linear-gradient(top, #2b3545, #232a3a);
+  background-image: linear-gradient(to bottom, #2b3545, #232a3a);
+  background-repeat: repeat-x;
+  border-top: 1px solid #3b4555;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2b3545', endColorstr='#ff232a3a', GradientType=0);
+}
+
+.widget-editor .select-view {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  min-width: 240px;
+  overflow: hidden;
+  overflow-y: scroll;
+  font-size: 14px;
+  -webkit-transition: height linear 0.1s;
+     -moz-transition: height linear 0.1s;
+      -ms-transition: height linear 0.1s;
+       -o-transition: height linear 0.1s;
+          transition: height linear 0.1s;
+}
+
+.widget-editor .select-view .updown-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1001;
+  width: 100%;
+  height: 40px;
+  background-color: transparent;
+  background-image: url('/static/img/updown-handle.png');
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.widget-editor .select-view ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.widget-editor .select-view ul li {
+  height: 40px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.widget-editor .select-view ul li:hover {
+  background-color: #3b4555;
+}
+
+.alignment-picker,
+.padding-picker {
+  padding: 4px;
+}
+
+.a-pick {
+  cursor: pointer;
+}
+
+.a-pick:hover {
+  background-color: #1b2535;
+}
+
+.icon-align-left {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-image: url('/static/img/align_left_icon.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: auto 50%;
+     -moz-background-size: auto 50%;
+       -o-background-size: auto 50%;
+          background-size: auto 50%;
+}
+
+.a-left {
+  background-image: url('/static/img/align_left_icon.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: auto 50%;
+     -moz-background-size: auto 50%;
+       -o-background-size: auto 50%;
+          background-size: auto 50%;
+}
+
+.icon-align-center {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-image: url('/static/img/align_center_icon.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: auto 50%;
+     -moz-background-size: auto 50%;
+       -o-background-size: auto 50%;
+          background-size: auto 50%;
+}
+
+.a-center {
+  background-image: url('/static/img/align_center_icon.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: auto 50%;
+     -moz-background-size: auto 50%;
+       -o-background-size: auto 50%;
+          background-size: auto 50%;
+}
+
+.icon-align-right {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-image: url('/static/img/align_right_icon.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: auto 50%;
+     -moz-background-size: auto 50%;
+       -o-background-size: auto 50%;
+          background-size: auto 50%;
+}
+
+.a-right {
+  background-image: url('/static/img/align_right_icon.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: auto 50%;
+     -moz-background-size: auto 50%;
+       -o-background-size: auto 50%;
+          background-size: auto 50%;
+}
+
+.icon-list {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-image: url('/static/img/list_bullets_icon&48.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: auto 50%;
+     -moz-background-size: auto 50%;
+       -o-background-size: auto 50%;
+          background-size: auto 50%;
+}
+
+.icon-list-alt {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-image: url('/static/img/list_num_icon&48.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: auto 50%;
+     -moz-background-size: auto 50%;
+       -o-background-size: auto 50%;
+          background-size: auto 50%;
+}
+
+.padding.tb {
+  padding: 0;
+  background-image: url('/static/img/tb-padding.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: auto 50%;
+     -moz-background-size: auto 50%;
+       -o-background-size: auto 50%;
+          background-size: auto 50%;
+}
+
+.padding.lr {
+  padding: 0;
+  background-image: url('/static/img/lr-padding.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: auto 50%;
+     -moz-background-size: auto 50%;
+       -o-background-size: auto 50%;
+          background-size: auto 50%;
+}
+
+.btn-group {
+  display: inline-block;
+  margin-top: 2px;
+  margin-left: 2px;
+  vertical-align: top;
+}
+
+.btn-group .option-button,
+.btn-group select {
+  margin: 2px;
+  vertical-align: top;
+}
+
+.btn-group .toolbar_fontsize {
+  margin-bottom: 2px;
+}
