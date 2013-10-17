@@ -114,23 +114,6 @@ define([
                 var iframe = document.getElementById('page');
                 this.iframe = iframe;
 
-                var inter = window.setInterval(function() {
-                    if (iframe.contentWindow.document.readyState === "complete") {
-
-                        var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-                        self.iframedoc = innerDoc;
-                        window.clearInterval(inter);
-                        self.marqueeView.render();
-                        self.widgetsManager.setElement(iframe).render();
-                        self.navbar.setElement(innerDoc.getElementById('navbar')).render();
-                        self.footer.setElement(innerDoc.getElementById('footer')).render();
-                        self.guides.setElement(innerDoc.getElementById('elements-container')).render();
-                        $(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
-
-                        self.setupPageHeight();
-                    }
-                }, 100);
-
                 this.setupPageWrapper();
                 this.setupPageHeightBindings();
 
@@ -155,6 +138,24 @@ define([
                 return this;
             },
 
+            renderIFrameContent: function (proxy) {
+                var self = this;
+                var iframe = document.getElementById('page');
+
+                console.log(proxy);
+
+                        var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        self.iframedoc = innerDoc;
+                        self.marqueeView.render();
+                        self.widgetsManager.setElement(iframe).render(proxy);
+                        self.navbar.setElement(innerDoc.getElementById('navbar')).render();
+                        self.footer.setElement(innerDoc.getElementById('footer')).render();
+                        self.guides.setElement(innerDoc.getElementById('elements-container')).render();
+                        $(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
+
+                        self.setupPageHeight();
+            },
+
             renderUrlBar: function() {
                 this.$el.find('.url-bar').html(this.urlModel.getUrlString());
             },
@@ -172,7 +173,6 @@ define([
                 var self = this;
                 this.UIStateTimer = setInterval(function() {
                     self.fetchUIState(function(state) {
-                        console.log(state);
                         /* crappy fix */
                         _.each(state.texts, function (text) {
                             text.tagName = "div";

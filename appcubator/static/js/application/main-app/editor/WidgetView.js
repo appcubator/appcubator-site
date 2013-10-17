@@ -1,9 +1,9 @@
-define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
+define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-templates'], function() {
 
     'use strict';
 
     var WidgetView = Backbone.UIView.extend({
-        
+
         el: null,
         className: 'widget-wrapper',
         tagName: 'div',
@@ -16,12 +16,12 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
         positionVerticalGrid: 15,
 
         events: {
-            'click'         : 'select',
-            'click .delete' : 'remove',
-            'mouseover'     : 'hovered',
-            'mouseout'      : 'unhovered',
-            'mousedown'     : 'mousedown',
-            'mouseup'       : 'mouseup'
+            'click': 'select',
+            'click .delete': 'remove',
+            'mouseover': 'hovered',
+            'mouseout': 'unhovered',
+            'mousedown': 'mousedown',
+            'mouseup': 'mouseup'
         },
 
         initialize: function(widgetModel) {
@@ -31,18 +31,18 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
             this.model = widgetModel;
             this.listenTo(this.model, "remove", this.close, this);
 
-            this.listenTo(this.model.get('data'),   "change:type",       this.changedType, this);
-            this.listenTo(this.model.get('data'),   "change:class_name", this.changedType, this);
+            this.listenTo(this.model.get('data'), "change:type", this.changedType, this);
+            this.listenTo(this.model.get('data'), "change:class_name", this.changedType, this);
 
-            this.listenTo(this.model.get('layout'), "change:width",      this.changedSize, this);
-            this.listenTo(this.model.get('layout'), "change:height",     this.changedSize, this);
-            this.listenTo(this.model.get('layout'), "change:top",        this.changedTop, this);
-            this.listenTo(this.model.get('layout'), "change:left",       this.changedLeft, this);
-            this.listenTo(this.model.get('layout'), "change:isFull",     this.toggleFull, this);
-            this.listenTo(this.model.get('layout'), "change:alignment",  this.changedAlignment, this);
-            this.listenTo(this.model.get('layout'), "change",            this.changedPadding, this);
+            this.listenTo(this.model.get('layout'), "change:width", this.changedSize, this);
+            this.listenTo(this.model.get('layout'), "change:height", this.changedSize, this);
+            this.listenTo(this.model.get('layout'), "change:top", this.changedTop, this);
+            this.listenTo(this.model.get('layout'), "change:left", this.changedLeft, this);
+            this.listenTo(this.model.get('layout'), "change:isFull", this.toggleFull, this);
+            this.listenTo(this.model.get('layout'), "change:alignment", this.changedAlignment, this);
+            this.listenTo(this.model.get('layout'), "change", this.changedPadding, this);
 
-            this.listenTo(this.model.get('data'),   "change:content",    this.changedText, this);
+            this.listenTo(this.model.get('data'), "change:content", this.changedText, this);
 
             this.listenTo(this.model.get('data').get('content_attribs'), "change:src", this.changedSource, this);
             this.listenTo(this.model.get('data').get('content_attribs'), "change:value", this.changedValue, this);
@@ -74,6 +74,8 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
             this.el.innerHTML = this.renderElement();
             this.innerEl = this.el.firstChild;
             this.$innerEl = $(this.innerEl);
+
+            console.log(this.el);
 
             return this;
         },
@@ -119,9 +121,9 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
             if (node_context.content) {
                 node_context.content = node_context.content.replace(/\n\r?/g, '<br />');
             }
-            if(node_context.content_attribs.href) node_context.content_attribs.href = "#";
-            
-            if(node_context.content_attribs.src && node_context.content_attribs.src.indexOf('{{') === 0) {
+            if (node_context.content_attribs.href) node_context.content_attribs.href = "#";
+
+            if (node_context.content_attribs.src && node_context.content_attribs.src.indexOf('{{') === 0) {
                 node_context.content_attribs.src = "/static/img/placeholder.png";
             }
             var el = _.template(temp, {
@@ -132,6 +134,7 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
         },
 
         select: function(e) {
+            console.log("selec");
             if (!this.editMode) {
                 this.model.trigger('selected');
                 this.el.style.zIndex = 2003;
@@ -229,6 +232,7 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
         },
 
         hovered: function() {
+            console.log('hovered');
             if (this.editMode || mouseDispatcher.isMousedownActive) return;
             if (this.model.isBgElement()) return;
             this.hovered = true;
@@ -248,9 +252,9 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
             var div = $('#widget-wrapper-' + this.model.cid);
             if (!div.offset()) return false;
 
-            var divTop    = div.offset().top;
-            var divLeft   = div.offset().left;
-            var divRight  = divLeft + div.width();
+            var divTop = div.offset().top;
+            var divLeft = div.offset().left;
+            var divRight = divLeft + div.width();
             var divBottom = divTop + div.height();
 
             if (mouseX >= divLeft && mouseX <= divRight && mouseY >= divTop && mouseY <= divBottom) {
@@ -276,21 +280,22 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
                 this.$innerEl.freshereditor({
                     toolbar_selector: ".widget-editor",
                     excludes: ['removeFormat',
-                               'insertheading1',
-                               'insertheading2',
-                               'insertheading3',
-                               'insertheading4',
-                               'fontname',
-                               'code',
-                               'superscript',
-                               'subscript',
-                               'forecolor',
-                               'backcolor',
-                               'strikethrough',
-                               'insertimage',
-                               'insertparagraph',
-                               'blockquote',
-                               'justifyfull']
+                        'insertheading1',
+                        'insertheading2',
+                        'insertheading3',
+                        'insertheading4',
+                        'fontname',
+                        'code',
+                        'superscript',
+                        'subscript',
+                        'forecolor',
+                        'backcolor',
+                        'strikethrough',
+                        'insertimage',
+                        'insertparagraph',
+                        'blockquote',
+                        'justifyfull'
+                    ]
                 });
                 this.$innerEl.freshereditor("edit", true);
 
@@ -337,7 +342,7 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
             var height = $(node).outerHeight(true);
             var width = $(node).outerWidth(true);
 
-            if(this.model.isImage())  {
+            if (this.model.isImage()) {
                 width = Math.max(240, width);
                 height = Math.max(150, height);
             }
@@ -349,14 +354,13 @@ define([ 'backbone', 'jquery.freshereditor', 'mixins/BackboneUI'],  function() {
                 nHeight = (nHeight < 30) ? 30 : nHeight;
                 nWidth = (nWidth < 120) ? 120 : nWidth;
 
-                if(this.model.isBuyButton()) {
+                if (this.model.isBuyButton()) {
                     nWidth = 260;
                     nHeight = 40;
                 }
 
-            }
-            else {
-                if(nWidth + this.model.get('layout').get('left') > 12) {
+            } else {
+                if (nWidth + this.model.get('layout').get('left') > 12) {
                     nWidth = 12 - this.model.get('layout').get('left');
                 }
             }
