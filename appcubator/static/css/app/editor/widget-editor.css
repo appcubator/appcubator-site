@@ -477,3 +477,12 @@ h3.edit-url {
 .btn-group .toolbar_fontsize {
   margin-bottom: 2px;
 }
+
+.delete-button {
+  background-image: url('/static/img/delete-icon-white.png');
+  -webkit-background-size: 80% 80%;
+  -moz-background-size: 80% 80%;
+  background-size: 80% 80%;
+  background-position: 4px 4px;
+  background-repeat: no-repeat;
+}
