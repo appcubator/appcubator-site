@@ -34,7 +34,7 @@ define([
             // mouseup  : function(e) { mouseDispatcher.isMousedownActive = false; },
 
             render: function() {
-                $('.page.full').on('mousedown', this.clickedPage);
+                $(window).on('mousedown', this.clickedPage);
                 return this;
             },
 
@@ -180,7 +180,7 @@ define([
                 keyDispatcher.unbind('left', this.moveSelectedLeft);
                 keyDispatcher.unbind('right', this.moveSelectedRight);
                 keyDispatcher.unbind('backspace', this.deleteSelected);
-                $('.page.full').off('mousedown', this.clickedPage);
+                $(window).off('mousedown', this.clickedPage);
                 Backbone.View.prototype.remove.call(this);
             }
         });

@@ -11,7 +11,6 @@ define([
         'editor/NavbarView',
         'editor/FooterView',
         'editor/GuideView',
-        'editor/MarqueeView',
         'editor/ToolBarView',
         'tutorial/TutorialView',
         'app/DeployView',
@@ -30,7 +29,6 @@ define([
         NavbarView,
         FooterView,
         GuideView,
-        MarqueeView,
         ToolBarView,
         TutorialView,
         DeployView,
@@ -62,7 +60,6 @@ define([
 
                 this.widgetsCollection = this.model.get('uielements');
 
-                this.marqueeView = new MarqueeView();
                 this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
                 this.widgetsManager = {};
                 this.guides = new GuideView(this.widgetsCollection);
@@ -141,7 +138,8 @@ define([
                 var iframe = document.getElementById('page');
 
                 this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
-
+                this.marqueeView = proxy.setupMarqueeView();
+                
                 var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
                 self.iframedoc = innerDoc;
                 self.marqueeView.render();

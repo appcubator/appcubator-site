@@ -334,6 +334,7 @@ h3.edit-url {
 .alignment-picker,
 .padding-picker {
   padding: 4px;
+  display: inline-block;
 }
 
 .a-pick {

@@ -93,6 +93,7 @@ require([
         "collections/MobilePageCollection",
         "editor/WidgetView",
         "editor/WidgetsManagerView",
+        'editor/MarqueeView',
         "editor/KeyDispatcher",
         "editor/MouseDispatcher",
         "heyoffline",
@@ -106,6 +107,7 @@ require([
         MobilePageCollection,
         WidgetView,
         WidgetsManagerView,
+        MarqueeView,
         KeyDispatcher,
         MouseDispatcher,
         Heyoffline,
@@ -122,6 +124,11 @@ require([
             setupWidgetsManager: function (widgetsCollection) {
                 this.widgetsManager = new WidgetsManagerView(widgetsCollection);
                 return this.widgetsManager;
+            },
+
+            setupMarqueeView: function () {
+                this.marqueeView = new MarqueeView();
+                return this.marqueeView;
             }
         };
 
