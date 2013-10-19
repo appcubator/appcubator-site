@@ -30,7 +30,7 @@
 }
 
 .red-border {
-  border: 1px solid #0072bc;
+  border: 1px solid #0072bc !important;
 }
 
 
@@ -219,5 +219,3 @@
   top: 23px;
   right: 23px;
 }
-
-

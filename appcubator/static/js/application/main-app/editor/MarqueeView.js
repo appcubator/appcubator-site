@@ -70,9 +70,14 @@ define([
                 this.isDrawing = false;
                 this.setZero();
 
+                console.log(arr);
+
                 if (arr.length == 1) {
                     arr[0].trigger('selected');
                 } else if (arr.length > 1) {
+                    
+                    console.log(this.multiSelectorView);
+
                     this.multiSelectorView.setContents(arr);
                 }
             },
@@ -164,10 +169,10 @@ define([
 
             close: function() {
                 window.removeEventListener('mouseup', this.mouseup);
-                if (document.getElementById('page')) {
-                    document.getElementById('page').removeEventListener('mousedown', this.mousedown);
-                    document.getElementById('page').removeEventListener('mousemove', this.mousemove);
-                }
+                
+                document.body.removeEventListener('mousedown', this.mousedown);
+                document.body.removeEventListener('mousemove', this.mousemove);
+
                 Backbone.View.prototype.close.call(this);
             }
 

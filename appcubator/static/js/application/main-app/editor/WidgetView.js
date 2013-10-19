@@ -75,8 +75,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.innerEl = this.el.firstChild;
             this.$innerEl = $(this.innerEl);
 
-            console.log(this.el);
-
             return this;
         },
 

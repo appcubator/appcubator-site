@@ -138,16 +138,17 @@ define([
                 var iframe = document.getElementById('page');
 
                 this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
-                this.marqueeView = proxy.setupMarqueeView();
                 
                 var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
                 self.iframedoc = innerDoc;
-                self.marqueeView.render();
+                //self.marqueeView.render();
                 self.widgetsManager.render();
+                this.marqueeView = proxy.setupMarqueeView();
+
                 self.navbar.setElement(innerDoc.getElementById('navbar')).render();
                 self.footer.setElement(innerDoc.getElementById('footer')).render();
                 self.guides.setElement(innerDoc.getElementById('elements-container')).render();
-                $(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
+                //$(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
 
                 self.setupPageHeight();
             },
