@@ -266,6 +266,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         switchEditModeOn: function() {
+            console.log("switchEditModeOn");
             if (this.model.get('data').get('content')) {
                 this.editMode = true;
                 //var el = $(this.el.firstChild);
@@ -274,26 +275,45 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                 //el.attr('contenteditable', 'true');
                 //el.focus();
 
+                var excludes = [
+                    'removeFormat',
+                    'insertheading1',
+                               'insertheading2',
+                               'insertheading3',
+                               'insertheading4',
+                               'fontname',
+                               'code',
+                               'superscript',
+                               'subscript',
+                               'forecolor',
+                               'backcolor',
+                               'strikethrough',
+                               'insertimage',
+                               'insertparagraph',
+                               'blockquote',
+                               'justifyfull'
+                ];
+
+                if(this.model.isBuyButton()) {
+                    excludes = _.union(excludes, [
+                        'FontSize',
+                        'justifyleft',
+                        'justifyright',
+                        'justifycenter',
+                        'createlink',
+                        'bold',
+                        'italic',
+                        'underline',
+                        'insertunorderedlist',
+                        'insertorderedlist'
+                    ]);
+                }
+                
                 this.$innerEl.freshereditor({
                     toolbar_selector: ".widget-editor",
-                    excludes: ['removeFormat',
-                        'insertheading1',
-                        'insertheading2',
-                        'insertheading3',
-                        'insertheading4',
-                        'fontname',
-                        'code',
-                        'superscript',
-                        'subscript',
-                        'forecolor',
-                        'backcolor',
-                        'strikethrough',
-                        'insertimage',
-                        'insertparagraph',
-                        'blockquote',
-                        'justifyfull'
-                    ]
+                    excludes: excludes
                 });
+
                 this.$innerEl.freshereditor("edit", true);
 
                 util.selectText(this.$innerEl);

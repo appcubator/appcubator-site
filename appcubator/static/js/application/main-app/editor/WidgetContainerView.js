@@ -111,6 +111,9 @@ function( React,
 
       this.renderElements();
 
+      this.innerEl = this.el.firstChild;
+      this.$innerEl = $(this.innerEl);
+
       return this;
     },
 

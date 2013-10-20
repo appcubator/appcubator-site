@@ -98,7 +98,7 @@ def change_card(request):
     return _ajax_response(request, "payment/_change_card_form.html", **data)
 
 def is_stripe_customer(user):
-    return (len(Customer.objects.filter(user=user)) != 0)
+    return Customer.objects.filter(user=user).count() > 0
 
 def stripe_acc_trigger(request):
     "Sets the the default plan of the user to the Starter (Free) plan."
