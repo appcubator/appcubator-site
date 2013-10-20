@@ -16,17 +16,24 @@ define([
         WidgetModel) {
 
         var EditorGalleryView = Backbone.View.extend({
+            
             el: util.get('top-panel-bb'),
             allList: util.get('all-list'),
+            
             curId: 'all-elements',
             dragActive: false,
             slideDownActive: false,
+            
             css: 'editor-gallery',
+            
             positionHorizontalGrid: 80,
             positionVerticalGrid: 15,
+            
             sections: [],
             subviews: [],
+            
             editorContext: "Page",
+
             events: {
                 'mouseover .bottom-arrow': 'slideDown',
                 'mousemove .bottom-arrow': 'slideDown',
@@ -287,7 +294,7 @@ define([
                         id = 'entity-table-' + tableM.cid;
                     }
                     this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') + ' Edit Form', 'create-form-icon');
-                    
+
                     if (tableM.hasMoneyField()) {
                         this.contextEntitySection.addFullWidthItem(id, "entity-buy-button", 'Buy ' + tableM.get('name') + ' Button', 'money-button-icon');
                     }
@@ -317,7 +324,9 @@ define([
 
             addNewSection: function(name) {
                 var self = this;
-                var sectionView = new EditorGallerySectionView({ parentView: self });
+                var sectionView = new EditorGallerySectionView({
+                    parentView: self
+                });
                 sectionView.name = name;
                 this.subviews.push(sectionView);
                 this.sections.push(sectionView);
@@ -611,7 +620,11 @@ define([
             },
 
             findLeft: function(e, ui) {
-                var offsetLeft = document.getElementById('elements-container').offsetLeft + document.getElementById('page-wrapper').offsetLeft;
+                var iframe = document.getElementById('page');
+
+                var doc = iframe.contentDocument || iframe.contentWindow.document;
+
+                var offsetLeft = this.eContainer().offsetLeft + document.getElementById('page-wrapper').offsetLeft;
                 offsetLeft += 20;
                 var left = Math.round((e.pageX - offsetLeft) / this.positionHorizontalGrid);
                 if (left < 0) left = 0;
@@ -621,7 +634,9 @@ define([
             },
 
             findTop: function(e, ui) {
-                var offsetScrolledTop = $('#elements-container').offset().top;
+                console.log(this.eContainer());
+                var self = this;
+                var offsetScrolledTop = $(self.eContainer()).offset().top;
                 var top = Math.round((e.pageY - offsetScrolledTop) / this.positionVerticalGrid);
                 if (top < 0) top = 0;
 
@@ -665,6 +680,17 @@ define([
                     self.slideDownActive = false;
                     clearTimeout(tmr);
                 }, 200);
+            },
+
+            eContainer: function() {
+                if (this.elementsContainer) {
+                    return this.elementsContainer;
+                } else {
+                    var iframe = document.getElementById('page');
+                    var doc = iframe.contentDocument || iframe.contentWindow.document;
+                    this.elementsContainer = doc.getElementById('elements-container');
+                    return this.elementsContainer;
+                }
             }
 
         });
