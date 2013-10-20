@@ -119,6 +119,7 @@ require([
 
         keyDispatcher = top.keyDispatcher;
         mouseDispatcher = top.mouseDispatcher;
+        g_marqueeView = {};
 
         var proxy = {
             setupWidgetsManager: function (widgetsCollection) {
@@ -129,9 +130,9 @@ require([
             setupMarqueeView: function () {
                 this.marqueeView = new MarqueeView();
                 this.marqueeView.render();
-                console.log( document.getElementById('elements-container'));
-                console.log(document.getElementById('elements-container'));
-                document.getElementById('elements-container').appendChild(this.marqueeView.el);
+                g_marqueeView = this.marqueeView;
+
+                document.body.appendChild(this.marqueeView.el);
                 console.log(this.marqueeView.el);
                 return this.marqueeView;
             }

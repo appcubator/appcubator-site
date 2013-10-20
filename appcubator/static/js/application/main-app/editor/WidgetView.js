@@ -132,7 +132,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         select: function(e) {
-            console.log("selec");
             if (!this.editMode) {
                 this.model.trigger('selected');
                 this.el.style.zIndex = 2003;
@@ -388,6 +387,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         mousedown: function(e) {
+            console.log("widget mousedown");
             mouseDispatcher.isMousedownActive = true;
         },
         mouseup: function() {

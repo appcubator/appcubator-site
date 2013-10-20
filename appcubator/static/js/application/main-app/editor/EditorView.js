@@ -80,7 +80,7 @@ define([
 
                 this.title = "Editor";
 
-                this.subviews = [this.marqueeView,
+                this.subviews = [
                     this.galleryEditor,
                     this.widgetsManager,
                     this.guides,
@@ -137,13 +137,13 @@ define([
                 var self = this;
                 var iframe = document.getElementById('page');
 
+                this.marqueeView = proxy.setupMarqueeView();
                 this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
                 
                 var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
                 self.iframedoc = innerDoc;
                 //self.marqueeView.render();
                 self.widgetsManager.render();
-                this.marqueeView = proxy.setupMarqueeView();
 
                 self.navbar.setElement(innerDoc.getElementById('navbar')).render();
                 self.footer.setElement(innerDoc.getElementById('footer')).render();

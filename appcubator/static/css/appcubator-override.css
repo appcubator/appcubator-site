@@ -2,6 +2,15 @@
   vertical-align: top;
 }
 
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box; /* Firefox */
+  /* Safari */
+}
+
 body .row.row {
   margin-left: 0px;
 }

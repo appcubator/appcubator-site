@@ -31,6 +31,8 @@ define([
             },
 
             mousedown: function(e) {
+                console.log(mouseDispatcher.isMousedownActive);
+                console.log("marquee-view mousedown");
                 if (mouseDispatcher.isMousedownActive) {
                     return true;
                 }
@@ -136,6 +138,9 @@ define([
             },
 
             setZero: function() {
+                console.log("HIIIDE");
+                console.log(this.setWidth);
+
                 this.$el.hide();
                 this.setWidth(0);
                 this.setHeight(0);
@@ -147,12 +152,12 @@ define([
             },
 
             render: function() {
-                window.addEventListener('mouseup', this.mouseup);
-                document.body.addEventListener('mousedown', this.mousedown);
-                document.body.addEventListener('mousemove', this.mousemove);
+                document.body.addEventListener('mouseup', this.mouseup, true);
+                document.body.addEventListener('mousedown', this.mousedown, true);
+                document.body.addEventListener('mousemove', this.mousemove, true);
                 this.el.className = 'marquee-view';
                 this.el.id = 'marquee-view';
-                this.container = document.getElementById('elements-container');
+                this.container = document.body;
                 this.setZero();
                 this.multiSelectorView.render();
                 return this;
