@@ -278,20 +278,20 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                 var excludes = [
                     'removeFormat',
                     'insertheading1',
-                               'insertheading2',
-                               'insertheading3',
-                               'insertheading4',
-                               'fontname',
-                               'code',
-                               'superscript',
-                               'subscript',
-                               'forecolor',
-                               'backcolor',
-                               'strikethrough',
-                               'insertimage',
-                               'insertparagraph',
-                               'blockquote',
-                               'justifyfull'
+                    'insertheading2',
+                    'insertheading3',
+                    'insertheading4',
+                    'fontname',
+                    'code',
+                    'superscript',
+                    'subscript',
+                    'forecolor',
+                    'backcolor',
+                    'strikethrough',
+                    'insertimage',
+                    'insertparagraph',
+                    'blockquote',
+                    'justifyfull'
                 ];
 
                 if(this.model.isBuyButton()) {

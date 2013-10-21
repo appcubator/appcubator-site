@@ -119,6 +119,7 @@ require([
 
         keyDispatcher = top.keyDispatcher;
         mouseDispatcher = top.mouseDispatcher;
+        statics = top.statics;
         g_marqueeView = {};
 
         var proxy = {
