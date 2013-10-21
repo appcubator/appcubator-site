@@ -23,9 +23,9 @@
     <tbody>
       {% for app in apps %}
       <tr>
-        <td><a href="{% url appcubator.admin_views.admin_app app.pk %}">{{ app.pk }}</a></td>
-        <td><a href="{% url appcubator.admin_views.admin_app app.pk %}">{{ app.name }}</a></td>
-        <td><a href="{% url appcubator.admin_views.admin_user app.owner.id %}">{{ app.owner }}</td>
+        <td><a href="{% url appcubator.admin.views.app app.pk %}">{{ app.pk }}</a></td>
+        <td><a href="{% url appcubator.admin.views.app app.pk %}">{{ app.name }}</a></td>
+        <td><a href="{% url appcubator.admin.views.user app.owner.id %}">{{ app.owner }}</td>
         {% if app.deployment_id %}
           <td><a href="{{app.url}}" target="_blank">{{ app.subdomain }}</a></td>
         {% else %}

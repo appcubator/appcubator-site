@@ -1,4 +1,4 @@
-from appcubator.models import UITheme, load_initial_themes
+from appcubator.themes.models import UITheme, load_initial_themes
 import sys
 import os
 

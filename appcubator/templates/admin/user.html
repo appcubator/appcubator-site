@@ -3,7 +3,7 @@
   <div class="page-header">
     <h2>User: {{ user.user.first_name }} {{ user.user.last_name }}</h2>
     {% if customer != None %}
-    <a href="{% url appcubator.admin_views.admin_customers_search %}?q={{customer.id}}">See customer</a>
+    <a href="{% url appcubator.admin.views.customers_search %}?q={{customer.id}}">See customer</a>
     {% endif %}
   </div>
 
@@ -36,7 +36,7 @@
       <tbody>
         {% for app in apps %}
         <tr>
-          <td class="span2"><a href="{% url appcubator.admin_views.admin_app app.pk %}">{{ app.pk }}</a></td>
+          <td class="span2"><a href="{% url appcubator.admin.views.app app.pk %}">{{ app.pk }}</a></td>
           <td>{{ app.name }}</td>
           {% if app.deployment_id %}
             <td><a href="{{app.url}}">{{ app.subdomain }}</a></td>

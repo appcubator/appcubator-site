@@ -1,3 +1,5 @@
+# a contribution by @times
+
 import sqlite3 as sq3
 from datetime import datetime
 import glob

@@ -1,0 +1,21 @@
+from django.conf.urls import patterns, include, url
+
+urlpatterns = patterns('appcubator.admin.views',
+    url(r'^$', 'home'),
+    url(r'^customers/$', 'customers'),
+    url(r'^customers/(\d+)/add_contact_log/$', 'add_contactlog'),
+    url(r'^search/$', 'customers_search'),
+    url(r'^users/(\d+)$', 'user'),
+    url(r'^users/(\d+)/graph/$', 'user_logs_graph'),
+    url(r'^users/$', 'users'),
+    url(r'^apps/errors/$', 'app_errors'),
+    url(r'^apps/(\d+)$', 'app'),
+    url(r'^apps/(\d+)/snaps$', 'app_snaps'),
+    url(r'^apps/$', 'apps'),
+    url(r'^invitations/$', 'invitations'),
+    url(r'^feedback/$', 'feedback'),
+    url(r'^walkthroughs/$', 'walkthroughs'),
+    url(r'^usersbydate/$', 'user_signups_json'),
+    url(r'^data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json'),
+    url(r'^logs/$', 'logs'),
+)
