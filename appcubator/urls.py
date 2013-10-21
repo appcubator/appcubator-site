@@ -124,7 +124,7 @@ urlpatterns += patterns('',
 )
 
 # USERNAME ROUTE
-urlpatterns += patterns('appcubator.views',
+urlpatterns += patterns('appcubator.views.app',
     url(r'^(.*)/$', 'user_page')
 )
 
