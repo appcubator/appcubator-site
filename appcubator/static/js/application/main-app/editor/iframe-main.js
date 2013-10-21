@@ -116,6 +116,7 @@ require([
         v1State = top.v1State;
         g_guides = top.g_guides;
         uieState = top.uieState;
+        appId = top.appId;
 
         keyDispatcher = top.keyDispatcher;
         mouseDispatcher = top.mouseDispatcher;
@@ -136,6 +137,20 @@ require([
                 document.body.appendChild(this.marqueeView.el);
                 console.log(this.marqueeView.el);
                 return this.marqueeView;
+            },
+
+            reArrangeCSSTag: function() {
+                var style = document.getElementById("css-uiestate");
+                style.parentNode.removeChild(style);
+
+                var head = document.getElementsByTagName('head')[0];
+                var newStyle = document.createElement('style');
+                newStyle.type = 'text/css';
+                newStyle.setAttribute('href', "/app/"+appId+"/uiestate.css");
+                newStyle.id = "css-uiestate";
+                newStyle.setAttribute('rel', 'stylesheet');
+
+                head.appendChild(style);
             }
         };
 

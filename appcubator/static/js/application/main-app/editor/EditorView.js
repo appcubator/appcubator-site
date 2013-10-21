@@ -91,8 +91,6 @@ define([
 
                 this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
                 this.listenTo(this.model, 'scroll', this.scrollTo);
-
-                this.startUIStateUpdater();
             },
 
             render: function() {
@@ -150,6 +148,7 @@ define([
                 self.guides.setElement(innerDoc.getElementById('elements-container')).render();
                 //$(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
 
+                self.startUIStateUpdater(proxy);
                 self.setupPageHeight();
             },
 
@@ -166,7 +165,7 @@ define([
                 new TutorialView([6]);
             },
 
-            startUIStateUpdater: function() {
+            startUIStateUpdater: function(proxy) {
                 var self = this;
                 this.UIStateTimer = setInterval(function() {
                     self.fetchUIState(function(state) {
@@ -176,7 +175,7 @@ define([
                         });
 
                         if (!_.isEqual(state, uieState)) {
-                            self.renewUIEState(state);
+                            self.renewUIEState(state, proxy);
                         }
                     });
 
@@ -195,9 +194,9 @@ define([
                 });
             },
 
-            renewUIEState: function(newState) {
+            renewUIEState: function(newState, proxy) {
                 uieState = newState;
-                v1.reArrangeCSSTag();
+                proxy.reArrangeCSSTag();
             },
 
             question: function(e) {
