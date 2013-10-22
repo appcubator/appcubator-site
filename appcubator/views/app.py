@@ -27,7 +27,7 @@ from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, Invita
 from appcubator.models import DomainRegistration
 from appcubator.themes.models import StaticFile, UITheme
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
-import appcubator.forms
+from appcubator import forms
 
 # from codegen
 import app_builder.analyzer as analyzer
