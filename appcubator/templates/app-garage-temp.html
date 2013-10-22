@@ -5,14 +5,14 @@
       {% if app %}
           <div class="app title">{{ app.name }}</div>
           <div class="row hoff1 span48 current-app-links">
-            <a class="white-border span15 hi8 settings hide-overlay" href="{% url appcubator.views.app_page app.id %}info/">
+            <a class="white-border span15 hi8 settings hide-overlay" href="{% url appcubator.views.app.page app.id %}info/">
               <span class="icon"></span>
               <div class="text">
                 <span class="title">App Settings</span>
                 <p>Change settings for your app or delete it.</p>
               </div>
             </a>
-            <a class="white-border span15 hi8 offset2 theme" href="{% url appcubator.views.app_edit_theme app.id %}" rel="external" target="_blank">
+            <a class="white-border span15 hi8 offset2 theme" href="{% url appcubator.views.app.edit_theme app.id %}" rel="external" target="_blank">
               <span class="icon"></span>
               <div class="text">
                 <span class="title">Theme Editor</span>
@@ -24,12 +24,12 @@
       </div>
       <div class="row span30">
         <div class="row">
-          <a class="span32 hi4 large-link white-border" href="{% url appcubator.views.user_page user.username %}" rel="external">
+          <a class="span32 hi4 large-link white-border" href="{% url appcubator.views.app.user_page user.username %}" rel="external">
             <strong>GO TO DASHBOARD</strong>
           </a>
         </div>
         <div class="row">
-          <a class="span32 hi4 large-link white-border" href="{% url appcubator.views.app_new %}" rel="external">
+          <a class="span32 hi4 large-link white-border" href="{% url appcubator.views.app.new %}" rel="external">
             <strong>+ CREATE A NEW APP</strong>
           </a>
         </div>

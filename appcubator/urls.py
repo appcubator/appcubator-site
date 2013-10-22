@@ -1,64 +1,47 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 import django.contrib.auth.views
-import views, theme_views, log_views, test_views, admin_views
+import views
 import django.views.generic.base
 from django.views.generic.simple import direct_to_template
-from appcubator_payments import views as payment_views
+
+from our_payments import views as payment_views
 import website
-from django.contrib import admin
 
 urlpatterns = patterns('',
     url(r'^forum/', include('askbot.urls')),
-    # url(r'^admin/', include(admin.site.urls)),
 )
 
 urlpatterns += patterns('',
     url(r'^', include('website.urls')),
     url(r'^backend/',                   include('app_builder.urls')),
-    url(r'^payments/',                  include('appcubator.appcubator_payments.urls')),
+    url(r'^payments/',                  include('appcubator.our_payments.urls')),
     url(r'^app/(\d+)/payment/$',        payment_views.app_payment),
     url(r'^trigger_customer/$',         payment_views.stripe_acc_trigger),
 )
 
-urlpatterns += patterns('appcubator.log_views',
+urlpatterns += patterns('appcubator.views.our_logging',
     url(r'^log/feedback/$', 'log_feedback'),
     url(r'^log/anything/$', 'log_anything'),
 )
 
-urlpatterns += patterns('appcubator.admin_views',
-    url(r'^stay/up/to/get/lucky/$', 'admin_home'),
-    url(r'^stay/up/to/get/lucky/customers/$', 'admin_customers'),
-    url(r'^stay/up/to/get/lucky/customers/(\d+)/add_contact_log/$', 'admin_add_contactlog'),
-    url(r'^stay/up/to/get/lucky/search/$', 'admin_customers_search'),
-    url(r'^stay/up/to/get/lucky/users/(\d+)$', 'admin_user'),
-    url(r'^stay/up/to/get/lucky/users/(\d+)/graph/$', 'user_logs_graph'),
-    url(r'^stay/up/to/get/lucky/users/$', 'admin_users'),
-    url(r'^stay/up/to/get/lucky/apps/errors/$', 'admin_app_errors'),
-    url(r'^stay/up/to/get/lucky/apps/(\d+)$', 'admin_app'),
-    url(r'^stay/up/to/get/lucky/apps/(\d+)/snaps$', 'admin_app_snaps'),
-    url(r'^stay/up/to/get/lucky/apps/$', 'admin_apps'),
-    url(r'^stay/up/to/get/lucky/invitations/$', 'admin_invitations'),
-    url(r'^stay/up/to/get/lucky/feedback/$', 'admin_feedback'),
-    url(r'^stay/up/to/get/lucky/walkthroughs/$', 'admin_walkthroughs'),
-    url(r'^stay/up/to/get/lucky/usersbydate/$', 'user_signups_json'),
-    url(r'^stay/up/to/get/lucky/data/(\d+)/(\d+)/([^/]+)/$', 'active_users_json'),
-    url(r'^stay/up/to/get/lucky/logs/$', 'logs'),
+urlpatterns += patterns('appcubator.views.admin',
+    url(r'^stay/up/to/get/lucky/', include('appcubator.admin.urls')),
 )
 
-urlpatterns += patterns('appcubator.views',
+urlpatterns += patterns('appcubator.views.app',
     url(r'filepick', django.views.generic.base.TemplateView.as_view(template_name="dev/filepicker-test.html")),
 
-    url(r'^app/$', 'app_welcome'),
+    url(r'^app/$', 'welcome'),
 
-    url(r'^app/0/$', 'app_noob_page'),
-    url(r'^app/new/$', 'app_new'),
-    url(r'^app/new/template/(\w+)/$', 'app_new_template'),
-    url(r'^app/new/walkthrough/simple/$', 'app_new_walkthrough', {"walkthrough": 'simpleWalkthrough'}),
-    url(r'^app/new/walkthrough/indepth/$', 'app_new_walkthrough', {"walkthrough": 'walkthrough'}),
-    url(r'^app/(\d+)/delete/$', 'app_delete'),
-    url(r'^app/(\d+)/edit_theme/', 'app_edit_theme'),
-    url(r'^app/(\d+)/themeeditor/', 'app_edit_theme'),
+    url(r'^app/0/$', 'noob_page'),
+    url(r'^app/new/$', 'new'),
+    url(r'^app/new/template/(\w+)/$', 'new_template'),
+    url(r'^app/new/walkthrough/simple/$', 'new_walkthrough', {"walkthrough": 'simpleWalkthrough'}),
+    url(r'^app/new/walkthrough/indepth/$', 'new_walkthrough', {"walkthrough": 'walkthrough'}),
+    url(r'^app/(\d+)/delete/$', 'delete'),
+    url(r'^app/(\d+)/edit_theme/', 'edit_theme'),
+    url(r'^app/(\d+)/themeeditor/', 'edit_theme'),
 
     # analytics
     url(r'^app/(\d+)/analytics/$', 'get_analytics'),
@@ -68,9 +51,9 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/static/(\d+)/delete/$', 'delete_static'), 
 
     # getting/setting state
-    url(r'^app/(\d+)/state/$', 'app_state'),
-    url(r'^app/(\d+)/state/force/$', 'app_state', {"validate": False}),
-    url(r'^app/(\d+)/clone/$', 'app_clone'),
+    url(r'^app/(\d+)/state/$', 'state'),
+    url(r'^app/(\d+)/state/force/$', 'state', {"validate": False}),
+    url(r'^app/(\d+)/clone/$', 'clone'),
 
     # getting/setting uie state
     url(r'^app/(\d+)/uiestate/$', 'uie_state'),
@@ -82,7 +65,7 @@ urlpatterns += patterns('appcubator.views',
     url(r'^app/(\d+)/mobile_uiestate.css$', 'mobile_css_sheet'),
 
     # deploy
-    url(r'^app/(\d+)/deploy/$',        'app_deploy'),
+    url(r'^app/(\d+)/deploy/$',        'deploy'),
 
     #zip
     url(r'^app/(\d+)/zip/$', 'app_zip'),
@@ -99,10 +82,11 @@ urlpatterns += patterns('appcubator.views',
     url(r'^subdomains/(.*)/available_check/$', 'sub_check_availability'),
     url(r'^app/(\d+)/subdomain/(.*)/$', 'sub_register_domain'),
 
-    # special json editor route
+    
     url(r'^app/(\d+)/editor/\d+/$', 'app_editor_iframe'), # this serves all the app pages
 
-    url(r'^app/(\d+)/editor/\d+/debug/$', 'app_json_editor'), # this serves all the app pages
+    # special json editor route
+    url(r'^app/(\d+)/editor/\d+/debug/$', 'json_editor'), # this serves all the app pages
 
     url(r'^feedback/$', 'documentation_page', {"page_name": "feedback"}),
     url(r'^documentation/$', 'documentation_page', {"page_name": "all"}),
@@ -113,9 +97,9 @@ urlpatterns += patterns('appcubator.views',
     url(r'^', include('appcubator.plugins.urls')),
 
     # the rest
-    url(r'^app/(\d+)/', 'app_page'),
-    #url(r'^app/(\d+)/', 'app_page', {"page_name": "overview"}), # this serves all the app pages
-    #url(r'^app/(\d+)/([^/]+)/$', 'app_page'), # this serves all the app pages
+    url(r'^app/(\d+)/', 'page'),
+    #url(r'^app/(\d+)/', 'page', {"page_name": "overview"}), # this serves all the app pages
+    #url(r'^app/(\d+)/([^/]+)/$', 'page'), # this serves all the app pages
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
 
@@ -123,26 +107,12 @@ urlpatterns += patterns('appcubator.views',
 
 )
 
-urlpatterns += patterns('appcubator.theme_views',
+urlpatterns += patterns('appcubator.themes.views',
     url(r'^designer/$', 'designer_page'),
-    url(r'^theme/new/web/$', 'theme_new_web'),
-    url(r'^theme/new/mobile/$', 'theme_new_mobile'),
-    url(r'^theme/(\d+)/info/$', 'theme_info'),
-    url(r'^theme/(\d+)/settings/$', 'theme_settings'),
-    url(r'^theme/(\d+)/edit/$', 'theme_edit'),
-    url(r'^theme/(\d+)/edit_image/$', 'theme_image_edit'),
-    url(r'^theme/(\d+)/clone/$', 'theme_clone'),
-    url(r'^theme/(\d+)/delete/$', 'theme_delete'),
-    url(r'^theme/(\d+)/editor/(\d+)$', 'theme_page_editor'),
-    # GET returns the apps statics, POST creates a new static file entry,
-    # DELETE delete a static file
-    url(r'^theme/(\d+)/static/(\d+)$', 'deletethemestaticfile'),
-    url(r'^theme/(\d+)/static/$', 'themestaticfiles'),
-
-    url(r'^theme/(\d+)/', 'theme_show'),
+    url(r'^theme/$', include('appcubator.themes.urls')),
 )
 
-urlpatterns += patterns('appcubator.test_views',
+urlpatterns += patterns('appcubator.views.test',
     url(r'^test/editor/$', 'test_editor'),
     url(r'^test/formeditor/$', 'test_formeditor'),
     url(r'^test/thirdparty/$', 'test_thirdpartyforms'),
@@ -157,7 +127,7 @@ urlpatterns += patterns('',
 )
 
 # USERNAME ROUTE
-urlpatterns += patterns('appcubator.views',
+urlpatterns += patterns('appcubator.views.app',
     url(r'^(.*)/$', 'user_page')
 )
 
