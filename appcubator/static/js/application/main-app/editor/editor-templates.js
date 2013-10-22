@@ -323,16 +323,6 @@ Templates.thirdPartyLogin = [
   '<div class="<%= provider %>-login-btn btn"><%= content %></div>'
 ].join('\n');
 
-Templates.footerTemp = [
-  '<div class="container">',
-    '<p id="customText" class="footer-text muted"></p>',
-    '<ul class="footer-links" id="links">',
-    '</ul>',
-    '<button class="edit-footer btn btn-small btn-inverse pull-right" id="edit-footer-btn">Edit Footer</button>',
-  '</div>',
-  '<div class="clearfix"></div>'
-].join('\n');
-
 
 Templates.searchboxTemp = [
 '<form class="search-box">',

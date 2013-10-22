@@ -138,8 +138,8 @@ define([
             },
 
             setZero: function() {
-                console.log("HIIIDE");
-                console.log(this.setWidth);
+
+                this.isDrawing = false;
 
                 this.$el.hide();
                 this.setWidth(0);
