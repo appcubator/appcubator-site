@@ -44,19 +44,16 @@ define(function(require, exports, module) {
         },
 
         selectMousedown: function(e) {
-            console.log("select-div mousedown");
             //if(!this.isMouseOn(e)) { return true; }
             this.mousedown();
         },
 
         mousedown: function(e) {
-            console.log("hover-div mousedown");
             g_marqueeView.setZero();
             mouseDispatcher.isMousedownActive = true;
         },
 
         mouseup: function(e) {
-            console.log("hover-div mouseup");
             mouseDispatcher.isMousedownActive = false;
         },
 
@@ -89,6 +86,7 @@ define(function(require, exports, module) {
                 drag: self.moving,
                 stop: self.moved,
                 snapMode: "outer"
+                // iframeFix: true
             });
 
             $(selectDiv).draggable({
@@ -97,6 +95,7 @@ define(function(require, exports, module) {
                 stop: self.moved,
                 snapMode: "outer",
                 cancel: '#widget-editor'
+                // iframeFix: true
             });
 
 
@@ -352,8 +351,7 @@ define(function(require, exports, module) {
         },
 
         moved: function(e, ui) {
-            if(!this.selectedEl) return;
-
+            
             var self = this;
             g_guides.hideAll();
 
@@ -401,12 +399,6 @@ define(function(require, exports, module) {
         },
 
         moveSelectedDown: function(e) {
-
-            console.log("MOVE DOWN");
-            console.log(!this.selectedEl);
-            console.log(keyDispatcher.textEditing === true);
-            console.log(this.selectedEl.getRow() && this.selectedEl.editMode === true);
-
             if (!this.selectedEl) return;
             if (keyDispatcher.textEditing === true) return;
             if (this.selectedEl.getRow() && this.selectedEl.editMode === true) return;
@@ -457,8 +449,6 @@ define(function(require, exports, module) {
         },
 
         doKeyBindings: function() {
-            console.log(keyDispatcher);
-
             keyDispatcher.bind('down', this.moveSelectedDown);
             keyDispatcher.bind('up', this.moveSelectedUp);
             keyDispatcher.bind('left', this.moveSelectedLeft);
@@ -534,7 +524,7 @@ define(function(require, exports, module) {
             keyDispatcher.unbind('right', this.moveSelectedRight);
             keyDispatcher.unbind('backspace', this.deleteSelected);
             this.deselect();
-            $('.page.full').off('mousedown', this.clickedPage);
+            $(document).off('mousedown', this.clickedPage);
 
             Backbone.View.prototype.close.call(this);
         }

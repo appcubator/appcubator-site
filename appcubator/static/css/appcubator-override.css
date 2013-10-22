@@ -151,3 +151,7 @@ body hr[class*="span"] {
 .hoff3  { margin-top: 45px;  }
 .hoff2  { margin-top: 30px;  }
 .hoff1  { margin-top: 15px;  }
+
+.container.elements {
+  padding: 0;
+}

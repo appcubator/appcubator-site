@@ -1,68 +1,83 @@
-define([
-  'mixins/SelectView'
-],
-function(SelectView) {
+define(function(require, exports, module) {
 
-  var WidgetClassPickerView = SelectView.extend({
-    className : 'class-picker select-view',
-    id: 'class-editor',
-    tagName : 'div',
-    css : 'widget-editor',
+    'use strict';
 
-    events: {
-      'click li' : 'select',
-      'click .updown-handle' : 'selectCurrent',
-      'mouseover li' : 'hovered',
-      'mouseover .updown-handle' : 'hovered'
-    },
+    var SelectView = require('mixins/SelectView');
 
-    initialize: function(widgetModel){
-      _.bindAll(this);
+    var WidgetClassPickerView = SelectView.extend({
+        className: 'class-picker select-view',
+        id: 'class-editor',
+        tagName: 'div',
+        css: 'widget-editor',
 
-      this.model = widgetModel;
-      this.list = _.map(uieState[this.model.get('data').get('nodeType')], function(obj) { return obj.class_name; });
+        events: {
+            'click li': 'select',
+            'click .updown-handle': 'selectCurrent',
+            'mouseover li': 'hovered',
+            'mouseover .updown-handle': 'hovered'
+        },
 
-      if(widgetModel.hasForm()) {
-        this.list = _.map(uieState["forms"], function(obj) { return obj.class_name; });
-      }
+        initialize: function(widgetModel) {
+            _.bindAll(this);
 
-      if(widgetModel.isList()) {
-        this.list = _.map(uieState["lists"], function(obj) { return obj.class_name; });
-      }
+            this.model = widgetModel;
 
-      this.currentVal = this.model.get('data').get('class_name');
-      this.render();
-    },
+            var type = this.model.get('data').get('nodeType');
+            var currentClass = this.model.get('data').get('class_name');
+            var currentVal = -1;
 
-    classChanged: function(e) {
-      var newClass = (e.target.id||e.target.parentNode.id);
-      this.model.get('data').set('class_name', newClass);
-      this.closeModal();
-    },
+            if (widgetModel.hasForm()) {
+                type = "forms";
+            }
 
-    render: function() {
-      WidgetClassPickerView.__super__.render.call(this);
-      this.expand();
-      this.hide();
-    },
+            if (widgetModel.isList()) {
+                type = "lists";
+            }
 
-    hovered: function(e) {
-      if(e.target.className == "updown-handle")  {
-        this.model.get('data').set('class_name', this.currentVal);
-        return;
-      }
-      var ind = String(e.target.id).replace('li-' + this.cid + '-', '');
-      this.model.get('data').set('class_name', this.list[ind]);
-    },
+            this.list = _.map(uieState[type], function(obj, key) {
+                if (obj.class_name == currentClass) {
+                    currentVal = key;
+                }
+                return {
+                    name: obj.class_name,
+                    val: key
+                };
+            });
 
-    show: function() {
-      this.$el.fadeIn();
-    },
+            this.uieVals = uieState[type];
+            this.isNameVal = true;
+            this.currentVal = {
+                name: currentClass,
+                val: currentVal
+            };
+            this.render();
+        },
 
-    hide: function() {
-      this.$el.hide();
-    }
-  });
+        render: function() {
+            WidgetClassPickerView.__super__.render.call(this);
+            this.expand();
+            this.hide();
+        },
 
-  return WidgetClassPickerView;
+        hovered: function(e) {
+            if (e.currentTarget.className == "updown-handle") {
+                this.model.get('data').set('tagName', this.uieVals[this.currentVal.val].tagName);
+                this.model.get('data').set('class_name', this.uieVals[this.currentVal.val].class_name);
+                return;
+            }
+            var ind = String(e.currentTarget.id).replace('li-' + this.cid + '-', '');
+            this.model.get('data').set('tagName', this.uieVals[this.list[ind].val].tagName);
+            this.model.get('data').set('class_name', this.uieVals[this.list[ind].val].class_name);
+        },
+
+        show: function() {
+            this.$el.fadeIn();
+        },
+
+        hide: function() {
+            this.$el.hide();
+        }
+    });
+
+    return WidgetClassPickerView;
 });

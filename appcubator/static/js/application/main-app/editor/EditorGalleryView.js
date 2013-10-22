@@ -101,7 +101,8 @@ define([
                     start: function(e) {
                         self.dragActive = true;
                     },
-                    stop: self.dropped
+                    stop: self.dropped,
+                    iframeFix: true
                 });
 
             },
@@ -167,7 +168,8 @@ define([
                     start: function(e) {
                         self.dragActive = true;
                     },
-                    stop: self.dropped
+                    stop: self.dropped,
+                    iframeFix: true
                 });
             },
 
@@ -189,7 +191,8 @@ define([
                     start: function(e) {
                         self.dragActive = true;
                     },
-                    stop: self.dropped
+                    stop: self.dropped,
+                    iframeFix: true
                 });
             },
 

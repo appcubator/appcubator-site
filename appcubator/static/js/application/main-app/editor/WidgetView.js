@@ -32,7 +32,8 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.listenTo(this.model, "remove", this.close, this);
 
             this.listenTo(this.model.get('data'), "change:type", this.changedType, this);
-            this.listenTo(this.model.get('data'), "change:class_name", this.changedType, this);
+            this.listenTo(this.model.get('data'), "change:tagName", this.changedType, this);
+            this.listenTo(this.model.get('data'), "change:class_name", this.changedTagName, this);
 
             this.listenTo(this.model.get('layout'), "change:width", this.changedSize, this);
             this.listenTo(this.model.get('layout'), "change:height", this.changedSize, this);
@@ -113,9 +114,20 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             if (this.model.isBgElement()) this.el.style.zIndex = 999;
         },
 
+        reRender: function() {
+            this.el.innerHTML = this.renderElement();
+            this.innerEl = this.el.firstChild;
+            this.$innerEl = $(this.innerEl);
+
+            return this;
+        },
+
         renderElement: function() {
             var temp = Templates.tempNode;
             var node_context = this.model.get('data').toJSON();
+
+            console.log(node_context);
+
             if (node_context.content) {
                 node_context.content = node_context.content.replace(/\n\r?/g, '<br />');
             }
@@ -127,6 +139,8 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             var el = _.template(temp, {
                 element: node_context
             });
+
+            console.log(el);
 
             return el;
         },
@@ -208,6 +222,10 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
         changedType: function(a) {
             this.el.firstChild.className = this.model.get('data').get('class_name');
+        },
+
+        changedTagName: function(a) {
+            this.reRender();
         },
 
         changedSource: function(a) {
