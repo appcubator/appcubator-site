@@ -5,18 +5,29 @@ function () {
 
   var KeyDispatcher = function() {
     this.bindings = {};
+    this.environments  = [ document ];
+
+    this.addEnvironment = function(env) {
+      this.environments.push(env);
+    };
 
     this.bind = function(keyComb, fn, type) {
-      $(document).bind('keydown', keyComb, fn);
+      _.each(this.environments, function(env) {
+        $(env).bind('keydown', keyComb, fn);
+      });
     };
 
     this.bindComb = function(keyComb, fn, type) {
-      $(document).bind('keydown', keyComb, fn);
-    },
+      _.each(this.environments, function(env) {
+        $(env).bind('keydown', keyComb, fn);
+      });
+    };
 
     this.unbind = function(keyComb, fn, type) {
-      $(document).unbind('keydown', fn);
-    },
+      _.each(this.environments, function(env) {
+        $(env).unbind('keydown', keyComb, fn);
+      });
+    };
 
     this.store = function(keyComb, fn, type) {
       if(!this.bindings[type]) { this.bindings[type] = []; }

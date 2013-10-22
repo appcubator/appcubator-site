@@ -134,11 +134,13 @@ define([
             renderIFrameContent: function (proxy) {
                 var self = this;
                 var iframe = document.getElementById('page');
+                var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+                keyDispatcher.addEnvironment(innerDoc);
 
                 this.marqueeView = proxy.setupMarqueeView();
                 this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
                 
-                var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
                 self.iframedoc = innerDoc;
                 //self.marqueeView.render();
                 self.widgetsManager.render();

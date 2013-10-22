@@ -144,12 +144,6 @@ require([
 
             g_guides = {};
             keyDispatcher = new KeyDispatcher();
-            
-            keyDispatcher.bind('down', function() {
-                alert('y');
-            });
-
-
             mouseDispatcher = new MouseDispatcher();
 
             v1 = {};

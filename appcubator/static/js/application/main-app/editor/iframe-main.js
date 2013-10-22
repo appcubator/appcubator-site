@@ -140,6 +140,9 @@ require([
             },
 
             reArrangeCSSTag: function() {
+
+                uieState = top.uieState;
+
                 var style = document.getElementById("css-uiestate");
                 style.parentNode.removeChild(style);
 
