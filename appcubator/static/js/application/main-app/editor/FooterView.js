@@ -26,10 +26,7 @@ function(FooterEditorView) {
 
     render: function() {
       var self = this;
-      this.el.innerHTML = _.template(Templates.footerTemp, {});
-
       this.$el.find('#customText').html(this.model.get('customText'));
-
       this.renderLinks();
       return this;
     },
@@ -39,7 +36,7 @@ function(FooterEditorView) {
       this.model.get('links').each(function(item) {
         htmlString += '<li><a href="#" class="menu-item">' + item.get('title') + '</a></li>';
       });
-      this.$el.find('#links').html(htmlString);
+      this.$el.find('#footer-links').html(htmlString);
     }
   });
 

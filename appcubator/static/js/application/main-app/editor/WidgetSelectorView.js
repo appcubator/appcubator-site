@@ -352,6 +352,8 @@ define(function(require, exports, module) {
         },
 
         moved: function(e, ui) {
+            if(!this.selectedEl) return;
+
             var self = this;
             g_guides.hideAll();
 

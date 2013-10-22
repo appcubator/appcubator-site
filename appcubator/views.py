@@ -592,8 +592,8 @@ def css_sheet(request, app_id, isMobile=False):
     if isMobile:
         uie_state = app.mobile_uie.state
 
-    if 'basecss' in uie_state:
-        uie_state["basecss"] = uie_state["basecss"].replace('body', '&')
+    # if 'basecss' in uie_state:
+    #     uie_state["basecss"] = uie_state["basecss"].replace('body', '&')
 
     from django.template import loader, Context
     context = Context({'uie_state': uie_state,
