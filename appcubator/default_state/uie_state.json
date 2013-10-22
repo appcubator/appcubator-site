@@ -113,17 +113,11 @@
     {
       "style": "",
       "isSingle": true,
-      "content_attribs": {
-        "value": "Button1"
-      },
       "hoverStyle": "",
       "class_name": "btn btn-info",
-      "content": null,
-      "tagName": "input",
-      "activeStyle": "",
-      "cons_attribs": {
-        "tagType": "submit"
-      }
+      "content": "Button 1",
+      "tagName": "a",
+      "activeStyle": ""
     },
     {
       "tagName": "a",
@@ -154,7 +148,7 @@
   ],
   "headerTexts": [
     {
-      "style": "line-height: 40px;",
+      "style": "",
       "isSingle": false,
       "content_attribs": null,
       "hoverStyle": "",
@@ -174,7 +168,7 @@
       "activeStyle": ""
     },
     {
-      "style": "line-height: 28px;\n",
+      "style": "",
       "isSingle": false,
       "content_attribs": null,
       "hoverStyle": "",
@@ -301,7 +295,7 @@
   ],
   "lines": [
     {
-      "style": "border:none; border-top: 1px solid #0054a6;",
+      "style": "",
       "isSingle": true,
       "cons_attribs": {},
       "hoverStyle": "",
@@ -311,7 +305,7 @@
       "activeStyle": ""
     },
     {
-      "style": "border:none; border-top: 1px solid #ccc;",
+      "style": "",
       "isSingle": true,
       "cons_attribs": {},
       "hoverStyle": "",
