@@ -191,6 +191,10 @@ define(function(require, exports, module) {
             $(this.selectDiv).find('.ui-resizable-handle').fadeIn();
         },
 
+        hideHoverDiv: function() {
+            this.hideLayout(this.hoverDiv);
+        },
+
         setLayout: function(node, widgetModel) {
             if (!widgetModel) return;
             $(node).show();
@@ -199,6 +203,15 @@ define(function(require, exports, module) {
             node.style.height = ((widgetModel.get('layout').get('height') * 15) + PADDING) + 'px';
             node.style.left = ((widgetModel.get('layout').get('left') * 80) - ALIGNMENT) + 'px';
             node.style.top = ((widgetModel.get('layout').get('top') * 15) - ALIGNMENT) + 'px';
+            return node;
+        },
+
+        hideLayout: function(node) {
+            $(node).hide();
+            node.style.width = '0px';
+            node.style.height = '0px';
+            node.style.left = '0px';
+            node.style.top = '0px';
             return node;
         },
 
@@ -364,6 +377,8 @@ define(function(require, exports, module) {
                     });
                 }
             }
+
+            this.hideHoverDiv();
 
             var top = Math.round((ui.position.top / this.positionVerticalGrid));
             var left = Math.round((ui.position.left / this.positionHorizontalGrid));
