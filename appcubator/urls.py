@@ -125,7 +125,7 @@ urlpatterns += patterns('',
 
 # USERNAME ROUTE
 urlpatterns += patterns('appcubator.views.app',
-    url(r'^(.*)/$', 'user_page')
+    url(r'^([^\/]*)/$', 'user_page')
 )
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
