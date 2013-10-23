@@ -42,7 +42,16 @@ class AppNew(forms.ModelForm):
 
     def clean(self):
         owner = self.owner
-        if owner.apps.count() >= MAX_FREE_APPS and owner.customer.current_subscription.plan == 'free':
+
+
+        paying = False
+        try: # this poor code was written b/c idk where to import CurrentSubscription from to see if (class).DoesNotExist is raised. This might get raised b/c some customers don't have current subscription. No idea why this is the case.
+            if owner.customer.current_subscription.plan != 'free':
+                paying = True
+        except Exception:
+            paying = False
+
+        if owner.apps.count() >= MAX_FREE_APPS and not paying:
             raise AppLimitReached()
         return self.cleaned_data
 
@@ -51,7 +60,14 @@ class AppClone(forms.Form):
 
     def clean(self):
         app = self.cleaned_data['app']
-        if app.owner.apps.count() >= MAX_FREE_APPS and app.owner.customer.current_subscription.plan == 'free':
+        paying = False
+        try: # this poor code was written b/c idk where to import CurrentSubscription from to see if (class).DoesNotExist is raised. This might get raised b/c some customers don't have current subscription. No idea why this is the case.
+            if app.owner.customer.current_subscription.plan != 'free':
+                paying = True
+        except Exception:
+            paying = False
+
+        if app.owner.apps.count() >= MAX_FREE_APPS and not paying:
             raise AppLimitReached()
         return self.cleaned_data
 
