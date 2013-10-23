@@ -106,7 +106,7 @@ urlpatterns += patterns('appcubator.views.app',
 
 urlpatterns += patterns('appcubator.themes.views',
     url(r'^designer/$', 'designer_page'),
-    url(r'^theme/$', include('appcubator.themes.urls')),
+    url(r'^theme/', include('appcubator.themes.urls')),
 )
 
 urlpatterns += patterns('appcubator.views.test',
