@@ -3,6 +3,7 @@ from . import JsonResponse
 
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ValidationError
 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -23,7 +24,7 @@ join = os.path.join
 from appcubator.email.sendgrid_email import send_email, send_template_email
 from appcubator.our_payments.views import is_stripe_customer#, subscribe
 
-from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User
+from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration
 from appcubator.models import DomainRegistration
 from appcubator.themes.models import StaticFile, UITheme
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
@@ -855,3 +856,33 @@ def register_domain(request, domain):
     # Give client the domain info
     return JsonResponse(d.domain_info)
 
+
+@require_POST
+@login_required
+def add_collaborator_to_app(request, app_id, user_id):
+    app = get_object_or_404(App, id=app_id)
+    if not app.is_editable_by_user(request.user):
+        raise Http404
+
+    collab_user = get_object_or_404(User, pk=user_id)
+    c = Collaboration(user=collab_user, app=app)
+    try:
+        c.full_clean()
+    except ValidationError, e:
+        return JsonResponse(e.message_dict, status=400)
+    c.save()
+    return JsonResponse({})
+
+
+@require_POST
+@login_required
+def remove_collaborator_from_app(request, app_id, user_id):
+    app = get_object_or_404(App, id=app_id)
+    if not app.is_editable_by_user(request.user):
+        raise Http404
+
+    collab_user = get_object_or_404(User, pk=user_id)
+    collab = get_object_or_404(Collaboration, app=app, user=collab_user)
+
+    collab.delete()
+    return JsonResponse({})
