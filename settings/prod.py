@@ -39,7 +39,8 @@ DATABASES = {
        'USER': 'appcubator',
        'PASSWORD': 'longisland3',
        'HOST': 'productionreplica.ccchupi0ycq8.us-east-1.rds.amazonaws.com',
-       'PORT': 3306
+       'PORT': 3306,
+       'AUTOCOMMIT': False
    }
 }
 
