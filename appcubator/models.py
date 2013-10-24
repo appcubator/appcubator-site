@@ -758,7 +758,7 @@ class App(models.Model):
             return True
         if user.is_superuser:
             return True
-        if self.collaborations.filter(userd=user).exists():
+        if self.collaborations.filter(user=user).exists():
             return True
 
         return False
