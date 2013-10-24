@@ -296,7 +296,7 @@ def app_editor_iframe(request, app_id, page_name="overview"):
     app_id = long(app_id)
     # id of 0 is reserved for sample app
     if(app_id == 0):
-        return redirect(app_welcome)
+        return redirect(user_page, request.user.username)
 
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
@@ -307,6 +307,11 @@ def app_editor_iframe(request, app_id, page_name="overview"):
     mobile_themes = UITheme.get_mobile_themes()
     mobile_themes = [t.to_dict() for t in mobile_themes]
 
+    try:
+        old_nav = app.state['pages'][0]['navbar']['version'] == 2
+    except KeyError:
+        old_nav = True
+
     page_context = {'app'          : app,
                     'title'        : 'The Garage',
                     'themes'       : simplejson.dumps(list(themes)),
@@ -316,6 +321,7 @@ def app_editor_iframe(request, app_id, page_name="overview"):
                     'staging'      : settings.STAGING,
                     'production'   : settings.PRODUCTION,
                     'page_name'    : page_name,
+                    'old_nav'      : old_nav,
                     'is_deployed'  : 1 if app.deployment_id != None else 0,
                     'display_garage' : False}
     add_statics_to_context(page_context, app)
