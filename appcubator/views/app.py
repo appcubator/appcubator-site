@@ -308,7 +308,7 @@ def app_editor_iframe(request, app_id, page_name="overview"):
     mobile_themes = [t.to_dict() for t in mobile_themes]
 
     try:
-        old_nav = app.state['pages'][0]['navbar']['version'] == 2
+        old_nav = app.state['pages'][0]['navbar']['version'] < 2
     except KeyError:
         old_nav = True
 
