@@ -13,6 +13,7 @@ function(LinkCollection) {
 
       //init items collection with links passed from appState
       this.set('links', new LinkCollection(bone.links||[]));
+      this.set('version', 2);
     },
 
     getLinks: function() {

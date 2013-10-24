@@ -18,6 +18,7 @@ function(LinkCollection) {
         title: "Powered by Appcubator",
         url:   "http://appcubator.com" }
       ]));
+      this.set('version', 2);
       this.links = this.get('links');
 
     },

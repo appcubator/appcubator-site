@@ -80,7 +80,8 @@
             "title": "Homepage"
           }
         ],
-        "customText": "<a href='http://appcubator.com'>Powered by Appcubator</a>"
+        "customText": "<a href='http://appcubator.com'>Powered by Appcubator</a>",
+        "version": 2
       },
       "navbar": {
         "isFixed": true,
@@ -95,7 +96,8 @@
             "url": "internal://About Us",
             "title": "About Us"
           }
-        ]
+        ],
+        "version": 2
       },
       "uielements": [
         {
@@ -509,6 +511,7 @@
             "title": "Powered by Appcubator"
           }
         ],
+        "version": 2,
         "customText": "Copyright 2013"
       },
       "url": {
@@ -530,7 +533,8 @@
             "url": "internal://About Us",
             "title": "About Us"
           }
-        ]
+        ],
+        "version": 2
       },
       "access_level": "all",
       "uielements": [
@@ -763,7 +767,8 @@
             "title": "Powered by Appcubator"
           }
         ],
-        "customText": "Copyright 2013"
+        "customText": "Copyright 2013",
+        "version": 2
       },
       "url": {
         "urlparts": [
@@ -784,7 +789,8 @@
             "url": "internal://About Us",
             "title": "About Us"
           }
-        ]
+        ],
+        "version": 2
       },
       "access_level": "all",
       "uielements": [
@@ -968,7 +974,8 @@
             "url": "http://appcubator.com",
             "title": "Powered by Appcubator"
           }
-        ]
+        ],
+        "version": 2
       },
       "navbar": {
         "isFixed": true,
@@ -983,7 +990,8 @@
             "url": "internal://About Us",
             "title": "About Us"
           }
-        ]
+        ],
+        "version": 2
       },
       "uielements": [
         {
@@ -1129,7 +1137,8 @@
             "url": "http://appcubator.com",
             "title": "Powered by Appcubator"
           }
-        ]
+        ],
+        "version": 2
       },
       "navbar": {
         "isFixed": true,
@@ -1144,7 +1153,8 @@
             "url": "internal://About Us",
             "title": "About Us"
           }
-        ]
+        ],
+        "version": 2
       },
       "uielements": [
         {
@@ -1283,13 +1293,15 @@
             "url": "http://appcubator.com",
             "title": "Powered by Appcubator"
           }
-        ]
+        ],
+        "version": 2
       },
       "navbar": {
         "isFixed": true,
         "brandName": null,
         "isHidden": false,
-        "links": []
+        "links": [],
+        "version": 2
       },
       "uielements": [],
       "page_name": "Community Rules",
@@ -1315,13 +1327,15 @@
             "url": "http://appcubator.com",
             "title": "Powered by Appcubator"
           }
-        ]
+        ],
+        "version": 2
       },
       "navbar": {
         "isFixed": true,
         "brandName": null,
         "isHidden": false,
-        "links": []
+        "links": [],
+        "version": 2
       },
       "uielements": [],
       "page_name": "About Us",
@@ -1341,7 +1355,8 @@
             "title": "Powered by Appcubator"
           }
         ],
-        "customText": "Copyright 2013"
+        "customText": "Copyright 2013",
+        "version": 2
       },
       "url": {
         "urlparts": [
@@ -1352,7 +1367,8 @@
         "isFixed": true,
         "brandName": null,
         "isHidden": false,
-        "links": []
+        "links": [],
+        "version": 2
       },
       "access_level": "all",
       "uielements": [
@@ -1502,7 +1518,8 @@
             "title": "Powered by Appcubator"
           }
         ],
-        "customText": "Copyright 2013"
+        "customText": "Copyright 2013",
+        "version": 2
       },
       "url": {
         "urlparts": [
@@ -1513,7 +1530,8 @@
         "isFixed": true,
         "brandName": null,
         "isHidden": false,
-        "links": []
+        "links": [],
+        "version": 2
       },
       "access_level": "all",
       "uielements": [
