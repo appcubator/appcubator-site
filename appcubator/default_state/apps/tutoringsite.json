@@ -76,6 +76,7 @@
             "title": "Powered by Appcubator"
           }
         ],
+        "version": 2,
         "customText": "StudyCloud has no affiliation with Case Western Reserve University, which was not involved in the production of, and does not endorse this product."
       },
       "navbar": {
@@ -91,7 +92,8 @@
             "url": "internal://Upload",
             "title": "Upload"
           }
-        ]
+        ],
+        "version": 2
       },
       "uielements": [
         {
@@ -383,7 +385,8 @@
             "title": "About"
           }
         ],
-        "customText": "StudyCloud has no affiliation with Case Western Reserve University, which was not involved in the production of, and does not endorse this product."
+        "customText": "StudyCloud has no affiliation with Case Western Reserve University, which was not involved in the production of, and does not endorse this product.",
+        "version": 2
       },
       "url": {
         "urlparts": [
@@ -403,7 +406,8 @@
             "url": "internal://Upload",
             "title": "Upload"
           }
-        ]
+        ],
+        "version": 2
       },
       "access_level": "users",
       "uielements": [
@@ -741,6 +745,7 @@
             "title": "About"
           }
         ],
+        "version": 2,
         "customText": "StudyCloud has no affiliation with Case Western Reserve University, which was not involved in the production of, and does not endorse this product. "
       },
       "url": {
@@ -762,7 +767,8 @@
             "url": "internal://Upload",
             "title": "Upload"
           }
-        ]
+        ],
+        "version": 2
       },
       "access_level": "users",
       "uielements": [
@@ -991,6 +997,7 @@
             "title": "About"
           }
         ],
+        "version": 2,
         "customText": "StudyCloud has no affiliation with Case Western Reserve University, which was not involved in the production of, and does not endorse this product. "
       },
       "url": {
@@ -1011,7 +1018,8 @@
             "url": "internal://Upload",
             "title": "Upload"
           }
-        ]
+        ],
+        "version": 2
       },
       "access_level": "all",
       "uielements": [
@@ -1080,6 +1088,7 @@
         "isFixed": true,
         "isHidden": false,
         "links": [],
+        "version": 2,
         "customText": "Powered by Appcubator"
       },
       "url": {
@@ -1100,7 +1109,8 @@
             "url": "internal://Upload",
             "title": "Upload"
           }
-        ]
+        ],
+        "version": 2
       },
       "access_level": "users",
       "uielements": [

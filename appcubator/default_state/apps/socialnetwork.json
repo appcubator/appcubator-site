@@ -87,7 +87,8 @@
             "title": "Homepage"
           }
         ],
-        "customText": "Powered by Appcubator"
+        "customText": "Powered by Appcubator",
+        "version": 2
       },
       "navbar": {
         "isFixed": true,
@@ -98,7 +99,8 @@
             "url": "internal://All users",
             "title": "Users"
           }
-        ]
+        ],
+        "version": 2
       },
       "uielements": [
         {
@@ -379,7 +381,8 @@
         "isFixed": true,
         "isHidden": false,
         "customText": "Powered by Appcubator",
-        "links": []
+        "links": [],
+        "version": 2
       },
       "navbar": {
         "isFixed": true,
@@ -390,7 +393,8 @@
             "url": "internal://All users",
             "title": "Users"
           }
-        ]
+        ],
+        "version": 2
       },
       "uielements": [
         {
@@ -747,7 +751,8 @@
         "isFixed": true,
         "isHidden": false,
         "customText": "Powered by Appcubator",
-        "links": []
+        "links": [],
+        "version": 2
       },
       "navbar": {
         "isFixed": true,
@@ -758,7 +763,8 @@
             "url": "internal://All users",
             "title": "Users"
           }
-        ]
+        ],
+        "version": 2
       },
       "uielements": [
         {
@@ -853,7 +859,8 @@
         "isFixed": true,
         "isHidden": false,
         "customText": "Powered by Appcubator",
-        "links": []
+        "links": [],
+        "version": 2
       },
       "navbar": {
         "isFixed": true,
@@ -864,7 +871,8 @@
             "url": "internal://All users",
             "title": "Users"
           }
-        ]
+        ],
+        "version": 2
       },
       "uielements": [
         {
@@ -1036,7 +1044,8 @@
         "isFixed": true,
         "isHidden": false,
         "links": [],
-        "customText": "Powered by Appcubator"
+        "customText": "Powered by Appcubator",
+        "version": 2
       },
       "url": {
         "urlparts": [
@@ -1048,7 +1057,8 @@
         "isFixed": true,
         "brandName": null,
         "isHidden": false,
-        "links": []
+        "links": [],
+        "version": 2
       },
       "access_level": "all",
       "uielements": [],
@@ -1064,7 +1074,8 @@
         "isFixed": true,
         "isHidden": false,
         "links": [],
-        "customText": "Powered by Appcubator"
+        "customText": "Powered by Appcubator",
+        "version": 2
       },
       "url": {
         "urlparts": [
@@ -1075,7 +1086,8 @@
         "isFixed": true,
         "brandName": null,
         "isHidden": false,
-        "links": []
+        "links": [],
+        "version": 2
       },
       "access_level": "all",
       "uielements": [
@@ -1351,7 +1363,8 @@
             "title": "Powered by Appcubator"
           }
         ],
-        "customText": "Copyright 2013"
+        "customText": "Copyright 2013",
+        "version": 2
       },
       "url": {
         "urlparts": [
@@ -1363,7 +1376,8 @@
         "isFixed": true,
         "brandName": null,
         "isHidden": false,
-        "links": []
+        "links": [],
+        "version": 2
       },
       "access_level": "all",
       "uielements": [
@@ -1462,7 +1476,8 @@
             "title": "Powered by Appcubator"
           }
         ],
-        "customText": "Copyright 2013"
+        "customText": "Copyright 2013",
+        "version": 2
       },
       "url": {
         "urlparts": [
@@ -1478,7 +1493,8 @@
             "url": "internal://Edit profile",
             "title": "Edit profile"
           }
-        ]
+        ],
+        "version": 2
       },
       "access_level": "all",
       "uielements": [
