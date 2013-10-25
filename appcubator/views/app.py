@@ -585,7 +585,7 @@ def css_sheet(request, app_id, isMobile=False):
         raise Http404
     uie_state = app.uie_state
     if isMobile:
-        uie_state = app.mobile_uie.state
+        uie_state = app.mobile_uie_state
 
     # if 'basecss' in uie_state:
     #     uie_state["basecss"] = uie_state["basecss"].replace('body', '&')
