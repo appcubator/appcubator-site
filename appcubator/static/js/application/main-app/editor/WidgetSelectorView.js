@@ -2,6 +2,8 @@ define(function(require, exports, module) {
 
     'use strict';
 
+    var WidgetEditorView = require('editor/WidgetEditorView');
+
     require('mixins/BackboneUI');
     require('util');
 
@@ -33,7 +35,6 @@ define(function(require, exports, module) {
 
             this.widgetsCollection = widgetsCollection;
             this.listenTo(this.widgetsCollection, 'add', this.bindWidget, true);
-            var WidgetEditorView = require('editor/WidgetEditorView');
             this.widgetEditorView = new WidgetEditorView();
             this.widgetEditorView.isMobile = self.isMobile;
 

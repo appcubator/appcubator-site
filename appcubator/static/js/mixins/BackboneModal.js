@@ -8,6 +8,9 @@ function() {
   Backbone.ModalView = Backbone.View.extend({
     width: 500,
     padding: 30,
+
+    bodyEl: null,
+
     events : {
       'click .modal-bg' : 'closeModal',
       'keydown'         : 'handleKey',
@@ -19,6 +22,7 @@ function() {
       if(options.height) {
         this.height = options.height;
       }
+      this.bodyEl = document.body;
       this.backgroundDiv = this.setupModal();
       this.modalWindow = this.setupModalWindow();
       _.bindAll(this);
@@ -26,6 +30,10 @@ function() {
 
     _ensureElement: function(options) {
       Backbone.ModalView.__super__._ensureElement.call(this, options);
+    },
+
+    setBodyEl: function(el) {
+      this.bodyEl = el;
     },
 
     setupModal: function() {
@@ -40,7 +48,7 @@ function() {
       div.style.backgroundColor = '#222';
       div.style.opacity = '0.6';
       div.style.zIndex = 3000;
-      document.body.appendChild(div);
+      this.bodyEl.appendChild(div);
 
       var closeHandler = function(e) {
         if(e.keyCode == 27) {
@@ -109,7 +117,7 @@ function() {
       content.style.padding = (this.padding||0) + 'px';
       div.appendChild(content);
 
-      document.body.appendChild(div);
+      this.bodyEl.appendChild(div);
 
       $(span).on('click', function(){
         self.closeModal();

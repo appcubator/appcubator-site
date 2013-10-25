@@ -108,6 +108,7 @@ require([
         "collections/PageCollection",
         "collections/MobilePageCollection",
         "app/AppRouter",
+        "editor/CustomWidgetEditorModal",
         "app/RouteLogger",
         "editor/KeyDispatcher",
         "editor/MouseDispatcher",
@@ -124,13 +125,17 @@ require([
         PageCollection,
         MobilePageCollection,
         AppRouter,
+        CustomWidgetEditorModal,
         RouteLogger,
         KeyDispatcher,
         MouseDispatcher,
         Heyoffline,
         Backbone) {
+    
+    //var CustomWidgetEditorModal = require('editor/CustomWidgetEditorModal');
 
         $(document).ready(function() {
+
 
             v1State = new Backbone.Model();
             v1State = new AppModel(appState);
@@ -148,6 +153,7 @@ require([
 
             v1 = {};
             v1 = new AppRouter();
+
             routeLogger = new RouteLogger({
                 router: v1
             });

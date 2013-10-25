@@ -109,7 +109,8 @@ function( WidgetView ) {
         }
       };
 
-      this.listenTo(v1, 'editor-loaded', appendJSTag, this);
+      $(document).ready(appendJSTag);
+      // this.listenTo(v1, 'editor-loaded', appendJSTag, this);
     },
 
     placeCSS: function() {

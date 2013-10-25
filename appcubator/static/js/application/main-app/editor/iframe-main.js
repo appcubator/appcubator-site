@@ -114,6 +114,7 @@ require([
         Backbone) {
 
         v1State = top.v1State;
+        v1 = top.v1;
         g_guides = top.g_guides;
         uieState = top.uieState;
         appId = top.appId;

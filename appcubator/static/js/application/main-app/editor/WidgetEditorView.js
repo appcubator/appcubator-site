@@ -20,6 +20,7 @@ define(function(require, exports, module) {
     var GenericModelFieldEditor = require('mixins/GenericModelFieldEditor');
 
     var WidgetEditorView = Backbone.UIView.extend({
+        
         className: 'widget-editor fadeIn',
         id: 'widget-editor',
         tagName: 'div',
@@ -61,6 +62,7 @@ define(function(require, exports, module) {
             }
 
             this.model = widgetModel;
+            v1.view.widgetEditorViewProxy.model = widgetModel;
 
             this.listenTo(this.model, 'startEditing', this.startedEditing);
             this.listenTo(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
@@ -295,7 +297,7 @@ define(function(require, exports, module) {
         },
 
         openCustomWidgetEditor: function() {
-            new CustomWidgetEditorModal(this.model);
+            v1.view.widgetEditorViewProxy.openCustomWidgetEditor();
         },
 
         closeEditingMode: function() {
