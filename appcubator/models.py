@@ -335,6 +335,8 @@ class App(models.Model):
 
     created_on = models.DateTimeField(auto_now_add=True)
 
+    collaborators = models.ManyToManyField(User, through='Collaboration')
+
     def get_error_type_name(self):
         err_type = self.error_type
         if err_type == 0:
@@ -911,7 +913,7 @@ class AnalyticsStore(models.Model):
         else:
             return result
 
-class Collaboration(models.Model):
-    user = models.ForeignKey(User, related_name="collaborations")
-    app = models.ForeignKey(App, related_name="collaborations")
 
+class Collaboration(models.Model):
+    user = models.ForeignKey(User, related_name="collaborations", unique=True)
+    app = models.ForeignKey(App, related_name="collaborations")

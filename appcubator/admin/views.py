@@ -48,7 +48,7 @@ def home(request):
 
     # deployed apps stats
     page_context["avg_deployment_time"] = avg_deployment_time()
-    page_context["num_deployed_apps"] = App.objects.filter(deployment_id__isnull=False).count()
+    page_context["num_deployed_apps"] = App.objects.using('readreplica1').filter(deployment_id__isnull=False).count()
 
     return render(request, 'admin/home.html', page_context)
 
@@ -56,7 +56,7 @@ def home(request):
 @user_passes_test(lambda u: u.is_superuser)
 def app_errors(request):
     page_context = {}
-    apps = App.objects.all()
+    apps = App.objects.using('readreplica1').all()
     err_apps = []
     for app in apps:
         if app.error_type !=0 and len(app.error_message) > 0:
@@ -78,7 +78,7 @@ def get_snapshots(request, app_id):
 @user_passes_test(lambda u: u.is_superuser)
 def customers(request):
     page_context = {}
-    page_context["customers"] = Customer.objects.all()
+    page_context["customers"] = Customer.objects.using('readreplica1').all()
     return render(request, 'admin/customers.html', page_context)
 
 
@@ -91,9 +91,9 @@ def customers_search(request):
     try:
         query = long(query)
     except ValueError:
-        page_context["customers"] = Customer.objects.filter(Q(name__icontains=query)|Q(email__icontains=query))
+        page_context["customers"] = Customer.objects.using('readreplica1').filter(Q(name__icontains=query)|Q(email__icontains=query))
     else:
-        page_context["customers"] = Customer.objects.filter(id=query)
+        page_context["customers"] = Customer.objects.using('readreplica1').filter(id=query)
 
     return render(request, 'admin/customers.html', page_context)
 
@@ -135,7 +135,7 @@ def users(request):
         user = get_object_or_404(User, pk=user_id)
         return redirect('appcubator.admin.views.user', str(user_id))
 
-    users_all = User.objects.order_by('-id')
+    users_all = User.objects.using('readreplica1').order_by('-id')
     paginator = Paginator(users_all, 100)
     page = request.GET.get('page')
     try:
@@ -156,8 +156,8 @@ def users(request):
 def user(request, user_id):
     user_id = long(user_id)
     user = get_object_or_404(User, id=user_id)
-    logs_all = LogAnything.objects.filter(user_id=user_id).order_by('-id')
-    apps = App.objects.filter(owner=user_id)
+    logs_all = LogAnything.objects.using('readreplica1').filter(user_id=user_id).order_by('-id')
+    apps = App.objects.using('readreplica1').filter(owner=user_id)
     paginator = Paginator(logs_all, 100)
     page = request.GET.get('page')
     try:
@@ -171,7 +171,7 @@ def user(request, user_id):
     page_context = {}
     page_context["user"] = user
     try:
-        page_context["customer"] = Customer.objects.get(user_id=user.id)
+        page_context["customer"] = Customer.objects.using('readreplica1').get(user_id=user.id)
     except Customer.DoesNotExist:
         page_context["customer"] = None
     page_context["apps"] = apps
@@ -184,7 +184,7 @@ def user(request, user_id):
 @require_GET
 @user_passes_test(lambda u: u.is_superuser)
 def apps(request):
-    apps_all = App.objects.order_by('-id')
+    apps_all = App.objects.using('readreplica1').order_by('-id')
     paginator = Paginator(apps_all, 100)
     page = request.GET.get('page')
     try:
@@ -205,7 +205,7 @@ def apps(request):
 def app(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
-    logs_all = LogAnything.objects.filter(user_id=app.owner.id, app_id=app_id).order_by('-id')
+    logs_all = LogAnything.objects.using('readreplica1').filter(user_id=app.owner.id, app_id=app_id).order_by('-id')
     paginator = Paginator(logs_all, 100)
     page = request.GET.get('page')
     try:
@@ -229,7 +229,7 @@ def app(request, app_id):
 def app_snaps(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
-    snaps_all = AppstateSnapshot.objects.filter(app=app).order_by('-id')
+    snaps_all = AppstateSnapshot.objects.using('readreplica1').filter(app=app).order_by('-id')
     paginator = Paginator(snaps_all, 20)
     page = request.GET.get('page')
     try:
@@ -251,7 +251,7 @@ def app_snaps(request, app_id):
 @user_passes_test(lambda u: u.is_superuser)
 def feedback(request):
     page_context = {}
-    feedback = list(LogAnything.objects.filter(name='posted feedback'))
+    feedback = list(LogAnything.objects.using('readreplica1').filter(name='posted feedback'))
     page_context["feedback"] = feedback
     return render(request, 'admin/feedback.html', page_context)
 
@@ -259,14 +259,14 @@ def feedback(request):
 @user_passes_test(lambda u: u.is_superuser)
 def invitations(request):
     page_context = {}
-    invs = InvitationKeys.objects.all()
+    invs = InvitationKeys.objects.using('readreplica1').all()
     page_context["invitations"] = invs
     return render(request, 'admin/invitations.html', page_context)
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def walkthroughs(request):
-    num_users = User.objects.all().count()
+    num_users = User.objects.using('readreplica1').all().count()
     started_quicktour = unique_user_logs(get_logs({'name': 'started quick tour'}))
     started_indepth_walkthrough = unique_user_logs(get_logs({'name': 'started in-depth twitter walkthrough'}))
     started_simple_walkthrough = unique_user_logs(get_logs({'name': 'started simple twitter walkthrough'}))
@@ -322,7 +322,7 @@ def logs(request):
 @user_passes_test(lambda u: u.is_superuser)
 def user_signups_json(request):
     # group number of users by date (not datetime) user joined
-    users = User.objects\
+    users = User.objects.using('readreplica1')\
                 .extra(select={'day_joined': 'date(date_joined)'})\
                 .values('day_joined')\
                 .annotate(num_users=Count('id'))\
@@ -413,15 +413,15 @@ def active_users_json(request, t_start, t_end, t_delta):
 def recent_users(long_ago=timedelta(days=1), limit=10):
     today = timezone.now().date()
     time_ago = today - long_ago
-    users = LogAnything.objects.filter(timestamp__gte=time_ago)\
+    users = LogAnything.objects.using('readreplica1').filter(timestamp__gte=time_ago)\
             .exclude(user_id=None)\
             .values_list('user_id', flat=True).distinct()
     if len(users) > limit:
         users = users[:limit]
     result = []
     for user_id in users:
-        user = User.objects.get(id=long(user_id))
-        num_logs = LogAnything.objects.filter(timestamp__gte=time_ago, user_id=user_id).count()
+        user = User.objects.using('readreplica1').get(id=long(user_id))
+        num_logs = LogAnything.objects.using('readreplica1').filter(timestamp__gte=time_ago, user_id=user_id).count()
         fullName = "%s %s" % (user.first_name, user.last_name)
         num_apps = user.apps.count()
         result.append({'user_id': user_id, 'num_logs': num_logs, 'name': fullName, 'num_apps': num_apps})
@@ -434,7 +434,7 @@ def recent_users(long_ago=timedelta(days=1), limit=10):
 # Top [limit] users with most page visits
 def logs_per_user(limit=10):
     try:
-        users = LogAnything.objects\
+        users = LogAnything.objects.using('readreplica1')\
                 .exclude(user_id=None)\
                 .values_list('user_id', flat=True).distinct()
     except:
@@ -442,8 +442,8 @@ def logs_per_user(limit=10):
 
     result = []
     for user_id in users:
-        user = User.objects.get(id=long(user_id))
-        num_logs = LogAnything.objects.filter(user_id=user_id).count()
+        user = User.objects.using('readreplica1').get(id=long(user_id))
+        num_logs = LogAnything.objects.using('readreplica1').filter(user_id=user_id).count()
         obj = {}
         obj['user_id'] = user_id
         obj['user'] = user
@@ -473,7 +473,7 @@ def deployed_apps(min, max=datetime.now()):
     # default starting date july 13, 2013
     if(min is None):
         min = datetime.date(2013, 6, 26)
-    return LogAnything.objects\
+    return LogAnything.objects.using('readreplica1')\
         .filter(timestamp__gte=min, timestamp__lte=max, name="deployed app")\
         .distinct('app_id').count()
 
@@ -490,7 +490,7 @@ def users_joined(min, max=datetime.now()):
     # default starting date july 26, 2013
     if(min is None):
         min = date(2013, 6, 26)
-    return User.objects.filter(date_joined__gte=min, date_joined__lte=max)
+    return User.objects.using('readreplica1').filter(date_joined__gte=min, date_joined__lte=max)
 
 def num_users_joined(min, max=datetime.now(), cumulative=False):
     if cumulative:

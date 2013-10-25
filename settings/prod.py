@@ -32,6 +32,15 @@ DATABASES = {
        'PASSWORD': 'longisland3',
        'HOST': 'appcubatorsite.ccchupi0ycq8.us-east-1.rds.amazonaws.com',
        'PORT': 3306
+   },
+   'readreplica1': {
+       'ENGINE': 'django.db.backends.mysql',
+       'NAME': 'v1factory',
+       'USER': 'appcubator',
+       'PASSWORD': 'longisland3',
+       'HOST': 'productionreplica.ccchupi0ycq8.us-east-1.rds.amazonaws.com',
+       'PORT': 3306,
+       'AUTOCOMMIT': False
    }
 }
 

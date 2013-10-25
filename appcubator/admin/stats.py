@@ -29,11 +29,11 @@ def timeframe(query_set, field_name, min=date(2013, 6, 26), max=datetime.now()):
 
 # get all the logs by a certain user
 def user_logs(user_id):
-	return LogAnything.objects.filter(user_id=user_id)
+	return LogAnything.objects.using('readreplica1').filter(user_id=user_id)
 
 
 def get_logs(args):
-    logs = LogAnything.objects
+    logs = LogAnything.objects.using('readreplica1')
     if 'name' in args:
         logs = logs.filter(name=urllib.unquote_plus(args['name']))
     if 'app_id' in args:
@@ -50,21 +50,21 @@ def get_logs(args):
 # Get a queryset of all the deployment logs
 def deployments(query_set=None):
 	if query_set is None:
-		return LogAnything.objects.filter(name='deployed app')
+		return LogAnything.objects.using('readreplica1').filter(name='deployed app')
 	else:
 		return query_set.filter(name='deployed app')
 
 # get a queryset of all the pageview logs
 def pageviews(query_set=None):
 	if query_set is None:
-		return LogAnything.objects.filter(name='visited page')
+		return LogAnything.objects.using('readreplica1').filter(name='visited page')
 	else:
 		return query_set.filter(name='visited page')
 
 
 def unique_user_logs(query_set=None, min=T0, max=datetime.now(), count=False):
 	if query_set is None:
-		query = timeframe(LogAnything.objects.all(), min, max)
+		query = timeframe(LogAnything.objects.using('readreplica1').all(), min, max)
 	else:
 		query = query_set
 	query = query.values_list('user_id', flat=True).distinct()
@@ -75,7 +75,7 @@ def unique_user_logs(query_set=None, min=T0, max=datetime.now(), count=False):
 
 
 def deployed_apps(count=False):
-	query = App.objects.filter(deployment_id__isnull=False)
+	query = App.objects.using('readreplica1').filter(deployment_id__isnull=False)
 	if not count:
 		return query
 	else:
@@ -99,7 +99,7 @@ def avg_deployment_time():
 # as dictionaries. if attr is specified, return a specific attribute in the data
 def log_data(query_set=None, attr=None):
 	if query_set is None:
-		query_set = LogAnything.objects.all()
+		query_set = LogAnything.objects.using('readreplica1').all()
 	query_set = query_set.values_list('data', flat=True)
 	data = map(json.loads, query_set)
 	if attr is not None:
