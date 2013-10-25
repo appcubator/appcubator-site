@@ -21,6 +21,7 @@ define(function(require, exports, module) {
     var RedoController = require('app/RedoController');
     var WidgetEditorViewProxy = require('editor/WidgetEditorViewProxy');
 
+    require('mixins/BackboneConvenience');
     require('editor/editor-templates');
 
 
@@ -56,12 +57,12 @@ define(function(require, exports, module) {
             this.toolBar = new ToolBarView();
 
             this.widgetEditorViewProxy = WidgetEditorViewProxy;
-            var redoController = new RedoController();
+            this.redoController = new RedoController();
 
-            keyDispatcher.bindComb('meta+z', redoController.undo);
-            keyDispatcher.bindComb('ctrl+z', redoController.undo);
-            keyDispatcher.bindComb('meta+shift+z', redoController.redo);
-            keyDispatcher.bindComb('ctrl+shift+z', redoController.redo);
+            keyDispatcher.bindComb('meta+z', this.redoController.undo);
+            keyDispatcher.bindComb('ctrl+z', this.redoController.undo);
+            keyDispatcher.bindComb('meta+shift+z', this.redoController.redo);
+            keyDispatcher.bindComb('ctrl+shift+z', this.redoController.redo);
 
             g_guides = this.guides;
 
@@ -281,10 +282,11 @@ define(function(require, exports, module) {
 
             clearInterval(this.UIStateTimer);
 
-            keyDispatcher.unbind('meta+z', redoController.redo);
-            keyDispatcher.unbind('ctrl+z', redoController.redo);
+            keyDispatcher.unbind('meta+z', this.redoController.redo);
+            keyDispatcher.unbind('ctrl+z', this.redoController.redo);
 
-            Backbone.View.prototype.close.call(this);
+            // TODO: fix this
+            //EditorView.__super__.close.call(this);
         }
 
     });

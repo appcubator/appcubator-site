@@ -13,7 +13,18 @@ function(LinkCollection) {
 
       //init items collection with links passed from appState
       this.set('links', new LinkCollection(bone.links||[]));
-      this.set('version', 2);
+      
+      if(appState) {
+        try {
+          if(appState.pages[0].navbar.version == 2) {
+            this.set('version', 2);
+          }
+        }
+        catch(err) {
+          console.log("Problem with accessing first page.");
+        }
+      }
+      
     },
 
     getLinks: function() {

@@ -53,7 +53,7 @@ function(PageModel) {
 
     clickedGoToPage: function(e) {
       var goToPageId = (e.target.id||e.target.parentNode.id).replace('page-','');
-      v1.navigate("app/"+ appId +"/editor/" + goToPageId +"/", {trigger: true});
+      v1.navigate("app/"+ appId +"/page/" + goToPageId +"/", {trigger: true});
     },
 
     createPage: function(name) {
