@@ -82,6 +82,8 @@ function( WidgetView ) {
 
     placeJS: function() {
 
+      var self = this;
+  
       var jsTag = 'custom-js-widget-' + this.model.cid;
       if(jsTag) $(jsTag).remove();
 
@@ -97,10 +99,10 @@ function( WidgetView ) {
 
         try {
           jsTag = document.createElement('script');
-          jsTag.id = 'custom-js-widget-' + this.model.cid;
+          jsTag.id = 'custom-js-widget-' + self.model.cid;
           jsTag.setAttribute("type","text/javascript");
           // console.log(_.template(customJSTemp, { code: this.model.get('data').get('jsC') }));
-          jsTag.text = this.model.get('data').get('jsC');
+          jsTag.text = self.model.get('data').get('jsC');
 
           document.body.appendChild(jsTag);
         }
@@ -121,7 +123,6 @@ function( WidgetView ) {
       style.id = 'custom-css-widget-' + this.model.cid;
       style.type = 'text/css';
       var css = this.model.get('data').get('cssC');
-      css = String(css).replace('body', '.fdededfcbcbcd');
       if (style.styleSheet){
         style.styleSheet.cssText = css;
       } else {
