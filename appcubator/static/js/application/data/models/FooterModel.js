@@ -18,9 +18,19 @@ function(LinkCollection) {
         title: "Powered by Appcubator",
         url:   "http://appcubator.com" }
       ]));
-      this.set('version', 2);
-      this.links = this.get('links');
 
+      if(appState) {
+        try {
+          if(appState.pages[0].footer.version == 2) {
+            this.set('version', 2);
+          }
+        }
+        catch(err) {
+          console.log("Problem with accessing first page.");
+        }
+      }
+
+      this.links = this.get('links');
     },
 
     getLinks: function() {
