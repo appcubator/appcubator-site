@@ -246,35 +246,27 @@ define(function(require, exports, module) {
         },
 
         openFormEditor: function() {
-            var entityModel = this.model.get('data').get('container_info').get('form').get('entity');
-            if (_.isString(entityModel)) entityModel = v1State.getTableModelWithName(entityModel);
-            new FormEditorView(this.model.get('data').get('container_info').get('form'), entityModel);
+            v1.view.widgetEditorViewProxy.openFormEditor();
         },
 
         openLoginEditor: function() {
-            var loginRoutes = this.model.getLoginRoutes();
-            new LoginFormEditorView(loginRoutes);
+            v1.view.widgetEditorViewProxy.openLoginEditor();
         },
 
         openSlideEditor: function() {
-            new ImageSliderEditorView(this.model);
+            v1.view.widgetEditorViewProxy.openSlideEditor();
         },
 
         openFBShareEditor: function() {
-            new FacebookShareEditor(this.model);
+            v1.view.widgetEditorViewProxy.openFBShareEditor();
         },
 
         openVideoEmbedEditor: function() {
-            new VideoEmbedEditor(this.model);
+            v1.view.widgetEditorViewProxy.openVideoEmbedEditor();
         },
 
         openQueryEditor: function() {
-            var type = 'table';
-            if (this.model.get('data').get('container_info').has('row')) {
-                type = 'list';
-            }
-
-            new QueryEditorView(this.model, type);
+            v1.view.widgetEditorViewProxy.openQueryEditor();
         },
 
         openRowEditor: function() {
@@ -293,7 +285,7 @@ define(function(require, exports, module) {
         },
 
         openSearchEditor: function() {
-            new SearchEditorView(this.model.get('data').get('searchQuery'));
+            v1.view.widgetEditorViewProxy.openSearchEditor();
         },
 
         openCustomWidgetEditor: function() {
