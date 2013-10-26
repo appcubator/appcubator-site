@@ -52,7 +52,8 @@ class AppNew(forms.ModelForm):
             paying = False
 
         if owner.apps.count() >= MAX_FREE_APPS and not paying:
-            raise AppLimitReached()
+            if not app.owner.is_superuser:
+                raise AppLimitReached()
         return self.cleaned_data
 
 class AppClone(forms.Form):
@@ -68,7 +69,8 @@ class AppClone(forms.Form):
             paying = False
 
         if app.owner.apps.count() >= MAX_FREE_APPS and not paying:
-            raise AppLimitReached()
+            if not app.owner.is_superuser:
+                raise AppLimitReached()
         return self.cleaned_data
 
     def save(self):
