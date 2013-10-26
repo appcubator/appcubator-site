@@ -140,7 +140,7 @@ define(function(require, exports, module) {
                 var cleanDiv = document.createElement('div');
                 cleanDiv.className = "clean-div editor-page";
                 $(document.body).append(cleanDiv);
-
+                console.log(pageId);
                 v1.view = new EditorView({
                     pageId: pageId
                 });

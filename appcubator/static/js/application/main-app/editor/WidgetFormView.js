@@ -55,8 +55,6 @@ function( WidgetContainerView,
     },
 
     render: function() {
-      console.log("hey");
-      console.trace();
       this.arrangeLayout();
 
       if(this.form) $(this.form).remove();

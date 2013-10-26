@@ -41,7 +41,10 @@ define(function(require, exports, module) {
             _.bindAll(this);
             this.subviews = [];
 
-            if (options && options.pageId) pageId = options.pageId;
+            if (options && options.pageId)  {
+                this.pageId = options.pageId;
+                pageId = options.pageId;
+            }
 
             util.loadCSS('jquery-ui');
 
@@ -87,7 +90,12 @@ define(function(require, exports, module) {
 
         render: function() {
             var self = this;
-            if (!this.el.innerHTML) this.el.innerHTML = util.getHTML('editor-page');
+            if (!this.el.innerHTML)  {
+                console.log('hey');
+                console.log(this.pageId);
+                console.log(_.template(util.getHTML('editor-page'), { pageId: this.pageId}));
+                this.el.innerHTML = _.template(util.getHTML('editor-page'), { pageId: this.pageId});
+            }
 
             document.body.style.overflow = "hidden";
 
