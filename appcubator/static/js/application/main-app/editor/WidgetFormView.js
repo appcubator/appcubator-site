@@ -55,7 +55,11 @@ function( WidgetContainerView,
     },
 
     render: function() {
+      console.log("hey");
+      console.trace();
       this.arrangeLayout();
+
+      if(this.form) $(this.form).remove();
 
       this.form = document.createElement('form');
       this.el.appendChild(this.form);
@@ -63,7 +67,7 @@ function( WidgetContainerView,
 
       if(!this.model.get('data').has('class_name')) {
         var className = uieState["forms"][0].class_name;
-        this.model.get('data').set('class_name', className);
+        this.model.get('data').set('class_name', className, {silent: true});
       }
 
       this.form.className = this.model.get('data').get('class_name');
