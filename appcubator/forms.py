@@ -52,7 +52,7 @@ class AppNew(forms.ModelForm):
             paying = False
 
         if owner.apps.count() >= MAX_FREE_APPS and not paying:
-            if not app.owner.is_superuser:
+            if not owner.is_superuser:
                 raise AppLimitReached()
         return self.cleaned_data
 
