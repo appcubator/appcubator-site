@@ -1323,7 +1323,7 @@ def user_get_unused_votes_today(self):
     """returns number of votes that are
     still available to the user today
     """
-    today = datetime.now(utc)
+    today = datetime.datetime.now(utc)
     one_day_interval = (today, today + datetime.timedelta(1))
 
     used_votes = Vote.objects.filter(
