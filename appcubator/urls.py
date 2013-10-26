@@ -61,6 +61,7 @@ urlpatterns += patterns('appcubator.views.app',
 
     url(r'^app/(\d+)/uiestate.less$', 'less_sheet'),
     url(r'^app/(\d+)/uiestate.css$', 'css_sheet'),
+    url(r'^app/(\d+)/migrated_uiestate.css$', 'migrated_css_sheet'),
     url(r'^app/(\d+)/mobile_uiestate.less$', 'mobile_less_sheet'),
     url(r'^app/(\d+)/mobile_uiestate.css$', 'mobile_css_sheet'),
 

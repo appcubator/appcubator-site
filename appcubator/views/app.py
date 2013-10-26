@@ -35,6 +35,7 @@ import app_builder.analyzer as analyzer
 
 from django.conf import settings
 
+import cssutils
 
 def add_statics_to_context(context, app):
     context['statics'] = simplejson.dumps(list(
@@ -598,6 +599,40 @@ def css_sheet(request, app_id, isMobile=False):
     css_string = t.render(context)
 
     return HttpResponse(css_string, mimetype='text/css')
+
+
+@csrf_exempt
+def migrated_css_sheet(request, app_id, isMobile=False):
+    app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
+    if not app.is_editable_by_user(request.user):
+        raise Http404
+    uie_state = app.uie_state
+    if isMobile:
+        uie_state = app.mobile_uie.state
+
+    # if 'basecss' in uie_state:
+    #     uie_state["basecss"] = uie_state["basecss"].replace('body', '&')
+
+    from django.template import loader, Context
+    context = Context({'uie_state': uie_state,
+                       'isMobile': False,
+                       'deploy': False})
+    t = loader.get_template('migrate-editor-css.html')
+    css_string = t.render(context)
+
+
+    css = cssutils.parseString(css_string)
+    rules = css.cssRules
+    print rules.length
+    for x in range(0, rules.length):
+        if rules.item(x).typeString == "STYLE_RULE":
+            selector_list = rules.item(x).selectorList
+            for y in range(0, selector_list.length):
+                if selector_list[y].selectorText != "body":
+                    selector_list[y].selectorText = selector_list[y].selectorText.replace('body','')
+
+    return HttpResponse(css.cssText, mimetype='text/css')
 
 
 @csrf_exempt
