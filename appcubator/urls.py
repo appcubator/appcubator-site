@@ -82,11 +82,11 @@ urlpatterns += patterns('appcubator.views.app',
     url(r'^subdomains/(.*)/available_check/$', 'sub_check_availability'),
     url(r'^app/(\d+)/subdomain/(.*)/$', 'sub_register_domain'),
 
-    
-    url(r'^app/(\d+)/editor/\d+/$', 'app_editor_iframe'), # this serves all the app pages
+
+    url(r'^app/(\d+)/editor/\d+/$', 'app_editor_iframe'),
 
     # special json editor route
-    url(r'^app/(\d+)/editor/\d+/debug/$', 'json_editor'), # this serves all the app pages
+    url(r'^app/(\d+)/page/\d+/debug/$', 'json_editor'),
 
     url(r'^feedback/$', 'documentation_page', {"page_name": "feedback"}),
     url(r'^documentation/$', 'documentation_page', {"page_name": "all"}),
