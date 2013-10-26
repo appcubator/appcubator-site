@@ -630,7 +630,7 @@ def migrated_css_sheet(request, app_id, isMobile=False):
             selector_list = rules.item(x).selectorList
             for y in range(0, selector_list.length):
                 if selector_list[y].selectorText != "body":
-                    selector_list[y].selectorText = selector_list[y].selectorText.replace('body','')
+                    selector_list[y].selectorText = selector_list[y].selectorText.replace('body','',1)
 
     return HttpResponse(css.cssText, mimetype='text/css')
 
