@@ -196,9 +196,10 @@ a.fancy:hover .edit-btn {
 
   .ui-tooltip, .arrow:after {
     background: black !important;
-    border:    solid white;
+    border: solid white;
   }
   .ui-tooltip {
+    display: inline-block !important;
     padding: 10px 20px;
     color: #fff !important;
     border-radius: 20px;
