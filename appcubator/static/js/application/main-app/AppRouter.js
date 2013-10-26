@@ -138,7 +138,6 @@ define(function(require, exports, module) {
                 $('.page:not(.container)').fadeOut();
                 if (v1.view) {
                     v1.view.close();
-                    console.log("closing");
                 }
                 var cleanDiv = document.createElement('div');
                 cleanDiv.className = "clean-div editor-page";
