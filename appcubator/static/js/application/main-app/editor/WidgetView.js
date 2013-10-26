@@ -126,8 +126,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             var temp = Templates.tempNode;
             var node_context = this.model.get('data').toJSON();
 
-            console.log(node_context);
-
             if (node_context.content) {
                 node_context.content = node_context.content.replace(/\n\r?/g, '<br />');
             }
@@ -139,8 +137,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             var el = _.template(temp, {
                 element: node_context
             });
-
-            console.log(el);
 
             return el;
         },
@@ -247,7 +243,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         hovered: function() {
-            console.log('hovered');
             if (this.editMode || mouseDispatcher.isMousedownActive) return;
             if (this.model.isBgElement()) return;
             this.hovered = true;
@@ -284,7 +279,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         switchEditModeOn: function() {
-            console.log("switchEditModeOn");
             if (this.model.get('data').get('content')) {
                 this.editMode = true;
                 //var el = $(this.el.firstChild);
@@ -425,7 +419,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         mousedown: function(e) {
-            console.log("widget mousedown");
             mouseDispatcher.isMousedownActive = true;
         },
         mouseup: function() {

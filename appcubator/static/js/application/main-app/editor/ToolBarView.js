@@ -29,7 +29,9 @@ function(PageModel) {
     },
 
     render: function() {
-
+      console.log(pageId);
+      console.log(v1State.get('pages').models[pageId]);
+      console.log(util.get('current-page'));
       util.get('current-page').innerHTML = v1State.get('pages').models[pageId].get('name');
       this.pageList = util.get('page-list');
 

@@ -91,9 +91,6 @@ define(function(require, exports, module) {
         render: function() {
             var self = this;
             if (!this.el.innerHTML)  {
-                console.log('hey');
-                console.log(this.pageId);
-                console.log(_.template(util.getHTML('editor-page'), { pageId: this.pageId}));
                 this.el.innerHTML = _.template(util.getHTML('editor-page'), { pageId: this.pageId});
             }
 
@@ -295,6 +292,10 @@ define(function(require, exports, module) {
 
             // TODO: fix this
             //EditorView.__super__.close.call(this);
+            this.undelegateEvents();
+            this.$el.removeData().unbind();
+            this.remove();
+            this.unbind();
         }
 
     });

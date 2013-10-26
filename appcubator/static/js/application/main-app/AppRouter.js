@@ -135,10 +135,14 @@ define(function(require, exports, module) {
             self.tutorialPage = "Editor";
 
             require(['editor/EditorView'], function(EditorView) {
-                $('.page').fadeOut();
-                if (v1.view) v1.view.close();
+                $('.page:not(.container)').fadeOut();
+                if (v1.view) {
+                    v1.view.close();
+                    console.log("closing");
+                }
                 var cleanDiv = document.createElement('div');
                 cleanDiv.className = "clean-div editor-page";
+                console.log(cleanDiv);
                 $(document.body).append(cleanDiv);
                 console.log(pageId);
                 v1.view = new EditorView({
