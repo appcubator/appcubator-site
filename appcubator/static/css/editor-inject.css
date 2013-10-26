@@ -1,3 +1,7 @@
+body {
+  overflow-y: scroll;
+}
+
 .guide-line-horizontal {
   display: none;
   position: absolute;

@@ -46,6 +46,7 @@ define([
                 var dist = this.getPageTopLeft();
                 coorX -= dist.left;
                 coorY -= dist.top;
+                coorY += $(window).scrollTop();
 
                 this.setTop(coorY);
                 this.setLeft(coorX);
