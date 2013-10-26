@@ -11,9 +11,6 @@
 {% endblock%}
 
 {% block tutorial-content %}
-<div class="website-notice">
-  We have made some significant changes to our theme infrastructure to let you have a better experience. This guide refers to the new version. If your app was created before 10/26/2013, you can refer to the <a href="/resources/designer-guide-old/">previous version of the this guide</a>.
-</div>
 <div class="section" id="themeeditor-section">
     <h4>How to Use the Theme Editor</h4>
     <p>Theme editor gives you full control over your interface. It requires knowledge of CSS. It uses LESS to compile the styles on the generated app, but it's not a required skill.</p>
@@ -24,10 +21,10 @@
     <h5>Base CSS</h5>
     <p>Base CSS is the CSS that will directly be injected to your page. It should include the overall styling of your page, such as the styling of the body tag, navigation bar or footer.</p>
     <h6>How to style body tag?</h6>
-    <p>As same with the other CSS selectors, you can just write <code>body { /* Your CSS */ }</code></p>
+    <p>To style the &#60;body&#62; tag, it's just enough to add lines on top of the basecss, without any brackets. The lines you write here will automatically be wrapped with <code>body { /* Your CSS */ }</code>.</p>
     <p class="example">
       <span>Example styling:</span><br>
-      <img src="https://www.filepicker.io/api/file/mUL20vQGRDmYUTWeGD2x">
+      <img src="https://www.filepicker.io/api/file/EJd57eLJSZOGEoab2Jnv">
     </p>
 </div>
 <div class="section" id="navigationbar-section">

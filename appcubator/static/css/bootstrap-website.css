@@ -6036,6 +6036,16 @@ i.icon-url {
   margin-top: 6px;
 }
 
+.website-notice {
+  padding: 15px;
+  border: 1px solid #ccc;
+  font-style: italic;
+}
+
+.website-notice a {
+  font-weight: bold;
+}
+
 .notification {
   padding: 12px 20px;
   font-weight: bold;

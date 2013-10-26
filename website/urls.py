@@ -64,6 +64,7 @@ urlpatterns = patterns('views',
     url(r'^resources/sample/(\d+)/part/(\d+)/$',                   views.sample_app_part),
 
     url(r'^resources/designer-guide/$',                            views.designer_guide),
+    url(r'^resources/designer-guide-old/$',                        views.designer_guide_old),
     url(r'^resources/developer-guide/$',                           views.developer_guide),
     url(r'^suggestions/$',                                         views.suggestions),
     url(r'^toggle/$',                                              views.toggle_love),
