@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 
 from appcubator.models import App
+from appcubator.views import JsonResponse
 from models import Provider, ProviderKey, ProviderData
 
 from django.core.exceptions import ValidationError
