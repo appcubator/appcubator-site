@@ -118,46 +118,6 @@ def developer_homepage(request):
     return render(request, 'website-home-developer.html', page_context)
 
 
-@require_GET
-def showhnpage(request):
-    if request.user.is_authenticated():
-        return redirect('/app/')
-
-    page_context = {}
-    page_context["title"] = "Homepage"
-
-    return render(request, 'website-showhn.html', page_context)
-
-@require_GET
-def showgwcpage(request):
-    if request.user.is_authenticated():
-        return redirect('/app/')
-
-    page_context = {}
-    page_context["title"] = "Homepage"
-
-    return render(request, 'website-showgwc.html', page_context)
-
-@require_GET
-def showdnpage(request):
-    if request.user.is_authenticated():
-        return redirect('/app/')
-
-    page_context = {}
-    page_context["title"] = "Homepage"
-
-    return render(request, 'website-showdn.html', page_context)
-
-@require_GET
-def showgsbpage(request):
-    if request.user.is_authenticated():
-        return redirect('/app/')
-
-    page_context = {}
-    page_context["title"] = "Homepage"
-
-    return render(request, 'website-showgsb.html', page_context)
-
 @login_required
 @csrf_exempt
 def account(request):
@@ -169,6 +129,7 @@ def account(request):
         user = request.user
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
+        user.username = request.POST['username']
         user.email = request.POST['email']
         if user.email == "":
             return HttpResponse(simplejson.dumps({"email": ["Email cannot be blank."]}), mimetype="application/json")
@@ -344,71 +305,6 @@ def signup_new_customer(request):
 
     return HttpResponse(simplejson.dumps(form.errors), mimetype="application/json", status=400)
 
-def signup_from(request, src):
-    src_company_map = { 'hn': 'Hacker News',
-                        'dn': 'Design News',
-                        'gwc': 'Girls who code',
-                        'gsb': 'GSB' }
-
-    src_description_map = { 'hn': 'HN launch',
-                            'dn': 'DN launch',
-                            'gwc': 'Referred by Renee',
-                            'gsb': 'Turkey training' }
-
-    src_template_map = { 'hn': 'website-showhn.html',
-                         'dn': 'website-showdn.html',
-                         'gwc': 'website-showgwc.html',
-                         'gsb': 'website-showgsb.html' }
-
-    if request.method == "GET":
-        if request.user.is_authenticated():
-            return redirect('/app/')
-        return render(request, src_template_map[src])
-    else:
-        req = {}
-        req = deepcopy(request.POST)
-        req["username"] = request.POST["email"]
-        req["first_name"] = request.POST["name"].split(" ")[0]
-        req["last_name"] = ' '.join(request.POST["name"].split(" ")[1:])
-        user_form = MyUserCreationForm(req)
-        req['company'] = src_company_map[src]
-        req['extra_info'] = ""
-        req['consulting'] = "false"
-        req['description'] = src_description_map[src]
-        req['sign_up_fee'] = '11'
-        cust_form = NewCustomerForm(req)
-        if user_form.is_valid() and cust_form.is_valid():
-            user = user_form.save()
-            c = cust_form.save(commit=False)
-            c.sent_welcome_email = True
-            new_user = authenticate(username=req['email'],
-                                    password=req['password1'])
-            login(request, new_user)
-            c.user_id = new_user.id
-            c.save()
-            return HttpResponse("")
-        else:
-            return HttpResponse(simplejson.dumps(dict(user_form.errors.items() + cust_form.errors.items())), mimetype="application/json", status=400)
-
-@require_http_methods(["GET", "POST"])
-@csrf_exempt
-def signup_from_hn(request):
-    return signup_from(request, 'hn')
-
-@require_http_methods(["GET", "POST"])
-@csrf_exempt
-def signup_from_dn(request):
-    return signup_from(request, 'dn')
-
-@require_http_methods(["GET", "POST"])
-@csrf_exempt
-def signup_from_gsb(request):
-    return signup_from(request, 'gsb')
-
-@require_http_methods(["GET", "POST"])
-@csrf_exempt
-def signup_from_gwc(request):
-    return signup_from(request, 'gwc')
 
 @login_required
 @csrf_exempt
