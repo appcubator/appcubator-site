@@ -73,6 +73,9 @@ urlpatterns += patterns('appcubator.views.app',
     #invitations
     url(r'^app/(\d+)/invitations/$', 'invitations'),
 
+    #collaborators
+    url(r'^app/(\d+)/collaborator/(\d+)/$', 'add_or_remove_collaborators'),
+
     # domains
     url(r'^app/(\d+)/customdomain/(.*)/$', 'hookup_custom_domain'),
         # this is old stuff

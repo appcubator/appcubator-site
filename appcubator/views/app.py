@@ -8,7 +8,7 @@ from django.template import loader, Context
 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
 
 from django.contrib import messages
 
@@ -896,6 +896,15 @@ def register_domain(request, domain):
     # Give client the domain info
     return JsonResponse(d.domain_info)
 
+@require_http_methods(['POST', 'DELETE'])
+@login_required
+def add_or_remove_collaborators(request, app_id, user_id):
+    if request.method == 'POST':
+        resp = add_collaborator_to_app(request, app_id, user_id)
+    elif request.method == 'DELETE':
+        resp = remove_collaborator_from_app(request, app_id, user_id)
+
+    return resp
 
 @require_POST
 @login_required
@@ -913,8 +922,7 @@ def add_collaborator_to_app(request, app_id, user_id):
     c.save()
     return JsonResponse({})
 
-
-@require_POST
+@require_http_methods(['DELETE'])
 @login_required
 def remove_collaborator_from_app(request, app_id, user_id):
     app = get_object_or_404(App, id=app_id)
