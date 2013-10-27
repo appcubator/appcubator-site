@@ -898,39 +898,53 @@ def register_domain(request, domain):
 
 @require_http_methods(['POST', 'DELETE'])
 @login_required
-def add_or_remove_collaborators(request, app_id, user_id):
+def add_or_remove_collaborators(request, app_id, username):
     if request.method == 'POST':
-        resp = add_collaborator_to_app(request, app_id, user_id)
+        resp = add_collaborator_to_app(request, app_id, username)
     elif request.method == 'DELETE':
-        resp = remove_collaborator_from_app(request, app_id, user_id)
+        resp = remove_collaborator_from_app(request, app_id, username)
 
     return resp
 
 @require_POST
 @login_required
-def add_collaborator_to_app(request, app_id, user_id):
+def add_collaborator_to_app(request, app_id, username):
+    """
+    404 if app not available or user not found
+    400 if duplicate
+    200 if success
+    """
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
         raise Http404
 
-    collab_user = get_object_or_404(User, pk=user_id)
+    collab_user = get_object_or_404(User, username=username)
     c = Collaboration(user=collab_user, app=app)
     try:
         c.full_clean()
-    except ValidationError, e:
+    except ValidationError, e: # validates uniqueness so dw about creating 2 collabs
         return JsonResponse(e.message_dict, status=400)
     c.save()
     return JsonResponse({})
 
 @require_http_methods(['DELETE'])
 @login_required
-def remove_collaborator_from_app(request, app_id, user_id):
+def remove_collaborator_from_app(request, app_id, username):
+    """
+    404 if app not available or user not found
+    400 if collab not exists
+    200 if success
+    """
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
         raise Http404
 
-    collab_user = get_object_or_404(User, pk=user_id)
-    collab = get_object_or_404(Collaboration, app=app, user=collab_user)
+    collab_user = get_object_or_404(User, username=username)
+
+    try:
+        collab = get_object_or_404(Collaboration, app=app, user=collab_user)
+    except Http404:
+        return JsonResponse({}, status=400)
 
     collab.delete()
     return JsonResponse({})
