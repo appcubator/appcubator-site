@@ -59,3 +59,11 @@ def reload_servers():
   code_dir = '/var/www/appcubator-sysadmin'
   with cd(code_dir):
     run('touch */*.ini')
+
+def reload_themes():
+  code_dir = '/var/www/appcubator-site'
+  with cd(code_dir):
+    with prefix('source venv/bin/activate'):
+      with prefix('export DJANGO_SETTINGS_MODULE=settings.%s' % env.__mode):
+        with prefix('export PYTHONPATH=$PWD'):
+          run('python scripts/006_refresh_themes.py')
