@@ -188,7 +188,7 @@ User.add_to_class(
 User.add_to_class('is_fake', models.BooleanField(default=False))
 
 User.add_to_class('email_isvalid', models.BooleanField(default=False)) #@UndefinedVariable
-User.add_to_class('email_key', models.CharField(max_length=32, null=True))
+User.add_to_class('email_key', models.CharField(max_length=32, null=True, blank=True))
 #hardcoded initial reputaion of 1, no setting for this one
 User.add_to_class('reputation',
     models.PositiveIntegerField(default=const.MIN_REPUTATION)
@@ -255,12 +255,12 @@ User.add_to_class(
 
 User.add_to_class(
     'twitter_access_token',
-    models.CharField(max_length=256, default='')
+    models.CharField(max_length=256, default='', blank=True)
 )
 
 User.add_to_class(
     'twitter_handle',
-    models.CharField(max_length=32, default='')
+    models.CharField(max_length=32, default='', blank=True)
 )
 
 User.add_to_class(
