@@ -18,10 +18,13 @@ body .row.row {
 body [class*="span"][class*="span"] {
   float: left;
   min-height: 1px;
-  margin-left: 0px;
   display: inline-block;
   vertical-align: top;
   overflow: hidden;
+}
+
+[class*="span"] {
+  margin-left: 0;
 }
 
 body hr[class*="span"] {
