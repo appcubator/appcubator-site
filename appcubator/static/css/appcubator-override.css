@@ -2,7 +2,6 @@
   vertical-align: top;
 }
 
-
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -19,10 +18,13 @@ body .row.row {
 body [class*="span"][class*="span"] {
   float: left;
   min-height: 1px;
-  margin-left: 0px;
   display: inline-block;
   vertical-align: top;
   overflow: hidden;
+}
+
+[class*="span"] {
+  margin-left: 0;
 }
 
 body hr[class*="span"] {
@@ -152,6 +154,10 @@ body hr[class*="span"] {
 .hoff3  { margin-top: 45px;  }
 .hoff2  { margin-top: 30px;  }
 .hoff1  { margin-top: 15px;  }
+
+.container.container {
+  padding: 0;
+}
 
 .container.elements {
   padding: 0;
