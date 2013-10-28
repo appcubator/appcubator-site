@@ -898,10 +898,12 @@ def register_domain(request, domain):
 
 @require_http_methods(['POST', 'DELETE'])
 @login_required
-def add_or_remove_collaborators(request, app_id, email):
+def add_or_remove_collaborators(request, app_id):
     if request.method == 'POST':
+        email = request.POST.get("email", "")
         resp = add_collaborator_to_app(request, app_id, email)
     elif request.method == 'DELETE':
+        email = request.body
         resp = remove_collaborator_from_app(request, app_id, email)
 
     return resp
