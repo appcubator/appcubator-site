@@ -85,6 +85,24 @@
             </div>
             <div class="span14 hi19 hoff1 total-page-visits"><span class="analyitcs-title">Page Visits</span><br></div></div>
           </div>
+          <hr class="span46 pheader hoff1"> <!-- <img class="span58 analytics-demo hoff1" src="/static/img/analytics.png"> -->
+          <div class="row hoff1" id="collaborators-section">
+            <h2 class="span46 hoff1">Collaborators</h2>
+            <ul class="unstyled-list hoff1 span36">
+              <li>{{ a.owner.get_full_name }} (Owner)</li>
+              {% for c in app.collaborators %}
+              <li>{{c.first_name}}</li>
+              {% endfor %}
+              {% if a.owner.id == user.id %}
+              <li id="add-collaborator-btn">
+                <strong>+ Add or Invite Collaborators</strong>
+              </li>
+              <form id="add-collaborator-form" class="hoff1 span36" style="display:none;" action="/app/{{ a.pl }}/collaborator/">
+                <input type="text" class="span24" name="email" placeholder="Email"><input type="submit" value="Add" class="btn span5 offset1">
+              </form>
+              {% endif %}
+            </ul>
+          </div>
         </div>
     {% endfor %}
     </div>
