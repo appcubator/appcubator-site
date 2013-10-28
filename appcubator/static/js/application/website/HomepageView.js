@@ -82,7 +82,6 @@ function(RequestInviteModalView) {
         else if (newValue > 90) { $video.css('opacity', 0); $whiteButton.css('opacity', 0); }
         else { $video.css('opacity', 1); $whiteButton.css('opacity', 1); }
 
-        console.log(newValue);
         if(newValue > 270) {
           $('.navbar').removeClass('transparent');
           $blueBar.removeClass('transparent');

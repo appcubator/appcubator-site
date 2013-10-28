@@ -119,6 +119,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
     homepage: function() {
       this.view = new HomepageView().render();
+      this.bindSections();
     },
 
     developerpage: function() {
