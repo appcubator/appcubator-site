@@ -27,6 +27,12 @@
           <a class="" href="#">{{ a.name }}</a>
         </li>
       {% endfor %}
+      {% if collab_apps %}<br>{% endif %}
+      {% for a in collab_apps %}
+        <li class='menu-item {% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
+          <a class="" href="#">{{ a.name }}</a>
+        </li>
+      {% endfor %}
       </ul>
       <a href="/app/new/" class="new"><strong>+</strong>New App</a>
       <a href="/forum/" target="_blank">Community Forum</a><br>
