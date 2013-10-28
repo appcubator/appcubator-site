@@ -888,6 +888,8 @@ class InvitationKeys(models.Model):
         try:
             c = CollaborationInvite.objects.get(invite_key=invite_key)
         except CollaborationInvite.DoesNotExist:
+            print invite_key
+            print "meow"
             return False
 
         invited_email = c.email
@@ -962,5 +964,5 @@ class AnalyticsStore(models.Model):
 
 
 class Collaboration(models.Model):
-    user = models.ForeignKey(User, related_name="collaborations", unique=True)
+    user = models.ForeignKey(User, related_name="collaborations")
     app = models.ForeignKey(App, related_name="collaborations")

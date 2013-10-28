@@ -1,6 +1,6 @@
 {% extends "admin/admin-base.html" %}
 {% block content %}
-  <h2>Apps</h2>
+  <h2>Apps ({{ apps.count }})</h2>
   <hr>
   <div class="pagination row">
     {% if apps.has_previous %}
