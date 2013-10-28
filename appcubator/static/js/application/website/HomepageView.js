@@ -57,6 +57,8 @@ function(RequestInviteModalView) {
       var $subText     = $('.sub-text');
       var $video       = $('#video-box');
 
+      var subnavVisible = false;
+
       $(window).on('scroll', function(e) {
         var newValue = $(window).scrollTop();
 
@@ -68,6 +70,7 @@ function(RequestInviteModalView) {
 
         if(newValue < 270) {
           $blueBar.css('padding-top', newValue/2 + 70);
+          if(subnavVisible) { $(".sub-navbar").animate({ top: 0}); subnavVisible = false; }
         }
 
         if (newValue <= 40) { $largeText.css('opacity', 1 - (newValue/40)); }
@@ -82,9 +85,13 @@ function(RequestInviteModalView) {
         else if (newValue > 90) { $video.css('opacity', 0); $whiteButton.css('opacity', 0); }
         else { $video.css('opacity', 1); $whiteButton.css('opacity', 1); }
 
-        if(newValue > 270) { $('.navbar').removeClass('transparent');
-        $blueBar.removeClass('transparent');
-        $("#signup-button").addClass('highlight'); }
+        console.log(newValue);
+        if(newValue > 270) {
+          $('.navbar').removeClass('transparent');
+          $blueBar.removeClass('transparent');
+          $("#signup-button").addClass('highlight');
+          if(!subnavVisible) { $(".sub-navbar").animate({ top: 70});  subnavVisible=true; }
+        }
         else { $("#signup-button").removeClass('highlight'); }
 
       });

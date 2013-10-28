@@ -297,11 +297,11 @@ h6 {
 
 .sub-navbar {
   position: fixed;
-  top: 70px;
+  top: 0;
   height: 50px;
   width: 100%;
   background-color: rgba(120, 120, 120, 0.9);
-  z-index: 6;
+  z-index: 5;
 }
 
 .menu {
