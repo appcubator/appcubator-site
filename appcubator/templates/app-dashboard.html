@@ -26,7 +26,6 @@
           <a class="" href="#">{{ a.name }}</a>
         </li>
       {% endfor %}
-      {% if collab_apps %}<li>Apps you're collaborating on:</li>{% endif %}
       {% for a in collab_apps %}
         <li class='menu-item {% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
           <a class="" href="#">{{ a.owner.username }} / {{ a.name }}</a>
