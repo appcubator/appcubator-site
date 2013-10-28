@@ -162,6 +162,7 @@ INSTALLED_APPS = (
     'compressor',
     'group_messaging',
     'tinymce',
+    'followit',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

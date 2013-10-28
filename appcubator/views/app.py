@@ -60,7 +60,7 @@ def welcome(request):
     if request.user.extradata.noob:
 
         # case for turning noob mode off
-        if request.user.apps.count() > 0 and is_stripe_customer(request.user):
+        if request.user.apps.count() > 0 or request.user.collaborations.count() > 0:
             e = request.user.extradata
             e.noob = 0
             e.save()
@@ -93,9 +93,15 @@ def user_page(request, username):
             return redirect(noob_page)
 
     if request.user.apps.count() == 0:
-        return redirect(new)
+        if request.user.collaborations.count() == 0:
+            return redirect(new)
+        else:
+            latest_app = request.user.collaborations.latest('created_on').app
+    else:
+        latest_app = request.user.apps.latest('created_on')
 
-    return dashboard(request, str(request.user.apps.latest('id').id))
+
+    return dashboard(request, str(latest_app.id))
 
 def dashboard(request, app_id):
     # render dashboard
@@ -201,7 +207,7 @@ def new(request, is_racoon = False, app_template=None):
             # this adds it to the deployment queue. non-blocking basically.
             app.deploy()
 
-            return redirect(page, app.id)
+            return redirect(user_page, request.user.username)
 
         return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'other_errors': form.non_field_errors, 'errors': form.errors}, status=400)
     else:

@@ -888,6 +888,8 @@ class InvitationKeys(models.Model):
         try:
             c = CollaborationInvite.objects.get(invite_key=invite_key)
         except CollaborationInvite.DoesNotExist:
+            print invite_key
+            print "meow"
             return False
 
         invited_email = c.email
