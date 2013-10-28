@@ -14,10 +14,10 @@ define(function(require, exports, module) {
             var self = this;
             _.bindAll(this);
 
-            this.appId = (options.appId||appId);
+            this.appId = (options.appId || appId);
             this.render();
-            
-            var v1 = (v1||null);
+
+            var v1 = (v1 || null);
             if (v1) {
                 v1.on('deployed', function() {
                     self.$('.coming-soon-overlay').hide();
@@ -27,35 +27,17 @@ define(function(require, exports, module) {
 
         render: function() {
             this.setElement(document.getElementById('dashboard-' + this.appId));
-            console.log(this.el );
-            //this.el.innerHTML = _.template(AnalyticsTemplates.main_stats, {});
-            // if (!window.is_deployed) {
-            //     $('.analytics .coming-soon-overlay').show();
-            //     $('.total-users', this.el)[0].innerHTML = "?";
-            //     $('.total-visitors', this.el)[0].innerHTML = "?";
-            //     $('.total-page-views', this.el)[0].innerHTML = "?";
-            //     $('.total-active-users', this.el)[0].innerHTML = "?";
-            // }
             this.fetchInfo();
             return this;
         },
 
         renderData: function(data) {
-            console.log(data);
 
             var self = this;
-
-            console.log(this.$el.find('.total-visitors'));
-            console.log(this.$el);
-            console.log(this.el);
 
             this.$el.find('.total-users').html(data.total_users || 0);
             this.$el.find('.total-visitors').html(data.total_visitors || 0);
             this.$el.find('.total-active-users').html(data.total_active_users || 0);
-
-            // document.getElementsByClassName('total-visitors')[0].innerHTML = ;
-            // document.getElementsByClassName('total-active-users')[0].innerHTML = ;
-            // document.getElementsByClassName('total-active-visitors')[0].innerHTML = data.total_active_visitors || 0;
 
             var blackList = ['/favicon.ico', '/robots.txt'];
             var total_page_views = data.total_page_views || 0;
@@ -76,8 +58,6 @@ define(function(require, exports, module) {
 
         fetchInfo: function() {
             var self = this;
-            console.trace();
-            console.log(self.appId);
             $.ajax({
                 type: "GET",
                 url: '/app/' + self.appId + '/analytics/',

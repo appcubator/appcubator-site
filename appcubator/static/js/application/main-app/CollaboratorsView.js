@@ -19,7 +19,6 @@ define(function(require, exports, module) {
         },
 
         showCollabBox: function(e) {
-
             $(e.currentTarget).hide();
             this.$addCollaboratorForm.fadeIn();
             this.$addCollaboratorForm.find('input[type="text"]').focus();
