@@ -18,6 +18,7 @@ import re
 import requests
 import nltk
 import simplejson
+import urlparse
 
 import os, os.path
 join = os.path.join
@@ -899,50 +900,61 @@ def register_domain(request, domain):
 @require_http_methods(['POST', 'DELETE'])
 @login_required
 def add_or_remove_collaborators(request, app_id):
+    """
+    400 if email key not present
+    404 if app or user not found
+    409 if creating a dupe collaboration or deleting an nonexistent collab
+    200 if success
+    """
+    app = get_object_or_404(App, id=app_id)
+    if not app.is_editable_by_user(request.user):
+        raise Http404
+
+    # get the email field out of the request
+    try:
+        if request.method == 'POST':
+            email = request.POST.get("email", "")
+        elif request.method == 'DELETE':
+            email = urlparse.parse_qs(request.body)['email'][0]
+    except (KeyError, IndexError):
+        return JsonResponse({}, status=400)
+
+    # get user by email or username
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        user = get_object_or_404(User, username=email)
+
     if request.method == 'POST':
-        email = request.POST.get("email", "")
-        resp = add_collaborator_to_app(request, app_id, email)
+        resp = add_collaborator_to_app(request, app, user)
     elif request.method == 'DELETE':
-        email = request.body
-        resp = remove_collaborator_from_app(request, app_id, email)
+        resp = remove_collaborator_from_app(request, app, user)
 
     return resp
 
 @require_POST
 @login_required
-def add_collaborator_to_app(request, app_id, email):
+def add_collaborator_to_app(request, app, collab_user):
     """
-    404 if app not available or user not found
-    400 if duplicate
+    409 if duplicate
     200 if success
     """
-    app = get_object_or_404(App, id=app_id)
-    if not app.is_editable_by_user(request.user):
-        raise Http404
-
-    collab_user = get_object_or_404(User, email=email)
     c = Collaboration(user=collab_user, app=app)
     try:
         c.full_clean()
     except ValidationError, e: # validates uniqueness so dw about creating 2 collabs
         return JsonResponse(e.message_dict, status=400)
+
     c.save()
     return JsonResponse({})
 
 @require_http_methods(['DELETE'])
 @login_required
-def remove_collaborator_from_app(request, app_id, email):
+def remove_collaborator_from_app(request, app, collab_user):
     """
-    404 if app not available or user not found
-    400 if collab not exists
+    409 if collab not exists
     200 if success
     """
-    app = get_object_or_404(App, id=app_id)
-    if not app.is_editable_by_user(request.user):
-        raise Http404
-
-    collab_user = get_object_or_404(User, email=email)
-
     try:
         collab = get_object_or_404(Collaboration, app=app, user=collab_user)
     except Http404:
