@@ -1,0 +1,89 @@
+{% load humanize %}
+      <div class="board {% if app_id == a.pk %}current{% endif %}" id="dashboard-{{ a.pk }}">
+          <div class="header hi9">
+            <div class="logo span12 hi8" style="background-image:url({{ STATIC_URL }}img/placeholder-logo.png);"></div>
+            <div class="span32 offset2 hi9">
+              <h1 class="hoff1">{{ a.name }}</h1>
+              <br>
+              <a target="_blank" href="{{ a.url }}" class="fancy link">{{ a.url }}{% if is_deployed == 0 %} (Not Deployed yet.) {% endif %}
+                <div class="edit-btn btn hi2">Edit</div></a><br>
+              <i class="hoff1 span34">Last Updated {{ a.last_update|naturaltime }}</i>
+            </div>
+            <a class="setting-btn" title="App Settings" href="/app/{{ a.pk }}/info/"></a>
+          </div>
+          <hr class="span46 pheader">
+            <div class="hi4 span46">
+              <form style="display:inline" method="POST" action="/app/{{ a.pk }}/clone/">
+                  {% csrf_token %}
+                  <button type="submit" class="btn big span4" title="Clone App"><div class="clone-icon"></div></button>
+              </form>
+              <a class="btn big span4 offset1 download"  title="Download Code" href="#"><div class="download-icon"></div></a>
+              <a class="btn big span10 offset1 browse" href="#">Browse Data</a>
+              <a class="btn big span10 offset1" id="share" href="#">Share</a>
+              <a class="btn btn-info big edit span14 offset1" href="/app/{{ a.pk }}/">Start Editing »</a>
+            </div>
+          <hr class="span46 pheader hoff1"> <!-- <img class="span58 analytics-demo hoff1" src="/static/img/analytics.png"> -->
+          <div class="row hoff1">
+            <div class="row hoff1 analytics" style="position: relative"> <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75); padding-top: 10%"> <h2>Publish your app to see your site analytics!</h2> </div>
+            <h2 class="span46 hoff1">Analytics</h2> 
+            <div class="span30">
+            <div class="row hoff1">
+            <div class="span14 hi8">
+              <strong class="total-active-users">0</strong>
+              <span class="analyitcs-title">Active Users</span>
+            </div>
+            <div class="span14 offset1 hi8">
+              <strong class="total-page-views">0</strong>
+              <span class="analyitcs-title">Total Page Views</span>
+            </div>
+            </div>
+            <div class="row hoff1">
+            <div class="span14 hi8">
+              <strong class="total-users">1</strong>
+              <span class="analyitcs-title">Total Users</span>
+            </div>
+            <div class="span14 offset1 hi8">
+              <strong class="total-visitors">0</strong>
+              <span class="analyitcs-title">Total Visitors</span>
+            </div>
+            </div>
+            </div>
+            <div class="span14 hi19 hoff1 total-page-visits"><span class="analyitcs-title">Page Visits</span><br></div></div>
+          </div>
+          <hr class="span46 pheader hoff1"> <!-- <img class="span58 analytics-demo hoff1" src="/static/img/analytics.png"> -->
+          <div class="row hoff1 collaborators-section">
+            <h2 class="span46 hoff1">Collaborators</h2>
+            <ul class="unstyled-list hoff1 span36">
+              <li>{{ a.owner.get_full_name }} (Owner)</li>
+              {% for c in a.collaborators.all %}
+              <li>{{ c.get_full_name }}<!-- Remove collaborator button -->
+                  <form style="display:inline-block;" method="POST" action="/app/{{ a.id }}/collaborator/delete/">{% csrf_token %}
+                      <input type="hidden" name="email" value="{{ c.email }}">
+                      <input type="submit" value="X">
+                  </form>
+              </li>
+              {% endfor %}
+              {% if a.collaborationinvite_set.all.count > 0 %}
+              Pending Invites:
+              {% for c in a.collaborationinvite_set.all %}
+              <li>{{ c.email }}<!-- Remove collaborator button -->
+                  <form style="display:inline-block;" method="POST" action="/app/{{ a.id }}/collaborator/delete/">{% csrf_token %}
+                      <input type="hidden" name="email" value="{{ c.email }}">
+                      <input type="submit" value="X">
+                  </form>
+              </li>
+              {% endfor %}
+              {% endif %}
+
+              {% if a.owner.id == user.id %}
+              <li class="add-collaborator-btn" style="cursor:pointer">
+                <strong>+ Add or Invite Collaborators</strong>
+              </li><!-- A backbone view will show this form onclick of the above button -->
+              <form class="hoff1 span36 add-collaborator-form" style="display:none;" method="POST" action="/app/{{ a.id }}/collaborator/">{% csrf_token %}
+                  <input type="text" class="span24" name="email" placeholder="Email">
+                  <input type="submit" value="Add" class="btn span5 offset1">
+              </form>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
