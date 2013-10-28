@@ -111,10 +111,10 @@
               {% endif %}
 
               {% if a.owner.id == user.id %}
-              <li id="add-collaborator-btn" style="cursor:pointer">
+              <li class="add-collaborator-btn" style="cursor:pointer">
                 <strong>+ Add or Invite Collaborators</strong>
               </li><!-- A backbone view will show this form onclick of the above button -->
-              <form id="add-collaborator-form" class="hoff1 span36" style="display:none;" method="POST" action="/app/{{ a.id }}/collaborator/">{% csrf_token %}
+              <form class="add-collaborator-form" class="hoff1 span36" style="display:none;" method="POST" action="/app/{{ a.id }}/collaborator/">{% csrf_token %}
                   <input type="text" class="span24" name="email" placeholder="Email">
                   <input type="submit" value="Add" class="btn span5 offset1">
               </form>

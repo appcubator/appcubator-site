@@ -7,7 +7,7 @@ define(function(require, exports, module) {
         css: 'app-page',
 
         events: {
-            'click #add-collaborator-btn': 'showCollabBox',
+            'click .add-collaborator-btn': 'showCollabBox',
         },
 
         initialize: function(options) {
@@ -15,7 +15,7 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            this.$addCollaboratorForm = this.$el.find('#add-collaborator-form');
+            this.$addCollaboratorForm = this.$el.find('.add-collaborator-form');
         },
 
         showCollabBox: function(e) {

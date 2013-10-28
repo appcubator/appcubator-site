@@ -31,9 +31,9 @@ define(function(require, exports, module) {
       this.appId = (options.appId || appId);
       console.log(this.appId);
       this.analyticsView = new AnalyticsView({ appId: this.appId});
-      this.subviews = [this.analyticsView];
-
       this.collaboratorsView = new CollaboratorsView();
+      this.subviews = [this.analyticsView, this.collaboratorsView];
+
       this.title = "The Garage";
     },
 
