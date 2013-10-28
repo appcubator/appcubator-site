@@ -14,10 +14,10 @@ define(function(require, exports, module) {
             var self = this;
             _.bindAll(this);
 
-            this.appId = (options.appId||appId);
+            this.appId = (options.appId || appId);
             this.render();
-            
-            var v1 = (v1||null);
+
+            var v1 = (v1 || null);
             if (v1) {
                 v1.on('deployed', function() {
                     self.$('.coming-soon-overlay').hide();
@@ -27,14 +27,6 @@ define(function(require, exports, module) {
 
         render: function() {
             this.setElement(document.getElementById('dashboard-' + this.appId));
-            //this.el.innerHTML = _.template(AnalyticsTemplates.main_stats, {});
-            // if (!window.is_deployed) {
-            //     $('.analytics .coming-soon-overlay').show();
-            //     $('.total-users', this.el)[0].innerHTML = "?";
-            //     $('.total-visitors', this.el)[0].innerHTML = "?";
-            //     $('.total-page-views', this.el)[0].innerHTML = "?";
-            //     $('.total-active-users', this.el)[0].innerHTML = "?";
-            // }
             this.fetchInfo();
             return this;
         },
@@ -46,10 +38,6 @@ define(function(require, exports, module) {
             this.$el.find('.total-users').html(data.total_users || 0);
             this.$el.find('.total-visitors').html(data.total_visitors || 0);
             this.$el.find('.total-active-users').html(data.total_active_users || 0);
-
-            // document.getElementsByClassName('total-visitors')[0].innerHTML = ;
-            // document.getElementsByClassName('total-active-users')[0].innerHTML = ;
-            // document.getElementsByClassName('total-active-visitors')[0].innerHTML = data.total_active_visitors || 0;
 
             var blackList = ['/favicon.ico', '/robots.txt'];
             var total_page_views = data.total_page_views || 0;
