@@ -910,10 +910,7 @@ def add_or_remove_collaborators(request, app_id, method="POST"):
 
     # get the email field out of the request
     try:
-        if method == 'POST':
-            email = request.POST.get("email", "")
-        elif method == 'DELETE':
-            email = urlparse.parse_qs(request.body)['email'][0]
+        email = request.POST.get("email", "")
     except (KeyError, IndexError):
         messages.error(request, "Something went wrong. Please contact team@appcubator.com about this.")
         return resp
@@ -945,7 +942,7 @@ def add_or_remove_collaborators(request, app_id, method="POST"):
                                                    inviter=request.user,
                                                    app=app)
                 collabinvite.save()
-                messages.info(request, "Done. %s was invited to collaborate." % email)
+                messages.info(request, "%s was invited to collaborate." % email)
                 return resp
 
             elif method == 'DELETE':
@@ -970,14 +967,10 @@ def add_or_remove_collaborators(request, app_id, method="POST"):
 @require_POST
 @login_required
 def add_collaborator_to_app(request, app, collab_user):
-    """
-    409 if duplicate
-    200 if success
-    """
     success = app.add_user_as_collaborator(collab_user)
 
     if success:
-        messages.info(request, "Done. @%s was added as a collaborator." % collab_user.username)
+        messages.info(request, "@%s was added as a collaborator." % collab_user.username)
         return True
     else:
         messages.error(request, "This user is already a collaborator.")
@@ -987,10 +980,6 @@ def add_collaborator_to_app(request, app, collab_user):
 @require_http_methods(['DELETE'])
 @login_required
 def remove_collaborator_from_app(request, app, collab_user):
-    """
-    409 if collab not exists
-    200 if success
-    """
     try:
         collab = get_object_or_404(Collaboration, app=app, user=collab_user)
     except Http404:
