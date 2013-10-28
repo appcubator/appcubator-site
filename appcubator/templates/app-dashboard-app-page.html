@@ -54,13 +54,21 @@
           <div class="row hoff1 collaborators-section">
             <h2 class="span46 hoff1">Collaborators</h2>
             <style>
-                ul.collab-list { list-style: disc inside; }
+                ul.collab-list { 
+                  list-style: disc inside; 
+                }
+                ul.collab-list li .remove-btn {
+                  display: none;
+                }
+                ul.collab-list li:hover .remove-btn {
+                  display: inline-block;
+                }
             </style>
-            <ul class="collab-list hoff1 span22">
+            <ul class="collab-list hoff1 span36">
               <li>{{ a.owner.get_full_name }} ({{ a.owner.email }})</li>
               {% for c in a.collaborators.all %}
               <li>{{ c.get_full_name }} ({{ c.email }})<!-- Remove collaborator button -->
-                  <form style="display:inline-block;" method="POST" action="/app/{{ a.id }}/collaborator/delete/">{% csrf_token %}
+                  <form class="remove-btn" method="POST" action="/app/{{ a.id }}/collaborator/delete/">{% csrf_token %}
                       <input type="hidden" name="email" value="{{ c.email }}">
                       <input type="submit" value="Remove">
                   </form>
@@ -80,9 +88,8 @@
               {% endif %}
             </ul>
               {% if a.owner.id == user.id %}
-              <div class="span22">
-                  <button class="add-collaborator-btn btn btn-blue">+ Add or Invite Collaborators</button>
-                  <!-- A backbone view will show this form onclick of the above button -->
+              <div class="span36">
+                  <a class="add-collaborator-btn"><strong>+ Add or Invite Collaborators</strong></a>
                   <form class="hoff1 span22 add-collaborator-form" style="display:none;" method="POST" action="/app/{{ a.id }}/collaborator/">{% csrf_token %}
                       <input type="text" class="span16" name="email" placeholder="Email">
                       <input type="submit" value="Add" class="btn span5">
