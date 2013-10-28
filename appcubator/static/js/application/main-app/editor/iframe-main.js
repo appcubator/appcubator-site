@@ -7,6 +7,7 @@ require.config({
         "shortcut": "../../../libs/shortcut",
         "underscore": "../../../libs/underscore-amd/underscore",
         "backbone": "../../../libs/backbone-amd/backbone",
+        "bootstrap": "../../../libs/bootstrap/bootstrap",
         "react": "../../../libs/react",
         "heyoffline": "../../../libs/heyoffline",
         "util": "../../../libs/util/util",
@@ -48,6 +49,9 @@ require.config({
         "backbone": {
             exports: "Backbone",
             deps: ["underscore", "jquery"]
+        },
+        "bootstrap": {
+            deps: ["jquery"]
         },
         "snap": {
             exports: "Snap"
@@ -98,6 +102,7 @@ require([
         "editor/MouseDispatcher",
         "heyoffline",
         "backbone",
+        "bootstrap",
         "util",
         "comp",
         "mixins/BackboneConvenience"
