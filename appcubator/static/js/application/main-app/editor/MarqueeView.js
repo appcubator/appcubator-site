@@ -31,8 +31,6 @@ define([
             },
 
             mousedown: function(e) {
-                console.log(mouseDispatcher.isMousedownActive);
-                console.log("marquee-view mousedown");
                 if (mouseDispatcher.isMousedownActive) {
                     return true;
                 }
@@ -73,14 +71,9 @@ define([
                 this.isDrawing = false;
                 this.setZero();
 
-                console.log(arr);
-
                 if (arr.length == 1) {
                     arr[0].trigger('selected');
                 } else if (arr.length > 1) {
-                    
-                    console.log(this.multiSelectorView);
-
                     this.multiSelectorView.setContents(arr);
                 }
             },
