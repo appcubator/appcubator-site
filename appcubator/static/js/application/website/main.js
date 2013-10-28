@@ -141,6 +141,18 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
     },
 
     bindSections: function() {
+      
+      var subnavVisible = false;
+      $(window).on('scroll', function(e) {
+        var newValue = $(window).scrollTop();
+        if(newValue < 270) {
+          if(subnavVisible) { $(".sub-navbar").animate({ top: 0}); subnavVisible = false; }
+        }
+        else {
+          if(!subnavVisible) { $(".sub-navbar").animate({ top: 70}); subnavVisible=true; }
+        }
+      });
+
       $('.section').each(function() {
           var el = this;
           var $el = $(this);
@@ -169,6 +181,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
     community: function() {
       $('#menu-community').addClass('selected');
+      this.bindSections();
     },
 
     slideViewPage: function() {
