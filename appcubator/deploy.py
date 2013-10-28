@@ -97,8 +97,6 @@ def transport_app(appdir, deploy_id, deploy_data, retry_on_404=True, git_user=No
             try:
                 r = requests.post("http://%s/deployment/" % settings.DEPLOYMENT_HOSTNAME, data=post_data, files=files, headers={'X-Requested-With': 'XMLHttpRequest'})
             except Exception:
-                print "handling request error. here's request:"
-                print r.request.__dict__
                 raise
 
         else:
