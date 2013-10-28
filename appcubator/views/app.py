@@ -108,6 +108,7 @@ def dashboard(request, app_id):
                     'themes'       : simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
                     'apps'         : request.user.apps.all(),
+                    'collab_apps'  : [c.app for c in request.user.collaborations.all()],
                     'staging'      : settings.STAGING,
                     'production'   : settings.PRODUCTION }
 
