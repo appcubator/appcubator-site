@@ -1,6 +1,6 @@
 {% extends "admin/admin-base.html" %}
 {% block content %}
-  <h2>Users ({{ users.count() }})</h2>
+  <h2>Users ({{ users.count }})</h2>
   <hr>
   <form method="GET" action="/stay/up/to/get/lucky/users/">
     <input type="text" name="user_id" placeholder="user id" />
