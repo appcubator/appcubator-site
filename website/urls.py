@@ -9,10 +9,6 @@ urlpatterns = patterns('views',
     url(r'^500/$',                          views.five_hundred_test),
     url(r'^404/$',                          views.five_hundred_test, {"code":404}),
 
-    #url(r'^showhn/$',                   views.homepage),
-    #url(r'^showgsb/$',                  views.showgsbpage),
-    #url(r'^showdn/$',                   views.showdnpage),
-    #url(r'^girlswhocode/$',             views.showgwcpage),
     url(r'^developer/$',                views.developer_homepage),
     url(r'^community/$',                views.community_page),
     url(r'^community/faq/$',            views.community_faq_page),
@@ -36,11 +32,6 @@ urlpatterns = patterns('views',
     url(r'^signup_form/$',              views.signup_new_customer),
     # actually signs up.
     url(r'^signup/$',                   views.signup, name='signup_form'),
-    # actually signs up, stores source info
-    url(r'^signup_hn_form/$',           views.signup_from_hn, name='hn_signup_form'),
-    url(r'^signup_dn_form/$',           views.signup_from_dn, name='dn_signup_form'),
-    url(r'^signup_gsb_form/$',          views.signup_from_gsb, name='gsb_signup_form'),
-    url(r'^signup_gwc_form/$',          views.signup_from_gwc, name='gwc_signup_form'),
 
     url(r'^send_invitation/(\d+)/$',    views.send_invitation_to_customer),
 

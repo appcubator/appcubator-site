@@ -8,7 +8,7 @@ from django.template import loader, Context
 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
 
 from django.contrib import messages
 
@@ -18,6 +18,7 @@ import re
 import requests
 import nltk
 import simplejson
+import urlparse
 
 import os, os.path
 join = os.path.join
@@ -25,7 +26,7 @@ join = os.path.join
 from appcubator.email.sendgrid_email import send_email, send_template_email
 from appcubator.our_payments.views import is_stripe_customer#, subscribe
 
-from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration
+from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration, CollaborationInvite
 from appcubator.models import DomainRegistration
 from appcubator.themes.models import StaticFile, UITheme
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
@@ -434,13 +435,13 @@ def invitations(request, app_id):
     # send an invitation from {{user_id}} to a friend
     else:
         user = get_object_or_404(User, pk=user_id)
-        if user.first_name is not "":
+        app = get_object_or_404(App, pk=long(app_id))
+        if user.first_name != "":
             user_name = user.first_name
             if user.last_name is not "":
                 user_name = user_name + " " + user.last_name
         else:
             user_name = user.username
-        app = get_object_or_404(App, pk=long(app_id))
         name = request.POST['name']
         email = request.POST['email']
         subject = "%s has invited you to check out Appcubator!" % user_name
@@ -448,12 +449,12 @@ def invitations(request, app_id):
 
         message = ('Dear {name},\n\n'
                    'Check out what I\'ve build using Appcubator:\n\n'
-                   '<a href="{hostname}">{hostname}</a>\n\n'
+                   '<a href="{url}">{hostname}</a>\n\n'
                    'Appcubator is the only visual web editor that can build rich web applications without hiring a developer or knowing how to code. It is also free to build an app, forever.\n'
                    'You can signup here: <a href="http://appcubator.com/signup?k={invitation_key}">Appcubator Signup</a>\n\n'
                    'Best,\n{user_name}\n\n\n')
 
-        message = message.format(name=name, hostname=app.hostname(), user_name=user_name, invitation_key=invitation.api_key)
+        message = message.format(name=name, url=app.url(), hostname=app.hostname(), user_name=user_name, invitation_key=invitation.api_key)
         template_context = { "text": message }
         send_template_email(request.user.email, email, subject, "", "emails/base_boxed_basic_query.html", template_context)
         return HttpResponse(message)
@@ -896,33 +897,106 @@ def register_domain(request, domain):
     # Give client the domain info
     return JsonResponse(d.domain_info)
 
-
 @require_POST
 @login_required
-def add_collaborator_to_app(request, app_id, user_id):
+def add_or_remove_collaborators(request, app_id, method="POST"):
+    assert method in ['POST', 'DELETE']
+
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
         raise Http404
 
-    collab_user = get_object_or_404(User, pk=user_id)
-    c = Collaboration(user=collab_user, app=app)
+    resp = redirect(user_page, request.user.username)
+
+    # get the email field out of the request
     try:
-        c.full_clean()
-    except ValidationError, e:
-        return JsonResponse(e.message_dict, status=400)
-    c.save()
-    return JsonResponse({})
+        if method == 'POST':
+            email = request.POST.get("email", "")
+        elif method == 'DELETE':
+            email = urlparse.parse_qs(request.body)['email'][0]
+    except (KeyError, IndexError):
+        messages.error(request, "Something went wrong. Please contact team@appcubator.com about this.")
+        return resp
 
+    # get user by email or username
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        try:
+            user = User.objects.get(username=email)
+        except User.DoesNotExist:
+            if method == 'POST':
+                subject = "%s invited you to collaborate on a website" % request.user.get_full_name()
+                invitation = InvitationKeys.create_invitation(request.user, email)
+
+                message = ('Hi there,\n\n'
+                           'I\'m working on a website:\n\n'
+                           '<a href="{url}">{hostname}</a>\n\n'
+                           'And I could use your help. I\'ve built it on Appcubator, a visual way to build rich web applications.\n'
+                           'You can signup here: <a href="http://appcubator.com/signup?k={invitation_key}">Signup link</a>\n'
+                           'Once you sign up, you\'ll automatically be added as a collaborator to the project.\n'
+                           'Thank you!\n{user_name}\n\n\n')
+                message = message.format(url=app.url(), hostname=app.hostname(), user_name=request.user.get_full_name(), invitation_key=invitation.api_key)
+
+                send_template_email(request.user.email, email, subject, "", "emails/base_boxed_basic_query.html", { "text": message })
+
+                collabinvite = CollaborationInvite(invite_key=invitation.api_key,
+                                                   email=email,
+                                                   inviter=request.user,
+                                                   app=app)
+                collabinvite.save()
+                messages.info(request, "Done. %s was invited to collaborate." % email)
+                return resp
+
+            elif method == 'DELETE':
+                try:
+                    ci = CollaborationInvite.objects.get(email=email)
+                except CollaborationInvite.DoesNotExist:
+                    # This can't happen unless someone's playing tricks with the api.
+                    # todo log this event
+                    raise
+                ci.delete()
+                messages.info(request, "Removed collaboration invite.")
+                return resp
+
+
+    if method == 'POST':
+        add_collaborator_to_app(request, app, user)
+
+    elif method == 'DELETE':
+        remove_collaborator_from_app(request, app, user)
+    return resp
 
 @require_POST
 @login_required
-def remove_collaborator_from_app(request, app_id, user_id):
-    app = get_object_or_404(App, id=app_id)
-    if not app.is_editable_by_user(request.user):
-        raise Http404
+def add_collaborator_to_app(request, app, collab_user):
+    """
+    409 if duplicate
+    200 if success
+    """
+    success = app.add_user_as_collaborator(collab_user)
 
-    collab_user = get_object_or_404(User, pk=user_id)
-    collab = get_object_or_404(Collaboration, app=app, user=collab_user)
+    if success:
+        messages.info(request, "Done. @%s was added as a collaborator." % collab_user.username)
+        return True
+    else:
+        messages.error(request, "This user is already a collaborator.")
+        return False
+
+
+@require_http_methods(['DELETE'])
+@login_required
+def remove_collaborator_from_app(request, app, collab_user):
+    """
+    409 if collab not exists
+    200 if success
+    """
+    try:
+        collab = get_object_or_404(Collaboration, app=app, user=collab_user)
+    except Http404:
+        messages.error(request, "This user is not a collaborator.")
+        return False
 
     collab.delete()
-    return JsonResponse({})
+    messages.info(request, "Successfully removed collaborator.")
+    return True

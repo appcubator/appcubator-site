@@ -765,6 +765,20 @@ class App(models.Model):
 
         return False
 
+    def add_user_as_collaborator(self, user):
+        """
+        Returns False if the user was already a collaborator or the owner,
+        True if user was just added as collaborator.
+        """
+        if self.owner.id == user.id:
+            return False
+        if Collaboration.objects.filter(user=user, app=self).exists():
+            return False
+        c = Collaboration(user=user, app=self)
+        c.save()
+        return True
+
+
 
 # Used to keep track of any of our APIs usage.
 # Count is incremented on each successful use.
@@ -864,6 +878,39 @@ class InvitationKeys(models.Model):
         invitation = cls(inviter_id=user.pk, invitee=invitee, api_key=api_key)
         invitation.save()
         return invitation
+
+    @classmethod
+    def add_collaborations(cls, user, invite_key):
+        """
+        Designed to fail silently if no collab invites exist for the invite key.
+        Return True if the user was added as a collaborator to some app.
+        """
+        try:
+            c = CollaborationInvite.objects.get(invite_key=invite_key)
+        except CollaborationInvite.DoesNotExist:
+            return False
+
+        invited_email = c.email
+        valid_emails = (user.email, invited_email)
+
+        collab_invites = CollaborationInvite.objects.filter(email__in=valid_emails)
+        for collab_invite in collab_invites:
+            collab_invite.app.add_user_as_collaborator(user)
+            collab_invite.delete()
+        return True
+
+
+class CollaborationInvite(models.Model):
+    """
+    A piece of data which means that when the user with this email signs up,
+    he or she should be added as a collaborator to some app.
+    """
+    invite_key = models.CharField(max_length=255, unique=True)
+    email = models.CharField(max_length=255) # of the invited person
+    inviter = models.ForeignKey(User)
+    app = models.ForeignKey(App)
+    created_on = models.DateTimeField(auto_now_add = True)
+
 
 class Customer(models.Model):
     user_id = models.IntegerField(blank=True, null=True)

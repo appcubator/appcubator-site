@@ -1,14 +1,14 @@
-define([
-  'app/AnalyticsView',
-  'mixins/SimpleModalView',
-  'app/ShareModalView',
-  'app/entities/AdminPanelView',
-  'app/DownloadModalView',
-  'app/templates/MainTemplates',
-  'util',
-  'util.filepicker'
-],
-function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView, DownloadModalView) {
+define(function(require, exports, module) {
+
+  var AnalyticsView = require('app/AnalyticsView');
+  var SimpleModalView = require('mixins/SimpleModalView');
+  var ShareModalView = require('app/ShareModalView');
+  var AdminPanelView = require('app/entities/AdminPanelView');
+  var DownloadModalView = require('app/DownloadModalView');
+  var CollaboratorsView = require('app/CollaboratorsView');
+  require('app/templates/MainTemplates');
+  require('util');
+  require('util.filepicker');
 
   var OverviewPageView = Backbone.View.extend({
     css: 'app-page',
@@ -33,11 +33,14 @@ function(AnalyticsView, SimpleModalView, ShareModalView, AdminPanelView, Downloa
       this.analyticsView = new AnalyticsView({ appId: this.appId});
       this.subviews = [this.analyticsView];
 
+      this.collaboratorsView = new CollaboratorsView();
       this.title = "The Garage";
     },
 
     render: function() {
       var page_context = {};
+
+      this.collaboratorsView.setElement(util.get('collaborators-section')).render();
       //this.el.innerHTML = _.template(util.getHTML('app-overview-page'), page_context);
       //this.$('.analytics').append(this.analyticsView.render().el);
       this.setLogoImage();
