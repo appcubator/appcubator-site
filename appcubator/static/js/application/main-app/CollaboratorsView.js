@@ -15,6 +15,8 @@ define(function(require, exports, module) {
         },
 
         render: function() {
+            console.log(this.$el.find('.add-collaborator-form'));
+            console.log(this.el);
             this.$addCollaboratorForm = this.$el.find('.add-collaborator-form');
         },
 

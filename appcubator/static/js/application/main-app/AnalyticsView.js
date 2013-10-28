@@ -27,7 +27,6 @@ define(function(require, exports, module) {
 
         render: function() {
             this.setElement(document.getElementById('dashboard-' + this.appId));
-            console.log(this.el );
             //this.el.innerHTML = _.template(AnalyticsTemplates.main_stats, {});
             // if (!window.is_deployed) {
             //     $('.analytics .coming-soon-overlay').show();
@@ -41,13 +40,8 @@ define(function(require, exports, module) {
         },
 
         renderData: function(data) {
-            console.log(data);
 
             var self = this;
-
-            console.log(this.$el.find('.total-visitors'));
-            console.log(this.$el);
-            console.log(this.el);
 
             this.$el.find('.total-users').html(data.total_users || 0);
             this.$el.find('.total-visitors').html(data.total_visitors || 0);
@@ -76,8 +70,6 @@ define(function(require, exports, module) {
 
         fetchInfo: function() {
             var self = this;
-            console.trace();
-            console.log(self.appId);
             $.ajax({
                 type: "GET",
                 url: '/app/' + self.appId + '/analytics/',
