@@ -226,7 +226,7 @@ def signup(request):
             req["last_name"] = " ".join(toks[1:])
         else:
             req["first_name"] = request.POST["name"]
-            req["last_name"] = ""
+            req["last_name"] = request.POST["name"]
 
         form = MyUserCreationForm(req)
         if form.is_valid():
