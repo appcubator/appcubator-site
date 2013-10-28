@@ -977,7 +977,7 @@ def add_collaborator_to_app(request, app, collab_user):
         return False
 
 
-@require_http_methods(['DELETE'])
+@require_POST
 @login_required
 def remove_collaborator_from_app(request, app, collab_user):
     try:
