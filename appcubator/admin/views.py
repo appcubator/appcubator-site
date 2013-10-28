@@ -148,6 +148,7 @@ def users(request):
         users = paginator.page(paginator.num_pages)
     page_context = {}
     page_context["users"] = users
+    page_context["users_count"] = User.objects.filter(is_active=True).count()
     return render(request, 'admin/users.html', page_context)
 
 @login_required
@@ -197,6 +198,7 @@ def apps(request):
         apps = paginator.page(paginator.num_pages)
     page_context = {}
     page_context["apps"] = apps
+    page_context["apps_count"] = App.objects.all().count()
     return render(request, 'admin/apps.html', page_context)
 
 @login_required
