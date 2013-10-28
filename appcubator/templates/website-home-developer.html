@@ -39,7 +39,9 @@
 
 <script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 <script type="text/template" id="temp-signupform">
-    <form class="sign-up-form" method="POST" id="signup" style="margin-top:20px" action="{% url hn_signup_form %}">
+    <h5>Signup for Appcubator</h5>
+    <form class="sign-up-form" method="POST" id="signup" action="{% url signup_form %}">
+        {% csrf_token %}
         <div class="left-side">
           <input type="text" name="name" id="inp-name" placeholder="Full Name">
           <div class="form-error field-name-first_name"></div>
@@ -51,14 +53,25 @@
           <input type="hidden" name="extra-info" id="inp-extra" value="-">
 
           <div class="btn btn-blue btn-facebook">Fill With Facebook</div>
-        </div>
-        <div class="left-side">
-          <input type="password" name="password1" id="inp-name" placeholder="Password">
+          <hr>
+          <input type="password" name="password1" id="inp-pwd1" placeholder="Password">
           <div class="form-error field-name-password1"></div>
 
-          <input type="password" name="password2" id="inp-email" placeholder="Confirm Password">
+          <input type="password" name="password2" id="inp-pwd2" placeholder="Confirm Password">
           <div class="form-error field-name-password2"></div>
-          <input style="height:48px;" type="submit" class="btn btn-blue" id="sign-up" value="Sign Me Up »">
+        </div>
+        <div class="right-side">
+          <div>
+            I am a(n)<br>
+            <input type="radio" name="description" id="student" value="student" checked data-label="Student">
+            <input type="radio" name="description" id="freelancer" value="freelancer" data-label="Freelancer">
+            <input type="radio" name="description" id="business-owner" value="business-owner" data-label="Small business owner">
+            <input type="radio" name="description" id="fulltime-developer" value="fulltime-developer" data-label="Full-time Developer">
+            <input type="radio" name="description" id="entrepreneur" value="entrepreneur" data-label="Entrepreneur">
+            <input type="radio" name="description" id="other" value="other" data-label="<input type='text' placeholder='Other' id='other-input'>">
+          </div>
+          <input style="height:48px;" type="submit" class="btn btn-blue span10" id="sign-up" value="Sign Me Up »">
+          <div style="height:48px; display:none;" class="btn btn-blue span10" id="passive-button"></div>
         </div>
     </form>
     <div class="thanks-for-signing" style="display:none;">
@@ -77,3 +90,4 @@
     </div>
 </script>
 {% endblock %}
+
