@@ -7,7 +7,7 @@ define(function(require, exports, module) {
         css: 'app-page',
 
         events: {
-            'click .add-collaborator-btn': 'showCollabBox',
+            'click #add-collaborator-btn': 'showCollabBox',
         },
 
         initialize: function(options) {
