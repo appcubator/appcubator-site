@@ -897,15 +897,11 @@ def register_domain(request, domain):
     # Give client the domain info
     return JsonResponse(d.domain_info)
 
-@require_http_methods(['POST', 'DELETE'])
+@require_POST
 @login_required
-def add_or_remove_collaborators(request, app_id):
-    """
-    400 if email key not present
-    404 if app or user not found
-    409 if creating a dupe collaboration or deleting an nonexistent collab
-    200 if success
-    """
+def add_or_remove_collaborators(request, app_id, method="POST"):
+    assert method in ['POST', 'DELETE']
+
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
         raise Http404
@@ -914,12 +910,12 @@ def add_or_remove_collaborators(request, app_id):
 
     # get the email field out of the request
     try:
-        if request.method == 'POST':
+        if method == 'POST':
             email = request.POST.get("email", "")
-        elif request.method == 'DELETE':
+        elif method == 'DELETE':
             email = urlparse.parse_qs(request.body)['email'][0]
     except (KeyError, IndexError):
-        # TODO flash message that something messed up
+        messages.error(request, "Something went wrong. Please contact team@appcubator.com about this.")
         return resp
 
     # get user by email or username
@@ -929,7 +925,7 @@ def add_or_remove_collaborators(request, app_id):
         try:
             user = User.objects.get(username=email)
         except User.DoesNotExist:
-            if request.method == 'POST':
+            if method == 'POST':
                 subject = "%s invited you to collaborate on a website" % request.user.get_full_name()
                 invitation = InvitationKeys.create_invitation(request.user, email)
 
@@ -949,18 +945,25 @@ def add_or_remove_collaborators(request, app_id):
                                                    inviter=request.user,
                                                    app=app)
                 collabinvite.save()
-                # TODO successfully invited flash message
+                messages.info(request, "Done. %s was invited to collaborate." % email)
                 return resp
 
-            elif request.method == 'DELETE':
-                # This can't happen unless someone's playing tricks with the api.
-                # todo log this event
-                raise AssertionError("wtf man")
+            elif method == 'DELETE':
+                try:
+                    ci = CollaborationInvite.objects.get(email=email)
+                except CollaborationInvite.DoesNotExist:
+                    # This can't happen unless someone's playing tricks with the api.
+                    # todo log this event
+                    raise
+                ci.delete()
+                messages.info(request, "Removed collaboration invite.")
+                return resp
 
-    if request.method == 'POST':
+
+    if method == 'POST':
         add_collaborator_to_app(request, app, user)
 
-    elif request.method == 'DELETE':
+    elif method == 'DELETE':
         remove_collaborator_from_app(request, app, user)
     return resp
 
@@ -974,10 +977,10 @@ def add_collaborator_to_app(request, app, collab_user):
     success = app.add_user_as_collaborator(collab_user)
 
     if success:
-        # TODO Flash message "User successfully added."
+        messages.info(request, "Done. @%s was added as a collaborator." % collab_user.username)
         return True
     else:
-        # TODO Flash message "This user is already a collaborator."
+        messages.error(request, "This user is already a collaborator.")
         return False
 
 
@@ -991,9 +994,9 @@ def remove_collaborator_from_app(request, app, collab_user):
     try:
         collab = get_object_or_404(Collaboration, app=app, user=collab_user)
     except Http404:
-        # TODO Flash message "This user is not a collaborator."
+        messages.error(request, "This user is not a collaborator.")
         return False
 
     collab.delete()
-    # TODO Flash message "User successfully added."
+    messages.info(request, "Successfully removed collaborator.")
     return True

@@ -14,14 +14,14 @@
 
   <div class="container hoff6" id="dashboards">
     <div class="span14 left-div">
+      {% if messages %}
       <div class="error-content span12 offset1 hoff2">
       {% for message in messages %}
-          {{ message|safe }}
+          <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
       {% endfor %}
       </div>
-      <ul class="left-nav nav span15 apps-list hoff2">
-      {% if messages %}
       {% endif %}
+      <ul class="left-nav nav span15 apps-list hoff2">
       {% for a in apps %}
         <li class='menu-item {% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
           <a class="" href="#">{{ a.name }}</a>
@@ -90,19 +90,31 @@
             <h2 class="span46 hoff1">Collaborators</h2>
             <ul class="unstyled-list hoff1 span36">
               <li>{{ a.owner.get_full_name }} (Owner)</li>
-              {% for c in app.collaborators %}
+              {% for c in a.collaborators.all %}
               <li>{{ c.get_full_name }}<!-- Remove collaborator button -->
-                  <form style="display:inline-block;" method="DELETE" action="/app/{{ a.id }}/collaborator/">{% csrf_token %}
+                  <form style="display:inline-block;" method="POST" action="/app/{{ a.id }}/collaborator/delete/">{% csrf_token %}
+                      <input type="hidden" name="email" value="{{ c.email }}">
                       <input type="submit" value="X">
                   </form>
               </li>
               {% endfor %}
+              {% if a.collaborationinvite_set.all.count > 0 %}
+              Pending Invites:
+              {% for c in a.collaborationinvite_set.all %}
+              <li>{{ c.email }}<!-- Remove collaborator button -->
+                  <form style="display:inline-block;" method="POST" action="/app/{{ a.id }}/collaborator/delete/">{% csrf_token %}
+                      <input type="hidden" name="email" value="{{ c.email }}">
+                      <input type="submit" value="X">
+                  </form>
+              </li>
+              {% endfor %}
+              {% endif %}
 
               {% if a.owner.id == user.id %}
               <li id="add-collaborator-btn" style="cursor:pointer">
                 <strong>+ Add or Invite Collaborators</strong>
               </li><!-- A backbone view will show this form onclick of the above button -->
-              <form id="add-collaborator-form" class="hoff1 span36" style="display:none;" action="/app/{{ a.id }}/collaborator/">{% csrf_token %}
+              <form id="add-collaborator-form" class="hoff1 span36" style="display:none;" method="POST" action="/app/{{ a.id }}/collaborator/">{% csrf_token %}
                   <input type="text" class="span24" name="email" placeholder="Email">
                   <input type="submit" value="Add" class="btn span5 offset1">
               </form>
