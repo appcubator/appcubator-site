@@ -200,14 +200,14 @@ def tutorial(request):
 @require_http_methods(["GET", "POST"])
 def signup(request):
     if request.method == "GET":
+        ik = None
         if 'k' in request.GET:
             api_key = request.GET['k']
             if InvitationKeys.objects.filter(api_key=api_key).exists():
                 ik = InvitationKeys.objects.filter(api_key=api_key)[0]
                 ik.accepted = True
                 ik.save()
-                return render(request, "registration/signup.html")
-        return render(request, "website-signup.html")
+        return render(request, "website-signup.html", {"ik": ik})
     else:
         req = {}
         req = deepcopy(request.POST)
@@ -220,8 +220,14 @@ def signup(request):
         if len(req["username"]) > 30:
             req["username"] = req["username"][:30]
 
-        req["first_name"] = request.POST["name"].split(" ")[0]
-        req["last_name"] = request.POST["name"].split(" ")[-1]
+        if " " in request.POST["name"]:
+            toks = request.POST["name"].split(" ")
+            req["first_name"] = toks[0]
+            req["last_name"] = " ".join(toks[1:])
+        else:
+            req["first_name"] = request.POST["name"]
+            req["last_name"] = ""
+
         form = MyUserCreationForm(req)
         if form.is_valid():
             user = form.save()
@@ -234,6 +240,8 @@ def signup(request):
             #     stripe_error = "We encountered an error with signing you up on your starter plan. Sorry!"
             #     return HttpResponse(simplejson.dumps(stripe_error), mimetype="application/json")
             login(request, new_user)
+
+            InvitationKeys.add_collaborations(new_user, req.POST.get('ik', ''))
 
             if request.is_ajax():
                 return HttpResponse(simplejson.dumps({"redirect_to": "/app/"}), mimetype="application/json")

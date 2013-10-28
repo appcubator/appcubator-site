@@ -26,7 +26,7 @@ join = os.path.join
 from appcubator.email.sendgrid_email import send_email, send_template_email
 from appcubator.our_payments.views import is_stripe_customer#, subscribe
 
-from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration
+from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration, CollaborationInvite
 from appcubator.models import DomainRegistration
 from appcubator.themes.models import StaticFile, UITheme
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
@@ -435,13 +435,13 @@ def invitations(request, app_id):
     # send an invitation from {{user_id}} to a friend
     else:
         user = get_object_or_404(User, pk=user_id)
-        if user.first_name is not "":
+        app = get_object_or_404(App, pk=long(app_id))
+        if user.first_name != "":
             user_name = user.first_name
             if user.last_name is not "":
                 user_name = user_name + " " + user.last_name
         else:
             user_name = user.username
-        app = get_object_or_404(App, pk=long(app_id))
         name = request.POST['name']
         email = request.POST['email']
         subject = "%s has invited you to check out Appcubator!" % user_name
@@ -449,12 +449,12 @@ def invitations(request, app_id):
 
         message = ('Dear {name},\n\n'
                    'Check out what I\'ve build using Appcubator:\n\n'
-                   '<a href="{hostname}">{hostname}</a>\n\n'
+                   '<a href="{url}">{hostname}</a>\n\n'
                    'Appcubator is the only visual web editor that can build rich web applications without hiring a developer or knowing how to code. It is also free to build an app, forever.\n'
                    'You can signup here: <a href="http://appcubator.com/signup?k={invitation_key}">Appcubator Signup</a>\n\n'
                    'Best,\n{user_name}\n\n\n')
 
-        message = message.format(name=name, hostname=app.hostname(), user_name=user_name, invitation_key=invitation.api_key)
+        message = message.format(name=name, url=app.url(), hostname=app.hostname(), user_name=user_name, invitation_key=invitation.api_key)
         template_context = { "text": message }
         send_template_email(request.user.email, email, subject, "", "emails/base_boxed_basic_query.html", template_context)
         return HttpResponse(message)
@@ -910,6 +910,8 @@ def add_or_remove_collaborators(request, app_id):
     if not app.is_editable_by_user(request.user):
         raise Http404
 
+    resp = redirect(user_page, request.user.username)
+
     # get the email field out of the request
     try:
         if request.method == 'POST':
@@ -917,19 +919,49 @@ def add_or_remove_collaborators(request, app_id):
         elif request.method == 'DELETE':
             email = urlparse.parse_qs(request.body)['email'][0]
     except (KeyError, IndexError):
-        return JsonResponse({}, status=400)
+        # TODO flash message that something messed up
+        return resp
 
     # get user by email or username
     try:
         user = User.objects.get(email=email)
     except User.DoesNotExist:
-        user = get_object_or_404(User, username=email)
+        try:
+            user = User.objects.get(username=email)
+        except User.DoesNotExist:
+            if request.method == 'POST':
+                subject = "%s invited you to collaborate on a website" % request.user.get_full_name()
+                invitation = InvitationKeys.create_invitation(request.user, email)
+
+                message = ('Hi there,\n\n'
+                           'I\'m working on a website:\n\n'
+                           '<a href="{url}">{hostname}</a>\n\n'
+                           'And I could use your help. I\'ve built it on Appcubator, a visual way to build rich web applications.\n'
+                           'You can signup here: <a href="http://appcubator.com/signup?k={invitation_key}">Signup link</a>\n'
+                           'Once you sign up, you\'ll automatically be added as a collaborator to the project.\n'
+                           'Thank you!\n{user_name}\n\n\n')
+                message = message.format(url=app.url(), hostname=app.hostname(), user_name=request.user.get_full_name(), invitation_key=invitation.api_key)
+
+                send_template_email(request.user.email, email, subject, "", "emails/base_boxed_basic_query.html", { "text": message })
+
+                collabinvite = CollaborationInvite(invite_key=invitation.api_key,
+                                                   email=email,
+                                                   inviter=request.user,
+                                                   app=app)
+                collabinvite.save()
+                # TODO successfully invited flash message
+                return resp
+
+            elif request.method == 'DELETE':
+                # This can't happen unless someone's playing tricks with the api.
+                # todo log this event
+                raise AssertionError("wtf man")
 
     if request.method == 'POST':
-        resp = add_collaborator_to_app(request, app, user)
-    elif request.method == 'DELETE':
-        resp = remove_collaborator_from_app(request, app, user)
+        add_collaborator_to_app(request, app, user)
 
+    elif request.method == 'DELETE':
+        remove_collaborator_from_app(request, app, user)
     return resp
 
 @require_POST
@@ -939,14 +971,15 @@ def add_collaborator_to_app(request, app, collab_user):
     409 if duplicate
     200 if success
     """
-    c = Collaboration(user=collab_user, app=app)
-    try:
-        c.full_clean()
-    except ValidationError, e: # validates uniqueness so dw about creating 2 collabs
-        return JsonResponse(e.message_dict, status=400)
+    success = app.add_user_as_collaborator(collab_user)
 
-    c.save()
-    return JsonResponse({})
+    if success:
+        # TODO Flash message "User successfully added."
+        return True
+    else:
+        # TODO Flash message "This user is already a collaborator."
+        return False
+
 
 @require_http_methods(['DELETE'])
 @login_required
@@ -958,7 +991,9 @@ def remove_collaborator_from_app(request, app, collab_user):
     try:
         collab = get_object_or_404(Collaboration, app=app, user=collab_user)
     except Http404:
-        return JsonResponse({}, status=400)
+        # TODO Flash message "This user is not a collaborator."
+        return False
 
     collab.delete()
-    return JsonResponse({})
+    # TODO Flash message "User successfully added."
+    return True
