@@ -241,7 +241,7 @@ def signup(request):
             #     return HttpResponse(simplejson.dumps(stripe_error), mimetype="application/json")
             login(request, new_user)
 
-            InvitationKeys.add_collaborations(new_user, req.POST.get('ik', ''))
+            InvitationKeys.add_collaborations(new_user, req.get('ik', ''))
 
             if request.is_ajax():
                 return HttpResponse(simplejson.dumps({"redirect_to": "/app/"}), mimetype="application/json")
