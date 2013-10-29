@@ -37,6 +37,7 @@ urlpatterns = patterns('views',
 
     url(r'^resources/$',                                           views.resources),
     url(r'^resources/editor/$',                                    views.external_editor),
+    url(r'^app/0/editor/0/$',                                      views.external_editor_iframe),
     url(r'^resources/editor/publish/$',                            views.temp_deploy),
     url(r'^resources/quickstart/$',                                views.quickstart),
     url(r'^resources/tutorials/$',                                 views.tutorials),

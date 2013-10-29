@@ -299,11 +299,10 @@ def page(request, app_id, page_name="overview"):
     return render(request, 'app-show.html', page_context)
 
 @require_GET
-@login_required
 def app_editor_iframe(request, app_id, page_name="overview"):
     app_id = long(app_id)
     # id of 0 is reserved for sample app
-    if(app_id == 0):
+    if(request.user.is_authenticated is False):
         return redirect(user_page, request.user.username)
 
     app = get_object_or_404(App, id=app_id)

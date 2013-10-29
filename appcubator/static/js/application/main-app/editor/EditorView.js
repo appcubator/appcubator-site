@@ -123,7 +123,9 @@ define(function(require, exports, module) {
                 $('.world-toggle.menu-button').on('click', v1.garageView.hide);
             }
 
-            $('.world-toggle.menu-button').on('click', v1.worldView.toggle);
+            if(v1.worldView) {
+                $('.world-toggle.menu-button').on('click', v1.worldView.toggle);
+            }
 
             return this;
         },

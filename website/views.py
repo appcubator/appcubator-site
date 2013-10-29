@@ -403,6 +403,12 @@ def external_editor(request):
 
     return render(request, 'website-external-editor.html', page_context)
 
+@require_GET
+@cache_page(60*5)
+@csrf_protect
+def external_editor_iframe(request):
+    return render(request, 'website-external-iframe.html', {})
+
 @cache_page(60*5)
 @csrf_protect
 def quickstart(request):

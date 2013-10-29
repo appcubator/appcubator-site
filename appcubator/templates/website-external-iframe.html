@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title> Appcubator | {{ title }}</title>
+<link type="text/css" href="/static/css/default-uiestate.css" id="css-uiestate" rel="stylesheet"/>
+<link type="text/css" href="/static/css/appcubator-override.css" rel="stylesheet"/>
+<link type="text/css" href="/static/css/editor-inject.css" rel="stylesheet"/>
+<link type="text/css" href="/static/css/jquery-ui.css" rel="stylesheet"/>
+<link type="text/css" href="/static/css/app/editor/widget-editor.css" rel="stylesheet"/>
+
+</head>
+<body>
+        <!-- Navbar -->
+        <div class="navbar navbar-fixed-top navbar-default" id="navbar">
+          <button id="edit-navbar-btn">Edit Navbar</button>
+            <div class="container">  
+              <div class="navbar-header">
+                <a href="#" class="navbar-brand">Demo App</a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+
+              <div class="navbar-collapse collapse" data-toggle="collapse">
+                <ul class="nav navbar-nav" id="links">
+                </ul>
+              </div>
+            </div>
+        </div>
+        <!-- Editing Container -->
+        <div class="container editing" id="full-container"></div>
+        <div class="editing container elements" id="elements-container">
+        <!-- UI Elements -->
+        </div>
+        <!-- Footer -->
+        <footer class="footer" id="footer">
+            <div class="container">
+            <p id="customText" class="footer-text muted"></p>
+            <ul class="list-unstyled" id="footer-links">
+              
+            </ul>
+            <button class="edit-footer btn btn-small btn-inverse pull-right" id="edit-footer-btn">Edit Footer</button>
+          </div>
+        </footer>
+
+<script type="text/javascript">
+    var staticVersion = "yoo";
+</script>
+<script data-main="{{ STATIC_URL }}js/application/main-app/editor/iframe-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+
+</body>
+</html>

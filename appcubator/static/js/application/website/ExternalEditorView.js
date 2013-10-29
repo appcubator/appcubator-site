@@ -55,6 +55,7 @@ function(EditorView, SignupDeployView, MarqueeView, EditorGalleryView, WidgetsMa
                     this.footer
                 ];
 
+                this.pageId = 0;
                 this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
         },
 
