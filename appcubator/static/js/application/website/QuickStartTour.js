@@ -22,6 +22,7 @@ define([
         },
         {
           ind     : 2,
+          iframe  : '#page',
           title   : 'Editing Elements',
           content : 'Double click on the element and change the text to <em>Your_Name</em>\'s Twitter. Then click on "Done Editing" button.',
           loc     : "left center, right center",
@@ -84,6 +85,7 @@ define([
           loc     : "top center, bottom center",
           url     : '/editor/1/',
           highlightTarget: true,
+          iframe  : '#page',
           target  : $('.form-editor-btn'),
           setup: function(tour, options) {
             v1State.getCurrentPage().get('uielements').each(function(widgetM) {

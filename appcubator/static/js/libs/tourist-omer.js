@@ -20,18 +20,29 @@ define([
 
     //var timer = {};
 
-    var waitUntilAppears = function(selector, callbackFn, cont_args, count) {
+    var waitUntilAppears = function(selector, iframe, callbackFn, cont_args, count) {
       //clearTimeout(timer);
       var cnt = (count || 0);
 
-      el = document.querySelector(selector);
+      if(iframe) {
+        console.log(iframe);
+        console.log(document.querySelector(iframe));
+        console.log(document.querySelector(iframe).contentWindow);
+        el = document.querySelector(iframe).contentWindow.document.querySelector(selector);
+      }
+      else {
+        el = document.querySelector(selector);
+      }
+      
+      console.log(el);
+
       if(el && !el.tagName) { el = el[0]; }
 
       var repeat = function() {
         cnt++;
         //timer = 
         window.setTimeout(function() {
-          waitUntilAppears.call(this, selector, callbackFn, cont_args, cnt);
+          waitUntilAppears.call(this, selector, iframe, callbackFn, cont_args, cnt);
         }, 500);
       };
 
@@ -43,22 +54,33 @@ define([
       if(!el) return repeat();
 
       var pos = findPos(el);
-      if($(selector).length === 0 || $(el).height() === 0 || $(el).width() === 0 || pos[0] <= 1 || pos[1] <= 1) return repeat();
+      console.log(pos);
+      if($(el).height() === 0 || $(el).width() === 0 || pos[0] <= 1 || pos[1] <= 1) return repeat();
+      console.log("yolo");
       callbackFn.apply(undefined, cont_args);
     };
 
-    var waitUntilOnDom = function(selector, callbackFn, cont_args, count) {
+    var waitUntilOnDom = function(selector, iframe, callbackFn, cont_args, count) {
       //clearTimeout(timer);
       var cnt = (count || 0);
 
-      el = document.querySelector(selector);
+      if(iframe) {
+        console.log(iframe);
+        console.log(document.querySelector(iframe));
+        console.log(document.querySelector(iframe).contentWindow);
+        el = document.querySelector(iframe).contentWindow.document.querySelector(selector);
+      }
+      else {
+        el = document.querySelector(selector);
+      }
+      
       if(el && !el.tagName) { el = el[0]; }
 
       var repeat = function() {
         cnt++;
         //timer = 
         window.setTimeout(function() {
-          waitUntilOnDom.call(this, selector, callbackFn, cont_args, cnt);
+          waitUntilOnDom.call(this, selector, iframe, callbackFn, cont_args, cnt);
         }, 500);
       };
 
@@ -69,7 +91,7 @@ define([
       if(cnt > 60) return fail();
       if(!el) return repeat();
 
-      if($(selector).length === 0) return repeat();
+      //if($(selector).length === 0) return repeat();
       callbackFn.apply(undefined, cont_args);
     };
 
@@ -137,7 +159,7 @@ define([
         var step = this.options.steps[index];
         var self = this;
         setTimeout(function() {
-          waitUntilAppears(self.options.steps[index].target.selector, function() {
+          waitUntilAppears(self.options.steps[index].target.selector, self.options.steps[index].iframe, function() {
             self._setupStep(self.options.steps[index]);
           });
         }, step.prepareTime||1);
@@ -179,13 +201,17 @@ define([
         var self = this;
 
         var goToNext = function() {
-          waitUntilAppears(step.target.selector, function() {
+          waitUntilAppears(step.target.selector, step.iframe, function() {
 
             //step = _.extend(step, self._setupStep(step));
             //console.log(tour);
             //if(step.setup) step.setup.call(tour, options);
-            step.target = $(step.target.selector);
-
+            if(step.iframe) {
+              step.target = $(step.iframe).contents().find(step.target.selector);
+            }
+            else {
+              step.target = $(step.target.selector);
+            }
 
             self._setTarget(step.target || false, step);
             self._setZIndex('');
@@ -199,7 +225,7 @@ define([
           });
         };
 
-        waitUntilOnDom(step.target.selector, function() {
+        waitUntilOnDom(step.target.selector, step.iframe, function() {
           if(step.prepare) { step.prepare.call(this); }
           if(step.prepareTime) { setTimeout(function() { goToNext(); }, step.prepareTime); }
           else { goToNext(); }

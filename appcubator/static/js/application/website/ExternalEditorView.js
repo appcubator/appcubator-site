@@ -1,5 +1,6 @@
-define(['editor/EditorView', './SignupDeployView','editor/MarqueeView', 'editor/EditorGalleryView', 'editor/WidgetsManagerView', 'editor/GuideView', 'editor/ToolBarView', 'app/RedoController', 'editor/NavbarView', 'editor/FooterView', 'mixins/SimpleModalView'],
-function(EditorView, SignupDeployView, MarqueeView, EditorGalleryView, WidgetsManagerView, GuideView, ToolBarView, RedoController, NavbarView, FooterView, SimpleModalView) {
+define(['editor/EditorView', './SignupDeployView','editor/MarqueeView', 'editor/EditorGalleryView', 'editor/WidgetsManagerView', 'editor/GuideView', 'editor/ToolBarView', 'app/RedoController', 'editor/NavbarView', 'editor/FooterView', 'mixins/SimpleModalView', 'editor/WidgetEditorViewProxy'],
+
+function(EditorView, SignupDeployView, MarqueeView, EditorGalleryView, WidgetsManagerView, GuideView, ToolBarView, RedoController, NavbarView, FooterView, SimpleModalView, WidgetEditorViewProxy) {
 
     var ExternalEditorView = EditorView.extend({
 
@@ -27,7 +28,7 @@ function(EditorView, SignupDeployView, MarqueeView, EditorGalleryView, WidgetsMa
 
                 this.marqueeView = new MarqueeView();
                 this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
-                this.widgetsManager = new WidgetsManagerView(this.widgetsCollection);
+                this.widgetsManager = {};
                 this.guides = new GuideView(this.widgetsCollection);
                 this.toolBar = new ToolBarView();
 
@@ -57,6 +58,8 @@ function(EditorView, SignupDeployView, MarqueeView, EditorGalleryView, WidgetsMa
 
                 this.pageId = 0;
                 this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
+       
+                this.widgetEditorViewProxy = WidgetEditorViewProxy;
         },
 
         render: function() {

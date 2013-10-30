@@ -293,8 +293,6 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
                 $(document.body).append(cleanDiv);
 
                 v1.reArrangeCSSTag = function() {};
-                console.log(ExternalEditorView.initialize);
-
                 v1.view = new ExternalEditorView({
                     pageId: 0
                 });
