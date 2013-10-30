@@ -71,6 +71,10 @@ function(EditorView, SignupDeployView, MarqueeView, EditorGalleryView, WidgetsMa
                 QuickTour.start();
             });
 
+            if(this.galleryEditor) {
+                this.galleryEditor.expandAllSections();
+            }
+
             return this;
         },
 

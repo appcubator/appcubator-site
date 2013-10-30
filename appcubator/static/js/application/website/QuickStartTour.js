@@ -41,6 +41,9 @@ define([
           url     : '/editor/1/',
           target  : $('#type-create-form'),
           prepare : function() {
+            if(v1 && v1.view.galleryEditor) {
+              v1.view.galleryEditor.expandAllSections();
+            }
             $('#item-gallery').scrollTop($("#type-create-form").offset().top + 30);
           },
           setup: function(tour, options) {
@@ -99,7 +102,7 @@ define([
                 });
               }
             }, this);
-            $('.form-editor-btn').first().one('click', tour.next);
+            $('#page').contents().find('.form-editor-btn').one('click', tour.next);
           }
         },
         {
