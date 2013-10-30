@@ -5,6 +5,9 @@
         <ul class="nav">
           <li class="brand">
             <h1 class="name">
+<!--               <a href="/"><div id="box-container">
+                <div id="cube" class=""><div></div><div></div><div></div><div></div><div></div><div></div></div></div></a> -->
+
               <a id="main-menu" href="{% url appcubator.views.app.user_page user.username %}" rel="external">
                 <span class="brand">Appcubator</span>
                 <span class="title">Dashboard</span>
@@ -13,14 +16,16 @@
               <li class="menu-app-pages">
                 <a id="pages-menu" href="/app/{{ app.id }}/pages/"><span class="pages-icon"></span><span>Pages</span></a>
               </li><li class="menu-app-entities">
-                <a id="entities-menu" href="/app/{{ app.id }}/tables/"><span class="entities-icon"></span><span>Tables</span></a>
+                <a id="entities-menu" href="/app/{{ app.id }}/tables/"><span class="entities-icon"></span><span>Data</span></a>
               </li><li class="menu-app-themes">
-                <a id="gallery-menu" href="/app/{{ app.id }}/gallery/"><span class="gallery-icon"></span><span>Themes</span></a>
+                <a id="gallery-menu" href="/app/{{ app.id }}/gallery/"><span class="gallery-icon"></span><span>Design</span></a>
               </li><li class="menu-app-emails">
                 <a id="emails-menu" href="/app/{{ app.id }}/emails/"><span class="emails-icon"></span><span>Emails</span></a>
               </li><li class="menu-app-plugins">
                 <a id="plugins-menu" href="/app/{{ app.id }}/plugins/"><span class="plugins-icon"></span><span>Plugins</span></a>
-              </li>
+              </li><!-- <li class="menu-app-support">
+                <a id="support-menu" href="/app/{{ app.id }}/support/"><span class="support-icon"></span><span>Support</span></a>
+              </li> -->
             </ul>{% endif %}
           </li>
           {% if app %}

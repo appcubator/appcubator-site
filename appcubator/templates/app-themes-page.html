@@ -1,9 +1,13 @@
   <div class="span58 hoff1">
-    <h2 class="pheader" id="themes-title">Themes</h2>
-    <a class="tbl-button right" rel="external" target="_blank" href="/app/{{ app.pk }}/edit_theme/">
-      <div class="box-button">
-      <span class="edit-icon"></span><span>Edit Current Theme</span>
+    <h2 class="pheader span58" id="themes-title">Current Theme</h2>
+    <hr class="span58 pheader">
+    <a class="span58 hi10 hoff1 pane padding" rel="external" target="_blank" href="/app/{{ app.pk }}/edit_theme/">
+      <h3>CSS Editor</h3>
+      <div class="hoff1">
+        If you are familiar with CSS, you can use the CSS editor to edit your current theme or make a new one. You can refer to the guide linked below to learn more about the Theme Editor.
       </div>
     </a>
+    <a class="hoff1 span58 offset2" href="{% url website.views.designer_guide %}"><strong>Guide on "How To Use the Theme Editor"</strong></a>
+    <h2 class="pheader span58 hoff3" id="themes-title">Theme Gallery</h2>
     <hr class="span58 pheader">
   </div>
