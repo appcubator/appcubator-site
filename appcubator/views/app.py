@@ -218,12 +218,17 @@ def new(request, is_racoon = False, app_template=None):
 @require_POST
 def clone(request, app_id):
     app_id = long(app_id)
+    app = get_object_or_404(App, id=app_id)
 
     form = forms.AppClone({ "app": app_id })
     if form.is_valid():
 
         new_app = form.save()
         print "new app: %d" % new_app.id
+        new_app._uie_state_json = app._uie_state_json
+        new_app._state_json = app._state_json
+
+        new_app.save()
 
         # this adds it to the deployment queue. non-blocking basically.
         new_app = App.objects.get(pk=new_app.id)
