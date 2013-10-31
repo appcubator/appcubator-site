@@ -38,13 +38,12 @@ define([
                 this.$el.show();
                 this.isDrawing = true;
 
-
                 var coorX = e.pageX;
                 var coorY = e.pageY;
                 var dist = this.getPageTopLeft();
                 coorX -= dist.left;
                 coorY -= dist.top;
-                coorY += $(window).scrollTop();
+                coorY -= $(document.body).scrollTop();
 
                 this.setTop(coorY);
                 this.setLeft(coorX);
@@ -87,6 +86,7 @@ define([
                 var dist = this.getPageTopLeft();
                 coorX -= dist.left;
                 coorY -= dist.top;
+                coorY -= $(document.body).scrollTop();
 
                 if (coorX < 0 || coorY < 0) {
                     return;
@@ -161,8 +161,8 @@ define([
                 var rect = this.container.getBoundingClientRect();
                 var docEl = document.documentElement;
                 return {
-                    left: rect.left + (window.pageXOffset || docEl.scrollLeft || 0),
-                    top: rect.top + (window.pageYOffset || docEl.scrollTop || 0)
+                    left: rect.left + (document.body.pageXOffset || docEl.scrollLeft || 0),
+                    top: rect.top + (document.body.pageYOffset || docEl.scrollTop || 0)
                 };
             },
 
