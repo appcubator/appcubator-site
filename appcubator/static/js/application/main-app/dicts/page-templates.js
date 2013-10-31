@@ -515,9 +515,9 @@ var page_templates = [
       {
         "type": "node",
         "layout": {
-          "top": 3,
+          "top": 5,
           "left": 3,
-          "height": 3,
+          "height": 4,
           "width": 6,
           "t_padding": 0,
           "b_padding": 0,
