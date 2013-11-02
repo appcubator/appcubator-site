@@ -227,6 +227,9 @@
     $(function () {
       /* prevents submitting twice */
       $('form').on('submit', function(e) {
+        if($(e.currentTarget).hasClass('no-ajax')) {
+          return;
+        }
         console.log("prevent");
         $(e.target).on('submit', function(e) {
           e.preventDefault();
