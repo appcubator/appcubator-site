@@ -40,13 +40,17 @@ define([
           loc     : "right center, left center",
           url     : '/editor/1/',
           target  : $('#type-create-form'),
+          prepareTime : 400,
           prepare : function() {
             if(v1 && v1.view.galleryEditor) {
               v1.view.galleryEditor.expandAllSections();
             }
-            $('#item-gallery').scrollTop($("#type-create-form").offset().top + 30);
+            setTimeout(function() {
+              $('#item-gallery').scrollTop(140);
+            }, 300);
           },
           setup: function(tour, options) {
+            $('#item-gallery').scrollTop(140);
             v1State.getCurrentPage().bind('creat-form-dropped', tour.next);
           },
           teardown: function(tour, options) {
