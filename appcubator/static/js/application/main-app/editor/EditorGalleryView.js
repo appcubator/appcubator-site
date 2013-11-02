@@ -63,7 +63,7 @@ define(function(require, exports, module) {
             this.hideAllSections();
             this.expandSection(0);
 
-            $(this.allList).append('<div class="bottom-arrow"></div>');
+            // $(this.allList).append('<div class="bottom-arrow"></div>');
             $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
             $(this.allList).find('.bottom-arrow').on('mousemove', this.slideDown);
 
