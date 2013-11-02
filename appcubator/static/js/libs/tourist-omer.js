@@ -25,17 +25,12 @@ define([
       var cnt = (count || 0);
 
       if(iframe) {
-        console.log(iframe);
-        console.log(document.querySelector(iframe));
-        console.log(document.querySelector(iframe).contentWindow);
         el = document.querySelector(iframe).contentWindow.document.querySelector(selector);
       }
       else {
         el = document.querySelector(selector);
       }
       
-      console.log(el);
-
       if(el && !el.tagName) { el = el[0]; }
 
       var repeat = function() {
@@ -54,9 +49,7 @@ define([
       if(!el) return repeat();
 
       var pos = findPos(el);
-      console.log(pos);
-      if($(el).height() === 0 || $(el).width() === 0 || pos[0] <= 1 || pos[1] <= 1) return repeat();
-      console.log("yolo");
+      if($(el).height() === 0 || $(el).width() === 0 || pos[0] <= 1) return repeat();
       callbackFn.apply(undefined, cont_args);
     };
 
@@ -65,9 +58,6 @@ define([
       var cnt = (count || 0);
 
       if(iframe) {
-        console.log(iframe);
-        console.log(document.querySelector(iframe));
-        console.log(document.querySelector(iframe).contentWindow);
         el = document.querySelector(iframe).contentWindow.document.querySelector(selector);
       }
       else {
@@ -203,9 +193,6 @@ define([
         var goToNext = function() {
           waitUntilAppears(step.target.selector, step.iframe, function() {
 
-            //step = _.extend(step, self._setupStep(step));
-            //console.log(tour);
-            //if(step.setup) step.setup.call(tour, options);
             if(step.iframe) {
               step.target = $(step.iframe).contents().find(step.target.selector);
             }
@@ -243,7 +230,7 @@ define([
       at = String(step.loc.split(',')[1]).trim() || 'right center';
       this.tip.setContainer(step.container || $('body'));
       this.tip.setContent(contentElement);
-      return this.tip.setPosition(step.target || false, my, at);
+      return this.tip.setPosition(step.target || false, my, at, step.iframe);
     };
 
     return Tourist;
