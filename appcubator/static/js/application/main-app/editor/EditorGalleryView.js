@@ -3,6 +3,7 @@ define(function(require, exports, module) {
     'use strict';
 
     var EditorGallerySectionView = require('editor/EditorGallerySectionView');
+    var SearchGallerySectionView = require('editor/SearchGallerySectionView');
     var PickCreateFormEntityView = require('editor/PickCreateFormEntityView');
     var ElementCollection = require('collections/ElementCollection');
     var WidgetContainerModel = require('models/WidgetContainerModel');
@@ -56,6 +57,7 @@ define(function(require, exports, module) {
 
             this.allList = util.get('all-list');
             this.allList.innerHTML = '';
+            this.renderSearchPart();
             this.renderUIElementList(); // Basic UI Elements
             this.renderAuthenticationForms(); // Authentication Forms
             this.renderCurrentUserElements(); // CurrentUser Elements
@@ -71,10 +73,6 @@ define(function(require, exports, module) {
             $(this.allList).find('.bottom-arrow').on('mousemove', this.slideDown);
 
             this.bindDraggable();
-
-            var list = new List('top-panel-bb', {
-                valueNames: ['name']
-            });
 
             $(util.get('top-panel-bb')).find('.search').on('focus', this.expandAllSections);
 
@@ -105,6 +103,23 @@ define(function(require, exports, module) {
                 iframeFix: true
             });
 
+        },
+
+        renderSearchPart: function() {
+
+            var list = new List('top-panel-bb', {
+                valueNames: ['name']
+            });
+
+            var self = this;
+            var sectionView = new SearchGallerySectionView({
+                parentView: self
+            });
+
+            sectionView.name = name;
+            this.subviews.push(sectionView);
+            this.sections.push(sectionView);
+            this.allList.appendChild(sectionView.render().el);
         },
 
         renderUIElementList: function() {
@@ -327,8 +342,6 @@ define(function(require, exports, module) {
         },
 
         addNewSection: function(name) {
-
-            this.searcher = new Searcher();
 
             var self = this;
             var sectionView = new EditorGallerySectionView({
