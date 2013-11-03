@@ -60,7 +60,7 @@ define(function(require, exports, module) {
             return li;
         },
 
-        addHalfWidthItem: function(id, className, text, icon, container) {
+        addHalfWidthItem: function(id, className, text, icon) {
             var li = document.createElement('li');
             li.className = className + ' half-width';
             li.id = id;

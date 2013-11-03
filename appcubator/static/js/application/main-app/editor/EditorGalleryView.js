@@ -37,7 +37,7 @@ define(function(require, exports, module) {
             'mousemove .bottom-arrow': 'slideDown',
             'focus input.search'     : 'expandAllSections',
             'change input.search'   : 'searchInputChage',
-            'keydown input.search'   : 'searchInputChage'
+            'keyup input.search'   : 'searchInputChage'
         },
 
         initialize: function(widgetsCollection) {
@@ -109,16 +109,14 @@ define(function(require, exports, module) {
 
         renderSearchPart: function() {
 
-            // var list = new List('top-panel-bb', {
-            //     valueNames: ['name']
-            // });
-
             var self = this;
             var sectionView = new SearchGallerySectionView({
                 parentView: self
             });
 
             sectionView.name = name;
+            this.searchSection = sectionView;
+
             this.subviews.push(sectionView);
             this.sections.push(sectionView);
             this.allList.appendChild(sectionView.render().el);
@@ -126,7 +124,18 @@ define(function(require, exports, module) {
 
         searchInputChage: function(e) {
             var val = e.currentTarget.value;
-            console.log(this.searcher.search(val));
+
+            if (val === "") {
+                this.searchSection.clear();
+                return;
+            }
+
+            this.searchSection.clear();
+            var results = this.searcher.search(val);
+            _.each(results, function(result) {
+                this.searchSection.addHalfWidthItem(result.id, result.className, result.text, result.icon);
+            }, this);
+
         },
 
         renderUIElementList: function() {

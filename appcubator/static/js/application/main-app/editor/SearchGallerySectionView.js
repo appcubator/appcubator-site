@@ -26,6 +26,12 @@ define(function(require, exports, module) {
             this.isExpanded = true;
         },
 
+        hide: function() { },
+
+        clear: function() {
+            this.list.innerHTML = '';
+        }
+
     });
 
 
