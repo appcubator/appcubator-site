@@ -35,7 +35,6 @@ define(function(require, exports, module) {
         events: {
             'mouseover .bottom-arrow': 'slideDown',
             'mousemove .bottom-arrow': 'slideDown',
-            'focus input.search'     : 'expandAllSections',
             'change input.search'   : 'searchInputChage',
             'keyup input.search'   : 'searchInputChage'
         },
