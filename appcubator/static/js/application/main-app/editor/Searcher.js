@@ -21,13 +21,13 @@ define(function(require, exports, module) {
         this.search = function(str) {
 
             var results = [];
-            _.each(function(item) {
-                if (item.text.indexOf(str) > -1) {
+            _.each(this.items, function(item) {
+                if (item.text.toLowerCase().indexOf(str.toLowerCase()) > -1) {
                     results.push(item);
                 }
             });
 
-            return item;
+            return results;
         };
 
 

@@ -12,7 +12,6 @@ define(function(require, exports, module) {
 
     require('dicts/default-uielements');
     require('dicts/constant-containers');
-    require('list');
 
     var EditorGalleryView = Backbone.View.extend({
 
@@ -36,7 +35,9 @@ define(function(require, exports, module) {
         events: {
             'mouseover .bottom-arrow': 'slideDown',
             'mousemove .bottom-arrow': 'slideDown',
-            'focus input.search': 'expandAllSections'
+            'focus input.search'     : 'expandAllSections',
+            'change input.search'   : 'searchInputChage',
+            'keydown input.search'   : 'searchInputChage'
         },
 
         initialize: function(widgetsCollection) {
@@ -54,6 +55,7 @@ define(function(require, exports, module) {
 
         render: function() {
             var self = this;
+            this.setElement(util.get('top-panel-bb'));
 
             this.allList = util.get('all-list');
             this.allList.innerHTML = '';
@@ -74,7 +76,7 @@ define(function(require, exports, module) {
 
             this.bindDraggable();
 
-            $(util.get('top-panel-bb')).find('.search').on('focus', this.expandAllSections);
+            //$().find('.search').on('focus', this.expandAllSections);
 
             // listen for changes to url to update context entity section
             this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
@@ -107,9 +109,9 @@ define(function(require, exports, module) {
 
         renderSearchPart: function() {
 
-            var list = new List('top-panel-bb', {
-                valueNames: ['name']
-            });
+            // var list = new List('top-panel-bb', {
+            //     valueNames: ['name']
+            // });
 
             var self = this;
             var sectionView = new SearchGallerySectionView({
@@ -120,6 +122,11 @@ define(function(require, exports, module) {
             this.subviews.push(sectionView);
             this.sections.push(sectionView);
             this.allList.appendChild(sectionView.render().el);
+        },
+
+        searchInputChage: function(e) {
+            var val = e.currentTarget.value;
+            console.log(this.searcher.search(val));
         },
 
         renderUIElementList: function() {

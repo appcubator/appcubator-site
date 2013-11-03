@@ -8,7 +8,6 @@ define(function(require, exports, module) {
 
     require('dicts/default-uielements');
     require('dicts/constant-containers');
-    require('list');
 
     var EditorGallerySectionView = Backbone.View.extend({
 
