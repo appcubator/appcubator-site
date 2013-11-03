@@ -7,6 +7,7 @@ define(function(require, exports, module) {
     var ElementCollection = require('collections/ElementCollection');
     var WidgetContainerModel = require('models/WidgetContainerModel');
     var WidgetModel = require('models/WidgetModel');
+    var Searcher = require('editor/Searcher');
 
     require('dicts/default-uielements');
     require('dicts/constant-containers');
@@ -43,6 +44,8 @@ define(function(require, exports, module) {
             this.widgetsCollection = widgetsCollection;
             this.widgetsCollection.grid = {};
             this.widgetsCollection.grid.maxWidth = 12;
+
+            this.searcher = new Searcher();
 
             this.sections = [];
             this.subviews = [];
@@ -324,10 +327,16 @@ define(function(require, exports, module) {
         },
 
         addNewSection: function(name) {
+
+            this.searcher = new Searcher();
+
             var self = this;
             var sectionView = new EditorGallerySectionView({
                 parentView: self
             });
+
+            sectionView.addSearcher(this.searcher);
+
             sectionView.name = name;
             this.subviews.push(sectionView);
             this.sections.push(sectionView);

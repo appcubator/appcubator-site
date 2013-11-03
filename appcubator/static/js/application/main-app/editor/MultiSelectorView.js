@@ -148,7 +148,6 @@ define([
 
             selectAll: function() {
                 _(this.contents).each(function(widgetModel) {
-                    console.log($('#widget-wrapper-' + widgetModel.cid));
                     $('#widget-wrapper-' + widgetModel.cid).addClass('red-border');
                 });
             },

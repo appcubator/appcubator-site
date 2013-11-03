@@ -1,127 +1,143 @@
-define([
-  'collections/ElementCollection',
-  'models/WidgetContainerModel',
-  'models/WidgetModel',
-  'dicts/default-uielements',
-  'dicts/constant-containers',
-  'list'
-],
-function(
-  ElementCollection,
-  WidgetContainerModel,
-  WidgetModel) {
+define(function(require, exports, module) {
 
-  var EditorGallerySectionView = Backbone.View.extend({
+    'use strict';
 
-    events : {
-      'click .gallery-header .qmark' : 'showSectionTutorial',
-      'click .gallery-header' : 'toggle',
-      'mouseover'   : 'expand',
-      'mouseenter'  : 'expand',
-      'mouseleave'  : 'mouseleave'
-    },
+    var ElementCollection = require('collections/ElementCollection');
+    var WidgetContainerModel = require('models/WidgetContainerModel');
+    var WidgetModel = require('models/WidgetModel');
 
-    isExpanded: true,
-    timer: null,
+    require('dicts/default-uielements');
+    require('dicts/constant-containers');
+    require('list');
 
-    initialize: function(options) {
-      _.bindAll(this);
-      this.parentView = options.parentView;
-      return this;
-    },
+    var EditorGallerySectionView = Backbone.View.extend({
 
-    render: function() {
-      if(this.el) {
-        this.el.innerHTML = '';
-      }
-      var sectionName = this.name.replace(/ /g,'-');
-      this.header = this.addHeaderItem(this.name);
-      this.list = document.createElement('ul');
-      this.el.appendChild(this.list);
-      this.list.style = '';
+        events: {
+            'click .gallery-header .qmark': 'showSectionTutorial',
+            'click .gallery-header': 'toggle',
+            'mouseover': 'expand',
+            'mouseenter': 'expand',
+            'mouseleave': 'mouseleave'
+        },
 
-      return this;
-    },
+        isExpanded: true,
+        timer: null,
 
-    addFullWidthItem: function(id, className, text, icon) {
-      var li = document.createElement('li');
-      li.className = className+' full-width';
-      li.id = id;
-      var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
-      li.innerHTML= _.template(tempLi, { text: text, icon: icon});
+        initialize: function(options) {
+            _.bindAll(this);
+            this.parentView = options.parentView;
+            return this;
+        },
 
-      this.list.appendChild(li);
-      return li;
-    },
+        render: function() {
+            if (this.el) {
+                this.el.innerHTML = '';
+            }
+            var sectionName = this.name.replace(/ /g, '-');
+            this.header = this.addHeaderItem(this.name);
+            this.list = document.createElement('ul');
+            this.el.appendChild(this.list);
+            this.list.style = '';
 
-    addHalfWidthItem: function(id, className, text, icon, container) {
-      var li = document.createElement('li');
-      li.className = className+' half-width';
-      li.id = id;
-      var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
-      li.innerHTML= _.template(tempLi, { text: text, icon: icon});
-      this.list.appendChild(li);
+            return this;
+        },
 
-      return li;
-    },
+        addFullWidthItem: function(id, className, text, icon) {
+            var li = document.createElement('li');
+            li.className = className + ' full-width';
+            li.id = id;
+            var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
+            li.innerHTML = _.template(tempLi, {
+                text: text,
+                icon: icon
+            });
 
-    addHeaderItem: function(text, target) {
-      var li = document.createElement('li');
-      li.className = 'gallery-header ui-draggable open';
-      li.innerHTML = text + '<span class="qmark">?</span>';
-      var icon = document.createElement('img');
-      icon.className="icon";
-      icon.src="/static/img/right-arrow.png";
-      li.appendChild(icon);
-      this.el.appendChild(li);
-      return li;
-    },
+            this.list.appendChild(li);
 
-    toggle: function() {
-      if(this.isExpanded) this.hide();
-      else this.expand();
-    },
+            if(this.searcher) {
+                this.searcher.register(id, className, text, icon);
+            }
 
-    expand: function() {
-      this.header.className +=' open';
-      
-      try {
-        $(this.list).clearQueue();
-      }
-      catch(err) {}
+            return li;
+        },
 
-      $(this.list).slideDown(200);
-      this.isExpanded = true;
-    },
+        addHalfWidthItem: function(id, className, text, icon, container) {
+            var li = document.createElement('li');
+            li.className = className + ' half-width';
+            li.id = id;
+            var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
+            li.innerHTML = _.template(tempLi, {
+                text: text,
+                icon: icon
+            });
+            this.list.appendChild(li);
 
-    hide: function() {
-      $(this.header).removeClass('open');
-      
-      try {
-        $(this.list).clearQueue();
-      }
-      catch(err) {}
+            if(this.searcher) {
+                this.searcher.register(id, className, text, icon);
+            }
 
-      $(this.list).slideUp(200);
-      this.isExpanded = false;
-    },
+            return li;
+        },
 
-    mouseleave: function(e) {
-      if(this.timer) clearTimeout(this.timer);
-      var self = this;
-      this.timer = setTimeout(function() {
-        if(!self.parentView.dragActive && !self.parentView.slideDownActive) self.hide();
-        if(self.timer) clearTimeout(self.timer);
-      }, 130);
-    },
+        addHeaderItem: function(text, target) {
+            var li = document.createElement('li');
+            li.className = 'gallery-header ui-draggable open';
+            li.innerHTML = text + '<span class="qmark">?</span>';
+            var icon = document.createElement('img');
+            icon.className = "icon";
+            icon.src = "/static/img/right-arrow.png";
+            li.appendChild(icon);
+            this.el.appendChild(li);
+            return li;
+        },
 
-    showSectionTutorial: function(e) {
-      e.stopPropagation();
-      v1.showTutorial(this.name);
-    }
+        toggle: function() {
+            if (this.isExpanded) this.hide();
+            else this.expand();
+        },
 
-  });
+        expand: function() {
+            this.header.className += ' open';
+
+            try {
+                $(this.list).clearQueue();
+            } catch (err) {}
+
+            $(this.list).slideDown(200);
+            this.isExpanded = true;
+        },
+
+        hide: function() {
+            $(this.header).removeClass('open');
+
+            try {
+                $(this.list).clearQueue();
+            } catch (err) {}
+
+            $(this.list).slideUp(200);
+            this.isExpanded = false;
+        },
+
+        mouseleave: function(e) {
+            if (this.timer) clearTimeout(this.timer);
+            var self = this;
+            this.timer = setTimeout(function() {
+                if (!self.parentView.dragActive && !self.parentView.slideDownActive) self.hide();
+                if (self.timer) clearTimeout(self.timer);
+            }, 130);
+        },
+
+        showSectionTutorial: function(e) {
+            e.stopPropagation();
+            v1.showTutorial(this.name);
+        },
+
+        addSearcher: function(searcherObj) {
+            this.searcher = searcherObj;
+        }
+
+    });
 
 
-  return EditorGallerySectionView;
+    return EditorGallerySectionView;
 });

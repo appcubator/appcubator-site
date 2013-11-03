@@ -1,92 +1,96 @@
-define([
-  'models/PageModel',
-  'mixins/BackboneNameBox'
-],
-function(PageModel) {
+define(function(require, exports, module) {
 
-  var ToolBarView = Backbone.View.extend({
-    subviews: [],
+    'use strict';
 
-    events: {
-      'mouseover #menu-pages' : 'expandPages',
-      'mouseout #menu-pages'  : 'shrinkPages',
-      'click .go-to-page'     : 'clickedGoToPage',
-      'click a.back'          : 'navigateBack',
-      'mouseover .dropdown-arrow' : 'expandPages',
-      'mouseout .dropdown-arrow' : 'shrinkPages'
-    },
+    var PageModel = require('models/PageModel');
+    require('mixins/BackboneNameBox');
 
-    initialize: function(navbarModel) {
-      _.bindAll(this);
+    var ToolBarView = Backbone.View.extend({
+        subviews: [],
 
-      this.nmrFields = v1State.get('pages').length + 1;
-      if(this.nmrFields > 6) this.nmrFields = 6;
-      this.listenTo(v1State.get('pages'), 'add remove', function() {
-        this.nmrFields = v1State.get('pages').length + 1;
-        if(this.nmrFields > 6) this.nmrFields = 6;
-      }, this);
+        events: {
+            'mouseover #menu-pages': 'expandPages',
+            'mouseout #menu-pages': 'shrinkPages',
+            'click .go-to-page': 'clickedGoToPage',
+            'click a.back': 'navigateBack',
+            'mouseover .dropdown-arrow': 'expandPages',
+            'mouseout .dropdown-arrow': 'shrinkPages'
+        },
 
-    },
+        initialize: function(navbarModel) {
+            _.bindAll(this);
 
-    render: function() {
-      console.log(pageId);
-      console.log(v1State.get('pages').models[pageId]);
-      console.log(util.get('current-page'));
-      util.get('current-page').innerHTML = v1State.get('pages').models[pageId].get('name');
-      this.pageList = util.get('page-list');
+            this.nmrFields = v1State.get('pages').length + 1;
+            if (this.nmrFields > 6) this.nmrFields = 6;
+            this.listenTo(v1State.get('pages'), 'add remove', function() {
+                this.nmrFields = v1State.get('pages').length + 1;
+                if (this.nmrFields > 6) this.nmrFields = 6;
+            }, this);
 
-      v1State.get('pages').each(function(page, ind) {
-        if(pageId == ind) return;
-        this.renderPageItem(ind, page.get('name'));
-      }, this);
+        },
 
-      this.createBox = new Backbone.NameBox({txt:'New Page'}).render();
-      this.createBox.on('submit', this.createPage);
+        render: function() {
+            util.get('current-page').innerHTML = v1State.get('pages').models[pageId].get('name');
+            this.pageList = util.get('page-list');
 
-      util.get('create-page').appendChild(this.createBox.el);
+            v1State.get('pages').each(function(page, ind) {
+                if (pageId == ind) return;
+                this.renderPageItem(ind, page.get('name'));
+            }, this);
 
-      this.menuPages = document.getElementById('menu-pages');
-      return this;
-    },
+            this.createBox = new Backbone.NameBox({
+                txt: 'New Page'
+            }).render();
+            this.createBox.on('submit', this.createPage);
 
-    renderPageItem: function(ind, name) {
-      this.pageList.innerHTML += '<li class="go-to-page" id="page-'+ind+'"><a>'+name+'</a></li>';
-    },
+            util.get('create-page').appendChild(this.createBox.el);
 
-    clickedGoToPage: function(e) {
-      var goToPageId = (e.target.id||e.target.parentNode.id).replace('page-','');
-      v1.navigate("app/"+ appId +"/page/" + goToPageId +"/", {trigger: true});
-    },
+            this.menuPages = document.getElementById('menu-pages');
+            return this;
+        },
 
-    createPage: function(name) {
-      var pageInd = v1State.get('pages').length;
-      var pageModel = new PageModel({ name: name });
-      pageModel.setupUrl(name);
-      v1State.get('pages').push(pageModel);
+        renderPageItem: function(ind, name) {
+            this.pageList.innerHTML += '<li class="go-to-page" id="page-' + ind + '"><a>' + name + '</a></li>';
+        },
 
-      var self = this;
-      v1.save(null, function() {
-        $('#page-list').append('<li class="go-to-page" id="page-'+pageInd+'"><a>'+name+'</a></li>');
-        self.expandPages();
-        util.scrollToBottom($('#page-list'));
-      });
-    },
+        clickedGoToPage: function(e) {
+            var goToPageId = (e.target.id || e.target.parentNode.id).replace('page-', '');
+            v1.navigate("app/" + appId + "/page/" + goToPageId + "/", {
+                trigger: true
+            });
+        },
 
-    expandPages: function () {
-      $('#menu-pages').height((this.nmrFields) * 42);
-    },
+        createPage: function(name) {
+            var pageInd = v1State.get('pages').length;
+            var pageModel = new PageModel({
+                name: name
+            });
+            pageModel.setupUrl(name);
+            v1State.get('pages').push(pageModel);
 
-    shrinkPages: function(e) {
-      if(util.isMouseOn(e.pageX, e.pageY, this.menuPages )) return;
-      $('#menu-pages').height(42);
-      this.createBox.reset();
-    },
+            var self = this;
+            v1.save(null, function() {
+                $('#page-list').append('<li class="go-to-page" id="page-' + pageInd + '"><a>' + name + '</a></li>');
+                self.expandPages();
+                util.scrollToBottom($('#page-list'));
+            });
+        },
 
-    navigateBack: function () {
-      window.history.back();
-    }
+        expandPages: function() {
+            $('#menu-pages').height((this.nmrFields) * 42);
+        },
 
-  });
+        shrinkPages: function(e) {
+            if (util.isMouseOn(e.pageX, e.pageY, this.menuPages)) return;
+            $('#menu-pages').height(42);
+            this.createBox.reset();
+        },
 
-  return ToolBarView;
+        navigateBack: function() {
+            window.history.back();
+        }
+
+    });
+
+    return ToolBarView;
 });
