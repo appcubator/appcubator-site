@@ -123,6 +123,7 @@ define(function(require, exports, module) {
         },
 
         searchInputChage: function(e) {
+            var self =  this;
             var val = e.currentTarget.value;
 
             if (val === "") {
@@ -136,6 +137,22 @@ define(function(require, exports, module) {
                 this.searchSection.addHalfWidthItem(result.id, result.className, result.text, result.icon);
             }, this);
 
+            this.searchSection.$el.find('li:not(.ui-draggable)').on('click', function(e) {
+                self.dropped(e);
+            });
+            this.searchSection.$el.find('li:not(.ui-draggable)').draggable({
+                cursor: "move",
+                cursorAt: {
+                    top: 0,
+                    left: 0
+                },
+                helper: "clone",
+                start: function(e) {
+                    self.dragActive = true;
+                },
+                stop: self.dropped,
+                iframeFix: true
+            });
         },
 
         renderUIElementList: function() {
