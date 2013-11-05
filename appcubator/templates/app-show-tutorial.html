@@ -1,0 +1,40 @@
+{% extends "infra-app.html" %}
+{% load embed_json %}
+{% block css %}
+{% endblock %}
+
+{% block topbar %}
+{% include "app-navbar.html" %}
+{% endblock %}
+
+{% block page %}
+  <span class="span6 save-btn" id="save"><img id="save-icon" src="{{ STATIC_URL }}img/save.png"></span>
+  <span class="span6 qm-btn" id="tutorial">?</span>
+  <span class="span6 scrollUp-btn hidden" id="scrollUp"></span>
+  <div class="container hoff7" id="main-container"></div>
+{% endblock %}
+
+{% block templates %}
+  {% include "app-page-templates.html" %}
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+    var appId = {{ app.id }};
+    var appUrl = "{{ app.url }}";
+    var appGitRepo = "{{ app.git_url }}";
+    var appState = {{ app.state_json|fix_solidus|safe }};
+    var uieState = {{ app.uie_state_json|fix_solidus|safe }};
+    var mobileUieState = {{ app.mobile_uie_state_json|fix_solidus|safe }};
+    var statics = {{ statics|fix_solidus|safe }};
+    var themes = {{ themes|fix_solidus|safe }};
+    var mobileThemes = {{ mobile_themes|fix_solidus|safe }};
+    var staticVersion = "{{STATIC_VERSION}}";
+    var is_deployed = {{ is_deployed }}
+    var v1 = {};
+    var v1State = {};
+    var pageId = null;
+  </script>
+  <script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js">
+  </script>
+{% endblock %}

@@ -342,6 +342,30 @@ def app_editor_iframe(request, app_id, page_name="overview"):
 
 @require_GET
 @login_required
+def tutorial(request, step_id, page_name="tutorial"):
+    td = find_or_create_temp_deployment(request)
+    td.deploy()
+    themes = UITheme.get_web_themes()
+    themes = [t.to_dict() for t in themes]
+    mobile_themes = UITheme.get_mobile_themes()
+    mobile_themes = [t.to_dict() for t in mobile_themes]
+    page_context = {
+        'app' : { 'id': 0},
+        'default_state': get_default_app_state(),
+        'title': 'My First App',
+        'default_mobile_uie_state': get_default_mobile_uie_state(),
+        'default_uie_state': get_default_uie_state(),
+        'themes': simplejson.dumps(list(themes)),
+        'mobile_themes': simplejson.dumps(list(mobile_themes)),
+        'statics': simplejson.dumps([]),
+    }
+    page_context["title"] = "Demo Editor"
+
+    return render(request, 'app-show-tutorial.html', page_context)
+
+
+@require_GET
+@login_required
 def json_editor(request, app_id):
     app_id = long(app_id)
     app = get_object_or_404(App, id=app_id)
