@@ -318,6 +318,21 @@ class TempDeployment(RandomPrimaryIdModel):
         s = deploy.get_deployment_status(self.deployment_id)
         return s
 
+    @staticmethod
+    def find_or_create_temp_deployment(request):
+        # create deployment in session
+        if 'temp_deploy_id' in request.session:
+            t_id = request.session['temp_deploy_id']
+            try:
+                t = TempDeployment.objects.get(id=t_id)
+                return t # "found" branch exits here
+            except TempDeployment.DoesNotExist:
+                pass
+        # if not found, create, deploy, return
+        t = TempDeployment.create()
+        request.session['temp_deploy_id'] = t.id
+        return t
+
 
 class App(models.Model):
     name = models.CharField(max_length=100)

@@ -25,7 +25,7 @@ join = os.path.join
 from appcubator.email.sendgrid_email import send_email, send_template_email
 from appcubator.our_payments.views import is_stripe_customer#, subscribe
 
-from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration, CollaborationInvite
+from appcubator.models import App, TempDeployment, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration, CollaborationInvite
 from appcubator.models import DomainRegistration
 from appcubator.themes.models import StaticFile, UITheme
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
@@ -343,7 +343,7 @@ def app_editor_iframe(request, app_id, page_name="overview"):
 @require_GET
 @login_required
 def tutorial(request, step_id, page_name="tutorial"):
-    td = find_or_create_temp_deployment(request)
+    td = TempDeployment.find_or_create_temp_deployment(request)
     td.deploy()
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]

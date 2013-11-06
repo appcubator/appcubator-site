@@ -344,22 +344,9 @@ def resources(request):
     page_context["title"] = "Resources"
     return render(request, 'website-resources.html', page_context)
 
-def find_or_create_temp_deployment(request):
-    # create deployment in session
-    if 'temp_deploy_id' in request.session:
-        t_id = request.session['temp_deploy_id']
-        try:
-            t = TempDeployment.objects.get(id=t_id)
-            return t # "found" branch exits here
-        except TempDeployment.DoesNotExist:
-            pass
-    # if not found, create, deploy, return
-    t = TempDeployment.create()
-    request.session['temp_deploy_id'] = t.id
-    return t
 
 def temp_deploy(request):
-    td = find_or_create_temp_deployment(request)
+    td = TempDeployment.find_or_create_temp_deployment(request)
     if request.method == 'GET':
         return HttpResponse(simplejson.dumps({ 'status': td.get_deployment_status() }), mimetype="application/json")
     elif request.method == 'POST':
@@ -383,7 +370,7 @@ def temp_deploy(request):
 @cache_page(60*5)
 @csrf_protect
 def external_editor(request):
-    td = find_or_create_temp_deployment(request)
+    td = TempDeployment.find_or_create_temp_deployment(request)
     td.deploy()
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
