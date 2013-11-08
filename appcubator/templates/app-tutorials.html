@@ -1,0 +1,61 @@
+{% extends "infra-website.html" %}
+
+{% block css %}
+<link href="{{ STATIC_URL }}css/tutorials.css" id="css-reset" rel="stylesheet">
+{% endblock %}
+
+{% block page %}
+<div id="fb-root"></div>
+<script>
+</script>
+{% include "website-navbar.html" %}
+
+<div class="sliding-panel">
+<div class="slide-info slide">
+    <div class="centered-container" id="screencasts-section" style="padding-top:60px; padding-bottom: 30px;">
+        <div class="thirdy-left" style="text-align: center;">
+          <div class="p-pic">
+            <img src="" style="background-image:url({{STATIC_URL}}img/sample-pp.jpg);">
+          </div>
+          <h3>Mirai Akagawa</h3>
+        </div>
+        <div class="seventy-right" style="padding-left: 30px; vertical-align: top;">
+          <ul class="tabs">
+            <li class="active">Training</li>
+            <li>Public Projects</li>
+          </ul>
+
+          <div class="tutorial-list">
+            <div class="row title">Beginner</div>
+            
+            <div class="row"><div class="checkbox">✔</div>Creating Pages</div>
+            <div class="row"><div class="checkbox">✔</div>Adding User Sign In</div>
+            <div class="row"><div class="checkbox">✔</div>Creating Forms</div>
+            <div class="row"><div class="checkbox">✔</div>Creating Lists</div>
+
+            <div class="row title">Intermediate</div>
+            <div class="row"><div class="checkbox">✔</div>Building Tables</div>
+            <div class="row"><div class="checkbox"></div>Making Pages with Context<div class="action">COMPLETE IT!</div></div>
+            <div class="row"><div class="checkbox"></div>Setting up Email<div class="action">COMPLETE IT!</div></div>
+
+            <div class="row title">Advanced</div>
+            <div class="row">Coming soon...</div>
+            <div class="row title">Programming</div>
+            <div class="row">Coming soon...</div>
+          </div>
+          <div class="scoreboard">
+            <h1>85</h1>
+            <span>Total Score</span>
+          </div>
+        </div>
+    </div>
+</div>
+    {% include "website-footer.html" %}
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script data-main="{{ STATIC_URL }}js/application/website/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+{% endblock %}
+.

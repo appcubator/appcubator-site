@@ -106,7 +106,8 @@ urlpatterns += patterns('appcubator.views.app',
     #url(r'^app/(\d+)/([^/]+)/$', 'page'), # this serves all the app pages
 
 
-    url(r'^tutorial/(\d+)/', 'tutorial'),
+    url(r'^tutorials/', 'tutorials_page'),
+    url(r'^tutorials/(\d+)/', 'tutorial'),
 
     url(r'^sendhostedemail/$', 'send_hosted_email'),
 

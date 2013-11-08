@@ -340,6 +340,14 @@ def app_editor_iframe(request, app_id, page_name="overview"):
     return render(request, 'app-editor-show.html', page_context)
 
 
+
+@require_GET
+@login_required
+def tutorials_page(request, page_name="tutorial"):
+
+    return render(request, 'app-tutorials.html')
+
+
 @require_GET
 @login_required
 def tutorial(request, step_id, page_name="tutorial"):
