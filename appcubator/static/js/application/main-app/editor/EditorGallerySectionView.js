@@ -8,6 +8,7 @@ define(function(require, exports, module) {
 
     require('dicts/default-uielements');
     require('dicts/constant-containers');
+    require('jquery-ui');
 
     var EditorGallerySectionView = Backbone.View.extend({
 
@@ -102,7 +103,10 @@ define(function(require, exports, module) {
                 $(this.list).clearQueue();
             } catch (err) {}
 
-            $(this.list).slideDown(200);
+            $(this.list).slideDown({
+                duration: 180,
+                easing: "linear"
+            });
             this.isExpanded = true;
         },
 
