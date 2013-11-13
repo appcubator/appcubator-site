@@ -29,17 +29,18 @@
 }
 
 .elements-list .bottom-arrow {
-  height: 40px;
-  width: 100%;
+  height: 36px;
+  width: 190px;
   position: absolute;
-  bottom: 0;
-  right: 0;
-  display: inline-block;
+  bottom: -36px;
+  margin-left: 5px;
   border-top: 1px solid #3b4555;
-  background-color: #2b3545;
+  background-color: #0f2d40;
   background-image: url(/static/img/bottom-arrow.png);
   background-position: center;
   background-repeat: no-repeat;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
 
 .item-gallery {
@@ -98,6 +99,21 @@ background-color: rgba(255,255,255,0.4);
   padding-bottom: 90px;
   color: #fff;
   text-align: center;
+}
+
+ul.list:hover .bottom-arrow {
+
+  transform: translate(0,-36px);
+  -ms-transform: translate(0,-36px);
+  -webkit-transform: translate(0,-36px);
+
+  // transition-property: width;
+  transition-duration: 0.18s;
+  transition-timing-function: ease-out;
+  /* Safari */
+  // -webkit-transition-property:width;
+  -webkit-transition-duration:0.18s;
+  -webkit-transition-timing-function:ease-out;
 }
 
 .item-gallery .header:before {
@@ -164,7 +180,7 @@ background-color: rgba(255,255,255,0.4);
   border-left: 2px solid #0f2d40;
 
   background-color: #fff;
-  margin-top: 10px;
+  margin-top: 30px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
@@ -203,10 +219,9 @@ background-color: rgba(255,255,255,0.4);
 
 .elements-list .gallery-header {
   width: 100%;
-  margin: 0;
+  margin-right: -8px;
   height: 40px;
   text-align: center;
-  border-radius: 0;
   font-weight: bold;
   font-size: 14px;
   padding: 0px;
@@ -218,7 +233,7 @@ background-color: rgba(255,255,255,0.4);
   position: relative;
   background-position: 0 0;
   border: none;
-  cursor: auto;
+  cursor: default;
   text-shadow: 0 1px 0 #1b2535;
   background-color: #0f2d40;
 
