@@ -19,8 +19,46 @@
   cursor: pointer;
 }
 
-.elements-list ul li:hover {
-  background-color: #3a4252;
+.elements-list ul li.ui-draggable:hover {
+  // background-color: #3a4252;
+  -webkit-transform: scale(1.10);
+  -webkit-animation: blurp 0.16s linear;
+}
+
+@keyframes blurp {
+  0% {
+    -webkit-transform: scale(1);
+}
+45% {
+    -webkit-transform: scale(1.12);
+}
+100% {
+    -webkit-transform: scale(1.1);
+}
+}
+
+@-moz-keyframes blurp {
+  0% {
+    -webkit-transform: scale(1);
+}
+45% {
+    -webkit-transform: scale(1.12);
+}
+100% {
+    -webkit-transform: scale(1.1);
+}
+}
+
+@-webkit-keyframes blurp {
+  0% {
+    -webkit-transform: scale(1);
+}
+45% {
+    -webkit-transform: scale(1.12);
+}
+100% {
+    -webkit-transform: scale(1.1);
+}
 }
 
 .elements-list ul li:active {
@@ -318,6 +356,7 @@ ul.list:hover .bottom-arrow {
 
 .elements-list .half-width {
   background-color: #0f2d40;
+  font-weight: bold;
 }
 
 .elements-list span {
