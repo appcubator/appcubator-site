@@ -7,7 +7,6 @@
   border: 1px solid #1b2535;
   border-top: 1px solid #3b4555;
   border-radius: 6px;
-  background-color: #2b3545;
   background-repeat: no-repeat;
   background-position: center 20px;
 
@@ -97,7 +96,6 @@ background-color: rgba(255,255,255,0.4);
   overflow: visible;
   padding: 0;
   padding-bottom: 90px;
-  background-color: #2b3545;
   color: #fff;
 }
 
@@ -161,6 +159,10 @@ background-color: rgba(255,255,255,0.4);
   height: 40px;
   border-bottom: 1px solid #1b2535;
   border-top: 1px solid #3b4555;
+  background-color: #0f2d40;
+  margin-top: 10px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .search-panel .search {
@@ -186,7 +188,7 @@ background-color: rgba(255,255,255,0.4);
 .search-panel .search-icon {
   display: inline-block;
   background-image: url(/static/img/search-icon.png);
-  height: 40px;
+  height: 38px;
   width: 40px;
   overflow: hidden;
   border-right: 1px solid #1b2535;
@@ -206,16 +208,15 @@ background-color: rgba(255,255,255,0.4);
   position: relative;
   background-position: 0 0;
   line-height: 23px;
-  -webkit-background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-  background-size: 100% 100%;
-  background-image: url(/static/img/section-header.png);
   border: none;
   cursor: auto;
   text-shadow: 0 1px 0 #1b2535;
+  background-color: #0f2d40;
 
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   :hover {
-    background-color: inherit;
+    // background-color: inherit;
   }
 
   :active {
@@ -283,12 +284,18 @@ background-color: rgba(255,255,255,0.4);
   padding: 0;
   background-repeat: no-repeat;
   background-position: 12px center;
+  background-color: #0f2d40;
 
   -webkit-background-size: auto 28px;
   -moz-background-size: auto 28px;
   background-size: auto 28px;
   color: #fff;
+  font-weight: bold;
   line-height: 80px;
+}
+
+.elements-list .half-width {
+  background-color: #0f2d40;
 }
 
 .elements-list span {
