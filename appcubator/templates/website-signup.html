@@ -18,7 +18,7 @@
   <div class="slide-info slide">
     <div class="row">
       <div class="centered-container" style="text-align:center; border-top-width: 0;">
-        <form class="sign-up-form no-ajax" method="POST" id="signup" action="{% url signup_form %}">
+        <form class="sign-up-form" method="POST" id="signup" action="{% url signup_form %}">
           {% csrf_token %}
           <div class="left-side">
             <input type="text" name="name" id="inp-name" placeholder="Full Name">
@@ -104,7 +104,8 @@
         obj.password2 = $("#inp-pwd2").val();
 
         /* Invitation key */
-        obj.ik = $("input[name=ik]").val();
+        if ($("input[name=ik]").val())
+          obj.ik = $("input[name=ik]").val();
 
         obj.description = $("input[name=description]:checked").val();
         if(obj.description == "other") { obj.description = $('#other-input').val(); }
