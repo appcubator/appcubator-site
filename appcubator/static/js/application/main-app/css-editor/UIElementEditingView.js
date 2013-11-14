@@ -26,9 +26,9 @@ define(function(require, exports, module) {
 
         render: function() {
             var tempPane = [
-                '<div class="sect span43"><p class="lead">Normal State</p><div id="style-<%= cid %>" class="style span42 hi11" placeholder="Styling here..."></div></div>',
-                '<div class="sect span20"><p class="lead">Hover State</p><div id="hover-style-<%= cid %>" class="hover-style span20 hi11"></div></div>',
-                '<div class="sect span20 offset1"><p class="lead">Active State</p><div id="active-style-<%= cid %>" class="active-style span20 hi11"></div></div>'
+                '<div class="sect"><h4>Normal State</h4><div id="style-<%= cid %>" class="style style-editor" placeholder="Styling here..."></div></div>',
+                '<div class="sect"><h4>Hover State</h4><div id="hover-style-<%= cid %>" class="hover-style style-editor"></div></div>',
+                '<div class="sect"><h4>Active State</h4><div id="active-style-<%= cid %>" class="active-style style-editor"></div></div>'
             ].join('\n');
 
             var form = _.template(tempPane, {
