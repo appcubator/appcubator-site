@@ -105,6 +105,7 @@ require.onError = function (err) {
 //libs
 require([
         "models/AppModel",
+        "models/ThemeModel",
         "collections/PageCollection",
         "collections/MobilePageCollection",
         "app/AppRouter",
@@ -122,6 +123,7 @@ require([
         "tourist-omer"
     ],
     function(AppModel,
+        ThemeModel,
         PageCollection,
         MobilePageCollection,
         AppRouter,
@@ -139,9 +141,9 @@ require([
 
             v1State = new Backbone.Model();
             v1State = new AppModel(appState);
-
             v1State.set('pages', new PageCollection(appState.pages || []));
-            v1State.lazySet('mobilePages', new MobilePageCollection(appState.mobilePages || []));
+
+            v1UIEState = new ThemeModel(uieState);
 
             v1State.on('error', function(message) {
                 alert(message);

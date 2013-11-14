@@ -20,6 +20,7 @@ define(function(require, exports, module) {
     var DeployView = require('app/DeployView');
     var RedoController = require('app/RedoController');
     var WidgetEditorViewProxy = require('editor/WidgetEditorViewProxy');
+    var CSSEditorView = require('app/css-editor/CSSEditorView');
 
     require('mixins/BackboneConvenience');
     require('editor/editor-templates');
@@ -34,7 +35,9 @@ define(function(require, exports, module) {
             'click #deploy': 'deploy',
             'click .menu-button.help': 'help',
             'click .menu-button.question': 'question',
-            'click .url-bar': 'clickedUrl'
+            'click .url-bar': 'clickedUrl',
+            'click #design-mode-button' : 'switchToDesignMode',
+            'click #close-css-editor' : 'switchOffDesignMode'
         },
 
         initialize: function(options) {
@@ -58,7 +61,7 @@ define(function(require, exports, module) {
             this.widgetsManager = {};
             this.guides = new GuideView(this.widgetsCollection);
             this.toolBar = new ToolBarView();
-
+            this.cssEditorView = new CSSEditorView();
             this.widgetEditorViewProxy = WidgetEditorViewProxy;
             this.redoController = new RedoController();
 
@@ -99,6 +102,8 @@ define(function(require, exports, module) {
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
             this.renderUrlBar();
             this.galleryEditor.render();
+            
+            this.cssEditorView.setElement($('#css-editor-panel')).render();
 
             /* Access to elements inside iframe */
             var iframe = document.getElementById('page');
@@ -275,6 +280,16 @@ define(function(require, exports, module) {
                 $('#page').scrollTop((widget.getBottom() - pageHeightUnit + widget.get('layout').get('height') + 1) * 15);
             }
 
+        },
+
+        switchToDesignMode: function() {
+            $('#css-editor-panel').addClass('expanded');
+            this.galleryEditor.hide();
+        },
+
+        switchOffDesignMode: function() {
+            $('#css-editor-panel').removeClass('expanded');
+            this.galleryEditor.show();
         },
 
         close: function() {

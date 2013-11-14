@@ -35,8 +35,8 @@ define(function(require, exports, module) {
         events: {
             'mouseover .bottom-arrow': 'slideDown',
             'mousemove .bottom-arrow': 'slideDown',
-            'change input.search'   : 'searchInputChage',
-            'keyup input.search'   : 'searchInputChage'
+            'change input.search'    : 'searchInputChage',
+            'keyup input.search'     : 'searchInputChage'
         },
 
         initialize: function(widgetsCollection) {
@@ -745,6 +745,14 @@ define(function(require, exports, module) {
                 this.elementsContainer = doc.getElementById('elements-container');
                 return this.elementsContainer;
             }
+        },
+
+        hide: function () {
+            this.$el.hide();
+        },
+
+        show: function() {
+            this.$el.fadeIn();
         }
 
     });

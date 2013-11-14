@@ -1195,7 +1195,10 @@ a.label:hover,a.badge:hover {
 
 .page-container {
   position: relative;
-  margin-right: 200px;
+  height: 100%;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .elements-inside-container {
@@ -2222,6 +2225,92 @@ ul.template-icons {
 .custom-widget-editor .sect.expanded {
   height: auto;
 }
+
+.left-buttons {
+  position: fixed;
+  top: 80px;
+  left: 10px;
+  width: 80px;
+  z-index: 1;
+}
+
+.left-menu-panel-l1 {
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 0;
+
+  background-color: #eee;
+  border-right: 1px solid #ccc;
+  z-index: 1001;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.left-menu-panel-l1.expanded {
+  width: auto;
+}
+
+.left-menu-panel-l1 ul {
+  width: 0;
+}
+
+.left-menu-panel-l1.expanded  ul {
+  display: inline-block;
+  vertical-align: top;
+  width: 280px;
+  height: 100%;
+}
+
+.left-menu-panel-l1 .cross {
+  float: right;
+  margin-right: 15px;
+  margin-top: 15px;
+  color: #ccc;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.left-menu-panel-l1 .cross:hover {
+  color: #aaa;
+}
+
+.left-menu-panel-l1 ul {
+
+}
+  
+.left-menu-panel-l1 ul li {
+  position: relative;
+  line-height: 48px;
+  font-weight: bold;
+  color: #555;
+  border-bottom: 1px solid #dedede;
+  font-size: 14.4px;
+}
+
+
+.left-menu-panel-l1 ul li.active:after {
+  display: inline-block;
+  float: right;
+  right: 15px;
+  position: absolute;
+  content: '❯';
+  font-weight: bold;
+}
+
+
+.left-menu-panel-l1 ul li a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  padding-left: 15px;
+}
+
+
+.left-menu-panel-l1 ul li:hover {
+  background-color: #ddd;
+}
+
 
 @import "editor-gallery";
 @import "form-editor";
