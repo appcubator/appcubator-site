@@ -1,7 +1,9 @@
 define(function(require, exports, module) {
     'use strict';
-    require('backbone');
+    
     var UIElementEditingView = require('./UIElementEditingView');
+    require('backbone');
+    
 
     var UIElementView = Backbone.View.extend({
         el: null,
@@ -30,9 +32,9 @@ define(function(require, exports, module) {
             upperDiv.className = "upper-area row";
             var class_name = this.model.get('class_name');
             upperDiv.innerHTML = [
-                '<div class="class-menu span41 hoff1">',
-                '<input type="text" name="className" placeHolder="Class Name" class="class_name span16" value="' + class_name + '" placeholder="className...">',
-                '<div class="right edit-text">Click to expand edit panel.</div>',
+                '<div class="hoff1">',
+                '<input type="text" name="className" placeHolder="Class Name" class="class_name" value="' + class_name + '" placeholder="className...">',
+                '<div class="edit-text btn">Edit Element</div>',
                 '<span class="remove-relation remove">×</span>',
                 '</div>'
             ].join('\n');
@@ -111,7 +113,6 @@ define(function(require, exports, module) {
         },
 
         expandElement: function() {
-            console.log('expand');
             this.isExpanded = true;
             this.expandedView = new UIElementEditingView(this.model);
             this.el.appendChild(this.expandedView.render().el);

@@ -145,11 +145,10 @@ define(function(require, exports, module) {
 
             var createBtn = document.createElement('span');
             var temp = [
-                '<div class="span44 hoff1 create-text pane hi7">',
-                  '<img src="/static/img/add.png" class="span3 add-img">',
-                  '<h3 class="hoff1 offset1">Create an element</span>',
+                '<div class="create-text">',
+                  '<img src="/static/img/add.png" class="span2 add-img">',
+                  '<h3 class="offset1">Create an element</span>',
                 '</div>',
-                '<div class="hi8 span44"></div>'
             ].join('\n');
             createBtn.innerHTML = _.template(temp, {});
 
