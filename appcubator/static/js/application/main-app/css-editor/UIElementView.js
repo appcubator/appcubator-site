@@ -22,6 +22,7 @@ define(function(require, exports, module) {
             this.model = uieModel;
             this.model.bind('change', this.reRender);
             this.model.bind('change', this.reRenderStyleTags);
+
             this.renderStyle();
         },
 

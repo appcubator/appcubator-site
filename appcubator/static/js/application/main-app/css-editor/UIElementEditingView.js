@@ -1,80 +1,88 @@
-define([
-  'mixins/BackboneModal'
-],
-function(){
+define(function(require, exports, module) {
+    'use strict';
 
-  var UIElementEditingView = Backbone.View.extend({
-    tagName : 'div',
-    className : 'element-view hoff2',
-    width: 660,
-    padding: 0,
+    require('mixins/BackboneModal');
 
-    events: {
-      'click .delete-elem'  : 'deleteElement'
-    },
-    initialize: function(uieModel) {
-      _.bindAll(this);
 
-      this.model = uieModel;
+    var UIElementEditingView = Backbone.View.extend({
+        tagName: 'div',
+        className: 'element-view hoff2',
+        width: 660,
+        padding: 0,
 
-      this.model.bind('change:style', this.renderStyleTags);
-      this.model.bind('change:hoverStyle', this.renderStyleTags);
-      this.model.bind('change:activeStyle', this.renderStyleTags);
+        events: {
+            'click .delete-elem': 'deleteElement'
+        },
 
-      this.model.bind('change:value', this.reRenderElement);
-    },
+        initialize: function(uieModel) {
+            _.bindAll(this);
 
-    render: function() {
-      var form = _.template(ThemeTemplates.tempPane, {info: this.model.attributes, cid: this.model.cid });
-      console.log(form);
-      this.el.innerHTML = form;
-      return this;
-    },
+            this.model = uieModel;
 
-    setUpAce: function () {
-      this.styleEditor = ace.edit("style-" + this.model.cid);
-      this.styleEditor.getSession().setMode("ace/mode/css");
-      this.styleEditor.setValue(this.model.get('style'), -1);
-      this.styleEditor.getSession().on('change', this.styleChanged);
+            this.model.bind('change:style', this.renderStyleTags);
+            this.model.bind('change:hoverStyle', this.renderStyleTags);
+            this.model.bind('change:activeStyle', this.renderStyleTags);
+        },
 
-      this.hoverStyleEditor = ace.edit("hover-style-" + this.model.cid);
-      this.hoverStyleEditor.getSession().setMode("ace/mode/css");
-      this.hoverStyleEditor.setValue(this.model.get('hoverStyle'), -1);
-      this.hoverStyleEditor.getSession().on('change', this.hoverStyleChanged);
+        render: function() {
+            var tempPane = [
+                '<div class="sect span43"><p class="lead">Normal State</p><div id="style-<%= cid %>" class="style span42 hi11" placeholder="Styling here..."></div></div>',
+                '<div class="sect span20"><p class="lead">Hover State</p><div id="hover-style-<%= cid %>" class="hover-style span20 hi11"></div></div>',
+                '<div class="sect span20 offset1"><p class="lead">Active State</p><div id="active-style-<%= cid %>" class="active-style span20 hi11"></div></div>'
+            ].join('\n');
 
-      this.activeStyleEditor = ace.edit("active-style-" + this.model.cid);
-      this.activeStyleEditor.getSession().setMode("ace/mode/css");
-      this.activeStyleEditor.setValue(this.model.get('activeStyle'), -1);
-      this.activeStyleEditor.getSession().on('change', this.activeStyleChanged);
+            var form = _.template(tempPane, {
+                info: this.model.attributes,
+                cid: this.model.cid
+            });
+            console.log(form);
+            this.el.innerHTML = form;
+            return this;
+        },
 
-    },
+        setUpAce: function() {
+            this.styleEditor = ace.edit("style-" + this.model.cid);
+            this.styleEditor.getSession().setMode("ace/mode/css");
+            this.styleEditor.setValue(this.model.get('style'), -1);
+            this.styleEditor.getSession().on('change', this.styleChanged);
 
-    deleteElement: function() {
-      var self = this;
-      this.model.collection.remove(self.model.cid);
-      this.closeModal();
-    },
+            this.hoverStyleEditor = ace.edit("hover-style-" + this.model.cid);
+            this.hoverStyleEditor.getSession().setMode("ace/mode/css");
+            this.hoverStyleEditor.setValue(this.model.get('hoverStyle'), -1);
+            this.hoverStyleEditor.getSession().on('change', this.hoverStyleChanged);
 
-    styleChanged: function(e) {
-      var value = this.styleEditor.getValue();
-      this.model.set('style', value);
-    },
-    hoverStyleChanged: function(e) {
-      var value = this.hoverStyleEditor.getValue();
-      console.log(value);
-      console.log("YOLO");
-      console.log(this.model);
-      this.model.set('hoverStyle', value);
-    },
-    activeStyleChanged: function(e) {
-      var value = this.activeStyleEditor.getValue();
-      this.model.set('activeStyle', value);
-    },
-    reRenderElement: function() {
-      this.$el.find('.node-wrapper').html(_.template(ThemeTemplates.tempNode, {info: this.model.attributes}));
-    }
+            this.activeStyleEditor = ace.edit("active-style-" + this.model.cid);
+            this.activeStyleEditor.getSession().setMode("ace/mode/css");
+            this.activeStyleEditor.setValue(this.model.get('activeStyle'), -1);
+            this.activeStyleEditor.getSession().on('change', this.activeStyleChanged);
 
-  });
+        },
 
-  return UIElementEditingView;
+        deleteElement: function() {
+            var self = this;
+            this.model.collection.remove(self.model.cid);
+            this.closeModal();
+        },
+
+        styleChanged: function(e) {
+            var value = this.styleEditor.getValue();
+            this.model.set('style', value);
+        },
+
+        hoverStyleChanged: function(e) {
+            var value = this.hoverStyleEditor.getValue();
+            console.log(value);
+            console.log("YOLO");
+            console.log(this.model);
+            this.model.set('hoverStyle', value);
+        },
+
+        activeStyleChanged: function(e) {
+            var value = this.activeStyleEditor.getValue();
+            this.model.set('activeStyle', value);
+        }
+
+    });
+
+    return UIElementEditingView;
 });
