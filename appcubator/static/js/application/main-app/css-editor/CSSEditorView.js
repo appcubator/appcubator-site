@@ -77,7 +77,7 @@ define(function(require, exports, module) {
         ],
 
         events: {
-
+            'click #navigate-back' : 'navBack'
         },
 
         initialize: function() {
@@ -86,6 +86,8 @@ define(function(require, exports, module) {
 
         render: function() {
             var self = this;
+
+            this.el.innerHTML += '<div class="title">CSS Editor</div>';
             this.elementsList = document.createElement('ul');
             _.each(this.elements, function(element) {
                 var id = element.id;
@@ -97,7 +99,7 @@ define(function(require, exports, module) {
                 this.elementsList.appendChild(liEl);
 
                 $(liEl).bind('click', function() {
-                    self.showElementType(id, element.key);
+                    self.showElementType(id, element.key, element.text);
                 });
 
             }, this);
@@ -105,7 +107,7 @@ define(function(require, exports, module) {
             return this;
         },
 
-        showElementType: function(type, key) {
+        showElementType: function(type, key, text) {
 
             switch(type) {
                 case "basecss":
@@ -113,9 +115,21 @@ define(function(require, exports, module) {
                 default:
                     var listView = new UIElementListView(this.model.get(key), type);
                     $(this.elementsList).hide();
+                    this.setTitle(text);
                     this.el.appendChild(listView.render().el);
+                    this.currentView = listView;
             }
 
+        },
+
+        navBack: function() {
+            this.currentView.close();
+            $(this.elementsList).show();
+            this.setTitle("CSS Editor");
+        },
+
+        setTitle: function(str) {
+            this.$el.find('.title').html(str);
         },
 
         expand: function() {

@@ -34,8 +34,8 @@ define(function(require, exports, module) {
             upperDiv.innerHTML = [
                 '<div class="hoff1">',
                 '<input type="text" name="className" placeHolder="Class Name" class="class_name" value="' + class_name + '" placeholder="className...">',
-                '<div class="edit-text btn">Edit Element</div>',
-                '<span class="remove-relation remove">×</span>',
+                '<div class="edit-text btn">Edit Style</div>',
+                '<span class="btn remove hoff1">Remove Style</span>',
                 '</div>'
             ].join('\n');
 
