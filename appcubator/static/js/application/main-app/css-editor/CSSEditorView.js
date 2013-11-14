@@ -87,7 +87,13 @@ define(function(require, exports, module) {
         render: function() {
             var self = this;
 
-            this.el.innerHTML += '<div class="title">CSS Editor</div>';
+            /* Top Row */
+            var titleEl = document.createElement('div');
+            titleEl.className = 'title';
+            this.titleDiv = titleEl;
+            this.$el.find('.top-row').append(this.titleDiv);
+
+            /* Elements List */
             this.elementsList = document.createElement('ul');
             _.each(this.elements, function(element) {
                 var id = element.id;
@@ -104,6 +110,9 @@ define(function(require, exports, module) {
 
             }, this);
             this.el.appendChild(this.elementsList);
+            
+            this.setTitle("CSS Editor");
+
             return this;
         },
 
@@ -129,7 +138,7 @@ define(function(require, exports, module) {
         },
 
         setTitle: function(str) {
-            this.$el.find('.title').html(str);
+            this.titleDiv.innerHTML = str;
         },
 
         expand: function() {

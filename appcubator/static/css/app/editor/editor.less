@@ -2244,15 +2244,20 @@ ul.template-icons {
   border-right: 1px solid #ccc;
   z-index: 1001;
   overflow: hidden;
-  overflow-y: scroll;
 }
 
 .left-menu-panel-l1.expanded {
   width: auto;
 }
 
+.left-menu-panel-l1 .top-row {
+  width: 100%;
+  border-bottom: 1px solid #dadada;
+}
+
 .left-menu-panel-l1 ul {
   width: 0;
+  overflow-y: scroll;
 }
 
 .left-menu-panel-l1.expanded  ul {
@@ -2260,6 +2265,7 @@ ul.template-icons {
   vertical-align: top;
   width: 280px;
   height: 100%;
+  padding-bottom: 120px;
 }
 
 .left-menu-panel-l1 .cross,
