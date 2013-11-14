@@ -116,7 +116,7 @@ define(function(require, exports, module) {
 
     var UIElementListView = Backbone.View.extend({
 
-        className: 'list',
+        className: 'elements list',
         events: {
             'click div.create-text': 'showForm',
             'submit .element-create-form': 'submitForm'

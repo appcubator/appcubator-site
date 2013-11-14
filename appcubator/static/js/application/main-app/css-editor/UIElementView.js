@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 
     var UIElementView = Backbone.View.extend({
         el: null,
-        className: 'widgetWrapper pane-inline border hi15 span44 hoff2',
+        className: 'widgetWrapper widget-style-wrapper',
         isExpanded: false,
 
         events: {
@@ -31,14 +31,14 @@ define(function(require, exports, module) {
             var class_name = this.model.get('class_name');
             upperDiv.innerHTML = [
                 '<div class="class-menu span41 hoff1">',
-                '<span class="offset1">Class Name:</span><input type="text" name="className" class="class_name span16" value="' + class_name + '" placeholder="className...">',
-                '<div class="span12 right edit-text">Click to expand edit panel.</div>',
+                '<input type="text" name="className" placeHolder="Class Name" class="class_name span16" value="' + class_name + '" placeholder="className...">',
+                '<div class="right edit-text">Click to expand edit panel.</div>',
                 '<span class="remove-relation remove">×</span>',
                 '</div>'
             ].join('\n');
 
             this.tempNodeDiv = document.createElement('div');
-            this.tempNodeDiv.className = "temp-node-area offset1 span40 hoff1";
+            this.tempNodeDiv.className = "temp-node-area hoff1";
             this.tempNodeDiv.innerHTML = _.template(this.tempNode(), {
                 info: this.model.attributes
             });
