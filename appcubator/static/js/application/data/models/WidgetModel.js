@@ -217,7 +217,6 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
             },
 
             isCustomWidget: function() {
-                console.log(this);
                 if (this.get('type') == "custom" ||
                     this.get('data').has('cssC') ||
                     this.get('data').has('jsC') ||

@@ -52,14 +52,11 @@ define([
 
         Backbone.View.prototype.deepListenTo = function(obj, event, handler) {
             if (Backbone.isModel(obj)) {
-                console.log(this);
-                console.log(obj.attributes);
                 this.listenTo(obj, event, handler);
                 _.each(obj.attributes, function(val, key) {
                     this.deepListenTo(val, event, handler);
                 }, this);
             } else if (Backbone.isCollection(obj)) {
-                console.log(this);
                 this.listenTo(obj, event, handler);
                 _.each(obj.models, function(model) {
                     this.deepListenTo(model, event, handler);

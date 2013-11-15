@@ -163,7 +163,6 @@ define(function(require, exports, module) {
             var type = widgetModel.get('data').get('nodeType');
             var className = widgetModel.get('data').get('class_name');
             var styleModel = this.model.getStyleWithClassAndType(className, type);
-            console.log(styleModel);
             this.styleSelected(styleModel);
         },
 
