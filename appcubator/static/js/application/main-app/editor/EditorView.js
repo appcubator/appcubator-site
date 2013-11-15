@@ -284,11 +284,13 @@ define(function(require, exports, module) {
 
         switchToDesignMode: function() {
             $('#css-editor-panel').addClass('expanded');
+            $('.left-buttons').css('width', '0');
             this.galleryEditor.hide();
         },
 
         switchOffDesignMode: function() {
             $('#css-editor-panel').removeClass('expanded');
+            $('.left-buttons').css('width', '80px');
             this.galleryEditor.show();
         },
 
