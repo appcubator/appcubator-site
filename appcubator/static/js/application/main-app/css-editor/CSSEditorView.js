@@ -2,6 +2,7 @@ define(function(require, exports, module) {
     'use strict';
 
     var UIElementListView = require('./UIElementListView');
+    var UIElementEditingView = require('./UIElementEditingView');
 
     require('app/templates/AnalyticsTemplates');
     require('backbone');
@@ -86,6 +87,10 @@ define(function(require, exports, module) {
             this.model = v1UIEState;
             this.lastSave = null;
             this.deepListenTo(this.model, 'change', this.save);
+
+            _.each(this.model.getUIElementCollections(), function(coll) {
+                this.listenTo(coll, 'selected', this.styleSelected);
+            }, this);
         },
 
         render: function() {
@@ -135,6 +140,15 @@ define(function(require, exports, module) {
                     this.currentView = listView;
             }
 
+        },
+
+        styleSelected: function(styleModel) {
+            if(this.currentView) this.currentView.close();
+            
+            this.currentView = new UIElementEditingView(styleModel);
+            this.el.appendChild(this.currentView.render().el);
+            this.setTitle(styleModel.get('class_name'));
+            this.currentView.setUpAce();
         },
 
         navBack: function() {

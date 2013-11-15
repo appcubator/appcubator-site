@@ -29,6 +29,15 @@ function(UIElementCollection) {
       this.set('fonts', new Backbone.Collection(themeState["fonts"]||[]));
     },
 
+    getUIElementCollections: function() {
+
+        return [this.get('buttons'), this.get('images'), this.get('headerTexts'),
+                this.get('texts'), this.get('links'), this.get('textInputs'),
+                this.get('passwords'), this.get('textAreas'), this.get('lines'),
+                this.get('dropdowns'), this.get('boxes'), this.get('forms'),
+                this.get('lists')];
+    },
+
     toJSON: function() {
       var json = _.clone(this.attributes);
 

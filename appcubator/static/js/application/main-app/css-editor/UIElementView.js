@@ -114,11 +114,13 @@ define(function(require, exports, module) {
         },
 
         expandElement: function() {
-            this.isExpanded = true;
-            this.expandedView = new UIElementEditingView(this.model);
-            this.el.appendChild(this.expandedView.render().el);
-            this.expandedView.setUpAce();
-            this.el.style.height = 'auto';
+            // this.isExpanded = true;
+            // this.expandedView = new UIElementEditingView(this.model);
+            // this.el.appendChild(this.expandedView.render().el);
+            // this.expandedView.setUpAce();
+            // this.el.style.height = 'auto';
+
+            this.model.collection.trigger('selected', this.model);
         },
 
         shrinkElement: function() {
