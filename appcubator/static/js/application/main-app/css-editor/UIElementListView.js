@@ -128,7 +128,6 @@ define(function(require, exports, module) {
             this.collection = UIElementColl;
             this.collection.bind('add', this.appendUIE);
             this.collection.bind('remove', this.removeUIE);
-            this.render();
         },
 
         render: function() {

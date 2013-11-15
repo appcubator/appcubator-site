@@ -77,11 +77,13 @@ define(function(require, exports, module) {
         ],
 
         events: {
-            'click #navigate-back' : 'navBack'
+            'click #navigate-back': 'navBack'
         },
 
         initialize: function() {
             this.model = v1UIEState;
+
+            this.deepListenTo(this.model, 'change', this.save);
         },
 
         render: function() {
@@ -110,7 +112,7 @@ define(function(require, exports, module) {
 
             }, this);
             this.el.appendChild(this.elementsList);
-            
+
             this.setTitle("CSS Editor");
 
             return this;
@@ -118,8 +120,10 @@ define(function(require, exports, module) {
 
         showElementType: function(type, key, text) {
 
-            switch(type) {
+            switch (type) {
                 case "basecss":
+                    break;
+                case "fonts":
                     break;
                 default:
                     var listView = new UIElementListView(this.model.get(key), type);
@@ -147,6 +151,28 @@ define(function(require, exports, module) {
 
         hide: function() {
             // this.$el.removeClassName('expanded');
+        },
+
+        save: function() {
+            var json = this.model.toJSON();
+            var save_url = '/app/' + appId + '/uiestate/';
+
+            $.ajax({
+                type: "POST",
+                url: save_url,
+                data: {
+                    uie_state: JSON.stringify(json)
+                },
+                statusCode: {
+                    200: function(data) {
+                        console.log('Saved.');
+                    },
+                    500: function() {
+                        alert('Server Error');
+                    }
+                },
+                dataType: "JSON"
+            });
         }
 
     });
