@@ -49,8 +49,6 @@ define(function(require, exports, module) {
                 pageId = options.pageId;
             }
 
-            util.loadCSS('jquery-ui');
-
             this.model = v1State.get('pages').models[pageId];
             v1State.currentPage = this.model;
             v1State.isMobile = false;
@@ -89,6 +87,7 @@ define(function(require, exports, module) {
 
             this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
             this.listenTo(this.model, 'scroll', this.scrollTo);
+
         },
 
         render: function() {
@@ -173,6 +172,8 @@ define(function(require, exports, module) {
 
         startUIStateUpdater: function(proxy) {
             var self = this;
+            this.listenTo(v1UIEState, 'synced', proxy.reArrangeCSSTag);
+
             this.UIStateTimer = setInterval(function() {
                 self.fetchUIState(function(state) {
                     /* crappy fix */
