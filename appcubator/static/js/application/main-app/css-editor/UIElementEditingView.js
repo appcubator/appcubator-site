@@ -6,7 +6,7 @@ define(function(require, exports, module) {
 
     var UIElementEditingView = Backbone.View.extend({
         tagName: 'div',
-        className: 'element-view hoff2',
+        className: 'element-view',
         width: 660,
         padding: 0,
 
