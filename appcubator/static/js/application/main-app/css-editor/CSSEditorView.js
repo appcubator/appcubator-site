@@ -91,6 +91,13 @@ define(function(require, exports, module) {
             _.each(this.model.getUIElementCollections(), function(coll) {
                 this.listenTo(coll, 'selected', this.styleSelected);
             }, this);
+
+            var elementsCollection = v1State.getCurrentPage().get('uielements');
+            elementsCollection.each(function(uielement) {
+                this.listenTo(uielement, 'selected', function() {
+                    this.elementSelected(uielement);
+                });
+            }, this);
         },
 
         render: function() {
@@ -144,12 +151,22 @@ define(function(require, exports, module) {
 
         styleSelected: function(styleModel) {
             if(this.currentView) this.currentView.close();
-            
+            $(this.elementsList).hide();
+
             this.currentView = new UIElementEditingView(styleModel);
             this.el.appendChild(this.currentView.render().el);
             this.setTitle(styleModel.get('class_name'));
             this.currentView.setUpAce();
         },
+
+        elementSelected: function(widgetModel) {
+            var type = widgetModel.get('data').get('nodeType');
+            var className = widgetModel.get('data').get('class_name');
+            var styleModel = this.model.getStyleWithClassAndType(className, type);
+            console.log(styleModel);
+            this.styleSelected(styleModel);
+        },
+
 
         navBack: function() {
             this.currentView.close();
@@ -170,7 +187,6 @@ define(function(require, exports, module) {
         },
 
         save: function() {
-            console.log('trynna save');
             var self = this;
             var json = this.model.toJSON();
             var save_url = '/app/' + appId + '/uiestate/';
