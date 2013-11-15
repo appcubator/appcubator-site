@@ -29,12 +29,6 @@
     </div>
   </div>
 
-  <!-- Left Menu -->
-  <div class="left-buttons">
-    <div class="btn">Build Mode</div>
-    <div class="btn" id="design-mode-button">Design Mode</div>
-  </div>
-
   <!-- CSS Editor -->
   <div class="left-menu-panel-l1 css-editor" id="css-editor-panel">
     <div class="top-row">
@@ -43,11 +37,17 @@
     </div>
   </div>
   
+  <!-- Left Menu -->
+  <div class="left-buttons">
+    <div class="btn">Build Mode</div>
+    <div class="btn" id="design-mode-button">Design Mode</div>
+  </div>
+
   <!-- Inside-Page -->
   <div class="page-container">
     <div class="page-wrapper" id="page-wrapper">
       <div class="url-bar">http://yourapp.com</div>
-      <iframe class="page full container fdededfcbcbcd" id="page" src="/app/{{ app.id }}/editor/<%= pageId %>/">
+      <iframe class="page full fdededfcbcbcd" id="page" src="/app/{{ app.id }}/editor/<%= pageId %>/">
       </iframe>
     </div>
   </div>
