@@ -2,7 +2,9 @@ define(function(require, exports, module) {
     'use strict';
 
     var UIElementListView = require('./UIElementListView');
+    var StaticsEditorView = require('./StaticsEditorView');
     var BaseCSSEditorView = require('./BaseCSSEditorView');
+
     var FontEditorView    = require('./FontEditorView');
 
     var UIElementEditingView = require('./UIElementEditingView');
@@ -158,6 +160,17 @@ define(function(require, exports, module) {
                     this.setTitle("Fonts");
                     this.el.appendChild(fontEditorView.render().el);
                     this.currentView = fontEditorView;
+                    this.$el.find('.navback').show();
+
+                    break;
+
+                case "statics":
+
+                    var staticsEditor = new StaticsEditorView(this.model);
+                    $(this.elementsList).hide();
+                    this.setTitle("Static Files");
+                    this.el.appendChild(staticsEditor.render().el);
+                    this.currentView = staticsEditor;
                     this.$el.find('.navback').show();
 
                     break;
