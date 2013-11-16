@@ -16,19 +16,17 @@ define(function(require, exports, module) {
 
         render: function() {
             var temp = [
-                '<div>',
                 '<input type="text" class="font-selector">',
                 '<ul class="fonts hoff2"></ul>',
-                '</div>'
             ].join('\n');
 
             this.el.innerHTML = temp;
 
 
             var tempFont = [
-              '<li class="row hi4">',
-                '<button class="span6 btn btn-small btn-danger remove" data-cid="<%= cid %>">Remove</button>',
-                '<span class="span18 offset2 font" style="font-family:<%= font %>"><%= font %></span>',
+              '<li class="row">',
+                '<span class="remove" data-cid="<%= cid %>">×</span>',
+                '<span class="font" style="font-family:<%= font %>"><%= font %></span>',
               '</li>'
             ].join('\n');
 
