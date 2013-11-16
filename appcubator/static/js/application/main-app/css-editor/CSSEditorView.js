@@ -3,6 +3,8 @@ define(function(require, exports, module) {
 
     var UIElementListView = require('./UIElementListView');
     var BaseCSSEditorView = require('./BaseCSSEditorView');
+    var FontEditorView    = require('./FontEditorView');
+
     var UIElementEditingView = require('./UIElementEditingView');
 
     require('app/templates/AnalyticsTemplates');
@@ -129,6 +131,7 @@ define(function(require, exports, module) {
             this.el.appendChild(this.elementsList);
 
             this.setTitle("CSS Editor");
+            this.$el.find('.navback').hide();
 
             return this;
         },
@@ -137,23 +140,39 @@ define(function(require, exports, module) {
 
             switch (type) {
                 case "basecss":
+                    
                     var editorView = new BaseCSSEditorView(this.model);
                     $(this.elementsList).hide();
                     this.setTitle("Base CSS");
                     this.el.appendChild(editorView.render().el);
                     editorView.setupAce();
                     this.currentView = editorView;
+                    this.$el.find('.navback').show();
+
                     break;
+                
                 case "fonts":
+
+                    var fontEditorView = new FontEditorView(this.model);
+                    $(this.elementsList).hide();
+                    this.setTitle("Fonts");
+                    this.el.appendChild(fontEditorView.render().el);
+                    this.currentView = fontEditorView;
+                    this.$el.find('.navback').show();
+
                     break;
+
                 default:
+                    
                     var listView = new UIElementListView(this.model.get(key), type);
                     $(this.elementsList).hide();
                     this.setTitle(text);
                     this.el.appendChild(listView.render().el);
                     this.currentView = listView;
+                    this.$el.find('.navback').show();
+                    
+                    break;
             }
-
         },
 
         styleSelected: function(styleModel) {
@@ -178,6 +197,7 @@ define(function(require, exports, module) {
             this.currentView.close();
             $(this.elementsList).show();
             this.setTitle("CSS Editor");
+            this.$el.find('.navback').hide();
         },
 
         setTitle: function(str) {
