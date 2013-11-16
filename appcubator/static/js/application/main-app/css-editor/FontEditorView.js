@@ -48,8 +48,9 @@ define(function(require, exports, module) {
             }, this);
             document.body.appendChild(fontStyles);
 
+            console.log( $('.font-selector'));
             // setup font event handlers
-            $('.font-selector').fontselect().change(function() {
+            this.$el.find('.font-selector').fontselect().change(function() {
                 var value = $(this).val();
                 
                 if (self.model.get('fonts').where({
