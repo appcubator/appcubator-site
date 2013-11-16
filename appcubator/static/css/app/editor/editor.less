@@ -10,7 +10,6 @@
   width: 100%;
   background-color: #e6e8e9;
   color: #fff;
-  // background-image: url(/static/img/editor_bg.png);
   font: normal 16px "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 }
@@ -159,24 +158,6 @@ pre code {
   white-space: pre-wrap;
   background-color: transparent;
   border: 0;
-}
-
-.pre-scrollable {
-  max-height: 340px;
-
-  -ms-overflow-y: scroll;
-  overflow-y: scroll;
-}
-
-fieldset {
-  padding: 0;
-  margin: 0;
-  border: 0;
-}
-
-legend small {
-  font-size: 15px;
-  color: #999999;
 }
 
 label,input,button,select,textarea {
@@ -1095,11 +1076,11 @@ a.label:hover,a.badge:hover {
   position: relative;
   display: block;
   width: 100%;
-  // left: 50%;
+  max-width: 1200px;
+
   margin-top: 24px;
   margin-right: 30px;
-  // margin-left: -533px;
-  // width: 1164px;
+
   height: 1066px;
   border-radius: 6px;
   border: 2px solid #666;
@@ -1144,7 +1125,7 @@ a.label:hover,a.badge:hover {
 .page.full {
   position: relative;
   display: block;
-  // width: 1160px;
+
   width: 100%;
   height: 1000px;
   margin: 7px auto;
@@ -1197,9 +1178,13 @@ a.label:hover,a.badge:hover {
 .page-container {
   position: relative;
   height: 100%;
-  padding-right: 45px;
+  padding-right: 120px;
   padding-left: 30px;
   overflow: hidden;
+}
+
+.page-container.packed {
+  padding-right: 15px;
 }
 
 .elements-inside-container {
@@ -1269,9 +1254,9 @@ a.label:hover,a.badge:hover {
 }
 
 .save-run-group .play-btn {
-  height: 48px;
-  margin-top: -3px;
-  width: 48px;
+  height: 46px;
+  margin-top: -2px;
+  width: 46px;
   margin-left: -27px;
   display: inline-block;
   position: absolute;
@@ -2200,6 +2185,10 @@ ul.template-icons {
   float: left;
 }
 
+.left-buttons.invisible {
+  width: 0;
+}
+
 .left-buttons .btn {
   border-radius: 0;
   background-image: url(/static/img/mode-buttons.png);
@@ -2322,6 +2311,13 @@ ul.template-icons {
 
 .left-menu-panel-l1 .list.elements {
   width: 280px;
+  height: 100%;
+  padding-bottom: 120px;
+  overflow-y: scroll;
+}
+
+.left-menu-panel-l1 .basecss.elements {
+  width: 360px;
   height: 100%;
   padding-bottom: 120px;
   overflow-y: scroll;

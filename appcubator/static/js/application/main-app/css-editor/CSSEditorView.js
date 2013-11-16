@@ -2,6 +2,7 @@ define(function(require, exports, module) {
     'use strict';
 
     var UIElementListView = require('./UIElementListView');
+    var BaseCSSEditorView = require('./BaseCSSEditorView');
     var UIElementEditingView = require('./UIElementEditingView');
 
     require('app/templates/AnalyticsTemplates');
@@ -136,6 +137,12 @@ define(function(require, exports, module) {
 
             switch (type) {
                 case "basecss":
+                    var editorView = new BaseCSSEditorView(this.model);
+                    $(this.elementsList).hide();
+                    this.setTitle("Base CSS");
+                    this.el.appendChild(editorView.render().el);
+                    editorView.setupAce();
+                    this.currentView = editorView;
                     break;
                 case "fonts":
                     break;
@@ -156,7 +163,7 @@ define(function(require, exports, module) {
             this.currentView = new UIElementEditingView(styleModel);
             this.el.appendChild(this.currentView.render().el);
             this.setTitle(styleModel.get('class_name'));
-            this.currentView.setUpAce();
+            this.currentView.setupAce();
         },
 
         elementSelected: function(widgetModel) {

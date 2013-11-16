@@ -285,13 +285,15 @@ define(function(require, exports, module) {
 
         switchToDesignMode: function() {
             $('#css-editor-panel').addClass('expanded');
-            $('.left-buttons').css('width', '0');
+            $('.left-buttons').addClass('invisible');
+            $('.page-container').addClass('packed');
             this.galleryEditor.hide();
         },
 
         switchOffDesignMode: function() {
             $('#css-editor-panel').removeClass('expanded');
-            $('.left-buttons').css('width', '80px');
+            $('.left-buttons').removeClass('invisible');
+            $('.page-container').removeClass('packed');
             this.galleryEditor.show();
         },
 

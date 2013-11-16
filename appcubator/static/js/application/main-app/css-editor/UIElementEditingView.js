@@ -41,7 +41,7 @@ define(function(require, exports, module) {
             return this;
         },
 
-        setUpAce: function() {
+        setupAce: function() {
             this.styleEditor = ace.edit("style-" + this.model.cid);
             this.styleEditor.getSession().setMode("ace/mode/css");
             this.styleEditor.setValue(this.model.get('style'), -1);
