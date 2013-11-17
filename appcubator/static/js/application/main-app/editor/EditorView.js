@@ -22,6 +22,7 @@ define(function(require, exports, module) {
     var WidgetEditorViewProxy = require('editor/WidgetEditorViewProxy');
     var CSSEditorView = require('app/css-editor/CSSEditorView');
 
+    require('jquery-ui');
     require('mixins/BackboneConvenience');
     require('editor/editor-templates');
 
@@ -130,6 +131,21 @@ define(function(require, exports, module) {
             if(v1.worldView) {
                 $('.world-toggle.menu-button').on('click', v1.worldView.toggle);
             }
+
+            $( '.left-buttons' ).tooltip({
+                  position: {
+                    my: "left+10 center",
+                    at: "right center",
+                    using: function( position, feedback ) {
+                      $( this ).css( position );
+                      $( "<div>" )
+                        .addClass( "arrow" )
+                        .addClass( feedback.vertical )
+                        .addClass( feedback.horizontal )
+                        .appendTo( this );
+                    }
+                  }
+                });
 
             return this;
         },
