@@ -179,7 +179,7 @@ require([
                 else {
                     head.appendChild(newstyle);
                     newstyle.onload = function() {
-                        newstyle.setAttribute('href', "/app/"+appId+"/uiestate.css");
+                        //newstyle.setAttribute('href', "/app/"+appId+"/uiestate.css");
                         style.parentNode.removeChild(style);
                     };
                 }
