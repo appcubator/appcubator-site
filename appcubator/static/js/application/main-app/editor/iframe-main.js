@@ -152,8 +152,22 @@ require([
                 var style = document.getElementById("css-uiestate");
                 var head = document.getElementsByTagName('head')[0];
                 var newstyle = style.cloneNode(true);
+                var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+
+                if(is_firefox) {
+                    console.log('newnew');
+                    newStyle = document.createElement('style');
+                    newStyle.type = 'text/css';
+                    newStyle.setAttribute('href', "/app/"+appId+"/uiestate.css");
+                    newStyle.id = "css-uiestate";
+                    newStyle.setAttribute('rel', 'stylesheet');
+                    console.log(newStyle);
+                }
+
                 head.appendChild(newstyle);
                 newstyle.onload = function() {
+                    console.log("YOLOOOOO.");
+                    newstyle.setAttribute('href', "/app/"+appId+"/uiestate.css");
                     style.parentNode.removeChild(style);
                 };
             }

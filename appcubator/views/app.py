@@ -532,6 +532,7 @@ def documentation_search(request):
 @login_required
 def uie_state(request, app_id):
     app = get_object_or_404(App, id=app_id)
+    
     if not app.is_editable_by_user(request.user):
         raise Http404
     if request.method == 'GET':
