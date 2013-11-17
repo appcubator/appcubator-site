@@ -204,6 +204,9 @@ define(function(require, exports, module) {
 
         elementSelected: function(widgetModel) {
             var type = widgetModel.get('data').get('nodeType');
+            if(widgetModel.isList()) {
+                type = "lists";
+            }
             var className = widgetModel.get('data').get('class_name');
             console.log(className);
             console.log(type);
