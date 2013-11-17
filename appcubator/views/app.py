@@ -337,7 +337,7 @@ def app_editor_iframe(request, app_id, page_name="overview"):
                     'is_deployed'  : 1 if app.deployment_id != None else 0,
                     'display_garage' : False}
     add_statics_to_context(page_context, app)
-    return render(request, 'app-editor-show.html', page_context)
+    return render(request, 'app-editor-iframe.html', page_context)
 
 
 @require_GET
