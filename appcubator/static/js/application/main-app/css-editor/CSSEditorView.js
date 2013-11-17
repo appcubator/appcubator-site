@@ -98,11 +98,15 @@ define(function(require, exports, module) {
             }, this);
 
             var elementsCollection = v1State.getCurrentPage().get('uielements');
-            elementsCollection.each(function(uielement) {
-                this.listenTo(uielement, 'selected', function() {
-                    this.elementSelected(uielement);
-                });
-            }, this);
+            elementsCollection.each(this.bindWidget, this);
+
+            this.listenTo(elementsCollection, 'add', this.bindWidget);
+        },
+
+        bindWidget: function(widgetModel) {
+            this.listenTo(widgetModel, 'selected', function() {
+                this.elementSelected(widgetModel);
+            });
         },
 
         render: function() {

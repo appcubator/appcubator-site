@@ -37,15 +37,15 @@ define(function(require, exports, module) {
             'click .menu-button.help': 'help',
             'click .menu-button.question': 'question',
             'click .url-bar': 'clickedUrl',
-            'click #design-mode-button' : 'switchToDesignMode',
-            'click #close-css-editor' : 'switchOffDesignMode'
+            'click #design-mode-button': 'switchToDesignMode',
+            'click #close-css-editor': 'switchOffDesignMode'
         },
 
         initialize: function(options) {
             _.bindAll(this);
             this.subviews = [];
 
-            if (options && options.pageId)  {
+            if (options && options.pageId) {
                 this.pageId = options.pageId;
                 pageId = options.pageId;
             }
@@ -93,8 +93,10 @@ define(function(require, exports, module) {
 
         render: function() {
             var self = this;
-            if (!this.el.innerHTML)  {
-                this.el.innerHTML = _.template(util.getHTML('editor-page'), { pageId: this.pageId});
+            if (!this.el.innerHTML) {
+                this.el.innerHTML = _.template(util.getHTML('editor-page'), {
+                    pageId: this.pageId
+                });
             }
 
             document.body.style.overflow = "hidden";
@@ -102,7 +104,7 @@ define(function(require, exports, module) {
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
             this.renderUrlBar();
             this.galleryEditor.render();
-            
+
             this.cssEditorView.setElement($('#css-editor-panel')).render();
 
             /* Access to elements inside iframe */
@@ -128,24 +130,24 @@ define(function(require, exports, module) {
                 $('.world-toggle.menu-button').on('click', v1.garageView.hide);
             }
 
-            if(v1.worldView) {
+            if (v1.worldView) {
                 $('.world-toggle.menu-button').on('click', v1.worldView.toggle);
             }
 
-            $( '.left-buttons' ).tooltip({
-                  position: {
+            $('.left-buttons').tooltip({
+                position: {
                     my: "left+10 center",
                     at: "right center",
-                    using: function( position, feedback ) {
-                      $( this ).css( position );
-                      $( "<div>" )
-                        .addClass( "arrow" )
-                        .addClass( feedback.vertical )
-                        .addClass( feedback.horizontal )
-                        .appendTo( this );
+                    using: function(position, feedback) {
+                        $(this).css(position);
+                        $("<div>")
+                            .addClass("arrow")
+                            .addClass(feedback.vertical)
+                            .addClass(feedback.horizontal)
+                            .appendTo(this);
                     }
-                  }
-                });
+                }
+            });
 
             return this;
         },
