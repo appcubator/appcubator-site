@@ -37,6 +37,7 @@ define(function(require, exports, module) {
 
         getStyleWithClassAndType: function(className, type) {
             var model = null;
+            if(type == "form") type = "forms";
 
             this.get(type).each(function(styleModel) {
                 if (styleModel.get('class_name') == className) {
