@@ -25,7 +25,7 @@ join = os.path.join
 from appcubator.email.sendgrid_email import send_email, send_template_email
 from appcubator.our_payments.views import is_stripe_customer#, subscribe
 
-from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration, CollaborationInvite
+from appcubator.models import App, TempDeployment, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration, CollaborationInvite
 from appcubator.models import DomainRegistration
 from appcubator.themes.models import StaticFile, UITheme
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
@@ -338,7 +338,6 @@ def app_editor_iframe(request, app_id, page_name="overview"):
                     'display_garage' : False}
     add_statics_to_context(page_context, app)
     return render(request, 'app-editor-iframe.html', page_context)
-
 
 @require_GET
 @login_required

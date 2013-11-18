@@ -14,6 +14,7 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('',
     url(r'^', include('website.urls')),
+    url(r'^', include('tutorials.urls')),
     url(r'^backend/',                   include('app_builder.urls')),
     url(r'^payments/',                  include('appcubator.our_payments.urls')),
     url(r'^app/(\d+)/payment/$',        payment_views.app_payment),

@@ -121,6 +121,19 @@ h6 {
   vertical-align: top;
 }
 
+.centered-container > .thirdy-left {
+  display: inline-block;
+  width: 30%;
+  vertical-align: top;
+}
+
+.centered-container > .seventy-right {
+  display: inline-block;
+  width: 69%;
+  vertical-align: top;
+}
+
+
 .centered-container > .two-third {
   display: inline-block;
   width: 60%;
