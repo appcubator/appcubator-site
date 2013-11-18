@@ -58,7 +58,7 @@ define([
                 }, this);
             } else if (Backbone.isCollection(obj)) {
                 this.listenTo(obj, event, handler);
-                obj.each(this.deepListenTo, function(model) {
+                _.each(obj.models, function(model) {
                     this.deepListenTo(model, event, handler);
                 }, this);
             }

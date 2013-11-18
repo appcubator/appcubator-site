@@ -28,7 +28,8 @@ require.config({
         "tutorial": "../tutorial",
         "wizard": "../wizard",
         "xrayquire": "../../libs/xrayquire",
-        "ace": "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace"
+        "ace": "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace",
+        "fontselect": "../../libs/fontselect/jquery.fontselect"
     },
 
     shim: {
@@ -73,6 +74,10 @@ require.config({
         },
         "react": {
             exports: "React"
+        },
+        "fontselect": {
+          exports: "$",
+          deps: ['jquery']
         }
     },
 
@@ -105,6 +110,7 @@ require.onError = function (err) {
 //libs
 require([
         "models/AppModel",
+        "models/ThemeModel",
         "collections/PageCollection",
         "collections/MobilePageCollection",
         "app/AppRouter",
@@ -122,6 +128,7 @@ require([
         "tourist-omer"
     ],
     function(AppModel,
+        ThemeModel,
         PageCollection,
         MobilePageCollection,
         AppRouter,
@@ -139,9 +146,9 @@ require([
 
             v1State = new Backbone.Model();
             v1State = new AppModel(appState);
-
             v1State.set('pages', new PageCollection(appState.pages || []));
-            v1State.lazySet('mobilePages', new MobilePageCollection(appState.mobilePages || []));
+
+            v1UIEState = new ThemeModel(uieState);
 
             v1State.on('error', function(message) {
                 alert(message);

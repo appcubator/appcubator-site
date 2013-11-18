@@ -20,7 +20,9 @@ define(function(require, exports, module) {
     var DeployView = require('app/DeployView');
     var RedoController = require('app/RedoController');
     var WidgetEditorViewProxy = require('editor/WidgetEditorViewProxy');
+    var CSSEditorView = require('app/css-editor/CSSEditorView');
 
+    require('jquery-ui');
     require('mixins/BackboneConvenience');
     require('editor/editor-templates');
 
@@ -34,19 +36,19 @@ define(function(require, exports, module) {
             'click #deploy': 'deploy',
             'click .menu-button.help': 'help',
             'click .menu-button.question': 'question',
-            'click .url-bar': 'clickedUrl'
+            'click .url-bar': 'clickedUrl',
+            'click #design-mode-button': 'switchToDesignMode',
+            'click #close-css-editor': 'switchOffDesignMode'
         },
 
         initialize: function(options) {
             _.bindAll(this);
             this.subviews = [];
 
-            if (options && options.pageId)  {
+            if (options && options.pageId) {
                 this.pageId = options.pageId;
                 pageId = options.pageId;
             }
-
-            util.loadCSS('jquery-ui');
 
             this.model = v1State.get('pages').models[pageId];
             v1State.currentPage = this.model;
@@ -58,7 +60,7 @@ define(function(require, exports, module) {
             this.widgetsManager = {};
             this.guides = new GuideView(this.widgetsCollection);
             this.toolBar = new ToolBarView();
-
+            this.cssEditorView = new CSSEditorView();
             this.widgetEditorViewProxy = WidgetEditorViewProxy;
             this.redoController = new RedoController();
 
@@ -86,12 +88,15 @@ define(function(require, exports, module) {
 
             this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
             this.listenTo(this.model, 'scroll', this.scrollTo);
+
         },
 
         render: function() {
             var self = this;
-            if (!this.el.innerHTML)  {
-                this.el.innerHTML = _.template(util.getHTML('editor-page'), { pageId: this.pageId});
+            if (!this.el.innerHTML) {
+                this.el.innerHTML = _.template(util.getHTML('editor-page'), {
+                    pageId: this.pageId
+                });
             }
 
             document.body.style.overflow = "hidden";
@@ -99,6 +104,8 @@ define(function(require, exports, module) {
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
             this.renderUrlBar();
             this.galleryEditor.render();
+
+            this.cssEditorView.setElement($('#css-editor-panel')).render();
 
             /* Access to elements inside iframe */
             var iframe = document.getElementById('page');
@@ -123,9 +130,24 @@ define(function(require, exports, module) {
                 $('.world-toggle.menu-button').on('click', v1.garageView.hide);
             }
 
-            if(v1.worldView) {
+            if (v1.worldView) {
                 $('.world-toggle.menu-button').on('click', v1.worldView.toggle);
             }
+
+            $('.left-buttons').tooltip({
+                position: {
+                    my: "left+10 center",
+                    at: "right center",
+                    using: function(position, feedback) {
+                        $(this).css(position);
+                        $("<div>")
+                            .addClass("arrow")
+                            .addClass(feedback.vertical)
+                            .addClass(feedback.horizontal)
+                            .appendTo(this);
+                    }
+                }
+            });
 
             return this;
         },
@@ -168,6 +190,8 @@ define(function(require, exports, module) {
 
         startUIStateUpdater: function(proxy) {
             var self = this;
+            this.listenTo(v1UIEState, 'synced', proxy.reArrangeCSSTag);
+
             this.UIStateTimer = setInterval(function() {
                 self.fetchUIState(function(state) {
                     /* crappy fix */
@@ -275,6 +299,20 @@ define(function(require, exports, module) {
                 $('#page').scrollTop((widget.getBottom() - pageHeightUnit + widget.get('layout').get('height') + 1) * 15);
             }
 
+        },
+
+        switchToDesignMode: function() {
+            $('#css-editor-panel').addClass('expanded');
+            $('.left-buttons').addClass('invisible');
+            $('.page-container').addClass('packed');
+            this.galleryEditor.hide();
+        },
+
+        switchOffDesignMode: function() {
+            $('#css-editor-panel').removeClass('expanded');
+            $('.left-buttons').removeClass('invisible');
+            $('.page-container').removeClass('packed');
+            this.galleryEditor.show();
         },
 
         close: function() {
