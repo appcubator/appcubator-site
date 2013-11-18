@@ -149,6 +149,7 @@ INSTALLED_APPS = (
     'appcubator.admin',
     'appcubator.themes',
     'website',
+    'tutorials',
     'south',
     'less',
     'registration',

@@ -5,7 +5,7 @@ import views
 
 urlpatterns = patterns('views',
 
-    url(r'^tutorials/', 'tutorials_page'),
-    url(r'^tutorials/(\d+)/', 'tutorial'),
+    url(r'^tutorials/', views.tutorials_page),
+    url(r'^tutorials/(\d+)/', views.tutorial),
 
 )

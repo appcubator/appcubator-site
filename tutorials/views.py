@@ -1,5 +1,4 @@
 from django.http import HttpResponse, Http404
-from . import JsonResponse
 
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.urlresolvers import reverse
@@ -22,19 +21,15 @@ import simplejson
 import os, os.path
 join = os.path.join
 
-from appcubator.email.sendgrid_email import send_email, send_template_email
-from appcubator.our_payments.views import is_stripe_customer#, subscribe
-
-from appcubator.models import App, TempDeployment, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration, CollaborationInvite
-from appcubator.models import DomainRegistration
-from appcubator.themes.models import StaticFile, UITheme
-from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
-from appcubator import forms
-
 # from codegen
 import app_builder.analyzer as analyzer
 
 from django.conf import settings
+
+
+def JsonResponse(serializable_obj, **kwargs):
+    """Just a convenience function, in the middle of horrible code"""
+    return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)
 
 
 @require_GET
