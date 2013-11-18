@@ -239,19 +239,19 @@ define(function(require, exports, module) {
             var self = this;
             var json = this.model.toJSON();
             var save_url = '/app/' + appId + '/uiestate/';
-            var currentTime = new Date().getTime();
+            // var currentTime = new Date().getTime();
             
-            if(this.lastSave === null || currentTime - this.lastSave < 3000) {
-                if(this.timer) clearTimeout(this.timer);
-                if(this.lastSave === null) {
-                    this.lastSave = currentTime + 1;
-                }
+            // if(this.lastSave === null || currentTime - this.lastSave < 3000) {
+            //     if(this.timer) clearTimeout(this.timer);
+            //     if(this.lastSave === null) {
+            //         this.lastSave = currentTime + 1;
+            //     }
 
-                this.timer = setTimeout(this.save, 3000);
-                return;
-            }
+            //     this.timer = setTimeout(this.save, 3000);
+            //     return;
+            // }
 
-            this.lastSave = currentTime;
+            // this.lastSave = currentTime;
             $.ajax({
                 type: "POST",
                 url: save_url,
@@ -261,7 +261,6 @@ define(function(require, exports, module) {
                 statusCode: {
                     200: function(data) {
                         console.log('Saved.');
-                        if(self.timer) clearTimeout(self.timer);
                         self.model.trigger('synced');
                     },
                     500: function() {

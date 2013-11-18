@@ -8,9 +8,12 @@ define(function(require, exports, module) {
         events: {
         },
 
+        doneTypingInterval: 3000,
+
         initialize: function(themeModel) {
             _.bindAll(this);
             this.model = themeModel;
+            this.typingTimer = null;
         },
 
         render: function() {
@@ -25,7 +28,12 @@ define(function(require, exports, module) {
             this.editor = ace.edit("base-css");
             this.editor.getSession().setMode("ace/mode/css");
             this.editor.setValue(this.model.get('basecss'), -1);
-            this.editor.on("change", this.baseChanged);
+            this.editor.on("change", this.keyup);
+        },
+
+        keyup: function(e) {
+            if(this.typingTimer) clearTimeout(this.typingTimer);
+            this.typingTimer = setTimeout(this.baseChanged, this.doneTypingInterval);
         },
 
         baseChanged: function(e) {
