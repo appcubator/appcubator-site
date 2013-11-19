@@ -1,8 +1,8 @@
 {% load humanize %}
       <div class="board {% if app_id == a.pk %}current{% endif %}" id="dashboard-{{ a.pk }}">
           <div class="header hi9">
-            <div class="logo span12 hi8" style="background-image:url({{ STATIC_URL }}img/placeholder-logo.png);"></div>
-            <div class="span32 offset2 hi9">
+            <div class="logo span10 hi6" style="background-image:url({{ STATIC_URL }}img/placeholder-logo.png);"></div>
+            <div class="span30 offset2 hi10">
               <h1 class="hoff1">{{ a.name }}</h1>
               <br>
               <a target="_blank" href="{{ a.url }}" class="fancy link">{{ a.url }}{% if is_deployed == 0 %} (Not Deployed yet.) {% endif %}
@@ -18,9 +18,9 @@
                   <button type="submit" class="btn big span4" title="Clone App"><div class="clone-icon"></div></button>
               </form>
               <a class="btn big span4 offset1 download"  title="Download Code" href="#"><div class="download-icon"></div></a>
-              <a class="btn big span10 offset1 browse" href="#">Browse Data</a>
-              <a class="btn big span10 offset1" id="share" href="#">Share</a>
-              <a class="btn btn-info big edit span14 offset1" href="/app/{{ a.pk }}/">Start Editing »</a>
+              <a class="btn big span9 offset1 browse" href="#">Browse Data</a>
+              <a class="btn big span9 offset1" id="share" href="#">Share</a>
+              <a class="btn btn-info big edit span12 offset1" href="/app/{{ a.pk }}/">Start Editing »</a>
             </div>
           <hr class="span46 pheader hoff1"> <!-- <img class="span58 analytics-demo hoff1" src="/static/img/analytics.png"> -->
           <div class="row hoff1 span46">

@@ -1,51 +1,61 @@
-{% extends "infra-app.html" %}
+{% extends "infra-internalsite.html" %}
 {% load embed_json %}
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/dashboard.css">
 {% endblock %}
 
+{% block less %}
+<link rel="stylesheet/less" href="{{ STATIC_URL }}css/tooltip.less">
+{% endblock %}
+
+{% block css-files %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/tooltip.css">
+{% endblock %}
+
 {% block topbar %}
-{% include "app-navbar.html" %}
+{% include "website-navbar.html" %}
 {% endblock %}
 
 {% block page %}
-
-  <div class="container hoff6" id="dashboards">
-    <div class="span14 left-div">
-      {% if messages %}
-      <div class="error-content span12 offset1 hoff2">
-      {% for message in messages %}
-          <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
-      {% endfor %}
+<div id="dashboards" style="height: 100%;">
+  <div class="centered-container hoff2" id="screencasts-section" style="padding-top:60px; padding-bottom: 30px;">
+      <div class="thirdy-left" style="text-align: center; padding-right: 30px;">
+        <div class="left-nav">
+          <div class="top-row">
+            <a href="/app/new/" class="title new"><strong>+</strong>Create New App</a>
+          </div>
+          {% if messages %}
+          <div class="error-content span12 offset1 hoff3">
+          {% for message in messages %}
+              <div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
+          {% endfor %}
+          </div>
+          {% endif %}
+          <ul>
+            {% for a in apps %}
+                <li class='{% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
+                  <a class="menu-item" href="#">{{ a.name }}</a>
+                </li>
+            {% endfor %}
+            {% for a in collab_apps %}
+                <li class='{% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
+                  <a class="menu-item" href="#">{{ a.owner.username }} / {{ a.name }}</a>
+                </li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
-      {% endif %}
-      <ul class="left-nav nav span15 apps-list hoff2">
-      {% for a in apps %}
-        <li class='menu-item {% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
-          <a class="" href="#">{{ a.name }}</a>
-        </li>
-      {% endfor %}
-      {% for a in collab_apps %}
-        <li class='menu-item {% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
-          <a class="" href="#">{{ a.owner.username }} / {{ a.name }}</a>
-        </li>
-      {% endfor %}
-      </ul>
-      <a href="/app/new/" class="new"><strong>+</strong>New App</a>
-      <a href="/forum/" target="_blank">Community Forum</a><br>
-      <a href="/resources/" target="_blank" class="hoff1">Learning Resources</a>
-    </div>
-    <div class="span50 hoff1">
-    {% for a in collab_apps reversed %}
-        {% include "app-dashboard-app-page.html" %}
-    {% endfor %}
-    {% for a in apps reversed %}
-        {% include "app-dashboard-app-page.html" %}
-    {% endfor %}
-    </div>
-  </div>
-
+      <div class="seventy-right" style="vertical-align: top;">
+          {% for a in collab_apps reversed %}
+              {% include "app-dashboard-app-page.html" %}
+          {% endfor %}
+          {% for a in apps reversed %}
+              {% include "app-dashboard-app-page.html" %}
+          {% endfor %}
+      </div>
+  </div>   
+</div>
   {% include "app-panel-templates.html" %}
 {% endblock %}
 

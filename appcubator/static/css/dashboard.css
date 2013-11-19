@@ -113,13 +113,15 @@ a.fancy:hover .edit-btn {
   color: #eee;
   padding: 0px;
   border-radius: 4px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
   -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.065);
   -moz-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.065);
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.065);
   overflow: hidden;
   margin-bottom: 10px;
+}
+
+.left-nav .top-row {
+  border-bottom: 1px solid #999;
 }
 
 .logo {
@@ -130,8 +132,7 @@ a.fancy:hover .edit-btn {
   font-size: 20px;
   font-weight: bold;
   display: block;
-  text-shadow: rgb(255, 255, 255) 0 1px 0;
-  margin-bottom: 15px;
+  line-height: 50px;
 }
 
 .new strong {
@@ -191,54 +192,3 @@ a.fancy:hover .edit-btn {
   border: 1px solid #bbb;
   background-position: right;
 }
-
-/* tooltip */
-
-  .ui-tooltip, .arrow:after {
-    background: black !important;
-    border: solid white;
-  }
-  .ui-tooltip {
-    display: inline-block !important;
-    padding: 10px 20px;
-    color: #fff !important;
-    border-radius: 20px;
-    font: 11px "Helvetica Neue", Sans-Serif !important;
-    background-image: none;
-    background-color: red;
-    box-shadow: none !important;
-  }
-  .arrow {
-    width: 50px;
-    height: 14px;
-    overflow: hidden;
-    position: absolute;
-    left: 50%;
-    margin-left: -35px;
-    bottom: -14px;
-  }
-  .arrow.top {
-    top: -16px;
-    bottom: auto;
-  }
-  .arrow.left {
-    left: 20%;
-  }
-  .arrow:after {
-    content: "";
-    position: absolute;
-    left: 20px;
-    top: -20px;
-    width: 20px;
-    height: 20px;
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    tranform: rotate(45deg);
-    border-width: 1px !important;
-  }
-  .arrow.top:after {
-    bottom: -20px;
-    top: auto;
-  }
