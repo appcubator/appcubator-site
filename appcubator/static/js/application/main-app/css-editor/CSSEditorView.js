@@ -239,7 +239,7 @@ define(function(require, exports, module) {
         },
 
         hide: function() {
-            this.$el.removeClassName('expanded');
+            this.$el.removeClass('expanded');
             this.expanded = false;
         },
 
