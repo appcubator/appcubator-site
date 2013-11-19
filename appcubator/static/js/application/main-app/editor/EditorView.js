@@ -302,14 +302,14 @@ define(function(require, exports, module) {
         },
 
         switchToDesignMode: function() {
-            $('#css-editor-panel').addClass('expanded');
+            this.cssEditorView.expand();
             $('.left-buttons').addClass('invisible');
             $('.page-container').addClass('packed');
             this.galleryEditor.hide();
         },
 
         switchOffDesignMode: function() {
-            $('#css-editor-panel').removeClass('expanded');
+            this.cssEditorView.hide();
             $('.left-buttons').removeClass('invisible');
             $('.page-container').removeClass('packed');
             this.galleryEditor.show();

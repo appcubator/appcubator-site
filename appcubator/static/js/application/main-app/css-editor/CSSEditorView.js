@@ -86,6 +86,9 @@ define(function(require, exports, module) {
             'click #navigate-back': 'navBack'
         },
 
+
+        expanded: false,
+
         initialize: function() {
             _.bindAll(this);
 
@@ -203,6 +206,9 @@ define(function(require, exports, module) {
         },
 
         elementSelected: function(widgetModel) {
+
+            if(!this.expanded) return;
+
             var type = widgetModel.get('data').get('nodeType');
             if(widgetModel.isList()) {
                 type = "lists";
@@ -228,11 +234,13 @@ define(function(require, exports, module) {
         },
 
         expand: function() {
-            // this.el.className += ' expanded';
+            this.el.className += ' expanded';
+            this.expanded = true;
         },
 
         hide: function() {
-            // this.$el.removeClassName('expanded');
+            this.$el.removeClassName('expanded');
+            this.expanded = false;
         },
 
         save: function() {
