@@ -74,6 +74,7 @@ a.fancy {
   margin-top: 6px;
   cursor: pointer;
   height: 42px;
+  font-size: 13px;
 }
 
 a.fancy .edit-btn {

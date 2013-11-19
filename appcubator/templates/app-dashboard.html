@@ -34,13 +34,13 @@
           {% endif %}
           <ul>
             {% for a in apps %}
-                <li class='{% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
-                  <a class="menu-item" href="#">{{ a.name }}</a>
+                <li class='menu-item {% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
+                  <a href="#">{{ a.name }}</a>
                 </li>
             {% endfor %}
             {% for a in collab_apps %}
-                <li class='{% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
-                  <a class="menu-item" href="#">{{ a.owner.username }} / {{ a.name }}</a>
+                <li class='menu-item {% if app_id == a.pk %}selected{% endif %}' id="menu-item-{{ a.pk }}">
+                  <a href="#">{{ a.owner.username }} / {{ a.name }}</a>
                 </li>
             {% endfor %}
           </ul>

@@ -7,7 +7,7 @@
               <br>
               <a target="_blank" href="{{ a.url }}" class="fancy link">{{ a.url }}{% if is_deployed == 0 %} (Not Deployed yet.) {% endif %}
                 <div class="edit-btn btn hi2">Edit</div></a><br>
-              <i class="hoff1 span34">Last Updated {{ a.last_update|naturaltime }}</i>
+                <i class="hoff1 span34" style="line-height: 16px;">Last Updated {{ a.last_update|naturaltime }}</i>
             </div>
             <a class="setting-btn" title="App Settings" href="/app/{{ a.pk }}/info/"></a>
           </div>
