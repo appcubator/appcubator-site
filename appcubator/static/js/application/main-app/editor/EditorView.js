@@ -19,7 +19,6 @@ define(function(require, exports, module) {
     var TutorialView = require('tutorial/TutorialView');
     var DeployView = require('app/DeployView');
     var RedoController = require('app/RedoController');
-    var WidgetEditorViewProxy = require('editor/WidgetEditorViewProxy');
     var CSSEditorView = require('app/css-editor/CSSEditorView');
 
     require('jquery-ui');
@@ -61,8 +60,9 @@ define(function(require, exports, module) {
             this.guides = new GuideView(this.widgetsCollection);
             this.toolBar = new ToolBarView();
             this.cssEditorView = new CSSEditorView();
-            this.widgetEditorViewProxy = WidgetEditorViewProxy;
             this.redoController = new RedoController();
+            this.widgetEditorView = new WidgetEditorView();
+            v1.widgetEditorView = this.WidgetEditorView;
 
             keyDispatcher.bindComb('meta+z', this.redoController.undo);
             keyDispatcher.bindComb('ctrl+z', this.redoController.undo);
@@ -104,6 +104,9 @@ define(function(require, exports, module) {
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
             this.renderUrlBar();
             this.galleryEditor.render();
+
+            this.el.appendChild(this.widgetEditorView.render().el);
+            console.log(this.widgetEditorView.el);
 
             this.cssEditorView.setElement($('#css-editor-panel')).render();
 

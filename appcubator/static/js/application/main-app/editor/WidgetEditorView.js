@@ -62,7 +62,6 @@ define(function(require, exports, module) {
             }
 
             this.model = widgetModel;
-            v1.view.widgetEditorViewProxy.model = widgetModel;
 
             this.listenTo(this.model, 'startEditing', this.startedEditing);
             this.listenTo(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
@@ -72,6 +71,11 @@ define(function(require, exports, module) {
         },
 
         render: function() {
+            this.$el.hide();
+            return this;
+        },
+
+        display: function() {
             this.$el.fadeIn();
 
             var action = "";
@@ -246,27 +250,35 @@ define(function(require, exports, module) {
         },
 
         openFormEditor: function() {
-            v1.view.widgetEditorViewProxy.openFormEditor();
+            var entityModel = this.model.get('data').get('container_info').get('form').get('entity');
+            if (_.isString(entityModel)) entityModel = v1State.getTableModelWithName(entityModel);
+            new FormEditorView(this.model.get('data').get('container_info').get('form'), entityModel);
         },
 
         openLoginEditor: function() {
-            v1.view.widgetEditorViewProxy.openLoginEditor();
+            var loginRoutes = this.model.getLoginRoutes();
+            new LoginFormEditorView(loginRoutes);
         },
 
         openSlideEditor: function() {
-            v1.view.widgetEditorViewProxy.openSlideEditor();
+            new ImageSliderEditorView(this.model);
         },
 
         openFBShareEditor: function() {
-            v1.view.widgetEditorViewProxy.openFBShareEditor();
+            new FacebookShareEditor(this.model);
         },
 
         openVideoEmbedEditor: function() {
-            v1.view.widgetEditorViewProxy.openVideoEmbedEditor();
+            new VideoEmbedEditor(this.model);
         },
 
         openQueryEditor: function() {
-            v1.view.widgetEditorViewProxy.openQueryEditor();
+            var type = 'table';
+            if (this.model.get('data').get('container_info').has('row')) {
+                type = 'list';
+            }
+
+            new QueryEditorView(this.model, type);
         },
 
         openRowEditor: function() {
@@ -285,11 +297,11 @@ define(function(require, exports, module) {
         },
 
         openSearchEditor: function() {
-            v1.view.widgetEditorViewProxy.openSearchEditor();
+            new SearchEditorView(this.model.get('data').get('searchQuery'));
         },
 
         openCustomWidgetEditor: function() {
-            v1.view.widgetEditorViewProxy.openCustomWidgetEditor();
+            new CustomWidgetEditorModal(this.model);
         },
 
         closeEditingMode: function() {

@@ -2,7 +2,6 @@ define(function(require, exports, module) {
 
     'use strict';
 
-    var WidgetEditorView = require('editor/WidgetEditorView');
 
     require('mixins/BackboneUI');
     require('util');
@@ -33,9 +32,10 @@ define(function(require, exports, module) {
 
             var self = this;
 
+            console.log('init selector');
             this.widgetsCollection = widgetsCollection;
             this.listenTo(this.widgetsCollection, 'add', this.bindWidget, true);
-            this.widgetEditorView = new WidgetEditorView();
+            this.widgetEditorView = v1.view.widgetEditorView;
             this.widgetEditorView.isMobile = self.isMobile;
 
             this.widgetsCollection.each(function(widget) {
@@ -246,7 +246,8 @@ define(function(require, exports, module) {
             });
             this.hideNode(this.hoverDiv);
             this.setLayout(this.selectDiv, widgetModel);
-            this.selectDiv.appendChild(this.widgetEditorView.setModel(widgetModel).render().el);
+            this.widgetEditorView.setModel(widgetModel).display();
+            //this.selectDiv.appendChild(.el);
         },
 
         resizing: function(e, ui) {
