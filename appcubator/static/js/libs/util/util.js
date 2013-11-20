@@ -405,6 +405,27 @@ define(['jquery'], function() {
 
         isString: function(obj) {
             return toString.call(obj) == '[object String]';
+        },
+
+        getWindowRelativeOffset: function(parentWindow, elem) {
+            var offset = {
+                left : 0,
+                top : 0
+            };
+            // relative to the target field's document
+            offset.left = elem.getBoundingClientRect().left;
+            offset.top = elem.getBoundingClientRect().top;
+            // now we will calculate according to the current document, this current
+            // document might be same as the document of target field or it may be
+            // parent of the document of the target field
+            var childWindow = elem.ownerDocument;
+            // while (childWindow != parentWindow) {
+            //     offset.left = offset.left + childWindow.body.getBoundingClientRect().left;
+            //     offset.top = offset.top + childWindow.body.getBoundingClientRect().top;
+            //     childWindow = childWindow.parent;
+            // }
+
+            return offset;
         }
 
     };

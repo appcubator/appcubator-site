@@ -80,6 +80,15 @@ define(function(require, exports, module) {
 
             var action = "";
 
+            // #page
+            var iframe = document.getElementById('page');
+            var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+            var element = innerDoc.getElementById('widget-wrapper-'+ this.model.cid);
+            var offset = util.getWindowRelativeOffset(window.document, element);
+            console.log(offset);
+            this.el.style.left = offset.left + 'px';
+            this.el.style.top = offset.top + 'px';
+
             if (this.model.get('data').has('container_info')) {
                 action = this.model.get('data').get('container_info').get('action');
 
