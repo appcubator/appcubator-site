@@ -80,15 +80,6 @@ define(function(require, exports, module) {
 
             var action = "";
 
-            // #page
-            var iframe = document.getElementById('page');
-            var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-            var element = innerDoc.getElementById('widget-wrapper-'+ this.model.cid);
-            var offset = util.getWindowRelativeOffset(window.document, element);
-            console.log(offset);
-            this.el.style.left = offset.left + 'px';
-            this.el.style.top = offset.top + 'px';
-
             if (this.model.get('data').has('container_info')) {
                 action = this.model.get('data').get('container_info').get('action');
 
@@ -211,23 +202,37 @@ define(function(require, exports, module) {
 
             var location = this.getLocation();
             this.location = location;
-
             this.el.className += ' ' + location;
 
-            // if(action == "show" || this.model.get('type') == "loop") {
-            //   this.el.className += ' '+location;
-            // }
-            // else {
-            //   this.$el.removeClass('right');
-            // }
+            var iframe = document.getElementById('page');
+            var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+            var element = innerDoc.getElementById('widget-wrapper-'+ this.model.cid);
 
-            if (this.location == "right") {
-                this.$el.append('<div class="left-arrow"></div>');
-            } else if (this.location == "bottom") {
-                this.$el.append('<div class="top-arrow"></div>');
-            } else {
-                this.$el.append('<div class="right-arrow"></div>');
+            var offsetFrame = util.getWindowRelativeOffset(window.document, iframe);
+            var offset = util.getWindowRelativeOffset(window.document, element);
+
+            var leftDist = offset.left + offsetFrame.left;
+            var topDist = offset.top + offsetFrame.top;
+
+            switch(this.location) {
+                case "right":
+                    this.$el.append('<div class="left-arrow"></div>');
+                    leftDist += element.getBoundingClientRect().width;
+                    break;
+                case "bottom":
+                    this.$el.append('<div class="top-arrow"></div>');
+                    topDist += element.getBoundingClientRect().height;
+                    break;
+                case "left":
+                    this.$el.append('<div class="right-arrow"></div>');
+                    break;
+                case "top":
+                    // not supposed to happen
+                    break;
             }
+
+            this.el.style.left = leftDist + 'px';
+            this.el.style.top = topDist + 'px';
 
             this.model.trigger('display-widget-editor');
 

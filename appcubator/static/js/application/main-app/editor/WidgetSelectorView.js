@@ -86,8 +86,8 @@ define(function(require, exports, module) {
                 containment: "parent",
                 drag: self.moving,
                 stop: self.moved,
-                snapMode: "outer"
-                // iframeFix: true
+                snapMode: "outer",
+                iframeFix: true
             });
 
             $(selectDiv).draggable({
@@ -95,15 +95,15 @@ define(function(require, exports, module) {
                 drag: self.moving,
                 stop: self.moved,
                 snapMode: "outer",
-                cancel: '#widget-editor'
-                // iframeFix: true
+                cancel: '#widget-editor',
+                iframeFix: true
             });
 
 
             selectDiv.style.zIndex = "2005";
             hoverDiv.style.zIndex = "2004";
-            hoverDiv.style.position = "absolute";
-            selectDiv.style.position = "absolute";
+            //hoverDiv.style.position = "absolute";
+            //selectDiv.style.position = "absolute";
 
             $(document).on('mousedown', this.clickedPage);
 
@@ -163,33 +163,13 @@ define(function(require, exports, module) {
         },
 
         makeSelectDivInvisible: function() {
-
             this.selectDiv.style.height = 0;
             this.selectDiv.style.width = 0;
-            this.selectDiv.style.borderWidth = 0;
-            var widgetModel = this.selectedEl;
-
-            switch (this.widgetEditorView.location) {
-                case "right":
-                    var leftVal = 0;
-                    leftVal += ((widgetModel.get('layout').get('left') * 80) - ALIGNMENT);
-                    leftVal += ((widgetModel.get('layout').get('width') * 80) + PADDING);
-                    this.selectDiv.style.left = leftVal + 'px';
-                    break;
-                case "bottom":
-                    var topVal = 0;
-                    topVal += ((widgetModel.get('layout').get('top') * this.positionVerticalGrid) - ALIGNMENT);
-                    topVal += ((widgetModel.get('layout').get('height') * this.positionVerticalGrid) + PADDING);
-                    this.selectDiv.style.top = topVal + 'px';
-                    break;
-            }
-
-            $(this.selectDiv).find('.ui-resizable-handle').hide();
+            $(this.selectDiv).hide();
         },
 
         makeSelectDivVisible: function(argument) {
-            this.selectDiv.style.borderWidth = '';
-            $(this.selectDiv).find('.ui-resizable-handle').fadeIn();
+            $(this.selectDiv).fadeIn();
         },
 
         hideHoverDiv: function() {
@@ -247,7 +227,6 @@ define(function(require, exports, module) {
             this.hideNode(this.hoverDiv);
             this.setLayout(this.selectDiv, widgetModel);
             this.widgetEditorView.setModel(widgetModel).display();
-            //this.selectDiv.appendChild(.el);
         },
 
         resizing: function(e, ui) {
@@ -349,6 +328,9 @@ define(function(require, exports, module) {
                 ui.position.left = (valRight - model.get('layout').get('width')) * this.positionHorizontalGrid - ALIGNMENT;
             }
 
+            /* Adjust for the scroll amount of the iframe - hacky */
+            var scrollTop = $(document).scrollTop();
+            ui.position.top += scrollTop;
 
             var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
             var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
@@ -400,7 +382,6 @@ define(function(require, exports, module) {
                 model.get('layout').set('top', top);
             }
 
-            this.selectDiv.appendChild(this.widgetEditorView.setModel(model).render().el);
             this.newSelected(model);
         },
 
