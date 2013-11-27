@@ -412,6 +412,8 @@ define(['jquery'], function() {
                 left : 0,
                 top : 0
             };
+
+            if(!elem) return offset;
             // relative to the target field's document
             offset.left = elem.getBoundingClientRect().left;
             offset.top = elem.getBoundingClientRect().top;

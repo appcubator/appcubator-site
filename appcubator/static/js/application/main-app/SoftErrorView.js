@@ -34,7 +34,7 @@ function(BackboneModal) {
       {
         case "pages":
           var pageObj = appState.pages[arr[1]];
-          str += "Problem is on <a href='/app/" +appId +"/editor/"+arr[1]+"/'>" + pageObj.name + '</a>';
+          str += "Problem is on <a href='/app/" +appId +"/page/"+arr[1]+"/'>" + pageObj.name + '</a>';
           break;
       }
 
@@ -43,7 +43,12 @@ function(BackboneModal) {
       switch(arr[2]) {
         case "uielements":
           var widgetObj = v1State.get('pages').models[arr[1]].get('uielements').models[arr[3]];
-          var domEl = document.getElementById('widget-wrapper-' + widgetObj.cid);
+
+          var iframe = document.getElementById('page');
+          var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+          var domEl = innerDoc.getElementById('widget-wrapper-' + widgetObj.cid);
+          
           if(domEl) { this.overlayEl = util.addOverlay(domEl); }
           else { this.listenTo(v1, 'editor-loaded', function() {
             var domEl = document.getElementById('widget-wrapper-' + widgetObj.cid);
