@@ -197,7 +197,9 @@ define(function(require, exports, module) {
         },
 
         widgetHover: function(widgetModel) {
+            if (g_marqueeView.isDrawing) return;
             if (this.selectedEl && widgetModel.cid === this.selectedEl.cid) return;
+            if (g_multiSelectorView.contains(widgetModel)) return;
             this.hoveredEl = widgetModel;
             this.setLayout(this.hoverDiv, widgetModel);
         },

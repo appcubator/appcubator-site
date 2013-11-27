@@ -174,6 +174,10 @@ define([
                 this.empty();
             },
 
+            contains: function(widgetModel) {
+                return _.contains(this.contents, widgetModel);
+            },
+
             remove: function() {
                 keyDispatcher.unbind('down', this.moveSelectedDown);
                 keyDispatcher.unbind('up', this.moveSelectedUp);
