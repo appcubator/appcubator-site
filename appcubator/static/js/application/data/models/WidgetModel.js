@@ -29,7 +29,7 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
             },
 
             isFullWidth: function() {
-                return this.get('layout').get('isFull') === true;
+                return this.get('layout').get('width') === "full";
             },
 
             moveLeft: function() {

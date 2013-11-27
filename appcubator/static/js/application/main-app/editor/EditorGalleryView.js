@@ -9,9 +9,91 @@ define(function(require, exports, module) {
     var WidgetContainerModel = require('models/WidgetContainerModel');
     var WidgetModel = require('models/WidgetModel');
     var Searcher = require('editor/Searcher');
-
-    require('dicts/default-uielements');
     require('dicts/constant-containers');
+
+    var defaultElements = [{
+            text: "Button",
+            className: "buttons",
+            el: "<div class='btn'>Default Button</div>"
+        },
+
+        {
+            text: "Image",
+            className: "images",
+            el: "<img class='span16' src='/static/img/placeholder.png'>"
+        },
+
+        {
+            text: "Header",
+            className: "headerTexts",
+            el: "<h1>Default Header</h1>"
+        },
+
+        {
+            text: "Text",
+            className: "texts",
+            el: "<did>Default text!</div>"
+        },
+
+        {
+            text: "Link",
+            className: "links",
+            el: "<a href='#'>Default Link</div>"
+        },
+
+        {
+            text: "Text Input",
+            className: "textInputs",
+            el: "<input type='text' placeholder='Default input...'>"
+        },
+
+        {
+            text: "Text Area",
+            className: "textAreas",
+            el: "<textarea></textarea>"
+        },
+
+        {
+            text: "Line",
+            className: "lines",
+            el: "<hr class='span20'>"
+        },
+
+        {
+            text: "Section",
+            className: "section",
+            el: "<div style='background-color:#ccc;height:120px' class='span30'></div>"
+        },
+
+        {
+            text: "Box",
+            className: "boxes",
+            el: "<div style='background-color:#ccc;height:120px' class='span20'></div>"
+        },
+
+        {
+            text: "Image Slider",
+            className: "imageslider",
+            el: "<img class='span24' src='/static/img/placeholder.png'>"
+        },
+
+        // {
+        //   text: "Twitter Feed",
+        //   className : "twitterfeed",
+        //   el : "<img class='span24' src='/static/img/placeholder.png'>"
+        // },
+
+        {
+            text: "FB Share",
+            className: "facebookshare",
+            el: "<img src='/static/img/fb-share-sample.png'>"
+        }, {
+            text: "Embed Video",
+            className: "embedvideo",
+            el: "<img src='/static/img/youtube-static.png'>"
+        }
+    ];
+
 
     var EditorGalleryView = Backbone.View.extend({
 
@@ -35,8 +117,8 @@ define(function(require, exports, module) {
         events: {
             'mouseover .bottom-arrow': 'slideDown',
             'mousemove .bottom-arrow': 'slideDown',
-            'change input.search'    : 'searchInputChage',
-            'keyup input.search'     : 'searchInputChage'
+            'change input.search': 'searchInputChage',
+            'keyup input.search': 'searchInputChage'
         },
 
         initialize: function(widgetsCollection) {
@@ -122,7 +204,7 @@ define(function(require, exports, module) {
         },
 
         searchInputChage: function(e) {
-            var self =  this;
+            var self = this;
             var val = e.currentTarget.value;
 
             if (val === "") {
@@ -649,6 +731,10 @@ define(function(require, exports, module) {
                 layout.r_padding = 0;
             }
 
+            if (type == "section") {
+                layout.width = "full";
+            }
+
             if (type == "imageslider") {
                 return this.widgetsCollection.createImageSlider(layout);
             }
@@ -669,6 +755,7 @@ define(function(require, exports, module) {
                 return this.widgetsCollection.createCustomWidget(layout);
             }
 
+            console.log(layout);
             var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, {});
             widget.setupPageContext(v1State.getCurrentPage());
             return widget;
@@ -747,7 +834,7 @@ define(function(require, exports, module) {
             }
         },
 
-        hide: function () {
+        hide: function() {
             this.$el.hide();
         },
 

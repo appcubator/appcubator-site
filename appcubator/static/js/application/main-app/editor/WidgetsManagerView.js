@@ -48,6 +48,9 @@ define(function(require, exports, module) {
             this.widgetsContainer = document.getElementById('elements-container');
             this.widgetsContainer.innerHTML = '';
 
+            this.fullWidgetsContainer =  document.getElementById('full-width-container');
+            this.fullWidgetsContainer.innerHTML = '';
+
             this.widgetsCollection.each(function(widget) {
                 widget.setupPageContext(top.v1State.getCurrentPage());
                 var newWidgetView = this.placeUIElement(widget, false);
@@ -89,8 +92,11 @@ define(function(require, exports, module) {
         placeWidget: function(widgetModel, isNew) {
             var curWidget = new WidgetView(widgetModel);
 
+            console.log(widgetModel);
+            console.log(widgetModel.isFullWidth());
+
             if (!widgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-            else util.get('full-container').appendChild(curWidget.render().el);
+            else this.fullWidgetsContainer.appendChild(curWidget.render().el);
             if (isNew) curWidget.autoResize();
 
             curWidget.delegateEvents();

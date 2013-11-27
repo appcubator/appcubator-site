@@ -134,7 +134,7 @@ define([
 
                 widget.data = {};
                 widget.data.nodeType = type;
-                widget.data = _.extend(widget.data, uieState[type][0]);
+                widget.data = _.extend(widget.data, v1UIEState.getInitialStyle(type));
 
                 if (widget.data.content_attribs && widget.data.content_attribs.src) {
                     widget.data.content_attribs.src = this.stockPhotos[Math.floor(Math.random() * this.stockPhotos.length)];

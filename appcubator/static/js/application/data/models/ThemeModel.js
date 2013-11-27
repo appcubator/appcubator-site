@@ -48,6 +48,29 @@ define(function(require, exports, module) {
             return model;
         },
 
+        getInitialStyle: function(type) {
+            console.log(type);
+            if(!uieState[type]) {
+
+                var obj = {};
+                if(type == "section") {
+                    obj = {
+                        activeStyle: "",
+                        class_name: "well",
+                        cons_attribs: {},
+                        content: null,
+                        hoverStyle: "",
+                        isSingle: false,
+                        style: "width: 100%;↵height: 100%;",
+                        tagName: "div"
+                    };
+                }
+                return obj;
+            }
+
+            return uieState[type][0];
+        },
+
         toJSON: function() {
             var json = _.clone(this.attributes);
 
