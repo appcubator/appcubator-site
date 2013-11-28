@@ -17,7 +17,6 @@ define(function(require, exports, module) {
     var NavbarView = require('editor/NavbarView');
     var FooterView = require('editor/FooterView');
     var GuideView = require('editor/GuideView');
-    var ToolBarView = require('editor/ToolBarView');
     var TutorialView = require('tutorial/TutorialView');
     var DeployView = require('app/DeployView');
     var RedoController = require('app/RedoController');
@@ -68,7 +67,6 @@ define(function(require, exports, module) {
             this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
             this.widgetsManager = {};
             this.guides = new GuideView(this.widgetsCollection);
-            this.toolBar = new ToolBarView();
             this.cssEditorView = new CSSEditorView();
             this.pageView = new PageView(this.model, pageId);
             this.redoController = new RedoController();
@@ -92,7 +90,6 @@ define(function(require, exports, module) {
                 this.galleryEditor,
                 this.widgetsManager,
                 this.guides,
-                this.toolBar,
                 this.navbar,
                 this.footer
             ];
@@ -112,7 +109,6 @@ define(function(require, exports, module) {
 
             document.body.style.overflow = "hidden";
 
-            this.toolBar.setElement(document.getElementById('tool-bar')).render();
             this.renderUrlBar();
             this.galleryEditor.render();
 

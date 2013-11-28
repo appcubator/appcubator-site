@@ -13,6 +13,8 @@ define(function(require, exports, module) {
         GarageView    = require("app/GarageView"),
         WorldView     = require("app/WorldView");
 
+    var ToolBarView = require('editor/ToolBarView');
+
     var AppRouter = Backbone.Router.extend({
 
         routes: {
@@ -48,10 +50,11 @@ define(function(require, exports, module) {
             keyDispatcher.bindComb('meta+v', this.paste);
             keyDispatcher.bindComb('ctrl+v', this.paste);
 
+
             var autoSave = setInterval(this.save, 30000);
 
-            this.worldView = new WorldView();
-
+            this.toolBar = new ToolBarView({pageId: -1});
+            this.toolBar.setElement(document.getElementById('tool-bar')).render();
             // if(appId !== 0) {
             //     this.garageView = new GarageView();
             //     $('.garage-toggle').on('click', this.garageView.toggle);
@@ -59,10 +62,7 @@ define(function(require, exports, module) {
             //     $('.world-toggle').on('click', this.garageView.hide);
             // }
 
-            $('.world-toggle').on('click', this.worldView.toggle);
-
             this.listenTo(v1State.get('tables'), 'add', this.entityAdded);
-
             this.autoAddLinksToNavbar();
         },
 
