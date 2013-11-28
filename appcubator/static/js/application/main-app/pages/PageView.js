@@ -147,6 +147,11 @@ define([
                         trigger: true
                     });
                 }
+            },
+
+            expand: function() {
+                this.el.className += ' expanded';
+                this.expanded = true;
             }
         });
 

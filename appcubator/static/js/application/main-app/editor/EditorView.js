@@ -11,6 +11,8 @@ define(function(require, exports, module) {
     var DebugOverlay = require('mixins/DebugOverlay');
     var WidgetEditorView = require('editor/WidgetEditorView');
     var EditorGalleryView = require('editor/EditorGalleryView');
+    var PageView = require('app/pages/PageView');
+
     var PageTemplatePicker = require('editor/PageTemplatePicker');
     var NavbarView = require('editor/NavbarView');
     var FooterView = require('editor/FooterView');
@@ -31,13 +33,14 @@ define(function(require, exports, module) {
         css: "bootstrap-editor",
 
         events: {
-            'click #editor-save': 'save',
-            'click #deploy': 'deploy',
-            'click .menu-button.help': 'help',
+            'click #editor-save'         : 'save',
+            'click #deploy'              : 'deploy',
+            'click .menu-button.help'    : 'help',
             'click .menu-button.question': 'question',
-            'click .url-bar': 'clickedUrl',
-            'click #design-mode-button': 'switchToDesignMode',
-            'click #close-css-editor': 'switchOffDesignMode'
+            'click .url-bar'             : 'clickedUrl',
+            'click #page-info'           : 'pageInfo',
+            'click #design-mode-button'  : 'switchToDesignMode',
+            'click #close-css-editor'    : 'switchOffDesignMode'
         },
 
         initialize: function(options) {
@@ -60,6 +63,7 @@ define(function(require, exports, module) {
             this.guides = new GuideView(this.widgetsCollection);
             this.toolBar = new ToolBarView();
             this.cssEditorView = new CSSEditorView();
+            this.pageView = new PageView(this.model, pageId);
             this.redoController = new RedoController();
             this.widgetEditorView = new WidgetEditorView();
             v1.widgetEditorView = this.WidgetEditorView;
@@ -109,6 +113,7 @@ define(function(require, exports, module) {
             console.log(this.widgetEditorView.el);
 
             this.cssEditorView.setElement($('#css-editor-panel')).render();
+            this.pageView.setElement($('#page-view-panel')).render();
 
             /* Access to elements inside iframe */
             var iframe = document.getElementById('page');
@@ -302,6 +307,11 @@ define(function(require, exports, module) {
                 $('#page').scrollTop((widget.getBottom() - pageHeightUnit + widget.get('layout').get('height') + 1) * 15);
             }
 
+        },
+
+        pageInfo: function() {
+            this.pageView.expand();
+            $('.page-container').addClass('packed');
         },
 
         switchToDesignMode: function() {
