@@ -8,7 +8,6 @@ body {
   line-height: 20px;
   color: #0f2d40;
   background-color: #e6e8e9;
-  overflow-y: scroll;
   background-image: url('/static/img/logo-bg.png');
   background-position: center;
   background-repeat: no-repeat;
@@ -938,7 +937,8 @@ legend + .control-group {
 
 .page {
   position: relative;
-  min-height: 100%;
+  overflow-y: scroll;
+  height: 100%;
 } // end .page
 
 .qm-btn,.qm-btn-nofix {
