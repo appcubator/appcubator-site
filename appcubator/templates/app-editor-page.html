@@ -8,24 +8,22 @@
         <span>Save</span>
       </div>
     </div>
-    <div class="middle-group" id="tool-bar">
-      <div class="navigator menu-button">
-        <a class="back"></a>
-        <a href="{% url appcubator.views.app.page app.id %}pages/" class="pages"></a>
-        <a href="{% url appcubator.views.app.page app.id %}emails/" class="emails"></a>
-        <a href="{% url appcubator.views.app.page app.id %}gallery/" class="themes"></a>
-        <a href="{% url appcubator.views.app.page app.id %}tables/" class="tables"></a>
-      </div>
+    <div class="right-group">
       <div class="menu-button pages" id="menu-pages">
         <div id="current-page" class="page-item"></div><ul id="page-list"></ul><div id="create-page" class="page-item">
-      </div></div>
-      <div class="menu-button dropdown-arrow">
+        </div>
       </div>
-    </div>
-    <div class="right-group">
-      <a class="menu-button world-toggle" href="#"></a>
-      <a class="menu-button garage-toggle" href="#"></a>
-      <div class="menu-button question">Ask a Question</div>
+      <ul class="navigation-menu">
+              <li class="menu-app-entities">
+                <a id="entities-menu" href="/app/{{ app.id }}/tables/"><span class="entities-icon"></span><span>Data</span></a>
+              </li><li class="menu-app-emails">
+                <a id="emails-menu" href="/app/{{ app.id }}/emails/"><span class="emails-icon"></span><span>Emails</span></a>
+              </li><li class="menu-app-plugins">
+                <a id="plugins-menu" href="/app/{{ app.id }}/plugins/"><span class="plugins-icon"></span><span>Plugins</span></a>
+              </li>
+                <li class="question"></li>
+        </ul>
+     
     </div>
   </div>
 
