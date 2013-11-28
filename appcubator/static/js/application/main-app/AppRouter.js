@@ -55,12 +55,6 @@ define(function(require, exports, module) {
 
             this.toolBar = new ToolBarView({pageId: -1});
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
-            // if(appId !== 0) {
-            //     this.garageView = new GarageView();
-            //     $('.garage-toggle').on('click', this.garageView.toggle);
-            //     $('.garage-toggle').on('click', this.worldView.hide);
-            //     $('.world-toggle').on('click', this.garageView.hide);
-            // }
 
             this.listenTo(v1State.get('tables'), 'add', this.entityAdded);
             this.autoAddLinksToNavbar();
@@ -72,20 +66,11 @@ define(function(require, exports, module) {
             v1State.get('pages').push(newPage);
         },
 
-        index: function(appId, tutorial) {
-            var self = this;
-            require(['app/OverviewPageView'], function(OverviewPageView) {
-                self.tutorialPage = "Introduction";
-                self.changePage(OverviewPageView, tutorial, function() {});
-                olark('api.box.show');
-            });
-        },
-
         info: function(appId, tutorial) {
             var self = this;
             require(['app/AppInfoView'], function(InfoView) {
                 self.tutorialPage = "Application Settings";
-                self.changePage(InfoView, tutorial, function() {
+                self.changePage(InfoView, {}, tutorial, function() {
                     $('.menu-app-info').addClass('active');
                 });
                 olark('api.box.show');
@@ -96,7 +81,7 @@ define(function(require, exports, module) {
             var self = this;
             require(['app/entities/EntitiesView'], function(EntitiesView) {
                 self.tutorialPage = "Tables Page";
-                self.changePage(EntitiesView, tutorial, function() {
+                self.changePage(EntitiesView, {}, tutorial, function() {
                     self.trigger('entities-loaded');
                     $('.menu-app-entities').addClass('active');
                 });
@@ -108,7 +93,7 @@ define(function(require, exports, module) {
             var self = this;
             self.tutorialPage = "Themes";
             require(['app/ThemesGalleryView'], function(ThemesGalleryView) {
-                self.changePage(ThemesGalleryView, tutorial, function() {
+                self.changePage(ThemesGalleryView, {}, tutorial, function() {
                     self.trigger('themes-loaded');
                     $('.menu-app-themes').addClass('active');
                 });
@@ -121,7 +106,7 @@ define(function(require, exports, module) {
             self.tutorialPage = "Pages";
             require(['app/pages/PagesView'], function(PagesView) {
                 $('.page').fadeIn();
-                self.changePage(PagesView, tutorial, function() {
+                self.changePage(PagesView, {}, tutorial, function() {
                     self.trigger('pages-loaded');
                     $('.menu-app-pages').addClass('active');
                 });
@@ -140,43 +125,10 @@ define(function(require, exports, module) {
 
             require(['editor/EditorView'], function(EditorView) {
                 // $('.page:not(.container)').fadeOut();
-                if (v1.view) {
-                    v1.view.close();
-                }
-                var cleanDiv = document.createElement('div');
-                cleanDiv.className = "clean-div editor-page";
-                var mainContainer = document.getElementById('main-container');
-                mainContainer.appendChild(cleanDiv);
-                $('.page').fadeIn();
-
-                console.log(pageId);
-                v1.view = new EditorView({
-                    pageId: pageId
-                });
-                v1.view.setElement(cleanDiv).render();
-
+                self.tutorialPage = "Introduction";
+                self.changePage(EditorView, {pageId: pageId}, "", function() {});
+                olark('api.box.show');
                 self.trigger('editor-loaded');
-
-                olark('api.box.hide');
-                self.changeTitle(v1.view.title);
-            });
-        },
-
-        mobileEditor: function(appId, pageId) {
-            var self = this;
-            self.tutorialPage = "Editor";
-            require(['m-editor/MobileEditorView'], function(MobileEditorView) {
-                if (v1.view) v1.view.close();
-                var cleanDiv = document.createElement('div');
-                cleanDiv.className = "clean-div editor-page";
-                var mainContainer = document.getElementById('main-container');
-                mainContainer.appendChild(cleanDiv);
-
-                v1.view = new MobileEditorView({
-                    pageId: pageId
-                });
-                v1.view.setElement(cleanDiv).render();
-
                 olark('api.box.hide');
                 self.changeTitle(v1.view.title);
             });
@@ -185,7 +137,7 @@ define(function(require, exports, module) {
         emails: function(appId, tutorial) {
             var self = this;
             self.tutorialPage = "Emails";
-            this.changePage(EmailsView, tutorial, function() {
+            this.changePage(EmailsView, {}, tutorial, function() {
                 $('.menu-app-emails').addClass('active');
             });
         },
@@ -193,19 +145,20 @@ define(function(require, exports, module) {
         plugins: function(appId, tutorial) {
             var self = this;
             self.tutorialPage = "Plugins";
-            this.changePage(PluginsView, tutorial, function() {
+            this.changePage(PluginsView, {}, tutorial, function() {
                 $('.menu-app-plugins').addClass('active');
             });
         },
 
-        changePage: function(newView, tutorial, post_render) {
+        changePage: function(NewView, options, tutorial, post_render) {
             if (v1.view) v1.view.close();
             var cleanDiv = document.createElement('div');
             cleanDiv.className = "clean-div";
             var mainContainer = document.getElementById('main-container');
             mainContainer.appendChild(cleanDiv);
 
-            v1.view = new newView();
+            v1.view = new NewView(options);
+
             v1.view.setElement(cleanDiv).render();
             $('.active').removeClass('active');
             this.changeTitle(v1.view.title);
