@@ -1,50 +1,40 @@
-<div class="v1nav navbar logo-text navbar-inverse navbar-fixed-top ">
-  <div class="hi4 navbar-inner">
-    <div class="container">
-      <div class="nav-collapse collapse navbar-responsive-collapse">
-        <ul class="nav">
-          <li class="brand">
-            <h1 class="name">
-<!--               <a href="/"><div id="box-container">
-                <div id="cube" class=""><div></div><div></div><div></div><div></div><div></div><div></div></div></div></a> -->
-
-              <a id="main-menu" href="{% url appcubator.views.app.user_page user.username %}" rel="external">
-                <span class="brand">Appcubator</span>
-                <span class="title">Dashboard</span>
-              </a>
-            </h1>{% if app and navHide != "true" %}<ul class="navigation-menu">
-              <li class="menu-app-pages">
-                <a id="pages-menu" href="/app/{{ app.id }}/pages/"><span class="pages-icon"></span><span>Pages</span></a>
-              </li><li class="menu-app-entities">
-                <a id="entities-menu" href="/app/{{ app.id }}/tables/"><span class="entities-icon"></span><span>Data</span></a>
-              </li><li class="menu-app-themes">
-                <a id="gallery-menu" href="/app/{{ app.id }}/gallery/"><span class="gallery-icon"></span><span>Design</span></a>
-              </li><li class="menu-app-emails">
-                <a id="emails-menu" href="/app/{{ app.id }}/emails/"><span class="emails-icon"></span><span>Emails</span></a>
-              </li><li class="menu-app-plugins">
-                <a id="plugins-menu" href="/app/{{ app.id }}/plugins/"><span class="plugins-icon"></span><span>Plugins</span></a>
-              </li><!-- <li class="menu-app-support">
-                <a id="support-menu" href="/app/{{ app.id }}/support/"><span class="support-icon"></span><span>Support</span></a>
-              </li> -->
-            </ul>{% endif %}
-          </li>
-          {% if app %}
-          <li class="pull-right dropd">
-            <a href="#" class="garage-toggle">
-            </a>
-          </li>
-          {% else %}
-          <li class="pull-right dropd">
-            <a href="{% url appcubator.views.app.user_page user.username %}" class="g-toggle" onclick="window.open(this.href, this.href); return false" rel="external">
-            </a>
-          </li>
-          {% endif %}
-          <li class="pull-right dropd">
-            <a href="#" class="world-toggle">
-            </a>
-          </li>
-        </ul>
-      </div>
+<!-- Top Menu -->
+<div class="section-select">
+    <div class="save-run-group">
+        <div class="menu-button run" id="deploy">
+            <span class="play-btn">
+                <span class="play-btn-icon">
+                </span>
+            </span>
+            <span id="deploy-text">
+                Publish
+            </span>
+        </div>
+        <div class="menu-button save" id="editor-save">
+            <span>
+                Save
+            </span>
+        </div>
     </div>
-  </div>
+    <div class="right-group">
+        <div class="menu-button pages" id="menu-pages">
+            <div id="current-page" class="page-item">
+            </div>
+            <ul id="page-list">
+            </ul>
+            <div id="create-page" class="page-item">
+            </div>
+        </div>
+        <ul class="navigation-menu">
+            <li class="menu-app-entities">
+                <a id="entities-menu" href="/app/{{ app.id }}/tables/"><span class="entities-icon"></span><span>Data</span></a>
+            </li><li class="menu-app-emails">
+                <a id="emails-menu" href="/app/{{ app.id }}/emails/"><span class="emails-icon"></span><span>Emails</span></a>
+            </li><li class="menu-app-plugins">
+                <a id="plugins-menu" href="/app/{{ app.id }}/plugins/"><span class="plugins-icon"></span><span>Plugins</span></a>
+            </li><li class="question">
+                <a></a>
+            </li>
+        </ul>
+    </div>
 </div>

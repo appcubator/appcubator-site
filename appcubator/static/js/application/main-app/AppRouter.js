@@ -24,8 +24,8 @@ define(function(require, exports, module) {
             "app/:appid/plugins/*tutorial"     : "plugins",
             "app/:appid/mobile-editor/:pageid/": "mobileEditor",
             "app/:appid/emails/*tutorial"      : "emails",
-            "app/:appid/*tutorial"             : "pages",
-            "app/:appid/*anything/"            : "pages"
+            "app/:appid/*tutorial"             : "editor",
+            "app/:appid/*anything/"            : "editor"
         },
 
         tutorialPage: 0,
@@ -52,12 +52,12 @@ define(function(require, exports, module) {
 
             this.worldView = new WorldView();
 
-            if(appId !== 0) {
-                this.garageView = new GarageView();
-                $('.garage-toggle').on('click', this.garageView.toggle);
-                $('.garage-toggle').on('click', this.worldView.hide);
-                $('.world-toggle').on('click', this.garageView.hide);
-            }
+            // if(appId !== 0) {
+            //     this.garageView = new GarageView();
+            //     $('.garage-toggle').on('click', this.garageView.toggle);
+            //     $('.garage-toggle').on('click', this.worldView.hide);
+            //     $('.world-toggle').on('click', this.garageView.hide);
+            // }
 
             $('.world-toggle').on('click', this.worldView.toggle);
 
@@ -130,19 +130,25 @@ define(function(require, exports, module) {
         },
 
         editor: function(appId, pageId) {
+            if(!pageId) pageId = 0;
+
+            console.log(pageId);
+
             var self = this;
 
             self.tutorialPage = "Editor";
 
             require(['editor/EditorView'], function(EditorView) {
-                $('.page:not(.container)').fadeOut();
+                // $('.page:not(.container)').fadeOut();
                 if (v1.view) {
                     v1.view.close();
                 }
                 var cleanDiv = document.createElement('div');
                 cleanDiv.className = "clean-div editor-page";
-                console.log(cleanDiv);
-                $(document.body).append(cleanDiv);
+                var mainContainer = document.getElementById('main-container');
+                mainContainer.appendChild(cleanDiv);
+                $('.page').fadeIn();
+
                 console.log(pageId);
                 v1.view = new EditorView({
                     pageId: pageId
@@ -158,13 +164,13 @@ define(function(require, exports, module) {
 
         mobileEditor: function(appId, pageId) {
             var self = this;
-            $('.page').fadeOut();
             self.tutorialPage = "Editor";
             require(['m-editor/MobileEditorView'], function(MobileEditorView) {
                 if (v1.view) v1.view.close();
                 var cleanDiv = document.createElement('div');
                 cleanDiv.className = "clean-div editor-page";
-                $(document.body).append(cleanDiv);
+                var mainContainer = document.getElementById('main-container');
+                mainContainer.appendChild(cleanDiv);
 
                 v1.view = new MobileEditorView({
                     pageId: pageId
@@ -207,7 +213,6 @@ define(function(require, exports, module) {
                 scrollTop: 0
             });
             $('.page').fadeIn();
-            $('.pull-right.dropd').removeClass('open');
             post_render.call();
             if (tutorial && tutorial === 'tutorial/') {
                 this.showTutorial();

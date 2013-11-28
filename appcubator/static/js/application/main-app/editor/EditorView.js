@@ -47,10 +47,17 @@ define(function(require, exports, module) {
             _.bindAll(this);
             this.subviews = [];
 
-            if (options && options.pageId) {
+            console.log(options.pageId);
+            console.log(options);
+
+            if (options && (options.pageId == "0" || options.pageId  >= 0)) {
+                console.log("yolo");
                 this.pageId = options.pageId;
                 pageId = options.pageId;
             }
+
+            console.log(options);
+            console.log(pageId);
 
             this.model = v1State.get('pages').models[pageId];
             v1State.currentPage = this.model;
@@ -128,14 +135,6 @@ define(function(require, exports, module) {
 
             if (!this.model.get('uielements').length) {
                 new PageTemplatePicker(this.model);
-            }
-
-            if (appId !== 0) {
-                v1.garageView.setEnvironmentEditor();
-                v1.worldView.setEnvironmentEditor();
-                $('.garage-toggle.menu-button').on('click', v1.garageView.toggle);
-                $('.garage-toggle.menu-button').on('click', v1.worldView.hide);
-                $('.world-toggle.menu-button').on('click', v1.garageView.hide);
             }
 
             if (v1.worldView) {
@@ -330,10 +329,6 @@ define(function(require, exports, module) {
 
         close: function() {
 
-            v1.garageView.unsetEnvironmentEditor();
-            v1.garageView.hide();
-            v1.worldView.unsetEnvironmentEditor();
-            v1.worldView.hide();
             g_guides = null;
             window.removeEventListener('resize', this.setupPageWrapper);
             document.body.style.overflow = "";
