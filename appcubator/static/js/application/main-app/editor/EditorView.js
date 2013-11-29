@@ -2,7 +2,6 @@ define(function(require, exports, module) {
 
     'use strict';
 
-
     var PageModel = require('models/PageModel');
     var TableCollection = require('collections/TableCollection');
     var UrlView = require('app/pages/UrlView');
@@ -38,6 +37,7 @@ define(function(require, exports, module) {
             'click .menu-button.question': 'question',
             'click .url-bar'             : 'clickedUrl',
             'click #page-info'           : 'pageInfo',
+            'click #close-page-info'     : 'closePageInfo',
             'click #design-mode-button'  : 'switchToDesignMode',
             'click #close-css-editor'    : 'switchOffDesignMode'
         },
@@ -306,7 +306,13 @@ define(function(require, exports, module) {
 
         pageInfo: function() {
             this.pageView.expand();
-            $('.page-container').addClass('packed');
+        },
+
+        closePageInfo: function() {
+            this.pageView.hide();
+            $('.left-buttons').removeClass('invisible');
+            $('.page-container').removeClass('packed');
+            this.galleryEditor.show();
         },
 
         switchToDesignMode: function() {

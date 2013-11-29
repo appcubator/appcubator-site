@@ -1,159 +1,179 @@
-define([
-        'app/pages/UrlView',
-        'mixins/SimpleModalView',
-        'mixins/DialogueView',
-        'app/templates/PageTemplates',
-        'util',
-        'backbone'
-    ],
-    function(UrlView, SimpleModalView, DialogueView) {
+define(function(require, exports, module) {
 
-        var PageView = Backbone.View.extend({
-            el: null,
-            tagName: 'li',
-            className: 'page-view span18 hoff2 offsetr1 pane hi22',
-            expanded: false,
-            events: {
-                'click .delete': 'deletePage',
-                'change #access_level': 'accessLevelChanged',
-                'click .edit-url': 'renderUrl',
-                'click .edit': 'goToEditor'
-            },
+    'use strict';
 
-            initialize: function(pageModel, ind, isMobile) {
-                _.bindAll(this);
+    var UrlView = require('app/pages/UrlView');
+    var SimpleModalView = require('mixins/SimpleModalView');
+    var DialogueView = require('mixins/DialogueView');
 
-                this.model = pageModel;
-                this.ind = ind;
-                this.isMobile = isMobile;
-                this.urlModel = pageModel.get('url');
-                this.listenTo(this.model, 'remove', this.close, this);
+    require('util');
+    require('backbone');
 
-            },
+    var tempPage = [
+        '<h3 class="offset2 hoff1"><%= page_name %></h3>',
+        '<span class="offset2 hi1 context-text edit-url"><%= context_text %></span>',
+        '<div class="page-menu">',
+        '<a class="delete item" <% if(disable_edit) { %>style="color: #999"<% } %>><i class="icon-delete"></i>Delete Page</a>',
+        '<div class="edit-url item" <% if(disable_edit) { %>style="color: #999"<% } %>><i class="icon-url"></i>Edit URL</div>',
+        '</div>'
+    ].join('\n');
 
-            render: function() {
-                var page_context = {};
-                page_context.page_name = this.model.get('name');
-                page_context.ind = this.ind;
-                page_context.context_text = this.model.getContextSentence();
-                // if this is the homepage view,
-                // mark 'edit url' link as disabled
-                page_context.disable_edit = (this.model.get('name') === 'Homepage') ? true : false;
+    var tempMenu = [
+        '<span class="span24 hi6">',
+        '<h4 class="hi2 span12 hoff1 offset2">Access Level</h4>',
+        '<select class="span12 offset2" id="access_level">',
+        '<option <% if(access_level == \'all\') { %> selected <% } %> value="all">Everyone</option>',
+        '<option <% if(access_level == \'users\') { %> selected <% } %> value="users">All Users</option>',
+        // '<% _.each(user_roles, function(role) { %>',
+        //   '<option <% if(access_level == role) { %> selected <% } %> value="<%=role%>">Only <%= role %></option>',
+        // '<% }); %>',
+        '</select>',
+        '</div>'
+    ].join('\n');
 
-                var page = _.template(PageTemplates.tempPage, page_context);
-                this.el.innerHTML += page;
 
-                this.renderMenu();
-                return this;
-            },
+    var PageView = Backbone.View.extend({
+        el: null,
+        tagName: 'li',
+        className: 'page-view span18 hoff2 offsetr1 pane hi22',
+        expanded: false,
+        events: {
+            'click .delete': 'deletePage',
+            'change #access_level': 'accessLevelChanged',
+            'click .edit-url': 'renderUrl',
+        },
 
-            renderUrl: function() {
-                // homepage url can't be edited
-                if (this.model.get('name') === 'Homepage') {
-                    return false;
-                }
-                var newView = new UrlView(this.urlModel, this.model);
-            },
+        initialize: function(pageModel, ind, isMobile) {
+            _.bindAll(this);
 
-            renderMenu: function() {
-                var page_context = {};
-                page_context = this.model.attributes;
-                page_context.page_name = this.model.get('name');
-                page_context.ind = this.ind;
-                page_context.user_roles = v1State.get('users').map(function(userModel) {
-                    return userModel.get('name');
+            this.model = pageModel;
+            this.ind = ind;
+            this.isMobile = isMobile;
+            this.urlModel = pageModel.get('url');
+            this.listenTo(this.model, 'remove', this.close, this);
+
+        },
+
+        render: function() {
+            var page_context = {};
+            page_context.page_name = this.model.get('name');
+            page_context.ind = this.ind;
+            page_context.context_text = this.model.getContextSentence();
+            // if this is the homepage view,
+            // mark 'edit url' link as disabled
+            page_context.disable_edit = (this.model.get('name') === 'Homepage') ? true : false;
+
+            var page = _.template(tempPage, page_context);
+            this.el.innerHTML += page;
+
+            this.renderMenu();
+            return this;
+        },
+
+        renderUrl: function() {
+            // homepage url can't be edited
+            if (this.model.get('name') === 'Homepage') {
+                return false;
+            }
+            var newView = new UrlView(this.urlModel, this.model);
+        },
+
+        renderMenu: function() {
+            var page_context = {};
+            page_context = this.model.attributes;
+            page_context.page_name = this.model.get('name');
+            page_context.ind = this.ind;
+            page_context.user_roles = v1State.get('users').map(function(userModel) {
+                return userModel.get('name');
+            });
+
+            var page = _.template(tempMenu, page_context);
+            var span = document.createElement('span');
+            span.innerHTML = page;
+
+            this.el.appendChild(span);
+        },
+
+        accessLevelChanged: function(e) {
+            this.model.set('access_level', e.target.value);
+        },
+
+        deletePage: function() {
+            if (this.model.get('name') == "Homepage" || this.model.get('name') == "Registration Page") {
+                new SimpleModalView({
+                    text: "The Hompage is an essential part of " + "your application, and can't be deleted."
                 });
 
-                var page = _.template(PageTemplates.tempMenu, page_context);
-                var span = document.createElement('span');
-                span.innerHTML = page;
-
-                this.el.appendChild(span);
-            },
-
-            accessLevelChanged: function(e) {
-                this.model.set('access_level', e.target.value);
-            },
-
-            deletePage: function() {
-                if (this.model.get('name') == "Homepage" || this.model.get('name') == "Registration Page") {
-                    new SimpleModalView({
-                        text: "The Hompage is an essential part of " + "your application, and can't be deleted."
-                    });
-
-                    return;
-                }
-                this.askToDelete();
-            },
-
-            askToDelete :function() {
-
-                var translateTypetoNL = function(str) {
-                    if(str == "node") {
-                        str = "Widget";
-                    }
-
-                    return str;
-                };
-
-                var coll = this.model.collection;
-                var model = this.model;
-
-                var widgets = v1State.getWidgetsRelatedToPage(this.model);
-                var links = v1State.getNavLinkRelatedToPage(this.model);
-
-                var widgetsNLString = "";
-                if(widgets.length) {
-                    var widgetsNL = _.map(widgets, function(widget) { return translateTypetoNL(widget.widget.get('type')) + ' on '+ widget.pageName; });
-                    widgetsNLString = widgetsNL.join('<br>');
-                    
-                }
-
-                var linksNLString = "";
-                if(links.length) {
-                    var linksNL = _.map(links, function(link) { return  'Link on '+ link.section + ' of '+ link.pageName; });
-                    linksNLString = linksNL.join('<br>');
-                }
-
-                if(!links.length && !widgets.length) {
-                    coll.remove(model);
-                }
-                else {
-
-                    new DialogueView({ text: "The related widgets listed below will be deleted with this page. Do you want to proceed? <br><br> " + widgetsNLString + linksNLString}, function() {
-                        
-                        coll.remove(model.cid);
-
-                        _.each(widgets, function(widget) {
-                            widget.widget.collection.remove(widget.widget);
-                        });
-
-                        _.each(links, function(link) {
-                            link.link.collection.remove(link.link);
-                        });
-                    });
-                }
-    
-            },
-
-            goToEditor: function(e) {
-                e.preventDefault();
-                if (this.isMobile) {
-                    v1.navigate("app/" + appId + "/mobile-editor/" + this.ind + '/', {
-                        trigger: true
-                    });
-                } else {
-                    v1.navigate("app/" + appId + "/page/" + this.ind + '/', {
-                        trigger: true
-                    });
-                }
-            },
-
-            expand: function() {
-                this.el.className += ' expanded';
-                this.expanded = true;
+                return;
             }
-        });
+            this.askToDelete();
+        },
 
-        return PageView;
+        askToDelete: function() {
+
+            var translateTypetoNL = function(str) {
+                if (str == "node") {
+                    str = "Widget";
+                }
+
+                return str;
+            };
+
+            var coll = this.model.collection;
+            var model = this.model;
+
+            var widgets = v1State.getWidgetsRelatedToPage(this.model);
+            var links = v1State.getNavLinkRelatedToPage(this.model);
+
+            var widgetsNLString = "";
+            if (widgets.length) {
+                var widgetsNL = _.map(widgets, function(widget) {
+                    return translateTypetoNL(widget.widget.get('type')) + ' on ' + widget.pageName;
+                });
+                widgetsNLString = widgetsNL.join('<br>');
+
+            }
+
+            var linksNLString = "";
+            if (links.length) {
+                var linksNL = _.map(links, function(link) {
+                    return 'Link on ' + link.section + ' of ' + link.pageName;
+                });
+                linksNLString = linksNL.join('<br>');
+            }
+
+            if (!links.length && !widgets.length) {
+                coll.remove(model);
+            } else {
+
+                new DialogueView({
+                    text: "The related widgets listed below will be deleted with this page. Do you want to proceed? <br><br> " + widgetsNLString + linksNLString
+                }, function() {
+
+                    coll.remove(model.cid);
+
+                    _.each(widgets, function(widget) {
+                        widget.widget.collection.remove(widget.widget);
+                    });
+
+                    _.each(links, function(link) {
+                        link.link.collection.remove(link.link);
+                    });
+                });
+            }
+
+        },
+
+        expand: function() {
+            this.el.className += ' expanded';
+            this.expanded = true;
+        },
+
+        hide: function() {
+            this.$el.removeClass('expanded');
+            this.expanded = false;
+        }
     });
+
+    return PageView;
+});
