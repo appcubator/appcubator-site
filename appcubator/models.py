@@ -981,3 +981,5 @@ class AnalyticsStore(models.Model):
 class Collaboration(models.Model):
     user = models.ForeignKey(User, related_name="collaborations")
     app = models.ForeignKey(App, related_name="collaborations")
+
+    created_on = models.DateTimeField(auto_now_add = True)
