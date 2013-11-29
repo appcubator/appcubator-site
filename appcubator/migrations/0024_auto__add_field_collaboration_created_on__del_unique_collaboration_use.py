@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Removing unique constraint on 'Collaboration', fields ['user']
-        db.delete_unique('appcubator_collaboration', ['user_id'])
+        # THERE WAS A BUG WITH THIS SO I COMMENTED OUT. db.delete_unique('appcubator_collaboration', ['user_id'])
 
         # Adding field 'Collaboration.created_on'
         db.add_column('appcubator_collaboration', 'created_on',
@@ -22,7 +22,7 @@ class Migration(SchemaMigration):
         db.delete_column('appcubator_collaboration', 'created_on')
 
         # Adding unique constraint on 'Collaboration', fields ['user']
-        db.create_unique('appcubator_collaboration', ['user_id'])
+        #db.create_unique('appcubator_collaboration', ['user_id'])
 
 
     models = {
