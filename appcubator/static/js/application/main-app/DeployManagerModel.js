@@ -7,6 +7,9 @@ define(function(require, exports, module) {
 	var DeployManagerModel = Backbone.Model.extend({
 
 		deployUrl: '/app/' + appId + '/deploy/',
+		isDeployed: false,
+		lastDeploy: null,
+		disableSave: false,
 
 		initialize: function (argument) {
 			// body...
@@ -57,12 +60,12 @@ define(function(require, exports, module) {
 
         deploySoftErrorHandler: function(data) {
                 v1State.set('version_id', data.version_id);
-                v1.disableSave = true;
+                this.disableSave = true;
                 new SoftErrorView({
                     text: data.message,
                     path: data.path
                 }, function() {
-                    v1.disableSave = false;
+                    this.disableSave = false;
                 });
                 return data;
         },
@@ -82,11 +85,13 @@ define(function(require, exports, module) {
         },
 
 		deploy: function(callback, hold_on_callback) {
-            if (v1.disableSave === true) return;
+            if (this.disableSave === true) return;
             var self = this;
+            
             var isDeployed = false;
             var before_deploy = new Date().getTime(); // global, b/c accessed in an ajax handler
-            v1.disableSave = true;
+            
+            this.disableSave = true;
 
             var jqxhrToJson = function(jqxhr){
                 var data = {};
@@ -100,9 +105,10 @@ define(function(require, exports, module) {
 
             // compose this w the other callbacks
             var completeCallback = function(data) {
-                v1.disableSave = false;
+                this.disableSave = false;
                 isDeployed = true;
                 data.deploy_time = (new Date().getTime() - before_deploy) / 1000;
+                this.lastDeploy = new Date().getTime();
                 return data;
             };
 
@@ -112,24 +118,24 @@ define(function(require, exports, module) {
                 statusCode: {
                     200: function(data){
                         data = completeCallback(data);
-                        data = successHandler(data, callback);
+                        data = self.successHandler(data, callback);
                     },
                     400: function(jqxhr){
                         var data = jqxhrToJson(jqxhr);
                         data = completeCallback(data);
-                        data = softErrorHandler(data);
+                        data = self.softErrorHandler(data);
                         data = callback(data);
                     },
                     409: function(jqxhr){
                         var data = jqxhrToJson(jqxhr);
                         data = completeCallback(data);
-                        data = mergeConflictHandler(data);
+                        data = self.mergeConflictHandler(data);
                         data = callback(data);
                     },
                     500: function(jqxhr){
                         var data = jqxhrToJson(jqxhr);
                         data = completeCallback(data);
-                        data = hardErrorHandler(data);
+                        data = self.hardErrorHandler(data);
                         data = callback(data);
                     },
                 },
