@@ -221,7 +221,7 @@ define(function(require, exports, module) {
                     this.tutorial.closeModal();
                 }
             }
-        },ß
+        },
 
         download: function(callback) {
             var jqxhrToJson = function(jqxhr){
