@@ -55,6 +55,55 @@
   box-shadow: 0 0 8px 2px rgba(60, 60, 60, 0.6);
 }
 
+
+
+
+@keyframes slidein {
+  0% {
+  -webkit-transform: translateY(40%);
+  -moz-transform: translateY(40%);
+  -ms-transform: translateY(40%);
+  transform: translateY(40%);
+  }
+
+  100% {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  }
+}
+
+@-moz-keyframes slidein {
+  0% {
+  -webkit-transform: translateY(40%);
+  -moz-transform: translateY(40%);
+  -ms-transform: translateY(40%);
+  transform: translateY(40%);
+  }
+  100% {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes slidein {
+  0% {
+  -webkit-transform: translateY(40%);
+  -moz-transform: translateY(40%);
+  -ms-transform: translateY(40%);
+  transform: translateY(40%);
+  }
+  100% {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  }
+}
+
 .page-wrapper {
   background-color: rgba(216, 216, 219, 0.6);
   position: relative;
@@ -73,12 +122,20 @@
   -webkit-box-shadow: 0 0 30px 2px rgba(120, 120, 120, 0.4);
   box-shadow: 0 0 30px 2px rgba(120, 120, 120, 0.4);
 
-  -webkit-transition: width 0.2s;
-  -moz-transition: width 0.2s;
-  -o-transition: width 0.2s;
-  -ms-transition: width 0.2s;
-  transition: width 0.2s;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  transition: all 0.2s;
   overflow: hidden;
+
+
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  -webkit-animation: slidein 0.4s ease-out;
+  animation: slidein 0.4s ease-out;
 }
 
 .url-bar {
