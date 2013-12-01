@@ -26,7 +26,9 @@ define(function(require, exports, module) {
 
         initialize: function(options) {
             _.bindAll(this);
+            console.log(options);
             this.parentView = options.parentView;
+            this.options = options;
             return this;
         },
 
@@ -37,7 +39,13 @@ define(function(require, exports, module) {
             var sectionName = this.name.replace(/ /g, '-');
             this.header = this.addHeaderItem(this.name);
             this.list = document.createElement('ul');
-            this.list.className = "elements-panel";
+            this.list.className = "elements-panel ";
+            if(this.options.index > -1) {
+                console.log(this.options.index);
+                this.list.className += 'top'+this.options.index;
+                console.log(this.list);
+            }
+            this.list.innerHTML = '<div class="arrow"></div>';
             this.el.appendChild(this.list);
             this.list.style = '';
 

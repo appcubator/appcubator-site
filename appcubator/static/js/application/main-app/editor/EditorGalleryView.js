@@ -26,6 +26,7 @@ define(function(require, exports, module) {
 
         positionHorizontalGrid: 80,
         positionVerticalGrid: 15,
+        nmrSections: 0,
 
         sections: [],
         subviews: [],
@@ -371,8 +372,11 @@ define(function(require, exports, module) {
 
             var self = this;
             var sectionView = new EditorGallerySectionView({
-                parentView: self
+                parentView: self,
+                index: this.nmrSections
             });
+
+            this.nmrSections++;
 
             sectionView.addSearcher(this.searcher);
 
