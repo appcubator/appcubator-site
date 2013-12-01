@@ -1,4 +1,5 @@
 define([
+  'util',
   'https://api.filepicker.io/v1/filepicker.js'
 ],
   function() {
