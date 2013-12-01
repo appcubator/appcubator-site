@@ -142,12 +142,19 @@ background-color: rgba(255,255,255,0.4);
  ul.list .elements-panel {
   // display: none;
   position: fixed;
-  right: 110px;
+  right: 120px;
   top: 80px;
-  height: 0;
-  width: 0;
 
+  height: 100%;
+  width: 220px;
+  tranform:scale(0);
+  -webkit-transform: scale(0);
   overflow: hidden;
+
+  transform-origin: 100% 20%;
+  -ms-transform-origin: 100% 20%;
+  -webkit-transform-origin: 100% 20%;
+
 }
 
  ul.list .elements-panel.open {  
@@ -155,10 +162,13 @@ background-color: rgba(255,255,255,0.4);
   -moz-transition: all .2s ease-out; 
   -o-transition:all .2s ease-out; 
   transition: all .2s ease-out; 
-  
+
   display: inline-block;
-  height: 100%;
-  width: 240px;
+
+
+  tranform:scale(1);
+  -webkit-transform: scale(1);
+
  }
 
 .item-gallery .header:before {
