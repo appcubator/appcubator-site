@@ -122,20 +122,25 @@
   -webkit-box-shadow: 0 0 30px 2px rgba(120, 120, 120, 0.4);
   box-shadow: 0 0 30px 2px rgba(120, 120, 120, 0.4);
 
-  -webkit-transition: all 0.2s;
-  -moz-transition: all 0.2s;
-  -o-transition: all 0.2s;
-  -ms-transition: all 0.2s;
-  transition: all 0.2s;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
   overflow: hidden;
 
 
+  -webkit-transform: translateY(100%);
+  -moz-transform: translateY(100%);
+  -ms-transform: translateY(100%);
+  transform: translateY(100%);
+}
+
+.page-wrapper.show {
   -webkit-transform: translateY(0);
   -moz-transform: translateY(0);
   -ms-transform: translateY(0);
   transform: translateY(0);
-  -webkit-animation: slidein 0.4s ease-out;
-  animation: slidein 0.4s ease-out;
 }
 
 .url-bar {

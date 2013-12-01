@@ -167,6 +167,8 @@ define(function(require, exports, module) {
 
             self.startUIStateUpdater(proxy);
             self.setupPageHeight();
+
+            this.$el.find('.page-wrapper').addClass('show');
         },
 
         renderUrlBar: function() {
