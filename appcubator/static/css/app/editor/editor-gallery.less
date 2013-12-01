@@ -139,20 +139,27 @@ background-color: rgba(255,255,255,0.4);
   text-align: center;
 }
 
-ul.list:hover .bottom-arrow {
+ ul.list .elements-panel {
+  // display: none;
+  position: fixed;
+  right: 110px;
+  top: 80px;
+  height: 0;
+  width: 0;
 
-  transform: translate(0,-36px);
-  -ms-transform: translate(0,-36px);
-  -webkit-transform: translate(0,-36px);
-
-  // transition-property: width;
-  transition-duration: 0.18s;
-  transition-timing-function: ease-out;
-  /* Safari */
-  // -webkit-transition-property:width;
-  -webkit-transition-duration:0.18s;
-  -webkit-transition-timing-function:ease-out;
+  overflow: hidden;
 }
+
+ ul.list .elements-panel.open {  
+    -webkit-transition: all .2s ease-out; 
+  -moz-transition: all .2s ease-out; 
+  -o-transition:all .2s ease-out; 
+  transition: all .2s ease-out; 
+  
+  display: inline-block;
+  height: 100%;
+  width: 240px;
+ }
 
 .item-gallery .header:before {
   content: ' ';
@@ -256,15 +263,16 @@ ul.list:hover .bottom-arrow {
 }
 
 .elements-list .gallery-header {
-  width: 100%;
+  width: 100px;
+  height: 100px;
+  border-radius: 18px;
+
   margin-right: -8px;
-  height: 40px;
   text-align: center;
-  font-weight: bold;
   font-size: 14px;
-  padding: 0px;
-  padding-left: 20px;
-  line-height: 40px;
+  padding: 6px;
+  padding-top: 15px;
+  line-height: 24px;
 
   margin-top: 8px;
   margin-left: -1px;
@@ -274,9 +282,6 @@ ul.list:hover .bottom-arrow {
   cursor: default;
   text-shadow: 0 1px 0 #1b2535;
   background-color: #0f2d40;
-
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
 
   :active {
     border: none;

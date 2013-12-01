@@ -20,6 +20,7 @@ define(function(require, exports, module) {
             'mouseleave': 'mouseleave'
         },
 
+        className: 'gallery-section',
         isExpanded: true,
         timer: null,
 
@@ -36,6 +37,7 @@ define(function(require, exports, module) {
             var sectionName = this.name.replace(/ /g, '-');
             this.header = this.addHeaderItem(this.name);
             this.list = document.createElement('ul');
+            this.list.className = "elements-panel";
             this.el.appendChild(this.list);
             this.list.style = '';
 
@@ -82,11 +84,12 @@ define(function(require, exports, module) {
         addHeaderItem: function(text, target) {
             var li = document.createElement('div');
             li.className = 'gallery-header open';
-            li.innerHTML = text + '<span class="qmark">?</span>';
+            li.innerHTML = text;
+            // + '<span class="qmark">?</span>';
             var icon = document.createElement('img');
             icon.className = "icon";
             icon.src = "/static/img/right-arrow.png";
-            li.appendChild(icon);
+            // li.appendChild(icon);
             this.el.appendChild(li);
             return li;
         },
@@ -98,26 +101,14 @@ define(function(require, exports, module) {
 
         expand: function() {
             this.header.className += ' open';
+            this.list.className += ' open';
 
-            try {
-                $(this.list).clearQueue();
-            } catch (err) {}
-
-            $(this.list).slideDown({
-                duration: 180,
-                easing: "linear"
-            });
             this.isExpanded = true;
         },
 
         hide: function() {
             $(this.header).removeClass('open');
-
-            try {
-                $(this.list).clearQueue();
-            } catch (err) {}
-
-            $(this.list).slideUp(200);
+            $(this.list).removeClass('open');
             this.isExpanded = false;
         },
 

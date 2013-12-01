@@ -33,8 +33,6 @@ define(function(require, exports, module) {
         editorContext: "Page",
 
         events: {
-            'mouseover .bottom-arrow': 'slideDown',
-            'mousemove .bottom-arrow': 'slideDown',
             'change input.search'    : 'searchInputChage',
             'keyup input.search'     : 'searchInputChage'
         },
@@ -68,10 +66,6 @@ define(function(require, exports, module) {
             // hide all sections except first
             this.hideAllSections();
             this.expandSection(0);
-
-            $(this.allList).append('<div class="bottom-arrow"></div>');
-            $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
-            $(this.allList).find('.bottom-arrow').on('mousemove', this.slideDown);
 
             this.bindDraggable();
 
