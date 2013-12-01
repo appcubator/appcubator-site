@@ -72,7 +72,8 @@ define([
                     start: function(e) {
                         self.draggableActive = true;
                     },
-                    stop: self.dropped
+                    stop: self.dropped,
+                    iframeFix: true
                 });
 
                 this.switchEditingModeOn();
@@ -166,7 +167,9 @@ define([
             },
 
             findLeft: function(e, ui) {
-                var offsetLeft = $('.highlighted').offset().left;
+                var iframe = document.getElementById('page');
+                var $el = $(iframe).contents().find('.highlighted');
+                var offsetLeft = $el.offset().left;
                 var left = Math.round((e.pageX - offsetLeft) / 1);
                 if (left < 0) left = 0;
                 //if(left + 4 > 12) left = 8;
@@ -175,7 +178,9 @@ define([
             },
 
             findTop: function(e, ui) {
-                var offsetScrolledTop = $('.highlighted').offset().top;
+                var iframe = document.getElementById('page');
+                var $el = $(iframe).contents().find('.highlighted');
+                var offsetScrolledTop = $el.offset().top;
                 var top = Math.round((e.pageY - offsetScrolledTop) / 1);
                 if (top < 0) top = 0;
 
