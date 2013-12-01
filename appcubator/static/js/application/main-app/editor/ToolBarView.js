@@ -76,19 +76,8 @@ define(function(require, exports, module) {
             var self = this;
             v1.save(null, function() {
                 $('#page-list').append('<li class="go-to-page" id="page-' + pageInd + '"><a>' + name + '</a></li>');
-                self.expandPages();
                 util.scrollToBottom($('#page-list'));
             });
-        },
-
-        expandPages: function() {
-            $('#menu-pages').height((this.nmrFields) * 42);
-        },
-
-        shrinkPages: function(e) {
-            if (util.isMouseOn(e.pageX, e.pageY, this.menuPages)) return;
-            $('#menu-pages').height(42);
-            this.createBox.reset();
         },
 
         navigateBack: function() {

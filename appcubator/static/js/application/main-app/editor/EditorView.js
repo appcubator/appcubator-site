@@ -120,10 +120,6 @@ define(function(require, exports, module) {
 
             $('#loading-gif').fadeOut().remove();
 
-            if (!this.model.get('uielements').length) {
-                new PageTemplatePicker(this.model);
-            }
-
             if (v1.worldView) {
                 $('.world-toggle.menu-button').on('click', v1.worldView.toggle);
             }
@@ -143,6 +139,7 @@ define(function(require, exports, module) {
                 }
             });
 
+            this.$pageContainer = this.$el.find('.page-container');
             return this;
         },
 
@@ -168,7 +165,17 @@ define(function(require, exports, module) {
             self.startUIStateUpdater(proxy);
             self.setupPageHeight();
 
-            this.$el.find('.page-wrapper').addClass('show');
+            if (!this.model.get('uielements').length) {
+                var templatePicker = new PageTemplatePicker({ model: this.model, callback: function() {
+                    $('.options-area').hide();
+                    $('.page-wrapper').addClass('show');
+                }});
+
+                this.$el.find('.options-area').append(templatePicker.render().el);
+            }
+            else {
+                this.$el.find('.page-wrapper').addClass('show');
+            }
         },
 
         renderUrlBar: function() {
@@ -276,21 +283,21 @@ define(function(require, exports, module) {
         closePageInfo: function() {
             this.pageView.hide();
             $('.left-buttons').removeClass('invisible');
-            $('.page-container').removeClass('packed');
+            this.$pageContainer.removeClass('packed');
             this.galleryEditor.show();
         },
 
         switchToDesignMode: function() {
             this.cssEditorView.expand();
             $('.left-buttons').addClass('invisible');
-            $('.page-container').addClass('packed');
+            this.$pageContainer.addClass('packed');
             this.galleryEditor.hide();
         },
 
         switchOffDesignMode: function() {
             this.cssEditorView.hide();
             $('.left-buttons').removeClass('invisible');
-            $('.page-container').removeClass('packed');
+            this.$pageContainer.removeClass('packed');
             this.galleryEditor.show();
         },
 
