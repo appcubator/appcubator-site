@@ -37,6 +37,7 @@ define(function(require, exports, module) {
             v1.view = null;
             _.bindAll(this);
             $('#save').on('click', this.save);
+            $('#deploy').on('click', this.deploy);
             $('#tutorial').on('click', function(e) {
                 self.showTutorial();
                 window.history.pushState(null, null, window.location.href.concat("tutorial/"));
@@ -182,11 +183,16 @@ define(function(require, exports, module) {
         },
 
         deploy: function(callback, hold_on_callback) {
+
             if (v1.disableSave === true) return;
             var self = this;
             var isDeployed = false;
             var before_deploy = new Date().getTime(); // global, b/c accessed in an ajax handler
             v1.disableSave = true;
+
+            util.get('deploy-text').innerHTML = 'Publishing';
+            var threeDots = util.threeDots();
+            util.get('deploy-text').appendChild(threeDots.el);
 
             var successHandler = function(data, callback){
                 v1.whenDeployed(function() {
@@ -197,6 +203,8 @@ define(function(require, exports, module) {
                         deploy_time: data.deploy_time + " seconds"
                     }, appId);
                     self.trigger('deployed');
+                    util.get('deploy-text').innerHTML = 'Publish';
+                    clearInterval(threeDots.timer);
                 });
                 return data;
             };
@@ -301,6 +309,7 @@ define(function(require, exports, module) {
             });
 
             var holdOnTimer = setTimeout(function() {
+                util.get('deploy-text').innerHTML = 'Hold On, It\'s still deploying.';
                 if (!isDeployed) hold_on_callback.call();
                 clearTimeout(holdOnTimer);
             }, 10000);

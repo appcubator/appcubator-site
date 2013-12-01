@@ -31,8 +31,6 @@ define(function(require, exports, module) {
         css: "bootstrap-editor",
 
         events: {
-            'click #editor-save'         : 'save',
-            'click #deploy'              : 'deploy',
             'click .menu-button.help'    : 'help',
             'click .menu-button.question': 'question',
             'click .url-bar'             : 'clickedUrl',
@@ -46,17 +44,10 @@ define(function(require, exports, module) {
             _.bindAll(this);
             this.subviews = [];
 
-            console.log(options.pageId);
-            console.log(options);
-
             if (options && (options.pageId == "0" || options.pageId  >= 0)) {
-                console.log("yolo");
                 this.pageId = options.pageId;
                 pageId = options.pageId;
             }
-
-            console.log(options);
-            console.log(pageId);
 
             this.model = v1State.get('pages').models[pageId];
             v1State.currentPage = this.model;
@@ -182,11 +173,6 @@ define(function(require, exports, module) {
             this.$el.find('.url-bar').html(this.urlModel.getUrlString());
         },
 
-        save: function(callback) {
-            v1.save();
-            return false;
-        },
-
         help: function(e) {
             new TutorialView([6]);
         },
@@ -230,29 +216,6 @@ define(function(require, exports, module) {
         question: function(e) {
             olark('api.box.show');
             olark('api.box.expand');
-        },
-
-        deploy: function(options) {
-            var url = '/app/' + appId + '/deploy/';
-            var self = this;
-            util.get('deploy-text').innerHTML = 'Publishing';
-            var threeDots = util.threeDots();
-            util.get('deploy-text').appendChild(threeDots.el);
-
-            var success_callback = function() {
-                util.get('deploy-text').innerHTML = 'Publish';
-                clearInterval(threeDots.timer);
-            };
-
-            var hold_on_callback = function() {
-                util.get('deploy-text').innerHTML = 'Hold On, It\'s still deploying.';
-            };
-
-            var urlSuffix = '/' + self.urlModel.getAppendixString();
-            if (urlSuffix != '/') urlSuffix += '/';
-            v1.deploy(success_callback, hold_on_callback, {
-                appendToUrl: urlSuffix
-            });
         },
 
         clickedUrl: function() {
