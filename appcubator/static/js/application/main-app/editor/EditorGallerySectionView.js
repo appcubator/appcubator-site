@@ -38,16 +38,17 @@ define(function(require, exports, module) {
             }
             var sectionName = this.name.replace(/ /g, '-');
             this.header = this.addHeaderItem(this.name);
+            this.listWrapper = document.createElement('div');
+            this.listWrapper.className = "elements-panel ";
+
             this.list = document.createElement('ul');
-            this.list.className = "elements-panel ";
             if(this.options.index > -1) {
-                console.log(this.options.index);
-                this.list.className += 'top'+this.options.index;
-                console.log(this.list);
+                this.listWrapper.className += 'top'+this.options.index;
             }
-            this.list.innerHTML = '<div class="arrow"></div>';
-            this.el.appendChild(this.list);
+
+            this.listWrapper.appendChild(this.list);
             this.list.style = '';
+            this.el.appendChild(this.listWrapper);
 
             return this;
         },
@@ -109,14 +110,14 @@ define(function(require, exports, module) {
 
         expand: function() {
             this.header.className += ' open';
-            this.list.className += ' open';
+            this.listWrapper.className += ' open';
 
             this.isExpanded = true;
         },
 
         hide: function() {
             $(this.header).removeClass('open');
-            $(this.list).removeClass('open');
+            $(this.listWrapper).removeClass('open');
             this.isExpanded = false;
         },
 

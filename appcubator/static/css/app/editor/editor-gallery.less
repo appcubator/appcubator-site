@@ -82,7 +82,7 @@
 }
 
 .item-gallery {
-  width: 210px;
+  width: 100px;
   height: 100%;
   right: 0;
   padding: 0;
@@ -90,8 +90,6 @@
   margin: 0;
   overflow: visible;
 
-  -ms-overflow-y: scroll;
-  overflow-y: scroll;
   z-index: 999;
   border-radius: 0;
   border: none;
@@ -162,32 +160,91 @@ background-color: rgba(255,255,255,0.4);
   border-radius: 6px;
 }
 
+ul.list .elements-panel ul {
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.elements-panel:after,
+.elements-panel:before {
+  left: 100%;
+  top: 100px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.elements-panel:after {
+  border-color: rgba(15, 45, 64, 0);
+  border-left-color: #0f2d40;
+  border-width: 15px;
+  margin-top: -15px;
+}
+.elements-panel:before {
+  border-color: rgba(255, 255, 255, 0);
+  border-left-color: #fff;
+  border-width: 18px;
+  margin-top: -18px;
+}
+
 ul.list .elements-panel.top0 {
   transform-origin: 240px 115px;
   -ms-transform-origin: 240px 115px;
   -webkit-transform-origin: 240px 115px;
 }
 
+.elements-panel.top0:after,
+.elements-panel.top0:before {
+  top: 108px;
+}
+
 ul.list .elements-panel.top1 {
-  transform-origin: 100% 208px;
-  -ms-transform-origin: 100% 208px;
-  -webkit-transform-origin: 100% 208px;
+  transform-origin: 240px 208px;
+  -ms-transform-origin: 240px 208px;
+  -webkit-transform-origin: 240px 208px;
+}
+.elements-panel.top1:after,
+.elements-panel.top1:before {
+  top: 206px;
 }
 
 ul.list .elements-panel.top2 {
-  transform-origin: 100% 316px;
-  -ms-transform-origin: 100% 316px;
-  -webkit-transform-origin: 100% 316px;
+  transform-origin: 240px 316px;
+  -ms-transform-origin: 240px 316px;
+  -webkit-transform-origin: 240px 316px;
+}
+.elements-panel.top2:after,
+.elements-panel.top2:before {
+  top: 304px;
 }
 
 ul.list .elements-panel.top3 {
-  transform-origin: 100% 424px;
-  -ms-transform-origin: 100% 424px;
-  -webkit-transform-origin: 100% 424px;
+  transform-origin: 240px 424px;
+  -ms-transform-origin: 240px 424px;
+  -webkit-transform-origin: 240px 424px;
+}
+.elements-panel.top3:after,
+.elements-panel.top3:before {
+  top: 402px;
 }
 
- ul.list .elements-panel.open {  
-    -webkit-transition: all .2s ease-out; 
+ul.list .elements-panel.top4 {
+  transform-origin: 240px 424px;
+  -ms-transform-origin: 240px 424px;
+  -webkit-transform-origin: 240px 424px;
+}
+.elements-panel.top4:after,
+.elements-panel.top4:before {
+  top: 424px;
+}
+
+
+ul.list .elements-panel.open {  
+  -webkit-transition: all .2s ease-out; 
   -moz-transition: all .2s ease-out; 
   -o-transition:all .2s ease-out; 
   transition: all .2s ease-out; 
@@ -200,30 +257,30 @@ ul.list .elements-panel.top3 {
 
  }
 
- ul.list .elements-panel .arrow {
-    width: 30px;
-    height: 30px;
-    position: fixed;
-    margin-right: -30px;
-    margin-left: 0;
-    left: auto;
-    top: 0px;
-    right: 0px;
-    background-color: red;
- }
+ // ul.list .elements-panel .arrow {
+ //    width: 30px;
+ //    height: 30px;
+ //    position: fixed;
+ //    margin-right: -30px;
+ //    margin-left: 0;
+ //    left: auto;
+ //    top: 0px;
+ //    right: 0px;
+ //    background-color: red;
+ // }
 
-  ul.list .elements-panel.top0 .arrow {
-  top: 100px;
- }
-  ul.list .elements-panel.top1 .arrow {
-  top: 208px;
- }
-  ul.list .elements-panel.top2 .arrow {
-  top: 316px;
- }
-  ul.list .elements-panel.top3 .arrow {
-  top: 424px;
- }
+ //  ul.list .elements-panel.top0 .arrow {
+ //  top: 100px;
+ // }
+ //  ul.list .elements-panel.top1 .arrow {
+ //  top: 208px;
+ // }
+ //  ul.list .elements-panel.top2 .arrow {
+ //  top: 316px;
+ // }
+ //  ul.list .elements-panel.top3 .arrow {
+ //  top: 424px;
+ // }
 
 .item-gallery .header:before {
   content: ' ';
@@ -327,19 +384,18 @@ ul.list .elements-panel.top3 {
 }
 
 .elements-list .gallery-header {
-  width: 100px;
-  height: 100px;
-  border-radius: 18px;
+  width: 90px;
+  height: 90px;
+  border-radius: 30px;
 
   margin-right: -8px;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   padding: 6px;
   padding-top: 15px;
   line-height: 24px;
 
   margin-top: 8px;
-  margin-left: -1px;
   position: relative;
   background-position: 0 0;
   border: none;
