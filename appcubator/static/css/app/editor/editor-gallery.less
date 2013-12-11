@@ -361,16 +361,19 @@ ul.list .elements-panel.open {
   margin-right: 54px;
   text-align: right;
 
-  width: 220px;
+  width: 250px;
 }
 
 .search-panel .search {
+  
+  position: relative;
+
   background: transparent;
   outline: none;
   color: #0f2d40;
   background-color: #fff;
   border: none;
-  height: 40px;
+  height: 44px;
 
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -379,20 +382,63 @@ ul.list .elements-panel.open {
   margin-top: 0px;
   // border-left: 1px solid #3b4555;
   border-width: 0;
-  width: 0px;
+  
+  width: 180px;
+  
   border: 3px solid #0f2d40;
-  border-width: 0;
   -webkit-transition: all 0.2s ease;
 
-  margin-right: 6px;
+  margin-right: 12px;
 }
 
-.search-panel:hover .search {
+.search-panel .search-bg {
   -webkit-transition: all 0.2s ease;
-  width: 160px;
-  display: inline-block;
-  border-width: 3px;
-  padding-left: 8px;
+  width: 0;
+  text-align: right;
+    overflow: hidden;
+
+}
+
+.search-panel:hover .search-bg {
+  -webkit-transition: all 0.2s ease;
+  width: 200px;
+}
+
+.search-panel .search-arrow {
+  position: relative;
+  margin-right: 12px;
+  width: 180px;
+}
+
+.search-panel:hover .search-arrow {
+  // width: 180px;
+}
+
+.search-panel .search-arrow:after,
+.search-panel .search-arrow:before {
+
+  left: 100%;
+  top: 22px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+
+}
+
+.search-panel .search-arrow:after {
+  border-color: rgba(15, 45, 64, 0);
+  border-left-color: #0f2d40;
+  border-width: 10px;
+  margin-top: -10px;
+}
+.search-panel .search-arrow:before {
+  border-color: rgba(255, 255, 255, 0);
+  border-left-color: #fff;
+  border-width: 12px;
+  margin-top: -12px;
 }
 
 .search-panel .search:focus {
