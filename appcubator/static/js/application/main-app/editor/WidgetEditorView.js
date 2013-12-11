@@ -252,7 +252,7 @@ define(function(require, exports, module) {
 
         renderButtonWithDeleteButtonandText: function(className, buttonText) {
             var li = document.createElement('ul');
-            li.className = 'pad section-' + className;
+            li.className = 'w-section section-' + className;
             li.innerHTML += '<span class="' + className + '  option-button tt" style="width:190px; display: inline-block;">' + buttonText + '</span><span id="delete-widget" class="option-button delete-button tt" style="width:34px;"></span>';
             return li;
         },
