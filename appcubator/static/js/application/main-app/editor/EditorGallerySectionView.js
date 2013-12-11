@@ -93,7 +93,7 @@ define(function(require, exports, module) {
         addHeaderItem: function(text, target) {
             var li = document.createElement('div');
             li.className = 'gallery-header open';
-            li.innerHTML = text;
+            li.innerHTML = '<span>' + text + '</span>';
             // + '<span class="qmark">?</span>';
             var icon = document.createElement('img');
             icon.className = "icon";
