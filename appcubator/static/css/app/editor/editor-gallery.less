@@ -352,21 +352,15 @@ ul.list .elements-panel.open {
   line-height: 46px;
   // border-bottom: 2px solid #0f2d40;
   // border-top: 2px solid #0f2d40;
-  border: 2px solid #0f2d40;
 
   // background-color: #fff;
   margin-top: 40px;
-  border-radius: 23px;
 
   overflow: hidden;
   margin-left: -150px;
   margin-right: 54px;
+  text-align: right;
 
-  -webkit-transition: all 0.2s ease;
-}
-
-
-.search-panel:hover {
   width: 220px;
 }
 
@@ -374,17 +368,31 @@ ul.list .elements-panel.open {
   background: transparent;
   outline: none;
   color: #0f2d40;
+  background-color: #fff;
   border: none;
-  height: 36px;
+  height: 40px;
 
   -webkit-box-shadow: none;
   box-shadow: none;
   padding: 0;
   vertical-align: top;
-  margin-top: 4px;
-  border-left: 1px solid #3b4555;
-  padding-left: 8px;
+  margin-top: 0px;
+  // border-left: 1px solid #3b4555;
   border-width: 0;
+  width: 0px;
+  border: 3px solid #0f2d40;
+  border-width: 0;
+  -webkit-transition: all 0.2s ease;
+
+  margin-right: 6px;
+}
+
+.search-panel:hover .search {
+  -webkit-transition: all 0.2s ease;
+  width: 160px;
+  display: inline-block;
+  border-width: 3px;
+  padding-left: 8px;
 }
 
 .search-panel .search:focus {
@@ -397,9 +405,12 @@ ul.list .elements-panel.open {
   background-position: center;
   background-color: #0f2d40;
   height: 44px;
-  width: 42px;
+  width: 44px;
   overflow: hidden;
   border-right: 1px solid #1b2535;
+  float: right;
+  border-radius: 22px;
+
 }
 
 .elements-list .gallery-header {
