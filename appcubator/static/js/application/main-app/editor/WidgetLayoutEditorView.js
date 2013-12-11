@@ -62,7 +62,6 @@ function(WidgetClassPickerView) {
 
     render: function() {
       var self = this;
-      this.el.appendChild(new comp().div('Layout').classN('header-div').el);
       this.el.appendChild(this.renderPaddingInfo());
       this.el.appendChild(this.renderLayoutInfo());
     },

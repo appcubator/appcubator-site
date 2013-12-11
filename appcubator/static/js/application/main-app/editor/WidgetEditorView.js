@@ -92,7 +92,7 @@ define(function(require, exports, module) {
                     this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
                     this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
+                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
                     this.el.appendChild(this.renderButtonWithText('edit-login-form-btn', 'Edit Login'));
                     this.el.appendChild(this.layoutEditor.el);
                 }
@@ -106,7 +106,7 @@ define(function(require, exports, module) {
                     this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
                     this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
+                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
                     this.el.appendChild(this.renderButtonWithText('form-editor-btn', 'Edit Form'));
                     this.el.appendChild(this.layoutEditor.el);
                 }
@@ -190,7 +190,7 @@ define(function(require, exports, module) {
                     this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
                     this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
+                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
                     this.el.appendChild(this.layoutEditor.el);
                     this.el.appendChild(this.contentEditor.el);
                 }
@@ -245,7 +245,7 @@ define(function(require, exports, module) {
 
         renderButtonWithWidthCustomWidth: function(className, buttonText, width) {
             var li = document.createElement('ul');
-            li.className = 'pad section-' + className;
+            li.className = 'pad w-section section-' + className;
             li.innerHTML += '<span class="option-button tt ' + className + '" style="width:' + width + 'px; display: inline-block;">' + buttonText + '</span>';
             return li;
         },
