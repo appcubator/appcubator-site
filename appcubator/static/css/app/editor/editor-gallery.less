@@ -88,6 +88,8 @@
   padding: 0;
   padding-bottom: 42px;
   margin: 0;
+  margin-top: 96px;
+
   overflow: visible;
 
   z-index: 999;
@@ -158,6 +160,11 @@ background-color: rgba(255,255,255,0.4);
   padding-top: 6px;
 
   border-radius: 6px;
+
+  -webkit-transition: all .1s ease-in; 
+  -moz-transition: all .1s ease-in; 
+  -o-transition:all .1s ease-in; 
+  transition: all .1s ease-in; 
 }
 
 ul.list .elements-panel ul {
@@ -233,14 +240,15 @@ ul.list .elements-panel.top3 {
 }
 
 ul.list .elements-panel.top4 {
-  transform-origin: 240px 424px;
-  -ms-transform-origin: 240px 424px;
-  -webkit-transform-origin: 240px 424px;
+  transform-origin: 240px 532px;
+  -ms-transform-origin: 240px 532px;
+  -webkit-transform-origin: 240px 532px;
 }
 .elements-panel.top4:after,
 .elements-panel.top4:before {
-  top: 424px;
+  top: 500px;
 }
+
 
 
 ul.list .elements-panel.open {  
@@ -338,17 +346,28 @@ ul.list .elements-panel.open {
 }
 
 .search-panel {
-  width: 220px;
+  float: right;
+  width: 46px;
   height: 46px;
   line-height: 46px;
-  border-bottom: 2px solid #0f2d40;
-  border-top: 2px solid #0f2d40;
-  border-left: 2px solid #0f2d40;
+  // border-bottom: 2px solid #0f2d40;
+  // border-top: 2px solid #0f2d40;
+  border: 2px solid #0f2d40;
 
-  background-color: #fff;
+  // background-color: #fff;
   margin-top: 40px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-radius: 23px;
+
+  overflow: hidden;
+  margin-left: -150px;
+  margin-right: 54px;
+
+  -webkit-transition: all 0.2s ease;
+}
+
+
+.search-panel:hover {
+  width: 220px;
 }
 
 .search-panel .search {
@@ -386,7 +405,10 @@ ul.list .elements-panel.open {
 .elements-list .gallery-header {
   width: 90px;
   height: 90px;
-  border-radius: 30px;
+  border-radius: 12px;
+  
+  padding: 2px;
+  border: 2px solid #fff;
 
   margin-right: -8px;
   text-align: center;
@@ -398,7 +420,6 @@ ul.list .elements-panel.open {
   margin-top: 8px;
   position: relative;
   background-position: 0 0;
-  border: none;
   cursor: default;
   text-shadow: 0 1px 0 #1b2535;
   background-color: #0f2d40;
