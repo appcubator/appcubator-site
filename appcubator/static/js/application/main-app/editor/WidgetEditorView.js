@@ -21,7 +21,7 @@ define(function(require, exports, module) {
 
     var WidgetEditorView = Backbone.UIView.extend({
         
-        className: 'widget-editor fadeIn',
+        className: 'widget-editor animated',
         id: 'widget-editor',
         tagName: 'div',
         css: 'widget-editor',
@@ -66,20 +66,69 @@ define(function(require, exports, module) {
             this.listenTo(this.model, 'startEditing', this.startedEditing);
             this.listenTo(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
             this.listenTo(this.model, 'doubleClicked', this.doubleClicked);
+            
+            this.listenTo(this.model, 'deselected', this.clear);
 
             return this;
         },
 
         render: function() {
-            this.$el.hide();
+            this.hide();
             return this;
         },
 
         display: function() {
-            this.$el.fadeIn();
+            
+            this.filleContent();
 
+            var location = this.getLocation();
+            this.location = location;
+            this.el.className += ' ' + location;
+
+            var iframe = document.getElementById('page');
+            var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+            var element = innerDoc.getElementById('widget-wrapper-'+ this.model.cid);
+
+            var offsetFrame = util.getWindowRelativeOffset(window.document, iframe);
+            var offset = util.getWindowRelativeOffset(window.document, element);
+
+            var leftDist = offset.left + offsetFrame.left;
+            var topDist = offset.top + offsetFrame.top;
+
+            switch(this.location) {
+                case "right":
+                    this.$el.append('<div class="left-arrow"></div>');
+                    leftDist += element.getBoundingClientRect().width;
+                    this.$el.addClass('fadeInRight');
+
+                    break;
+                case "bottom":
+                    this.$el.append('<div class="top-arrow"></div>');
+                    topDist += element.getBoundingClientRect().height;
+                    this.$el.addClass('fadeInUp');
+
+                    break;
+                case "left":
+                    this.$el.append('<div class="right-arrow"></div>');
+                    this.$el.addClass('fadeInLeft');
+                    break;
+                case "top":
+                    // not supposed to happen
+                    break;
+            }
+            this.$el.show();
+
+
+            this.el.style.left = leftDist + 'px';
+            this.el.style.top = topDist + 'px';
+
+            this.model.trigger('display-widget-editor');
+
+            return this;
+        },
+
+        filleContent: function() {
             var action = "";
-
             if (this.model.get('data').has('container_info')) {
                 action = this.model.get('data').get('container_info').get('action');
 
@@ -195,48 +244,6 @@ define(function(require, exports, module) {
                     this.el.appendChild(this.contentEditor.el);
                 }
             }
-
-            this.$el.removeClass('left');
-            this.$el.removeClass('right');
-            this.$el.removeClass('bottom');
-
-            var location = this.getLocation();
-            this.location = location;
-            this.el.className += ' ' + location;
-
-            var iframe = document.getElementById('page');
-            var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-            var element = innerDoc.getElementById('widget-wrapper-'+ this.model.cid);
-
-            var offsetFrame = util.getWindowRelativeOffset(window.document, iframe);
-            var offset = util.getWindowRelativeOffset(window.document, element);
-
-            var leftDist = offset.left + offsetFrame.left;
-            var topDist = offset.top + offsetFrame.top;
-
-            switch(this.location) {
-                case "right":
-                    this.$el.append('<div class="left-arrow"></div>');
-                    leftDist += element.getBoundingClientRect().width;
-                    break;
-                case "bottom":
-                    this.$el.append('<div class="top-arrow"></div>');
-                    topDist += element.getBoundingClientRect().height;
-                    break;
-                case "left":
-                    this.$el.append('<div class="right-arrow"></div>');
-                    break;
-                case "top":
-                    // not supposed to happen
-                    break;
-            }
-
-            this.el.style.left = leftDist + 'px';
-            this.el.style.top = topDist + 'px';
-
-            this.model.trigger('display-widget-editor');
-
-            return this;
         },
 
         renderButtonWithText: function(className, buttonText) {
@@ -378,6 +385,19 @@ define(function(require, exports, module) {
             });
             this.el.innerHTML = '';
             this.el.style.width = '';
+
+            this.hide();
+        },
+
+        hide: function() {
+            this.$el.removeClass('left');
+            this.$el.removeClass('right');
+            this.$el.removeClass('bottom');
+
+            this.$el.removeClass('fadeInBottom');
+            this.$el.removeClass('fadeInUp');
+            this.$el.removeClass('fadeInLeft');
+            this.$el.removeClass('fadeInRight');
             this.$el.hide();
         },
 

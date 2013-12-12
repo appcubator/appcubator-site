@@ -392,7 +392,7 @@ define(function(require, exports, module) {
                 this.selectedEl.trigger('deselected');
                 this.stopListening(this.selectedEl.get('layout'), 'change');
             }
-            this.widgetEditorView.clear();
+
             this.selectedEl = null;
             this.hideNode(this.selectDiv);
             this.hideNode(this.hoverDiv);
