@@ -1455,3 +1455,106 @@
 	-o-animation-name: bounce-topright;
 	animation-name: bounce-topright;
 }
+
+
+/* BLURP */
+
+@keyframes blurp {
+  0% {
+    -webkit-transform: scale(1);
+}
+45% {
+    -webkit-transform: scale(1.12);
+}
+100% {
+    -webkit-transform: scale(1.1);
+}
+}
+
+@-moz-keyframes blurp {
+  0% {
+    -webkit-transform: scale(1);
+}
+45% {
+    -webkit-transform: scale(1.12);
+}
+100% {
+    -webkit-transform: scale(1.1);
+}
+}
+
+@-webkit-keyframes blurp {
+  0% {
+    -webkit-transform: scale(1);
+}
+45% {
+    -webkit-transform: scale(1.12);
+}
+100% {
+    -webkit-transform: scale(1.1);
+}
+}
+
+
+
+/* SPRING */
+
+@-webkit-keyframes springRight {
+	0% {
+		-webkit-transform: translateX(0px);
+	}
+	60% {
+		-webkit-transform: translateX(-8px);
+	}
+	80% {
+		-webkit-transform: translateX(2px);
+	}
+	100% {
+		-webkit-transform: translateX(0);
+	}
+}
+
+@-moz-keyframes springRight {
+	0% {
+		-moz-transform: translateX(0px);
+	}
+	60% {
+		-moz-transform: translateX(-8px);
+	}
+	80% {
+		-moz-transform: translateX(2px);
+	}
+	100% {
+		-moz-transform: translateX(0);
+	}
+}
+
+@-o-keyframes springRight {
+	0% {
+		-o-transform: translateX(0px);
+	}
+	60% {
+		-o-transform: translateX(-8px);
+	}
+	80% {
+		-o-transform: translateX(2px);
+	}
+	100% {
+		-o-transform: translateX(0);
+	}
+}
+
+@keyframes springRight {
+	0% {
+		transform: translateX(0px);
+	}
+	60% {
+		transform: translateX(-8px);
+	}
+	80% {
+		transform: translateX(2px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
