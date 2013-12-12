@@ -609,6 +609,7 @@ define(function(require, exports, module) {
         createEditForm: function(layout, id) {
             var entityType = String(id).replace('entity-', '');
             var entity = {};
+            var editOn;
             //if edit form is for a user role
             if (entityType.indexOf('user') > -1) {
                 var cid = entityType.replace('user-', '');
