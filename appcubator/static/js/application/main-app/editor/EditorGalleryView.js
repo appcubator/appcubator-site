@@ -126,6 +126,7 @@ define(function(require, exports, module) {
         searchCanceled: function() {
             $(".search-panel").removeClass("hover");
             $('.search').val('');
+            $('.search').focusout();
         },
 
         searchInputChage: function(e) {
