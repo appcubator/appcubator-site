@@ -368,11 +368,11 @@ ul.list .elements-panel.open {
   margin-right: 54px;
   text-align: right;
 
-  width: 250px;
+  width: 270px;
 }
 
 .search-panel .search {
-  
+  display: inline-block;
   position: relative;
 
   background: transparent;
@@ -380,7 +380,7 @@ ul.list .elements-panel.open {
   color: #0f2d40;
   background-color: #fff;
   border: none;
-  height: 44px;
+  height: 40px;
 
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -390,35 +390,50 @@ ul.list .elements-panel.open {
   // border-left: 1px solid #3b4555;
   border-width: 0;
   
-  width: 180px;
+  width: 156px;
   
-  border: 3px solid #0f2d40;
   -webkit-transition: all 0.2s ease;
 
   margin-right: 12px;
 }
+
+
 
 .search-panel .search-bg {
   -webkit-transition: all 0.2s ease;
   width: 0;
   text-align: right;
-    overflow: hidden;
-
+  overflow: hidden;
+  height: 50px;
 }
 
-.search-panel:hover .search-bg {
+.search-panel:hover .search-bg,
+.search-panel.hover .search-bg {
   -webkit-transition: all 0.2s ease;
-  width: 200px;
+  width: 220px;
 }
 
 .search-panel .search-arrow {
   position: relative;
   margin-right: 12px;
-  width: 180px;
+  width: 200px;
 }
 
-.search-panel:hover .search-arrow {
+.search-panel .search-cancel {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+  color: #666;
+  cursor: pointer;
+}
+
+.search-panel:hover .search-arrow,
+.search-panel.hover .search-arrow {
   // width: 180px;
+  border: 3px solid #0f2d40;
+  background-color: #fff;
+  border-radius: 4px;
+  height: 46px;
 }
 
 .search-panel .search-arrow:after,

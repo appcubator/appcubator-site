@@ -35,7 +35,9 @@ define(function(require, exports, module) {
 
         events: {
             'change input.search'    : 'searchInputChage',
-            'keyup input.search'     : 'searchInputChage'
+            'mouseenter .search-icon': 'searchHovered',
+            'keyup input.search'     : 'searchInputChage',
+            'click .search-cancel'   : 'searchCanceled'
         },
 
         initialize: function(widgetsCollection) {
@@ -117,13 +119,26 @@ define(function(require, exports, module) {
             this.allList.appendChild(sectionView.render().el);
         },
 
+        searchHovered: function() {
+            $('.search').focus();
+        },
+
+        searchCanceled: function() {
+            $(".search-panel").removeClass("hover");
+            $('.search').val('');
+        },
+
         searchInputChage: function(e) {
             var self =  this;
             var val = e.currentTarget.value;
 
             if (val === "") {
                 this.searchSection.clear();
+                $(".search-panel").removeClass("hover");
                 return;
+            }
+            else {
+                $(".search-panel").addClass("hover");
             }
 
             this.searchSection.clear();
