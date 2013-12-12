@@ -6,6 +6,8 @@ define(function(require, exports, module) {
 
     var SearchGallerySectionView = EditorGallerySectionView.extend({
 
+        className: 'search-section',
+
         render: function() {
             if (this.el) {
                 this.el.innerHTML = '';
