@@ -35,16 +35,32 @@ define(function(require, exports, module) {
         initialize: function() {
             var self = this;
             v1.view = null;
-            v1.deployManager = new DeployManagerModel();
+
+            var deployManager = new DeployManagerModel();
+            v1.deployManager = deployManager;
 
             _.bindAll(this);
             $('#save').on('click', this.save);
 
             $('#deploy').on('click', function() {
-                            console.log(v1.deployManager);
-                            console.log(v1);
-                v1.deployManager.deploy.call(v1.deployManager);
+                
+                console.log(deployManager);
+                $('.deploy-text').html('Publishing');
+                var threeDots = util.threeDots();
+                $('.deploy-text').append(threeDots.el);
+
+                var success_callback = function() {
+                    $('.deploy-text').html('Publish');
+                    clearInterval(threeDots.timer);
+                };
+
+                var hold_on_callback = function() {
+                     $('.deploy-text').html('Hold On, Still deploying.');
+                };
+
+                deployManager.deploy.call(success_callback, hold_on_callback);
             });
+
             $('#tutorial').on('click', function(e) {
                 self.showTutorial();
                 window.history.pushState(null, null, window.location.href.concat("tutorial/"));

@@ -3,6 +3,7 @@ define(function(require, exports, module) {
     'use strict';
 
     require('backbone');
+    var DeployView = require('DeployView');
 
 	var DeployManagerModel = Backbone.Model.extend({
 
@@ -18,6 +19,7 @@ define(function(require, exports, module) {
 		},
 
 		deploySuccessHandler: function(data, callback){
+            var self = this;
             v1.whenDeployed(function() {
                 callback.call();
                 new DeployView(data);
@@ -86,6 +88,7 @@ define(function(require, exports, module) {
         },
 
 		deploy: function(callback, hold_on_callback) {
+            console.log(this);
             if (this.disableSave === true) return;
 
             console.log(this);
@@ -109,10 +112,10 @@ define(function(require, exports, module) {
 
             // compose this w the other callbacks
             var completeCallback = function(data) {
-                this.disableSave = false;
+                self.disableSave = false;
                 isDeployed = true;
                 data.deploy_time = (new Date().getTime() - before_deploy) / 1000;
-                this.lastDeploy = new Date().getTime();
+                self.lastDeploy = new Date().getTime();
                 return data;
             };
 
@@ -124,7 +127,7 @@ define(function(require, exports, module) {
                 statusCode: {
                     200: function(data){
                         data = completeCallback(data);
-                        data = self.successHandler(data, callback);
+                        data = self.deploySuccessHandler(data, callback);
                     },
                     400: function(jqxhr){
                         var data = jqxhrToJson(jqxhr);

@@ -87,29 +87,6 @@ define(function(require, exports, module) {
         save: function() {
             v1.save();
             return false;
-        },
-
-        deploy: function() {
-            var url = '/app/' + appId + '/deploy/';
-            var self = this;
-            util.get('deploy-text').innerHTML = 'Publishing';
-            var threeDots = util.threeDots();
-            util.get('deploy-text').appendChild(threeDots.el);
-
-            var success_callback = function() {
-                util.get('deploy-text').innerHTML = 'Publish';
-                clearInterval(threeDots.timer);
-            };
-
-            var hold_on_callback = function() {
-                util.get('deploy-text').innerHTML = 'Hold On, It\'s still deploying.';
-            };
-
-            var urlSuffix = '/' + self.urlModel.getAppendixString();
-            if (urlSuffix != '/') urlSuffix += '/';
-            v1.deploy(success_callback, hold_on_callback, {
-                appendToUrl: urlSuffix
-            });
         }
 
     });
