@@ -6,7 +6,7 @@ define(function(require, exports, module) {
 
     var SearchGallerySectionView = EditorGallerySectionView.extend({
 
-        className: 'search-section',
+        className: 'search elements-panel',
 
         render: function() {
             if (this.el) {
@@ -20,15 +20,20 @@ define(function(require, exports, module) {
         },
 
         expand: function() {
-            try {
-                $(this.list).clearQueue();
-            } catch (err) {}
-
-            $(this.list).slideDown(200);
+            console.log("EXPAND");
+            console.trace();
+            if(this.isExpanded) return;
+            this.$el.addClass("open");
             this.isExpanded = true;
         },
 
-        hide: function() { },
+        hide: function() {
+            console.trace();
+            console.log("HIDE");
+            if(!this.isExpanded) return;
+            this.isExpanded = false;
+            this.$el.removeClass("open");
+        },
 
         clear: function() {
             this.list.innerHTML = '';

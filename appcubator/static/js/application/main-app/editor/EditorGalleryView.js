@@ -69,11 +69,7 @@ define(function(require, exports, module) {
 
             // hide all sections except first
             this.hideAllSections();
-            this.expandSection(0);
-
             this.bindDraggable();
-
-            //$().find('.search').on('focus', this.expandAllSections);
 
             // listen for changes to url to update context entity section
             this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
@@ -144,6 +140,14 @@ define(function(require, exports, module) {
 
             this.searchSection.clear();
             var results = this.searcher.search(val);
+            
+            if(results.length > 0) {
+                this.searchSection.expand();
+            }
+            else {
+                this.searchSection.hide();
+            }
+
             _.each(results, function(result) {
                 this.searchSection.addHalfWidthItem(result.id, result.className, result.text, result.icon);
             }, this);
