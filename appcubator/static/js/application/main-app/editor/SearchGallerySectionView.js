@@ -20,16 +20,12 @@ define(function(require, exports, module) {
         },
 
         expand: function() {
-            console.log("EXPAND");
-            console.trace();
             if(this.isExpanded) return;
             this.$el.addClass("open");
             this.isExpanded = true;
         },
 
         hide: function() {
-            console.trace();
-            console.log("HIDE");
             if(!this.isExpanded) return;
             this.isExpanded = false;
             this.$el.removeClass("open");

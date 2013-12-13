@@ -141,7 +141,6 @@ require([
                 g_marqueeView = this.marqueeView;
 
                 document.body.appendChild(this.marqueeView.el);
-                console.log(this.marqueeView.el);
                 return this.marqueeView;
             },
 
@@ -155,14 +154,11 @@ require([
                 var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
                 if(is_firefox) {
-                    console.log('newnew');
                     newStyle = document.createElement('style');
                     newStyle.type = 'text/css';
                     newStyle.setAttribute('href', "");
                     newStyle.id = "css-uiestate";
                     newStyle.setAttribute('rel', 'stylesheet');
-                    console.log(newStyle);
-        
                     // $.ajax({
                     //     type: "GET",
                     //     url: '/app/' + appId + '/uiestate.css',

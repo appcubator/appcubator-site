@@ -26,7 +26,6 @@ define(function(require, exports, module) {
 
         initialize: function(options) {
             _.bindAll(this);
-            console.log(options);
             this.parentView = options.parentView;
             this.options = options;
             return this;

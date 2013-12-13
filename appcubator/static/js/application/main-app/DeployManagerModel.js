@@ -14,7 +14,6 @@ define(function(require, exports, module) {
 
 		initialize: function (argument) {
             _.bindAll(this);
-            console.log('hey');
             this.deployUrl = '/app/' + appId + '/deploy/';
 		},
 
@@ -88,11 +87,7 @@ define(function(require, exports, module) {
         },
 
 		deploy: function(callback, hold_on_callback) {
-            console.log(this);
             if (this.disableSave === true) return;
-
-            console.log(this);
-
             var self = this;
             
             var isDeployed = false;
@@ -119,8 +114,6 @@ define(function(require, exports, module) {
                 return data;
             };
 
-            console.log("trying to deploy");
-            console.log(self.deployUrl);
             $.ajax({
                 type: "POST",
                 url: self.deployUrl,
@@ -150,9 +143,6 @@ define(function(require, exports, module) {
                 },
                 dataType: "JSON"
             });
-
-            console.log("yolo");
-
 
             var holdOnTimer = setTimeout(function() {
                 if (!isDeployed && hold_on_callback) hold_on_callback.call();

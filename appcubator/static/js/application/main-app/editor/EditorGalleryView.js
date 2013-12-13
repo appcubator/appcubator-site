@@ -660,11 +660,7 @@ define(function(require, exports, module) {
             var field = _(v1State.get('pages').models[pageId].getFields()).find(function(fieldModel) {
                 return (fieldModel.cid == field_id);
             });
-
-            console.log(field);
             var type = util.getDisplayType(field.get('type'));
-            console.log(type);
-
             var content_ops = {};
 
             if (type == "links") {

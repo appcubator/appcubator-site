@@ -31,8 +31,6 @@ define(function(require, exports, module) {
             _.bindAll(this);
 
             var self = this;
-
-            console.log('init selector');
             this.widgetsCollection = widgetsCollection;
             this.listenTo(this.widgetsCollection, 'add', this.bindWidget, true);
             this.widgetEditorView = v1.view.widgetEditorView;

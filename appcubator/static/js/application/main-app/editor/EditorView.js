@@ -104,8 +104,6 @@ define(function(require, exports, module) {
             this.galleryEditor.render();
 
             this.el.appendChild(this.widgetEditorView.render().el);
-            console.log(this.widgetEditorView.el);
-
             this.cssEditorView.setElement($('#css-editor-panel')).render();
             this.pageView.setElement($('#page-view-panel')).render();
 

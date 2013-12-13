@@ -44,7 +44,6 @@ define(function(require, exports, module) {
 
             $('#deploy').on('click', function() {
                 
-                console.log(deployManager);
                 $('.deploy-text').html('Publishing');
                 var threeDots = util.threeDots();
                 $('.deploy-text').append(threeDots.el);
@@ -140,9 +139,6 @@ define(function(require, exports, module) {
 
         editor: function(appId, pageId) {
             if(!pageId) pageId = 0;
-
-            console.log(pageId);
-
             var self = this;
 
             self.tutorialPage = "Editor";
