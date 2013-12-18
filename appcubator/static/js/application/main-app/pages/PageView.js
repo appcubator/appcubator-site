@@ -10,11 +10,14 @@ define(function(require, exports, module) {
     require('backbone');
 
     var tempPage = [
-        '<h3 class="offset2 hoff1"><%= page_name %></h3>',
-        '<span class="offset2 hi1 context-text edit-url"><%= context_text %></span>',
+        '<div class="top-row">',
+        '<div class="cross" id="close-page-info">×</div>',
+        '<div class="title"><%= page_name %> Info</div>',
+        '</div>',
         '<div class="page-menu">',
         '<a class="delete item" <% if(disable_edit) { %>style="color: #999"<% } %>><i class="icon-delete"></i>Delete Page</a>',
         '<div class="edit-url item" <% if(disable_edit) { %>style="color: #999"<% } %>><i class="icon-url"></i>Edit URL</div>',
+        '<span class="context-text edit-url"><%= context_text %></span>',
         '</div>'
     ].join('\n');
 
@@ -35,7 +38,7 @@ define(function(require, exports, module) {
     var PageView = Backbone.View.extend({
         el: null,
         tagName: 'li',
-        className: 'page-view span18 hoff2 offsetr1 pane hi22',
+        className: 'page-view hoff2 offsetr1 pane hi22',
         expanded: false,
         events: {
             'click .delete': 'deletePage',
@@ -166,10 +169,12 @@ define(function(require, exports, module) {
 
         expand: function() {
             this.el.className += ' expanded';
+            this.el.style.width = "280px";
             this.expanded = true;
         },
 
         hide: function() {
+            this.el.style.width = "";
             this.$el.removeClass('expanded');
             this.expanded = false;
         }

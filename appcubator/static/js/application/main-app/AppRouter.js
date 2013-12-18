@@ -180,7 +180,6 @@ define(function(require, exports, module) {
             v1.view = new NewView(options);
 
             v1.view.setElement(cleanDiv).render();
-            $('.active').removeClass('active');
             this.changeTitle(v1.view.title);
             $("html, body").animate({
                 scrollTop: 0
