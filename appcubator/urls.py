@@ -106,6 +106,7 @@ urlpatterns += patterns('appcubator.views.app',
     #url(r'^app/(\d+)/', 'page', {"page_name": "overview"}), # this serves all the app pages
     #url(r'^app/(\d+)/([^/]+)/$', 'page'), # this serves all the app pages
 
+    url(r'^theme/(\d+)/sheet.css$', 'theme_css_sheet'),
     url(r'^sendhostedemail/$', 'send_hosted_email'),
 
     # USERNAME ROUTE moved down to the bottom to avoid conflict w other routes

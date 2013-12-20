@@ -606,6 +606,23 @@ def css_sheet(request, app_id, isMobile=False):
     return HttpResponse(css_string, mimetype='text/css')
 
 
+
+@csrf_exempt
+def theme_css_sheet(request, theme_id):
+    theme_id = long(theme_id)
+    theme = get_object_or_404(UITheme, id=theme_id)
+
+    uie_state = theme.uie_state
+
+    context = Context({'uie_state': uie_state,
+                       'isMobile': False,
+                       'deploy': False})
+    t = loader.get_template('app-editor-css-gen.html')
+    css_string = t.render(context)
+
+    return HttpResponse(css_string, mimetype='text/css')
+
+
 @csrf_exempt
 def mobile_css_sheet(request, app_id):
     return css_sheet(request, app_id, True)

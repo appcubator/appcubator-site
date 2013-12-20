@@ -58,8 +58,10 @@ define(function(require, exports, module) {
             });
         },
 
-        previewTheme: function() {
-
+        previewTheme: function(e) {
+            var themeId = String(e.currentTarget.id).replace('theme-','');
+            var url = "/theme/" + themeId + '/sheet.css';
+            v1.view.iframeProxy.addTempStyleSheet(url);
         },
 
         revertTheme: function() {

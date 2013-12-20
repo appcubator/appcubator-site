@@ -148,6 +148,7 @@ define(function(require, exports, module) {
 
             keyDispatcher.addEnvironment(innerDoc);
 
+            this.iframeProxy = proxy;
             this.marqueeView = proxy.setupMarqueeView();
             this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
 
