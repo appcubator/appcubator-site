@@ -10,9 +10,9 @@ define(function(require, exports, module) {
     var ThemesGalleryView = Backbone.View.extend({
         css: 'gallery',
         events: {
-            'click      .theme': 'showThemeModal',
             'mouseover  .theme': 'previewTheme',
-            'mouseleave .theme': 'revertTheme'
+            'mouseleave .theme': 'revertTheme',
+            'click .load-theme-btn': 'loadTheme'
         },
 
         className: 'gallery-view',
@@ -30,7 +30,7 @@ define(function(require, exports, module) {
                 '<h2><%= name %></h2>',
                 '<p class="designed-by">Designed by <%= designer %></p>',
                 '<div class="img"><img src="<%= image %>"></div>',
-                '<div class="details">Click to See Details</div>',
+                '<div id="theme-btn-<%= id %>" class="btn load-theme-btn">Load Theme</div>',
                 '</li>'
             ].join('\n');
 
@@ -46,18 +46,6 @@ define(function(require, exports, module) {
             return this;
         },
 
-        showThemeModal: function(e) {
-            var themeId = e.target.parentNode.id.replace('theme-', '');
-            $.ajax({
-                type: "POST",
-                url: '/theme/' + themeId + '/info/',
-                success: function(data) {
-                    new ThemeDisplayView(data, themeId);
-                },
-                dataType: "JSON"
-            });
-        },
-
         previewTheme: function(e) {
             var themeId = String(e.currentTarget.id).replace('theme-','');
             var url = "/theme/" + themeId + '/sheet.css';
@@ -66,6 +54,52 @@ define(function(require, exports, module) {
 
         revertTheme: function() {
 
+        },
+
+        loadTheme: function(e) {
+            var themeId = e.currentTarget.id.replace('theme-btn-','');
+           
+            $.ajax({
+                type: "POST",
+                url: '/theme/' + themeId + '/info/',
+                success: function(data) {
+                    var info = data.themeInfo;
+                    var url = '/app/' + appId + '/uiestate/';
+                    var newState = uieState;
+                    newState = _.extend(uieState, this.theme);
+
+                    var self = this;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: {
+                            uie_state: JSON.stringify(newState)
+                        },
+                        success: function(data) {
+                            //self.$el.find('.load').append('<div class="hoff1"><h4 class="text-success"><strong>Loaded!</strong></h4></div>');
+                        }
+                    });
+
+                    /* Load Statics */
+                    $.ajax({
+                        type: "GET",
+                        url: '/theme/' + info.id + '/static/',
+                        success: function(data) {
+                            _(data).each(function(static_file) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/app/' + appId + '/static/',
+                                    data: JSON.stringify(static_file),
+                                    success: function(data) {}
+                                });
+                            });
+                        }
+                    });
+                },
+                dataType: "JSON"
+            });
+
+                
         }
 
     });
