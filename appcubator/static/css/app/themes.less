@@ -29,9 +29,10 @@
     }
 
 		.img {
+      position: relative;
 			display: inline-block;
 			width: 96%;
-			height: 200px;
+			height: 180px;
 			.border-radius(6px);
 			overflow: hidden;
 
@@ -45,17 +46,21 @@
 		  display: none;
 		  position: absolute;
 		  left: 2%;
-		  bottom: 15px;
-		  height: 200px;
-      width: 96%;
+      top: 0;  
+		  height: 180px;
+      width: 100%;
 		  background-color: rgba(0, 0, 0, 0.4);
 		  color: #fff;
 		  text-align: center;
 		  font-size: 18px;
 		  font-weight: bold;
 		  .border-radius(6px);
-		  line-height: 260px;
+		  line-height: 180px;
 		}
+
+    .details.active {
+      display: inline-block;
+    }
 
     .designed-by {
       line-height: 20px;
