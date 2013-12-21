@@ -186,12 +186,12 @@ require([
                     newstyle.onload = function() {
                         //newstyle.setAttribute('href', "/app/"+appId+"/uiestate.css");
                         $('.tempStyle').remove();
-                        if(style) style.parentNode.removeChild(style);
+                        if(style && style.parentNode) style.parentNode.removeChild(style);
                     };
                 }
             },
 
-            addTempStyleSheet: function(url) {
+            addTempStyleSheet: function(url, callback) {
 
                 uieState = top.uieState;
                 var templStyles = $('.tempStyle');
@@ -235,6 +235,7 @@ require([
 
                             }
                         }
+                        if(callback) callback.call(this);
                     };
                 }
             },

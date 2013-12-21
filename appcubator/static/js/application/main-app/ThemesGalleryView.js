@@ -16,6 +16,7 @@ define(function(require, exports, module) {
         },
 
         className: 'gallery-view',
+        currentPreview: 0,
 
         initialize: function() {
             this.title = "Themes";
@@ -29,7 +30,7 @@ define(function(require, exports, module) {
                 '<li class="theme" class="theme-item" id="theme-<%= id %>">',
                 '<h2><%= name %></h2>',
                 '<p class="designed-by">Designed by <%= designer %></p>',
-                '<div class="img"><img src="<%= image %>"></div>',
+                '<div class="img"><img src="<%= image %>"><div class="details" id="theme-prev-<%= id %>">Previewing</div></div>',
                 '<div id="theme-btn-<%= id %>" class="btn load-theme-btn">Load Theme</div>',
                 '</li>'
             ].join('\n');
@@ -48,8 +49,15 @@ define(function(require, exports, module) {
 
         previewTheme: function(e) {
             var themeId = String(e.currentTarget.id).replace('theme-','');
+
+            if(this.currentPreview == themeId) return;
+            
+            $('.details.active').removeClass('active');
             var url = "/theme/" + themeId + '/sheet.css';
-            v1.view.iframeProxy.addTempStyleSheet(url);
+            this.currentPreview = themeId;
+            v1.view.iframeProxy.addTempStyleSheet(url, function() {
+                $('#theme-prev-' + themeId).addClass('active');
+            });
         },
 
         revertTheme: function() {
