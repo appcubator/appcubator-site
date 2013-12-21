@@ -130,12 +130,12 @@ require([
         g_marqueeView = {};
 
         var proxy = {
-            setupWidgetsManager: function (widgetsCollection) {
+            setupWidgetsManager: function(widgetsCollection) {
                 this.widgetsManager = new WidgetsManagerView(widgetsCollection);
                 return this.widgetsManager;
             },
 
-            setupMarqueeView: function () {
+            setupMarqueeView: function() {
                 this.marqueeView = new MarqueeView();
                 this.marqueeView.render();
                 g_marqueeView = this.marqueeView;
@@ -150,10 +150,20 @@ require([
 
                 var style = document.getElementById("css-uiestate");
                 var head = document.getElementsByTagName('head')[0];
-                var newstyle = style.cloneNode(true);
+                var newstyle = null;
+                if (style) {
+                    newstyle = style.cloneNode(true);
+
+                } else {
+                    newstyle = document.createElement("link");
+                    newstyle.setAttribute("rel", "stylesheet");
+                    newstyle.setAttribute("type", "text/css");
+                    newstyle.setAttribute("href", '/app/'+ appId +'/uiestate.css');
+                    newstyle.id = "css-uiestate";
+                }
                 var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-                if(is_firefox) {
+                if (is_firefox) {
                     newStyle = document.createElement('style');
                     newStyle.type = 'text/css';
                     newStyle.setAttribute('href', "");
@@ -171,12 +181,12 @@ require([
                     //     dataType: "JSON"
                     // });
 
-                }
-                else {
+                } else {
                     head.appendChild(newstyle);
                     newstyle.onload = function() {
                         //newstyle.setAttribute('href', "/app/"+appId+"/uiestate.css");
-                        style.parentNode.removeChild(style);
+                        $('.tempStyle').remove();
+                        if(style) style.parentNode.removeChild(style);
                     };
                 }
             },
@@ -187,7 +197,7 @@ require([
                 var templStyles = $('.tempStyle');
                 var style = document.getElementById("css-uiestate");
                 var head = document.getElementsByTagName('head')[0];
-                var newstyle=document.createElement("link");
+                var newstyle = document.createElement("link");
                 newstyle.setAttribute("rel", "stylesheet");
                 newstyle.setAttribute("type", "text/css");
                 newstyle.setAttribute("href", url);
@@ -195,7 +205,7 @@ require([
 
                 var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-                if(is_firefox) {
+                if (is_firefox) {
                     newStyle = document.createElement('style');
                     newStyle.type = 'text/css';
                     newStyle.setAttribute('href', "");
@@ -213,19 +223,24 @@ require([
                     //     dataType: "JSON"
                     // });
 
-                }
-                else {
+                } else {
                     head.appendChild(newstyle);
                     newstyle.onload = function() {
                         //newstyle.setAttribute('href', "/app/"+appId+"/uiestate.css");
                         templStyles.remove();
-                        if(style) { style.parentNode.removeChild(style); }
+                        if (style) {
+                            try {
+                                style.parentNode.removeChild(style);
+                            } catch (e) {
+
+                            }
+                        }
                     };
                 }
             },
 
             removeTempStyleSheet: function() {
-
+                this.reArrangeCSSTag();
             }
         };
 

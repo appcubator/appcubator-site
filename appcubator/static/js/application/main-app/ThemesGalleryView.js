@@ -53,12 +53,15 @@ define(function(require, exports, module) {
         },
 
         revertTheme: function() {
-
+            v1.view.iframeProxy.removeTempStyleSheet();
         },
 
         loadTheme: function(e) {
+            $('.load-theme-btn').html("Load Theme");
             var themeId = e.currentTarget.id.replace('theme-btn-','');
-           
+            e.currentTarget.innerHTML = "Loading";
+            e.currentTarget.appendChild(util.threeDots().el);
+
             $.ajax({
                 type: "POST",
                 url: '/theme/' + themeId + '/info/',
@@ -76,6 +79,7 @@ define(function(require, exports, module) {
                             uie_state: JSON.stringify(newState)
                         },
                         success: function(data) {
+                            e.currentTarget.innerHTML = "Loaded!";
                             //self.$el.find('.load').append('<div class="hoff1"><h4 class="text-success"><strong>Loaded!</strong></h4></div>');
                         }
                     });
