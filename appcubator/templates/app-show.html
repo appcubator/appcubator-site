@@ -4,11 +4,13 @@
 {% endblock %}
 
 {% block topbar %}
+{% include "internal-menu.html" %}
 {% include "app-navbar.html" %}
 {% endblock %}
 
 {% block page %}
-  <div id="main-container"></div>
+  <div id="main-container">
+  </div>
 {% endblock %}
 
 {% block templates %}

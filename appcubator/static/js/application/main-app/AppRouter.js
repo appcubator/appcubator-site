@@ -41,7 +41,7 @@ define(function(require, exports, module) {
 
             _.bindAll(this);
             $('#save').on('click', this.save);
-
+            $('#left-menu-toggle').on('click', this.toggleLeftMenu);
             $('#deploy').on('click', function() {
                 
                 $('.deploy-text').html('Publishing');
@@ -402,6 +402,27 @@ define(function(require, exports, module) {
 
             if (e) e.preventDefault();
             return false;
+        },
+
+        toggleLeftMenu: function() {
+            var self = this;
+            if(this.menuExpanded) {
+                $('#tool-bar').removeClass('open');
+                $('#main-container').removeClass('open');
+                this.menuExpanded = false;
+                $('#main-container').off('click', function() {
+                    self.toggleLeftMenu();
+                });
+            }
+            else {
+                $('#tool-bar').addClass('open');
+                $('#main-container').addClass('open');
+                this.menuExpanded = true;
+
+                $('#main-container').on('click', function() {
+                    self.toggleLeftMenu();
+                });
+            }
         },
 
         showTutorial: function(dir) {

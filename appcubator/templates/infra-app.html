@@ -2,12 +2,11 @@
 
 {% block less %}
 <link rel="stylesheet/less" href="{{ STATIC_URL }}css/app/app.less">
-  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/js/libs/fontselect/fontselect.css" />
-
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/js/libs/fontselect/fontselect.css" />
 {% endblock %}
 
 {% block css-files %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/app/style.css">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/app/app.css">
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/app/editor/editor.css">
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/js/libs/fontselect/fontselect.css" />
 {% endblock %}
@@ -17,12 +16,6 @@
 {% endblock %}
 
 {% block overlay-page %}
-<div class="welcome garage" id="garage-div" {% if not display_garage %} style="display:none;" {% endif %}>
-  {% include "app-garage-temp.html" %}
-</div>
-<div class="welcome world" id="world-div" {% if not display_garage %} style="display:none;" {% endif %}>
-  {% include "app-world-temp.html" %}
-</div>
 {% endblock %}
 
 
