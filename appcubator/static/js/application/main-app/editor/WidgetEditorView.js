@@ -230,7 +230,7 @@ define(function(require, exports, module) {
                 } else {
                     this.widgetClassPickerView = new WidgetClassPickerView(this.model);
                     this.layoutEditor = new WidgetLayoutEditorView(this.model);
-                    this.contentEditor = new WidgetContentEditorView(this.model);
+                    this.contentEditor = new WidgetContentEditorView(this.model, this);
 
                     this.subviews.push(this.widgetClassPickerView);
                     this.subviews.push(this.layoutEditor);
@@ -399,6 +399,17 @@ define(function(require, exports, module) {
             this.$el.removeClass('fadeInLeft');
             this.$el.removeClass('fadeInRight');
             this.$el.hide();
+        },
+
+        setTempContent: function(domNode) {
+            this.tempContent = domNode;
+            this.hideSubviews();
+            this.el.appendChild(domNode);
+        },
+
+        removeTempContent: function() {
+            if(this.tempContent) this.el.removeChild(this.tempContent);
+            this.showSubviews();
         },
 
         showSubviews: function() {

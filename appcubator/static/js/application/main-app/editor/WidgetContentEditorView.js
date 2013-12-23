@@ -11,16 +11,19 @@ define([
             events: {
                 'keyup .content-editor': 'changedContent',
                 'click #toggle-bold': 'toggleBold',
+                'click .change-src-btn': 'clickedChangeSrc',
+                'click .change-link-btn': 'clickedChangeHref',
                 'change .font-picker': 'changeFont',
                 'change .statics': 'changeSrc',
                 'change .select-href': 'changeHref',
                 'submit #external-link-form': 'addExternalLink'
             },
 
-            initialize: function(widgetModel) {
+            initialize: function(widgetModel, parentView) {
                 _.bindAll(this);
 
                 this.model = widgetModel;
+                this.parentView = parentView;
                 this.render();
             },
 
@@ -33,56 +36,26 @@ define([
                     //this.el.appendChild(this.renderFontPicker());
                 }
 
-                if (this.model.get('data').get('content_attribs').has('href')) {
-                    this.el.appendChild(this.renderHrefInfo());
-                }
-
                 if (this.model.get('data').get('content_attribs').has('src')) {
                     this.el.appendChild(this.renderSrcInfo());
+                    this.el.appendChild(this.renderHrefInfo());
+                }
+                else if (this.model.get('data').get('content_attribs').has('href')) {
                     this.el.appendChild(this.renderHrefInfo());
                 }
             },
 
             renderHrefInfo: function() {
-                // if (!this.hrefLi) {
-                //     this.hrefLi = document.createElement('li');
-                // }
-                // var listOfPages = this.model.getListOfPages();
-                // // if(!this.model.get('data').get('content_attribs').get('href')) {
-                // //   this.model.get('data').get('content_attribs').set('href', "internal://Homepage");
-                // // }
-                // var href = (this.model.get('data').get('content_attribs').get('href') || null);
 
-                // var external;
-                // if (String(href).indexOf('internal://') < 0) {
-                //     href = {
-                //         name: href,
-                //         val: href
-                //     };
-                // } else {
-                //     href = {
-                //         name: href.replace('internal://', ''),
-                //         val: href
-                //     };
-                // }
-
-                // this.hrefLi.innerHTML = '';
-                // this.hrefLi.appendChild(new comp().div('Links To').classN('header-div').el);
-                // var selecView = new SelectView(listOfPages, href, true, {
-                //     maxHeight: 3
-                // });
-                // selecView.bind('change', this.changeHref, this);
-                // this.hrefLi.appendChild(selecView.el);
 
                 // return this.hrefLi;
 
                 var href = (this.model.get('data').get('content_attribs').get('href') || null);
                 var li = document.createElement('li');
-                li.className = "w-section";
-                if(href) {
+                li.className = "w-section change-link-btn";
+                if (href) {
                     li.innerHTML = "Change Link Target";
-                }
-                else {
+                } else {
                     li.innerHTML = "Add Link";
                 }
                 return li;
@@ -92,34 +65,12 @@ define([
                 // var li = document.createElement('li');
                 // li.appendChild(new comp().div('Image Source').classN('header-div').el);
 
-                // var statics_list = _.map(statics, function(obj) {
-                //     var newObj = {};
-                //     newObj.val = obj.url;
-                //     newObj.name = obj.name;
-                //     return newObj;
-                // });
-                // statics_list = _.union({
-                //     val: "new-image",
-                //     name: "Upload New Image"
-                // }, statics_list);
 
-                // var curValName = this.model.get('data').get('content_attribs').get('src');
-                // if (this.model.get('data').get('content_attribs').has('src_content')) {
-                //     curValName = this.model.get('data').get('content_attribs').get('src_content');
-                // }
-                // var curVal = {
-                //     name: curValName,
-                //     val: this.model.get('data').get('content_attribs').get('src')
-                // };
-                // var selecView = new SelectView(statics_list, curVal, true, {
-                //     maxHeight: 5
-                // });
-                // selecView.bind('change', this.changeSrc);
                 // li.appendChild(selecView.el);
                 // 
 
                 var li = document.createElement('li');
-                li.className = "w-section";
+                li.className = "w-section change-src-btn";
                 li.innerHTML = "Change Image Source";
                 return li;
             },
@@ -212,6 +163,43 @@ define([
                 self.model.get('data').set('content', _.last(files).url);
             },
 
+            clickedChangeSrc: function() {
+                var self = this;
+
+                var statics_list = _.map(statics, function(obj) {
+                    var newObj = {};
+                    newObj.val = obj.url;
+                    newObj.name = obj.name;
+                    return newObj;
+                });
+
+                statics_list = _.union({
+                    val: "new-image",
+                    name: "Upload New Image"
+                }, statics_list);
+
+                var curValName = this.model.get('data').get('content_attribs').get('src');
+                if (this.model.get('data').get('content_attribs').has('src_content')) {
+                    curValName = this.model.get('data').get('content_attribs').get('src_content');
+                }
+                var curVal = {
+                    name: curValName,
+                    val: this.model.get('data').get('content_attribs').get('src')
+                };
+                var selectView = new SelectView(statics_list, curVal, true, {
+                    maxHeight: 5
+                });
+
+                this.parentView.setTempContent(selectView.el);
+
+                selectView.bind('change', this.changeSrc);
+                selectView.bind('change', function() {
+                    self.parentView.removeTempContent();
+                });
+
+                selectView.expand();
+            },
+
             changeSrc: function(inp) {
                 var self = this;
                 if (inp == 'new-image') {
@@ -220,6 +208,42 @@ define([
                     this.model.get('data').get('content_attribs').set('src', inp);
                     this.model.get('data').set('content', inp);
                 }
+            },
+
+            clickedChangeHref: function() {
+                var self = this;
+                var listOfPages = this.model.getListOfPages();
+                var href = (this.model.get('data').get('content_attribs').get('href') || null);
+
+                if(href === null) {
+                    href = {
+                        name: "Currently no Target",
+                        val: null
+                    };
+                }
+                else if (String(href).indexOf('internal://') < 0) {
+                    href = {
+                        name: href,
+                        val: href
+                    };
+                } else {
+                    href = {
+                        name: href.replace('internal://', ''),
+                        val: href
+                    };
+                }
+                var selectView = new SelectView(listOfPages, href, true, {
+                    maxHeight: 5
+                });
+
+                this.parentView.setTempContent(selectView.el);
+
+                selectView.bind('change', this.changeHref);
+                selectView.bind('change', function() {
+                    self.parentView.removeTempContent();
+                });
+
+                selectView.expand();
             },
 
             changeHref: function(inp) {

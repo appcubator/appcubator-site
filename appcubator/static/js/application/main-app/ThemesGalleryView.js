@@ -49,6 +49,7 @@ define(function(require, exports, module) {
 
         previewTheme: function(e) {
             var themeId = String(e.currentTarget.id).replace('theme-','');
+
             if(this.currentPreview == themeId) return;
             $('.details.active').removeClass('active');
             var url = "/theme/" + themeId + '/sheet.css';
