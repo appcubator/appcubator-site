@@ -369,8 +369,8 @@ text-align: left;
   position: relative;
   display: inline-block;
   width: 52px;
-  height: 44px;
-  margin-top: 5px;
+  height: 42px;
+  margin-top: 6px;
   background-color: #fff;
   text-align: center;
   margin-left: 10px;
@@ -381,14 +381,20 @@ text-align: left;
 
 .main-menu-btn div {
   display: block;
-  position: relative;
-  background-color: #0f2d40;
-  width: 38px;
-  height: 5px;
-  border-radius: 2px;
-  line-height: 12px;
-  text-align: center;
-  margin-top: 7px;
-  left: 50%;
-  margin-left: -19px;
+  background-image: url(/static/img/home-icon.png);
+  background-repeat: no-repeat;
+  height: 100%;
+  background-position: center;
+
+  -webkit-transition: all 0.18s ease-out;
+  -moz-transition: all 0.18s ease-out;
+  -o-transition: all 0.18s ease-out;
+  -ms-transition: all 0.18s ease-out;
+  transition: all 0.18s ease-out;
+}
+
+#tool-bar.open .main-menu-btn div {
+transform: rotate(180deg);
+-ms-transform: rotate(180deg); /* IE 9 */
+-webkit-transform: rotate(180deg); /* Safari and Chrome */
 }
