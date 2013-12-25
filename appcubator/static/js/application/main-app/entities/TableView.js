@@ -87,6 +87,12 @@ define(function(require, exports, module) {
             this.$el.find('.data-li').addClass('active');
         },
 
+        renderCode: function() {
+            this.$el.find('.current-content').html('');
+            this.$el.find('.current-content').append(new TableCodeView(this.model).render().el);
+            this.$el.find('.code-li').addClass('active');
+        },
+
         tabClicked: function(e) {
             this.$el.find('.active').removeClass('active');
 
@@ -97,17 +103,8 @@ define(function(require, exports, module) {
                 this.renderData();
             }
             else if($(e.currentTarget).hasClass('code-li')) {
-
+                this.renderCode();
             }
-        },
-
-
-        changedAttribs: function(e) {
-            var props = String(e.target.id).split('-');
-            var cid = props[1];
-            var attrib = props[0];
-            var value = e.target.options[e.target.selectedIndex].value || e.target.value;
-            this.fieldsCollection.get(cid).set(attrib, value);
         },
 
         addedEntity: function(item) {
