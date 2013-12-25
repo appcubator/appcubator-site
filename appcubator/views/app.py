@@ -205,7 +205,7 @@ def new(request, is_racoon = False, app_template=None):
             # refetch from the db. this is a weird hack that makes deploy magically work.
             app = App.objects.get(pk=app.id)
             # this adds it to the deployment queue. non-blocking basically.
-            app.deploy()
+            # app.deploy()
 
             return redirect(user_page, request.user.username)
 

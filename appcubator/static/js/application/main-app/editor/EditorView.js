@@ -21,6 +21,8 @@ define(function(require, exports, module) {
     var RedoController = require('app/RedoController');
     var CSSEditorView = require('app/css-editor/CSSEditorView');
 
+    var EntitiesView = require('app/entities/EntitiesView');
+
     require('jquery-ui');
     require('mixins/BackboneConvenience');
     require('editor/editor-templates');
@@ -63,6 +65,8 @@ define(function(require, exports, module) {
             this.redoController = new RedoController();
             this.widgetEditorView = new WidgetEditorView();
             v1.widgetEditorView = this.WidgetEditorView;
+
+            this.entitiesView = new EntitiesView();
 
             keyDispatcher.bindComb('meta+z', this.redoController.undo);
             keyDispatcher.bindComb('ctrl+z', this.redoController.undo);
@@ -138,6 +142,7 @@ define(function(require, exports, module) {
             });
 
             this.$pageContainer = this.$el.find('.page-container');
+            this.el.appendChild(this.entitiesView.render().el);
             return this;
         },
 

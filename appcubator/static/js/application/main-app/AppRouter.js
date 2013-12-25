@@ -74,7 +74,7 @@ define(function(require, exports, module) {
             keyDispatcher.bindComb('ctrl+v', this.paste);
 
 
-            var autoSave = setInterval(this.save, 30000);
+            //var autoSave = setInterval(this.save, 30000);
 
             this.toolBar = new ToolBarView({pageId: -1});
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
@@ -102,14 +102,13 @@ define(function(require, exports, module) {
 
         tables: function(appId, tutorial) {
             var self = this;
-            require(['app/entities/EntitiesView'], function(EntitiesView) {
-                self.tutorialPage = "Tables Page";
-                self.changePage(EntitiesView, {}, tutorial, function() {
-                    self.trigger('entities-loaded');
-                    $('.menu-app-entities').addClass('active');
-                });
-                olark('api.box.show');
-            });
+            //self.tutorialPage = "Tables Page";
+            //self.changePage(EntitiesView, {}, tutorial, function() {
+            //        self.trigger('entities-loaded');
+            //        $('.menu-app-entities').addClass('active');
+            //    });
+            //    olark('api.box.show');
+            //});
         },
 
         themes: function(appId, tutorial) {
@@ -151,6 +150,7 @@ define(function(require, exports, module) {
                 self.trigger('editor-loaded');
                 olark('api.box.hide');
                 self.changeTitle(v1.view.title);
+
             });
         },
 

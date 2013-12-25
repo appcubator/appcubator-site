@@ -26,7 +26,7 @@ function(AppInfoModel,
 
       this.set('info', new AppInfoModel(aState.info));
       this.set('users', new UserRolesCollection(aState.users));
-      this.set('tables', new TableCollection(aState.tables));
+      this.set('tables', new TableCollection(aState.models));
       this.set('emails', new EmailCollection(aState.emails));
 
     },

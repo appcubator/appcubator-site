@@ -1359,3 +1359,36 @@ legend + .control-group {
 }
 
 
+
+.card-view {
+  position: fixed;
+  bottom: -40px;
+  left: 50%;
+  height: 640px;
+  z-index: 1050;
+  width: 800px;
+  margin-left: -400px;
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #999;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  *border: 1px solid #999;
+  border-radius: 6px;
+  outline: none;
+  overflow: hidden;
+  .opacity(1);
+  padding: 30px;
+  padding-top: 0;
+  padding-bottom: 70px;
+  .box-shadow(0 3px 7px rgba(0, 0, 0, 0.3));
+
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
+
+  -webkit-animation: bounceInUp 300ms ease-out;
+  -moz-animation: bounceInUp 300ms ease-out;
+  -ms-animation: bounceInUp 300ms ease-out;
+  -o-animation: bounceInUp 300ms ease-out;
+  animation: bounceInUp 300ms ease-out;
+}

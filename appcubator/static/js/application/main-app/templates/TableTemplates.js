@@ -1,28 +1,22 @@
 var TableTemplates = {};
 
 TableTemplates.Table = [
-'<div class="row">',
-  '<p class="lead" style="display:none">Click "Add Table" to create your first table</p>',
-  '<div class="span58 entity">',
+  '<div class="entity">',
     '<div class="header">',
-      '<div class="offset2 hi4 span20">',
+      '<div>',
         '<h2><%= name %></h2>',
         '<div class="q-mark-circle"></div>',
       '</div>',
-      '<span class="right">',
-        /*'<span class="hi4 show-data right-icon">',
-          '<span class="icon"></span>',
-          '<span>Description</span>',
-        '</span><span class="hi4 show-data right-icon">',
-          '<span class="icon"></span>',
-          '<span>See User Data</span>',*/
-        '<span class="hi4 excel right-icon">',
+      '<ul class="tabs">',
+        '<li class="excel right-icon">',
           '<span class="icon"></span>',
           '<span>Access Data</span>',
-        '</span><span class="hi4 trash right-icon">',
+        '</li>',
+        '<li class="trash right-icon">',
           '<span class="icon"></span>',
-        '</span>',
-      '</span>',
+          '<span>Code</span>',
+        '</li>',
+      '</ul>',
     '</div><div class="description"><div class="title">Description</div>',
       '<span class="tbl-wrapper span58">',
         '<span class="tbl">',
@@ -56,7 +50,6 @@ TableTemplates.Table = [
   '<div class="hi3 span58">',
     '<div class="related-fields"></div>',
   '</div>',
-'</div>'
 ].join('\n');
 
 

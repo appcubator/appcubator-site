@@ -4,8 +4,22 @@
         "keywords": "",
         "description": ""
     },
-    "models": {
-        "Picture": {
+    "models": [
+        {
+          "name" : "Picture",
+          "fields": {
+            "datePicked": "Date",
+            "url": "String"
+          },
+          "instancemethods": {
+            "updateUrl": "function (newUrl, cb) {\n      this.url = newUrl;\n      this.save(function(e, d){cb(e,d);});\n    }"
+          },
+          "staticmethods": {
+            "randomNFromFlickr": "function (searchQ, limit, cb) {\n      var flickr = require('flickr');\n      var fcli = new flickr.Flickr('cbe3f7f6cbf9d13ad243a1e1afec902d', '5c3f9a33e088ef60');\n      fcli.executeAPIRequest('flickr.photos.search', {text: searchQ, per_page: limit, extras: ['url_q']},\n                               false, function(e, d){cb(e, d);});\n    }"
+          }
+        },
+        {
+          "name" : "Car",
           "fields": {
             "datePicked": "Date",
             "url": "String"
@@ -17,7 +31,7 @@
             "randomNFromFlickr": "function (searchQ, limit, cb) {\n      var flickr = require('flickr');\n      var fcli = new flickr.Flickr('cbe3f7f6cbf9d13ad243a1e1afec902d', '5c3f9a33e088ef60');\n      fcli.executeAPIRequest('flickr.photos.search', {text: searchQ, per_page: limit, extras: ['url_q']},\n                               false, function(e, d){cb(e, d);});\n    }"
           }
         }
-    },
+    ],
     "emails": [
         {
             "content": "Dear {{User.username}},\n\nThanks for signing up!\n\nCheers!\n{{AppName}}",
