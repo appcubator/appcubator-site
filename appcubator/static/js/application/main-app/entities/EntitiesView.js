@@ -61,6 +61,7 @@ define([
                 // createRoleBox.on('submit', this.createUserRole);
                 // this.subviews.push(createRoleBox);
 
+                $('.menu-app-entities').on('click', this.toggle);
                 return this;
             },
 
@@ -134,6 +135,25 @@ define([
                     return;
                 }
                 util.scrollToElement($(hash));
+            },
+
+            toggle: function() {
+                if(this.expanded) {
+                    this.hide();
+                }
+                else {
+                    this.show();
+                }
+            },
+
+            show: function() {
+                this.$el.addClass('expanded');
+                this.expanded = true;
+            },
+
+            hide: function() {
+                this.$el.removeClass('expanded');
+                this.expanded = false;
             }
         });
 
