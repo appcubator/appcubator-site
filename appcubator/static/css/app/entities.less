@@ -11,7 +11,7 @@
 	border: 3px solid #ccc;
 
 	padding: 30px;
-	z-index: 1007;
+	z-index: 2004;
 
   tranform:scale(0);
   -webkit-transform: scale(0);
@@ -23,6 +23,31 @@
   transform-origin: 330px -30px;
   -ms-transform-origin: 330px -30px;
   -webkit-transform-origin: 330px -30px;
+
+
+	&:after,
+	&:before {
+		bottom: 100%;
+		left: 50%;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+	&:after {
+		border-color: rgba(255, 255, 255, 0);
+		border-bottom-color: #fff;
+		border-width: 12px;
+		margin-left: -12px;
+	}
+	&:before {
+		border-color: rgba(204, 204, 204, 0);
+		border-bottom-color: #ccc;
+		border-width: 16px;
+		margin-left: -16px;
+	}
 }
 
 .entities-view.expanded {
