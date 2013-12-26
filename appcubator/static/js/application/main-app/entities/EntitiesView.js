@@ -34,6 +34,10 @@ define([
             initialize: function() {
                 _.bindAll(this);
                 this.subviews = [this.tablesView, this.userTablesView, this.relationsView, this.createRelationView];
+                this.collection = v1State.get('tables');
+
+
+                this.listenTo(this.collection, 'add', this.renderTable);
 
                 this.title = "Tables";
             },
@@ -59,10 +63,12 @@ define([
             },
 
             renderTables: function() {
-                v1State.get('tables').each(function(tableModel) {
-                    this.$el.find('#list-tables').append('<li class="table-name" id="table-'+ tableModel.cid+'">' + tableModel.get('name') + '</li>');
-                }, this);
+                this.collection.each(this.renderTable);
                 //this.$('#users').append(this.userTablesView.render().el);
+            },
+
+            renderTable: function(tableModel) {
+                this.$el.find('#list-tables').append('<li class="table-name" id="table-'+ tableModel.cid+'">' + tableModel.get('name') + '</li>');
             },
 
             clickedTableName: function(e) {
