@@ -33,10 +33,6 @@ define([
 
             initialize: function() {
                 _.bindAll(this);
-                //this.tablesView = new TablesView(v1State.get('tables'), false);
-                //this.userTablesView = new TablesView(v1State.get('users'), true);
-                //this.relationsView = new RelationsView();
-                //this.createRelationView = new CreateRelationView();
                 this.subviews = [this.tablesView, this.userTablesView, this.relationsView, this.createRelationView];
 
                 this.title = "Tables";
@@ -46,20 +42,17 @@ define([
 
                 this.$el.html(_.template(util.getHTML('entities-page'), {}));
                 this.renderTables();
-                this.renderRelations();
+                // this.renderRelations();
 
                 var addTableBtn = document.createElement('div');
                 addTableBtn.id = 'add-entity';
-                addTableBtn.innerHTML = "Create New";
-                //document.getElementById('add-entity');
+                addTableBtn.innerHTML = '<span class="box-button">+ Create Table</span>';
+                
                 var createTableBox = new Backbone.NameBox({}).setElement(addTableBtn).render();
                 createTableBox.on('submit', this.createTable);
                 this.subviews.push(createTableBox);
 
-                // var addroleBtn = document.getElementById('add-role');
-                // var createRoleBox = new Backbone.NameBox({}).setElement(addroleBtn).render();
-                // createRoleBox.on('submit', this.createUserRole);
-                // this.subviews.push(createRoleBox);
+                this.$el.append(addTableBtn);
 
                 $('.menu-app-entities').on('click', this.toggle);
                 return this;

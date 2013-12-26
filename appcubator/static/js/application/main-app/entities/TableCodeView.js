@@ -8,12 +8,12 @@ define(function(require, exports, module) {
     require('prettyCheckable');
 
 
-    var TableDataView = Backbone.View.extend({
+    var TableCodeView = Backbone.View.extend({
         el: null,
         tagName: 'div',
         collection: null,
         parentName: "",
-        className: 'entity-pane',
+        className: 'code-view',
         subviews: [],
 
         events: {
@@ -26,17 +26,24 @@ define(function(require, exports, module) {
         },
 
         render: function() {
+            var funcTemplate = [
+                '<div class="code-chunk">',
+                '<span class="title"><%= name %></span>',
+                '<div class="code-editor" id="func-editor-<%= cid %>"></div>',
+                '</div>'
+            ].join('\n');
+
             var insStr ='';
             this.model.get('instancemethods').each(function(methodModel) {
-                insStr += '<div id="func-editor-'+methodModel.cid+'"></div>';
+                insStr += _.template(funcTemplate, _.extend(methodModel.toJSON(), {cid: methodModel.cid}));
             });
 
-            var staticStr ='';
+            var statStr ='';
             this.model.get('staticmethods').each(function(methodModel) {
-                staticStr += '<div id="func-editor-'+methodModel.cid+'"></div>';
+                statStr += _.template(funcTemplate, _.extend(methodModel.toJSON(), {cid: methodModel.cid}));
             });
 
-            this.el.innerHTML = '<div id="instance-methods-list">'+insStr+'</div><div id="static-methods-list">'+staticStr+'</div>';
+            this.el.innerHTML = '<div id="instance-methods-list">'+insStr+'</div><div id="static-methods-list">'+statStr+'</div>';
 
             return this;
         },
@@ -61,5 +68,5 @@ define(function(require, exports, module) {
     
     });
 
-    return TableDataView;
+    return TableCodeView;
 });
