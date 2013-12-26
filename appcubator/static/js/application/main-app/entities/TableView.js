@@ -8,7 +8,8 @@ define(function(require, exports, module) {
     var AdminPanelView = require('app/entities/AdminPanelView');
 
     var TableDescriptionView = require('app/entities/TableDescriptionView');
-    var TableDataView = require('app/entities/TableDataView');
+    var TableDataView        = require('app/entities/TableDataView');
+    var TableCodeView        = require('app/entities/TableCodeView');
 
 
     var SoftErrorView = require('app/SoftErrorView');
@@ -50,9 +51,6 @@ define(function(require, exports, module) {
         events: {
             'change .attribs'     : 'changedAttribs',
             'click .q-mark-circle': 'showTableTutorial',
-            'click .remove'       : 'clickedPropDelete',
-            'click .excel'        : 'clickedUploadExcel',
-            'click .trash'        : 'clickedDelete',
             'click .right-icon'   : 'tabClicked'
         },
 
@@ -60,7 +58,6 @@ define(function(require, exports, module) {
         initialize: function(tableModel) {
             _.bindAll(this);
             this.model = tableModel;
-            this.fieldsCollection = tableModel.getFieldsColl();
 
             this.listenTo(this.model, 'remove', this.remove);
             this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
@@ -88,8 +85,10 @@ define(function(require, exports, module) {
         },
 
         renderCode: function() {
+            var tableCodeView = new TableCodeView(this.model);
             this.$el.find('.current-content').html('');
-            this.$el.find('.current-content').append(new TableCodeView(this.model).render().el);
+            this.$el.find('.current-content').append(tableCodeView.render().el);
+            tableCodeView.setupAce();
             this.$el.find('.code-li').addClass('active');
         },
 
