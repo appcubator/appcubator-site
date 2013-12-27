@@ -890,76 +890,76 @@
 /*
  * BOUNCEOUTDOWN
  */
-@-webkit-keyframes bounceOutDown {
-	0% {
-		-webkit-transform: translateY(0);
-	}
+// @-webkit-keyframes bounceOutDown {
+// 	0% {
+// 		-webkit-transform: translateY(0);
+// 	}
 
-	20% {
-		opacity: 1;
-		-webkit-transform: translateY(-20px);
-	}
+// 	20% {
+// 		opacity: 1;
+// 		-webkit-transform: translateY(-20px);
+// 	}
 
-	100% {
-		opacity: 0;
-		-webkit-transform: translateY(2000px);
-	}
-}
+// 	100% {
+// 		opacity: 0;
+// 		-webkit-transform: translateY(2000px);
+// 	}
+// }
 
-@-moz-keyframes bounceOutDown {
-	0% {
-		-moz-transform: translateY(0);
-	}
+// @-moz-keyframes bounceOutDown {
+// 	0% {
+// 		-moz-transform: translateY(0);
+// 	}
 
-	20% {
-		opacity: 1;
-		-moz-transform: translateY(-20px);
-	}
+// 	20% {
+// 		opacity: 1;
+// 		-moz-transform: translateY(-20px);
+// 	}
 
-	100% {
-		opacity: 0;
-		-moz-transform: translateY(2000px);
-	}
-}
+// 	100% {
+// 		opacity: 0;
+// 		-moz-transform: translateY(2000px);
+// 	}
+// }
 
-@-o-keyframes bounceOutDown {
-	0% {
-		-o-transform: translateY(0);
-	}
+// @-o-keyframes bounceOutDown {
+// 	0% {
+// 		-o-transform: translateY(0);
+// 	}
 
-	20% {
-		opacity: 1;
-		-o-transform: translateY(-20px);
-	}
+// 	20% {
+// 		opacity: 1;
+// 		-o-transform: translateY(-20px);
+// 	}
 
-	100% {
-		opacity: 0;
-		-o-transform: translateY(2000px);
-	}
-}
+// 	100% {
+// 		opacity: 0;
+// 		-o-transform: translateY(2000px);
+// 	}
+// }
 
-@keyframes bounceOutDown {
-	0% {
-		transform: translateY(0);
-	}
+// @keyframes bounceOutDown {
+// 	0% {
+// 		transform: translateY(0);
+// 	}
 
-	20% {
-		opacity: 1;
-		transform: translateY(-20px);
-	}
+// 	20% {
+// 		opacity: 1;
+// 		transform: translateY(-20px);
+// 	}
 
-	100% {
-		opacity: 0;
-		transform: translateY(2000px);
-	}
-}
+// 	100% {
+// 		opacity: 0;
+// 		transform: translateY(2000px);
+// 	}
+// }
 
-.bounceOutDown {
-	-webkit-animation-name: bounceOutDown;
-	-moz-animation-name: bounceOutDown;
-	-o-animation-name: bounceOutDown;
-	animation-name: bounceOutDown;
-}
+// .bounceOutDown {
+// 	-webkit-animation-name: bounceOutDown;
+// 	-moz-animation-name: bounceOutDown;
+// 	-o-animation-name: bounceOutDown;
+// 	animation-name: bounceOutDown;
+// }
 
 
 /*
@@ -1756,9 +1756,103 @@
 }
 
 .bounceInUp {
-	-webkit-animation-name: bounceInUp;
-	-moz-animation-name: bounceInUp;
-	-o-animation-name: bounceInUp;
-	animation-name: bounceInUp;
+		-webkit-transform: translateY(0);
+		-moz-transform: translateY(0);
+		-o-transform: translateY(0);
+		transform: translateY(0);
+  -webkit-animation: bounceInUp 300ms ease-out;
+  -moz-animation: bounceInUp 300ms ease-out;
+  -ms-animation: bounceInUp 300ms ease-out;
+  -o-animation: bounceInUp 300ms ease-out;
+  animation: bounceInUp 300ms ease-out;
+}
+
+
+@-webkit-keyframes bounceOutDown {
+	0% {
+		-webkit-transform: translateY(0);
+	}
+	
+	// 60% {
+	// 	opacity: 1;
+	// 	-webkit-transform: translateY(-30px);
+	// }
+	
+	// 80% {
+	// 	-webkit-transform: translateY(10px);
+	// }
+	
+	100% {
+		-webkit-transform: translateY(660px);
+	}
+}
+@-moz-keyframes bounceOutDown {
+	0% {
+		-moz-transform: translateY(0);
+	}
+	
+	// 60% {
+	// 	opacity: 1;
+	// 	-moz-transform: translateY(-30px);
+	// }
+	
+	// 80% {
+	// 	-moz-transform: translateY(10px);
+	// }
+	
+	100% {
+		-moz-transform: translateY(660px);
+	}
+}
+
+@-o-keyframes bounceOutDown {
+	0% {
+		-o-transform: translateY(0);
+	}
+	
+	// 60% {
+	// 	opacity: 1;
+	// 	-o-transform: translateY(-30px);
+	// }
+	
+	// 80% {
+	// 	-o-transform: translateY(10px);
+	// }
+	
+	100% {
+		-o-transform: translateY(660px);
+	}
+}
+
+@keyframes bounceOutDown {
+	0% {
+		transform: translateY(0);
+	}
+	
+	// 60% {
+	// 	opacity: 1;
+	// 	transform: translateY(-30px);
+	// }
+	
+	// 80% {
+	// 	transform: translateY(10px);
+	// }
+	
+	100% {
+		transform: translateY(660px);
+	}
+}
+
+.bounceOutDown {
+	-webkit-transform: translateY(660px);
+	-moz-transform: translateY(660px);
+	-o-transform: translateY(660px);
+	transform: translateY(660px);
+
+	-webkit-animation: bounceOutDown 300ms ease-out;
+	-moz-animation: bounceOutDown 300ms ease-out;
+	-ms-animation: bounceOutDown 300ms ease-out;
+	-o-animation: bounceOutDown 300ms ease-out;
+	animation: bounceOutDown 300ms ease-out;
 }
 

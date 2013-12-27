@@ -71,7 +71,7 @@ define([
 
                 var div = document.createElement('div');
                 div.style.position = 'fixed';
-                div.className = 'card-view ' + this.className;
+                div.className = 'card-view bounceInUp ' + this.className;
                 div.style.width = this.width + 'px';
                 if (this.height) {
                     div.style.height = this.height + 'px';
@@ -133,8 +133,12 @@ define([
                 this.undelegateEvents();
                 if (this.callback) this.callback();
                 if (this.onClose) this.onClose();
-                $(self.modalWindow).fadeOut(100);
-                $(self.backgroundDiv).hide();
+                
+                $(self.modalWindow).addClass('animated');
+                $(self.modalWindow).removeClass('bounceInUp');
+                $(self.modalWindow).addClass('bounceOutDown');
+                
+                $(self.backgroundDiv).fadeOut();
 
                 setTimeout(function() {
                     self.$el.remove();

@@ -13,7 +13,7 @@ define(function(require, exports, module) {
 
     var descriptionTemplate = [
     '<div class="description">',
-        '<span class="tbl-wrapper span58">',
+        '<span class="tbl-wrapper">',
             '<span class="tbl">',
                 '<ul class="property-list">',
                     '<div class="column">',
@@ -29,7 +29,7 @@ define(function(require, exports, module) {
                         '</div>',
                     '</div>',
                 '</ul>',
-                '<div class="column span8 add-property-column">',
+                '<div class="column add-property-column">',
                     '<form class="add-property-form" style="display:none">',
                         '<div class="hi2 hdr">',
                             '<input type="text" class="property-name-input" placeholder="Property Name...">',
