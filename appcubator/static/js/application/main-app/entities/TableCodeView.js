@@ -43,7 +43,18 @@ define(function(require, exports, module) {
                 statStr += _.template(funcTemplate, _.extend(methodModel.toJSON(), {cid: methodModel.cid}));
             });
 
-            this.el.innerHTML = '<div id="instance-methods-list">'+insStr+'</div><div id="static-methods-list">'+statStr+'</div>';
+            this.el.innerHTML = [
+                '<div class="instance sect">',
+                    '<span class="title">Instance Methods</span>',
+                    '<div id="instance-methods-list">'+insStr+'</div>',
+                    '<div class="add-button">Create a New Instance Method</div>',
+                '</div>',
+                '<div class="static sect">',
+                    '<span class="title">Static Methods</span>',
+                    '<div id="static-methods-list">'+statStr+'</div>',
+                    '<div class="add-button>Create a New Static Method</div>',
+                '</div>'
+            ].join('\n');
 
             return this;
         },
