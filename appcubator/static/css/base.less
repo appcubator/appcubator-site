@@ -162,22 +162,6 @@ hr {
   }
 }
 
-.column {
-  overflow: hidden;
-  border-left: 1px solid #ccc;
-  height: 100%;
-}
-
-.column:last-child {
-  border-right: 1px solid #ccc;
-}
-
-.column > div {
-  padding: 4px;
-  border-bottom: 1px solid #ccc;
-  text-align: center;
-}
-
 /*
  * PANES
  */
@@ -1358,7 +1342,13 @@ legend + .control-group {
   z-index: 3000;
 }
 
-
+.modal-bg {
+  -webkit-animation: fadeInSeven 300ms ease-out;
+  -moz-animation: fadeInSeven 300ms ease-out;
+  -ms-animation: fadeInSeven 300ms ease-out;
+  -o-animation: fadeInSeven 300ms ease-out;
+  animation: fadeInSeven 300ms ease-out;
+}
 
 .card-view {
   position: fixed;

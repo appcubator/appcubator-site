@@ -171,26 +171,43 @@
 
 	.sect {
 		margin-bottom: 30px;
+		margin-top: 15px;
+
+		display: block;
+		width: 92%;
+		margin-left: 4%;
 
 		.title {
 			font-size: 24px;
 			line-height: 32px;
-			padding-left: 30px;
+			display: block;
+			height: 45px;
 		}
 
+		.add-button {
+			font-size: 18px;
+			color: #0f2d40;
+			font-weight: lighter;
+			text-align: center;
+			line-height: 60px;
+			cursor: pointer;
+		}
 	}
 
 	.code-chunk {
 		position: relative;
 		display: block;
 		height: 345px;
+		border: 1px solid #ccc;
+		border-radius: 6px;
+		overflow: hidden;
 
 		.title {
 			font-size: 16px;
 			height: 45px;
 			line-height: 45px;
 			padding: 0 40px;
-			background-color: #eee;
+			background-color: #f6f6f6;
 			width: 100%;
 		}
 	}
@@ -202,6 +219,16 @@
 		height: 300px;
 		border-bottom: 1px solid #aaa;
 	}
+}
+
+.description-view {
+	padding: 30px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+
+.data-view {
+	padding: 30px;
 }
 
 .entity-pane {
@@ -309,14 +336,14 @@
 
 	.tbl-wrapper {
 		position: relative;
-	  height: 150px;
-	  overflow: hidden;
+	  // height: 150px;
+	  // overflow: hidden;
 
-	  -ms-overflow-x: scroll;
-	  overflow-x: scroll;
-	  background-color: #fff;
-	  border-top: 1px solid #d3d3d3;
-	  border-bottom: 1px solid #d3d3d3;
+	  // -ms-overflow-x: scroll;
+	  // overflow-x: scroll;
+	  // background-color: #fff;
+	  // border-top: 1px solid #d3d3d3;
+	  // border-bottom: 1px solid #d3d3d3;
 
 	  .remove {
 	  	font-size: 10px;
@@ -343,15 +370,15 @@
   	background-color: #fff;
 
   	.column {
-			min-width: 90px;
-			float: left;
-			height: 150px;
+			display: block;
+			width: 480px;
+			height: 60px;
+			border-bottom: 1px solid #ccc;
 		}
 
   	.property-list {
   		list-style: none;
 			display: inline-block;
-			float: left;
 
 			select {
 				display: inline-block;
@@ -412,21 +439,27 @@
 		}
 
   	.hdr {
+  		width: 120px;
+  		display: inline-block;
   		font-weight: bold;
-		  border-bottom: 2px solid #AAA;
 		  height: 30px;
 		  padding: 4px;
 		  text-align: left;
-		  display: inline-block;
-		  min-width: 90px;
-		  width: 100%;
+		  vertical-align: top;
   	}
 
-  	.desc {
-		  text-align: left;
-		  font-size: 12px;
-		  font-weight: bold;
-		}
+  	.type-field {
+  		display: inline-block;
+  		width: 120px;
+  		vertical-align: top;
+  	}
+
+  	.prop-cross {
+  		display: inline-block;
+  		width: 60px;
+ 			vertical-align: top;
+  	}
+
 	} // end .tbl
 
 	.related-fields {

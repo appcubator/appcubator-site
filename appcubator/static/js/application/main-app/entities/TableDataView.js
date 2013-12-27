@@ -13,7 +13,7 @@ define(function(require, exports, module) {
         tagName: 'div',
         collection: null,
         parentName: "",
-        className: 'entity-pane',
+        className: 'data-view',
         subviews: [],
 
         events: {

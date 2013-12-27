@@ -47,12 +47,12 @@ define(function(require, exports, module) {
                 '<div class="instance sect">',
                     '<span class="title">Instance Methods</span>',
                     '<div id="instance-methods-list">'+insStr+'</div>',
-                    '<div class="add-button">Create a New Instance Method</div>',
+                    '<div class="add-button">+ Create a New Instance Method</div>',
                 '</div>',
                 '<div class="static sect">',
                     '<span class="title">Static Methods</span>',
                     '<div id="static-methods-list">'+statStr+'</div>',
-                    '<div class="add-button>Create a New Static Method</div>',
+                    '<div class="add-button>+ Create a New Static Method</div>',
                 '</div>'
             ].join('\n');
 
@@ -63,12 +63,14 @@ define(function(require, exports, module) {
          setupAce: function() {
             this.model.get('instancemethods').each(function(methodModel) {
                 var editor = ace.edit("func-editor-" + methodModel.cid);
+                editor.getSession().setMode("ace/mode/javascript");
                 editor.setValue(methodModel.get('code'), -1);
             });
 
             var staticStr ='';
             this.model.get('staticmethods').each(function(methodModel) {
                 var editor = ace.edit("func-editor-" + methodModel.cid);
+                editor.getSession().setMode("ace/mode/javascript");
                 editor.setValue(methodModel.get('code'), -1);
             });
 

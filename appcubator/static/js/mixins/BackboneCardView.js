@@ -39,14 +39,14 @@ define([
             setupModal: function() {
                 var self = this;
                 var div = document.createElement('div');
-                div.className = "modal-bg fadeIn";
+                div.className = "modal-bg";
                 div.style.position = 'fixed';
                 div.style.width = '100%';
                 div.style.height = '100%';
                 div.style.top = '0';
                 div.style.left = '0';
                 div.style.backgroundColor = '#222';
-                div.style.opacity = '0.6';
+                div.style.opacity = '0.7';
                 div.style.zIndex = 3000;
                 this.bodyEl.appendChild(div);
 
