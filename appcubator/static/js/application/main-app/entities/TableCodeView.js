@@ -4,9 +4,18 @@ define(function(require, exports, module) {
 
     var SoftErrorView = require('app/SoftErrorView');
     var DialogueView = require('mixins/DialogueView');
+    var TableCodeModel = require('models/TableCodeModel');
+
     require('app/templates/TableTemplates');
     require('prettyCheckable');
 
+
+    var funcTemplate = [
+        '<div class="code-chunk">',
+            '<span class="title"><%= name %></span>',
+            '<div class="code-editor" id="func-editor-<%= cid %>"></div>',
+        '</div>'
+    ].join('\n');
 
     var TableCodeView = Backbone.View.extend({
         el: null,
@@ -17,21 +26,20 @@ define(function(require, exports, module) {
         subviews: [],
 
         events: {
+
         },
 
 
         initialize: function(tableModel) {
             _.bindAll(this);
             this.model = tableModel;
+
+            this.listenTo(this.model.get('staticmethods'), 'add', this.renderStaticMethod);
+            this.listenTo(this.model.get('instancemethods'), 'add', this.renderInstanceMethod);
+
         },
 
         render: function() {
-            var funcTemplate = [
-                '<div class="code-chunk">',
-                '<span class="title"><%= name %></span>',
-                '<div class="code-editor" id="func-editor-<%= cid %>"></div>',
-                '</div>'
-            ].join('\n');
 
             var insStr ='';
             this.model.get('instancemethods').each(function(methodModel) {
@@ -46,21 +54,41 @@ define(function(require, exports, module) {
             this.el.innerHTML = [
                 '<div class="instance sect">',
                     '<span class="title">Instance Methods</span>',
-                    '<div id="instance-methods-list">'+insStr+'</div>',
-                    '<div class="add-button">+ Create a New Instance Method</div>',
+                    '<div id="static-methods-list">'+insStr+'</div>',
+                    '<div id="add-static-box">',
+                        '<form style="display:none;">',
+                            '<input type="text" class="property-name-input" placeholder="Property Name...">',
+                            '<input type="submit" class="done-btn" value="Done">',
+                        '</form>',
+                        '<div class="add-button box-button">+ Create a New Instance Method</div>',
+                    '</div>',
                 '</div>',
                 '<div class="static sect">',
                     '<span class="title">Static Methods</span>',
-                    '<div id="static-methods-list">'+statStr+'</div>',
-                    '<div class="add-button>+ Create a New Static Method</div>',
+                    '<div id="instance-methods-list">'+statStr+'</div>',
+                    '<div id="add-instance-box">',
+                        '<form style="display:none;">',
+                            '<input type="text" class="property-name-input" placeholder="Property Name...">',
+                            '<input type="submit" class="done-btn" value="Done">',
+                        '</form>',
+                        '<div class="add-button box-button">+ Create a New Static Method</div>',
+                    '</div>',
                 '</div>'
             ].join('\n');
+
+            this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-static-box')).render();
+            this.addPropertyBox.on('submit', this.createStaticFunction);
+            this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-instance-box')).render();
+            this.addPropertyBox.on('submit', this.createInstanceFunction);
+            //             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('.add-property-column').get(0)).render();
+            // this.subviews.push(this.addPropertyBox);
+            // this.addPropertyBox.on('submit', this.createNewProperty);
 
             return this;
         },
 
 
-         setupAce: function() {
+        setupAce: function() {
             this.model.get('instancemethods').each(function(methodModel) {
                 var editor = ace.edit("func-editor-" + methodModel.cid);
                 editor.getSession().setMode("ace/mode/javascript");
@@ -78,7 +106,24 @@ define(function(require, exports, module) {
             // this.editor.setValue(this.model.get('basecss'), -1);
             // this.editor.on("change", this.keyup);
         },
-    
+
+        renderStaticMethod: function(methodModel) {
+            this.$el.find('#static-methods-list').append(_.template(funcTemplate, _.extend(methodModel.toJSON(), {cid: methodModel.cid})));
+
+        },
+
+        renderInstanceMethod: function(methodModel) {
+            this.$el.find('#instance-methods-list').append(_.template(funcTemplate, _.extend(methodModel.toJSON(), {cid: methodModel.cid})));
+        },
+
+        createStaticFunction: function(functionName) {
+            this.model.get('staticmethods').add(new TableCodeModel({ name: functionName }));
+        },
+
+        createInstanceFunction: function(functionName) {
+            this.model.get('instancemethods').add(new TableCodeModel({ name: functionName }));
+        }
+
     });
 
     return TableCodeView;

@@ -43,7 +43,7 @@ define(function(require, exports, module) {
 
 
     var propertyTemplate = [
-    '<div class="column" id="column-<%- cid %>">',
+    '<div class="column <% if(isNew) { %>newcol<% } %>" id="column-<%- cid %>">',
       '<div class="hdr"><%- name %></div>',
       '<div class="type-field" id="type-row-<%- cid %>">',
         '<select class="attribs" id="type-<%- cid %>">',
@@ -89,9 +89,10 @@ define(function(require, exports, module) {
             this.fieldsCollection = tableModel.getFieldsColl();
 
             this.listenTo(this.model, 'remove', this.remove);
-            this.listenTo(this.model.get('fields'), 'add', this.appendField);
+            this.listenTo(this.model.get('fields'), 'add', this.appendField, true);
             this.listenTo(this.model.get('fields'), 'remove', this.removeField);
             this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
+            
             this.userRoles = v1State.get('users').pluck('name');
             this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));
             this.bindDupeWarning();
@@ -144,7 +145,7 @@ define(function(require, exports, module) {
             this.fieldsCollection.push(newField);
         },
 
-        appendField: function(fieldModel) {
+        appendField: function(fieldModel, isNew) {
             // don't append field if it's a relational field
             if (fieldModel.isRelatedField()) {
                 return false;
@@ -155,6 +156,8 @@ define(function(require, exports, module) {
             page_context.nlType = fieldModel.getNLType();
             page_context.entityName = this.model.get('name');
             page_context.entities = this.userRoles.concat(this.otherEntities);
+            page_context.isNew = isNew;
+
             var template = _.template(propertyTemplate, page_context);
 
             this.$el.find('.property-list').append(template);
