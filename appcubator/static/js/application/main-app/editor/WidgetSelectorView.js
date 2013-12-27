@@ -212,6 +212,7 @@ define(function(require, exports, module) {
             var self = this;
             if (this.selectedEl && this.selectedEl.cid == widgetModel.cid) {
                 this.setLayout(this.selectDiv, widgetModel);
+                this.selectedEl.trigger('reselected');
                 return;
             }
 
@@ -312,7 +313,7 @@ define(function(require, exports, module) {
 
             if (!model) return;
 
-            this.widgetEditorView.clear();
+            this.widgetEditorView.hide();
 
             var cid = model.cid;
             g_guides.hideAll();

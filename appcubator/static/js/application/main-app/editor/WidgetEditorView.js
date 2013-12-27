@@ -66,7 +66,10 @@ define(function(require, exports, module) {
             this.listenTo(this.model, 'startEditing', this.startedEditing);
             this.listenTo(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
             this.listenTo(this.model, 'doubleClicked', this.doubleClicked);
-            
+
+            this.listenTo(this.model, 'reselected', this.show);
+            // this.listenTo(this.model.get('layout'), 'change', this.hide);
+
             this.listenTo(this.model, 'deselected', this.clear);
 
             return this;
@@ -78,9 +81,11 @@ define(function(require, exports, module) {
         },
 
         display: function() {
-            
             this.filleContent();
+            this.show();
+        },
 
+        show: function() {
             var location = this.getLocation();
             this.location = location;
             this.el.className += ' ' + location;
@@ -375,6 +380,7 @@ define(function(require, exports, module) {
         },
 
         clear: function() {
+            console.trace();
             if (this.contentEditor) this.contentEditor.clear();
             if (this.layoutEditor) this.layoutEditor.clear();
             if (this.infoEditor) this.infoEditor.clear();
