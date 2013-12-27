@@ -90,30 +90,37 @@ define(function(require, exports, module) {
 
         setupAce: function() {
             this.model.get('instancemethods').each(function(methodModel) {
-                var editor = ace.edit("func-editor-" + methodModel.cid);
-                editor.getSession().setMode("ace/mode/javascript");
-                editor.setValue(methodModel.get('code'), -1);
-            });
-
-            var staticStr ='';
+                this.setupSingleAce(methodModel);
+            }, this);
             this.model.get('staticmethods').each(function(methodModel) {
-                var editor = ace.edit("func-editor-" + methodModel.cid);
-                editor.getSession().setMode("ace/mode/javascript");
-                editor.setValue(methodModel.get('code'), -1);
-            });
+                this.setupSingleAce(methodModel);
+            }, this);
 
             // this.editor.getSession().setMode("ace/mode/css");
             // this.editor.setValue(this.model.get('basecss'), -1);
             // this.editor.on("change", this.keyup);
         },
 
+        setupSingleAce: function(methodModel) {
+            var self = this;
+
+            var editor = ace.edit("func-editor-" + methodModel.cid);
+            editor.getSession().setMode("ace/mode/javascript");
+            editor.setValue(methodModel.get('code'), -1);
+
+            editor.on("change", function() {
+                self.codeChanged(methodModel, editor.getValue());
+            });
+        },
+
         renderStaticMethod: function(methodModel) {
             this.$el.find('#static-methods-list').append(_.template(funcTemplate, _.extend(methodModel.toJSON(), {cid: methodModel.cid})));
-
+            this.setupSingleAce(methodModel);
         },
 
         renderInstanceMethod: function(methodModel) {
             this.$el.find('#instance-methods-list').append(_.template(funcTemplate, _.extend(methodModel.toJSON(), {cid: methodModel.cid})));
+            this.setupSingleAce(methodModel);
         },
 
         createStaticFunction: function(functionName) {
@@ -122,6 +129,11 @@ define(function(require, exports, module) {
 
         createInstanceFunction: function(functionName) {
             this.model.get('instancemethods').add(new TableCodeModel({ name: functionName }));
+        },
+
+        codeChanged: function(methodModel, newValue) {
+            console.log(newValue);
+            methodModel.set('code', newValue);
         }
 
     });
