@@ -86,10 +86,6 @@ define(function(require, exports, module) {
             });
             $(this.allList).find('li:not(.ui-draggable)').draggable({
                 cursor: "move",
-                cursorAt: {
-                    top: 0,
-                    left: 0
-                },
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
@@ -197,13 +193,7 @@ define(function(require, exports, module) {
             var self = this;
             $(li).draggable({
                 cursor: "move",
-                cursorAt: {
-                    top: 0,
-                    left: 0
-                },
-                helper: function(event) {
-                    return $(elementModel.get('el')).css('position', 'fixed');
-                },
+                helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
                 },
