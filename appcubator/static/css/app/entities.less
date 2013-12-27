@@ -225,6 +225,11 @@
 	padding: 30px;
 	overflow: hidden;
 	overflow-y: scroll;
+	text-align: center;
+
+	.description {
+		text-align: left;
+	}
 }
 
 .data-view {
@@ -373,7 +378,12 @@
 			display: block;
 			width: 480px;
 			height: 60px;
+			line-height: 60px;
 			border-bottom: 1px solid #ccc;
+		}
+
+		.column.header {
+			background-color: #efefef;
 		}
 
   	.property-list {
@@ -411,16 +421,22 @@
 				font-size: 12px;
 				height: 100%;
 				cursor: pointer;
+				line-height: 60px;
+				vertical-align: top;
 			}
 			.plus-icon {
 				background-image: url(/static/img/add.png);
-				.background-size(auto 100%);
+				-webkit-background-size: 100% auto;
+				-moz-background-size:  100% auto;
+				-o-background-size:  100% auto;
+				background-size: 100% auto;
 				background-position: center;
-			  background-repeat: no-repeat;
-			  margin-top: 30px;
-			  margin-bottom: 8px;
-			  width: 100%;
-			  height: 30px;
+				background-repeat: no-repeat;
+				width: 30px;
+				height: 60px;
+				display: inline-block;
+				line-height: 60px;
+				margin-right: 15px;
 			}
 		} // end .add-property-column
 
@@ -439,11 +455,9 @@
 		}
 
   	.hdr {
-  		width: 120px;
+  		width: 180px;
+  		padding-left: 30px;
   		display: inline-block;
-  		font-weight: bold;
-		  height: 30px;
-		  padding: 4px;
 		  text-align: left;
 		  vertical-align: top;
   	}

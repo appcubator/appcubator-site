@@ -16,7 +16,7 @@ define(function(require, exports, module) {
         '<span class="tbl-wrapper">',
             '<span class="tbl">',
                 '<ul class="property-list">',
-                    '<div class="column">',
+                    '<div class="column header">',
                         '<div class="hdr">Property</div>',
                         '<div class="type-field desc">Type</div>',
                     '</div>',
@@ -31,9 +31,7 @@ define(function(require, exports, module) {
                 '</ul>',
                 '<div class="column add-property-column">',
                     '<form class="add-property-form" style="display:none">',
-                        '<div class="hi2 hdr">',
                             '<input type="text" class="property-name-input" placeholder="Property Name...">',
-                        '</div>',
                         '<input type="submit" class="done-btn" value="Done">',
                     '</form>',
                     '<span class="add-property-button box-button"><span class="plus-icon"></span>Add Property</span>',
@@ -109,7 +107,6 @@ define(function(require, exports, module) {
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('.add-property-column').get(0)).render();
             this.subviews.push(this.addPropertyBox);
             this.addPropertyBox.on('submit', this.createNewProperty);
-            this.adjustTableWidth();
 
             return this;
         },
@@ -161,12 +158,10 @@ define(function(require, exports, module) {
             var template = _.template(propertyTemplate, page_context);
 
             this.$el.find('.property-list').append(template);
-            this.adjustTableWidth();
         },
 
         removeField: function(fieldModel) {
             this.$('#column-' + fieldModel.cid).remove();
-            this.adjustTableWidth();
         },
 
         changedAttribs: function(e) {
@@ -256,23 +251,6 @@ define(function(require, exports, module) {
                 },
                 dataType: "JSON"
             });
-        },
-
-        adjustTableWidth: function() {
-            var propertyList = this.$el.find('ul.property-list').get(0);
-            var width = propertyList.clientWidth;
-
-            width += 120;
-            this.width = width;
-            if (this.width < 300) this.width = 300;
-            this.$el.find('.tbl').width(this.width);
-
-            if (width > 870 && !this.hasArrow) {
-                this.hasArrow = true;
-                var div = document.createElement('div');
-                div.className = 'right-arrow';
-                this.$el.find('.description').append(div);
-            }
         },
 
         initializeTableWidth: function() {
