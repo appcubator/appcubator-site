@@ -132,7 +132,6 @@ define(function(require, exports, module) {
         },
 
         codeChanged: function(methodModel, newValue) {
-            console.log(newValue);
             methodModel.set('code', newValue);
         }
 
