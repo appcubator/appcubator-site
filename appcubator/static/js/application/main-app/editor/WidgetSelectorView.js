@@ -330,8 +330,10 @@ define(function(require, exports, module) {
             }
 
             /* Adjust for the scroll amount of the iframe - hacky */
-            var scrollTop = $(document).scrollTop();
-            ui.position.top += scrollTop;
+            // console.log(document);
+            // console.log($(document).scrollTop());
+            // var scrollTop = $(document).scrollTop();
+            // ui.position.top += scrollTop;
 
             var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
             var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
