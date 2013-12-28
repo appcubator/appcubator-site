@@ -80,6 +80,22 @@ define(function(require, exports, module) {
             return this;
         },
 
+        setupScrollEvents: function() {
+            var self = this;
+            var timer;
+            $(innerDoc).bind('scroll',function () {
+                clearTimeout(timer);
+                timer = setTimeout( refresh , 150 );
+                self.hide();
+            });
+
+            var refresh = function () {
+                // do stuff
+                self.show();
+            };
+
+        },
+
         display: function() {
             this.filleContent();
             this.show();
@@ -380,7 +396,6 @@ define(function(require, exports, module) {
         },
 
         clear: function() {
-            console.trace();
             if (this.contentEditor) this.contentEditor.clear();
             if (this.layoutEditor) this.layoutEditor.clear();
             if (this.infoEditor) this.infoEditor.clear();

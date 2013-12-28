@@ -149,7 +149,9 @@ define(function(require, exports, module) {
         renderIFrameContent: function(proxy) {
             var self = this;
             var iframe = document.getElementById('page');
-            var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+            innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+            this.widgetEditorView.setupScrollEvents();
 
             keyDispatcher.addEnvironment(innerDoc);
 
