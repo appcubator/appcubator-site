@@ -55,7 +55,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'less.finders.LessFinder',
-    'compressor.finders.CompressorFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
@@ -244,8 +243,6 @@ EMAIL_HOST_PASSWORD = "obscurepassword321"
 EMAIL_USE_TLS = False
 DEFAULT_FROM_EMAIL = 'team@appcubator.com'
 
-DEPLOYMENT_HOSTNAME = 'deployment.staging.appcubator.com'
-
 import os, os.path
 import re
 static_version_file_path = os.path.join(os.path.dirname(__file__), 'STATIC_VERSION')
@@ -265,3 +262,4 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.linkedin.LinkedinBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+DEPLOYMENT_HOSTNAME='deployment.staging.appcubator.com'

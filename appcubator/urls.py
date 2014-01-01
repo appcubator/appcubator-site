@@ -135,4 +135,8 @@ urlpatterns += patterns('appcubator.views.app',
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-urlpatterns += staticfiles_urlpatterns()
+# Let django serve statics.
+urlpatterns += patterns('',
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': False,})
+)
+
