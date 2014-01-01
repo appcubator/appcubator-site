@@ -1,0 +1,9 @@
+<!-- node -->
+{# TODO Figure out this wrapper business #}
+<div class="node-wrapper" style="text-align:{{node.layout.alignment}}; {{ node.overlap_styles }} {# node.wrapper_position_string #} {{ node.padding_string }}">
+<{{node.tagName}} {% for attrib in node.content_attribs %} {{ attrib }}="{{ node.content_attribs[attrib] }}"{% endfor %} class="node {{ node.class_name }}">
+{% if not node.isSingle %}
+{{ node.content() }}
+</{{node.tagName}}>{% endif %}
+</div>
+<!-- /node -->

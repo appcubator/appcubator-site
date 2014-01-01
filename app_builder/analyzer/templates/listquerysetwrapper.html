@@ -1,0 +1,9 @@
+<div class="row list-container span{{context.width}} hi{{context.height}} offset{{context.left}} hoff{{context.top}}">
+  {{ '{%' }} for item in {{ context.django_query.identifier() }} {{ '%}' }}
+  <div class="list-entry span{{context.row_width}} hi{{context.row_height}}">
+{% for n in context.nodes %}
+    {{ n.render(env)|indent(2) }}
+{% endfor %}
+  </div>
+  {{ "{% endfor %}" }}
+</div>

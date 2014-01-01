@@ -1,0 +1,6 @@
+{% extends "model.py.template" %}
+
+{% set models = imports['django.models'] %}
+{% set AbstractUser = imports['django.models.AbstractUser'] %}
+
+{% block subclass_name %}{{AbstractUser}}{% endblock %}

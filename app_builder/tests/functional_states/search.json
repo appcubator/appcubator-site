@@ -1,0 +1,545 @@
+{
+    "info": {
+        "keywords": "",
+        "description": ""
+    },
+    "tables": [
+        {
+            "name": "SearchMe",
+            "fields": [
+                {
+                    "name": "Name",
+                    "type": "text"
+                },
+                {
+                    "name": "Place",
+                    "type": "text"
+                },
+                {
+                    "name": "Price",
+                    "type": "number"
+                },
+                {
+                    "name": "Searcher",
+                    "type": "fk",
+                    "related_name": "Searchables",
+                    "owner_entity": "SearchMe",
+                    "entity_name": "User"
+                }
+            ]
+        }
+    ],
+    "users": [
+        {
+            "fields": [],
+            "name": "User"
+        }
+    ],
+    "mobilePages": [],
+    "emails": [
+        {
+            "content": "Dear {{User.First_Name}},\n\nThanks for signing up!\n\n- {{AppName}} Team",
+            "name": "Welcome",
+            "subject": "Thanks for Signing up!"
+        }
+    ],
+    "pages": [
+        {
+            "name": "Homepage",
+            "access_level": "all",
+            "url": {
+                "urlparts": []
+            },
+            "footer": {
+                "isFixed": true,
+                "isHidden": false,
+                "links": [
+                    {
+                        "url": "internal://Homepage",
+                        "title": "Homepage"
+                    }
+                ],
+                "customText": "Add custom footer text here"
+            },
+            "navbar": {
+                "isFixed": true,
+                "brandName": null,
+                "isHidden": false,
+                "links": [
+                    {
+                        "url": "internal://Homepage",
+                        "title": "Homepage"
+                    },
+                    {
+                        "title": "Search Results",
+                        "url": "internal://Search Results"
+                    }
+                ]
+            },
+            "uielements": [
+                {
+                    "type": "form",
+                    "layout": {
+                        "top": 3,
+                        "left": 8,
+                        "height": 14,
+                        "width": 4,
+                        "t_padding": 0,
+                        "b_padding": 0,
+                        "l_padding": 0,
+                        "r_padding": 0,
+                        "alignment": "left"
+                    },
+                    "data": {
+                        "nodeType": "form",
+                        "class_name": "form-with-bg",
+                        "container_info": {
+                            "action": "login",
+                            "form": {
+                                "name": "local login",
+                                "action": "login",
+                                "fields": [
+                                    {
+                                        "field_name": "username",
+                                        "placeholder": "Username",
+                                        "label": "Username",
+                                        "displayType": "single-line-text",
+                                        "type": "text",
+                                        "options": "",
+                                        "required": false
+                                    },
+                                    {
+                                        "name": "password",
+                                        "placeholder": "Password",
+                                        "label": "Password",
+                                        "displayType": "password-text",
+                                        "type": "password",
+                                        "options": "",
+                                        "required": false
+                                    },
+                                    {
+                                        "placeholder": "Login",
+                                        "label": "Login",
+                                        "displayType": "button",
+                                        "type": "button",
+                                        "required": false
+                                    }
+                                ],
+                                "loginRoutes": [
+                                    {
+                                        "role": "User",
+                                        "redirect": "internal://Homepage"
+                                    }
+                                ],
+                                "entity": "User",
+                                "actions": []
+                            }
+                        },
+                        "content_attribs": {}
+                    }
+                },
+                {
+                    "type": "node",
+                    "layout": {
+                        "top": 1,
+                        "left": 0,
+                        "height": 4,
+                        "width": 3,
+                        "t_padding": 0,
+                        "b_padding": 0,
+                        "l_padding": 0,
+                        "r_padding": 0,
+                        "alignment": "left"
+                    },
+                    "data": {
+                        "nodeType": "headerTexts",
+                        "style": "font-size: 32px;\nfont-weight: bold;",
+                        "isSingle": false,
+                        "content_attribs": {},
+                        "hoverStyle": "",
+                        "class_name": "header-1",
+                        "content": "Search Test",
+                        "tagName": "h1",
+                        "activeStyle": ""
+                    }
+                },
+                {
+                    "type": "form",
+                    "layout": {
+                        "top": 16,
+                        "left": 1,
+                        "height": 18,
+                        "width": 3,
+                        "t_padding": 0,
+                        "b_padding": 0,
+                        "l_padding": 0,
+                        "r_padding": 0,
+                        "alignment": "left"
+                    },
+                    "data": {
+                        "container_info": {
+                            "entity": "SearchMe",
+                            "action": "create",
+                            "form": {
+                                "entity": "SearchMe",
+                                "goto": "internal://Homepage",
+                                "name": "",
+                                "fields": [
+                                    {
+                                        "field_name": "Name",
+                                        "displayType": "single-line-text",
+                                        "type": "text",
+                                        "label": "Name",
+                                        "options": "",
+                                        "placeholder": "Name",
+                                        "required": false
+                                    },
+                                    {
+                                        "field_name": "Place",
+                                        "displayType": "single-line-text",
+                                        "type": "text",
+                                        "label": "Place",
+                                        "options": "",
+                                        "placeholder": "Place",
+                                        "required": false
+                                    },
+                                    {
+                                        "field_name": "Price",
+                                        "displayType": "single-line-text",
+                                        "type": "number",
+                                        "label": "Price",
+                                        "options": "",
+                                        "placeholder": "Price",
+                                        "required": false
+                                    },
+                                    {
+                                        "type": "button",
+                                        "displayType": "button",
+                                        "placeholder": "Submit",
+                                        "required": false
+                                    }
+                                ],
+                                "action": "create",
+                                "actions": []
+                            }
+                        },
+                        "content_attribs": {},
+                        "class_name": "form-with-bg"
+                    }
+                },
+                {
+                    "type": "node",
+                    "layout": {
+                        "top": 11,
+                        "left": 1,
+                        "height": 4,
+                        "width": 4,
+                        "t_padding": 0,
+                        "b_padding": 0,
+                        "l_padding": 0,
+                        "r_padding": 0,
+                        "alignment": "left"
+                    },
+                    "data": {
+                        "nodeType": "headerTexts",
+                        "style": "font-size: 32px;\nfont-weight: bold;",
+                        "isSingle": false,
+                        "content_attribs": {},
+                        "hoverStyle": "",
+                        "class_name": "header-1",
+                        "content": "Create Searches\n",
+                        "tagName": "h1",
+                        "activeStyle": ""
+                    }
+                }
+            ],
+            "page_name": "Homepage",
+            "ind": 0,
+            "user_roles": [
+                "User"
+            ]
+        },
+        {
+            "name": "Registration",
+            "url": {
+                "urlparts": [
+                    "Registration"
+                ]
+            },
+            "access_level": "all",
+            "uielements": [
+                {
+                    "type": "form",
+                    "layout": {
+                        "top": 1,
+                        "left": 8,
+                        "height": 22,
+                        "width": 4,
+                        "t_padding": 0,
+                        "b_padding": 0,
+                        "l_padding": 0,
+                        "r_padding": 0,
+                        "alignment": "left"
+                    },
+                    "data": {
+                        "nodeType": "form",
+                        "container_info": {
+                            "entity": "User",
+                            "action": "signup",
+                            "form": {
+                                "action": "signup",
+                                "entity": "User",
+                                "fields": [
+                                    {
+                                        "field_name": "username",
+                                        "placeholder": "Username",
+                                        "label": "Username",
+                                        "displayType": "single-line-text",
+                                        "type": "text",
+                                        "options": "",
+                                        "required": false
+                                    },
+                                    {
+                                        "name": "password1",
+                                        "placeholder": "Password",
+                                        "label": "Password",
+                                        "displayType": "password-text",
+                                        "type": "password",
+                                        "options": "",
+                                        "required": false
+                                    },
+                                    {
+                                        "name": "password2",
+                                        "placeholder": "Confirm Password",
+                                        "label": "Confirm Password",
+                                        "displayType": "password-text",
+                                        "type": "password",
+                                        "options": "",
+                                        "required": false
+                                    },
+                                    {
+                                        "field_name": "Email",
+                                        "placeholder": "Email Address",
+                                        "label": "Email Address",
+                                        "displayType": "email-text",
+                                        "type": "email",
+                                        "options": "",
+                                        "required": false
+                                    },
+                                    {
+                                        "placeholder": "Sign Up",
+                                        "displayType": "button",
+                                        "type": "button",
+                                        "required": false
+                                    }
+                                ],
+                                "goto": "internal://Homepage",
+                                "name": "Sign Up",
+                                "signupRole": "User",
+                                "isConstant": true,
+                                "actions": []
+                            }
+                        },
+                        "content_attribs": {},
+                        "class_name": "form-with-bg"
+                    }
+                }
+            ],
+            "navbar": {
+                "brandName": null,
+                "isHidden": false,
+                "isFixed": true,
+                "links": []
+            },
+            "footer": {
+                "customText": "Add custom footer text here",
+                "isHidden": false,
+                "isFixed": true,
+                "links": []
+            },
+            "page_name": "Registration",
+            "ind": 1,
+            "user_roles": [
+                "User"
+            ]
+        },
+        {
+            "name": "Search Results",
+            "url": {
+                "urlparts": [
+                    "Search_Results"
+                ]
+            },
+            "access_level": "all",
+            "uielements": [
+                {
+                    "type": "search",
+                    "layout": {
+                        "top": 1,
+                        "left": 0,
+                        "height": 7,
+                        "width": 4,
+                        "t_padding": 0,
+                        "b_padding": 0,
+                        "l_padding": 0,
+                        "r_padding": 0,
+                        "alignment": "left"
+                    },
+                    "data": {
+                        "container_info": {
+                            "entity": "SearchMe",
+                            "action": "searchbox"
+                        },
+                        "searchQuery": {
+                            "searchOn": "SearchMe",
+                            "searchPage": "internal://Search Results",
+                            "searchFields": [
+                                "Name",
+                                "Place",
+                                "Price"
+                            ]
+                        },
+                        "content_attribs": {}
+                    }
+                },
+                {
+                    "type": "loop",
+                    "layout": {
+                        "top": 8,
+                        "left": 0,
+                        "height": 45,
+                        "width": 5,
+                        "t_padding": 0,
+                        "b_padding": 0,
+                        "l_padding": 0,
+                        "r_padding": 0,
+                        "alignment": "left"
+                    },
+                    "data": {
+                        "container_info": {
+                            "entity": "SearchMe",
+                            "action": "searchlist",
+                            "row": {
+                                "isListOrGrid": "list",
+                                "layout": {
+                                    "height": 10,
+                                    "width": 4,
+                                    "top": 0,
+                                    "left": 0,
+                                    "t_padding": 0,
+                                    "b_padding": 0,
+                                    "l_padding": 0,
+                                    "r_padding": 0,
+                                    "alignment": "left"
+                                },
+                                "uielements": [
+                                    {
+                                        "type": "node",
+                                        "layout": {
+                                            "left": 95,
+                                            "top": 0,
+                                            "height": 45,
+                                            "width": 400,
+                                            "t_padding": 0,
+                                            "b_padding": 0,
+                                            "l_padding": 0,
+                                            "r_padding": 0,
+                                            "alignment": "left"
+                                        },
+                                        "data": {
+                                            "nodeType": "texts",
+                                            "tagName": "p",
+                                            "content_attribs": {},
+                                            "content": "{{loop.SearchMe.Name}}",
+                                            "isSingle": false,
+                                            "style": "",
+                                            "hoverStyle": "",
+                                            "activeStyle": "",
+                                            "class_name": "normal-text"
+                                        }
+                                    },
+                                    {
+                                        "type": "node",
+                                        "layout": {
+                                            "left": 95,
+                                            "top": 45,
+                                            "height": 45,
+                                            "width": 400,
+                                            "t_padding": 0,
+                                            "b_padding": 0,
+                                            "l_padding": 0,
+                                            "r_padding": 0,
+                                            "alignment": "left"
+                                        },
+                                        "data": {
+                                            "nodeType": "texts",
+                                            "tagName": "p",
+                                            "content_attribs": {},
+                                            "content": "{{loop.SearchMe.Place}}",
+                                            "isSingle": false,
+                                            "style": "",
+                                            "hoverStyle": "",
+                                            "activeStyle": "",
+                                            "class_name": "normal-text"
+                                        }
+                                    },
+                                    {
+                                        "type": "node",
+                                        "layout": {
+                                            "left": 95,
+                                            "top": 90,
+                                            "height": 45,
+                                            "width": 400,
+                                            "t_padding": 0,
+                                            "b_padding": 0,
+                                            "l_padding": 0,
+                                            "r_padding": 0,
+                                            "alignment": "left"
+                                        },
+                                        "data": {
+                                            "nodeType": "texts",
+                                            "tagName": "p",
+                                            "content_attribs": {},
+                                            "content": "{{loop.SearchMe.Price}}",
+                                            "isSingle": false,
+                                            "style": "",
+                                            "hoverStyle": "",
+                                            "activeStyle": "",
+                                            "class_name": "normal-text"
+                                        }
+                                    }
+                                ],
+                                "goesTo": null
+                            },
+                            "search": {
+                                "fieldsToDisplay": [],
+                                "sortAccordingTo": "-Date",
+                                "numberOfRows": -1,
+                                "where": []
+                            }
+                        },
+                        "content_attribs": {}
+                    }
+                }
+            ],
+            "navbar": {
+                "brandName": null,
+                "isHidden": false,
+                "isFixed": true,
+                "links": []
+            },
+            "footer": {
+                "customText": "Add custom footer text here",
+                "isHidden": false,
+                "isFixed": true,
+                "links": []
+            },
+            "page_name": "Search Results",
+            "ind": 2,
+            "user_roles": [
+                "User"
+            ]
+        }
+    ],
+    "name": "SearchTest"
+}

@@ -1,0 +1,10 @@
+<table class="span{{context.width}} hi{{context.height}}">
+  <tr>{% for field_name in context.fields %}<td>{{ field_name }}</td>{% endfor %}</tr>
+  {{ '{%' }} for item in {{ context.django_query.identifier() }} {{ '%}' }}
+  <tr>
+{% for f in context.django_query.fields %}
+    <td>{{ '{{' }}item.{{ f.identifier() }}{{ '}}' }}</td>
+{% endfor %}
+  </tr>
+  {{ "{% endfor %}" }}
+</table>

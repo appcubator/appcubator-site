@@ -1,0 +1,13 @@
+<div class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="/" id="brand-name">{{ navbar.brandName }}</a>
+    <ul class="nav" id="items">
+      {% for l in navbar.links %}
+      <li{% if l.is_current_page(page) %} class="active"{% endif %}><a href="{{ l.url_pl.to_code() }}">{{ l.title }}</a></li>
+      {% endfor %}
+      {{ '{% if user.is_authenticated %}' }}
+      <li class="logout-item pull-right"><a id="logout" href="{{ "{% url \"django.contrib.auth.views.logout\" %}" }}">Logout</a></li>
+      {{ '{% endif %}' }}
+    </ul>
+  </div>
+</div>

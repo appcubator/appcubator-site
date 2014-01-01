@@ -1,0 +1,4 @@
+<form method="POST" {% if context.__class__.__name__ == "LoginForm" %}action="{{ '{%' }} url webapp.form_receivers.receive_local_login {{ '%}' }}"{% else %}action="{{ '{%' }} url {{ context.form_receiver.view_path() }} {{ '%}' }}"{% endif %} class="span{{ context.width }} hi{{ context.height }}">
+{% include "formfields.html" %}
+  <br />
+</form>
