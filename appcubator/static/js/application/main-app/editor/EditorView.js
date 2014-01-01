@@ -67,6 +67,7 @@ define(function(require, exports, module) {
             v1.widgetEditorView = this.WidgetEditorView;
 
             this.entitiesView = new EntitiesView();
+            this.entitiesView.setToggleEl($('.menu-app-entities'));
 
             keyDispatcher.bindComb('meta+z', this.redoController.undo);
             keyDispatcher.bindComb('ctrl+z', this.redoController.undo);
