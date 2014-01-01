@@ -9,10 +9,6 @@ from our_payments import views as payment_views
 import website
 
 urlpatterns = patterns('',
-    url(r'^forum/', include('askbot.urls')),
-)
-
-urlpatterns += patterns('',
     url(r'^', include('website.urls')),
     url(r'^', include('tutorials.urls')),
     url(r'^backend/',                   include('app_builder.urls')),
@@ -106,6 +102,7 @@ urlpatterns += patterns('appcubator.views.app',
     #url(r'^app/(\d+)/', 'page', {"page_name": "overview"}), # this serves all the app pages
     #url(r'^app/(\d+)/([^/]+)/$', 'page'), # this serves all the app pages
 
+    url(r'^theme/(\d+)/sheet.css$', 'theme_css_sheet'),
     url(r'^sendhostedemail/$', 'send_hosted_email'),
 
     # USERNAME ROUTE moved down to the bottom to avoid conflict w other routes
@@ -138,4 +135,8 @@ urlpatterns += patterns('appcubator.views.app',
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-urlpatterns += staticfiles_urlpatterns()
+# Let django serve statics.
+urlpatterns += patterns('',
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': False,})
+)
+

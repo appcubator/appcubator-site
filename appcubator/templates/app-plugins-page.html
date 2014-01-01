@@ -1,33 +1,72 @@
-  <div class="span58 hoff1">
-    <h2 class="pheader">Plugins</h2><h3 class="offset1">(Work in progress.)</h3>
-    <hr class="pheader">
-    <p>We are commited create a rich plugin ecosystem on Appcubator so that you can easily drag and drop your favorite platforms and APIs. <a href="#" class="suggestions underline">Please help us by giving suggestions.</a></p>
-    <div class="span58 hoff1 emails">
-        <ul id="email-list" class="left-nav span12">
-          <li id="ganalytics-btn">Google Analytics</li>
-          <li id="paypal-btn">Paypal (Payments)</li>
-          <li id="suggestions-btn">Suggestions</li>
-        </ul>
-      <div class="right-bar span40 offset2" id="disqus-thread" style="display:none;">
-        <div id="disqus_thread"></div>
-        <p>If you are a platform developer who wants to integrate their API into Appcubator, please e-mail us at team@appcubator.com, explaining what would be easiest way to do it and why do you Appcubator users can benefit from it. We will be prioritizing such requests.</p>
-        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-        <div class="hi5"></div>
-      </div>
-      <div class="right-bar span40 offset2" id="google-analytics">
-        <div><small>Coming soon.</small></div><br>
-        Google Analytics ID:<br> <input type="text" placholder="Google Analytics ID"><br>
-        <input type="submit" class="blue-btn btn" value="Activate">
-      </div>
-      <div class="right-bar span40 offset2 overlay" id="paypal" style="display:none;">
-        <div><small>Coming soon.</small></div><br>
-                                                                {# below is pluginkey.internal_name #}
-        <form method="POST" action="/app/{{ app.id }}/plugins/1/PAYPAL_EMAIL/">
-            Paypal ID:<br>{# this is pluginkey.display_name #}
-            {% csrf_token %}
-            <input type="text" placeholder="Paypal ID" name="value" value="{{ app.providerdata_set.all.0.value }}"><br>
-            <input type="submit" class="blue-btn btn" value="Activate">
-        </form>
-      </div>
+<div class="container hoff1" id="entities-page">
+    <div class="span58 hoff1">
+        <h2 class="pheader">
+            Plugins
+        </h2>
+        <h3 class="offset1">
+            (Work in progress.)
+        </h3>
+        <hr class="pheader">
+        <p>
+            We are commited create a rich plugin ecosystem on Appcubator so that you
+            can easily drag and drop your favorite platforms and APIs.
+            <a href="#" class="suggestions underline">Please help us by giving suggestions.</a>
+        </p>
+        <div class="span58 hoff1 emails">
+            <ul id="email-list" class="left-nav span12">
+                <li id="ganalytics-btn">
+                    Google Analytics
+                </li>
+                <li id="paypal-btn">
+                    Paypal (Payments)
+                </li>
+                <li id="suggestions-btn">
+                    Suggestions
+                </li>
+            </ul>
+            <div class="right-bar span40 offset2" id="disqus-thread" style="display:none;">
+                <div id="disqus_thread">
+                </div>
+                <p>
+                    If you are a platform developer who wants to integrate their API into
+                    Appcubator, please e-mail us at team@appcubator.com, explaining what would
+                    be easiest way to do it and why do you Appcubator users can benefit from
+                    it. We will be prioritizing such requests.
+                </p>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                <div class="hi5">
+                </div>
+            </div>
+            <div class="right-bar span40 offset2" id="google-analytics">
+                <div>
+                    <small>
+                        Coming soon.
+                    </small>
+                </div>
+                <br>
+                Google Analytics ID:
+                <br>
+                <input type="text" placholder="Google Analytics ID">
+                <br>
+                <input type="submit" class="blue-btn btn" value="Activate">
+            </div>
+            <div class="right-bar span40 offset2 overlay" id="paypal" style="display:none;">
+                <div>
+                    <small>
+                        Coming soon.
+                    </small>
+                </div>
+                <br>
+                {# below is pluginkey.internal_name #}
+                <form method="POST" action="/app/{{ app.id }}/plugins/1/PAYPAL_EMAIL/">
+                    Paypal ID:
+                    <br>
+                    {# this is pluginkey.display_name #} {% csrf_token %}
+                    <input type="text" placeholder="Paypal ID" name="value" value="{{ app.providerdata_set.all.0.value }}">
+                    <br>
+                    <input type="submit" class="blue-btn btn" value="Activate">
+                </form>
+            </div>
+        </div>
     </div>
 </div>

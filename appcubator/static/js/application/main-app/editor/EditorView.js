@@ -2,7 +2,6 @@ define(function(require, exports, module) {
 
     'use strict';
 
-
     var PageModel = require('models/PageModel');
     var TableCollection = require('collections/TableCollection');
     var UrlView = require('app/pages/UrlView');
@@ -11,15 +10,18 @@ define(function(require, exports, module) {
     var DebugOverlay = require('mixins/DebugOverlay');
     var WidgetEditorView = require('editor/WidgetEditorView');
     var EditorGalleryView = require('editor/EditorGalleryView');
+    var PageView = require('app/pages/PageView');
+
     var PageTemplatePicker = require('editor/PageTemplatePicker');
     var NavbarView = require('editor/NavbarView');
     var FooterView = require('editor/FooterView');
     var GuideView = require('editor/GuideView');
-    var ToolBarView = require('editor/ToolBarView');
     var TutorialView = require('tutorial/TutorialView');
     var DeployView = require('app/DeployView');
     var RedoController = require('app/RedoController');
     var CSSEditorView = require('app/css-editor/CSSEditorView');
+
+    var EntitiesView = require('app/entities/EntitiesView');
 
     require('jquery-ui');
     require('mixins/BackboneConvenience');
@@ -31,20 +33,20 @@ define(function(require, exports, module) {
         css: "bootstrap-editor",
 
         events: {
-            'click #editor-save': 'save',
-            'click #deploy': 'deploy',
-            'click .menu-button.help': 'help',
+            'click .menu-button.help'    : 'help',
             'click .menu-button.question': 'question',
-            'click .url-bar': 'clickedUrl',
-            'click #design-mode-button': 'switchToDesignMode',
-            'click #close-css-editor': 'switchOffDesignMode'
+            'click .url-bar'             : 'clickedUrl',
+            'click #page-info'           : 'pageInfo',
+            'click #close-page-info'     : 'closePageInfo',
+            'click #design-mode-button'  : 'switchToDesignMode',
+            'click #close-css-editor'    : 'switchOffDesignMode'
         },
 
         initialize: function(options) {
             _.bindAll(this);
             this.subviews = [];
 
-            if (options && options.pageId) {
+            if (options && (options.pageId == "0" || options.pageId  >= 0)) {
                 this.pageId = options.pageId;
                 pageId = options.pageId;
             }
@@ -58,11 +60,13 @@ define(function(require, exports, module) {
             this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
             this.widgetsManager = {};
             this.guides = new GuideView(this.widgetsCollection);
-            this.toolBar = new ToolBarView();
             this.cssEditorView = new CSSEditorView();
+            this.pageView = new PageView(this.model, pageId);
             this.redoController = new RedoController();
             this.widgetEditorView = new WidgetEditorView();
             v1.widgetEditorView = this.WidgetEditorView;
+
+            this.entitiesView = new EntitiesView();
 
             keyDispatcher.bindComb('meta+z', this.redoController.undo);
             keyDispatcher.bindComb('ctrl+z', this.redoController.undo);
@@ -81,7 +85,6 @@ define(function(require, exports, module) {
                 this.galleryEditor,
                 this.widgetsManager,
                 this.guides,
-                this.toolBar,
                 this.navbar,
                 this.footer
             ];
@@ -101,14 +104,12 @@ define(function(require, exports, module) {
 
             document.body.style.overflow = "hidden";
 
-            this.toolBar.setElement(document.getElementById('tool-bar')).render();
             this.renderUrlBar();
             this.galleryEditor.render();
 
             this.el.appendChild(this.widgetEditorView.render().el);
-            console.log(this.widgetEditorView.el);
-
             this.cssEditorView.setElement($('#css-editor-panel')).render();
+            this.pageView.setElement($('#page-view-panel')).render();
 
             /* Access to elements inside iframe */
             var iframe = document.getElementById('page');
@@ -120,18 +121,6 @@ define(function(require, exports, module) {
             window.addEventListener('resize', this.setupPageWrapper);
 
             $('#loading-gif').fadeOut().remove();
-
-            if (!this.model.get('uielements').length) {
-                new PageTemplatePicker(this.model);
-            }
-
-            if (appId !== 0) {
-                v1.garageView.setEnvironmentEditor();
-                v1.worldView.setEnvironmentEditor();
-                $('.garage-toggle.menu-button').on('click', v1.garageView.toggle);
-                $('.garage-toggle.menu-button').on('click', v1.worldView.hide);
-                $('.world-toggle.menu-button').on('click', v1.garageView.hide);
-            }
 
             if (v1.worldView) {
                 $('.world-toggle.menu-button').on('click', v1.worldView.toggle);
@@ -152,16 +141,21 @@ define(function(require, exports, module) {
                 }
             });
 
+            this.$pageContainer = this.$el.find('.page-container');
+            this.el.appendChild(this.entitiesView.render().el);
             return this;
         },
 
         renderIFrameContent: function(proxy) {
             var self = this;
             var iframe = document.getElementById('page');
-            var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+            innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+            this.widgetEditorView.setupScrollEvents();
 
             keyDispatcher.addEnvironment(innerDoc);
 
+            this.iframeProxy = proxy;
             this.marqueeView = proxy.setupMarqueeView();
             this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
 
@@ -176,15 +170,22 @@ define(function(require, exports, module) {
 
             self.startUIStateUpdater(proxy);
             self.setupPageHeight();
+
+            if (!this.model.get('uielements').length) {
+                var templatePicker = new PageTemplatePicker({ model: this.model, callback: function() {
+                    $('.options-area').hide();
+                    $('.page-wrapper').addClass('show');
+                }});
+
+                this.$el.find('.options-area').append(templatePicker.render().el);
+            }
+            else {
+                this.$el.find('.page-wrapper').addClass('show');
+            }
         },
 
         renderUrlBar: function() {
             this.$el.find('.url-bar').html(this.urlModel.getUrlString());
-        },
-
-        save: function(callback) {
-            v1.save();
-            return false;
         },
 
         help: function(e) {
@@ -230,29 +231,6 @@ define(function(require, exports, module) {
         question: function(e) {
             olark('api.box.show');
             olark('api.box.expand');
-        },
-
-        deploy: function(options) {
-            var url = '/app/' + appId + '/deploy/';
-            var self = this;
-            util.get('deploy-text').innerHTML = 'Publishing';
-            var threeDots = util.threeDots();
-            util.get('deploy-text').appendChild(threeDots.el);
-
-            var success_callback = function() {
-                util.get('deploy-text').innerHTML = 'Publish';
-                clearInterval(threeDots.timer);
-            };
-
-            var hold_on_callback = function() {
-                util.get('deploy-text').innerHTML = 'Hold On, It\'s still deploying.';
-            };
-
-            var urlSuffix = '/' + self.urlModel.getAppendixString();
-            if (urlSuffix != '/') urlSuffix += '/';
-            v1.deploy(success_callback, hold_on_callback, {
-                appendToUrl: urlSuffix
-            });
         },
 
         clickedUrl: function() {
@@ -304,26 +282,33 @@ define(function(require, exports, module) {
 
         },
 
+        pageInfo: function() {
+            this.pageView.expand();
+        },
+
+        closePageInfo: function() {
+            this.pageView.hide();
+            $('.left-buttons').removeClass('invisible');
+            this.$pageContainer.removeClass('packed');
+            this.galleryEditor.show();
+        },
+
         switchToDesignMode: function() {
             this.cssEditorView.expand();
             $('.left-buttons').addClass('invisible');
-            $('.page-container').addClass('packed');
+            this.$pageContainer.addClass('packed');
             this.galleryEditor.hide();
         },
 
         switchOffDesignMode: function() {
             this.cssEditorView.hide();
             $('.left-buttons').removeClass('invisible');
-            $('.page-container').removeClass('packed');
+            this.$pageContainer.removeClass('packed');
             this.galleryEditor.show();
         },
 
         close: function() {
 
-            v1.garageView.unsetEnvironmentEditor();
-            v1.garageView.hide();
-            v1.worldView.unsetEnvironmentEditor();
-            v1.worldView.hide();
             g_guides = null;
             window.removeEventListener('resize', this.setupPageWrapper);
             document.body.style.overflow = "";

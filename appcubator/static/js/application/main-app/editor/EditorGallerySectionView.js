@@ -20,12 +20,14 @@ define(function(require, exports, module) {
             'mouseleave': 'mouseleave'
         },
 
+        className: 'gallery-section',
         isExpanded: true,
         timer: null,
 
         initialize: function(options) {
             _.bindAll(this);
             this.parentView = options.parentView;
+            this.options = options;
             return this;
         },
 
@@ -35,9 +37,17 @@ define(function(require, exports, module) {
             }
             var sectionName = this.name.replace(/ /g, '-');
             this.header = this.addHeaderItem(this.name);
+            this.listWrapper = document.createElement('div');
+            this.listWrapper.className = "elements-panel ";
+
             this.list = document.createElement('ul');
-            this.el.appendChild(this.list);
+            if(this.options.index > -1) {
+                this.listWrapper.className += 'top'+this.options.index;
+            }
+
+            this.listWrapper.appendChild(this.list);
             this.list.style = '';
+            this.el.appendChild(this.listWrapper);
 
             return this;
         },
@@ -82,11 +92,12 @@ define(function(require, exports, module) {
         addHeaderItem: function(text, target) {
             var li = document.createElement('div');
             li.className = 'gallery-header open';
-            li.innerHTML = text + '<span class="qmark">?</span>';
+            li.innerHTML = '<span>' + text + '</span>';
+            // + '<span class="qmark">?</span>';
             var icon = document.createElement('img');
             icon.className = "icon";
             icon.src = "/static/img/right-arrow.png";
-            li.appendChild(icon);
+            // li.appendChild(icon);
             this.el.appendChild(li);
             return li;
         },
@@ -98,26 +109,14 @@ define(function(require, exports, module) {
 
         expand: function() {
             this.header.className += ' open';
+            this.listWrapper.className += ' open';
 
-            try {
-                $(this.list).clearQueue();
-            } catch (err) {}
-
-            $(this.list).slideDown({
-                duration: 180,
-                easing: "linear"
-            });
             this.isExpanded = true;
         },
 
         hide: function() {
             $(this.header).removeClass('open');
-
-            try {
-                $(this.list).clearQueue();
-            } catch (err) {}
-
-            $(this.list).slideUp(200);
+            $(this.listWrapper).removeClass('open');
             this.isExpanded = false;
         },
 

@@ -6,6 +6,8 @@ define(function(require, exports, module) {
 
     var SearchGallerySectionView = EditorGallerySectionView.extend({
 
+        className: 'search elements-panel',
+
         render: function() {
             if (this.el) {
                 this.el.innerHTML = '';
@@ -18,15 +20,16 @@ define(function(require, exports, module) {
         },
 
         expand: function() {
-            try {
-                $(this.list).clearQueue();
-            } catch (err) {}
-
-            $(this.list).slideDown(200);
+            if(this.isExpanded) return;
+            this.$el.addClass("open");
             this.isExpanded = true;
         },
 
-        hide: function() { },
+        hide: function() {
+            if(!this.isExpanded) return;
+            this.isExpanded = false;
+            this.$el.removeClass("open");
+        },
 
         clear: function() {
             this.list.innerHTML = '';

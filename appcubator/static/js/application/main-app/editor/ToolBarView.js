@@ -9,19 +9,18 @@ define(function(require, exports, module) {
         subviews: [],
 
         events: {
-            'mouseover #menu-pages': 'expandPages',
-            'mouseout #menu-pages': 'shrinkPages',
-            'click .go-to-page': 'clickedGoToPage',
-            'click a.back': 'navigateBack',
-            'mouseover .dropdown-arrow': 'expandPages',
-            'mouseout .dropdown-arrow': 'shrinkPages'
+            'click .go-to-page'    : 'clickedGoToPage',
+            'click a.back'         : 'navigateBack',
         },
 
-        initialize: function(navbarModel) {
+        initialize: function(options) {
             _.bindAll(this);
-
+            
+            this.pageId = options.pageId;
             this.nmrFields = v1State.get('pages').length + 1;
+            
             if (this.nmrFields > 6) this.nmrFields = 6;
+            
             this.listenTo(v1State.get('pages'), 'add remove', function() {
                 this.nmrFields = v1State.get('pages').length + 1;
                 if (this.nmrFields > 6) this.nmrFields = 6;
@@ -30,7 +29,13 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            util.get('current-page').innerHTML = v1State.get('pages').models[pageId].get('name');
+            if(pageId > 0) {
+                util.get('current-page').innerHTML = v1State.get('pages').models[pageId].get('name');
+            }
+            else {
+                util.get('current-page').innerHTML = "Pages";
+            }
+            
             this.pageList = util.get('page-list');
 
             v1State.get('pages').each(function(page, ind) {
@@ -71,23 +76,17 @@ define(function(require, exports, module) {
             var self = this;
             v1.save(null, function() {
                 $('#page-list').append('<li class="go-to-page" id="page-' + pageInd + '"><a>' + name + '</a></li>');
-                self.expandPages();
                 util.scrollToBottom($('#page-list'));
             });
         },
 
-        expandPages: function() {
-            $('#menu-pages').height((this.nmrFields) * 42);
-        },
-
-        shrinkPages: function(e) {
-            if (util.isMouseOn(e.pageX, e.pageY, this.menuPages)) return;
-            $('#menu-pages').height(42);
-            this.createBox.reset();
-        },
-
         navigateBack: function() {
             window.history.back();
+        },
+
+        save: function() {
+            v1.save();
+            return false;
         }
 
     });

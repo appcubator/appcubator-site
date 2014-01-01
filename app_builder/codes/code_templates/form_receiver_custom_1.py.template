@@ -1,0 +1,58 @@
+{% extends "form_receiver.py.template" %}
+{% set JsonResponse = imports['django.JsonResponse'] %}
+{% set simplejson = imports['django.simplejson'] %}
+{% set get_object_or_404 = imports['django.get_object_or_404'] %}
+
+{% set request = locals['request'] %}
+{% set obj = locals['obj'] %}
+
+{% block args%}{% for arg, data in fr.args %}, {{ arg }}{% endfor %}{% endblock %}
+
+
+    {% block init_forms %}
+    {% for arg, arg_data in fr.args %}
+    {{ arg_data.inst_id }} = {{get_object_or_404}}({{ arg_data.model_id }}, pk={{ arg }})
+    {% endfor %}
+    {% if fr.edit %}
+    form = {{ fr.form_id }}({{request}}.POST, instance={{fr.edit_inst_id}})
+    {% else %}
+    form = {{ fr.form_id }}({{request}}.POST)
+    {% endif %}
+    {% endblock %}
+
+        {% block do_stuff_with_valid_form %}
+        {{obj}} = form.save({% if not fr.commit %}commit=False{% endif %})
+
+        {% for x in fr.pre_relation_assignments %}
+        {% if loop.first %}
+        # bind some variables
+        {% endif %}
+        {{ x }}
+        {% endfor %}
+
+        {% for x in fr.relation_assignments %}
+        {% if loop.first %}
+        # set foreign keys
+        {% endif %}
+        {{ x }}
+        {% endfor %}
+
+        {% if not fr.commit %}
+        {{obj}}.save() # persist the object to the DB
+        {% endif %}
+
+        {% for l in fr.after_save_saves %}
+        {% if loop.first %}
+        # save the related objects
+        {% endif %}
+        {{ l() }}.save()
+        {% endfor %}
+        {% endblock %}
+        
+        {% block send_emails_if_needed %}
+        {% for e in fr.email_actions %}
+        {{ e }}
+        {% endfor %}
+        {% endblock %}
+
+

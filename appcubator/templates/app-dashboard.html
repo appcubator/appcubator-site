@@ -1,20 +1,8 @@
 {% extends "infra-internalsite.html" %}
 {% load embed_json %}
 
-{% block css %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/dashboard.css">
-{% endblock %}
-
-{% block less %}
-<link rel="stylesheet/less" href="{{ STATIC_URL }}css/tooltip.less">
-{% endblock %}
-
-{% block css-files %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/tooltip.css">
-{% endblock %}
-
 {% block topbar %}
-{% include "website-navbar.html" %}
+{% include "internal-menu.html" %}
 {% endblock %}
 
 {% block page %}

@@ -1,0 +1,11 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load admin_static i18n admin_modify admin_urls grp_tags %}
+
+<!-- Overriding the user admin fields to the new ones -->
+{% block field_sets %}
+    {% for fieldset in adminform %}
+        {% include "admin/includes/fieldset.html" %}
+    {% endfor %}
+{% endblock %}

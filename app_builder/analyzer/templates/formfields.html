@@ -1,0 +1,37 @@
+  {% elif field.display_type == "dropdown" %}
+  <select class="dropdown">
+            {% for option in field.options %}
+                <option>{{ option }}</option>
+            {% endfor %}
+  </select>
+
+
+
+
+  {% elif field.display_type == "option-boxes" %}
+  <span class="option-boxes">
+            {% for option in field.options %}
+                <label for="opt-{{ loop.index }}"></label>
+                <input id="opt-{{ loop.index }}" class="field-type" type="radio" name="types" value="single-line-text">{{ option }}
+            {% endfor %}
+  </span>
+
+
+
+
+  {% elif field.display_type == "image-uploader" %}
+  <input id="button-id-{{ field.post_name }}" type="button" value="{{ field.kwargs.placeholder }}" class="btn upload" />
+  <input id="id-{{ field.post_name }}" type="hidden" name="{{ field.post_name }}" {% for attrib in field.kwargs %}{{ attrib }}="{{ field.kwargs[attrib] }}" {% endfor %}>
+
+
+
+
+  {% elif field.display_type == "date-picker" %}
+  date picker will be here<input type="text" name="{{ field.post_name }}"  id="id-{{ field.post_name }}" {% for attrib in field.kwargs %}{{ attrib }}="{{ field.kwargs[attrib] }}" {% endfor %}>
+  {% else %}
+  <!-- Non-standard tag specified -->
+  {% endif %}
+  <div class="form-error field-name-{{ field.post_name }}"></div>
+{% endfor %}
+{% for field in context.foreign_key_fields %}
+<input type="hidden" style="display:none" name="{{ field.identifier() }}" value="{{ "{{" }} {{ field.model.identifier().lower() }}.id {{ "}}" }}">

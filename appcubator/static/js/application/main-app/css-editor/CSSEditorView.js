@@ -8,6 +8,7 @@ define(function(require, exports, module) {
     var FontEditorView    = require('./FontEditorView');
 
     var UIElementEditingView = require('./UIElementEditingView');
+    var ThemesGalleryView    = require('app/ThemesGalleryView');
 
     require('app/templates/AnalyticsTemplates');
     require('backbone');
@@ -83,7 +84,8 @@ define(function(require, exports, module) {
         ],
 
         events: {
-            'click #navigate-back': 'navBack'
+            'click #theme-picker-btn' : 'openThemePicker',
+            'click #navigate-back'    : 'navBack'
         },
 
 
@@ -123,13 +125,16 @@ define(function(require, exports, module) {
 
             /* Elements List */
             this.elementsList = document.createElement('ul');
+            this.elementsList.innerHTML += '<li id="theme-picker-btn"><a>Pick a Theme</li>';
             _.each(this.elements, function(element) {
                 var id = element.id;
                 var liEl = document.createElement('li');
                 liEl.id = id;
+                
                 var aEl = document.createElement('a');
                 aEl.innerHTML = element.text;
                 liEl.appendChild(aEl);
+                
                 this.elementsList.appendChild(liEl);
 
                 $(liEl).bind('click', function() {
@@ -221,6 +226,15 @@ define(function(require, exports, module) {
             this.styleSelected(styleModel);
         },
 
+        openThemePicker: function() {
+            if(this.currentView) this.currentView.close();
+            $(this.elementsList).hide();
+
+            this.currentView = new ThemesGalleryView();
+            this.el.appendChild(this.currentView.render().el);
+            this.setTitle("Theme Picker");
+            this.$el.find('.navback').show();
+        },
 
         navBack: function() {
             this.currentView.close();

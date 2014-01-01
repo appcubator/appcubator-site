@@ -26,6 +26,7 @@ define(function(require, exports, module) {
 
         positionHorizontalGrid: 80,
         positionVerticalGrid: 15,
+        nmrSections: 0,
 
         sections: [],
         subviews: [],
@@ -33,10 +34,10 @@ define(function(require, exports, module) {
         editorContext: "Page",
 
         events: {
-            'mouseover .bottom-arrow': 'slideDown',
-            'mousemove .bottom-arrow': 'slideDown',
             'change input.search'    : 'searchInputChage',
-            'keyup input.search'     : 'searchInputChage'
+            'mouseenter .search-icon': 'searchHovered',
+            'keyup input.search'     : 'searchInputChage',
+            'click .search-cancel'   : 'searchCanceled'
         },
 
         initialize: function(widgetsCollection) {
@@ -62,20 +63,13 @@ define(function(require, exports, module) {
             this.renderUIElementList(); // Basic UI Elements
             this.renderAuthenticationForms(); // Authentication Forms
             this.renderCurrentUserElements(); // CurrentUser Elements
-            this.renderEntityFormsTablesLists(); // All Create Forms, Tables, Lists
+            this.renderEntityForms();
+            this.renderEntityLists(); // All Create Forms, Tables, Lists
             this.renderContextEntityElements(); // Context Entity Elements and Update Forms
 
             // hide all sections except first
             this.hideAllSections();
-            this.expandSection(0);
-
-            $(this.allList).append('<div class="bottom-arrow"></div>');
-            $(this.allList).find('.bottom-arrow').on('mouseover', this.slideDown);
-            $(this.allList).find('.bottom-arrow').on('mousemove', this.slideDown);
-
             this.bindDraggable();
-
-            //$().find('.search').on('focus', this.expandAllSections);
 
             // listen for changes to url to update context entity section
             this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
@@ -92,10 +86,6 @@ define(function(require, exports, module) {
             });
             $(this.allList).find('li:not(.ui-draggable)').draggable({
                 cursor: "move",
-                cursorAt: {
-                    top: 0,
-                    left: 0
-                },
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
@@ -121,17 +111,39 @@ define(function(require, exports, module) {
             this.allList.appendChild(sectionView.render().el);
         },
 
+        searchHovered: function() {
+            $('.search').focus();
+        },
+
+        searchCanceled: function() {
+            $(".search-panel").removeClass("hover");
+            $('.search').val('');
+            $('.search').focusout();
+        },
+
         searchInputChage: function(e) {
             var self =  this;
             var val = e.currentTarget.value;
 
             if (val === "") {
                 this.searchSection.clear();
+                $(".search-panel").removeClass("hover");
                 return;
+            }
+            else {
+                $(".search-panel").addClass("hover");
             }
 
             this.searchSection.clear();
             var results = this.searcher.search(val);
+            
+            if(results.length > 0) {
+                this.searchSection.expand();
+            }
+            else {
+                this.searchSection.hide();
+            }
+
             _.each(results, function(result) {
                 this.searchSection.addHalfWidthItem(result.id, result.className, result.text, result.icon);
             }, this);
@@ -181,13 +193,7 @@ define(function(require, exports, module) {
             var self = this;
             $(li).draggable({
                 cursor: "move",
-                cursorAt: {
-                    top: 0,
-                    left: 0
-                },
-                helper: function(event) {
-                    return $(elementModel.get('el')).css('position', 'fixed');
-                },
+                helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
                 },
@@ -244,7 +250,7 @@ define(function(require, exports, module) {
         },
 
         renderAuthenticationForms: function() {
-            this.authSection = this.addNewSection('Authentication');
+            this.authSection = this.addNewSection('User Signin Forms');
 
             this.authSection.addFullWidthItem("entity-user-Local_Login", "login", "Login Form", "local-login");
 
@@ -267,7 +273,7 @@ define(function(require, exports, module) {
         },
 
         renderCurrentUserElements: function() {
-            this.currUserSection = this.addNewSection('Current User');
+            this.currUserSection = this.addNewSection('Current User Views');
 
             _(v1State.getCurrentPage().getFields()).each(function(field) {
                 if (field.isRelatedField()) return;
@@ -279,13 +285,13 @@ define(function(require, exports, module) {
             }, this);
         },
 
-        renderEntityFormsTablesLists: function() {
+        renderEntityForms: function() {
 
-            if (!this.tableSection) {
-                this.tableSection = this.addNewSection('Table Data');
-            } else {
-                this.tableSection.render();
-            }
+            // if (!this.tableSection) {
+                this.tableSection = this.addNewSection('Data Forms');
+            // } else {
+            //     this.tableSection.render();
+            // }
 
             v1State.get('tables').each(function(entityModel) {
                 var context = {
@@ -295,8 +301,37 @@ define(function(require, exports, module) {
                 var id = 'entity-' + entityModel.cid;
                 this.tableSection.addFullWidthItem(id, "entity-create-form", entityModel.get('name') + ' Create Form', 'create-form-icon');
                 //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
-                this.tableSection.addFullWidthItem(id, "entity-list", entityModel.get('name') + ' List', 'list-icon');
                 this.tableSection.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') + ' Search Box', 'searchbox-icon');
+            }, this);
+
+            v1State.get('users').each(function(entityModel) {
+                var context = {
+                    entity_id: entityModel.cid,
+                    entity_name: entityModel.get('name')
+                };
+                var id = 'entity-' + entityModel.cid;
+                //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
+                this.tableSection.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') + ' Search Box', 'searchbox-icon');
+            }, this);
+
+            this.bindDraggable();
+        },
+
+        renderEntityLists: function() {
+            // if (!this.tableSection) {
+                this.tableSection = this.addNewSection('Data Views');
+            // } else {
+            //     this.tableSection.render();
+            // }
+
+            v1State.get('tables').each(function(entityModel) {
+                var context = {
+                    entity_id: entityModel.cid,
+                    entity_name: entityModel.get('name')
+                };
+                var id = 'entity-' + entityModel.cid;
+                //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
+                this.tableSection.addFullWidthItem(id, "entity-list", entityModel.get('name') + ' List', 'list-icon');
                 this.tableSection.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') + ' Search Results', 'searchlist-icon');
             }, this);
 
@@ -308,7 +343,6 @@ define(function(require, exports, module) {
                 var id = 'entity-' + entityModel.cid;
                 //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
                 this.tableSection.addFullWidthItem(id, "entity-list", entityModel.get('name') + ' List', 'list-icon');
-                this.tableSection.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') + ' Search Box', 'searchbox-icon');
                 this.tableSection.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') + ' Search Results', 'searchlist-icon');
             }, this);
 
@@ -377,8 +411,11 @@ define(function(require, exports, module) {
 
             var self = this;
             var sectionView = new EditorGallerySectionView({
-                parentView: self
+                parentView: self,
+                index: this.nmrSections
             });
+
+            this.nmrSections++;
 
             sectionView.addSearcher(this.searcher);
 
@@ -566,6 +603,7 @@ define(function(require, exports, module) {
         createEditForm: function(layout, id) {
             var entityType = String(id).replace('entity-', '');
             var entity = {};
+            var editOn;
             //if edit form is for a user role
             if (entityType.indexOf('user') > -1) {
                 var cid = entityType.replace('user-', '');
@@ -612,11 +650,7 @@ define(function(require, exports, module) {
             var field = _(v1State.get('pages').models[pageId].getFields()).find(function(fieldModel) {
                 return (fieldModel.cid == field_id);
             });
-
-            console.log(field);
             var type = util.getDisplayType(field.get('type'));
-            console.log(type);
-
             var content_ops = {};
 
             if (type == "links") {

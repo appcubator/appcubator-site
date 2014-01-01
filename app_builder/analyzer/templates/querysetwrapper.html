@@ -1,0 +1,9 @@
+<div class="row">
+  {{ '{%' }} for item in {{ context.django_query.identifier() }} {{ '%}' }}
+  <div class="span{{context.width}} hi{{context.height}}">
+{% for context in context.nodes %}
+      {{ context.render(env)|indent(2) }}
+{% endfor %}
+  </div>
+  {{ "{% endfor %}" }}
+</div>

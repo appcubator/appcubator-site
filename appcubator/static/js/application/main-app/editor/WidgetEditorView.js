@@ -21,7 +21,7 @@ define(function(require, exports, module) {
 
     var WidgetEditorView = Backbone.UIView.extend({
         
-        className: 'widget-editor fadeIn',
+        className: 'widget-editor animated',
         id: 'widget-editor',
         tagName: 'div',
         css: 'widget-editor',
@@ -67,19 +67,89 @@ define(function(require, exports, module) {
             this.listenTo(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
             this.listenTo(this.model, 'doubleClicked', this.doubleClicked);
 
+            this.listenTo(this.model, 'reselected', this.show);
+            // this.listenTo(this.model.get('layout'), 'change', this.hide);
+
+            this.listenTo(this.model, 'deselected', this.clear);
+
             return this;
         },
 
         render: function() {
-            this.$el.hide();
+            this.hide();
             return this;
         },
 
+        setupScrollEvents: function() {
+            var self = this;
+            var timer;
+            $(innerDoc).bind('scroll',function () {
+                clearTimeout(timer);
+                timer = setTimeout( refresh , 150 );
+                self.hide();
+            });
+
+            var refresh = function () {
+                // do stuff
+                self.show();
+            };
+
+        },
+
         display: function() {
-            this.$el.fadeIn();
+            this.filleContent();
+            this.show();
+        },
 
+        show: function() {
+            var location = this.getLocation();
+            this.location = location;
+            this.el.className += ' ' + location;
+
+            var iframe = document.getElementById('page');
+            var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+            var element = innerDoc.getElementById('widget-wrapper-'+ this.model.cid);
+
+            var offsetFrame = util.getWindowRelativeOffset(window.document, iframe);
+            var offset = util.getWindowRelativeOffset(window.document, element);
+
+            var leftDist = offset.left + offsetFrame.left;
+            var topDist = offset.top + offsetFrame.top;
+
+            switch(this.location) {
+                case "right":
+                    this.$el.append('<div class="left-arrow"></div>');
+                    leftDist += element.getBoundingClientRect().width;
+                    this.$el.addClass('fadeInRight');
+
+                    break;
+                case "bottom":
+                    this.$el.append('<div class="top-arrow"></div>');
+                    topDist += element.getBoundingClientRect().height;
+                    this.$el.addClass('fadeInUp');
+
+                    break;
+                case "left":
+                    this.$el.append('<div class="right-arrow"></div>');
+                    this.$el.addClass('fadeInLeft');
+                    break;
+                case "top":
+                    // not supposed to happen
+                    break;
+            }
+            this.$el.show();
+
+
+            this.el.style.left = leftDist + 'px';
+            this.el.style.top = topDist + 'px';
+
+            this.model.trigger('display-widget-editor');
+
+            return this;
+        },
+
+        filleContent: function() {
             var action = "";
-
             if (this.model.get('data').has('container_info')) {
                 action = this.model.get('data').get('container_info').get('action');
 
@@ -92,7 +162,7 @@ define(function(require, exports, module) {
                     this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
                     this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
+                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
                     this.el.appendChild(this.renderButtonWithText('edit-login-form-btn', 'Edit Login'));
                     this.el.appendChild(this.layoutEditor.el);
                 }
@@ -106,7 +176,7 @@ define(function(require, exports, module) {
                     this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
                     this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
+                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
                     this.el.appendChild(this.renderButtonWithText('form-editor-btn', 'Edit Form'));
                     this.el.appendChild(this.layoutEditor.el);
                 }
@@ -181,7 +251,7 @@ define(function(require, exports, module) {
                 } else {
                     this.widgetClassPickerView = new WidgetClassPickerView(this.model);
                     this.layoutEditor = new WidgetLayoutEditorView(this.model);
-                    this.contentEditor = new WidgetContentEditorView(this.model);
+                    this.contentEditor = new WidgetContentEditorView(this.model, this);
 
                     this.subviews.push(this.widgetClassPickerView);
                     this.subviews.push(this.layoutEditor);
@@ -190,53 +260,11 @@ define(function(require, exports, module) {
                     this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
                     this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('pick-style', 'Pick Style'));
+                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
                     this.el.appendChild(this.layoutEditor.el);
                     this.el.appendChild(this.contentEditor.el);
                 }
             }
-
-            this.$el.removeClass('left');
-            this.$el.removeClass('right');
-            this.$el.removeClass('bottom');
-
-            var location = this.getLocation();
-            this.location = location;
-            this.el.className += ' ' + location;
-
-            var iframe = document.getElementById('page');
-            var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-            var element = innerDoc.getElementById('widget-wrapper-'+ this.model.cid);
-
-            var offsetFrame = util.getWindowRelativeOffset(window.document, iframe);
-            var offset = util.getWindowRelativeOffset(window.document, element);
-
-            var leftDist = offset.left + offsetFrame.left;
-            var topDist = offset.top + offsetFrame.top;
-
-            switch(this.location) {
-                case "right":
-                    this.$el.append('<div class="left-arrow"></div>');
-                    leftDist += element.getBoundingClientRect().width;
-                    break;
-                case "bottom":
-                    this.$el.append('<div class="top-arrow"></div>');
-                    topDist += element.getBoundingClientRect().height;
-                    break;
-                case "left":
-                    this.$el.append('<div class="right-arrow"></div>');
-                    break;
-                case "top":
-                    // not supposed to happen
-                    break;
-            }
-
-            this.el.style.left = leftDist + 'px';
-            this.el.style.top = topDist + 'px';
-
-            this.model.trigger('display-widget-editor');
-
-            return this;
         },
 
         renderButtonWithText: function(className, buttonText) {
@@ -245,14 +273,14 @@ define(function(require, exports, module) {
 
         renderButtonWithWidthCustomWidth: function(className, buttonText, width) {
             var li = document.createElement('ul');
-            li.className = 'pad section-' + className;
+            li.className = 'pad w-section section-' + className;
             li.innerHTML += '<span class="option-button tt ' + className + '" style="width:' + width + 'px; display: inline-block;">' + buttonText + '</span>';
             return li;
         },
 
         renderButtonWithDeleteButtonandText: function(className, buttonText) {
             var li = document.createElement('ul');
-            li.className = 'pad section-' + className;
+            li.className = 'w-section section-' + className;
             li.innerHTML += '<span class="' + className + '  option-button tt" style="width:190px; display: inline-block;">' + buttonText + '</span><span id="delete-widget" class="option-button delete-button tt" style="width:34px;"></span>';
             return li;
         },
@@ -378,7 +406,31 @@ define(function(require, exports, module) {
             });
             this.el.innerHTML = '';
             this.el.style.width = '';
+
+            this.hide();
+        },
+
+        hide: function() {
+            this.$el.removeClass('left');
+            this.$el.removeClass('right');
+            this.$el.removeClass('bottom');
+
+            this.$el.removeClass('fadeInBottom');
+            this.$el.removeClass('fadeInUp');
+            this.$el.removeClass('fadeInLeft');
+            this.$el.removeClass('fadeInRight');
             this.$el.hide();
+        },
+
+        setTempContent: function(domNode) {
+            this.tempContent = domNode;
+            this.hideSubviews();
+            this.el.appendChild(domNode);
+        },
+
+        removeTempContent: function() {
+            if(this.tempContent) this.el.removeChild(this.tempContent);
+            this.showSubviews();
         },
 
         showSubviews: function() {

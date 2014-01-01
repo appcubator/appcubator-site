@@ -1,0 +1,218 @@
+{
+   "info":{
+      "keywords":"",
+      "description":""
+   },
+   "tables":[
+      {
+         "name":"Tweet",
+         "fields":[
+            {
+               "name":"Content",
+               "type":"text"
+            }
+         ]
+      }
+   ],
+   "users":[
+      {
+         "fields":[
+
+         ],
+         "name":"User"
+      }
+   ],
+   "mobilePages":[
+
+   ],
+   "emails":[
+      {
+         "content":"Dear {{User.First_Name}},\n\nThanks for signing up!\n\n- {{AppName}} Team",
+         "name":"Welcome Email",
+         "subject":"Thanks for Signing up!"
+      }
+   ],
+   "pages":[
+      {
+         "name":"Homepage",
+         "access_level":"all",
+         "url":{
+            "urlparts":[
+
+            ]
+         },
+         "footer":{
+            "isFixed":true,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ],
+            "customText":"Add custom footer text here"
+         },
+         "navbar":{
+            "isFixed":true,
+            "brandName":null,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ]
+         },
+         "uielements":[
+            {
+               "type":"search",
+               "layout":{
+                  "top":4,
+                  "left":4,
+                  "height":7,
+                  "width":4,
+                  "t_padding":0,
+                  "b_padding":0,
+                  "l_padding":0,
+                  "r_padding":0,
+                  "alignment":"left"
+               },
+               "data":{
+                  "container_info":{
+                     "entity":"Tweet",
+                     "action":"searchbox",
+                     "uielements":[
+
+                     ]
+                  },
+                  "searchQuery":{
+                     "searchOn":"Tweet",
+                     "searchPage":"Homepage",
+                     "searchFields":[
+                        "Content"
+                     ]
+                  },
+                  "content_attribs":{
+
+                  }
+               }
+            },
+            {
+               "type":"loop",
+               "layout":{
+                  "top":11,
+                  "left":4,
+                  "height":37,
+                  "width":4,
+                  "t_padding":0,
+                  "b_padding":0,
+                  "l_padding":0,
+                  "r_padding":0,
+                  "alignment":"left"
+               },
+               "data":{
+                  "container_info":{
+                     "entity":"Tweet",
+                     "action":"searchlist",
+                     "uielements":[
+
+                     ],
+                     "row":{
+                        "isListOrGrid":"list",
+                        "layout":{
+                           "height":10,
+                           "width":4,
+                           "top":0,
+                           "left":0,
+                           "t_padding":0,
+                           "b_padding":0,
+                           "l_padding":0,
+                           "r_padding":0,
+                           "alignment":"left"
+                        },
+                        "uielements":[
+
+                        ],
+                        "goesTo":null
+                     },
+                     "search":{
+                        "fieldsToDisplay":[
+
+                        ],
+                        "sortAccordingTo":"Date",
+                        "numberOfRows":-1,
+                        "where":[
+
+                        ]
+                     }
+                  },
+                  "content_attribs":{
+
+                  }
+               }
+            }
+         ],
+         "page_name":"Homepage",
+         "ind":0,
+         "user_roles":[
+            "User"
+         ]
+      },
+      {
+         "name":"Registration Page",
+         "access_level":"all",
+         "navbar":{
+            "isFixed":true,
+            "brandName":null,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ]
+         },
+         "footer":{
+            "isFixed":true,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ],
+            "customText":"Add custom footer text here"
+         },
+         "url":{
+            "urlparts":[
+               "registration"
+            ]
+         },
+         "uielements":[
+
+         ],
+         "page_name":"Registration Page",
+         "ind":1,
+         "user_roles":[
+            "User"
+         ]
+      }
+   ],
+   "name":"Search2"
+}

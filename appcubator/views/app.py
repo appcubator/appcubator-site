@@ -205,7 +205,7 @@ def new(request, is_racoon = False, app_template=None):
             # refetch from the db. this is a weird hack that makes deploy magically work.
             app = App.objects.get(pk=app.id)
             # this adds it to the deployment queue. non-blocking basically.
-            app.deploy()
+            # app.deploy()
 
             return redirect(user_page, request.user.username)
 
@@ -596,6 +596,23 @@ def css_sheet(request, app_id, isMobile=False):
     uie_state = app.uie_state
     if isMobile:
         uie_state = app.mobile_uie_state
+
+    context = Context({'uie_state': uie_state,
+                       'isMobile': False,
+                       'deploy': False})
+    t = loader.get_template('app-editor-css-gen.html')
+    css_string = t.render(context)
+
+    return HttpResponse(css_string, mimetype='text/css')
+
+
+
+@csrf_exempt
+def theme_css_sheet(request, theme_id):
+    theme_id = long(theme_id)
+    theme = get_object_or_404(UITheme, id=theme_id)
+
+    uie_state = theme.uie_state
 
     context = Context({'uie_state': uie_state,
                        'isMobile': False,

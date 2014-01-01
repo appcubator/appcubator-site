@@ -32,6 +32,10 @@ define([
             if (bone.fields) {
                 this.get('fields').add(bone.fields);
             }
+
+            this.set('instancemethods', new Backbone.Collection(bone.instancemethods||[]));
+            this.set('staticmethods', new Backbone.Collection(bone.staticmethods||[]));
+            
             this.isUser = false;
         },
 

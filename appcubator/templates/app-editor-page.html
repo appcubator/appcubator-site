@@ -1,68 +1,65 @@
- <div class="loading-gif" id="loading-gif"></div>
-
-  <!-- Top Menu -->
-  <div class="section-select">
-    <div class="save-run-group">
-      <div class="menu-button run" id="deploy"><span class="play-btn"><span class="play-btn-icon"></span></span><span id="deploy-text">Publish</span>
-      </div><div class="menu-button save" id="editor-save">
-        <span>Save</span>
-      </div>
-    </div>
-    <div class="middle-group" id="tool-bar">
-      <div class="navigator menu-button">
-        <a class="back"></a>
-        <a href="{% url appcubator.views.app.page app.id %}pages/" class="pages"></a>
-        <a href="{% url appcubator.views.app.page app.id %}emails/" class="emails"></a>
-        <a href="{% url appcubator.views.app.page app.id %}gallery/" class="themes"></a>
-        <a href="{% url appcubator.views.app.page app.id %}tables/" class="tables"></a>
-      </div>
-      <div class="menu-button pages" id="menu-pages">
-        <div id="current-page" class="page-item"></div><ul id="page-list"></ul><div id="create-page" class="page-item">
-      </div></div>
-      <div class="menu-button dropdown-arrow">
-      </div>
-    </div>
-    <div class="right-group">
-      <a class="menu-button world-toggle" href="#"></a>
-      <a class="menu-button garage-toggle" href="#"></a>
-      <div class="menu-button question">Ask a Question</div>
-    </div>
-  </div>
-
-  <!-- CSS Editor -->
-  <div class="left-menu-panel-l1 css-editor" id="css-editor-panel">
+<div class="loading-gif" id="loading-gif">
+</div>
+<!-- CSS Editor -->
+<div class="left-menu-panel-l1 css-editor" id="css-editor-panel">
     <div class="top-row">
-      <div class="navback" id="navigate-back">‹</div>
-      <div class="cross" id="close-css-editor">×</div>
+        <div class="navback" id="navigate-back">
+            ‹
+        </div>
+        <div class="cross" id="close-css-editor">
+            ×
+        </div>
     </div>
-  </div>
-  
-  <!-- Left Menu -->
-  <div class="left-buttons">
-    <div class="btn active build-mode" title="Build Mode"></div>
-    <div class="btn design-mode" id="design-mode-button" title="Design Mode"></div>
-  </div>
+</div>
+<!-- CSS Editor -->
+<div class="left-menu-panel-l1 css-editor" id="page-view-panel">
+</div>
+<!-- Left Menu -->
+<div class="left-buttons">
 
-  <!-- Inside-Page -->
-  <div class="page-container">
+    <div class="button-group">
+      <div class="btn info" id="page-info" title="Page Info"></div>
+    </div>
+
+    <div class="button-group">
+      <div class="btn active build-mode" title="Build Mode">
+      </div>
+      <div class="btn design-mode" id="design-mode-button" title="Design Mode">
+      </div>
+    </div>
+</div>
+<!-- Inside-Page -->
+<div class="page-container">
+    <div class="options-area"></div>
     <div class="page-wrapper" id="page-wrapper">
-      <div class="url-bar">http://yourapp.com</div>
-      <iframe class="page full fdededfcbcbcd" id="page" src="/app/{{ app.id }}/editor/<%= pageId %>/">
-      </iframe>
+        <div class="url-bar">
+            http://yourapp.com
+        </div>
+        <iframe class="page full fdededfcbcbcd" id="page" src="/app/{{ app.id }}/editor/<%= pageId %>/">
+        </iframe>
     </div>
-  </div>
-
-
-  <!-- Right Gallery Panel -->
-  <div id="top-panel-bb" class="right-panel">
+</div>
+<!-- Right Gallery Panel -->
+<div id="top-panel-bb" class="right-panel">
     <div class="top-panel-title">
-      <span>UI Elements</span>
+        <span>
+            UI Elements
+        </span>
     </div>
     <div class="search-panel">
-      <span class="search-icon"></span><input type="text" class="search" placeholder="Search Elements...">
-    </div><div class="item-gallery section" id="item-gallery">
-      <div class="elements-list" id="elements-list">
-        <ul id='all-list' class="list"></ul>
-      </div>
+        <span class="search-bg">
+            <span class="search-arrow">
+                <span class="search-cancel">×</span>
+                <input type="text" class="search" placeholder="Search Elements...">
+            </span>
+        </span>
+        <span class="search-icon">
+        </span>
     </div>
-  </div>
+    <div class="item-gallery section" id="item-gallery">
+        <div class="elements-list" id="elements-list">
+            <ul id='all-list' class="list">
+            </ul>
+        </div>
+    </div>
+</div>

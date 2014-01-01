@@ -4,11 +4,50 @@
         "keywords": "",
         "description": ""
     },
-    "users": [
+    "models": [
         {
-            "name": "User",
-            "fields": [
-            ]
+          "name" : "Picture",
+          "fields": [
+            {
+                "name" : "datePicked",
+                "type" : "Date"
+            },
+            {
+                "name" : "url",
+                "type" : "String"
+            }
+          ],
+          "instancemethods": [
+            {
+                "name" : "updateUrl",
+                "code" : "function (newUrl, cb) {\n      this.url = newUrl;\n      this.save(function(e, d){cb(e,d);});\n    }"
+            }
+          ],
+          "staticmethods": [
+            { 
+                "name" : "randomNFromFlickr",
+                "code" : "function (searchQ, limit, cb) {\n      var flickr = require('flickr');\n      var fcli = new flickr.Flickr('cbe3f7f6cbf9d13ad243a1e1afec902d', '5c3f9a33e088ef60');\n      fcli.executeAPIRequest('flickr.photos.search', {text: searchQ, per_page: limit, extras: ['url_q']},\n                               false, function(e, d){cb(e, d);});\n    }"
+            }
+          ]
+        },
+        {
+          "name" : "Car",
+          "fields": {
+            "datePicked": "Date",
+            "url": "String"
+          },
+          "instancemethods": [
+              {
+                "name" : "updateUrl",
+                "code" : "function (newUrl, cb) {\n      this.url = newUrl;\n      this.save(function(e, d){cb(e,d);});\n    }"
+              }
+          ],
+          "staticmethods": [
+              {
+                "name" : "randomNFromFlickr",
+                "code" : "function (searchQ, limit, cb) {\n      var flickr = require('flickr');\n      var fcli = new flickr.Flickr('cbe3f7f6cbf9d13ad243a1e1afec902d', '5c3f9a33e088ef60');\n      fcli.executeAPIRequest('flickr.photos.search', {text: searchQ, per_page: limit, extras: ['url_q']},\n                               false, function(e, d){cb(e, d);});\n    }"
+              }
+          ]
         }
     ],
     "emails": [
@@ -17,8 +56,6 @@
             "name": "Welcome",
             "subject": "Thanks for Signing up!"
         }
-    ],
-    "tables": [
     ],
     "pages": [
         {

@@ -31,8 +31,6 @@ define(function(require, exports, module) {
             _.bindAll(this);
 
             var self = this;
-
-            console.log('init selector');
             this.widgetsCollection = widgetsCollection;
             this.listenTo(this.widgetsCollection, 'add', this.bindWidget, true);
             this.widgetEditorView = v1.view.widgetEditorView;
@@ -214,6 +212,7 @@ define(function(require, exports, module) {
             var self = this;
             if (this.selectedEl && this.selectedEl.cid == widgetModel.cid) {
                 this.setLayout(this.selectDiv, widgetModel);
+                this.selectedEl.trigger('reselected');
                 return;
             }
 
@@ -314,7 +313,7 @@ define(function(require, exports, module) {
 
             if (!model) return;
 
-            this.widgetEditorView.clear();
+            this.widgetEditorView.hide();
 
             var cid = model.cid;
             g_guides.hideAll();
@@ -331,8 +330,10 @@ define(function(require, exports, module) {
             }
 
             /* Adjust for the scroll amount of the iframe - hacky */
-            var scrollTop = $(document).scrollTop();
-            ui.position.top += scrollTop;
+            // console.log(document);
+            // console.log($(document).scrollTop());
+            // var scrollTop = $(document).scrollTop();
+            // ui.position.top += scrollTop;
 
             var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
             var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
@@ -392,7 +393,7 @@ define(function(require, exports, module) {
                 this.selectedEl.trigger('deselected');
                 this.stopListening(this.selectedEl.get('layout'), 'change');
             }
-            this.widgetEditorView.clear();
+
             this.selectedEl = null;
             this.hideNode(this.selectDiv);
             this.hideNode(this.hoverDiv);

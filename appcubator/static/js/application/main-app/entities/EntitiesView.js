@@ -7,6 +7,7 @@ define([
         'app/entities/TablesView',
         'app/entities/CreateRelationView',
         'app/entities/RelationsView',
+        'app/entities/TableView',
         'mixins/ErrorDialogueView',
         'util'
     ],
@@ -19,25 +20,24 @@ define([
         TablesView,
         CreateRelationView,
         RelationsView,
+        TableView,
         ErrorDialogueView) {
 
         var EntitiesView = Backbone.View.extend({
-            css: 'entities',
             title: 'Tables',
+            className: 'entities-view',
             events: {
-                'click #add-relation': 'showCreateRelationForm',
-                'click .related-tag': 'scrollToRelation'
+                'click .table-name' : 'clickedTableName'
             },
             subviews: [],
 
             initialize: function() {
                 _.bindAll(this);
-
-                this.tablesView = new TablesView(v1State.get('tables'), false);
-                this.userTablesView = new TablesView(v1State.get('users'), true);
-                this.relationsView = new RelationsView();
-                this.createRelationView = new CreateRelationView();
                 this.subviews = [this.tablesView, this.userTablesView, this.relationsView, this.createRelationView];
+                this.collection = v1State.get('tables');
+
+
+                this.listenTo(this.collection, 'add', this.renderTable);
 
                 this.title = "Tables";
             },
@@ -46,33 +46,42 @@ define([
 
                 this.$el.html(_.template(util.getHTML('entities-page'), {}));
                 this.renderTables();
-                this.renderRelations();
+                // this.renderRelations();
 
-                var addTableBtn = document.getElementById('add-entity');
+                var addTableBtn = document.createElement('div');
+                addTableBtn.id = 'add-entity';
+                addTableBtn.innerHTML = '<span class="box-button">+ Create Table</span>';
+                
                 var createTableBox = new Backbone.NameBox({}).setElement(addTableBtn).render();
                 createTableBox.on('submit', this.createTable);
                 this.subviews.push(createTableBox);
 
-                var addroleBtn = document.getElementById('add-role');
-                var createRoleBox = new Backbone.NameBox({}).setElement(addroleBtn).render();
-                createRoleBox.on('submit', this.createUserRole);
-                this.subviews.push(createRoleBox);
+                this.$el.append(addTableBtn);
 
+                $('.menu-app-entities').on('click', this.toggle);
                 return this;
             },
 
             renderTables: function() {
-                //don't render tables unless parent view has been rendered
-                if (!this.$el) {
-                    return this;
-                }
-                this.$('#tables').append(this.tablesView.render().el);
-                this.$('#users').append(this.userTablesView.render().el);
+                this.collection.each(this.renderTable);
+                //this.$('#users').append(this.userTablesView.render().el);
+            },
+
+            renderTable: function(tableModel) {
+                this.$el.find('#list-tables').append('<li class="table-name" id="table-'+ tableModel.cid+'">' + tableModel.get('name') + '</li>');
+            },
+
+            clickedTableName: function(e) {
+                var cid = String(e.currentTarget.id).replace('table-','');
+                var tableModel = v1State.get('tables').get(cid);
+                var tableView = new TableView(tableModel);
+                tableView.render();
+                // this.el.appendChild(tableView.render().el);
             },
 
             renderRelations: function() {
-                util.get('relations').appendChild(this.createRelationView.render().el);
-                util.get('relations').appendChild(this.relationsView.render().el);
+                //util.get('relations').appendChild(this.createRelationView.render().el);
+                //util.get('relations').appendChild(this.relationsView.render().el);
             },
 
             createUserRole: function(val) {
@@ -125,6 +134,25 @@ define([
                     return;
                 }
                 util.scrollToElement($(hash));
+            },
+
+            toggle: function() {
+                if(this.expanded) {
+                    this.hide();
+                }
+                else {
+                    this.show();
+                }
+            },
+
+            show: function() {
+                this.$el.addClass('expanded');
+                this.expanded = true;
+            },
+
+            hide: function() {
+                this.$el.removeClass('expanded');
+                this.expanded = false;
             }
         });
 
