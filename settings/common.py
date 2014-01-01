@@ -55,7 +55,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'less.finders.LessFinder',
-    'compressor.finders.CompressorFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
@@ -64,7 +63,6 @@ SECRET_KEY = '(kx8m9$ts@foen+2h(tv$q^k(k@z@)bl+wq*4r67srq$&amp;hjt$^'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'askbot.skins.loaders.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
@@ -76,15 +74,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-
-
-
-    'askbot.middleware.anon_user.ConnectToSessionMessagesMiddleware',
-    'askbot.middleware.forum_mode.ForumModeMiddleware',
-    'askbot.middleware.cancel.CancelActionMiddleware',
-    'django.middleware.transaction.TransactionMiddleware',
-    'askbot.middleware.view_log.ViewLogMiddleware',
-    'askbot.middleware.spaceless.SpacelessMiddleware',
 
 
 #    'payments.middleware.ActiveSubscriptionMiddleware',
@@ -121,20 +110,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "appcubator.our_payments.views.stripe_context",
 
     'django.core.context_processors.request',
-    'askbot.context.application_settings',
-    'askbot.user_messages.context_processors.user_messages',
 
 )
 
-import site
-import askbot
-
-#this line is added so that we can import pre-packaged askbot dependencies
-ASKBOT_ROOT = os.path.abspath(os.path.dirname(askbot.__file__))
-site.addsitedir(os.path.join(ASKBOT_ROOT, 'deps'))
-
 INSTALLED_APPS = (
-    'longerusername',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -158,12 +137,6 @@ INSTALLED_APPS = (
     'threadedcomments',
     'django.contrib.comments',
 
-    'askbot',
-    'askbot.deps.livesettings',
-    'compressor',
-    'group_messaging',
-    'tinymce',
-    'followit',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -270,8 +243,6 @@ EMAIL_HOST_PASSWORD = "obscurepassword321"
 EMAIL_USE_TLS = False
 DEFAULT_FROM_EMAIL = 'team@appcubator.com'
 
-DEPLOYMENT_HOSTNAME = 'deployment.staging.appcubator.com'
-
 import os, os.path
 import re
 static_version_file_path = os.path.join(os.path.dirname(__file__), 'STATIC_VERSION')
@@ -291,67 +262,4 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.linkedin.LinkedinBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-
-ASKBOT_URL = 'forum/' #no leading slash, default = '' empty string
-ASKBOT_TRANSLATE_URL = True #translate specific URLs
-_ = lambda v:v #fake translation function for the login url
-#LOGIN_URL = '/%s%s%s' % (ASKBOT_URL,_('account/'),_('signin/'))
-#LOGIN_REDIRECT_URL = ASKBOT_URL #adjust, if needed
-ALLOW_UNICODE_SLUGS = False
-ASKBOT_USE_STACKEXCHANGE_URLS = False #mimic url scheme of stackexchange
-NOTIFICATION_DELAY_TIME = 60*15
-
-GROUP_MESSAGING = {
-    'BASE_URL_GETTER_FUNCTION': 'askbot.models.user_get_profile_url',
-    'BASE_URL_PARAMS': {'section': 'messages', 'sort': 'inbox'}
-}
-
-ASKBOT_MULTILINGUAL = False
-
-ASKBOT_CSS_DEVEL = False
-if 'ASKBOT_CSS_DEVEL' in locals() and ASKBOT_CSS_DEVEL == True:
-    COMPRESS_PRECOMPILERS = (
-        ('text/less', 'lessc {infile} {outfile}'),
-    )
-
-ASKBOT_ALLOWED_UPLOAD_FILE_TYPES = ('.jpg', '.jpeg', '.gif', '.bmp', '.png', '.tiff')
-ASKBOT_MAX_UPLOAD_FILE_SIZE = 1024 * 1024 #result in bytes
-
-COMPRESS_JS_FILTERS = []
-COMPRESS_PARSER = 'compressor.parser.HtmlParser'
-JINJA2_EXTENSIONS = ('compressor.contrib.jinja2ext.CompressorExtension',)
-
-TINYMCE_COMPRESSOR = True
-TINYMCE_SPELLCHECKER = False
-TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, 'default/media/js/tinymce/')
-TINYMCE_URL = STATIC_URL + 'default/media/js/tinymce/'
-TINYMCE_DEFAULT_CONFIG = {
-    'convert_urls': False,
-    'plugins': 'askbot_imageuploader,askbot_attachment',
-    'theme': 'advanced',
-    'content_css': STATIC_URL + 'default/media/style/tinymce/content.css',
-    'force_br_newlines': True,
-    'force_p_newlines': False,
-    'forced_root_block': '',
-    'mode' : 'textareas',
-    'oninit': "function(){ tinyMCE.activeEditor.setContent(askbot['data']['editorContent'] || ''); }",
-    'plugins': 'askbot_imageuploader,askbot_attachment',
-    'theme_advanced_toolbar_location' : 'top',
-    'theme_advanced_toolbar_align': 'left',
-    'theme_advanced_buttons1': 'bold,italic,underline,|,bullist,numlist,|,undo,redo,|,link,unlink,askbot_imageuploader,askbot_attachment',
-    'theme_advanced_buttons2': '',
-    'theme_advanced_buttons3' : '',
-    'theme_advanced_path': False,
-    'theme_advanced_resizing': True,
-    'theme_advanced_resize_horizontal': False,
-    'theme_advanced_statusbar_location': 'bottom',
-    'width': '723',
-    'height': '250'
-}
-
-RECAPTCHA_USE_SSL = True
-
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
-
-LOGIN_REDIRECT_URL = "/"
-
+DEPLOYMENT_HOSTNAME='deployment.staging.appcubator.com'

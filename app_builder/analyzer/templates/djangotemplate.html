@@ -1,0 +1,34 @@
+{{ "{%" }} extends "base.html" {{ "%}" }}
+
+{{ "{% block title %}" }}{{ template.page.name }}{{ "{% endblock %}" }}
+
+{{ "{% block navbar %}" }}
+{{ template.page.navbar.render(template.page) }}
+{{ "{% endblock %}" }}
+
+
+{{ "{% block content %}" }}
+{% for row in template.tree.rows recursive %}
+    {% set row_loop = loop %}
+    {% if row.cols %}
+    <!-- row -->
+    <div class="{{ row.class_string }}">
+    {% for col in row.cols %}
+    {%- if col.tree == None %}
+        <!-- column terminal -->
+        {{ col.render()|indent(4 + 4 * row_loop.index) }}
+    {% else %}
+        <!-- column -->
+        <div class="{{ col.class_string }}">
+            {{ row_loop(col.tree.rows)|indent(4 * row_loop.index) }}
+        </div>
+    {% endif %}
+    {% endfor %}
+    </div>
+    {% endif %}
+{% endfor %}
+{{ "{% endblock %}" }}
+
+{{ "{% block footer %}" }}
+{{ template.page.footer.render() }}
+{{ "{% endblock %}" }}

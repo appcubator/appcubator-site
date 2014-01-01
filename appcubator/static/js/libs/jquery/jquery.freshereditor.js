@@ -106,7 +106,7 @@
                     }],
                     [{
                         name: 'createlink',
-                        label: '@',
+                        label: '<i>@</i>',
                         title: 'Link to a web page (Ctrl+L)',
                         userinput: "yes",
                         classname: 'toolbar_link'
@@ -183,13 +183,14 @@
                     }]
                 ];
                 if (options.toolbar_selector != null) {
-                    $toolbar = $(options.toolbar_selector);
+                    $toolbar = $(options.toolbar_selector, parent.window.document);
                 } else {
                     $(this).before("<div id='editor-toolbar'></div>");
                     $toolbar = $('#editor-toolbar');
                 }
                 $toolbar.addClass('fresheditor-toolbar');
                 $toolbar.append("<div class='btn-toolbar'></div>");
+
                 excludes = options.excludes || [];
                 for (_i = 0, _len = groups.length; _i < _len; _i++) {
                     commands = groups[_i];
@@ -223,8 +224,8 @@
                         font = fontnames[_k];
                         font_list += "<li><a href='#' class='fontname-option' style='font-family:" + font + ";'>" + font + "</a></li>";
                     }
-                    $('.toolbar_fontname').after("<ul class='dropdown-menu'>" + font_list + "</ul>");
-                    $('.fontname-option').on('click', function() {
+                    $toolbar.find('.toolbar_fontname').after("<ul class='dropdown-menu'>" + font_list + "</ul>");
+                    $toolbar.find('.fontname-option').on('click', function() {
                         document.execCommand("fontname", false, $(this).text());
                         $(this).closest('.btn-group').removeClass('open');
                     });
@@ -265,7 +266,7 @@
                             size_list += "<option value='" + fontsize.size + "'>" + fontsize.point + "pt</option>";
                         }
                     }
-                    $('.toolbar_fontsize').html(size_list);
+                    $toolbar.find('.toolbar_fontsize').html(size_list);
                     // $('a.fontsize-option').on('click', function() {
                     //   document.execCommand("FontSize", false, $(this).attr('fontsize'));
                     //   $(this).closest('.btn-group').removeClass('open');
@@ -273,7 +274,7 @@
                     // });
                 }
                 if (jQuery.inArray('forecolor', excludes) < 0) {
-                    $('a.toolbar_forecolor').after("<ul class='dropdown-menu colorpanel'><input type='text' id='forecolor-input' value='#000000' /><div id='forecolor-picker'></div></ul>");
+                    $toolbar.find('a.toolbar_forecolor').after("<ul class='dropdown-menu colorpanel'><input type='text' id='forecolor-input' value='#000000' /><div id='forecolor-picker'></div></ul>");
                     // $('#forecolor-picker').farbtastic(function(color) {
                     //   $('#forecolor-input').val(color);
                     //   document.execCommand("forecolor", false, color);
@@ -285,7 +286,7 @@
                     // });
                 }
                 if (jQuery.inArray('backcolor', excludes) < 0) {
-                    $('a.toolbar_bgcolor').after("<ul class='dropdown-menu colorpanel'><input type='text' id='bgcolor-input' value='#000000' /><div id='bgcolor-picker'></div></ul>");
+                    $toolbar.find('a.toolbar_bgcolor').after("<ul class='dropdown-menu colorpanel'><input type='text' id='bgcolor-input' value='#000000' /><div id='bgcolor-picker'></div></ul>");
                     // $('#bgcolor-picker').farbtastic(function(color) {
                     //   $('#bgcolor-input').val(color);
                     //   document.execCommand("backcolor", false, color);
@@ -311,7 +312,7 @@
                     return $this;
                 });
 
-                $("select.toolbar-cmd").on('change', function() {
+                $toolbar.find("select.toolbar-cmd").on('change', function() {
                     var ceNode, cmd, dummy, range;
                     cmd = $(this).attr('command');
 
@@ -355,7 +356,7 @@
                     }
                 });
 
-                $("a.toolbar-cmd").on('click', function() {
+                $toolbar.find("a.toolbar-cmd").on('click', function() {
 
                     var ceNode, cmd, dummy, range;
                     cmd = $(this).attr('command');

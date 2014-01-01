@@ -1,0 +1,64 @@
+#main-container {
+  padding-top: 54px;
+  height: 100%;
+  background-color: #e6e8e9;
+}
+
+.clean-div {
+  height: 100%;
+}
+
+@menuTopOffset: 54px;
+#main-container {
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+#main-container.open {
+  transform: translateY(@menuTopOffset);
+  -ms-transform: translateY(@menuTopOffset); /* IE 9 */
+  -webkit-transform: translateY(@menuTopOffset);
+
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  overflow: hidden;
+
+}
+#tool-bar {
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  overflow: hidden;
+}
+#tool-bar.open {
+  transform: translateY(@menuTopOffset);
+  -ms-transform: translateY(@menuTopOffset); /* IE 9 */
+  -webkit-transform: translateY(@menuTopOffset);
+
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  overflow: hidden;
+}
+
+#main-menu {
+  position: fixed;
+  z-index: 0;
+  top: 0;
+}
+
+.page {
+  position: relative;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 100%;
+} // end .page

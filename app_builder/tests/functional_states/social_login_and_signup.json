@@ -1,0 +1,470 @@
+{
+   "info":{
+      "keywords":"",
+      "description":""
+   },
+   "tables":[
+      {
+         "fields":[
+            {
+               "type":"text",
+               "name":"Content",
+               "owner_entity":null,
+               "related_name":null,
+               "entity_name":null
+            },
+            {
+               "related_name":"Tweets",
+               "type":"fk",
+               "name":"User",
+               "entity_name":"User",
+               "owner_entity":null
+            }
+         ],
+         "name":"Tweet"
+      }
+   ],
+   "users":[
+      {
+         "name":"role one",
+         "fields":[
+            {
+               "name":"common",
+               "type":"text",
+               "owner_entity":null,
+               "related_name":null,
+               "entity_name":null
+            },
+            {
+               "name":"im diff one",
+               "type":"text",
+               "owner_entity":null,
+               "related_name":null,
+               "entity_name":null
+            }
+         ]
+      },
+      {
+         "name":"role two",
+         "fields":[
+            {
+               "name":"common",
+               "type":"text",
+               "owner_entity":null,
+               "related_name":null,
+               "entity_name":null
+            },
+            {
+               "name":"im diff two",
+               "type":"text",
+               "owner_entity":null,
+               "related_name":null,
+               "entity_name":null
+            }
+         ]
+      },
+      {
+         "name":"role three",
+         "fields":[
+            {
+               "name":"im diff three",
+               "type":"text",
+               "owner_entity":null,
+               "related_name":null,
+               "entity_name":null
+            }
+         ]
+      }
+   ],
+   "mobilePages":[
+
+   ],
+   "emails":[
+      {
+         "content":"Dear {{User.First_Name}},\n\nThanks for signing up!\n\n- {{AppName}} Team",
+         "name":"Welcome Email",
+         "subject":"Thanks for Signing up!"
+      }
+   ],
+   "pages":[
+      {
+         "name":"Homepage",
+         "access_level":"all",
+         "url":{
+            "urlparts":[
+
+            ]
+         },
+         "footer":{
+            "isFixed":true,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ],
+            "customText":"Add custom footer text here"
+         },
+         "navbar":{
+            "isFixed":true,
+            "brandName":null,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ]
+         },
+         "uielements":[
+            {
+               "layout":{
+                  "top":3,
+                  "left":1,
+                  "height":4,
+                  "width":4,
+                  "t_padding":0,
+                  "b_padding":0,
+                  "l_padding":0,
+                  "r_padding":0,
+                  "alignment":"left"
+               },
+               "data":{
+                  "nodeType":"headerTexts",
+                  "isSingle":false,
+                  "content_attribs":{
+
+                  },
+                  "class_name":"header-1",
+                  "content":"Signup\n",
+                  "tagName":"h1",
+                  "activeStyle":""
+               },
+               "type":"node"
+            },
+            {
+               "layout":{
+                  "top":10,
+                  "left":1,
+                  "height":3,
+                  "width":2,
+                  "t_padding":0,
+                  "b_padding":0,
+                  "l_padding":0,
+                  "r_padding":0,
+                  "alignment":"left"
+               },
+               "data":{
+                  "action":"thirdpartylogin",
+                  "provider":"facebook",
+                  "content":"Login w/ Facebook",
+                  "signupRole": "role one",
+                  "goto": "internal://protected three/"
+               },
+               "type":"thirdpartylogin"
+            },
+            {
+               "layout":{
+                  "top":10,
+                  "left":4,
+                  "height":5,
+                  "width":2,
+                  "t_padding":0,
+                  "b_padding":0,
+                  "l_padding":0,
+                  "r_padding":0,
+                  "alignment":"left"
+               },
+               "data":{
+                  "action":"thirdpartylogin",
+                  "provider":"facebook",
+                  "content":"Login w/ Facebook",
+                  "signupRole": "role two",
+                  "goto": "internal://protected two/"
+               },
+               "type":"thirdpartylogin"
+            },
+            {
+               "layout":{
+                  "top":10,
+                  "left":7,
+                  "height":4,
+                  "width":2,
+                  "t_padding":0,
+                  "b_padding":0,
+                  "l_padding":0,
+                  "r_padding":0,
+                  "alignment":"left"
+               },
+               "data":{
+                  "action":"thirdpartylogin",
+                  "provider":"facebook",
+                  "content":"Login w/ Facebook",
+                  "signupRole": "role three",
+                  "goto": "internal://protected one/"
+               },
+               "type":"thirdpartylogin"
+            },
+            {
+               "layout":{
+                  "top":18,
+                  "left":1,
+                  "height":4,
+                  "width":4,
+                  "t_padding":0,
+                  "b_padding":0,
+                  "l_padding":0,
+                  "r_padding":0,
+                  "alignment":"left"
+               },
+               "data":{
+                  "nodeType":"headerTexts",
+                  "isSingle":false,
+                  "content_attribs":{
+
+                  },
+                  "class_name":"header-1",
+                  "content":"Login",
+                  "tagName":"h1",
+                  "activeStyle":""
+               },
+               "type":"node"
+            },
+            {
+               "layout":{
+                  "top":25,
+                  "left":1,
+                  "height":2,
+                  "width":2,
+                  "t_padding":0,
+                  "b_padding":0,
+                  "l_padding":0,
+                  "r_padding":0,
+                  "alignment":"left"
+               },
+               "data":{
+                  "action":"thirdpartylogin",
+                  "provider":"facebook",
+                  "content":"Login w/ Facebook",
+                  "loginRoutes":[
+                        {"role":"role one", "redirect": "internal://protected one/"},
+                        {"role":"role two", "redirect": "internal://protected two/"},
+                        {"role":"role three", "redirect": "internal://protected three/"}
+                  ]
+               },
+               "type":"thirdpartylogin"
+            }
+         ],
+         "page_name":"Homepage",
+         "ind":0,
+         "user_roles":[
+            "role one",
+            "role two",
+            "role three"
+         ]
+      },
+      {
+         "name":"Registration Page",
+         "access_level":"all-users",
+         "navbar":{
+            "isFixed":true,
+            "brandName":null,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ]
+         },
+         "footer":{
+            "isFixed":true,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ],
+            "customText":"Add custom footer text here"
+         },
+         "url":{
+            "urlparts":[
+               "registration"
+            ]
+         },
+         "uielements":[
+
+         ],
+         "page_name":"Registration Page",
+         "ind":1,
+         "user_roles":[
+            "role one",
+            "role two",
+            "role three"
+         ]
+      },{
+         "name":"protected one",
+         "access_level":"all-users",
+         "navbar":{
+            "isFixed":true,
+            "brandName":null,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ]
+         },
+         "footer":{
+            "isFixed":true,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ],
+            "customText":"Add custom footer text here"
+         },
+         "url":{
+            "urlparts":[
+               "r1"
+            ]
+         },
+         "uielements":[
+
+         ],
+         "page_name":"Registration Page",
+         "ind":1,
+         "user_roles":[
+            "role one",
+            "role two",
+            "role three"
+         ]
+      },{
+         "name":"protected two",
+         "access_level":"all-users",
+         "navbar":{
+            "isFixed":true,
+            "brandName":null,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ]
+         },
+         "footer":{
+            "isFixed":true,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ],
+            "customText":"Add custom footer text here"
+         },
+         "url":{
+            "urlparts":[
+               "r2"
+            ]
+         },
+         "uielements":[
+
+         ],
+         "page_name":"Registration Page",
+         "ind":1,
+         "user_roles":[
+            "role one",
+            "role two",
+            "role three"
+         ]
+      },{
+         "name":"protected three",
+         "access_level":"all-users",
+         "navbar":{
+            "isFixed":true,
+            "brandName":null,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ]
+         },
+         "footer":{
+            "isFixed":true,
+            "isHidden":false,
+            "links":[
+               {
+                  "url":"internal://Homepage",
+                  "title":"Homepage"
+               },
+               {
+                  "url":"internal://Registration Page",
+                  "title":"Registration Page"
+               }
+            ],
+            "customText":"Add custom footer text here"
+         },
+         "url":{
+            "urlparts":[
+               "r3"
+            ]
+         },
+         "uielements":[
+
+         ],
+         "page_name":"Registration Page",
+         "ind":1,
+         "user_roles":[
+            "role one",
+            "role two",
+            "role three"
+         ]
+      }
+   ],
+   "name":"social login test"
+}

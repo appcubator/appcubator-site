@@ -9,9 +9,11 @@ define(function(require, exports, module) {
         EmailsView    = require("app/emails/EmailsView"),
         PluginsView   = require("app/PluginsView"),
         DeployView    = require("app/DeployView"),
-        SoftErrorView = require("app/SoftErrorView"),
-        GarageView    = require("app/GarageView"),
-        WorldView     = require("app/WorldView");
+        SoftErrorView = require("app/SoftErrorView");
+
+    var ToolBarView = require('editor/ToolBarView');
+
+    var DeployManagerModel = require('./DeployManagerModel');
 
     var AppRouter = Backbone.Router.extend({
 
@@ -24,8 +26,8 @@ define(function(require, exports, module) {
             "app/:appid/plugins/*tutorial"     : "plugins",
             "app/:appid/mobile-editor/:pageid/": "mobileEditor",
             "app/:appid/emails/*tutorial"      : "emails",
-            "app/:appid/*tutorial"             : "pages",
-            "app/:appid/*anything/"            : "pages"
+            "app/:appid/*tutorial"             : "editor",
+            "app/:appid/*anything/"            : "editor"
         },
 
         tutorialPage: 0,
@@ -33,8 +35,31 @@ define(function(require, exports, module) {
         initialize: function() {
             var self = this;
             v1.view = null;
+
+            var deployManager = new DeployManagerModel();
+            v1.deployManager = deployManager;
+
             _.bindAll(this);
             $('#save').on('click', this.save);
+            $('#left-menu-toggle').on('click', this.toggleLeftMenu);
+            $('#deploy').on('click', function() {
+                
+                $('.deploy-text').html('Publishing');
+                var threeDots = util.threeDots();
+                $('.deploy-text').append(threeDots.el);
+
+                var success_callback = function() {
+                    $('.deploy-text').html('Publish');
+                    clearInterval(threeDots.timer);
+                };
+
+                var hold_on_callback = function() {
+                     $('.deploy-text').html('Hold On, Still deploying.');
+                };
+
+                deployManager.deploy.call(success_callback, hold_on_callback);
+            });
+
             $('#tutorial').on('click', function(e) {
                 self.showTutorial();
                 window.history.pushState(null, null, window.location.href.concat("tutorial/"));
@@ -48,21 +73,13 @@ define(function(require, exports, module) {
             keyDispatcher.bindComb('meta+v', this.paste);
             keyDispatcher.bindComb('ctrl+v', this.paste);
 
-            var autoSave = setInterval(this.save, 30000);
 
-            this.worldView = new WorldView();
+            //var autoSave = setInterval(this.save, 30000);
 
-            if(appId !== 0) {
-                this.garageView = new GarageView();
-                $('.garage-toggle').on('click', this.garageView.toggle);
-                $('.garage-toggle').on('click', this.worldView.hide);
-                $('.world-toggle').on('click', this.garageView.hide);
-            }
-
-            $('.world-toggle').on('click', this.worldView.toggle);
+            this.toolBar = new ToolBarView({pageId: -1});
+            this.toolBar.setElement(document.getElementById('tool-bar')).render();
 
             this.listenTo(v1State.get('tables'), 'add', this.entityAdded);
-
             this.autoAddLinksToNavbar();
         },
 
@@ -72,20 +89,11 @@ define(function(require, exports, module) {
             v1State.get('pages').push(newPage);
         },
 
-        index: function(appId, tutorial) {
-            var self = this;
-            require(['app/OverviewPageView'], function(OverviewPageView) {
-                self.tutorialPage = "Introduction";
-                self.changePage(OverviewPageView, tutorial, function() {});
-                olark('api.box.show');
-            });
-        },
-
         info: function(appId, tutorial) {
             var self = this;
             require(['app/AppInfoView'], function(InfoView) {
                 self.tutorialPage = "Application Settings";
-                self.changePage(InfoView, tutorial, function() {
+                self.changePage(InfoView, {}, tutorial, function() {
                     $('.menu-app-info').addClass('active');
                 });
                 olark('api.box.show');
@@ -94,21 +102,20 @@ define(function(require, exports, module) {
 
         tables: function(appId, tutorial) {
             var self = this;
-            require(['app/entities/EntitiesView'], function(EntitiesView) {
-                self.tutorialPage = "Tables Page";
-                self.changePage(EntitiesView, tutorial, function() {
-                    self.trigger('entities-loaded');
-                    $('.menu-app-entities').addClass('active');
-                });
-                olark('api.box.show');
-            });
+            //self.tutorialPage = "Tables Page";
+            //self.changePage(EntitiesView, {}, tutorial, function() {
+            //        self.trigger('entities-loaded');
+            //        $('.menu-app-entities').addClass('active');
+            //    });
+            //    olark('api.box.show');
+            //});
         },
 
         themes: function(appId, tutorial) {
             var self = this;
             self.tutorialPage = "Themes";
             require(['app/ThemesGalleryView'], function(ThemesGalleryView) {
-                self.changePage(ThemesGalleryView, tutorial, function() {
+                self.changePage(ThemesGalleryView, {}, tutorial, function() {
                     self.trigger('themes-loaded');
                     $('.menu-app-themes').addClass('active');
                 });
@@ -121,7 +128,7 @@ define(function(require, exports, module) {
             self.tutorialPage = "Pages";
             require(['app/pages/PagesView'], function(PagesView) {
                 $('.page').fadeIn();
-                self.changePage(PagesView, tutorial, function() {
+                self.changePage(PagesView, {}, tutorial, function() {
                     self.trigger('pages-loaded');
                     $('.menu-app-pages').addClass('active');
                 });
@@ -130,56 +137,27 @@ define(function(require, exports, module) {
         },
 
         editor: function(appId, pageId) {
+            if(!pageId) pageId = 0;
             var self = this;
 
             self.tutorialPage = "Editor";
 
             require(['editor/EditorView'], function(EditorView) {
-                $('.page:not(.container)').fadeOut();
-                if (v1.view) {
-                    v1.view.close();
-                }
-                var cleanDiv = document.createElement('div');
-                cleanDiv.className = "clean-div editor-page";
-                console.log(cleanDiv);
-                $(document.body).append(cleanDiv);
-                console.log(pageId);
-                v1.view = new EditorView({
-                    pageId: pageId
-                });
-                v1.view.setElement(cleanDiv).render();
-
+                // $('.page:not(.container)').fadeOut();
+                self.tutorialPage = "Introduction";
+                self.changePage(EditorView, {pageId: pageId}, "", function() {});
+                olark('api.box.show');
                 self.trigger('editor-loaded');
-
                 olark('api.box.hide');
                 self.changeTitle(v1.view.title);
-            });
-        },
 
-        mobileEditor: function(appId, pageId) {
-            var self = this;
-            $('.page').fadeOut();
-            self.tutorialPage = "Editor";
-            require(['m-editor/MobileEditorView'], function(MobileEditorView) {
-                if (v1.view) v1.view.close();
-                var cleanDiv = document.createElement('div');
-                cleanDiv.className = "clean-div editor-page";
-                $(document.body).append(cleanDiv);
-
-                v1.view = new MobileEditorView({
-                    pageId: pageId
-                });
-                v1.view.setElement(cleanDiv).render();
-
-                olark('api.box.hide');
-                self.changeTitle(v1.view.title);
             });
         },
 
         emails: function(appId, tutorial) {
             var self = this;
             self.tutorialPage = "Emails";
-            this.changePage(EmailsView, tutorial, function() {
+            this.changePage(EmailsView, {}, tutorial, function() {
                 $('.menu-app-emails').addClass('active');
             });
         },
@@ -187,27 +165,26 @@ define(function(require, exports, module) {
         plugins: function(appId, tutorial) {
             var self = this;
             self.tutorialPage = "Plugins";
-            this.changePage(PluginsView, tutorial, function() {
+            this.changePage(PluginsView, {}, tutorial, function() {
                 $('.menu-app-plugins').addClass('active');
             });
         },
 
-        changePage: function(newView, tutorial, post_render) {
+        changePage: function(NewView, options, tutorial, post_render) {
             if (v1.view) v1.view.close();
             var cleanDiv = document.createElement('div');
             cleanDiv.className = "clean-div";
             var mainContainer = document.getElementById('main-container');
             mainContainer.appendChild(cleanDiv);
 
-            v1.view = new newView();
+            v1.view = new NewView(options);
+
             v1.view.setElement(cleanDiv).render();
-            $('.active').removeClass('active');
             this.changeTitle(v1.view.title);
             $("html, body").animate({
                 scrollTop: 0
             });
             $('.page').fadeIn();
-            $('.pull-right.dropd').removeClass('open');
             post_render.call();
             if (tutorial && tutorial === 'tutorial/') {
                 this.showTutorial();
@@ -221,131 +198,6 @@ define(function(require, exports, module) {
                     this.tutorial.closeModal();
                 }
             }
-        },
-
-        deploy: function(callback, hold_on_callback) {
-            if (v1.disableSave === true) return;
-            var self = this;
-            var isDeployed = false;
-            var before_deploy = new Date().getTime(); // global, b/c accessed in an ajax handler
-            v1.disableSave = true;
-
-            var successHandler = function(data, callback){
-                v1.whenDeployed(function() {
-                    callback.call();
-                    new DeployView(data);
-                    util.log_to_server('deployed app', {
-                        status: 'success',
-                        deploy_time: data.deploy_time + " seconds"
-                    }, appId);
-                    self.trigger('deployed');
-                });
-                return data;
-            };
-
-            var jqxhrToJson = function(jqxhr){
-                var data = {};
-                try {
-                    data = JSON.parse(jqxhr.responseText);
-                } catch (e) {
-                    data.errors = ["JSON response from server failed to parse", jqxhr.responseText];
-                }
-                return data;
-            };
-
-            var mergeConflictHandler = function(data){
-                var text = "<h1>Merge Conflict</h1>";
-                text += "\n<p>We tried to generate the code but we couldn't resolve a conflict between our code and your code.</p>";
-                text += "\n<p>To fix this, please resolve the conflict and push a commit with your fix in <span class=\"branch\">master</span>.</p>";
-                text += "\n<p>We stored the conflict details in <span class=\"branch\">" + data.branch + "</span>.</p>";
-                text += "\n<div>";
-                text += "\n  <h2>Affected files</h2>";
-                text += "\n  <ol>";
-                for (var i = 0; i < data.files.length; i++) {
-                    text += "\n    <li class=\"file\">" + data.files[i] + "</li>";
-                }
-                text += "\n  </ol>";
-                text += "\n<div>";
-
-                var content = {
-                    text: text
-                };
-                new SimpleModalView(content);
-                util.log_to_server('deployed app', {
-                    status: 'merge conflict',
-                    deploy_time: data.deploy_time + " seconds",
-                    message: data
-                }, appId);
-                return data;
-            };
-
-            // this is copy pasted from the save code. i dont know how to modularize these functions properly. ~ks
-            var softErrorHandler = function(data) {
-                v1State.set('version_id', data.version_id);
-                v1.disableSave = true;
-                new SoftErrorView({
-                    text: data.message,
-                    path: data.path
-                }, function() {
-                    v1.disableSave = false;
-                });
-                return data;
-            };
-            var hardErrorHandler = function(data){
-                var content = {};
-                if (DEBUG) content.text = data.responseText;
-                else content.text = "There has been a problem. Please refresh your page. We're really sorry for the inconvenience and will be fixing it very soon.";
-                new ErrorDialogueView(content);
-                util.log_to_server('deployed app', {
-                    status: 'FAILURE',
-                    deploy_time: data.deploy_time + " seconds",
-                    message: data.errors
-                }, appId);
-                return data;
-            };
-
-            // compose this w the other callbacks
-            var completeCallback = function(data) {
-                v1.disableSave = false;
-                isDeployed = true;
-                data.deploy_time = (new Date().getTime() - before_deploy) / 1000;
-                return data;
-            };
-
-            $.ajax({
-                type: "POST",
-                url: '/app/' + appId + '/deploy/',
-                statusCode: {
-                    200: function(data){
-                        data = completeCallback(data);
-                        data = successHandler(data, callback);
-                    },
-                    400: function(jqxhr){
-                        var data = jqxhrToJson(jqxhr);
-                        data = completeCallback(data);
-                        data = softErrorHandler(data);
-                        data = callback(data);
-                    },
-                    409: function(jqxhr){
-                        var data = jqxhrToJson(jqxhr);
-                        data = completeCallback(data);
-                        data = mergeConflictHandler(data);
-                        data = callback(data);
-                    },
-                    500: function(jqxhr){
-                        var data = jqxhrToJson(jqxhr);
-                        data = completeCallback(data);
-                        data = hardErrorHandler(data);
-                        data = callback(data);
-                    },
-                },
-                dataType: "JSON"
-            });
-
-            var holdOnTimer = setTimeout(function() {
-                if (!isDeployed) hold_on_callback.call();
-                clearTimeout(holdOnTimer);
-            }, 10000);
         },
 
         download: function(callback) {
@@ -550,6 +402,27 @@ define(function(require, exports, module) {
 
             if (e) e.preventDefault();
             return false;
+        },
+
+        toggleLeftMenu: function() {
+            var self = this;
+            if(this.menuExpanded) {
+                $('#tool-bar').removeClass('open');
+                $('#main-container').removeClass('open');
+                this.menuExpanded = false;
+                $('#main-container').off('click', function() {
+                    self.toggleLeftMenu();
+                });
+            }
+            else {
+                $('#tool-bar').addClass('open');
+                $('#main-container').addClass('open');
+                this.menuExpanded = true;
+
+                $('#main-container').on('click', function() {
+                    self.toggleLeftMenu();
+                });
+            }
         },
 
         showTutorial: function(dir) {

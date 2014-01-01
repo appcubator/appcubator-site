@@ -1,0 +1,10 @@
+<footer class="footer" id="footer">
+  <div class="container">
+    <p id="customText" class="footer-text muted"></p>
+    <ul class="list-unstyled" id="footer-links">
+      {% for l in footer.links %}
+      <li><a href="{{ l.url_pl.to_code() }}" class="menu-item">{{ l.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</footer>

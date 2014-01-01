@@ -6,7 +6,7 @@ function(WidgetClassPickerView) {
 
   var WidgetLayoutEditorView = Backbone.View.extend({
     el     : document.getElementById('layout-editor'),
-    className : 'layout-editor',
+    className : 'w-section layout-editor',
     events : {
       'click .a-pick'            : 'changeAlignment',
       'click .padding'           : 'changePadding',
@@ -62,7 +62,6 @@ function(WidgetClassPickerView) {
 
     render: function() {
       var self = this;
-      this.el.appendChild(new comp().div('Layout').classN('header-div').el);
       this.el.appendChild(this.renderPaddingInfo());
       this.el.appendChild(this.renderLayoutInfo());
     },

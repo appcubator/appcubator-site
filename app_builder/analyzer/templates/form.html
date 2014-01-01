@@ -1,0 +1,7 @@
+<form method="POST" action="{{ '{%' }} url {{ context.form_receiver.view_path() }} {{ '%}' }}">
+{{ "{% csrf_token %}" }}
+{% for field in form.form.fields %}
+        {% include "formfields.html" %}
+{% endfor %}
+<div class="form-error field-all"></div>
+</form>
