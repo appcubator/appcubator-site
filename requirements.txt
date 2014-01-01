@@ -36,4 +36,5 @@ cssutils==0.9.10
 mysql-python==1.2.4
 
 django-threadedcomments==0.9.0
+django-countries
 gunicorn==18.0
