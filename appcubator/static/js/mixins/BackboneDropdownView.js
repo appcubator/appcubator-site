@@ -50,7 +50,8 @@ define([
                 var toggleEl = this.$toggleEl;
                 // if the target of the click isn't the container
                 // ... nor a descendant of the container
-                if (!container.is(e.target) && !toggleEl.is(e.target) && container.has(e.target).length === 0)
+                if (!container.is(e.target) && !toggleEl.is(e.target) &&
+                    container.has(e.target).length === 0 && toggleEl.has(e.target).length === 0)
                 {
                     this.hide();
                 }
