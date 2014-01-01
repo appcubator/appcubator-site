@@ -36,13 +36,16 @@ define([
             expand: function() {
                 this.$el.addClass('expanded');
                 this.isExpanded = true;
-                $(document).on('mouseup', this.clickedOnElement);
+                $(window).on('mouseup', this.clickedOnElement);
+                $(window).on('keydown', this.closeHandler);
+
             },
 
             hide: function() {
                 this.$el.removeClass('expanded');
                 this.isExpanded = false;
-                $(document).off('mouseup', this.clickedOnElement);
+                $(window).off('mouseup', this.clickedOnElement);
+                $(window).off('keydown', this.closeHandler);
             },
 
             clickedOnElement: function(e) {
@@ -53,6 +56,12 @@ define([
                 if (!container.is(e.target) && !toggleEl.is(e.target) &&
                     container.has(e.target).length === 0 && toggleEl.has(e.target).length === 0)
                 {
+                    this.hide();
+                }
+            },
+
+            closeHandler: function(e) {
+                if(e.keyCode == 27) {
                     this.hide();
                 }
             }
