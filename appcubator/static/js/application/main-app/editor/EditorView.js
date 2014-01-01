@@ -116,6 +116,8 @@ define(function(require, exports, module) {
             var iframe = document.getElementById('page');
             this.iframe = iframe;
 
+            console.log(iframe);
+            
             this.setupPageWrapper();
             this.setupPageHeightBindings();
 

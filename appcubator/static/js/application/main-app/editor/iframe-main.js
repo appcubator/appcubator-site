@@ -245,8 +245,8 @@ require([
             }
         };
 
-        if (top.v1.view) {
-            top.v1.view.renderIFrameContent(proxy);
+        if (top.v1.currentApp) {
+            top.v1.currentApp.renderIFrameContent(proxy);
         }
     });
 
