@@ -1,0 +1,38 @@
+<div class="navbar" id="main-menu">
+    <div class="large-header">
+        <a href="/">
+          <div id="box-container">
+            <div id="cube" class="">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </a>
+        <a href="/"><h1>Appcubator</h1></a>
+    </div>
+    <ul class="menu">
+      <li id="menu-resources"><a href="/resources/">RESOURCES</a></li>
+      <li id="menu-community"><a href="/community/">COMMUNITY</a></li>
+      {% if user.is_authenticated %}
+      <li><a href="/app/">GARAGE</a></li>
+      <li><a href="/app/" class="account-icon"></a></li>
+
+      {% else %}
+      <li><a class="login-button" href="/login/">LOGIN</a></li>
+      <li><a class="signup-button" href="/signup/">SIGNUP</a></li>
+      {% endif %}      
+
+    </ul>
+    <form class="login-form" method="post" action="{% url django.contrib.auth.views.login %}" style="display:none;">
+      {% csrf_token %}
+      <input id="id_username" class="span10" type="text" name="username" placeholder="Email..." maxlength="60">
+      <input type="password" class="span10" name="password" placeholder="Password..." id="id_password">
+      <input class="btn" type="submit" value="Login »"/>
+      <a class="qmark" href="{% url auth_password_reset %}">?</a>
+      <input type="hidden" name="next" value="{{ next|default:"/app" }}" />
+    </form>
+</div>
