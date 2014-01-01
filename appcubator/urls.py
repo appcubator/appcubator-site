@@ -27,8 +27,6 @@ urlpatterns += patterns('appcubator.views.admin',
 )
 
 urlpatterns += patterns('appcubator.views.app',
-    url(r'filepick', django.views.generic.base.TemplateView.as_view(template_name="dev/filepicker-test.html")),
-
     url(r'^app/$', 'welcome'),
 
     url(r'^app/0/$', 'noob_page'),
