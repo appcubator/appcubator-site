@@ -88,12 +88,12 @@ define(function(require, exports, module) {
             });
         },
 
-        tables: function(appId, tutorial) {
+        tables: function(tutorial) {
             var self = this;
-            //this.entitiesView.expand();
+            this.entitiesView.expand();
         },
 
-        themes: function(appId, tutorial) {
+        themes: function(tutorial) {
             var self = this;
             self.tutorialPage = "Themes";
             require(['app/ThemesGalleryView'], function(ThemesGalleryView) {

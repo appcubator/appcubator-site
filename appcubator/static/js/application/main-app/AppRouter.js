@@ -47,7 +47,6 @@ define(function(require, exports, module) {
         },
 
         tables: function(appId, tutorial) {
-            var self = this;
             v1.currentApp.tables(tutorial);
         },
 
