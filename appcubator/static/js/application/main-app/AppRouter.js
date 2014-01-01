@@ -7,8 +7,7 @@ define(function(require, exports, module) {
 
     var TutorialView  = require("tutorial/TutorialView"),
         AppView       = require("app/AppView"),
-        DeployView    = require("app/DeployView"),
-        SoftErrorView = require("app/SoftErrorView");
+        DeployView    = require("app/DeployView");
 
     var AppRouter = Backbone.Router.extend({
 

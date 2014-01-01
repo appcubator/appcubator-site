@@ -6,6 +6,10 @@ define(function(require, exports, module) {
     var ToolBarView = require('editor/ToolBarView');
     var EditorView = require('editor/EditorView');
 
+    var SoftErrorView = require("app/SoftErrorView");
+    var EntitiesView = require('app/entities/EntitiesView');
+
+
     var AppView = Backbone.View.extend({
 
         events: {
@@ -14,24 +18,54 @@ define(function(require, exports, module) {
             'click #deploy': 'deployApp'
         },
 
+        el: document.getElementById('app-content'),
+
         initialize: function(options) {
             _.bindAll(this);
 
             this.model = options.model;
             this.appId = options.appId;
+            this.pageId = options.pageId;
 
             this.toolBar = new ToolBarView({
                 pageId: -1
             });
-            this.toolBar.setElement(document.getElementById('tool-bar')).render();
 
             this.listenTo(this.model.get('tables'), 'add', this.entityAdded);
             this.autoAddLinksToNavbar();
+
+            this.entitiesView = new EntitiesView();
+            this.entitiesView.setToggleEl($('.menu-app-entities'));
 
             this.deployManager = new DeployManagerModel(this.appId);
 
             //var autoSave = setInterval(this.save, 30000);
             this.render();
+        },
+
+        render: function() {
+            var pageId = 0;
+            this.pageId = 0;
+
+            var cleanDiv = document.createElement('div');
+            cleanDiv.className = "clean-div";
+            var mainContainer = document.getElementById('main-container');
+            mainContainer.appendChild(cleanDiv);
+
+            console.log(this.model);
+            this.view = new EditorView({ pageId : pageId, appModel: this.model });
+            this.view.setElement(cleanDiv).render();
+            
+            console.log(this.el);
+            console.log(this.entitiesView.el);
+
+            this.toolBar.setElement(document.getElementById('tool-bar')).render();
+            this.el.appendChild(this.entitiesView.render().el);
+
+            $("html, body").animate({
+                scrollTop: 0
+            });
+    
         },
 
         doKeyBindings: function() {
@@ -56,13 +90,7 @@ define(function(require, exports, module) {
 
         tables: function(appId, tutorial) {
             var self = this;
-            //self.tutorialPage = "Tables Page";
-            //self.changePage(EntitiesView, {}, tutorial, function() {
-            //        self.trigger('entities-loaded');
-            //        $('.menu-app-entities').addClass('active');
-            //    });
-            //    olark('api.box.show');
-            //});
+            //this.entitiesView.expand();
         },
 
         themes: function(appId, tutorial) {
@@ -91,6 +119,7 @@ define(function(require, exports, module) {
         },
 
         page: function(pageId) {
+            if(pageId == this.pageId) return;
             if (!pageId) pageId = 0;
             var self = this;
 
@@ -102,11 +131,11 @@ define(function(require, exports, module) {
         },
 
         emails: function(tutorial) {
-            var self = this;
-            self.tutorialPage = "Emails";
-            this.changePage(EmailsView, {}, tutorial, function() {
-                $('.menu-app-emails').addClass('active');
-            });
+            // var self = this;
+            // self.tutorialPage = "Emails";
+            // this.changePage(EmailsView, {}, tutorial, function() {
+            //     $('.menu-app-emails').addClass('active');
+            // });
         },
 
         plugins: function(tutorial) {
@@ -227,10 +256,6 @@ define(function(require, exports, module) {
                 },
                 dataType: "JSON"
             });
-        },
-
-        render: function() {
-
         },
 
         save: function(e, callback) {
