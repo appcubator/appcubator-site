@@ -9,10 +9,6 @@ from our_payments import views as payment_views
 import website
 
 urlpatterns = patterns('',
-    url(r'^forum/', include('askbot.urls')),
-)
-
-urlpatterns += patterns('',
     url(r'^', include('website.urls')),
     url(r'^', include('tutorials.urls')),
     url(r'^backend/',                   include('app_builder.urls')),

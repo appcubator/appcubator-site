@@ -15,6 +15,6 @@ cp ./static/js/application/main-app/main.js.backup ./static/js/application/main-
 echo "[BUILD] Running manage.py collectstatic"
 cd ..
 python manage.py collectstatic --noinput
-echo "[BUILD] Copying other askbot static files"
-cp -r askbot/other_static/* appcubator/dist_static/
+#echo "[BUILD] Copying other askbot static files"
+#cp -r askbot/other_static/* appcubator/dist_static/
 echo "[BUILD] Done"
