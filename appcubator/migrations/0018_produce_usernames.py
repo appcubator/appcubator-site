@@ -10,10 +10,7 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Write your forwards methods here."
         # Note: Remember to use orm['appname.ModelName'] rather than "from appname.models..."
-        if db.dry_run:
-          from appcubator.models import User
-        else:
-          User = orm['auth.User']
+        User = orm['auth.User']
         for u in User.objects.filter(is_active=True):
             from appcubator import models as appcubator_models
             u.username = appcubator_models.email_to_uniq_username(u.email)
