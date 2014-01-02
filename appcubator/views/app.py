@@ -114,9 +114,8 @@ def dashboard(request, app_id):
                     'themes'       : simplejson.dumps(list(themes)),
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
                     'apps'         : request.user.apps.all(),
-                    'collab_apps'  : [c.app for c in request.user.collaborations.all()],
-                    'staging'      : settings.STAGING,
-                    'production'   : settings.PRODUCTION }
+                    'collab_apps'  : [c.app for c in request.user.collaborations.all()]
+                    }
 
     app_id = long(app_id)
     # id of 0 is reserved for sample app
@@ -186,7 +185,7 @@ def new(request, is_racoon = False, app_template=None):
         data['subdomain'] = "%s-%s" % (request.user.username, request.POST.get('name', ''))
 
         # dev modifications
-        if not settings.STAGING and not settings.PRODUCTION:
+        if settings.DEBUG:
             data['subdomain'] = 'dev-' + data['subdomain']
 
         form = forms.AppNew(data, owner=request.user)
@@ -295,8 +294,6 @@ def page(request, app_id, page_name="overview"):
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
                     'apps'         : app.owner.apps.all(),
                     'user'         : app.owner,
-                    'staging'      : settings.STAGING,
-                    'production'   : settings.PRODUCTION,
                     'page_name'    : page_name,
                     'is_deployed'  : 1 if app.deployment_id != None else 0,
                     'display_garage' : False}
@@ -330,8 +327,6 @@ def app_editor_iframe(request, app_id, page_name="overview"):
                     'mobile_themes': simplejson.dumps(list(mobile_themes)),
                     'apps'         : app.owner.apps.all(),
                     'user'         : app.owner,
-                    'staging'      : settings.STAGING,
-                    'production'   : settings.PRODUCTION,
                     'page_name'    : page_name,
                     'old_nav'      : old_nav,
                     'is_deployed'  : 1 if app.deployment_id != None else 0,

@@ -1,4 +1,19 @@
-import os
+import os, os.path
+import re
+
+DEBUG=True
+TEMPLATE_DEBUG=DEBUG
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+PROJECT_ROOT_PATH = BASE_DIR
+
+ADMINS = (
+    ('Karan Sikka', 'karan@appcubator.com'),
+    ('Ilter Canberk', 'ilter@appcubator.com'),
+)
+
+MANAGERS = ADMINS
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -24,7 +39,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.abspath(os.path.dirname(__file__) + "/../collected_media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "collected_media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -35,7 +50,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.abspath(os.path.dirname(__file__) + "/../appcubator/dist_static")
+STATIC_ROOT = os.path.join(BASE_DIR + "appcubator/dist_static")
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -59,7 +74,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '(kx8m9$ts@foen+2h(tv$q^k(k@z@)bl+wq*4r67srq$&amp;hjt$^'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -92,7 +107,6 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 DOCUMENTATION_SEARCH_DIR = os.path.join(BASE_DIR, 'appcubator/templates/documentation/html/')
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -194,13 +208,6 @@ LOGGING = {
     }
 }
 
-# Stripe Payments based key
-#STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_qbJZ9hMePgdpdZUrkKTskzgz")
-#STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_GhzvfBePNCkvC6j23UtZkmTi")
-STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_fY9VBkCmjBQLk621M0ya73gL")
-STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_live_QcJadrTVAXeC3DrotELf02KJ")
-
-
 PAYMENTS_PLANS = {
     "monthly": {
         "stripe_plan_id": "pro-monthly",
@@ -222,7 +229,6 @@ PAYMENTS_PLANS = {
 # SUBSCRIPTION_REQUIRED_EXCEPTION_URLS = ['/']
 # SUBSCRIPTION_REQUIRED_REDIRECT='/'
 
-# End keys
 
 COMMENTS_APP = 'threadedcomments'
 
@@ -236,25 +242,19 @@ LOGOUT_URL="/"
 LOGIN_URL="/login/"
 
 # Simple SMTP
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "maverickn"
-EMAIL_HOST_PASSWORD = "obscurepassword321"
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_PORT = os.environ['EMAIL_PORT']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_PORT = os.environ['EMAIL_PORT']
 EMAIL_USE_TLS = False
 DEFAULT_FROM_EMAIL = 'team@appcubator.com'
 
-import os, os.path
-import re
+
 static_version_file_path = os.path.join(os.path.dirname(__file__), 'STATIC_VERSION')
 with open(static_version_file_path) as bro:
     CACHE_BUSTING_STRING = re.sub(r'[^0-9A-Za-z_\-]', '', bro.read().split('\n')[0].strip())
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': 6000,
-    }
-}
 AUTHENTICATION_BACKENDS = (
     'appcubator.utils.EmailOrUsernameModelBackend',
     'social_auth.backends.facebook.FacebookBackend',
@@ -262,4 +262,32 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.linkedin.LinkedinBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-DEPLOYMENT_HOSTNAME='deployment.staging.appcubator.com'
+
+
+if 'DB_PASSWORD' in os.environ:
+    DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.mysql',
+           'HOST': os.environ['DB_HOST'],
+           'PORT': os.environ['DB_PORT'],
+           'NAME': os.environ['DB_NAME'],
+           'USER': os.environ['DB_USERNAME'],
+           'PASSWORD': os.environ['DB_PASSWORD'],
+       }
+    }
+else:
+    DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.sqlite3',
+           'NAME': os.path.join(BASE_DIR, 'tempdb')
+       }
+    }
+
+# Production/Live keys for Stripe
+STRIPE_PUBLIC_KEY = os.environ["STRIPE_PUBLIC_KEY"]
+STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
+
+# deployer service
+DEPLOYMENT_HOSTNAME = os.environ["DEPLOYMENT_HOSTNAME"]
+# domain from which apps are available
+DEPLOYMENT_DOMAIN = os.environ["DEPLOYMENT_DOMAIN"]
