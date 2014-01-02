@@ -1,19 +1,19 @@
-SECRET_KEY='something random'
+export SECRET_KEY='something random'
 
 # db settings
-DB_HOST='127.0.0.1'
-DB_PORT=3306
-DB_NAME='v1factory'
-DB_USERNAME='root'
-DB_PASSWORD='password'
+export DB_HOST='127.0.0.1'
+export DB_PORT=3306
+export DB_NAME='v1factory'
+export DB_USERNAME='root'
+export DB_PASSWORD='password'
 
 # test stripe settings
-STRIPE_PUBLIC_KEY="pk_test_qbJZ9hMePgdpdZUrkKTskzgz"
-STRIPE_SECRET_KEY="sk_test_GhzvfBePNCkvC6j23UtZkmTi"
-DEPLOYMENT_HOSTNAME='test.appcubator.com'
+export STRIPE_PUBLIC_KEY="pk_test_qbJZ9hMePgdpdZUrkKTskzgz"
+export STRIPE_SECRET_KEY="sk_test_GhzvfBePNCkvC6j23UtZkmTi"
+export DEPLOYMENT_HOSTNAME='test.appcubator.com'
 
 # global email settings
-EMAIL_HOST='smtp.sendgrid.net'
-EMAIL_PORT=587
-EMAIL_HOST_USER="maverickn"
-EMAIL_HOST_PASSWORD="obscurepassword321"
+export EMAIL_HOST='smtp.sendgrid.net'
+export EMAIL_PORT=587
+export EMAIL_HOST_USER="maverickn"
+export EMAIL_HOST_PASSWORD="obscurepassword321"
