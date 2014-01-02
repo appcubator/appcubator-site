@@ -4,6 +4,8 @@ define(function(require, exports, module) {
 
     var UserTableModel = require('models/UserTableModel');
     var TableModel = require('models/TableModel');
+    var TableView = require('entities/TableView');
+
     require('util');
     require('mixins/BackboneDropdownView');
 
