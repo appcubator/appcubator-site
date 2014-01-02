@@ -12,7 +12,16 @@
 {% endblock %}
 
 {% block topbar %}
+{% include "internal-menu.html" %}
+{% endblock %}
+
+{% block page %}
+<div id="app-content">
 {% include "app-navbar.html" %}
+{% block app-content%}
+
+{% endblock %}
+</div>
 {% endblock %}
 
 {% block overlay-page %}

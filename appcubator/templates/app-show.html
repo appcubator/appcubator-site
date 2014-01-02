@@ -3,15 +3,12 @@
 {% block css %}
 {% endblock %}
 
-{% block topbar %}
-{% include "internal-menu.html" %}
-{% include "app-navbar.html" %}
+
+{% block app-content%}
+<div id="main-container">
+</div>
 {% endblock %}
 
-{% block page %}
-  <div id="main-container">
-  </div>
-{% endblock %}
 
 {% block templates %}
   {% include "app-page-templates.html" %}

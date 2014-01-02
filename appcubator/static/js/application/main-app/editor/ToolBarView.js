@@ -74,9 +74,9 @@ define(function(require, exports, module) {
             v1State.get('pages').push(pageModel);
 
             var self = this;
-            v1.save(null, function() {
-                $('#page-list').append('<li class="go-to-page" id="page-' + pageInd + '"><a>' + name + '</a></li>');
-                util.scrollToBottom($('#page-list'));
+            v1.currentApp.save(null, function() {
+                this.$el.find('#page-list').append('<li class="go-to-page" id="page-' + pageInd + '"><a>' + name + '</a></li>');
+                util.scrollToBottom(this.$el.find('#page-list'));
             });
         },
 

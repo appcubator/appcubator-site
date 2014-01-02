@@ -46,7 +46,7 @@ function() {
       div.style.top = '0';
       div.style.left = '0';
       div.style.backgroundColor = '#222';
-      div.style.opacity = '0.6';
+      div.style.opacity = '0.7';
       div.style.zIndex = 3000;
       this.bodyEl.appendChild(div);
 

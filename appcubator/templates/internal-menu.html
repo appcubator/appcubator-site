@@ -19,10 +19,12 @@
       <li id="menu-community"><a href="/community/">COMMUNITY</a></li>
       {% if user.is_authenticated %}
       <li><a href="/app/">GARAGE</a></li>
+      <li><a href="/app/" class="account-icon"></a></li>
       {% else %}
       <li><a class="login-button" href="/login/">LOGIN</a></li>
       <li><a class="signup-button" href="/signup/">SIGNUP</a></li>
       {% endif %}      
+
     </ul>
     <form class="login-form" method="post" action="{% url django.contrib.auth.views.login %}" style="display:none;">
       {% csrf_token %}

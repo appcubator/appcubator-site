@@ -1,161 +1,128 @@
-define([
-        'collections/TableCollection',
-        'models/UserTableModel',
-        'models/TableModel',
-        'app/entities/ShowDataView',
-        'app/entities/UserTableView',
-        'app/entities/TablesView',
-        'app/entities/CreateRelationView',
-        'app/entities/RelationsView',
-        'app/entities/TableView',
-        'mixins/ErrorDialogueView',
-        'util'
-    ],
+define(function(require, exports, module) {
 
-    function(TableCollection,
-        UserTableModel,
-        TableModel,
-        ShowDataView,
-        UserTableView,
-        TablesView,
-        CreateRelationView,
-        RelationsView,
-        TableView,
-        ErrorDialogueView) {
+    'use strict';
 
-        var EntitiesView = Backbone.View.extend({
-            title: 'Tables',
-            className: 'entities-view',
-            events: {
-                'click .table-name' : 'clickedTableName'
-            },
-            subviews: [],
+    var UserTableModel = require('models/UserTableModel');
+    var TableModel = require('models/TableModel');
+    require('util');
+    require('mixins/BackboneDropdownView');
 
-            initialize: function() {
-                _.bindAll(this);
-                this.subviews = [this.tablesView, this.userTablesView, this.relationsView, this.createRelationView];
-                this.collection = v1State.get('tables');
+    var EntitiesView = Backbone.DropdownView.extend({
+        title: 'Tables',
+        className: 'entities-view',
+        events: {
+            'click .table-name': 'clickedTableName'
+        },
+        subviews: [],
+
+        initialize: function() {
+            _.bindAll(this);
+            this.subviews = [this.tablesView, this.userTablesView, this.relationsView, this.createRelationView];
+            this.collection = v1State.get('tables');
 
 
-                this.listenTo(this.collection, 'add', this.renderTable);
+            this.listenTo(this.collection, 'add', this.renderTable);
 
-                this.title = "Tables";
-            },
+            this.title = "Tables";
+        },
 
-            render: function() {
+        render: function() {
 
-                this.$el.html(_.template(util.getHTML('entities-page'), {}));
-                this.renderTables();
-                // this.renderRelations();
+            this.$el.html(_.template(util.getHTML('entities-page'), {}));
+            this.renderTables();
+            // this.renderRelations();
 
-                var addTableBtn = document.createElement('div');
-                addTableBtn.id = 'add-entity';
-                addTableBtn.innerHTML = '<span class="box-button">+ Create Table</span>';
-                
-                var createTableBox = new Backbone.NameBox({}).setElement(addTableBtn).render();
-                createTableBox.on('submit', this.createTable);
-                this.subviews.push(createTableBox);
+            var addTableBtn = document.createElement('div');
+            addTableBtn.id = 'add-entity';
+            addTableBtn.innerHTML = '<span class="box-button">+ Create Table</span>';
 
-                this.$el.append(addTableBtn);
+            var createTableBox = new Backbone.NameBox({}).setElement(addTableBtn).render();
+            createTableBox.on('submit', this.createTable);
+            this.subviews.push(createTableBox);
 
-                $('.menu-app-entities').on('click', this.toggle);
-                return this;
-            },
+            this.$el.append(addTableBtn);
+            return this;
+        },
 
-            renderTables: function() {
-                this.collection.each(this.renderTable);
-                //this.$('#users').append(this.userTablesView.render().el);
-            },
+        renderTables: function() {
+            this.collection.each(this.renderTable);
+            //this.$('#users').append(this.userTablesView.render().el);
+        },
 
-            renderTable: function(tableModel) {
-                this.$el.find('#list-tables').append('<li class="table-name" id="table-'+ tableModel.cid+'">' + tableModel.get('name') + '</li>');
-            },
+        renderTable: function(tableModel) {
+            this.$el.find('#list-tables').append('<li class="table-name" id="table-' + tableModel.cid + '">' + tableModel.get('name') + '</li>');
+        },
 
-            clickedTableName: function(e) {
-                var cid = String(e.currentTarget.id).replace('table-','');
-                var tableModel = v1State.get('tables').get(cid);
-                var tableView = new TableView(tableModel);
-                tableView.render();
-                // this.el.appendChild(tableView.render().el);
-            },
+        clickedTableName: function(e) {
+            var cid = String(e.currentTarget.id).replace('table-', '');
+            var tableModel = v1State.get('tables').get(cid);
+            var tableView = new TableView(tableModel);
+            tableView.render();
+            // this.el.appendChild(tableView.render().el);
+        },
 
-            renderRelations: function() {
-                //util.get('relations').appendChild(this.createRelationView.render().el);
-                //util.get('relations').appendChild(this.relationsView.render().el);
-            },
+        renderRelations: function() {
+            //util.get('relations').appendChild(this.createRelationView.render().el);
+            //util.get('relations').appendChild(this.relationsView.render().el);
+        },
 
-            createUserRole: function(val) {
-                //force user role names to be singular
-                var name = util.singularize(val);
+        createUserRole: function(val) {
+            //force user role names to be singular
+            var name = util.singularize(val);
 
-                var elem = new UserTableModel({
-                    name: name
-                });
+            var elem = new UserTableModel({
+                name: name
+            });
 
-                if(v1State.get('tables').findWhere({name: name})) {
-                    v1State.get('users').trigger('duplicate', "name");
-                    return;
-                }
-
-                v1State.get('users').push(elem);
-                return elem;
-            },
-
-
-            createTable: function(val) {
-                //force table names to be singular
-                var name = util.singularize(val);
-
-                var elem = new TableModel({
-                    name: name,
-                    fields: []
-                });
-
-                if(v1State.get('users').findWhere({name: name})) {
-                    v1State.get('tables').trigger('duplicate', "name");
-                    return;
-                }
-
-                v1State.get('tables').push(elem);
-                return elem;
-            },
-
-            showCreateRelationForm: function() {
-                var self = this;
-                this.createRelationView.$el.fadeIn('fast');
-                util.scrollToElement(self.$('#new-relation'));
-            },
-
-            scrollToRelation: function(e) {
-                e.preventDefault();
-                var hash = e.currentTarget.hash;
-                if (hash === '#relation-new') {
-                    this.showCreateRelationForm();
-                    return;
-                }
-                util.scrollToElement($(hash));
-            },
-
-            toggle: function() {
-                if(this.expanded) {
-                    this.hide();
-                }
-                else {
-                    this.show();
-                }
-            },
-
-            show: function() {
-                this.$el.addClass('expanded');
-                this.expanded = true;
-            },
-
-            hide: function() {
-                this.$el.removeClass('expanded');
-                this.expanded = false;
+            if (v1State.get('tables').findWhere({
+                name: name
+            })) {
+                v1State.get('users').trigger('duplicate', "name");
+                return;
             }
-        });
 
-        return EntitiesView;
+            v1State.get('users').push(elem);
+            return elem;
+        },
 
+
+        createTable: function(val) {
+            //force table names to be singular
+            var name = util.singularize(val);
+
+            var elem = new TableModel({
+                name: name,
+                fields: []
+            });
+
+            if (v1State.get('users').findWhere({
+                name: name
+            })) {
+                v1State.get('tables').trigger('duplicate', "name");
+                return;
+            }
+
+            v1State.get('tables').push(elem);
+            return elem;
+        },
+
+        showCreateRelationForm: function() {
+            var self = this;
+            this.createRelationView.$el.fadeIn('fast');
+            util.scrollToElement(self.$('#new-relation'));
+        },
+
+        scrollToRelation: function(e) {
+            e.preventDefault();
+            var hash = e.currentTarget.hash;
+            if (hash === '#relation-new') {
+                this.showCreateRelationForm();
+                return;
+            }
+            util.scrollToElement($(hash));
+        }
     });
+
+    return EntitiesView;
+
+});

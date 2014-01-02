@@ -97,6 +97,8 @@ define(function(require, exports, module) {
         },
 
         display: function() {
+            if(!this.model) return;
+            
             this.filleContent();
             this.show();
         },

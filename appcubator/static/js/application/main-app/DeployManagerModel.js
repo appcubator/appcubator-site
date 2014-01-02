@@ -12,7 +12,7 @@ define(function(require, exports, module) {
 		lastDeploy : null,
 		disableSave: false,
 
-		initialize: function (argument) {
+		initialize: function (appId) {
             _.bindAll(this);
             this.deployUrl = '/app/' + appId + '/deploy/';
 		},

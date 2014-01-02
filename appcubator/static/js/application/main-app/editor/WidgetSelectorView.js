@@ -33,7 +33,7 @@ define(function(require, exports, module) {
             var self = this;
             this.widgetsCollection = widgetsCollection;
             this.listenTo(this.widgetsCollection, 'add', this.bindWidget, true);
-            this.widgetEditorView = v1.view.widgetEditorView;
+            this.widgetEditorView = v1.currentApp.view.widgetEditorView;
             this.widgetEditorView.isMobile = self.isMobile;
 
             this.widgetsCollection.each(function(widget) {

@@ -3,7 +3,6 @@ define(function(require, exports, module) {
     'use strict';
 
     var PageModel = require('models/PageModel');
-    var TableCollection = require('collections/TableCollection');
     var UrlView = require('app/pages/UrlView');
     var SimpleModalView = require('mixins/SimpleModalView');
     var ErrorModalView = require('mixins/ErrorModalView');
@@ -20,8 +19,6 @@ define(function(require, exports, module) {
     var DeployView = require('app/DeployView');
     var RedoController = require('app/RedoController');
     var CSSEditorView = require('app/css-editor/CSSEditorView');
-
-    var EntitiesView = require('app/entities/EntitiesView');
 
     require('jquery-ui');
     require('mixins/BackboneConvenience');
@@ -51,9 +48,17 @@ define(function(require, exports, module) {
                 pageId = options.pageId;
             }
 
-            this.model = v1State.get('pages').models[pageId];
+            this.appModel = options.appModel;
+            console.log(options);
+            console.log(this.appModel);
+
+            this.model = this.appModel.get('pages').models[pageId];
+            
             v1State.currentPage = this.model;
+            this.appModel.currentPage = this.model;
             v1State.isMobile = false;
+            this.appModel.isMobile = false;
+
 
             this.widgetsCollection = this.model.get('uielements');
 
@@ -65,8 +70,6 @@ define(function(require, exports, module) {
             this.redoController = new RedoController();
             this.widgetEditorView = new WidgetEditorView();
             v1.widgetEditorView = this.WidgetEditorView;
-
-            this.entitiesView = new EntitiesView();
 
             keyDispatcher.bindComb('meta+z', this.redoController.undo);
             keyDispatcher.bindComb('ctrl+z', this.redoController.undo);
@@ -115,6 +118,8 @@ define(function(require, exports, module) {
             var iframe = document.getElementById('page');
             this.iframe = iframe;
 
+            console.log(iframe);
+
             this.setupPageWrapper();
             this.setupPageHeightBindings();
 
@@ -142,7 +147,6 @@ define(function(require, exports, module) {
             });
 
             this.$pageContainer = this.$el.find('.page-container');
-            this.el.appendChild(this.entitiesView.render().el);
             return this;
         },
 
