@@ -57,12 +57,11 @@ require([
   "designer-app/ThemeEditView",
   'models/ThemeModel',
   "editor/KeyDispatcher",
-  "app/GarageView",
   "mixins/BackboneConvenience",
   "bootstrap",
   "ace"
 ],
-function(ThemeEditView, ThemeModel, KeyDispatcher, GarageView) {
+function(ThemeEditView, ThemeModel, KeyDispatcher) {
 
   keyDispatcher  = new KeyDispatcher();
   var themeModel = new ThemeModel(themeState);
@@ -80,9 +79,6 @@ function(ThemeEditView, ThemeModel, KeyDispatcher, GarageView) {
     initialize: function() {
       _.bindAll(this);
       document.addEventListener("touchstart", function(){}, true);
-
-      this.garageView = new GarageView();
-      $('.garage-toggle').on('click', this.garageView.show);
     },
 
     showElement: function(appId, elementName) {

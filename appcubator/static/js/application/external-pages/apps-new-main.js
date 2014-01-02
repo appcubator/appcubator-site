@@ -27,11 +27,9 @@ require.config({
 
 require([
         'jquery',
-        '../main-app/GarageView',
-        '../main-app/WorldView',
         'util'
     ],
-    function($, GarageView, WorldView) {
+    function($) {
 
         var currentTemplate = null;
 
@@ -69,16 +67,5 @@ require([
         }, function() {
             $('#mascot').removeClass('happy');
         });
-
-        this.worldView = new WorldView();
-
-        // if (appId !== 0) {
-            this.garageView = new GarageView();
-            $('.garage-toggle').on('click', this.garageView.toggle);
-            $('.garage-toggle').on('click', this.worldView.hide);
-            $('.world-toggle').on('click', this.garageView.hide);
-        // }
-
-        $('.world-toggle').on('click', this.worldView.toggle);
 
     });

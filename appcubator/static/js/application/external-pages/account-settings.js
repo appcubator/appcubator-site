@@ -32,10 +32,9 @@ require.config({
 
 require([
   'app/Striper',
-  '../main-app/WorldView',
   'bootstrap'
 ],
-function(Striper, WorldView) {
+function(Striper) {
 
   var PaymentsMain = function() {
     var striper = new Striper();
@@ -67,9 +66,6 @@ function(Striper, WorldView) {
     $('#add-key-btn').hide();
     $('#add-key-panel').fadeIn();
   });
-
-  var worldView = new WorldView();
-  $('.world-toggle').on('click', worldView.toggle);
 
   // @ksikka's code
   $(document).ready(function() {

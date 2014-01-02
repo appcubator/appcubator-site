@@ -127,10 +127,6 @@ define(function(require, exports, module) {
 
             $('#loading-gif').fadeOut().remove();
 
-            if (v1.worldView) {
-                $('.world-toggle.menu-button').on('click', v1.worldView.toggle);
-            }
-
             $('.left-buttons').tooltip({
                 position: {
                     my: "left+10 center",

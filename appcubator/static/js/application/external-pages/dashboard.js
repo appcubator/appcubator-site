@@ -39,12 +39,10 @@ require.config({
 
 require([
         'app/OverviewPageView',
-        '../main-app/GarageView',
-        '../main-app/WorldView',
         'util',
         'backbone'
 ],
-function(OverviewPageView, GarageView, WorldView) {
+function(OverviewPageView) {
 
     var DashboardsView = Backbone.View.extend({
         el: document.getElementById('dashboards'),
@@ -60,8 +58,6 @@ function(OverviewPageView, GarageView, WorldView) {
 
         render: function() {
 
-            this.worldView = new WorldView();
-            $('.world-toggle').on('click', this.worldView.toggle);
             this.dashboardView = new OverviewPageView({ appId: initAppId });
             this.dashboardView.setElement(document.getElementById('dashboard-' + initAppId)).render();
 
