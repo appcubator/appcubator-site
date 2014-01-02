@@ -18,7 +18,7 @@
       {% if errors %}
       <div class="error-content">
       <br>
-      {% for k, v in errors.items %}
+      {% for k, values in errors.items %}
           {% for val in values %}
           {{ val }}<br>
           {% endfor %}

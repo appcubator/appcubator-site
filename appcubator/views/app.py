@@ -208,7 +208,7 @@ def new(request, is_racoon = False, app_template=None):
 
             return redirect(user_page, request.user.username)
 
-        return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'other_errors': form.non_field_errors, 'errors': form.errors}, status=400)
+        return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'other_errors': form.non_field_errors, 'errors': dict(form.errors)}, status=400)
     else:
         return HttpResponse(status=405)
 
