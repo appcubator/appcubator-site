@@ -1,6 +1,8 @@
 import os, os.path
 import re
 
+DEBUG=True
+TEMPLATE_DEBUG=DEBUG
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 PROJECT_ROOT_PATH = BASE_DIR
