@@ -280,10 +280,7 @@ class TempDeployment(RandomPrimaryIdModel):
         return tmp_project_dir
 
     def hostname(self):
-        if not settings.PRODUCTION: # debug and staging
-            return "%s.staging.appcubator.com" % self.subdomain
-        else:
-            return "%s.appcubator.com" % self.subdomain
+        return "%s.%s" % (self.subdomain, settings.DEPLOYMENT_DOMAIN)
 
     def url(self):
         return "http://%s/" % self.hostname()
@@ -648,10 +645,7 @@ class App(models.Model):
     def hostname(self):
         if self.custom_domain is not None:
             return self.custom_domain
-        if not settings.PRODUCTION: # debug and staging
-            return "%s.staging.appcubator.com" % self.subdomain
-        else:
-            return "%s.appcubator.com" % self.subdomain
+        return "%s.%s" % (self.subdomain, settings.DEPLOYMENT_DOMAIN)
 
     def url(self):
         return "http://%s/" % self.hostname()
