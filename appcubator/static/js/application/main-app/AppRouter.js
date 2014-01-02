@@ -16,7 +16,7 @@ define(function(require, exports, module) {
             "app/:appid/tables/*tutorial"      : "tables",
             "app/:appid/gallery/*tutorial"     : "themes",
             "app/:appid/pages/*tutorial"       : "pages",
-            "app/:appid/page/:pageid/"         : "editor",
+            "app/:appid/page/:pageid/"         : "appmain",
             "app/:appid/plugins/*tutorial"     : "plugins",
             "app/:appid/mobile-editor/:pageid/": "mobileEditor",
             "app/:appid/emails/*tutorial"      : "emails",

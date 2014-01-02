@@ -5,6 +5,8 @@ define(function(require, exports, module) {
     var DeployManagerModel = require('./DeployManagerModel');
     var ToolBarView = require('editor/ToolBarView');
     var EditorView = require('editor/EditorView');
+    var PluginsView = require('app/PluginsView');
+
 
     var SoftErrorView = require("app/SoftErrorView");
     var EntitiesView = require('app/entities/EntitiesView');
@@ -14,7 +16,7 @@ define(function(require, exports, module) {
 
         events: {
             'click #save': 'save',
-            'click #left-menu-toggle': 'toggleLeftMenu',
+            'click #left-menu-toggle': 'toggleTopMenu',
             'click #deploy': 'deployApp'
         },
 
@@ -52,15 +54,14 @@ define(function(require, exports, module) {
             var mainContainer = document.getElementById('main-container');
             mainContainer.appendChild(cleanDiv);
 
-            console.log(this.model);
-            this.view = new EditorView({ pageId : pageId, appModel: this.model });
+            this.view = new EditorView({ pageId : 0, appModel: this.model });
             this.view.setElement(cleanDiv).render();
-            
-            console.log(this.el);
-            console.log(this.entitiesView.el);
 
+            this.toolBar.setPage(this.pageId);
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
             this.el.appendChild(this.entitiesView.render().el);
+            
+            this.changePage(EditorView, { pageId: this.pageId, appModel: this.model }, "", function() {});
 
             $("html, body").animate({
                 scrollTop: 0
@@ -121,11 +122,14 @@ define(function(require, exports, module) {
         page: function(pageId) {
             if(pageId == this.pageId) return;
             if (!pageId) pageId = 0;
+            
             var self = this;
 
+            this.pageId = pageId;
             self.tutorialPage = "Editor";
             self.tutorialPage = "Introduction";
-            self.changePage(EditorView, { pageId: pageId }, "", function() {});
+            self.changePage(EditorView, { pageId: pageId, appModel: this.model }, "", function() {});
+            this.toolBar.setPage(this.pageId);
             self.trigger('editor-loaded');
             olark('api.box.hide');
         },
@@ -162,13 +166,14 @@ define(function(require, exports, module) {
             this.view = new NewView(options);
             this.view.setElement(cleanDiv).render();
 
-            v1.changeTitle(this.view.title);
+            //v1.changeTitle(this.view.title);
 
             $("html, body").animate({
                 scrollTop: 0
             });
             $('.page').fadeIn();
             post_render.call();
+            
             if (tutorial && tutorial === 'tutorial/') {
                 this.showTutorial();
             } else if (tutorial) {
@@ -357,24 +362,22 @@ define(function(require, exports, module) {
             return false;
         },
 
-        toggleLeftMenu: function() {
-            var self = this;
-            if (this.menuExpanded) {
-                $('#tool-bar').removeClass('open');
-                $('#main-container').removeClass('open');
-                this.menuExpanded = false;
-                $('#main-container').off('click', function() {
-                    self.toggleLeftMenu();
-                });
-            } else {
+        toggleTopMenu: function() {
+            return (this.menuExpanded ? this.hideTopMenu : this.expandTopMenu)();
+        },
+
+        expandTopMenu: function() {
                 $('#tool-bar').addClass('open');
                 $('#main-container').addClass('open');
                 this.menuExpanded = true;
+                $('#main-container').on('click', this.hideTopMenu);
+        },
 
-                $('#main-container').on('click', function() {
-                    self.toggleLeftMenu();
-                });
-            }
+        hideTopMenu: function() {
+                $('#tool-bar').removeClass('open');
+                $('#main-container').removeClass('open');
+                this.menuExpanded = false;
+                $('#main-container').off('click', this.hideTopMenu);
         },
 
         download: function(callback) {

@@ -151,6 +151,7 @@ define(function(require, exports, module) {
         },
 
         renderIFrameContent: function(proxy) {
+            console.log("RENDERED");
             var self = this;
             var iframe = document.getElementById('page');
             innerDoc = iframe.contentDocument || iframe.contentWindow.document;
