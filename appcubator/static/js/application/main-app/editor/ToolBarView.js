@@ -28,18 +28,24 @@ define(function(require, exports, module) {
 
         },
 
+        setPage: function(pageId) {
+            this.pageId = pageId;
+            this.render();
+        },
+
         render: function() {
-            if(pageId > 0) {
-                util.get('current-page').innerHTML = v1State.get('pages').models[pageId].get('name');
+            if(this.pageId >= 0) {
+                util.get('current-page').innerHTML = v1State.get('pages').models[this.pageId].get('name');
             }
             else {
                 util.get('current-page').innerHTML = "Pages";
             }
             
             this.pageList = util.get('page-list');
+            this.pageList.innerHTML = '';
 
             v1State.get('pages').each(function(page, ind) {
-                if (pageId == ind) return;
+                if (this.pageId == ind) return;
                 this.renderPageItem(ind, page.get('name'));
             }, this);
 
