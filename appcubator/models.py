@@ -21,10 +21,6 @@ import shutil
 from utils import RandomPrimaryIdModel
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_app_state, get_default_uie_state, get_default_mobile_uie_state
 
-from app_builder.analyzer import App as AnalyzedApp # avoid conflict w site App
-from app_builder.controller import create_codes
-from app_builder.coder import Coder, write_to_fs
-
 import deploy
 
 from django.conf import settings

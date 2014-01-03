@@ -5,6 +5,13 @@ import os
 import tarfile
 logger = logging.getLogger(__name__)
 
+
+from deis import DeisClient
+
+"""
+TODO replace with a deis implementation
+"""
+
 class DeploymentError(Exception):
     """Should be raised whenever the deployment server does not return 200"""
     pass
