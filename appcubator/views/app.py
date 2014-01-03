@@ -30,9 +30,7 @@ from appcubator.models import DomainRegistration
 from appcubator.themes.models import StaticFile, UITheme
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
 from appcubator import forms
-
-# from codegen
-import app_builder.analyzer as analyzer
+from appcubator import codegen
 
 from django.conf import settings
 
@@ -415,7 +413,7 @@ def save_state(request, app, require_valid=True):
     if require_valid:
         try:
             app.parse_and_link_app_state()
-        except analyzer.UserInputError, e:
+        except codegen.UserInputError, e:
             app.save()
             d = e.to_dict()
             d['version_id'] = app.state.get('version_id', 0)
@@ -763,7 +761,7 @@ def app_zip(request, app_id):
     # AJAX this route to do validate (returns 200 or 409)
     try:
         app.parse_and_link_app_state()
-    except analyzer.UserInputError, e:
+    except codegen.UserInputError, e:
         d = e.to_dict()
         return JsonResponse(d, status=400)
 
@@ -793,7 +791,7 @@ def deploy(request, app_id):
             result['git_url'] = app.git_url()
             result['zip_url'] = reverse('appcubator.views.app.app_zip', args=(app_id,))
             is_merge, data = app.deploy()
-        except analyzer.UserInputError, e:
+        except codegen.UserInputError, e:
             d = e.to_dict()
             return JsonResponse(d, status=400)
 
