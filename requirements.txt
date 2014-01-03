@@ -31,10 +31,12 @@ django-stripe-payments==2.0b22
 pyyaml==3.10
 nltk==2.0.4
 cssutils==0.9.10
-
+django-threadedcomments==0.9.0
+django-countries
 
 mysql-python==1.2.4
 
-django-threadedcomments==0.9.0
-django-countries
 gunicorn==18.0
+eventlet==0.14.0
+
+deis==0.3.1
