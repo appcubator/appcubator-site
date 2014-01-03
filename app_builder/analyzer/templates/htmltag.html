@@ -1,8 +1,0 @@
-<{{ context.tagName }}
-    {%- if context.id_string %} id="{{ context.id_string }}"{% endif %}
-    {%- if context.class_string %} class="{{ context.class_string }}"{% endif %}
-    {%- if context.style_string %} style="{{ context.style_string }}"{% endif %}
-    {%- for attrib in context.attribs %} {{ attrib }}="{{ context.attribs[attrib]|safe }}"{% endfor %}
-    {%- if context.isSingle %}>{% else %}>{% if not context.has_content() %}</{{ context.tagName }}>{% else %}
-  {{ context.content()|indent(2)|safe  }}
-</{{ context.tagName }}>{% endif %}{% endif %}
