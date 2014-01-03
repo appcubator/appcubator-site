@@ -59,32 +59,6 @@ import logging
 logger = logging.getLogger('appcubator.models')
 
 
-class PubKey(models.Model):
-    user = models.ForeignKey(User, related_name="pubkeys")
-    pubkey = models.TextField(max_length=600)
-    name = models.CharField(max_length=40, default="unnamed")
-
-    # audit fields
-    created_on = models.DateTimeField(auto_now_add = True)
-    updated_on = models.DateTimeField(auto_now = True)
-
-    @classmethod
-    def sync_pubkeys_of_user(cls, user):
-        """
-        Calls to deployment server to sync this user's pubkeys.
-        Returns HttpResponse of deployment API
-        """
-        pubkeys = user.pubkeys.order_by('-created_on')
-        pubkeys_json = simplejson.dumps([p.pubkey for p in pubkeys])
-        gitrepo_names_json = simplejson.dumps([a.gitrepo_name for a in user.apps.exclude(deployment_id=None)])
-        r = requests.post("http://%s/user/%s/pubkeys/" % (settings.DEPLOYMENT_HOSTNAME, user.extradata.git_user_id()),
-            data={'public_keys': pubkeys_json,
-                  'gitrepo_names': gitrepo_names_json},
-            headers={'X-Requested-With': 'XMLHttpRequest'})
-        return r
-
-
-
 # ADDITIONAL USER DATA CAN BE STORED HERE
 class ExtraUserData(models.Model):
     user = models.OneToOneField(User, related_name="extradata")
@@ -100,9 +74,6 @@ class ExtraUserData(models.Model):
                 u.extradata
             except cls.DoesNotExist:
                 cls(user=u, noob=0).save()
-
-    def git_user_id(self): # TODO fix in staging and dev case. (unique on id, hostname)
-        return "user%d" % self.user.id
 
 from django.db.models.signals import post_save
 
@@ -228,8 +199,7 @@ class TempDeployment(RandomPrimaryIdModel):
 
     def delete_deployment(self):
         if self.deployment_id is not None:
-            r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
-            return r
+            pass # TODO implement
 
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:
@@ -257,15 +227,12 @@ class TempDeployment(RandomPrimaryIdModel):
         css_string = t.render(context)
         return css_string
 
-    def get_deploy_data(self, git_user=None):
+    def get_deploy_data(self):
         post_data = {
             "hostname": self.hostname(),
-            "gitrepo_name": self.subdomain,
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
-        if git_user is not None:
-            post_data['user_id'] = git_user
         return post_data
 
     def write_to_tmpdir(self):
@@ -284,9 +251,6 @@ class TempDeployment(RandomPrimaryIdModel):
 
     def url(self):
         return "http://%s/" % self.hostname()
-
-    def git_url(self):
-        return "git@%s:%s.git" % (settings.DEPLOYMENT_HOSTNAME, "thisdoesntexist")
 
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
@@ -339,7 +303,6 @@ class App(models.Model):
     # cached deployment info
     subdomain = models.CharField(max_length=50, blank=True, unique=True)
     custom_domain = models.CharField(max_length=50, blank=True, null=True, unique=True, default=None) # if this is None, then the person is not using custom domain.
-    gitrepo_name = models.CharField(max_length=50, blank=True, unique=True)
 
     # set on save and deploy calls.
     error_type = models.IntegerField(default=0)
@@ -393,13 +356,12 @@ class App(models.Model):
     def __init__(self, *args, **kwargs):
         super(App, self).__init__(*args, **kwargs)
         self._original_subdomain = self.subdomain
-        self._original_gitrepo_name = self.gitrepo_name
         self._original_custom_domain = self.custom_domain
 
     def update_deployment_info(self):
         # calls method outside of this class
         if self.deployment_id is not None:
-            r = deploy.update_deployment_info(self.deployment_id, self.hostname(), self.gitrepo_name)
+            r = deploy.update_deployment_info(self.deployment_id, self.hostname())
         return r
 
     def get_deployment_status(self):
@@ -424,7 +386,7 @@ class App(models.Model):
 
     def save(self, increment_version_if_changed=True, update_deploy_server=True, log_state_if_changed=True, *args, **kwargs):
         """
-        If the deployment info (subdomain and gitrepo name) were changed since init,
+        If the deployment info (subdomain) were changed since init,
         this will POST to the deployment server to update it.
         There for it may raise a DeploymentError
         """
@@ -443,7 +405,7 @@ class App(models.Model):
 
         # update the deployment info on the server if it changed.
         if update_deploy_server and self.deployment_id is not None:
-            if self._original_subdomain != self.subdomain or self._original_gitrepo_name != self.gitrepo_name or self._original_custom_domain != self.custom_domain:
+            if self._original_subdomain != self.subdomain or self._original_custom_domain != self.custom_domain:
 
                 # update call to deployment server
                 try:
@@ -466,19 +428,6 @@ class App(models.Model):
             subdomain = subdomain[-min(len(subdomain), 40):] # take the last min(40, len subdomain) chars.
 
         return subdomain
-
-    @classmethod
-    def provision_gitrepo_name(cls, gitrepo_name):
-        gitrepo_name = clean_subdomain(gitrepo_name, replace_periods=True)
-
-        # prevent duplicate gitrepo_names
-        while cls.objects.filter(gitrepo_name__iexact=gitrepo_name).exists():
-            gitrepo_name += str(random.randint(1,9))
-
-            # the above process may have caused string to grow, so trim if too long
-            gitrepo_name = gitrepo_name[-min(len(gitrepo_name), 40):] # take the last min(40, len gitrepo_name) chars.
-
-        return gitrepo_name
 
     @classmethod
     def provision_app_name(cls, app_name, user_id):
@@ -509,10 +458,8 @@ class App(models.Model):
     def clone(self):
         new_app_name = App.provision_app_name(self.name, self.owner_id)
         new_subdomain = App.provision_subdomain(self.name)
-        new_gitrepo_name = App.provision_gitrepo_name(self.name)
         cloned_app = App(name=new_app_name,
                          subdomain=new_subdomain,
-                         gitrepo_name=new_gitrepo_name,
                          owner=self.owner)
         cloned_app.save()
         from plugins.models import copy_provider_data
@@ -608,11 +555,6 @@ class App(models.Model):
             simplejson.loads(self._uie_state_json)
         except simplejson.JSONDecodeError, e:
             raise ValidationError(e.msg)
-        # Initial gitrepo name value. gets called on new app.
-        if self.gitrepo_name == '':
-            self.gitrepo_name = "%s-%s" % (self.owner.email.split('@')[0], self.name)
-        if self.gitrepo_name != clean_subdomain(self.gitrepo_name, replace_periods=True):
-            self.gitrepo_name = App.provision_gitrepo_name(self.gitrepo_name)
 
     def write_to_tmpdir(self):
         app = self.parse_and_link_app_state()
@@ -649,9 +591,6 @@ class App(models.Model):
 
     def url(self):
         return "http://%s/" % self.hostname()
-
-    def git_url(self):
-        return "git@%s:%s.git" % (settings.DEPLOYMENT_HOSTNAME, self.gitrepo_name)
 
     def zip_bytes(self):
         tmpdir = self.write_to_tmpdir()
@@ -716,22 +655,19 @@ class App(models.Model):
         print "PLUGIN DATA: ", provider_map
         return provider_map
 
-    def get_deploy_data(self, git_user=None):
+    def get_deploy_data(self):
         post_data = {
             "hostname": self.hostname(),
-            "gitrepo_name": self.gitrepo_name,
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
-        if git_user is not None:
-            post_data['user_id'] = git_user
         return post_data
 
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
         try:
             logger.info("Deployed to %s" % tmpdir)
-            is_merge, data = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404, git_user=self.owner.extradata.git_user_id())
+            is_merge, data = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404)
             if not is_merge:
                 self.deployment_id = data
                 self.save() # might be unnecessary if nothing has changed.
@@ -747,8 +683,7 @@ class App(models.Model):
 
     def delete_deployment(self):
         if self.deployment_id is not None:
-            r = requests.delete("http://%s/deployment/%d/" % (settings.DEPLOYMENT_HOSTNAME, self.deployment_id), headers={'X-Requested-With': 'XMLHttpRequest'})
-            return r
+            pass # TODO implement
 
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:
