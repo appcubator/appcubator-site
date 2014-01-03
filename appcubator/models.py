@@ -232,6 +232,7 @@ class TempDeployment(RandomPrimaryIdModel):
         return post_data
 
     def write_to_tmpdir(self):
+        """ old code:
         app = AnalyzedApp.create_from_dict(self.state)
 
         app.api_key = "sljlfksjdflsjdlfkjsdlkfjlsdk"
@@ -241,6 +242,10 @@ class TempDeployment(RandomPrimaryIdModel):
         tmp_project_dir = write_to_fs(coder, css=self.css())
 
         return tmp_project_dir
+        """
+        r = requests.post("/compile", data=simplejson.stringify(self.state))
+        # TODO write the stuff from r.json() to disk
+        raise Exception("TODO implement me")
 
     def hostname(self):
         return "%s.%s" % (self.subdomain, settings.DEPLOYMENT_DOMAIN)
@@ -553,6 +558,14 @@ class App(models.Model):
             raise ValidationError(e.msg)
 
     def write_to_tmpdir(self):
+        """TODO
+        get the code by POST to codegen web service
+        write out to a tar
+        return directory of the tar
+        """
+
+        """
+        old code:
         app = self.parse_and_link_app_state()
 
         app.api_key = self.api_key
@@ -569,8 +582,11 @@ class App(models.Model):
             raise
 
         return tmp_project_dir
+        """
+        raise Exception("TODO implement me")
 
     def parse_and_link_app_state(self):
+        """TODO DEPRECATE
         try:
             app = AnalyzedApp.create_from_dict(self.state, self.api_key)
         except Exception:
@@ -579,6 +595,13 @@ class App(models.Model):
         else:
             self.clear_error_record(src='compile')
             return app
+        """
+        # TODO Test me
+        r = requests.post("/expandAll", data=simplejson.stringify(self.state))
+        if r.status_code != 200:
+            self.record_compile_error(r.text)
+        else:
+            self.clear_error_record(src='compile')
 
     def hostname(self):
         if self.custom_domain is not None:
