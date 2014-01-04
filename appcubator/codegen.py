@@ -17,3 +17,12 @@ class UserInputError(Exception):
 
     def __str__(self):
         return "%s\nPath: %s" % (self.message, self,path)
+
+def expandOnce(generators, genref):
+    raise Exception("implement me bro")
+
+def expandAll(app):
+    raise Exception("implement me bro")
+
+def compile(app):
+    raise Exception("implement me bro")

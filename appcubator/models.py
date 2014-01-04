@@ -8,7 +8,6 @@ from simplejson import JSONDecodeError
 from django.contrib.auth.models import User
 
 import re
-import requests
 import simplejson
 import traceback
 from datetime import datetime, timedelta
@@ -243,8 +242,8 @@ class TempDeployment(RandomPrimaryIdModel):
 
         return tmp_project_dir
         """
-        r = requests.post("/compile", data=simplejson.stringify(self.state))
-        # TODO write the stuff from r.json() to disk
+        code_data = codegen.compileApp(self.state)
+        # TODO write the stuff from code_data to disk
         raise Exception("TODO implement me")
 
     def hostname(self):
@@ -558,50 +557,35 @@ class App(models.Model):
             raise ValidationError(e.msg)
 
     def write_to_tmpdir(self):
-        """TODO
-        get the code by POST to codegen web service
-        write out to a tar
-        return directory of the tar
-        """
+        self.parse_and_link_app_state()
 
-        """
-        old code:
-        app = self.parse_and_link_app_state()
-
-        app.api_key = self.api_key
+        # app.api_key = self.api_key
         try:
-            codes = create_codes(app,
-                        uid=self.uid(),
-                        email=self.owner.email,
-                        provider_data=self.get_plugin_data())
-            coder = Coder.create_from_codes(codes)
+            # TODO FIXME
+            #codes = create_codes(app,
+            #            uid=self.uid(),
+            #            email=self.owner.email,
+            #            provider_data=self.get_plugin_data())
+            #coder = Coder.create_from_codes(codes)
 
-            tmp_project_dir = write_to_fs(coder, css=self.css())
+            #tmp_project_dir = write_to_fs(coder, css=self.css())
+            code_data = codegen.compileApp(self.state)
+            # TODO write the stuff from code_data to disk
         except Exception:
             self.record_compile2_error(traceback.format_exc())
             raise
 
-        return tmp_project_dir
-        """
+        #return tmp_project_dir
         raise Exception("TODO implement me")
 
     def parse_and_link_app_state(self):
-        """TODO DEPRECATE
         try:
-            app = AnalyzedApp.create_from_dict(self.state, self.api_key)
-        except Exception:
+            app = codegen.expandAll(self.state)
+        except codegen.UserInputError, e:
             self.record_compile_error(traceback.format_exc())
-            raise
         else:
             self.clear_error_record(src='compile')
             return app
-        """
-        # TODO Test me
-        r = requests.post("/expandAll", data=simplejson.stringify(self.state))
-        if r.status_code != 200:
-            self.record_compile_error(r.text)
-        else:
-            self.clear_error_record(src='compile')
 
     def hostname(self):
         if self.custom_domain is not None:
