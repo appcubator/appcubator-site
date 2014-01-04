@@ -571,13 +571,13 @@ class App(models.Model):
 
             #tmp_project_dir = write_to_fs(coder, css=self.css())
             code_data = codegen.compileApp(self.state)
+            tmp_project_dir = codegen.write_to_tmpdir(code_data)
             # TODO write the stuff from code_data to disk
         except Exception:
             self.record_compile2_error(traceback.format_exc())
             raise
 
-        #return tmp_project_dir
-        raise Exception("TODO implement me")
+        return tmp_project_dir
 
     def parse_and_link_app_state(self):
         try:
@@ -671,7 +671,8 @@ class App(models.Model):
         tmpdir = self.write_to_tmpdir()
         try:
             logger.info("Deployed to %s" % tmpdir)
-            is_merge, data = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404)
+            #is_merge, data = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404)
+            is_merge, data = False, None
             if not is_merge:
                 self.deployment_id = data
                 self.save() # might be unnecessary if nothing has changed.
@@ -682,7 +683,9 @@ class App(models.Model):
             self.clear_error_record(src='deploy')
         finally:
             # because hard disk space doesn't grow on trees.
-            shutil.rmtree(tmpdir)
+            # TODO uncomment below once deployment is working
+            pass
+            #shutil.rmtree(tmpdir)
         return (is_merge, data)
 
     def delete_deployment(self):
