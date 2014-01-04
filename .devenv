@@ -15,4 +15,4 @@ export EMAIL_HOST_USER="maverickn"
 export EMAIL_HOST_PASSWORD="obscurepassword321"
 
 # codegen
-export CODEGEN_ADDR=127.0.0.1:3000
+export CODEGEN_ADDR=http://127.0.0.1:3000

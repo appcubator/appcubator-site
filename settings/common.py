@@ -293,4 +293,4 @@ DEPLOYMENT_HOSTNAME = os.environ["DEPLOYMENT_HOSTNAME"]
 DEPLOYMENT_DOMAIN = os.environ["DEPLOYMENT_DOMAIN"]
 
 # codegen service
-CODEGEN_ADDR = os.environ["CODEGEN_ADDR"] # ip:port format
+CODEGEN_ADDR = os.environ["CODEGEN_ADDR"] # ie, http://127.0.0.1:3000

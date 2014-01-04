@@ -1,3 +1,7 @@
+import requests
+from django.conf import settings
+import json
+
 
 # backwards compatibility
 class UserInputError(Exception):
@@ -19,10 +23,69 @@ class UserInputError(Exception):
         return "%s\nPath: %s" % (self.message, self,path)
 
 def expandOnce(generators, genref):
-    raise Exception("implement me bro")
+    r = requests.post(settings.CODEGEN_ADDR + '/expandOnce/', data=json.dumps([generators, genref]), headers={'Content-Type':'application/json'})
+    if r.status_code == 200:
+        return r.json()
+    else:
+        print r.status_code
+        print r.text
+        raise Exception("ruh roh")
+
+def expand(generators, genref):
+    r = requests.post(settings.CODEGEN_ADDR + '/expand/', data=json.dumps([generators, genref]), headers={'Content-Type':'application/json'})
+    if r.status_code == 200:
+        return r.json()
+    else:
+        print r.status_code
+        print r.text
+        raise Exception("ruh roh")
 
 def expandAll(app):
-    raise Exception("implement me bro")
+    r = requests.post(settings.CODEGEN_ADDR + '/expandAll/', data=json.dumps(app), headers={'Content-Type':'application/json'})
+    if r.status_code == 200:
+        return r.json()
+    else:
+        print r.status_code
+        print r.text
+        raise Exception("ruh roh")
 
 def compile(app):
-    raise Exception("implement me bro")
+    r = requests.post(settings.CODEGEN_ADDR + '/compile/', data=json.dumps(app), headers={'Content-Type':'application/json'})
+    if r.status_code == 200:
+        return r.json()
+    else:
+        print r.status_code
+        print r.text
+        raise Exception("ruh roh")
+
+import unittest
+
+
+class CodegenIntegrationTest(unittest.TestCase):
+
+    def test_expandOnce(self):
+        genref = {'generate': 'routes.staticpage', 'data': {'templateName':'Homepage'}}
+        route = expandOnce([], genref)
+        self.assertIn('code', route)
+
+    def test_expand(self):
+        generators = {'testing': {
+                        'testing': [{"name":"testing",
+                                   "version":"0.1",
+                                   "code":"""function(){return {generate:'testing.testing.testing2', data:null};}""",
+                                   "templates":{},
+                                },{"name":"testing2",
+                                   "version":"0.1",
+                                   "code":"function(){return 'success';}",
+                                   "templates":{},
+                                }] } }
+        genref = {'generate': 'testing.testing.testing', 'data': {'templateName':'Homepage'}}
+        result = expand(generators, genref)
+        self.assertEqual(result, 'success')
+
+    def test_expandAll(self):
+        from appcubator.default_data import get_default_app_state
+        sampleApp = json.loads(get_default_app_state())
+        app = expandAll(sampleApp)
+
+
