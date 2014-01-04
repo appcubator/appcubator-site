@@ -27,10 +27,6 @@ import re
 import os, os.path
 join = os.path.join
 
-# codegen
-import app_builder.analyzer as analyzer
-from app_builder.analyzer import App as AnalyzedApp
-
 def JsonResponse(serializable_obj, **kwargs):
     """Just a convenience function, in the middle of horrible code"""
     return HttpResponse(simplejson.dumps(serializable_obj), mimetype="application/json", **kwargs)
@@ -320,6 +316,8 @@ def temp_deploy(request):
     if request.method == 'GET':
         return HttpResponse(simplejson.dumps({ 'status': td.get_deployment_status() }), mimetype="application/json")
     elif request.method == 'POST':
+        # TODO Fix temp deployment
+        """
         old_state = td._state_json
         td._state_json = request.POST['app_state']
 
@@ -334,6 +332,10 @@ def temp_deploy(request):
         td._state_json = old_state
         td.save()
         d = {"site_url": td.url(), "git_url": td.git_url(), "zip_url": ""}
+        """
+        d = {"site_url": "notyetimplemented.com",
+             "git_url": "notyetimplemented.com",
+             "zip_url": "notyetimplemented.com"}
         return HttpResponse(simplejson.dumps(d), mimetype="application/json")
 
 @require_GET

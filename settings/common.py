@@ -196,10 +196,6 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
-        'app_builder': {
-            'handlers': ['console'],
-            'level': 'ERROR'
-        },
         'appcubator': {
             'handlers': ['console'],
             'level': 'DEBUG'

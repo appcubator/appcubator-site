@@ -21,9 +21,6 @@ import simplejson
 import os, os.path
 join = os.path.join
 
-# from codegen
-import app_builder.analyzer as analyzer
-
 from django.conf import settings
 
 
