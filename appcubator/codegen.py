@@ -20,7 +20,7 @@ class UserInputError(Exception):
         return self.__str__()
 
     def __str__(self):
-        return "%s\nPath: %s" % (self.message, self,path)
+        return "%s\nPath: %s" % (self.message, self.path)
 
 def expandOnce(generators, genref):
     r = requests.post(settings.CODEGEN_ADDR + '/expandOnce/', data=json.dumps([generators, genref]), headers={'Content-Type':'application/json'})
@@ -49,7 +49,7 @@ def expandAll(app):
         print r.text
         raise Exception("ruh roh")
 
-def compile(app):
+def compileApp(app):
     r = requests.post(settings.CODEGEN_ADDR + '/compile/', data=json.dumps(app), headers={'Content-Type':'application/json'})
     if r.status_code == 200:
         return r.json()
@@ -57,6 +57,23 @@ def compile(app):
         print r.status_code
         print r.text
         raise Exception("ruh roh")
+
+def write_to_tmpdir(codeData):
+    import tempfile
+    import os, os.path
+    tmpdir = tempfile.mkdtemp(prefix='tmp-appcodegen-')
+    files_to_write = [] # each entry will be a tuple of rel. path - content. content is a string (file) or dict (directory).
+    files_to_write.extend(codeData.items())
+    while len(files_to_write) > 0:
+        relpath, content = files_to_write.pop()
+        if isinstance(content, basestring):
+            with open(os.path.join(tmpdir, relpath), 'w') as f:
+                f.write(content)
+        else:
+            os.makedirs(os.path.join(tmpdir, relpath))
+            files_to_write.extend([(os.path.join(relpath, filename), subcontent) for filename, subcontent in content.iteritems() ])
+
+    return tmpdir
 
 import unittest
 
@@ -87,5 +104,20 @@ class CodegenIntegrationTest(unittest.TestCase):
         from appcubator.default_data import get_default_app_state
         sampleApp = json.loads(get_default_app_state())
         app = expandAll(sampleApp)
+        self.assertTrue(isinstance(app, type({})))
+
+    def test_compileApp(self):
+        from appcubator.default_data import get_default_app_state
+        sampleApp = json.loads(get_default_app_state())
+        code_data = compileApp(sampleApp)
+        print code_data
+
+    def test_writeTmpDir(self):
+        from appcubator.default_data import get_default_app_state
+        sampleApp = json.loads(get_default_app_state())
+        code_data = compileApp(sampleApp)
+
+        print write_to_tmpdir(code_data)
+
 
 

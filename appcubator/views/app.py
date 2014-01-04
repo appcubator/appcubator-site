@@ -788,7 +788,6 @@ def deploy(request, app_id):
             app.parse_and_link_app_state()
             result = {}
             result['site_url'] = app.url()
-            result['git_url'] = app.git_url()
             result['zip_url'] = reverse('appcubator.views.app.app_zip', args=(app_id,))
             is_merge, data = app.deploy()
         except codegen.UserInputError, e:

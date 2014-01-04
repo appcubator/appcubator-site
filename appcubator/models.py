@@ -21,6 +21,7 @@ from utils import RandomPrimaryIdModel
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_app_state, get_default_uie_state, get_default_mobile_uie_state
 
 import deploy
+from appcubator import codegen
 
 from django.conf import settings
 
