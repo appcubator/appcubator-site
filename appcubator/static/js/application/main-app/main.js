@@ -145,20 +145,25 @@ require([
         $(document).ready(function() {
 
 
+            /* Initialize v1State */
             v1State = new Backbone.Model();
             v1State = new AppModel(appState);
             v1State.set('pages', new PageCollection(appState.pages || []));
 
+            /* Initialize v1UIEState */
             v1UIEState = new ThemeModel(uieState);
 
+            /* Help with debugging */
             v1State.on('error', function(message) {
                 alert(message);
             });
 
+            /* Track key/mouse events */
             g_guides = {};
             keyDispatcher = new KeyDispatcher();
             mouseDispatcher = new MouseDispatcher();
 
+            /* Initialize routing */
             v1 = {};
             v1 = new AppRouter();
 
