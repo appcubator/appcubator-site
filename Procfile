@@ -1,1 +1,1 @@
-web: gunicorn --workers=1 wsgi:application
+web: gunicorn --workers=1 --worker-class eventlet wsgi:application

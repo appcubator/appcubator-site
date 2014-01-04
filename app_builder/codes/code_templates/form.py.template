@@ -1,9 +1,0 @@
-{% set forms = imports['django.forms'] %}
-class {% block class_name %}{{ form.identifier }}{% endblock %}({{forms}}.ModelForm):
-    {% for field_id, t in form.required_field_id_types %}
-    {{ field_id }} = {{forms}}.{{t}}(required=True)
-    {% endfor %}
-
-    class Meta:
-        model = {{ form.model_id }}
-        fields = ({{ form.included_field_string }})

@@ -89,42 +89,6 @@
       {% include "payment/_cancel_form.html" %}
     </div>
 
-    <div class="span48 pane hoff4 padding" id="advanced-settings">
-        <style>
-            #advanced-settings li {
-                margin: 20px 0 20px 0;
-            }
-            #advanced-settings  {
-                margin: 20px 0 20px 0;
-            }
-      </style>
-      <h3>SSH Keys</h3><br>
-      <ul class="hoff2 span42">
-
-        {% for pubkey in user.pubkeys.all %}
-        <li>
-          {{forloop.counter}}. {{pubkey.name}}
-          <form class="no-ajax" action="/setpubkey/" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="title" class="span20" placeholder="Name..." value="{{pubkey.name}}"><br>
-            <textarea name="key" class="span40" placeholder="Public key...">{{pubkey.pubkey}}</textarea><br>
-            <input type="submit" onClick="this.disabled=true; this.value='Working...'; this.form.submit();" class="btn btn-info" value="Update this key">
-          </form>
-        </li>
-        <hr>
-        {% endfor %}
-
-        <li id="add-key-btn"><button class="btn btn-info">+ Add a new key</button></li>
-        <li style="display:none" id='add-key-panel'>
-          <form class="no-ajax" action="/setpubkey/" method="post">
-            {% csrf_token %}
-            <input type="text" name="title" class="span20" placeholder="Name..."><br>
-            <textarea name="key" class="span40" placeholder="Public key..."></textarea><br>
-            <input type="submit" onClick="this.disabled=true; this.value='Working...'; this.form.submit();" class="btn btn-info" value="Add key">
-          </form>
-        </li>
-      </ul>
-    </div>
   </div><!-- end main content -->
 
   <div class="hi4 hoff4 span4"></div>

@@ -5,6 +5,13 @@ import os
 import tarfile
 logger = logging.getLogger(__name__)
 
+
+from deis import DeisClient
+
+"""
+TODO replace with a deis implementation
+"""
+
 class DeploymentError(Exception):
     """Should be raised whenever the deployment server does not return 200"""
     pass
@@ -13,9 +20,8 @@ class NotDeployedError(Exception):
     """Indicates that the deployment id is bogus"""
     pass
 
-def update_deployment_info(deployment_id, hostname, gitrepo_name):
-    payload = { 'hostname': hostname,
-                'gitrepo_name': gitrepo_name }
+def update_deployment_info(deployment_id, hostname):
+    payload = { 'hostname': hostname }
     deployment_url = 'http://%s/deployment/%d/info/' % (settings.DEPLOYMENT_HOSTNAME, deployment_id)
     r = requests.post(deployment_url, data=payload, headers={'X-Requested-With': 'XMLHttpRequest'})
     if r.status_code == 200:
@@ -68,17 +74,14 @@ def write_tar_from_app_dir(appdir):
     t.close()
     return os.path.join(appdir, 'payload.tar')
 
-#def _transport_app(self, appdir, retry_on_404=True, git_user=None):
-def transport_app(appdir, deploy_id, deploy_data, retry_on_404=True, git_user=None):
+def transport_app(appdir, deploy_id, deploy_data, retry_on_404=True):
     """
     1. path to directory where app is stored
     2. deployment id (or none if it's not yet deployed)
     3. dictionary of deploy data
             "hostname": app.hostname(),
-            "gitrepo_name": app.gitrepo_name,
             "app_json": app.state_json,
             "deploy_secret": "v1factory rocks!",
-            "user_id": # some id for git access permissions, can be none
 
     returns false, deployment_id
     or

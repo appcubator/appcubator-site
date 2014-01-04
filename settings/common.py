@@ -196,10 +196,6 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
-        'app_builder': {
-            'handlers': ['console'],
-            'level': 'ERROR'
-        },
         'appcubator': {
             'handlers': ['console'],
             'level': 'DEBUG'
@@ -291,3 +287,6 @@ STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
 DEPLOYMENT_HOSTNAME = os.environ["DEPLOYMENT_HOSTNAME"]
 # domain from which apps are available
 DEPLOYMENT_DOMAIN = os.environ["DEPLOYMENT_DOMAIN"]
+
+# codegen service
+CODEGEN_ADDR = os.environ["CODEGEN_ADDR"] # ie, http://127.0.0.1:3000

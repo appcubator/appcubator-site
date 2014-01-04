@@ -13,7 +13,7 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from appcubator.models import User, Customer, TempDeployment, InvitationKeys, PubKey
+from appcubator.models import User, Customer, TempDeployment, InvitationKeys
 from appcubator.themes.models import UITheme
 from appcubator.default_data import get_default_uie_state, get_default_mobile_uie_state, get_default_app_state
 import appcubator.models
@@ -26,10 +26,6 @@ from forms import ToggleLoveForm
 import re
 import os, os.path
 join = os.path.join
-
-# codegen
-import app_builder.analyzer as analyzer
-from app_builder.analyzer import App as AnalyzedApp
 
 def JsonResponse(serializable_obj, **kwargs):
     """Just a convenience function, in the middle of horrible code"""
@@ -140,36 +136,6 @@ def account(request):
         else:
             user.save()
             return HttpResponse(simplejson.dumps({"redirect_to": "/account/"}), mimetype="application/json")
-
-
-@login_required
-@require_POST
-def setpubkey(request):
-    try:
-        name = request.POST['title']
-        key = request.POST['key']
-    except KeyError:
-        return HttpResponse("", status=400)
-
-    # find and update, or create
-    try:
-        pubkey = request.user.pubkeys.get(name=name)
-    except PubKey.DoesNotExist:
-        pubkey = PubKey(name=name, pubkey=key, user=request.user)
-    else:
-        pubkey.name = name
-        pubkey.pubkey = key
-
-    #validate
-    try:
-        pubkey.full_clean()
-    except ValidationError, e:
-        return HttpResponse(simplejson.dumps(e.message_dict), mimetype="application/json")
-
-    pubkey.save()
-    r = PubKey.sync_pubkeys_of_user(request.user)
-    assert r.status_code == 200, "Pubkey error: %s" % r.text
-    return redirect(account)
 
 
 @login_required
@@ -350,6 +316,8 @@ def temp_deploy(request):
     if request.method == 'GET':
         return HttpResponse(simplejson.dumps({ 'status': td.get_deployment_status() }), mimetype="application/json")
     elif request.method == 'POST':
+        # TODO Fix temp deployment
+        """
         old_state = td._state_json
         td._state_json = request.POST['app_state']
 
@@ -364,6 +332,10 @@ def temp_deploy(request):
         td._state_json = old_state
         td.save()
         d = {"site_url": td.url(), "git_url": td.git_url(), "zip_url": ""}
+        """
+        d = {"site_url": "notyetimplemented.com",
+             "git_url": "notyetimplemented.com",
+             "zip_url": "notyetimplemented.com"}
         return HttpResponse(simplejson.dumps(d), mimetype="application/json")
 
 @require_GET

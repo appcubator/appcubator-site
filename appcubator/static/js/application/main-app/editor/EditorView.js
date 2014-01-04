@@ -172,6 +172,7 @@ define(function(require, exports, module) {
             self.startUIStateUpdater(proxy);
             self.setupPageHeight();
 
+            /* TODO re-implement page templates
             if (!this.model.get('uielements').length) {
                 var templatePicker = new PageTemplatePicker({ model: this.model, callback: function() {
                     $('.options-area').hide();
@@ -180,9 +181,9 @@ define(function(require, exports, module) {
 
                 this.$el.find('.options-area').append(templatePicker.render().el);
             }
-            else {
+            else { */
                 this.$el.find('.page-wrapper').addClass('show');
-            }
+            /* } */
         },
 
         renderUrlBar: function() {
