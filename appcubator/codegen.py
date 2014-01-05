@@ -49,7 +49,8 @@ def expandAll(app):
         print r.text
         raise Exception("ruh roh")
 
-def compileApp(app):
+def compileApp(app, css=''):
+    app['css'] = css
     r = requests.post(settings.CODEGEN_ADDR + '/compile/', data=json.dumps(app), headers={'Content-Type':'application/json'})
     if r.status_code == 200:
         return r.json()

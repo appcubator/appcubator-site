@@ -243,7 +243,7 @@ class TempDeployment(RandomPrimaryIdModel):
 
         return tmp_project_dir
         """
-        code_data = codegen.compileApp(self.state)
+        code_data = codegen.compileApp(self.state, css=self.css())
         # TODO write the stuff from code_data to disk
         raise Exception("TODO implement me")
 
@@ -570,7 +570,7 @@ class App(models.Model):
             #coder = Coder.create_from_codes(codes)
 
             #tmp_project_dir = write_to_fs(coder, css=self.css())
-            code_data = codegen.compileApp(self.state)
+            code_data = codegen.compileApp(self.state, css=self.css())
             tmp_project_dir = codegen.write_to_tmpdir(code_data)
             # TODO write the stuff from code_data to disk
         except Exception:
