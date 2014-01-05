@@ -62,7 +62,7 @@ def welcome(request):
             e = request.user.extradata
             e.noob = 0
             e.save()
-            # moves on w rest of procedure
+            return redirect(user_page, request.user.username)
         # else redirect to noob page
         else:
             return redirect(noob_page)
