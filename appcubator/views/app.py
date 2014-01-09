@@ -87,8 +87,8 @@ def user_page(request, username):
             e.save()
             # moves on w rest of procedure
         # else redirect to noob page
-        else:
-            return redirect(noob_page)
+        # else:
+        #    return redirect(noob_page)
 
     if request.user.apps.count() == 0:
         if request.user.collaborations.count() == 0:

@@ -321,6 +321,26 @@ h6 {
   border-radius: 4px;
 }
 
+.navbar .account-dropdown-menu {
+  
+  position: absolute;
+  top: 50px;
+  right: 30px;
+  width: 300px;
+  background-color: #fff;
+  z-index: 2005;
+
+  background-color: #fff;
+  border-radius: 6px;
+  border: 3px solid #ccc;
+  padding: 15px 30px;
+
+  display: none;
+  &.expanded {
+    display: inline-block;
+  }
+}
+
 .menu li a {
   display: inline-block;
   padding: 10px;

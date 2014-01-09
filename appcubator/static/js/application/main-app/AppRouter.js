@@ -7,7 +7,8 @@ define(function(require, exports, module) {
 
     var TutorialView  = require("tutorial/TutorialView"),
         AppView       = require("app/AppView"),
-        DeployView    = require("app/DeployView");
+        DeployView    = require("app/DeployView"),
+        AccountDropdownView = require("app/AccountDropdownView");
 
     var AppRouter = Backbone.Router.extend({
 
@@ -36,6 +37,10 @@ define(function(require, exports, module) {
                 self.showTutorial();
                 window.history.pushState(null, null, window.location.href.concat("tutorial/"));
             });
+
+            var accountDropdownView = new AccountDropdownView();
+            accountDropdownView.setElement($('.account-dropdown-menu')).render();
+            accountDropdownView.setToggleEl($('.account-icon'));
 
             this.currentApp = new AppView({model: v1State, appId: appId});
             v1.view = this.currentApp;
