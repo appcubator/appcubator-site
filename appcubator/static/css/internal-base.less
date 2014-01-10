@@ -333,11 +333,18 @@ h6 {
   background-color: #fff;
   border-radius: 6px;
   border: 3px solid #ccc;
-  padding: 15px 30px;
+  padding: 15px 15px;
 
   display: none;
   &.expanded {
     display: inline-block;
+  }
+
+  li {
+    height: 45px;
+    line-height: 45px;
+    text-transform: uppercase;
+    color: #0f2d40;
   }
 }
 
@@ -353,7 +360,8 @@ h6 {
   background-repeat: no-repeat;
 }
 
-.menu li:hover a.account-icon {
+.menu li:hover a.account-icon,
+.menu li.expanded a.account-icon {
   background-position: right;
 }
 
@@ -363,7 +371,8 @@ h6 {
 }
 
 .menu li.highlight,
-.menu li.selected {
+.menu li.selected,
+.menu li.expanded {
   color: #0f2d40;
   background-color: #fff;
   border-radius: 4px;

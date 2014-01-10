@@ -40,7 +40,7 @@ define(function(require, exports, module) {
 
             var accountDropdownView = new AccountDropdownView();
             accountDropdownView.setElement($('.account-dropdown-menu')).render();
-            accountDropdownView.setToggleEl($('.account-icon'));
+            accountDropdownView.setToggleEl($('.account-menu-toggle'));
 
             this.currentApp = new AppView({model: v1State, appId: appId});
             v1.view = this.currentApp;
