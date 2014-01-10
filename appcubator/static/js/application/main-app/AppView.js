@@ -23,6 +23,7 @@ define(function(require, exports, module) {
         el: document.getElementById('app-content'),
 
         initialize: function(options) {
+            console.trace();
             _.bindAll(this);
 
             this.model = options.model;

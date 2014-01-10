@@ -7,7 +7,6 @@ define(function(require, exports, module) {
 
 	var DeployManagerModel = Backbone.Model.extend({
 
-		deployUrl  : '/app/' + appId + '/deploy/',
 		isDeployed : false,
 		lastDeploy : null,
 		disableSave: false,

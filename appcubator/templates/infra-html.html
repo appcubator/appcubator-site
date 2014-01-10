@@ -67,7 +67,13 @@ less = {
     {% block page %}
     {% endblock %}
   </div>
-<!-- end olark code -->
+
+{% if user.is_authenticated %}
+<script type="text/javascript">
+var username = "{{ user.username }}";
+</script>
+{% endif %}
+
 {% block js %}
 {% endblock %}
 {% block templates %}

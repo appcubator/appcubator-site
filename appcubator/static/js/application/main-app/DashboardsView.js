@@ -1,43 +1,4 @@
-require.config({
-    paths: {
-        "jquery": "../../libs/jquery/jquery",
-        "jquery-ui": "../../libs/jquery-ui/jquery-ui",
-        "bootstrap": "../../libs/bootstrap/bootstrap",
-        "app": "../main-app",
-        "util": "../../libs/util/util",
-        "util.filepicker": "../../libs/util/util.filepicker",
-        "mixins": "../../mixins",
-        "backbone": "../../libs/backbone-amd/backbone",
-        "underscore": "../../libs/underscore-amd/underscore",
-    },
-
-    shim: {
-        "bootstrap": {
-            deps: ["jquery"]
-        },
-        "backbone": {
-            exports: "Backbone",
-            deps: ["underscore", "jquery"]
-        },
-        "underscore": {
-            exports: "_"
-        },
-        "jquery": {
-            exports: "$"
-        },
-        "jquery-ui": {
-            exports: "$",
-            deps: ['jquery']
-        },
-        "util.filepicker": {
-            deps: ['util'],
-            exports: "util"
-        }
-    }
-
-});
-
-require([
+define([
         'app/OverviewPageView',
         'util',
         'backbone'
@@ -188,24 +149,5 @@ function(OverviewPageView) {
         }
     });
 
-  $(document).ready(function() {
-    dboard = new DashboardsView();
-    Backbone.history.start({pushState: true});
-
-    $( document ).tooltip({
-      position: {
-        my: "center bottom-10",
-        at: "center top",
-        using: function( position, feedback ) {
-          $( this ).css( position );
-          $( "<div>" )
-            .addClass( "arrow" )
-            .addClass( feedback.vertical )
-            .addClass( feedback.horizontal )
-            .appendTo( this );
-        }
-      }
-    });
-  });
-
+    return DashboardsView;
 });

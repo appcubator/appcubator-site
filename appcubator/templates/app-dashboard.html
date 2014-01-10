@@ -73,6 +73,8 @@
     {% endfor %}
 
   </script>
-  <script data-main="{{ STATIC_URL }}js/application/external-pages/dashboard" src="{{ STATIC_URL }}js/libs/require.js">
-  </script>
+<script type="text/javascript">
+    var staticVersion = "{{STATIC_VERSION}}";
+</script>
+<script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 {% endblock %}

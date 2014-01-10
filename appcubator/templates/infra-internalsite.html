@@ -1,9 +1,20 @@
 {% extends "infra-html.html" %}
 
+{% block topbar %}
+{% include "internal-menu.html" %}
+{% endblock %}
+
 {% block less %}
 <link rel="stylesheet/less" href="{{ STATIC_URL }}css/internal.less">
 {% endblock %}
 
 {% block css-files %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/internal.css">
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    var staticVersion = "{{STATIC_VERSION}}";
+</script>
+<script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 {% endblock %}

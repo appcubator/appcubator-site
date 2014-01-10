@@ -28,7 +28,7 @@ require.config({
         "tutorial": "../tutorial",
         "wizard": "../wizard",
         "xrayquire": "../../libs/xrayquire",
-        "ace"  : "../../libs/ace/ace",
+        "ace": "../../libs/ace/ace",
         //"ace": "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace",
         "fontselect": "../../libs/fontselect/jquery.fontselect"
     },
@@ -77,8 +77,8 @@ require.config({
             exports: "React"
         },
         "fontselect": {
-          exports: "$",
-          deps: ['jquery']
+            exports: "$",
+            deps: ['jquery']
         }
     },
 
@@ -89,7 +89,7 @@ require.config({
     urlArgs: "bust=" + staticVersion
 });
 
-require.onError = function (err) {
+require.onError = function(err) {
     if (err.requireType === 'timeout' || err.requireType === "scripterror") {
         var el = document.createElement('a');
         el.style.width = '100%';
@@ -97,8 +97,8 @@ require.onError = function (err) {
         el.style.top = '120px';
         el.style.textAlign = 'center';
         el.style.cursor = 'pointer';
-        el.innerHTML =  '<img src="/static/img/mascot-timeout.png">';
-        el.addEventListener('click', function(){
+        el.innerHTML = '<img src="/static/img/mascot-timeout.png">';
+        el.addEventListener('click', function() {
             location.reload();
         });
         document.body.appendChild(el);
@@ -139,30 +139,68 @@ require([
         MouseDispatcher,
         Heyoffline,
         Backbone) {
-    
-    //var CustomWidgetEditorModal = require('editor/CustomWidgetEditorModal');
+
+        //var CustomWidgetEditorModal = require('editor/CustomWidgetEditorModal');
 
         $(document).ready(function() {
 
+            var appState = (appState || null);
 
-            /* Initialize v1State */
-            v1State = new Backbone.Model();
-            v1State = new AppModel(appState);
-            v1State.set('pages', new PageCollection(appState.pages || []));
+            if (appState) {
+                /* Initialize v1State */
+                v1State = new Backbone.Model();
+                v1State = new AppModel(appState);
+                v1State.set('pages', new PageCollection(appState.pages || []));
 
-            /* Initialize v1UIEState */
-            v1UIEState = new ThemeModel(uieState);
+                /* Initialize v1UIEState */
+                v1UIEState = new ThemeModel(uieState);
 
-            /* Help with debugging */
-            v1State.on('error', function(message) {
-                alert(message);
-            });
+                /* Help with debugging */
+                v1State.on('error', function(message) {
+                    alert(message);
+                });
 
-            /* Track key/mouse events */
-            g_guides = {};
-            keyDispatcher = new KeyDispatcher();
-            mouseDispatcher = new MouseDispatcher();
+                /* Track key/mouse events */
+                g_guides = {};
+                keyDispatcher = new KeyDispatcher();
+                mouseDispatcher = new MouseDispatcher();
 
+                v1State.listenTo(v1, 'saved', function(new_version_id) {
+                    v1State.set('version_id', new_version_id);
+                });
+
+
+                if (v1State.has('walkthrough')) {
+                    require(['app/TwitterTour'], function(QuickTour) {
+                        if (!QuickTour.currentStep) return;
+                        var url = QuickTour.currentStep.url;
+                        v1.navigate('app/' + appId + url, {
+                            trigger: true
+                        });
+                        setTimeout(function() {
+                            QuickTour.start();
+                        }, 1000);
+                    });
+                }
+
+                if (v1State.has('simpleWalkthrough')) {
+                    require(['app/SimpleTwitterTour'], function(QuickTour) {
+
+                        if (!QuickTour.currentStep) return;
+                        var url = QuickTour.currentStep.url;
+
+                        v1.navigate('app/' + appId + url, {
+                            trigger: true
+                        });
+                        setTimeout(function() {
+                            QuickTour.start();
+                        }, 1000);
+
+                    });
+                }
+
+
+            }
             /* Initialize routing */
             v1 = {};
             v1 = new AppRouter();
@@ -172,43 +210,10 @@ require([
             });
 
             // on appstate saves, synchronize version ids
-            v1State.listenTo(v1, 'saved', function(new_version_id) {
-                v1State.set('version_id', new_version_id);
-            });
 
             Backbone.history.start({
                 pushState: true
             });
-
-
-            if (v1State.has('walkthrough')) {
-                require(['app/TwitterTour'], function(QuickTour) {
-                    if (!QuickTour.currentStep) return;
-                    var url = QuickTour.currentStep.url;
-                    v1.navigate('app/' + appId + url, {
-                        trigger: true
-                    });
-                    setTimeout(function() {
-                        QuickTour.start();
-                    }, 1000);
-                });
-            }
-
-            if (v1State.has('simpleWalkthrough')) {
-                require(['app/SimpleTwitterTour'], function(QuickTour) {
-
-                    if (!QuickTour.currentStep) return;
-                    var url = QuickTour.currentStep.url;
-
-                    v1.navigate('app/' + appId + url, {
-                        trigger: true
-                    });
-                    setTimeout(function() {
-                        QuickTour.start();
-                    }, 1000);
-
-                });
-            }
 
             if (DEBUG) {
                 showElems = function() {
