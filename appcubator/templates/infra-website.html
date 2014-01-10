@@ -23,7 +23,16 @@
 api_key: etouje3xl27v
 scope: r_fullprofile r_emailaddress
 </script>
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css">
+
+{% block less %}
+<link rel="stylesheet/less" href="{{ STATIC_URL }}css/external-website.less">
+{% endblock %}
+
+{% block css-files %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/external-website.css">
+{% endblock %}
+
+
 {% if DEBUG %}
 <script>
 less = {

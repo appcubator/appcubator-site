@@ -4,8 +4,11 @@
 <div id="fb-root"></div>
 <script>
 </script>
+{% if user.is_authenticated %}
+{% include "internal-menu.html" %}
+{% else %}
 {% include "website-navbar.html" %}
-
+{% endif %}
 <div class="sliding-panel">
   <div class="slide slide-intro">
     <div class="blue-bar community">
