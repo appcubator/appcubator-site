@@ -27,10 +27,18 @@ var tcpProxy = function(LOCAL_PORT, REMOTE_ADDR, REMOTE_PORT) {
 }
 
 
-var spawn = require('child_process').spawn;
+var USAGE = 'Devmon, spawns app as subprocess and proxies TCP to it.\n'+
+            'Listens for code updates and respawns.\n'+
+            'Usage: node devmon.js PORT PROXYPORT [ subprocess argv ] \n'+
+            '        0      1        2      3           4 ... n ';
 
-/* node devmon.js PORT PROXYPORT [ subprocess argv ] */
-/*  0      1        2      3           4 ... n       */
+if (process.argv.length < 6) {
+    console.log(USAGE);
+    process.exit(1);
+}
+
+
+var spawn = require('child_process').spawn;
 var port = process.argv[2],
     proxyport = process.argv[3],
     app_cmd = process.argv[4],
