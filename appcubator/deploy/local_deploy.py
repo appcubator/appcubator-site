@@ -3,7 +3,9 @@ import logging
 import os
 import tarfile
 import random
-import subprocess, shlex
+import subprocess
+import socket
+import base64
 logger = logging.getLogger(__name__)
 
 
@@ -50,6 +52,7 @@ def provision(appdir, deploy_data):
     devmonport = random.randint(1025, 60000) # TODO more properly find an available port
     appport = random.randint(1025, 60000)
     DEVMON = os.path.join(os.path.dirname(__file__), 'devmon.js')
+    print appdir
     cmd = [DEVMON, str(devmonport), str(appport), appdir, 'node', 'app.js', str(appport)]
     child_env = os.environ.copy()
     child_env.update({'MONGO_ADDR': 'localhost'})
@@ -57,6 +60,10 @@ def provision(appdir, deploy_data):
     deployment_id = p.pid
     fake_database[deployment_id] = (p, devmonport)
     logger.info('127.0.0.1:%d' % devmonport + '\t' + deploy_data['url'])
+
+    # this is just for dev mode/testing.
+    deploy_data['_port'] = devmonport
+
     return deployment_id
 
 def destroy(deploy_id):
@@ -77,21 +84,24 @@ def update_code(appdir, deploy_id, deploy_data):
             "deploy_secret": "v1factory rocks!",
     """
     tar_path = _write_tar_from_app_dir(appdir)
-    f = open(tar_path, "r")
+    f = open(tar_path, "rb")
     try:
-        r = requests.post(deploy_data['url'] + '__custom_code__', files={'code': f})
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        host = deploy_data['hostname']
+        port = deploy_data.get('_port', 80)
+        s.connect((host, port))
+
+        tarbin = base64.b64encode(f.read())
+        s.sendall("POST /__update_code__ HTTP/1.1\n\n" + str(len(tarbin))+"\n\n")
+        s.sendall(tarbin)
+        s.recv(1)
+
+        s.close()
+
     finally:
         f.close()
         os.remove(os.path.join(appdir, 'payload.tar'))
 
-    if r.status_code == 200:
-        return r.json()['deployment_id']
-
-    elif r.status_code == 404:
-        raise NotDeployedError()
-
-    else:
-        raise DeploymentError("Deployment server error: %r" % r.text)
 
 import unittest
 from appcubator import codegen
@@ -103,18 +113,42 @@ APPSTATE = json.loads(get_default_app_state())
 
 ## Testing requires an example app. We use the default state + codegen
 ## Note: CODEGEN SERVER MUST BE LIVE TO TEST.
-class TestLocalDeploy(unittest.TestCase):
+class TestProvision(unittest.TestCase):
 
     def setUp(self):
         self.appdir = codegen.write_to_tmpdir(codegen.compileApp(APPSTATE))
 
     def test_provision(self):
-        dd = { 'hostname': 'doesntmatter.com',
-               'url': 'http://doesntmatter.com/' }
+        dd = { 'hostname': '127.0.0.1',
+               'url': 'http://127.0.0.1/' }
         d_id = provision(self.appdir, dd)
-        print "hi, " + str(d_id)
-        import time
-        time.sleep(10)
+        p, port = fake_database[d_id]
+        import time; time.sleep(2)
+        print "Devmon pid=" + str(p.pid)
+        r = requests.get('http://127.0.0.1:%d' % port)
+        self.assertEqual(r.status_code, 200)
+
+    def tearDown(self):
+        shutil.rmtree(self.appdir)
+
+class TestUpdateCode(unittest.TestCase):
+
+    def setUp(self):
+        self.appdir = codegen.write_to_tmpdir(codegen.compileApp(APPSTATE))
+        dd = { 'hostname': '127.0.0.1',
+               'url': 'http://127.0.0.1/' }
+        d_id = provision(self.appdir, dd)
+        p, port = fake_database[d_id]
+        import time; time.sleep(2)
+        print "Devmon pid=" + str(p.pid)
+        r = requests.get('http://127.0.0.1:%d' % port)
+        self.assertEqual(r.status_code, 200)
+
+        self.dd = dd
+        self.d_id = d_id
+
+    def test_update_code(self):
+        update_code(self.appdir, self.d_id, self.dd)
 
     def tearDown(self):
         shutil.rmtree(self.appdir)

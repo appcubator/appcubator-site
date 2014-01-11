@@ -78,7 +78,7 @@ def write_to_tmpdir(codeData):
     # TEMPORARY TIME-SAVING HACK: EXTRACT TAR OF REQUIRED NODE_MODULES INTO TMPDIR
     import subprocess, shlex
     NM_TAR_PATH = os.path.join(os.path.dirname(__file__), 'node_modules.tar.gz')
-    p = subprocess.Popen(shlex.split('tar zxvf %s -C %s' % (NM_TAR_PATH, tmpdir)))
+    p = subprocess.Popen(shlex.split('tar zxf %s -C %s' % (NM_TAR_PATH, tmpdir)))
     p.wait()
 
     return tmpdir
