@@ -20,10 +20,14 @@ import shutil
 from utils import RandomPrimaryIdModel
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_app_state, get_default_uie_state, get_default_mobile_uie_state
 
-import deploy
-from appcubator import codegen
-
 from django.conf import settings
+
+if settings.DEBUG:
+    import deploy.local_deploy as deploy
+else:
+    import deploy.deis_deploy as deploy
+
+from appcubator import codegen
 
 
 def email_to_uniq_username(email):
