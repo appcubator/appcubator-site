@@ -677,11 +677,9 @@ class App(models.Model):
         tmpdir = self.write_to_tmpdir()
         try:
             logger.info("Deployed to %s" % tmpdir)
-            #is_merge, data = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404)
-            is_merge, data = False, None
-            if not is_merge:
-                self.deployment_id = data
-                self.save() # might be unnecessary if nothing has changed.
+            data = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404)
+            self.deployment_id = data
+            self.save() # might be unnecessary if nothing has changed.
         except Exception:
             self.record_deploy_error(traceback.format_exc())
             raise
@@ -692,7 +690,7 @@ class App(models.Model):
             # TODO uncomment below once deployment is working
             pass
             #shutil.rmtree(tmpdir)
-        return (is_merge, data)
+        return data
 
     def delete_deployment(self):
         if self.deployment_id is not None:

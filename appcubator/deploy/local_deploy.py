@@ -1,8 +1,9 @@
 import requests
 import logging
-from django.conf import settings
 import os
 import tarfile
+import random
+import subprocess, shlex
 logger = logging.getLogger(__name__)
 
 
@@ -47,7 +48,9 @@ def provision(appdir, deploy_data):
     """
     tar_path = _write_tar_from_app_dir(appdir)
     port = random.randint(1025, 60000) # TODO more properly find an available port
-    p = subprocess.Popen(shlex.split('devmon node app.js %d' % port))
+    APP_JS = os.path.join(tar_path, 'app.js')
+    DEVMON = os.path.join(os.path.dirname(__file__), 'devmon.js')
+    p = subprocess.Popen(shlex.split(DEVMON+' node '+APP_JS+' %d' % port))
     deployment_id = p.pid
     fake_database[deployment_id] = (p, port)
     logger.info('127.0.0.1:%d' % port + '\t' + deploy_data['url'])
@@ -68,7 +71,6 @@ def update_code(appdir, deploy_id, deploy_data):
     3. dictionary of deploy data
             "hostname": app.hostname(),
             "url": 'http://' + app.hostname() + '/', (reachable url)
-            "app_json": app.state_json,
             "deploy_secret": "v1factory rocks!",
     """
     tar_path = _write_tar_from_app_dir(appdir)
@@ -80,7 +82,7 @@ def update_code(appdir, deploy_id, deploy_data):
         os.remove(os.path.join(appdir, 'payload.tar'))
 
     if r.status_code == 200:
-        return response_content['deployment_id']
+        return r.json()['deployment_id']
 
     elif r.status_code == 404:
         raise NotDeployedError()
@@ -88,3 +90,29 @@ def update_code(appdir, deploy_id, deploy_data):
     else:
         raise DeploymentError("Deployment server error: %r" % r.text)
 
+import unittest
+from appcubator import codegen
+from appcubator.default_data import get_default_app_state
+import shutil
+import json
+APPSTATE = json.loads(get_default_app_state())
+
+
+## Testing requires an example app. We use the default state + codegen
+## Note: CODEGEN SERVER MUST BE LIVE TO TEST.
+class TestLocalDeploy(unittest.TestCase):
+
+    def setUp(self):
+        self.appdir = codegen.write_to_tmpdir(codegen.compileApp(APPSTATE))
+
+    def test_provision(self):
+        dd = { 'hostname': 'doesntmatter.com',
+               'url': 'http://doesntmatter.com/' }
+        d_id = provision(self.appdir, dd)
+        print "hi, " + str(d_id)
+
+    def tearDown(self):
+        shutil.rmtree(self.appdir)
+
+if __name__ == "__main__":
+    unittest.main()

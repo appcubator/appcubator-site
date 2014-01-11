@@ -50,6 +50,7 @@ def expandAll(app):
         raise Exception("ruh roh")
 
 def compileApp(app, css=''):
+    assert isinstance(app, dict)
     app['css'] = css
     r = requests.post(settings.CODEGEN_ADDR + '/compile/', data=json.dumps(app), headers={'Content-Type':'application/json'})
     if r.status_code == 200:
