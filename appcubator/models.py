@@ -230,6 +230,7 @@ class TempDeployment(RandomPrimaryIdModel):
     def get_deploy_data(self):
         post_data = {
             "hostname": self.hostname(),
+            "url": self.url(),
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
@@ -666,6 +667,7 @@ class App(models.Model):
     def get_deploy_data(self):
         post_data = {
             "hostname": self.hostname(),
+            "url": self.url(),
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
