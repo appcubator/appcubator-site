@@ -16,6 +16,7 @@ class NotDeployedError(Exception):
 
 def update_deployment_info(deployment_id, hostname):
     """Update the deployment with the new hostname"""
+    pass
 
 def get_deployment_status(deployment_id):
     """
@@ -24,9 +25,7 @@ def get_deployment_status(deployment_id):
      1 = Running
      2 = Task done, plz collect result.
     """
-
-def write_tar_from_app_dir(appdir):
-    """Given the directory of the app, tar it up and return the path to the tar."""
+    return random.randint(0,1) * 2
 
 def transport_app(appdir, deploy_id, deploy_data, retry_on_404=True):
     """
@@ -40,6 +39,16 @@ def transport_app(appdir, deploy_id, deploy_data, retry_on_404=True):
     returns deployment_id
     """
     # tar it up
+    def write_tar_from_app_dir(appdir):
+        """Given the directory of the app, tar it up and return the path to the tar."""
+        contents = os.listdir(appdir)
+        # tar it up
+        t = tarfile.open(os.path.join(appdir, 'payload.tar'), 'w')
+        for fname in contents:
+            t.add(os.path.join(appdir, fname), arcname=fname)
+        t.close()
+        return os.path.join(appdir, 'payload.tar')
+
     tar_path = write_tar_from_app_dir(appdir)
     f = open(tar_path, "r")
     try:

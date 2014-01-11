@@ -61,7 +61,6 @@ def get_deployment_status(deployment_id):
     return status
 
 
-#def _write_tar_from_app_dir(self, appdir):
 def write_tar_from_app_dir(appdir):
     """
     Given the directory of the app, tar it up and return the path to the tar.
