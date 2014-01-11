@@ -47,13 +47,13 @@ def provision(appdir, deploy_data):
     Returns deployment_id
     """
     tar_path = _write_tar_from_app_dir(appdir)
-    port = random.randint(1025, 60000) # TODO more properly find an available port
-    APP_JS = os.path.join(tar_path, 'app.js')
+    devmonport = random.randint(1025, 60000) # TODO more properly find an available port
+    appport = random.randint(1025, 60000)
     DEVMON = os.path.join(os.path.dirname(__file__), 'devmon.js')
-    p = subprocess.Popen(shlex.split(DEVMON+' node '+APP_JS+' %d' % port))
+    p = subprocess.Popen([DEVMON, str(devmonport), str(appport), tar_path, 'node', 'app.js', str(appport)])
     deployment_id = p.pid
-    fake_database[deployment_id] = (p, port)
-    logger.info('127.0.0.1:%d' % port + '\t' + deploy_data['url'])
+    fake_database[deployment_id] = (p, devmonport)
+    logger.info('127.0.0.1:%d' % devmonport + '\t' + deploy_data['url'])
     return deployment_id
 
 def destroy(deploy_id):

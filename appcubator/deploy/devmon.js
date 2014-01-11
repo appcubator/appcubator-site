@@ -3,27 +3,29 @@
 var net = require('net');
 var child_process = require('child_process');
 
-var updateCode = function(tarpath) {
+var updateCode = function (tarpath, callback) {
     child_process.exec('tar -xvf '+tarpath, function(err, stdout, stderr) {
         if (err) throw err;
         console.log('Code updated. Tar output:');
         console.log(stdout);
         console.log(stderr);
+        callback();
     });
 };
 
 /* TCP Proxy, from http://gonzalo123.com/2012/09/17/building-a-simple-tcp-proxy-server-with-node-js/ */
-var tcpProxy = function(LOCAL_PORT, REMOTE_ADDR, REMOTE_PORT) {
+var tcpProxy = function (LOCAL_PORT, REMOTE_ADDR, REMOTE_PORT) {
     var server = net.createServer(function (socket) {
         socket.on('data', function (msg) {
             console.log('  ** START **');
             console.log('<< From client to proxy ', msg.toString()); // TODO be careful of request size... protect against hax
             if (msg.indexOf("POST /__update_code__ HTTP/1.1\n\n") == 0) {
                 // update code
-                code_tar_b64 = msg.replace(/^.*\n\n/, ''); // trim upto double \n
+                b64string = msg.replace(/^.*\n\n/, ''); // trim upto double \n
                 var codeTarBuf = new Buffer(b64string, 'base64');
-                fs.writeFile('payload.tar', codeTarBuf, {encoding:'binary'}, function(){
-                    updateCode('payload.tar');
+                // Note: it will write this relative to the current working directory (cwd)
+                fs.writeFile('payload.tar', codeTarBuf, {encoding:'binary'}, function() {
+                    updateCode('payload.tar', function(){console.log('Code updated successfully!')});
                 });
             } else {
                 // proxy
