@@ -68,7 +68,7 @@ var port = process.argv[2],
 
 process.chdir(cwd);
 
-var child_app = spawn(app_cmd, app_args);
+var child_app = spawn(app_cmd, app_args, {env: process.env});
 var proxySock = tcpProxy(port, '127.0.0.1', proxyport);
 
 child_app.stdout.on('data', function (data) {

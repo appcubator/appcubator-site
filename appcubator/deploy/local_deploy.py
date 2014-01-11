@@ -50,7 +50,10 @@ def provision(appdir, deploy_data):
     devmonport = random.randint(1025, 60000) # TODO more properly find an available port
     appport = random.randint(1025, 60000)
     DEVMON = os.path.join(os.path.dirname(__file__), 'devmon.js')
-    p = subprocess.Popen([DEVMON, str(devmonport), str(appport), tar_path, 'node', 'app.js', str(appport)])
+    cmd = [DEVMON, str(devmonport), str(appport), appdir, 'node', 'app.js', str(appport)]
+    child_env = os.environ.copy()
+    child_env.update({'MONGO_ADDR': 'localhost'})
+    p = subprocess.Popen(cmd, env=child_env)
     deployment_id = p.pid
     fake_database[deployment_id] = (p, devmonport)
     logger.info('127.0.0.1:%d' % devmonport + '\t' + deploy_data['url'])
@@ -110,6 +113,8 @@ class TestLocalDeploy(unittest.TestCase):
                'url': 'http://doesntmatter.com/' }
         d_id = provision(self.appdir, dd)
         print "hi, " + str(d_id)
+        import time
+        time.sleep(10)
 
     def tearDown(self):
         shutil.rmtree(self.appdir)
