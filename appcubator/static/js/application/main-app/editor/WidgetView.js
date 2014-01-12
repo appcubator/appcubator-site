@@ -123,20 +123,19 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         renderElement: function() {
-            var temp = Templates.tempNode;
-            var node_context = this.model.get('data').serialize();
+            var el = "";
+            console.log(this.model);
 
-            if (node_context.content) {
-                node_context.content = node_context.content.replace(/\n\r?/g, '<br />');
-            }
-            if (node_context.content_attribs.href) node_context.content_attribs.href = "#";
+            if(this.model.has('html')) {
+                var temp = this.model.get('html');
+                var cont = {};
+                
+                if(this.model.has('style')) {
+                    _.extend(cont, this.model.get('style').serialize());
+                }
 
-            if (node_context.content_attribs.src && node_context.content_attribs.src.indexOf('{{') === 0) {
-                node_context.content_attribs.src = "/static/img/placeholder.png";
+                el = _.template(temp, cont);
             }
-            var el = _.template(temp, {
-                element: node_context
-            });
 
             return el;
         },

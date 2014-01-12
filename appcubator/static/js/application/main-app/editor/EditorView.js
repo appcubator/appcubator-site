@@ -161,6 +161,8 @@ define(function(require, exports, module) {
 
             this.iframeProxy = proxy;
             this.marqueeView = proxy.setupMarqueeView(this.widgetsCollection);
+
+            console.log(this.widgetsCollection);
             this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
 
             self.iframedoc = innerDoc;

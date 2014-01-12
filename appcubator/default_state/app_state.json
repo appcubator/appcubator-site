@@ -130,9 +130,13 @@
           "generate": "templates.concatUIE",
           "data": [
             {
-              "html": "<h1>Search Flickr</h1>",
+              "html": "<h1 class='<%= class_name %>''>Search Flickr</h1>",
+              "style": {
+                "class_name": "yolo",
+              },
               "js": "",
-              "css": ""
+              "css": "",
+              "layout": {}
             },
             {
               "generate": "flickrpickr.uielements.flicksearchbar",
@@ -151,7 +155,11 @@
             {
               "html": "<h1>Create a Picture</h1>",
               "js": "",
-              "css": ""
+              "css": "",
+              "layout": {},
+              "style": {
+                "class_name": "yolo2",
+              },
             },
             {
               "generate": "crud.uielements.create",
