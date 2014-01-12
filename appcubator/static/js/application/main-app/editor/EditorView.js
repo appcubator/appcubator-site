@@ -52,7 +52,7 @@ define(function(require, exports, module) {
             console.log(options);
             console.log(this.appModel);
 
-            this.model = this.appModel.get('pages').models[pageId];
+            this.model = this.appModel.get('routes').models[pageId];
             
             v1State.currentPage = this.model;
             this.appModel.currentPage = this.model;

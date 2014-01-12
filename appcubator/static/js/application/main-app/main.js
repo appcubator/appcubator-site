@@ -150,7 +150,7 @@ require([
                 /* Initialize v1State */
                 v1State = new Backbone.Model();
                 v1State = new AppModel(appState);
-                v1State.set('pages', new PageCollection(appState.pages || []));
+                v1State.set('routes', new PageCollection(appState.routes || []));
 
                 console.log(v1State);
 
@@ -167,9 +167,9 @@ require([
                 keyDispatcher = new KeyDispatcher();
                 mouseDispatcher = new MouseDispatcher();
 
-                v1State.listenTo(v1, 'saved', function(new_version_id) {
-                    v1State.set('version_id', new_version_id);
-                });
+                // v1State.listenTo(v1, 'saved', function(new_version_id) {
+                //     v1State.set('version_id', new_version_id);
+                // });
 
 
                 if (v1State.has('walkthrough')) {

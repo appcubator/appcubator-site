@@ -16,18 +16,20 @@ define([
             initialize: function(bone) {
                 bone = bone || {};
                 var self = this;
-                if (bone.url && bone.url.urlparts.length === 0) {
+                if (bone.url && bone.url.length === 0) {
                     // homepage shouldn't have a customizable url
                     if (this.get('name') === 'Homepage') {
-                        bone.url.urlparts = [];
+                        bone.url = [];
                     } else {
-                        bone.url.urlparts = [this.get('name') || "Page Name"];
+                        bone.url = [this.get('name') || "Page Name"];
                     }
                 }
+                
                 this.set('url', new UrlModel(bone.url || {}));
                 this.set('navbar', new NavbarModel(bone.navbar || {}));
                 this.set('footer', new FooterModel(bone.footer || {}));
                 this.set('uielements', new WidgetCollection());
+                
                 _(bone.uielements).each(function(uielement) {
                     if (uielement.container_info) {
                         this.get('uielements').addWidgetContainerModel(uielement);

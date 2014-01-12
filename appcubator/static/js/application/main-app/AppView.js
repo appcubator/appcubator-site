@@ -197,13 +197,13 @@ define(function(require, exports, module) {
                     urlparts: [pageName.replace(/ /g, '_'), '{{' + entityModel.get('name') + '}}']
                 }
             };
-            this.model.get('pages').push(newPage);
+            this.model.get('routes').push(newPage);
         },
 
         autoAddLinksToNavbar: function() {
-            this.listenTo(v1State.get('pages'), 'add', function(pageM) {
+            this.listenTo(this.model.get('routes'), 'add', function(pageM) {
                 if (!pageM.isContextFree()) return;
-                var homePageNav = v1State.get('pages').first().get('navbar');
+                var homePageNav = this.model.get('routes').first().get('navbar');
                 homePageNav.get('links').push({
                     url: 'internal://' + pageM.get('name'),
                     title: pageM.get('name')

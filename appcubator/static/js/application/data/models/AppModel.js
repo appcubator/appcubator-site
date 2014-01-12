@@ -5,6 +5,7 @@ define([
   'collections/PageCollection',
   'collections/MobilePageCollection',
   'collections/EmailCollection',
+  'collections/TemplateCollection',
   'models/EntityManager'
 ],
 function(AppInfoModel,
@@ -13,6 +14,7 @@ function(AppInfoModel,
          PageCollection,
          MobilePageCollection,
          EmailCollection,
+         TemplateCollection,
          EntityManager) {
 
   var AppModel = Backbone.Model.extend({
@@ -28,6 +30,7 @@ function(AppInfoModel,
       this.set('users', new UserRolesCollection(aState.users));
       this.set('tables', new TableCollection(aState.models));
       this.set('emails', new EmailCollection(aState.emails));
+      this.set('templates', new TemplateCollection(aState.templates));
 
     },
 

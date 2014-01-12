@@ -16,12 +16,14 @@ define(function(require, exports, module) {
         initialize: function(options) {
             _.bindAll(this);
             
+            this.collection = v1State.get('routes');
+
             this.pageId = options.pageId;
-            this.nmrFields = v1State.get('pages').length + 1;
+            this.nmrFields = v1State.get('routes').length + 1;
             
             if (this.nmrFields > 6) this.nmrFields = 6;
             
-            this.listenTo(v1State.get('pages'), 'add remove', function() {
+            this.listenTo(v1State.get('routes'), 'add remove', function() {
                 this.nmrFields = v1State.get('pages').length + 1;
                 if (this.nmrFields > 6) this.nmrFields = 6;
             }, this);
@@ -35,7 +37,7 @@ define(function(require, exports, module) {
 
         render: function() {
             if(this.pageId >= 0) {
-                util.get('current-page').innerHTML = v1State.get('pages').models[this.pageId].get('name');
+                util.get('current-page').innerHTML = this.collection.models[this.pageId].get('name');
             }
             else {
                 util.get('current-page').innerHTML = "Pages";
@@ -44,7 +46,7 @@ define(function(require, exports, module) {
             this.pageList = util.get('page-list');
             this.pageList.innerHTML = '';
 
-            v1State.get('pages').each(function(page, ind) {
+            this.collection.each(function(page, ind) {
                 if (this.pageId == ind) return;
                 this.renderPageItem(ind, page.get('name'));
             }, this);
@@ -72,12 +74,12 @@ define(function(require, exports, module) {
         },
 
         createPage: function(name) {
-            var pageInd = v1State.get('pages').length;
+            var pageInd = this.collection.length;
             var pageModel = new PageModel({
                 name: name
             });
             pageModel.setupUrl(name);
-            v1State.get('pages').push(pageModel);
+            this.collection.push(pageModel);
 
             var self = this;
             v1.currentApp.save(null, function() {
