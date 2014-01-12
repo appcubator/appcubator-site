@@ -23,8 +23,11 @@ define([
             events: {},
             subviews: [],
 
-            initialize: function() {
+            initialize: function(widgetsCollection) {
                 _.bindAll(this);
+
+                this.widgetsCollection = widgetsCollection;
+
                 this.multiSelectorView = new MultiSelectorView();
                 g_multiSelectorView = this.multiSelectorView;
                 this.subviews.push(this.multiSelectorView);
@@ -62,7 +65,7 @@ define([
 
                 var Xcor = e.clientX;
                 var Ycor = e.clientY;
-                var arr = v1State.getCurrentPage().get('uielements').filter(function(widget) {
+                var arr = this.widgetsCollection.filter(function(widget) {
                     var elem = document.getElementById('widget-wrapper-' + widget.cid);
                     return util.isRectangleIntersectElement(this.clientOrigin.x, this.clientOrigin.y, Xcor, Ycor, elem);
                 }, this);
@@ -120,7 +123,7 @@ define([
                 this.currentPage = v1State.getCurrentPage();
                 if (Xcor % 3 >= 1 & Ycor % 3 >= 1) return;
 
-                this.currentPage.get('uielements').each(function(widget) {
+                this.widgetsCollection.each(function(widget) {
                     var elem = document.getElementById('widget-wrapper-' + widget.cid);
                     if (util.isRectangleIntersectElement(Xorigin, Yorigin, Xcor, Ycor, elem)) {
                         $(elem).addClass('red-border');
@@ -139,7 +142,7 @@ define([
                 this.setWidth(0);
                 this.setHeight(0);
 
-                v1State.getCurrentPage().get('uielements').each(function(widget) {
+                this.widgetsCollection.each(function(widget) {
                     var elem = document.getElementById('widget-wrapper-' + widget.cid);
                     $(elem).removeClass('red-border');
                 });

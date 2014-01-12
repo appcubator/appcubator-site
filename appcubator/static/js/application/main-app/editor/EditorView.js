@@ -49,32 +49,35 @@ define(function(require, exports, module) {
             }
 
             this.appModel = options.appModel;
-            console.log(options);
-            console.log(this.appModel);
 
             this.model = this.appModel.get('routes').models[pageId];
-            
+            this.pageName = this.model.get('name');
+
             v1State.currentPage = this.model;
             this.appModel.currentPage = this.model;
             v1State.isMobile = false;
             this.appModel.isMobile = false;
 
 
-            this.widgetsCollection = this.model.get('uielements');
+            this.templateModel = this.appModel.get('templates').getTemplateWithName(this.pageName);
+            this.widgetsCollection = this.templateModel.get('body');
+            console.log(this.widgetsCollection);
 
             this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
             this.widgetsManager = {};
             this.guides = new GuideView(this.widgetsCollection);
             this.cssEditorView = new CSSEditorView();
             this.pageView = new PageView(this.model, pageId);
-            this.redoController = new RedoController();
+
+            // TODO: setup redo controller again
+            // this.redoController = new RedoController();
             this.widgetEditorView = new WidgetEditorView();
             v1.widgetEditorView = this.WidgetEditorView;
 
-            keyDispatcher.bindComb('meta+z', this.redoController.undo);
-            keyDispatcher.bindComb('ctrl+z', this.redoController.undo);
-            keyDispatcher.bindComb('meta+shift+z', this.redoController.redo);
-            keyDispatcher.bindComb('ctrl+shift+z', this.redoController.redo);
+            // keyDispatcher.bindComb('meta+z', this.redoController.undo);
+            // keyDispatcher.bindComb('ctrl+z', this.redoController.undo);
+            // keyDispatcher.bindComb('meta+shift+z', this.redoController.redo);
+            // keyDispatcher.bindComb('ctrl+shift+z', this.redoController.redo);
 
             g_guides = this.guides;
 
@@ -157,7 +160,7 @@ define(function(require, exports, module) {
             keyDispatcher.addEnvironment(innerDoc);
 
             this.iframeProxy = proxy;
-            this.marqueeView = proxy.setupMarqueeView();
+            this.marqueeView = proxy.setupMarqueeView(this.widgetsCollection);
             this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
 
             self.iframedoc = innerDoc;
@@ -247,12 +250,12 @@ define(function(require, exports, module) {
         },
 
         setupPageHeightBindings: function() {
-            this.listenTo(this.model.get('uielements'), 'add', function(uielem) {
+            this.listenTo(this.widgetsCollection, 'add', function(uielem) {
                 this.setupPageHeight();
                 this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
             }, this);
 
-            this.model.get('uielements').each(function(uielem) {
+            this.widgetsCollection.each(function(uielem) {
                 this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
             }, this);
         },
@@ -317,8 +320,8 @@ define(function(require, exports, module) {
 
             clearInterval(this.UIStateTimer);
 
-            keyDispatcher.unbind('meta+z', this.redoController.redo);
-            keyDispatcher.unbind('ctrl+z', this.redoController.redo);
+            // keyDispatcher.unbind('meta+z', this.redoController.redo);
+            // keyDispatcher.unbind('ctrl+z', this.redoController.redo);
 
             // TODO: fix this
             //EditorView.__super__.close.call(this);

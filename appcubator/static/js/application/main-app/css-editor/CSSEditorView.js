@@ -102,10 +102,11 @@ define(function(require, exports, module) {
                 this.listenTo(coll, 'selected', this.styleSelected);
             }, this);
 
-            var elementsCollection = v1State.getCurrentPage().get('uielements');
-            elementsCollection.each(this.bindWidget, this);
+            // TODO: get this back
+            // var elementsCollection = v1State.getCurrentPage().get('uielements');
+            // elementsCollection.each(this.bindWidget, this);
 
-            this.listenTo(elementsCollection, 'add', this.bindWidget);
+            // this.listenTo(elementsCollection, 'add', this.bindWidget);
         },
 
         bindWidget: function(widgetModel) {

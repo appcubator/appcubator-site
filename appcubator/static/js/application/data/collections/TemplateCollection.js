@@ -1,11 +1,23 @@
 define([
-  'models/TemplateModel'
-],
-function(TemplateModel) {
+        'models/TemplateModel'
+    ],
+    function(TemplateModel) {
 
-  var TemplateCollection = Backbone.Collection.extend({
-    model : TemplateModel
-  });
+        var TemplateCollection = Backbone.Collection.extend({
+            model: TemplateModel,
 
-  return TemplateCollection;
-});
+            getTemplateWithName: function(name) {
+                var page = null;
+
+                this.each(function(templateModel) {
+                    if (templateModel.get('name') == name) {
+                        page = templateModel;
+                    }
+                });
+
+                return page;
+            }
+        });
+
+        return TemplateCollection;
+    });

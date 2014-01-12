@@ -120,10 +120,11 @@
       "custom.txt": "this is custom code\n"
     }
   },
-  "templates": {
-    "Homepage": {
+  "templates": [
+    {
       "generate": "templates.page",
       "data": {
+        "name": "Homepage",
         "head": "<script src=\"//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js\"></script>",
         "body": {
           "generate": "templates.concatUIE",
@@ -194,7 +195,7 @@
         }
       }
     }
-  },
+  ],
   "routes": [
     {
       "generate": "routes.staticpage",

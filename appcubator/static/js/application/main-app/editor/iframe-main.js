@@ -135,8 +135,8 @@ require([
                 return this.widgetsManager;
             },
 
-            setupMarqueeView: function() {
-                this.marqueeView = new MarqueeView();
+            setupMarqueeView: function(widgetsCollection) {
+                this.marqueeView = new MarqueeView(widgetsCollection);
                 this.marqueeView.render();
                 g_marqueeView = this.marqueeView;
 
