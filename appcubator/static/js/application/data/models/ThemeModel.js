@@ -48,23 +48,23 @@ define(function(require, exports, module) {
             return model;
         },
 
-        toJSON: function() {
+        serialize: function() {
             var json = _.clone(this.attributes);
 
-            json["buttons"] = this.get('buttons').toJSON();
-            json["images"] = this.get('images').toJSON();
-            json["headerTexts"] = this.get('headerTexts').toJSON();
-            json["texts"] = this.get('texts').toJSON();
-            json["links"] = this.get('links').toJSON();
-            json["textInputs"] = this.get('textInputs').toJSON();
-            json["passwords"] = this.get('passwords').toJSON();
-            json["textAreas"] = this.get('textAreas').toJSON();
-            json["lines"] = this.get('lines').toJSON();
-            json["dropdowns"] = this.get('dropdowns').toJSON();
-            json["boxes"] = this.get('boxes').toJSON();
-            json["forms"] = this.get('forms').toJSON();
-            json["lists"] = this.get('lists').toJSON();
-            json["fonts"] = this.get('fonts').toJSON();
+            json["buttons"] = this.get('buttons').serialize();
+            json["images"] = this.get('images').serialize();
+            json["headerTexts"] = this.get('headerTexts').serialize();
+            json["texts"] = this.get('texts').serialize();
+            json["links"] = this.get('links').serialize();
+            json["textInputs"] = this.get('textInputs').serialize();
+            json["passwords"] = this.get('passwords').serialize();
+            json["textAreas"] = this.get('textAreas').serialize();
+            json["lines"] = this.get('lines').serialize();
+            json["dropdowns"] = this.get('dropdowns').serialize();
+            json["boxes"] = this.get('boxes').serialize();
+            json["forms"] = this.get('forms').serialize();
+            json["lists"] = this.get('lists').serialize();
+            json["fonts"] = this.get('fonts').serialize();
 
             return json;
         }

@@ -109,7 +109,7 @@ function(EditorView, SignupDeployView, MarqueeView, EditorGalleryView, WidgetsMa
             var before_deploy = new Date().getTime();
             this.disableSave = true;
 
-            var newState = v1State.toJSON();
+            var newState = v1State.serialize();
             
             _.each(newState.pages[0].uielements, function(val, key) {
                 if(val.type && val.type == "form") {
@@ -123,7 +123,7 @@ function(EditorView, SignupDeployView, MarqueeView, EditorGalleryView, WidgetsMa
                 type: "POST",
                 url: '/resources/editor/publish/',
                 data: {
-                    app_state: JSON.stringify(v1State.toJSON())
+                    app_state: JSON.stringify(v1State.serialize())
                 },
                 success: function(data) {
                     self.disableSave = false;

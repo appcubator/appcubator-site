@@ -124,7 +124,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
         renderElement: function() {
             var temp = Templates.tempNode;
-            var node_context = this.model.get('data').toJSON();
+            var node_context = this.model.get('data').serialize();
 
             if (node_context.content) {
                 node_context.content = node_context.content.replace(/\n\r?/g, '<br />');

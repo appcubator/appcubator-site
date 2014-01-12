@@ -79,7 +79,7 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                 var isUnique = true;
 
                 this.get('context').each(function(context) {
-                    if (_.isEqual(context.toJSON(), newContext)) {
+                    if (_.isEqual(context.serialize(), newContext)) {
                         isUnique = false;
                     }
                 });
@@ -235,12 +235,12 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                 return this.get('layout').get('height') + this.get('layout').get('top');
             },
 
-            toJSON: function() {
+            serialize: function() {
                 var json = _.clone(this.attributes);
                 json = _.omit(json, 'selected', 'deletable', 'context');
 
-                json.data = this.get('data').toJSON();
-                json.layout = this.get('layout').toJSON();
+                json.data = this.get('data').serialize();
+                json.layout = this.get('layout').serialize();
                 if (json.context) delete json.context;
                 return json;
             }

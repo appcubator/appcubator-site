@@ -81,7 +81,11 @@
       if (!eventsApi(this, 'on', name, [callback, context]) || !callback) return this;
       this._events || (this._events = {});
       var events = this._events[name] || (this._events[name] = []);
-      events.push({callback: callback, context: context, ctx: context || this});
+      events.push({
+        callback: callback,
+        context: context,
+        ctx: context || this
+      });
       return this;
     },
 
@@ -119,7 +123,7 @@
             for (j = 0, k = events.length; j < k; j++) {
               ev = events[j];
               if ((callback && callback !== ev.callback && callback !== ev.callback._callback) ||
-                  (context && context !== ev.context)) {
+                (context && context !== ev.context)) {
                 retain.push(ev);
               }
             }
@@ -153,7 +157,7 @@
       if (!listeners) return this;
       var deleteListener = !name && !callback;
       if (typeof name === 'object') callback = this;
-      if (obj) (listeners = {})[obj._listenerId] = obj;
+      if (obj)(listeners = {})[obj._listenerId] = obj;
       for (var id in listeners) {
         listeners[id].off(name, callback, this);
         if (deleteListener) delete this._listeners[id];
@@ -196,17 +200,33 @@
   // triggering events. Tries to keep the usual cases speedy (most internal
   // Backbone events have 3 arguments).
   var triggerEvents = function(events, args) {
-    var ev, i = -1, l = events.length, a1 = args[0], a2 = args[1], a3 = args[2];
+    var ev, i = -1,
+      l = events.length,
+      a1 = args[0],
+      a2 = args[1],
+      a3 = args[2];
     switch (args.length) {
-      case 0: while (++i < l) (ev = events[i]).callback.call(ev.ctx); return;
-      case 1: while (++i < l) (ev = events[i]).callback.call(ev.ctx, a1); return;
-      case 2: while (++i < l) (ev = events[i]).callback.call(ev.ctx, a1, a2); return;
-      case 3: while (++i < l) (ev = events[i]).callback.call(ev.ctx, a1, a2, a3); return;
-      default: while (++i < l) (ev = events[i]).callback.apply(ev.ctx, args);
+      case 0:
+        while (++i < l)(ev = events[i]).callback.call(ev.ctx);
+        return;
+      case 1:
+        while (++i < l)(ev = events[i]).callback.call(ev.ctx, a1);
+        return;
+      case 2:
+        while (++i < l)(ev = events[i]).callback.call(ev.ctx, a1, a2);
+        return;
+      case 3:
+        while (++i < l)(ev = events[i]).callback.call(ev.ctx, a1, a2, a3);
+        return;
+      default:
+        while (++i < l)(ev = events[i]).callback.apply(ev.ctx, args);
     }
   };
 
-  var listenMethods = {listenTo: 'on', listenToOnce: 'once'};
+  var listenMethods = {
+    listenTo: 'on',
+    listenToOnce: 'once'
+  };
 
   // Inversion-of-control versions of `on` and `once`. Tell *this* object to
   // listen to an event in another object ... keeping track of what it's
@@ -223,7 +243,7 @@
   });
 
   // Aliases for backwards compatibility.
-  Events.bind   = Events.on;
+  Events.bind = Events.on;
   Events.unbind = Events.off;
 
   // Allow the `Backbone` object to serve as a global event bus, for folks who
@@ -248,9 +268,17 @@
     this.attributes = {};
     _.extend(this, _.pick(options, modelOptions));
     if (options.parse) attrs = this.parse(attrs, options) || {};
+    
+    if (attrs.generate) {
+      this.generate = attrs.generate;
+      attrs = attrs.data;
+      attributes = attrs;
+    }
+
     if (defaults = _.result(this, 'defaults')) {
       attrs = _.defaults({}, attrs, defaults);
     }
+
     this.set(attrs, options);
     this.changed = {};
     this.initialize.apply(this, arguments);
@@ -274,7 +302,7 @@
 
     // Initialize is an empty function by default. Override it with your own
     // initialization logic.
-    initialize: function(){},
+    initialize: function() {},
 
     // Return a copy of the model's `attributes` object.
     toJSON: function(options) {
@@ -324,11 +352,11 @@
       if (!this._validate(attrs, options)) return false;
 
       // Extract attributes and options.
-      unset           = options.unset;
-      silent          = options.silent;
-      changes         = [];
-      changing        = this._changing;
-      this._changing  = true;
+      unset = options.unset;
+      silent = options.silent;
+      changes = [];
+      changing = this._changing;
+      this._changing = true;
 
       if (!changing) {
         this._previousAttributes = _.clone(this.attributes);
@@ -376,14 +404,18 @@
     // Remove an attribute from the model, firing `"change"`. `unset` is a noop
     // if the attribute doesn't exist.
     unset: function(attr, options) {
-      return this.set(attr, void 0, _.extend({}, options, {unset: true}));
+      return this.set(attr, void 0, _.extend({}, options, {
+        unset: true
+      }));
     },
 
     // Clear all attributes on the model, firing `"change"`.
     clear: function(options) {
       var attrs = {};
       for (var key in this.attributes) attrs[key] = void 0;
-      return this.set(attrs, _.extend({}, options, {unset: true}));
+      return this.set(attrs, _.extend({}, options, {
+        unset: true
+      }));
     },
 
     // Determine if the model has changed since the last `"change"` event.
@@ -457,7 +489,9 @@
       // If we're not waiting and attributes exist, save acts as `set(attr).save(null, opts)`.
       if (attrs && (!options || !options.wait) && !this.set(attrs, options)) return false;
 
-      options = _.extend({validate: true}, options);
+      options = _.extend({
+        validate: true
+      }, options);
 
       // Do not persist invalid models.
       if (!this._validate(attrs, options)) return false;
@@ -551,7 +585,9 @@
 
     // Check if the model is currently in a valid state.
     isValid: function(options) {
-      return this._validate({}, _.extend(options || {}, { validate: true }));
+      return this._validate({}, _.extend(options || {}, {
+        validate: true
+      }));
     },
 
     // Run validation against the next complete set of model attributes,
@@ -561,7 +597,9 @@
       attrs = _.extend({}, this.attributes, attrs);
       var error = this.validationError = this.validate(attrs, options) || null;
       if (!error) return true;
-      this.trigger('invalid', this, error, _.extend(options || {}, {validationError: error}));
+      this.trigger('invalid', this, error, _.extend(options || {}, {
+        validationError: error
+      }));
       return false;
     }
 
@@ -599,12 +637,22 @@
     if (options.comparator !== void 0) this.comparator = options.comparator;
     this._reset();
     this.initialize.apply(this, arguments);
-    if (models) this.reset(models, _.extend({silent: true}, options));
+    if (models) this.reset(models, _.extend({
+      silent: true
+    }, options));
   };
 
   // Default options for `Collection#set`.
-  var setOptions = {add: true, remove: true, merge: true};
-  var addOptions = {add: true, merge: false, remove: false};
+  var setOptions = {
+    add: true,
+    remove: true,
+    merge: true
+  };
+  var addOptions = {
+    add: true,
+    merge: false,
+    remove: false
+  };
 
   // Define the Collection's inheritable methods.
   _.extend(Collection.prototype, Events, {
@@ -615,12 +663,14 @@
 
     // Initialize is an empty function by default. Override it with your own
     // initialization logic.
-    initialize: function(){},
+    initialize: function() {},
 
     // The JSON representation of a Collection is an array of the
     // models' attributes.
     toJSON: function(options) {
-      return this.map(function(model){ return model.toJSON(options); });
+      return this.map(function(model) {
+        return model.toJSON(options);
+      });
     },
 
     // Proxy `Backbone.sync` by default.
@@ -667,7 +717,9 @@
       var at = options.at;
       var sortable = this.comparator && (at == null) && options.sort !== false;
       var sortAttr = _.isString(this.comparator) ? this.comparator : null;
-      var toAdd = [], toRemove = [], modelMap = {};
+      var toAdd = [],
+        toRemove = [],
+        modelMap = {};
 
       // Turn bare objects into model references, and prevent invalid models
       // from being added.
@@ -683,7 +735,7 @@
             if (sortable && !sort && existing.hasChanged(sortAttr)) sort = true;
           }
 
-        // This is a new model, push it to the `toAdd` list.
+          // This is a new model, push it to the `toAdd` list.
         } else if (options.add) {
           toAdd.push(model);
 
@@ -715,7 +767,9 @@
       }
 
       // Silently sort the collection if appropriate.
-      if (sort) this.sort({silent: true});
+      if (sort) this.sort({
+        silent: true
+      });
 
       if (options.silent) return this;
 
@@ -740,7 +794,9 @@
       }
       options.previousModels = this.models;
       this._reset();
-      this.add(models, _.extend({silent: true}, options));
+      this.add(models, _.extend({
+        silent: true
+      }, options));
       if (!options.silent) this.trigger('reset', this, options);
       return this;
     },
@@ -748,7 +804,9 @@
     // Add a model to the end of the collection.
     push: function(model, options) {
       model = this._prepareModel(model, options);
-      this.add(model, _.extend({at: this.length}, options));
+      this.add(model, _.extend({
+        at: this.length
+      }, options));
       return model;
     },
 
@@ -762,7 +820,9 @@
     // Add a model to the beginning of the collection.
     unshift: function(model, options) {
       model = this._prepareModel(model, options);
-      this.add(model, _.extend({at: 0}, options));
+      this.add(model, _.extend({
+        at: 0
+      }, options));
       return model;
     },
 
@@ -830,8 +890,8 @@
     sortedIndex: function(model, value, context) {
       value || (value = this.comparator);
       var iterator = _.isFunction(value) ? value : function(model) {
-        return model.get(value);
-      };
+          return model.get(value);
+        };
       return _.sortedIndex(this.models, model, iterator, context);
     },
 
@@ -891,7 +951,7 @@
     _reset: function() {
       this.length = 0;
       this.models = [];
-      this._byId  = {};
+      this._byId = {};
     },
 
     // Prepare a hash of attributes (or other model) to be added to this
@@ -941,7 +1001,8 @@
     'reject', 'every', 'all', 'some', 'any', 'include', 'contains', 'invoke',
     'max', 'min', 'toArray', 'size', 'first', 'head', 'take', 'initial', 'rest',
     'tail', 'drop', 'last', 'without', 'indexOf', 'shuffle', 'lastIndexOf',
-    'isEmpty', 'chain'];
+    'isEmpty', 'chain'
+  ];
 
   // Mix in each Underscore method as a proxy to `Collection#models`.
   _.each(methods, function(method) {
@@ -959,8 +1020,8 @@
   _.each(attributeMethods, function(method) {
     Collection.prototype[method] = function(value, context) {
       var iterator = _.isFunction(value) ? value : function(model) {
-        return model.get(value);
-      };
+          return model.get(value);
+        };
       return _[method](this.models, iterator, context);
     };
   });
@@ -1006,7 +1067,7 @@
 
     // Initialize is an empty function by default. Override it with your own
     // initialization logic.
-    initialize: function(){},
+    initialize: function() {},
 
     // **render** is the core function that your view should override, in order
     // to populate its element (`this.el`), with the appropriate HTML. The
@@ -1057,7 +1118,8 @@
         if (!method) continue;
 
         var match = key.match(delegateEventSplitter);
-        var eventName = match[1], selector = match[2];
+        var eventName = match[1],
+          selector = match[2];
         method = _.bind(method, this);
         eventName += '.delegateEvents' + this.cid;
         if (selector === '') {
@@ -1133,7 +1195,10 @@
     });
 
     // Default JSON-request options.
-    var params = {type: type, dataType: 'json'};
+    var params = {
+      type: type,
+      dataType: 'json'
+    };
 
     // Ensure that we have a URL.
     if (!options.url) {
@@ -1149,7 +1214,9 @@
     // For older servers, emulate JSON by encoding the request into an HTML-form.
     if (options.emulateJSON) {
       params.contentType = 'application/x-www-form-urlencoded';
-      params.data = params.data ? {model: params.data} : {};
+      params.data = params.data ? {
+        model: params.data
+      } : {};
     }
 
     // For older servers, emulate HTTP by mimicking the HTTP method with `_method`
@@ -1172,8 +1239,7 @@
     // If we're sending a `PATCH` request, and we're in an old Internet Explorer
     // that still has ActiveX enabled by default, override jQuery to use that
     // for XHR instead. Remove this line when jQuery supports `PATCH` on IE8.
-    if (params.type === 'PATCH' && window.ActiveXObject &&
-          !(window.external && window.external.msActiveXFilteringEnabled)) {
+    if (params.type === 'PATCH' && window.ActiveXObject && !(window.external && window.external.msActiveXFilteringEnabled)) {
       params.xhr = function() {
         return new ActiveXObject("Microsoft.XMLHTTP");
       };
@@ -1189,9 +1255,9 @@
   var methodMap = {
     'create': 'POST',
     'update': 'PUT',
-    'patch':  'PATCH',
+    'patch': 'PATCH',
     'delete': 'DELETE',
-    'read':   'GET'
+    'read': 'GET'
   };
 
   // Set the default implementation of `Backbone.ajax` to proxy through to `$`.
@@ -1215,16 +1281,16 @@
   // Cached regular expressions for matching named param parts and splatted
   // parts of route strings.
   var optionalParam = /\((.*?)\)/g;
-  var namedParam    = /(\(\?)?:\w+/g;
-  var splatParam    = /\*\w+/g;
-  var escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#\s]/g;
+  var namedParam = /(\(\?)?:\w+/g;
+  var splatParam = /\*\w+/g;
+  var escapeRegExp = /[\-{}\[\]+?.,\\\^$|#\s]/g;
 
   // Set up all inheritable **Backbone.Router** properties and methods.
   _.extend(Router.prototype, Events, {
 
     // Initialize is an empty function by default. Override it with your own
     // initialization logic.
-    initialize: function(){},
+    initialize: function() {},
 
     // Manually bind a single named route to a callback. For example:
     //
@@ -1272,11 +1338,11 @@
     // against the current location hash.
     _routeToRegExp: function(route) {
       route = route.replace(escapeRegExp, '\\$&')
-                   .replace(optionalParam, '(?:$1)?')
-                   .replace(namedParam, function(match, optional){
-                     return optional ? match : '([^\/]+)';
-                   })
-                   .replace(splatParam, '(.*?)');
+        .replace(optionalParam, '(?:$1)?')
+        .replace(namedParam, function(match, optional) {
+          return optional ? match : '([^\/]+)';
+        })
+        .replace(splatParam, '(.*?)');
       return new RegExp('^' + route + '$');
     },
 
@@ -1363,14 +1429,16 @@
 
       // Figure out the initial configuration. Do we need an iframe?
       // Is pushState desired ... is it available?
-      this.options          = _.extend({}, {root: '/'}, this.options, options);
-      this.root             = this.options.root;
+      this.options = _.extend({}, {
+        root: '/'
+      }, this.options, options);
+      this.root = this.options.root;
       this._wantsHashChange = this.options.hashChange !== false;
-      this._wantsPushState  = !!this.options.pushState;
-      this._hasPushState    = !!(this.options.pushState && this.history && this.history.pushState);
-      var fragment          = this.getFragment();
-      var docMode           = document.documentMode;
-      var oldIE             = (isExplorer.exec(navigator.userAgent.toLowerCase()) && (!docMode || docMode <= 7));
+      this._wantsPushState = !! this.options.pushState;
+      this._hasPushState = !! (this.options.pushState && this.history && this.history.pushState);
+      var fragment = this.getFragment();
+      var docMode = document.documentMode;
+      var oldIE = (isExplorer.exec(navigator.userAgent.toLowerCase()) && (!docMode || docMode <= 7));
 
       // Normalize root to always include a leading and trailing slash.
       this.root = ('/' + this.root + '/').replace(rootStripper, '/');
@@ -1404,8 +1472,8 @@
         // Return immediately as browser will do redirect to new url
         return true;
 
-      // Or if we've started out with a hash-based route, but we're currently
-      // in a browser where it could be `pushState`-based instead...
+        // Or if we've started out with a hash-based route, but we're currently
+        // in a browser where it could be `pushState`-based instead...
       } else if (this._wantsPushState && this._hasPushState && atRoot && loc.hash) {
         this.fragment = this.getHash().replace(routeStripper, '');
         this.history.replaceState({}, document.title, this.root + this.fragment + loc.search);
@@ -1425,7 +1493,10 @@
     // Add a route to be tested when the fragment changes. Routes added later
     // may override previous routes.
     route: function(route, callback) {
-      this.handlers.unshift({route: route, callback: callback});
+      this.handlers.unshift({
+        route: route,
+        callback: callback
+      });
     },
 
     // Checks the current URL to see if it has changed, and if it has,
@@ -1463,7 +1534,9 @@
     // you wish to modify the current URL without adding an entry to the history.
     navigate: function(fragment, options) {
       if (!History.started) return false;
-      if (!options || options === true) options = {trigger: options};
+      if (!options || options === true) options = {
+        trigger: options
+      };
       fragment = this.getFragment(fragment || '');
       if (this.fragment === fragment) return;
       this.fragment = fragment;
@@ -1473,20 +1546,20 @@
       if (this._hasPushState) {
         this.history[options.replace ? 'replaceState' : 'pushState']({}, document.title, url);
 
-      // If hash changes haven't been explicitly disabled, update the hash
-      // fragment to store history.
+        // If hash changes haven't been explicitly disabled, update the hash
+        // fragment to store history.
       } else if (this._wantsHashChange) {
         this._updateHash(this.location, fragment, options.replace);
         if (this.iframe && (fragment !== this.getFragment(this.getHash(this.iframe)))) {
           // Opening and closing the iframe tricks IE7 and earlier to push a
           // history entry on hash-tag change.  When replace is true, we don't
           // want this.
-          if(!options.replace) this.iframe.document.open().close();
+          if (!options.replace) this.iframe.document.open().close();
           this._updateHash(this.iframe.location, fragment, options.replace);
         }
 
-      // If you've told us that you explicitly don't want fallback hashchange-
-      // based history, then `navigate` becomes a page refresh.
+        // If you've told us that you explicitly don't want fallback hashchange-
+        // based history, then `navigate` becomes a page refresh.
       } else {
         return this.location.assign(url);
       }
@@ -1526,7 +1599,9 @@
     if (protoProps && _.has(protoProps, 'constructor')) {
       child = protoProps.constructor;
     } else {
-      child = function(){ return parent.apply(this, arguments); };
+      child = function() {
+        return parent.apply(this, arguments);
+      };
     }
 
     // Add static properties to the constructor function, if supplied.
@@ -1534,7 +1609,9 @@
 
     // Set the prototype chain to inherit from `parent`, without calling
     // `parent`'s constructor function.
-    var Surrogate = function(){ this.constructor = child; };
+    var Surrogate = function() {
+      this.constructor = child;
+    };
     Surrogate.prototype = parent.prototype;
     child.prototype = new Surrogate;
 
@@ -1558,7 +1635,7 @@
   };
 
   // Wrap an optional error callback with a fallback error event.
-  var wrapError = function (model, options) {
+  var wrapError = function(model, options) {
     var error = options.error;
     options.error = function(resp) {
       if (error) error(model, resp, options);

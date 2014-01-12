@@ -56,7 +56,7 @@ function( WidgetContainerView,
 
       if(this.model.get('data').get('container_info').get('action') === "imageslider" ) {
         var slideDiv = document.createElement('div');
-        slideDiv.innerHTML = _.template(Templates.sliderTemp, {slides: this.model.get('data').get('container_info').get('slides').toJSON() });
+        slideDiv.innerHTML = _.template(Templates.sliderTemp, {slides: this.model.get('data').get('container_info').get('slides').serialize() });
         $(slideDiv).flexslider();
         this.el.appendChild(slideDiv);
       }

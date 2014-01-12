@@ -90,9 +90,9 @@ define([
       });
     },
 
-    toJSON: function() {
+    serialize: function() {
       var json  = _.clone(this.attributes);
-      json.uielements = json.uielements.toJSON();
+      json.uielements = json.uielements.serialize();
 
       return json;
     }

@@ -20,25 +20,25 @@ function(ContentModel,
       if(bone.searchQuery) { this.set('searchQuery', new SearchQueryModel(bone.searchQuery)); }
     },
 
-    toJSON: function() {
+    serialize: function() {
       var json = _.clone(this.attributes);
 
       if(json.entity) {
         if(_.isString(json.entity)) json.entity = json.entity;
         else if(json.entity.name) json.entity = json.entity.name;
-        else json.entity = json.entity.toJSON();
+        else json.entity = json.entity.serialize();
       }
 
       if(json.content_attribs) {
-        json.content_attribs = this.get('content_attribs').toJSON()||{};
+        json.content_attribs = this.get('content_attribs').serialize()||{};
       }
 
       if(json.container_info) {
-        json.container_info = this.get('container_info').toJSON();
+        json.container_info = this.get('container_info').serialize();
       }
 
       if(json.searchQuery) {
-        json.searchQuery = this.get('searchQuery').toJSON();
+        json.searchQuery = this.get('searchQuery').serialize();
       }
 
       return json;

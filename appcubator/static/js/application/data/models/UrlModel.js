@@ -32,7 +32,7 @@ define(['backbone'], function(Backbone) {
       var value = this.get('urlparts').remove(value);
     },
 
-    toJSON: function() {
+    serialize: function() {
       var json = _.clone(this.attributes);
       json.urlparts = this.get('urlparts').pluck('value');
       return json;

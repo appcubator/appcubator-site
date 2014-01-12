@@ -38,10 +38,10 @@ function(TableModel, FieldModel, FieldsCollection, Backbone) {
       return normalFields;
     },
 
-    toJSON: function () {
+    serialize: function () {
       var json = {};
       json        = _.clone(this.attributes);
-      json.fields = this.get('fields').toJSON();
+      json.fields = this.get('fields').serialize();
       json.fields = _.uniq(json.fields, function(val) { return val.name; });
       json.fields = _.filter(json.fields, function(val){ return (val.name != "First Name")&&(val.name != "Last Name");});
 

@@ -37,9 +37,9 @@ function(LinkCollection) {
       return this.get('links');
     },
 
-    toJSON: function() {
+    serialize: function() {
       var json = _.clone(this.attributes);
-      json.links = json.links.toJSON();
+      json.links = json.links.serialize();
       return json;
     }
   });

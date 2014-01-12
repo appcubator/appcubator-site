@@ -11,7 +11,7 @@ define(['backbone'], function(Backbone) {
       'r_padding' : 15,
       'alignment' : 'left'
     },
-    toJSON: function() {
+    serialize: function() {
       var json = _.clone(this.attributes);
       json.top = parseInt(this.get('top'));
       json.left = parseInt(this.get('left'));

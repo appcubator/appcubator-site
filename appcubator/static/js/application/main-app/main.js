@@ -144,13 +144,15 @@ require([
 
         $(document).ready(function() {
 
-            var appState = (appState || null);
+            //var appState = (appState || null);
 
             if (appState) {
                 /* Initialize v1State */
                 v1State = new Backbone.Model();
                 v1State = new AppModel(appState);
                 v1State.set('pages', new PageCollection(appState.pages || []));
+
+                console.log(v1State);
 
                 /* Initialize v1UIEState */
                 v1UIEState = new ThemeModel(uieState);
@@ -217,7 +219,7 @@ require([
 
             if (DEBUG) {
                 showElems = function() {
-                    v1State.getCurrentPage().get('uielements').toJSON();
+                    v1State.getCurrentPage().get('uielements').serialize();
                 };
             }
 

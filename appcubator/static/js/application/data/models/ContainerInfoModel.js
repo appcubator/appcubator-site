@@ -45,15 +45,15 @@ function(QueryModel,
     },
 
 
-    toJSON: function() {
+    serialize: function() {
       var json = _.clone(this.attributes);
-      if(json.uielements) json.uielements = this.get('uielements').toJSON();
-      if(json.slides) json.slides = json.slides.toJSON();
-      if(json.form) json.form = json.form.toJSON();
-      if(json.query) json.query = this.get('query').toJSON();
-      if(json.search) json.search = json.search.toJSON();
-      if(json.searchQuery) json.searchQuery = json.searchQuery.toJSON();
-      if(this.has('row')) json.row = this.get('row').toJSON();
+      if(json.uielements) json.uielements = this.get('uielements').serialize();
+      if(json.slides) json.slides = json.slides.serialize();
+      if(json.form) json.form = json.form.serialize();
+      if(json.query) json.query = this.get('query').serialize();
+      if(json.search) json.search = json.search.serialize();
+      if(json.searchQuery) json.searchQuery = json.searchQuery.serialize();
+      if(this.has('row')) json.row = this.get('row').serialize();
       if(this.has('entity')) {
         if(typeof json.entity !== "string") {
           json.entity = json.entity.get('name');

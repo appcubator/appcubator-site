@@ -273,7 +273,7 @@ define(function(require, exports, module) {
             $el.fadeOut().html("<span>Saving...</span>").fadeIn();
 
             var self = this;
-            appState = v1State.toJSON();
+            appState = v1State.serialize();
 
             var successHandler = function(data) {
                 util.dontAskBeforeLeave();
@@ -491,11 +491,11 @@ define(function(require, exports, module) {
             if (this.view.marqueeView.multiSelectorView.contents.length) {
                 this.contents = [];
                 _(this.view.marqueeView.multiSelectorView.contents).each(function(model) {
-                    this.contents.push(_.clone(model.toJSON()));
+                    this.contents.push(_.clone(model.serialize()));
                 }, this);
             } else if (this.view.widgetsManager.widgetSelectorView.selectedEl) {
                 this.contents = [];
-                this.contents.push(_.clone(this.view.widgetsManager.widgetSelectorView.selectedEl.toJSON()));
+                this.contents.push(_.clone(this.view.widgetsManager.widgetSelectorView.selectedEl.serialize()));
             }
         },
 

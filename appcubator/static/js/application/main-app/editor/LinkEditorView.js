@@ -28,13 +28,13 @@ define([
             // if the current link is an external link,
             // we need to add it to the link options
             if (!this.isInternalLink(this.model.get('url'))) {
-                this.linkOptions.push(this.model.toJSON());
+                this.linkOptions.push(this.model.serialize());
             }
         },
 
         render: function() {
             var self = this;
-            this.$el.html(_.template(Templates.LinkEditor, this.model.toJSON()));
+            this.$el.html(_.template(Templates.LinkEditor, this.model.serialize()));
             this.renderLinkOptions();
 
             this.$urlContainer = this.$el.find('.url-container');
@@ -124,7 +124,7 @@ define([
 
         updateTitle: function(e) {
             var newTitle = e.target.value;
-            var oldAttrs = this.model.toJSON();
+            var oldAttrs = this.model.serialize();
             this.model.set({
                 title: newTitle
             });

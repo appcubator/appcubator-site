@@ -259,7 +259,7 @@ define(function(require, exports, module) {
 
         save: function() {
             var self = this;
-            var json = this.model.toJSON();
+            var json = this.model.serialize();
             var save_url = '/app/' + appId + '/uiestate/';
             // var currentTime = new Date().getTime();
             

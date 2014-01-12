@@ -24,7 +24,7 @@ function() {
       return this.get('type');
     },
 
-    toJSON: function () {
+    serialize: function () {
       var json = _.clone(this.attributes);
       if(json.type == "goto") {
         var str = "internal://" + json.page_name;

@@ -31,9 +31,9 @@ function(LinkCollection) {
       return this.get('links');
     },
 
-    toJSON : function() {
+    serialize : function() {
       var json = _.clone(this.attributes);
-      json.links = this.get('links').toJSON();
+      json.links = this.get('links').serialize();
       return json;
     }
 

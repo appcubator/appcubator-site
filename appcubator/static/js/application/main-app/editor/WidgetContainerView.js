@@ -68,7 +68,7 @@ function( React,
         var slideDiv = document.createElement('div');
         var data = {
           cid: this.model.cid,
-          slides: this.model.get('data').get('container_info').get('slides').toJSON()
+          slides: this.model.get('data').get('container_info').get('slides').serialize()
         };
         slideDiv.innerHTML = _.template(Templates.sliderTemp, data);
         $(slideDiv).carousel();
@@ -105,7 +105,7 @@ function( React,
 
       if(this.model.get('data').get('action') == "thirdpartylogin" ) {
         var thirdPartyBtn = document.createElement('div');
-        thirdPartyBtn.innerHTML = _.template(Templates.thirdPartyLogin, this.model.get('data').toJSON());
+        thirdPartyBtn.innerHTML = _.template(Templates.thirdPartyLogin, this.model.get('data').serialize());
         this.el.appendChild(thirdPartyBtn);
       }
 

@@ -129,4 +129,15 @@ define([
             return model;
         };
 
+        Backbone.Model.prototype.serialize = function() {
+
+            var json = this.toJSON();
+            
+            if(this.generate) {
+                json.data = json;
+                json.generate = this.generate;
+            }
+
+            return json;
+        };
     });

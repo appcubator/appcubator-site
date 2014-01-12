@@ -39,10 +39,10 @@ define([
             this.isUser = false;
         },
 
-        toJSON: function() {
+        serialize: function() {
             var json = {};
             json = _.clone(this.attributes);
-            json.fields = this.get('fields').toJSON();
+            json.fields = this.get('fields').serialize();
             return json;
         },
 

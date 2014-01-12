@@ -62,7 +62,7 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            this.el.innerHTML = _.template(tableTemplate, this.model.toJSON());
+            this.el.innerHTML = _.template(tableTemplate, this.model.serialize());
             this.el.id = 'table-' + this.model.cid;
             this.renderDescription();
 

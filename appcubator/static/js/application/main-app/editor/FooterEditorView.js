@@ -100,7 +100,7 @@ function(NavbarEditorView, LinkEditorView) {
       var pageM = v1State.get('pages').get(cid);
 
       this.model.get('links').reset();
-      this.model.get('links').add(pageM.get('footer').get('links').toJSON());
+      this.model.get('links').add(pageM.get('footer').get('links').serialize());
       this.model.set('customText', pageM.get('footer').get('customText'));
 
       this.closeModal();

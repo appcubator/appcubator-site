@@ -35,7 +35,7 @@ define([
 
             render: function() {
                 var temp = UrlTemplate.mainTemplate;
-                this.el.innerHTML = _.template(temp, this.model.toJSON());
+                this.el.innerHTML = _.template(temp, this.model.serialize());
                 this.renderUrlParts();
                 this.renderFullUrl();
 
@@ -193,14 +193,14 @@ define([
             changedOrder: function(e, ui) {
                 var self = this;
                 var sortedIDs = $('.url-parts').sortable("toArray");
-                console.log(this.model.get('urlparts').toJSON());
+                console.log(this.model.get('urlparts').serialize());
 
                 var newUrlParts = _(sortedIDs).map(function(id) {
                     return self.model.get('urlparts').get(id.replace('urlpart-', ''));
                 });
 
                 this.model.get('urlparts').reset(newUrlParts);
-                console.log(this.model.get('urlparts').toJSON());
+                console.log(this.model.get('urlparts').serialize());
             },
             cancelFormSubmit: function() {
                 return false;

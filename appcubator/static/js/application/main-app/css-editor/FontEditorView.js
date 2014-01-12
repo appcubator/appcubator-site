@@ -71,7 +71,7 @@ define(function(require, exports, module) {
             this.$el.find('.fonts').on('click', 'li .remove', function(e) {
                 var cid = e.currentTarget.dataset.cid;
                 self.model.get('fonts').remove(cid);
-                console.log(self.model.get('fonts').toJSON());
+                console.log(self.model.get('fonts').serialize());
                 $(e.currentTarget).parent().remove();
             });
 

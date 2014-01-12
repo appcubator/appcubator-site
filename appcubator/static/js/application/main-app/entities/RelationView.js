@@ -25,7 +25,7 @@ function(SelectView) {
 
     render: function() {
       var type = this.model.get('type');
-      data = this.model.toJSON();
+      data = this.model.serialize();
       data.cid = this.model.cid;
       data.util = util;
 

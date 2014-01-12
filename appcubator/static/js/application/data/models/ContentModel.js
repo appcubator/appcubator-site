@@ -8,7 +8,7 @@ define(['backbone'], function(Backbone) {
       }
     },
 
-    toJSON: function() {
+    serialize: function() {
       var json = _.clone(this.attributes);
       if(json.src_content) {
         json.src = json.src_content;

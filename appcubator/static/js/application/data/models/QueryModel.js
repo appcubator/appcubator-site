@@ -13,9 +13,9 @@ define([
       this.set('where', new WhereCollection(bone.where||[]));
     },
 
-    toJSON: function () {
+    serialize: function () {
       var json = _.clone(this.attributes);
-      json.where = json.where.toJSON();
+      json.where = json.where.serialize();
 
       return json;
     }

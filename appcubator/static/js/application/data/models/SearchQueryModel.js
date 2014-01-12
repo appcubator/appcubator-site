@@ -31,7 +31,7 @@ function() {
       }, this);
     },
 
-    toJSON: function () {
+    serialize: function () {
       var json = _.clone(this.attributes);
       json.searchFields = json.searchFields.pluck('value');
       return json;

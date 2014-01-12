@@ -156,7 +156,7 @@ define([
 
       var callback = jasmine.createSpy();
 
-      getValidation(v1State.toJSON(), callback);
+      getValidation(v1State.serialize(), callback);
       waitsFor(function() {
         return callback.callCount > 0;
       });

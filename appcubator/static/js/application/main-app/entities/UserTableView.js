@@ -30,7 +30,7 @@ define([
 
 
             render: function() {
-                this.el.innerHTML = _.template(TableTemplates.UserTable, this.model.toJSON());
+                this.el.innerHTML = _.template(TableTemplates.UserTable, this.model.serialize());
                 this.el.id = 'user-table-' + this.model.cid;
 
                 this.renderProperties();

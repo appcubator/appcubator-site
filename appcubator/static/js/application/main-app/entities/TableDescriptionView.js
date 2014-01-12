@@ -100,7 +100,7 @@ define(function(require, exports, module) {
 
         render: function() {
 
-            this.$el.html(_.template(descriptionTemplate, this.model.toJSON()));
+            this.$el.html(_.template(descriptionTemplate, this.model.serialize()));
 
             this.renderProperties();
             this.renderRelations();

@@ -43,12 +43,12 @@ define(function(require, exports, module) {
 
             var insStr ='';
             this.model.get('instancemethods').each(function(methodModel) {
-                insStr += _.template(funcTemplate, _.extend(methodModel.toJSON(), {cid: methodModel.cid}));
+                insStr += _.template(funcTemplate, _.extend(methodModel.serialize(), {cid: methodModel.cid}));
             });
 
             var statStr ='';
             this.model.get('staticmethods').each(function(methodModel) {
-                statStr += _.template(funcTemplate, _.extend(methodModel.toJSON(), {cid: methodModel.cid}));
+                statStr += _.template(funcTemplate, _.extend(methodModel.serialize(), {cid: methodModel.cid}));
             });
 
             this.el.innerHTML = [
@@ -114,12 +114,12 @@ define(function(require, exports, module) {
         },
 
         renderStaticMethod: function(methodModel) {
-            this.$el.find('#static-methods-list').append(_.template(funcTemplate, _.extend(methodModel.toJSON(), {cid: methodModel.cid})));
+            this.$el.find('#static-methods-list').append(_.template(funcTemplate, _.extend(methodModel.serialize(), {cid: methodModel.cid})));
             this.setupSingleAce(methodModel);
         },
 
         renderInstanceMethod: function(methodModel) {
-            this.$el.find('#instance-methods-list').append(_.template(funcTemplate, _.extend(methodModel.toJSON(), {cid: methodModel.cid})));
+            this.$el.find('#instance-methods-list').append(_.template(funcTemplate, _.extend(methodModel.serialize(), {cid: methodModel.cid})));
             this.setupSingleAce(methodModel);
         },
 

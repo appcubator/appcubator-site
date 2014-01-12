@@ -43,7 +43,7 @@ function(LinkEditorView) {
 
       editorDiv.innerHTML = _.template(Templates.NavbarEditor, {
         brandName: brandName,
-        items: this.model.get('links').toJSON()
+        items: this.model.get('links').serialize()
       });
 
       this.$linksList = this.$el.find('#link-editors');
@@ -70,7 +70,7 @@ function(LinkEditorView) {
     addLinkEditorClicked: function(e) {
       var newLink = {};
       if(this.model.get('links').last()) {
-        _.clone(this.model.get('links').last().toJSON());
+        _.clone(this.model.get('links').last().serialize());
       }
       else {
         newLink = {
@@ -139,7 +139,7 @@ function(LinkEditorView) {
       var pageM = v1State.get('pages').get(cid);
 
       this.model.get('links').reset();
-      this.model.get('links').add(pageM.get('navbar').get('links').toJSON());
+      this.model.get('links').add(pageM.get('navbar').get('links').serialize());
       this.model.set('brandName', pageM.get('navbar').get('brandName'));
 
       this.closeModal();

@@ -140,7 +140,7 @@ define([
                 var pageM = v1State.get('pages').get(this.pageCidToClone);
                 var pageName = $('.clone-page-name').val();
 
-                var initModel = pageM.toJSON();
+                var initModel = pageM.serialize();
                 var pageUrlPart = pageName.replace(/ /g, '_');
                 initModel.url.urlparts[0] = pageUrlPart;
                 initModel.name = pageName;

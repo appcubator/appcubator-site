@@ -20,7 +20,7 @@ function(Backbone) {
 
       this.entity = entityModel;
       this.name = entityModel.get('name');
-      this.fields = entityModel.get('fields').toJSON();
+      this.fields = entityModel.get('fields').serialize();
       this.render();
       this.setUpDragnDrop();
 

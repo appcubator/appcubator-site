@@ -94,7 +94,7 @@ function(UIElementListView, ErrorDialogueView) {
           return false;
         }
         var newFont = self.model.get('fonts').add({name: value});
-        console.log(self.model.get('fonts').toJSON());
+        console.log(self.model.get('fonts').serialize());
         var font = value.replace(/\+/g, ' ');
         $('#fonts-cont .fonts').append(_.template(ThemeTemplates.tempFont, { font: font, cid: newFont.cid }));
       });
@@ -102,7 +102,7 @@ function(UIElementListView, ErrorDialogueView) {
       $('#fonts-cont .fonts ').on('click', 'li .remove', function(e) {
         var cid = e.currentTarget.dataset.cid;
         self.model.get('fonts').remove(cid);
-        console.log(self.model.get('fonts').toJSON());
+        console.log(self.model.get('fonts').serialize());
         $(e.currentTarget).parent().remove();
       });
     },
@@ -181,7 +181,7 @@ function(UIElementListView, ErrorDialogueView) {
 
     save: function(e) {
       e.preventDefault();
-      var json = this.model.toJSON();
+      var json = this.model.serialize();
       if(themeId) { save_url = url + '/edit/'; }
       else if(appId) { save_url = url + '/uiestate/'; }
       var save_btn = $('.save-btn img');

@@ -90,15 +90,15 @@ function(AppInfoModel,
       return new EntityManager({ pages: this.get('pages') }).getWidgetsRelatedToField(fieldM);
     },
 
-    toJSON: function() {
+    serialize: function() {
       var json = _.clone(this.attributes);
-      json.info = json.info.toJSON();
-      json.users = json.users.toJSON();
-      json.tables = json.tables.toJSON();
-      json.pages = this.get('pages').toJSON();
-      //if(json.mobilePages) json.mobilePages = json.mobilePages.toJSON();
+      json.info = json.info.serialize();
+      json.users = json.users.serialize();
+      json.tables = json.tables.serialize();
+      json.pages = this.get('pages').serialize();
+      //if(json.mobilePages) json.mobilePages = json.mobilePages.serialize();
       if(json.mobilePages) json.mobilePages = [];
-      json.emails = json.emails.toJSON();
+      json.emails = json.emails.serialize();
 
       return json;
     }

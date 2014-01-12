@@ -277,13 +277,13 @@ define([
                 return this.get('isConstant');
             },
 
-            toJSON: function() {
+            serialize: function() {
                 var json = _.clone(this.attributes);
                 json.name = json.name || "";
-                json.fields = this.get('fields').toJSON();
-                if (json.loginRoutes) json.loginRoutes = json.loginRoutes.toJSON();
-                if (json.goto) json.goto = json.goto.toJSON();
-                if (json.actions) json.actions = json.actions.toJSON();
+                json.fields = this.get('fields').serialize();
+                if (json.loginRoutes) json.loginRoutes = json.loginRoutes.serialize();
+                if (json.goto) json.goto = json.goto.serialize();
+                if (json.actions) json.actions = json.actions.serialize();
                 return json;
             }
 

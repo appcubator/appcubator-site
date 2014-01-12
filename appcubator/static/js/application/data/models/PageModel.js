@@ -164,12 +164,12 @@ define([
                 return hasSearchList;
             },
 
-            toJSON: function() {
+            serialize: function() {
                 var json = _.clone(this.attributes);
-                json.url = this.get('url').toJSON();
-                json.navbar = this.get('navbar').toJSON();
-                json.footer = this.get('footer').toJSON();
-                json.uielements = this.get('uielements').toJSON();
+                json.url = this.get('url').serialize();
+                json.navbar = this.get('navbar').serialize();
+                json.footer = this.get('footer').serialize();
+                json.uielements = this.get('uielements').serialize();
                 return json;
             }
         });

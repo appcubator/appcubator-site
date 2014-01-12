@@ -29,41 +29,41 @@ function( AppModel,
   describe("Emails", function() {
     it("works", function() {
       var emailsCollection = new EmailCollection(appState.emails);
-      expect(appState.emails).toEqual(emailsCollection.toJSON());
+      expect(appState.emails).toEqual(emailsCollection.serialize());
     });
   });
 
   describe("Info", function() {
     it("works", function() {
       var infoModel = new AppInfoModel(appState.info);
-      expect(appState.info).toEqual(infoModel.toJSON());
+      expect(appState.info).toEqual(infoModel.serialize());
     });
   });
 
   describe("Mobile Pages", function() {
     it("works", function() {
       var pagesCollection = new MobilePageCollection(appState.mobilePages);
-      expect(appState.mobilePages).toEqual(pagesCollection.toJSON());
+      expect(appState.mobilePages).toEqual(pagesCollection.serialize());
     });
   });
 
   describe("Pages", function() {
     it("works", function() {
       //var pagesCollection = new PageCollection(appState.pages);
-      //expect(appState.pages).toEqual(pagesCollection.toJSON());
+      //expect(appState.pages).toEqual(pagesCollection.serialize());
     });
   });
 
   describe("User Tables", function() {
     it("works", function() {
       var usersCollection = new UserRolesCollection(appState.users);
-      expect(appState.users).toEqual(usersCollection.toJSON());
+      expect(appState.users).toEqual(usersCollection.serialize());
     });
   });
 
   describe("Tables", function() {
       var tablesCollection = new TableCollection(appState.tables);
-      expect(appState.tables).toEqual(tablesCollection.toJSON());
+      expect(appState.tables).toEqual(tablesCollection.serialize());
   });
 
 });

@@ -153,7 +153,7 @@ function(AppModel,
     },
 
     getJSON: function() {
-      return this.state.toJSON();
+      return this.state.serialize();
     }
 
   });

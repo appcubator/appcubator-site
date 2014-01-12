@@ -30,11 +30,11 @@ define([
                 }, this);
             },
 
-            toJSON: function() {
+            serialize: function() {
                 var json = _.clone(this.attributes);
 
-                json.layout = this.get('layout').toJSON();
-                json.data = this.get('data').toJSON();
+                json.layout = this.get('layout').serialize();
+                json.data = this.get('data').serialize();
                 if (json.context) delete json.context;
 
                 return json;
