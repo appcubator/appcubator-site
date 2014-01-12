@@ -48,11 +48,9 @@ def provision(appdir, deploy_data):
     Spawn a development sandbox.
     Returns deployment_id
     """
-    tar_path = _write_tar_from_app_dir(appdir)
     devmonport = random.randint(1025, 60000) # TODO more properly find an available port
     appport = random.randint(1025, 60000)
     DEVMON = os.path.join(os.path.dirname(__file__), 'devmon.js')
-    print appdir
     cmd = [DEVMON, str(devmonport), str(appport), appdir, 'node', 'app.js', str(appport)]
     child_env = os.environ.copy()
     child_env.update({'MONGO_ADDR': 'localhost'})
