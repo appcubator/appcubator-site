@@ -636,6 +636,12 @@
     if (options.model) this.model = options.model;
     if (options.comparator !== void 0) this.comparator = options.comparator;
     this._reset();
+
+    if(models.generate) {
+      this.generate = models.generate;
+      models = models.data;
+    }
+
     this.initialize.apply(this, arguments);
     if (models) this.reset(models, _.extend({
       silent: true
@@ -668,9 +674,20 @@
     // The JSON representation of a Collection is an array of the
     // models' attributes.
     toJSON: function(options) {
-      return this.map(function(model) {
+      var json = {};
+      var data = this.map(function(model) {
         return model.toJSON(options);
       });
+
+      if(this.generate) {
+        json.generate = this.generate;
+        json.data = data;
+      }
+      else {
+        json = data;
+      }
+
+      return json;
     },
 
     // Proxy `Backbone.sync` by default.
