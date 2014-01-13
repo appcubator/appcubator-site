@@ -680,7 +680,8 @@ class App(models.Model):
             self.clear_error_record(src='deploy')
         finally:
             # because hard disk space doesn't grow on trees.
-            shutil.rmtree(tmpdir)
+            if not settings.DEBUG:
+                shutil.rmtree(tmpdir)
         return self.deployment_id
 
     def delete_deployment(self):
