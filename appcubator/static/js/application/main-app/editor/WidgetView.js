@@ -123,24 +123,26 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         renderElement: function() {
-            var el = "";
-            console.log(this.model);
+            var html = "";
+            var el = this.model.expand();
 
-            if(this.model.generate) {
-                el = this.model.expand();
-            }
-            else if(this.model.has('html')) {
-                var temp = this.model.get('html');
+            console.log(this.model);
+            console.log(el);
+
+            if(el.html) {
+                var temp = el.html;
                 var cont = {};
                 
                 if(this.model.has('style')) {
                     _.extend(cont, this.model.get('style').serialize());
                 }
 
-                el = _.template(temp, cont);
+                html = _.template(temp, cont);
             }
 
-            return el;
+            console.log(html);
+
+            return html;
         },
 
         select: function(e) {

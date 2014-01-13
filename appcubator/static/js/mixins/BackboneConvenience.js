@@ -166,6 +166,9 @@ define([
                 var generator = new Generator();
                 return generator.generate(this.generate, this.toJSON());
             }
+            else {
+                return this.toJSON();
+            }
 
             return null;
         };
