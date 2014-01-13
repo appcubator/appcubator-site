@@ -100,6 +100,7 @@ function(AppInfoModel,
       json.tables = json.tables.serialize();
       //if(json.mobilePages) json.mobilePages = json.mobilePages.serialize();
       json.emails = json.emails.serialize();
+      json.templates = json.templates.serialize();
 
       return json;
     }

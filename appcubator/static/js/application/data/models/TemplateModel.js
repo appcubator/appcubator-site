@@ -8,7 +8,7 @@ define(function(require, exports, module) {
         initialize: function(bone) {
 
             console.log(bone);
-            this.set('body', new WidgetCollection(bone.body.data));
+            this.set('body', new WidgetCollection(bone.body));
 
             // _(bone.body).each(function(uielement) {
             //     if (uielement.container_info) {
@@ -17,6 +17,14 @@ define(function(require, exports, module) {
             //         this.get('body').addWidgetModel(uielement);
             //     }
             // }, this);
+        },
+
+        toJSON: function() {
+
+            var json = _.clone(this.attributes);
+            json.body = json.body.serialize();
+
+            return json;
         }
     });
 

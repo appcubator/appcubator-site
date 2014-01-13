@@ -151,7 +151,7 @@ define([
 
             if(this.generate) {
                 json.generate = this.generate;
-                json.data = json;
+                json.data = data;
             }
             else {
                 json = data;

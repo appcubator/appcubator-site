@@ -276,6 +276,8 @@ define(function(require, exports, module) {
             var self = this;
             appState = v1State.serialize();
 
+            console.log(appState);
+
             var successHandler = function(data) {
                 util.dontAskBeforeLeave();
                 v1.disableSave = false;
