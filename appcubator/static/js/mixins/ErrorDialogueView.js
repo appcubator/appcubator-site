@@ -35,7 +35,6 @@ function(Backbone) {
     },
 
     render : function(img, text) {
-      console.log(text);
       if(img) { this.el.innerHTML += '<img src="/static/img/'+img+'">'; }
       if(text) { this.el.innerHTML += '<p>'+text+'</p>'; }
 

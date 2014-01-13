@@ -674,20 +674,9 @@
     // The JSON representation of a Collection is an array of the
     // models' attributes.
     toJSON: function(options) {
-      var json = {};
-      var data = this.map(function(model) {
+      return this.map(function(model) {
         return model.toJSON(options);
       });
-
-      if(this.generate) {
-        json.generate = this.generate;
-        json.data = data;
-      }
-      else {
-        json = data;
-      }
-
-      return json;
     },
 
     // Proxy `Backbone.sync` by default.

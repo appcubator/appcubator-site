@@ -4,6 +4,7 @@ define(function(require, exports, module) {
 
     require('backbone');
     var DeployView = require('DeployView');
+    var ErrorDialogueView = require('mixins/ErrorDialogueView');
 
 	var DeployManagerModel = Backbone.Model.extend({
 
@@ -136,7 +137,7 @@ define(function(require, exports, module) {
                     500: function(jqxhr){
                         var data = jqxhrToJson(jqxhr);
                         data = completeCallback(data);
-                        data = self.hardErrorHandler(data);
+                        data = self.deployHardErrorHandler(data);
                         data = callback(data);
                     },
                 },

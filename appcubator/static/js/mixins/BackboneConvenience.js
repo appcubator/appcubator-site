@@ -130,12 +130,30 @@ define([
         };
 
         Backbone.Model.prototype.serialize = function() {
-
-            var json = this.toJSON();
+            var json = {};
+            var data = this.toJSON();
             
             if(this.generate) {
-                json.data = json;
                 json.generate = this.generate;
+                json.data = json;
+            }
+            else {
+                json = data;
+            }
+
+            return json;
+        };
+
+        Backbone.Collection.prototype.serialize = function() {
+            var json = {};
+            var data = this.toJSON();
+
+            if(this.generate) {
+                json.generate = this.generate;
+                json.data = json;
+            }
+            else {
+                json = data;
             }
 
             return json;
