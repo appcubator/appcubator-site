@@ -126,7 +126,10 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             var el = "";
             console.log(this.model);
 
-            if(this.model.has('html')) {
+            if(this.model.generate) {
+                el = this.model.expand();
+            }
+            else if(this.model.has('html')) {
                 var temp = this.model.get('html');
                 var cont = {};
                 

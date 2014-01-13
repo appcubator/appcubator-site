@@ -1,9 +1,10 @@
 define([
         'backbone',
+        'app/Generator',
         'util'
     ],
 
-    function(Backbone) {
+    function(Backbone, Generator) {
 
         Backbone.View.prototype.close = function() {
 
@@ -157,5 +158,15 @@ define([
             }
 
             return json;
+        };
+
+        Backbone.Model.prototype.expand = function() {
+
+            if(this.generate) {
+                var generator = new Generator();
+                return generator.generate(this.generate, this.toJSON());
+            }
+
+            return null;
         };
     });
