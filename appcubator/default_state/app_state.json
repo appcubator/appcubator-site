@@ -132,7 +132,7 @@
             {
               "html": "<h1 class='<%= class_name %>''>Search Flickr</h1>",
               "style": {
-                "class_name": "yolo",
+                "class_name": "yolo"
               },
               "js": "",
               "css": "",
@@ -158,8 +158,8 @@
               "css": "",
               "layout": {},
               "style": {
-                "class_name": "yolo2",
-              },
+                "class_name": "yolo2"
+              }
             },
             {
               "generate": "crud.uielements.create",
