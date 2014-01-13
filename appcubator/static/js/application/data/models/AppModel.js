@@ -98,9 +98,7 @@ function(AppInfoModel,
       json.info = json.info.serialize();
       json.users = json.users.serialize();
       json.tables = json.tables.serialize();
-      json.pages = this.get('pages').serialize();
       //if(json.mobilePages) json.mobilePages = json.mobilePages.serialize();
-      if(json.mobilePages) json.mobilePages = [];
       json.emails = json.emails.serialize();
 
       return json;

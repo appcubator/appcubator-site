@@ -9,6 +9,7 @@ define(function(require, exports, module) {
 
 
     var SoftErrorView = require("app/SoftErrorView");
+    var ErrorDialogueView = require('mixins/ErrorDialogueView');
     var EntitiesView = require('app/entities/EntitiesView');
 
 
