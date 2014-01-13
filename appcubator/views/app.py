@@ -789,17 +789,12 @@ def deploy(request, app_id):
             result = {}
             result['site_url'] = app.url()
             result['zip_url'] = reverse('appcubator.views.app.app_zip', args=(app_id,))
-            is_merge, data = app.deploy()
+            data = app.deploy()
         except codegen.UserInputError, e:
             d = e.to_dict()
             return JsonResponse(d, status=400)
 
-        if is_merge:
-            result.update(data)
-            status = 409
-        else:
-            status = 200
-        return HttpResponse(simplejson.dumps(result), status=status, mimetype="application/json")
+        return HttpResponse(simplejson.dumps(result), status=200, mimetype="application/json")
 
 
 @require_POST

@@ -20,10 +20,14 @@ import shutil
 from utils import RandomPrimaryIdModel
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_app_state, get_default_uie_state, get_default_mobile_uie_state
 
-import deploy
-from appcubator import codegen
-
 from django.conf import settings
+
+if settings.DEBUG:
+    import deploy.local_deploy as deploy
+else:
+    import deploy.deis_deploy as deploy
+
+from appcubator import codegen
 
 
 def email_to_uniq_username(email):
@@ -226,6 +230,7 @@ class TempDeployment(RandomPrimaryIdModel):
     def get_deploy_data(self):
         post_data = {
             "hostname": self.hostname(),
+            "url": self.url(),
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
@@ -562,17 +567,8 @@ class App(models.Model):
 
         # app.api_key = self.api_key
         try:
-            # TODO FIXME
-            #codes = create_codes(app,
-            #            uid=self.uid(),
-            #            email=self.owner.email,
-            #            provider_data=self.get_plugin_data())
-            #coder = Coder.create_from_codes(codes)
-
-            #tmp_project_dir = write_to_fs(coder, css=self.css())
             code_data = codegen.compileApp(self.state, css=self.css())
             tmp_project_dir = codegen.write_to_tmpdir(code_data)
-            # TODO write the stuff from code_data to disk
         except Exception:
             self.record_compile2_error(traceback.format_exc())
             raise
@@ -614,7 +610,8 @@ class App(models.Model):
                 zbytes = zfile.read()
         finally:
             # because hard disk space doesn't grow on trees.
-            shutil.rmtree(tmpdir)
+            if not settings.DEBUG:
+                shutil.rmtree(tmpdir)
 
         return zbytes
 
@@ -662,6 +659,7 @@ class App(models.Model):
     def get_deploy_data(self):
         post_data = {
             "hostname": self.hostname(),
+            "url": self.url(),
             "app_json": self.state_json,
             "deploy_secret": "v1factory rocks!"
         }
@@ -669,13 +667,12 @@ class App(models.Model):
 
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
+        logger.info("Deployed to %s" % tmpdir)
         try:
-            logger.info("Deployed to %s" % tmpdir)
-            #is_merge, data = deploy.transport_app(tmpdir, self.deployment_id, self.get_deploy_data(), retry_on_404=retry_on_404)
-            is_merge, data = False, None
-            if not is_merge:
-                self.deployment_id = data
-                self.save() # might be unnecessary if nothing has changed.
+            if self.deployment_id is None:
+                self.deployment_id = deploy.provision(tmpdir, self.get_deploy_data())
+            else:
+                deploy.update_code(tmpdir, self.deployment_id, self.get_deploy_data())
         except Exception:
             self.record_deploy_error(traceback.format_exc())
             raise
@@ -683,14 +680,12 @@ class App(models.Model):
             self.clear_error_record(src='deploy')
         finally:
             # because hard disk space doesn't grow on trees.
-            # TODO uncomment below once deployment is working
-            pass
-            #shutil.rmtree(tmpdir)
-        return (is_merge, data)
+            shutil.rmtree(tmpdir)
+        return self.deployment_id
 
     def delete_deployment(self):
         if self.deployment_id is not None:
-            pass # TODO implement
+            deploy.destroy(self.deployment_id)
 
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:

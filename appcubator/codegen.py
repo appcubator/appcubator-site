@@ -50,6 +50,7 @@ def expandAll(app):
         raise Exception("ruh roh")
 
 def compileApp(app, css=''):
+    assert isinstance(app, dict)
     app['css'] = css
     r = requests.post(settings.CODEGEN_ADDR + '/compile/', data=json.dumps(app), headers={'Content-Type':'application/json'})
     if r.status_code == 200:
@@ -77,7 +78,7 @@ def write_to_tmpdir(codeData):
     # TEMPORARY TIME-SAVING HACK: EXTRACT TAR OF REQUIRED NODE_MODULES INTO TMPDIR
     import subprocess, shlex
     NM_TAR_PATH = os.path.join(os.path.dirname(__file__), 'node_modules.tar.gz')
-    p = subprocess.Popen(shlex.split('tar zxvf %s -C %s' % (NM_TAR_PATH, tmpdir)))
+    p = subprocess.Popen(shlex.split('tar zxf %s -C %s' % (NM_TAR_PATH, tmpdir)))
     p.wait()
 
     return tmpdir
