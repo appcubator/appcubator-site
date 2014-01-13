@@ -637,7 +637,7 @@
     if (options.comparator !== void 0) this.comparator = options.comparator;
     this._reset();
 
-    if(models.generate) {
+    if(models && models.generate) {
       this.generate = models.generate;
       models = models.data;
     }
