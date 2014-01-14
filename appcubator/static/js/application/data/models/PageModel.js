@@ -156,12 +156,12 @@ define([
                 return hasSearchList;
             },
 
-            serialize: function() {
+            toJSON: function() {
                 var json = _.clone(this.attributes);
                 json.url = this.get('url').serialize();
-                json.navbar = this.get('navbar').serialize();
-                json.footer = this.get('footer').serialize();
-                json.uielements = this.get('uielements').serialize();
+                // json.navbar = this.get('navbar').serialize();
+                // json.footer = this.get('footer').serialize();
+                // json.uielements = this.get('uielements').serialize();
                 return json;
             }
         });

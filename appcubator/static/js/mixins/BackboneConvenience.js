@@ -144,13 +144,13 @@ define([
             this.generate = generatorStr;
         };
 
-        Backbone.Model.prototype.serialize = function() {
+        Backbone.Model.prototype.serialize = function(options) {
             var json = {};
-            var data = this.toJSON();
+            var data = this.toJSON(options);
 
             if (this.generate) {
                 json.generate = this.generate;
-                json.data = json;
+                json.data = data;
             } else {
                 json = data;
             }
@@ -158,10 +158,11 @@ define([
             return json;
         };
 
-        Backbone.Collection.prototype.serialize = function() {
+        Backbone.Collection.prototype.serialize = function(options) {
             var json = {};
 
             var data = this.map(function(model) {
+                console.log(model);
                 return model.serialize(options);
             });
 
@@ -172,6 +173,7 @@ define([
                 json = data;
             }
 
+            console.log(json);
             return json;
         };
 
