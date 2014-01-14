@@ -162,7 +162,6 @@ define([
             var json = {};
 
             var data = this.map(function(model) {
-                console.log(model);
                 return model.serialize(options);
             });
 
@@ -173,7 +172,6 @@ define([
                 json = data;
             }
 
-            console.log(json);
             return json;
         };
 
