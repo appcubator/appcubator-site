@@ -67,30 +67,36 @@ define([
 
         Backbone.Collection.prototype.add = function(models, options) {
             /* make things validate by default*/
-            models = _.isArray(models)? models : [models];
-            options = _.extend({validate: true}, options);
+            models = _.isArray(models) ? models : [models];
+            options = _.extend({
+                validate: true
+            }, options);
             var dupes = [];
-            var addOptions = {add: true, merge: false, remove: false};
+            var addOptions = {
+                add: true,
+                merge: false,
+                remove: false
+            };
 
-            if(this.uniqueKeys) {
+            if (this.uniqueKeys) {
                 if (!_.isArray(models)) models = models ? [models] : [];
-                
+
                 _.each(models, function(model) {
                     this.each(function(_model) {
                         var dupe = null;
                         _.each(this.uniqueKeys, function(key) {
                             var _modelVal = _model.attributes ? _model.get(key) : _model[key];
-                            if(_modelVal === model.get(key) ||
+                            if (_modelVal === model.get(key) ||
                                 (Backbone.isString(_modelVal) && Backbone.isString(model.get(key)) &&
                                     _modelVal.toLowerCase() === model.get(key).toLowerCase()
-                                    )) {
+                                )) {
                                 dupe = model;
                                 this.trigger('duplicate', key, model.get(key));
                                 return;
                             }
                         }, this);
 
-                        if(dupe) {
+                        if (dupe) {
                             dupes.push(dupe);
                             return;
                         }
@@ -107,26 +113,30 @@ define([
         Backbone.Collection.prototype.push = function(model, options) {
             model = this._prepareModel(model, options);
             var dupe = null;
-            if(this.uniqueKeys) {
+            if (this.uniqueKeys) {
 
                 this.each(function(_model) {
 
-                        _.each(this.uniqueKeys, function(key) {
+                    _.each(this.uniqueKeys, function(key) {
 
-                            if(_model.get(key) === model.get(key)) {
-                                dupe = _model;
-                                this.trigger('duplicate', key, model.get(key));
-                                return;
-                            }
-                        }, this);
+                        if (_model.get(key) === model.get(key)) {
+                            dupe = _model;
+                            this.trigger('duplicate', key, model.get(key));
+                            return;
+                        }
+                    }, this);
 
-                        if(dupe) { return; }
+                    if (dupe) {
+                        return;
+                    }
                 }, this);
             }
 
-            if(dupe) return dupe;
+            if (dupe) return dupe;
 
-            this.add(model, _.extend({at: this.length}, options));
+            this.add(model, _.extend({
+                at: this.length
+            }, options));
             return model;
         };
 
@@ -137,12 +147,11 @@ define([
         Backbone.Model.prototype.serialize = function() {
             var json = {};
             var data = this.toJSON();
-            
-            if(this.generate) {
+
+            if (this.generate) {
                 json.generate = this.generate;
                 json.data = json;
-            }
-            else {
+            } else {
                 json = data;
             }
 
@@ -151,13 +160,15 @@ define([
 
         Backbone.Collection.prototype.serialize = function() {
             var json = {};
-            var data = this.toJSON();
 
-            if(this.generate) {
+            var data = this.map(function(model) {
+                return model.serialize(options);
+            });
+
+            if (this.generate) {
                 json.generate = this.generate;
                 json.data = data;
-            }
-            else {
+            } else {
                 json = data;
             }
 
@@ -166,11 +177,10 @@ define([
 
         Backbone.Model.prototype.expand = function() {
 
-            if(this.generate) {
+            if (this.generate) {
                 var generator = new Generator();
                 return generator.generate(this.generate, this.toJSON());
-            }
-            else {
+            } else {
                 return this.toJSON();
             }
 
