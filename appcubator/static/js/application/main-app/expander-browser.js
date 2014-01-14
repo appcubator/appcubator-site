@@ -81,7 +81,7 @@ exports.factory = function(_safe_eval_) {
             module = tokens[1];
             name = tokens[2];
         } else {
-            throw "Invalid dot separation. Must be 2 or 3 tokens. Original: " + generatorName;
+            throw "Invalid generator reference syntax. Must provide '[package.]module.name' .  Original: " + generatorName;
         }
 
 
@@ -137,7 +137,7 @@ try {
 
     exports.init = function() {
         var r = require; // avoid browserifying this
-        exports.expander = exports.factory(r('vm').runInNewContext);
+        return exports.factory(r('vm').runInNewContext);
     };
 }
 
@@ -767,22 +767,19 @@ generators.push({
 
 
 generators.push({
-    name: 'design.header',
+    name: 'design-header',
     version: '0.1',
     code: function(data, templates) {
-        /* expects: content
-         * optional: className, style */
+        /* expects: content, className, style */
+        data.className = data.className || '';
+        data.style = data.style || '';
         return { html: templates.html(data),
                  css: '',
                  js: '',
                  layout: data.layout };
     },
     templates: {
-        html: '<h1'+
-                '<% if (className) { %> class="<%= className %>"<% } %>>'+
-                '<% if (style) { %> style="<%= data.styleString %>"<% } %>'+
-                '<%= content %>'+
-              '</h1>'
+        html: '<h1 class="<%= className %>" style="<%= style %>"><%= content %></h1>'
     }
 });
 
