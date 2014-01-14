@@ -162,6 +162,8 @@ define([
 
         Backbone.Model.prototype.expand = function() {
 
+            console.log("EXPAND");
+            console.log(this.generate);
             if(this.generate) {
                 var generator = new Generator();
                 return generator.generate(this.generate, this.toJSON());
