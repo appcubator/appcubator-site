@@ -144,9 +144,9 @@ define([
             this.generate = generatorStr;
         };
 
-        Backbone.Model.prototype.serialize = function() {
+        Backbone.Model.prototype.serialize = function(options) {
             var json = {};
-            var data = this.toJSON();
+            var data = this.toJSON(options);
 
             if (this.generate) {
                 json.generate = this.generate;
@@ -158,7 +158,7 @@ define([
             return json;
         };
 
-        Backbone.Collection.prototype.serialize = function() {
+        Backbone.Collection.prototype.serialize = function(options) {
             var json = {};
 
             var data = this.map(function(model) {
