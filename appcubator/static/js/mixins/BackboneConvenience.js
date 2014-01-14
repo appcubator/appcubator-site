@@ -150,7 +150,7 @@ define([
 
             if (this.generate) {
                 json.generate = this.generate;
-                json.data = json;
+                json.data = data;
             } else {
                 json = data;
             }
@@ -162,6 +162,7 @@ define([
             var json = {};
 
             var data = this.map(function(model) {
+                console.log(model);
                 return model.serialize(options);
             });
 
@@ -172,6 +173,7 @@ define([
                 json = data;
             }
 
+            console.log(json);
             return json;
         };
 
