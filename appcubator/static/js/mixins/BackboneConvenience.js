@@ -130,6 +130,10 @@ define([
             return model;
         };
 
+        Backbone.Model.prototype.setGenerator = function(generatorStr) {
+            this.generate = generatorStr;
+        };
+
         Backbone.Model.prototype.serialize = function() {
             var json = {};
             var data = this.toJSON();
@@ -162,13 +166,8 @@ define([
 
         Backbone.Model.prototype.expand = function() {
 
-            console.log("EXPAND");
-            console.log(this.generate);
             if(this.generate) {
                 var generator = new Generator();
-
-                console.log(generator.generate(this.generate, this.toJSON()));
-
                 return generator.generate(this.generate, this.toJSON());
             }
             else {

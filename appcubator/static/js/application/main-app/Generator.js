@@ -13,11 +13,8 @@ define(function(require, exports, module) {
         var Vm = function() {
 
             this.runCode = function(code, globals) {
-                console.log(code);
-                console.log(this);
                 var templates = globals.templates;
                 return eval(code);
-                //.apply(globals,[]);
             };
 
         };
@@ -27,7 +24,6 @@ define(function(require, exports, module) {
             return VM.runCode(code, globals);
         });
 
-        console.log(expander.expand(appState.generators, {generate: generatorPath, data: data}));
         return expander.expand(appState.generators, {generate: generatorPath, data: data});
     };
 

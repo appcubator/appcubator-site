@@ -125,24 +125,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         renderElement: function() {
             var html = "";
             var el = this.model.expand();
-
-            console.log(this.model);
-            console.log(el);
-
-            if(el.html) {
-                var temp = el.html;
-                var cont = {};
-                
-                if(this.model.has('style')) {
-                    _.extend(cont, this.model.get('style').serialize());
-                }
-
-                html = _.template(temp, cont);
-            }
-
-            console.log(html);
-
-            return html;
+            return el.html;
         },
 
         select: function(e) {

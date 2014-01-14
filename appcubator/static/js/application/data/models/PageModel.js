@@ -26,9 +26,6 @@ define([
                 }
                 
                 this.set('url', new UrlModel(bone.url || {}));
-                this.set('navbar', new NavbarModel(bone.navbar || {}));
-                this.set('footer', new FooterModel(bone.footer || {}));
-
             },
 
             getHeight: function() {

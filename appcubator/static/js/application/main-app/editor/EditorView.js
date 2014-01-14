@@ -81,8 +81,8 @@ define(function(require, exports, module) {
 
             g_guides = this.guides;
 
-            this.navbar = new NavbarView(this.model.get('navbar'));
-            this.footer = new FooterView(this.model.get('footer'));
+            // this.navbar = new NavbarView(this.model.get('navbar'));
+            // this.footer = new FooterView(this.model.get('footer'));
             this.urlModel = this.model.get('url');
 
             this.title = "Editor";
@@ -169,8 +169,8 @@ define(function(require, exports, module) {
             //self.marqueeView.render();
             self.widgetsManager.render();
 
-            self.navbar.setElement(innerDoc.getElementById('navbar')).render();
-            self.footer.setElement(innerDoc.getElementById('footer')).render();
+            // self.navbar.setElement(innerDoc.getElementById('navbar')).render();
+            // self.footer.setElement(innerDoc.getElementById('footer')).render();
             self.guides.setElement(innerDoc.getElementById('elements-container')).render();
             //$(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
 

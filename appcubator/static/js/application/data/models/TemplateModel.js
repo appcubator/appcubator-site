@@ -7,8 +7,9 @@ define(function(require, exports, module) {
 
         initialize: function(bone) {
 
-            console.log(bone);
-            this.set('body', new WidgetCollection(bone.body));
+            this.set('name', bone.name);
+            this.set('head', bone.head||"");
+            this.set('body', new WidgetCollection(bone.body||{}));
 
             // _(bone.body).each(function(uielement) {
             //     if (uielement.container_info) {

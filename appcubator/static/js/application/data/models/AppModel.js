@@ -101,6 +101,7 @@ function(AppInfoModel,
       //if(json.mobilePages) json.mobilePages = json.mobilePages.serialize();
       json.emails = json.emails.serialize();
       json.templates = json.templates.serialize();
+      json.routes = json.routes.serialize();
 
       return json;
     }

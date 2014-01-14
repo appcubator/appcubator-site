@@ -202,15 +202,16 @@ define(function(require, exports, module) {
         },
 
         autoAddLinksToNavbar: function() {
-            this.listenTo(this.model.get('routes'), 'add', function(pageM) {
-                if (!pageM.isContextFree()) return;
-                var homePageNav = this.model.get('routes').first().get('navbar');
-                homePageNav.get('links').push({
-                    url: 'internal://' + pageM.get('name'),
-                    title: pageM.get('name')
-                });
+            // TODO: fix this
+            // this.listenTo(this.model.get('routes'), 'add', function(pageM) {
+            //     if (!pageM.isContextFree()) return;
+            //     var homePageNav = this.model.get('routes').first().get('navbar');
+            //     homePageNav.get('links').push({
+            //         url: 'internal://' + pageM.get('name'),
+            //         title: pageM.get('name')
+            //     });
 
-            }, this);
+            // }, this);
         },
 
         deployApp: function() {

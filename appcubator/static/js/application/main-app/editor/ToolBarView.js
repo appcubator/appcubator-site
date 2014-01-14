@@ -2,7 +2,9 @@ define(function(require, exports, module) {
 
     'use strict';
 
-    var PageModel = require('models/PageModel');
+    var PageModel = require('models/PageModel'),
+        TemplateModel = require('models/TemplateModel');
+
     require('mixins/BackboneNameBox');
 
     var ToolBarView = Backbone.View.extend({
@@ -24,7 +26,7 @@ define(function(require, exports, module) {
             if (this.nmrFields > 6) this.nmrFields = 6;
             
             this.listenTo(v1State.get('routes'), 'add remove', function() {
-                this.nmrFields = v1State.get('pages').length + 1;
+                this.nmrFields = v1State.get('routes').length + 1;
                 if (this.nmrFields > 6) this.nmrFields = 6;
             }, this);
 
@@ -79,7 +81,11 @@ define(function(require, exports, module) {
                 name: name
             });
             pageModel.setupUrl(name);
+            pageModel.setGenerator("routes.staticpage");
             this.collection.push(pageModel);
+
+            var templateModel = new TemplateModel({ name : name });
+            v1State.get('templates').add(templateModel);
 
             var self = this;
             v1.currentApp.save(null, function() {
