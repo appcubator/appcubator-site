@@ -76,12 +76,14 @@ exports.factory = function(_safe_eval_) {
             package = 'root';
             module = tokens[0];
             name = tokens[1];
-        } else if (tokens.length == 3) {
+        } else if (tokens.length >= 3) {
             package = tokens[0];
             module = tokens[1];
-            name = tokens[2];
+            // combine ending tokens into one name.
+            // [ root, uielements, design, header ] => [ root, uielements, design.header ]
+            name = tokens.slice(2).join('.');
         } else {
-            throw "Invalid dot separation. Must be 2 or 3 tokens. Original: " + generatorName;
+            throw "Invalid generator reference. Must provide '[package.]module.name' .  Original: " + generatorName;
         }
 
 
@@ -137,7 +139,7 @@ try {
 
     exports.init = function() {
         var r = require; // avoid browserifying this
-        exports.expander = exports.factory(r('vm').runInNewContext);
+        return exports.factory(r('vm').runInNewContext);
     };
 }
 
