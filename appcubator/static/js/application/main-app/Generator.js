@@ -14,13 +14,14 @@ define(function(require, exports, module) {
 
             this.runCode = function(code, globals) {
                 var templates = globals.templates;
+                var expand = globals.expand;
                 return eval(code);
             };
 
         };
 
         var VM = new Vm();
-        window.expander = expanderfactory.init(function(code, globals) {
+        window.expander = expanderfactory(function(code, globals) {
             return VM.runCode(code, globals);
         });
 
