@@ -76,14 +76,12 @@ exports.factory = function(_safe_eval_) {
             package = 'root';
             module = tokens[0];
             name = tokens[1];
-        } else if (tokens.length >= 3) {
+        } else if (tokens.length == 3) {
             package = tokens[0];
             module = tokens[1];
-            // combine ending tokens into one name.
-            // [ root, uielements, design, header ] => [ root, uielements, design.header ]
-            name = tokens.slice(2).join('.');
+            name = tokens[2];
         } else {
-            throw "Invalid generator reference. Must provide '[package.]module.name' .  Original: " + generatorName;
+            throw "Invalid generator reference syntax. Must provide '[package.]module.name' .  Original: " + generatorName;
         }
 
 
@@ -769,22 +767,19 @@ generators.push({
 
 
 generators.push({
-    name: 'design.header',
+    name: 'design-header',
     version: '0.1',
     code: function(data, templates) {
-        /* expects: content
-         * optional: className, style */
+        /* expects: content, className, style */
+        data.className = data.className || '';
+        data.style = data.style || '';
         return { html: templates.html(data),
                  css: '',
                  js: '',
                  layout: data.layout };
     },
     templates: {
-        html: '<h1'+
-                '<% if (className) { %> class="<%= className %>"<% } %>>'+
-                '<% if (style) { %> style="<%= data.styleString %>"<% } %>'+
-                '<%= content %>'+
-              '</h1>'
+        html: '<h1 class="<%= className %>" style="<%= style %>"><%= content %></h1>'
     }
 });
 
