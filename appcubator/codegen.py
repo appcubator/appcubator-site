@@ -29,7 +29,7 @@ def expandOnce(generators, genref):
     else:
         print r.status_code
         print r.text
-        raise Exception("ruh roh")
+        raise Exception(r.text)
 
 def expand(generators, genref):
     r = requests.post(settings.CODEGEN_ADDR + '/expand/', data=json.dumps([generators, genref]), headers={'Content-Type':'application/json'})
@@ -38,7 +38,7 @@ def expand(generators, genref):
     else:
         print r.status_code
         print r.text
-        raise Exception("ruh roh")
+        raise Exception(r.text)
 
 def expandAll(app):
     r = requests.post(settings.CODEGEN_ADDR + '/expandAll/', data=json.dumps(app), headers={'Content-Type':'application/json'})
@@ -47,7 +47,7 @@ def expandAll(app):
     else:
         print r.status_code
         print r.text
-        raise Exception("ruh roh")
+        raise Exception(r.text)
 
 def compileApp(app, css=''):
     assert isinstance(app, dict)
@@ -58,7 +58,7 @@ def compileApp(app, css=''):
     else:
         print r.status_code
         print r.text
-        raise Exception("ruh roh")
+        raise Exception(r.text)
 
 def write_to_tmpdir(codeData):
     import tempfile

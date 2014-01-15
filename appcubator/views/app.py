@@ -418,6 +418,8 @@ def save_state(request, app, require_valid=True):
             d = e.to_dict()
             d['version_id'] = app.state.get('version_id', 0)
             return (400, d)
+        except Exception, e:
+            return (500, str(e))
 
     app.save()
 
