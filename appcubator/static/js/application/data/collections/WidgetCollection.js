@@ -138,18 +138,17 @@ define([
                 widget.type = type;
                 widget = _.extend(widget, v1UIEState.getBaseStyleOf(type).serialize());
 
-                if (widget.content_attribs && widget.content_attribs.src) {
-                    widget.content_attribs.src = this.stockPhotos[Math.floor(Math.random() * this.stockPhotos.length)];
-                    layout.width = 4;
-                    layout.height = 8;
+                if (widget.src) {
+                    widget.src = this.stockPhotos[Math.floor(Math.random() * this.stockPhotos.length)];
+                    widget.layout.width = 4;
+                    widget.layout.height = 8;
                 }
 
                 var generator = "uielements.design-"+ type;
-                console.log(generator);
                 /* Ghetto fix */
                 //if(widget.tagName == "p") widget.data.tagName = "div";
 
-                if (type == "texts" && widget.content) { widget.content = this.loremIpsum(); }
+                if (type == "text" && widget.content) { widget.content = this.loremIpsum(); }
                 if (content_ops.content) widget.content = content_ops.content;
                 if (content_ops.href) widget.content_attribs.href = content_ops.href;
                 if (content_ops.src_content) widget.content_attribs.src_content = content_ops.src_content;

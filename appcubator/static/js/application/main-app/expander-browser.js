@@ -873,13 +873,15 @@ generators.push({
         /* expects: url, className, style */
         data.className = data.className || '';
         data.style = data.style || '';
+        data.href = "";
+
         return { html: templates.html(data),
                  css: '',
                  js: '',
                  layout: data.layout };
     },
     templates: {
-        html: '<img class="<%= className %>" style="<%= style %>" src="<%= url %>">'
+        html: '<a href="<%= href %>"><img class="<%= className %>" style="<%= style %>" src="<%= src %>">'
     }
 });
 
@@ -896,11 +898,9 @@ generators.push({
                  layout: data.layout };
     },
     templates: {
-        html: '<a href="<%= url %>" class="<%= className %>" style="<%= style %>"><%= content %></a>'
+        html: '<a href="<%= href %>" class="<%= className %>" style="<%= style %>"><%= content %></a>'
     }
 });
-
-/** NOT IMPLEMENTED YET **/
 
 generators.push({
     name: 'design-button',
@@ -915,7 +915,7 @@ generators.push({
                  layout: data.layout };
     },
     templates: {
-        html: '<a href="<%= url %>" class="<%= className %>" style="<%= style %>"><%= content %></a>'
+        html: '<a href="<%= url %>" class="btn <%= className %>" style="<%= style %>"><%= content %></a>'
     }
 });
 
@@ -923,7 +923,7 @@ generators.push({
     name: 'design-line',
     version: '0.1',
     code: function(data, templates) {
-        /* expects: content, url, className, style */
+        /* expects: className, style */
         data.className = data.className || '';
         data.style = data.style || '';
         return { html: templates.html(data),
@@ -932,7 +932,7 @@ generators.push({
                  layout: data.layout };
     },
     templates: {
-        html: '<a href="<%= url %>" class="<%= className %>" style="<%= style %>"><%= content %></a>'
+        html: '<hr class="<%= className %>" style="<%= style %>">'
     }
 });
 
@@ -943,15 +943,18 @@ generators.push({
         /* expects: content, url, className, style */
         data.className = data.className || '';
         data.style = data.style || '';
+        data.style += " width: 100%; height: 100%;";
         return { html: templates.html(data),
                  css: '',
                  js: '',
                  layout: data.layout };
     },
     templates: {
-        html: '<a href="<%= url %>" class="<%= className %>" style="<%= style %>"><%= content %></a>'
+        html: '<div class="<%= className %>" style="<%= style %>"></div>'
     }
 });
+
+/** NOT IMPLEMENTED YET **/
 
 generators.push({
     name: 'design-imageslider',
