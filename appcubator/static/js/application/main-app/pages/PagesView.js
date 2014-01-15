@@ -1,13 +1,13 @@
 define([
-        'models/PageModel',
+        'models/RouteModel',
         'models/UrlModel',
-        'collections/PageCollection',
+        'collections/RouteCollection',
         'app/pages/PageView',
         'mixins/ErrorDialogueView',
         'mixins/BackboneNameBox',
         'jquery-ui'
     ],
-    function(PageModel, UrlModel, PageCollection, PageView, ErrorDialogueView) {
+    function(RouteModel, UrlModel, RouteCollection, PageView, ErrorDialogueView) {
 
         var PagesView = Backbone.View.extend({
 

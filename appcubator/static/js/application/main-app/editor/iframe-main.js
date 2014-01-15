@@ -93,8 +93,6 @@ require.onError = function(err) {
 //libs
 require([
         "models/AppModel",
-        "collections/PageCollection",
-        "collections/MobilePageCollection",
         "editor/WidgetView",
         "editor/WidgetsManagerView",
         'editor/MarqueeView',
@@ -108,8 +106,6 @@ require([
         "mixins/BackboneConvenience"
     ],
     function(AppModel,
-        PageCollection,
-        MobilePageCollection,
         WidgetView,
         WidgetsManagerView,
         MarqueeView,

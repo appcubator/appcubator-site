@@ -29,7 +29,6 @@ function(FooterEditorView) {
       var html = "";
       var el = this.model.expand();
       this.el.innerHTML = el;
-      console.log("HTML: " + el);
       return this;
     },
 

@@ -16,7 +16,6 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            console.log(this.el);
             return this;
         }
     });

@@ -58,7 +58,9 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
             },
 
             setupPageContext: function(pageModel) {
-                var entityList = pageModel.getContextEntities();
+                // TODO: Fix this
+                //var entityList = pageModel.getContextEntities();
+                var entityList = [];
                 var contextList = this.get('context');
 
                 _(entityList).each(function(entity) {

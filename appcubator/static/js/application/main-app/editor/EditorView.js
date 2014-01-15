@@ -2,7 +2,6 @@ define(function(require, exports, module) {
 
     'use strict';
 
-    var PageModel = require('models/PageModel');
     var UrlView = require('app/pages/UrlView');
     var SimpleModalView = require('mixins/SimpleModalView');
     var ErrorModalView = require('mixins/ErrorModalView');
@@ -61,8 +60,6 @@ define(function(require, exports, module) {
 
             this.templateModel = this.appModel.get('templates').getTemplateWithName(this.pageName);
             this.widgetsCollection = this.templateModel.get('body').get('uielements');
-            
-            console.log(this.widgetsCollection);
 
             this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
             this.widgetsManager = {};
@@ -122,8 +119,6 @@ define(function(require, exports, module) {
             var iframe = document.getElementById('page');
             this.iframe = iframe;
 
-            console.log(iframe);
-
             this.setupPageWrapper();
             this.setupPageHeightBindings();
 
@@ -151,7 +146,6 @@ define(function(require, exports, module) {
         },
 
         renderIFrameContent: function(proxy) {
-            console.log("RENDERED");
             var self = this;
             var iframe = document.getElementById('page');
             innerDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -163,7 +157,6 @@ define(function(require, exports, module) {
             this.iframeProxy = proxy;
             this.marqueeView = proxy.setupMarqueeView(this.widgetsCollection);
 
-            console.log(this.widgetsCollection);
             this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
 
             self.iframedoc = innerDoc;
@@ -191,6 +184,10 @@ define(function(require, exports, module) {
             else { */
                 this.$el.find('.page-wrapper').addClass('show');
             /* } */
+        },
+
+        getCurrentTemplate: function() {
+            return this.templateModel;
         },
 
         renderUrlBar: function() {
@@ -268,7 +265,7 @@ define(function(require, exports, module) {
             var $container = $(this.iframedoc.getElementById('elements-container'));
             var oldHeight = this.currentHeight;
 
-            this.currentHeight = (this.model.getHeight() + 12) * 15;
+            this.currentHeight = (this.templateModel.getHeight() + 12) * 15;
             if (this.currentHeight < 800) this.currentHeight = 800;
             $container.css('height', this.currentHeight);
 

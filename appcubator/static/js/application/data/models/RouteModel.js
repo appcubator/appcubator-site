@@ -7,15 +7,13 @@ define([
     function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
 
         var PageModel = Backbone.Model.extend({
+            
             defaults: {
-                "name": "default-page",
-                "access_level": "all",
-                "uielements": []
+                "name": "default-page"
             },
 
             initialize: function(bone) {
                 bone = bone || {};
-                var self = this;
                 if (bone.url && bone.url.length === 0) {
                     // homepage shouldn't have a customizable url
                     if (this.get('name') === 'Homepage') {
@@ -26,21 +24,6 @@ define([
                 }
                 
                 this.set('url', new UrlModel(bone.url || {}));
-            },
-
-            getHeight: function() {
-                var height = 0;
-
-                // TODO: fix this
-                // this.get('uielements').each(function(uielement) {
-                //     var layout = uielement.get('layout');
-                //     var bottom = layout.get('top') + layout.get('height');
-                //     if (bottom > height) {
-                //         height = bottom;
-                //     }
-                // });
-
-                return height;
             },
 
             addToContext: function(tableM) {
@@ -91,17 +74,20 @@ define([
             },
 
             getFields: function() {
-                var access = this.get('access_level');
+                // TODO: fix this
+                // var access = this.get('access_level');
 
-                if (access == "all") {
-                    return v1State.get('users').getCommonProps();
-                }
-                if (access == "users") {
-                    return v1State.get('users').getCommonProps();
-                }
+                // if (access == "all") {
+                //     return v1State.get('users').getCommonProps();
+                // }
+                // if (access == "users") {
+                //     return v1State.get('users').getCommonProps();
+                // }
 
-                var model = v1State.get('users').getUserTableWithName(access);
-                return model.getFieldsColl().models;
+                // var model = v1State.get('users').getUserTableWithName(access);
+                // return model.getFieldsColl().models;
+
+                return [];
             },
 
             updatePageName: function(urlModel, newPageName) {

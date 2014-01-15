@@ -266,13 +266,12 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
 
             require(['./ExternalEditorView',
                      'models/AppModel',
-                     'collections/MobilePageCollection',
                      'collections/PageCollection',
                      "editor/KeyDispatcher",
                      "editor/MouseDispatcher",
                      "comp"],
 
-            function(ExternalEditorView, AppModel, MobilePageCollection, PageCollection, KeyDispatcher, MouseDispatcher) {
+            function(ExternalEditorView, AppModel, PageCollection, KeyDispatcher, MouseDispatcher) {
 
 
                 $('.page').hide();

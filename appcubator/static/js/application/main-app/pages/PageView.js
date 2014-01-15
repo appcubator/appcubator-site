@@ -90,9 +90,10 @@ define(function(require, exports, module) {
                 return userModel.get('name');
             });
 
-            var page = _.template(tempMenu, page_context);
+            //var page = _.template(tempMenu, page_context);
             var span = document.createElement('span');
-            span.innerHTML = page;
+            //span.innerHTML = page;
+            span.innerHTML = "There will be more info here";
 
             this.el.appendChild(span);
         },

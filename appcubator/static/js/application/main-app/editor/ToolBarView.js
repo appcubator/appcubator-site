@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 
     'use strict';
 
-    var PageModel = require('models/PageModel'),
+    var RouteModel = require('models/RouteModel'),
         TemplateModel = require('models/TemplateModel');
 
     require('mixins/BackboneNameBox');
@@ -77,7 +77,7 @@ define(function(require, exports, module) {
 
         createPage: function(name) {
             var pageInd = this.collection.length;
-            var pageModel = new PageModel({
+            var pageModel = new RouteModel({
                 name: name
             });
             pageModel.setupUrl(name);
