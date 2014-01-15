@@ -49,4 +49,4 @@ var defaultElements = [
         "className": "box",
         "el": "<div style='background-color:#ccc;height:120px' class='span20'></div>"
     }
-]
+];

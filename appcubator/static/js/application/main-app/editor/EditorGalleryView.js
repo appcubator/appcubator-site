@@ -5,7 +5,6 @@ define(function(require, exports, module) {
     var EditorGallerySectionView = require('editor/EditorGallerySectionView');
     var SearchGallerySectionView = require('editor/SearchGallerySectionView');
     var PickCreateFormEntityView = require('editor/PickCreateFormEntityView');
-    var ElementCollection = require('collections/ElementCollection');
     var WidgetContainerModel = require('models/WidgetContainerModel');
     var WidgetModel = require('models/WidgetModel');
     var Searcher = require('editor/Searcher');
@@ -72,7 +71,7 @@ define(function(require, exports, module) {
             this.bindDraggable();
 
             // listen for changes to url to update context entity section
-            this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
+            // this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
             this.listenTo(v1State.get('tables'), 'add remove', this.renderEntityFormsTablesLists);
 
             return this;
@@ -168,16 +167,11 @@ define(function(require, exports, module) {
 
         renderUIElementList: function() {
             var self = this;
-            var collection = new ElementCollection(defaultElements);
+            console.log(defaultElements);
+            var collection = new Backbone.Collection(defaultElements);
             this.uiElemsSection = this.addNewSection('Design Elements');
 
-            collection.each(function(element) {
-                if (element.get('className') == "textInputs" ||
-                    element.get('className') == "textAreas" ||
-                    element.get('className') == "dropdowns") return;
-
-                this.appendUIElement(element);
-            }, this);
+            collection.each(this.appendUIElement);
 
             self.appendLambdaCreate();
             self.appendCustomWidget();
@@ -275,14 +269,15 @@ define(function(require, exports, module) {
         renderCurrentUserElements: function() {
             this.currUserSection = this.addNewSection('Current User Views');
 
-            _(v1State.getCurrentPage().getFields()).each(function(field) {
-                if (field.isRelatedField()) return;
-                this.currUserSection.addFullWidthItem('current-user-' + field.cid, 'current-user', 'Current User ' + field.get('name'), 'current-user-icon');
-            }, this);
+            console.log(v1);
+            // _(v1.currentApp.getCurrentPage().getFields()).each(function(field) {
+            //     if (field.isRelatedField()) return;
+            //     this.currUserSection.addFullWidthItem('current-user-' + field.cid, 'current-user', 'Current User ' + field.get('name'), 'current-user-icon');
+            // }, this);
 
-            v1State.get('users').each(function(user) {
-                this.currUserSection.addFullWidthItem('entity-user-' + user.cid, "entity-edit-form", 'Current ' + user.get('name') + ' Edit Form', 'create-form-icon');
-            }, this);
+            // v1State.get('users').each(function(user) {
+            //     this.currUserSection.addFullWidthItem('entity-user-' + user.cid, "entity-edit-form", 'Current ' + user.get('name') + ' Edit Form', 'create-form-icon');
+            // }, this);
         },
 
         renderEntityForms: function() {
@@ -350,45 +345,45 @@ define(function(require, exports, module) {
         },
 
         renderContextEntityElements: function() {
-            var pageContext = v1State.getCurrentPage().getContextEntities();
+            // var pageContext = v1State.getCurrentPage().getContextEntities();
 
-            // if there are no context entities, remove this section if it exists
-            if (!pageContext.length) {
-                if (this.contextEntitySection) {
-                    this.removeSection(this.contextEntitySection);
-                }
-                return;
-            }
+            // // if there are no context entities, remove this section if it exists
+            // if (!pageContext.length) {
+            //     if (this.contextEntitySection) {
+            //         this.removeSection(this.contextEntitySection);
+            //     }
+            //     return;
+            // }
 
-            if (!this.contextEntitySection) {
-                this.contextEntitySection = this.addNewSection('Page Context Data');
-            } else {
-                this.allList.appendChild(this.contextEntitySection.render().el);
-            }
+            // if (!this.contextEntitySection) {
+            //     this.contextEntitySection = this.addNewSection('Page Context Data');
+            // } else {
+            //     this.allList.appendChild(this.contextEntitySection.render().el);
+            // }
 
 
 
-            _(pageContext).each(function(tableName) {
-                var tableM = v1State.getTableModelWithName(tableName);
-                if (!tableM) throw "Error with page context";
-                var tableId = tableM.cid;
-                var id = '';
-                if (tableM.isUser) {
-                    id = 'entity-user-' + tableM.cid;
-                } else {
-                    id = 'entity-table-' + tableM.cid;
-                }
-                this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') + ' Edit Form', 'create-form-icon');
+            // _(pageContext).each(function(tableName) {
+            //     var tableM = v1State.getTableModelWithName(tableName);
+            //     if (!tableM) throw "Error with page context";
+            //     var tableId = tableM.cid;
+            //     var id = '';
+            //     if (tableM.isUser) {
+            //         id = 'entity-user-' + tableM.cid;
+            //     } else {
+            //         id = 'entity-table-' + tableM.cid;
+            //     }
+            //     this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') + ' Edit Form', 'create-form-icon');
 
-                if (tableM.hasMoneyField()) {
-                    this.contextEntitySection.addFullWidthItem(id, "entity-buy-button", 'Buy ' + tableM.get('name') + ' Button', 'money-button-icon');
-                }
+            //     if (tableM.hasMoneyField()) {
+            //         this.contextEntitySection.addFullWidthItem(id, "entity-buy-button", 'Buy ' + tableM.get('name') + ' Button', 'money-button-icon');
+            //     }
 
-                tableM.getFieldsColl().each(function(field) {
-                    if (field.isRelatedField()) return this.renderRelatedField(field, tableM);
-                    this.contextEntitySection.addFullWidthItem('context-field-' + tableId + '-' + field.cid, 'context-entity', tableName + ' ' + field.get('name'), 'plus-icon');
-                }, this);
-            }, this);
+            //     tableM.getFieldsColl().each(function(field) {
+            //         if (field.isRelatedField()) return this.renderRelatedField(field, tableM);
+            //         this.contextEntitySection.addFullWidthItem('context-field-' + tableId + '-' + field.cid, 'context-entity', tableName + ' ' + field.get('name'), 'plus-icon');
+            //     }, this);
+            // }, this);
 
             this.bindDraggable();
         },
@@ -704,7 +699,7 @@ define(function(require, exports, module) {
             }
 
             var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, {});
-            widget.setupPageContext(v1State.getCurrentPage());
+            widget.setupPageContext(v1.currentApp.getCurrentPage());
             return widget;
         },
 

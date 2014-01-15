@@ -58,7 +58,9 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
             },
 
             setupPageContext: function(pageModel) {
-                var entityList = pageModel.getContextEntities();
+                // TODO: Fix this
+                //var entityList = pageModel.getContextEntities();
+                var entityList = [];
                 var contextList = this.get('context');
 
                 _(entityList).each(function(entity) {
@@ -235,7 +237,7 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                 return this.get('layout').get('height') + this.get('layout').get('top');
             },
 
-            serialize: function() {
+            toJSON: function() {
                 var json = _.clone(this.attributes);
                 json = _.omit(json, 'selected', 'deletable', 'context');
 

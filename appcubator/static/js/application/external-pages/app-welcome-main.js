@@ -58,7 +58,6 @@ require.config({
 require([
         "models/AppModel",
         "collections/PageCollection",
-        "collections/MobilePageCollection",
         "app/AppRouter",
         "app/RouteLogger",
         "editor/KeyDispatcher",
@@ -72,7 +71,6 @@ require([
     ],
     function(AppModel,
         PageCollection,
-        MobilePageCollection,
         AppRouter,
         RouteLogger,
         KeyDispatcher,

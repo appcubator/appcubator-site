@@ -1,24 +1,36 @@
 define(function(require, exports, module) {
 
     'use strict';
-    var WidgetCollection = require('collections/WidgetCollection');
+    var BodyModel = require('models/BodyModel');
 
     var TemplateModel = Backbone.Model.extend({
 
         initialize: function(bone) {
 
             this.set('name', bone.name);
-            this.set('head', bone.head||"");
-            this.set('body', new WidgetCollection(bone.body||{}));
+            this.set('head', bone.head || "");
+            this.set('body', new BodyModel(bone.body || {}));
 
-            // _(bone.body).each(function(uielement) {
-            //     if (uielement.container_info) {
-            //         this.get('body').addWidgetContainerModel(uielement);
-            //     } else {
-            //         this.get('body').addWidgetModel(uielement);
-            //     }
-            // }, this);
         },
+
+        getUIElements: function() {
+            return this.get('body').get('uielements');
+        },
+
+        getHeight: function() {
+            var height = 0;
+
+            this.getUIElements().each(function(uielement) {
+                var layout = uielement.get('layout');
+                var bottom = layout.get('top') + layout.get('height');
+                if (bottom > height) {
+                    height = bottom;
+                }
+            });
+
+            return height;
+        },
+
 
         toJSON: function() {
 

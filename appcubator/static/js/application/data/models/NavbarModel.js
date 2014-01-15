@@ -11,6 +11,7 @@ function(LinkCollection) {
     },
     initialize: function(bone) {
 
+      this.setGenerator("templates.navbar");
       //init items collection with links passed from appState
       this.set('links', new LinkCollection(bone.links||[]));
       
@@ -31,7 +32,7 @@ function(LinkCollection) {
       return this.get('links');
     },
 
-    serialize : function() {
+    toJSON: function() {
       var json = _.clone(this.attributes);
       json.links = this.get('links').serialize();
       return json;

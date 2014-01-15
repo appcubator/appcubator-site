@@ -48,6 +48,34 @@ define(function(require, exports, module) {
             return model;
         },
 
+        getBaseStyleOf: function(type) {
+            
+            if(this.has(type)) {
+                return this.get(type).first();
+            }
+
+            switch(type) {
+                case "button":
+                    return this.getBaseStyleOf("buttons");
+                case "header":
+                    return this.getBaseStyleOf("headerTexts");
+                case "image":
+                    return this.getBaseStyleOf("images");
+                case "text":
+                    return this.getBaseStyleOf("texts");
+                case "link":
+                    return this.getBaseStyleOf("links");
+                case "line":
+                    return this.getBaseStyleOf("lines");
+                case "box":
+                    return this.getBaseStyleOf("boxes");
+                case "form":
+                    return this.getBaseStyleOf("forms");
+            }
+
+            return null;
+        },
+
         serialize: function() {
             var json = _.clone(this.attributes);
 

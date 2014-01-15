@@ -24,7 +24,6 @@ define(function(require, exports, module) {
         el: document.getElementById('app-content'),
 
         initialize: function(options) {
-            console.trace();
             _.bindAll(this);
 
             this.model = options.model;
@@ -69,6 +68,10 @@ define(function(require, exports, module) {
                 scrollTop: 0
             });
     
+        },
+
+        getCurrentPage: function() {
+            return this.view.getCurrentTemplate();
         },
 
         doKeyBindings: function() {
@@ -276,7 +279,6 @@ define(function(require, exports, module) {
 
             var self = this;
             appState = v1State.serialize();
-
             console.log(appState);
 
             var successHandler = function(data) {

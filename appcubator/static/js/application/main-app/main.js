@@ -112,8 +112,7 @@ require.onError = function(err) {
 require([
         "models/AppModel",
         "models/ThemeModel",
-        "collections/PageCollection",
-        "collections/MobilePageCollection",
+        "collections/RouteCollection",
         "app/AppRouter",
         "editor/CustomWidgetEditorModal",
         "app/RouteLogger",
@@ -130,8 +129,7 @@ require([
     ],
     function(AppModel,
         ThemeModel,
-        PageCollection,
-        MobilePageCollection,
+        RouteCollection,
         AppRouter,
         CustomWidgetEditorModal,
         RouteLogger,
@@ -150,9 +148,7 @@ require([
                 /* Initialize v1State */
                 v1State = new Backbone.Model();
                 v1State = new AppModel(appState);
-                v1State.set('routes', new PageCollection(appState.routes || []));
-
-                console.log(v1State);
+                v1State.set('routes', new RouteCollection(appState.routes || []));
 
                 /* Initialize v1UIEState */
                 v1UIEState = new ThemeModel(uieState);

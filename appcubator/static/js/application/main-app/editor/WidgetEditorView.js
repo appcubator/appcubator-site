@@ -471,7 +471,7 @@ define(function(require, exports, module) {
             var layout = this.model.get('layout');
             var rightCoor = layout.get('left') + layout.get('width');
 
-            var pageHeight = v1State.getCurrentPage().getHeight();
+            var pageHeight = v1.currentApp.getCurrentPage().getHeight();
             var widgetBottom = layout.get('top') + layout.get('height');
 
             if (widgetBottom + 8 > pageHeight) {

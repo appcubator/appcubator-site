@@ -1,60 +1,43 @@
 var defaultElements = [
   {
     text: "Button",
-    className : "buttons",
+    className : "button",
     el : "<div class='btn'>Default Button</div>"
   },
 
   {
     text: "Image",
-    className : "images",
+    className : "image",
     el : "<img class='span16' src='/static/img/placeholder.png'>"
   },
 
   {
     text: "Header",
-    className : "headerTexts",
+    className : "header",
     el : "<h1>Default Header</h1>"
   },
 
   {
     text: "Text",
-    className : "texts",
+    className : "text",
     el : "<did>Default text!</div>"
   },
 
   {
     text: "Link",
-    className : "links",
+    className : "link",
     el : "<a href='#'>Default Link</div>"
   },
 
   {
-    text: "Text Input",
-    className : "textInputs",
-    el : "<input type='text' placeholder='Default input...'>"
-  },
-
-  {
-    text: "Text Area",
-    className : "textAreas",
-    el : "<textarea></textarea>"
-  },
-
-  {
     text: "Line",
-    className : "lines",
+    className : "line",
     el : "<hr class='span20'>"
   },
 
   {
-    text: "Dropdown",
-    className : "dropdowns",
-    el : "<select><option>Option 1</option></select>"
-  },
-  {
     text: "Box",
-    className : "boxes",
+    className : "box",
     el : "<div style='background-color:#ccc;height:120px' class='span20'></div>"
   },
 
@@ -64,17 +47,12 @@ var defaultElements = [
     el : "<img class='span24' src='/static/img/placeholder.png'>"
   },
 
-  // {
-  //   text: "Twitter Feed",
-  //   className : "twitterfeed",
-  //   el : "<img class='span24' src='/static/img/placeholder.png'>"
-  // },
-
   {
     text: "FB Share",
-    className : "facebookshare",
+    className : "fbshare",
     el : "<img src='/static/img/fb-share-sample.png'>"
   },
+
   {
     text: "Embed Video",
     className : "embedvideo",

@@ -2,8 +2,6 @@ define([
   'models/AppInfoModel',
   'collections/UserRolesCollection',
   'collections/TableCollection',
-  'collections/PageCollection',
-  'collections/MobilePageCollection',
   'collections/EmailCollection',
   'collections/TemplateCollection',
   'models/EntityManager'
@@ -11,8 +9,6 @@ define([
 function(AppInfoModel,
          UserRolesCollection,
          TableCollection,
-         PageCollection,
-         MobilePageCollection,
          EmailCollection,
          TemplateCollection,
          EntityManager) {
@@ -32,10 +28,6 @@ function(AppInfoModel,
       this.set('emails', new EmailCollection(aState.emails));
       this.set('templates', new TemplateCollection(aState.templates));
 
-    },
-
-    getCurrentPage: function() {
-      return this.currentPage;
     },
 
     getPages: function () {

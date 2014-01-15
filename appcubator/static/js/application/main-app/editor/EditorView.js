@@ -2,7 +2,6 @@ define(function(require, exports, module) {
 
     'use strict';
 
-    var PageModel = require('models/PageModel');
     var UrlView = require('app/pages/UrlView');
     var SimpleModalView = require('mixins/SimpleModalView');
     var ErrorModalView = require('mixins/ErrorModalView');
@@ -60,8 +59,7 @@ define(function(require, exports, module) {
 
 
             this.templateModel = this.appModel.get('templates').getTemplateWithName(this.pageName);
-            this.widgetsCollection = this.templateModel.get('body');
-            console.log(this.widgetsCollection);
+            this.widgetsCollection = this.templateModel.get('body').get('uielements');
 
             this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
             this.widgetsManager = {};
@@ -81,8 +79,8 @@ define(function(require, exports, module) {
 
             g_guides = this.guides;
 
-            // this.navbar = new NavbarView(this.model.get('navbar'));
-            // this.footer = new FooterView(this.model.get('footer'));
+            this.navbar = new NavbarView(this.templateModel.get('body').get('navbar'));
+            this.footer = new FooterView(this.templateModel.get('body').get('footer'));
             this.urlModel = this.model.get('url');
 
             this.title = "Editor";
@@ -121,8 +119,6 @@ define(function(require, exports, module) {
             var iframe = document.getElementById('page');
             this.iframe = iframe;
 
-            console.log(iframe);
-
             this.setupPageWrapper();
             this.setupPageHeightBindings();
 
@@ -150,7 +146,6 @@ define(function(require, exports, module) {
         },
 
         renderIFrameContent: function(proxy) {
-            console.log("RENDERED");
             var self = this;
             var iframe = document.getElementById('page');
             innerDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -162,15 +157,15 @@ define(function(require, exports, module) {
             this.iframeProxy = proxy;
             this.marqueeView = proxy.setupMarqueeView(this.widgetsCollection);
 
-            console.log(this.widgetsCollection);
             this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
 
             self.iframedoc = innerDoc;
             //self.marqueeView.render();
             self.widgetsManager.render();
 
-            // self.navbar.setElement(innerDoc.getElementById('navbar')).render();
-            // self.footer.setElement(innerDoc.getElementById('footer')).render();
+            self.navbar.setElement(innerDoc.getElementById('navbar')).render();
+            self.footer.setElement(innerDoc.getElementById('footer')).render();
+
             self.guides.setElement(innerDoc.getElementById('elements-container')).render();
             //$(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
 
@@ -189,6 +184,10 @@ define(function(require, exports, module) {
             else { */
                 this.$el.find('.page-wrapper').addClass('show');
             /* } */
+        },
+
+        getCurrentTemplate: function() {
+            return this.templateModel;
         },
 
         renderUrlBar: function() {
@@ -266,7 +265,7 @@ define(function(require, exports, module) {
             var $container = $(this.iframedoc.getElementById('elements-container'));
             var oldHeight = this.currentHeight;
 
-            this.currentHeight = (this.model.getHeight() + 12) * 15;
+            this.currentHeight = (this.templateModel.getHeight() + 12) * 15;
             if (this.currentHeight < 800) this.currentHeight = 800;
             $container.css('height', this.currentHeight);
 

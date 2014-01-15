@@ -3,9 +3,7 @@
     {
       "style": "color: #0054a6;",
       "isSingle": false,
-      "content_attribs": {
-        "href": "internal://Homepage"
-      },
+      "href": "internal://Homepage",
       "hoverStyle": "",
       "class_name": "link-1",
       "content": "Default Link...",
@@ -15,9 +13,7 @@
     {
       "style": "color:#49afcd;",
       "isSingle": false,
-      "content_attribs": {
-        "href": "internal://Homepage"
-      },
+      "href": "internal://Homepage",
       "hoverStyle": "",
       "class_name": "blue-link",
       "content": "Default Link...",
@@ -51,9 +47,7 @@
     {
       "style": "border-radius: 6px;\nwidth: 180px;",
       "isSingle": true,
-      "content_attribs": {
-        "src": "/static/img/placeholder.png"
-      },
+      "src": "/static/img/placeholder.png",
       "hoverStyle": "",
       "class_name": "img-width-fixed",
       "content": null,
@@ -63,9 +57,7 @@
     {
       "style": "border-radius: 6px;\nheight: 280px;",
       "isSingle": true,
-      "content_attribs": {
-        "src": "/static/img/placeholder.png"
-      },
+      "src": "/static/img/placeholder.png",
       "hoverStyle": "",
       "class_name": "img-height-fixed",
       "content": null,
@@ -75,9 +67,7 @@
     {
       "style": "",
       "isSingle": true,
-      "content_attribs": {
-        "src": "/static/img/placeholder.png"
-      },
+      "src": "/static/img/placeholder.png",
       "hoverStyle": "",
       "class_name": "img-polaroid",
       "content": null,
@@ -89,9 +79,7 @@
     {
       "style": "",
       "isSingle": false,
-      "content_attribs": {
-        "href": "internal://Homepage"
-      },
+      "href": "internal://Homepage",
       "hoverStyle": "",
       "class_name": "btn btn-default",
       "content": "Button 1",
@@ -101,9 +89,7 @@
     {
       "style": "",
       "isSingle": false,
-      "content_attribs": {
-        "href": "internal://Homepage"
-      },
+      "href": "internal://Homepage",
       "hoverStyle": "",
       "class_name": "btn btn-primary",
       "content": "Button 1",
@@ -122,9 +108,7 @@
     {
       "tagName": "a",
       "cons_attribs": {},
-      "content_attribs": {
-        "href": "internal://Homepage"
-      },
+      "href": "internal://Homepage",
       "content": "Default Button",
       "isSingle": false,
       "style": "",
@@ -135,9 +119,7 @@
     {
       "tagName": "a",
       "cons_attribs": {},
-      "content_attribs": {
-        "href": "internal://Homepage"
-      },
+      "href": "internal://Homepage",
       "content": "Default Button",
       "isSingle": false,
       "style": "",
@@ -212,9 +194,6 @@
     {
       "style": "width: 100%;\nheight: 100%;",
       "isSingle": false,
-      "cons_attribs": {
-        "style": "width: 100%; height: 100%;"
-      },
       "hoverStyle": "",
       "class_name": "well",
       "content": null,
@@ -224,9 +203,6 @@
     {
       "style": "  padding: 19px;\n  background-color: #f5f5f5;\n  border: 1px solid #e3e3e3;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);\n     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);\n          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05); width: 100%; height: 100%;",
       "isSingle": false,
-      "cons_attribs": {
-        "style": "width: 100%; height: 100%;"
-      },
       "hoverStyle": "",
       "class_name": "box-2",
       "content": null,

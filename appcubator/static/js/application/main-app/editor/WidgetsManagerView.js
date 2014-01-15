@@ -49,7 +49,7 @@ define(function(require, exports, module) {
             this.widgetsContainer.innerHTML = '';
 
             this.widgetsCollection.each(function(widget) {
-                widget.setupPageContext(top.v1State.getCurrentPage());
+                widget.setupPageContext(v1.currentApp.getCurrentPage());
                 var newWidgetView = this.placeUIElement(widget, false);
             }, this);
 
@@ -68,7 +68,7 @@ define(function(require, exports, module) {
                 isNew = false;
             }
 
-            model.setupPageContext(v1State.getCurrentPage());
+            model.setupPageContext(v1.currentApp.getCurrentPage());
             var widget = {};
             if (model.get('data').has('container_info') && model.get('data').get('container_info').has('row')) {
                 widget = this.placeList(model, isNew);

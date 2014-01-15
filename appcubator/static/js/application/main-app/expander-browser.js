@@ -59,7 +59,17 @@ exports.factory = function(_safe_eval_) {
                 console: console // debug
             };
             var code = '(' + generatorData.code + ')(data, templates);';
-            var genObj = _safe_eval_(code, globals);
+            
+            var genObj = "ERROR";
+
+            try {
+                genObj = _safe_eval_(code, globals);
+            }
+            catch(e) {
+                console.log(e);
+                throw generatorData.name;
+            }
+
             return genObj;
         };
         return fn;
@@ -107,19 +117,25 @@ exports.factory = function(_safe_eval_) {
     expander.expandOnce = expandOnce;
 
     expander.expandAll = function(app) {
-        _.each(app.routes, function(route, i) {
-            app.routes[i] = expand(app.generators, route);
-        });
+        try {
+            _.each(app.routes, function(route, i) {
+                app.routes[i] = expand(app.generators, route);
+            });
 
-        _.each(app.models, function(model, index) {
-            app.models[index] = expand(app.generators, model);
-        });
+            _.each(app.models, function(model, index) {
+                app.models[index] = expand(app.generators, model);
+            });
 
-        _.each(app.templates, function (template, index) {
-            app.templates[index] = expand(app.generators, template);
-        });
+            _.each(app.templates, function (template, index) {
+                app.templates[index] = expand(app.generators, template);
+            });
 
-        app.config = expand(app.generators, app.config);
+            app.config = expand(app.generators, app.config);
+        }
+        catch(e) {
+            console.log("ERROR with generator: " + e);
+            throw e;
+        }
         return app;
     };
 
@@ -733,6 +749,56 @@ generators.push({
     templates: {'code':""}
 
 });
+
+generators.push({
+    name: 'navbar',
+    version: '0.1',
+    code: function(data, templates){
+        return templates.html({ data: data });
+    },
+    templates: {
+        'html': '<div class="navbar navbar-fixed-top navbar-default" id="navbar">' +
+          // '<button id="edit-navbar-btn">Edit Navbar</button>' +
+            '<div class="container">' +
+              '<div class="navbar-header">' +
+               '<a href="#" class="navbar-brand"><%= data.brandName %></a>' +
+                '<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">' +
+                  '<span class="icon-bar"></span>' +
+                  '<span class="icon-bar"></span>' +
+                  '<span class="icon-bar"></span>' +
+                '</button>' +
+              '</div>' +
+              '<div class="navbar-collapse collapse" data-toggle="collapse">' +
+                '<ul class="nav navbar-nav" id="links">' +
+                    '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
+                    '<li><a href="#" class="menu-item"><%= item.title %></a></li>' +
+                    '<% } %>' +
+                '</ul>' +
+              '</div>' +
+            '</div>' +
+        '</div>'
+    }
+});
+
+generators.push({
+    name: 'footer',
+    version: '0.1',
+    code: function(data, templates){
+        return templates.html({ data: data });
+    },
+    templates: {
+        'html': '<div class="container">' +
+            '<p id="customText" class="footer-text muted"><%= data.customText %></p>' +
+            '<ul class="footer-links" id="links">' +
+                '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
+                '<li><a href="#" class="menu-item"><%= item.title %></a></li>' +
+                '<% } %>' +
+            '</ul>' +
+          '</div>' +
+          '<div class="clearfix"></div>'
+    }
+});
+
 exports.generators = generators;
 
 },{}],11:[function(require,module,exports){
@@ -782,6 +848,165 @@ generators.push({
         html: '<h1 class="<%= className %>" style="<%= style %>"><%= content %></h1>'
     }
 });
+
+generators.push({
+    name: 'design-text',
+    version: '0.1',
+    code: function(data, templates) {
+        /* expects: content, className, style */
+        data.className = data.className || '';
+        data.style = data.style || '';
+        return { html: templates.html(data),
+                 css: '',
+                 js: '',
+                 layout: data.layout };
+    },
+    templates: {
+        html: '<p class="<%= className %>" style="<%= style %>"><%= content %></p>'
+    }
+});
+
+generators.push({
+    name: 'design-image',
+    version: '0.1',
+    code: function(data, templates) {
+        /* expects: url, className, style */
+        data.className = data.className || '';
+        data.style = data.style || '';
+        data.href = "";
+
+        return { html: templates.html(data),
+                 css: '',
+                 js: '',
+                 layout: data.layout };
+    },
+    templates: {
+        html: '<a href="<%= href %>"><img class="<%= className %>" style="<%= style %>" src="<%= src %>">'
+    }
+});
+
+generators.push({
+    name: 'design-link',
+    version: '0.1',
+    code: function(data, templates) {
+        /* expects: content, url, className, style */
+        data.className = data.className || '';
+        data.style = data.style || '';
+        return { html: templates.html(data),
+                 css: '',
+                 js: '',
+                 layout: data.layout };
+    },
+    templates: {
+        html: '<a href="<%= href %>" class="<%= className %>" style="<%= style %>"><%= content %></a>'
+    }
+});
+
+generators.push({
+    name: 'design-button',
+    version: '0.1',
+    code: function(data, templates) {
+        /* expects: content, url, className, style */
+        data.className = data.className || '';
+        data.style = data.style || '';
+        return { html: templates.html(data),
+                 css: '',
+                 js: '',
+                 layout: data.layout };
+    },
+    templates: {
+        html: '<a href="<%= url %>" class="btn <%= className %>" style="<%= style %>"><%= content %></a>'
+    }
+});
+
+generators.push({
+    name: 'design-line',
+    version: '0.1',
+    code: function(data, templates) {
+        /* expects: className, style */
+        data.className = data.className || '';
+        data.style = data.style || '';
+        return { html: templates.html(data),
+                 css: '',
+                 js: '',
+                 layout: data.layout };
+    },
+    templates: {
+        html: '<hr class="<%= className %>" style="<%= style %>">'
+    }
+});
+
+generators.push({
+    name: 'design-box',
+    version: '0.1',
+    code: function(data, templates) {
+        /* expects: content, url, className, style */
+        data.className = data.className || '';
+        data.style = data.style || '';
+        data.style += " width: 100%; height: 100%;";
+        return { html: templates.html(data),
+                 css: '',
+                 js: '',
+                 layout: data.layout };
+    },
+    templates: {
+        html: '<div class="<%= className %>" style="<%= style %>"></div>'
+    }
+});
+
+/** NOT IMPLEMENTED YET **/
+
+generators.push({
+    name: 'design-imageslider',
+    version: '0.1',
+    code: function(data, templates) {
+        /* expects: content, url, className, style */
+        data.className = data.className || '';
+        data.style = data.style || '';
+        return { html: templates.html(data),
+                 css: '',
+                 js: '',
+                 layout: data.layout };
+    },
+    templates: {
+        html: '<a href="<%= url %>" class="<%= className %>" style="<%= style %>"><%= content %></a>'
+    }
+});
+
+generators.push({
+    name: 'design-fbshare',
+    version: '0.1',
+    code: function(data, templates) {
+        /* expects: content, url, className, style */
+        data.className = data.className || '';
+        data.style = data.style || '';
+        return { html: templates.html(data),
+                 css: '',
+                 js: '',
+                 layout: data.layout };
+    },
+    templates: {
+        html: '<a href="<%= url %>" class="<%= className %>" style="<%= style %>"><%= content %></a>'
+    }
+});
+
+generators.push({
+    name: 'design-embedvideo',
+    version: '0.1',
+    code: function(data, templates) {
+        /* expects: content, url, className, style */
+        data.className = data.className || '';
+        data.style = data.style || '';
+        return { html: templates.html(data),
+                 css: '',
+                 js: '',
+                 layout: data.layout };
+    },
+    templates: {
+        html: '<a href="<%= url %>" class="<%= className %>" style="<%= style %>"><%= content %></a>'
+    }
+});
+
 
 exports.generators = generators;
 

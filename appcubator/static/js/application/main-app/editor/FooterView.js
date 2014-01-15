@@ -24,10 +24,11 @@ function(FooterEditorView) {
       new FooterEditorView(this.model);
     },
 
+
     render: function() {
-      var self = this;
-      this.$el.find('#customText').html(this.model.get('customText'));
-      this.renderLinks();
+      var html = "";
+      var el = this.model.expand();
+      this.el.innerHTML = el;
       return this;
     },
 
