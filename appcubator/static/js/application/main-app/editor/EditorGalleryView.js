@@ -5,7 +5,6 @@ define(function(require, exports, module) {
     var EditorGallerySectionView = require('editor/EditorGallerySectionView');
     var SearchGallerySectionView = require('editor/SearchGallerySectionView');
     var PickCreateFormEntityView = require('editor/PickCreateFormEntityView');
-    var ElementCollection = require('collections/ElementCollection');
     var WidgetContainerModel = require('models/WidgetContainerModel');
     var WidgetModel = require('models/WidgetModel');
     var Searcher = require('editor/Searcher');
@@ -168,16 +167,11 @@ define(function(require, exports, module) {
 
         renderUIElementList: function() {
             var self = this;
-            var collection = new ElementCollection(defaultElements);
+            console.log(defaultElements);
+            var collection = new Backbone.Collection(defaultElements);
             this.uiElemsSection = this.addNewSection('Design Elements');
 
-            collection.each(function(element) {
-                if (element.get('className') == "textInputs" ||
-                    element.get('className') == "textAreas" ||
-                    element.get('className') == "dropdowns") return;
-
-                this.appendUIElement(element);
-            }, this);
+            collection.each(this.appendUIElement);
 
             self.appendLambdaCreate();
             self.appendCustomWidget();
@@ -705,7 +699,7 @@ define(function(require, exports, module) {
             }
 
             var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, {});
-            widget.setupPageContext(v1State.getCurrentPage());
+            widget.setupPageContext(v1.currentApp.getCurrentPage());
             return widget;
         },
 

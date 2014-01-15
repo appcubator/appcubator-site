@@ -11,6 +11,10 @@ define([
 
             model: WidgetModel,
 
+            initialize: function() {
+                this.generate = "templates.concatUIE";
+            },
+
             stockPhotos: [
                 "https://i.istockimg.com/file_thumbview_approve/19012355/2/stock-photo-19012355-world-globe-on-a-school-desk.jpg",
                 "https://i.istockimg.com/file_thumbview_approve/21149086/2/stock-photo-21149086-futuristic-digital-tablet-in-the-hands.jpg",
@@ -129,30 +133,30 @@ define([
 
             createNodeWithFieldTypeAndContent: function(layout, type, content_ops) {
                 var widget = {};
-                widget.type = "node";
+
                 widget.layout = layout;
+                widget.type = type;
+                widget = _.extend(widget, v1UIEState.getBaseStyleOf(type).serialize());
 
-                widget.data = {};
-                widget.data.nodeType = type;
-                widget.data = _.extend(widget.data, uieState[type][0]);
-
-                if (widget.data.content_attribs && widget.data.content_attribs.src) {
-                    widget.data.content_attribs.src = this.stockPhotos[Math.floor(Math.random() * this.stockPhotos.length)];
+                if (widget.content_attribs && widget.content_attribs.src) {
+                    widget.content_attribs.src = this.stockPhotos[Math.floor(Math.random() * this.stockPhotos.length)];
                     layout.width = 4;
                     layout.height = 8;
                 }
 
+                var generator = "uielements.design-"+ type;
+                console.log(generator);
                 /* Ghetto fix */
-                if(widget.data.tagName == "p") widget.data.tagName = "div";
+                //if(widget.tagName == "p") widget.data.tagName = "div";
 
-                if (type == "texts" && widget.data.content) {
-                    widget.data.content = this.loremIpsum();
-                }
-                if (content_ops.content) widget.data.content = content_ops.content;
-                if (content_ops.href) widget.data.content_attribs.href = content_ops.href;
-                if (content_ops.src_content) widget.data.content_attribs.src_content = content_ops.src_content;
+                if (type == "texts" && widget.content) { widget.content = this.loremIpsum(); }
+                if (content_ops.content) widget.content = content_ops.content;
+                if (content_ops.href) widget.content_attribs.href = content_ops.href;
+                if (content_ops.src_content) widget.content_attribs.src_content = content_ops.src_content;
 
                 var widgetModel = new WidgetModel(widget);
+                widgetModel.setGenerator(generator);
+
                 return this.push(widgetModel);
             },
 
@@ -330,21 +334,15 @@ define([
             createImageSlider: function(layout) {
                 var widget = {};
                 widget.type = "imageslider";
-
-                widget.data = {};
-                widget.data.nodeType = "imageslider";
-                widget.data.container_info = {};
-                widget.data.container_info.uielements = [];
-                widget.data.container_info.action = "imageslider";
-
-                widget.data.container_info.slides = [{
+                widget.nodeType = "imageslider";
+                widget.slides = [{
                     image: '/static/img/placeholder-slide1.png'
                 }, {
                     image: '/static/img/placeholder-slide2.png'
                 }];
 
-                var widgetContainerModel = new WidgetContainerModel(widget);
-
+                var widgetContainerModel = new WidgetModel(widget);
+                widgetContainerModel.setGenerator("uielements.imageslider");
                 return this.push(widgetContainerModel);
             },
 

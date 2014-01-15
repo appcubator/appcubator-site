@@ -11,6 +11,7 @@ function(LinkCollection) {
     },
     initialize: function(bone) {
 
+      this.setGenerator("templates.navbar");
       //init items collection with links passed from appState
       this.set('links', new LinkCollection(bone.links||[]));
       

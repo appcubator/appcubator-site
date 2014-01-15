@@ -2,7 +2,6 @@ define(function(require, exports, module) {
 
     'use strict';
 
-    var ElementCollection = require('collections/ElementCollection');
     var WidgetContainerModel = require('models/WidgetContainerModel');
     var WidgetModel = require('models/WidgetModel');
 

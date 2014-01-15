@@ -85,12 +85,13 @@ define(function(require, exports, module) {
             this.collection.push(pageModel);
 
             var templateModel = new TemplateModel({ name : name });
+            templateModel.setGenerator("templates.page");
             v1State.get('templates').add(templateModel);
 
             var self = this;
             v1.currentApp.save(null, function() {
-                this.$el.find('#page-list').append('<li class="go-to-page" id="page-' + pageInd + '"><a>' + name + '</a></li>');
-                util.scrollToBottom(this.$el.find('#page-list'));
+                self.$el.find('#page-list').append('<li class="go-to-page" id="page-' + pageInd + '"><a>' + name + '</a></li>');
+                util.scrollToBottom(self.$el.find('#page-list'));
             });
         },
 

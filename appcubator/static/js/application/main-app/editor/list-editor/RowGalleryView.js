@@ -1,11 +1,9 @@
 define([
         'editor/EditorGallerySectionView',
         'editor/EditorGalleryView',
-        'collections/ElementCollection'
     ],
     function(EditorGallerySectionView,
-        EditorGalleryView,
-        ElementCollection) {
+        EditorGalleryView) {
 
         var RowGalleryView = EditorGalleryView.extend({
             el: null,
