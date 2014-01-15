@@ -145,8 +145,6 @@ define([
                 }
 
                 var generator = "uielements.design-"+ type;
-                /* Ghetto fix */
-                //if(widget.tagName == "p") widget.data.tagName = "div";
 
                 if (type == "text" && widget.content) { widget.content = this.loremIpsum(); }
                 if (content_ops.content) widget.content = content_ops.content;

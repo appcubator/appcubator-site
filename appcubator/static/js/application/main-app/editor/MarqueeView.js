@@ -120,7 +120,7 @@ define([
 
             iterateWidgets: function(Xorigin, Yorigin, Xcor, Ycor) {
 
-                this.currentPage = v1State.getCurrentPage();
+                this.currentPage = v1.currentApp.getCurrentPage();
                 if (Xcor % 3 >= 1 & Ycor % 3 >= 1) return;
 
                 this.widgetsCollection.each(function(widget) {
