@@ -33,8 +33,7 @@ define(['backbone'], function(Backbone) {
     },
 
     serialize: function() {
-      var json = _.clone(this.attributes);
-      json.urlparts = this.get('urlparts').pluck('value');
+      var json = this.get('urlparts').pluck('value');
       return json;
     }
   });

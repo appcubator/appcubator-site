@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 
     'use strict';
-    var WidgetCollection = require('collections/WidgetCollection');
+    var BodyModel = require('models/BodyModel');
 
     var TemplateModel = Backbone.Model.extend({
 
@@ -9,7 +9,9 @@ define(function(require, exports, module) {
 
             this.set('name', bone.name);
             this.set('head', bone.head||"");
-            this.set('body', new WidgetCollection(bone.body||{}));
+            this.set('body', new BodyModel(bone.body||{}));
+
+            //new WidgetCollection(bone.body||{}));
 
             // _(bone.body).each(function(uielement) {
             //     if (uielement.container_info) {

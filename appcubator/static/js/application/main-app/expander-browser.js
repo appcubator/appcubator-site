@@ -59,7 +59,16 @@ exports.factory = function(_safe_eval_) {
                 console: console // debug
             };
             var code = '(' + generatorData.code + ')(data, templates);';
-            var genObj = _safe_eval_(code, globals);
+            
+            var genObj = "ERROR";
+
+            try {
+                genObj = _safe_eval_(code, globals);
+            }
+            catch(e) {
+                throw generatorData.name;
+            }
+
             return genObj;
         };
         return fn;
@@ -107,19 +116,25 @@ exports.factory = function(_safe_eval_) {
     expander.expandOnce = expandOnce;
 
     expander.expandAll = function(app) {
-        _.each(app.routes, function(route, i) {
-            app.routes[i] = expand(app.generators, route);
-        });
+        try {
+            _.each(app.routes, function(route, i) {
+                app.routes[i] = expand(app.generators, route);
+            });
 
-        _.each(app.models, function(model, index) {
-            app.models[index] = expand(app.generators, model);
-        });
+            _.each(app.models, function(model, index) {
+                app.models[index] = expand(app.generators, model);
+            });
 
-        _.each(app.templates, function (template, index) {
-            app.templates[index] = expand(app.generators, template);
-        });
+            _.each(app.templates, function (template, index) {
+                app.templates[index] = expand(app.generators, template);
+            });
 
-        app.config = expand(app.generators, app.config);
+            app.config = expand(app.generators, app.config);
+        }
+        catch(e) {
+            console.log("ERROR with generator: " + e);
+            throw e;
+        }
         return app;
     };
 
@@ -427,7 +442,9 @@ generators.push({
     <%= head %>\n \
     </head>\n \
     <body>\n \
+    <%= navbar %> \n \
     <%= body %>\n \
+    <%= footer %>\n \
     </body>\n \
 </html>\n" }
 });
@@ -733,6 +750,57 @@ generators.push({
     templates: {'code':""}
 
 });
+
+generators.push({
+    name: 'navbar',
+    version: '0.1',
+    code: function(data, templates){
+        return templates.html({ data: data });
+    },
+    templates: {
+        'html': '<div class="navbar navbar-fixed-top navbar-default" id="navbar">' +
+          // '<button id="edit-navbar-btn">Edit Navbar</button>' +
+            '<div class="container">' +
+              '<div class="navbar-header">' +
+               '<a href="#" class="navbar-brand"><%= data.brandName %></a>' +
+                '<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">' +
+                  '<span class="icon-bar"></span>' +
+                  '<span class="icon-bar"></span>' +
+                  '<span class="icon-bar"></span>' +
+                '</button>' +
+              '</div>' +
+              '<div class="navbar-collapse collapse" data-toggle="collapse">' +
+                '<ul class="nav navbar-nav" id="links">' +
+                    '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
+                    '<li><a href="#" class="menu-item"><%= item.title %></a></li>' +
+                    '<% } %>' +
+                '</ul>' +
+              '</div>' +
+            '</div>' +
+        '</div>'
+    }
+});
+
+generators.push({
+    name: 'footer',
+    version: '0.1',
+    code: function(data, templates){
+        // CSS at the top, then HTML elements, then the corresponding Javascript at the bottom.
+        return templates.html({ data: data });
+    },
+    templates: {
+        'html': '<div class="container">' +
+            '<p id="customText" class="footer-text muted"><%= data.customText %></p>' +
+            '<ul class="footer-links" id="links">' +
+                '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
+                '<li><a href="#" class="menu-item"><%= item.title %></a></li>' +
+                '<% } %>' +
+            '</ul>' +
+          '</div>' +
+          '<div class="clearfix"></div>'
+    }
+});
+
 exports.generators = generators;
 
 },{}],11:[function(require,module,exports){
