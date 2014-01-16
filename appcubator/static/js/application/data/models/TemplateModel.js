@@ -39,7 +39,7 @@ define(function(require, exports, module) {
         toJSON: function() {
 
             var json = _.clone(this.attributes);
-            json.uielement  = json.uielement.serialize();
+            json.uielements = json.uielements.serialize();
             json.navbar     = json.navbar.serialize();
             json.footer     = json.footer.serialize();
 
