@@ -33,7 +33,7 @@ def log_feedback(request):
     user_id = request.user.id
     like = request.POST['like']
     dislike = request.POST['dislike']
-    features = request.POST['features']
+    features = request.POST.get('features', 'None')
     app_id = request.POST.get('__app_id', None)
 
     message =  user + " says.\n\n Like: \n" + like + \
