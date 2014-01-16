@@ -16,7 +16,6 @@ define(function(require, exports, module) {
                 var templates = globals.templates;
                 var data = globals.data;
                 var expand = globals.expand;
-                console.log(data);
                 return eval(code);
             };
 
