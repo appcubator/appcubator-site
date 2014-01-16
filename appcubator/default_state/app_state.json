@@ -99,95 +99,93 @@
     "data": {
       "name": "Homepage",
       "head": "<script src=\"//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js\"></script>",
-      "body": {
-        "navbar": {
-          "generate": "templates.navbar",
-          "data": {
-            "isFixed": true,
-            "brandName": null,
-            "isHidden": false,
-            "links": [{
-              "url": "internal://Homepage",
-              "title": "Homepage"
-            }]
-          }
-        },
-        "footer": {
-          "generate": "templates.footer",
-          "data": {
-            "isFixed": true,
-            "customText": "<a href='http://appcubator.com'>Powered by Appcubator</a>",
-            "isHidden": false,
-            "links": [{
-              "url": "internal://Homepage",
-              "title": "Homepage"
-            }]
-          }
-        },
-        "uielements": {
-          "generate": "templates.concatUIE",
-          "data": [{
-            "html": "<h1>Search Flickr</h1>",
-            "style": {
-              "class_name": "yolo"
-            },
-            "js": "",
-            "css": "",
-            "layout": {}
-          }, {
-            "generate": "flickrpickr.uielements.flicksearchbar",
-            "data": {
-              "galleryID": "myflickgallery",
-              "searchID": "myflicksearch",
-              "buttonText": "Hit the backend!"
-            }
-          }, {
-            "generate": "flickrpickr.uielements.flickgallery",
-            "data": {
-              "galleryID": "myflickgallery"
-            }
-          }, {
-            "html": "<h1>Create a Picture</h1>",
-            "js": "",
-            "css": "",
-            "layout": {},
-            "style": {
-              "class_name": "yolo2"
-            }
-          }, {
-            "generate": "crud.uielements.create",
-            "data": {
-              "fields": [
-                [
-                  "name", {
-                    "type": "text",
-                    "placeholder": "Name"
-                  }
-                ],
-                [
-                  "url", {
-                    "type": "text",
-                    "placeholder": "URL"
-                  }
-                ]
-              ],
-              "id": "testform",
-              "redirect": "/?success=true"
-            }
-          }, {
-            "html": "<div id=\"piclist\"></div>",
-            "js": "models.Picture.findPicture({}, function(err, data){\n_.each(data, function(d) {$('#piclist').append('<p>'+d.name+'</p><img class=\"piclist\" src=\"'+d.url+'\">'); });\n});",
-            "css": "img.piclist {max-height: 200px; max-width: 300px;}"
-          }, {
-            "html": "<h1>Sign Up</h1>\n<form id=\"signup\">\n<input name=\"username\" type=\"text\" placeholder=\"Username\"><br>\n<input name=\"password\" type=\"password\" placeholder=\"Password\"><br>\n<input name=\"password2\" type=\"password\" placeholder=\"Confirm password\"><br>\n<input type=\"submit\" value=\"Submit\">\n</form>",
-            "js": "$('#signup').submit(function(){\n    var username = $('#signup input[name=\"username\"]').val();\n    var password = $('#signup input[name=\"password\"]').val();\n    var password2 = $('#signup input[name=\"password2\"]').val();\n    models.User.signup(username, password, password2, function(err, data){\n        if (err) { alert(err); }\n        else { location.href = data.url; }\n        \n    });\n    return false;\n});",
-            "css": ""
-          }, {
-            "html": "<h1>Login</h1>",
-            "js": "",
-            "css": ""
+      "navbar": {
+        "generate": "templates.navbar",
+        "data": {
+          "isFixed": true,
+          "brandName": null,
+          "isHidden": false,
+          "links": [{
+            "url": "internal://Homepage",
+            "title": "Homepage"
           }]
         }
+      },
+      "footer": {
+        "generate": "templates.footer",
+        "data": {
+          "isFixed": true,
+          "customText": "<a href='http://appcubator.com'>Powered by Appcubator</a>",
+          "isHidden": false,
+          "links": [{
+            "url": "internal://Homepage",
+            "title": "Homepage"
+          }]
+        }
+      },
+      "body": {
+        "generate": "templates.concatUIE",
+        "data": [{
+          "html": "<h1>Search Flickr</h1>",
+          "style": {
+            "class_name": "yolo"
+          },
+          "js": "",
+          "css": "",
+          "layout": {}
+        }, {
+          "generate": "flickrpickr.uielements.flicksearchbar",
+          "data": {
+            "galleryID": "myflickgallery",
+            "searchID": "myflicksearch",
+            "buttonText": "Hit the backend!"
+          }
+        }, {
+          "generate": "flickrpickr.uielements.flickgallery",
+          "data": {
+            "galleryID": "myflickgallery"
+          }
+        }, {
+          "html": "<h1>Create a Picture</h1>",
+          "js": "",
+          "css": "",
+          "layout": {},
+          "style": {
+            "class_name": "yolo2"
+          }
+        }, {
+          "generate": "crud.uielements.create",
+          "data": {
+            "fields": [
+              [
+                "name", {
+                  "type": "text",
+                  "placeholder": "Name"
+                }
+              ],
+              [
+                "url", {
+                  "type": "text",
+                  "placeholder": "URL"
+                }
+              ]
+            ],
+            "id": "testform",
+            "redirect": "/?success=true"
+          }
+        }, {
+          "html": "<div id=\"piclist\"></div>",
+          "js": "models.Picture.findPicture({}, function(err, data){\n_.each(data, function(d) {$('#piclist').append('<p>'+d.name+'</p><img class=\"piclist\" src=\"'+d.url+'\">'); });\n});",
+          "css": "img.piclist {max-height: 200px; max-width: 300px;}"
+        }, {
+          "html": "<h1>Sign Up</h1>\n<form id=\"signup\">\n<input name=\"username\" type=\"text\" placeholder=\"Username\"><br>\n<input name=\"password\" type=\"password\" placeholder=\"Password\"><br>\n<input name=\"password2\" type=\"password\" placeholder=\"Confirm password\"><br>\n<input type=\"submit\" value=\"Submit\">\n</form>",
+          "js": "$('#signup').submit(function(){\n    var username = $('#signup input[name=\"username\"]').val();\n    var password = $('#signup input[name=\"password\"]').val();\n    var password2 = $('#signup input[name=\"password2\"]').val();\n    models.User.signup(username, password, password2, function(err, data){\n        if (err) { alert(err); }\n        else { location.href = data.url; }\n        \n    });\n    return false;\n});",
+          "css": ""
+        }, {
+          "html": "<h1>Login</h1>",
+          "js": "",
+          "css": ""
+        }]
       }
     }
   }],
