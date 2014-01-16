@@ -339,37 +339,38 @@ define([
                 }];
 
                 var widgetContainerModel = new WidgetModel(widget);
-                widgetContainerModel.setGenerator("uielements.imageslider");
+                widgetContainerModel.setGenerator("uielements.design-imageslider");
                 return this.push(widgetContainerModel);
             },
 
             createFacebookShare: function(layout) {
                 var widget = {};
+                widget.layout = layout;
                 widget.type = "facebookshare";
+                widget.nodeType = "facebookshare";
+                widget.container_info = {};
+                widget.container_info.action = "facebookshare";
 
-                widget.data = {};
-                widget.data.nodeType = "facebookshare";
-                widget.data.container_info = {};
-                widget.data.container_info.action = "facebookshare";
-
-                var widgetContainerModel = new WidgetContainerModel(widget);
-
-                return this.push(widgetContainerModel);
+                var widgetModel = new WidgetModel(widget);
+                widgetModel.setGenerator('uielements.design-fbshare');
+                
+                return this.push(widgetModel);
             },
 
             createVideoEmbed: function(layout) {
                 var widget = {};
+                widget.layout = layout;
                 widget.type = "videoembed";
+                widget.nodeType = "videoembed";
+                widget.action = "videoembed";
+                widget.youtubeURL = "http://www.youtube.com/watch?v=hZTx0vXUo34";
 
-                widget.data = {};
-                widget.data.nodeType = "videoembed";
-                widget.data.container_info = {};
-                widget.data.container_info.action = "videoembed";
-                widget.data.container_info.youtubeURL = "http://www.youtube.com/watch?v=hZTx0vXUo34";
+                var widgetModel = new WidgetModel(widget);
+                widgetModel.setGenerator('uielements.design-embedvideo');
 
-                var widgetContainerModel = new WidgetContainerModel(widget);
+                console.log(widget);
 
-                return this.push(widgetContainerModel);
+                return this.push(widgetModel);
             },
 
             addWidgetContainerModel: function(uielementDict) {

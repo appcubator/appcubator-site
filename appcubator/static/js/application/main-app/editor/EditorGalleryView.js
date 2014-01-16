@@ -686,7 +686,7 @@ define(function(require, exports, module) {
                 return this.widgetsCollection.createTwitterFeed(layout);
             }
 
-            if (type == "facebookshare") {
+            if (type == "fbshare") {
                 return this.widgetsCollection.createFacebookShare(layout);
             }
 
