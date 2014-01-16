@@ -222,7 +222,8 @@ define(function(require, exports, module) {
             var threeDots = util.threeDots();
             $('.deploy-text').append(threeDots.el);
 
-            var success_callback = function() {
+            var success_callback = function(data) {
+                new DeployView(data);
                 $('.deploy-text').html('Publish');
                 clearInterval(threeDots.timer);
             };
@@ -236,9 +237,10 @@ define(function(require, exports, module) {
 
 
         whenDeployed: function(successCallback) {
-            v1.getDeploymentStatus(successCallback, function() {
+            var self = this;
+            this.getDeploymentStatus(successCallback, function() {
                 setTimeout(function() {
-                    v1.whenDeployed(successCallback);
+                    self.whenDeployed(successCallback);
                 }, 1500);
             });
         },

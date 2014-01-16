@@ -59,7 +59,7 @@ define(function(require, exports, module) {
 
 
             this.templateModel = this.appModel.get('templates').getTemplateWithName(this.pageName);
-            this.widgetsCollection = this.templateModel.get('body').get('uielements');
+            this.widgetsCollection = this.templateModel.getUIElements();
 
             this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
             this.widgetsManager = {};
@@ -79,8 +79,8 @@ define(function(require, exports, module) {
 
             g_guides = this.guides;
 
-            this.navbar = new NavbarView(this.templateModel.get('body').get('navbar'));
-            this.footer = new FooterView(this.templateModel.get('body').get('footer'));
+            this.navbar = new NavbarView(this.templateModel.get('navbar'));
+            this.footer = new FooterView(this.templateModel.get('footer'));
             this.urlModel = this.model.get('url');
 
             this.title = "Editor";
