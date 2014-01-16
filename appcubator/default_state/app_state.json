@@ -192,7 +192,7 @@
   "routes": [{
     "generate": "routes.staticpage",
     "data": {
-      "url": ["/"],
+      "url": [],
       "name": "Homepage"
     }
   }],
