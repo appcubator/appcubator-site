@@ -94,7 +94,7 @@ require.onError = function(err) {
 require([
         "models/AppModel",
         "editor/WidgetView",
-        "editor/WidgetsManagerView",
+        "editor/SectionsManagerView",
         'editor/MarqueeView',
         "editor/KeyDispatcher",
         "editor/MouseDispatcher",
@@ -107,7 +107,7 @@ require([
     ],
     function(AppModel,
         WidgetView,
-        WidgetsManagerView,
+        SectionsManagerView,
         MarqueeView,
         KeyDispatcher,
         MouseDispatcher,
@@ -126,9 +126,9 @@ require([
         g_marqueeView = {};
 
         var proxy = {
-            setupWidgetsManager: function(widgetsCollection) {
-                this.widgetsManager = new WidgetsManagerView(widgetsCollection);
-                return this.widgetsManager;
+            setupSectionsManager: function(sectionsCollection) {
+                this.sectionsManager = new SectionsManagerView(sectionsCollection);
+                return this.sectionsManager;
             },
 
             setupMarqueeView: function(widgetsCollection) {

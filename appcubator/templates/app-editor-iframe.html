@@ -7,7 +7,6 @@
 <link type="text/css" href="/static/css/appcubator-override.css" rel="stylesheet"/>
 <link type="text/css" href="/static/css/editor-inject.css" rel="stylesheet"/>
 <link type="text/css" href="/static/css/jquery-ui.css" rel="stylesheet"/>
-<link type="text/css" href="/static/css/app/editor/editor-gallery.css" rel="stylesheet"/>
 
 </head>
 <body>
@@ -27,10 +26,14 @@
         </div>
         {% endif %}
         <!-- Editing Container -->
-        <div class="container editing" id="full-container"></div>
-        <div class="editing container elements" id="elements-container">
+        <div class="editing elements" id="elements-container">
         <!-- UI Elements -->
         </div>
+
+        <div class="container editing full-container">
+            Add New Section
+        </div>
+
         <!-- Footer -->
         {% if old_nav %}
         <footer class="footer" id="footer">

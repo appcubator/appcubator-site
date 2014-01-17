@@ -59,11 +59,11 @@ define(function(require, exports, module) {
 
 
             this.templateModel = this.appModel.get('templates').getTemplateWithName(this.pageName);
-            this.widgetsCollection = this.templateModel.getUIElements();
+            this.sectionsCollection = this.templateModel.getSections();
 
-            this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
-            this.widgetsManager = {};
-            this.guides = new GuideView(this.widgetsCollection);
+            this.galleryEditor = new EditorGalleryView(this.sectionsCollection);
+            this.sectionsManager = {};
+            this.guides = new GuideView(this.sectionsCollection);
             this.cssEditorView = new CSSEditorView();
             this.pageView = new PageView(this.model, pageId);
 
@@ -87,7 +87,7 @@ define(function(require, exports, module) {
 
             this.subviews = [
                 this.galleryEditor,
-                this.widgetsManager,
+                this.sectionsManager,
                 this.guides,
                 this.navbar,
                 this.footer
@@ -155,18 +155,18 @@ define(function(require, exports, module) {
             keyDispatcher.addEnvironment(innerDoc);
 
             this.iframeProxy = proxy;
-            this.marqueeView = proxy.setupMarqueeView(this.widgetsCollection);
+            //this.marqueeView = proxy.setupMarqueeView(this.sectionsCollection);
 
-            this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
+            this.sectionsManager = proxy.setupSectionsManager(this.sectionsCollection);
 
             self.iframedoc = innerDoc;
             //self.marqueeView.render();
-            self.widgetsManager.render();
+            self.sectionsManager.render();
 
             self.navbar.setElement(innerDoc.getElementById('navbar')).render();
             self.footer.setElement(innerDoc.getElementById('footer')).render();
 
-            self.guides.setElement(innerDoc.getElementById('elements-container')).render();
+            //self.guides.setElement(innerDoc.getElementById('elements-container')).render();
             //$(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
 
             self.startUIStateUpdater(proxy);
@@ -251,14 +251,14 @@ define(function(require, exports, module) {
         },
 
         setupPageHeightBindings: function() {
-            this.listenTo(this.widgetsCollection, 'add', function(uielem) {
-                this.setupPageHeight();
-                this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
-            }, this);
+            // this.listenTo(this.widgetsCollection, 'add', function(uielem) {
+            //     this.setupPageHeight();
+            //     this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
+            // }, this);
 
-            this.widgetsCollection.each(function(uielem) {
-                this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
-            }, this);
+            // this.widgetsCollection.each(function(uielem) {
+            //     this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
+            // }, this);
         },
 
         setupPageHeight: function() {

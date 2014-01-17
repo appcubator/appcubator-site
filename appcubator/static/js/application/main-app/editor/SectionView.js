@@ -13,9 +13,7 @@ define(function(require, exports, module) {
     require('util');
 
 
-    var WidgetManagerView = Backbone.View.extend({
-
-        el: document.body,
+    var SectionView = Backbone.View.extend({
 
         widgetsContainer: null,
 
@@ -23,38 +21,74 @@ define(function(require, exports, module) {
 
         },
 
+        className: "section-proto",
+
         subviews: [],
 
-        initialize: function(widgetsCollection) {
+        initialize: function(sectionModel) {
             _.bindAll(this);
 
-            var self = this;
-            this.subviews = [];
+            this.model = sectionModel;
 
-            this.widgetsCollection = widgetsCollection;
-            this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
+            // this.widgetsCollection = widgetsCollection;
+            // this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
 
-            this.widgetSelectorView = new WidgetSelectorView(this.widgetsCollection);
+            // this.widgetSelectorView = new WidgetSelectorView(this.widgetsCollection);
 
-            this.listenTo(this.widgetsCollection, 'change', function() {
-                util.askBeforeLeave();
-            });
-            this.listenTo(this.widgetsCollection, 'add', function() {
-                util.askBeforeLeave();
-            });
+            // this.listenTo(this.widgetsCollection, 'change', function() {
+            //     util.askBeforeLeave();
+            // });
+            // this.listenTo(this.widgetsCollection, 'add', function() {
+            //     util.askBeforeLeave();
+            // });
         },
 
         render: function() {
-            this.widgetsContainer = document.getElementById('elements-container');
-            this.widgetsContainer.innerHTML = '';
+            switch(this.model.get('layout')) {
+                case "hero":
+                    this.el.innerHTML = '<div class="jumbotron"><div class="container col0"></div></div>';
+                    break;
+                case "3-3-3-3":
+                    this.el.innerHTML = [
+                    '<div class="container">',
+                        '<div class="row">',
+                            '<h1 class="text-center coltop"></h1>',
+                            '<div class="col-md-3 col0"></div>',
+                            '<div class="col-md-3 col1"></div>',
+                            '<div class="col-md-3 col2"></div>',
+                            '<div class="col-md-3 col3"></div>',
+                        '</div>',
+                    '</div>'].join('\n');
+                    break;
+            }
 
-            this.widgetsCollection.each(function(widget) {
-                widget.setupPageContext(v1.currentApp.getCurrentPage());
-                var newWidgetView = this.placeUIElement(widget, false);
+            this.layoutElements();
+            // this.widgetsContainer = document.getElementById('elements-container');
+            // this.widgetsContainer.innerHTML = '';
+
+            // this.widgetsCollection.each(function(widget) {
+            //     widget.setupPageContext(v1.currentApp.getCurrentPage());
+            //     var newWidgetView = this.placeUIElement(widget, false);
+            // }, this);
+
+
+            // this.widgetSelectorView.setElement(document).render();
+            return this;
+        },
+
+        layoutElements: function() {
+            // colid: [els]
+            var dict = this.model.getArrangedModels();
+            _.each(dict, function(val, key) {
+
+                var $col = this.$el.find('.col'+key);
+                _.each(val, function(widgetModel) {
+                    var widgetView = new WidgetView(widgetModel);
+                    $col.append(widgetView.render().el);
+                });
+
             }, this);
 
-
-            this.widgetSelectorView.setElement(document).render();
         },
 
         addWidgets: function(arrWidgets) {
@@ -135,5 +169,5 @@ define(function(require, exports, module) {
         }
     });
 
-    return WidgetManagerView;
+    return SectionView;
 });

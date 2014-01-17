@@ -3,7 +3,7 @@ define(function(require, exports, module) {
     'use strict';
     var NavbarModel      = require('models/NavbarModel'),
         FooterModel      = require('models/FooterModel'),
-        WidgetCollection = require('collections/WidgetCollection');
+        SectionCollection= require('collections/SectionCollection');
 
     var TemplateModel = Backbone.Model.extend({
 
@@ -11,7 +11,7 @@ define(function(require, exports, module) {
 
             this.set('name', bone.name);
             this.set('head', bone.head || "");
-            this.set('uielements', new WidgetCollection(bone.uielements || {}));
+            this.set('uielements', new SectionCollection(bone.uielements || []));
             this.set('navbar', new NavbarModel(bone.navbar || {}));
             this.set('footer', new FooterModel(bone.footer || {}));
 
@@ -21,16 +21,20 @@ define(function(require, exports, module) {
             return this.get('uielements');
         },
 
+        getSections: function() {
+            return this.get('uielements');
+        },
+
         getHeight: function() {
             var height = 0;
 
-            this.getUIElements().each(function(uielement) {
-                var layout = uielement.get('layout');
-                var bottom = layout.get('top') + layout.get('height');
-                if (bottom > height) {
-                    height = bottom;
-                }
-            });
+            // this.getUIElements().each(function(uielement) {
+            //     var layout = uielement.get('layout');
+            //     var bottom = layout.get('top') + layout.get('height');
+            //     if (bottom > height) {
+            //         height = bottom;
+            //     }
+            // });
 
             return height;
         },
