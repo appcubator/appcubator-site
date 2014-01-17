@@ -11,6 +11,9 @@ define(function(require, exports, module) {
 
             this.set('name', bone.name);
             this.set('head', bone.head || "");
+
+            console.log(bone);
+            
             this.set('uielements', new SectionCollection(bone.uielements || []));
             this.set('navbar', new NavbarModel(bone.navbar || {}));
             this.set('footer', new FooterModel(bone.footer || {}));

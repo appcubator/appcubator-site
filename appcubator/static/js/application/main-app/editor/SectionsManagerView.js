@@ -2,6 +2,7 @@ define(function(require, exports, module) {
 
     'use strict';
     var SectionView = require('editor/SectionView');
+    var WidgetSelectorView = require('editor/WidgetSelectorView');
 
     require('backbone');
     require('util');
@@ -14,9 +15,11 @@ define(function(require, exports, module) {
         widgetsContainer: null,
 
         events: {
-            'click #addNewSection' : 'showSectionOptions',
+            'click #addNewSectionTitle' : 'showSectionOptions',
             'click .section-option': 'selectSectionLayout'
         },
+
+        optionsHidden : true,
 
         subviews: [],
 
@@ -26,11 +29,14 @@ define(function(require, exports, module) {
             var self = this;
             this.subviews = [];
 
+            this.widgetSelectorView = new WidgetSelectorView(sectionsCollection.getAllWidgets());
+
             this.sectionsCollection = sectionsCollection;
             this.listenTo(this.sectionsCollection, 'add', this.placeSection, true);
         },
 
         render: function() {
+
             this.widgetsContainer = document.getElementById('elements-container');
             this.widgetsContainer.innerHTML = '';
 
@@ -39,20 +45,26 @@ define(function(require, exports, module) {
                 var newWidgetView = this.placeSection(widget, false);
             }, this);
 
-
-            //this.widgetSelectorView.setElement(document).render();
+            this.widgetSelectorView.setElement(document).render();
         },
 
         showSectionOptions: function() {
 
+            if(!this.optionsHidden) return;
+
             this.$el.find('#addNewSectionTitle').hide();
             this.$el.find('.options').fadeIn();
-
+            this.optionsHidden = false;
         },
 
         selectSectionLayout: function(e) {
             var id = String(e.currentTarget.id).replace('opt-','');
             this.sectionsCollection.createSectoinWithType(id);
+
+            console.log(this.$el.find('.options'));
+            this.$el.find('.options').first().hide();
+            this.$el.find('#addNewSectionTitle').fadeIn();
+            this.optionsHidden = true;
         },
 
         // this function decides if widget or container

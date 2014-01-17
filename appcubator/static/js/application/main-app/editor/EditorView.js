@@ -155,19 +155,19 @@ define(function(require, exports, module) {
             keyDispatcher.addEnvironment(innerDoc);
 
             this.iframeProxy = proxy;
-            //this.marqueeView = proxy.setupMarqueeView(this.sectionsCollection);
+            this.marqueeView = proxy.setupMarqueeView(this.sectionsCollection.getAllWidgets());
 
             this.sectionsManager = proxy.setupSectionsManager(this.sectionsCollection);
 
             self.iframedoc = innerDoc;
-            //self.marqueeView.render();
+            self.marqueeView.render();
             self.sectionsManager.render();
 
             self.navbar.setElement(innerDoc.getElementById('navbar')).render();
             self.footer.setElement(innerDoc.getElementById('footer')).render();
 
             //self.guides.setElement(innerDoc.getElementById('elements-container')).render();
-            //$(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
+            $(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
 
             self.startUIStateUpdater(proxy);
             self.setupPageHeight();

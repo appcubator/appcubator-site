@@ -104,6 +104,8 @@ define(function(require, exports, module) {
         },
 
         show: function() {
+            if(!this.model) return;
+
             var location = this.getLocation();
             this.location = location;
             this.el.className += ' ' + location;

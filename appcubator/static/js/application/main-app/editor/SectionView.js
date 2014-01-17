@@ -6,7 +6,6 @@ define(function(require, exports, module) {
     var WidgetModel = require('models/WidgetModel');
     var WidgetListView = require('editor/WidgetListView');
     var WidgetFormView = require('editor/WidgetFormView');
-    var WidgetSelectorView = require('editor/WidgetSelectorView');
     var WidgetCustomView = require('editor/WidgetCustomView');
     var CustomWidgetEditorModal = require('editor/CustomWidgetEditorModal');
     require('backbone');
@@ -33,7 +32,6 @@ define(function(require, exports, module) {
             // this.widgetsCollection = widgetsCollection;
             // this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
 
-            // this.widgetSelectorView = new WidgetSelectorView(this.widgetsCollection);
 
             // this.listenTo(this.widgetsCollection, 'change', function() {
             //     util.askBeforeLeave();
@@ -72,7 +70,6 @@ define(function(require, exports, module) {
             // }, this);
 
 
-            // this.widgetSelectorView.setElement(document).render();
             return this;
         },
 
@@ -164,7 +161,6 @@ define(function(require, exports, module) {
         },
 
         close: function() {
-            this.widgetSelectorView.close();
             WidgetManagerView.__super__.close.call(this);
         }
     });
