@@ -114,7 +114,7 @@ define(function(require, exports, module) {
             }, this);
 
             this.on('add', function(sectionModel) {
-                widgetCollection.add(sectionModel.get('uielements'));
+                widgetCollection.add(sectionModel.get('uielements').models);
             });
 
             return widgetCollection;

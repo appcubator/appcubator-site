@@ -114,6 +114,8 @@ define(function(require, exports, module) {
             var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
             var element = innerDoc.getElementById('widget-wrapper-'+ this.model.cid);
 
+            if(!element) return;
+
             var offsetFrame = util.getWindowRelativeOffset(window.document, iframe);
             var offset = util.getWindowRelativeOffset(window.document, element);
 

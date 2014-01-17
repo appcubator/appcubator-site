@@ -178,10 +178,21 @@ define(function(require, exports, module) {
             if (!widgetModel) return;
             $(node).show();
 
-            node.style.width = ((widgetModel.get('layout').get('width') * 80) + PADDING) + 'px';
-            node.style.height = ((widgetModel.get('layout').get('height') * 15) + PADDING) + 'px';
-            node.style.left = ((widgetModel.get('layout').get('left') * 80) - ALIGNMENT) + 'px';
-            node.style.top = ((widgetModel.get('layout').get('top') * 15) - ALIGNMENT) + 'px';
+            var element = document.getElementById('widget-wrapper-'+ widgetModel.cid);
+            var $element = $(element);
+            if(!element) return;
+
+            // var offsetFrame = util.getWindowRelativeOffset(window.document, window);
+            var offset = util.getWindowRelativeOffset(window.document, element);
+
+            var leftDist = offset.left; // + offsetFrame.left;
+            var topDist = offset.top + $(window).scrollTop();
+
+            node.style.width =  $element.outerWidth() + 'px';
+            node.style.height = $element.outerHeight() + 'px';
+            node.style.left = (leftDist) + 'px';
+            node.style.top = (topDist) + 'px';
+
             return node;
         },
 
