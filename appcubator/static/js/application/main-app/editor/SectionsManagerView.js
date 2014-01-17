@@ -40,9 +40,9 @@ define(function(require, exports, module) {
             this.widgetsContainer = document.getElementById('elements-container');
             this.widgetsContainer.innerHTML = '';
 
-            this.sectionsCollection.each(function(widget) {
+            this.sectionsCollection.each(function(sectionModel) {
                 // widget.setupPageContext(v1.currentApp.getCurrentPage());
-                var newWidgetView = this.placeSection(widget, false);
+                var newWidgetView = this.placeSection(sectionModel, false);
             }, this);
 
             this.widgetSelectorView.setElement(document).render();
@@ -72,8 +72,27 @@ define(function(require, exports, module) {
             //model.setupPageContext(v1.currentApp.getCurrentPage());
             var sectionView = new SectionView(model);
             this.widgetsContainer.appendChild(sectionView.render().el);
+
+            this.listenTo(model, 'hovered', function() {
+                console.log(model);
+                this.changeCurrentSection(model, sectionView);
+            }, this);
+
             this.subviews.push(sectionView);
             return sectionView;
+        },
+
+        changeCurrentSection: function(model, view) {
+            this.currentSectionModel = model;
+            this.currentSectionView = view;
+        },
+
+        highlightSections: function () {
+            this.$el.find('.ycol').addClass("fancy-borders");
+        },
+
+        unhighlightSections: function () {
+            this.$el.find('.ycol').removeClass("fancy-borders");
         },
 
         close: function() {

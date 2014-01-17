@@ -17,7 +17,7 @@ define(function(require, exports, module) {
         widgetsContainer: null,
 
         events: {
-
+            'mouseover' : 'hovered'
         },
 
         className: "section-proto",
@@ -44,20 +44,31 @@ define(function(require, exports, module) {
         render: function() {
             switch(this.model.get('layout')) {
                 case "hero":
-                    this.el.innerHTML = '<div class="jumbotron"><div class="container col0"></div></div>';
+                    this.el.innerHTML = '<div class="jumbotron"><div class="container ycol col0"></div></div>';
                     break;
                 case "3-3-3-3":
                     this.el.innerHTML = [
                     '<div class="container">',
                         '<div class="row">',
-                            '<h1 class="text-center coltop"></h1>',
-                            '<div class="col-md-3 col0"></div>',
-                            '<div class="col-md-3 col1"></div>',
-                            '<div class="col-md-3 col2"></div>',
-                            '<div class="col-md-3 col3"></div>',
+                            '<div class="text-center ycol colheader"></div>',
+                            '<div class="col-md-3 ycol col0"></div>',
+                            '<div class="col-md-3 ycol col1"></div>',
+                            '<div class="col-md-3 ycol col2"></div>',
+                            '<div class="col-md-3 ycol col3"></div>',
                         '</div>',
                     '</div>'].join('\n');
                     break;
+
+                case "4-4-4":
+                    this.el.innerHTML = [
+                    '<div class="container">',
+                        '<div class="row">',
+                            '<div class="text-center ycol colheader"></div>',
+                            '<div class="col-md-4 ycol col0"></div>',
+                            '<div class="col-md-4 ycol col1"></div>',
+                            '<div class="col-md-4 ycol col2"></div>',
+                        '</div>',
+                    '</div>'].join('\n');
             }
 
             this.layoutElements();
@@ -76,6 +87,7 @@ define(function(require, exports, module) {
         layoutElements: function() {
             // colid: [els]
             var dict = this.model.getArrangedModels();
+            console.log(dict);
             _.each(dict, function(val, key) {
 
                 var $col = this.$el.find('.col'+key);
@@ -158,6 +170,10 @@ define(function(require, exports, module) {
             this.widgetsContainer.appendChild(curWidget.render().el);
             if (isNew) new CustomWidgetEditorModal(widgetModel);
             return curWidget;
+        },
+
+        hovered: function() {
+            this.model.trigger('hovered');
         },
 
         close: function() {

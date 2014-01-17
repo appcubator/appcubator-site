@@ -135,10 +135,11 @@ body {
   z-index: 1002;
 }
 
-#hover-div,#list-hover-div {
+#hover-div,
+#list-hover-div {
   display: inline-block;
   border-radius: 2px;
-  border: 1px solid #d3742e;
+  background-color: rgba(124, 192, 213, 0.20);
   position: absolute;
   cursor: move;
 }
@@ -254,4 +255,10 @@ body {
   min-height: 90px;
 }
 
+.ycol {
+  border: 1px solid transparent;
+}
 
+.ycol.fancy-borders {
+  border: 1px dashed #333;
+}

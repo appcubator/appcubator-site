@@ -11,20 +11,9 @@
 </head>
 <body>
         <!-- Navbar -->
-        {% if old_nav %}
-        <navbar class="navbar" id="navbar">
-          <div class="navbar-inner">
-            <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
-            <ul class="nav" id="links">
-            </ul>
-            <button id="edit-navbar-btn">Edit Navbar</button>
-          </div>
-        </navbar>
-        {% else %}
-        <div class="navbar navbar-fixed-top navbar-default" id="navbar">
+        <div id="navbar">
           <button id="edit-navbar-btn">Edit Navbar</button>
         </div>
-        {% endif %}
         <!-- Editing Container -->
         <div class="editing elements" id="elements-container">
         <!-- UI Elements -->

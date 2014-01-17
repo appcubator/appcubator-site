@@ -39,12 +39,10 @@ define(function(require, exports, module) {
             'click .search-cancel'   : 'searchCanceled'
         },
 
-        initialize: function(widgetsCollection) {
+        initialize: function(sectionsCollection) {
             _.bindAll(this);
 
-            this.widgetsCollection = widgetsCollection;
-            this.widgetsCollection.grid = {};
-            this.widgetsCollection.grid.maxWidth = 12;
+            this.sectionsCollection = sectionsCollection;
 
             this.searcher = new Searcher();
 
@@ -88,8 +86,12 @@ define(function(require, exports, module) {
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
+                    v1.currentApp.view.sectionsManager.highlightSections();
                 },
-                stop: self.dropped,
+                stop: function(e) {
+                    self.dropped(e);
+                    v1.currentApp.view.sectionsManager.unhighlightSections();
+                },
                 iframeFix: true
             });
 
@@ -159,8 +161,12 @@ define(function(require, exports, module) {
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
+                    v1.currentApp.view.sectionsManager.highlightSections();
                 },
-                stop: self.dropped,
+                stop: function(e) {
+                    self.dropped(e);
+                    v1.currentApp.view.sectionsManager.unhighlightSections();
+                },
                 iframeFix: true
             });
         },
@@ -190,8 +196,12 @@ define(function(require, exports, module) {
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
+                    v1.currentApp.view.sectionsManager.highlightSections();
                 },
-                stop: self.dropped,
+                stop: function(e) {
+                    self.dropped(e);
+                    v1.currentApp.view.sectionsManager.unhighlightSections();
+                },
                 iframeFix: true
             });
             $(li).on('click', self.dropped);
@@ -214,8 +224,12 @@ define(function(require, exports, module) {
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
+                    v1.currentApp.view.sectionsManager.highlightSections();
                 },
-                stop: self.dropped,
+                stop: function(e) {
+                    self.dropped(e);
+                    v1.currentApp.view.sectionsManager.unhighlightSections();
+                },
                 iframeFix: true
             });
         },
@@ -237,8 +251,12 @@ define(function(require, exports, module) {
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
+                    v1.currentApp.view.sectionsManager.highlightSections();
                 },
-                stop: self.dropped,
+                stop: function(e) {
+                    self.dropped(e);
+                    v1.currentApp.view.sectionsManager.unhighlightSections();
+                },
                 iframeFix: true
             });
         },
@@ -457,7 +475,14 @@ define(function(require, exports, module) {
 
             util.log_to_server("widget dropped", id, appId);
 
+            this.widgetsCollection = this.getCurrentWidgetCollection().get('uielements');
+            console.log(this.widgetsCollection);
             return this.createElement(layout, className, id);
+        },
+
+        getCurrentWidgetCollection: function() {
+            console.log( v1.currentApp.view.sectionsManager);
+            return v1.currentApp.view.sectionsManager.currentSectionModel;
         },
 
         createElement: function(layout, className, id) {

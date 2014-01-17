@@ -50,7 +50,9 @@ define(function(require, exports, module) {
 
         getBaseStyleOf: function(type) {
             
+            console.log(type);
             if(this.has(type)) {
+                console.log(this.get(type));
                 return this.get(type).first();
             }
 
