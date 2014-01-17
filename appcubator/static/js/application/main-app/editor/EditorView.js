@@ -262,16 +262,16 @@ define(function(require, exports, module) {
         },
 
         setupPageHeight: function() {
-            var $container = $(this.iframedoc.getElementById('elements-container'));
-            var oldHeight = this.currentHeight;
+            // var $container = $(this.iframedoc.getElementById('elements-container'));
+            // var oldHeight = this.currentHeight;
 
-            this.currentHeight = (this.templateModel.getHeight() + 12) * 15;
-            if (this.currentHeight < 800) this.currentHeight = 800;
-            $container.css('height', this.currentHeight);
+            // this.currentHeight = (this.templateModel.getHeight() + 12) * 15;
+            // if (this.currentHeight < 800) this.currentHeight = 800;
+            // $container.css('height', this.currentHeight);
 
-            if (this.currentHeight > oldHeight) {
-                util.scrollToBottom($('#page'));
-            }
+            // if (this.currentHeight > oldHeight) {
+            //     util.scrollToBottom($('#page'));
+            // }
         },
 
         scrollTo: function(widget) {

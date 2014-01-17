@@ -11,7 +11,6 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                 this.set('layout', new LayoutModel(bone.layout||{}));
                 this.set('data', new DataModel(bone.data || {}, isNew));
                 this.set('context', new Backbone.Collection(bone.context || []));
-                this.set('style', new Backbone.Model(bone.style||{}));
 
                 this.bind('editModeOn', function() {
                     this.editMode = true;
@@ -243,7 +242,6 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
 
                 json.data = this.get('data').serialize();
                 json.layout = this.get('layout').serialize();
-                json.style = this.get('style').serialize();
 
                 if (json.context) delete json.context;
                 return json;

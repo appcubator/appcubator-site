@@ -885,6 +885,8 @@ generators.push({
         data.style = data.style || '';
         data.href = "";
 
+        console.log(data.style);
+
         return { html: templates.html(data),
                  css: '',
                  js: '',
