@@ -14,7 +14,8 @@ define(function(require, exports, module) {
         widgetsContainer: null,
 
         events: {
-
+            'click #addNewSection' : 'showSectionOptions',
+            'click .section-option': 'selectSectionLayout'
         },
 
         subviews: [],
@@ -42,9 +43,20 @@ define(function(require, exports, module) {
             //this.widgetSelectorView.setElement(document).render();
         },
 
+        showSectionOptions: function() {
+
+            this.$el.find('#addNewSectionTitle').hide();
+            this.$el.find('.options').fadeIn();
+
+        },
+
+        selectSectionLayout: function(e) {
+            var id = String(e.currentTarget.id).replace('opt-','');
+            this.sectionsCollection.createSectoinWithType(id);
+        },
+
         // this function decides if widget or container
         placeSection: function(model, isNew, extraData) {
-            console.log(model);
             //model.setupPageContext(v1.currentApp.getCurrentPage());
             var sectionView = new SectionView(model);
             this.widgetsContainer.appendChild(sectionView.render().el);

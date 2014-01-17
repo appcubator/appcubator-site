@@ -63,7 +63,7 @@ define(function(require, exports, module) {
 
             this.galleryEditor = new EditorGalleryView(this.sectionsCollection);
             this.sectionsManager = {};
-            this.guides = new GuideView(this.sectionsCollection);
+            //this.guides = new GuideView(this.sectionsCollection);
             this.cssEditorView = new CSSEditorView();
             this.pageView = new PageView(this.model, pageId);
 
@@ -77,7 +77,7 @@ define(function(require, exports, module) {
             // keyDispatcher.bindComb('meta+shift+z', this.redoController.redo);
             // keyDispatcher.bindComb('ctrl+shift+z', this.redoController.redo);
 
-            g_guides = this.guides;
+            //g_guides = this.guides;
 
             this.navbar = new NavbarView(this.templateModel.get('navbar'));
             this.footer = new FooterView(this.templateModel.get('footer'));
