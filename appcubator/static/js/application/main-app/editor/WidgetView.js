@@ -265,7 +265,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         switchEditModeOn: function() {
-            if (this.model.get('data').get('content')) {
+            if (this.model.get('content')) {
                 this.editMode = true;
 
                 //var el = $(this.el.firstChild);
@@ -328,8 +328,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.$el.removeClass('textediting');
             var val = this.$innerEl.html();
             this.$innerEl.freshereditor("edit", false);
-            this.model.get('data').set('content', val);
-
+            this.model.set('content', val);
 
             keyDispatcher.textEditing = false;
             util.unselectText();
