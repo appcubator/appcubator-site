@@ -57,7 +57,8 @@ body {
 }
 
 .widget-wrapper {
-  display: inline-block;
+/*  display: inline-block;
+*/  
   z-index: 1001;
 /*  position: absolute;
   overflow: visible;
@@ -67,6 +68,21 @@ body {
 
  /* animation: blurpIn 0.2s linear;
   -webkit-animation: blurpIn 0.2s linear;*/
+
+  cursor: move;
+  border: 1px solid transparent;
+}
+
+.widget-wrapper.selected {
+  border-color: rgba(124, 192, 213, 0.8);
+}
+
+.widget-wrapper:hover {
+  background-color: rgba(124, 192, 213, 0.20);
+}
+
+.widget-wrapper.selected:hover {
+  background-color: transparent;
 }
 
 #footer {

@@ -51,7 +51,13 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.listenTo(this.model, "startEditing", this.switchEditModeOn, this);
             this.listenTo(this.model, "deselected", function() {
                 this.model.trigger('stopEditing');
+                this.$el.removeClass('selected');
+                this.selected = false;
             }, this);
+            this.listenTo(this.model, "selected", function() {
+                this.$el.addClass('selected');
+            });
+
             this.listenTo(this.model, "stopEditing", this.switchEditModeOff);
             this.listenTo(this.model, "cancelEditing", this.cancelEditing);
 
@@ -128,10 +134,18 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         select: function(e) {
+    
+            console.log("select");
+            if(this.selected && !this.editMode) {
+                this.model.trigger('doubleClicked');
+                return;
+            }
+
             if (!this.editMode) {
                 this.model.trigger('selected');
                 this.el.style.zIndex = 2003;
                 if (this.model.isBgElement()) this.el.style.zIndex = 1000;
+                this.selected = true;
             }
         },
 
@@ -152,28 +166,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
             this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
             this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
-        },
-
-        toggleFull: function(argument) {
-            if (this.model.get('layout').get('isFull') === true) {
-                this.switchOnFullWidth();
-            } else {
-                this.switchOffFullWidth();
-            }
-        },
-
-        switchOnFullWidth: function() {
-            $('#full-container').append(this.el);
-            this.disableResizeAndDraggable();
-            this.el.className = 'selected widget-wrapper spanFull';
-            this.setLeft(0);
-            this.fullWidth = true;
-        },
-
-        switchOffFullWidth: function() {
-            this.fullWidth = false;
-            $('#elements-container').append(this.el);
-            this.render();
         },
 
         changedSize: function() {
@@ -265,6 +257,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         switchEditModeOn: function() {
+            
             if (this.model.get('content')) {
                 this.editMode = true;
 

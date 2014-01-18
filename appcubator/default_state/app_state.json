@@ -159,6 +159,7 @@
           "data": [
             {
               "layout": "hero",
+              "className": "jumbo",
               "uielements": [
                 {
                   "generate": "uielements.design-header",
@@ -201,6 +202,7 @@
             },
             {
               "layout": "3-3-3-3",
+              "className": "",
               "uielements": [
                 {
                   "generate": "uielements.design-header",

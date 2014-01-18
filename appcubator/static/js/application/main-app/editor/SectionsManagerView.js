@@ -61,7 +61,6 @@ define(function(require, exports, module) {
             var id = String(e.currentTarget.id).replace('opt-','');
             this.sectionsCollection.createSectoinWithType(id);
 
-            console.log(this.$el.find('.options'));
             this.$el.find('.options').first().hide();
             this.$el.find('#addNewSectionTitle').fadeIn();
             this.optionsHidden = true;
@@ -74,7 +73,6 @@ define(function(require, exports, module) {
             this.widgetsContainer.appendChild(sectionView.render().el);
 
             this.listenTo(model, 'hovered', function() {
-                console.log(model);
                 this.changeCurrentSection(model, sectionView);
             }, this);
 

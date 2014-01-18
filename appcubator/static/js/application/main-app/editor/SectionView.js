@@ -18,6 +18,7 @@ define(function(require, exports, module) {
 
         events: {
             'mouseover'       : 'hovered',
+            'mouseup'         : 'hovered',
             'mouseover .ycol' : 'hoveredColumn',
             'mouseup .ycol'   : 'hoveredColumn'
         },
@@ -32,7 +33,7 @@ define(function(require, exports, module) {
             this.model = sectionModel;
             this.widgetsCollection = this.model.get('uielements');
             this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
-
+            this.colElements = {};
 
             // this.listenTo(this.widgetsCollection, 'change', function() {
             //     util.askBeforeLeave();
@@ -72,6 +73,8 @@ define(function(require, exports, module) {
                     '</div>'].join('\n');
             }
 
+            this.$el.find( ".ycol" );
+
             this.layoutElements();
             // this.widgetsContainer = document.getElementById('elements-container');
             // this.widgetsContainer.innerHTML = '';
@@ -85,13 +88,57 @@ define(function(require, exports, module) {
             return this;
         },
 
+        updated: function(colKey, $col) {
+            var curArr = $col.sortable( "toArray" );
+            if(!_.isEqual(curArr, this.colElements[colKey])) {
+
+                    console.log("IM DIFFERENT");
+
+                _.each(curArr, function(elId, ind) {
+                    
+                    var cid = elId.replace('widget-wrapper-','');
+                    var widgetModel = {};
+
+                    if (this.widgetsCollection.get(cid)) {
+                        widgetModel = this.widgetsCollection.get(cid);
+                    }
+                    else {
+                        var coll = v1.currentApp.view.sectionsCollection.getAllWidgets();
+                        widgetModel = coll.get(cid);
+                        widgetModel.collection.remove(widgetModel);
+                        this.collection.add(widgetModel);
+                    }
+                    
+                    console.log(widgetModel);
+                    console.log(ind);
+                    widgetModel.get('layout').set('col', colKey);
+                    widgetModel.get('layout').set('row', ind);
+
+                }, this);
+
+            }
+        },
+
         layoutElements: function() {
             // colid: [els]
             var dict = this.model.getArrangedModels();
 
             _.each(dict, function(val, key) {
 
+                var self = this;
                 var $col = this.$el.find('#col'+key);
+
+                $col.sortable({
+                    connectWith: ".ycol",
+                    update: function() {
+                        self.updated(key, $col);
+                    }
+                }).disableSelection();
+
+                this.colElements[key] = $col.sortable( "toArray" );
+
+                var val = _.sortBy(val, function(model) { return parseInt(model.get('layout').get('row')); });
+                
                 _.each(val, function(widgetModel) {
                     var widgetView = new WidgetView(widgetModel);
                     $col.append(widgetView.render().el);
@@ -125,7 +172,6 @@ define(function(require, exports, module) {
 
         hoveredColumn: function(e) {
             var colId = String(e.currentTarget.id).replace('col','');
-            console.log(colId);
             this.currentColumn = colId;
         },
 
