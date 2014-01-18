@@ -12,7 +12,7 @@ define([
             model: WidgetModel,
 
             initialize: function() {
-                this.generate = "templates.concatUIE";
+
             },
 
             stockPhotos: [

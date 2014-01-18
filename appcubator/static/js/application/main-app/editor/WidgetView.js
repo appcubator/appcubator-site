@@ -203,7 +203,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         changedSource: function(a) {
-            this.el.firstChild.src = this.model.get('data').get('content_attribs').get('src');
+            this.reRender();
         },
 
         changedStyle: function() {

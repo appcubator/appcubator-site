@@ -114,8 +114,6 @@ define(function(require, exports, module) {
             var curArr = $col.sortable( "toArray" );
             if(!_.isEqual(curArr, this.colElements[colKey])) {
 
-                    console.log("IM DIFFERENT");
-
                 _.each(curArr, function(elId, ind) {
                     
                     var cid = elId.replace('widget-wrapper-','');
@@ -131,8 +129,6 @@ define(function(require, exports, module) {
                         this.collection.add(widgetModel);
                     }
                     
-                    console.log(widgetModel);
-                    console.log(ind);
                     widgetModel.get('layout').set('col', colKey);
                     widgetModel.get('layout').set('row', ind);
 
@@ -150,9 +146,6 @@ define(function(require, exports, module) {
                 var self = this;
                 var $col = this.$el.find('#col'+key);
 
-                console.log(document);
-                console.log(window);
-
                 $col.sortable({
                     connectWith: ".ycol",
                     update: function() {
@@ -162,8 +155,6 @@ define(function(require, exports, module) {
                     sort: function(e, ui) {
                         var amt = $(window).scrollTop();
                         ui.position.top += amt;
-                        console.log(amt);
-                        console.log(ui);
                     },
                     start: function(e, ui) {
                         // console.log(ui);
@@ -171,6 +162,10 @@ define(function(require, exports, module) {
                         // ui.position.top += amt;
                         // console.log(amt);
                         // console.log(ui);
+                        self.highlightCols();
+                    },
+                    stop: function(e, ui) {
+                        self.unhighlightCols();
                     }
                 }).disableSelection();
 
@@ -203,6 +198,14 @@ define(function(require, exports, module) {
 
             }, 200);
 
+        },
+
+        highlightCols: function() {
+            this.$el.find('.ycol').addClass("fancy-borders");
+        },
+
+        unhighlightCols: function() {
+            this.$el.find('.ycol').removeClass("fancy-borders");
         },
 
         hovered: function() {
