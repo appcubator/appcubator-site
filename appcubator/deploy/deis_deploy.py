@@ -3,6 +3,9 @@ import logging
 from django.conf import settings
 import os
 import tarfile
+import random
+import socket
+import base64
 logger = logging.getLogger(__name__)
 
 
@@ -47,14 +50,15 @@ def provision(appdir, deploy_data):
     Builds a development sandbox on a Deis server.
     Returns deployment_id
     """
-    tar = _write_tar_from_app_dir(appdir)
-    with open(tar, rb) as f:
-        r = requests.post(DEIS_URL+'/sandbox/', files={'code':f})
+    dc = DeisClient()
+    deployment_id = dc.apps_create_without_git({'--formation': settings.DEIS_FORMATION })
+    return deployment_id
 
-    if r.status_code == 200:
-        return r.json()['id']
-    else:
-        raise DeploymentError(str(r.status_code) + ': ' + r.text)
+def rebuild(appdir, deploy_data, deployment_id):
+    dc = DeisClient()
+    result = dc.apps_push({'<codepath>': appdir,
+                  '--app': deployment_id})
+    return result
 
 def update_code(appdir, deploy_id, deploy_data):
     """
@@ -102,14 +106,14 @@ class TestProvision(unittest.TestCase):
 
     def test_provision(self):
         self.id = random.randint(100, 999)
-        dd = { 'hostname': 'testing%d.app.com' % self.id,
-               'url': 'http://testing%d.app.com/' % self.id }
+        dd = { 'hostname': 'testing%d.appcubator.com' % self.id,
+               'url': 'http://testing%d.appcubator.com/' % self.id }
         d_id = provision(self.appdir, dd)
-        p, port = fake_database[d_id]
-        import time; time.sleep(2)
-        print "Devmon pid=" + str(p.pid)
-        r = requests.get('http://127.0.0.1:%d' % port)
-        self.assertEqual(r.status_code, 200)
+        out = rebuild(self.appdir, dd, d_id)
+        print out
+        #import time; time.sleep(2)
+        #r = requests.get(dd['url'])
+        #self.assertEqual(r.status_code, 200)
 
     def tearDown(self):
         shutil.rmtree(self.appdir)

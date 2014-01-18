@@ -39,4 +39,4 @@ mysql-python==1.2.4
 gunicorn==18.0
 eventlet==0.14.0
 
-deis==0.3.1
+git+git://github.com/appcubator/deis-client.git

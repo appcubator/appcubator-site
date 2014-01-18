@@ -7,6 +7,7 @@ export STRIPE_SECRET_KEY="sk_test_GhzvfBePNCkvC6j23UtZkmTi"
 # deployment service
 export DEPLOYMENT_HOSTNAME='test.appcubator.com'
 export DEPLOYMENT_DOMAIN='test.appcubator.com'
+export DEIS_FORMATION='homer'
 
 # global email settings
 export EMAIL_HOST='smtp.sendgrid.net'
