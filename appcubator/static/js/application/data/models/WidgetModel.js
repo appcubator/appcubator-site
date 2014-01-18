@@ -154,7 +154,7 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
             },
 
             getContent: function() {
-                return this.get('data').get('content');
+                return this.get('content');
             },
 
             getForm: function() {
@@ -210,7 +210,8 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
             },
 
             isLoginForm: function() {
-                return (this.isForm() && this.get('data').get('container_info').get('action') == "login") || (this.get('type') == "thirdpartylogin");
+                return false;
+                //return (this.isForm() && this.get('data').get('container_info').get('action') == "login") || (this.get('type') == "thirdpartylogin");
             },
 
             isList: function() {

@@ -48,9 +48,36 @@ define(function(require, exports, module) {
             return model;
         },
 
+        getUIEVals: function(type) {
+
+            if(this.has(type)) {
+                return this.get(type);
+            }
+
+            switch(type) {
+                case "button":
+                    return this.getUIEVals("buttons");
+                case "header":
+                    return this.getUIEVals("headerTexts");
+                case "image":
+                    return this.getUIEVals("images");
+                case "text":
+                    return this.getUIEVals("texts");
+                case "link":
+                    return this.getUIEVals("links");
+                case "line":
+                    return this.getUIEVals("lines");
+                case "box":
+                    return this.getUIEVals("boxes");
+                case "form":
+                    return this.getUIEVals("forms");
+            }
+
+            return null;
+        },
+
         getBaseStyleOf: function(type) {
             
-            console.log(type);
             if(this.has(type)) {
                 console.log(this.get(type));
                 return this.get(type).first();

@@ -31,9 +31,12 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.model = widgetModel;
             this.listenTo(this.model, "remove", this.close, this);
 
-            this.listenTo(this.model.get('data'), "change:type", this.changedType, this);
-            this.listenTo(this.model.get('data'), "change:tagName", this.changedType, this);
-            this.listenTo(this.model.get('data'), "change:class_name", this.changedTagName, this);
+            this.listenTo(this.model, "change:type", this.reRender, this);
+            this.listenTo(this.model, "change:tagName", this.reRender, this);
+            this.listenTo(this.model, "change:className", this.reRender, this);
+            this.listenTo(this.model, "change:src", this.changedSource, this);
+            this.listenTo(this.model, "change:value", this.changedValue, this);
+            this.listenTo(this.model, "change:style", this.changedStyle, this);
 
             this.listenTo(this.model.get('layout'), "change:width", this.changedSize, this);
             this.listenTo(this.model.get('layout'), "change:height", this.changedSize, this);
@@ -44,10 +47,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.listenTo(this.model.get('layout'), "change", this.changedPadding, this);
 
             this.listenTo(this.model.get('data'), "change:content", this.changedText, this);
-
-            this.listenTo(this.model.get('data').get('content_attribs'), "change:src", this.changedSource, this);
-            this.listenTo(this.model.get('data').get('content_attribs'), "change:value", this.changedValue, this);
-            this.listenTo(this.model.get('data').get('content_attribs'), "change:style", this.changedStyle, this);
 
             this.listenTo(this.model, "startEditing", this.switchEditModeOn, this);
             this.listenTo(this.model, "deselected", function() {

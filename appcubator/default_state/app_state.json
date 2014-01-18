@@ -163,6 +163,7 @@
                 {
                   "generate": "uielements.design-header",
                   "data": {
+                    "type" : "header",
                     "content": "Teach Me How To DJ",
                     "layout": {
                       "row": 0,
@@ -175,6 +176,7 @@
                 {
                   "generate": "uielements.design-text",
                   "data": {
+                    "type" : "text",
                     "content": "<p>Welcome to 98-246! Brought to you by 4 DJs at Carnegie Mellon, this course will teach you everything you need to know in order to DJ your next party. Be sure to bring a passion for music!</p><p>For more information just click around!</p>",
                     "layout": {
                         "row": 1,
@@ -187,6 +189,7 @@
                 {
                   "generate": "uielements.design-button",
                   "data": {
+                    "type" : "button",
                     "content": "Vire Syllabus >",
                     "layout": {},
                     "href": "http://TOOLOBAPAGE.html",
@@ -202,6 +205,7 @@
                 {
                   "generate": "uielements.design-header",
                   "data": {
+                    "type" : "header",
                     "content": "Instructors",
                     "layout": {
                       "col": "header"
@@ -213,6 +217,7 @@
                 {
                   "generate": "uielements.design-image",
                   "data": {
+                    "type" : "image",
                     "src": "http://stuco.conciergeent.com/dist/img/rishabh-photo.png",
                     "layout": {
                       "row": 1,
@@ -225,6 +230,7 @@
                 {
                   "generate": "uielements.design-text",
                   "data": {
+                    "type" : "text",
                     "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
                     "layout": {
                       "row": 2,
@@ -238,6 +244,7 @@
                 {
                   "generate": "uielements.design-image",
                   "data": {
+                    "type" : "image",
                     "src": "http://stuco.conciergeent.com/dist/img/rishabh-photo.png",
                     "layout": {
                       "row": 1,
@@ -250,6 +257,7 @@
                 {
                   "generate": "uielements.design-text",
                   "data": {
+                    "type" : "text",
                     "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
                     "layout": {
                       "row": 2,
@@ -263,6 +271,7 @@
                 {
                   "generate": "uielements.design-image",
                   "data": {
+                    "type" : "image",
                     "src": "http://stuco.conciergeent.com/dist/img/rishabh-photo.png",
                     "layout": {
                       "row": 1,
@@ -275,6 +284,7 @@
                 {
                   "generate": "uielements.design-text",
                   "data": {
+                    "type" : "text",
                     "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
                     "layout": {
                       "row": 2,
@@ -288,6 +298,7 @@
                 {
                   "generate": "uielements.design-image",
                   "data": {
+                    "type" : "image",
                     "src": "http://stuco.conciergeent.com/dist/img/rishabh-photo.png",
                     "layout": {
                       "row": 1,
@@ -300,6 +311,7 @@
                 {
                   "generate": "uielements.design-text",
                   "data": {
+                    "type" : "text",
                     "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
                     "layout": {
                       "row": 2,
