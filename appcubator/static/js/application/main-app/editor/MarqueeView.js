@@ -7,7 +7,7 @@ define([
     function(WidgetEditorView,
         MultiSelectorView) {
 
-        var WidgetSelectorView = Backbone.UIView.extend({
+        var MarqueeView = Backbone.UIView.extend({
             className: 'marquee-view',
             tagName: 'div',
             isDrawing: false,
@@ -180,6 +180,6 @@ define([
 
         });
 
-        return WidgetSelectorView;
+        return MarqueeView;
 
     });

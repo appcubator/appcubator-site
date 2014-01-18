@@ -33,6 +33,10 @@ define(function(require, exports, module) {
             this.model = sectionModel;
             this.widgetsCollection = this.model.get('uielements');
             this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
+            
+            this.listenToModels(this.widgetsCollection, 'startEditing', this.startEditing);
+            this.listenToModels(this.widgetsCollection, 'stopEditing cancelEditing', this.stopEditing);
+
             this.colElements = {};
 
             // this.listenTo(this.widgetsCollection, 'change', function() {
@@ -206,6 +210,22 @@ define(function(require, exports, module) {
 
         unhighlightCols: function() {
             this.$el.find('.ycol').removeClass("fancy-borders");
+        },
+
+        startEditing: function() {
+            this.$el.find('.ycol').each(function() {
+                if($(this).hasClass("ui-sortable")) {
+                    $(this).sortable("disable");
+                }
+            });
+        },
+
+        stopEditing: function() {
+            this.$el.find('.ycol').each(function() {
+                if($(this).hasClass("ui-sortable")) {
+                    $(this).sortable("enable");
+                }
+            });
         },
 
         hovered: function() {

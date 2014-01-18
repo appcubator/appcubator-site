@@ -186,8 +186,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         changedText: function(a) {
-            var content = this.model.get('data').get('content').replace(/\n\r?/g, '<br />');
-            this.el.firstChild.innerHTML = content;
+            this.reRender();
         },
 
         changedValue: function(a) {
@@ -207,8 +206,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         changedStyle: function() {
-            this.el.firstChild.setAttribute('style', this.model.get('data').get('content_attribs').get('style'));
-            this.el.firstChild.style.lineHeight = '1em';
+            this.reRender();
         },
 
         staticsAdded: function(files) {
@@ -216,7 +214,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                 file.name = file.filename;
                 statics.push(file);
             });
-            this.model.get('data').get('content_attribs').set('src', _.last(files).url);
+            this.model.set('src', _.last(files).url);
             //this.show(this.model);
         },
 

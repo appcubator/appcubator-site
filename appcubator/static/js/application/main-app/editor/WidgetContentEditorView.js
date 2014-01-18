@@ -160,8 +160,8 @@ define(function(require, exports, module) {
                 file.name = file.filename;
                 statics.push(file);
             });
-            self.model.get('data').get('content_attribs').set('src', _.last(files).url);
-            self.model.get('data').set('content', _.last(files).url);
+            self.model.set('src', _.last(files).url);
+            // self.model.get('data').set('content', _.last(files).url);
         },
 
         clickedChangeSrc: function() {

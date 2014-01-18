@@ -66,7 +66,7 @@ define(function(require, exports, module) {
 
         hovered: function(e) {
             if (e.currentTarget.className == "updown-handle") {
-                this.model.set('tagName', this.uieVals[this.currentVal.val].tagName);
+                this.model.set('tagName',   this.uieVals[this.currentVal.val].tagName);
                 this.model.set('className', this.uieVals[this.currentVal.val].class_name);
                 return;
             }
