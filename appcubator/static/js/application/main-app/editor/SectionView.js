@@ -17,7 +17,9 @@ define(function(require, exports, module) {
         widgetsContainer: null,
 
         events: {
-            'mouseover' : 'hovered'
+            'mouseover'       : 'hovered',
+            'mouseover .ycol' : 'hoveredColumn',
+            'mouseup .ycol'   : 'hoveredColumn'
         },
 
         className: "section-proto",
@@ -28,9 +30,8 @@ define(function(require, exports, module) {
             _.bindAll(this);
 
             this.model = sectionModel;
-
-            // this.widgetsCollection = widgetsCollection;
-            // this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
+            this.widgetsCollection = this.model.get('uielements');
+            this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
 
 
             // this.listenTo(this.widgetsCollection, 'change', function() {
@@ -44,17 +45,17 @@ define(function(require, exports, module) {
         render: function() {
             switch(this.model.get('layout')) {
                 case "hero":
-                    this.el.innerHTML = '<div class="jumbotron"><div class="container ycol col0"></div></div>';
+                    this.el.innerHTML = '<div class="jumbotron"><div class="container ycol" id="col0"></div></div>';
                     break;
                 case "3-3-3-3":
                     this.el.innerHTML = [
                     '<div class="container">',
                         '<div class="row">',
                             '<div class="text-center ycol colheader"></div>',
-                            '<div class="col-md-3 ycol col0"></div>',
-                            '<div class="col-md-3 ycol col1"></div>',
-                            '<div class="col-md-3 ycol col2"></div>',
-                            '<div class="col-md-3 ycol col3"></div>',
+                            '<div class="col-md-3 ycol" id="col0"></div>',
+                            '<div class="col-md-3 ycol" id="col1"></div>',
+                            '<div class="col-md-3 ycol" id="col2"></div>',
+                            '<div class="col-md-3 ycol" id="col3"></div>',
                         '</div>',
                     '</div>'].join('\n');
                     break;
@@ -63,10 +64,10 @@ define(function(require, exports, module) {
                     this.el.innerHTML = [
                     '<div class="container">',
                         '<div class="row">',
-                            '<div class="text-center ycol colheader"></div>',
-                            '<div class="col-md-4 ycol col0"></div>',
-                            '<div class="col-md-4 ycol col1"></div>',
-                            '<div class="col-md-4 ycol col2"></div>',
+                            '<div class="text-center ycol" id="colheader"></div>',
+                            '<div class="col-md-4 ycol" id="col0"></div>',
+                            '<div class="col-md-4 ycol" id="col1"></div>',
+                            '<div class="col-md-4 ycol" id="col2"></div>',
                         '</div>',
                     '</div>'].join('\n');
             }
@@ -87,10 +88,10 @@ define(function(require, exports, module) {
         layoutElements: function() {
             // colid: [els]
             var dict = this.model.getArrangedModels();
-            console.log(dict);
+
             _.each(dict, function(val, key) {
 
-                var $col = this.$el.find('.col'+key);
+                var $col = this.$el.find('#col'+key);
                 _.each(val, function(widgetModel) {
                     var widgetView = new WidgetView(widgetModel);
                     $col.append(widgetView.render().el);
@@ -100,80 +101,32 @@ define(function(require, exports, module) {
 
         },
 
-        addWidgets: function(arrWidgets) {
-            widget.setupPageContext(top.v1State.getCurrentPage());
-            var newWidgetView = this.placeUIElement(widget, false);
-        },
-
-        // this function decides if widget or container
         placeUIElement: function(model, isNew, extraData) {
-            if (extraData && extraData.collection) {
-                isNew = false;
-            }
+            //model.setupPageContext(v1.currentApp.getCurrentPage());
 
-            model.setupPageContext(v1.currentApp.getCurrentPage());
-            var widget = {};
-            if (model.get('data').has('container_info') && model.get('data').get('container_info').has('row')) {
-                widget = this.placeList(model, isNew);
-            } else if (model.hasForm()) {
-                widget = this.placeForm(model, isNew);
-            } else if (model.get('data').has('container_info') || model.get('data').get('action') == "thirdpartylogin") {
-                widget = this.placeContainer(model, isNew);
-            } else if (model.get('type') == 'custom') {
-                widget = this.placeCustomWidget(model, isNew);
-            } else {
-                widget = this.placeWidget(model, isNew);
-            }
+            var dict = this.model.getArrangedModels();
+            var self = this;
 
-            this.subviews.push(widget);
-            return widget;
-        },
+            setTimeout(function() {
+                model.get('layout').set('col', self.currentColumn);
+                model.get('layout').set('row', dict[self.currentColumn].length);
 
-        placeWidget: function(widgetModel, isNew) {
-            var curWidget = new WidgetView(widgetModel);
+                var $col = self.$el.find('#col'+self.currentColumn);
+                var widgetView = new WidgetView(model);
+                $col.append(widgetView.render().el);
 
-            if (!widgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-            else util.get('full-container').appendChild(curWidget.render().el);
-            if (isNew) curWidget.autoResize();
+            }, 200);
 
-            curWidget.delegateEvents();
-
-            return curWidget;
-        },
-
-        placeContainer: function(containerWidgetModel, isNew) {
-            var curWidget = new WidgetContainerView(containerWidgetModel);
-            if (!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-            else util.get('full-container').appendChild(curWidget.render().el);
-            if (isNew) curWidget.autoResize();
-            return curWidget;
-        },
-
-        placeList: function(containerWidgetModel, isNew) {
-            var curWidget = new WidgetListView(containerWidgetModel);
-            if (!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-            else util.get('full-container').appendChild(curWidget.render().el);
-            if (isNew) curWidget.autoResize();
-            return curWidget;
-        },
-
-        placeForm: function(containerWidgetModel, isNew) {
-            var curWidget = new WidgetFormView(containerWidgetModel);
-            if (!containerWidgetModel.isFullWidth()) this.widgetsContainer.appendChild(curWidget.render().el);
-            else util.get('full-container').appendChild(curWidget.render().el);
-            if (isNew) curWidget.autoResize();
-            return curWidget;
-        },
-
-        placeCustomWidget: function(widgetModel, isNew) {
-            var curWidget = new WidgetCustomView(widgetModel);
-            this.widgetsContainer.appendChild(curWidget.render().el);
-            if (isNew) new CustomWidgetEditorModal(widgetModel);
-            return curWidget;
         },
 
         hovered: function() {
             this.model.trigger('hovered');
+        },
+
+        hoveredColumn: function(e) {
+            var colId = String(e.currentTarget.id).replace('col','');
+            console.log(colId);
+            this.currentColumn = colId;
         },
 
         close: function() {

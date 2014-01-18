@@ -173,7 +173,6 @@ define(function(require, exports, module) {
 
         renderUIElementList: function() {
             var self = this;
-            console.log(defaultElements);
             var collection = new Backbone.Collection(defaultElements);
             this.uiElemsSection = this.addNewSection('Design Elements');
 
@@ -286,8 +285,6 @@ define(function(require, exports, module) {
 
         renderCurrentUserElements: function() {
             this.currUserSection = this.addNewSection('Current User Views');
-
-            console.log(v1);
             // _(v1.currentApp.getCurrentPage().getFields()).each(function(field) {
             //     if (field.isRelatedField()) return;
             //     this.currUserSection.addFullWidthItem('current-user-' + field.cid, 'current-user', 'Current User ' + field.get('name'), 'current-user-icon');
@@ -476,12 +473,11 @@ define(function(require, exports, module) {
             util.log_to_server("widget dropped", id, appId);
 
             this.widgetsCollection = this.getCurrentWidgetCollection().get('uielements');
-            console.log(this.widgetsCollection);
+
             return this.createElement(layout, className, id);
         },
 
         getCurrentWidgetCollection: function() {
-            console.log( v1.currentApp.view.sectionsManager);
             return v1.currentApp.view.sectionsManager.currentSectionModel;
         },
 
