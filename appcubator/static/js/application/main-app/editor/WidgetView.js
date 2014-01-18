@@ -162,10 +162,10 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         changedPadding: function() {
-            this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
-            this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
-            this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
-            this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
+            // this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
+            // this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
+            // this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
+            // this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
         },
 
         changedSize: function() {
