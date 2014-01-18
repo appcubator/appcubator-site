@@ -71,6 +71,28 @@ define(function(require, exports, module) {
                             '<div class="col-md-4 ycol" id="col2"></div>',
                         '</div>',
                     '</div>'].join('\n');
+                    break;
+
+                case "8-4":
+                    this.el.innerHTML = [
+                    '<div class="container">',
+                        '<div class="row">',
+                            '<div class="text-center ycol" id="colheader"></div>',
+                            '<div class="col-md-8 ycol" id="col0"></div>',
+                            '<div class="col-md-4 ycol" id="col1"></div>',
+                        '</div>',
+                    '</div>'].join('\n');
+                    break;
+
+                case "4-8":
+                    this.el.innerHTML = [
+                    '<div class="container">',
+                        '<div class="row">',
+                            '<div class="text-center ycol" id="colheader"></div>',
+                            '<div class="col-md-4 ycol" id="col0"></div>',
+                            '<div class="col-md-8 ycol" id="col1"></div>',
+                        '</div>',
+                    '</div>'].join('\n');
             }
 
             this.$el.find( ".ycol" );
@@ -128,16 +150,33 @@ define(function(require, exports, module) {
                 var self = this;
                 var $col = this.$el.find('#col'+key);
 
+                console.log(document);
+                console.log(window);
+
                 $col.sortable({
                     connectWith: ".ycol",
                     update: function() {
                         self.updated(key, $col);
+                    },
+                    containment: document.firstChild,
+                    sort: function(e, ui) {
+                        var amt = $(window).scrollTop();
+                        ui.position.top += amt;
+                        console.log(amt);
+                        console.log(ui);
+                    },
+                    start: function(e, ui) {
+                        // console.log(ui);
+                        // var amt = $(window).scrollTop();
+                        // ui.position.top += amt;
+                        // console.log(amt);
+                        // console.log(ui);
                     }
                 }).disableSelection();
 
                 this.colElements[key] = $col.sortable( "toArray" );
 
-                var val = _.sortBy(val, function(model) { return parseInt(model.get('layout').get('row')); });
+                val = _.sortBy(val, function(model) { return parseInt(model.get('layout').get('row')); });
                 
                 _.each(val, function(widgetModel) {
                     var widgetView = new WidgetView(widgetModel);

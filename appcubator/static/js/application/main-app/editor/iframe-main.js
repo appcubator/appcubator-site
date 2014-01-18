@@ -103,7 +103,8 @@ require([
         "bootstrap",
         "util",
         "comp",
-        "mixins/BackboneConvenience"
+        "mixins/BackboneConvenience",
+        "jquery-ui"
     ],
     function(AppModel,
         WidgetView,

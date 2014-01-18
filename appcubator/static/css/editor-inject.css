@@ -275,6 +275,8 @@ body {
 
 .ycol {
   border: 1px solid transparent;
+  min-height: 90px;
+  height: 100%;
 }
 
 .ycol.fancy-borders {
