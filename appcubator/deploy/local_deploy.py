@@ -64,6 +64,10 @@ def provision(appdir, deploy_data):
 
     return deployment_id
 
+def rebuild(*args):
+    # NOOP
+    return ''
+
 def destroy(deploy_id):
     if deploy_id in fake_database:
         p, port = fake_database[deploy_id]

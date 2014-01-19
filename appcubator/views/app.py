@@ -666,6 +666,7 @@ def _get_analytics(deployment_id):
     """
         Send a post request to get analytics from the deployment corresponding to deployment_id.
         Then upsert it into the analytics store.
+        TODO FIX THIS
     """
     r = requests.post("http://%s/analytics/%d/" % (settings.DEPLOYMENT_HOSTNAME, deployment_id))
     # HACK to get rid of double quotes.

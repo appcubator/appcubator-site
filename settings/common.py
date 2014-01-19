@@ -283,10 +283,9 @@ else:
 STRIPE_PUBLIC_KEY = os.environ["STRIPE_PUBLIC_KEY"]
 STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
 
-# deployer service
-DEPLOYMENT_HOSTNAME = os.environ["DEPLOYMENT_HOSTNAME"]
 # domain from which apps are available
 DEPLOYMENT_DOMAIN = os.environ["DEPLOYMENT_DOMAIN"]
+DEPLOYMENT_HOSTNAME = os.environ["DEIS_URL"]
 DEIS_FORMATION = os.environ["DEIS_FORMATION"]
 
 # codegen service

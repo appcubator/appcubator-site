@@ -57,6 +57,7 @@ def provision(appdir, deploy_data):
 def rebuild(appdir, deploy_data, deployment_id):
     dc = DeisClient()
     result = dc.apps_push({'<codepath>': appdir,
+                  '--buildpack_url': 'https://github.com/appcubator/heroku-buildpack-nodejs',
                   '--app': deployment_id})
     return result
 
@@ -87,6 +88,10 @@ def update_code(appdir, deploy_id, deploy_data):
     finally:
         f.close()
         os.remove(os.path.join(appdir, 'payload.tar'))
+
+def destroy(deploy_id):
+    dc = DeisClient()
+    dc.apps_destroy({'--app': deploy_id, '--confirm': deploy_id})
 
 
 import unittest

@@ -667,10 +667,15 @@ class App(models.Model):
 
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
-        logger.info("Deployed to %s" % tmpdir)
+        logger.info("Written to %s" % tmpdir)
         try:
-            if self.deployment_id is None:
-                self.deployment_id = deploy.provision(tmpdir, self.get_deploy_data())
+            if self.deployment_id is None: # TODO or (change in build deps)
+                dd = self.get_deploy_data()
+                self.deployment_id = deploy.provision(tmpdir, dd)
+                out = rebuild(tmpdir, dd, self.deployment_id)
+                print "rc: " + out['rc']
+                print "Out: " + out['out']
+                print "Err: " + out['err']
             else:
                 deploy.update_code(tmpdir, self.deployment_id, self.get_deploy_data())
         except Exception:
