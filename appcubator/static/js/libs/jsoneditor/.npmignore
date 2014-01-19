@@ -1,0 +1,14 @@
+app
+bower.json
+build
+downloads
+jsoneditor
+misc
+node_modules
+test
+tools
+.idea
+component.json
+Jakefile.js
+.npmignore
+.gitignore

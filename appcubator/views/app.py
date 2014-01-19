@@ -298,6 +298,36 @@ def page(request, app_id, page_name="overview"):
     add_statics_to_context(page_context, app)
     return render(request, 'app-show.html', page_context)
 
+
+@require_GET
+@login_required
+def jsoneditor(request, app_id, page_name="overview"):
+    app_id = long(app_id)
+    # id of 0 is reserved for sample app
+    if(app_id == 0):
+        return redirect(welcome)
+
+    app = get_object_or_404(App, id=app_id)
+    if not app.is_editable_by_user(request.user):
+        raise Http404
+
+    themes = UITheme.get_web_themes()
+    themes = [t.to_dict() for t in themes]
+    mobile_themes = UITheme.get_mobile_themes()
+    mobile_themes = [t.to_dict() for t in mobile_themes]
+
+    page_context = {'app'          : app,
+                    'title'        : 'The Garage',
+                    'themes'       : simplejson.dumps(list(themes)),
+                    'mobile_themes': simplejson.dumps(list(mobile_themes)),
+                    'apps'         : app.owner.apps.all(),
+                    'user'         : app.owner,
+                    'page_name'    : page_name,
+                    'is_deployed'  : 1 if app.deployment_id != None else 0,
+                    'display_garage' : False}
+    add_statics_to_context(page_context, app)
+    return render(request, 'app-jsoneditor.html', page_context)
+
 @require_GET
 def app_editor_iframe(request, app_id, page_name="overview"):
     app_id = long(app_id)
@@ -331,21 +361,6 @@ def app_editor_iframe(request, app_id, page_name="overview"):
                     'display_garage' : False}
     add_statics_to_context(page_context, app)
     return render(request, 'app-editor-iframe.html', page_context)
-
-@require_GET
-@login_required
-def json_editor(request, app_id):
-    app_id = long(app_id)
-    app = get_object_or_404(App, id=app_id)
-    if not app.is_editable_by_user(request.user):
-        raise Http404
-
-    page_context = {'app': app,
-                    'app_id': long(app_id),
-                    }
-    add_statics_to_context(page_context, app)
-    return render(request, 'app-json-editor.html', page_context)
-
 
 @login_required
 def edit_theme(request, app_id):
