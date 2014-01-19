@@ -1,5 +1,6 @@
 body {
   overflow: hidden;
+  position: relative;
 }
 
 .guide-line-horizontal {
@@ -270,7 +271,16 @@ body {
 }
 
 .section-proto {
+  position: relative;
   min-height: 90px;
+}
+
+.section-proto .remove-section {
+  position: absolute;
+  top: 60px;
+  right: 60px;
+  font-size: 32px;
+  font-weight: bold;
 }
 
 .ycol {

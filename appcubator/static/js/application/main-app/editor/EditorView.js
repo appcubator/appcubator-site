@@ -182,7 +182,10 @@ define(function(require, exports, module) {
                 this.$el.find('.options-area').append(templatePicker.render().el);
             }
             else { */
-                this.$el.find('.page-wrapper').addClass('show');
+            
+            this.$el.find('.page-wrapper').addClass('show');
+            this.iframeProxy.updateScrollbar();
+
             /* } */
         },
 

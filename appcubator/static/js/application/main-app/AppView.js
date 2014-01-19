@@ -355,7 +355,7 @@ define(function(require, exports, module) {
 
             $.ajax({
                 type: "POST",
-                url: '/app/' + this.appId + '/state/',
+                url: '/app/' + this.appId + '/state/force/',
                 data: JSON.stringify(appState),
                 statusCode: {
                     200: successHandler,

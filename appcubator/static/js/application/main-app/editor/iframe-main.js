@@ -245,12 +245,18 @@ require([
 
             removeTempStyleSheet: function() {
                 this.reArrangeCSSTag();
+            },
+
+            updateScrollbar: function() {
+                $(document.body).perfectScrollbar("update");
             }
         };
 
-        $(document.body).perfectScrollbar();
         if (top.v1.currentApp) {
             top.v1.currentApp.renderIFrameContent(proxy);
+            $(document.body).perfectScrollbar({
+                wheelSpeed: 15,
+            });
         }
     });
 

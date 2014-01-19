@@ -3,7 +3,6 @@ define(function(require, exports, module) {
 
     require('mixins/BackboneModal');
 
-
     var UIElementEditingView = Backbone.View.extend({
         
         tagName: 'div',
@@ -36,12 +35,15 @@ define(function(require, exports, module) {
                 info: this.model.attributes,
                 cid: this.model.cid
             });
-            console.log(form);
+
             this.el.innerHTML = form;
             return this;
         },
 
         setupAce: function() {
+            console.log(this.el);
+            console.log($("#style-" + this.model.cid));
+
             this.styleEditor = ace.edit("style-" + this.model.cid);
             this.styleEditor.getSession().setMode("ace/mode/css");
             this.styleEditor.setValue(this.model.get('style'), -1);

@@ -158,8 +158,8 @@
           "generate": "templates.layoutSections",
           "data": [
             {
-              "layout": "hero",
-              "className": "jumbo",
+              "layout": "12",
+              "className": "jumbotron",
               "uielements": [
                 {
                   "generate": "uielements.design-header",

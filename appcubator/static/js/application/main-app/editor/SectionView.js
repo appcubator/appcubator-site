@@ -20,7 +20,8 @@ define(function(require, exports, module) {
             'mouseover'       : 'hovered',
             'mouseup'         : 'hovered',
             'mouseover .ycol' : 'hoveredColumn',
-            'mouseup .ycol'   : 'hoveredColumn'
+            'mouseup .ycol'   : 'hoveredColumn',
+            'click .remove-section' : 'removeSection'
         },
 
         className: "section-proto",
@@ -31,9 +32,11 @@ define(function(require, exports, module) {
             _.bindAll(this);
 
             this.model = sectionModel;
+            this.listenTo(this.model, 'remove', this.close);
+
             this.widgetsCollection = this.model.get('uielements');
             this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
-            
+
             this.listenToModels(this.widgetsCollection, 'startEditing', this.startEditing);
             this.listenToModels(this.widgetsCollection, 'stopEditing cancelEditing', this.stopEditing);
 
@@ -48,15 +51,22 @@ define(function(require, exports, module) {
         },
 
         render: function() {
+            var template = "";
             switch(this.model.get('layout')) {
-                case "hero":
-                    this.el.innerHTML = '<div class="jumbotron"><div class="container ycol" id="col0"></div></div>';
+                case "12":
+                    template = [
+                    '<div class="<%= className %>">',
+                        '<div class="container">',
+                            '<div class="ycol" id="colheader"></div>',
+                            '<div class="col-md-12 ycol" id="col0"></div>',
+                        '</div>',
+                    '</div>'].join('\n');
                     break;
                 case "3-3-3-3":
-                    this.el.innerHTML = [
+                    template = [
                     '<div class="container">',
                         '<div class="row">',
-                            '<div class="text-center ycol colheader"></div>',
+                            '<div class="text-center ycol" id="colheader"></div>',
                             '<div class="col-md-3 ycol" id="col0"></div>',
                             '<div class="col-md-3 ycol" id="col1"></div>',
                             '<div class="col-md-3 ycol" id="col2"></div>',
@@ -66,7 +76,7 @@ define(function(require, exports, module) {
                     break;
 
                 case "4-4-4":
-                    this.el.innerHTML = [
+                    template = [
                     '<div class="container">',
                         '<div class="row">',
                             '<div class="text-center ycol" id="colheader"></div>',
@@ -78,7 +88,7 @@ define(function(require, exports, module) {
                     break;
 
                 case "8-4":
-                    this.el.innerHTML = [
+                    template = [
                     '<div class="container">',
                         '<div class="row">',
                             '<div class="text-center ycol" id="colheader"></div>',
@@ -89,7 +99,7 @@ define(function(require, exports, module) {
                     break;
 
                 case "4-8":
-                    this.el.innerHTML = [
+                    template = [
                     '<div class="container">',
                         '<div class="row">',
                             '<div class="text-center ycol" id="colheader"></div>',
@@ -99,7 +109,8 @@ define(function(require, exports, module) {
                     '</div>'].join('\n');
             }
 
-            this.$el.find( ".ycol" );
+            this.el.innerHTML = _.template(template, this.model.toJSON());
+            this.$el.append('<div class="remove-section">×</div>');
 
             this.layoutElements();
             // this.widgetsContainer = document.getElementById('elements-container');
@@ -161,11 +172,6 @@ define(function(require, exports, module) {
                         ui.position.top += amt;
                     },
                     start: function(e, ui) {
-                        // console.log(ui);
-                        // var amt = $(window).scrollTop();
-                        // ui.position.top += amt;
-                        // console.log(amt);
-                        // console.log(ui);
                         self.highlightCols();
                     },
                     stop: function(e, ui) {
@@ -175,7 +181,7 @@ define(function(require, exports, module) {
 
                 this.colElements[key] = $col.sortable( "toArray" );
 
-                val = _.sortBy(val, function(model) { return parseInt(model.get('layout').get('row')); });
+                val = _.sortBy(val, function(model) { return parseInt(model.get('layout').get('row'), 10); });
                 
                 _.each(val, function(widgetModel) {
                     var widgetView = new WidgetView(widgetModel);
@@ -237,9 +243,10 @@ define(function(require, exports, module) {
             this.currentColumn = colId;
         },
 
-        close: function() {
-            WidgetManagerView.__super__.close.call(this);
+        removeSection: function() {
+            this.model.collection.remove(this.model);
         }
+
     });
 
     return SectionView;
