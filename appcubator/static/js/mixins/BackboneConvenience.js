@@ -65,6 +65,18 @@ define([
             }
         };
 
+        Backbone.View.prototype.listenToModels = function(coll, event, handler) {
+
+            coll.each(function(model) {
+                this.listenTo(model, event, handler);
+            }, this);
+
+            var self = this;
+            this.listenTo(coll, 'add', function(model) {
+                self.listenTo(model, event, handler);
+            });
+        };
+
         Backbone.Collection.prototype.add = function(models, options) {
             /* make things validate by default*/
             models = _.isArray(models) ? models : [models];

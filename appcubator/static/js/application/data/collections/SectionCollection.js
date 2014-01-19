@@ -65,10 +65,11 @@ define(function(require, exports, module) {
             };
 
             switch (type) {
-                case "jumbo":
+                case "12":
                     this.add({
-                        "layout": "hero",
-                        "uielements": [sampleHeader(0)]
+                        "layout": "12",
+                        "className": "jumbotron",
+                        "uielements": [sampleHeader("header"), sampleText(0)]
                     });
                     break;
 

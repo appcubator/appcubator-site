@@ -19,12 +19,12 @@ define(function(require, exports, module) {
         positionVerticalGrid: 15,
 
         events: {
-            'click #hover-div': 'hoverClicked',
-            'click #select-div': 'doubleClicked',
-            'mousedown #hover-div': 'mousedown',
-            'mousedown #select-div': 'selectMousedown',
-            'mouseup #hover-div': 'mouseup',
-            'mouseup #select-div': 'mouseup'
+            // 'click #hover-div': 'hoverClicked',
+            // 'click #select-div': 'doubleClicked',
+            // 'mousedown #hover-div': 'mousedown',
+            // 'mousedown #select-div': 'selectMousedown',
+            // 'mouseup #hover-div': 'mouseup',
+            // 'mouseup #select-div': 'mouseup'
         },
 
         initialize: function(widgetsCollection) {
@@ -366,7 +366,7 @@ define(function(require, exports, module) {
         moved: function(e, ui) {
             
             var self = this;
-            g_guides.hideAll();
+            //g_guides.hideAll();
 
             var model = this.selectedEl;
             if (e.target.id == "hover-div") {

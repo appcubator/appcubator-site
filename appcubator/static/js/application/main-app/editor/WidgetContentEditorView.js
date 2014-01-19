@@ -31,17 +31,17 @@ define(function(require, exports, module) {
 
         render: function() {
             var self = this;
-            if (this.model.get('data').has('content') && this.model.get('data').get('content') !== null && !this.model.get('data').get('content_attribs').has('src') &&
-                this.model.get('type') != "images" &&
-                this.model.get('type') != "buttons") {
+            // if (this.model.get('data').has('content') && this.model.get('data').get('content') !== null && !this.model.get('data').get('content_attribs').has('src') &&
+            //     this.model.get('type') != "images" &&
+            //     this.model.get('type') != "buttons") {
 
-                //this.el.appendChild(this.renderFontPicker());
-            }
+            //     //this.el.appendChild(this.renderFontPicker());
+            // }
 
-            if (this.model.get('data').get('content_attribs').has('src')) {
+            if (this.model.has('src')) {
                 this.el.appendChild(this.renderSrcInfo());
-                this.el.appendChild(this.renderHrefInfo());
-            } else if (this.model.get('data').get('content_attribs').has('href')) {
+            }
+            if (this.model.has('href')) {
                 this.el.appendChild(this.renderHrefInfo());
             }
         },
@@ -77,38 +77,38 @@ define(function(require, exports, module) {
         },
 
 
-        renderFontPicker: function() {
-            var li = document.createElement('li');
-            var curStyle = (this.model.get('data').get('content_attribs').get('style') || 'font-size:default;');
+        // renderFontPicker: function() {
+        //     var li = document.createElement('li');
+        //     var curStyle = (this.model.get('data').get('content_attribs').get('style') || 'font-size:default;');
 
-            var currentFont;
-            if (/font-size:([^]+);/g.exec(curStyle)) {
-                currentFont = /font-size:([^]+);/g.exec(curStyle)[1];
-            } else {
-                currentFont = "font-size:default;";
-            }
+        //     var currentFont;
+        //     if (/font-size:([^]+);/g.exec(curStyle)) {
+        //         currentFont = /font-size:([^]+);/g.exec(curStyle)[1];
+        //     } else {
+        //         currentFont = "font-size:default;";
+        //     }
 
-            var sizeDiv = document.createElement('div');
-            sizeDiv.className = 'size-picker';
-            var hash = 'content_attribs' + '-' + 'style';
-            var sizeSelect = new comp().select('').id(hash).classN('font-picker');
+        //     var sizeDiv = document.createElement('div');
+        //     sizeDiv.className = 'size-picker';
+        //     var hash = 'content_attribs' + '-' + 'style';
+        //     var sizeSelect = new comp().select('').id(hash).classN('font-picker');
 
-            _(['default', '10px', '14px', '16px', '18px', '20px', '32px', '36px', '48px', '72px']).each(function(val) {
-                sizeSelect.el.innerHTML += '<option value="font-size:' + val + ';">' + val + '</option>';
-            });
+        //     _(['default', '10px', '14px', '16px', '18px', '20px', '32px', '36px', '48px', '72px']).each(function(val) {
+        //         sizeSelect.el.innerHTML += '<option value="font-size:' + val + ';">' + val + '</option>';
+        //     });
 
-            sizeDiv.innerHTML = '<span class="key">Font Size</span>';
-            sizeDiv.appendChild(sizeSelect.el);
-            var optionsDiv = document.createElement('div');
-            optionsDiv.className = 'font-options';
-            optionsDiv.innerHTML = '<span id="toggle-bold" class="option-button"><strong>B</strong></span>';
+        //     sizeDiv.innerHTML = '<span class="key">Font Size</span>';
+        //     sizeDiv.appendChild(sizeSelect.el);
+        //     var optionsDiv = document.createElement('div');
+        //     optionsDiv.className = 'font-options';
+        //     optionsDiv.innerHTML = '<span id="toggle-bold" class="option-button"><strong>B</strong></span>';
 
-            // li.appendChild(sizeDiv);
-            // li.appendChild(optionsDiv);
+        //     // li.appendChild(sizeDiv);
+        //     // li.appendChild(optionsDiv);
 
-            $(sizeDiv).find('option[value="font-size:' + currentFont + ';"]').prop('selected', true);
-            return li;
-        },
+        //     $(sizeDiv).find('option[value="font-size:' + currentFont + ';"]').prop('selected', true);
+        //     return li;
+        // },
 
         inputChanged: function(e) {
             e.stopPropagation();
@@ -160,8 +160,8 @@ define(function(require, exports, module) {
                 file.name = file.filename;
                 statics.push(file);
             });
-            self.model.get('data').get('content_attribs').set('src', _.last(files).url);
-            self.model.get('data').set('content', _.last(files).url);
+            self.model.set('src', _.last(files).url);
+            // self.model.get('data').set('content', _.last(files).url);
         },
 
         clickedChangeSrc: function() {
@@ -179,14 +179,15 @@ define(function(require, exports, module) {
                 name: "Upload New Image"
             }, statics_list);
 
-            var curValName = this.model.get('data').get('content_attribs').get('src');
-            if (this.model.get('data').get('content_attribs').has('src_content')) {
+            var curValName = this.model.get('src');
+            if (this.model.has('src_content')) {
                 curValName = this.model.get('data').get('content_attribs').get('src_content');
             }
             var curVal = {
                 name: curValName,
                 val: this.model.get('data').get('content_attribs').get('src')
             };
+
             var selectView = new SelectView(statics_list, curVal, true, {
                 maxHeight: 5
             });
@@ -206,15 +207,15 @@ define(function(require, exports, module) {
             if (inp == 'new-image') {
                 top.util.filepicker.openFilePick(self.staticsAdded, self, appId);
             } else {
-                this.model.get('data').get('content_attribs').set('src', inp);
-                this.model.get('data').set('content', inp);
+                this.model.set('src', inp);
+                //this.model.set('content', inp);
             }
         },
 
         clickedChangeHref: function() {
             var self = this;
             var listOfPages = this.model.getListOfPages();
-            var href = (this.model.get('data').get('content_attribs').get('href') || null);
+            var href = (this.model.get('href') || null);
 
             if (href === null) {
                 href = {
@@ -257,14 +258,14 @@ define(function(require, exports, module) {
                 target = 'internal://' + target;
                 target += ('/' + this.model.get('data').get('context'));
             }
-            this.model.get('data').get('content_attribs').set('href', target);
+            this.model.set('href', target);
             this.renderHrefInfo();
         },
 
         addExternalLink: function(e) {
             e.preventDefault();
             var page_link = util.get('external-link-input').value;
-            this.model.get('data').get('content_attribs').set('href', page_link);
+            this.model.set('href', page_link);
             $('#external-link-form').remove();
             this.hrefOptions.unshift(page_link);
             this.renderHrefInfo();

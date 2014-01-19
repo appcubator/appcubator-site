@@ -25,7 +25,7 @@ define(function(require, exports, module) {
                 text: "Fonts"
             }, {
                 id: "button",
-                key: "headerTexts",
+                key: "buttons",
                 text: "Button"
             }, {
                 id: "image",
@@ -138,6 +138,7 @@ define(function(require, exports, module) {
                 
                 this.elementsList.appendChild(liEl);
 
+                console.log(element);
                 $(liEl).bind('click', function() {
                     self.showElementType(id, element.key, element.text);
                 });
@@ -189,7 +190,7 @@ define(function(require, exports, module) {
                     break;
 
                 default:
-                    
+                    console.log(key);
                     var listView = new UIElementListView(this.model.get(key), type);
                     $(this.elementsList).hide();
                     this.setTitle(text);
@@ -204,6 +205,8 @@ define(function(require, exports, module) {
         styleSelected: function(styleModel) {
             if(this.currentView) this.currentView.close();
             $(this.elementsList).hide();
+
+            console.log(styleModel);
 
             this.currentView = new UIElementEditingView(styleModel);
             this.el.appendChild(this.currentView.render().el);

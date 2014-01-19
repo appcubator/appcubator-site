@@ -3,6 +3,7 @@ require.config({
         "jquery": "../../../libs/jquery/jquery",
         "jquery-ui": "../../../libs/jquery-ui/jquery-ui",
         "jquery.hotkeys": "../../../libs/jquery/jquery.hotkeys",
+        "jquery.scrollbar": "../../../libs/jquery/jquery.scrollbar",
         "jquery.freshereditor": "../../../libs/jquery/jquery.freshereditor",
         "shortcut": "../../../libs/shortcut",
         "underscore": "../../../libs/underscore-amd/underscore",
@@ -33,6 +34,10 @@ require.config({
             deps: ['jquery']
         },
         "jquery.hotkeys": {
+            exports: "$",
+            deps: ['jquery']
+        },
+        "jquery.scrollbar": {
             exports: "$",
             deps: ['jquery']
         },
@@ -103,7 +108,9 @@ require([
         "bootstrap",
         "util",
         "comp",
-        "mixins/BackboneConvenience"
+        "mixins/BackboneConvenience",
+        "jquery-ui",
+        "jquery.scrollbar"
     ],
     function(AppModel,
         WidgetView,
@@ -238,11 +245,18 @@ require([
 
             removeTempStyleSheet: function() {
                 this.reArrangeCSSTag();
+            },
+
+            updateScrollbar: function() {
+                $(document.body).perfectScrollbar("update");
             }
         };
 
         if (top.v1.currentApp) {
             top.v1.currentApp.renderIFrameContent(proxy);
+            $(document.body).perfectScrollbar({
+                wheelSpeed: 15,
+            });
         }
     });
 
