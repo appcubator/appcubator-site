@@ -135,7 +135,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
         select: function(e) {
     
-            console.log("select");
             if(this.selected && !this.editMode) {
                 this.model.trigger('doubleClicked');
                 return;
