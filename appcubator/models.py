@@ -672,6 +672,7 @@ class App(models.Model):
             if self.deployment_id is None: # TODO or (change in build deps)
                 dd = self.get_deploy_data()
                 self.deployment_id = deploy.provision(tmpdir, dd)
+                rerelease({'MONGO_ADDR': os.environ['TEMP_MONGO']})
                 out = rebuild(tmpdir, dd, self.deployment_id)
                 print "rc: " + out['rc']
                 print "Out: " + out['out']

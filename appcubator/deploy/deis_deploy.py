@@ -52,14 +52,30 @@ def provision(appdir, deploy_data):
     """
     dc = DeisClient()
     deployment_id = dc.apps_create_without_git({'--formation': settings.DEIS_FORMATION })
+                  # TODO set initial config.
+                  #'<var>=<value>': [ key+u'='+unicode(value) for key, value in config_values.iteritems() ],
     return deployment_id
 
-def rebuild(appdir, deploy_data, deployment_id):
+def rebuild(appdir, deploy_data, deployment_id, config_values=None):
+    """
+    Creates a new Build and Release
+    """
     dc = DeisClient()
     result = dc.apps_push({'<codepath>': appdir,
                   '--buildpack_url': 'https://github.com/appcubator/heroku-buildpack-nodejs',
                   '--app': deployment_id})
     return result
+
+def rerelease(deployment_id, config_values):
+    """
+    Updates current config with new ones.
+    Key : None means unset Key
+    """
+    dc = DeisClient()
+    result = dc.config_set({'--app': deployment_id,
+                            '<var>=<value>': [ key+u'='+unicode(value) for key, value in config_values.iteritems() ] })
+    return result
+
 
 def update_code(appdir, deploy_id, deploy_data):
     """
