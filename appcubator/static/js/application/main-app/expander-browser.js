@@ -885,6 +885,8 @@ generators.push({
         data.style = data.style || '';
         data.href = "";
 
+        console.log(data.style);
+
         return { html: templates.html(data),
                  css: '',
                  js: '',
@@ -919,6 +921,7 @@ generators.push({
         /* expects: content, url, className, style */
         data.className = data.className || '';
         data.style = data.style || '';
+        data.url = data.url || "#";
         return { html: templates.html(data),
                  css: '',
                  js: '',

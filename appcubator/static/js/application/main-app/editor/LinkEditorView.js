@@ -18,18 +18,18 @@ define([
             this.listenTo(this.model, 'change:url', this.renderUrl, this);
 
             // generate list of link options
-            this.linkOptions = _(v1State.getPages().getContextFreePageModels()).map(function(page) {
-                return {
-                    url: 'internal://' + page.get('name'),
-                    title: page.get('name')
-                };
-            });
+            // this.linkOptions = _(v1State.getPages().getContextFreePageModels()).map(function(page) {
+            //     return {
+            //         url: 'internal://' + page.get('name'),
+            //         title: page.get('name')
+            //     };
+            // });
 
             // if the current link is an external link,
             // we need to add it to the link options
-            if (!this.isInternalLink(this.model.get('url'))) {
-                this.linkOptions.push(this.model.serialize());
-            }
+            // if (!this.isInternalLink(this.model.get('url'))) {
+            //     this.linkOptions.push(this.model.serialize());
+            // }
         },
 
         render: function() {

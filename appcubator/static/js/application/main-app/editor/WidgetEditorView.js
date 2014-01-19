@@ -104,6 +104,8 @@ define(function(require, exports, module) {
         },
 
         show: function() {
+            if(!this.model) return;
+
             var location = this.getLocation();
             this.location = location;
             this.el.className += ' ' + location;
@@ -111,6 +113,8 @@ define(function(require, exports, module) {
             var iframe = document.getElementById('page');
             var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
             var element = innerDoc.getElementById('widget-wrapper-'+ this.model.cid);
+
+            if(!element) return;
 
             var offsetFrame = util.getWindowRelativeOffset(window.document, iframe);
             var offset = util.getWindowRelativeOffset(window.document, element);

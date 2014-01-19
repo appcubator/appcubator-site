@@ -16,16 +16,17 @@ body .row.row {
 }
 
 body [class*="span"][class*="span"] {
-  float: left;
+/*  float: left;
+*/  
   min-height: 1px;
-  display: inline-block;
-  vertical-align: top;
-  overflow: hidden;
-}
+/*  display: inline-block;
+*/  vertical-align: top;
+/*  overflow: hidden;
+*/}
 
-[class*="span"] {
+/*[class*="span"] {
   margin-left: 0;
-}
+}*/
 
 body hr[class*="span"] {
   height: 2px;
@@ -155,10 +156,10 @@ body hr[class*="span"] {
 .hoff2  { margin-top: 30px;  }
 .hoff1  { margin-top: 15px;  }
 
-.container.container {
+/*.container.container {
   padding: 0;
 }
-
+*/
 .container.elements {
   padding: 0;
 }

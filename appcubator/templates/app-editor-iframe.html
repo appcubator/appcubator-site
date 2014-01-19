@@ -7,30 +7,29 @@
 <link type="text/css" href="/static/css/appcubator-override.css" rel="stylesheet"/>
 <link type="text/css" href="/static/css/editor-inject.css" rel="stylesheet"/>
 <link type="text/css" href="/static/css/jquery-ui.css" rel="stylesheet"/>
-<link type="text/css" href="/static/css/app/editor/editor-gallery.css" rel="stylesheet"/>
 
 </head>
 <body>
         <!-- Navbar -->
-        {% if old_nav %}
-        <navbar class="navbar" id="navbar">
-          <div class="navbar-inner">
-            <a class="brand" href="#" id="brand-name">{{ app.name }}</a>
-            <ul class="nav" id="links">
-            </ul>
-            <button id="edit-navbar-btn">Edit Navbar</button>
-          </div>
-        </navbar>
-        {% else %}
-        <div class="navbar navbar-fixed-top navbar-default" id="navbar">
+        <div id="navbar">
           <button id="edit-navbar-btn">Edit Navbar</button>
         </div>
-        {% endif %}
         <!-- Editing Container -->
-        <div class="container editing" id="full-container"></div>
-        <div class="editing container elements" id="elements-container">
+        <div class="editing elements" id="elements-container">
         <!-- UI Elements -->
         </div>
+
+        <div class="container editing full-container" id="addNewSection">
+            <span id="addNewSectionTitle">Add A New Section</span>
+            <ul class="options" style="display:none;">
+                <li class="section-option" id="opt-jumbo">Jumbo</li>
+                <li class="section-option" id="opt-3-3-3-3">3-3-3-3</li>
+                <li class="section-option" id="opt-4-4-4">4-4-4</li>
+                <li class="section-option" id="opt-4-8">4-8</li>
+                <li class="section-option" id="opt-8-4">8-4</li>
+            </ul>
+        </div>
+
         <!-- Footer -->
         {% if old_nav %}
         <footer class="footer" id="footer">

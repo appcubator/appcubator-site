@@ -39,12 +39,10 @@ define(function(require, exports, module) {
             'click .search-cancel'   : 'searchCanceled'
         },
 
-        initialize: function(widgetsCollection) {
+        initialize: function(sectionsCollection) {
             _.bindAll(this);
 
-            this.widgetsCollection = widgetsCollection;
-            this.widgetsCollection.grid = {};
-            this.widgetsCollection.grid.maxWidth = 12;
+            this.sectionsCollection = sectionsCollection;
 
             this.searcher = new Searcher();
 
@@ -88,8 +86,12 @@ define(function(require, exports, module) {
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
+                    v1.currentApp.view.sectionsManager.highlightSections();
                 },
-                stop: self.dropped,
+                stop: function(e) {
+                    self.dropped(e);
+                    v1.currentApp.view.sectionsManager.unhighlightSections();
+                },
                 iframeFix: true
             });
 
@@ -159,15 +161,18 @@ define(function(require, exports, module) {
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
+                    v1.currentApp.view.sectionsManager.highlightSections();
                 },
-                stop: self.dropped,
+                stop: function(e) {
+                    self.dropped(e);
+                    v1.currentApp.view.sectionsManager.unhighlightSections();
+                },
                 iframeFix: true
             });
         },
 
         renderUIElementList: function() {
             var self = this;
-            console.log(defaultElements);
             var collection = new Backbone.Collection(defaultElements);
             this.uiElemsSection = this.addNewSection('Design Elements');
 
@@ -190,8 +195,12 @@ define(function(require, exports, module) {
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
+                    v1.currentApp.view.sectionsManager.highlightSections();
                 },
-                stop: self.dropped,
+                stop: function(e) {
+                    self.dropped(e);
+                    v1.currentApp.view.sectionsManager.unhighlightSections();
+                },
                 iframeFix: true
             });
             $(li).on('click', self.dropped);
@@ -214,8 +223,12 @@ define(function(require, exports, module) {
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
+                    v1.currentApp.view.sectionsManager.highlightSections();
                 },
-                stop: self.dropped,
+                stop: function(e) {
+                    self.dropped(e);
+                    v1.currentApp.view.sectionsManager.unhighlightSections();
+                },
                 iframeFix: true
             });
         },
@@ -237,8 +250,12 @@ define(function(require, exports, module) {
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
+                    v1.currentApp.view.sectionsManager.highlightSections();
                 },
-                stop: self.dropped,
+                stop: function(e) {
+                    self.dropped(e);
+                    v1.currentApp.view.sectionsManager.unhighlightSections();
+                },
                 iframeFix: true
             });
         },
@@ -268,8 +285,6 @@ define(function(require, exports, module) {
 
         renderCurrentUserElements: function() {
             this.currUserSection = this.addNewSection('Current User Views');
-
-            console.log(v1);
             // _(v1.currentApp.getCurrentPage().getFields()).each(function(field) {
             //     if (field.isRelatedField()) return;
             //     this.currUserSection.addFullWidthItem('current-user-' + field.cid, 'current-user', 'Current User ' + field.get('name'), 'current-user-icon');
@@ -457,7 +472,13 @@ define(function(require, exports, module) {
 
             util.log_to_server("widget dropped", id, appId);
 
+            this.widgetsCollection = this.getCurrentWidgetCollection().get('uielements');
+
             return this.createElement(layout, className, id);
+        },
+
+        getCurrentWidgetCollection: function() {
+            return v1.currentApp.view.sectionsManager.currentSectionModel;
         },
 
         createElement: function(layout, className, id) {

@@ -48,7 +48,7 @@ define(function(require, exports, module) {
         },
 
         mousedown: function(e) {
-            g_marqueeView.setZero();
+            //g_marqueeView.setZero();
             mouseDispatcher.isMousedownActive = true;
         },
 
@@ -129,6 +129,8 @@ define(function(require, exports, module) {
                 self.newSelected(widget);
             });
 
+            this.listenTo(widget, 'doubleClicked', this.doubleClicked);
+
             this.listenTo(widget, 'deselect', function() {
                 self.deselect();
             });
@@ -178,10 +180,21 @@ define(function(require, exports, module) {
             if (!widgetModel) return;
             $(node).show();
 
-            node.style.width = ((widgetModel.get('layout').get('width') * 80) + PADDING) + 'px';
-            node.style.height = ((widgetModel.get('layout').get('height') * 15) + PADDING) + 'px';
-            node.style.left = ((widgetModel.get('layout').get('left') * 80) - ALIGNMENT) + 'px';
-            node.style.top = ((widgetModel.get('layout').get('top') * 15) - ALIGNMENT) + 'px';
+            var element = document.getElementById('widget-wrapper-'+ widgetModel.cid);
+            var $element = $(element);
+            if(!element) return;
+
+            // var offsetFrame = util.getWindowRelativeOffset(window.document, window);
+            var offset = util.getWindowRelativeOffset(window.document, element);
+
+            var leftDist = offset.left; // + offsetFrame.left;
+            var topDist = offset.top + $(window).scrollTop();
+
+            node.style.width =  $element.outerWidth() + 'px';
+            node.style.height = $element.outerHeight() + 'px';
+            node.style.left = (leftDist) + 'px';
+            node.style.top = (topDist) + 'px';
+
             return node;
         },
 
@@ -197,9 +210,9 @@ define(function(require, exports, module) {
         widgetHover: function(widgetModel) {
             if (g_marqueeView.isDrawing) return;
             if (this.selectedEl && widgetModel.cid === this.selectedEl.cid) return;
-            if (g_multiSelectorView.contains(widgetModel)) return;
+            // if (g_multiSelectorView.contains(widgetModel)) return;
             this.hoveredEl = widgetModel;
-            this.setLayout(this.hoverDiv, widgetModel);
+            //this.setLayout(this.hoverDiv, widgetModel);
         },
 
         widgetUnhover: function(widgetModel) {
@@ -226,7 +239,7 @@ define(function(require, exports, module) {
                 self.setLayout(self.selectDiv, widgetModel);
             });
             this.hideNode(this.hoverDiv);
-            this.setLayout(this.selectDiv, widgetModel);
+            // this.setLayout(this.selectDiv, widgetModel);
             this.widgetEditorView.setModel(widgetModel).display();
         },
 
@@ -236,33 +249,33 @@ define(function(require, exports, module) {
 
             var elem = this.el.getElementById('widget-wrapper-' + cid);
 
-            g_guides.hideAll();
+            //g_guides.hideAll();
 
-            var valLeft = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid, cid);
-            var valRight = g_guides.showVertical((ui.position.left + ui.size.width) / this.positionHorizontalGrid, cid);
+            // var valLeft = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid, cid);
+            // var valRight = g_guides.showVertical((ui.position.left + ui.size.width) / this.positionHorizontalGrid, cid);
 
-            if (valLeft) {
-                var deltaLeft = ui.position.left - (valLeft * this.positionHorizontalGrid) + ALIGNMENT;
-                ui.size.width = ui.size.width + deltaLeft;
-                ui.element.width(ui.size.width + PADDING);
-                ui.position.left = (valLeft * this.positionHorizontalGrid) - ALIGNMENT;
-                ui.element.css('left', ui.position.left);
-            }
-            if (valRight) {
-                var deltaRight = valRight * this.positionHorizontalGrid - (ui.position.left + ui.size.width);
-                ui.size.width = ui.size.width + deltaRight - ALIGNMENT;
-                ui.element.width(ui.size.width);
-            }
+            // if (valLeft) {
+            //     var deltaLeft = ui.position.left - (valLeft * this.positionHorizontalGrid) + ALIGNMENT;
+            //     ui.size.width = ui.size.width + deltaLeft;
+            //     ui.element.width(ui.size.width + PADDING);
+            //     ui.position.left = (valLeft * this.positionHorizontalGrid) - ALIGNMENT;
+            //     ui.element.css('left', ui.position.left);
+            // }
+            // if (valRight) {
+            //     var deltaRight = valRight * this.positionHorizontalGrid - (ui.position.left + ui.size.width);
+            //     ui.size.width = ui.size.width + deltaRight - ALIGNMENT;
+            //     ui.element.width(ui.size.width);
+            // }
 
-            var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
-            var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
+            // var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
+            // var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
 
-            if (valTop) {
-                var deltaTop = (valTop * this.positionVerticalGrid) - ui.position.top;
-            }
-            if (valBottom) {
-                var deltaBottom = ui.position.top = (valTop * this.positionVerticalGrid);
-            }
+            // if (valTop) {
+            //     var deltaTop = (valTop * this.positionVerticalGrid) - ui.position.top;
+            // }
+            // if (valBottom) {
+            //     var deltaBottom = ui.position.top = (valTop * this.positionVerticalGrid);
+            // }
 
             elem.style.width = (ui.size.width + PADDING) + 'px';
             elem.style.height = (ui.size.height + PADDING) + 'px';
@@ -272,7 +285,7 @@ define(function(require, exports, module) {
         },
 
         resized: function(e, ui) {
-            g_guides.hideAll();
+            // g_guides.hideAll();
 
             var left = Math.round((ui.position.left / this.positionHorizontalGrid));
             var top = Math.round((ui.position.top / this.positionVerticalGrid));
@@ -303,9 +316,9 @@ define(function(require, exports, module) {
 
             if (e.target.id == "hover-div") {
                 model = this.hoveredEl;
-                if (!g_multiSelectorView.isEmpty()) {
-                    return g_multiSelectorView.moving(e, ui, model, this.positionHorizontalGrid, this.positionVerticalGrid);
-                }
+                // if (!g_multiSelectorView.isEmpty()) {
+                //     return g_multiSelectorView.moving(e, ui, model, this.positionHorizontalGrid, this.positionVerticalGrid);
+                // }
             } else {
                 model = this.selectedEl;
                 this.hideNode(this.hoverDiv);
@@ -316,18 +329,18 @@ define(function(require, exports, module) {
             this.widgetEditorView.hide();
 
             var cid = model.cid;
-            g_guides.hideAll();
+            // g_guides.hideAll();
 
 
-            var valLeft = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid, cid);
-            var valRight = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid + model.get('layout').get('width'), cid);
+            // var valLeft = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid, cid);
+            // var valRight = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid + model.get('layout').get('width'), cid);
 
-            if (valLeft) {
-                ui.position.left = valLeft * this.positionHorizontalGrid;
-            }
-            if (valRight) {
-                ui.position.left = (valRight - model.get('layout').get('width')) * this.positionHorizontalGrid - ALIGNMENT;
-            }
+            // if (valLeft) {
+            //     ui.position.left = valLeft * this.positionHorizontalGrid;
+            // }
+            // if (valRight) {
+            //     ui.position.left = (valRight - model.get('layout').get('width')) * this.positionHorizontalGrid - ALIGNMENT;
+            // }
 
             /* Adjust for the scroll amount of the iframe - hacky */
             // console.log(document);
@@ -335,15 +348,15 @@ define(function(require, exports, module) {
             // var scrollTop = $(document).scrollTop();
             // ui.position.top += scrollTop;
 
-            var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
-            var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
+            // var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
+            // var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
 
-            if (valTop) {
-                ui.position.top = valTop * this.positionVerticalGrid;
-            }
-            if (valBottom) {
-                ui.position.top = (valBottom - model.get('layout').get('height')) * this.positionVerticalGrid - 2;
-            }
+            // if (valTop) {
+            //     ui.position.top = valTop * this.positionVerticalGrid;
+            // }
+            // if (valBottom) {
+            //     ui.position.top = (valBottom - model.get('layout').get('height')) * this.positionVerticalGrid - 2;
+            // }
 
             var elem = this.el.getElementById('widget-wrapper-' + model.cid);
             elem.style.top = ui.position.top + ALIGNMENT + 'px';
@@ -471,8 +484,7 @@ define(function(require, exports, module) {
         },
 
         doubleClicked: function(e) {
-            if (!this.isMouseOn(e) || this.selectedEl.editModeOn) return;
-            this.selectedEl.trigger('doubleClicked');
+            //if (!this.isMouseOn(e) || this.selectedEl.editModeOn) return;
 
             if (this.selectedEl.getContent() && !this.selectedEl.isLoginForm()) {
                 this.selectedEl.trigger('startEditing');
