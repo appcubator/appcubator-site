@@ -689,8 +689,9 @@ class App(models.Model):
             if self.deployment_id is None: # TODO or (change in build deps)
                 dd = self.get_deploy_data()
                 self.deployment_id = deploy.provision(tmpdir, dd)
-                self._rebuild(dd=dd, tmpdir=tmpdir)
                 self._rerelease()
+                self._rebuild(dd=dd, tmpdir=tmpdir)
+                self.save()
             else:
                 deploy.update_code(tmpdir, self.deployment_id, self.get_deploy_data())
         except Exception:
