@@ -1,13 +1,16 @@
 /*global define*/
 
 define([
+    'jquery',
     'underscore',
     'backbone',
     'views/Editor',
-    'jsoneditor'
-], function (_, Backbone, EditorView, jsoneditor) {
+    'jsoneditor',
+    '/static/js/libs/util/util.js'
+], function ($, _, Backbone, EditorView, jsoneditor, util) {
     'use strict';
-    console.log(jsoneditor);
+    
+    console.log(util);
     var AppModel = Backbone.Model.extend({
         defaults: {
         	  currentJSON: undefined,
@@ -17,6 +20,16 @@ define([
         },
         initialize: function (currentJSON){
             this.currentJSON = currentJSON;
+
+            
+            var appId = window.location.pathname.split( '/' )[2];
+            var jsonString = $.ajax({
+              type: "GET",
+              url: "/app/" + appId + "/state/",
+              async: false
+            }).responseText;
+            this.set('currentJSON', JSON.parse(jsonString));
+
             this.on('change:currentJSON', function (event){
                 this.get('editorView').render();
                 this.get('browserView').render();
@@ -59,6 +72,20 @@ define([
             i++;
           }
           return escaped;
+        },
+        saveJSON: function (){
+          var str = JSON.stringify(this.get('browserView').returnJSONObject());
+          var appId = window.location.pathname.split( '/' )[2];
+
+          $.ajax({
+            type: "POST",
+            data: str,
+            url: "/app/" + appId + "/state/force/",
+            async: false,
+            success: function(){
+              console.log("Appmake file updated!");
+            }
+          })
         }              
     });
 

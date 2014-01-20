@@ -1,6 +1,8 @@
 {% extends "infra-html.html" %}
 {% load embed_json %}
 {% block css %}
+<link type="text/css" href="{{ STATIC_URL }}css/jsoneditor.css" rel="stylesheet"/>
+
 {% endblock %}
 
 
@@ -23,5 +25,5 @@
     var innerDoc;
   </script>
   <script data-main="{{ STATIC_URL }}js/application/jsoneditor/main" src="{{ STATIC_URL }}js/libs/require.js">
-  </script>
+  </script>-
 {% endblock %}

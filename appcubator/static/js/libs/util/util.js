@@ -486,4 +486,6 @@ define(['jquery'], function() {
         });
     }
 
+    return util;
+
 });

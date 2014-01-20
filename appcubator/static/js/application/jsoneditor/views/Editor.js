@@ -8,7 +8,7 @@ define([
 ], function($, _, Backbone, ace) {
     'use strict';
 
-    var strVar = "";
+    var strVar="";
     strVar += "  <div class=\"panel panel-default\">";
     strVar += "    <div class=\"panel-heading\">";
     strVar += "      <h4 class=\"panel-title\">";
@@ -25,7 +25,7 @@ define([
     strVar += "          <button type=\"button\" id=\"css\" class=\"setSyntaxButton btn btn-default\">CSS<\/button>";
     strVar += "        <\/div>";
     strVar += "";
-    strVar += "        <button type=\"button\" id=\"css\" class=\"updateBrowserButton btn btn-default\">Save<\/button>";
+    strVar += "        <button type=\"button\" id=\"css\" class=\"updateBrowserButton btn btn-default\"> Update<\/button>";
     strVar += "";
     strVar += "        ";
     strVar += "      <\/h4>";
@@ -34,6 +34,7 @@ define([
     strVar += "      <div class=\"panel-body\" id='editor'><\/div>";
     strVar += "    <\/div>";
     strVar += "  <\/div>";
+
 
 
     var EditorView = Backbone.View.extend({
@@ -46,7 +47,6 @@ define([
             this.$el.html(_.template(this.template));
             var editor = ace.edit("editor");
             this.aceEditor = editor;
-            editor.setTheme("ace/theme/monokai");
         },
         initialize: function() {
             this.render();

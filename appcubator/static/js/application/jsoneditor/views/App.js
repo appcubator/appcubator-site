@@ -9,7 +9,6 @@ define([
     'bootstrap'
 ], function($, _, Backbone, EditorView, BrowserView) {
     'use strict';
-
     var AppView = Backbone.View.extend({
         template: [
             '<div class="navbar navbar-default navbar-static-top" role="navigation">',
@@ -29,7 +28,6 @@ define([
             '<li class="dropdown">',
             '<a href="#" class="dropdown-toggle" data-toggle="dropdown"> File <b class="caret"></b></a>',
             '<ul class="dropdown-menu">',
-            '<li><a class="importJSONButton"> Import JSON </a></li>',
             '<li><a class="saveJSONButton"> Save </a></li>',
             '</ul>',
             '</li>',
@@ -82,7 +80,29 @@ define([
             this.$el.html(_.template(this.template));
         },
         displayJSONImportModal: function() {
-            var modalTemplate = JST['app/scripts/templates/JSONLoadModal.ejs']({});
+            
+
+            var modalTemplate="";
+            modalTemplate += "<div class=\"modal fade\">";
+            modalTemplate += "  <div class=\"modal-dialog\">";
+            modalTemplate += "    <div class=\"modal-content\">";
+            modalTemplate += "      <div class=\"modal-header\">";
+            modalTemplate += "        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;<\/button>";
+            modalTemplate += "        <h4 class=\"modal-title lead\"> Import JSON<\/h4>";
+            modalTemplate += "      <\/div>";
+            modalTemplate += "      <div class=\"modal-body\">";
+            modalTemplate += "        <p> Paste <code> appcubator-app.json <\/code> here <\/p>";
+            modalTemplate += "        <textarea class=\"form-control loadJSONFromStringTextArea\" rows=\"10\"><\/textarea>";
+            modalTemplate += "      <\/div>";
+            modalTemplate += "      <div class=\"modal-footer\">";
+            modalTemplate += "        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close<\/button>";
+            modalTemplate += "        <button type=\"button\" class=\"btn btn-primary  loadJSONFromStringButton\">Import<\/button>";
+            modalTemplate += "      <\/div>";
+            modalTemplate += "    <\/div><!-- \/.modal-content -->";
+            modalTemplate += "  <\/div><!-- \/.modal-dialog -->";
+            modalTemplate += "<\/div><!-- \/.modal -->";
+
+            var modalTemplate = _.tempate(modalTemplate, {});
             $(modalTemplate).modal();
         },
         loadJSONFromString: function(event) {
@@ -100,7 +120,7 @@ define([
             $('.modal-backdrop').remove();
         },
         saveJSON: function() {
-            this.model.get('browserView').returnJSONObject();
+            this.model.saveJSON();
         }
 
     });

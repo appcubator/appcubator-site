@@ -87,7 +87,7 @@ define([
             return string.replace(/\\n/g, "\n").replace(/\\t/g, "\t").replace(/\\r/g, "\r").replace(/\\r/g, "\r").replace(/\\"/g, "\"");
         },
         returnJSONObject: function() {
-            console.log(this.jsonEditor.get());
+            return this.jsonEditor.get();
         }
 
     });
