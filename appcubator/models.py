@@ -682,6 +682,13 @@ class App(models.Model):
     def _rerelease(self):
         deploy.rerelease(self.deployment_id, {'MONGO_ADDR': os.environ['TEMP_MONGO']})
 
+    def _update_code(self, port):
+        # this is just for testing.
+        tmpdir = self.write_to_tmpdir()
+        deploy.update_code(tmpdir, self.deployment_id, {'url':'http://localhost:%d'%port})
+        shutil.rmtree(tmpdir)
+
+
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
         logger.info("Written to %s" % tmpdir)
@@ -689,6 +696,10 @@ class App(models.Model):
             if self.deployment_id is None: # TODO or (change in build deps)
                 dd = self.get_deploy_data()
                 self.deployment_id = deploy.provision(tmpdir, dd)
+
+                # HACK
+                self.custom_domain = self.deployment_id + '.' + settings.DEPLOYMENT_DOMAIN
+
                 self._rerelease()
                 self._rebuild(dd=dd, tmpdir=tmpdir)
                 self.save()

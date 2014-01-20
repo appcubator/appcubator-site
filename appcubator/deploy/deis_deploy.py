@@ -85,6 +85,7 @@ def update_code(appdir, deploy_id, deploy_data):
             "deploy_secret": "v1factory rocks!",
     """
     tar_path = _write_tar_from_app_dir(appdir)
+    print 'posting file: '+str(os.path.getsize(tar_path))
     try:
         with open(tar_path, "rb") as f:
             r = requests.post(deploy_data['url']+'/__update_code__', files={'code':f})
