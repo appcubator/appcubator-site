@@ -17,3 +17,5 @@ export EMAIL_HOST_PASSWORD="obscurepassword321"
 
 # codegen
 export CODEGEN_ADDR=http://127.0.0.1:3000
+
+export TEMP_MONGO=mongodb://ksikka:ilikepieON3@paulo.mongohq.com:10051/testing

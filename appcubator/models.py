@@ -22,10 +22,13 @@ from appcubator.default_data import DEFAULT_STATE_DIR, get_default_app_state, ge
 
 from django.conf import settings
 
+"""
 if settings.DEBUG:
     import deploy.local_deploy as deploy
 else:
     import deploy.deis_deploy as deploy
+"""
+import deploy.deis_deploy as deploy
 
 from appcubator import codegen
 
@@ -124,7 +127,7 @@ def clean_subdomain(subdomain, replace_periods=False):
 
 class TempDeployment(RandomPrimaryIdModel):
     # now the id is random
-    deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
+    deployment_id = models.CharField(max_length=100, blank=True, null=True, default=None)
     # cached deployment info
     subdomain = models.CharField(max_length=50, blank=True, unique=True)
 
@@ -305,7 +308,7 @@ class App(models.Model):
     name = models.CharField(max_length=100)
     owner = models.ForeignKey(User, related_name='apps')
 
-    deployment_id = models.BigIntegerField(blank=True, null=True, default=None)
+    deployment_id = models.CharField(max_length=100, blank=True, null=True, default=None)
     # cached deployment info
     subdomain = models.CharField(max_length=50, blank=True, unique=True)
     custom_domain = models.CharField(max_length=50, blank=True, null=True, unique=True, default=None) # if this is None, then the person is not using custom domain.
@@ -665,6 +668,20 @@ class App(models.Model):
         }
         return post_data
 
+    def _rebuild(self, tmpdir=None, dd=None):
+        if tmpdir is None:
+            tmpdir = self.write_to_tmpdir()
+        if dd is None:
+            dd = self.get_deploy_data()
+        out = deploy.rebuild(tmpdir, dd, self.deployment_id)
+        print "rc: " + str(out['rc'])
+        print "Out: " + out['out']
+        print "Err: " + out['err']
+        return out
+
+    def _rerelease(self):
+        deploy.rerelease(self.deployment_id, {'MONGO_ADDR': os.environ['TEMP_MONGO']})
+
     def deploy(self, retry_on_404=True):
         tmpdir = self.write_to_tmpdir()
         logger.info("Written to %s" % tmpdir)
@@ -672,11 +689,8 @@ class App(models.Model):
             if self.deployment_id is None: # TODO or (change in build deps)
                 dd = self.get_deploy_data()
                 self.deployment_id = deploy.provision(tmpdir, dd)
-                rerelease({'MONGO_ADDR': os.environ['TEMP_MONGO']})
-                out = rebuild(tmpdir, dd, self.deployment_id)
-                print "rc: " + out['rc']
-                print "Out: " + out['out']
-                print "Err: " + out['err']
+                self._rebuild(dd=dd, tmpdir=tmpdir)
+                self._rerelease()
             else:
                 deploy.update_code(tmpdir, self.deployment_id, self.get_deploy_data())
         except Exception:
@@ -702,7 +716,7 @@ class App(models.Model):
                 logger.error("Could not reach appcubator server.")
             else:
                 if r.status_code != 200:
-                    logger.error("Tried to delete %d, Deployment server returned bad response: %d %r" % (self.deployment_id, r.status_code, r.text))
+                    logger.error("Tried to delete %d, Deployment server returned bad response: %s %r" % (self.deployment_id, r.status_code, r.text))
         super(App, self).delete(*args, **kwargs)
 
     def is_editable_by_user(self, user):

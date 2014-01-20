@@ -4,8 +4,6 @@ from django.conf import settings
 import os
 import tarfile
 import random
-import socket
-import base64
 logger = logging.getLogger(__name__)
 
 
@@ -87,23 +85,15 @@ def update_code(appdir, deploy_id, deploy_data):
             "deploy_secret": "v1factory rocks!",
     """
     tar_path = _write_tar_from_app_dir(appdir)
-    f = open(tar_path, "rb")
     try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        host = deploy_data['hostname']
-        port = deploy_data.get('_port', 80)
-        s.connect((host, port))
-
-        tarbin = base64.b64encode(f.read())
-        s.sendall("POST /__update_code__ HTTP/1.1\n\n" + str(len(tarbin))+"\n\n")
-        s.sendall(tarbin)
-        s.recv(1)
-
-        s.close()
-
+        with open(tar_path, "rb") as f:
+            r = requests.post(deploy_data['url']+'/__update_code__', files={'code':f})
     finally:
-        f.close()
-        os.remove(os.path.join(appdir, 'payload.tar'))
+        os.remove(tar_path)
+
+    if r.status_code != 200:
+        raise Exception(str(r.status_code) + r.text)
+
 
 def destroy(deploy_id):
     dc = DeisClient()
