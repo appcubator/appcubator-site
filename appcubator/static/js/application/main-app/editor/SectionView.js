@@ -1,13 +1,11 @@
 define(function(require, exports, module) {
 
     'use strict';
+
     var WidgetView = require('editor/WidgetView');
-    var WidgetContainerView = require('editor/WidgetContainerView');
     var WidgetModel = require('models/WidgetModel');
-    var WidgetListView = require('editor/WidgetListView');
-    var WidgetFormView = require('editor/WidgetFormView');
-    var WidgetCustomView = require('editor/WidgetCustomView');
-    var CustomWidgetEditorModal = require('editor/CustomWidgetEditorModal');
+    var SectionEditorView = require('editor/SectionEditorView');
+
     require('backbone');
     require('util');
 
@@ -20,11 +18,10 @@ define(function(require, exports, module) {
             'mouseover'       : 'hovered',
             'mouseup'         : 'hovered',
             'mouseover .ycol' : 'hoveredColumn',
-            'mouseup .ycol'   : 'hoveredColumn',
-            'click .remove-section' : 'removeSection'
+            'mouseup .ycol'   : 'hoveredColumn'
         },
 
-        className: "section-proto",
+        className: "section-view",
 
         subviews: [],
 
@@ -32,7 +29,9 @@ define(function(require, exports, module) {
             _.bindAll(this);
 
             this.model = sectionModel;
+            
             this.listenTo(this.model, 'remove', this.close);
+            this.listenTo(this.model, 'change', this.renderContent);
 
             this.widgetsCollection = this.model.get('uielements');
             this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
@@ -42,16 +41,23 @@ define(function(require, exports, module) {
 
             this.colElements = {};
 
-            // this.listenTo(this.widgetsCollection, 'change', function() {
-            //     util.askBeforeLeave();
-            // });
-            // this.listenTo(this.widgetsCollection, 'add', function() {
-            //     util.askBeforeLeave();
-            // });
         },
 
         render: function() {
+
+            this.renderContent();
+            this.sectionEditorView = new SectionEditorView(this.model).render();
+            this.$el.append(this.sectionEditorView.el);
+
+            return this;
+        },
+
+        renderContent: function() {
+            
+            if(this.$innerEl) this.$innerEl.remove();
+
             var template = "";
+            
             switch(this.model.get('layout')) {
                 case "12":
                     template = [
@@ -109,20 +115,10 @@ define(function(require, exports, module) {
                     '</div>'].join('\n');
             }
 
-            this.el.innerHTML = _.template(template, this.model.toJSON());
-            this.$el.append('<div class="remove-section">×</div>');
-
+            this.$innerEl = $(_.template(template, this.model.toJSON()));
+            this.$el.append(this.$innerEl);
             this.layoutElements();
-            // this.widgetsContainer = document.getElementById('elements-container');
-            // this.widgetsContainer.innerHTML = '';
 
-            // this.widgetsCollection.each(function(widget) {
-            //     widget.setupPageContext(v1.currentApp.getCurrentPage());
-            //     var newWidgetView = this.placeUIElement(widget, false);
-            // }, this);
-
-
-            return this;
         },
 
         updated: function(colKey, $col) {
