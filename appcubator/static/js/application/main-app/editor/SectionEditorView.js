@@ -33,9 +33,12 @@ define(function(require, exports, module) {
         render: function() {
             var template = [
                     '<input type="text" class="class_name" value="<%= className %>">',
-                    '<div class="remove-section"></div>'].join('\n');
+                    '<div class="remove-section">×</div>'].join('\n');
 
-            this.el.innerHTML = _.template(template, this.model.toJSON());
+            var data = this.model.toJSON();
+            data.className = data.className || "";
+
+            this.el.innerHTML = _.template(template, data);
             return this;
         },
 

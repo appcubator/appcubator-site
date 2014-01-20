@@ -76,6 +76,7 @@ define(function(require, exports, module) {
                 case "3-3-3-3":
                     this.add({
                         "layout": "3-3-3-3",
+                        "className": "",
                         "uielements": [sampleHeader("header"), sampleImage(0), sampleImage(1), sampleImage(2), sampleImage(3)]
                     });
                     break;
@@ -83,6 +84,7 @@ define(function(require, exports, module) {
                 case "4-4-4":
                     this.add({
                         "layout": "4-4-4",
+                        "className": "",
                         "uielements": [sampleHeader("header"), sampleText(0), sampleText(1), sampleText(2)]
                     });
                     break;
@@ -90,6 +92,7 @@ define(function(require, exports, module) {
                 case "8-4":
                     this.add({
                         "layout": "8-4",
+                        "className": "",
                         "uielements": [sampleText(0), sampleImage(1)]
                     });
                     break;
@@ -97,6 +100,7 @@ define(function(require, exports, module) {
                 case "4-8":
                     this.add({
                         "layout": "4-8",
+                        "className": "",
                         "uielements": [sampleImage(0), sampleText(1)]
                     });
                     break;

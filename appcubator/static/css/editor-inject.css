@@ -282,6 +282,12 @@ body {
   font-size: 32px;
   font-weight: bold;
   display: none;
+  width: 150px;
+}
+
+.section-view .section-editor-view input {
+  width: 100px;
+  font-size: 14px;
 }
 
 .section-view:hover .section-editor-view {
