@@ -98,7 +98,6 @@ define(function(require, exports, module) {
         },
 
         toggleElement: function(e) {
-
             if (e.target.tagName == "INPUT") return;
             if (e.target.className.indexOf('ace_') === 0) return;
             console.log(e.target);
@@ -119,8 +118,8 @@ define(function(require, exports, module) {
             // this.el.appendChild(this.expandedView.render().el);
             // this.expandedView.setUpAce();
             // this.el.style.height = 'auto';
-
-            this.model.collection.trigger('selected', this.model);
+            console.log(this.model);
+            this.model.collection.trigger('selected', [this.model]);
         },
 
         shrinkElement: function() {

@@ -1,0 +1,51 @@
+<% var htmlEncode = function(s){ return s.replace(/&(?!\w+([;\s]|$))/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }; %> 
+<% if (currentJSON !== undefined) { %> 
+
+<% var prefix = currentDir; %>
+<div class="panel-group" id="<%=prefix%>Accordion">
+
+<% for (prop in currentJSON) { %>
+	
+	<div class="panel panel-default">
+
+		<div class="panel-heading" data-toggle="collapse" data-parent="#appAccordion" href="#collapse<%=prefix%>-<%=prop%>">
+		  <h4 class="panel-title">
+		    <%=prop%>  
+		  </h4>
+		</div>
+
+		<div id="collapse<%=prefix%>-<%=prop%>" class="panel-collapse collapse in">
+			<% var data = currentJSON[prop]; %>
+			<% if (data instanceof String) { %> 
+				<%= htmlEncode(data) %>
+			<% } %>
+			<% if (data instanceof Number) { %> 
+				<%= htmlEncode(data) %>
+			<% } %>
+			<% if (data instanceof Object) { %>
+				<table class='table'>
+					<tbody>	
+						<% for (subProp in data) { %>
+						<tr>
+							<td> <%=subProp%> </td>
+							<% var subData = data[subProp]; %>
+							<% if (subData instanceof Object) { %>
+								<% var key = JSON.parse(currentDir).push(prop, subProp).toString() %>
+								<td data-key='<%=key%>' data-expandview="true"> </td>								
+							<% } else { %>
+								<td data-key='<%=key%>' > <%= htmlEncode(subData) %> </td>								
+							<% } %>
+						</tr>
+						<% } %>
+					</tbody>
+				</table>
+			<% } %>
+		</div>
+
+	</div>
+
+<% } %>
+</div>
+
+<% } else { %>
+<% } %>

@@ -32,6 +32,7 @@ define(function(require, exports, module) {
             'click .menu-button.help'    : 'help',
             'click .menu-button.question': 'question',
             'click .url-bar'             : 'clickedUrl',
+            'click .refresh-page'        : 'refreshPage',
             'click #page-info'           : 'pageInfo',
             'click #close-page-info'     : 'closePageInfo',
             'click #design-mode-button'  : 'switchToDesignMode',
@@ -195,6 +196,7 @@ define(function(require, exports, module) {
 
         renderUrlBar: function() {
             this.$el.find('.url-bar').html(this.urlModel.getUrlString());
+            this.$el.find('.url-bar').append('<div class="refresh-page">r</div>');
         },
 
         help: function(e) {
@@ -245,6 +247,10 @@ define(function(require, exports, module) {
         clickedUrl: function() {
             var newView = new UrlView(this.urlModel, this.model);
             newView.onClose = this.renderUrlBar;
+        },
+
+        refreshPage: function() {
+            this.iframeProxy.reloadPage();
         },
 
         setupPageWrapper: function() {

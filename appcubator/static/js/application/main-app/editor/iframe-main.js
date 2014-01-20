@@ -249,6 +249,10 @@ require([
 
             updateScrollbar: function() {
                 $(document.body).perfectScrollbar("update");
+            },
+
+            reloadPage: function() {
+                location.reload();
             }
         };
 

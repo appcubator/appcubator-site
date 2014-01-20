@@ -111,14 +111,21 @@ define(function(require, exports, module) {
 
         constructWidgetCollection: function() {
             var widgetCollection = new WidgetCollection();
+            
             this.each(function(sectionModel) {
-                console.log(sectionModel);
-                console.log(sectionModel.get('uielements'));
-                widgetCollection.add(sectionModel.get('uielements').models);
+                var collection = sectionModel.get('uielements');
+                widgetCollection.add(collection.models);
+                collection.on('add', function(model) {
+                    widgetCollection.add(model);
+                });
             }, this);
 
             this.on('add', function(sectionModel) {
-                widgetCollection.add(sectionModel.get('uielements').models);
+                var collection = sectionModel.get('uielements');
+                widgetCollection.add(collection.models);
+                collection.on('add', function(model) {
+                    widgetCollection.add(model);
+                });
             });
 
             return widgetCollection;

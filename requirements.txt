@@ -1,7 +1,7 @@
 Django==1.4.3
 amqp==1.0.8
 anyjson==0.3.3
-argparse==1.2.1
+argparse
 billiard==2.7.3.21
 celery==3.0.15
 django-celery==3.0.11
@@ -34,7 +34,7 @@ cssutils==0.9.10
 django-threadedcomments==0.9.0
 django-countries
 
-mysql-python==1.2.4
+#mysql-python==1.2.4
 
 gunicorn==18.0
 eventlet==0.14.0
