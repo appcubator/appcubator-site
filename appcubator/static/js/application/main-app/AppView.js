@@ -536,6 +536,11 @@ define(function(require, exports, module) {
         setupMenuHeight: function() {
             var height = $(document).height();
             this.$leftMenu.height(height);
+            var self = this;
+            $( window ).resize(function() {
+                var height = $(document).height();
+                self.$leftMenu.height(height);
+            });
         }
 
     });
