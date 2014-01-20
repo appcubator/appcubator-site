@@ -64,6 +64,9 @@ define(function(require, exports, module) {
             
             this.changePage(EditorView, { pageId: this.pageId, appModel: this.model }, "", function() {});
 
+            this.$leftMenu = this.$el.find('.left-menu-panel-l1 ');
+            this.setupMenuHeight();
+
             $("html, body").animate({
                 scrollTop: 0
             });
@@ -528,6 +531,11 @@ define(function(require, exports, module) {
                     this.view.marqueeView.multiSelectorView.setContents(newContents);
                 }
             }
+        },
+
+        setupMenuHeight: function() {
+            var height = $(document).height();
+            this.$leftMenu.height(height);
         }
 
     });
