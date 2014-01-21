@@ -218,7 +218,7 @@ class TempDeployment(RandomPrimaryIdModel):
     def css(self, deploy=True, mobile=False):
         """Use uiestate, less, and django templates to generate a string of the CSS"""
         from django.template import Context, loader
-        t = loader.get_template('app-editor-less-gen.html')
+        t = loader.get_template('app-editor-css-gen.html')
 
         uie_state = self.uie_state
         if mobile:
@@ -227,7 +227,8 @@ class TempDeployment(RandomPrimaryIdModel):
         context = Context({'uie_state': uie_state,
                            'isMobile': mobile,
                            'deploy': deploy})
-        css_string = t.render(context)
+        less_string = t.render(context)
+        css_string = codegen.less(less_string)
         return css_string
 
     def get_deploy_data(self):
@@ -621,7 +622,7 @@ class App(models.Model):
     def css(self, deploy=True, mobile=False):
         """Use uiestate, less, and django templates to generate a string of the CSS"""
         from django.template import Context, loader
-        t = loader.get_template('app-editor-less-gen.html')
+        t = loader.get_template('app-editor-css-gen.html')
 
         uie_state = self.uie_state
         if mobile:
@@ -630,7 +631,8 @@ class App(models.Model):
         context = Context({'uie_state': uie_state,
                            'isMobile': mobile,
                            'deploy': deploy})
-        css_string = t.render(context)
+        less_string = t.render(context)
+        css_string = codegen.less(less_string)
         return css_string
 
     def uid(self):
