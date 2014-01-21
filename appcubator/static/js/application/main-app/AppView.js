@@ -358,7 +358,7 @@ define(function(require, exports, module) {
 
             $.ajax({
                 type: "POST",
-                url: '/app/' + this.appId + '/state/force/',
+                url: '/app/' + this.appId + '/state/',
                 data: JSON.stringify(appState),
                 statusCode: {
                     200: successHandler,
@@ -535,7 +535,11 @@ define(function(require, exports, module) {
 
         setupMenuHeight: function() {
             var height = $(document).height();
-            this.$leftMenu.height(height);
+            this.$leftMenu.each(function() {
+                console.log(this);
+                $(this).height(height);
+            });
+
             var self = this;
             $( window ).resize(function() {
                 var height = $(document).height();

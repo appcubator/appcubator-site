@@ -190,10 +190,10 @@ define(function(require, exports, module) {
             var leftDist = offset.left; // + offsetFrame.left;
             var topDist = offset.top + $(window).scrollTop();
 
-            node.style.width =  $element.outerWidth() + 'px';
-            node.style.height = $element.outerHeight() + 'px';
-            node.style.left = (leftDist) + 'px';
-            node.style.top = (topDist) + 'px';
+            // node.style.width =  $element.outerWidth() + 'px';
+            // node.style.height = $element.outerHeight() + 'px';
+            // node.style.left = (leftDist) + 'px';
+            // node.style.top = (topDist) + 'px';
 
             return node;
         },

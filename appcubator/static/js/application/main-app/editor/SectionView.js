@@ -61,7 +61,7 @@ define(function(require, exports, module) {
             switch(this.model.get('layout')) {
                 case "12":
                     template = [
-                    '<div class="<%= className %>">',
+                    '<div class="row <%= className %>">',
                         '<div class="container">',
                             '<div class="ycol" id="colheader"></div>',
                             '<div class="col-md-12 ycol" id="col0"></div>',
@@ -70,8 +70,8 @@ define(function(require, exports, module) {
                     break;
                 case "3-3-3-3":
                     template = [
-                    '<div class="container">',
-                        '<div class="row">',
+                    '<div class="row <%= className %>">',
+                        '<div class="container">',
                             '<div class="text-center ycol" id="colheader"></div>',
                             '<div class="col-md-3 ycol" id="col0"></div>',
                             '<div class="col-md-3 ycol" id="col1"></div>',
@@ -83,8 +83,8 @@ define(function(require, exports, module) {
 
                 case "4-4-4":
                     template = [
-                    '<div class="container">',
-                        '<div class="row">',
+                    '<div class="row <%= className %>">',
+                        '<div class="container">',
                             '<div class="text-center ycol" id="colheader"></div>',
                             '<div class="col-md-4 ycol" id="col0"></div>',
                             '<div class="col-md-4 ycol" id="col1"></div>',
@@ -95,8 +95,8 @@ define(function(require, exports, module) {
 
                 case "8-4":
                     template = [
-                    '<div class="container">',
-                        '<div class="row">',
+                    '<div class="row <%= className %>">',
+                        '<div class="container">',
                             '<div class="text-center ycol" id="colheader"></div>',
                             '<div class="col-md-8 ycol" id="col0"></div>',
                             '<div class="col-md-4 ycol" id="col1"></div>',
@@ -106,13 +106,17 @@ define(function(require, exports, module) {
 
                 case "4-8":
                     template = [
-                    '<div class="container">',
-                        '<div class="row">',
+                    '<div class="row <%= className %>">',
+                        '<div class="container">',
                             '<div class="text-center ycol" id="colheader"></div>',
                             '<div class="col-md-4 ycol" id="col0"></div>',
                             '<div class="col-md-8 ycol" id="col1"></div>',
                         '</div>',
                     '</div>'].join('\n');
+            }
+
+            if(!this.model.has('className')) {
+                this.model.set('className', '');
             }
 
             this.$innerEl = $(_.template(template, this.model.toJSON()));
