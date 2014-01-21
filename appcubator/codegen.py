@@ -60,6 +60,15 @@ def compileApp(app, css=''):
         print r.text
         raise Exception(r.text)
 
+def less(less_string):
+    r = requests.get(settings.CODEGEN_ADDR + '/less/', data={'less':less_string})
+    if r.status_code == 200:
+        return r.text
+    else:
+        print r.status_code
+        print r.text
+        raise Exception(r.text)
+
 def write_to_tmpdir(codeData):
     import tempfile
     import os, os.path

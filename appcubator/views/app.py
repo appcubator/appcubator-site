@@ -580,7 +580,8 @@ def less_sheet(request, app_id, isMobile=False):
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
         raise Http404
-    css_string = app.css(deploy=False, mobile=isMobile)
+    less_string = app.css(deploy=False, mobile=isMobile)
+    css_string = codegen.less(less_string)
     return HttpResponse(css_string, mimetype='text/css')
 
 @csrf_exempt
@@ -589,12 +590,13 @@ def mobile_less_sheet(request, app_id):
 
 @csrf_exempt
 def default_less_sheet(request):
-    t = loader.get_template('app-editor-less-gen.html')
+    t = loader.get_template('app-editor-css-gen.html')
     uie_state = simplejson.loads(get_default_uie_state())
     context = Context({'uie_state': uie_state,
                        'isMobile': False,
                        'deploy': False})
-    css_string = t.render(context)
+    less_string = t.render(context)
+    css_string = codegen.less(less_string)
     return HttpResponse(css_string, mimetype='text/css')
 
 @csrf_exempt
@@ -611,7 +613,8 @@ def css_sheet(request, app_id, isMobile=False):
                        'isMobile': False,
                        'deploy': False})
     t = loader.get_template('app-editor-css-gen.html')
-    css_string = t.render(context)
+    less_string = t.render(context)
+    css_string = codegen.less(less_string)
 
     return HttpResponse(css_string, mimetype='text/css')
 
@@ -628,7 +631,8 @@ def theme_css_sheet(request, theme_id):
                        'isMobile': False,
                        'deploy': False})
     t = loader.get_template('app-editor-css-gen.html')
-    css_string = t.render(context)
+    less_string = t.render(context)
+    css_string = codegen.less(less_string)
 
     return HttpResponse(css_string, mimetype='text/css')
 
