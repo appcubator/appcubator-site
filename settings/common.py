@@ -285,8 +285,10 @@ STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
 
 # domain from which apps are available
 DEPLOYMENT_DOMAIN = os.environ["DEPLOYMENT_DOMAIN"]
-DEPLOYMENT_HOSTNAME = os.environ["DEIS_URL"]
+DEIS_CONTROLLER = os.environ["DEIS_CONTROLLER"]
 DEIS_FORMATION = os.environ["DEIS_FORMATION"]
+DEIS_USERNAME = os.environ["DEIS_USERNAME"]
+DEIS_PASSWORD = os.environ["DEIS_PASSWORD"]
 
 # codegen service
 CODEGEN_ADDR = os.environ["CODEGEN_ADDR"] # ie, http://127.0.0.1:3000

@@ -5,9 +5,11 @@ export STRIPE_PUBLIC_KEY="pk_test_qbJZ9hMePgdpdZUrkKTskzgz"
 export STRIPE_SECRET_KEY="sk_test_GhzvfBePNCkvC6j23UtZkmTi"
 
 # deployment service
-export DEIS_URL='deis.appcbtr.com'
+export DEIS_CONTROLLER='deis.appcbtr.com'
 export DEPLOYMENT_DOMAIN='appcbtr.com'
 export DEIS_FORMATION='homer'
+export DEIS_USERNAME='dev'
+export DEIS_PASSWORD='123123123'
 
 # global email settings
 export EMAIL_HOST='smtp.sendgrid.net'

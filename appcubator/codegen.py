@@ -1,6 +1,8 @@
 import requests
 from django.conf import settings
 import json
+import tempfile
+import os, os.path
 
 
 # backwards compatibility
@@ -70,8 +72,6 @@ def less(less_string):
         raise Exception(r.text)
 
 def write_to_tmpdir(codeData):
-    import tempfile
-    import os, os.path
     tmpdir = tempfile.mkdtemp(prefix='tmp-appcodegen-')
     files_to_write = [] # each entry will be a tuple of rel. path - content. content is a string (file) or dict (directory).
     files_to_write.extend(codeData.items())
@@ -83,14 +83,6 @@ def write_to_tmpdir(codeData):
         else:
             os.makedirs(os.path.join(tmpdir, relpath))
             files_to_write.extend([(os.path.join(relpath, filename), subcontent) for filename, subcontent in content.iteritems() ])
-
-    """
-    # TEMPORARY TIME-SAVING HACK: EXTRACT TAR OF REQUIRED NODE_MODULES INTO TMPDIR
-    import subprocess, shlex
-    NM_TAR_PATH = os.path.join(os.path.dirname(__file__), 'node_modules.tar.gz')
-    p = subprocess.Popen(shlex.split('tar zxf %s -C %s' % (NM_TAR_PATH, tmpdir)))
-    p.wait()
-    """
 
     return tmpdir
 

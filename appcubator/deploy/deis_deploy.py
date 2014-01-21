@@ -9,6 +9,13 @@ logger = logging.getLogger(__name__)
 
 from deis import DeisClient
 
+def login_if_required(dc):
+    if not dc._settings['controller']:
+        dc.auth_login({'<controller>':settings.DEIS_CONTROLLER,
+                       '--username':settings.DEIS_USERNAME,
+                       '--password':settings.DEIS_PASSWORD})
+
+
 
 class DeploymentError(Exception):
     """Should be raised whenever the deployment server does not return 200"""
@@ -49,6 +56,7 @@ def provision(appdir, deploy_data):
     Returns deployment_id
     """
     dc = DeisClient()
+    login_if_required(dc)
     deployment_id = dc.apps_create_without_git({'--formation': settings.DEIS_FORMATION })
                   # TODO set initial config.
                   #'<var>=<value>': [ key+u'='+unicode(value) for key, value in config_values.iteritems() ],
@@ -59,6 +67,7 @@ def rebuild(appdir, deploy_data, deployment_id, config_values=None):
     Creates a new Build and Release
     """
     dc = DeisClient()
+    login_if_required(dc)
     result = dc.apps_push({'<codepath>': appdir,
                   '--buildpack_url': 'https://github.com/appcubator/heroku-buildpack-nodejs',
                   '--app': deployment_id})
@@ -70,6 +79,7 @@ def rerelease(deployment_id, config_values):
     Key : None means unset Key
     """
     dc = DeisClient()
+    login_if_required(dc)
     result = dc.config_set({'--app': deployment_id,
                             '<var>=<value>': [ key+u'='+unicode(value) for key, value in config_values.iteritems() ] })
     return result
@@ -98,6 +108,7 @@ def update_code(appdir, deploy_id, deploy_data):
 
 def destroy(deploy_id):
     dc = DeisClient()
+    login_if_required(dc)
     dc.apps_destroy({'--app': deploy_id, '--confirm': deploy_id})
 
 
