@@ -1,5 +1,6 @@
 body {
-  overflow-y: scroll;
+  overflow: hidden;
+  position: relative;
 }
 
 .guide-line-horizontal {
@@ -57,16 +58,32 @@ body {
 }
 
 .widget-wrapper {
-  display: inline-block;
+/*  display: inline-block;
+*/  
   z-index: 1001;
-  position: absolute;
+/*  position: absolute;
   overflow: visible;
   background-color: rgba(124, 192, 213, 0.0);
-  overflow: hidden;
+  overflow: hidden;*/
   border: 1px solid transparent;
 
  /* animation: blurpIn 0.2s linear;
   -webkit-animation: blurpIn 0.2s linear;*/
+
+  cursor: move;
+  border: 1px solid transparent;
+}
+
+.widget-wrapper.selected {
+  border-color: rgba(124, 192, 213, 0.8);
+}
+
+.widget-wrapper:hover {
+  background-color: rgba(124, 192, 213, 0.20);
+}
+
+.widget-wrapper.selected:hover {
+  background-color: transparent;
 }
 
 #footer {
@@ -135,10 +152,11 @@ body {
   z-index: 1002;
 }
 
-#hover-div,#list-hover-div {
+#hover-div,
+#list-hover-div {
   display: inline-block;
   border-radius: 2px;
-  border: 1px solid #d3742e;
+  background-color: rgba(124, 192, 213, 0.20);
   position: absolute;
   cursor: move;
 }
@@ -215,4 +233,73 @@ body {
 #edit-footer-btn {
   top: 23px;
   right: 23px;
+}
+
+.container.full-container {
+  display: block;
+  width: 100%;
+  background-color: #eee;
+  border: 1px solid #dedede;
+  border-width: 1px 0;
+
+  min-height: 90px;
+  font-size: 24px;
+  text-align: center;
+  margin: 0;
+  margin-top: 60px;
+
+  color: #aaa;
+  max-width: 100%;
+  cursor: pointer;
+}
+
+.container.full-container span {
+  line-height: 90px;
+}
+
+.container.full-container:hover {
+  color: #666;
+}
+
+.container.full-container .options {
+  font-size: 18px;
+  text-align: center;
+}
+
+.container.full-container .options li {
+
+}
+
+.section-view {
+  position: relative;
+  min-height: 90px;
+}
+
+.section-view .section-editor-view {
+  position: absolute;
+  top: 60px;
+  right: 60px;
+  font-size: 32px;
+  font-weight: bold;
+  display: none;
+  width: 150px;
+}
+
+.section-view .section-editor-view input {
+  width: 100px;
+  font-size: 14px;
+}
+
+.section-view:hover .section-editor-view {
+  display: inline-block;
+}
+
+.ycol {
+  border: 1px solid transparent;
+  min-height: 90px !important;
+  height: 100%;
+}
+
+.ycol.fancy-borders {
+  border: 1px dashed #333;
 }

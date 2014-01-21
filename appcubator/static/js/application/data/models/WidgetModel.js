@@ -7,11 +7,10 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
             editMode: false,
 
             initialize: function(bone, isNew) {
-                this.set('type', bone.type || '');
+
                 this.set('layout', new LayoutModel(bone.layout||{}));
                 this.set('data', new DataModel(bone.data || {}, isNew));
                 this.set('context', new Backbone.Collection(bone.context || []));
-                this.set('style', new Backbone.Model(bone.style||{}));
 
                 this.bind('editModeOn', function() {
                     this.editMode = true;
@@ -19,6 +18,7 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                 this.bind('editModeOff', function() {
                     this.editMode = false;
                 }, this);
+
             },
 
             remove: function() {
@@ -154,7 +154,7 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
             },
 
             getContent: function() {
-                return this.get('data').get('content');
+                return this.get('content');
             },
 
             getForm: function() {
@@ -210,7 +210,8 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
             },
 
             isLoginForm: function() {
-                return (this.isForm() && this.get('data').get('container_info').get('action') == "login") || (this.get('type') == "thirdpartylogin");
+                return false;
+                //return (this.isForm() && this.get('data').get('container_info').get('action') == "login") || (this.get('type') == "thirdpartylogin");
             },
 
             isList: function() {
@@ -243,7 +244,6 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
 
                 json.data = this.get('data').serialize();
                 json.layout = this.get('layout').serialize();
-                json.style = this.get('style').serialize();
 
                 if (json.context) delete json.context;
                 return json;

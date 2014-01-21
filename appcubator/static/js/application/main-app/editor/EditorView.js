@@ -32,6 +32,7 @@ define(function(require, exports, module) {
             'click .menu-button.help'    : 'help',
             'click .menu-button.question': 'question',
             'click .url-bar'             : 'clickedUrl',
+            'click .refresh-page'        : 'refreshPage',
             'click #page-info'           : 'pageInfo',
             'click #close-page-info'     : 'closePageInfo',
             'click #design-mode-button'  : 'switchToDesignMode',
@@ -59,11 +60,11 @@ define(function(require, exports, module) {
 
 
             this.templateModel = this.appModel.get('templates').getTemplateWithName(this.pageName);
-            this.widgetsCollection = this.templateModel.getUIElements();
+            this.sectionsCollection = this.templateModel.getSections();
 
-            this.galleryEditor = new EditorGalleryView(this.widgetsCollection);
-            this.widgetsManager = {};
-            this.guides = new GuideView(this.widgetsCollection);
+            this.galleryEditor = new EditorGalleryView(this.sectionsCollection);
+            this.sectionsManager = {};
+            //this.guides = new GuideView(this.sectionsCollection);
             this.cssEditorView = new CSSEditorView();
             this.pageView = new PageView(this.model, pageId);
 
@@ -77,7 +78,7 @@ define(function(require, exports, module) {
             // keyDispatcher.bindComb('meta+shift+z', this.redoController.redo);
             // keyDispatcher.bindComb('ctrl+shift+z', this.redoController.redo);
 
-            g_guides = this.guides;
+            //g_guides = this.guides;
 
             this.navbar = new NavbarView(this.templateModel.get('navbar'));
             this.footer = new FooterView(this.templateModel.get('footer'));
@@ -87,8 +88,8 @@ define(function(require, exports, module) {
 
             this.subviews = [
                 this.galleryEditor,
-                this.widgetsManager,
-                this.guides,
+                this.sectionsManager,
+                //this.guides,
                 this.navbar,
                 this.footer
             ];
@@ -155,18 +156,18 @@ define(function(require, exports, module) {
             keyDispatcher.addEnvironment(innerDoc);
 
             this.iframeProxy = proxy;
-            this.marqueeView = proxy.setupMarqueeView(this.widgetsCollection);
+            //this.marqueeView = proxy.setupMarqueeView(this.sectionsCollection.getAllWidgets());
 
-            this.widgetsManager = proxy.setupWidgetsManager(this.widgetsCollection);
+            this.sectionsManager = proxy.setupSectionsManager(this.sectionsCollection);
 
             self.iframedoc = innerDoc;
             //self.marqueeView.render();
-            self.widgetsManager.render();
+            self.sectionsManager.render();
 
             self.navbar.setElement(innerDoc.getElementById('navbar')).render();
             self.footer.setElement(innerDoc.getElementById('footer')).render();
 
-            self.guides.setElement(innerDoc.getElementById('elements-container')).render();
+            //self.guides.setElement(innerDoc.getElementById('elements-container')).render();
             //$(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
 
             self.startUIStateUpdater(proxy);
@@ -182,7 +183,10 @@ define(function(require, exports, module) {
                 this.$el.find('.options-area').append(templatePicker.render().el);
             }
             else { */
-                this.$el.find('.page-wrapper').addClass('show');
+            
+            this.$el.find('.page-wrapper').addClass('show');
+            this.iframeProxy.updateScrollbar();
+
             /* } */
         },
 
@@ -192,6 +196,7 @@ define(function(require, exports, module) {
 
         renderUrlBar: function() {
             this.$el.find('.url-bar').html(this.urlModel.getUrlString());
+            this.$el.find('.url-bar').append('<div class="refresh-page">r</div>');
         },
 
         help: function(e) {
@@ -244,6 +249,10 @@ define(function(require, exports, module) {
             newView.onClose = this.renderUrlBar;
         },
 
+        refreshPage: function() {
+            this.iframeProxy.reloadPage();
+        },
+
         setupPageWrapper: function() {
             var height = window.innerHeight - 90;
             util.get('page-wrapper').style.height = height + 'px';
@@ -251,27 +260,27 @@ define(function(require, exports, module) {
         },
 
         setupPageHeightBindings: function() {
-            this.listenTo(this.widgetsCollection, 'add', function(uielem) {
-                this.setupPageHeight();
-                this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
-            }, this);
+            // this.listenTo(this.widgetsCollection, 'add', function(uielem) {
+            //     this.setupPageHeight();
+            //     this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
+            // }, this);
 
-            this.widgetsCollection.each(function(uielem) {
-                this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
-            }, this);
+            // this.widgetsCollection.each(function(uielem) {
+            //     this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
+            // }, this);
         },
 
         setupPageHeight: function() {
-            var $container = $(this.iframedoc.getElementById('elements-container'));
-            var oldHeight = this.currentHeight;
+            // var $container = $(this.iframedoc.getElementById('elements-container'));
+            // var oldHeight = this.currentHeight;
 
-            this.currentHeight = (this.templateModel.getHeight() + 12) * 15;
-            if (this.currentHeight < 800) this.currentHeight = 800;
-            $container.css('height', this.currentHeight);
+            // this.currentHeight = (this.templateModel.getHeight() + 12) * 15;
+            // if (this.currentHeight < 800) this.currentHeight = 800;
+            // $container.css('height', this.currentHeight);
 
-            if (this.currentHeight > oldHeight) {
-                util.scrollToBottom($('#page'));
-            }
+            // if (this.currentHeight > oldHeight) {
+            //     util.scrollToBottom($('#page'));
+            // }
         },
 
         scrollTo: function(widget) {

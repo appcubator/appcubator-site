@@ -6,21 +6,21 @@ define(function(require, exports, module) {
     require('util');
 
     var WidgetContentEditorView = require('editor/WidgetContentEditorView');
-    var WidgetLayoutEditorView  = require('editor/WidgetLayoutEditorView');
-    var ImageSliderEditorView   = require('editor/ImageSliderEditorView');
-    var WidgetClassPickerView   = require('editor/WidgetClassPickerView');
-    var SearchEditorView        = require('editor/SearchEditorView');
-    var FacebookShareEditor     = require('editor/FacebookShareEditor');
-    var VideoEmbedEditor        = require('editor/VideoEmbedEditor');
-    var RowGalleryView          = require('editor/list-editor/RowGalleryView');
-    var FormEditorView          = require('editor/form-editor/FormEditorView');
-    var LoginFormEditorView     = require('editor/form-editor/LoginFormEditorView');
-    var QueryEditorView         = require('editor/QueryEditorView');
+    var WidgetLayoutEditorView = require('editor/WidgetLayoutEditorView');
+    var ImageSliderEditorView = require('editor/ImageSliderEditorView');
+    var WidgetClassPickerView = require('editor/WidgetClassPickerView');
+    var SearchEditorView = require('editor/SearchEditorView');
+    var FacebookShareEditor = require('editor/FacebookShareEditor');
+    var VideoEmbedEditor = require('editor/VideoEmbedEditor');
+    var RowGalleryView = require('editor/list-editor/RowGalleryView');
+    var FormEditorView = require('editor/form-editor/FormEditorView');
+    var LoginFormEditorView = require('editor/form-editor/LoginFormEditorView');
+    var QueryEditorView = require('editor/QueryEditorView');
     var CustomWidgetEditorModal = require('editor/CustomWidgetEditorModal');
     var GenericModelFieldEditor = require('mixins/GenericModelFieldEditor');
 
     var WidgetEditorView = Backbone.UIView.extend({
-        
+
         className: 'widget-editor animated',
         id: 'widget-editor',
         tagName: 'div',
@@ -83,13 +83,13 @@ define(function(require, exports, module) {
         setupScrollEvents: function() {
             var self = this;
             var timer;
-            $(innerDoc).bind('scroll',function () {
+            $(innerDoc).bind('scroll', function() {
                 clearTimeout(timer);
-                timer = setTimeout( refresh , 150 );
+                timer = setTimeout(refresh, 150);
                 self.hide();
             });
 
-            var refresh = function () {
+            var refresh = function() {
                 // do stuff
                 self.show();
             };
@@ -97,20 +97,24 @@ define(function(require, exports, module) {
         },
 
         display: function() {
-            if(!this.model) return;
-            
+            if (!this.model) return;
+
             this.filleContent();
             this.show();
         },
 
         show: function() {
+            if (!this.model) return;
+
             var location = this.getLocation();
             this.location = location;
             this.el.className += ' ' + location;
 
             var iframe = document.getElementById('page');
             var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-            var element = innerDoc.getElementById('widget-wrapper-'+ this.model.cid);
+            var element = innerDoc.getElementById('widget-wrapper-' + this.model.cid);
+
+            if (!element) return;
 
             var offsetFrame = util.getWindowRelativeOffset(window.document, iframe);
             var offset = util.getWindowRelativeOffset(window.document, element);
@@ -118,7 +122,7 @@ define(function(require, exports, module) {
             var leftDist = offset.left + offsetFrame.left;
             var topDist = offset.top + offsetFrame.top;
 
-            switch(this.location) {
+            switch (this.location) {
                 case "right":
                     this.$el.append('<div class="left-arrow"></div>');
                     leftDist += element.getBoundingClientRect().width;
@@ -152,121 +156,138 @@ define(function(require, exports, module) {
 
         filleContent: function() {
             var action = "";
-            if (this.model.get('data').has('container_info')) {
-                action = this.model.get('data').get('container_info').get('action');
+            var type = this.model.get('type');
 
-                if (action == "login" || action == "thirdpartylogin") {
-                    this.widgetClassPickerView = new WidgetClassPickerView(this.model);
-                    this.layoutEditor = new WidgetLayoutEditorView(this.model);
-                    this.subviews.push(this.layoutEditor);
-                    this.subviews.push(this.widgetClassPickerView);
-
-                    this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
-
-                    this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
-                    this.el.appendChild(this.renderButtonWithText('edit-login-form-btn', 'Edit Login'));
-                    this.el.appendChild(this.layoutEditor.el);
-                }
-
-                if (action == "authentication" || action == "signup") {
-                    this.widgetClassPickerView = new WidgetClassPickerView(this.model);
-                    this.layoutEditor = new WidgetLayoutEditorView(this.model);
-                    this.subviews.push(this.layoutEditor);
-                    this.subviews.push(this.widgetClassPickerView);
-
-                    this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
-
-                    this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
-                    this.el.appendChild(this.renderButtonWithText('form-editor-btn', 'Edit Form'));
-                    this.el.appendChild(this.layoutEditor.el);
-                }
-
-                if (action == "imageslider") {
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-slides-button', 'Edit Slides'));
-                }
-
-                if (action == "facebookshare") {
-                    this.layoutEditor = new WidgetLayoutEditorView(this.model);
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('link-to-page-button', 'Link to A Facebook Page'));
-                    this.el.appendChild(this.layoutEditor.el);
-                }
-
-                if (action == "videoembed") {
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('video-link-button', 'Change Video Content'));
-                }
-
-                if (action == "table") {
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('query-editor-btn', 'Edit Query'));
-                }
-
-                if (action == "show" || action == "loop") {
-                    this.widgetClassPickerView = new WidgetClassPickerView(this.model);
-                    this.subviews.push(this.widgetClassPickerView);
-
-                    this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
-
-                    this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
-                    this.el.appendChild(this.renderButtonWithText('query-editor-btn', 'Edit Query'));
-                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
-                }
-
-                if (action == "searchlist") {
-                    this.widgetClassPickerView = new WidgetClassPickerView(this.model);
-                    this.subviews.push(this.widgetClassPickerView);
-                    this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
-                    this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
-                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
-                }
-
-                if (action == "searchbox") {
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('search-editor-btn', 'Edit Search Options'));
-                }
-
-                if (action == "buy") {
-                    this.layoutEditor = new WidgetLayoutEditorView(this.model);
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-itemname-btn', 'Edit Item Name'));
-                    this.el.appendChild(this.layoutEditor.el);
-                }
-
-                if (this.model.hasForm() && action != "login" && action != "signup") {
-                    this.widgetClassPickerView = new WidgetClassPickerView(this.model);
-                    this.layoutEditor = new WidgetLayoutEditorView(this.model);
-
-                    this.subviews.push(this.widgetClassPickerView);
-                    this.subviews.push(this.layoutEditor);
-
-                    this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
-
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
-                    this.el.appendChild(this.layoutEditor.el);
-                    this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
-                }
-            } else {
-
-                if (this.model.isCustomWidget()) {
-                    this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-custom-widget-btn', 'Edit Custom Widget'));
-                } else {
-                    this.widgetClassPickerView = new WidgetClassPickerView(this.model);
-                    this.layoutEditor = new WidgetLayoutEditorView(this.model);
-                    this.contentEditor = new WidgetContentEditorView(this.model, this);
-
-                    this.subviews.push(this.widgetClassPickerView);
-                    this.subviews.push(this.layoutEditor);
-                    this.subviews.push(this.contentEditor);
-
-                    this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
-
-                    this.el.appendChild(this.widgetClassPickerView.el);
-                    this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
-                    this.el.appendChild(this.layoutEditor.el);
-                    this.el.appendChild(this.contentEditor.el);
-                }
+            if (type == "imageslider") {
+                this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-slides-button', 'Edit Slides'));
+                return;
             }
+
+            if (type == "fbshare") {
+                this.layoutEditor = new WidgetLayoutEditorView(this.model);
+                this.el.appendChild(this.renderButtonWithDeleteButtonandText('link-to-page-button', 'Link to A Facebook Page'));
+                this.el.appendChild(this.layoutEditor.el);
+                return;
+            }
+
+            if (type == "videoembed") {
+                this.el.appendChild(this.renderButtonWithDeleteButtonandText('video-link-button', 'Change Video Content'));
+                return;
+            }
+
+            if (type == "customwidget") {
+                this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-custom-widget-btn', 'Edit Custom Widget'));
+                return;
+            }
+
+            this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+            this.layoutEditor = new WidgetLayoutEditorView(this.model);
+            this.contentEditor = new WidgetContentEditorView(this.model, this);
+
+            this.subviews.push(this.widgetClassPickerView);
+            this.subviews.push(this.layoutEditor);
+            this.subviews.push(this.contentEditor);
+
+            this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+
+            this.el.appendChild(this.widgetClassPickerView.el);
+            this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
+            this.el.appendChild(this.layoutEditor.el);
+            this.el.appendChild(this.contentEditor.el);
+
+
+            // if (this.model.get('data').has('container_info')) {
+            //     action = this.model.get('data').get('container_info').get('action');
+
+            //     if (action == "login" || action == "thirdpartylogin") {
+            //         this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+            //         this.layoutEditor = new WidgetLayoutEditorView(this.model);
+            //         this.subviews.push(this.layoutEditor);
+            //         this.subviews.push(this.widgetClassPickerView);
+
+            //         this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+
+            //         this.el.appendChild(this.widgetClassPickerView.el);
+            //         this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
+            //         this.el.appendChild(this.renderButtonWithText('edit-login-form-btn', 'Edit Login'));
+            //         this.el.appendChild(this.layoutEditor.el);
+            //     }
+
+            //     if (action == "authentication" || action == "signup") {
+            //         this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+            //         this.layoutEditor = new WidgetLayoutEditorView(this.model);
+            //         this.subviews.push(this.layoutEditor);
+            //         this.subviews.push(this.widgetClassPickerView);
+
+            //         this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+
+            //         this.el.appendChild(this.widgetClassPickerView.el);
+            //         this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
+            //         this.el.appendChild(this.renderButtonWithText('form-editor-btn', 'Edit Form'));
+            //         this.el.appendChild(this.layoutEditor.el);
+            //     }
+
+            //     if (action == "imageslider") {}
+
+            //     if (action == "facebookshare") {}
+
+            //     if (action == "videoembed") {}
+
+            //     if (action == "table") {
+            //         this.el.appendChild(this.renderButtonWithDeleteButtonandText('query-editor-btn', 'Edit Query'));
+            //     }
+
+            //     if (action == "show" || action == "loop") {
+            //         this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+            //         this.subviews.push(this.widgetClassPickerView);
+
+            //         this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+
+            //         this.el.appendChild(this.widgetClassPickerView.el);
+            //         this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
+            //         this.el.appendChild(this.renderButtonWithText('query-editor-btn', 'Edit Query'));
+            //         this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
+            //     }
+
+            //     if (action == "searchlist") {
+            //         this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+            //         this.subviews.push(this.widgetClassPickerView);
+            //         this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+            //         this.el.appendChild(this.widgetClassPickerView.el);
+            //         this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-row-btn', 'Edit Row'));
+            //         this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
+            //     }
+
+            //     if (action == "searchbox") {
+            //         this.el.appendChild(this.renderButtonWithDeleteButtonandText('search-editor-btn', 'Edit Search Options'));
+            //     }
+
+            //     if (action == "buy") {
+            //         this.layoutEditor = new WidgetLayoutEditorView(this.model);
+            //         this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-itemname-btn', 'Edit Item Name'));
+            //         this.el.appendChild(this.layoutEditor.el);
+            //     }
+
+            //     if (this.model.hasForm() && action != "login" && action != "signup") {
+            //         this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+            //         this.layoutEditor = new WidgetLayoutEditorView(this.model);
+
+            //         this.subviews.push(this.widgetClassPickerView);
+            //         this.subviews.push(this.layoutEditor);
+
+            //         this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+
+            //         this.el.appendChild(this.renderButtonWithDeleteButtonandText('form-editor-btn', 'Edit Form'));
+            //         this.el.appendChild(this.layoutEditor.el);
+            //         this.el.appendChild(this.widgetClassPickerView.el);
+            //         this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
+            //     }
+            // } else {
+
+            //     if (this.model.isCustomWidget()) {} else {
+
+            //     }
+            // }
         },
 
         renderButtonWithText: function(className, buttonText) {
@@ -431,7 +452,7 @@ define(function(require, exports, module) {
         },
 
         removeTempContent: function() {
-            if(this.tempContent) this.el.removeChild(this.tempContent);
+            if (this.tempContent) this.el.removeChild(this.tempContent);
             this.showSubviews();
         },
 

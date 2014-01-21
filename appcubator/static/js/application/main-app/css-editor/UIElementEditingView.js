@@ -3,23 +3,20 @@ define(function(require, exports, module) {
 
     require('mixins/BackboneModal');
 
-
     var UIElementEditingView = Backbone.View.extend({
         
         tagName: 'div',
         className: 'element-view',
-        width: 660,
-        padding: 0,
 
         events: {
             'click .delete-elem': 'deleteElement'
         },
 
-        initialize: function(uieModel) {
+        initialize: function(options) {
             _.bindAll(this);
 
-            this.model = uieModel;
-
+            this.model = options.model;
+            console.log(this.model);
             this.model.bind('change:style', this.renderStyleTags);
             this.model.bind('change:hoverStyle', this.renderStyleTags);
             this.model.bind('change:activeStyle', this.renderStyleTags);
@@ -36,26 +33,41 @@ define(function(require, exports, module) {
                 info: this.model.attributes,
                 cid: this.model.cid
             });
+
             console.log(form);
             this.el.innerHTML = form;
             return this;
         },
 
         setupAce: function() {
-            this.styleEditor = ace.edit("style-" + this.model.cid);
-            this.styleEditor.getSession().setMode("ace/mode/css");
-            this.styleEditor.setValue(this.model.get('style'), -1);
-            this.styleEditor.getSession().on('change', this.styleChanged);
+            console.log(this.el);
+            console.log($("#style-" + this.model.cid));
+            var self = this;
 
-            this.hoverStyleEditor = ace.edit("hover-style-" + this.model.cid);
-            this.hoverStyleEditor.getSession().setMode("ace/mode/css");
-            this.hoverStyleEditor.setValue(this.model.get('hoverStyle'), -1);
-            this.hoverStyleEditor.getSession().on('change', this.hoverStyleChanged);
+            console.trace();
+            setTimeout(function() {
 
-            this.activeStyleEditor = ace.edit("active-style-" + this.model.cid);
-            this.activeStyleEditor.getSession().setMode("ace/mode/css");
-            this.activeStyleEditor.setValue(this.model.get('activeStyle'), -1);
-            this.activeStyleEditor.getSession().on('change', this.activeStyleChanged);
+                var cid = self.model.cid;
+                console.log(cid);
+                console.log(self.model.get('style'));
+                console.log(self.model);
+
+                self.styleEditor = ace.edit("style-" + cid);
+                self.styleEditor.getSession().setMode("ace/mode/css");
+                self.styleEditor.setValue(self.model.get('style'), -1);
+                self.styleEditor.getSession().on('change', self.styleChanged);
+
+                self.hoverStyleEditor = ace.edit("hover-style-" + cid);
+                self.hoverStyleEditor.getSession().setMode("ace/mode/css");
+                self.hoverStyleEditor.setValue(self.model.get('hoverStyle'), -1);
+                self.hoverStyleEditor.getSession().on('change', self.hoverStyleChanged);
+
+                self.activeStyleEditor = ace.edit("active-style-" + cid);
+                self.activeStyleEditor.getSession().setMode("ace/mode/css");
+                self.activeStyleEditor.setValue(self.model.get('activeStyle'), -1);
+                self.activeStyleEditor.getSession().on('change', self.activeStyleChanged);
+
+            });
 
         },
 

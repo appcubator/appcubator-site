@@ -18,6 +18,7 @@ define([
             browserView: undefined,
             currentValueElement: undefined,
         },
+        
         initialize: function (currentJSON){
             this.currentJSON = currentJSON;
 
@@ -28,6 +29,7 @@ define([
               url: "/app/" + appId + "/state/",
               async: false
             }).responseText;
+            
             this.set('currentJSON', JSON.parse(jsonString));
 
             this.on('change:currentJSON', function (event){

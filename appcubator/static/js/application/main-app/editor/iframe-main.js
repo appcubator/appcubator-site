@@ -3,6 +3,7 @@ require.config({
         "jquery": "../../../libs/jquery/jquery",
         "jquery-ui": "../../../libs/jquery-ui/jquery-ui",
         "jquery.hotkeys": "../../../libs/jquery/jquery.hotkeys",
+        "jquery.scrollbar": "../../../libs/jquery/jquery.scrollbar",
         "jquery.freshereditor": "../../../libs/jquery/jquery.freshereditor",
         "shortcut": "../../../libs/shortcut",
         "underscore": "../../../libs/underscore-amd/underscore",
@@ -33,6 +34,10 @@ require.config({
             deps: ['jquery']
         },
         "jquery.hotkeys": {
+            exports: "$",
+            deps: ['jquery']
+        },
+        "jquery.scrollbar": {
             exports: "$",
             deps: ['jquery']
         },
@@ -94,7 +99,7 @@ require.onError = function(err) {
 require([
         "models/AppModel",
         "editor/WidgetView",
-        "editor/WidgetsManagerView",
+        "editor/SectionsManagerView",
         'editor/MarqueeView',
         "editor/KeyDispatcher",
         "editor/MouseDispatcher",
@@ -103,11 +108,13 @@ require([
         "bootstrap",
         "util",
         "comp",
-        "mixins/BackboneConvenience"
+        "mixins/BackboneConvenience",
+        "jquery-ui",
+        "jquery.scrollbar"
     ],
     function(AppModel,
         WidgetView,
-        WidgetsManagerView,
+        SectionsManagerView,
         MarqueeView,
         KeyDispatcher,
         MouseDispatcher,
@@ -126,9 +133,9 @@ require([
         g_marqueeView = {};
 
         var proxy = {
-            setupWidgetsManager: function(widgetsCollection) {
-                this.widgetsManager = new WidgetsManagerView(widgetsCollection);
-                return this.widgetsManager;
+            setupSectionsManager: function(sectionsCollection) {
+                this.sectionsManager = new SectionsManagerView(sectionsCollection);
+                return this.sectionsManager;
             },
 
             setupMarqueeView: function(widgetsCollection) {
@@ -238,11 +245,22 @@ require([
 
             removeTempStyleSheet: function() {
                 this.reArrangeCSSTag();
+            },
+
+            updateScrollbar: function() {
+                $(document.body).perfectScrollbar("update");
+            },
+
+            reloadPage: function() {
+                location.reload();
             }
         };
 
         if (top.v1.currentApp) {
             top.v1.currentApp.renderIFrameContent(proxy);
+            $(document.body).perfectScrollbar({
+                wheelSpeed: 15,
+            });
         }
     });
 

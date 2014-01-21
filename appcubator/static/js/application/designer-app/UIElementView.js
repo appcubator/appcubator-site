@@ -24,6 +24,7 @@ function(UIElementEditingView) {
     },
 
     render: function() {
+      alert('ye');
       this.el.id = 'elem-' + this.model.cid;
 
       var upperDiv = document.createElement('div');
@@ -111,6 +112,7 @@ function(UIElementEditingView) {
       this.isExpanded = true;
       this.expandedView = new UIElementEditingView(this.model);
       this.el.appendChild(this.expandedView.render().el);
+      console.log(this.expandedView.el);
       this.expandedView.setUpAce();
       this.el.style.height = 'auto';
     },

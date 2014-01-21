@@ -21,9 +21,8 @@ define(function(require, exports, module) {
             _.bindAll(this);
 
             this.model = widgetModel;
-
-            var type = this.model.get('data').get('nodeType');
-            var currentClass = this.model.get('data').get('class_name');
+            var type = this.model.get('type');
+            var currentClass = this.model.get('className');
             var currentVal = -1;
 
             if (widgetModel.hasForm()) {
@@ -34,7 +33,11 @@ define(function(require, exports, module) {
                 type = "lists";
             }
 
-            this.list = _.map(uieState[type], function(obj, key) {
+            console.log(type);
+
+            var els = top.v1UIEState.getUIEVals(type).toJSON();
+
+            this.list = _.map(els, function(obj, key) {
                 if (obj.class_name == currentClass) {
                     currentVal = key;
                 }
@@ -44,7 +47,9 @@ define(function(require, exports, module) {
                 };
             });
 
-            this.uieVals = uieState[type];
+            this.uieVals = els;
+            //top.v1UIEState.getUIEVals(type);
+            
             this.isNameVal = true;
             this.currentVal = {
                 name: currentClass,
@@ -60,14 +65,14 @@ define(function(require, exports, module) {
         },
 
         hovered: function(e) {
-            if (e.currentTarget.className == "updown-handle") {
-                this.model.get('data').set('tagName', this.uieVals[this.currentVal.val].tagName);
-                this.model.get('data').set('class_name', this.uieVals[this.currentVal.val].class_name);
+            if (e.currentTarget.className == "updown-handle" && this.uieVals[this.currentVal.val]) {
+                this.model.set('tagName',   this.uieVals[this.currentVal.val].tagName);
+                this.model.set('className', this.uieVals[this.currentVal.val].class_name);
                 return;
             }
             var ind = String(e.currentTarget.id).replace('li-' + this.cid + '-', '');
-            this.model.get('data').set('tagName', this.uieVals[this.list[ind].val].tagName);
-            this.model.get('data').set('class_name', this.uieVals[this.list[ind].val].class_name);
+            this.model.set('tagName', this.uieVals[this.list[ind].val].tagName);
+            this.model.set('className', this.uieVals[this.list[ind].val].class_name);
         },
 
         show: function() {

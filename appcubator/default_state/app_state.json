@@ -1,87 +1,113 @@
 {
   "version_id": 0,
-  "models": [{
-    "generate": "models.model",
-    "data": {
-      "name": "Picture",
-      "fields": [{
-        "name": "datePicked",
-        "type": "Date"
-      }, {
-        "name": "name",
-        "type": "String"
-      }, {
-        "name": "url",
-        "type": "String"
-      }],
-      "instancemethods": [{
-        "name": "updateUrl",
-        "enableAPI": true,
-        "code": "function (newUrl, cb) {\n      this.url = newUrl;\n      this.save(function(e, d){cb(e,d);});\n    }"
-      }],
-      "staticmethods": [{
-        "name": "randomNFromFlickr",
-        "enableAPI": true,
-        "code": "function (searchQ, limit, cb) {\n      var flickr = require('flickr');\n      var fcli = new flickr.Flickr('cbe3f7f6cbf9d13ad243a1e1afec902d', '5c3f9a33e088ef60');\n      fcli.executeAPIRequest('flickr.photos.search', {text: searchQ, per_page: limit, extras: ['url_q']},\n                               false, function(e, d){cb(e, d);});\n    }"
-      }, {
-        "generate": "crud.models.create",
-        "data": {
-          "modelName": "Picture",
-          "enableAPI": true
-        }
-      }, {
-        "generate": "crud.models.find",
-        "data": {
-          "modelName": "Picture",
-          "enableAPI": true
-        }
-      }]
+  "models": [
+    {
+      "generate": "models.model",
+      "data": {
+        "name": "Picture",
+        "fields": [
+          {
+            "name": "datePicked",
+            "type": "Date"
+          },
+          {
+            "name": "name",
+            "type": "String"
+          },
+          {
+            "name": "url",
+            "type": "String"
+          }
+        ],
+        "instancemethods": [
+          {
+            "name": "updateUrl",
+            "enableAPI": true,
+            "code": "function (newUrl, cb) {\n      this.url = newUrl;\n      this.save(function(e, d){cb(e,d);});\n    }"
+          }
+        ],
+        "staticmethods": [
+          {
+            "name": "randomNFromFlickr",
+            "enableAPI": true,
+            "code": "function (searchQ, limit, cb) {\n      var flickr = require('flickr');\n      var fcli = new flickr.Flickr('cbe3f7f6cbf9d13ad243a1e1afec902d', '5c3f9a33e088ef60');\n      fcli.executeAPIRequest('flickr.photos.search', {text: searchQ, per_page: limit, extras: ['url_q']},\n                               false, function(e, d){cb(e, d);});\n    }"
+          },
+          {
+            "generate": "crud.models.create",
+            "data": {
+              "modelName": "Picture",
+              "enableAPI": true
+            }
+          },
+          {
+            "generate": "crud.models.find",
+            "data": {
+              "modelName": "Picture",
+              "enableAPI": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "generate": "models.model",
+      "data": {
+        "name": "User",
+        "fields": [
+          {
+            "name": "name",
+            "type": "String"
+          },
+          {
+            "name": "email",
+            "type": "String"
+          },
+          {
+            "name": "username",
+            "type": "String"
+          },
+          {
+            "name": "hashed_password",
+            "type": "String"
+          },
+          {
+            "name": "salt",
+            "type": "String"
+          }
+        ],
+        "instancemethods": [
+          {
+            "name": "authenticate",
+            "code": "function (plainText) {\n  /**\n   * Authenticate by checking the hashed password and provided password\n   *\n   * @param {String} plainText\n   * @return {Boolean}\n   * @api private\n   */\n    return this.encryptPassword(plainText) === this.hashed_password;\n  }"
+          },
+          {
+            "name": "makeSalt",
+            "code": "function () {\n  /**\n   * Create password salt\n   *\n   * @return {String}\n   * @api private\n   */\n\n    /* Then to regenerate password, use:\n        this.salt = this.makeSalt()\n        this.hashed_password = this.encryptPassword(password)\n    */\n    return Math.round((new Date().valueOf() * Math.random())) + '';\n  }"
+          },
+          {
+            "name": "encryptPassword",
+            "code": "function (password) {\n  /**\n   * Encrypt password\n   *\n   * @param {String} password\n   * @return {String}\n   * @api private\n   */\n    var crypto = require('crypto');\n    if (!password) return '';\n    return crypto.createHmac('sha1', this.salt).update(password).digest('hex');\n  }"
+          },
+          {
+            "name": "resetToken",
+            "code": "function (token, cb) {\n  /**\n   * Reset auth token\n   *\n   * @param {String} token\n   * @param {Function} cb\n   * @api private\n   */\n    var self = this;\n    var crypto = require('crypto');\n    crypto.randomBytes(48, function(ex, buf) {\n      self[token] = buf.toString('hex');\n      if (cb) cb();\n    });\n  }"
+          }
+        ],
+        "staticmethods": [
+          {
+            "name": "signup",
+            "enableAPI": true,
+            "code": "function (username, password, password2, callback) {\n        if (password !== password2) {\n            callback('Passwords don\\'t match. Please try again.');\n        }\n        var user = new this({username: username});\n        user.salt = user.makeSalt();\n        user.hashed_password = user.encryptPassword(password);\n        user.save(function(err, data) {\n            if (err) {\n                callback(err);\n            } else {\n                callback(null, {url:'?success=true'});\n            }\n        });\n    }"
+          }
+        ],
+        "schemaMods": [
+          "function (schema) {\n  schema.path('name').validate(function (name) {\n    return name.trim().length > 0;\n  }, 'Please provide a valid name');\n}",
+          "function (schema) {\n  schema.path('email').validate(function (email) {\n    return email.trim().length > 0;\n  }, 'Please provide a valid email');\n}",
+          "function (schema) {\n  schema.path('hashed_password').validate(function (hashed_password) {\n    return hashed_password.length > 0;\n  }, 'Please provide a password');\n}"
+        ]
+      }
     }
-  }, {
-    "generate": "models.model",
-    "data": {
-      "name": "User",
-      "fields": [{
-        "name": "name",
-        "type": "String"
-      }, {
-        "name": "email",
-        "type": "String"
-      }, {
-        "name": "username",
-        "type": "String"
-      }, {
-        "name": "hashed_password",
-        "type": "String"
-      }, {
-        "name": "salt",
-        "type": "String"
-      }],
-      "instancemethods": [{
-        "name": "authenticate",
-        "code": "function (plainText) {\n  /**\n   * Authenticate by checking the hashed password and provided password\n   *\n   * @param {String} plainText\n   * @return {Boolean}\n   * @api private\n   */\n    return this.encryptPassword(plainText) === this.hashed_password;\n  }"
-      }, {
-        "name": "makeSalt",
-        "code": "function () {\n  /**\n   * Create password salt\n   *\n   * @return {String}\n   * @api private\n   */\n\n    /* Then to regenerate password, use:\n        this.salt = this.makeSalt()\n        this.hashed_password = this.encryptPassword(password)\n    */\n    return Math.round((new Date().valueOf() * Math.random())) + '';\n  }"
-      }, {
-        "name": "encryptPassword",
-        "code": "function (password) {\n  /**\n   * Encrypt password\n   *\n   * @param {String} password\n   * @return {String}\n   * @api private\n   */\n    var crypto = require('crypto');\n    if (!password) return '';\n    return crypto.createHmac('sha1', this.salt).update(password).digest('hex');\n  }"
-      }, {
-        "name": "resetToken",
-        "code": "function (token, cb) {\n  /**\n   * Reset auth token\n   *\n   * @param {String} token\n   * @param {Function} cb\n   * @api private\n   */\n    var self = this;\n    var crypto = require('crypto');\n    crypto.randomBytes(48, function(ex, buf) {\n      self[token] = buf.toString('hex');\n      if (cb) cb();\n    });\n  }"
-      }],
-      "staticmethods": [{
-        "name": "signup",
-        "enableAPI": true,
-        "code": "function (username, password, password2, callback) {\n        if (password !== password2) {\n            callback('Passwords don\\'t match. Please try again.');\n        }\n        var user = new this({username: username});\n        user.salt = user.makeSalt();\n        user.hashed_password = user.encryptPassword(password);\n        user.save(function(err, data) {\n            if (err) {\n                callback(err);\n            } else {\n                callback(null, {url:'?success=true'});\n            }\n        });\n    }"
-      }],
-      "schemaMods": [
-        "function (schema) {\n  schema.path('name').validate(function (name) {\n    return name.trim().length > 0;\n  }, 'Please provide a valid name');\n}",
-        "function (schema) {\n  schema.path('email').validate(function (email) {\n    return email.trim().length > 0;\n  }, 'Please provide a valid email');\n}",
-        "function (schema) {\n  schema.path('hashed_password').validate(function (hashed_password) {\n    return hashed_password.length > 0;\n  }, 'Please provide a password');\n}"
-      ]
-    }
-  }],
+  ],
   "_comment2": "This stuff is new and not yet implemented",
   "packages": {
     "express": "3.4.4",
@@ -94,124 +120,248 @@
       "custom.txt": "this is custom code\n"
     }
   },
-  "templates": [{
-    "generate": "templates.page",
-    "data": {
-      "name": "Homepage",
-      "head": "<script src=\"//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js\"></script>",
-      "navbar": {
-        "generate": "templates.navbar",
-        "data": {
-          "isFixed": true,
-          "brandName": null,
-          "isHidden": false,
-          "links": [{
-            "url": "internal://Homepage",
-            "title": "Homepage"
-          }]
-        }
-      },
-      "footer": {
-        "generate": "templates.footer",
-        "data": {
-          "isFixed": true,
-          "customText": "<a href='http://appcubator.com'>Powered by Appcubator</a>",
-          "isHidden": false,
-          "links": [{
-            "url": "internal://Homepage",
-            "title": "Homepage"
-          }]
-        }
-      },
-      "uielements": {
-        "generate": "templates.concatUIE",
-        "data": [{
-          "html": "<h1>Search Flickr</h1>",
-          "style": {
-            "class_name": "yolo"
-          },
-          "js": "",
-          "css": "",
-          "layout": {}
-        }, {
-          "generate": "flickrpickr.uielements.flicksearchbar",
+  "templates": [
+    {
+      "generate": "templates.page",
+      "data": {
+        "name": "Homepage",
+        "head": "<script src=\"//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js\"></script>",
+        "navbar": {
+          "generate": "templates.navbar",
           "data": {
-            "galleryID": "myflickgallery",
-            "searchID": "myflicksearch",
-            "buttonText": "Hit the backend!"
+            "isFixed": true,
+            "brandName": null,
+            "isHidden": false,
+            "links": [
+              {
+                "url": "internal://Homepage",
+                "title": "Homepage"
+              }
+            ]
           }
-        }, {
-          "generate": "flickrpickr.uielements.flickgallery",
+        },
+        "footer": {
+          "generate": "templates.footer",
           "data": {
-            "galleryID": "myflickgallery"
+            "isFixed": true,
+            "customText": "<a href='http://appcubator.com'>Powered by Appcubator</a>",
+            "isHidden": false,
+            "links": [
+              {
+                "url": "internal://Homepage",
+                "title": "Homepage"
+              }
+            ]
           }
-        }, {
-          "html": "<h1>Create a Picture</h1>",
-          "js": "",
-          "css": "",
-          "layout": {},
-          "style": {
-            "class_name": "yolo2"
-          }
-        }, {
-          "generate": "crud.uielements.create",
-          "data": {
-            "fields": [
-              [
-                "name", {
-                  "type": "text",
-                  "placeholder": "Name"
-                }
-              ],
-              [
-                "url", {
-                  "type": "text",
-                  "placeholder": "URL"
+        },
+        "uielements": {
+          "generate": "templates.layoutSections",
+          "data": [
+            {
+              "layout": "12",
+              "className": "jumbotron",
+              "uielements": [
+                {
+                  "generate": "uielements.design-header",
+                  "data": {
+                    "type" : "header",
+                    "content": "Teach Me How To DJ",
+                    "layout": {
+                      "row": 0,
+                      "col": 0
+                    },
+                    "className" : "",
+                    "style": ""
+                  }
+                },
+                {
+                  "generate": "uielements.design-text",
+                  "data": {
+                    "type" : "text",
+                    "content": "<p>Welcome to 98-246! Brought to you by 4 DJs at Carnegie Mellon, this course will teach you everything you need to know in order to DJ your next party. Be sure to bring a passion for music!</p><p>For more information just click around!</p>",
+                    "layout": {
+                        "row": 1,
+                        "col": 0
+                    },
+                    "className" : "",
+                    "style": ""
+                  }
+                },
+                {
+                  "generate": "uielements.design-button",
+                  "data": {
+                    "type" : "button",
+                    "content": "Vire Syllabus >",
+                    "layout": {
+                        "row": 1,
+                        "col": 0
+                      },
+                    "href": "http://TOOLOBAPAGE.html",
+                    "className" : "btn",
+                    "style": ""
+                  }
                 }
               ]
-            ],
-            "id": "testform",
-            "redirect": "/?success=true"
-          }
-        }, {
-          "html": "<div id=\"piclist\"></div>",
-          "js": "models.Picture.findPicture({}, function(err, data){\n_.each(data, function(d) {$('#piclist').append('<p>'+d.name+'</p><img class=\"piclist\" src=\"'+d.url+'\">'); });\n});",
-          "css": "img.piclist {max-height: 200px; max-width: 300px;}"
-        }, {
-          "html": "<h1>Sign Up</h1>\n<form id=\"signup\">\n<input name=\"username\" type=\"text\" placeholder=\"Username\"><br>\n<input name=\"password\" type=\"password\" placeholder=\"Password\"><br>\n<input name=\"password2\" type=\"password\" placeholder=\"Confirm password\"><br>\n<input type=\"submit\" value=\"Submit\">\n</form>",
-          "js": "$('#signup').submit(function(){\n    var username = $('#signup input[name=\"username\"]').val();\n    var password = $('#signup input[name=\"password\"]').val();\n    var password2 = $('#signup input[name=\"password2\"]').val();\n    models.User.signup(username, password, password2, function(err, data){\n        if (err) { alert(err); }\n        else { location.href = data.url; }\n        \n    });\n    return false;\n});",
-          "css": ""
-        }, {
-          "html": "<h1>Login</h1>",
-          "js": "",
-          "css": ""
-        }]
+            },
+            {
+              "layout": "3-3-3-3",
+              "className": "",
+              "uielements": [
+                {
+                  "generate": "uielements.design-header",
+                  "data": {
+                    "type" : "header",
+                    "content": "Instructors",
+                    "layout": {
+                      "col": "header"
+                    },
+                    "className" : "",
+                    "style": ""
+                  }
+                },
+                {
+                  "generate": "uielements.design-image",
+                  "data": {
+                    "type" : "image",
+                    "src": "http://stuco.conciergeent.com/dist/img/rishabh-photo.png",
+                    "layout": {
+                      "row": 1,
+                      "col": 0
+                    },
+                    "className" :"img-rounded",
+                    "style": "width: 140px; height: 140px;"
+                  }
+                },
+                {
+                  "generate": "uielements.design-text",
+                  "data": {
+                    "type" : "text",
+                    "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
+                    "layout": {
+                      "row": 2,
+                      "col": 0
+                    },
+                    "style": {
+                      "class_name": ""
+                    }
+                  }
+                },
+                {
+                  "generate": "uielements.design-image",
+                  "data": {
+                    "type" : "image",
+                    "src": "http://stuco.conciergeent.com/dist/img/rishabh-photo.png",
+                    "layout": {
+                      "row": 1,
+                      "col": 1
+                    },
+                    "className" :"img-rounded",
+                    "style": "width: 140px; height: 140px;"
+                  }
+                },
+                {
+                  "generate": "uielements.design-text",
+                  "data": {
+                    "type" : "text",
+                    "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
+                    "layout": {
+                      "row": 2,
+                      "col": 1
+                    },
+                    "style": {
+                      "class_name": ""
+                    }
+                  }
+                },
+                {
+                  "generate": "uielements.design-image",
+                  "data": {
+                    "type" : "image",
+                    "src": "http://stuco.conciergeent.com/dist/img/rishabh-photo.png",
+                    "layout": {
+                      "row": 1,
+                      "col": 2
+                    },
+                    "className" :"img-rounded",
+                    "style": "width: 140px; height: 140px;"
+                  }
+                },
+                {
+                  "generate": "uielements.design-text",
+                  "data": {
+                    "type" : "text",
+                    "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
+                    "layout": {
+                      "row": 2,
+                      "col": 2
+                    },
+                    "style": {
+                      "class_name": ""
+                    }
+                  }
+                },
+                {
+                  "generate": "uielements.design-image",
+                  "data": {
+                    "type" : "image",
+                    "src": "http://stuco.conciergeent.com/dist/img/rishabh-photo.png",
+                    "layout": {
+                      "row": 1,
+                      "col": 3
+                    },
+                    "className" :"img-rounded",
+                    "style": "width: 140px; height: 140px;"
+                  }
+                },
+                {
+                  "generate": "uielements.design-text",
+                  "data": {
+                    "type" : "text",
+                    "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
+                    "layout": {
+                      "row": 2,
+                      "col": 3
+                    },
+                    "style": {
+                      "class_name": ""
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
       }
     }
-  }],
-  "routes": [{
-    "generate": "routes.staticpage",
-    "data": {
-      "url": [],
-      "name": "Homepage"
+  ],
+  "routes": [
+    {
+      "generate": "routes.staticpage",
+      "data": {
+        "url": [],
+        "name": "Homepage"
+      }
     }
-  }],
+  ],
   "generators": {
     "flickrpickr": {
-      "uielements": [{
-        "name": "flicksearchbar",
-        "version": "0.1",
-        "code": "function (data, templates){\n // buttonText, searchID, galleryID\n        var uie = {\n            html: templates.html(data),\n            css: '',\n            js: templates.js(data)\n        };\n        return uie;\n    }",
-        "templates": {
-          "html": "<form id=\"<%= searchID %>\">\n<input type=\"text\" name=\"q\">\n<input type=\"submit\" value=\"<%= buttonText %>\">\n</form>",
-          "js": "function renderInList (e, d) {    if (e) alert(e);    else {        for (var i = 0; i < d.photos.photo.length; i ++) {            var photo = d.photos.photo[i];            $('#<%= galleryID %>').append('<img src=\"'+photo.url_q+'\">');        }    }}$('#<%= searchID %>').submit(function() {    var formData = $('#<%= searchID %>').serializeArray();    models.Picture.randomNFromFlickr(formData[0].value, 10, renderInList);    return false;});"
+      "uielements": [
+        {
+          "name": "flicksearchbar",
+          "version": "0.1",
+          "code": "function (data, templates){\n // buttonText, searchID, galleryID\n        var uie = {\n            html: templates.html(data),\n            css: '',\n            js: templates.js(data)\n        };\n        return uie;\n    }",
+          "templates": {
+            "html": "<form id=\"<%= searchID %>\">\n<input type=\"text\" name=\"q\">\n<input type=\"submit\" value=\"<%= buttonText %>\">\n</form>",
+            "js": "function renderInList (e, d) {    if (e) alert(e);    else {        for (var i = 0; i < d.photos.photo.length; i ++) {            var photo = d.photos.photo[i];            $('#<%= galleryID %>').append('<img src=\"'+photo.url_q+'\">');        }    }}$('#<%= searchID %>').submit(function() {    var formData = $('#<%= searchID %>').serializeArray();    models.Picture.randomNFromFlickr(formData[0].value, 10, renderInList);    return false;});"
+          }
+        },
+        {
+          "name": "flickgallery",
+          "version": "0.1",
+          "code": "function (data, templates){\n  console.log('yolo'); console.log('data: '+data); console.log(templates);      // galleryID\n        var uie = {\n            html:'<div id=\"'+data.galleryID+'\"></div>',\n            css: '',\n            js: ''\n        };\n        return uie;\n    }",
+          "templates": {}
         }
-      }, {
-        "name": "flickgallery",
-        "version": "0.1",
-        "code": "function (data, templates){\n  console.log('yolo'); console.log('data: '+data); console.log(templates);      // galleryID\n        var uie = {\n            html:'<div id=\"'+data.galleryID+'\"></div>',\n            css: '',\n            js: ''\n        };\n        return uie;\n    }",
-        "templates": {}
-      }]
+      ]
     }
   },
   "config": {
@@ -226,10 +376,12 @@
     "keywords": "",
     "description": ""
   },
-  "emails": [{
-    "content": "Dear {{User.username}},\n\nThanks for signing up!\n\nCheers!\n{{AppName}}",
-    "name": "Welcome",
-    "subject": "Thanks for Signing up!"
-  }],
+  "emails": [
+    {
+      "content": "Dear {{User.username}},\n\nThanks for signing up!\n\nCheers!\n{{AppName}}",
+      "name": "Welcome",
+      "subject": "Thanks for Signing up!"
+    }
+  ],
   "name": "thisisirrelevant"
 }

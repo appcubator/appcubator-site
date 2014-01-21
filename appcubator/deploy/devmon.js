@@ -1,9 +1,28 @@
 #!/usr/bin/env node
 
-var net = require('net');
-var child_process = require('child_process');
 var fs = require('fs');
-var DEBUG = false;
+var child_process = require('child_process');
+var http = require('http');
+var formidable = require('formidable');
+
+var DEBUG = true;
+
+
+var spawnApp = function () {
+    var child_app = spawn(app_cmd, app_args, {env: process.env});
+
+    child_app.stdout.on('data', function (data) {
+      console.log('stdout: ' + data);
+    });
+
+    child_app.stderr.on('data', function (data) {
+      console.log('stderr: ' + data);
+    });
+
+    child_app.on('close', function (code) {
+      console.log('child process exited with code ' + code);
+    });
+}
 
 var updateCode = function (tarpath, callback) {
     child_process.exec('tar -xvf '+tarpath, function(err, stdout, stderr) {
@@ -17,58 +36,60 @@ var updateCode = function (tarpath, callback) {
     });
 };
 
-/* TCP Proxy, from http://gonzalo123.com/2012/09/17/building-a-simple-tcp-proxy-server-with-node-js/ */
-var tcpProxy = function (LOCAL_PORT, REMOTE_ADDR, REMOTE_PORT) {
-    var server = net.createServer(function (socket) {
-        var bytesToRecv, bytesRecvd, recvBuf;
-        var updating = false;
-        socket.on('data', function (msg) {
-            //console.log('  ** START **' + msg.length);
-            if(DEBUG) console.log('<< From client to proxy ', msg.toString()); // TODO be careful of request size... protect against hax
-            if (msg.toString().indexOf("POST /__update_code__ HTTP/1.1\n\n") == 0) {
-                console.log(msg.toString());
-                // activate code updating mode
-                updating = true;
-                recvBuf = [];
-                msg = msg.toString().replace(/^[^\n]*\n\n/, ''); // trim upto double \n
-                bytesToRecv = parseInt(msg.substr(0, msg.indexOf('\n\n')));
-                bytesRecvd = 0;
-                msg = msg.replace(/^\d+\n\n/, ''); // trim upto size decl \n
-            }
-            if (updating) {
-                // update code
-                recvBuf.push(msg.toString());
-                bytesRecvd += msg.length;
-                if (bytesRecvd >= bytesToRecv) {
-                    var codeTarBuf = new Buffer(recvBuf.join(''), 'base64');
-                    // Note: it will write this relative to the current working directory (cwd)
-                    fs.writeFile('payload2.tar', codeTarBuf, function(err) {
-                        if (err) throw err;
-                        //updateCode('payload2.tar', function(){console.log('Code updated successfully!')});
-                    });
-                    // deactivate code updating mode
-                    updating = false;
-                    socket.end('0');
-                }
-            } else {
-                // proxy
-                var serviceSocket = new net.Socket();
-                serviceSocket.connect(parseInt(REMOTE_PORT), REMOTE_ADDR, function () {
-                    if(DEBUG) console.log('>> From proxy to remote', msg.toString());
-                    serviceSocket.write(msg);
-                });
-                serviceSocket.on("data", function (data) {
-                    if(DEBUG) console.log('<< From remote to proxy', data.toString());
-                    socket.write(data);
-                    if(DEBUG) console.log('>> From proxy to client', data.toString());
-                });
-            }
-        });
-    });
 
-    server.listen(LOCAL_PORT);
-    console.log("TCP server accepting connection on port: " + LOCAL_PORT);
-    return server;
+var httpProxy = function (LOCAL_PORT, REMOTE_ADDR, REMOTE_PORT) {
+    /*
+     * Modified from:
+     *   A simple proxy server written in node.js.
+     *   Peteris Krumins (peter@catonmat.net)
+     *   http://www.catonmat.net/http-proxy-in-nodejs/
+     *
+     */
+    var s = http.createServer(function(request, response) {
+        var ip = request.connection.remoteAddress;
+        console.log(ip + ": " + request.method + " " + request.url);
+        if (request.url.indexOf('__update_code__') != -1) {
+            var form = new formidable.IncomingForm();
+
+            form.parse(request, function(err, fields, files) {
+                var codeTarBuf = new Buffer(recvBuf.join(''), 'binary');
+                // Note: it will write this relative to the current working directory which should be appdir
+                fs.writeFile('payload2.tar', codeTarBuf, function(err) {
+                    if (err) throw err;
+                    updateCode('payload2.tar', function(){
+                        app.kill();
+                        console.log('Sent SIGTERM to app, now waiting.');
+                        app.on('exit', function(){
+                            console.log('Spawning app.');
+                            // app is a global
+                            app = spawnApp();
+                            response.writeHead(200, {'content-type': 'text/plain'});
+                            response.end('OK');
+                        });
+                    });
+                });
+            });
+        } else {
+            var proxy = http.createClient(REMOTE_PORT, REMOTE_ADDR);
+            var proxy_request = proxy.request(request.method, request.url, request.headers);
+            proxy_request.addListener('response', function(proxy_response) {
+                proxy_response.addListener('data', function(chunk) {
+                    response.write(chunk, 'binary');
+                });
+                proxy_response.addListener('end', function() {
+                    response.end();
+                });
+                response.writeHead(proxy_response.statusCode, proxy_response.headers);
+            });
+            request.addListener('data', function(chunk) {
+                proxy_request.write(chunk, 'binary');
+            });
+            request.addListener('end', function() {
+                proxy_request.end();
+            });
+        }
+    }).listen(LOCAL_PORT);
+    return s;
 }
 
 
@@ -91,18 +112,6 @@ var port = process.argv[2],
 
 process.chdir(cwd);
 console.log('Changed CWD to ' + cwd);
-
-var child_app = spawn(app_cmd, app_args, {env: process.env});
-var proxySock = tcpProxy(port, '127.0.0.1', proxyport);
-
-child_app.stdout.on('data', function (data) {
-  console.log('stdout: ' + data);
-});
-
-child_app.stderr.on('data', function (data) {
-  console.log('stderr: ' + data);
-});
-
-child_app.on('close', function (code) {
-  console.log('child process exited with code ' + code);
-});
+// global
+app = spawnApp();
+var proxySock = httpProxy(port, '127.0.0.1', proxyport);

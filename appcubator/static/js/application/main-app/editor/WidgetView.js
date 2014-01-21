@@ -31,9 +31,12 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.model = widgetModel;
             this.listenTo(this.model, "remove", this.close, this);
 
-            this.listenTo(this.model.get('data'), "change:type", this.changedType, this);
-            this.listenTo(this.model.get('data'), "change:tagName", this.changedType, this);
-            this.listenTo(this.model.get('data'), "change:class_name", this.changedTagName, this);
+            this.listenTo(this.model, "change:type", this.reRender, this);
+            this.listenTo(this.model, "change:tagName", this.reRender, this);
+            this.listenTo(this.model, "change:className", this.reRender, this);
+            this.listenTo(this.model, "change:src", this.changedSource, this);
+            this.listenTo(this.model, "change:value", this.changedValue, this);
+            this.listenTo(this.model, "change:style", this.changedStyle, this);
 
             this.listenTo(this.model.get('layout'), "change:width", this.changedSize, this);
             this.listenTo(this.model.get('layout'), "change:height", this.changedSize, this);
@@ -45,14 +48,16 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
             this.listenTo(this.model.get('data'), "change:content", this.changedText, this);
 
-            this.listenTo(this.model.get('data').get('content_attribs'), "change:src", this.changedSource, this);
-            this.listenTo(this.model.get('data').get('content_attribs'), "change:value", this.changedValue, this);
-            this.listenTo(this.model.get('data').get('content_attribs'), "change:style", this.changedStyle, this);
-
             this.listenTo(this.model, "startEditing", this.switchEditModeOn, this);
             this.listenTo(this.model, "deselected", function() {
                 this.model.trigger('stopEditing');
+                this.$el.removeClass('selected');
+                this.selected = false;
             }, this);
+            this.listenTo(this.model, "selected", function() {
+                this.$el.addClass('selected');
+            });
+
             this.listenTo(this.model, "stopEditing", this.switchEditModeOff);
             this.listenTo(this.model, "cancelEditing", this.cancelEditing);
 
@@ -85,33 +90,33 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
             this.el.id = 'widget-wrapper-' + this.model.cid;
 
-            this.setTop((this.positionVerticalGrid) * (this.model.get('layout').get('top')));
-            this.setLeft((this.positionHorizontalGrid) * (this.model.get('layout').get('left')));
-            this.setHeight(height * (this.positionVerticalGrid));
+            // this.setTop((this.positionVerticalGrid) * (this.model.get('layout').get('top')));
+            // this.setLeft((this.positionHorizontalGrid) * (this.model.get('layout').get('left')));
+            // this.setHeight(height * (this.positionVerticalGrid));
 
-            if (this.positionHorizontalGrid == 80) this.el.className += " span" + width;
-            else this.setWidth(width * this.positionHorizontalGrid);
+            // if (this.positionHorizontalGrid == 80) this.el.className += " span" + width;
+            // else this.setWidth(width * this.positionHorizontalGrid);
 
-            this.el.style.textAlign = this.model.get('layout').get('alignment');
+            // this.el.style.textAlign = this.model.get('layout').get('alignment');
 
-            if (this.model.get('layout').has('l_padding')) {
-                this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
-            }
+            // if (this.model.get('layout').has('l_padding')) {
+            //     this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
+            // }
 
-            if (this.model.get('layout').has('r_padding')) {
-                this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
-            }
+            // if (this.model.get('layout').has('r_padding')) {
+            //     this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
+            // }
 
-            if (this.model.get('layout').has('t_padding')) {
-                this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
-            }
+            // if (this.model.get('layout').has('t_padding')) {
+            //     this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
+            // }
 
-            if (this.model.get('layout').has('b_padding')) {
-                this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
-            }
+            // if (this.model.get('layout').has('b_padding')) {
+            //     this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
+            // }
 
-            if (this.model.isFullWidth()) this.switchOnFullWidth();
-            if (this.model.isBgElement()) this.el.style.zIndex = 999;
+            // if (this.model.isFullWidth()) this.switchOnFullWidth();
+            // if (this.model.isBgElement()) this.el.style.zIndex = 999;
         },
 
         reRender: function() {
@@ -129,10 +134,17 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         select: function(e) {
+    
+            if(this.selected && !this.editMode) {
+                this.model.trigger('doubleClicked');
+                return;
+            }
+
             if (!this.editMode) {
                 this.model.trigger('selected');
                 this.el.style.zIndex = 2003;
                 if (this.model.isBgElement()) this.el.style.zIndex = 1000;
+                this.selected = true;
             }
         },
 
@@ -149,32 +161,10 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         changedPadding: function() {
-            this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
-            this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
-            this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
-            this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
-        },
-
-        toggleFull: function(argument) {
-            if (this.model.get('layout').get('isFull') === true) {
-                this.switchOnFullWidth();
-            } else {
-                this.switchOffFullWidth();
-            }
-        },
-
-        switchOnFullWidth: function() {
-            $('#full-container').append(this.el);
-            this.disableResizeAndDraggable();
-            this.el.className = 'selected widget-wrapper spanFull';
-            this.setLeft(0);
-            this.fullWidth = true;
-        },
-
-        switchOffFullWidth: function() {
-            this.fullWidth = false;
-            $('#elements-container').append(this.el);
-            this.render();
+            // this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
+            // this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
+            // this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
+            // this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
         },
 
         changedSize: function() {
@@ -195,8 +185,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         changedText: function(a) {
-            var content = this.model.get('data').get('content').replace(/\n\r?/g, '<br />');
-            this.el.firstChild.innerHTML = content;
+            this.reRender();
         },
 
         changedValue: function(a) {
@@ -212,12 +201,11 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         changedSource: function(a) {
-            this.el.firstChild.src = this.model.get('data').get('content_attribs').get('src');
+            this.reRender();
         },
 
         changedStyle: function() {
-            this.el.firstChild.setAttribute('style', this.model.get('data').get('content_attribs').get('style'));
-            this.el.firstChild.style.lineHeight = '1em';
+            this.reRender();
         },
 
         staticsAdded: function(files) {
@@ -225,7 +213,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                 file.name = file.filename;
                 statics.push(file);
             });
-            this.model.get('data').get('content_attribs').set('src', _.last(files).url);
+            this.model.set('src', _.last(files).url);
             //this.show(this.model);
         },
 
@@ -266,7 +254,8 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         switchEditModeOn: function() {
-            if (this.model.get('data').get('content')) {
+            
+            if (this.model.get('content')) {
                 this.editMode = true;
 
                 //var el = $(this.el.firstChild);
@@ -329,8 +318,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.$el.removeClass('textediting');
             var val = this.$innerEl.html();
             this.$innerEl.freshereditor("edit", false);
-            this.model.get('data').set('content', val);
-
+            this.model.set('content', val);
 
             keyDispatcher.textEditing = false;
             util.unselectText();

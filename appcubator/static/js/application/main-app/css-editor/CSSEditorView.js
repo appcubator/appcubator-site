@@ -25,7 +25,7 @@ define(function(require, exports, module) {
                 text: "Fonts"
             }, {
                 id: "button",
-                key: "headerTexts",
+                key: "buttons",
                 text: "Button"
             }, {
                 id: "image",
@@ -111,7 +111,7 @@ define(function(require, exports, module) {
 
         bindWidget: function(widgetModel) {
             this.listenTo(widgetModel, 'selected', function() {
-                this.elementSelected(widgetModel);
+                //this.elementSelected(widgetModel);
             });
         },
 
@@ -189,7 +189,6 @@ define(function(require, exports, module) {
                     break;
 
                 default:
-                    
                     var listView = new UIElementListView(this.model.get(key), type);
                     $(this.elementsList).hide();
                     this.setTitle(text);
@@ -205,8 +204,11 @@ define(function(require, exports, module) {
             if(this.currentView) this.currentView.close();
             $(this.elementsList).hide();
 
-            this.currentView = new UIElementEditingView(styleModel);
+            styleModel = styleModel[0];
+
+            this.currentView = new UIElementEditingView({ model: styleModel });
             this.el.appendChild(this.currentView.render().el);
+
             this.setTitle(styleModel.get('class_name'));
             this.currentView.setupAce();
         },
@@ -220,11 +222,9 @@ define(function(require, exports, module) {
                 type = "lists";
             }
             var className = widgetModel.get('data').get('class_name');
-            console.log(className);
-            console.log(type);
             var styleModel = this.model.getStyleWithClassAndType(className, type);
             this.$el.find('.navback').show();
-            this.styleSelected(styleModel);
+            //this.styleSelected(styleModel);
         },
 
         openThemePicker: function() {

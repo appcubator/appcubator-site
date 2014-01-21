@@ -26,7 +26,8 @@ require.config({
         "backbone": "../../libs/backbone-amd/backbone",
         "underscore": "../../libs/underscore-amd/underscore",
         "bootstrap": "../../libs/bootstrap/bootstrap",
-        "ace": "../../libs/ace/ace",
+        // "ace": "../../libs/ace/ace",
+        "ace": "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace",
         "jsoneditor": "../../libs/jsoneditor/jsoneditor"
     }
 });

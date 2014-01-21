@@ -64,6 +64,10 @@ def provision(appdir, deploy_data):
 
     return deployment_id
 
+def rebuild(*args):
+    # NOOP
+    return ''
+
 def destroy(deploy_id):
     if deploy_id in fake_database:
         p, port = fake_database[deploy_id]
@@ -84,21 +88,14 @@ def update_code(appdir, deploy_id, deploy_data):
     tar_path = _write_tar_from_app_dir(appdir)
     f = open(tar_path, "rb")
     try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        host = deploy_data['hostname']
-        port = deploy_data.get('_port', 80)
-        s.connect((host, port))
-
-        tarbin = base64.b64encode(f.read())
-        s.sendall("POST /__update_code__ HTTP/1.1\n\n" + str(len(tarbin))+"\n\n")
-        s.sendall(tarbin)
-        s.recv(1)
-
-        s.close()
+        r = requests.post(deploy_data['url']+'/__update_code__', files={'code':f})
 
     finally:
         f.close()
         os.remove(os.path.join(appdir, 'payload.tar'))
+
+    if r.status_code != 200:
+        raise Exception(str(r.status_code) + r.text)
 
 
 import unittest
