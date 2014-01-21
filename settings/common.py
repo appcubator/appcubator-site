@@ -69,7 +69,6 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'less.finders.LessFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
@@ -144,7 +143,6 @@ INSTALLED_APPS = (
     'website',
     'tutorials',
     'south',
-    'less',
     'registration',
     'django_forms_bootstrap',
     'payments',
