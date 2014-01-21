@@ -66,7 +66,7 @@ define(function(require, exports, module) {
             this.sectionsManager = {};
             //this.guides = new GuideView(this.sectionsCollection);
             this.cssEditorView = new CSSEditorView();
-            this.pageView = new PageView(this.model, pageId);
+            this.pageView = new PageView(this.model, this.templateModel, pageId);
 
             // TODO: setup redo controller again
             // this.redoController = new RedoController();

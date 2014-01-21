@@ -31,6 +31,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.model = widgetModel;
             this.listenTo(this.model, "remove", this.close, this);
 
+            this.listenTo(this.model, "change", this.reRender, this);
             this.listenTo(this.model, "change:type", this.reRender, this);
             this.listenTo(this.model, "change:tagName", this.reRender, this);
             this.listenTo(this.model, "change:className", this.reRender, this);
@@ -77,9 +78,15 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
         render: function() {
             this.arrangeLayout();
-            this.el.innerHTML = this.renderElement();
+
+            var expanded = this.model.expand();
+
+            this.el.innerHTML = this.renderElement(expanded);
             this.innerEl = this.el.firstChild;
             this.$innerEl = $(this.innerEl);
+
+            this.placeCSS(expanded);
+            this.placeJS(expanded);
 
             return this;
         },
@@ -87,55 +94,89 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         arrangeLayout: function() {
             var width = this.model.get('layout').get('width');
             var height = this.model.get('layout').get('height');
-
             this.el.id = 'widget-wrapper-' + this.model.cid;
-
-            // this.setTop((this.positionVerticalGrid) * (this.model.get('layout').get('top')));
-            // this.setLeft((this.positionHorizontalGrid) * (this.model.get('layout').get('left')));
-            // this.setHeight(height * (this.positionVerticalGrid));
-
-            // if (this.positionHorizontalGrid == 80) this.el.className += " span" + width;
-            // else this.setWidth(width * this.positionHorizontalGrid);
-
-            // this.el.style.textAlign = this.model.get('layout').get('alignment');
-
-            // if (this.model.get('layout').has('l_padding')) {
-            //     this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
-            // }
-
-            // if (this.model.get('layout').has('r_padding')) {
-            //     this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
-            // }
-
-            // if (this.model.get('layout').has('t_padding')) {
-            //     this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
-            // }
-
-            // if (this.model.get('layout').has('b_padding')) {
-            //     this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
-            // }
-
-            // if (this.model.isFullWidth()) this.switchOnFullWidth();
-            // if (this.model.isBgElement()) this.el.style.zIndex = 999;
         },
 
         reRender: function() {
-            this.el.innerHTML = this.renderElement();
+            var expanded = this.model.expand();
+
+            this.el.innerHTML = this.renderElement(expanded);
             this.innerEl = this.el.firstChild;
             this.$innerEl = $(this.innerEl);
+
+            this.placeCSS(expanded);
+            this.placeJS(expanded);
+
 
             return this;
         },
 
-        renderElement: function() {
+        renderElement: function(expanded) {
             var html = "";
-            var el = this.model.expand();
-            return el.html;
+            if (!expanded.html || expanded.html == "") {
+                expanded.html = "Custom Widget";
+            }
+            return expanded.html;
+        },
+
+
+        placeCSS: function(expanded) {
+            
+            var styleTag = document.getElementById('custom-css-widget-' + this.model.cid);
+            if (styleTag) $(styleTag).remove();
+
+            var style = document.createElement('style');
+            style.id = 'custom-css-widget-' + this.model.cid;
+            style.type = 'text/css';
+            
+            var css = expanded.css;
+            if (style.styleSheet) {
+                style.styleSheet.cssText = css;
+            } else {
+                style.appendChild(document.createTextNode(css));
+            }
+            document.getElementsByTagName('head')[0].appendChild(style);
+        },
+
+        placeJS: function(expanded) {
+
+            if(!expanded.js || expanded.js === '') return;
+
+            var self = this;
+
+            this.model.trigger('selected');
+
+            var jsTag = 'custom-js-widget-' + this.model.cid;
+            if (jsTag) $(jsTag).remove();
+
+            var appendJSTag = function() {
+
+                var customJSTemp = [
+                    'try {',
+                    '<%= code %>',
+                    '} catch(err) { console.log("Error executing custom js: "+ err); }',
+                ].join('\n');
+
+                try {
+                    jsTag = document.createElement('script');
+                    jsTag.id = 'custom-js-widget-' + self.model.cid;
+                    jsTag.setAttribute("type", "text/javascript");
+
+                    jsTag.text = _.template(customJSTemp, { code: expanded.js });
+
+                    document.body.appendChild(jsTag);
+                } catch (err) {
+                    console.log('Error adding custom js:' + err);
+                }
+            };
+
+            setTimeout(function() { $(document).ready(appendJSTag); }, 3000);
+            // this.listenTo(v1, 'editor-loaded', appendJSTag, this);
         },
 
         select: function(e) {
-    
-            if(this.selected && !this.editMode) {
+
+            if (this.selected && !this.editMode) {
                 this.model.trigger('doubleClicked');
                 return;
             }
@@ -254,7 +295,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         switchEditModeOn: function() {
-            
+
             if (this.model.get('content')) {
                 this.editMode = true;
 
@@ -283,7 +324,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                     'justifyfull'
                 ];
 
-                if(this.model.isBuyButton()) {
+                if (this.model.isBuyButton()) {
                     excludes = _.union(excludes, [
                         'FontSize',
                         'justifyleft',
@@ -297,7 +338,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                         'insertorderedlist'
                     ]);
                 }
-                
+
                 this.$innerEl.freshereditor({
                     toolbar_selector: ".widget-editor",
                     excludes: excludes

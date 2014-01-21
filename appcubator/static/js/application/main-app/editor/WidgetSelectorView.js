@@ -525,9 +525,9 @@ define(function(require, exports, module) {
         },
 
         hideNode: function(node) {
-            node.style.height = 0;
-            node.style.width = 0;
-            $(node).hide();
+            // node.style.height = 0;
+            // node.style.width = 0;
+            // $(node).hide();
         },
 
         close: function() {

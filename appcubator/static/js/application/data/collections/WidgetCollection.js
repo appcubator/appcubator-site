@@ -161,15 +161,13 @@ define([
                 var widget = {};
                 widget.type = "custom";
                 widget.layout = layout;
-
-                widget.data = {};
-                widget.data.nodeType = 'custom-widget';
-                widget.data.tagName = 'div';
-                widget.data.htmlC = null;
-                widget.data.cssC = null;
-                widget.data.jsC = null;
+                widget.htmlC = null;
+                widget.cssC = null;
+                widget.jsC = null;
 
                 var widgetModel = new WidgetModel(widget);
+                widgetModel.setGenerator("uielements.design-custom");
+
                 return this.push(widgetModel);
             },
 
@@ -367,8 +365,6 @@ define([
 
                 var widgetModel = new WidgetModel(widget);
                 widgetModel.setGenerator('uielements.design-embedvideo');
-
-                console.log(widget);
 
                 return this.push(widgetModel);
             },

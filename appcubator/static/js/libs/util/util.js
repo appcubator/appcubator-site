@@ -1,4 +1,4 @@
-define(['jquery'], function() {
+define(['backbone'], function() {
 
     var util = {
 

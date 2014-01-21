@@ -175,7 +175,7 @@ define(function(require, exports, module) {
                 return;
             }
 
-            if (type == "customwidget") {
+            if (type == "custom") {
                 this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-custom-widget-btn', 'Edit Custom Widget'));
                 return;
             }

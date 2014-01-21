@@ -70,7 +70,7 @@ def write_to_tmpdir(codeData):
         relpath, content = files_to_write.pop()
         if isinstance(content, basestring):
             with open(os.path.join(tmpdir, relpath), 'w') as f:
-                f.write(content)
+                f.write(content.encode('utf-8'))
         else:
             os.makedirs(os.path.join(tmpdir, relpath))
             files_to_write.extend([(os.path.join(relpath, filename), subcontent) for filename, subcontent in content.iteritems() ])

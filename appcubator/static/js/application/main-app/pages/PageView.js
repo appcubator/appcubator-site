@@ -5,6 +5,7 @@ define(function(require, exports, module) {
     var UrlView = require('app/pages/UrlView');
     var SimpleModalView = require('mixins/SimpleModalView');
     var DialogueView = require('mixins/DialogueView');
+    var HeaderEditorView = require('app/pages/HeaderEditorView');
 
     require('util');
     require('backbone');
@@ -17,6 +18,7 @@ define(function(require, exports, module) {
         '<div class="page-menu">',
         '<a class="delete item" <% if(disable_edit) { %>style="color: #999"<% } %>><i class="icon-delete"></i>Delete Page</a>',
         '<div class="edit-url item" <% if(disable_edit) { %>style="color: #999"<% } %>><i class="icon-url"></i>Edit URL</div>',
+        '<div class="edit-header item" <% if(disable_edit) { %>style="color: #999"<% } %>><i class=""></i>Edit Header</div>',
         '<span class="context-text edit-url"><%= context_text %></span>',
         '</div>'
     ].join('\n');
@@ -44,17 +46,19 @@ define(function(require, exports, module) {
             'click .delete': 'deletePage',
             'change #access_level': 'accessLevelChanged',
             'click .edit-url': 'renderUrl',
+            'click .edit-header': 'clickedEditHeader'
         },
 
-        initialize: function(pageModel, ind, isMobile) {
+        initialize: function(routeModel, templateModel, ind, isMobile) {
             _.bindAll(this);
 
-            this.model = pageModel;
+            this.model = routeModel;
             this.ind = ind;
             this.isMobile = isMobile;
-            this.urlModel = pageModel.get('url');
+            this.urlModel = routeModel.get('url');
             this.listenTo(this.model, 'remove', this.close, this);
 
+            this.templateModel = templateModel;
         },
 
         render: function() {
@@ -166,6 +170,10 @@ define(function(require, exports, module) {
                 });
             }
 
+        },
+
+        clickedEditHeader: function() {
+            new HeaderEditorView(this.templateModel);
         },
 
         expand: function() {

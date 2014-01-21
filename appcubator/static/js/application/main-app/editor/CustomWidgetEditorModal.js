@@ -24,9 +24,9 @@ define([
 
             render: function() {
                 var self = this;
-                var htmlStr = this.model.get('data').get('htmlC') || '';
-                var cssStr = this.model.get('data').get('cssC') || '';
-                var jsStr = this.model.get('data').get('jsC') || '';
+                var htmlStr = this.model.get('htmlC') || '';
+                var cssStr = this.model.get('cssC') || '';
+                var jsStr = this.model.get('jsC') || '';
 
                 var content = [
                     '<div class="sect"><div class="sub-title" id="e-html">» HTML</div><div id="edit-html-inp" style="background-color:#eee; height: 300px; width:540px; position:relative;"></div></div>',
@@ -69,9 +69,9 @@ define([
             },
 
             onClose: function() {
-                this.model.get('data').set('cssC', this.editors["e-css"].getValue());
-                this.model.get('data').set('jsC', this.editors["e-js"].getValue());
-                this.model.get('data').set('htmlC', this.editors["e-html"].getValue());
+                this.model.set('cssC', this.editors["e-css"].getValue());
+                this.model.set('jsC', this.editors["e-js"].getValue());
+                this.model.set('htmlC', this.editors["e-html"].getValue());
                 this.model.trigger('custom_edited');
             }
 
