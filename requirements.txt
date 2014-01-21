@@ -33,7 +33,7 @@ cssutils==0.9.10
 django-threadedcomments==0.9.0
 django-countries
 
-#mysql-python==1.2.4
+mysql-python==1.2.4
 
 gunicorn==18.0
 eventlet==0.14.0
