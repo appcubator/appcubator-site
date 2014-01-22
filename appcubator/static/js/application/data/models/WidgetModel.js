@@ -96,50 +96,51 @@ define(['models/DataModel', 'models/LayoutModel', 'dicts/constant-containers'],
                 return this;
             },
 
-            getListOfPages: function() {
-                var pagesCollection = v1State.get('pages');
-                var listOfLinks = [];
+            // getListOfPages: function() {
+            //     console.trace();
+            //     var pagesCollection = v1State.get('pages');
+            //     var listOfLinks = [];
 
-                _(pagesCollection.getContextFreePages()).each(function(page) {
-                    listOfLinks.push({
-                        name: page,
-                        val: "internal://" + page
-                    });
-                });
+            //     _(pagesCollection.getContextFreePages()).each(function(page) {
+            //         listOfLinks.push({
+            //             name: page,
+            //             val: "internal://" + page
+            //         });
+            //     });
 
-                this.get('context').each(function(context) {
-                    var entityName = context.get('entity');
-                    var entityModel = v1State.getTableModelWithName(entityName);
+            //     this.get('context').each(function(context) {
+            //         var entityName = context.get('entity');
+            //         var entityModel = v1State.getTableModelWithName(entityName);
 
-                    var listOfPages = v1State.get('pages').getPagesWithEntityName(entityName);
-                    _(listOfPages).each(function(pageName) {
-                        listOfLinks.push({
-                            name: pageName,
-                            val: "internal://" + pageName + '/?' + context.get('entity') + '=' + context.get('context')
-                        });
-                    });
+            //         var listOfPages = v1State.get('pages').getPagesWithEntityName(entityName);
+            //         _(listOfPages).each(function(pageName) {
+            //             listOfLinks.push({
+            //                 name: pageName,
+            //                 val: "internal://" + pageName + '/?' + context.get('entity') + '=' + context.get('context')
+            //             });
+            //         });
 
-                    entityModel.getFieldsColl().each(function(field) {
-                        if(field.get('type') == "fk") {
-                            var fieldEntityName = field.get('entity_name');
-                            var listOfIntPages = v1State.get('pages').getPagesWithEntityName(fieldEntityName);
-                            _(listOfIntPages).each(function(pageName) {
-                                listOfLinks.push({
-                                    name: pageName + " with "+ entityName+"."+field.get('name'),
-                                    val: "internal://" + pageName + '/?' + fieldEntityName + '=' + context.get('context') +"."+ field.get('name')
-                                });
-                            });
-                        }
-                    });
-                });
+            //         entityModel.getFieldsColl().each(function(field) {
+            //             if(field.get('type') == "fk") {
+            //                 var fieldEntityName = field.get('entity_name');
+            //                 var listOfIntPages = v1State.get('pages').getPagesWithEntityName(fieldEntityName);
+            //                 _(listOfIntPages).each(function(pageName) {
+            //                     listOfLinks.push({
+            //                         name: pageName + " with "+ entityName+"."+field.get('name'),
+            //                         val: "internal://" + pageName + '/?' + fieldEntityName + '=' + context.get('context') +"."+ field.get('name')
+            //                     });
+            //                 });
+            //             }
+            //         });
+            //     });
 
-                listOfLinks.push({
-                    name: 'External Link',
-                    val: "External Link"
-                });
+            //     listOfLinks.push({
+            //         name: 'External Link',
+            //         val: "External Link"
+            //     });
 
-                return listOfLinks;
-            },
+            //     return listOfLinks;
+            // },
 
             getAction: function() {
                 if (this.get('data').has('container_info')) return this.get('data').get('container_info').get('action');

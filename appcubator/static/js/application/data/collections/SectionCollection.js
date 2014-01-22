@@ -8,6 +8,13 @@ define(function(require, exports, module) {
 
         model: SectionModel,
 
+        initialize: function() {
+            
+            if(!this.generate) {
+                this.setGenerator('templates.layoutSections');
+            }
+        },
+
         createSectoinWithType: function(type) {
 
 

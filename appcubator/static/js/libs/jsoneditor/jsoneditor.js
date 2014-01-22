@@ -64,11 +64,11 @@ function JSONEditor (container, options, json) {
   }
 
   // check for unsupported browser (IE8 and older)
-  var ieVersion = util.getInternetExplorerVersion();
-  if (ieVersion != -1 && ieVersion < 9) {
-    throw new Error('Unsupported browser, IE9 or newer required. ' +
-        'Please install the newest version of your browser.');
-  }
+  // var ieVersion = util.getInternetExplorerVersion();
+  // if (ieVersion != -1 && ieVersion < 9) {
+  //   throw new Error('Unsupported browser, IE9 or newer required. ' +
+  //       'Please install the newest version of your browser.');
+  // }
 
   if (arguments.length) {
     this._create(container, options, json);

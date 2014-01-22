@@ -78,22 +78,23 @@ define(function(require, exports, module) {
         bindDraggable: function() {
             var self = this;
 
-            $(this.allList).find('li:not(.ui-draggable)').on('click', function(e) {
-                self.dropped(e);
-            });
-            $(this.allList).find('li:not(.ui-draggable)').draggable({
-                cursor: "move",
-                helper: "clone",
-                start: function(e) {
-                    self.dragActive = true;
-                    v1.currentApp.view.sectionsManager.highlightSections();
-                },
-                stop: function(e) {
-                    self.dropped(e);
-                    v1.currentApp.view.sectionsManager.unhighlightSections();
-                },
-                iframeFix: true
-            });
+            // $(this.allList).find('li:not(.ui-draggable)').on('click', function(e) {
+            //     self.dropped(e);
+            // });
+            
+            // $(this.allList).find('li:not(.ui-draggable)').draggable({
+            //     cursor: "move",
+            //     helper: "clone",
+            //     start: function(e) {
+            //         self.dragActive = true;
+            //         v1.currentApp.view.sectionsManager.highlightSections();
+            //     },
+            //     stop: function(e) {
+            //         self.dropped(e);
+            //         v1.currentApp.view.sectionsManager.unhighlightSections();
+            //     },
+            //     iframeFix: true
+            // });
 
         },
 
@@ -152,23 +153,23 @@ define(function(require, exports, module) {
             this.searchSection.$el.find('li:not(.ui-draggable)').on('click', function(e) {
                 self.dropped(e);
             });
-            this.searchSection.$el.find('li:not(.ui-draggable)').draggable({
-                cursor: "move",
-                cursorAt: {
-                    top: 0,
-                    left: 0
-                },
-                helper: "clone",
-                start: function(e) {
-                    self.dragActive = true;
-                    v1.currentApp.view.sectionsManager.highlightSections();
-                },
-                stop: function(e) {
-                    self.dropped(e);
-                    v1.currentApp.view.sectionsManager.unhighlightSections();
-                },
-                iframeFix: true
-            });
+            // this.searchSection.$el.find('li:not(.ui-draggable)').draggable({
+            //     cursor: "move",
+            //     cursorAt: {
+            //         top: 0,
+            //         left: 0
+            //     },
+            //     helper: "clone",
+            //     start: function(e) {
+            //         self.dragActive = true;
+            //         v1.currentApp.view.sectionsManager.highlightSections();
+            //     },
+            //     stop: function(e) {
+            //         self.dropped(e);
+            //         v1.currentApp.view.sectionsManager.unhighlightSections();
+            //     },
+            //     iframeFix: true
+            // });
         },
 
         renderUIElementList: function() {
@@ -190,19 +191,19 @@ define(function(require, exports, module) {
 
             var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
             var self = this;
-            $(li).draggable({
-                cursor: "move",
-                helper: "clone",
-                start: function(e) {
-                    self.dragActive = true;
-                    v1.currentApp.view.sectionsManager.highlightSections();
-                },
-                stop: function(e) {
-                    self.dropped(e);
-                    v1.currentApp.view.sectionsManager.unhighlightSections();
-                },
-                iframeFix: true
-            });
+            // $(li).draggable({
+            //     cursor: "move",
+            //     helper: "clone",
+            //     start: function(e) {
+            //         self.dragActive = true;
+            //         v1.currentApp.view.sectionsManager.highlightSections();
+            //     },
+            //     stop: function(e) {
+            //         self.dropped(e);
+            //         v1.currentApp.view.sectionsManager.unhighlightSections();
+            //     },
+            //     iframeFix: true
+            // });
             $(li).on('click', self.dropped);
         },
 
@@ -214,23 +215,23 @@ define(function(require, exports, module) {
 
             var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
             var self = this;
-            $(li).draggable({
-                cursor: "move",
-                cursorAt: {
-                    top: 0,
-                    left: 0
-                },
-                helper: "clone",
-                start: function(e) {
-                    self.dragActive = true;
-                    v1.currentApp.view.sectionsManager.highlightSections();
-                },
-                stop: function(e) {
-                    self.dropped(e);
-                    v1.currentApp.view.sectionsManager.unhighlightSections();
-                },
-                iframeFix: true
-            });
+            // $(li).draggable({
+            //     cursor: "move",
+            //     cursorAt: {
+            //         top: 0,
+            //         left: 0
+            //     },
+            //     helper: "clone",
+            //     start: function(e) {
+            //         self.dragActive = true;
+            //         v1.currentApp.view.sectionsManager.highlightSections();
+            //     },
+            //     stop: function(e) {
+            //         self.dropped(e);
+            //         v1.currentApp.view.sectionsManager.unhighlightSections();
+            //     },
+            //     iframeFix: true
+            // });
         },
 
         appendCustomWidget: function() {
@@ -241,23 +242,23 @@ define(function(require, exports, module) {
 
             var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
             var self = this;
-            $(li).draggable({
-                cursor: "move",
-                cursorAt: {
-                    top: 0,
-                    left: 0
-                },
-                helper: "clone",
-                start: function(e) {
-                    self.dragActive = true;
-                    v1.currentApp.view.sectionsManager.highlightSections();
-                },
-                stop: function(e) {
-                    self.dropped(e);
-                    v1.currentApp.view.sectionsManager.unhighlightSections();
-                },
-                iframeFix: true
-            });
+            // $(li).draggable({
+            //     cursor: "move",
+            //     cursorAt: {
+            //         top: 0,
+            //         left: 0
+            //     },
+            //     helper: "clone",
+            //     start: function(e) {
+            //         self.dragActive = true;
+            //         v1.currentApp.view.sectionsManager.highlightSections();
+            //     },
+            //     stop: function(e) {
+            //         self.dropped(e);
+            //         v1.currentApp.view.sectionsManager.unhighlightSections();
+            //     },
+            //     iframeFix: true
+            // });
         },
 
         renderAuthenticationForms: function() {

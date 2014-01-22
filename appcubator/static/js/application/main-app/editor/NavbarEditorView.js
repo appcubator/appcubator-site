@@ -88,7 +88,6 @@ function(LinkEditorView) {
       this.subviews.push(newLinkEditor);
       this.$linksList.append(newLinkEditor.render().el);
 
-      console.log(this.$linksList);
       util.scrollToBottom($('.links-list'));
     },
 
