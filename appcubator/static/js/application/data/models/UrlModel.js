@@ -6,8 +6,8 @@ define(['backbone'], function(Backbone) {
     initialize: function(bone) {
       var urlparts = [];
 
-      if(bone.urlparts) {
-        urlparts = _(bone.urlparts).map(function(value) {
+      if(bone) {
+        urlparts = _(bone).map(function(value) {
           return {
             value: value
           };
@@ -32,7 +32,7 @@ define(['backbone'], function(Backbone) {
       var value = this.get('urlparts').remove(value);
     },
 
-    serialize: function() {
+    toJSON: function() {
       var json = this.get('urlparts').pluck('value');
       return json;
     }

@@ -138,6 +138,8 @@ define(function(require, exports, module) {
             self.tutorialPage = "Introduction";
             self.changePage(EditorView, { pageId: pageId, appModel: this.model }, "", function() {});
             this.toolBar.setPage(this.pageId);
+            this.$leftMenu = this.$el.find('.left-menu-panel-l1 ');
+            this.setupMenuHeight();
             self.trigger('editor-loaded');
             olark('api.box.hide');
         },
@@ -535,6 +537,7 @@ define(function(require, exports, module) {
 
         setupMenuHeight: function() {
             var height = $(document).height();
+            
             this.$leftMenu.each(function() {
                 console.log(this);
                 $(this).height(height);

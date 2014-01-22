@@ -170,6 +170,10 @@ define([
             return json;
         };
 
+        Backbone.Collection.prototype.setGenerator = function(generatorStr) {
+            this.generate = generatorStr;
+        };
+        
         Backbone.Collection.prototype.serialize = function(options) {
             var json = {};
 

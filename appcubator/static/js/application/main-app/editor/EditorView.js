@@ -183,7 +183,18 @@ define(function(require, exports, module) {
                 this.$el.find('.options-area').append(templatePicker.render().el);
             }
             else { */
-            
+            console.log($(iframe).contents().find('.ui-sortable'));
+
+            $(iframe).contents().find('.ui-sortable').droppable({
+                accept: ".drag",
+                drop: function( event, ui ) {
+                    // var html = '<div class="droptrue">'+ ui.draggable.html() + '</div>';
+                    // //alert(html);
+                    // $(this).append(html);
+                    alert('yolo');
+                }
+            });
+
             this.$el.find('.page-wrapper').addClass('show');
             this.iframeProxy.updateScrollbar();
 

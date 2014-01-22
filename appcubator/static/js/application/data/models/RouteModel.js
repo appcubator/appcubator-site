@@ -6,7 +6,7 @@ define([
     ],
     function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
 
-        var PageModel = Backbone.Model.extend({
+        var RouteModel = Backbone.Model.extend({
             
             defaults: {
                 "name": "default-page"
@@ -24,6 +24,10 @@ define([
                 }
                 
                 this.set('url', new UrlModel(bone.url || {}));
+            },
+
+            getUrlString: function() {
+                return '/' + this.get('url').toJSON().join('/');
             },
 
             addToContext: function(tableM) {
@@ -152,5 +156,5 @@ define([
             }
         });
 
-        return PageModel;
+        return RouteModel;
     });

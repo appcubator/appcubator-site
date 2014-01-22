@@ -13,17 +13,20 @@ define([
         },
         initialize: function(options) {
             _.bindAll(this);
-            this.model = options.model;
 
+            this.model = options.model;
             this.listenTo(this.model, 'change:url', this.renderUrl, this);
 
             // generate list of link options
-            // this.linkOptions = _(v1State.getPages().getContextFreePageModels()).map(function(page) {
-            //     return {
-            //         url: 'internal://' + page.get('name'),
-            //         title: page.get('name')
-            //     };
-            // });
+            console.log(v1.currentApp.model.get('routes'));
+            this.linkOptions = v1.currentApp.model.get('routes').map(function(routeModel) {
+                console.log(routeModel.getUrlString());
+                console.log(routeModel);
+                return {
+                    url: routeModel.getUrlString(),
+                    title: routeModel.get('name')
+                };
+            });
 
             // if the current link is an external link,
             // we need to add it to the link options
@@ -60,14 +63,10 @@ define([
                 // if the link model doesn't have a URL,
                 // 'Choose a Page' must be selected
                 var selected = (link.url === self.model.get('url')) ? "selected" : "";
-                if (self.isInternalLink(link.url)) {
-                    var pageName = link.url.replace('internal://', '');
-                    htmlString += '<option value="' + link.url + '"' + selected + '>' + pageName + '</option>';
-                } else {
-                    htmlString += '<option value="' + link.url + '"' + selected + '>' + link.url + '</option>';
-                }
+                htmlString += '<option value="' + link.url + '"' + selected + '>' + link.title + '</option>';
 
             });
+
             htmlString += '<option value="external">External Link...</option>';
             select.html(htmlString);
         },
@@ -85,12 +84,8 @@ define([
                 title: selectedItem.title
             });
 
-            // if non-internal link chosen,
-            // replace select box with textfield
-            if (selectedItem.url.indexOf('internal://') === -1) {
-                // if 'External Link...' option is chosen
-                // create a new link option
-                if (selectedItem.url === 'external') {
+
+            if (selectedItem.url === 'external') {
                     var newLink = {
                         title: 'External Link Title',
                         url: 'http://'
@@ -100,7 +95,6 @@ define([
                     this.renderLinkOptions();
                     this.$select.hide();
                     this.$urlContainer.show().find('input').focus();
-                }
             }
 
             this.renderTitle();
@@ -130,7 +124,8 @@ define([
             });
             var newAttrs = _.clone(oldAttrs);
             newAttrs.title = newTitle;
-            this.updateLinkOptions(oldAttrs, newAttrs);
+            // this.updateLinkOptions(oldAttrs, newAttrs);
+            
             return false;
         },
 

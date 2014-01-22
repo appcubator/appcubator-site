@@ -144,6 +144,12 @@ require([
 
             //var appState = (appState || null);
 
+            // making the dashboard work
+            var apps = apps || false;
+            if(apps && !appState) {
+                appState = _.last(apps);
+            }
+
             if (appState) {
                 /* Initialize v1State */
                 v1State = new Backbone.Model();

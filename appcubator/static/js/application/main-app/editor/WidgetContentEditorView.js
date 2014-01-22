@@ -41,7 +41,7 @@ define(function(require, exports, module) {
             if (this.model.has('src')) {
                 this.el.appendChild(this.renderSrcInfo());
             }
-            if (this.model.has('href')) {
+            if (this.model.has('href') || this.model.generate == "uielements.design-button") {
                 this.el.appendChild(this.renderHrefInfo());
             }
         },
@@ -51,7 +51,7 @@ define(function(require, exports, module) {
 
             // return this.hrefLi;
 
-            var href = (this.model.get('data').get('content_attribs').get('href') || null);
+            var href = (this.model.get('href') || null);
             var li = document.createElement('li');
             li.className = "w-section change-link-btn";
             if (href) {
@@ -214,7 +214,10 @@ define(function(require, exports, module) {
 
         clickedChangeHref: function() {
             var self = this;
-            var listOfPages = this.model.getListOfPages();
+            var listOfPages = v1.currentApp.model.get('routes').map(function(routeModel) {
+                return { name: routeModel.get('name'), val: routeModel.getUrlString() };
+            });
+
             var href = (this.model.get('href') || null);
 
             if (href === null) {
@@ -222,17 +225,13 @@ define(function(require, exports, module) {
                     name: "Currently no Target",
                     val: null
                 };
-            } else if (String(href).indexOf('internal://') < 0) {
+            } else {
                 href = {
                     name: href,
                     val: href
                 };
-            } else {
-                href = {
-                    name: href.replace('internal://', ''),
-                    val: href
-                };
             }
+
             var selectView = new SelectView(listOfPages, href, true, {
                 maxHeight: 5
             });
@@ -248,16 +247,19 @@ define(function(require, exports, module) {
         },
 
         changeHref: function(inp) {
+            console.log(inp);
+
             var self = this;
             var target = inp;
             if (target == "External Link") {
                 self.hrefLi.innerHTML = '<form id="external-link-form"><input id="external-link-input" type="text" placeholder="http://"></form>';
                 $('#external-link-input').focus();
                 return;
-            } else if (this.model.get('data').get('context')) {
-                target = 'internal://' + target;
-                target += ('/' + this.model.get('data').get('context'));
             }
+            // else if (this.model.get('context')) {
+            //     target = 'internal://' + target;
+            //     target += ('/' + this.model.get('data').get('context'));
+            // }
             this.model.set('href', target);
             this.renderHrefInfo();
         },
