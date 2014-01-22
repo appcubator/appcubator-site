@@ -229,7 +229,7 @@ def clone(request, app_id):
 
         # this adds it to the deployment queue. non-blocking basically.
         new_app = App.objects.get(pk=new_app.id)
-        new_app.deploy()
+        #new_app.deploy()
 
         return redirect(welcome)
     else:
