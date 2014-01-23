@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 from deis import DeisClient
 
 def login_if_required(dc):
-    if not dc._settings['controller']:
+    if not dc._settings.get('controller'):
         dc.auth_login({'<controller>':settings.DEIS_CONTROLLER,
                        '--username':settings.DEIS_USERNAME,
                        '--password':settings.DEIS_PASSWORD})
