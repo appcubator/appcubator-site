@@ -122,21 +122,23 @@ define(function(require, exports, module) {
             var leftDist = offset.left + offsetFrame.left;
             var topDist = offset.top + offsetFrame.top;
 
+            this.$el.find('.arw').remove();
+
             switch (this.location) {
                 case "right":
-                    this.$el.append('<div class="left-arrow"></div>');
+                    this.$el.append('<div class="left-arrow arw"></div>');
                     leftDist += element.getBoundingClientRect().width;
                     this.$el.addClass('fadeInRight');
 
                     break;
                 case "bottom":
-                    this.$el.append('<div class="top-arrow"></div>');
+                    this.$el.append('<div class="top-arrow arw"></div>');
                     topDist += element.getBoundingClientRect().height;
                     this.$el.addClass('fadeInUp');
 
                     break;
                 case "left":
-                    this.$el.append('<div class="right-arrow"></div>');
+                    this.$el.append('<div class="right-arrow arw"></div>');
                     this.$el.addClass('fadeInLeft');
                     break;
                 case "top":
