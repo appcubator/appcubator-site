@@ -145,6 +145,20 @@
 
 .url-bar {
   position: relative;
+  text-align: left;
+}
+
+.url-field:hover {
+  border-color: #71c5ef;
+
+  -webkit-box-shadow: 0 0 4px 0 rgba(60, 60, 60, 0.4);
+  box-shadow: 0 0 4px 0 rgba(60, 60, 60, 0.4);
+}
+
+
+.url-field {
+  display: inline-block;
+
   background-color: #fff;
   border-radius: 4px;
   height: 36px;
@@ -154,8 +168,8 @@
   padding-left: 10px;
   border: 1px solid #CCC;
   cursor: pointer;
-  text-align: left;
-  
+  width: 95%;
+
   -webkit-transition: border-color 60ms linear;
   -moz-transition: border-color 60ms linear;
   -o-transition: border-color 60ms linear;
@@ -163,17 +177,17 @@
   transition: border-color 60ms linear;
 }
 
-.url-bar:hover {
-  border-color: #71c5ef;
-
-  -webkit-box-shadow: 0 0 4px 0 rgba(60, 60, 60, 0.4);
-  box-shadow: 0 0 4px 0 rgba(60, 60, 60, 0.4);
-}
-
 .url-bar .refresh-page {
   position: absolute;
   right: 10px;
   top: 10px;
+  display: inline-block;
+  width: 28px;
+  vertical-align: top;
+}
+
+.url-bar .refresh-page img {
+  width: 94%;
 }
 
 .page.full {

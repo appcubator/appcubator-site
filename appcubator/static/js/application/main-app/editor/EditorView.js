@@ -31,7 +31,7 @@ define(function(require, exports, module) {
         events: {
             'click .menu-button.help'    : 'help',
             'click .menu-button.question': 'question',
-            'click .url-bar'             : 'clickedUrl',
+            'click .url-field'           : 'clickedUrl',
             'click .refresh-page'        : 'refreshPage',
             'click #page-info'           : 'pageInfo',
             'click #close-page-info'     : 'closePageInfo',
@@ -206,8 +206,7 @@ define(function(require, exports, module) {
         },
 
         renderUrlBar: function() {
-            this.$el.find('.url-bar').html(this.urlModel.getUrlString());
-            this.$el.find('.url-bar').append('<div class="refresh-page">r</div>');
+            this.$el.find('.url-field').html(this.urlModel.getUrlString());
         },
 
         help: function(e) {
