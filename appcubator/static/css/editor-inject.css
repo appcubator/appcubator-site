@@ -277,21 +277,57 @@ body {
 
 .section-view .section-editor-view {
   position: absolute;
-  top: 60px;
+  top: 64px;
   right: 60px;
   font-size: 32px;
   font-weight: bold;
   display: none;
-  width: 150px;
+  width: 50px;
+  height: 40px;
+  line-height: 40px;
+
+  -webkit-transition: all 60ms linear;
+  -moz-transition: all 60ms linear;
+  -o-transition: all 60ms linear;
+  -ms-transition: all 60ms linear;
+  transition: all 60ms linear;
+
+  background-color: #0f2d40;
+  border-radius: 6px;
+
+  text-align: right;
 }
 
 .section-view .section-editor-view input {
-  width: 100px;
+  width: 120px;
   font-size: 14px;
+  vertical-align: middle;
+  border-radius: 4px;
 }
 
 .section-view:hover .section-editor-view {
   display: inline-block;
+  overflow: hidden;
+}
+
+.section-editor-view:hover {
+    width: 200px;
+}
+.section-editor-view img {
+  height: 70%;
+  margin-top: 12%;
+  vertical-align: top;
+  margin-right: 6%;
+}
+
+.section-editor-view:hover img.icon {
+  display: none;
+}
+
+.section-editor-view .remove-section {
+  display: inline-block;
+  color: #fff;
+  cursor: pointer;
 }
 
 .ycol {
@@ -302,4 +338,8 @@ body {
 
 .ycol.fancy-borders {
   border: 1px dashed #333;
+}
+
+.section-editor-view {
+  display: inline-block;
 }

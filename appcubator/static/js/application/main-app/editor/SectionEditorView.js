@@ -32,6 +32,7 @@ define(function(require, exports, module) {
 
         render: function() {
             var template = [
+                    '<img class="icon" src="/static/img/edit.png">',
                     '<input type="text" class="class_name" value="<%= className %>">',
                     '<div class="remove-section">×</div>'].join('\n');
 
