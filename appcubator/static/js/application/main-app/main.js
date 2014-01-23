@@ -138,19 +138,14 @@ require([
         Heyoffline,
         Backbone) {
 
+        // making the dashboard work
+
         //var CustomWidgetEditorModal = require('editor/CustomWidgetEditorModal');
 
         $(document).ready(function() {
 
-            //var appState = (appState || null);
-
-            // making the dashboard work
-            var apps = apps || false;
-            if(apps && !appState) {
-                appState = _.last(apps);
-            }
-
             if (appState) {
+                console.log(appState);
                 /* Initialize v1State */
                 v1State = new Backbone.Model();
                 v1State = new AppModel(appState);

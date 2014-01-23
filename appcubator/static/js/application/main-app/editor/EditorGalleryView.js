@@ -78,23 +78,23 @@ define(function(require, exports, module) {
         bindDraggable: function() {
             var self = this;
 
-            // $(this.allList).find('li:not(.ui-draggable)').on('click', function(e) {
-            //     self.dropped(e);
-            // });
+            $(this.allList).find('li:not(.ui-draggable)').on('click', function(e) {
+                self.dropped(e);
+            });
             
-            // $(this.allList).find('li:not(.ui-draggable)').draggable({
-            //     cursor: "move",
-            //     helper: "clone",
-            //     start: function(e) {
-            //         self.dragActive = true;
-            //         v1.currentApp.view.sectionsManager.highlightSections();
-            //     },
-            //     stop: function(e) {
-            //         self.dropped(e);
-            //         v1.currentApp.view.sectionsManager.unhighlightSections();
-            //     },
-            //     iframeFix: true
-            // });
+            $(this.allList).find('li:not(.ui-draggable)').draggable({
+                cursor: "move",
+                helper: "clone",
+                start: function(e) {
+                    self.dragActive = true;
+                    v1.currentApp.view.sectionsManager.highlightSections();
+                },
+                stop: function(e) {
+                    self.dropped(e);
+                    v1.currentApp.view.sectionsManager.unhighlightSections();
+                },
+                iframeFix: true
+            });
 
         },
 

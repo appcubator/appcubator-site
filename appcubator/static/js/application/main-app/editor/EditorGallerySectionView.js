@@ -40,19 +40,19 @@ define(function(require, exports, module) {
             this.listWrapper.className = "elements-panel ";
 
             this.list = document.createElement('ul');
-            if(this.options.index > -1) {
-                this.listWrapper.className += 'top'+this.options.index;
+            if (this.options.index > -1) {
+                this.listWrapper.className += 'top' + this.options.index;
             }
 
             this.listWrapper.appendChild(this.list);
             this.list.style = '';
             this.el.appendChild(this.listWrapper);
 
-            $(this.list).sortable({
-                connectWith: '.ycol',
-                iframeFix: true
-            });
-            console.log("sroting")
+            // $(this.list).sortable({
+            //     connectWith: '.ycol',
+            //     iframeFix: true
+            // });
+
             return this;
         },
 
@@ -68,7 +68,7 @@ define(function(require, exports, module) {
 
             this.list.appendChild(li);
 
-            if(this.searcher) {
+            if (this.searcher) {
                 this.searcher.register(id, className, text, icon);
             }
 
@@ -86,7 +86,7 @@ define(function(require, exports, module) {
             });
             this.list.appendChild(li);
 
-            if(this.searcher) {
+            if (this.searcher) {
                 this.searcher.register(id, className, text, icon);
             }
 
@@ -127,10 +127,13 @@ define(function(require, exports, module) {
         mouseleave: function(e) {
             if (this.timer) clearTimeout(this.timer);
             var self = this;
-            this.timer = setTimeout(function() {
-                if (!self.parentView.dragActive && !self.parentView.slideDownActive) self.hide();
-                if (self.timer) clearTimeout(self.timer);
-            }, 130);
+            this.timer = setTimeout(this.checkToHide, 130);
+        },
+
+        checkToHide: function() {
+            if (this.timer) clearTimeout(this.timer);
+            if (!this.parentView.dragActive && !this.parentView.slideDownActive) return this.hide();
+            this.timer = setTimeout(this.checkToHide, 2000);
         },
 
         showSectionTutorial: function(e) {

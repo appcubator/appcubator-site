@@ -53,7 +53,11 @@
 {% block js %}
   <script type="text/javascript">
     {% for a in apps %}
-      {% if forloop.last %}var initAppId = {{ a.pk }};{% endif %}
+      {% if forloop.last %}
+        var initAppId = {{ a.pk }};
+        var appState = {{ a.state_json|fix_solidus|safe }};
+        var uieState = {{ a.uie_state_json|fix_solidus|safe }}
+      {% endif %}
     {% endfor %}
 
     var apps = {};
