@@ -14,6 +14,8 @@ lessc --verbose --rootpath=/static/css/app/ -x --yui-compress --ru --line-number
 echo "[BUILD] Compiled app/style.less to internal.css"
 lessc --verbose --rootpath=/static/css/ -x --yui-compress --ru --line-numbers=mediaquery ./static/css/documentation.less ./static/css/documentation.css
 echo "[BUILD] Compiled documentation.less to documentation.css"
+lessc --verbose --rootpath=/static/css/ -x --yui-compress --ru --line-numbers=mediaquery ./static/css/external-website.less ./static/css/external-website.css
+echo "[BUILD] Compiled external-website.less to external-website.css"
 r.js -o ./static/build/app.build.js
 mv ./static/js/application/main-app/main.js.backup ./static/js/application/main-app/main.js
 
