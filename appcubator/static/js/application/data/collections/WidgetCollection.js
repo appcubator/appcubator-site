@@ -41,6 +41,86 @@ define([
                 return ret;
             },
 
+            createElement: function(layout, className, id) {
+                className = String(className).replace('ui-draggable', '');
+                className = String(className).replace('full-width', '');
+                className = String(className).replace('half-width', '');
+                className = String(className).replace('authentication', '');
+                className = String(className).trim();
+
+                switch (className) {
+                    case "login":
+                        return this.createLocalLoginForm(layout, id);
+                    case "signup":
+                        return this.createLocalSignupForm(layout, id);
+                    case "thirdparty":
+                        return this.createThirdPartyLogin(layout, id);
+                    case "facebooksignup":
+                        return this.createFacebookSignup(layout, id);
+                    case "twittersignup":
+                        return this.createTwitterSigup(layout, id);
+                    case "linkedinsignup":
+                        return this.createLinkedInSignup(layout, id);
+                    case "context-entity":
+                        return this.createContextEntityNode(layout, id);
+                    case "context-nested-entity":
+                        return this.createNestedContextEntityNode(layout, id);
+                    case "entity-buy-button":
+                        return this.createBuyButton(layout, id);
+                    case "entity-create-form":
+                        return this.createCreateForm(layout, id);
+                    case "entity-edit-form":
+                        return this.createEditForm(layout, id);
+                    case "entity-table":
+                        return this.createEntityTable(layout, id);
+                    case "entity-list":
+                        return this.createEntityList(layout, id);
+                    case "entity-searchbox":
+                        return this.createSearchBox(layout, id);
+                    case "entity-searchlist":
+                        return this.createSearchList(layout, id);
+                    case "current-user":
+                        return this.createCurrentUserNode(layout, id);
+                    case "uielement":
+                        var type = id.replace('type-', '');
+
+                        if (type == "boxes" || type == "imageslider" || type == "custom-widget") {
+                            layout.l_padding = 0;
+                            layout.r_padding = 0;
+                        }
+
+                        if (type == "imageslider") {
+                            return this.createImageSlider(layout);
+                        }
+
+                        if (type == "twitterfeed") {
+                            return this.createTwitterFeed(layout);
+                        }
+
+                        if (type == "fbshare") {
+                            return this.createFacebookShare(layout);
+                        }
+
+                        if (type == "embedvideo") {
+                            return this.createVideoEmbed(layout);
+                        }
+
+                        if (type == "custom-widget") {
+                            return this.createCustomWidget(layout);
+                        }
+
+                        return this.createNodeWithFieldTypeAndContent(layout, type, {});
+                        // widget.setupPageContext(v1.currentApp.getCurrentPage());
+                    case "lambda-create-form":
+                        v1State.getCurrentPage().trigger('creat-form-dropped');
+                        return new PickCreateFormEntityView(layout, id);
+                    case "custom-widget":
+                        return this.createCustomWidget(layout, id);
+                    default:
+                        throw "Unknown type dropped to the editor.";
+                }
+            },
+
             createThirdPartyLogin: function(layout, provider) {
                 var widget = {};
 
@@ -144,9 +224,11 @@ define([
                     widget.layout.height = 8;
                 }
 
-                var generator = "uielements.design-"+ type;
+                var generator = "uielements.design-" + type;
 
-                if (type == "text" && widget.content) { widget.content = this.loremIpsum(); }
+                if (type == "text" && widget.content) {
+                    widget.content = this.loremIpsum();
+                }
                 if (content_ops.content) widget.content = content_ops.content;
                 if (content_ops.href) widget.content_attribs.href = content_ops.href;
                 if (content_ops.src_content) widget.content_attribs.src_content = content_ops.src_content;
@@ -351,7 +433,7 @@ define([
 
                 var widgetModel = new WidgetModel(widget);
                 widgetModel.setGenerator('uielements.design-fbshare');
-                
+
                 return this.push(widgetModel);
             },
 

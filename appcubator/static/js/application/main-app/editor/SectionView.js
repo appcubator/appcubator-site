@@ -48,6 +48,7 @@ define(function(require, exports, module) {
             this.renderContent();
             this.sectionEditorView = new SectionEditorView(this.model).render();
             this.$el.append(this.sectionEditorView.el);
+            this.el.id = "section-wrapper-" + this.model.cid;
 
             return this;
         },
@@ -197,16 +198,16 @@ define(function(require, exports, module) {
 
             var dict = this.model.getArrangedModels();
             var self = this;
+            console.log(model);
 
-            setTimeout(function() {
-                model.get('layout').set('col', self.currentColumn);
-                model.get('layout').set('row', dict[self.currentColumn].length);
 
-                var $col = self.$el.find('#col'+self.currentColumn);
-                var widgetView = new WidgetView(model);
-                $col.append(widgetView.render().el);
+            var col = model.get('layout').get('col');
+            model.get('layout').set('row', dict[col].length);
+            var $col = self.$el.find('#col'+col);
 
-            }, 200);
+            console.log($col);
+            var widgetView = new WidgetView(model);
+            $col.append(widgetView.render().el);
 
         },
 

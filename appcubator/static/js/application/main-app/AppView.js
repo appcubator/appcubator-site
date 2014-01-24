@@ -55,8 +55,10 @@ define(function(require, exports, module) {
             var mainContainer = document.getElementById('main-container');
             mainContainer.appendChild(cleanDiv);
 
-            this.view = new EditorView({ pageId : 0, appModel: this.model });
-            this.view.setElement(cleanDiv).render();
+            // alert('yo');
+
+            // this.view = new EditorView({ pageId : 0, appModel: this.model });
+            // this.view.setElement(cleanDiv).render();
 
             this.toolBar.setPage(this.pageId);
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
@@ -118,7 +120,7 @@ define(function(require, exports, module) {
             var self = this;
             self.tutorialPage = "Pages";
             require(['app/pages/PagesView'], function(PagesView) {
-                $('.page').fadeIn();
+                $('#page').fadeIn();
                 self.changePage(PagesView, {}, tutorial, function() {
                     self.trigger('pages-loaded');
                     $('.menu-app-pages').addClass('active');
@@ -181,7 +183,7 @@ define(function(require, exports, module) {
             $("html, body").animate({
                 scrollTop: 0
             });
-            $('.page').fadeIn();
+            $('#page').fadeIn();
             post_render.call();
             
             if (tutorial && tutorial === 'tutorial/') {

@@ -18,6 +18,7 @@ define(function(require, exports, module) {
     var DeployView = require('app/DeployView');
     var RedoController = require('app/RedoController');
     var CSSEditorView = require('app/css-editor/CSSEditorView');
+    var SectionShadowView = require('editor/SectionShadowView');
 
     require('jquery-ui');
     require('mixins/BackboneConvenience');
@@ -100,6 +101,7 @@ define(function(require, exports, module) {
         },
 
         render: function() {
+
             var self = this;
             if (!this.el.innerHTML) {
                 this.el.innerHTML = _.template(util.getHTML('editor-page'), {
@@ -159,10 +161,12 @@ define(function(require, exports, module) {
             //this.marqueeView = proxy.setupMarqueeView(this.sectionsCollection.getAllWidgets());
 
             this.sectionsManager = proxy.setupSectionsManager(this.sectionsCollection);
+            this.sectionShadowView = new SectionShadowView(this.sectionsCollection);
 
             self.iframedoc = innerDoc;
             //self.marqueeView.render();
             self.sectionsManager.render();
+            self.sectionShadowView.render();
 
             self.navbar.setElement(innerDoc.getElementById('navbar')).render();
             self.footer.setElement(innerDoc.getElementById('footer')).render();
@@ -185,15 +189,15 @@ define(function(require, exports, module) {
             else { */
             console.log($(iframe).contents().find('.ui-sortable'));
 
-            $(iframe).contents().find('.ui-sortable').droppable({
-                accept: ".drag",
-                drop: function( event, ui ) {
-                    // var html = '<div class="droptrue">'+ ui.draggable.html() + '</div>';
-                    // //alert(html);
-                    // $(this).append(html);
-                    alert('yolo');
-                }
-            });
+            // $(iframe).contents().find('.ui-sortable').droppable({
+            //     accept: ".drag",
+            //     drop: function( event, ui ) {
+            //         // var html = '<div class="droptrue">'+ ui.draggable.html() + '</div>';
+            //         // //alert(html);
+            //         // $(this).append(html);
+            //         alert('yolo');
+            //     }
+            // });
 
             this.$el.find('.page-wrapper').addClass('show');
             this.iframeProxy.updateScrollbar();

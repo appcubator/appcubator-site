@@ -27,6 +27,11 @@ define(function(require, exports, module) {
             return els;
         },
 
+        addElement: function(colId, id, className) {
+            var layout = { col: colId };
+            this.get('uielements').createElement(layout, className, id);
+        },
+
         toJSON: function() {
             var json = _.clone(this.attributes);
             json.uielements = json.uielements.serialize();

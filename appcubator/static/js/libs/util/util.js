@@ -383,9 +383,40 @@ define(['backbone'], function() {
             overlayEl.style.width = $el.outerWidth() + 'px';
             overlayEl.style.height = $el.outerHeight() + 'px';
             document.body.appendChild(overlayEl);
+
             $(overlayEl).one('click', function(e) {
                 $(e.currentTarget).remove();
             });
+
+            return overlayEl;
+        },
+
+        addShadow: function(el, pageWrapper, frame, doc) {
+            var $el = $(el);
+            frame = frame || window;
+
+            var overlayEl = document.createElement('div');
+            overlayEl.className = 'global-overlay';
+            var position = $el.offset();
+            if(doc) {
+                position.top -= $(doc).scrollTop();
+                console.log('-' + $(doc).scrollTop());
+            }
+
+            if(frame != window) {
+                var n = $(frame).offset().top - $(pageWrapper).offset().top;
+                position.top += n;
+            }
+
+            overlayEl.style.position = 'fixed';
+            overlayEl.style.top = position.top + 'px';
+            overlayEl.style.left = position.left + 'px';
+            overlayEl.style.width = $el.outerWidth() + 'px';
+            overlayEl.style.height = $el.outerHeight() + 'px';
+            overlayEl.style.color = 'red';
+            overlayEl.style.fontSize = '24px';
+            overlayEl.style.border = '1px solid #ccc';
+
             return overlayEl;
         },
 

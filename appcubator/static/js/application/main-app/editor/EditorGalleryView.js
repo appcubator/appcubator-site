@@ -68,6 +68,7 @@ define(function(require, exports, module) {
             this.hideAllSections();
             this.bindDraggable();
 
+
             // listen for changes to url to update context entity section
             // this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
             this.listenTo(v1State.get('tables'), 'add remove', this.renderEntityFormsTablesLists);
@@ -81,17 +82,19 @@ define(function(require, exports, module) {
             $(this.allList).find('li:not(.ui-draggable)').on('click', function(e) {
                 self.dropped(e);
             });
-            
+
             $(this.allList).find('li:not(.ui-draggable)').draggable({
                 cursor: "move",
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
                     v1.currentApp.view.sectionsManager.highlightSections();
+                    v1.currentApp.view.sectionShadowView.displayColumnShadows();
                 },
                 stop: function(e) {
-                    self.dropped(e);
+                    self.dragActive = false;
                     v1.currentApp.view.sectionsManager.unhighlightSections();
+                    v1.currentApp.view.sectionShadowView.hideColumnShadows();
                 },
                 iframeFix: true
             });
@@ -443,95 +446,46 @@ define(function(require, exports, module) {
             this.subviews.splice(this.subviews.indexOf(sectionView), 1);
         },
 
-        dropped: function(e, ui) {
-            this.dragActive = false;
+        // dropped: function(e, ui) {
+        //     this.dragActive = false;
 
-            var left = 0;
-            var top = 1;
-            var itemGallery = document.getElementById('item-gallery');
+        //     var left = 0;
+        //     var top = 1;
+        //     var itemGallery = document.getElementById('item-gallery');
 
-            if (e.type != 'click') {
-                left = this.findLeft(e, ui);
-                top = this.findTop(e, ui);
-                if (util.isRectangleIntersectElement(e.pageX, e.pageY, e.pageX + 80, e.pageY + 80, itemGallery)) return;
-            } else {
-                top = Math.round($('#page').scrollTop() / this.positionVerticalGrid);
-            }
+        //     if (e.type != 'click') {
+        //         left = this.findLeft(e, ui);
+        //         top = this.findTop(e, ui);
+        //         if (util.isRectangleIntersectElement(e.pageX, e.pageY, e.pageX + 80, e.pageY + 80, itemGallery)) return;
+        //     } else {
+        //         top = Math.round($('#page').scrollTop() / this.positionVerticalGrid);
+        //     }
 
-            var layout = {
-                top: top,
-                left: left
-            };
+        //     var layout = {
+        //         top: top,
+        //         left: left
+        //     };
 
-            var targetEl = e.target;
-            if (e.target.tagName != "LI") {
-                targetEl = e.target.parentNode;
-            }
+        //     var targetEl = e.target;
+        //     if (e.target.tagName != "LI") {
+        //         targetEl = e.target.parentNode;
+        //     }
 
-            var className = targetEl.className;
-            var id = targetEl.id;
+        //     var className = targetEl.className;
+        //     var id = targetEl.id;
 
-            util.log_to_server("widget dropped", id, appId);
+        //     util.log_to_server("widget dropped", id, appId);
 
-            this.widgetsCollection = this.getCurrentWidgetCollection().get('uielements');
-
-            return this.createElement(layout, className, id);
-        },
+        //     //this.widgetsCollection = this.getCurrentWidgetCollection().get('uielements');
+        //     //return this.createElement(layout, className, id);
+        // },
 
         getCurrentWidgetCollection: function() {
             return v1.currentApp.view.sectionsManager.currentSectionModel;
         },
 
         createElement: function(layout, className, id) {
-            className = String(className).replace('ui-draggable', '');
-            className = String(className).replace('full-width', '');
-            className = String(className).replace('half-width', '');
-            className = String(className).replace('authentication', '');
-            className = String(className).trim();
-
-            switch (className) {
-                case "login":
-                    return this.createLocalLoginForm(layout, id);
-                case "signup":
-                    return this.createLocalSignupForm(layout, id);
-                case "thirdparty":
-                    return this.createThirdPartyLogin(layout, id);
-                case "facebooksignup":
-                    return this.createFacebookSignup(layout, id);
-                case "twittersignup":
-                    return this.createTwitterSigup(layout, id);
-                case "linkedinsignup":
-                    return this.createLinkedInSignup(layout, id);
-                case "context-entity":
-                    return this.createContextEntityNode(layout, id);
-                case "context-nested-entity":
-                    return this.createNestedContextEntityNode(layout, id);
-                case "entity-buy-button":
-                    return this.createBuyButton(layout, id);
-                case "entity-create-form":
-                    return this.createCreateForm(layout, id);
-                case "entity-edit-form":
-                    return this.createEditForm(layout, id);
-                case "entity-table":
-                    return this.createEntityTable(layout, id);
-                case "entity-list":
-                    return this.createEntityList(layout, id);
-                case "entity-searchbox":
-                    return this.createSearchBox(layout, id);
-                case "entity-searchlist":
-                    return this.createSearchList(layout, id);
-                case "current-user":
-                    return this.createCurrentUserNode(layout, id);
-                case "uielement":
-                    return this.createNode(layout, id);
-                case "lambda-create-form":
-                    v1State.getCurrentPage().trigger('creat-form-dropped');
-                    return new PickCreateFormEntityView(layout, id);
-                case "custom-widget":
-                    return this.createCustomWidget(layout, id);
-                default:
-                    throw "Unknown type dropped to the editor.";
-            }
+            
         },
 
         createLocalLoginForm: function(layout, id) {

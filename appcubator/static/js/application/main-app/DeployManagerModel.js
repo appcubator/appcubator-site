@@ -20,8 +20,8 @@ define(function(require, exports, module) {
 		deploySuccessHandler: function(data, callback){
             var self = this;
             v1.view.whenDeployed(function(data) {
-                alert('deployd');
                 callback.call(this, data);
+                console.log(data);
                 new DeployView(data);
                 util.log_to_server('deployed app', {
                     status: 'success',
