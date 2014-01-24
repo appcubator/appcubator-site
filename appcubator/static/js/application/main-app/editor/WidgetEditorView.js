@@ -90,7 +90,7 @@ define(function(require, exports, module) {
             });
 
             var refresh = function() {
-                // do stuff
+                if(!self.model) return;
                 self.show();
             };
 
@@ -198,6 +198,7 @@ define(function(require, exports, module) {
             this.el.appendChild(this.contentEditor.el);
 
 
+            this.el.appendChild(this.renderSettingsAndDelete('edit-custom-widget-btn', 'Edit Custom Widget'));
             // if (this.model.get('data').has('container_info')) {
             //     action = this.model.get('data').get('container_info').get('action');
 
@@ -307,6 +308,13 @@ define(function(require, exports, module) {
             var li = document.createElement('ul');
             li.className = 'w-section section-' + className;
             li.innerHTML += '<span class="' + className + '  option-button tt" style="width:190px; display: inline-block;">' + buttonText + '</span><span id="delete-widget" class="option-button delete-button tt" style="width:34px;"></span>';
+            return li;
+        },
+
+        renderSettingsAndDelete: function() {
+            var li = document.createElement('ul');
+            li.className = 'w-section';
+            li.innerHTML += '<span class="option-button tt settings" style="width:160px;">Settings</span><span id="delete-widget" class="option-button delete-button tt" style="width:34px;"></span>';
             return li;
         },
 
@@ -431,6 +439,7 @@ define(function(require, exports, module) {
             });
             this.el.innerHTML = '';
             this.el.style.width = '';
+            this.model = null;
 
             this.hide();
         },

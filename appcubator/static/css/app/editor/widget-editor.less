@@ -145,9 +145,11 @@
     left: 100%;
     top: 0;
     background-color: rgba(30, 30, 30, 0.8);
-    padding: 6px;
-    font-weight: bold;
+    padding: 6px 18px;
     margin-left: 10px;
+    line-height:  18px;
+    font-size: 12px;
+    min-width: 120px;
     .border-radius(4px);
   }
 
@@ -236,9 +238,17 @@ div.padding {
   }
 }
 
+.option-button.settings {
+  font-size: 16px;
+}
+
 .option-button.delete-button {
   // margin-left: 6px;
   // display: inline-block;
+  background-image: url('/static/img/trash.png');
+  background-size: auto 60%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .option-button:hover {
