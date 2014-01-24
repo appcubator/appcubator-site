@@ -156,23 +156,6 @@ define(function(require, exports, module) {
             this.searchSection.$el.find('li:not(.ui-draggable)').on('click', function(e) {
                 self.dropped(e);
             });
-            // this.searchSection.$el.find('li:not(.ui-draggable)').draggable({
-            //     cursor: "move",
-            //     cursorAt: {
-            //         top: 0,
-            //         left: 0
-            //     },
-            //     helper: "clone",
-            //     start: function(e) {
-            //         self.dragActive = true;
-            //         v1.currentApp.view.sectionsManager.highlightSections();
-            //     },
-            //     stop: function(e) {
-            //         self.dropped(e);
-            //         v1.currentApp.view.sectionsManager.unhighlightSections();
-            //     },
-            //     iframeFix: true
-            // });
         },
 
         renderUIElementList: function() {
@@ -193,21 +176,6 @@ define(function(require, exports, module) {
             var text = elementModel.get('text');
 
             var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
-            var self = this;
-            // $(li).draggable({
-            //     cursor: "move",
-            //     helper: "clone",
-            //     start: function(e) {
-            //         self.dragActive = true;
-            //         v1.currentApp.view.sectionsManager.highlightSections();
-            //     },
-            //     stop: function(e) {
-            //         self.dropped(e);
-            //         v1.currentApp.view.sectionsManager.unhighlightSections();
-            //     },
-            //     iframeFix: true
-            // });
-            $(li).on('click', self.dropped);
         },
 
         appendLambdaCreate: function() {
@@ -218,23 +186,6 @@ define(function(require, exports, module) {
 
             var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
             var self = this;
-            // $(li).draggable({
-            //     cursor: "move",
-            //     cursorAt: {
-            //         top: 0,
-            //         left: 0
-            //     },
-            //     helper: "clone",
-            //     start: function(e) {
-            //         self.dragActive = true;
-            //         v1.currentApp.view.sectionsManager.highlightSections();
-            //     },
-            //     stop: function(e) {
-            //         self.dropped(e);
-            //         v1.currentApp.view.sectionsManager.unhighlightSections();
-            //     },
-            //     iframeFix: true
-            // });
         },
 
         appendCustomWidget: function() {
@@ -244,24 +195,6 @@ define(function(require, exports, module) {
             var text = 'Custom Widget';
 
             var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
-            var self = this;
-            // $(li).draggable({
-            //     cursor: "move",
-            //     cursorAt: {
-            //         top: 0,
-            //         left: 0
-            //     },
-            //     helper: "clone",
-            //     start: function(e) {
-            //         self.dragActive = true;
-            //         v1.currentApp.view.sectionsManager.highlightSections();
-            //     },
-            //     stop: function(e) {
-            //         self.dropped(e);
-            //         v1.currentApp.view.sectionsManager.unhighlightSections();
-            //     },
-            //     iframeFix: true
-            // });
         },
 
         renderAuthenticationForms: function() {
@@ -446,260 +379,8 @@ define(function(require, exports, module) {
             this.subviews.splice(this.subviews.indexOf(sectionView), 1);
         },
 
-        // dropped: function(e, ui) {
-        //     this.dragActive = false;
-
-        //     var left = 0;
-        //     var top = 1;
-        //     var itemGallery = document.getElementById('item-gallery');
-
-        //     if (e.type != 'click') {
-        //         left = this.findLeft(e, ui);
-        //         top = this.findTop(e, ui);
-        //         if (util.isRectangleIntersectElement(e.pageX, e.pageY, e.pageX + 80, e.pageY + 80, itemGallery)) return;
-        //     } else {
-        //         top = Math.round($('#page').scrollTop() / this.positionVerticalGrid);
-        //     }
-
-        //     var layout = {
-        //         top: top,
-        //         left: left
-        //     };
-
-        //     var targetEl = e.target;
-        //     if (e.target.tagName != "LI") {
-        //         targetEl = e.target.parentNode;
-        //     }
-
-        //     var className = targetEl.className;
-        //     var id = targetEl.id;
-
-        //     util.log_to_server("widget dropped", id, appId);
-
-        //     //this.widgetsCollection = this.getCurrentWidgetCollection().get('uielements');
-        //     //return this.createElement(layout, className, id);
-        // },
-
         getCurrentWidgetCollection: function() {
             return v1.currentApp.view.sectionsManager.currentSectionModel;
-        },
-
-        createElement: function(layout, className, id) {
-            
-        },
-
-        createLocalLoginForm: function(layout, id) {
-            return this.widgetsCollection.createLoginForm(layout);
-        },
-
-        createLocalSignupForm: function(layout, id) {
-            var signupRole = id.replace('entity-user-', '');
-            return this.widgetsCollection.createSignupForm(layout, signupRole);
-        },
-
-        createThirdPartyLogin: function(layout, id) {
-            var provider = String(id).replace('entity-user-', '').replace('_', ' ');
-            return this.widgetsCollection.createThirdPartyLogin(layout, provider);
-        },
-
-        createFacebookSignup: function(layout, id) {
-            var signupRole = id.replace('entity-user-', '');
-            return this.widgetsCollection.createThirdPartySignup(layout, "facebook", signupRole);
-        },
-
-        createTwitterSigup: function(layout, id) {
-            var signupRole = id.replace('entity-user-', '');
-            return this.widgetsCollection.createThirdPartySignup(layout, "twitter", signupRole);
-        },
-
-        createLinkedInSignup: function(layout, id) {
-            var signupRole = id.replace('entity-user-', '');
-            return this.widgetsCollection.createThirdPartySignup(layout, "linkedin", signupRole);
-        },
-
-        createContextEntityNode: function(layout, id) {
-            var hash = String(id).replace('context-field-', '').split('-');
-            var entityM = v1State.getTableModelWithCid(hash[0]);
-            var fieldM = entityM.getFieldsColl().get(hash[1]);
-
-            var displayType = util.getDisplayType(fieldM.get('type'));
-
-
-            var editorContext = this.editorContext ? this.editorContext : "Page";
-
-            var content_ops = {};
-            if (displayType == "links") {
-                content_ops.content = 'Download ' + fieldM.get('name');
-                content_ops.href = '{{' + editorContext + '.' + entityM.get('name') + '.' + fieldM.get('name') + '}}';
-            } else if (displayType == "images") {
-                content_ops.src_content = '{{' + editorContext + '.' + entityM.get('name') + '.' + fieldM.get('name') + '}}';
-            } else {
-                content_ops.content = '{{' + editorContext + '.' + entityM.get('name') + '.' + fieldM.get('name') + '}}';
-            }
-
-            return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
-        },
-
-        createNestedContextEntityNode: function(layout, id) {
-            var hash = String(id).replace('context-field-', '').split('-');
-            var entity = v1State.getTableModelWithCid(hash[0]);
-            var nested_entity = v1State.getTableModelWithCid(hash[1]);
-            var field = entity.getFieldsColl().get(hash[2]);
-
-            var nested_field = nested_entity.getFieldsColl().get(hash[3]);
-
-            var displayType = util.getDisplayType(nested_field);
-            var editorContext = this.editorContext ? this.editorContext : "Page";
-
-            var content_ops = {};
-
-            if (displayType == "links") {
-                content_ops.content = 'Download ' + field.get('name');
-                content_ops.href = '{{' + editorContext + '.' + entity.get('name') + '.' + field.get('name') + '.' + nested_field.get('name') + '}}';
-            } else if (displayType == "images") {
-                content_ops.src_content = '{{' + editorContext + '.' + entity.get('name') + '.' + field.get('name') + '.' + nested_field.get('name') + '}}';
-            } else {
-                content_ops.content = '{{' + editorContext + '.' + entity.get('name') + '.' + field.get('name') + '.' + nested_field.get('name') + '}}';
-            }
-
-            return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, displayType, content_ops);
-        },
-
-        createCreateForm: function(layout, id) {
-            var cid = String(id).replace('entity-', '');
-            var entity = v1State.get('tables').get(cid);
-            return this.widgetsCollection.createCreateForm(layout, entity);
-        },
-
-        createEditForm: function(layout, id) {
-            var entityType = String(id).replace('entity-', '');
-            var entity = {};
-            var editOn;
-            //if edit form is for a user role
-            if (entityType.indexOf('user') > -1) {
-                var cid = entityType.replace('user-', '');
-                editOn = "CurrentUser";
-                entity = v1State.get('users').get(cid);
-            }
-            //edit form is for a table
-            else {
-                var cid = entityType.replace('table-', '');
-                entity = v1State.get('tables').get(cid);
-                if (!entity) entity = v1State.get('users').get(cid);
-                editOn = "Page." + entity.get('name');
-            }
-
-            return this.widgetsCollection.createEditForm(layout, entity, editOn);
-        },
-
-        createEntityTable: function(layout, id) {
-            var cid = String(id).replace('entity-', '');
-            var entity = v1State.getTableModelWithCid(cid);
-            return this.widgetsCollection.createTable(layout, entity);
-        },
-
-        createEntityList: function(layout, id) {
-            var cid = String(id).replace('entity-', '');
-            var entity = v1State.getTableModelWithCid(cid);
-            return this.widgetsCollection.createList(layout, entity);
-        },
-
-        createSearchBox: function(layout, id) {
-            var cid = String(id).replace('entity-', '');
-            var entity = v1State.getTableModelWithCid(cid);
-            return this.widgetsCollection.createSearchbox(layout, entity);
-        },
-
-        createSearchList: function(layout, id) {
-            var cid = String(id).replace('entity-', '');
-            var entity = v1State.getTableModelWithCid(cid);
-            return this.widgetsCollection.createSearchList(layout, entity);
-        },
-
-        createCurrentUserNode: function(layout, id) {
-            var field_id = String(id).replace('current-user-', '');
-            var field = _(v1State.get('pages').models[pageId].getFields()).find(function(fieldModel) {
-                return (fieldModel.cid == field_id);
-            });
-            var type = util.getDisplayType(field.get('type'));
-            var content_ops = {};
-
-            if (type == "links") {
-                content_ops.content = 'Download ' + field.get('name') + ' of Current User';
-                content_ops.href = '{{CurrentUser.' + field.get('name') + '}}';
-            } else if (type == "images") {
-                content_ops.src_content = '{{CurrentUser.' + field.get('name') + '}}';
-            } else {
-                content_ops.content = '{{CurrentUser.' + field.get('name') + '}}';
-            }
-
-            return this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, content_ops);
-        },
-
-        createBuyButton: function(layout, id) {
-            var cid = String(id).replace('entity-table-', '');
-            var entity = v1State.get('tables').get(cid);
-            var editorContext = this.editorContext ? this.editorContext : "Page";
-            var buyOn = editorContext + "." + entity.get('name');
-
-            return this.widgetsCollection.createBuyButton(layout, entity, buyOn);
-        },
-
-
-        createNode: function(layout, id) {
-            var type = id.replace('type-', '');
-
-            if (type == "boxes" || type == "imageslider" || type == "custom-widget") {
-                layout.l_padding = 0;
-                layout.r_padding = 0;
-            }
-
-            if (type == "imageslider") {
-                return this.widgetsCollection.createImageSlider(layout);
-            }
-
-            if (type == "twitterfeed") {
-                return this.widgetsCollection.createTwitterFeed(layout);
-            }
-
-            if (type == "fbshare") {
-                return this.widgetsCollection.createFacebookShare(layout);
-            }
-
-            if (type == "embedvideo") {
-                return this.widgetsCollection.createVideoEmbed(layout);
-            }
-
-            if (type == "custom-widget") {
-                return this.widgetsCollection.createCustomWidget(layout);
-            }
-
-            var widget = this.widgetsCollection.createNodeWithFieldTypeAndContent(layout, type, {});
-            widget.setupPageContext(v1.currentApp.getCurrentPage());
-            return widget;
-        },
-
-        findLeft: function(e, ui) {
-            var iframe = document.getElementById('page');
-
-            var doc = iframe.contentDocument || iframe.contentWindow.document;
-
-            var offsetLeft = this.eContainer().offsetLeft + document.getElementById('page-wrapper').offsetLeft;
-            offsetLeft += 20;
-            var left = Math.round((e.pageX - offsetLeft) / this.positionHorizontalGrid);
-            if (left < 0) left = 0;
-            if (left + 1 > 12) left = 11;
-
-            return left;
-        },
-
-        findTop: function(e, ui) {
-            var self = this;
-            var offsetScrolledTop = $(self.eContainer()).offset().top;
-            var top = Math.round((e.pageY - offsetScrolledTop - 40 - 90) / this.positionVerticalGrid);
-            if (top < 0) top = 0;
-
-            return top;
         },
 
         addInfoItem: function(text) {

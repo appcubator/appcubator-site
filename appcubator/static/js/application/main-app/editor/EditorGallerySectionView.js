@@ -48,11 +48,6 @@ define(function(require, exports, module) {
             this.list.style = '';
             this.el.appendChild(this.listWrapper);
 
-            // $(this.list).sortable({
-            //     connectWith: '.ycol',
-            //     iframeFix: true
-            // });
-
             return this;
         },
 

@@ -55,11 +55,6 @@ define(function(require, exports, module) {
             var mainContainer = document.getElementById('main-container');
             mainContainer.appendChild(cleanDiv);
 
-            // alert('yo');
-
-            // this.view = new EditorView({ pageId : 0, appModel: this.model });
-            // this.view.setElement(cleanDiv).render();
-
             this.toolBar.setPage(this.pageId);
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
             this.el.appendChild(this.entitiesView.render().el);
