@@ -536,7 +536,6 @@ define(function(require, exports, module) {
             var height = $(document).height();
             
             this.$leftMenu.each(function() {
-                console.log(this);
                 $(this).height(height);
             });
 

@@ -15,10 +15,7 @@ define(function(require, exports, module) {
         widgetsContainer: null,
 
         events: {
-            'mouseover'       : 'hovered',
-            'mouseup'         : 'hovered',
-            'mouseover .ycol' : 'hoveredColumn',
-            'mouseup .ycol'   : 'hoveredColumn'
+
         },
 
         className: "section-view",
@@ -142,7 +139,7 @@ define(function(require, exports, module) {
                         var coll = v1.currentApp.view.sectionsCollection.getAllWidgets();
                         widgetModel = coll.get(cid);
                         widgetModel.collection.remove(widgetModel);
-                        this.collection.add(widgetModel);
+                        this.widgetsCollection.add(widgetModel);
                     }
                     
                     widgetModel.get('layout').set('col', colKey);
@@ -167,7 +164,6 @@ define(function(require, exports, module) {
                     update: function() {
                         self.updated(key, $col);
                     },
-                    containment: document.firstChild,
                     sort: function(e, ui) {
                         var amt = $(window).scrollTop();
                         ui.position.top += amt;
@@ -178,7 +174,8 @@ define(function(require, exports, module) {
                     stop: function(e, ui) {
                         self.unhighlightCols();
                     }
-                }).disableSelection();
+                });
+                //.disableSelection();
 
                 this.colElements[key] = $col.sortable( "toArray" );
 
@@ -198,17 +195,13 @@ define(function(require, exports, module) {
 
             var dict = this.model.getArrangedModels();
             var self = this;
-            console.log(model);
-
 
             var col = model.get('layout').get('col');
             model.get('layout').set('row', dict[col].length);
             var $col = self.$el.find('#col'+col);
 
-            console.log($col);
             var widgetView = new WidgetView(model);
             $col.append(widgetView.render().el);
-
         },
 
         highlightCols: function() {
@@ -220,10 +213,8 @@ define(function(require, exports, module) {
         },
 
         startEditing: function() {
-            this.$el.find('.ycol').each(function() {
-                if($(this).hasClass("ui-sortable")) {
-                    $(this).sortable("disable");
-                }
+            this.$el.find('.ycol.ui-sortable').each(function() {
+                $(this).sortable("disable");
             });
         },
 
@@ -233,15 +224,6 @@ define(function(require, exports, module) {
                     $(this).sortable("enable");
                 }
             });
-        },
-
-        hovered: function() {
-            this.model.trigger('hovered');
-        },
-
-        hoveredColumn: function(e) {
-            var colId = String(e.currentTarget.id).replace('col','');
-            this.currentColumn = colId;
         },
 
         removeSection: function() {

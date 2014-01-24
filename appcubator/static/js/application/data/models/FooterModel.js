@@ -20,17 +20,6 @@ function(LinkCollection) {
         url:   "http://appcubator.com" }
       ]));
 
-      if(appState) {
-        try {
-          if(appState.pages[0].footer.version == 2) {
-            this.set('version', 2);
-          }
-        }
-        catch(err) {
-          console.log("Problem with accessing first page.");
-        }
-      }
-
       this.links = this.get('links');
     },
 
