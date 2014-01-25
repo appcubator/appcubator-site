@@ -13,7 +13,7 @@ from django.conf import settings
 from django.utils import simplejson
 from copy import deepcopy
 
-from appcubator.models import User, Customer, TempDeployment, InvitationKeys
+from appcubator.models import User, Customer, InvitationKeys
 from appcubator.themes.models import UITheme
 from appcubator.default_data import get_default_uie_state, get_default_mobile_uie_state, get_default_app_state
 import appcubator.models
@@ -312,12 +312,13 @@ def resources(request):
 
 
 def temp_deploy(request):
+    # TODO Fix temp deployment
+    pass
+    """
     td = TempDeployment.find_or_create_temp_deployment(request)
     if request.method == 'GET':
         return HttpResponse(simplejson.dumps({ 'status': td.get_deployment_status() }), mimetype="application/json")
     elif request.method == 'POST':
-        # TODO Fix temp deployment
-        """
         old_state = td._state_json
         td._state_json = request.POST['app_state']
 
@@ -332,16 +333,18 @@ def temp_deploy(request):
         td._state_json = old_state
         td.save()
         d = {"site_url": td.url(), "git_url": td.git_url(), "zip_url": ""}
-        """
         d = {"site_url": "notyetimplemented.com",
              "git_url": "notyetimplemented.com",
              "zip_url": "notyetimplemented.com"}
         return HttpResponse(simplejson.dumps(d), mimetype="application/json")
+        """
 
 @require_GET
 @cache_page(60*5)
 @csrf_protect
 def external_editor(request):
+    pass
+    """
     td = TempDeployment.find_or_create_temp_deployment(request)
     td.deploy()
     themes = UITheme.get_web_themes()
@@ -361,6 +364,7 @@ def external_editor(request):
     page_context["title"] = "Demo Editor"
 
     return render(request, 'website-external-editor.html', page_context)
+    """
 
 @require_GET
 @cache_page(60*5)

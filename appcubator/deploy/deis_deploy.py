@@ -29,16 +29,6 @@ def update_deployment_info(deployment_id, hostname):
     """Update the deployment with the new hostname"""
     pass
 
-def get_deployment_status(deployment_id):
-    """
-    Returns 0, 1, or 2.
-     0 = No task running
-     1 = Running
-     2 = Task done, plz collect result.
-    #TODO async
-    """
-    return random.randint(0,1) * 2
-
 # tar it up
 def _write_tar_from_app_dir(appdir):
     """Given the directory of the app, tar it up and return the path to the tar."""

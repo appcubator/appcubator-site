@@ -39,6 +39,8 @@ def tutorials_page(request, page_name="tutorial"):
 @require_GET
 @login_required
 def tutorial(request, step_id, page_name="tutorial"):
+    pass
+    """
     td = TempDeployment.find_or_create_temp_deployment(request)
     td.deploy()
     themes = UITheme.get_web_themes()
@@ -58,3 +60,4 @@ def tutorial(request, step_id, page_name="tutorial"):
     page_context["title"] = "Demo Editor"
 
     return render(request, 'app-show-tutorial.html', page_context)
+    """

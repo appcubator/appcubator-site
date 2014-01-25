@@ -25,7 +25,7 @@ join = os.path.join
 from appcubator.email.sendgrid_email import send_email, send_template_email
 from appcubator.our_payments.views import is_stripe_customer#, subscribe
 
-from appcubator.models import App, TempDeployment, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration, CollaborationInvite
+from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration, CollaborationInvite
 from appcubator.models import DomainRegistration
 from appcubator.themes.models import StaticFile, UITheme
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
@@ -439,6 +439,43 @@ def save_state(request, app, require_valid=True):
     app.save()
 
     return (200, {'version_id': app.state.get('version_id', 0)})
+
+
+@login_required
+@require_POST
+def deployment(request, app_id, operation):
+    app = get_object_or_404(App, id=app_id)
+    if not app.is_editable_by_user(request.user):
+        raise Http404
+
+    result = {}
+    if operation == 'update_code':
+        try:
+            app.parse_and_link_app_state()
+            data = app.deploy()
+        except codegen.UserInputError, e:
+            d = e.to_dict()
+            return JsonResponse(d, status=400)
+
+    elif operation == 'rebuild':
+        try:
+            app._rebuild()
+        except Exception:
+            return JsonResponse({'todo': 'catchme'}, status=500)
+
+    elif operation == 'rerelease':
+        try:
+            app._rerelease()
+        except Exception:
+            return JsonResponse({'todo': 'catchme'}, status=500)
+    else:
+        return JsonResponse("Operation must be one of ['update_code', 'rebuild', 'rerelease']. You gave " + operation, status=400)
+
+    result['site_url'] = app.url()
+    result['zip_url'] = reverse('appcubator.views.app.app_zip', args=(app_id,))
+
+    return JsonResponse(result, status=200)
+
 
 @login_required
 @csrf_exempt
