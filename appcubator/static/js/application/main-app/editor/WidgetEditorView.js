@@ -5,6 +5,7 @@ define(function(require, exports, module) {
     require('mixins/BackboneUI');
     require('util');
 
+    var WidgetSettingsView = require('editor/WidgetSettingsView');
     var WidgetContentEditorView = require('editor/WidgetContentEditorView');
     var WidgetLayoutEditorView = require('editor/WidgetLayoutEditorView');
     var ImageSliderEditorView = require('editor/ImageSliderEditorView');
@@ -29,6 +30,7 @@ define(function(require, exports, module) {
         subviews: [],
 
         events: {
+            'click .settings'           : 'openSettingsView',
             'click .edit-slides-button': 'openSlideEditor',
             'click .query-editor-btn': 'openQueryEditor',
             'click .edit-row-btn': 'openRowEditor',
@@ -377,6 +379,10 @@ define(function(require, exports, module) {
 
         openCustomWidgetEditor: function() {
             new CustomWidgetEditorModal(this.model);
+        },
+
+        openSettingsView: function() {
+            new WidgetSettingsView(this.model).render();
         },
 
         closeEditingMode: function() {

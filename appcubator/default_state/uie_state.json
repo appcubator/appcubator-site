@@ -7,7 +7,6 @@
       "hoverStyle": "",
       "class_name": "link-1",
       "content": "Default Link...",
-      "tagName": "a",
       "activeStyle": ""
     },
     {
@@ -17,7 +16,6 @@
       "hoverStyle": "",
       "class_name": "blue-link",
       "content": "Default Link...",
-      "tagName": "a",
       "activeStyle": ""
     }
   ],
@@ -29,7 +27,6 @@
       "hoverStyle": "",
       "class_name": "txt",
       "content": "Default text!",
-      "tagName": "p",
       "activeStyle": ""
     },
     {
@@ -39,7 +36,6 @@
       "hoverStyle": "",
       "class_name": "small-txt",
       "content": "Default text!",
-      "tagName": "p",
       "activeStyle": ""
     }
   ],
@@ -51,7 +47,6 @@
       "hoverStyle": "",
       "class_name": "img-width-fixed",
       "content": null,
-      "tagName": "img",
       "activeStyle": ""
     },
     {
@@ -61,7 +56,6 @@
       "hoverStyle": "",
       "class_name": "img-height-fixed",
       "content": null,
-      "tagName": "img",
       "activeStyle": ""
     },
     {
@@ -71,7 +65,6 @@
       "hoverStyle": "",
       "class_name": "img-polaroid",
       "content": null,
-      "tagName": "img",
       "activeStyle": ""
     }
   ],
@@ -83,7 +76,6 @@
       "hoverStyle": "",
       "class_name": "btn btn-default",
       "content": "Button 1",
-      "tagName": "a",
       "activeStyle": ""
     },
     {
@@ -93,7 +85,6 @@
       "hoverStyle": "",
       "class_name": "btn btn-primary",
       "content": "Button 1",
-      "tagName": "a",
       "activeStyle": ""
     },
     {
@@ -102,11 +93,9 @@
       "hoverStyle": "",
       "class_name": "btn btn-info",
       "content": "Button 1",
-      "tagName": "a",
       "activeStyle": ""
     },
     {
-      "tagName": "a",
       "cons_attribs": {},
       "href": "internal://Homepage",
       "content": "Default Button",
@@ -117,7 +106,6 @@
       "class_name": "btn btn-success"
     },
     {
-      "tagName": "a",
       "cons_attribs": {},
       "href": "internal://Homepage",
       "content": "Default Button",
@@ -136,7 +124,6 @@
       "hoverStyle": "",
       "class_name": "header-default",
       "content": "Default header!",
-      "tagName": "h1",
       "activeStyle": ""
     },
     {
@@ -146,7 +133,6 @@
       "hoverStyle": "",
       "class_name": "header-2",
       "content": "Default header!",
-      "tagName": "h2",
       "activeStyle": ""
     },
     {
@@ -156,7 +142,6 @@
       "hoverStyle": "",
       "class_name": "header-3",
       "content": "Default header!",
-      "tagName": "h3",
       "activeStyle": ""
     }
   ],
@@ -171,7 +156,6 @@
       "hoverStyle": "",
       "class_name": "password-1",
       "content": null,
-      "tagName": "input",
       "activeStyle": "",
       "cons_attribs": {
         "tagType": "password"
@@ -186,7 +170,6 @@
       "hoverStyle": "",
       "class_name": "textarea1",
       "content": "Default Text Area...",
-      "tagName": "textarea",
       "activeStyle": ""
     }
   ],
@@ -197,7 +180,6 @@
       "hoverStyle": "",
       "class_name": "well",
       "content": null,
-      "tagName": "div",
       "activeStyle": ""
     },
     {
@@ -206,7 +188,6 @@
       "hoverStyle": "",
       "class_name": "box-2",
       "content": null,
-      "tagName": "div",
       "activeStyle": ""
     }
   ],
@@ -218,7 +199,6 @@
       "hoverStyle": "",
       "class_name": "default-dropdown",
       "content": "Option 1",
-      "tagName": "select",
       "activeStyle": ""
     }
   ],
@@ -230,7 +210,6 @@
       "hoverStyle": "",
       "class_name": "line-1",
       "content": null,
-      "tagName": "hr",
       "activeStyle": ""
     },
     {
@@ -240,7 +219,6 @@
       "hoverStyle": "",
       "class_name": "line-4",
       "content": null,
-      "tagName": "hr",
       "activeStyle": ""
     },
     {
@@ -250,7 +228,6 @@
       "hoverStyle": "",
       "class_name": "line-3",
       "content": null,
-      "tagName": "hr",
       "activeStyle": ""
     }
   ],
@@ -264,7 +241,6 @@
       "hoverStyle": "",
       "class_name": "inpt-1",
       "content": null,
-      "tagName": "input",
       "activeStyle": "",
       "cons_attribs": {
         "tagType": "text"
@@ -279,7 +255,6 @@
       "hoverStyle": "",
       "class_name": "inpt-blue",
       "content": null,
-      "tagName": "input",
       "activeStyle": "",
       "cons_attribs": {
         "tagType": "text"
@@ -297,8 +272,7 @@
       "activeStyle": "",
       "content_attribs": {
         "placeholder": "Default placeholder..."
-      },
-      "tagName": "input"
+      }
     }
   ],
   "forms": [
@@ -309,7 +283,6 @@
       "hoverStyle": "",
       "class_name": "form-default",
       "content": null,
-      "tagName": "form",
       "activeStyle": ""
     }
   ],
@@ -320,7 +293,6 @@
       "cons_attribs": {},
       "class_name": "default-list",
       "content": null,
-      "tagName": "div"
     }
   ],
   "fonts": [
