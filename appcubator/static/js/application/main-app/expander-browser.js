@@ -113,9 +113,13 @@ exports.factory = function(_safe_eval_) {
         return genData;
     }
 
+    expander.parseGenID = parseGenID;
+
     expander.expand = expand;
 
     expander.expandOnce = expandOnce;
+
+    expander.findGenData = findGenData;
 
     expander.expandAll = function(app) {
         try {
@@ -149,6 +153,7 @@ try {
     var x = window;
     // No error -> we're in the frontend
     window.expanderfactory = exports.factory;
+
 } catch (e) {
     // ReferenceError -> we're in the backend
 

@@ -5,11 +5,6 @@ define(function(require, exports, module) {
     var _ = require('underscore');
 
     var Generator = function() {
-
-    };
-
-    Generator.prototype.generate = function(generatorPath, data) {
-
         var Vm = function() {
 
             this.runCode = function(code, globals) {
@@ -22,11 +17,21 @@ define(function(require, exports, module) {
         };
 
         var VM = new Vm();
-        window.expander = expanderfactory(function(code, globals) {
+        this.expander = expanderfactory(function(code, globals) {
             return VM.runCode(code, globals);
         });
 
-        return expander.expand(appState.generators, {generate: generatorPath, data: data});
+    };
+
+    Generator.prototype.generate = function(generatorPath, data) {
+
+        return this.expander.expand(appState.generators, {generate: generatorPath, data: data});
+    };
+
+    Generator.prototype.getGenerator = function(generatorPath) {
+
+        return this.expander.findGenData(v1.currentApp.model.serialize().generators, this.expander.parseGenID(generatorPath));
+
     };
 
     return Generator;

@@ -5,6 +5,8 @@ define(function(require, exports, module) {
     require('backbone');
     require('mixins/BackboneCardView');
 
+    var GeneratorEditorView = require('app/GeneratorEditorView');
+
     var tableTemplate = [
             '<div class="header">',
                 '<div>',
@@ -72,7 +74,10 @@ define(function(require, exports, module) {
         },
 
         renderCode: function() {
-            var tableCodeView = new TableCodeView(this.model);
+            console.log(this.model);
+            console.log(this.model.generate);
+
+            var tableCodeView = new GeneratorEditorView({ generate: this.model.generate });
             this.$el.find('.current-content').html('');
             this.$el.find('.current-content').append(tableCodeView.render().el);
             tableCodeView.setupAce();
