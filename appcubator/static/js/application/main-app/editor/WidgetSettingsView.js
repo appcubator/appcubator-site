@@ -6,6 +6,7 @@ define(function(require, exports, module) {
     require('mixins/BackboneCardView');
 
     var GeneratorEditorView = require('app/GeneratorEditorView');
+    var TemplatesEditorView = require('app/TemplatesEditorView');
 
     var tableTemplate = [
             '<div class="header">',
@@ -14,8 +15,10 @@ define(function(require, exports, module) {
                 '<div class="q-mark-circle"></div>',
                 '</div>',
                 '<ul class="tabs">',
-                    '<li class="description-li right-icon">',
+                    '<li class="attributes-li right-icon">',
                     '<span>Attributes</span>',
+                    '</li><li class="templates-li right-icon">',
+                    '<span>Templates</span>',
                     '</li><li class="code-li right-icon">',
                     '<span>Code</span>',
                     '</li>',
@@ -25,10 +28,7 @@ define(function(require, exports, module) {
     ].join('\n');
 
     var TableView = Backbone.CardView.extend({
-        el: null,
-        tagName: 'div',
-        collection: null,
-        parentName: "",
+
         className: 'widget-settings-pane',
         subviews: [],
 
@@ -54,117 +54,85 @@ define(function(require, exports, module) {
             return this;
         },
 
+        reRender: function() {
+            this.el.innerHTML = '';
+            this.render();
+        },
+
         renderAttributes: function() {
             
-            var strHTML = '<ul>';
+            var strHTML = '<div class="code-view"><div class="instance sect">';
+
+            strHTML += '<table style="margin: 15px auto;">';
             _.each(this.model.attributes, function(val, key) {
                 if(key == 'layout') return;
                 if(Backbone.isModel(val) || Backbone.isCollection(val)) return;
 
-                strHTML += '<li>' + key + '<input type="text" class="attr-input" id="attr-'+key+'" value="' + val +'"></li>';
+                strHTML += '<tr><td>' + key + '</td><td><input type="text" class="attr-input" id="attr-'+key+'" value="' + val +'"></td></tr>';
             });
-            strHTML += '</ul>';
-            this.currentContentPane.html(strHTML);
-        },
+            strHTML += '</table>';
 
-        renderData: function() {
-            this.$el.find('.current-content').html('');
-            this.$el.find('.current-content').append(new TableDataView(this.model).render().el);
-            this.$el.find('.data-li').addClass('active');
+            strHTML += [
+                    '<div id="add-attribute-box">',
+                        '<form style="display:none;">',
+                            '<input type="text" class="property-name-input" placeholder="Template Name...">',
+                            '<input type="submit" class="done-btn" value="Done">',
+                        '</form>',
+                        '<div class="add-button box-button">+ Create a New Template</div>',
+                    '</div>'
+                ].join('\n');
+
+            strHTML += '</div></div>';
+
+            this.currentContentPane.html(strHTML);
+            this.addAttributeBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-attribute-box')).render();
+            this.addAttributeBox.on('submit', this.createAttribute);
+
+            this.$el.find('.attributes-li').addClass('active');
         },
 
         renderCode: function() {
-            console.log(this.model);
-            console.log(this.model.generate);
-
-            var tableCodeView = new GeneratorEditorView({ generate: this.model.generate });
+            var tableCodeView = new GeneratorEditorView({ generate: this.model.generate, widgetModel: this.model });
             this.$el.find('.current-content').html('');
             this.$el.find('.current-content').append(tableCodeView.render().el);
             tableCodeView.setupAce();
             this.$el.find('.code-li').addClass('active');
         },
 
+        renderTemplates: function() {
+            var templatesView = new TemplatesEditorView({ generate: this.model.generate, widgetModel: this.model });
+            this.$el.find('.current-content').html('');
+            this.$el.find('.current-content').append(templatesView.render().el);
+            templatesView.setupAce();
+            this.$el.find('.templates-li').addClass('active');
+        },
+
         attributeChanged: function(e) {
             var attributeKey = String(e.currentTarget.id).replace('attr-','');
-            console.log( e.currentTarget.value);
-            console.log(attributeKey);
             this.model.set(attributeKey, e.currentTarget.value);
+        },
+
+        createAttribute: function(name) {
+            this.model.set(name, '');
+            this.reRender();
         },
 
         tabClicked: function(e) {
             this.$el.find('.active').removeClass('active');
 
-            if($(e.currentTarget).hasClass('description-li')) {
-                this.renderDescription();
+            if($(e.currentTarget).hasClass('templates-li')) {
+                this.renderTemplates();
             }
-            else if($(e.currentTarget).hasClass('data-li')) {
-                this.renderData();
+            else if($(e.currentTarget).hasClass('attributes-li')) {
+                this.renderAttributes();
             }
             else if($(e.currentTarget).hasClass('code-li')) {
                 this.renderCode();
             }
         },
 
-        addedEntity: function(item) {
-            var optString = '<option value="{{' + item.get('name') + '}}">List of ' + item.get('name') + 's</option>';
-            $('.attribs', this.el).append(optString);
-        },
-
-        clickedDelete: function(e) {
-            this.askToDelete(v1State.get('tables'));
-        },
-
-        askToDelete: function(tableColl) {
-            var widgets = v1State.getWidgetsRelatedToTable(this.model);
-            var model = this.model;
-            if (widgets.length) {
-
-                var widgetsNL = _.map(widgets, function(widget) {
-                    return widget.widget.get('type') + ' on ' + widget.pageName;
-                });
-                var widgetsNLString = widgetsNL.join('\n');
-                new DialogueView({
-                    text: "The related widgets listed below will be deleted with this table. Do you want to proceed? <br><br> " + widgetsNLString
-                }, function() {
-                    tableColl.remove(model.cid);
-                    v1State.get('pages').removePagesWithContext(model);
-                    _.each(widgets, function(widget) {
-                        widget.widget.collection.remove(widget.widget);
-                    });
-                });
-
-            } else {
-                tableColl.remove(model.cid);
-                v1State.get('pages').removePagesWithContext(model);
-            }
-        },
-
-        clickedUploadExcel: function(e) {
-            new AdminPanelView();
-        },
-
-        showData: function(e) {
-            $.ajax({
-                type: "POST",
-                url: '/app/' + appId + '/entities/fetch_data/',
-                data: {
-                    model_name: this.model.get('name')
-                },
-                success: function(data) {
-                    new ShowDataView(data);
-                },
-                dataType: "JSON"
-            });
-        },
-
-        typeClicked: function(e) {
-            var cid = e.target.id.replace('type-row-', '');
-            $('#type-' + cid).click();
-            e.preventDefault();
-        },
-
-        showTableTutorial: function(e) {
-            v1.showTutorial("Tables");
+        onClose: function() {
+            this.model.trigger('rerender');
         }
 
     });

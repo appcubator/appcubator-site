@@ -31,6 +31,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.model = widgetModel;
             this.listenTo(this.model, "remove", this.close, this);
 
+            this.listenTo(this.model, "rerender", this.reRender, this);
             this.listenTo(this.model, "change", this.reRender, this);
             this.listenTo(this.model, "change:type", this.reRender, this);
             this.listenTo(this.model, "change:tagName", this.reRender, this);
@@ -85,6 +86,8 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.innerEl = this.el.firstChild;
             this.$innerEl = $(this.innerEl);
 
+            this.$el.find('a').on('click', function(e) { e.preventDefault(); });
+
             this.placeCSS(expanded);
             this.placeJS(expanded);
 
@@ -107,6 +110,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.placeCSS(expanded);
             this.placeJS(expanded);
 
+            this.$el.find('a').on('click', function(e) { e.preventDefault(); });
 
             return this;
         },

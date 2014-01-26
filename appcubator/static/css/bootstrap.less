@@ -1,0 +1,101 @@
+/* Parts of bootstrap.css curated by @icanberk */
+
+
+/* Dropdown */
+
+.dropdown-menu {
+  display: none;
+  text-align: left;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 3px solid #ccc;
+  padding: 5px 0;
+}
+
+.dropdown-menu.abs {
+  position: absolute;
+  right: 20px;
+  z-index: 200;
+}
+
+.dropdown-menu .divider {
+  border-top: 1px solid #ccc;
+  height: 3px;
+  width: 100%;
+}
+
+.dropdown-menu li {
+  padding: 0 15px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #efefef;
+}
+
+.open {
+  *z-index: 1000;
+}
+
+.open > .dropdown-menu {
+  display: block;
+}
+
+.btn-group {
+  font-family: "proxima-nova";
+}
+
+.btn-group.right {
+  text-align: right;
+  padding-right: 5px;
+}
+
+.btn-group > .btn-small + .dropdown-toggle {
+  *padding-top: 5px;
+  *padding-bottom: 4px;
+}
+
+.btn-group > .btn-large + .dropdown-toggle {
+  *padding-top: 7px;
+  padding-right: 12px;
+  *padding-bottom: 7px;
+  padding-left: 12px;
+}
+
+.btn-group.open .dropdown-toggle {
+  background-image: none;
+
+  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-group.open .btn.dropdown-toggle {
+  background-color: #e6e6e6;
+}
+
+.btn-group.open .btn-primary.dropdown-toggle {
+  background-color: #0044cc;
+}
+
+.btn-group.open .btn-warning.dropdown-toggle {
+  background-color: #f89406;
+}
+
+.btn-group.open .btn-danger.dropdown-toggle {
+  background-color: #bd362f;
+}
+
+.btn-group.open .btn-success.dropdown-toggle {
+  background-color: #51a351;
+}
+
+.btn-group.open .btn-info.dropdown-toggle {
+  background-color: #2f96b4;
+}
+
+.btn-group.open .btn-inverse.dropdown-toggle {
+  background-color: #222222;
+}
+
+/* Dropdown Ends */
+

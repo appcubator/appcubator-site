@@ -29,7 +29,7 @@ require.config({
         "wizard": "../wizard",
         "xrayquire": "../../libs/xrayquire",
         // "ace": "../../libs/ace",
-        "ace": "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace",
+        "ace": "//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace",
         "fontselect": "../../libs/fontselect/jquery.fontselect"
     },
 

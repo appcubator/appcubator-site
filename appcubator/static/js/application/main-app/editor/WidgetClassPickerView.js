@@ -33,8 +33,6 @@ define(function(require, exports, module) {
                 type = "lists";
             }
 
-            console.log(type);
-
             var els = top.v1UIEState.getUIEVals(type).toJSON();
 
             this.list = _.map(els, function(obj, key) {

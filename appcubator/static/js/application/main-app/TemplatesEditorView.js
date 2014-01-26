@@ -6,7 +6,14 @@ define(function(require, exports, module) {
     require('backbone');
     require('bootstrap');
 
-    var GeneratorEditorView = Backbone.View.extend({
+    var funcTemplate = [
+        '<div class="code-chunk">',
+            '<span class="title"><%= name %></span>',
+            '<div class="code-editor" id="template-editor-<%= name %>"></div>',
+        '</div>'
+    ].join('\n');
+
+    var TemplatesEditorView = Backbone.View.extend({
         el: null,
         tagName: 'div',
         collection: null,
@@ -28,7 +35,7 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            this.el.innerHTML = _.template([
+            var strHTML = _.template([
                 '<div id="name-editor" style="height:60px; display: block; border-bottom:1px solid #ccc;">',
                     '<div style="line-height: 60px; display:inline-block;">Current Generator: <%= name %></div>',
                     '<div class="btn-group right">',
@@ -40,14 +47,33 @@ define(function(require, exports, module) {
                             '<li class="divider"></li>',
                         '</ul>',
                     '</div>',
-                '</div>',
-                '<div id="current-code-editor" style="width:100%; height: 100%;"></div>'
+                '</div>'
             ].join('\n'), { name: this.generatorName });
+            
+            strHTML += '<div class="instance sect">';
+            _.each(this.generator.templates, function(val, key) {
+                strHTML += _.template(funcTemplate, { name: key });
+            });
 
+            strHTML += [
+                    '<div id="add-template-box">',
+                        '<form style="display:none;">',
+                            '<input type="text" class="property-name-input" placeholder="Template Name...">',
+                            '<input type="submit" class="done-btn" value="Done">',
+                        '</form>',
+                        '<div class="add-button box-button">+ Create a New Template</div>',
+                    '</div>'
+                ].join('\n');
+
+            strHTML += '</div>';
+
+            this.el.innerHTML = strHTML;
 
             this.$el.find('.dropdown-toggle').dropdown();
+            this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-template-box')).render();
+            this.addPropertyBox.on('submit', this.createTemplate);
+            
             this.renderCloneButtons();
-
             return this;
         },
 
@@ -55,27 +81,6 @@ define(function(require, exports, module) {
             this.el.innerHTML = '';
             this.render();
             this.setupAce();
-        },
-
-        setupAce: function() {
-            
-            this.editor = ace.edit("current-code-editor");
-            this.editor.getSession().setMode("ace/mode/css");
-            this.editor.setValue(String(this.generator.code), -1);
-            this.editor.on("change", this.keyup);
-
-            var packageModuleName = expanderfactory(function(code, globals) { }).parseGenID(this.generatorName);
-
-            if(packageModuleName.package != "local") {
-                this.editor.setReadOnly(true);  // false to make it editable
-                this.editor.setHighlightActiveLine(false);
-                this.editor.setHighlightGutterLine(false);
-                this.editor.renderer.$cursorLayer.element.style.opacity=0;
-
-            }
-            else {
-                this.editor.setReadOnly(false);  // false to make it editable
-            }
         },
 
         renderCloneButtons: function() {
@@ -105,7 +110,38 @@ define(function(require, exports, module) {
             }, this);
         },
 
+        setupAce: function() {
+            
+            var packageModuleName = expanderfactory(function(code, globals) { }).parseGenID(this.generatorName);
+
+            _.each(this.generator.templates, function(val, key) {
+
+                var self = this;
+                var editor = ace.edit("template-editor-" + key);
+                editor.getSession().setMode("ace/mode/html");
+                editor.setValue(String(val), -1);
+                editor.on("change", function() {
+                    self.keyup(editor, key);
+                });
+
+                if(packageModuleName.package != "local") {
+                    
+                    editor.setReadOnly(true);  // false to make it editable
+                    editor.setHighlightActiveLine(false);
+                    editor.setHighlightGutterLine(false);
+                    editor.renderer.$cursorLayer.element.style.opacity=0;
+
+                }
+                else {
+                    editor.setReadOnly(false);  // false to make it editable
+                }
+
+            }, this);
+
+        },
+
         editCurrentGen: function() {
+            alert('edit');
             var genObj = _.clone(this.generator);
 
             var gensWrapper = v1.currentApp.model.get('generators');
@@ -146,6 +182,11 @@ define(function(require, exports, module) {
             return isUnique;
         },
 
+        createTemplate: function(name) {
+            this.generator.templates[name] = "";
+            this.reRender();
+        },
+
         cloneGenerator: function(e) {
             var genPath = String(e.currentTarget.id);
             this.widgetModel.generate = genPath;
@@ -155,12 +196,11 @@ define(function(require, exports, module) {
             this.reRender();
         },
 
-        keyup: function() {
-            var newCode = this.editor.getValue(String(this.generator.code), -1);
-            this.generator.code = newCode;
+        keyup: function(editor, key) {
+            this.generator.templates[key] = editor.getValue();
         }
 
     });
 
-    return GeneratorEditorView;
+    return TemplatesEditorView;
 });
