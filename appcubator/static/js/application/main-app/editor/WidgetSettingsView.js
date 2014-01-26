@@ -54,9 +54,16 @@ define(function(require, exports, module) {
             return this;
         },
 
+        reRender: function() {
+            this.el.innerHTML = '';
+            this.render();
+        },
+
         renderAttributes: function() {
             
-            var strHTML = '<table style="margin: 15px auto;">';
+            var strHTML = '<div class="code-view"><div class="instance sect">';
+
+            strHTML += '<table style="margin: 15px auto;">';
             _.each(this.model.attributes, function(val, key) {
                 if(key == 'layout') return;
                 if(Backbone.isModel(val) || Backbone.isCollection(val)) return;
@@ -64,7 +71,23 @@ define(function(require, exports, module) {
                 strHTML += '<tr><td>' + key + '</td><td><input type="text" class="attr-input" id="attr-'+key+'" value="' + val +'"></td></tr>';
             });
             strHTML += '</table>';
+
+            strHTML += [
+                    '<div id="add-attribute-box">',
+                        '<form style="display:none;">',
+                            '<input type="text" class="property-name-input" placeholder="Template Name...">',
+                            '<input type="submit" class="done-btn" value="Done">',
+                        '</form>',
+                        '<div class="add-button box-button">+ Create a New Template</div>',
+                    '</div>'
+                ].join('\n');
+
+            strHTML += '</div></div>';
+
             this.currentContentPane.html(strHTML);
+            this.addAttributeBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-attribute-box')).render();
+            this.addAttributeBox.on('submit', this.createAttribute);
+
             this.$el.find('.attributes-li').addClass('active');
         },
 
@@ -86,9 +109,12 @@ define(function(require, exports, module) {
 
         attributeChanged: function(e) {
             var attributeKey = String(e.currentTarget.id).replace('attr-','');
-            console.log( e.currentTarget.value);
-            console.log(attributeKey);
             this.model.set(attributeKey, e.currentTarget.value);
+        },
+
+        createAttribute: function(name) {
+            this.model.set(name, '');
+            this.reRender();
         },
 
         tabClicked: function(e) {

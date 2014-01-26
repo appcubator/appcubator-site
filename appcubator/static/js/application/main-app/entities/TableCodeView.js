@@ -18,9 +18,8 @@ define(function(require, exports, module) {
     ].join('\n');
 
     var TableCodeView = Backbone.View.extend({
-        el: null,
+
         tagName: 'div',
-        collection: null,
         parentName: "",
         className: 'code-view',
         subviews: [],
@@ -80,9 +79,6 @@ define(function(require, exports, module) {
             this.addPropertyBox.on('submit', this.createStaticFunction);
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-instance-box')).render();
             this.addPropertyBox.on('submit', this.createInstanceFunction);
-            //             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('.add-property-column').get(0)).render();
-            // this.subviews.push(this.addPropertyBox);
-            // this.addPropertyBox.on('submit', this.createNewProperty);
 
             return this;
         },
