@@ -22,7 +22,8 @@ define(function(require, exports, module) {
         subviews: [],
 
         events: {
-            'click .edit-current' : 'editCurrentGen'
+            'click .edit-current' : 'editCurrentGen',
+            'click .clone-button' : 'cloneGenerator'
         },
 
 
@@ -41,11 +42,9 @@ define(function(require, exports, module) {
                         '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">',
                         'Edit Code <span class="caret"></span>',
                         '</button>',
-                        '<ul class="dropdown-menu abs" role="menu">',
+                        '<ul class="dropdown-menu abs action-menu" role="menu">',
                             '<li><a href="#" class="edit-current">Edit Current Code</a></li>',
                             '<li class="divider"></li>',
-                            '<li><a href="#">Switch to X</a></li>',
-                            '<li><a href="#">Switch to Y</a></li>',
                         '</ul>',
                     '</div>',
                 '</div>'
@@ -74,6 +73,7 @@ define(function(require, exports, module) {
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-template-box')).render();
             this.addPropertyBox.on('submit', this.createTemplate);
             
+            this.renderCloneButtons();
             return this;
         },
 
@@ -81,6 +81,30 @@ define(function(require, exports, module) {
             this.el.innerHTML = '';
             this.render();
             this.setupAce();
+        },
+
+        renderCloneButtons: function() {
+            var packageModuleName = expanderfactory(function(code, globals) { }).parseGenID(this.generatorName);
+            var generators = [];
+
+            if (appState.generators[packageModuleName.package] &&
+                appState.generators[packageModuleName.package][packageModuleName.module]) {
+                generators = appState.generators[packageModuleName.package][packageModuleName.module];
+            }
+
+            if (packageModuleName.package != "local" &&
+                appState.generators["local"][packageModuleName.module]) {
+                generators = _.union(generators, appState.generators["local"][packageModuleName.module]);
+            }
+
+            generators = _.reject(generators, function(generator) {
+                var genName = [packageModuleName.package, packageModuleName.module, generator.name].join('.');
+                return genName == this.generatorName;
+            }, this);
+
+            _.each(generators, function(generator) {
+                this.$el.find('.action-menu').append('<li class="clone-button"><a href="#">Clone '+  generator.name +'X</a></li>');
+            }, this);
         },
 
         setupAce: function() {
@@ -144,6 +168,10 @@ define(function(require, exports, module) {
         createTemplate: function(name) {
             this.generator.templates[name] = "";
             this.reRender();
+        },
+
+        cloneGenerator: function() {
+
         },
 
         keyup: function(editor, key) {

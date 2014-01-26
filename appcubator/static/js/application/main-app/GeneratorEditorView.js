@@ -47,7 +47,8 @@ define(function(require, exports, module) {
 
 
             this.$el.find('.dropdown-toggle').dropdown();
-            
+            this.renderCloneButtons();
+
             return this;
         },
 
@@ -76,6 +77,16 @@ define(function(require, exports, module) {
             else {
                 this.editor.setReadOnly(false);  // false to make it editable
             }
+        },
+
+        renderCloneButtons: function() {
+            var packageModuleName = expanderfactory(function(code, globals) { }).parseGenID(this.generatorName);
+            var generators = appState.generators[packageModuleName.module];
+            generators = _.omit(packageModuleName, this.generatorName);
+
+            _.each(generators, function(generator) {
+                this.$el.find('.action-menu').append('<li><a href="#">Clone '+  generator.name +'X</a></li>');
+            }, this);
         },
 
         editCurrentGen: function() {
