@@ -11,7 +11,6 @@ define([
             events: {
 
             },
-
             _configure: function(options) {
                 Backbone.DropdownView.__super__._configure.call(this, options);
                 _.bindAll(this);
@@ -28,7 +27,11 @@ define([
                     self.toggle();
                 });
             },
-
+            // Set the displacement of the little pointer
+            setPointerPosition: function(offset){
+                console.log(this.$el);
+                console.log(offset);
+            },
             toggle: function() {
                 if(this.isExpanded) { this.hide(); } else { this.expand(); }
             },

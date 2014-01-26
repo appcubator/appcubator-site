@@ -11,6 +11,7 @@ define(function(require, exports, module) {
     var SoftErrorView = require("app/SoftErrorView");
     var ErrorDialogueView = require('mixins/ErrorDialogueView');
     var EntitiesView = require('app/entities/EntitiesView');
+    var PluginsView = require('app/entities/PluginsView');
 
 
     var AppView = Backbone.View.extend({
@@ -40,6 +41,10 @@ define(function(require, exports, module) {
             this.entitiesView = new EntitiesView();
             this.entitiesView.setToggleEl($('.menu-app-entities'));
 
+            this.pluginsView = new PluginsView();
+            this.pluginsView.setToggleEl($('.menu-app-plugins'));
+            this.pluginsView.setPointerPosition("230px");
+
             this.deployManager = new DeployManagerModel(this.appId);
 
             //var autoSave = setInterval(this.save, 30000);
@@ -57,7 +62,10 @@ define(function(require, exports, module) {
 
             this.toolBar.setPage(this.pageId);
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
+            
             this.el.appendChild(this.entitiesView.render().el);
+            this.el.appendChild(this.pluginsView.render().el);
+
             
             this.changePage(EditorView, { pageId: this.pageId, appModel: this.model }, "", function() {});
 
@@ -151,10 +159,7 @@ define(function(require, exports, module) {
 
         plugins: function(tutorial) {
             var self = this;
-            self.tutorialPage = "Plugins";
-            this.changePage(PluginsView, {}, tutorial, function() {
-                $('.menu-app-plugins').addClass('active');
-            });
+            this.pluginsView.expand();
         },
 
         renderIFrameContent: function(proxy) {
