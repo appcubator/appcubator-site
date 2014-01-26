@@ -84,17 +84,19 @@ define(function(require, exports, module) {
         },
 
         renderCloneButtons: function() {
+            
             var packageModuleName = expanderfactory(function(code, globals) { }).parseGenID(this.generatorName);
             var generators = [];
 
-            if (appState.generators[packageModuleName.package] &&
+            if (packageModuleName.package != "local" &&
+                appState.generators[packageModuleName.package] &&
                 appState.generators[packageModuleName.package][packageModuleName.module]) {
-                generators = appState.generators[packageModuleName.package][packageModuleName.module];
+                generators = _.map(appState.generators[packageModuleName.package][packageModuleName.module], function(obj) { obj.package = packageModuleName.package; return obj; });
             }
 
-            if (packageModuleName.package != "local" &&
-                appState.generators["local"][packageModuleName.module]) {
-                generators = _.union(generators, appState.generators["local"][packageModuleName.module]);
+            if (appState.generators["local"][packageModuleName.module]) {
+                var localGens = _.map(appState.generators["local"][packageModuleName.module], function(obj) { obj.package = "local"; return obj; });
+                generators = _.union(generators, localGens);
             }
 
             generators = _.reject(generators, function(generator) {
@@ -103,7 +105,8 @@ define(function(require, exports, module) {
             }, this);
 
             _.each(generators, function(generator) {
-                this.$el.find('.action-menu').append('<li class="clone-button"><a href="#">Clone '+  generator.name +'X</a></li>');
+                var genName = [generator.package, packageModuleName.module, generator.name].join('.');
+                this.$el.find('.action-menu').append('<li class="clone-button" id="'+ genName +'"><a href="#">Clone '+  generator.name +'X</a></li>');
             }, this);
         },
 
@@ -138,6 +141,7 @@ define(function(require, exports, module) {
         },
 
         editCurrentGen: function() {
+            alert('edit');
             var genObj = _.clone(this.generator);
 
             var gensWrapper = v1.currentApp.model.get('generators');
@@ -150,6 +154,8 @@ define(function(require, exports, module) {
             var i = 2;
             var newName = packageModuleName.name + '_v' + i;
             while(!this.isUnique(packageModuleName, newName)) { i++; newName =  packageModuleName.name + '_v' + i;  }
+
+            alert(newName);
 
             packageModuleName.name = newName;
 
@@ -165,19 +171,33 @@ define(function(require, exports, module) {
             this.reRender();
         },
 
+        isUnique: function(packageModuleName, name) {
+            var gensWrapper = v1.currentApp.model.get('generators');
+            var isUnique = true;
+            var gens = gensWrapper.local[packageModuleName.module];
+            _.each(gens, function(gen) {
+                if(gen.name == name) isUnique = false;
+            }, this);
+
+            return isUnique;
+        },
+
         createTemplate: function(name) {
             this.generator.templates[name] = "";
             this.reRender();
         },
 
-        cloneGenerator: function() {
+        cloneGenerator: function(e) {
+            var genPath = String(e.currentTarget.id);
+            this.widgetModel.generate = genPath;
+            this.generatorName = genPath;
+            this.generator = new Generator().getGenerator(this.generatorName);
 
+            this.reRender();
         },
 
         keyup: function(editor, key) {
             this.generator.templates[key] = editor.getValue();
-            // var newCode = this.editor.getValue(String(this.generator.code), -1);
-            // this.generator.code = newCode;
         }
 
     });

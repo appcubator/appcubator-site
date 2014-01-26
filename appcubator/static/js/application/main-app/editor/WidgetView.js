@@ -110,6 +110,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.placeCSS(expanded);
             this.placeJS(expanded);
 
+            this.$el.find('a').on('click', function(e) { e.preventDefault(); });
 
             return this;
         },
