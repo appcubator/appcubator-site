@@ -94,7 +94,7 @@ define(function(require, exports, module) {
 
         plugins: function(appId, tutorial) {
             v1.configApp();
-            v1.currentApp.plugins(tutorial);
+            //v1.currentApp.plugins(tutorial);
         },
 
         showTutorial: function(dir) {
