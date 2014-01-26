@@ -6,7 +6,7 @@ define(function(require, exports, module) {
     require('backbone');
     require('bootstrap');
 
-    var GeneratorEditorView = Backbone.View.extend({
+    var TemplatesEditorView = Backbone.View.extend({
         el: null,
         tagName: 'div',
         collection: null,
@@ -27,7 +27,7 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            this.el.innerHTML = _.template([
+            var strHTML = _.template([
                 '<div id="name-editor" style="height:60px; display: block; border-bottom:1px solid #ccc;">',
                     '<div style="line-height: 60px; display:inline-block;">Current Generator: <%= name %></div>',
                     '<div class="btn-group right">',
@@ -41,11 +41,16 @@ define(function(require, exports, module) {
                             '<li><a href="#">Switch to Y</a></li>',
                         '</ul>',
                     '</div>',
-                '</div>',
-                '<div id="current-code-editor" style="width:100%; height: 100%;"></div>'
+                '</div>'
             ].join('\n'), { name: this.generatorName });
-
-
+            
+            strHTML += '<div>';
+            _.each(this.generator.templates, function(val, key) {
+                strHTML += '<div>' + key + '</div><div id="template-'+key+'" style="height: 300px; width: 100%;"></div></div>';
+            });
+            strHTML += '</div>';
+            this.el.innerHTML = strHTML;
+            
             this.$el.find('.dropdown-toggle').dropdown();
             
             return this;
@@ -59,23 +64,32 @@ define(function(require, exports, module) {
 
         setupAce: function() {
             
-            this.editor = ace.edit("current-code-editor");
-            this.editor.getSession().setMode("ace/mode/css");
-            this.editor.setValue(String(this.generator.code), -1);
-            this.editor.on("change", this.keyup);
-
             var packageModuleName = expanderfactory(function(code, globals) { }).parseGenID(this.generatorName);
 
-            if(packageModuleName.package != "local") {
-                this.editor.setReadOnly(true);  // false to make it editable
-                this.editor.setHighlightActiveLine(false);
-                this.editor.setHighlightGutterLine(false);
-                this.editor.renderer.$cursorLayer.element.style.opacity=0;
+            _.each(this.generator.templates, function(val, key) {
 
-            }
-            else {
-                this.editor.setReadOnly(false);  // false to make it editable
-            }
+                var self = this;
+                var editor = ace.edit("template-" + key);
+                editor.getSession().setMode("ace/mode/html");
+                editor.setValue(String(val), -1);
+                editor.on("change", function() {
+                    self.keyup(editor, key);
+                });
+
+                if(packageModuleName.package != "local") {
+                    
+                    editor.setReadOnly(true);  // false to make it editable
+                    editor.setHighlightActiveLine(false);
+                    editor.setHighlightGutterLine(false);
+                    editor.renderer.$cursorLayer.element.style.opacity=0;
+
+                }
+                else {
+                    editor.setReadOnly(false);  // false to make it editable
+                }
+
+            }, this);
+
         },
 
         editCurrentGen: function() {
@@ -106,23 +120,14 @@ define(function(require, exports, module) {
             this.reRender();
         },
 
-        isUnique: function(packageModuleName, name) {
-            var gensWrapper = v1.currentApp.model.get('generators');
-            var isUnique = true;
-            var gens = gensWrapper.local[packageModuleName.module];
-            _.each(gens, function(gen) {
-                if(gen.name == name) isUnique = false;
-            }, this);
-
-            return isUnique;
-        },
-
-        keyup: function() {
-            var newCode = this.editor.getValue(String(this.generator.code), -1);
-            this.generator.code = newCode;
+        keyup: function(editor, key) {
+            console.log(editor.getValue());
+            this.generator.templates[key] = editor.getValue();
+            // var newCode = this.editor.getValue(String(this.generator.code), -1);
+            // this.generator.code = newCode;
         }
 
     });
 
-    return GeneratorEditorView;
+    return TemplatesEditorView;
 });

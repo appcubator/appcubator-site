@@ -85,6 +85,8 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.innerEl = this.el.firstChild;
             this.$innerEl = $(this.innerEl);
 
+            this.$el.find('a').on('click', function(e) { e.preventDefault(); });
+
             this.placeCSS(expanded);
             this.placeJS(expanded);
 

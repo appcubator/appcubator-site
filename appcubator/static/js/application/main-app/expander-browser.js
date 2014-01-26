@@ -41,6 +41,8 @@ exports.factory = function(_safe_eval_) {
         return generator;
     }
 
+    expander.findGenData = findGenData;
+
     function constructGen(generatorData) {
         // input the generator's data from the json
         // output a function which can directly be used for generator execution.
@@ -99,11 +101,15 @@ exports.factory = function(_safe_eval_) {
         return { package: package, module: module, name: name, version: version };
     }
 
+    expander.parseGenID = parseGenID;
+
     function expandOnce(generators, genData) {
         var genID = parseGenID(genData.generate);
         var generatedObj = constructGen(findGenData(generators, genID))(generators, genData.data);
         return generatedObj;
     }
+
+    expander.expandOnce = expandOnce;
 
     function expand(generators, genData) {
         // TODO check for cycles
@@ -113,13 +119,7 @@ exports.factory = function(_safe_eval_) {
         return genData;
     }
 
-    expander.parseGenID = parseGenID;
-
     expander.expand = expand;
-
-    expander.expandOnce = expandOnce;
-
-    expander.findGenData = findGenData;
 
     expander.expandAll = function(app) {
         try {
@@ -136,6 +136,7 @@ exports.factory = function(_safe_eval_) {
             });
 
             app.config = expand(app.generators, app.config);
+            app.css = expand(app.generators, app.css);
         }
         catch(e) {
             console.log("ERROR with generator: " + e);
@@ -153,7 +154,6 @@ try {
     var x = window;
     // No error -> we're in the frontend
     window.expanderfactory = exports.factory;
-
 } catch (e) {
     // ReferenceError -> we're in the backend
 
@@ -500,14 +500,18 @@ generators.push({
     name: 'navbar',
     version: '0.1',
     code: function(data, templates){
+        
+        _.each(data.links, function(link) {
+            link.url = link.url || "#";
+        });
+
         return templates.html({ data: data });
     },
     templates: {
         'html': '<div class="navbar navbar-fixed-top navbar-default" id="navbar">' +
-          // '<button id="edit-navbar-btn">Edit Navbar</button>' +
             '<div class="container">' +
               '<div class="navbar-header">' +
-               '<a href="#" class="navbar-brand"><%= data.brandName %></a>' +
+               '<a href="/" class="navbar-brand"><%= data.brandName %></a>' +
                 '<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">' +
                   '<span class="icon-bar"></span>' +
                   '<span class="icon-bar"></span>' +
@@ -517,7 +521,7 @@ generators.push({
               '<div class="navbar-collapse collapse" data-toggle="collapse">' +
                 '<ul class="nav navbar-nav" id="links">' +
                     '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
-                    '<li><a href="#" class="menu-item"><%= item.title %></a></li>' +
+                    '<li><a href="<%= item.url %>" class="menu-item"><%= item.title %></a></li>' +
                     '<% } %>' +
                 '</ul>' +
               '</div>' +
@@ -595,6 +599,7 @@ generators.push({
             });
 
             expandedEls.colheader = expandedEls.colheader || "";
+            expandedEls.col0      = expandedEls.col0 || "";
             expandedEls.className = sectionObj.className || "";
 
             return template(expandedEls);

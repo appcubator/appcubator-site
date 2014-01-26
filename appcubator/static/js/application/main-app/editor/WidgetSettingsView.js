@@ -6,6 +6,7 @@ define(function(require, exports, module) {
     require('mixins/BackboneCardView');
 
     var GeneratorEditorView = require('app/GeneratorEditorView');
+    var TemplatesEditorView = require('app/TemplatesEditorView');
 
     var tableTemplate = [
             '<div class="header">',
@@ -16,6 +17,8 @@ define(function(require, exports, module) {
                 '<ul class="tabs">',
                     '<li class="attributes-li right-icon">',
                     '<span>Attributes</span>',
+                    '</li><li class="templates-li right-icon">',
+                    '<span>Templates</span>',
                     '</li><li class="code-li right-icon">',
                     '<span>Code</span>',
                     '</li>',
@@ -66,14 +69,19 @@ define(function(require, exports, module) {
         },
 
         renderCode: function() {
-            console.log(this.model);
-            console.log(this.model.generate);
-
             var tableCodeView = new GeneratorEditorView({ generate: this.model.generate, widgetModel: this.model });
             this.$el.find('.current-content').html('');
             this.$el.find('.current-content').append(tableCodeView.render().el);
             tableCodeView.setupAce();
             this.$el.find('.code-li').addClass('active');
+        },
+
+        renderTemplates: function() {
+            var templatesView = new TemplatesEditorView({ generate: this.model.generate, widgetModel: this.model });
+            this.$el.find('.current-content').html('');
+            this.$el.find('.current-content').append(templatesView.render().el);
+            templatesView.setupAce();
+            this.$el.find('.templates-li').addClass('active');
         },
 
         attributeChanged: function(e) {
@@ -86,8 +94,8 @@ define(function(require, exports, module) {
         tabClicked: function(e) {
             this.$el.find('.active').removeClass('active');
 
-            if($(e.currentTarget).hasClass('description-li')) {
-                this.renderDescription();
+            if($(e.currentTarget).hasClass('templates-li')) {
+                this.renderTemplates();
             }
             else if($(e.currentTarget).hasClass('attributes-li')) {
                 this.renderAttributes();
@@ -95,6 +103,10 @@ define(function(require, exports, module) {
             else if($(e.currentTarget).hasClass('code-li')) {
                 this.renderCode();
             }
+        },
+
+        onClose: function() {
+            this.model.trigger('rerender');
         }
 
     });
