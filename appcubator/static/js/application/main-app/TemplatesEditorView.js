@@ -6,6 +6,13 @@ define(function(require, exports, module) {
     require('backbone');
     require('bootstrap');
 
+    var funcTemplate = [
+        '<div class="code-chunk">',
+            '<span class="title"><%= name %></span>',
+            '<div class="code-editor" id="template-editor-<%= name %>"></div>',
+        '</div>'
+    ].join('\n');
+
     var TemplatesEditorView = Backbone.View.extend({
         el: null,
         tagName: 'div',
@@ -44,14 +51,28 @@ define(function(require, exports, module) {
                 '</div>'
             ].join('\n'), { name: this.generatorName });
             
-            strHTML += '<div>';
+            strHTML += '<div class="instance sect">';
             _.each(this.generator.templates, function(val, key) {
-                strHTML += '<div>' + key + '</div><div id="template-'+key+'" style="height: 300px; width: 100%;"></div></div>';
+                strHTML += _.template(funcTemplate, { name: key });
             });
+
+            strHTML += [
+                    '<div id="add-template-box">',
+                        '<form style="display:none;">',
+                            '<input type="text" class="property-name-input" placeholder="Template Name...">',
+                            '<input type="submit" class="done-btn" value="Done">',
+                        '</form>',
+                        '<div class="add-button box-button">+ Create a New Template</div>',
+                    '</div>'
+                ].join('\n');
+
             strHTML += '</div>';
+
             this.el.innerHTML = strHTML;
-            
+
             this.$el.find('.dropdown-toggle').dropdown();
+            this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-template-box')).render();
+            this.addPropertyBox.on('submit', this.createTemplate);
             
             return this;
         },
@@ -69,7 +90,7 @@ define(function(require, exports, module) {
             _.each(this.generator.templates, function(val, key) {
 
                 var self = this;
-                var editor = ace.edit("template-" + key);
+                var editor = ace.edit("template-editor-" + key);
                 editor.getSession().setMode("ace/mode/html");
                 editor.setValue(String(val), -1);
                 editor.on("change", function() {
@@ -120,8 +141,12 @@ define(function(require, exports, module) {
             this.reRender();
         },
 
+        createTemplate: function(name) {
+            this.generator.templates[name] = "";
+            this.reRender();
+        },
+
         keyup: function(editor, key) {
-            console.log(editor.getValue());
             this.generator.templates[key] = editor.getValue();
             // var newCode = this.editor.getValue(String(this.generator.code), -1);
             // this.generator.code = newCode;
