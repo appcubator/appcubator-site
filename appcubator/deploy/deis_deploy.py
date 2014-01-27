@@ -3,6 +3,7 @@ import logging
 from django.conf import settings
 import os
 import tarfile
+import subprocess
 import random
 logger = logging.getLogger(__name__)
 
