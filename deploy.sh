@@ -7,4 +7,6 @@ cd $DIR
 git archive --format=tar HEAD -o build.tar
 tar --append --file build.tar appcubator/dist_static/
 
-deis apps:push $DIR/build.tar --app=kabuki-zirconia
+gzip build.tar
+
+deis apps:push $DIR/build.tar.gz --app=kabuki-zirconia
