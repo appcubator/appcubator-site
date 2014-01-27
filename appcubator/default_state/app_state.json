@@ -175,16 +175,32 @@
                   }
                 },
                 {
-                  "generate": "uielements.design-text",
+                  "generate": "crud.uielements.create",
                   "data": {
-                    "type" : "text",
-                    "content": "<p>Welcome to 98-246! Brought to you by 4 DJs at Carnegie Mellon, this course will teach you everything you need to know in order to DJ your next party. Be sure to bring a passion for music!</p><p>For more information just click around!</p>",
+                    "type" : "create-form",
+                    "table": "Picture",
                     "layout": {
-                        "row": 1,
-                        "col": 0
+                      "row": 0,
+                      "col": 0
                     },
                     "className" : "",
-                    "style": ""
+                    "style": "",
+                    "fields": [
+                        { 
+                          "field_name": "name",
+                          "type": "text",
+                          "placeholder": "Name",
+                          "displayType": "single-line-text"
+                        },
+                        {
+                          "field_name" : "url",
+                          "type": "text",
+                          "placeholder": "URL",
+                          "displayType": "single-line-text"
+                        }
+                    ],
+                    "id": "testform",
+                    "redirect": "/?success=true"
                   }
                 },
                 {

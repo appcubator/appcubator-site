@@ -184,6 +184,15 @@ define(function(require, exports, module) {
                 return;
             }
 
+           switch (type) {
+                case "custom":
+                    break;
+
+                case "create-form":
+                    this.el.appendChild(this.renderButtonWithText('form-editor-btn', 'Edit Form'));
+                    break;
+            }
+
             this.widgetClassPickerView = new WidgetClassPickerView(this.model);
             this.layoutEditor = new WidgetLayoutEditorView(this.model);
             this.contentEditor = new WidgetContentEditorView(this.model, this);
@@ -327,9 +336,7 @@ define(function(require, exports, module) {
         },
 
         openFormEditor: function() {
-            var entityModel = this.model.get('data').get('container_info').get('form').get('entity');
-            if (_.isString(entityModel)) entityModel = v1State.getTableModelWithName(entityModel);
-            new FormEditorView(this.model.get('data').get('container_info').get('form'), entityModel);
+            new FormEditorView({ model: this.model });
         },
 
         openLoginEditor: function() {

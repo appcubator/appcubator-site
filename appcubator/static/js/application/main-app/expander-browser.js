@@ -218,15 +218,19 @@ generators.push({
                   redirect: 'https://www.google.com/' }
         }
           */
+
+        data.className = data.className || "";
+        data.style     = data.style || "";
+
         var uie = { html: templates.html(data),
                     js: templates.js(data),
                     css: '' };
         return uie;
     },
     templates: {
-        "html": "<form id=\"<%= id %>\">\n"+
+        "html": "<form id=\"<%= id %>\" class=\"<%= className %>\" style=\"<%= style %>\">\n"+
                 "<% for (var i = 0; i < fields.length; i ++) { %>\n"+
-                "<input type=\"<%= fields[i][1].type %>\" name=\"<%= fields[i][0] %>\" placeholder=\"<%= fields[i][1].placeholder %>\"><br>\n"+
+                "<input type=\"<%= fields[i].type %>\" name=\"<%= fields[i].field_name %>\" placeholder=\"<%= fields[i].placeholder %>\"><br>\n"+
                 "<% } %>\n"+
                 "<input type=\"submit\" value=\"Submit\"><br>\n"+
                 "</form>\n",

@@ -2,7 +2,6 @@ define([
   'models/FormFieldModel',
   'editor/form-editor/ActionEditorView',
   'tutorial/TutorialView',
-  'app/templates/FormEditorTemplates',
   'mixins/BackboneModal',
   'mixins/SelectView',
   'jquery-ui'
