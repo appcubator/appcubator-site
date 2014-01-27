@@ -264,10 +264,18 @@ body {
 .container.full-container .options {
   font-size: 18px;
   text-align: center;
+  list-style: none;
+  margin-bottom: 20px;
 }
 
 .container.full-container .options li {
-
+  display: inline-block;
+  width: 140px;
+  height: 110px;
+  margin-top: 20px;
+  margin-right: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
 .section-view {

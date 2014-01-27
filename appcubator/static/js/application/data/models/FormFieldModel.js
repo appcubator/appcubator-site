@@ -13,7 +13,7 @@ function() {
       this.set('required', (bone.required || true));
     },
 
-    serialize: function() {
+    toJSON: function() {
       var json = _.clone(this.attributes);
       if(json.displayType == "button") { json = _.omit(json, 'options'); }
       return json;

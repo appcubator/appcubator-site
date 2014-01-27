@@ -10,20 +10,6 @@ define(function(require, exports, module) {
     require('mixins/SelectView');
     require('jquery-ui');
 
-    var FieldTypes = {
-        "single-line-text": '<input type="text" placeholder="<%= field.get(\'placeholder\') %>" disabled>',
-        "text": '<input type="text" placeholder="<%= field.get(\'placeholder\') %>" disabled>',
-        "paragraph-text": '<textarea placeholder="<%= field.get(\'placeholder\') %>" disabled></textarea>',
-        "dropdown": '<select class="dropdown"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><option><%= option %></option><% }); %></select>',
-        "option-boxes": '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value=""> <label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
-        "password-text": '<input type="password" placeholder="<%= field.get(\'placeholder\') %>">',
-        "email-text": '<div class="email"><input type="text" placeholder="<%= field.get(\'placeholder\') %>"></div>',
-        "button": '<div class="btn"><%= field.get(\'placeholder\') %></div>',
-        "image-uploader": '<div class="upload-image btn">Upload Image</div>',
-        "file-uploader": '<div class="upload-file btn">Upload File</div>',
-        "date-picker": '<input type="text" placeholder="<%= field.get(\'placeholder\') %>"><img style="margin-left:5px;" src="/static/img/calendar-icon.png">'
-    };
-
     var fieldTypesArr = {
         "text": [{
             text: "Single Line Text",
@@ -84,36 +70,7 @@ define(function(require, exports, module) {
 
     FormEditorTemplates.field = [
         '<li id="field-<%= field.cid %>" class="field-li-item sortable li-<%= field.get(\'displayType\')%>"><label class="header"><%= field.get(\'label\') %> <% if(field.get(\'required\') && field.get(\'displayType\') != "button") { %>*<% } %></label><span class="form-item">',
-        '<% if(field.get(\'displayType\') == "single-line-text") { %>',
-        FieldTypes['single-line-text'],
-        '<% } %>',
-        '<% if(field.get(\'displayType\') == "paragraph-text") { %>',
-        FieldTypes['paragraph-text'],
-        '<% } %>',
-        '<% if(field.get(\'displayType\') == "password-text") { %>',
-        FieldTypes['password-text'],
-        '<% } %>',
-        '<% if(field.get(\'displayType\') == "email-text") { %>',
-        FieldTypes['email-text'],
-        '<% } %>',
-        '<% if(field.get(\'displayType\') == "image-uploader") { %>',
-        FieldTypes['image-uploader'],
-        '<% } %>',
-        '<% if(field.get(\'displayType\') == "file-uploader") { %>',
-        FieldTypes['file-uploader'],
-        '<% } %>',
-        '<% if(field.get(\'displayType\') == "date-picker") { %>',
-        FieldTypes['date-picker'],
-        '<% } %>',
-        '<% if(field.get(\'displayType\') == "button") { %>',
-        FieldTypes['button'],
-        '<% } %>',
-        '<% if(field.get(\'displayType\') == "option-boxes") { %>',
-        FieldTypes['option-boxes'],
-        '<% } %>',
-        '<% if(field.get(\'displayType\') == "dropdown") { %>',
-        FieldTypes['dropdown'],
-        '<% } %>',
+        '<%= fieldRendered %>',
         '</span><span class="drag-icon"></span><span class="delete-field" id="delete-btn-field-<%= field.cid %>">Delete Field</span></li>'
     ].join('\n');
 
@@ -299,10 +256,14 @@ define(function(require, exports, module) {
             var length = this.model.get('fields').length;
             this.model.get('fields').each(function(field, ind) {
                 if (ind == (length - 1)) return;
+                
+                var fieldRendered = field.expand();
+                console.log(fieldRendered);
                 var html = _.template(FormEditorTemplates.field, {
-                    field: field,
-                    value: ''
+                    fieldRendered: fieldRendered,
+                    field: field
                 });
+
                 this.$el.find('.form-fields-list').append(html);
             }, this);
         },

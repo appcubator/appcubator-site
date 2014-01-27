@@ -187,16 +187,22 @@
                     "style": "",
                     "fields": [
                         { 
-                          "field_name": "name",
-                          "type": "text",
-                          "placeholder": "Name",
-                          "displayType": "single-line-text"
+                          "generate" : "crud.uielements.form-field",
+                          "data" : {
+                            "field_name": "name",
+                            "type": "text",
+                            "placeholder": "Name",
+                            "displayType": "single-line-text"
+                          }
                         },
                         {
-                          "field_name" : "url",
-                          "type": "text",
-                          "placeholder": "URL",
-                          "displayType": "single-line-text"
+                          "generate" : "crud.uielements.form-field",
+                          "data" : {
+                            "field_name" : "url",
+                            "type": "text",
+                            "placeholder": "URL",
+                            "displayType": "single-line-text"
+                          }
                         }
                     ],
                     "id": "testform",
