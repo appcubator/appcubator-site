@@ -3,6 +3,7 @@ import logging
 from django.conf import settings
 import os
 import tarfile
+import subprocess
 import random
 logger = logging.getLogger(__name__)
 
@@ -38,7 +39,8 @@ def _write_tar_from_app_dir(appdir):
     for fname in contents:
         t.add(os.path.join(appdir, fname), arcname=fname)
     t.close()
-    return os.path.join(appdir, 'payload.tar')
+    p = subprocess.call(['gzip', 'payload.tar'], cwd=appdir)
+    return os.path.join(appdir, 'payload.tar.gz')
 
 def provision(appdir, deploy_data):
     """

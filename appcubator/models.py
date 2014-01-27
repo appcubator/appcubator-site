@@ -523,10 +523,13 @@ class App(models.Model):
 
                 self._rerelease()
                 self._rebuild(dd=dd, tmpdir=tmpdir)
+
                 self.save()
             else:
                 deploy.update_code(tmpdir, self.deployment_id, self.get_deploy_data())
         except Exception:
+            self.deployment_id = None
+            self.custom_domain = None
             self.record_deploy_error(traceback.format_exc())
             raise
         else:
