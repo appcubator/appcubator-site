@@ -74,7 +74,7 @@ define(function(require, exports, module) {
                     return this.getUIEVals("forms");
             }
 
-            return null;
+            return this.getUIEVals("texts");
         },
 
         getBaseStyleOf: function(type) {
