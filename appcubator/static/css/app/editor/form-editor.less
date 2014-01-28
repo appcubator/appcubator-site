@@ -1,6 +1,4 @@
 .form-editor {
-  height: 600px;
-  background-color: #fff;
   .box-shadow(none);
   border: none;
   overflow: hidden;
@@ -84,11 +82,12 @@
 .details-panel {
   display: inline-block;
   background-color: #fff;
-  width: 260px;
+  width: 280px;
   height: 490px;
   -ms-overflow-y: scroll;
   overflow-y: scroll;
   z-index: 3002;
+  padding-bottom: 30px;
 }
 
 .details-panel label {
@@ -173,7 +172,7 @@ ul.action li:hover .add-to-list {
 
 .form-panel {
   position: relative;
-  width: 460px;
+  width: 520px;
   padding-left: 0;
   padding-right: 0;
   border-left: 1px solid #C2D7EF;
@@ -188,7 +187,7 @@ ul.action li:hover .add-to-list {
   border-width: 1px;
 }
 
-.form-panel .bottom-sect {
+.form-editor .bottom-sect {
   position: absolute;
   height: 50px;
   bottom: 0;
@@ -201,7 +200,7 @@ ul.action li:hover .add-to-list {
   .border-bottom-right-radius(6px);
 }
 
-.form-panel .done-btn {
+.form-editor .bottom-sect .done-btn {
   float: right;
 }
 
@@ -416,10 +415,10 @@ label.header {
 }
 
 .add-field-panel {
-  width: 458px;
+  width: 520px;
   position: absolute;
   bottom: 50px;
-  left: 261px;
+  left: 281px;
   height: 50px;
   padding: 10px;
   background-color: #eee;

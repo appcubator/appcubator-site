@@ -93,18 +93,17 @@ define(function(require, exports, module) {
     ].join('\n');
 
     FormEditorTemplates.template = [
-        '<h4 class="form-editor-title">Form Editor</h4><h4 class="form-action-title">Actions on form submission</h4>',
-        '<div class="details-panel panel">',
-        '</div><div class="form-panel panel">',
-        '<small>You can click on field to see the details and drag them to arrange the display order</small>',
-        '<ul class="form-fields-list">',
-        '</ul>',
-        '<% var field = _.last(form.get(\'fields\').models); var sortable = "not-sortable"; %>',
-        FormEditorTemplates.submitField,
-        '<% %>',
-        '</div>',
-        '<div class="add-field-panel"><div class="btn add-field-button"><span class="icon"></span>Add a New Field</div></div>',
-        '<div class="action-panel panel">',
+        '<div class="">',
+            '<div class="details-panel panel">',
+            '</div><div class="form-panel panel">',
+            '<small>You can click on field to see the details and drag them to arrange the display order</small>',
+            '<ul class="form-fields-list">',
+            '</ul>',
+            '<% var field = _.last(form.get(\'fields\').models); var sortable = "not-sortable"; %>',
+            FormEditorTemplates.submitField,
+            '<% %>',
+            '</div>',
+            '<div class="add-field-panel"><div class="btn add-field-button"><span class="icon"></span>Add a New Field</div></div>',
         '</div>',
         '<div class="bottom-sect"><div class="q-mark"></div><div class="btn done">Done</div></div>'
     ].join('\n');
@@ -166,13 +165,11 @@ define(function(require, exports, module) {
     ].join('\n');
 
 
-    var FormEditorView = Backbone.ModalView.extend({
+    var FormEditorView = Backbone.CardView.extend({
         tagName: 'div',
-        width: 960,
-        height: 600,
-        padding: 0,
+        // height: 600,
+        // padding: 0,
         className: 'form-editor',
-        css: 'form-editor',
 
         events: {
             'click   .field-li-item': 'clickedField',
@@ -213,7 +210,7 @@ define(function(require, exports, module) {
             this.possibleActions = [];
             //this.model.getRelationalActions(v1State.getCurrentPage());
 
-            this.actionEditor = new ActionEditorView(this.model, this.entityModel);
+            //this.actionEditor = new ActionEditorView(this.model, this.entityModel);
             this.render();
 
             if (this.model.get('fields').models.length > 0) {
@@ -230,13 +227,35 @@ define(function(require, exports, module) {
             // _.map(v1State.get('users').getCommonProps(), function(field) {
             //     return "CurrentUser." + field.name;
             // });
-
             var html = _.template(FormEditorTemplates.template, temp_context);
-            this.el.innerHTML = html;
+            
+
+            var formEditorHTML = [
+             '<div class="header">',
+                '<div>',
+                '<h2>Form Editor</h2>',
+                '<div class="q-mark-circle"></div>',
+                '</div>',
+                '<ul class="tabs">',
+                    '<li class="fields-li right-icon">',
+                    '<span>Fields</span>',
+                    '</li><li class="actions-li right-icon">',
+                    '<span>Actions</span>',
+                    '</li><li class="code-li right-icon">',
+                    '<span>Code</span>',
+                    '</li>',
+                '</ul>',
+            '</div>',
+            '<div class="current-content">',
+            html,
+            '</div>'
+            ].join('\n');
+
+            this.el.innerHTML = formEditorHTML;
 
             this.renderFields();
 
-            this.actionEditor.setElement(this.$el.find('.action-panel')).render();
+            //this.actionEditor.setElement(this.$el.find('.action-panel')).render();
 
             $('.form-fields-list').sortable({
                 stop: this.changedOrder,
@@ -244,6 +263,7 @@ define(function(require, exports, module) {
                 axis: "y"
             });
 
+            this.$el.find('.fields-li').addClass('active');
             // if (this.model.isConstant()) {
             //     $('.add-field-button').remove();
             //     $('.delete-field').remove();
@@ -258,7 +278,6 @@ define(function(require, exports, module) {
                 if (ind == (length - 1)) return;
                 
                 var fieldRendered = field.expand();
-                console.log(fieldRendered);
                 var html = _.template(FormEditorTemplates.field, {
                     fieldRendered: fieldRendered,
                     field: field
@@ -312,10 +331,13 @@ define(function(require, exports, module) {
         },
 
         fieldAdded: function(fieldModel) {
+            console.log(fieldModel);
+            var fieldRendered = fieldModel.expand();
             var html = _.template(FormEditorTemplates.field, {
-                field: fieldModel,
-                value: ''
+                fieldRendered: fieldRendered,
+                field: fieldModel
             });
+
             this.$el.find('.form-fields-list').append(html);
             this.selectedNew(fieldModel);
             this.$el.find('.form-panel').animate({
