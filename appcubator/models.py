@@ -512,21 +512,23 @@ class App(models.Model):
 
 
     def deploy(self, retry_on_404=True):
-        tmpdir = self.write_to_tmpdir()
-        logger.info("Written to %s" % tmpdir)
         try:
             if self.deployment_id is None: # TODO or (change in build deps)
                 dd = self.get_deploy_data()
-                self.deployment_id = deploy.provision(tmpdir, dd)
+                self.deployment_id = deploy.provision(dd)
 
                 # HACK
                 self.custom_domain = self.deployment_id + '.' + settings.DEPLOYMENT_DOMAIN
-
                 self._rerelease()
+
+                tmpdir = self.write_to_tmpdir()
+                logger.info("Written to %s for container building" % tmpdir)
                 self._rebuild(dd=dd, tmpdir=tmpdir)
 
                 self.save()
             else:
+                tmpdir = self.write_to_tmpdir()
+                logger.info("Written to %s for code updating" % tmpdir)
                 deploy.update_code(tmpdir, self.deployment_id, self.get_deploy_data())
         except deploy.NotDeployedError:
             if retry_on_404:

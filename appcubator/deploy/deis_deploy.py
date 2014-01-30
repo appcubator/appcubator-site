@@ -42,7 +42,7 @@ def _write_tar_from_app_dir(appdir):
     p = subprocess.call(['gzip', 'payload.tar'], cwd=appdir)
     return os.path.join(appdir, 'payload.tar.gz')
 
-def provision(appdir, deploy_data):
+def provision():
     """
     Builds a development sandbox on a Deis server.
     Returns deployment_id
@@ -54,7 +54,7 @@ def provision(appdir, deploy_data):
                   #'<var>=<value>': [ key+u'='+unicode(value) for key, value in config_values.iteritems() ],
     return deployment_id
 
-def rebuild(appdir, deploy_data, deployment_id, config_values=None):
+def rebuild(appdir, deployment_id, config_values=None):
     """
     Creates a new Build and Release
     """
@@ -77,7 +77,7 @@ def rerelease(deployment_id, config_values):
     return result
 
 
-def update_code(appdir, deploy_id, deploy_data):
+def update_code(appdir, deploy_id, url):
     """
     1. path to directory where app is stored
     2. deployment id (or none if it's not yet deployed)
@@ -90,7 +90,7 @@ def update_code(appdir, deploy_id, deploy_data):
     print 'posting file: '+str(os.path.getsize(tar_path))
     try:
         with open(tar_path, "rb") as f:
-            r = requests.post(deploy_data['url']+'/__update_code__', files={'code':f})
+            r = requests.post(url+'/__update_code__', files={'code':f})
     finally:
         os.remove(tar_path)
 
@@ -110,19 +110,43 @@ def destroy(deploy_id):
 
 PATH_TO_FAKE_APP = os.path.join(os.path.dirname(__file__), 'lolapp')
 
-def zero_out(deploy_id, deploy_data):
-    return update_code(PATH_TO_FAKE_APP, deploy_id, deploy_data)
+def zero_out(deploy_id, url):
+    """
+    Given an appcubator devmon deployment, update its code to be just a marketing page.
+    TODO implement removal of code on devmon app for security purposes
+    """
+    return update_code(PATH_TO_FAKE_APP, deploy_id, url)
 
-def make_new_app(dd):
-    d_id = provision(tmpdir, dd)
+def get_orphans(known_deployments):
+    dc = DeisClient()
+    login_if_required(dc)
+    all_apps = dc.apps_list({})
+    return list(set(all_apps) - set(known_deployments))
+
+
+def zero_out_orphans(orphans=None):
+    if orphans is None:
+        orphans = get_orphans()
+    for d_id in orphans:
+        logger.info("Attempting to delete app with id=%s"%d_id)
+        domain = d_id + '.' + settings.DEPLOYMENT_DOMAIN
+        url = 'http://' + domain + '/'
+        zero_out(d_id, url)
+        logger.info("Deleted app with id=%s"%d_id)
+
+
+def make_new_app():
+    d_id = provision()
     domain = d_id + '.' + settings.DEPLOYMENT_DOMAIN
     rerelease(d_id, {'MONGO_ADDR': os.environ['TEMP_MONGO']})
-    out = rebuild(PATH_TO_FAKE_APP, dd, d_id)
-    print "rc: " + str(out['rc'])
-    print "Out: " + out['out']
-    if out['err']:
-        print "Err: " + out['err']
-    return out
+    url = 'http://' + domain + '/'
+    result = rebuild(PATH_TO_FAKE_APP, url, d_id)
+    print "rc: " + str(result['rc'])
+    print "Out: " + result['out']
+    if result['err']:
+        print "Err: " + result['err']
+        raise DeploymentError(result)
+    return (d_id, url)
 
 
 import unittest
@@ -142,17 +166,55 @@ class TestProvision(unittest.TestCase):
 
     def test_provision(self):
         self.id = random.randint(100, 999)
-        dd = { 'hostname': 'testing%d.appcubator.com' % self.id,
-               'url': 'http://testing%d.appcubator.com/' % self.id }
-        d_id = provision(self.appdir, dd)
-        out = rebuild(self.appdir, dd, d_id)
+        url = 'http://testing%d.appcubator.com/' % self.id
+        d_id = provision()
+        out = rebuild(self.appdir, url, d_id)
         print out
         #import time; time.sleep(2)
-        #r = requests.get(dd['url'])
+        #r = requests.get(url)
         #self.assertEqual(r.status_code, 200)
 
     def tearDown(self):
         shutil.rmtree(self.appdir)
+
+
+class TestNewApp(unittest.TestCase):
+    def test_new_app_task_doesnt_error(self):
+        print make_new_app()
+
+class TestZeroOutApp(unittest.TestCase):
+    def setUp(self):
+        print "Making new app for testing..."
+        self.d_id, self.url = make_new_app()
+        print "Generating code for the default app..."
+        self.appdir = codegen.write_to_tmpdir(codegen.compileApp(APPSTATE))
+        print "Updating app with generated code..."
+        update_code(self.appdir, self.d_id, self.url)
+
+    def test_app_gets_zeroed_out(self):
+        zero_out(self.d_id, self.url)
+        import time; time.sleep(2)
+        r = requests.get(self.url)
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.text.find('BEGIN UIELEMENTS'), -1)
+
+class TestGetOrphans(unittest.TestCase):
+    def setUp(self):
+        dc = DeisClient()
+        login_if_required(dc)
+        all_apps = dc.apps_list({})
+        known_apps = all_apps[:1]
+
+        self.dc = dc
+        self.known_apps = known_apps
+        self.all_apps = all_apps
+
+    def test_get_orphans(self):
+        orphans = get_orphans(self.known_apps)
+        print orphans
+        self.assertEqual(set(orphans), set(self.all_apps) - set(self.known_apps))
+
+#def zero_out_orphans(orphans=None):
 
 if __name__ == "__main__":
     unittest.main()
