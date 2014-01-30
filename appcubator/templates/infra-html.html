@@ -43,12 +43,15 @@ less = {
 <script type="text/javascript" src="//use.typekit.net/gyl1cyv.js"></script>
 <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
-<script type="text/javascript">
-  var DEBUG = {% if DEBUG %}true{% else %}false{% endif %};
-</script>
-
 </head>
 <body>
+  <script type="text/javascript">
+    var DEBUG = {% if DEBUG %}true{% else %}false{% endif %};
+  </script>
+  <script type="text/javascript">
+    var staticVersion = "{{STATIC_VERSION}}";
+    var appState = null;
+  </script>
   <!-- fb js sdk code -->
   <div id="fb-root"></div>
   <script>(function(d, s, id) {

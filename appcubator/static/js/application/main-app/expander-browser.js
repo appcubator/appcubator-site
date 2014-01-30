@@ -216,17 +216,17 @@ generators.push({
         return template(data);
     },
     templates: {
-        "single-line-text": '<input type="text" placeholder="<%= placeholder %>" disabled>',
-        "text": '<input type="text" placeholder="<%= placeholder %>" disabled>',
-        "paragraph-text": '<textarea placeholder="<%= placeholder %>" disabled></textarea>',
-        "dropdown": '<select class="dropdown"><% _.each(options.split(\',\'), function(option, ind){ %><option><%= option %></option><% }); %></select>',
+        "single-line-text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
+        "text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
+        "paragraph-text": '<textarea name="<%= field_name %>" placeholder="<%= placeholder %>"></textarea>',
+        "dropdown": '<select name="<%= field_name %>" class="dropdown"><% _.each(options.split(\',\'), function(option, ind){ %><option><%= option %></option><% }); %></select>',
         "option-boxes": '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value=""> <label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
-        "password-text": '<input type="password" placeholder="<%= placeholder %>">',
+        "password-text": '<input name="<%= field_name %>" type="password" placeholder="<%= placeholder %>">',
         "email-text": '<div class="email"><input type="text" placeholder="<%= placeholder %>"></div>',
         "button": '<div class="btn"><%= placeholder %></div>',
         "image-uploader": '<div class="upload-image btn">Upload Image</div>',
         "file-uploader": '<div class="upload-file btn">Upload File</div>',
-        "date-picker": '<input type="text" placeholder="<%= placeholder %>"><img style="margin-left:5px;" src="/static/img/calendar-icon.png">'
+        "date-picker": '<input name="<%= field_name %>" type="text" placeholder="<%= placeholder %>"><img style="margin-left:5px;" src="/static/img/calendar-icon.png">'
     }
 });
 
@@ -699,25 +699,11 @@ generators.push({
     version: '0.1',
     code: function(data, templates) {
         /* data has isSingle, tagName, idString, classList, styleString, attribs, content */
-        if (data.classList)
-            data.classString = data.classList.join(' ');
-        return { html: templates.html({data: data}),
-                 css: '',
-                 js: '',
+
+        return { html: data.html,
+                 css: data.css,
+                 js: data.js,
                  layout: data.layout };
-    },
-    templates: {
-        html: '<<%= data.tagName %>'+
-                '<% if (data.idString) { %> id="<%= data.idString %>"<% } %>'+
-                '<% if (data.classString) { %> class="<%= data.classString %>"<% } %>'+
-                '<% if (data.styleString) { %> style="<%= data.styleString %>"<% } %>'+
-                '<% for (var attrib in data.attribs) { %> <%= attrib %>="<%= data.attribs[attrib] %>"<% } %>'+
-                '><% if (!data.isSingle) { %>'+
-                 '<% if (data.content) { %>'+
-                     '\n<%- data.content %>\n'+
-                 '<% } %>'+
-              '</<%= data.tagName %>>'+
-              '<% } %>'
     }
 });
 
