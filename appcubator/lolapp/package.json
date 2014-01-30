@@ -1,0 +1,8 @@
+{
+    "dependencies": {
+        "mongoose": "3.8.1",
+        "express": "3.4.4",
+        "flickr": "0.1.0",
+        "ejs": "0.8.5"
+    }
+}

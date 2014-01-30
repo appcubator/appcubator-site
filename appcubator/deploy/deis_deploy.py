@@ -17,7 +17,6 @@ def login_if_required(dc):
                        '--password':settings.DEIS_PASSWORD})
 
 
-
 class DeploymentError(Exception):
     """Should be raised whenever the deployment server does not return 200"""
     pass
@@ -107,6 +106,24 @@ def destroy(deploy_id):
     login_if_required(dc)
     dc.apps_destroy({'--app': deploy_id, '--confirm': deploy_id})
 
+## BEGIN RANDOM SCRIPTS
+
+PATH_TO_FAKE_APP = os.path.join(os.path.dirname(__file__), 'lolapp')
+
+def zero_out(deploy_id, deploy_data):
+    return update_code(PATH_TO_FAKE_APP, deploy_id, deploy_data)
+
+def make_new_app(dd):
+    d_id = provision(tmpdir, dd)
+    domain = d_id + '.' + settings.DEPLOYMENT_DOMAIN
+    rerelease(d_id, {'MONGO_ADDR': os.environ['TEMP_MONGO']})
+    out = rebuild(PATH_TO_FAKE_APP, dd, d_id)
+    print "rc: " + str(out['rc'])
+    print "Out: " + out['out']
+    if out['err']:
+        print "Err: " + out['err']
+    return out
+
 
 import unittest
 from appcubator import codegen
@@ -139,4 +156,3 @@ class TestProvision(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
