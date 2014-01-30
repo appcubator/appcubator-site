@@ -24,7 +24,8 @@ class DeploymentError(Exception):
 
 class NotDeployedError(Exception):
     """Indicates that the deployment id is bogus"""
-    pass
+    def __init__(self, deployment_id):
+        self.deployment_id = deployment_id
 
 def update_deployment_info(deployment_id, hostname):
     """Update the deployment with the new hostname"""
@@ -93,6 +94,9 @@ def update_code(appdir, deploy_id, deploy_data):
             r = requests.post(deploy_data['url']+'/__update_code__', files={'code':f})
     finally:
         os.remove(tar_path)
+
+    if r.status_code == 404:
+        raise NotDeployedError(deploy_id)
 
     if r.status_code != 200:
         raise Exception(str(r.status_code) + r.text)

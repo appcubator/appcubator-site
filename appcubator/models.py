@@ -503,10 +503,11 @@ class App(models.Model):
     def _rerelease(self):
         deploy.rerelease(self.deployment_id, {'MONGO_ADDR': os.environ['TEMP_MONGO']})
 
-    def _update_code(self, port):
+    def _update_code(self, port, retry=True):
         # this is just for testing.
         tmpdir = self.write_to_tmpdir()
         deploy.update_code(tmpdir, self.deployment_id, {'url':'http://localhost:%d'%port})
+
         shutil.rmtree(tmpdir)
 
 
@@ -527,6 +528,14 @@ class App(models.Model):
                 self.save()
             else:
                 deploy.update_code(tmpdir, self.deployment_id, self.get_deploy_data())
+        except deploy.NotDeployedError:
+            if retry_on_404:
+                logger.warn("App was not actually deployed, probably from a prior error. Trying again.")
+                self.deployment_id = None
+                self.custom_domain = None
+                return self.deploy(retry_on_404=False)
+            else:
+                raise
         except Exception:
             self.deployment_id = None
             self.custom_domain = None
