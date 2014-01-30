@@ -489,12 +489,10 @@ class App(models.Model):
         }
         return post_data
 
-    def _rebuild(self, tmpdir=None, dd=None):
+    def _rebuild(self, tmpdir=None):
         if tmpdir is None:
             tmpdir = self.write_to_tmpdir()
-        if dd is None:
-            dd = self.get_deploy_data()
-        out = deploy.rebuild(tmpdir, dd, self.deployment_id)
+        out = deploy.rebuild(tmpdir, self.deployment_id)
         print "rc: " + str(out['rc'])
         print "Out: " + out['out']
         print "Err: " + out['err']
@@ -513,17 +511,24 @@ class App(models.Model):
 
     def deploy(self, retry_on_404=True):
         try:
-            if self.deployment_id is None: # TODO or (change in build deps)
-                dd = self.get_deploy_data()
-                self.deployment_id = deploy.provision(dd)
+            # TODO detect change in build dependencies and build a new container
+            if self.deployment_id is None:
+                # TODO cache this stuff.
+                known_deps = [a.deployment_id for a in App.objects.all() if a.deployment_id is not None]
+                orphan = deploy.get_functioning_orphan(known_deps)
+                if orphan: # use an available orphan if possible.
+                    self.deployment_id = orphan
+                    # HACK
+                    self.custom_domain = self.deployment_id + '.' + settings.DEPLOYMENT_DOMAIN
+                else:
+                    self.deployment_id = deploy.provision()
+                    # HACK
+                    self.custom_domain = self.deployment_id + '.' + settings.DEPLOYMENT_DOMAIN
+                    self._rerelease()
 
-                # HACK
-                self.custom_domain = self.deployment_id + '.' + settings.DEPLOYMENT_DOMAIN
-                self._rerelease()
-
-                tmpdir = self.write_to_tmpdir()
-                logger.info("Written to %s for container building" % tmpdir)
-                self._rebuild(dd=dd, tmpdir=tmpdir)
+                    tmpdir = self.write_to_tmpdir()
+                    logger.info("Written to %s for container building" % tmpdir)
+                    self._rebuild(dd=dd, tmpdir=tmpdir)
 
                 self.save()
             else:

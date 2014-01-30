@@ -98,7 +98,7 @@ def update_code(appdir, deploy_id, url):
         raise NotDeployedError(deploy_id)
 
     if r.status_code != 200:
-        raise Exception(str(r.status_code) + r.text)
+        raise DeploymentError(str(r.status_code) + r.text)
 
 
 def destroy(deploy_id):
@@ -123,16 +123,34 @@ def get_orphans(known_deployments):
     all_apps = dc.apps_list({})
     return list(set(all_apps) - set(known_deployments))
 
+def get_functioning_orphan(known_deps):
+    orphs = get_orphans(known_deps)
+    candidate = orphs.pop()
+    while len(orphs) > 0:
+        pass
 
-def zero_out_orphans(orphans=None):
-    if orphans is None:
-        orphans = get_orphans()
-    for d_id in orphans:
+
+
+def zero_out_bulk(deps, orphans=None):
+    """
+    Returns the deployments for which errors were encountered.
+    """
+    error_apps = []
+    for d_id in deps:
         logger.info("Attempting to delete app with id=%s"%d_id)
         domain = d_id + '.' + settings.DEPLOYMENT_DOMAIN
         url = 'http://' + domain + '/'
-        zero_out(d_id, url)
-        logger.info("Deleted app with id=%s"%d_id)
+        try:
+            zero_out(d_id, url)
+        except DeploymentError, e:
+            logger.warn('That one errored')
+            error_apps.append((e, d_id))
+        except NotDeployedError, e:
+            logger.warn('That one 404d')
+            error_apps.append((e, d_id))
+        else:
+            logger.info("Deleted app with id=%s"%d_id)
+    return error_apps
 
 
 def make_new_app():
