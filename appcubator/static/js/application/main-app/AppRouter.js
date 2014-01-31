@@ -15,6 +15,7 @@ define(function(require, exports, module) {
     var AppRouter = Backbone.Router.extend({
 
         routes: {
+            "app/new/"                     : "newapp",
             "app/:appid/info/*tutorial"    : "info",
             "app/:appid/tables/*tutorial"  : "tables",
             "app/:appid/gallery/*tutorial" : "themes",
@@ -174,6 +175,16 @@ define(function(require, exports, module) {
                     });
                 });
             });
+        },
+
+        newapp: function() {
+
+            $('#skip-racoon').hover(function() {
+                $('#mascot').addClass('happy');
+            }, function() {
+                $('#mascot').removeClass('happy');
+            });
+
         },
 
         dashboard: function() {

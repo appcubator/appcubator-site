@@ -32,14 +32,27 @@ define(function(require, exports, module) {
 
         render: function() {
             var template = [
-                    '<img class="icon" src="/static/img/edit.png">',
-                    '<input type="text" class="class_name" value="<%= className %>">',
-                    '<div class="remove-section">×</div>'].join('\n');
+                    '<div class="btn-group">',
+                        '<div class="button dropdown-toggle" data-toggle="dropdown">',
+                        '<img width="24" class="icon" src="/static/img/edit.png"><span class="caret"></span>',
+                        '</div>',
+                        '<ul class="dropdown-menu pull-right action-menu" role="menu">',
+                            '<li><input type="text" class="class_name" value="<%= className %>" placeholder="Class Name"></li>',
+                            '<li class="divider"></li>',
+                            '<li class="remove-section"><a>Remove Section</a></li>',
+                        '</ul>',
+                    '</div>'].join('\n');
 
             var data = this.model.toJSON();
             data.className = data.className || "";
 
             this.el.innerHTML = _.template(template, data);
+
+            this.$el.find('.dropdown-menu input').click(function(event){
+                event.stopPropagation();
+            });
+            this.$el.find('.dropdown-toggle').dropdown();
+
             return this;
         },
 

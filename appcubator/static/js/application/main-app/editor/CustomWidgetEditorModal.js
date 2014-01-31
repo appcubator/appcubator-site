@@ -27,16 +27,14 @@ define(function(require, exports, module) {
             var jsStr = this.model.get('jsC') || '';
 
             var content = [
-                '<div class="sect"><div class="sub-title" id="e-html">» HTML</div><div id="edit-html-inp" style="background-color:#eee; height: 500px; width:100%; position:relative;"></div></div>',
-                '<div class="sect"><div class="sub-title" id="e-js">» JS</div><div id="edit-js-inp" style="position:relative; background-color:#eee; height: 500px; width:100%;"></div></div>',
-                '<div class="sect"><div class="sub-title" id="e-css">» CSS</div><div id="edit-css-inp" style="position:relative; background-color:#eee; height: 500px; width:100%;"></div></div>',
+                '<div class="sect"><div class="sub-title" id="e-html">» HTML</div><div id="edit-html-inp" style="background-color:#eee; height: 400px; width:100%; position:relative;"></div></div>',
+                '<div class="sect"><div class="sub-title" id="e-js">» JS</div><div id="edit-js-inp" style="position:relative; background-color:#eee; height: 400px; width:100%;"></div></div>',
+                '<div class="sect"><div class="sub-title" id="e-css">» CSS</div><div id="edit-css-inp" style="position:relative; background-color:#eee; height: 400px; width:100%;"></div></div>',
                 '<a style="position: relative; width:100%; display:block; text-align: center; padding: 8px; color: #666; margin-top:20px;" href="/resources/tutorials/custom-widget/" rel="external" target="_blank">Guide on using the Custom Widget</a>'
             ].join('\n');
 
             this.el.innerHTML = content;
             this.el.style.overflow = "hidden";
-            this.el.style.height = "438px";
-
 
             this.editors = {};
 

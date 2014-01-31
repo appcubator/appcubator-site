@@ -204,7 +204,7 @@ def new(request, is_racoon = False, app_template=None):
             # this adds it to the deployment queue. non-blocking basically.
             # app.deploy()
 
-            return redirect(user_page, request.user.username)
+            return redirect(page, app.pk)
 
         return render(request,  'apps-new.html', {'old_name': request.POST.get('name', ''), 'other_errors': form.non_field_errors, 'errors': dict(form.errors)}, status=400)
     else:

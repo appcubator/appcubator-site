@@ -3,13 +3,10 @@ amqp==1.0.8
 anyjson==0.3.3
 argparse
 billiard==2.7.3.21
-celery==3.0.15
-django-celery==3.0.11
-kombu==2.5.6
 python-dateutil==2.2
 pytz==2012j
-requests==2.2.0
-simplejson==3.1.0
+requests==2.2.1
+simplejson
 wsgiref==0.1.2
 jinja2==2.7
 xlrd==0.9.0
@@ -33,7 +30,7 @@ cssutils==0.9.10
 django-threadedcomments==0.9.0
 django-countries
 
-mysql-python==1.2.4
+#mysql-python==1.2.4
 
 gunicorn==18.0
 eventlet==0.14.0

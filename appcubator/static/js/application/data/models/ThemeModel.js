@@ -69,11 +69,12 @@ define(function(require, exports, module) {
                     return this.getUIEVals("lines");
                 case "box":
                     return this.getUIEVals("boxes");
+                case "create-form":
                 case "form":
                     return this.getUIEVals("forms");
             }
 
-            return null;
+            return this.getUIEVals("texts");
         },
 
         getBaseStyleOf: function(type) {

@@ -104,9 +104,17 @@ exports.factory = function(_safe_eval_) {
     expander.parseGenID = parseGenID;
 
     function expandOnce(generators, genData) {
-        var genID = parseGenID(genData.generate);
-        var generatedObj = constructGen(findGenData(generators, genID))(generators, genData.data);
-        return generatedObj;
+        try {
+            var genID = parseGenID(genData.generate);
+            var generatedObj = constructGen(findGenData(generators, genID))(generators, genData.data);
+            return generatedObj;
+        }
+        catch(e) {
+            _.each(genID, function(val, key) {
+                console.log(val + " " + key);
+            });
+            throw genID + " : " + e;
+        }
     }
 
     expander.expandOnce = expandOnce;
@@ -206,6 +214,31 @@ exports.generators = generators;
 var generators = [];
 
 generators.push({
+    name: 'form-field',
+    version: '0.1',
+    code: function(data, templates) {
+
+        var template = templates[data.displayType];
+        data.style = data.style || 'display:block';
+
+        return template(data);
+    },
+    templates: {
+        "single-line-text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
+        "text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
+        "paragraph-text": '<textarea name="<%= field_name %>" placeholder="<%= placeholder %>"></textarea>',
+        "dropdown": '<select name="<%= field_name %>" class="dropdown"><% _.each(options.split(\',\'), function(option, ind){ %><option><%= option %></option><% }); %></select>',
+        "option-boxes": '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value=""> <label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
+        "password-text": '<input name="<%= field_name %>" type="password" placeholder="<%= placeholder %>">',
+        "email-text": '<div class="email"><input type="text" placeholder="<%= placeholder %>"></div>',
+        "button": '<div class="btn"><%= placeholder %></div>',
+        "image-uploader": '<div class="upload-image btn">Upload Image</div>',
+        "file-uploader": '<div class="upload-file btn">Upload File</div>',
+        "date-picker": '<input name="<%= field_name %>" type="text" placeholder="<%= placeholder %>"><img style="margin-left:5px;" src="/static/img/calendar-icon.png">'
+    }
+});
+
+generators.push({
     name: 'create',
     version: '0.1',
     code: function(data, templates) {
@@ -218,40 +251,45 @@ generators.push({
                   redirect: 'https://www.google.com/' }
         }
           */
-        var uie = { html: templates.html(data),
-                    js: templates.js(data),
-                    css: '' };
+
+        data.className = data.className || "";
+        data.style = data.style || "";
+
+        data.formFields = _.map(data.fields, expand).join('\n');
+
+        var uie = {
+            html: templates.html(data),
+            js: templates.js(data),
+            css: ''
+        };
         return uie;
     },
     templates: {
-        "html": "<form id=\"<%= id %>\">\n"+
-                "<% for (var i = 0; i < fields.length; i ++) { %>\n"+
-                "<input type=\"<%= fields[i][1].type %>\" name=\"<%= fields[i][0] %>\" placeholder=\"<%= fields[i][1].placeholder %>\"><br>\n"+
-                "<% } %>\n"+
-                "<input type=\"submit\" value=\"Submit\"><br>\n"+
-                "</form>\n",
-        "js": "$('#<%= id %>').submit(function(){\n"+
-              "    var formdata = {};\n"+
-              "    formdata.name = $('#<%= id %> input[name=\"name\"]').val();\n"+
-              "    formdata.url = $('#<%= id %> input[name=\"url\"]').val();\n"+
-              "    models.Picture.createPicture(formdata, function(err, data){\n"+
-              "        console.log(data);\n"+
-              "        if (err) {\n"+
-              "            // Do whatever you want with user errors\n"+
-              "            alert(err);\n"+
-              "        }\n"+
-              "        else {\n"+
-              "            // You can redirect on success\n"+
-              "            location.href = '<%= redirect %>';\n"+
-              "        }\n"+
-              "    });\n"+
-              "    return false;\n"+
-              "});\n",
+        "html": "<form id=\"<%= id %>\" class=\"<%= className %>\" style=\"<%= style %>\">\n" +
+            "<%= formFields %>" +
+            "<input type=\"submit\" value=\"Submit\"><br>\n" +
+            "</form>\n",
+        "js": "$('#<%= id %>').submit(function(){\n" +
+            "    var formdata = {};\n" +
+            "    formdata.name = $('#<%= id %> input[name=\"name\"]').val();\n" +
+            "    formdata.url = $('#<%= id %> input[name=\"url\"]').val();\n" +
+            "    models.Picture.createPicture(formdata, function(err, data){\n" +
+            "        console.log(data);\n" +
+            "        if (err) {\n" +
+            "            // Do whatever you want with user errors\n" +
+            "            alert(err);\n" +
+            "        }\n" +
+            "        else {\n" +
+            "            // You can redirect on success\n" +
+            "            location.href = '<%= redirect %>';\n" +
+            "        }\n" +
+            "    });\n" +
+            "    return false;\n" +
+            "});\n",
     }
 });
 
 exports.generators = generators;
-
 },{}],5:[function(require,module,exports){
 exports.root = require('./root/generators');
 exports.crud = require('./crud/generators');
@@ -437,33 +475,33 @@ generators.push({
         data._inclString = '<% include modeldefs %>';// this include statement needs to be inserted into the generated code but it was causing problems inside the template and idk how to escape it in EJS.
         return {name: data.name, code: templates.code(data)};
     },
-    templates: {'code':"<html>\n \
-    <head>\n \
-\
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> \
-    <meta charset=\"utf-8\"> \
-    <!-- autogenerated css--> \
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\"></script> \
-    <script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>\
-\
-    <!-- begin autogenerated api client library --> \
-    <script type=\"text/javascript\"><%= _inclString %></script>\n \
-    <script src=\"/static/models.js\"></script> \
-    <!-- end autogenerated api client library --> \
-    <%= head %>\n \
-    </head>\n \
-    <body>\n \
-    <!-- BEGIN NAVBAR-->\n \
-    <%= navbar %>\n \
-    <!-- END NAVBAR-->\n \
-    <!-- BEGIN UIELEMENTS -->\n \
-    <%= uielements %>\n \
-    <!-- END UIELEMENTS -->\n \
-    <!-- BEGIN FOOTER-->\n \
-    <%= footer %>\n \
-    <!-- END FOOTER-->\n \
-    </body>\n \
-</html>\n" }
+    templates: {'code':[
+    '<html>',
+    '<head>',
+    '<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">',
+    '<meta charset=\"utf-8\">',
+    '<!-- autogenerated css-->',
+    '<link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\"></script>',
+    '<script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>',
+    '<!-- begin autogenerated api client library -->',
+    '<script type=\"text/javascript\"><%= _inclString %></script>',
+    '<script src=\"/static/models.js\"></script>',
+    '<!-- end autogenerated api client library -->',
+    '<%= head %>\n',
+    '</head>',
+    '<body>',
+    '<!-- BEGIN NAVBAR-->',
+    '<%= navbar %>',
+    '<!-- END NAVBAR-->',
+    '<!-- BEGIN UIELEMENTS -->',
+    '<%= uielements %>\n',
+    '<!-- END UIELEMENTS -->\n',
+    '<!-- BEGIN FOOTER-->\n',
+    '<%= footer %>',
+    '<!-- END FOOTER-->',
+    '<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>\n',
+   ' </body>\n',
+    '</html>'].join('\n') }
 });
 
 generators.push({
@@ -508,17 +546,17 @@ generators.push({
         return templates.html({ data: data });
     },
     templates: {
-        'html': '<div class="navbar navbar-fixed-top navbar-default" id="navbar">' +
+        'html': '<div class="navbar navbar-fixed-top navbar-default" id="navbar" role="navigation">' +
             '<div class="container">' +
               '<div class="navbar-header">' +
                '<a href="/" class="navbar-brand"><%= data.brandName %></a>' +
-                '<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">' +
+                '<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">' +
                   '<span class="icon-bar"></span>' +
                   '<span class="icon-bar"></span>' +
                   '<span class="icon-bar"></span>' +
                 '</button>' +
               '</div>' +
-              '<div class="navbar-collapse collapse" data-toggle="collapse">' +
+              '<div class="navbar-collapse collapse" id="navbar-collapse">' +
                 '<ul class="nav navbar-nav" id="links">' +
                     '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
                     '<li><a href="<%= item.url %>" class="menu-item"><%= item.title %></a></li>' +
@@ -537,7 +575,8 @@ generators.push({
         return templates.html({ data: data });
     },
     templates: {
-        'html': '<div class="container">' +
+        'html': '<footer class="footer">' +
+            '<div class="container">' +
             '<p id="customText" class="footer-text muted"><%= data.customText %></p>' +
             '<ul class="footer-links" id="links">' +
                 '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
@@ -545,7 +584,8 @@ generators.push({
                 '<% } %>' +
             '</ul>' +
           '</div>' +
-          '<div class="clearfix"></div>'
+          '<div class="clearfix"></div>' +
+          '</footer>'
     }
 });
 
@@ -669,25 +709,11 @@ generators.push({
     version: '0.1',
     code: function(data, templates) {
         /* data has isSingle, tagName, idString, classList, styleString, attribs, content */
-        if (data.classList)
-            data.classString = data.classList.join(' ');
-        return { html: templates.html({data: data}),
-                 css: '',
-                 js: '',
+
+        return { html: data.html,
+                 css: data.css,
+                 js: data.js,
                  layout: data.layout };
-    },
-    templates: {
-        html: '<<%= data.tagName %>'+
-                '<% if (data.idString) { %> id="<%= data.idString %>"<% } %>'+
-                '<% if (data.classString) { %> class="<%= data.classString %>"<% } %>'+
-                '<% if (data.styleString) { %> style="<%= data.styleString %>"<% } %>'+
-                '<% for (var attrib in data.attribs) { %> <%= attrib %>="<%= data.attribs[attrib] %>"<% } %>'+
-                '><% if (!data.isSingle) { %>'+
-                 '<% if (data.content) { %>'+
-                     '\n<%- data.content %>\n'+
-                 '<% } %>'+
-              '</<%= data.tagName %>>'+
-              '<% } %>'
     }
 });
 

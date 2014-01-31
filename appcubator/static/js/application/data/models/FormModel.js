@@ -13,7 +13,7 @@ define([
         var FormModel = Backbone.Model.extend({
 
             initialize: function(bone) {
-
+                alert('ye');
                 this.set('name', bone.name);
                 this.set('fields', new FormFieldCollection());
                 this.set('action', bone.action || "create");

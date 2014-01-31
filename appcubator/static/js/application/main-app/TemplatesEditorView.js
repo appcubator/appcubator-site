@@ -94,7 +94,8 @@ define(function(require, exports, module) {
                 generators = _.map(appState.generators[packageModuleName.package][packageModuleName.module], function(obj) { obj.package = packageModuleName.package; return obj; });
             }
 
-            if (appState.generators["local"][packageModuleName.module]) {
+            if (appState.generators["local"] &&
+                appState.generators["local"][packageModuleName.module]) {
                 var localGens = _.map(appState.generators["local"][packageModuleName.module], function(obj) { obj.package = "local"; return obj; });
                 generators = _.union(generators, localGens);
             }
@@ -141,7 +142,6 @@ define(function(require, exports, module) {
         },
 
         editCurrentGen: function() {
-            alert('edit');
             var genObj = _.clone(this.generator);
 
             var gensWrapper = v1.currentApp.model.get('generators');
@@ -154,8 +154,6 @@ define(function(require, exports, module) {
             var i = 2;
             var newName = packageModuleName.name + '_v' + i;
             while(!this.isUnique(packageModuleName, newName)) { i++; newName =  packageModuleName.name + '_v' + i;  }
-
-            alert(newName);
 
             packageModuleName.name = newName;
 

@@ -9,57 +9,60 @@
 
 {% block page %}
 <div class="container hoff3">
-  <h2 class="hoff3 span52">Start a New App</h2>
-  <div class="hoff1 span40">
-      <form method="post" action="/app/new/">
-      {% csrf_token %}
-      <h4 class="span12 hoff1">Name of the app</h4>
-      <input class="span16 hoff1" name="name" type="text" placeholder="Easy App" value="{{old_name}}">
-      {% if errors %}
-      <div class="error-content">
-      <br>
-      {% for k, values in errors.items %}
-          {% for val in values %}
-          {{ val }}<br>
-          {% endfor %}
-      {% endfor %}
-      </div>
-      {% endif %}
-      {% if other_errors %}
-      <div class="error-content">
-      <br>
-      {% for val in other_errors %}
-          {{ val|safe }}<br>
-      {% endfor %}
-      </div>
-      {% endif %}
-      <hr>
+  <div class="span40 hoff8">
+    <h2 class="">Start a New App</h2>
+    <div class="hoff1">
+        <form method="post" action="/app/new/">
+        {% csrf_token %}
+        <h4 class="span12 hoff1">Name of the app</h4>
+        <input class="span16 hoff1" name="name" type="text" placeholder="Easy App" value="{{old_name}}">
+        {% if errors %}
+        <div class="error-content">
+        <br>
+        {% for k, values in errors.items %}
+            {% for val in values %}
+            {{ val }}<br>
+            {% endfor %}
+        {% endfor %}
+        </div>
+        {% endif %}
+        {% if other_errors %}
+        <div class="error-content">
+        <br>
+        {% for val in other_errors %}
+            {{ val|safe }}<br>
+        {% endfor %}
+        </div>
+        {% endif %}
+        <hr>
 
 
-      </form>
-      <h4 class="span34">Pick a base app template below, or start with the simple one.</h4>
-      <div class="span41 hi18 hoff1" style="background-color:#fff; overflow-y: scroll; border-radius: 4px; border: 2px solid #ccc;">
-        <div class="span12 hi10 hoff2 app-template offset1 selected" id="simple" style="background-image:url(https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7);">
-          <p>Simple</p>
-          <span class="layover"></span>
-        </div>
-        <div class="span12 hi10 hoff2 app-template offset1" id="socialnetwork" style="background-image:url(https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7);">
-          <p>Social Network</p>
-          <span class="layover"></span>
-        </div>
-        <div class="span12 hi10 hoff2 offset1 app-template" id="marketplace" style="background-image:url({{STATIC_URL}}img/marketplace.png);">
-          <span class="layover"></span>
-          <p>Market Place</p>
-        </div>
-        <div class="span12 hi10 hoff2 offset1 app-template" id="tutoringsite"  style="background-image:url({{STATIC_URL}}img/examcloud.png);">   <span class="layover"></span>
-          <p>Tutoring Site</p>
-        </div>
-        <div class="hoff1 span40"></div>
-      </div>
-      <hr class="span40">
-      <span id="current-temp-text"></span><div id="skip-racoon" class="span15 btn btn-blue hi3 offset12 pull-right" >Start Building My App »</div>
+        </form>
+        <!-- <h4 class="span34">Pick a base app template below, or start with the simple one.</h4>
+        <div class="span41 hi18 hoff1" style="background-color:#fff; overflow-y: scroll; border-radius: 4px; border: 2px solid #ccc;">
+          <div class="span12 hi10 hoff2 app-template offset1 selected" id="simple" style="background-image:url(https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7);">
+            <p>Simple</p>
+            <span class="layover"></span>
+          </div>
+          <div class="span12 hi10 hoff2 app-template offset1" id="socialnetwork" style="background-image:url(https://www.filepicker.io/api/file/qm5fTBFDTKSQZhpoJqO7);">
+            <p>Social Network</p>
+            <span class="layover"></span>
+          </div>
+          <div class="span12 hi10 hoff2 offset1 app-template" id="marketplace" style="background-image:url({{STATIC_URL}}img/marketplace.png);">
+            <span class="layover"></span>
+            <p>Market Place</p>
+          </div>
+          <div class="span12 hi10 hoff2 offset1 app-template" id="tutoringsite"  style="background-image:url({{STATIC_URL}}img/examcloud.png);">   <span class="layover"></span>
+            <p>Tutoring Site</p>
+          </div>
+          <div class="hoff1 span40"></div>
+        </div> -->
+
+  <!--       <hr class="span40">
+   -->      <span id="current-temp-text"></span><input type="submit" value="Start Building My App »" id="skip-racoon" class="span15 btn btn-blue hi3 offset12 pull-right" >
+    </div>
   </div>
-  <div class="mascot hoff2 span20 hi16 offset4" id="mascot">
+  <div class="mascot hoff8 span20 hi16 offset4" id="mascot">
   </div>
 </div>
 {% endblock %}
@@ -67,5 +70,7 @@
 {% block js %}
 <script src="{{ STATIC_URL }}js/libs/jquery/jquery.min.js"></script>
 <script src="{{ STATIC_URL }}js/libs/bootstrap/bootstrap.js"></script>
-<script data-main="{{ STATIC_URL }}js/application/external-pages/apps-new-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+<!-- <script data-main="{{ STATIC_URL }}js/application/external-pages/apps-new-main" src="{{ STATIC_URL }}js/libs/require.js"></script>
+ -->
+ <script data-main="{{ STATIC_URL }}js/application/main-app/main" src="{{ STATIC_URL }}js/libs/require.js"></script>
 {% endblock %}
