@@ -104,9 +104,17 @@ exports.factory = function(_safe_eval_) {
     expander.parseGenID = parseGenID;
 
     function expandOnce(generators, genData) {
-        var genID = parseGenID(genData.generate);
-        var generatedObj = constructGen(findGenData(generators, genID))(generators, genData.data);
-        return generatedObj;
+        try {
+            var genID = parseGenID(genData.generate);
+            var generatedObj = constructGen(findGenData(generators, genID))(generators, genData.data);
+            return generatedObj;
+        }
+        catch(e) {
+            _.each(genID, function(val, key) {
+                console.log(val + " " + key);
+            });
+            throw genID + " : " + e;
+        }
     }
 
     expander.expandOnce = expandOnce;
@@ -567,7 +575,8 @@ generators.push({
         return templates.html({ data: data });
     },
     templates: {
-        'html': '<div class="container">' +
+        'html': '<footer class="footer">' +
+            '<div class="container">' +
             '<p id="customText" class="footer-text muted"><%= data.customText %></p>' +
             '<ul class="footer-links" id="links">' +
                 '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
@@ -575,7 +584,8 @@ generators.push({
                 '<% } %>' +
             '</ul>' +
           '</div>' +
-          '<div class="clearfix"></div>'
+          '<div class="clearfix"></div>' +
+          '</footer>'
     }
 });
 
