@@ -123,14 +123,6 @@ def get_orphans(known_deployments):
     all_apps = dc.apps_list({})
     return list(set(all_apps) - set(known_deployments))
 
-def get_functioning_orphan(known_deps):
-    orphs = get_orphans(known_deps)
-    candidate = orphs.pop()
-    while len(orphs) > 0:
-        pass
-
-
-
 def zero_out_bulk(deps, orphans=None):
     """
     Returns the deployments for which errors were encountered.
@@ -151,6 +143,27 @@ def zero_out_bulk(deps, orphans=None):
         else:
             logger.info("Deleted app with id=%s"%d_id)
     return error_apps
+
+def update_orphan_cache():
+    from appcubator.models import Deployment, App
+    known_deps = [a.deployment_id for a in App.objects.all() if a.deployment_id is not None]
+    orphans = get_orphans(known_deps)
+    for orph in orphans:
+        # is this already in the table? if so, skip it.
+        if Deployment.objects.filter(d_id=orph).exists():
+            logger.info(orph + ": status already known")
+            continue
+        # is this orphan working?
+        domain = orph + '.' + settings.DEPLOYMENT_DOMAIN
+        url = 'http://' + domain + '/__ping__'
+        try:
+            r = requests.get(url)
+            working = r.status_code == 200
+        except requests.exceptions.ConnectionError:
+            working = False
+        d = Deployment(d_id=orph,
+                       has_error=(not working))
+        d.save()
 
 
 def make_new_app():

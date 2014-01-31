@@ -124,6 +124,16 @@ def clean_subdomain(subdomain, replace_periods=False):
 
     return subdomain
 
+class Deployment(models.Model):
+    """
+    This table is used to keep a cache of information about orphan deployments.
+        - 'Error' orphan deployments are in bad shape and need to get checked out.
+        - If not error, then 'Free'.
+        - 'Free' orphan deployments may be used for new app deployments.
+    """
+    d_id = models.CharField(max_length=100, blank=False)
+    has_error = models.BooleanField(default=False)
+    created_on = models.DateTimeField(auto_now_add=True)
 
 class App(models.Model):
     name = models.CharField(max_length=100)
@@ -513,22 +523,11 @@ class App(models.Model):
         try:
             # TODO detect change in build dependencies and build a new container
             if self.deployment_id is None:
-                # TODO cache this stuff.
-                known_deps = [a.deployment_id for a in App.objects.all() if a.deployment_id is not None]
-                orphan = deploy.get_functioning_orphan(known_deps)
-                if orphan: # use an available orphan if possible.
-                    self.deployment_id = orphan
-                    # HACK
-                    self.custom_domain = self.deployment_id + '.' + settings.DEPLOYMENT_DOMAIN
-                else:
-                    self.deployment_id = deploy.provision()
-                    # HACK
-                    self.custom_domain = self.deployment_id + '.' + settings.DEPLOYMENT_DOMAIN
-                    self._rerelease()
-
-                    tmpdir = self.write_to_tmpdir()
-                    logger.info("Written to %s for container building" % tmpdir)
-                    self._rebuild(dd=dd, tmpdir=tmpdir)
+                # TODO make sure deployments are always available
+                orphan = Deployment.objects.filter(has_error=False)[0]
+                self.deployment_id = orphan
+                # HACK
+                self.custom_domain = self.deployment_id + '.' + settings.DEPLOYMENT_DOMAIN
 
                 self.save()
             else:
