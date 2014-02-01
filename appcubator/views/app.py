@@ -28,6 +28,8 @@ from appcubator.our_payments.views import is_stripe_customer#, subscribe
 from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration, CollaborationInvite
 from appcubator.models import DomainRegistration
 from appcubator.themes.models import StaticFile, UITheme
+from appcubator.plugins.models import Plugin, load_initial_plugins
+
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
 from appcubator import forms
 from appcubator import codegen
@@ -1056,3 +1058,15 @@ def remove_collaborator_from_app(request, app, collab_user):
     collab.delete()
     messages.info(request, "Successfully removed collaborator.")
     return True
+
+
+def plugins(request):
+    plugins = Plugin.objects.all()
+
+    if len(plugins) is 0:
+        load_initial_plugins()
+        plugins = Plugin.objects.all()
+
+    plugins = [p.to_dict() for p in plugins]
+    
+    return HttpResponse(simplejson.dumps(list(plugins)), status=200, mimetype="application/json")
