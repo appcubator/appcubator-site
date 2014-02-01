@@ -149,10 +149,12 @@ def update_orphan_cache():
     known_deps = [a.deployment_id for a in App.objects.all() if a.deployment_id is not None]
     orphans = get_orphans(known_deps)
     for orph in orphans:
+        """ Commented out in order to be more OCD about correctness of orphan status.
         # is this already in the table? if so, skip it.
         if Deployment.objects.filter(d_id=orph).exists():
             logger.info(orph + ": status already known")
             continue
+        """
         # is this orphan working?
         domain = orph + '.' + settings.DEPLOYMENT_DOMAIN
         url = 'http://' + domain + '/__ping__'
@@ -161,8 +163,15 @@ def update_orphan_cache():
             working = r.status_code == 200
         except requests.exceptions.ConnectionError:
             working = False
-        d = Deployment(d_id=orph,
-                       has_error=(not working))
+
+        dq = Deployment.objects.filter(d_id=orph)
+        if not dq.exists():
+            d = Deployment()
+        else:
+            d = dq[0]
+
+        d.d_id = orph
+        d.has_error = not working
         d.save()
 
 

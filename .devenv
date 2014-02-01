@@ -8,8 +8,10 @@ export STRIPE_SECRET_KEY="sk_test_GhzvfBePNCkvC6j23UtZkmTi"
 export DEIS_CONTROLLER='deis.appcbtr.com'
 export DEPLOYMENT_DOMAIN='appcbtr.com'
 export DEIS_FORMATION='homer'
-export DEIS_USERNAME='dev'
-export DEIS_PASSWORD='123123123'
+
+# (this is now custom per developer)
+#export DEIS_USERNAME='dev'
+#export DEIS_PASSWORD='123123123'
 
 # global email settings
 export EMAIL_HOST='smtp.sendgrid.net'

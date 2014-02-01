@@ -514,7 +514,7 @@ class App(models.Model):
     def _update_code(self, port, retry=True):
         # this is just for testing.
         tmpdir = self.write_to_tmpdir()
-        deploy.update_code(tmpdir, self.deployment_id, {'url':'http://localhost:%d'%port})
+        deploy.update_code(tmpdir, self.deployment_id, 'http://localhost:%d' % port)
 
         shutil.rmtree(tmpdir)
 
@@ -525,15 +525,18 @@ class App(models.Model):
             if self.deployment_id is None:
                 # TODO make sure deployments are always available
                 orphan = Deployment.objects.filter(has_error=False)[0]
-                self.deployment_id = orphan
+                self.deployment_id = orphan.d_id
                 # HACK
                 self.custom_domain = self.deployment_id + '.' + settings.DEPLOYMENT_DOMAIN
 
                 self.save()
-            else:
-                tmpdir = self.write_to_tmpdir()
-                logger.info("Written to %s for code updating" % tmpdir)
-                deploy.update_code(tmpdir, self.deployment_id, self.get_deploy_data())
+                orphan.delete()
+
+            tmpdir = self.write_to_tmpdir()
+            logger.info("Written to %s for code updating" % tmpdir)
+
+            deploy.update_code(tmpdir, self.deployment_id, self.url())
+
         except deploy.NotDeployedError:
             if retry_on_404:
                 logger.warn("App was not actually deployed, probably from a prior error. Trying again.")
