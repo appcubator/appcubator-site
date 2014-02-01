@@ -94,6 +94,8 @@
       "custom.txt": "this is custom code\n"
     }
   },
+  "header": "",
+  "scripts": "",
   "templates": [{
     "generate": "templates.page",
     "data": {
