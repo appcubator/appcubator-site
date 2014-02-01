@@ -780,3 +780,28 @@ class Collaboration(models.Model):
     app = models.ForeignKey(App, related_name="collaborations")
 
     created_on = models.DateTimeField(auto_now_add = True)
+
+
+# -
+# Plugin Model
+
+class Plugin(models.Model):
+    name = models.CharField(max_length=100)
+    owner = models.ForeignKey(User, related_name='plugins', blank=True)
+
+    # set on save and deploy calls.
+    description = models.TextField(max_length=255, blank=True)
+    guide = models.TextField(max_length=255, blank=True)
+
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    _data_json = models.TextField(blank=True, default=get_default_app_state)
+
+    def get_data(self):
+        return simplejson.loads(self._data_json)
+
+    def set_data(self, val):
+        self._data_json = simplejson.dumps(val)
+
+
+    state = property(get_data, set_data)
