@@ -83,7 +83,8 @@ class Plugin(models.Model):
         return {'name': self.name,
                 'owner': owner,
                 'description': self.description,
-                'guide': self.guide}
+                'guide': self.guide,
+                'data': self._data_json }
 
 
 class Provider(models.Model):
