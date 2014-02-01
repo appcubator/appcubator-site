@@ -1,21 +1,52 @@
 @import "../mixins";
-.generatorContainer {
-	height: 30px;
+::-webkit-scrollbar {
+    width: 12px;
 }
-.generatorBar {
-	margin-top: 5px;
-	background-color: #FBFBFB;
-	width: 100%;
-	margin-left: 4px;
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+.pluginContainer {
+	overflow-y: scroll;
+	overflow-x: hidden;
 
-	float:left;
+	height: 390px;
+	width: 550px;
+}
+.pluginBar {
+	width: 540px;
+	height: 80px;
+	overflow: hidden;
+	.identifier {
+		font-style: bold;
+		font-size: 16px;
+		width: 25%;
+		display: inline;
+		float: left;
 
-	.name {
-		font-size: 20px;
+		.pluginImageHolder {
+			height: 40px;
+			width: 40px;
+			background-color: #ABABAB;	
+		}
 	}
-	.description {
+	.information {
 		font-size: 12px;
-		width: 80%;
+		width:45%;
+		display: inline;
+				float: left;
+	}
+	.toggleSwitch {
+		width:20%;
+		display: inline;
+		float: right;
+		margin-left: 3px;
 	}
 }
 
@@ -44,7 +75,6 @@ input[type=checkbox] {
 	top: 60px;
 	right: 40px;
 	width: 630px;
-	height: 400px;
 	background-color: #fff;
 	border-radius: 6px;
 	border: 3px solid #ccc;
