@@ -5,6 +5,9 @@ define(function(require, exports, module) {
     var UserTableModel = require('models/UserTableModel');
     var TableModel = require('models/TableModel');
     var TableView = require('entities/TableView');
+    var plugins = {
+        repoAddress: undefined // Define this later to access repo. Import from global settings/env
+    }
 
     require('util');
     require('mixins/BackboneDropdownView');
@@ -13,109 +16,54 @@ define(function(require, exports, module) {
         title: 'Tables',
         className: 'plugins-view',
         events: {
-            'click .table-name': 'clickedTableName'
+            'click .plugin-toggle': 'clickedTableName'
         },
         subviews: [],
-
         initialize: function() {
            
         },
 
         render: function() {
-
-            this.$el.html(_.template(util.getHTML('plugins-page'), {}));
-            // this.renderTables();
-            // // this.renderRelations();
-
-            // var addTableBtn = document.createElement('div');
-            // addTableBtn.id = 'add-entity';
-            // addTableBtn.innerHTML = '<span class="box-button">+ Create Table</span>';
-
-            // var createTableBox = new Backbone.NameBox({}).setElement(addTableBtn).render();
-            // createTableBox.on('submit', this.createTable);
-            // this.subviews.push(createTableBox);
-
-            // this.$el.append(addTableBtn);
+            // get this from somewhere else later.
+            var pluginsTmp = {
+                plugins: [
+                    { 
+                        name: "BuyAndSell", 
+                        description: "Add the ability to transact between models. Lorem ipsum dolor sit amet, consectetur. ", 
+                        address: "#"
+                    },
+                    { 
+                        name: "CRUD", 
+                        description: "Create Read Update Destroy", 
+                        address: "#"
+                    },
+                    { 
+                        name: "Apify", 
+                        description: "Create an API to retive your models", 
+                        address: "#"
+                    },
+                    { 
+                        name: "BuyAndSell", 
+                        description: "Add the ability to transact between models. Lorem ipsum dolor sit amet, consectetur. ", 
+                        address: "#"
+                    },
+                    { 
+                        name: "CRUD", 
+                        description: "Create Read Update Destroy", 
+                        address: "#"
+                    },
+                    { 
+                        name: "Apify", 
+                        description: "Create an API to retive your models", 
+                        address: "#"
+                    }                                                     
+                ]
+            }
+            this.$el.html(_.template(util.getHTML('plugins-page'), pluginsTmp));
             return this;
         },
 
-        renderTables: function() {
-            this.collection.each(this.renderTable);
-            //this.$('#users').append(this.userTablesView.render().el);
-        },
-
-        renderTable: function(tableModel) {
-            this.$el.find('#list-tables').append('<li class="table-name" id="table-' + tableModel.cid + '">' + tableModel.get('name') + '</li>');
-        },
-
-        clickedTableName: function(e) {
-            var cid = String(e.currentTarget.id).replace('table-', '');
-            var tableModel = v1State.get('tables').get(cid);
-            var tableView = new TableView(tableModel);
-            tableView.render();
-            // this.el.appendChild(tableView.render().el);
-        },
-
-        renderRelations: function() {
-            //util.get('relations').appendChild(this.createRelationView.render().el);
-            //util.get('relations').appendChild(this.relationsView.render().el);
-        },
-
-        createUserRole: function(val) {
-            //force user role names to be singular
-            var name = util.singularize(val);
-
-            var elem = new UserTableModel({
-                name: name
-            });
-
-            if (v1State.get('tables').findWhere({
-                name: name
-            })) {
-                v1State.get('users').trigger('duplicate', "name");
-                return;
-            }
-
-            v1State.get('users').push(elem);
-            return elem;
-        },
-
-
-        createTable: function(val) {
-            //force table names to be singular
-            var name = util.singularize(val);
-
-            var elem = new TableModel({
-                name: name,
-                fields: []
-            });
-
-            if (v1State.get('users').findWhere({
-                name: name
-            })) {
-                v1State.get('tables').trigger('duplicate', "name");
-                return;
-            }
-
-            v1State.get('tables').push(elem);
-            return elem;
-        },
-
-        showCreateRelationForm: function() {
-            var self = this;
-            this.createRelationView.$el.fadeIn('fast');
-            util.scrollToElement(self.$('#new-relation'));
-        },
-
-        scrollToRelation: function(e) {
-            e.preventDefault();
-            var hash = e.currentTarget.hash;
-            if (hash === '#relation-new') {
-                this.showCreateRelationForm();
-                return;
-            }
-            util.scrollToElement($(hash));
-        }
+       
     });
 
     return PluginsView;

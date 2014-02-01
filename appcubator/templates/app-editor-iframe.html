@@ -12,7 +12,7 @@
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
 <script src="http://cl.ly/code/2R2P0B3s3u0q/jquery.content_slider.js" type="text/javascript"></script>
  -->
-
+{{ header|safe }}
 </head>
 <body>
         <!-- Navbar -->
@@ -36,9 +36,7 @@
         </div>
 
         <!-- Footer -->
-        {% if old_nav %}
         <div id="footer"></div>
-        {% endif %}
 
 <script type="text/javascript">
     var staticVersion = "{{STATIC_VERSION}}";
@@ -48,6 +46,6 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
 <script src="http://cl.ly/code/2R2P0B3s3u0q/jquery.content_slider.js" type="text/javascript"></script>
 <script type="text/javascript" src="http://cl.ly/code/471n3G0I3134/bootstrap-select.js"></script>
-
+{{ scripts|safe }}
 </body>
 </html>

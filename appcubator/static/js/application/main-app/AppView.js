@@ -5,13 +5,13 @@ define(function(require, exports, module) {
     var DeployManagerModel = require('./DeployManagerModel');
     var ToolBarView = require('editor/ToolBarView');
     var EditorView = require('editor/EditorView');
-    var PluginsView = require('app/PluginsView');
+    var PluginsView = require('app/entities/PluginsView');
+    var SettingsView = require('app/SettingsView');
 
 
     var SoftErrorView = require("app/SoftErrorView");
     var ErrorDialogueView = require('mixins/ErrorDialogueView');
     var EntitiesView = require('app/entities/EntitiesView');
-    var PluginsView = require('app/entities/PluginsView');
 
 
     var AppView = Backbone.View.extend({
@@ -45,6 +45,10 @@ define(function(require, exports, module) {
             this.pluginsView.setToggleEl($('.menu-app-plugins'));
             this.pluginsView.setPointerPosition("230px");
 
+            this.settingsView = new SettingsView();
+            this.settingsView.setToggleEl($('.menu-app-settings'));
+            this.settingsView.setPointerPosition("230px");
+
             this.deployManager = new DeployManagerModel(this.appId);
 
             //var autoSave = setInterval(this.save, 30000);
@@ -65,6 +69,7 @@ define(function(require, exports, module) {
             
             this.el.appendChild(this.entitiesView.render().el);
             this.el.appendChild(this.pluginsView.render().el);
+            this.el.appendChild(this.settingsView.render().el);
 
             
             this.changePage(EditorView, { pageId: this.pageId, appModel: this.model }, "", function() {});

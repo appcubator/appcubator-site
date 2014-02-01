@@ -28,6 +28,8 @@ from appcubator.our_payments.views import is_stripe_customer#, subscribe
 from appcubator.models import App, ApiKeyUses, ApiKeyCounts, LogAnything, InvitationKeys, AnalyticsStore, User, Collaboration, CollaborationInvite
 from appcubator.models import DomainRegistration
 from appcubator.themes.models import StaticFile, UITheme
+from appcubator.plugins.models import Plugin, load_initial_plugins
+
 from appcubator.default_data import DEFAULT_STATE_DIR, get_default_mobile_uie_state, get_default_uie_state, get_default_app_state
 from appcubator import forms
 from appcubator import codegen
@@ -341,22 +343,15 @@ def app_editor_iframe(request, app_id, page_name="overview"):
 
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
-    mobile_themes = UITheme.get_mobile_themes()
-    mobile_themes = [t.to_dict() for t in mobile_themes]
-
-    try:
-        old_nav = app.state['pages'][0]['navbar']['version'] < 2
-    except KeyError:
-        old_nav = True
 
     page_context = {'app'          : app,
                     'title'        : 'The Garage',
                     'themes'       : simplejson.dumps(list(themes)),
-                    'mobile_themes': simplejson.dumps(list(mobile_themes)),
                     'apps'         : app.owner.apps.all(),
                     'user'         : app.owner,
                     'page_name'    : page_name,
-                    'old_nav'      : old_nav,
+                    'header'       : app.state['header'],
+                    'scripts'      : app.state['scripts'],
                     'is_deployed'  : 1 if app.deployment_id != None else 0,
                     'display_garage' : False}
     add_statics_to_context(page_context, app)
@@ -1063,3 +1058,15 @@ def remove_collaborator_from_app(request, app, collab_user):
     collab.delete()
     messages.info(request, "Successfully removed collaborator.")
     return True
+
+
+def plugins(request):
+    plugins = Plugin.objects.all()
+
+    if len(plugins) is 0:
+        load_initial_plugins()
+        plugins = Plugin.objects.all()
+
+    plugins = [p.to_dict() for p in plugins]
+    
+    return HttpResponse(simplejson.dumps(list(plugins)), status=200, mimetype="application/json")
