@@ -341,22 +341,15 @@ def app_editor_iframe(request, app_id, page_name="overview"):
 
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
-    mobile_themes = UITheme.get_mobile_themes()
-    mobile_themes = [t.to_dict() for t in mobile_themes]
-
-    try:
-        old_nav = app.state['pages'][0]['navbar']['version'] < 2
-    except KeyError:
-        old_nav = True
 
     page_context = {'app'          : app,
                     'title'        : 'The Garage',
                     'themes'       : simplejson.dumps(list(themes)),
-                    'mobile_themes': simplejson.dumps(list(mobile_themes)),
                     'apps'         : app.owner.apps.all(),
                     'user'         : app.owner,
                     'page_name'    : page_name,
-                    'old_nav'      : old_nav,
+                    'header'       : app.state['header'],
+                    'scripts'      : app.state['scripts'],
                     'is_deployed'  : 1 if app.deployment_id != None else 0,
                     'display_garage' : False}
     add_statics_to_context(page_context, app)

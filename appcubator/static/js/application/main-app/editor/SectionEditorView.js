@@ -37,7 +37,7 @@ define(function(require, exports, module) {
                         '<img width="24" class="icon" src="/static/img/edit.png"><span class="caret"></span>',
                         '</div>',
                         '<ul class="dropdown-menu pull-right action-menu" role="menu">',
-                            '<li><input type="text" class="class_name" value="<%= className %>" placeholder="Class Name"></li>',
+                            '<li><a><input type="text" class="class_name" value="<%= className %>" placeholder="Class Name"></a></li>',
                             '<li class="divider"></li>',
                             '<li class="remove-section"><a>Remove Section</a></li>',
                         '</ul>',
