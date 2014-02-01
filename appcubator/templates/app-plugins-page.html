@@ -1,28 +1,30 @@
-    <div class="hoff1">
-        <h2 class="pheader">
-            Plugins  <button id='browsePlugins'> Browse </button>
+<div class="hoff1">
+<h2 class="pheader">
+    Plugins  <button id='browsePlugins'> Browse </button>
+</h2>
+<hr>
 
-        </h2>
-        <hr>
+<div class='pluginContainer'>
 
-        <div class='generatorContainer'>
-            <div class="generatorBar"> 
-                <div class="name"> 
-                    <button> Toggle </button>
-                    <a href=''> BuyAndSell</a>
-                </div>
-                <div class="description"> <p> Plugin for your models that adds functionality for buying and selling. </p> </div>
-            </div>
-            <div class="generatorBar"> 
-                <div class="name"> <button> Toggle </button> APify
-                </div>
-                <div class="description"> <p> Create routes to access get JSON, XML etc responses for any model. Helpful in building APIs  </p> </div>
-            </div>
-            <div class="generatorBar"> 
-                <input type="checkbox" value="None" id="slideThree" name="check" />
-                    Awesome UI Elements
-                </div>
-                <div class="description"> <p> Some awesome UI elements  </p> </div>
-            </div>            
+<% for (var i=0; i<plugins.length; i++) {%>
+<div class="pluginBar"> 
+    <div class="identifier"> <%=plugins[i].name%> <div class="pluginImageHolder"> </div></div>
+    <div class="information"> <%=plugins[i].description%>
+    </div>
+
+    <div class="toggleSwitch">
+        <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch<%=i%>" class="onoffswitch-checkbox" id="myonoffswitch<%=i%>" checked>
+            <label class="onoffswitch-label" for="myonoffswitch<%=i%>">
+                <div class="onoffswitch-inner"></div>
+                <div class="onoffswitch-switch"></div>
+            </label>
         </div>
     </div>
+</div>
+<hr>
+<% } %>
+
+
+</div>
+</div>
