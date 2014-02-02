@@ -828,6 +828,7 @@ def app_zip(request, app_id):
 
 
 @login_required
+@require_POST
 @csrf_exempt
 def deploy(request, app_id):
     app = get_object_or_404(App, id=app_id)
@@ -835,21 +836,17 @@ def deploy(request, app_id):
         raise Http404
     app.full_clean()
 
-    if request.method == 'GET':
-        return JsonResponse({ 'status': app.get_deployment_status() })
-    elif request.method == 'POST':
+    try:
+        app.parse_and_link_app_state()
+        result = {}
+        result['site_url'] = app.url()
+        result['zip_url'] = reverse('appcubator.views.app.app_zip', args=(app_id,))
+        data = app.deploy()
+    except codegen.UserInputError, e:
+        d = e.to_dict()
+        return JsonResponse(d, status=400)
 
-        try:
-            app.parse_and_link_app_state()
-            result = {}
-            result['site_url'] = app.url()
-            result['zip_url'] = reverse('appcubator.views.app.app_zip', args=(app_id,))
-            data = app.deploy()
-        except codegen.UserInputError, e:
-            d = e.to_dict()
-            return JsonResponse(d, status=400)
-
-        return HttpResponse(simplejson.dumps(result), status=200, mimetype="application/json")
+    return JsonResponse(result)
 
 
 @require_POST

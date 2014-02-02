@@ -204,17 +204,6 @@ class App(models.Model):
             r = deploy.update_deployment_info(self.deployment_id, self.hostname())
         return r
 
-    def get_deployment_status(self):
-        """
-        Returns 0, 1, or 2.
-         0 = No task running
-         1 = Running
-         2 = Task done, plz collect result.
-        """
-        if self.deployment_id is None:
-            return 0
-        return 2
-
     def is_new_version(self):
         """ True iff the saving state is same as last saved state """
         last_snap = self.get_last_snapshot()
