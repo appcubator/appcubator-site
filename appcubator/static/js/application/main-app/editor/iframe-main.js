@@ -248,7 +248,7 @@ require([
             },
 
             updateScrollbar: function() {
-                $(document.body).perfectScrollbar("update");
+                $(document.body).niceScroll();
             },
 
             reloadPage: function() {
@@ -258,9 +258,6 @@ require([
 
         if (top.v1.currentApp) {
             top.v1.currentApp.renderIFrameContent(proxy);
-            $(document.body).perfectScrollbar({
-                wheelSpeed: 15,
-            });
         }
     });
 

@@ -344,14 +344,23 @@ def app_editor_iframe(request, app_id, page_name="overview"):
     themes = UITheme.get_web_themes()
     themes = [t.to_dict() for t in themes]
 
+    header = ""
+    scripts =""
+
+    if 'header' in app.state.values():
+        header = app.state['header']
+
+    if 'scripts' in app.state.values():
+        scripts = app.state['scripts']
+
     page_context = {'app'          : app,
                     'title'        : 'The Garage',
                     'themes'       : simplejson.dumps(list(themes)),
                     'apps'         : app.owner.apps.all(),
                     'user'         : app.owner,
                     'page_name'    : page_name,
-                    'header'       : app.state['header'],
-                    'scripts'      : app.state['scripts'],
+                    'header'       : header,
+                    'scripts'      : scripts,
                     'is_deployed'  : 1 if app.deployment_id != None else 0,
                     'display_garage' : False}
     add_statics_to_context(page_context, app)
