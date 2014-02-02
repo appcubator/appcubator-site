@@ -65,13 +65,13 @@ define(function(require, exports, module) {
             hoverDiv.id = "hover-div";
             this.hoverDiv = hoverDiv;
             this.hideNode(hoverDiv);
-            this.elContainer.appendChild(hoverDiv);
+            // this.elContainer.appendChild(hoverDiv);
 
             var selectDiv = document.createElement('div');
             selectDiv.id = "select-div";
             this.selectDiv = selectDiv;
             this.hideNode(selectDiv);
-            this.elContainer.appendChild(selectDiv);
+            // this.elContainer.appendChild(selectDiv);
 
             $(selectDiv).resizable({
                 handles: "n, e, s, w, nw, ne, sw, se",
