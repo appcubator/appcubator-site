@@ -350,8 +350,8 @@ def app_editor_iframe(request, app_id, page_name="overview"):
                     'apps'         : app.owner.apps.all(),
                     'user'         : app.owner,
                     'page_name'    : page_name,
-                    'header'       : app.state['header'],
-                    'scripts'      : app.state['scripts'],
+                    'header'       : app.state.get('header', ''),
+                    'scripts'      : app.state.get('scripts', ''),
                     'is_deployed'  : 1 if app.deployment_id != None else 0,
                     'display_garage' : False}
     add_statics_to_context(page_context, app)
