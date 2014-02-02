@@ -413,9 +413,9 @@ define(['backbone'], function() {
             overlayEl.style.left = position.left + 'px';
             overlayEl.style.width = $el.outerWidth() + 'px';
             overlayEl.style.height = $el.outerHeight() + 'px';
-            overlayEl.style.color = 'red';
+            //overlayEl.style.color = 'red';
             overlayEl.style.fontSize = '24px';
-            overlayEl.style.border = '1px solid #ccc';
+            //overlayEl.style.border = '1px solid #ccc';
 
             return overlayEl;
         },
