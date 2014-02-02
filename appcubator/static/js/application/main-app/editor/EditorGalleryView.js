@@ -88,12 +88,10 @@ define(function(require, exports, module) {
                 helper: "clone",
                 start: function(e) {
                     self.dragActive = true;
-                    v1.currentApp.view.sectionsManager.highlightSections();
                     v1.currentApp.view.sectionShadowView.displayColumnShadows();
                 },
                 stop: function(e) {
                     self.dragActive = false;
-                    v1.currentApp.view.sectionsManager.unhighlightSections();
                     v1.currentApp.view.sectionShadowView.hideColumnShadows();
                 },
                 iframeFix: true

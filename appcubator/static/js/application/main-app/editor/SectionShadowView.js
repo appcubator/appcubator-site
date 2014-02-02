@@ -55,7 +55,8 @@ define(function(require, exports, module) {
             ycols.each(function() {
                 var colId = this.id.replace('col','');
                 var shadowEl = util.addShadow(this, document.getElementById('page-wrapper'), self.iframe, self.iframeDoc);
-                shadowEl.innerHTML = sectionModel.cid;
+                //shadowEl.innerHTML = sectionModel.cid;
+                shadowEl.className = "section-shadow";
                 self.shadows.push(shadowEl);
                 self.shadowFrame.appendChild(shadowEl);
 
@@ -68,7 +69,12 @@ define(function(require, exports, module) {
                         // var idshit =
                         sectionModel.addElement(colId, id, className);
                     },
-                    over: function() { }
+                    over: function() {
+                        shadowEl.className = "section-shadow active";
+                    },
+                    out: function() {
+                        shadowEl.className = "section-shadow";
+                    }
                 });
             });
 
