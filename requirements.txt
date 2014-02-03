@@ -5,7 +5,7 @@ argparse
 billiard==2.7.3.21
 python-dateutil==2.2
 pytz==2012j
-requests==2.2.1
+requests==2.2.0
 simplejson
 wsgiref==0.1.2
 jinja2==2.7

@@ -248,42 +248,6 @@ define(function(require, exports, module) {
             this.deployManager.deploy.call(success_callback, hold_on_callback);
         },
 
-
-        whenDeployed: function(successCallback) {
-            var self = this;
-            this.getDeploymentStatus(successCallback, function() {
-                setTimeout(function() {
-                    self.whenDeployed(successCallback);
-                }, 1500);
-            });
-        },
-
-        getDeploymentStatus: function(successCallback, failCallback) {
-            $.ajax({
-                type: "GET",
-                url: '/app/' + appId + '/deploy/',
-                success: function(data) {
-                    if (data.status !== undefined) {
-                        if (data.status === 0) {
-                            // I'll need to figure out a better way soon.
-                            // new ErrorDialogueView({text: 'Something is wrong... deployment seems to not have gotten the memo.'});
-                        } else if (data.status == 1) {
-                            failCallback.call(); // deployment task is still running
-                        } else if (data.status == 2) {
-                            successCallback.call();
-                        } else {
-                            new ErrorDialogueView({
-                                text: 'Deploy status route returned a bad value.'
-                            });
-                        }
-                    } else {
-                        alert('Deploy status route returned a bad value.');
-                    }
-                },
-                dataType: "JSON"
-            });
-        },
-
         save: function(e, callback) {
             if (v1.disableSave === true) return;
             if (appId === 0) return;
@@ -335,7 +299,7 @@ define(function(require, exports, module) {
                     text: "Looks like you (or someone else) made a change to your app in another browser window. Please make sure you only use one window with Appcubator or you may end up overwriting your app with an older version. Please refresh the browser to get the updated version of your app."
                 };
                 if (BROWSER_VERSION_ERROR_HAPPENED_BEFORE) {
-                    content.text += '<br><br><br>Refreshing in <span id="countdown-ksikka">6</span> seconds...\n'
+                    content.text += '<br><br><br>Refreshing in <span id="countdown-ksikka">6</span> seconds...\n';
                 }
                 var errorModal = new ErrorDialogueView(content, function() {
                     v1.disableSave = false;
@@ -413,32 +377,6 @@ define(function(require, exports, module) {
                 return data;
             };
 
-            var mergeConflictHandler = function(data) {
-                var text = "<h1>Merge Conflict</h1>";
-                text += "\n<p>We tried to generate the code but we couldn't resolve a conflict between our code and your code.</p>";
-                text += "\n<p>To fix this, please resolve the conflict and push a commit with your fix in <span class=\"branch\">master</span>.</p>";
-                text += "\n<p>We stored the conflict details in <span class=\"branch\">" + data.branch + "</span>.</p>";
-                text += "\n<div>";
-                text += "\n  <h2>Affected files</h2>";
-                text += "\n  <ol>";
-                for (var i = 0; i < data.files.length; i++) {
-                    text += "\n    <li class=\"file\">" + data.files[i] + "</li>";
-                }
-                text += "\n  </ol>";
-                text += "\n<div>";
-
-                var content = {
-                    text: text
-                };
-                new SimpleModalView(content);
-                util.log_to_server('deployed app', {
-                    status: 'merge conflict',
-                    deploy_time: data.deploy_time + " seconds",
-                    message: data
-                }, this.appId);
-                return data;
-            };
-
             // this is copy pasted from the save code. i dont know how to modularize these functions properly. ~ks
             var softErrorHandler = function(data) {
                 v1State.set('version_id', data.version_id);
@@ -490,11 +428,6 @@ define(function(require, exports, module) {
                     400: function(jqxhr) {
                         var data = jqxhrToJson(jqxhr);
                         data = softErrorHandler(data);
-                        data = callback(data);
-                    },
-                    409: function(jqxhr) {
-                        var data = jqxhrToJson(jqxhr);
-                        data = mergeConflictHandler(data);
                         data = callback(data);
                     },
                     500: function(jqxhr) {

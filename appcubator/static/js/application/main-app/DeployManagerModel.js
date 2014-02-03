@@ -7,6 +7,7 @@ define(function(require, exports, module) {
     var ErrorDialogueView = require('mixins/ErrorDialogueView');
 
 	var DeployManagerModel = Backbone.Model.extend({
+        DeployView : DeployView,
 
 		isDeployed : false,
 		lastDeploy : null,
@@ -19,45 +20,14 @@ define(function(require, exports, module) {
 
 		deploySuccessHandler: function(data, callback){
             var self = this;
-            v1.view.whenDeployed(function(data) {
-                callback.call(this, data);
-                console.log(data);
-                new DeployView(data);
-                util.log_to_server('deployed app', {
-                    status: 'success',
-                    deploy_time: data.deploy_time + " seconds"
-                }, appId);
-                self.trigger('deployed');
-            });
-            return data;
-        },
-
-        deployMergeConflict: function(data) {
-            var text = [
-                "<h1>Merge Conflict</h1>",
-                "<p>We tried to generate the code but we couldn't resolve a conflict between our code and your code.</p>",
-                "<p>To fix this, please resolve the conflict and push a commit with your fix in <span class=\"branch\">master</span>.</p>",
-                "<p>We stored the conflict details in <span class=\"branch\">" + data.branch + "</span>.</p>",
-                "<div>",
-                "<h2>Affected files</h2>",
-                "<ol>"
-            ];
-
-            for (var i = 0; i < data.files.length; i++) {
-                text.push("<li class=\"file\">" + data.files[i] + "</li>");
-            }
-            text.push("</ol>");
-            text.push("<div>");
-            var content = { text: text.join('\n') };
-
-            new SimpleModalView(content);
-                
+            callback.call(this, data);
+            console.log(data);
+            new DeployView(data);
             util.log_to_server('deployed app', {
-                status: 'merge conflict',
-                deploy_time: data.deploy_time + " seconds",
-                message: data
+                status: 'success',
+                deploy_time: data.deploy_time + " seconds"
             }, appId);
-        
+            self.trigger('deployed');
             return data;
         },
 
@@ -127,12 +97,6 @@ define(function(require, exports, module) {
                         var data = jqxhrToJson(jqxhr);
                         data = completeCallback(data);
                         data = self.softErrorHandler(data);
-                        data = callback(data);
-                    },
-                    409: function(jqxhr){
-                        var data = jqxhrToJson(jqxhr);
-                        data = completeCallback(data);
-                        data = self.mergeConflictHandler(data);
                         data = callback(data);
                     },
                     500: function(jqxhr){
