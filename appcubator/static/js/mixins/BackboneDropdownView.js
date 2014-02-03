@@ -39,8 +39,6 @@ define([
             expand: function() {
                 this.$el.addClass('expanded');
                 this.$toggleEl.addClass('expanded');
-
-
                 this.isExpanded = true;
                 $(window).on('mouseup', this.clickedOnElement);
                 $(window).on('keydown', this.closeHandler);

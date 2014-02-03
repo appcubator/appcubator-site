@@ -21,7 +21,6 @@ define(function(require, exports, module) {
         },
         clickedPluginToggle: function(e){
             $($(e.target).closest("input")).toggleClass('checked');
-            console.log($($(e.target).closest("input")).hasClass('checked'));
         },
 
         browsePluginList: function (generatorList){

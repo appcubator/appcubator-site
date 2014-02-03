@@ -33,14 +33,11 @@ function(AppInfoModel,
       for (plugin in aState.generators){
           var currentPluginObject = aState.generators[plugin];
           var p = $.extend(true, {}, currentPluginObject);
-          p.pluginInformation = { name: plugin, description: "lorem ipsum", origin: "appcubator"};
+          p.pluginInformation = { name: plugin, description: "lorem ipsum", enabled: true, origin: "appcubator"};
           console.log(p);
           pluginArray.push(p);
       }
       this.set('generators', new PluginCollection(pluginArray));
-      console.log('generators');
-      console.log(this.get('generators'));
-      console.log(this.get('generators').toJSON());
     },
 
     getPages: function () {
