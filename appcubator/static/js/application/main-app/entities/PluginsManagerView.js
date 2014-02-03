@@ -15,7 +15,7 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            var plugins = v1State.get('generators').toJSON()[0];
+            var plugins = v1State.get('generators').toJSON();
             this.$el.html(_.template(util.getHTML('plugins-page'), {plugins: plugins}));
             return this;
         },

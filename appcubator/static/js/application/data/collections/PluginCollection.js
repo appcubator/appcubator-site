@@ -5,10 +5,8 @@ function(PluginModel) {
 
   var PluginCollection = Backbone.Collection.extend({
     model : PluginModel,    
-    initialize: function (options) {
-    	console.log(options);
-    	this.identifier = options.identifier; // Unique identifier for plugins
-    	this.modules = options.modules;
+    initialize: function () {
+
     }
   });
 
