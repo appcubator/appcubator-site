@@ -15,18 +15,8 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            var gens = v1State.get('generators');
-            console.log(gens);
-
-            var pluginsThing = {
-                plugins: [
-                    {
-                        name: "Plugin 1",
-                        description: "Lorem Ipsum"
-                    }                
-                ]
-            };
-            this.$el.html(_.template(util.getHTML('plugins-page'), pluginsThing));
+            var plugins = v1State.get('generators').toJSON()[0];
+            this.$el.html(_.template(util.getHTML('plugins-page'), {plugins: plugins}));
             return this;
         },
         clickedPluginToggle: function(e){

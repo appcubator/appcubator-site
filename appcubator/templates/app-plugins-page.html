@@ -6,16 +6,16 @@
 
 <div class='pluginContainer'>
 
-<% for (var i=0; i<plugins.length; i++) {%>
+<% for (key in plugins) {%>
 <div class="pluginBar"> 
-    <div class="identifier"> <a href='#'> <%=plugins[i].name%> </a> <div class="pluginImageHolder"> </div></div>
-    <div class="information"> <%=plugins[i].description%>
+    <div class="identifier"> <a href='#'> <%=key %> </a> <div class="pluginImageHolder"> </div></div>
+    <div class="information"> <%=plugins[key].description%>
     </div>
 
     <div class="toggleSwitch">
         <div class="onoffswitch" >
-            <input type="checkbox" name="onoffswitch<%=i%>" class="onoffswitch-checkbox" id="myonoffswitch<%=i%>" >
-            <label class="onoffswitch-label" for="myonoffswitch<%=i%>">
+            <input type="checkbox" name="onoffswitch<%=key%>" class="onoffswitch-checkbox" id="myonoffswitch<%=key%>" >
+            <label class="onoffswitch-label" for="myonoffswitch<%=key%>">
                 <div class="onoffswitch-inner"></div>
                 <div class="onoffswitch-switch"></div>
             </label>
@@ -24,6 +24,7 @@
 </div>
 <hr>
 <% } %>
+
 
 
 </div>

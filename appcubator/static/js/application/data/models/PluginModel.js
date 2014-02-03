@@ -9,12 +9,8 @@ define([
 
     var PluginModel = Backbone.Model.extend({
         defaults: {
-            address: "",
-            name: "",
-            generators: new GeneratorCollection(),
         },
         initialize: function(options) {
-            this.set("name", options.name)
         },        
         fetchPlugin: function() {
             var name = this.get("name");
@@ -27,11 +23,6 @@ define([
                 }.bind(this)
             })
         },
-        serialize: function() {
-
-        },
-
-
     });
 
     return PluginModel;

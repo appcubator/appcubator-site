@@ -29,7 +29,20 @@ function(AppInfoModel,
       this.set('tables', new TableCollection(aState.models));
       this.set('emails', new EmailCollection(aState.emails));
       this.set('templates', new TemplateCollection(aState.templates));
-      this.set('generators', new PluginCollection(aState.generators));
+      console.log(aState.generators);
+      var pluginArray = [];
+      for (plugin in aState.generators){
+              console.log("GENERATORS");
+              console.log(plugin);
+
+        var currentPluginObject = aState.generators[plugin];
+        var p = $.extend(true, {}, currentPluginObject);
+        p.pluginInformation = { name: plugin, description: "lorem ipsum", origin: "appcubator"};
+        console.log(p);
+        pluginArray.push(p);
+      }
+      this.set('generators', new PluginCollection(pluginArray));
+      console.log(this.get('generators'));
     },
 
     getPages: function () {
