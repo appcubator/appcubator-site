@@ -15,6 +15,9 @@ define(function(require, exports, module) {
         },
 
         render: function() {
+            var gens = v1State.get('generators');
+            console.log(gens);
+
             var pluginsThing = {
                 plugins: [
                     {
