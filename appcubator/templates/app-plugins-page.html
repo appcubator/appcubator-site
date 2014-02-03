@@ -8,13 +8,13 @@
 
 <% for (var i=0; i<plugins.length; i++) {%>
 <div class="pluginBar"> 
-    <div class="identifier"> <%=plugins[i].name%> <div class="pluginImageHolder"> </div></div>
+    <div class="identifier"> <a href='#'> <%=plugins[i].name%> </a> <div class="pluginImageHolder"> </div></div>
     <div class="information"> <%=plugins[i].description%>
     </div>
 
     <div class="toggleSwitch">
-        <div class="onoffswitch">
-            <input type="checkbox" name="onoffswitch<%=i%>" class="onoffswitch-checkbox" id="myonoffswitch<%=i%>" checked>
+        <div class="onoffswitch" >
+            <input type="checkbox" name="onoffswitch<%=i%>" class="onoffswitch-checkbox" id="myonoffswitch<%=i%>" >
             <label class="onoffswitch-label" for="myonoffswitch<%=i%>">
                 <div class="onoffswitch-inner"></div>
                 <div class="onoffswitch-switch"></div>

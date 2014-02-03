@@ -27,7 +27,7 @@ function(AppInfoModel,
       this.set('tables', new TableCollection(aState.models));
       this.set('emails', new EmailCollection(aState.emails));
       this.set('templates', new TemplateCollection(aState.templates));
-
+      //this.set('plugins', new PluginCollection(aState.generators));
     },
 
     getPages: function () {

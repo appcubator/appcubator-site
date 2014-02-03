@@ -5,9 +5,7 @@ define(function(require, exports, module) {
     var UserTableModel = require('models/UserTableModel');
     var TableModel = require('models/TableModel');
     var TableView = require('entities/TableView');
-    var plugins = {
-        repoAddress: undefined // Define this later to access repo. Import from global settings/env
-    }
+
 
     require('util');
     require('mixins/BackboneDropdownView');
@@ -16,7 +14,7 @@ define(function(require, exports, module) {
         title: 'Tables',
         className: 'plugins-view',
         events: {
-            'click .plugin-toggle': 'clickedTableName'
+            'click .onoffswitch': 'clickedPluginToggle'
         },
         subviews: [],
         initialize: function() {
@@ -27,14 +25,13 @@ define(function(require, exports, module) {
             // get this from somewhere else later.
             var pluginsTmp = {
                 plugins: [
-                    { 
+                    {   
                         name: "BuyAndSell", 
                         description: "Add the ability to transact between models. Lorem ipsum dolor sit amet, consectetur. ", 
-                        address: "#"
                     },
                     { 
                         name: "CRUD", 
-                        description: "Create Read Update Destroy", 
+                        description: "Small particles of poop. JK.", 
                         address: "#"
                     },
                     { 
@@ -62,6 +59,10 @@ define(function(require, exports, module) {
             this.$el.html(_.template(util.getHTML('plugins-page'), pluginsTmp));
             return this;
         },
+        clickedPluginToggle: function(e){
+            $($(e.target).closest("input")).toggleClass('checked');
+            console.log($($(e.target).closest("input")).hasClass('checked'));
+        }
 
        
     });

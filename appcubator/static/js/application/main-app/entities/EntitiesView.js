@@ -21,8 +21,6 @@ define(function(require, exports, module) {
             _.bindAll(this);
             this.subviews = [this.tablesView, this.userTablesView, this.relationsView, this.createRelationView];
             this.collection = v1State.get('tables');
-
-
             this.listenTo(this.collection, 'add', this.renderTable);
 
             this.title = "Tables";

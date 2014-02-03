@@ -40,6 +40,7 @@ define(function(require, exports, module) {
 
             this.entitiesView = new EntitiesView();
             this.entitiesView.setToggleEl($('.menu-app-entities'));
+            this.entitiesView.setPointerPosition("180px")
 
             this.pluginsView = new PluginsView();
             this.pluginsView.setToggleEl($('.menu-app-plugins'));
