@@ -12,19 +12,44 @@ define(function(require, exports, module) {
         },
         subviews: [],
         initialize: function() {
+
         },
 
         render: function() {
-            var plugins = v1State.get('generators').toJSON();
+            var plugins = v1State.get('plugins').toJSON();
             this.$el.html(_.template(util.getHTML('plugins-page'), {plugins: plugins}));
             return this;
         },
         clickedPluginToggle: function(e){
-            $($(e.target).closest("input")).toggleClass('checked');
-        },
+            var input = $(e.target).closest("[type='checkbox']");
+            var pluginName = $(input).attr('pluginName');
+            var pluginEnabled = $(input).hasClass('checked');
 
-        browsePluginList: function (generatorList){
-            
+            if (pluginEnabled){
+                $(input).removeClass('checked');
+            } else {
+                $(input).addClass('checked');
+            }
+            var plugin = v1.currentApp.model.get('plugins').find(
+                function (p) {
+                    if (p.get('pluginInformation').name === pluginName){
+                        if (pluginEnabled){
+                            p.disablePlugin();
+                        } else {
+                            p.enablePlugin();
+                        }
+                    }
+                    return (p.get('pluginInformation').name === pluginName); 
+            });
+            console.log(this.getActivePlugins())
+        },
+        getActivePlugins: function (){
+            var enabledPlugins = v1.currentApp.model.get('plugins').filter( 
+                function (p) { 
+                    return p.getPluginStatus() ; 
+                }
+            );
+            return enabledPlugins;
         }
     });
 

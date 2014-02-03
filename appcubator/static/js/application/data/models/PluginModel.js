@@ -11,6 +11,7 @@ define([
         defaults: {
         },
         initialize: function(options) {
+
         },        
         fetchPlugin: function() {
             var name = this.get("name");
@@ -23,6 +24,22 @@ define([
                 }.bind(this)
             })
         },
+        enablePlugin: function(){
+            console.log("Enabling Plugin" + this.get('pluginInformation').name);
+            var pluginInfo = this.get("pluginInformation");
+            pluginInfo.enabled = true;
+            this.set('pluginInformation', pluginInfo);
+        },
+        disablePlugin: function(){
+            console.log("Disabling Plugin" + this.get('pluginInformation').name);
+            var pluginInfo = this.get("pluginInformation");
+            pluginInfo.enabled = false;
+            this.set('pluginInformation', pluginInfo);
+        },  
+        getPluginStatus: function(){
+            return this.get('pluginInformation').enabled;
+        }      
+
     });
 
     return PluginModel;

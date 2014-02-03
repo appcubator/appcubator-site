@@ -29,6 +29,8 @@ function(AppInfoModel,
       this.set('tables', new TableCollection(aState.models));
       this.set('emails', new EmailCollection(aState.emails));
       this.set('templates', new TemplateCollection(aState.templates));
+      
+      // Initialize the avaliable plugins. 
       var pluginArray = [];
       for (plugin in aState.generators){
           var currentPluginObject = aState.generators[plugin];
@@ -37,7 +39,7 @@ function(AppInfoModel,
           console.log(p);
           pluginArray.push(p);
       }
-      this.set('generators', new PluginCollection(pluginArray));
+      this.set('plugins', new PluginCollection(pluginArray));
     },
 
     getPages: function () {
