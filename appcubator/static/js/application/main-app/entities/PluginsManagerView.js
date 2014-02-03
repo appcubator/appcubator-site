@@ -15,8 +15,15 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            var plugins = appState;
-            this.$el.html(_.template(util.getHTML('plugins-page'), plugins));
+            var pluginsThing = {
+                plugins: [
+                    {
+                        name: "Plugin 1",
+                        description: "Lorem Ipsum"
+                    }                
+                ]
+            };
+            this.$el.html(_.template(util.getHTML('plugins-page'), pluginsThing));
             return this;
         },
         clickedPluginToggle: function(e){
