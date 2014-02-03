@@ -4,6 +4,7 @@ define([
   'collections/TableCollection',
   'collections/EmailCollection',
   'collections/TemplateCollection',
+  'collections/PluginCollection',
   'models/EntityManager'
 ],
 function(AppInfoModel,
@@ -11,6 +12,7 @@ function(AppInfoModel,
          TableCollection,
          EmailCollection,
          TemplateCollection,
+         PluginCollection,
          EntityManager) {
 
   var AppModel = Backbone.Model.extend({
@@ -27,7 +29,7 @@ function(AppInfoModel,
       this.set('tables', new TableCollection(aState.models));
       this.set('emails', new EmailCollection(aState.emails));
       this.set('templates', new TemplateCollection(aState.templates));
-      //this.set('plugins', new PluginCollection(aState.generators));
+      this.set('generators', new PluginCollection(aState.generators));
     },
 
     getPages: function () {
