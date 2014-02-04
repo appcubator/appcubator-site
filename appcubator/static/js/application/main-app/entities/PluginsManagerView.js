@@ -3,22 +3,27 @@ define(function(require, exports, module) {
     'use strict';
     require('util');
     require('mixins/BackboneDropdownView');
+    var PluginBrowserView = require('PluginBrowserView');
 
     var PluginsManagerView = Backbone.DropdownView.extend({
         title: 'Plugins',
         className: 'plugins-view',
         events: {
-            'click .onoffswitch': 'clickedPluginToggle'
+            'click .onoffswitch': 'clickedPluginToggle',
+            'click .browsePluginsButton': 'browsePlugins'
         },
         subviews: [],
         initialize: function() {
-
         },
-
         render: function() {
             var plugins = v1State.get('plugins').toJSON();
             this.$el.html(_.template(util.getHTML('plugins-page'), {plugins: plugins}));
             return this;
+        },
+        browsePlugins: function(){
+            var repoAddress = "http://localhost:3001/packageListing";
+            var browserView = new PluginBrowserView();
+
         },
         clickedPluginToggle: function(e){
             var input = $(e.target).closest("[type='checkbox']");
