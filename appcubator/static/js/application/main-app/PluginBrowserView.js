@@ -18,7 +18,9 @@ function() {
     },
     render: function() {
       var template = util.getHTML('plugin-browser');
-      this.el.innerHTML = _.template(template, this.data);
+      console.log(this.data);
+      console.log(template);
+      this.el.innerHTML = _.template(template, {});
       return this;
     },
 
