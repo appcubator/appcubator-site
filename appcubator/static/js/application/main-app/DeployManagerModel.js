@@ -21,7 +21,6 @@ define(function(require, exports, module) {
 		deploySuccessHandler: function(data, callback){
             var self = this;
             callback.call(this, data);
-            console.log(data);
             new DeployView(data);
             util.log_to_server('deployed app', {
                 status: 'success',
@@ -110,7 +109,7 @@ define(function(require, exports, module) {
             });
 
             var holdOnTimer = setTimeout(function() {
-                if (!isDeployed && hold_on_callback) hold_on_callback.call();
+                if (!isDeployed && hold_on_callback) hold_on_callback.call(this);
                 clearTimeout(holdOnTimer);
             }, 10000);
         },
