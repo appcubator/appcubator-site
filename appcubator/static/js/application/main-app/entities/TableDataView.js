@@ -26,7 +26,7 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            this.el.innerHTML = 'No data available';
+            this.el.innerHTML = 'Coming soon...';
             return this;
         },
 

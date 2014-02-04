@@ -58,11 +58,13 @@ define(function(require, exports, module) {
             this.allList.innerHTML = '';
             this.renderSearchPart();
             this.renderUIElementList(); // Basic UI Elements
+            // TODO implement these in one fn call via plugins.
+            // for now they're dummies
             this.renderAuthenticationForms(); // Authentication Forms
             this.renderCurrentUserElements(); // CurrentUser Elements
             this.renderEntityForms();
             this.renderEntityLists(); // All Create Forms, Tables, Lists
-            this.renderContextEntityElements(); // Context Entity Elements and Update Forms
+            //this.renderContextEntityElements(); // Context Entity Elements and Update Forms
 
             // hide all sections except first
             this.hideAllSections();
@@ -196,7 +198,7 @@ define(function(require, exports, module) {
         },
 
         renderAuthenticationForms: function() {
-            this.authSection = this.addNewSection('User Signin Forms');
+            this.authSection = this.addNewSection('User Signin Forms', true);
 
             this.authSection.addFullWidthItem("entity-user-Local_Login", "login", "Login Form", "local-login");
 
@@ -219,7 +221,7 @@ define(function(require, exports, module) {
         },
 
         renderCurrentUserElements: function() {
-            this.currUserSection = this.addNewSection('Current User Views');
+            this.currUserSection = this.addNewSection('Current User Views', true);
             // _(v1.currentApp.getCurrentPage().getFields()).each(function(field) {
             //     if (field.isRelatedField()) return;
             //     this.currUserSection.addFullWidthItem('current-user-' + field.cid, 'current-user', 'Current User ' + field.get('name'), 'current-user-icon');
@@ -233,7 +235,7 @@ define(function(require, exports, module) {
         renderEntityForms: function() {
 
             // if (!this.tableSection) {
-                this.tableSection = this.addNewSection('Data Forms');
+                this.tableSection = this.addNewSection('Data Forms', true);
             // } else {
             //     this.tableSection.render();
             // }
@@ -264,7 +266,7 @@ define(function(require, exports, module) {
 
         renderEntityLists: function() {
             // if (!this.tableSection) {
-                this.tableSection = this.addNewSection('Data Views');
+                this.tableSection = this.addNewSection('Data Views', true);
             // } else {
             //     this.tableSection.render();
             // }
@@ -352,12 +354,13 @@ define(function(require, exports, module) {
             }, this);
         },
 
-        addNewSection: function(name) {
+        addNewSection: function(name, notYetImplementedFlag) {
 
             var self = this;
             var sectionView = new EditorGallerySectionView({
                 parentView: self,
-                index: this.nmrSections
+                index: this.nmrSections,
+                notYetImplementedFlag: notYetImplementedFlag,
             });
 
             this.nmrSections++;
