@@ -7,7 +7,7 @@ function() {
   var PluginBrowserView = Backbone.ModalView.extend({
     className: "plugin-browser-panel",
     width: 800,
-    height: 680,
+    height: 630,
     events: {
       'click .addPluginButton': 'addPlugin'
     },
@@ -23,7 +23,6 @@ function() {
       this.el.innerHTML = _.template(template, {});
       return this;
     },
-
     addPlugin: function(){
       console.log("Add Plugin!");
     },

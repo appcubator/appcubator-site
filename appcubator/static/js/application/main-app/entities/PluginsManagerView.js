@@ -21,9 +21,9 @@ define(function(require, exports, module) {
             return this;
         },
         browsePlugins: function(){
-            var repoAddress = "http://localhost:3001/packageListing";
-            var browserView = new PluginBrowserView();
-
+            var browserView = new PluginBrowserView({
+                repoAddress: "http://localhost:3001/packageListing"
+            });
         },
         clickedPluginToggle: function(e){
             var input = $(e.target).closest("[type='checkbox']");

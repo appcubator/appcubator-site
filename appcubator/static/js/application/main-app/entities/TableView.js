@@ -55,7 +55,6 @@ define(function(require, exports, module) {
         initialize: function(tableModel) {
             _.bindAll(this);
             this.model = tableModel;
-
             this.listenTo(this.model, 'remove', this.remove);
             this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
             this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));
@@ -91,7 +90,6 @@ define(function(require, exports, module) {
 
         tabClicked: function(e) {
             this.$el.find('.active').removeClass('active');
-
             if($(e.currentTarget).hasClass('description-li')) {
                 this.renderDescription();
             }

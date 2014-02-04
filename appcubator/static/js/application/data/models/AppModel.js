@@ -35,6 +35,12 @@ function(AppInfoModel,
       for (plugin in aState.generators){
           var currentPluginObject = aState.generators[plugin];
           var p = $.extend(true, {}, currentPluginObject);
+          for (module in p){
+            for (var i = 0; i < p[module].length; i++){
+              p[module][i].generatorIdentifier = plugin + "." + module + "." + p[module][i].name;
+            }
+          }
+          //console.log(p);
           p.pluginInformation = { name: plugin, description: "lorem ipsum", enabled: true, origin: "appcubator"};
           console.log(p);
           pluginArray.push(p);
