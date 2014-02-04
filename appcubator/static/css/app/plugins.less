@@ -634,4 +634,68 @@ input[type=checkbox] {
 .icon-o2o {
   background-position: -280px 0;
 }
+.plugin-browser-panel {
+	div {
+		padding: 0px;
+	}
 
+	.tabs {
+		width:100%;
+	}
+	.rating {
+	  margin-top: 3px;
+	  unicode-bidi: bidi-override;
+	  direction: rtl;
+	  font-size: 20px;
+	  text-align: left;
+	}
+	.rating > span {
+	  display: inline-block;
+	  position: relative;
+	  width: 1.1em;
+	}
+	.rating > span:hover:before,
+	.rating > span:hover ~ span:before {
+	   content: "\2605";
+	   position: absolute;
+	}
+
+	.current-content {
+		margin-top: 7px;
+	}
+	.description {
+		height: 80px;
+		padding-left: 5px;
+		padding-right: 5px;
+		padding-top: 5px;
+		font-size: 12px;
+	}
+	.pluginTitleBar {
+		float:left;
+		margin-top: 5px;
+		margin-left: 5px;
+		height: 200px;
+		width: 340px;
+		border-radius: 3px;
+		background-color: #FBFBFB;
+	}
+
+	.pluginTitleBar:hover {
+		background-color: #EBEBEB;
+	
+	}
+
+	.addPluginPutton {
+		float: right;
+	}
+
+	.pluginLogo {
+		height: 80px;
+		width: 80px;
+		margin-top: 4px;
+		margin-left: 4px;
+		background-color: grey;
+		float: left;
+		margin-right: 10px;
+	}
+}

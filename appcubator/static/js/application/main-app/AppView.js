@@ -236,7 +236,6 @@ define(function(require, exports, module) {
             $('.deploy-text').append(threeDots.el);
 
             var success_callback = function(data) {
-                new DeployView(data);
                 $('.deploy-text').html('Publish');
                 clearInterval(threeDots.timer);
             };
@@ -245,7 +244,7 @@ define(function(require, exports, module) {
                 $('.deploy-text').html('Hold On, Still deploying.');
             };
 
-            this.deployManager.deploy.call(success_callback, hold_on_callback);
+            this.deployManager.deploy.call(this, success_callback, hold_on_callback);
         },
 
         save: function(e, callback) {
@@ -258,7 +257,7 @@ define(function(require, exports, module) {
 
             var self = this;
             appState = v1State.serialize();
-            console.log(appState);
+            if(DEBUG) console.log(appState);
 
             var successHandler = function(data) {
                 util.dontAskBeforeLeave();

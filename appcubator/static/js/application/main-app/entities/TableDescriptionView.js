@@ -42,6 +42,39 @@ define(function(require, exports, module) {
     ].join('\n');
 
 
+    var pluginAttribsTemplate = [
+    '<div class="plugins-list">',
+        '<div class="plugin-li">',
+        '<h4>Plugin 1</h4>',
+        '<div class="toggleSwitch">',
+            '<div class="onoffswitch" >',
+                '<input type="checkbox" name="onoffswitch< i >" class="onoffswitch-checkbox" id="myonoffswitch< i >" >',
+                '<label class="onoffswitch-label" for="myonoffswitch< i >">',
+                    '<div class="onoffswitch-inner"></div>',
+                    '<div class="onoffswitch-switch"></div>',
+                '</label>',
+            '</div>',
+        '</div>',
+        '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
+        '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
+        '</div>',
+        '<div class="plugin-li">',
+        '<h4>Plugin 2</h4>',
+        '<div class="toggleSwitch">',
+            '<div class="onoffswitch" >',
+                '<input type="checkbox" name="onoffswitch< i >" class="onoffswitch-checkbox" id="myonoffswitch< i >" >',
+                '<label class="onoffswitch-label" for="myonoffswitch< i >">',
+                    '<div class="onoffswitch-inner"></div>',
+                    '<div class="onoffswitch-switch"></div>',
+                '</label>',
+            '</div>',
+        '</div>',
+        '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
+        '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
+        '</div>',
+    '</div>'
+    ].join('\n');
+
     var propertyTemplate = [
     '<div class="column <% if(isNew) { %>newcol<% } %>" id="column-<%- cid %>">',
       '<div class="hdr"><%- name %></div>',
@@ -100,7 +133,10 @@ define(function(require, exports, module) {
 
         render: function() {
 
-            this.$el.html(_.template(descriptionTemplate, this.model.serialize()));
+            var html = _.template(descriptionTemplate, this.model.serialize());
+            html    += _.template(pluginAttribsTemplate, {});
+
+            this.$el.html(html);
 
             this.renderProperties();
             this.renderRelations();

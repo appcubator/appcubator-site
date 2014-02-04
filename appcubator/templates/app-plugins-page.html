@@ -1,20 +1,21 @@
 <div class="hoff1">
 <h2 class="pheader">
-    Plugins  <button id='browsePlugins'> Browse </button>
+    Plugins  <button id='browsePlugins' class='browsePluginsButton'> Browse </button>
 </h2>
 <hr>
-
+<% console.log(plugins) %>
 <div class='pluginContainer'>
-
 <% for (var i=0; i<plugins.length;i++) {%>
 <div class="pluginBar"> 
-    <div class="identifier"> <a href='#'> <%=plugins[i].pluginInformation.name %> </a> <div class="pluginImageHolder"> </div></div>
+    <% var pluginStatus = plugins[i].pluginInformation.enabled ? "checked" : ""; %>
+    <% console.log(pluginStatus) %>
+    <div class="identifier"> <a href='#'> <%=plugins[i].pluginInformation.name%> </a> <div class="pluginImageHolder"> </div></div>
     <div class="information"> <%=plugins[i].pluginInformation.description%>
     </div>
 
     <div class="toggleSwitch">
         <div class="onoffswitch" >
-            <input type="checkbox" name="onoffswitch<%=i%>" class="onoffswitch-checkbox" id="myonoffswitch<%=i%>" >
+            <input type="checkbox" name="onoffswitch<%=i%>" pluginName=<%=plugins[i].pluginInformation.name%> class="onoffswitch-checkbox <%=pluginStatus%> >" id="myonoffswitch<%=i%>" >
             <label class="onoffswitch-label" for="myonoffswitch<%=i%>">
                 <div class="onoffswitch-inner"></div>
                 <div class="onoffswitch-switch"></div>

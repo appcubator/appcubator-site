@@ -29,15 +29,23 @@ function(AppInfoModel,
       this.set('tables', new TableCollection(aState.models));
       this.set('emails', new EmailCollection(aState.emails));
       this.set('templates', new TemplateCollection(aState.templates));
+      
+      // Initialize the avaliable plugins. 
       var pluginArray = [];
       for (plugin in aState.generators){
           var currentPluginObject = aState.generators[plugin];
           var p = $.extend(true, {}, currentPluginObject);
+          for (module in p){
+            for (var i = 0; i < p[module].length; i++){
+              p[module][i].generatorIdentifier = plugin + "." + module + "." + p[module][i].name;
+            }
+          }
+          //console.log(p);
           p.pluginInformation = { name: plugin, description: "lorem ipsum", enabled: true, origin: "appcubator"};
           console.log(p);
           pluginArray.push(p);
       }
-      this.set('generators', new PluginCollection(pluginArray));
+      this.set('plugins', new PluginCollection(pluginArray));
     },
 
     getPages: function () {

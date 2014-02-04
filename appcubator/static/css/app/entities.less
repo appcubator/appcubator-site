@@ -216,15 +216,47 @@
 	}
 }
 
-.description-view {
-	padding: 30px;
+.entity-pane .description-view {
 	height: 515px;
 	overflow: hidden;
-	overflow-y: scroll;
-	text-align: center;
+	overflow-y: visible;
+	text-align: left;
+	display: inline-block;
+	padding: 0;
 
 	.description {
 		text-align: left;
+		overflow-y: scroll;
+		height: 100%;
+	}
+}
+
+.entity-pane .plugins-list {
+	display: inline-block;
+	width: 296px;
+
+	.plugin-li {
+		position: relative;
+		padding: 15px;
+		border-bottom: 1px solid #eee;
+	}
+
+	.toggleSwitch {
+		display: inline-block;
+		height: 40px;
+		float: right;
+		position: absolute;
+		top: 16px;
+		right: 15px;
+	}
+
+	h4 {
+		vertical-align: top;
+		width: 190px;
+		line-height: 40px;
+		border-bottom: 1px solid #eee;
+		width: 100%;
+		margin-bottom: 15px;
 	}
 }
 

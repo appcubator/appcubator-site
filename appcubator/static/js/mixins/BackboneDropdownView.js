@@ -29,8 +29,6 @@ define([
             },
             // Set the displacement of the little pointer
             setPointerPosition: function(offset){
-                console.log(this.$el);
-                console.log(offset);
             },
             toggle: function() {
                 if(this.isExpanded) { this.hide(); } else { this.expand(); }
