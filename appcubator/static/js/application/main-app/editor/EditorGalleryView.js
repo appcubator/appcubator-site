@@ -63,6 +63,7 @@ define(function(require, exports, module) {
             this.renderEntityForms();
             this.renderEntityLists(); // All Create Forms, Tables, Lists
             this.renderContextEntityElements(); // Context Entity Elements and Update Forms
+            this.renderPluginElements();
 
             // hide all sections except first
             this.hideAllSections();
@@ -72,7 +73,7 @@ define(function(require, exports, module) {
             // listen for changes to url to update context entity section
             // this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
             this.listenTo(v1State.get('tables'), 'add remove', this.renderEntityFormsTablesLists);
-
+            this.listenToModels(v1State.get('plugins'), 'change', this.renderPluginElements);
             return this;
         },
 
@@ -336,6 +337,26 @@ define(function(require, exports, module) {
             // }, this);
 
             this.bindDraggable();
+        },
+
+        renderPluginElements: function() {
+            var elements = [];
+
+            v1State.get('plugins').each(function(pluginModel) {
+                if(!pluginModel.isEnabled()) return;
+
+                console.log('hey');
+                console.log(pluginModel.getActiveUIElements());
+                _.each(pluginModel.getActiveUIElements(), function(uielement) {
+                    elements.push(uielement);
+                });
+            });
+
+            if(this.pluginElemsSection) this.pluginElemsSection.close();
+            this.pluginElemsSection = this.addNewSection('Plugin Elements');
+            _.each(elements, function(element) {
+                this.pluginElemsSection.addFullWidthItem('id', 'class', element.name, 'plugin-icon');
+            }, this);
         },
 
         renderRelatedField: function(fieldModel, tableModel, section) {
