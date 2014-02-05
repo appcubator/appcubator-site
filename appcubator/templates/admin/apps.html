@@ -17,7 +17,7 @@
         <th>Name</th>
         <th>Owner</th>
         <th>Subdomain</th>
-        <th>Num Pages</th>
+        <th>Num Templates</th>
       </tr>
     </thead>
     <tbody>
@@ -31,7 +31,7 @@
         {% else %}
           <td>{{ app.subdomain }}</td>
         {% endif %}
-        <td>{{app.state.pages|length}}</td>
+        <td>{{app.state.templates|length}}</td>
       </tr>
       {% endfor %}
     </tbody>
