@@ -157,11 +157,13 @@ def update_orphan_cache():
         """
         # is this orphan working?
         domain = orph + '.' + settings.DEPLOYMENT_DOMAIN
-        url = 'http://' + domain + '/__ping__'
+        url = 'http://' + domain
         try:
+            logger.info('curling app '+ orph)
             r = requests.get(url)
             working = r.status_code == 200
         except requests.exceptions.ConnectionError:
+            logger.warn('not working')
             working = False
 
         dq = Deployment.objects.filter(d_id=orph)
