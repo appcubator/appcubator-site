@@ -331,23 +331,6 @@ class App(models.Model):
     def mobile_uie_state_json(self):
         return self._mobile_uie_state_json
 
-    @property
-    def entities(self):
-        return self.state['entities']
-
-    @property
-    def pages(self):
-        return self.state['pages']
-
-    @property
-    def mobile_pages(self):
-        return self.state['pages']
-
-    @property
-    def urls(self):
-        return self.state['urls']
-
-
     def get_last_snapshot(self):
         try:
             snapshot = AppstateSnapshot.objects.filter(app=self).latest('snapshot_date')

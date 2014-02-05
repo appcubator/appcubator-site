@@ -30,12 +30,6 @@
   <p><strong>Deployed URL:</strong><a href="{{app.url}}" target="_blank">{{ app.hostname }}</a></p>
   <p><strong>Deployment ID:</strong> {{ app.deployment_id }}</p>
   <p><button class="btn btn-inverse" id="deploy-app" data-toggle="modal" data-target=".deploy">Deploy App</button></p>
-  <p><strong>Pages</strong></p>
-  <ol>
-  {% for p in app.pages %}
-  <li><a href="{{ app.url }}{{ p.url.urlparts|join:"/" }}" target="_blank">{{ p.name }}</a></li>
-  {% endfor %}
-  </ol>
 <div class="row">
   <div class="span6">
     <strong>App State</strong>
