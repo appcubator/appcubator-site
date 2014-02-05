@@ -547,19 +547,14 @@ class App(models.Model):
                 shutil.rmtree(tmpdir)
         return self.deployment_id
 
-    def delete_deployment(self):
-        if self.deployment_id is not None:
-            deploy.destroy(self.deployment_id)
-
     def delete(self, *args, **kwargs):
         if self.deployment_id is not None:
             try:
-                r = self.delete_deployment()
+                deploy.zero_out(self.deployment_id, self.url())
+            except deploy.NotDeployedError:
+                logger.error("Got a 404 from the url")
             except Exception:
-                logger.error("Could not reach appcubator server.")
-            else:
-                if r.status_code != 200:
-                    logger.error("Tried to delete %d, Deployment server returned bad response: %s %r" % (self.deployment_id, r.status_code, r.text))
+                raise
         super(App, self).delete(*args, **kwargs)
 
     def is_editable_by_user(self, user):
