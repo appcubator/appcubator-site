@@ -1,10 +1,12 @@
 define([
     'require',
     'collections/FieldsCollection',
+    'models/TableCodeModel',
     'backbone'
 ], function(require) {
 
     var FieldsCollection = require('collections/FieldsCollection');
+    var TableCodeModel = require('models/TableCodeModel');
     var Backbone = require('backbone');
 
     var TableModel = Backbone.Model.extend({
@@ -33,8 +35,9 @@ define([
                 this.get('fields').add(bone.fields);
             }
 
-            this.set('instancemethods', new Backbone.Collection(bone.instancemethods||[]));
-            this.set('staticmethods', new Backbone.Collection(bone.staticmethods||[]));
+            var TableCodeCollection = Backbone.Collection.extend({model:TableCodeModel});
+            this.set('instancemethods', new TableCodeCollection(bone.instancemethods||[]));
+            this.set('staticmethods', new TableCodeCollection(bone.staticmethods||[]));
             
             this.isUser = false;
         },

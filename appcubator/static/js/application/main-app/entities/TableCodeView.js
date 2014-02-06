@@ -40,21 +40,11 @@ define(function(require, exports, module) {
 
         render: function() {
 
-            var insStr ='';
-            this.model.get('instancemethods').each(function(methodModel) {
-                insStr += _.template(funcTemplate, _.extend(methodModel.serialize(), {cid: methodModel.cid}));
-            });
-
-            var statStr ='';
-            this.model.get('staticmethods').each(function(methodModel) {
-                statStr += _.template(funcTemplate, _.extend(methodModel.serialize(), {cid: methodModel.cid}));
-            });
-
             this.el.innerHTML = [
                 '<div class="instance sect">',
                     '<span class="title">Instance Methods</span>',
-                    '<div id="static-methods-list">'+insStr+'</div>',
-                    '<div id="add-static-box">',
+                    '<div id="instance-methods-list"></div>',
+                    '<div id="add-instance-box">',
                         '<form style="display:none;">',
                             '<input type="text" class="property-name-input" placeholder="Property Name...">',
                             '<input type="submit" class="done-btn" value="Done">',
@@ -64,8 +54,8 @@ define(function(require, exports, module) {
                 '</div>',
                 '<div class="static sect">',
                     '<span class="title">Static Methods</span>',
-                    '<div id="instance-methods-list">'+statStr+'</div>',
-                    '<div id="add-instance-box">',
+                    '<div id="static-methods-list"></div>',
+                    '<div id="add-static-box">',
                         '<form style="display:none;">',
                             '<input type="text" class="property-name-input" placeholder="Property Name...">',
                             '<input type="submit" class="done-btn" value="Done">',
@@ -74,6 +64,16 @@ define(function(require, exports, module) {
                     '</div>',
                 '</div>'
             ].join('\n');
+
+            var self = this;
+
+            this.model.get('instancemethods').each(function(methodModel){
+                self._inject_ace_html(methodModel, 'instance');
+            });
+
+            this.model.get('staticmethods').each(function(methodModel){
+                self._inject_ace_html(methodModel, 'static');
+            });
 
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-static-box')).render();
             this.addPropertyBox.on('submit', this.createStaticFunction);
@@ -89,7 +89,11 @@ define(function(require, exports, module) {
                 this.setupSingleAce(methodModel);
             }, this);
             this.model.get('staticmethods').each(function(methodModel) {
-                this.setupSingleAce(methodModel);
+                if (methodModel.isGenerator()) {
+                    this.setupFakeGeneratorAce(methodModel);
+                } else {
+                    this.setupSingleAce(methodModel);
+                }
             }, this);
 
             // this.editor.getSession().setMode("ace/mode/css");
@@ -97,25 +101,35 @@ define(function(require, exports, module) {
             // this.editor.on("change", this.keyup);
         },
 
+        setupFakeGeneratorAce: function(methodModel) {
+            this.$el.find("#func-editor-" + methodModel.cid).text(methodModel.getCode());
+        },
         setupSingleAce: function(methodModel) {
+            /* this breaks when this.el is not rendered */
             var self = this;
 
             var editor = ace.edit("func-editor-" + methodModel.cid);
             editor.getSession().setMode("ace/mode/javascript");
-            editor.setValue(methodModel.get('code'), -1);
+            editor.setValue(methodModel.getCode(), -1);
 
             editor.on("change", function() {
                 self.codeChanged(methodModel, editor.getValue());
             });
         },
 
+        '_inject_ace_html': function(methodModel, instanceOrStatic) {
+            /* this will work even if the el is not yet rendered */
+            this.$el.find('#'+instanceOrStatic+'-methods-list').append(_.template(funcTemplate, _.extend(methodModel.getGenerated(), {cid: methodModel.cid})));
+        },
         renderStaticMethod: function(methodModel) {
-            this.$el.find('#static-methods-list').append(_.template(funcTemplate, _.extend(methodModel.serialize(), {cid: methodModel.cid})));
+            /* this breaks when this.el is not rendered */
+            this._inject_ace_html(methodModel, 'static');
             this.setupSingleAce(methodModel);
         },
 
         renderInstanceMethod: function(methodModel) {
-            this.$el.find('#instance-methods-list').append(_.template(funcTemplate, _.extend(methodModel.serialize(), {cid: methodModel.cid})));
+            /* this breaks when this.el is not rendered */
+            this._inject_ace_html(methodModel, 'instance');
             this.setupSingleAce(methodModel);
         },
 
