@@ -161,7 +161,7 @@ define(function(require, exports, module) {
         filleContent: function() {
             var action = "";
             var type = this.model.get('type');
-
+            /*
             if (type == "imageslider") {
                 this.el.appendChild(this.renderButtonWithDeleteButtonandText('edit-slides-button', 'Edit Slides'));
                 return;
@@ -192,6 +192,7 @@ define(function(require, exports, module) {
                     this.el.appendChild(this.renderButtonWithText('form-editor-btn', 'Edit Form'));
                     break;
             }
+            */
 
             this.widgetClassPickerView = new WidgetClassPickerView(this.model);
             this.layoutEditor = new WidgetLayoutEditorView(this.model);
