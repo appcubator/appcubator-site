@@ -9,38 +9,16 @@
 
 
 <div class="current-content">
+	<% _.each(pluginsList, function(plugin, ind) { %>
 	<div class='pluginTitleBar'>
 		<div class='pluginLogo'> </div>
-		<h6> <a href="#"> flickerpicker </a> <div class="rating">
+		<h6> <a href="#"> <%= plugin.name %></a> <div class="rating">
 			<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
 		</div> </h6>
-		<div class="description"> Lorem ipsum something Lorem ipsum something Lorem ipsum somethingLorem  </div>
-		<button class="addPluginPutton"> Add Plugin </button>
+		<div class="description"><%= plugin.description %></div>
+		<button class="addPluginButton btn" id="add-<%= ind %>"> Add Plugin </button>
 	</div> 
-	<div class='pluginTitleBar'>
-		<div class='pluginLogo'> </div>
-		<h6> <a href="#"> BuyAndSell </a> <div class="rating">
-			<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-		</div></h6>
-		<div class="description"> Lorem ipsum something </div>
-		<button class="addPluginPutton"> Add Plugin </button>
-	</div> 
-	<div class='pluginTitleBar'>
-		<div class='pluginLogo'> </div>
-		<h6> <a href="#"> BuyAndSell </a> <div class="rating">
-			<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-		</div></h6>
-		<div class="description"> Lorem ipsum something </div>
-		<button class="addPluginPutton"> Add Plugin </button>
-	</div>
-	<div class='pluginTitleBar'>
-		<div class='pluginLogo'> </div>
-		<h6> <a href="#"> BuyAndSell </a> <div class="rating">
-			<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-		</div></h6>
-		<div class="description"> Lorem ipsum something </div>
-		<button class="addPluginPutton"> Add Plugin </button>
-	</div>	
+	<% }); %>
 </div>
 
 

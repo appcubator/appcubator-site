@@ -456,6 +456,15 @@ define(['backbone'], function() {
             // }
 
             return offset;
+        },
+
+        addLoadingSpin: function (domEl) {
+            var spinner = document.createElement('img');
+            spinner.src = '/static/img/spinner.gif';
+            spinner.className = 'generic-spinner';
+            domEl.appendChild(spinner);
+            
+            return spinner;
         }
 
     };
