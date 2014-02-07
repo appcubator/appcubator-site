@@ -331,7 +331,7 @@ define(function(require, exports, module) {
         renderSettingsAndDelete: function() {
             var li = document.createElement('ul');
             li.className = 'w-section';
-            li.innerHTML += '<span class="option-button tt settings" style="width:160px;">Settings</span><span id="delete-widget" class="option-button delete-button tt" style="width:34px;"></span>';
+            li.innerHTML += '<span id="delete-widget" class="option-button delete-button tt"></span><span class="option-button tt settings"></span>';
             return li;
         },
 

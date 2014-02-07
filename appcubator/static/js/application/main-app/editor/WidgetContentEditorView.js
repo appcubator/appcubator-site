@@ -8,7 +8,7 @@ define(function(require, exports, module) {
 
     var WidgetContentEditorView = Backbone.View.extend({
         el: document.getElementById('content-editor'),
-        className: 'content-editor',
+        className: 'content-editor w-section',
         tagName: 'ul',
         events: {
             'keyup .content-editor': 'changedContent',

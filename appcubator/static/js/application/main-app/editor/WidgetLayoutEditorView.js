@@ -1,125 +1,131 @@
 define([
-  'editor/WidgetClassPickerView',
-  'editor/tool-tip-hints'
-],
-function(WidgetClassPickerView) {
+        'editor/WidgetClassPickerView',
+        'editor/tool-tip-hints'
+    ],
+    function(WidgetClassPickerView) {
 
-  var WidgetLayoutEditorView = Backbone.View.extend({
-    el     : document.getElementById('layout-editor'),
-    className : 'w-section layout-editor',
-    events : {
-      'click .a-pick'            : 'changeAlignment',
-      'click .padding'           : 'changePadding',
-      'click #delete-widget'     : 'deleteWidget',
-      'mouseover .tt'            : 'showToolTip',
-      'mouseout .tt'             : 'hideToolTip'
-    },
-
-    initialize: function(widgetModel){
-      _.bindAll(this);
-
-      this.model = widgetModel;
-      this.render();
-    },
+        var ToolTipHints = {
+            "a-left": "Align left",
+            "a-center": "Align center",
+            "a-right": "Align right",
+            "padding-tb": "Top-Bottom Padding",
+            "padding-lr": "Left-Right Padding",
+            "pick-style": "Click to add a style"
+        };
 
 
-    changeAlignment: function(e) {
-      $('.selected', '.alignment-picker').removeClass('selected');
-      var direction = (e.target.className).replace(' a-pick', '');
-      direction = direction.replace(' tt', '');
-      direction = direction.replace('a-','');
+        var WidgetLayoutEditorView = Backbone.View.extend({
+            el: document.getElementById('layout-editor'),
+            className: 'w-section layout-editor',
+            events: {
+                'click .a-pick': 'changeAlignment',
+                'click .padding': 'changePadding',
+                'click #delete-widget': 'deleteWidget',
+                'mouseover .tt': 'showToolTip',
+                'mouseout .tt': 'hideToolTip'
+            },
 
-      this.model.get('layout').set('alignment', direction);
-      e.target.className += ' selected';
-    },
+            initialize: function(widgetModel) {
+                _.bindAll(this);
 
-    changePadding: function(e) {
-      var padding = (e.target.id).replace('padding-', '');
-      $(e.target).toggleClass('selected');
+                this.model = widgetModel;
+                this.render();
+            },
 
 
-      if(padding == "tb") {
-        if($(e.target).hasClass('selected')) {
-          this.model.get('layout').set('t_padding', 15);
-          this.model.get('layout').set('b_padding', 15);
-        }
-        else {
-          this.model.get('layout').set('t_padding', 0);
-          this.model.get('layout').set('b_padding', 0);
-        }
-      }
-      else {
-        if($(e.target).hasClass('selected')) {
-          this.model.get('layout').set('r_padding', 15);
-          this.model.get('layout').set('l_padding', 15);
-        }
-        else {
-          this.model.get('layout').set('r_padding', 0);
-          this.model.get('layout').set('l_padding', 0);
-        }
-      }
-    },
+            changeAlignment: function(e) {
+                $('.selected', '.alignment-picker').removeClass('selected');
+                var direction = (e.target.className).replace(' a-pick', '');
+                direction = direction.replace(' tt', '');
+                direction = direction.replace('a-', '');
 
-    render: function() {
-      var self = this;
-      this.el.appendChild(this.renderPaddingInfo());
-      this.el.appendChild(this.renderLayoutInfo());
-    },
+                this.model.get('layout').set('alignment', direction);
+                e.target.className += ' selected';
+            },
 
-    renderLayoutInfo: function() {
-      var aLeft = this.model.get('layout').get('alignment') == "left" ? " selected" : "";
-      var aCenter = this.model.get('layout').get('alignment') == "center" ? " selected" : "";
-      var aRight = this.model.get('layout').get('alignment') == "right" ? " selected" : "";
+            changePadding: function(e) {
+                var padding = (e.target.id).replace('padding-', '');
+                $(e.target).toggleClass('selected');
 
-      var div = document.createElement('div');
-      div.className = "alignment-picker";
-      div.innerHTML += '<div class="a-left a-pick tt'+ aLeft +'" id="a-left"></div><div class="a-center a-pick tt'+ aCenter +'" id="a-center"></div><div class="a-right a-pick tt'+ aRight +'" id="a-right"></div>';
-      return div;
-    },
 
-    renderPaddingInfo: function() {
-      var paddingLR = this.model.get('layout').get('r_padding') > 0 ? "selected" : "";
-      var paddingTB = this.model.get('layout').get('b_padding') > 0 ? "selected" : "";
+                if (padding == "tb") {
+                    if ($(e.target).hasClass('selected')) {
+                        this.model.get('layout').set('t_padding', 15);
+                        this.model.get('layout').set('b_padding', 15);
+                    } else {
+                        this.model.get('layout').set('t_padding', 0);
+                        this.model.get('layout').set('b_padding', 0);
+                    }
+                } else {
+                    if ($(e.target).hasClass('selected')) {
+                        this.model.get('layout').set('r_padding', 15);
+                        this.model.get('layout').set('l_padding', 15);
+                    } else {
+                        this.model.get('layout').set('r_padding', 0);
+                        this.model.get('layout').set('l_padding', 0);
+                    }
+                }
+            },
 
-      var div = document.createElement('div');
-      div.className = "padding-picker right";
-      div.innerHTML += '<div class="padding tb tt '+ paddingTB +'" id="padding-tb"></div><div class="padding lr tt '+ paddingLR +'" id="padding-lr"></div>';
-      return div;
-    },
+            render: function() {
+                var self = this;
+                this.el.appendChild(this.renderPaddingInfo());
+                this.el.appendChild(this.renderLayoutInfo());
+            },
 
-    showToolTip: function(e) {
-      if(this.toolTip) {
-        $(this.toolTip).remove();
-      }
+            renderLayoutInfo: function() {
+                var aLeft = this.model.get('layout').get('alignment') == "left" ? " selected" : "";
+                var aCenter = this.model.get('layout').get('alignment') == "center" ? " selected" : "";
+                var aRight = this.model.get('layout').get('alignment') == "right" ? " selected" : "";
 
-      var div = document.createElement('div');
-      div.className = "tool-tip-box fadeIn";
-      var text = ToolTipHints[e.target.id];
-      if(text) {
-        div.innerHTML = text;
-        this.toolTip = div;
-        this.el.appendChild(div);
-      }
+                var div = document.createElement('div');
+                div.className = "alignment-picker";
+                div.innerHTML += '<div class="a-left a-pick tt' + aLeft + '" id="a-left"></div><div class="a-center a-pick tt' + aCenter + '" id="a-center"></div><div class="a-right a-pick tt' + aRight + '" id="a-right"></div>';
+                return div;
+            },
 
-    },
+            renderPaddingInfo: function() {
+                var paddingLR = this.model.get('layout').get('r_padding') > 0 ? "selected" : "";
+                var paddingTB = this.model.get('layout').get('b_padding') > 0 ? "selected" : "";
 
-    hideToolTip: function(e) {
-      if(this.toolTip) {
-        $(this.toolTip).remove();
-      }
-    },
+                var div = document.createElement('div');
+                div.className = "padding-picker right";
+                div.innerHTML += '<div class="padding tb tt ' + paddingTB + '" id="padding-tb"></div><div class="padding lr tt ' + paddingLR + '" id="padding-lr"></div>';
+                return div;
+            },
 
-    deleteWidget: function() {
-      this.model.remove();
-    },
+            showToolTip: function(e) {
+                if (this.toolTip) {
+                    $(this.toolTip).remove();
+                }
 
-    clear: function() {
-      this.el.innerHTML = '';
-      this.model = null;
-      this.remove();
-    }
-  });
+                var div = document.createElement('div');
+                div.className = "tool-tip-box fadeIn";
+                var text = ToolTipHints[e.target.id];
+                if (text) {
+                    div.innerHTML = text;
+                    this.toolTip = div;
+                    this.el.appendChild(div);
+                }
 
-  return WidgetLayoutEditorView;
-});
+            },
 
+            hideToolTip: function(e) {
+                if (this.toolTip) {
+                    $(this.toolTip).remove();
+                }
+            },
+
+            deleteWidget: function() {
+                this.model.remove();
+            },
+
+            clear: function() {
+                this.el.innerHTML = '';
+                this.model = null;
+                this.remove();
+            }
+        });
+
+        return WidgetLayoutEditorView;
+    });
