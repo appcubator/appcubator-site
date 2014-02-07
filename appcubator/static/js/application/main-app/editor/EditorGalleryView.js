@@ -76,6 +76,8 @@ define(function(require, exports, module) {
             // this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
             this.listenTo(v1State.get('tables'), 'add remove', this.renderEntityFormsTablesLists);
             this.listenToModels(v1State.get('plugins'), 'change', this.renderPluginElements);
+            this.listenTo(v1State.get('plugins'), 'add remove', this.renderPluginElements);
+
             return this;
         },
 
@@ -340,6 +342,8 @@ define(function(require, exports, module) {
             _.each(elements, function(element) {
                 this.pluginElemsSection.addFullWidthItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier);
             }, this);
+
+            this.bindDraggable();
         },
 
         renderRelatedField: function(fieldModel, tableModel, section) {
@@ -354,6 +358,8 @@ define(function(require, exports, module) {
                     tableName + ' ' + fieldModel.get('name') + '.' + fieldM.get('name'),
                     'plus-icon', section);
             }, this);
+
+            this.bindDraggable();
         },
 
         addNewSection: function(name, notYetImplementedFlag) {

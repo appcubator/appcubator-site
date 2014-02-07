@@ -273,6 +273,19 @@ ul.list .elements-panel.top5 {
 
 
 
+@top6dist: (@top + @margintop + (6 * (@margintop + @height)) + @height/2);
+ul.list .elements-panel.top6 {
+  transform-origin: 240px @top6dist;
+  -ms-transform-origin: 240px @top6dist;
+  -webkit-transform-origin: 240px @top6dist;
+}
+.elements-panel.top6:after,
+.elements-panel.top6:before {
+  top: @top6dist;
+}
+
+
+
 ul.list .elements-panel.open {  
   -webkit-transition: all .2s ease-out; 
   -moz-transition: all .2s ease-out; 

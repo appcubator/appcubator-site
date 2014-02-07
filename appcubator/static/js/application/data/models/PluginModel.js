@@ -33,10 +33,18 @@ define([
             var pluginInfo = this.get("pluginInformation");
             pluginInfo.enabled = true;
             this.set('pluginInformation', pluginInfo);
+            /* Copies the generators to appState.generators */
+            var generators = _.clone(this.toJSON());
+            generators = _.omit(generators, 'pluginInformation');
+            v1State.get('generators')[pluginInfo.name] = generators;
         },
 
         getActiveUIElements: function() {
-            return this.get('uielements');
+            var uielements = _.map(this.get('uielements'), function(el) {
+                el.generatorIdentifier = this.get('pluginInformation').name + ".uielements." + el.name;
+                return el;
+            }, this);
+            return uielements;
         },
 
         isEnabled: function() {
@@ -48,6 +56,8 @@ define([
             var pluginInfo = this.get("pluginInformation");
             pluginInfo.enabled = false;
             this.set('pluginInformation', pluginInfo);
+            /* Should remove the generators from appState.generators */
+
         },
 
         getPluginStatus: function() {
