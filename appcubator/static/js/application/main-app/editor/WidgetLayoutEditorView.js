@@ -1,6 +1,5 @@
 define([
-        'editor/WidgetClassPickerView',
-        'editor/tool-tip-hints'
+        'editor/WidgetClassPickerView'
     ],
     function(WidgetClassPickerView) {
 
