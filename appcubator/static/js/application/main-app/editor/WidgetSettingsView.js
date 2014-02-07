@@ -7,6 +7,7 @@ define(function(require, exports, module) {
 
     var GeneratorEditorView = require('app/GeneratorEditorView');
     var TemplatesEditorView = require('app/TemplatesEditorView');
+    var ModelEditorView = require('app/ModelEditorView');
 
     var tableTemplate = [
             '<div class="header">',
@@ -61,32 +62,36 @@ define(function(require, exports, module) {
 
         renderAttributes: function() {
             
-            var strHTML = '<div class="code-view"><div class="instance sect">';
+            this.$el.find('.current-content').html('');
+            var modelEditorView = new ModelEditorView(this.model);
+            this.currentContentPane.append(modelEditorView.render().el);
 
-            strHTML += '<table style="margin: 15px auto;">';
-            _.each(this.model.attributes, function(val, key) {
-                if(key == 'layout') return;
-                if(Backbone.isModel(val) || Backbone.isCollection(val)) return;
+            // var strHTML = '<div class="code-view"><div class="instance sect">';
 
-                strHTML += '<tr><td>' + key + '</td><td><input type="text" class="attr-input" id="attr-'+key+'" value="' + val +'"></td></tr>';
-            });
-            strHTML += '</table>';
+            // strHTML += '<table style="margin: 15px auto;">';
+            // _.each(this.model.attributes, function(val, key) {
+            //     if(key == 'layout') return;
+            //     if(Backbone.isModel(val) || Backbone.isCollection(val)) return;
 
-            strHTML += [
-                    '<div id="add-attribute-box">',
-                        '<form style="display:none;">',
-                            '<input type="text" class="property-name-input" placeholder="Template Name...">',
-                            '<input type="submit" class="done-btn" value="Done">',
-                        '</form>',
-                        '<div class="add-button box-button">+ Create a New Template</div>',
-                    '</div>'
-                ].join('\n');
+            //     strHTML += '<tr><td>' + key + '</td><td><input type="text" class="attr-input" id="attr-'+key+'" value="' + val +'"></td></tr>';
+            // });
+            // strHTML += '</table>';
 
-            strHTML += '</div></div>';
+            // strHTML += [
+            //         '<div id="add-attribute-box">',
+            //             '<form style="display:none;">',
+            //                 '<input type="text" class="property-name-input" placeholder="Template Name...">',
+            //                 '<input type="submit" class="done-btn" value="Done">',
+            //             '</form>',
+            //             '<div class="add-button box-button">+ Create a New Attribute</div>',
+            //         '</div>'
+            //     ].join('\n');
 
-            this.currentContentPane.html(strHTML);
-            this.addAttributeBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-attribute-box')).render();
-            this.addAttributeBox.on('submit', this.createAttribute);
+            // strHTML += '</div></div>';
+
+            // this.currentContentPane.html(strHTML);
+            // this.addAttributeBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-attribute-box')).render();
+            // this.addAttributeBox.on('submit', this.createAttribute);
 
             this.$el.find('.attributes-li').addClass('active');
         },
@@ -105,16 +110,6 @@ define(function(require, exports, module) {
             this.$el.find('.current-content').append(templatesView.render().el);
             templatesView.setupAce();
             this.$el.find('.templates-li').addClass('active');
-        },
-
-        attributeChanged: function(e) {
-            var attributeKey = String(e.currentTarget.id).replace('attr-','');
-            this.model.set(attributeKey, e.currentTarget.value);
-        },
-
-        createAttribute: function(name) {
-            this.model.set(name, '');
-            this.reRender();
         },
 
         tabClicked: function(e) {
