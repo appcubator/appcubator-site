@@ -42,7 +42,6 @@ define(function(require, exports, module) {
 
         initialize: function(options) {
             _.bindAll(this);
-            this.subviews = [];
 
             if (options && (options.pageId == "0" || options.pageId  >= 0)) {
                 this.pageId = options.pageId;
@@ -86,14 +85,6 @@ define(function(require, exports, module) {
             this.urlModel = this.model.get('url');
 
             this.title = "Editor";
-
-            this.subviews = [
-                this.galleryEditor,
-                this.sectionsManager,
-                //this.guides,
-                this.navbar,
-                this.footer
-            ];
 
             this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
             this.listenTo(this.model, 'scroll', this.scrollTo);

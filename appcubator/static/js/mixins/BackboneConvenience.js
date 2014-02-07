@@ -77,6 +77,18 @@ define([
             });
         };
 
+        Backbone.View.prototype.createSubview = function(cls, data) {
+
+            var view = new cls(data);
+            view.superview = this;
+            this.subviews = this.subviews || [];
+            this.subviews.push(this);
+            
+            if(this.topview) { view.topview = this.topview; }
+            
+            return view;
+        };
+
         Backbone.Collection.prototype.add = function(models, options) {
             /* make things validate by default*/
             models = _.isArray(models) ? models : [models];

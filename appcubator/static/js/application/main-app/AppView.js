@@ -31,22 +31,20 @@ define(function(require, exports, module) {
             this.appId = options.appId;
             this.pageId = options.pageId;
 
-            this.toolBar = new ToolBarView({
-                pageId: -1
-            });
+            this.toolBar = this.createSubview(ToolBarView, { pageId: -1 });
 
             this.listenTo(this.model.get('tables'), 'add', this.entityAdded);
             this.autoAddLinksToNavbar();
 
-            this.entitiesView = new EntitiesView();
+            this.entitiesView = this.createSubview(EntitiesView);
             this.entitiesView.setToggleEl($('.menu-app-entities'));
             this.entitiesView.setPointerPosition("180px")
 
-            this.pluginsView = new PluginsView();
+            this.pluginsView = this.createSubview(PluginsView);
             this.pluginsView.setToggleEl($('.menu-app-plugins'));
             this.pluginsView.setPointerPosition("230px");
 
-            this.settingsView = new SettingsView();
+            this.settingsView = this.createSubview(SettingsView);
             this.settingsView.setToggleEl($('.menu-app-settings'));
             this.settingsView.setPointerPosition("230px");
 
@@ -181,7 +179,7 @@ define(function(require, exports, module) {
             var mainContainer = document.getElementById('main-container');
             mainContainer.appendChild(cleanDiv);
 
-            this.view = new NewView(options);
+            this.view = this.createSubview(NewView, options);
             this.view.setElement(cleanDiv).render();
 
             //v1.changeTitle(this.view.title);

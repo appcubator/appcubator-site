@@ -160,6 +160,7 @@ define(function(require, exports, module) {
                     $(this.elementsList).hide();
                     this.setTitle("Base CSS");
                     this.expandExtra();
+                    this.makeResizable();
                     this.el.appendChild(editorView.render().el);
                     editorView.setupAce();
                     this.currentView = editorView;
@@ -241,6 +242,7 @@ define(function(require, exports, module) {
         navBack: function() {
             this.currentView.close();
             this.expand();
+            this.disableResizable();
             $(this.elementsList).show();
             this.setTitle("CSS Editor");
             this.$el.find('.navback').hide();
@@ -248,6 +250,29 @@ define(function(require, exports, module) {
 
         setTitle: function(str) {
             this.titleDiv.innerHTML = str;
+        },
+
+        makeResizable: function () {
+            var self = this;
+            this.$el.resizable({
+                handles: "e",
+                iframeFix: true,
+                start: function(event, ui) {
+                    $('#page').css('pointer-events','none');
+                    self.$el.removeClass('animated');
+                },
+                stop: function(event, ui) {
+                    $('#page').css('pointer-events','auto');
+                    self.$el.addClass('animated');
+                }
+            });
+        },
+
+        disableResizable: function (argument) {
+            if(this.$el.hasClass("ui-resizable")) {
+                this.$el.resizable( "destroy" );
+                this.el.style.width = '';
+            }
         },
 
         expandExtra: function (argument) {
@@ -277,6 +302,7 @@ define(function(require, exports, module) {
 
         hide: function() {
             this.$el.removeClass('expanded');
+            this.disableResizable();
             this.expanded = false;
         },
 
