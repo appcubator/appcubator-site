@@ -1,0 +1,14 @@
+{
+  "uielements": [{
+    "name": "dropdownmenu",
+    "version": "0.1",
+    "defaults": {
+      "options" : "Option 1, Option 2"
+    },
+    "code": "function (data, templates){\n data.options_arr = data.options.split(',');   var uie = {\n            html: templates.html(data),\n            css: '',\n            js: templates.js(data)\n        };\n        return uie;\n    }",
+    "templates": {
+      "html": "<select class='fancy-dropdown'><% _.each(options_arr, function(option_text) { %><option><%= option_text %></option> <%  }); %></select>",
+      "js": "$('select.fancy-dropdown').selectpicker();"
+    }
+  }]
+}

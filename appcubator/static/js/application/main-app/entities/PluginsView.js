@@ -56,7 +56,7 @@ define(function(require, exports, module) {
                     }                                                     
                 ]
             }
-            this.$el.html(_.template(util.getHTML('plugins-page'), pluginsTmp));
+            //this.$el.html(_.template(util.getHTML('plugins-page'), pluginsTmp));
             return this;
         },
         clickedPluginToggle: function(e){
