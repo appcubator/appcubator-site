@@ -63,8 +63,15 @@ define(function(require, exports, module) {
                 $(shadowEl).droppable({
                     accept: ".ui-draggable",
                     drop: function( event, ui ) {
+                        
                         var className = ui.draggable.attr('class');
                         var id = ui.draggable.attr('id');
+
+                        if($(ui.draggable).data("genpath")) {
+                            sectionModel.addElementWithPath(colId, id, $(ui.draggable).data("genpath"));
+                            return;
+                        }
+    
                         // var idshit =
                         sectionModel.addElement(colId, id, className);
                     },

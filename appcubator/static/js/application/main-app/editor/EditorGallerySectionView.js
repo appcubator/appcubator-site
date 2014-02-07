@@ -60,7 +60,7 @@ define(function(require, exports, module) {
             return this;
         },
 
-        addFullWidthItem: function(id, className, text, icon) {
+        addFullWidthItem: function(id, className, text, icon, generatorIdentifier) {
             var li = document.createElement('li');
             li.className = className + ' full-width';
             li.id = id;
@@ -69,6 +69,10 @@ define(function(require, exports, module) {
                 text: text,
                 icon: icon
             });
+
+            if(generatorIdentifier) {
+                $(li).data('genpath', generatorIdentifier);
+            }
 
             this.list.appendChild(li);
 

@@ -221,7 +221,7 @@ define(function(require, exports, module) {
         stopEditing: function() {
             this.$el.find('.ycol').each(function() {
                 if($(this).hasClass("ui-sortable")) {
-                    $(this).sortable("enable");
+                    //$(this).sortable("enable");
                 }
             });
         },

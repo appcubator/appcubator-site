@@ -62,7 +62,7 @@ define(function(require, exports, module) {
             // for now they're dummies
             this.renderAuthenticationForms(); // Authentication Forms
             this.renderCurrentUserElements(); // CurrentUser Elements
-            this.renderEntityForms();
+            this.renderCrudElements();
             this.renderEntityLists(); // All Create Forms, Tables, Lists
             this.renderContextEntityElements(); // Context Entity Elements and Update Forms
             this.renderPluginElements();
@@ -233,14 +233,10 @@ define(function(require, exports, module) {
             // }, this);
         },
 
-        renderEntityForms: function() {
+        renderCrudElements: function (argument) {
 
-            // if (!this.tableSection) {
-                this.tableSection = this.addNewSection('Data Forms', true);
-            // } else {
-            //     this.tableSection.render();
-            // }
-
+            this.tableSection = this.addNewSection('Data Forms');
+            
             v1State.get('tables').each(function(entityModel) {
                 var context = {
                     entity_id: entityModel.cid,
@@ -248,21 +244,9 @@ define(function(require, exports, module) {
                 };
                 var id = 'entity-' + entityModel.cid;
                 this.tableSection.addFullWidthItem(id, "entity-create-form", entityModel.get('name') + ' Create Form', 'create-form-icon');
-                //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
-                this.tableSection.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') + ' Search Box', 'searchbox-icon');
+                //this.tableSection.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') + ' Search Box', 'searchbox-icon');
             }, this);
-
-            v1State.get('users').each(function(entityModel) {
-                var context = {
-                    entity_id: entityModel.cid,
-                    entity_name: entityModel.get('name')
-                };
-                var id = 'entity-' + entityModel.cid;
-                //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
-                this.tableSection.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') + ' Search Box', 'searchbox-icon');
-            }, this);
-
-            this.bindDraggable();
+        
         },
 
         renderEntityLists: function() {
@@ -346,9 +330,6 @@ define(function(require, exports, module) {
 
             v1State.get('plugins').each(function(pluginModel) {
                 if(!pluginModel.isEnabled()) return;
-
-                console.log('hey');
-                console.log(pluginModel.getActiveUIElements());
                 _.each(pluginModel.getActiveUIElements(), function(uielement) {
                     elements.push(uielement);
                 });
@@ -357,7 +338,7 @@ define(function(require, exports, module) {
             if(this.pluginElemsSection) this.pluginElemsSection.close();
             this.pluginElemsSection = this.addNewSection('Plugin Elements');
             _.each(elements, function(element) {
-                this.pluginElemsSection.addFullWidthItem('id', 'class', element.name, 'plugin-icon');
+                this.pluginElemsSection.addFullWidthItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier);
             }, this);
         },
 

@@ -32,6 +32,11 @@ define(function(require, exports, module) {
             this.get('uielements').createElement(layout, className, id);
         },
 
+        addElementWithPath: function (colId, id, generatorPath) {
+            var layout = { col: colId };
+            this.get('uielements').createElemntWithGenPath(layout, generatorPath, id);
+        },
+
         toJSON: function() {
             var json = _.clone(this.attributes);
             json.uielements = json.uielements.serialize();

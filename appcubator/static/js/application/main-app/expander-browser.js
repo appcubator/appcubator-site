@@ -269,8 +269,9 @@ generators.push({
 
         data.className = data.className || "";
         data.style = data.style || "";
-
+        data.id = data.id || "bla";
         data.formFields = _.map(data.fields, expand).join('\n');
+        data.redirect = data.redirect || "bla";
 
         var uie = {
             html: templates.html(data),
@@ -280,10 +281,12 @@ generators.push({
         return uie;
     },
     templates: {
+
         "html": "<form id=\"<%= id %>\" class=\"<%= className %>\" style=\"<%= style %>\">\n" +
             "<%= formFields %>" +
             "<input type=\"submit\" value=\"Submit\"><br>\n" +
             "</form>\n",
+
         "js": "$('#<%= id %>').submit(function(){\n" +
             "    var formdata = {};\n" +
             "    formdata.name = $('#<%= id %> input[name=\"name\"]').val();\n" +
