@@ -444,6 +444,10 @@
   background-position: -990px -25px;
 }
 
+.icon.plugin-icon {
+  background-image: url('/static/img/plugin-icon-small.png');
+}
+
 .icon.current-user-icon {
   display: inline-block;
   width: 50px;
