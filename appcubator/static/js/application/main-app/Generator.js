@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 
     var _ = require('underscore');
 
-    var Generator = function() {
+    var Generator = function(generatorPath) {
         var Vm = function() {
 
             this.runCode = function(code, globals) {
@@ -21,6 +21,7 @@ define(function(require, exports, module) {
             return VM.runCode(code, globals);
         });
 
+        if(generatorPath) { return this.getGenerator(generatorPath); }
     };
 
     Generator.prototype.generate = function(generatorPath, data) {

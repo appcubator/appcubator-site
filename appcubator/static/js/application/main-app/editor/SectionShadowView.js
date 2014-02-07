@@ -63,7 +63,6 @@ define(function(require, exports, module) {
                 $(shadowEl).droppable({
                     accept: ".ui-draggable",
                     drop: function( event, ui ) {
-                        console.log(ui.draggable);
                         var className = ui.draggable.attr('class');
                         var id = ui.draggable.attr('id');
                         // var idshit =

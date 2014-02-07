@@ -103,8 +103,6 @@ define(['backbone'], function() {
                 cssFile.setAttribute('href', '/static/css/' + css + '.css');
                 cssFile.setAttribute('rel', 'stylesheet');
                 cssFile.id = 'css-' + css;
-                //console.log("loading " + css);
-                //document.getElementsByTagName('head')[0].appendChild(cssFile);
             }
         },
 
@@ -400,7 +398,6 @@ define(['backbone'], function() {
             var position = $el.offset();
             if(doc) {
                 position.top -= $(doc).scrollTop();
-                console.log('-' + $(doc).scrollTop());
             }
 
             if(frame != window) {

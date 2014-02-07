@@ -77,6 +77,13 @@ define(function(require, exports, module) {
             return this.getUIEVals("texts");
         },
 
+        getBaseClass: function (type) {
+            if(this.has(type)) {
+                return this.get(type).first().get('class_name');
+            }
+            return null;
+        },
+
         getBaseStyleOf: function(type) {
             
             if(this.has(type)) {

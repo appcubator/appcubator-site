@@ -1,19 +1,14 @@
-define([
-        "models/WidgetModel",
-        "models/WidgetContainerModel",
-        "backbone"
-    ],
+define(function(require, exports, module) {
 
-    function(WidgetModel,
-        WidgetContainerModel) {
+    'use strict';
+
+    var WidgetModel = require("models/WidgetModel");
+    var Generator = require("app/Generator")
+    require("backbone");
 
         var WidgetCollection = Backbone.Collection.extend({
 
             model: WidgetModel,
-
-            initialize: function() {
-
-            },
 
             stockPhotos: [
                 "https://i.istockimg.com/file_thumbview_approve/19012355/2/stock-photo-19012355-world-globe-on-a-school-desk.jpg",
@@ -31,7 +26,7 @@ define([
 
                 var randy = Math.floor(Math.random() * (maxWordCount - minWordCount)) + minWordCount;
                 var ret = "";
-                for (i = 0; i < randy; i++) {
+                for (var i = 0; i < randy; i++) {
                     var newTxt = loremIpsumWordBank[Math.floor(Math.random() * (loremIpsumWordBank.length - 1))];
                     if (ret.substring(ret.length - 1, ret.length) == "." || ret.substring(ret.length - 1, ret.length) == "?") {
                         newTxt = newTxt.substring(0, 1).toUpperCase() + newTxt.substring(1, newTxt.length);
@@ -83,32 +78,6 @@ define([
                         return this.createCurrentUserNode(layout, id);
                     case "uielement":
                         var type = id.replace('type-', '');
-
-                        if (type == "boxes" || type == "imageslider" || type == "custom-widget") {
-                            layout.l_padding = 0;
-                            layout.r_padding = 0;
-                        }
-
-                        if (type == "imageslider") {
-                            return this.createImageSlider(layout);
-                        }
-
-                        if (type == "twitterfeed") {
-                            return this.createTwitterFeed(layout);
-                        }
-
-                        if (type == "fbshare") {
-                            return this.createFacebookShare(layout);
-                        }
-
-                        if (type == "embedvideo") {
-                            return this.createVideoEmbed(layout);
-                        }
-
-                        if (type == "custom-widget") {
-                            return this.createCustomWidget(layout);
-                        }
-
                         return this.createNodeWithFieldTypeAndContent(layout, type, {});
                         // widget.setupPageContext(v1.currentApp.getCurrentPage());
                     case "lambda-create-form":
@@ -136,7 +105,7 @@ define([
                 widget.data.container_info = {};
                 widget.data.container_info.action = "thirdpartylogin";
 
-                var widgetModel = new WidgetContainerModel(widget);
+                //var widgetModel = new WidgetContainerModel(widget);
 
                 widgetModel.createLoginRoutes();
 
@@ -165,7 +134,7 @@ define([
 
                 widget.data.container_info = {};
 
-                var widgetModel = new WidgetContainerModel(widget);
+                //var widgetModel = new WidgetContainerModel(widget);
 
                 return this.push(widgetModel);
             },
@@ -185,7 +154,7 @@ define([
                 widget.data.container_info.form = constantContainers["Local Login"];
                 widget.data.container_info.form.entity = 'User';
 
-                var widgetModel = new WidgetContainerModel(widget);
+                //var widgetModel = new WidgetContainerModel(widget);
                 widgetModel.getForm().createLoginRoutes();
 
                 return this.push(widgetModel);
@@ -207,16 +176,23 @@ define([
                 widget.data.container_info.form.signupRole = roleStr;
                 widget.data.container_info.form.isConstant = true;
 
-                var widgetSignupModel = new WidgetContainerModel(widget);
+                //var widgetSignupModel = new WidgetContainerModel(widget);
                 return this.push(widgetSignupModel);
             },
 
             createNodeWithFieldTypeAndContent: function(layout, type, content_ops) {
-                var widget = {};
+                var generatorPath = "uielements.design-" + type;
+                var generator = new Generator(generatorPath);
 
+                var widget = {};
+                console.log(generator);
                 widget.layout = layout;
                 widget.type = type;
-                widget = _.extend(widget, v1UIEState.getBaseStyleOf(type).serialize());
+                widget = _.extend(widget, generator.defaults);
+                
+                if(v1UIEState.getBaseClass(type)) {
+                    widget.className = v1UIEState.getBaseClass(type);
+                }
 
                 if (widget.src) {
                     widget.src = this.stockPhotos[Math.floor(Math.random() * this.stockPhotos.length)];
@@ -224,31 +200,12 @@ define([
                     widget.layout.height = 8;
                 }
 
-                var generator = "uielements.design-" + type;
-
                 if (type == "text" && widget.content) {
                     widget.content = this.loremIpsum();
                 }
-                if (content_ops.content) widget.content = content_ops.content;
-                if (content_ops.href) widget.content_attribs.href = content_ops.href;
-                if (content_ops.src_content) widget.content_attribs.src_content = content_ops.src_content;
 
                 var widgetModel = new WidgetModel(widget);
-                widgetModel.setGenerator(generator);
-
-                return this.push(widgetModel);
-            },
-
-            createCustomWidget: function(layout) {
-                var widget = {};
-                widget.type = "custom";
-                widget.layout = layout;
-                widget.htmlC = null;
-                widget.cssC = null;
-                widget.jsC = null;
-
-                var widgetModel = new WidgetModel(widget);
-                widgetModel.setGenerator("uielements.design-custom");
+                widgetModel.setGenerator(generatorPath);
 
                 return this.push(widgetModel);
             },
@@ -272,8 +229,8 @@ define([
                 if (currentPage.getContextEntities().length) widget.data.container_info.form.goto = "internal://Homepage";
                 else widget.data.container_info.form.goto = currentPage.getLinkLang();
 
-                var widgetContainerModel = new WidgetContainerModel(widget);
-                widgetContainerModel.getForm().fillWithProps(entity);
+                // var widgetContainerModel = new WidgetContainerModel(widget);
+                // widgetContainerModel.getForm().fillWithProps(entity);
                 return this.push(widgetContainerModel);
             },
 
@@ -291,8 +248,8 @@ define([
                 widget.data.container_info.form.entity = entity.get('name');
                 widget.data.container_info.form.goto = "internal://Homepage";
 
-                var widgetContainerModel = new WidgetContainerModel(widget);
-                widgetContainerModel.getForm().fillWithEditProps(entity);
+                // var widgetContainerModel = new WidgetContainerModel(widget);
+                // widgetContainerModel.getForm().fillWithEditProps(entity);
                 return this.push(widgetContainerModel);
             },
 
@@ -319,7 +276,7 @@ define([
                 widget.data.container_info.item_name = entity.get('fields').first().get('name');
                 widget.data.container_info.amount = amount;
 
-                var widgetContainerModel = new WidgetContainerModel(widget);
+                // var widgetContainerModel = new WidgetContainerModel(widget);
 
                 return this.push(widgetContainerModel);
             },
@@ -335,7 +292,7 @@ define([
                 widget.data.container_info.action = "table";
                 widget.data.container_info.query = {};
 
-                var widgetContainerModel = new WidgetContainerModel(widget);
+                // var widgetContainerModel = new WidgetContainerModel(widget);
                 return this.push(widgetContainerModel);
             },
 
@@ -356,8 +313,8 @@ define([
                 widget.data.container_info.row = {};
                 widget.data.container_info.query = {};
 
-                var widgetContainerModel = new WidgetContainerModel(widget);
-                widgetContainerModel.getRow().fillWithProps(entity);
+                // var widgetContainerModel = new WidgetContainerModel(widget);
+                // widgetContainerModel.getRow().fillWithProps(entity);
 
                 return this.push(widgetContainerModel);
             },
@@ -380,9 +337,9 @@ define([
                 }
                 widget.data.searchQuery.searchFields = [];
 
-                var widgetContainerModel = new WidgetContainerModel(widget);
-                widgetContainerModel.getSearchQuery().fillWithFields(entity);
-                widgetContainerModel.createSearchTarget();
+                // var widgetContainerModel = new WidgetContainerModel(widget);
+                // widgetContainerModel.getSearchQuery().fillWithFields(entity);
+                // widgetContainerModel.createSearchTarget();
 
                 return this.push(widgetContainerModel);
             },
@@ -403,56 +360,9 @@ define([
                 widget.data.container_info.search = {};
                 // widget.data.container_info.query = {};
 
-                var widgetContainerModel = new WidgetContainerModel(widget);
-                widgetContainerModel.getRow().fillWithProps(entity);
-                return this.push(widgetContainerModel);
-            },
-
-            createImageSlider: function(layout) {
-                var widget = {};
-                widget.type = "imageslider";
-                widget.nodeType = "imageslider";
-                widget.slides = [{
-                    image: '/static/img/placeholder-slide1.png'
-                }, {
-                    image: '/static/img/placeholder-slide2.png'
-                }];
-
-                var widgetContainerModel = new WidgetModel(widget);
-                widgetContainerModel.setGenerator("uielements.design-imageslider");
-                return this.push(widgetContainerModel);
-            },
-
-            createFacebookShare: function(layout) {
-                var widget = {};
-                widget.layout = layout;
-                widget.type = "facebookshare";
-                widget.nodeType = "facebookshare";
-                widget.container_info = {};
-                widget.container_info.action = "facebookshare";
-
-                var widgetModel = new WidgetModel(widget);
-                widgetModel.setGenerator('uielements.design-fbshare');
-
-                return this.push(widgetModel);
-            },
-
-            createVideoEmbed: function(layout) {
-                var widget = {};
-                widget.layout = layout;
-                widget.type = "videoembed";
-                widget.nodeType = "videoembed";
-                widget.action = "videoembed";
-                widget.youtubeURL = "http://www.youtube.com/watch?v=hZTx0vXUo34";
-
-                var widgetModel = new WidgetModel(widget);
-                widgetModel.setGenerator('uielements.design-embedvideo');
-
-                return this.push(widgetModel);
-            },
-
-            addWidgetContainerModel: function(uielementDict) {
-                return this.push(new WidgetContainerModel(uielementDict));
+                // var widgetContainerModel = new WidgetContainerModel(widget);
+                // widgetContainerModel.getRow().fillWithProps(entity);
+                // return this.push(widgetContainerModel);
             },
 
             addWidgetModel: function(uielementDict) {
