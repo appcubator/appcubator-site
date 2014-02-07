@@ -159,6 +159,7 @@ define(function(require, exports, module) {
                     var editorView = new BaseCSSEditorView(this.model);
                     $(this.elementsList).hide();
                     this.setTitle("Base CSS");
+                    this.expandExtra();
                     this.el.appendChild(editorView.render().el);
                     editorView.setupAce();
                     this.currentView = editorView;
@@ -239,6 +240,7 @@ define(function(require, exports, module) {
 
         navBack: function() {
             this.currentView.close();
+            this.expand();
             $(this.elementsList).show();
             this.setTitle("CSS Editor");
             this.$el.find('.navback').hide();
@@ -248,8 +250,28 @@ define(function(require, exports, module) {
             this.titleDiv.innerHTML = str;
         },
 
+        expandExtra: function (argument) {
+            
+            if(!this.$el.hasClass('expanded')){
+                this.el.className += ' expanded';
+            }
+            
+            if(!this.$el.hasClass('extra')) {
+                this.el.className += ' extra';
+            }
+            
+            this.expanded = true;
+        },
+
         expand: function() {
-            this.el.className += ' expanded';
+            if(!this.$el.hasClass('expanded')) {
+                this.el.className += ' expanded';
+            }
+
+            if(this.$el.hasClass('extra')) {
+                this.$el.removeClass('extra');
+            }
+           
             this.expanded = true;
         },
 

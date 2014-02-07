@@ -18,7 +18,7 @@ define(function(require, exports, module) {
 
         render: function() {
             var temp = [
-                '<div class="base-css span40" id="base-css">'
+                '<div class="base-css" id="base-css" style="height:100%; width:100%;">'
             ].join('\n');
             this.el.innerHTML = temp;
             return this;

@@ -101,7 +101,7 @@ define(function(require, exports, module) {
         display: function() {
             if (!this.model) return;
 
-            this.filleContent();
+            this.fillContent();
             this.show();
         },
 
@@ -158,7 +158,7 @@ define(function(require, exports, module) {
             return this;
         },
 
-        filleContent: function() {
+        fillContent: function() {
             var action = "";
             var type = this.model.get('type');
             /*
@@ -210,7 +210,12 @@ define(function(require, exports, module) {
             this.el.appendChild(this.contentEditor.el);
 
 
+            if(type == "custom") {
+                this.el.appendChild(this.renderButtonWithText('edit-custom-widget-btn', 'Edit Custom Widget'));
+            }
+
             this.el.appendChild(this.renderSettingsAndDelete('edit-custom-widget-btn', 'Edit Custom Widget'));
+
             // if (this.model.get('data').has('container_info')) {
             //     action = this.model.get('data').get('container_info').get('action');
 
