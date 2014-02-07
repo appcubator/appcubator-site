@@ -78,6 +78,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         render: function() {
+            var spin = util.addLoadingSpin(this.el);
             this.arrangeLayout();
 
             var expanded = this.model.expand();
@@ -95,8 +96,8 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         arrangeLayout: function() {
-            var width = this.model.get('layout').get('width');
-            var height = this.model.get('layout').get('height');
+            // var width = this.model.get('layout').get('width');
+            // var height = this.model.get('layout').get('height');
             this.el.id = 'widget-wrapper-' + this.model.cid;
         },
 
