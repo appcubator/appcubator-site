@@ -46,7 +46,7 @@ define(function(require, exports, module) {
 
             this.settingsView = this.createSubview(SettingsView);
             this.settingsView.setToggleEl($('.menu-app-settings'));
-            this.settingsView.setPointerPosition("230px");
+            this.settingsView.setPointerPosition("30px");
 
             this.deployManager = new DeployManagerModel(this.appId);
 

@@ -11,6 +11,8 @@ define(function(require, exports, module) {
         className: "plugin-browser-panel",
         width: 800,
         height: 630,
+        padding: 0,
+
         events: {
             'click .addPluginButton': 'addPlugin'
         },
@@ -61,6 +63,8 @@ define(function(require, exports, module) {
             });
             pluginModel.enablePlugin();
             v1State.get('plugins').add(pluginModel);
+
+            e.currentTarget.innerHTML = 'Plugin Installed ✔';
         }
 
     });
