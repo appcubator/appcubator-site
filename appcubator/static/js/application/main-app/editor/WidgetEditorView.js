@@ -195,17 +195,18 @@ define(function(require, exports, module) {
             }
             */
 
-            this.widgetClassPickerView = new WidgetClassPickerView(this.model);
             this.layoutEditor = new WidgetLayoutEditorView(this.model);
-            this.contentEditor = new WidgetContentEditorView(this.model, this);
-
-            this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
-
-            this.el.appendChild(this.widgetClassPickerView.el);
-            this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
             this.el.appendChild(this.layoutEditor.el);
 
+            if (this.model.has('className')) {
+                this.widgetClassPickerView = new WidgetClassPickerView(this.model);
+                this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
+                this.el.appendChild(this.widgetClassPickerView.el);
+                this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
+            }
+
             if (this.model.has('href') || this.model.has('src')) {
+                this.contentEditor = new WidgetContentEditorView(this.model, this);
                 this.el.appendChild(this.contentEditor.el);
             }
 

@@ -11,9 +11,9 @@ define(function(require, exports, module) {
         css: 'widget-editor',
 
         events: {
-            'click li': 'select',
-            'click .updown-handle': 'selectCurrent',
-            'mouseover li': 'hovered',
+            'click li'                : 'select',
+            'click .updown-handle'    : 'selectCurrent',
+            'mouseover li'            : 'hovered',
             'mouseover .updown-handle': 'hovered'
         },
 
@@ -25,13 +25,8 @@ define(function(require, exports, module) {
             var currentClass = this.model.get('className');
             var currentVal = -1;
 
-            if (widgetModel.hasForm()) {
-                type = "forms";
-            }
-
-            if (widgetModel.isList()) {
-                type = "lists";
-            }
+            if (widgetModel.hasForm()) { type = "forms"; }
+            if (widgetModel.isList()) { type = "lists"; }
 
             var els = top.v1UIEState.getUIEVals(type).toJSON();
 
