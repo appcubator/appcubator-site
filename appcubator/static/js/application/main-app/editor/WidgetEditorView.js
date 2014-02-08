@@ -30,7 +30,7 @@ define(function(require, exports, module) {
         subviews: [],
 
         events: {
-            'click .settings'           : 'openSettingsView',
+            'click .settings': 'openSettingsView',
             'click .edit-slides-button': 'openSlideEditor',
             'click .query-editor-btn': 'openQueryEditor',
             'click .edit-row-btn': 'openRowEditor',
@@ -57,24 +57,25 @@ define(function(require, exports, module) {
         },
 
         setModel: function(widgetModel) {
-            if (this.model) {
-                this.stopListening(this.model, 'startEditing', this.startedEditing);
-                this.stopListening(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
-                this.stopListening(this.model, 'doubleClicked', this.doubleClicked);
-            }
+            if (this.model) { this.unbindModel(widgetModel); }
 
             this.model = widgetModel;
 
             this.listenTo(this.model, 'startEditing', this.startedEditing);
             this.listenTo(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
             this.listenTo(this.model, 'doubleClicked', this.doubleClicked);
-
             this.listenTo(this.model, 'reselected', this.show);
-            // this.listenTo(this.model.get('layout'), 'change', this.hide);
-
             this.listenTo(this.model, 'deselected', this.clear);
 
             return this;
+        },
+
+        unbindModel: function(model) {
+            this.stopListening(model, 'startEditing', this.startedEditing);
+            this.stopListening(model, 'stopEditing cancelEditing', this.stoppedEditing);
+            this.stopListening(model, 'doubleClicked', this.doubleClicked);
+            this.stopListening(model, 'reselected', this.show);
+            this.stopListening(model, 'deselected', this.clear);
         },
 
         render: function() {
@@ -92,7 +93,7 @@ define(function(require, exports, module) {
             });
 
             var refresh = function() {
-                if(!self.model) return;
+                if (!self.model) return;
                 self.show();
             };
 
@@ -198,19 +199,17 @@ define(function(require, exports, module) {
             this.layoutEditor = new WidgetLayoutEditorView(this.model);
             this.contentEditor = new WidgetContentEditorView(this.model, this);
 
-            this.subviews.push(this.widgetClassPickerView);
-            this.subviews.push(this.layoutEditor);
-            this.subviews.push(this.contentEditor);
-
             this.listenTo(this.widgetClassPickerView, 'change', this.classChanged);
 
             this.el.appendChild(this.widgetClassPickerView.el);
             this.el.appendChild(this.renderButtonWithText('pick-style', 'Pick Style'));
             this.el.appendChild(this.layoutEditor.el);
-            this.el.appendChild(this.contentEditor.el);
 
+            if (this.model.has('href') || this.model.has('src')) {
+                this.el.appendChild(this.contentEditor.el);
+            }
 
-            if(type == "custom") {
+            if (type == "custom") {
                 this.el.appendChild(this.renderButtonWithText('edit-custom-widget-btn', 'Edit Custom Widget'));
             }
 
@@ -342,7 +341,9 @@ define(function(require, exports, module) {
         },
 
         openFormEditor: function() {
-            new FormEditorView({ model: this.model });
+            new FormEditorView({
+                model: this.model
+            });
         },
 
         openLoginEditor: function() {
@@ -437,6 +438,7 @@ define(function(require, exports, module) {
         },
 
         startedEditing: function() {
+            console.trace();
             this.hideSubviews();
             this.el.appendChild(this.renderButtonWithText('done-text-editing', 'Done Editing'));
         },
@@ -458,6 +460,9 @@ define(function(require, exports, module) {
             });
             this.el.innerHTML = '';
             this.el.style.width = '';
+
+            this.unbindModel(this.model);
+
             this.model = null;
 
             this.hide();
