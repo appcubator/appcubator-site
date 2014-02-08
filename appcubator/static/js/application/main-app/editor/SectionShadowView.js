@@ -64,16 +64,21 @@ define(function(require, exports, module) {
                     accept: ".ui-draggable",
                     drop: function( event, ui ) {
                         
-                        var className = ui.draggable.attr('class');
-                        var id = ui.draggable.attr('id');
+                        var extraData = {};
+
+                        var type = $(ui.draggable).data("type");
+
+                        if($(ui.draggable).data("extraData")) {
+                            extraData = $(ui.draggable).data("extraData");
+                        }
 
                         if($(ui.draggable).data("genpath")) {
-                            sectionModel.addElementWithPath(colId, id, $(ui.draggable).data("genpath"));
+                            sectionModel.addElementWithPath(colId, type, $(ui.draggable).data("genpath"), extraData);
                             return;
                         }
     
                         // var idshit =
-                        sectionModel.addElement(colId, id, className);
+                        sectionModel.addElement(colId, type, extraData);
                     },
                     over: function() {
                         shadowEl.className = "section-shadow active";

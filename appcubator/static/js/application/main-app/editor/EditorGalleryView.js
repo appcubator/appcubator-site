@@ -8,6 +8,7 @@ define(function(require, exports, module) {
     var WidgetContainerModel = require('models/WidgetContainerModel');
     var WidgetModel = require('models/WidgetModel');
     var Searcher = require('editor/Searcher');
+    var AutoFillHelper = require('app/AutoFillHelper');
 
     require('dicts/default-uielements');
     require('dicts/constant-containers');
@@ -21,7 +22,6 @@ define(function(require, exports, module) {
         dragActive: false,
         slideDownActive: false,
 
-        css: 'editor-gallery',
 
         positionHorizontalGrid: 80,
         positionVerticalGrid: 15,
@@ -174,11 +174,12 @@ define(function(require, exports, module) {
 
         appendUIElement: function(elementModel) {
             var className = 'uielement';
-            var id = 'type-' + elementModel.get('className');
             var icon = 'icon ' + elementModel.get('className');
             var text = elementModel.get('text');
 
-            var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
+            var li = this.uiElemsSection.addHalfWidthItem(null, className, text, icon, 'uielements.design-' + elementModel.get('className'));
+            $(li).data('extraData', AutoFillHelper.fillUIElement(elementModel));
+
         },
 
         appendLambdaCreate: function() {
@@ -197,7 +198,7 @@ define(function(require, exports, module) {
             var icon = 'custom-widget';
             var text = 'Custom Widget';
 
-            var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
+            var li = this.uiElemsSection.addHalfWidthItem(null, className, text, icon, 'uielements.design-custom-widget');
         },
 
         renderAuthenticationForms: function() {
@@ -238,15 +239,17 @@ define(function(require, exports, module) {
         renderCrudElements: function (argument) {
 
             this.tableSection = this.addNewSection('Data Forms');
-            
             v1State.get('tables').each(function(entityModel) {
-                var context = {
-                    entity_id: entityModel.cid,
-                    entity_name: entityModel.get('name')
-                };
-                var id = 'entity-' + entityModel.cid;
-                this.tableSection.addFullWidthItem(id, "entity-create-form", entityModel.get('name') + ' Create Form', 'create-form-icon');
-                //this.tableSection.addFullWidthItem(id, "entity-searchbox", entityModel.get('name') + ' Search Box', 'searchbox-icon');
+
+                var li = this.tableSection.addFullWidthItem(null, "entity-create-form", entityModel.get('name') + ' Create Form', 'create-form-icon', 'crud.uielements.create');
+
+                $(li).data('extraData', {
+                    id: Math.floor(Math.random()*11),
+                    tableName: entityModel.get('name')
+                });
+
+                $(li).data('type', 'create-form');
+
             }, this);
         
         },

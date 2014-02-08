@@ -60,6 +60,7 @@ define(function(require, exports, module) {
             return this;
         },
 
+        // TODO : reduce this
         addFullWidthItem: function(id, className, text, icon, generatorIdentifier) {
             var li = document.createElement('li');
             li.className = className + ' full-width';
@@ -83,7 +84,7 @@ define(function(require, exports, module) {
             return li;
         },
 
-        addHalfWidthItem: function(id, className, text, icon) {
+        addHalfWidthItem: function(id, className, text, icon, generatorIdentifier) {
             var li = document.createElement('li');
             li.className = className + ' half-width';
             li.id = id;
@@ -92,6 +93,11 @@ define(function(require, exports, module) {
                 text: text,
                 icon: icon
             });
+
+            if(generatorIdentifier) {
+                $(li).data('genpath', generatorIdentifier);
+            }
+
             this.list.appendChild(li);
 
             if (this.searcher) {

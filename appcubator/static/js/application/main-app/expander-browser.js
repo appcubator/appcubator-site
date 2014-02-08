@@ -251,6 +251,14 @@ generators.push({
 generators.push({
     name: 'create',
     version: '0.1',
+    defaults: {
+        className: "",
+        style: "",
+        fields: [],
+        redirect: "/",
+        id: Math.floor(Math.random()*11),
+        tableName: "DefaultTable"
+    },
     code: function(data, templates) {
         /* Example (subject to change)
         {
@@ -266,12 +274,7 @@ generators.push({
                     id: 'testform',
                     redirect: '/?success=true' }
           */
-
-        data.className = data.className || "";
-        data.style = data.style || "";
-        data.id = data.id || "bla";
         data.formFields = _.map(data.fields, expand).join('\n');
-        data.redirect = data.redirect || "bla";
 
         var uie = {
             html: templates.html(data),
@@ -291,7 +294,7 @@ generators.push({
             "    var formdata = {};\n" +
             "    formdata.name = $('#<%= id %> input[name=\"name\"]').val();\n" +
             "    formdata.url = $('#<%= id %> input[name=\"url\"]').val();\n" +
-            "    models.Picture.createPicture(formdata, function(err, data){\n" +
+            "    models.<%= tableName %>.create<%= tableName %>(formdata, function(err, data){\n" +
             "        console.log(data);\n" +
             "        if (err) {\n" +
             "            // Do whatever you want with user errors\n" +
@@ -851,7 +854,8 @@ generators.push({
     defaults: {
       className: '',
       style: '',
-      href: '#'
+      href: '#',
+      content: 'Button to Go'
     },
     code: function(data, templates) {
         /* expects: content, url, className, style */

@@ -27,14 +27,14 @@ define(function(require, exports, module) {
             return els;
         },
 
-        addElement: function(colId, id, className) {
+        addElement: function(colId, type, extraData) {
             var layout = { col: colId };
             this.get('uielements').createElement(layout, className, id);
         },
 
-        addElementWithPath: function (colId, id, generatorPath) {
+        addElementWithPath: function (colId, type, generatorPath, extraData) {
             var layout = { col: colId };
-            this.get('uielements').createElemntWithGenPath(layout, generatorPath, id);
+            this.get('uielements').createElementWithGenPath(layout, generatorPath, type, extraData);
         },
 
         toJSON: function() {
