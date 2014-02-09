@@ -33,62 +33,41 @@ define(function(require, exports, module) {
             _.bindAll(this);
             this.model = tableModel;
 
-            this.listenTo(this.model.get('staticmethods'), 'add', this.renderStaticMethod);
-            this.listenTo(this.model.get('instancemethods'), 'add', this.renderInstanceMethod);
+            this.listenTo(this.model.get('functions'), 'add', this.renderStaticMethod);
 
         },
 
         render: function() {
 
             this.el.innerHTML = [
-                '<div class="instance sect">',
-                    '<span class="title">Instance Methods</span>',
-                    '<div id="instance-methods-list"></div>',
-                    '<div id="add-instance-box">',
-                        '<form style="display:none;">',
-                            '<input type="text" class="property-name-input" placeholder="Property Name...">',
-                            '<input type="submit" class="done-btn" value="Done">',
-                        '</form>',
-                        '<div class="add-button box-button">+ Create a New Instance Method</div>',
-                    '</div>',
-                '</div>',
                 '<div class="static sect">',
-                    '<span class="title">Static Methods</span>',
+                    '<span class="title">Functions</span>',
                     '<div id="static-methods-list"></div>',
                     '<div id="add-static-box">',
                         '<form style="display:none;">',
                             '<input type="text" class="property-name-input" placeholder="Property Name...">',
                             '<input type="submit" class="done-btn" value="Done">',
                         '</form>',
-                        '<div class="add-button box-button">+ Create a New Static Method</div>',
+                        '<div class="add-button box-button">+ Create a New Function</div>',
                     '</div>',
                 '</div>'
             ].join('\n');
 
             var self = this;
 
-            this.model.get('instancemethods').each(function(methodModel){
-                self._inject_ace_html(methodModel, 'instance');
-            });
-
-            this.model.get('staticmethods').each(function(methodModel){
-                self._inject_ace_html(methodModel, 'static');
+            this.model.get('functions').each(function(methodModel){
+                self._inject_ace_html(methodModel, 'static-methods-list');
             });
 
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-static-box')).render();
             this.addPropertyBox.on('submit', this.createStaticFunction);
-            this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-instance-box')).render();
-            this.addPropertyBox.on('submit', this.createInstanceFunction);
 
             return this;
         },
 
 
         setupAce: function() {
-            this.model.get('instancemethods').each(function(methodModel) {
-                this.setupSingleAce(methodModel);
-            }, this);
-            this.model.get('staticmethods').each(function(methodModel) {
+            this.model.get('functions').each(function(methodModel) {
                 if (methodModel.isGenerator()) {
                     this.setupFakeGeneratorAce(methodModel);
                 } else {
@@ -117,28 +96,18 @@ define(function(require, exports, module) {
             });
         },
 
-        '_inject_ace_html': function(methodModel, instanceOrStatic) {
+        '_inject_ace_html': function(methodModel, id) {
             /* this will work even if the el is not yet rendered */
-            this.$el.find('#'+instanceOrStatic+'-methods-list').append(_.template(funcTemplate, _.extend(methodModel.getGenerated(), {cid: methodModel.cid})));
+            this.$el.find('#'+id).append(_.template(funcTemplate, _.extend(methodModel.getGenerated(), {cid: methodModel.cid})));
         },
         renderStaticMethod: function(methodModel) {
             /* this breaks when this.el is not rendered */
-            this._inject_ace_html(methodModel, 'static');
-            this.setupSingleAce(methodModel);
-        },
-
-        renderInstanceMethod: function(methodModel) {
-            /* this breaks when this.el is not rendered */
-            this._inject_ace_html(methodModel, 'instance');
+            this._inject_ace_html(methodModel, 'static-methods-list');
             this.setupSingleAce(methodModel);
         },
 
         createStaticFunction: function(functionName) {
-            this.model.get('staticmethods').add(new TableCodeModel({ name: functionName }));
-        },
-
-        createInstanceFunction: function(functionName) {
-            this.model.get('instancemethods').add(new TableCodeModel({ name: functionName }));
+            this.model.get('functions').add(new TableCodeModel({ name: functionName }));
         },
 
         codeChanged: function(methodModel, newValue) {

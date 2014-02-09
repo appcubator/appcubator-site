@@ -36,9 +36,8 @@ define([
             }
 
             var TableCodeCollection = Backbone.Collection.extend({model:TableCodeModel});
-            this.set('instancemethods', new TableCodeCollection(bone.instancemethods||[]));
-            this.set('staticmethods', new TableCodeCollection(bone.staticmethods||[]));
-            
+            this.set('functions', new TableCodeCollection(bone.functions||[]));
+
             this.isUser = false;
         },
 
