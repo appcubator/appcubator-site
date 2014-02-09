@@ -311,22 +311,7 @@
     }
   }],
   "generators": {
-    "flickrpickr": {
-      "uielements": [{
-        "name": "flicksearchbar",
-        "version": "0.1",
-        "code": "function (data, templates){\n // buttonText, searchID, galleryID\n        var uie = {\n            html: templates.html(data),\n            css: '',\n            js: templates.js(data)\n        };\n        return uie;\n    }",
-        "templates": {
-          "html": "<form id=\"<%= searchID %>\">\n<input type=\"text\" name=\"q\">\n<input type=\"submit\" value=\"<%= buttonText %>\">\n</form>",
-          "js": "function renderInList (e, d) {    if (e) alert(e);    else {        for (var i = 0; i < d.photos.photo.length; i ++) {            var photo = d.photos.photo[i];            $('#<%= galleryID %>').append('<img src=\"'+photo.url_q+'\">');        }    }}$('#<%= searchID %>').submit(function() {    var formData = $('#<%= searchID %>').serializeArray();    models.Picture.randomNFromFlickr(formData[0].value, 10, renderInList);    return false;});"
-        }
-      }, {
-        "name": "flickgallery",
-        "version": "0.1",
-        "code": "function (data, templates){\n  console.log('yolo'); console.log('data: '+data); console.log(templates);      // galleryID\n        var uie = {\n            html:'<div id=\"'+data.galleryID+'\"></div>',\n            css: '',\n            js: ''\n        };\n        return uie;\n    }",
-        "templates": {}
-      }]
-    }
+
   },
   "config": {
     "generate": "app.config",

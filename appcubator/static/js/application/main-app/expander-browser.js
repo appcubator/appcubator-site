@@ -61,7 +61,7 @@ exports.factory = function(_safe_eval_) {
             }
 
             if (found) {
-                generator._pristine = (genCollection === generators);
+                generator._pristine = (genCollection !== generators);
                 return generator;
             }
         }

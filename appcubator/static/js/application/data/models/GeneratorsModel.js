@@ -16,7 +16,7 @@ define(['backbone'], function(Backbone) {
     			});
     		});
 
-            generators.push(v1State.get('plugins').getGeneratorsWithModule(generatorModule));
+            generators = _.union(generators, v1State.get('plugins').getGeneratorsWithModule(generatorModule));
 
     		return generators;
     	},

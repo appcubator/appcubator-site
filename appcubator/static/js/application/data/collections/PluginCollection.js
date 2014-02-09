@@ -21,7 +21,6 @@ define([
 	            });
 
 	      	    this.add(pluginModel);
-	      	    pluginModel.enablePlugin();
 			},
 
 			getGeneratorsWithModule: function(moduleName) {

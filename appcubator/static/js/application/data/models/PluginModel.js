@@ -29,7 +29,9 @@ define([
         },
 
         getGeneratorsWithModule: function(moduleName) {
-            var uielements = _.map(this.get('moduleName'), function(el) {
+            if(!this.has(moduleName)) return [];
+
+            var uielements = _.map(this.get(moduleName), function(el) {
                 el.generatorIdentifier = this.get('pluginInformation').name + ".uielements." + el.name;
                 return el;
             }, this);

@@ -76,6 +76,7 @@ define(function(require, exports, module) {
             // this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
             this.listenTo(v1State.get('tables'), 'add remove', this.renderEntityFormsTablesLists);
             this.listenTo(v1State.get('generators'), 'change', this.renderPluginElements);
+            this.listenTo(v1State.get('plugins'), 'add remove', this.renderPluginElements);
 
             return this;
         },
@@ -335,7 +336,6 @@ define(function(require, exports, module) {
             var uiGenerators = v1State.get('generators').getGeneratorsWithModule('uielements');
 
             _.each(uiGenerators, function(uigen) {
-
                 uigen.generatorIdentifier = uigen.packageName + ".uielements." + uigen.name; 
                 elements.push(uigen);
             });
