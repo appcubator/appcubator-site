@@ -2,10 +2,6 @@ define(['backbone'], function(Backbone) {
     
     var GeneratorsModel = Backbone.Model.extend({
 
-    	forkPlugin: function() {
-
-    	},
-
     	getGeneratorsWithModule: function (generatorModule) {
 
     		var generators = [];
@@ -19,6 +15,8 @@ define(['backbone'], function(Backbone) {
     				});
     			});
     		});
+
+            generators.push(v1State.get('plugins').getGeneratorsWithModule(generatorModule));
 
     		return generators;
     	},
@@ -34,16 +32,16 @@ define(['backbone'], function(Backbone) {
             return isUnique;
         },
 
-    	fork: function (generator, generatorName, newName) {
+    	fork: function (generator, generatorPath, newName) {
 
     		var genObj = _.clone(generator);
-    		var newPath = util.packageModuleName(generator);
+    		var newPath = util.packageModuleName(generatorPath);
     		newPath.name = newName;
     		genObj.name = newName;
 
     		this.get(newPath.package)[newPath.module].push(genObj);
 
-    		return newPath.join('.');
+    		return [newPath.package, newPath.module, newPath.name].join('.');
     	}
 
     });

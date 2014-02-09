@@ -22,6 +22,12 @@ define([
 
 	      	    this.add(pluginModel);
 	      	    pluginModel.enablePlugin();
+			},
+
+			getGeneratorsWithModule: function(moduleName) {
+				return _.flatten(this.map(function(pluginModel) {
+					return pluginModel.getGeneratorsWithModule(moduleName);
+				}));
 			}
 		});
 

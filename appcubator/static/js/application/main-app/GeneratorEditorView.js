@@ -119,7 +119,9 @@ define(function(require, exports, module) {
             
             var self = this;
 
-            new StringDialogBox('What do you want to name the new generator?', function(newName) {
+            var newName = window.prompt("What do you want to name the new generator?", util.packageModuleName(self.generatorPath) + "_edited");
+            
+            if (newName!=null) {
                 
                 var newPackageModuleName = util.packageModuleName(self.generatorPath);
                 newPackageModuleName.name = newName;
@@ -131,8 +133,10 @@ define(function(require, exports, module) {
                 self.setupGenerator(newGenPath);
                 self.reRender();
                 self.makeEditorEditable();
-            });
-
+            }
+            else {
+                self.forkCurrentGen();
+            }
         },
 
         cloneGenerator: function(e) {

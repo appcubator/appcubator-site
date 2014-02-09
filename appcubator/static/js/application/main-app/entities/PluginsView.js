@@ -27,9 +27,7 @@ define(function(require, exports, module) {
         },
         
         browsePlugins: function(){
-            var browserView = new PluginBrowserView({
-                repoAddress: "http://localhost:3001/packageListing"
-            });
+            var browserView = new PluginBrowserView({});
         },
         
         clickedPluginToggle: function(e){

@@ -17,9 +17,8 @@ define(function(require, exports, module) {
             'click .addPluginButton': 'addPlugin'
         },
 
-        initialize: function(data) {
+        initialize: function() {
             _.bindAll(this);
-            this.data = data;
             this.render();
         },
 

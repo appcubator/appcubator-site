@@ -332,17 +332,17 @@ define(function(require, exports, module) {
         renderPluginElements: function() {
             var elements = [];
 
-            _.each(v1State.get('generators').attributes, function(packageContent, packageName) {
+            var uiGenerators = v1State.get('generators').getGeneratorsWithModule('uielements');
 
-                _.each(packageContent.uielements, function(uielement) {
-                    uielement.generatorIdentifier = packageName+ ".uielements." + uielement.name; 
-                    elements.push(uielement);
-                });
+            _.each(uiGenerators, function(uigen) {
 
+                uigen.generatorIdentifier = uigen.packageName + ".uielements." + uigen.name; 
+                elements.push(uigen);
             });
 
             if(this.pluginElemsSection) this.pluginElemsSection.close();
             this.pluginElemsSection = this.addNewSection('Plugin Elements');
+            
             _.each(elements, function(element) {
                 this.pluginElemsSection.addFullWidthItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier);
             }, this);

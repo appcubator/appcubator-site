@@ -25,14 +25,13 @@ define(function(require, exports, module) {
     };
 
     Generator.prototype.generate = function(generatorPath, data) {
-
-        return this.expander.expand(appState.generators, {generate: generatorPath, data: data});
+        var aState = v1State.serialize();
+        return this.expander.expand(aState.plugins, aState.generators, {generate: generatorPath, data: data});
     };
 
     Generator.prototype.getGenerator = function(generatorPath) {
-
-        return this.expander.findGenData(v1.currentApp.model.serialize().generators, this.expander.parseGenID(generatorPath));
-
+        var aState = v1State.serialize();
+        return this.expander.findGenData(aState.plugins, aState.generators, this.expander.parseGenID(generatorPath));
     };
 
     return Generator;

@@ -82,6 +82,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.arrangeLayout();
 
             var expanded = this.model.expand();
+            console.log(this.model);
 
             this.el.innerHTML = this.renderElement(expanded);
             this.innerEl = this.el.firstChild;

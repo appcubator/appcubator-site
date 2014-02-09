@@ -10,21 +10,19 @@ exports.factory = function(_safe_eval_) {
 
     var expander = {};
 
-    function findGenData(generators, genID) {
-        // generators is app.generators
+    function findGenDataSub(generators, genID) {
+        // generators is some object of generators to search through
         // genID is an obj w (package, module, name, version) keys
-        // Search order: generators, then builtinGenerators
+        // Search order: generators, plugins, then builtinGenerators
 
         var packageObj = generators[genID.package];
         if (packageObj === undefined) {
-            packageObj = builtinGenerators[genID.package];
-            if (packageObj === undefined) {
-                throw "Package " + genID.package + " not found";
-            }
+            throw { name: 'GenNotFound', message: "Package " + genID.package + " not found", level: 'package' };
         }
+
         var module = packageObj[genID.module];
         if (module === undefined)
-            throw "Module " + genID.module + " not found in package " + genID.package;
+            throw { name: 'GenNotFound', message: "Module " + genID.module + " not found in package " + genID.package, level: 'module' };
 
         // linear search through the generators in the module.
         var generator;
@@ -35,10 +33,40 @@ exports.factory = function(_safe_eval_) {
                 break;
             }
         }
+
         if (generator === undefined)
-            throw "Generator '"+genID.name+"' with version '"+genID.version+"' not found in module '"+genID.module+"'";
+            throw { name: 'GenNotFound', message: "Generator '"+genID.name+"' with version '"+genID.version+"' not found in module '"+genID.module+"'", level: 'generator' };
 
         return generator;
+    }
+
+    function findGenData(plugins, generators, genID) {
+        // plugins is app.plugins
+        // generators is app.generators
+        var generator;
+        var searchList = [generators, plugins, builtinGenerators];
+        while (searchList.length !== 0) {
+            var genCollection = searchList.shift();
+            var found;
+
+            try {
+                found = true;
+                generator = findGenDataSub(genCollection, genID);
+            } catch (e) {
+                if (e.name === 'GenNotFound') {
+                    found = false;
+                } else {
+                    throw e;
+                }
+            }
+
+            if (found) {
+                generator._pristine = (genCollection === generators);
+                return generator;
+            }
+        }
+
+        throw {name: 'GenNotFound', message: "Generator '"+genID.name+"' with version '"+genID.version+"' not found." };
     }
 
     expander.findGenData = findGenData;
@@ -46,7 +74,7 @@ exports.factory = function(_safe_eval_) {
     function constructGen(generatorData) {
         // input the generator's data from the json
         // output a function which can directly be used for generator execution.
-        var fn = function(generators, data) {
+        var fn = function(plugins, generators, data) {
             var templates = generatorData.templates;
             var compiledTemplates = {};
 
@@ -59,7 +87,7 @@ exports.factory = function(_safe_eval_) {
             }
 
             // TODO compile each EJS template so that it can have a render method.
-            var expandFn = function(data) { return expand(generators, data); };
+            var expandFn = function(data) { return expand(plugins, generators, data); };
             var globals = {
                 data: data,
                 templates: compiledTemplates,
@@ -109,10 +137,10 @@ exports.factory = function(_safe_eval_) {
 
     expander.parseGenID = parseGenID;
 
-    function expandOnce(generators, genData) {
+    function expandOnce(plugins, generators, genData) {
         try {
             var genID = parseGenID(genData.generate);
-            var generatedObj = constructGen(findGenData(generators, genID))(generators, genData.data);
+            var generatedObj = constructGen(findGenData(plugins, generators, genID))(plugins, generators, genData.data);
             return generatedObj;
         }
         catch(e) {
@@ -125,10 +153,10 @@ exports.factory = function(_safe_eval_) {
 
     expander.expandOnce = expandOnce;
 
-    function expand(generators, genData) {
+    function expand(plugins, generators, genData) {
         // TODO check for cycles
         while (typeof(genData) == typeof({}) && 'generate' in genData) {
-            genData = expandOnce(generators, genData);
+            genData = expandOnce(plugins, generators, genData);
         }
         return genData;
     }
@@ -136,24 +164,25 @@ exports.factory = function(_safe_eval_) {
     expander.expand = expand;
 
     expander.expandAll = function(app) {
+        app.plugins = app.plugins || []; // TEMP BECAUSE THIS DOES NOT YET EXIST.
         try {
             _.each(app.routes, function(route, i) {
-                app.routes[i] = expand(app.generators, route);
+                app.routes[i] = expand(app.plugins, app.generators, route);
             });
 
             _.each(app.models, function(model, index) {
-                app.models[index] = expand(app.generators, model);
+                app.models[index] = expand(app.plugins, app.generators, model);
             });
 
             _.each(app.templates, function (template, index) {
-                app.templates[index] = expand(app.generators, template);
+                app.templates[index] = expand(app.plugins, app.generators, template);
             });
 
             app.templates.push({name: "header", code: app.header||""});
             app.templates.push({name: "scripts", code: app.scripts||""});
 
-            app.config = expand(app.generators, app.config);
-            app.css = expand(app.generators, app.css);
+            app.config = expand(app.plugins, app.generators, app.config);
+            app.css = expand(app.plugins, app.generators, app.css);
         }
         catch(e) {
             console.log("ERROR with generator: " + e);
@@ -172,10 +201,10 @@ try {
     // No error -> we're in the frontend
     window.expanderfactory = exports.factory;
 } catch (e) {
-    // ReferenceError -> we're in the backend
-
+    // e is a ReferenceError, which implies we're in the backend
     exports.init = function() {
-        var r = require; // avoid browserifying this
+        // avoid browserifying vm
+        var r = require;
         return exports.factory(r('vm').runInNewContext);
     };
 }
@@ -387,14 +416,9 @@ generators.push({
         if (data.schemaMods === undefined)
             data.schemaMods = [];
 
-        for (var index in data.instancemethods) {
-            var im = data.instancemethods[index];
-            data.instancemethods[index] = expand(im);
-        }
-
-        for (index in data.staticmethods) {
-            var sm = data.staticmethods[index];
-            data.staticmethods[index] = expand(sm);
+        for (index in data.functions) {
+            var sm = data.functions[index];
+            data.functions[index] = expand(sm);
         }
 
         // generate the main model code.
@@ -416,13 +440,8 @@ var Schema = mongoose.Schema;\n\
 \n\
 var <%= name %>Schema = <%= schemaCode %>;\n\
 \n\
-<% for(var index in instancemethods) { %>\n\
-<% var im = instancemethods[index]; %>\n\
-<%= name %>Schema.methods.<%= im.name %> = <%= im.code %>;\n\
-<% } %>\n\
-\n\
-<% for(var index in staticmethods) { %>\n\
-<% var sm = staticmethods[index]; %>\n\
+<% for(var index in functions) { %>\n\
+<% var sm = functions[index]; %>\n\
 <%= name %>Schema.statics.<%= sm.name %> = <%= sm.code %>;\n\
 <% } %>\n\
 \n\
