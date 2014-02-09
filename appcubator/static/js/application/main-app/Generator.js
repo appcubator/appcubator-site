@@ -30,8 +30,10 @@ define(function(require, exports, module) {
     };
 
     Generator.prototype.getGenerator = function(generatorPath) {
+        console.log(generatorPath);
         var aState = v1State.serialize();
-        return this.expander.findGenData(aState.plugins.serialize(), aState.generators.serialize(), this.expander.parseGenID(generatorPath));
+        console.log(aState);
+        return this.expander.findGenData(aState.plugins, aState.generators, this.expander.parseGenID(generatorPath));
     };
 
     return Generator;

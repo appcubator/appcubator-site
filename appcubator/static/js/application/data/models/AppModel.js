@@ -4,7 +4,7 @@ define([
         'collections/TableCollection',
         'collections/EmailCollection',
         'collections/TemplateCollection',
-        'collections/PluginCollection',
+        'models/PluginsModel',
         'models/GeneratorsModel',
         'models/EntityManager'
     ],
@@ -13,7 +13,7 @@ define([
         TableCollection,
         EmailCollection,
         TemplateCollection,
-        PluginCollection,
+        PluginsModel,
         GeneratorsModel,
         EntityManager) {
 
@@ -31,8 +31,8 @@ define([
                 this.set('tables', new TableCollection(aState.models));
                 this.set('emails', new EmailCollection(aState.emails));
                 this.set('templates', new TemplateCollection(aState.templates));
-                this.set('plugins', new PluginCollection(aState.plugins || []));
-                this.set('generators', new GeneratorsModel(aState.generators));
+                this.set('plugins', new PluginsModel(aState.plugins || {}));
+                this.set('generators', new GeneratorsModel(aState.generators|| {}));
 
             },
 
@@ -107,6 +107,8 @@ define([
                 json.emails = json.emails.serialize();
                 json.templates = json.templates.serialize();
                 json.routes = json.routes.serialize();
+                json.plugins = json.plugins.serialize();
+                json.generators = json.generators.serialize();
 
                 return json;
             }

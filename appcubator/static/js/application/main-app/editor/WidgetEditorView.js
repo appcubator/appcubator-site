@@ -165,7 +165,6 @@ define(function(require, exports, module) {
 
             this.layoutEditor = new WidgetLayoutEditorView(this.model);
             this.el.appendChild(this.layoutEditor.el);
-            console.log(type);
 
             if (this.model.has('className')) {
                 this.widgetClassPickerView = new WidgetClassPickerView(this.model);
@@ -179,7 +178,7 @@ define(function(require, exports, module) {
                 this.el.appendChild(this.contentEditor.el);
             }
 
-            if (type == "custom") {
+            if (type == "custom-widget") {
                 this.el.appendChild(this.renderButtonWithText('edit-custom-widget-btn', 'Edit Custom Widget'));
             }
 

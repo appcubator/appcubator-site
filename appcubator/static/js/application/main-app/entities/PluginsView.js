@@ -17,11 +17,13 @@ define(function(require, exports, module) {
         },
         
         initialize: function() {
-            this.listenTo(v1State.get('plugins'), 'add remove', this.render);
+            this.listenTo(v1State.get('plugins'), 'change', this.render);
         },
         
         render: function() {
-            var plugins = v1State.get('plugins').toJSON();
+            var plugins = v1State.get('plugins').serialize();
+            plugins = _.map(plugins, function(val, key) { return val; });
+            console.log(plugins);
             this.$el.html(_.template(util.getHTML('plugins-page'), {plugins: plugins}));
             return this;
         },

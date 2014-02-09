@@ -4,6 +4,7 @@ define(function(require, exports, module) {
 
 
     require('mixins/BackboneUI');
+    require('jquery-ui');
     require('util');
 
     var PADDING = 2;

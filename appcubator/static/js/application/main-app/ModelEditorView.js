@@ -58,7 +58,7 @@ define(function(require, exports, module) {
             var row = this.el.insertRow(ind);
             row.id = "attr-" + key;
             row.innerHTML = ['<td>' + key + '</td>',
-                    '<td><input type="text" class="attr-input" value="' + val +'"></td>',
+                    '<td><input type="text" class="attr-input" id="inp-'+ key +'" value="' + val +'"></td>',
                     '<td class="settings"><span class="remove-attr">-</span></td>'].join('\n');
 
             return row;
@@ -85,7 +85,7 @@ define(function(require, exports, module) {
         },
 
         attributeChanged: function(e) {
-            var attributeKey = String(e.currentTarget.parentNode.id).replace('attr-','');
+            var attributeKey = String(e.currentTarget.id).replace('inp-','');
             this.model.set(attributeKey, e.currentTarget.value);
         },
 

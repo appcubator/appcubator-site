@@ -76,7 +76,7 @@ define(function(require, exports, module) {
             // this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
             this.listenTo(v1State.get('tables'), 'add remove', this.renderEntityFormsTablesLists);
             this.listenTo(v1State.get('generators'), 'change', this.renderPluginElements);
-            this.listenTo(v1State.get('plugins'), 'add remove', this.renderPluginElements);
+            this.listenTo(v1State.get('plugins'), 'change', this.renderPluginElements);
 
             return this;
         },
@@ -187,11 +187,11 @@ define(function(require, exports, module) {
 
         appendCustomWidget: function() {
             var className = 'uielement';
-            var id = 'type-custom-widget';
             var icon = 'custom-widget';
             var text = 'Custom Widget';
 
             var li = this.uiElemsSection.addHalfWidthItem(null, className, text, icon, 'uielements.design-custom');
+            $(li).data('type', 'custom-widget');
         },
 
         renderAuthenticationForms: function() {
@@ -328,15 +328,11 @@ define(function(require, exports, module) {
 
             var uiGenerators = v1State.get('generators').getGeneratorsWithModule('uielements');
 
-            _.each(uiGenerators, function(uigen) {
-                uigen.generatorIdentifier = uigen.packageName + ".uielements." + uigen.name; 
-                elements.push(uigen);
-            });
-
             if(this.pluginElemsSection) this.pluginElemsSection.close();
             this.pluginElemsSection = this.addNewSection('Plugin Elements');
             
-            _.each(elements, function(element) {
+            _.each(uiGenerators, function(element) {
+                console.log(element.generatorIdentifier);
                 this.pluginElemsSection.addFullWidthItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier);
             }, this);
 
