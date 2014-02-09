@@ -198,7 +198,7 @@ define(function(require, exports, module) {
             var icon = 'custom-widget';
             var text = 'Custom Widget';
 
-            var li = this.uiElemsSection.addHalfWidthItem(null, className, text, icon, 'uielements.design-custom-widget');
+            var li = this.uiElemsSection.addHalfWidthItem(null, className, text, icon, 'uielements.design-custom');
         },
 
         renderAuthenticationForms: function() {

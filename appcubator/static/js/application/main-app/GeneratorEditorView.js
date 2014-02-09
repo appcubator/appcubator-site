@@ -54,7 +54,7 @@ define(function(require, exports, module) {
 
             this.$el.find('.dropdown-toggle').dropdown();
 
-            if(this.generator._pristine()) { 
+            if(this.generator._pristine) { 
                 // disable that option.
                 // this.$le.find('.edit-current').
             }
@@ -109,7 +109,7 @@ define(function(require, exports, module) {
 
         editCurrentGen: function() {
             // if is not pristine, shoudl give a warning. waiting for that functionality.
-            if(this.generator._pristine()) { return; }
+            if(this.generator._pristine) { return; }
             else {
                 this.makeEditorEditable();
             }
