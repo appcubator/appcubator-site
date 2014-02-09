@@ -16,6 +16,7 @@ define(function(require, exports, module) {
 
         events: {
             'click .edit-current' : 'editCurrentGen',
+            'click .fork-current' : 'forkCurrentGen',
             'click .clone-button' : 'cloneGenerator'
         },
 
@@ -23,8 +24,13 @@ define(function(require, exports, module) {
         initialize: function(options) {
             _.bindAll(this);
             this.widgetModel = options.widgetModel;
-            this.generatorName = options.generate;
-            this.generator = new Generator().getGenerator(this.generatorName);
+            this.setupGenerator(options.generate);
+        },
+
+        setupGenerator: function(generatorPath) {
+            this.generatorPath = generatorPath;
+            this.generator = new Generator().getGenerator(this.generatorPath);
+            this.widgetModel.setGenerator(generatorPath);
         },
 
         render: function() {
@@ -36,16 +42,23 @@ define(function(require, exports, module) {
                         'Edit Code <span class="caret"></span>',
                         '</button>',
                         '<ul class="dropdown-menu abs action-menu" role="menu">',
-                            '<li><a href="#" class="edit-current">Edit Current Code</a></li>',
+                            '<li><a href="#" class="edit-current">Edit Current Generator</a></li>',
+                            '<li><a href="#" class="fork-current">Fork Current Generator</a></li>',
                             '<li class="divider"></li>',
                         '</ul>',
                     '</div>',
                 '</div>',
                 '<div id="current-code-editor" style="width:100%; height: 100%;"></div>'
-            ].join('\n'), { name: this.generatorName });
+            ].join('\n'), { name: this.generatorPath });
 
 
             this.$el.find('.dropdown-toggle').dropdown();
+
+            if(this.generator._pristine()) { 
+                // disable that option.
+                // this.$le.find('.edit-current').
+            }
+
             this.renderCloneButtons();
 
             return this;
@@ -58,98 +71,75 @@ define(function(require, exports, module) {
         },
 
         setupAce: function() {
-            
             this.editor = ace.edit("current-code-editor");
             this.editor.getSession().setMode("ace/mode/css");
             this.editor.setValue(String(this.generator.code), -1);
             this.editor.on("change", this.keyup);
+            this.makeEditorUneditable();
+        },
 
-            var packageModuleName = expanderfactory(function(code, globals) { }).parseGenID(this.generatorName);
+        makeEditorEditable: function() {
+            this.editor.setReadOnly(false);  // false to make it editable
+        },
 
-            if(packageModuleName.package != "local") {
-                this.editor.setReadOnly(true);  // false to make it editable
-                this.editor.setHighlightActiveLine(false);
-                this.editor.setHighlightGutterLine(false);
-                this.editor.renderer.$cursorLayer.element.style.opacity=0;
-
-            }
-            else {
-                this.editor.setReadOnly(false);  // false to make it editable
-            }
+        makeEditorUneditable: function() {
+            this.editor.setReadOnly(true);  // false to make it editable
+            this.editor.setHighlightActiveLine(false);
+            this.editor.setHighlightGutterLine(false);
+            this.editor.renderer.$cursorLayer.element.style.opacity=0;
         },
 
         renderCloneButtons: function() {
             
-            var packageModuleName = expanderfactory(function(code, globals) { }).parseGenID(this.generatorName);
-            var generators = [];
-
-            if (packageModuleName.package != "local" &&
-                appState.generators[packageModuleName.package] &&
-                appState.generators[packageModuleName.package][packageModuleName.module]) {
-                generators = _.map(appState.generators[packageModuleName.package][packageModuleName.module], function(obj) { obj.package = packageModuleName.package; return obj; });
-            }
-
-            if (appState.generators["local"] &&
-                appState.generators["local"][packageModuleName.module]) {
-                var localGens = _.map(appState.generators["local"][packageModuleName.module], function(obj) { obj.package = "local"; return obj; });
-                generators = _.union(generators, localGens);
-            }
-
+            var currentModule = util.packageModuleName(this.generatorPath).module;
+            // e.g. if module == uielements, it can only clone uielements
+            var generators = v1State.get('generators').getGeneratorsWithModule(currentModule);
+            
             generators = _.reject(generators, function(generator) {
-                var genName = [packageModuleName.package, packageModuleName.module, generator.name].join('.');
-                return genName == this.generatorName;
+
+                var genPath = [util.packageModuleName(this.generatorPath).package, currentModule, generator.name].join('.');
+                return genPath == this.generatorPath;
             }, this);
 
             _.each(generators, function(generator) {
-                var genName = [generator.package, packageModuleName.module, generator.name].join('.');
-                this.$el.find('.action-menu').append('<li class="clone-button" id="'+ genName +'"><a href="#">Clone '+  generator.name +'X</a></li>');
+                var genPath = [generator.package, currentModule, generator.name].join('.');
+                this.$el.find('.action-menu').append('<li class="clone-button" id="'+ genPath +'"><a href="#">Switch Generator to '+  generator.name +'X</a></li>');
             }, this);
         },
 
         editCurrentGen: function() {
-            var genObj = _.clone(this.generator);
-
-            var gensWrapper = v1.currentApp.model.get('generators');
-            var packageModuleName = expanderfactory(function(code, globals) { }).parseGenID(this.generatorName);
-            packageModuleName.package = 'local';
-            gensWrapper.local = gensWrapper.local || {};
-            gensWrapper.local[packageModuleName.module] = gensWrapper.local[packageModuleName.module] || [];
-
-
-            var i = 2;
-            var newName = packageModuleName.name + '_v' + i;
-            while(!this.isUnique(packageModuleName, newName)) { i++; newName =  packageModuleName.name + '_v' + i;  }
-
-            alert(newName);
-
-            packageModuleName.name = newName;
-
-            this.generatorName = [  packageModuleName.package,
-                                    packageModuleName.module,
-                                    packageModuleName.name].join('.');
-            
-            this.widgetModel.generate = this.generatorName;
-            genObj.name = packageModuleName.name;
-            this.generator = genObj;
-
-            gensWrapper.local[packageModuleName.module].push(this.generator);
-            this.reRender();
+            // if is not pristine, shoudl give a warning. waiting for that functionality.
+            if(this.generator._pristine()) { return; }
+            else {
+                this.makeEditorEditable();
+            }
         },
 
-        isUnique: function(packageModuleName, name) {
-            var gensWrapper = v1.currentApp.model.get('generators');
-            var isUnique = true;
-            var gens = gensWrapper.local[packageModuleName.module];
-            _.each(gens, function(gen) {
-                if(gen.name == name) isUnique = false;
-            }, this);
+        forkCurrentGen: function() {
+            
+            var self = this;
 
-            return isUnique;
+            new StringDialogBox('What do you want to name the new generator?', function(newName) {
+                
+                var newPackageModuleName = util.packageModuleName(self.generatorPath);
+                newPackageModuleName.name = newName;
+                
+                if(!v1State.get('generators').isNameUnique(newPackageModuleName)) { self.forkCurrentGen(); } 
+                
+                var genObj = _.clone(this.generator);
+                var newGenPath = v1State.get('generators').fork(this.generator, this.generatorName, newName);
+                self.setupGenerator(newGenPath);
+                self.reRender();
+                self.makeEditorEditable();
+            });
+
         },
 
         cloneGenerator: function(e) {
             var genPath = String(e.currentTarget.id);
-            this.widgetModel.generate = genPath;
+            this.widgetModel.setGenerator(genPath);
+            
+            // changes data related to this view and rerenders
             this.generatorName = genPath;
             this.generator = new Generator().getGenerator(this.generatorName);
 

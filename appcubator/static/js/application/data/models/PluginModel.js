@@ -36,7 +36,7 @@ define([
             /* Copies the generators to appState.generators */
             var generators = _.clone(this.toJSON());
             generators = _.omit(generators, 'pluginInformation');
-            v1State.get('generators')[pluginInfo.name] = generators;
+            v1State.get('generators').set(pluginInfo.name, generators);
         },
 
         getActiveUIElements: function() {

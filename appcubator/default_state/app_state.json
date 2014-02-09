@@ -14,12 +14,11 @@
         "name": "url",
         "type": "String"
       }],
-      "instancemethods": [{
+      "functions": [{
         "name": "updateUrl",
         "enableAPI": true,
         "code": "function (newUrl, cb) {\n      this.url = newUrl;\n      this.save(function(e, d){cb(e,d);});\n    }"
-      }],
-      "staticmethods": [{
+      }, {
         "name": "randomNFromFlickr",
         "enableAPI": true,
         "code": "function (searchQ, limit, cb) {\n      var flickr = require('flickr');\n      var fcli = new flickr.Flickr('cbe3f7f6cbf9d13ad243a1e1afec902d', '5c3f9a33e088ef60');\n      fcli.executeAPIRequest('flickr.photos.search', {text: searchQ, per_page: limit, extras: ['url_q']},\n                               false, function(e, d){cb(e, d);});\n    }"
@@ -57,7 +56,7 @@
         "name": "salt",
         "type": "String"
       }],
-      "instancemethods": [{
+      "functions": [{
         "name": "authenticate",
         "code": "function (plainText) {\n  /**\n   * Authenticate by checking the hashed password and provided password\n   *\n   * @param {String} plainText\n   * @return {Boolean}\n   * @api private\n   */\n    return this.encryptPassword(plainText) === this.hashed_password;\n  }"
       }, {
@@ -69,8 +68,7 @@
       }, {
         "name": "resetToken",
         "code": "function (token, cb) {\n  /**\n   * Reset auth token\n   *\n   * @param {String} token\n   * @param {Function} cb\n   * @api private\n   */\n    var self = this;\n    var crypto = require('crypto');\n    crypto.randomBytes(48, function(ex, buf) {\n      self[token] = buf.toString('hex');\n      if (cb) cb();\n    });\n  }"
-      }],
-      "staticmethods": [{
+      }, {
         "name": "signup",
         "enableAPI": true,
         "code": "function (username, password, password2, callback) {\n        if (password !== password2) {\n            callback('Passwords don\\'t match. Please try again.');\n        }\n        var user = new this({username: username});\n        user.salt = user.makeSalt();\n        user.hashed_password = user.encryptPassword(password);\n        user.save(function(err, data) {\n            if (err) {\n                callback(err);\n            } else {\n                callback(null, {url:'?success=true'});\n            }\n        });\n    }"

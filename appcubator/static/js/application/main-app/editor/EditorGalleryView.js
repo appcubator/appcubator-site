@@ -75,8 +75,7 @@ define(function(require, exports, module) {
             // listen for changes to url to update context entity section
             // this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
             this.listenTo(v1State.get('tables'), 'add remove', this.renderEntityFormsTablesLists);
-            this.listenToModels(v1State.get('plugins'), 'change', this.renderPluginElements);
-            this.listenTo(v1State.get('plugins'), 'add remove', this.renderPluginElements);
+            this.listenTo(v1State.get('generators'), 'change', this.renderPluginElements);
 
             return this;
         },
@@ -333,11 +332,13 @@ define(function(require, exports, module) {
         renderPluginElements: function() {
             var elements = [];
 
-            v1State.get('plugins').each(function(pluginModel) {
-                if(!pluginModel.isEnabled()) return;
-                _.each(pluginModel.getActiveUIElements(), function(uielement) {
+            _.each(v1State.get('generators').attributes, function(packageContent, packageName) {
+
+                _.each(packageContent.uielements, function(uielement) {
+                    uielement.generatorIdentifier = packageName+ ".uielements." + uielement.name; 
                     elements.push(uielement);
                 });
+
             });
 
             if(this.pluginElemsSection) this.pluginElemsSection.close();

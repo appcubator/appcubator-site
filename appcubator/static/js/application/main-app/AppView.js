@@ -5,7 +5,7 @@ define(function(require, exports, module) {
     var DeployManagerModel = require('./DeployManagerModel');
     var ToolBarView = require('editor/ToolBarView');
     var EditorView = require('editor/EditorView');
-    var PluginsView = require('app/entities/PluginsManagerView');
+    var PluginsView = require('app/entities/PluginsView');
     var SettingsView = require('app/SettingsView');
 
 

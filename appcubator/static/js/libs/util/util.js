@@ -465,6 +465,10 @@ define(['backbone'], function() {
             domEl.appendChild(spinner);
             
             return spinner;
+        },
+
+        packageModuleName: function(generatorName) {
+            return expanderfactory(function(code, globals) { }).parseGenID(generatorName);
         }
 
     };

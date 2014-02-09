@@ -1,70 +1,74 @@
 define(function(require, exports, module) {
 
     'use strict';
-
-    var UserTableModel = require('models/UserTableModel');
-    var TableModel = require('models/TableModel');
-    var TableView = require('entities/TableView');
-
-
     require('util');
     require('mixins/BackboneDropdownView');
+    var PluginBrowserView = require('PluginBrowserView');
 
     var PluginsView = Backbone.DropdownView.extend({
-        title: 'Tables',
-        className: 'plugins-view',
-        events: {
-            'click .onoffswitch': 'clickedPluginToggle'
-        },
-        subviews: [],
-        initialize: function() {
-           
-        },
+        
+        title: 'Plugins',
 
+        className: 'plugins-view',
+
+        events: {
+            'click .onoffswitch': 'clickedPluginToggle',
+            'click .browsePluginsButton': 'browsePlugins'
+        },
+        
+        initialize: function() {
+            this.listenTo(v1State.get('plugins'), 'add remove', this.render);
+        },
+        
         render: function() {
-            // get this from somewhere else later.
-            var pluginsTmp = {
-                plugins: [
-                    {   
-                        name: "BuyAndSell", 
-                        description: "Add the ability to transact between models. Lorem ipsum dolor sit amet, consectetur. ", 
-                    },
-                    { 
-                        name: "CRUD", 
-                        description: "Small particles of poop. JK.", 
-                        address: "#"
-                    },
-                    { 
-                        name: "Apify", 
-                        description: "Create an API to retive your models", 
-                        address: "#"
-                    },
-                    { 
-                        name: "BuyAndSell", 
-                        description: "Add the ability to transact between models. Lorem ipsum dolor sit amet, consectetur. ", 
-                        address: "#"
-                    },
-                    { 
-                        name: "CRUD", 
-                        description: "Create Read Update Destroy", 
-                        address: "#"
-                    },
-                    { 
-                        name: "Apify", 
-                        description: "Create an API to retive your models", 
-                        address: "#"
-                    }                                                     
-                ]
-            }
-            //this.$el.html(_.template(util.getHTML('plugins-page'), pluginsTmp));
+            var plugins = v1State.get('plugins').toJSON();
+            this.$el.html(_.template(util.getHTML('plugins-page'), {plugins: plugins}));
             return this;
         },
+        
+        browsePlugins: function(){
+            var browserView = new PluginBrowserView({
+                repoAddress: "http://localhost:3001/packageListing"
+            });
+        },
+        
         clickedPluginToggle: function(e){
-            $($(e.target).closest("input")).toggleClass('checked');
-            console.log($($(e.target).closest("input")).hasClass('checked'));
-        }
+            
+            var input = $(e.target).closest("[type='checkbox']");
+            var pluginName = $(input).attr('pluginName');
+            var pluginEnabled = $(input).hasClass('checked');
 
-       
+            if (pluginEnabled){
+                $(input).removeClass('checked');
+            } else {
+                $(input).addClass('checked');
+            }
+            
+            var plugin = v1.currentApp.model.get('plugins').find(
+                function (p) {
+                    if (p.get('pluginInformation').name === pluginName){
+                        if (pluginEnabled){
+                            p.disablePlugin();
+                        } else {
+                            p.enablePlugin();
+                        }
+                    }
+                    return (p.get('pluginInformation').name === pluginName); 
+            });
+            
+            console.log(this.getActivePlugins())
+        },
+        
+        getActivePlugins: function (){
+            
+            var enabledPlugins = v1.currentApp.model.get('plugins').filter( 
+                function (p) { 
+                    return p.getPluginStatus() ; 
+                }
+            );
+            
+            return enabledPlugins;
+        }
     });
 
     return PluginsView;

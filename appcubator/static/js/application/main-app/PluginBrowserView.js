@@ -54,16 +54,7 @@ define(function(require, exports, module) {
             /* Installs the plugin */
             var ind = e.currentTarget.id.replace('add-', '');
             var plugin = this.currentList[ind];
-            console.log(plugin);
-            var pluginModel = new PluginModel(JSON.parse(plugin.data));
-            pluginModel.set('pluginInformation', {
-                description: plugin.description,
-                name: plugin.name,
-                origin: "appcubator"
-            });
-            pluginModel.enablePlugin();
-            v1State.get('plugins').add(pluginModel);
-
+            v1State.get('plugins').install(plugin);
             e.currentTarget.innerHTML = 'Plugin Installed ✔';
         }
 

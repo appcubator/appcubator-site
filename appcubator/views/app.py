@@ -205,8 +205,10 @@ def new(request, is_racoon = False, app_template=None):
             app = App.objects.get(pk=app.id)
             try:
                 app.deploy()
-            except Exception:
+            except Exception, e:
                 app.delete()
+                import traceback
+                traceback.print_exc()
                 return HttpResponse("Sorry for the inconvenience, but the deployment system is down. Please contact founders@appcubator.com and we'll get it back up immediately.", status=500)
 
             return redirect(page, app.pk)
