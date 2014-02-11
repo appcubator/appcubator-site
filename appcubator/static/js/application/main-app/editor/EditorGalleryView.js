@@ -116,7 +116,6 @@ define(function(require, exports, module) {
         },
 
         searchToggle: function() {
-            console.log('wtf');
             if (this._search_expanded)
                 this.searchCanceled();
             else
