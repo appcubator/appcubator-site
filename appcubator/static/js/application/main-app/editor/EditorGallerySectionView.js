@@ -13,10 +13,7 @@ define(function(require, exports, module) {
 
         events: {
             'click .gallery-header .qmark': 'showSectionTutorial',
-            'click .gallery-header': 'toggle',
-            'mouseover': 'expand',
-            'mouseenter': 'expand',
-            'mouseleave': 'mouseleave'
+            'click .gallery-header': 'toggle'
         },
 
         className: 'gallery-section',
@@ -122,7 +119,10 @@ define(function(require, exports, module) {
 
         toggle: function() {
             if (this.isExpanded) this.hide();
-            else this.expand();
+            else {
+                this.parentView.hideAllSections();
+                this.expand();
+            }
         },
 
         expand: function() {
@@ -130,18 +130,30 @@ define(function(require, exports, module) {
             this.listWrapper.className += ' open';
 
             this.isExpanded = true;
+            $(window).on('mouseup', this.clickedOutsideHide);
         },
 
         hide: function() {
             $(this.header).removeClass('open');
             $(this.listWrapper).removeClass('open');
             this.isExpanded = false;
+            $(window).off('mouseup', this.clickedOutsideHide);
         },
 
+/* Dead code as of 2/10/14
         mouseleave: function(e) {
             if (this.timer) clearTimeout(this.timer);
             var self = this;
             this.timer = setTimeout(this.checkToHide, 130);
+        },
+        */
+        clickedOutsideHide: function(e) {
+            var container = this.$el;
+            // if the target of the click isn't the container
+            // ... nor a descendant of the container
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                this.hide();
+            }
         },
 
         checkToHide: function() {
