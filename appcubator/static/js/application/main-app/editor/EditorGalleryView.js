@@ -34,7 +34,7 @@ define(function(require, exports, module) {
 
         events: {
             'change input.search'    : 'searchInputChage',
-            'mouseenter .search-icon': 'searchHovered',
+            'click .search-icon'     : 'searchToggle',
             'keyup input.search'     : 'searchInputChage',
             'click .search-cancel'   : 'searchCanceled'
         },
@@ -115,14 +115,25 @@ define(function(require, exports, module) {
             this.allList.appendChild(sectionView.render().el);
         },
 
+        searchToggle: function() {
+            console.log('wtf');
+            if (this._search_expanded)
+                this.searchCanceled();
+            else
+                this.searchHovered();
+        },
+
         searchHovered: function() {
+            $(".search-panel").addClass("hover");
             $('.search').focus();
+            this._search_expanded = true;
         },
 
         searchCanceled: function() {
             $(".search-panel").removeClass("hover");
             $('.search').val('');
             $('.search').focusout();
+            this._search_expanded = false;
         },
 
         searchInputChage: function(e) {
