@@ -1,7 +1,7 @@
 import os, os.path
 import re
 
-DEBUG=True
+DEBUG = os.environ.get('DEBUG', 'True') != 'False'
 TEMPLATE_DEBUG=DEBUG
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
@@ -71,6 +71,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ['SECRET_KEY']
@@ -154,6 +155,11 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+
+if not DEBUG:
+    STATIC_URL = 'https://s3.amazonaws.com/%s/' % os.environ['AWS_STORAGE_BUCKET_NAME']
+
 
 # See http://docs.djangoproject.com/en/dev/topics/logging
 LOGGING = {
