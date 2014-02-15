@@ -17,7 +17,6 @@ define(function(require, exports, module) {
         initialize: function(bone, isNew) {
 
             this.set('layout', new LayoutModel(bone.layout || {}));
-            this.set('data', new DataModel(bone.data || {}, isNew));
             this.set('context', new Backbone.Collection(bone.context || []));
 
             if (bone.fields) {
@@ -29,6 +28,27 @@ define(function(require, exports, module) {
             }, this);
             this.bind('editModeOff', function() {
                 this.editMode = false;
+            }, this);
+
+        },
+
+        updateJSON: function(bone) {
+
+            var cleanBone = _.omit(bone, ['layout', 'data', 'context', 'fields']);
+            this.set(cleanBone);
+
+            if (this.has('layout)')) this.get('layout').set(bone.layout || {});
+            if (this.has('context')) this.get('context').set(bone.context || []);
+
+            if (bone.fields) {
+                if (this.has('fields')) this.get('fields').set(bone.fields || []);
+            }
+
+            _.each(this.attributes, function(val, key) {
+                if(!bone[key]) {
+                    console.log(key);
+                    this.unset(key);
+                }
             }, this);
 
         },
@@ -176,8 +196,7 @@ define(function(require, exports, module) {
         },
 
         hasForm: function() {
-            if (this.get('data').has('container_info') &&
-                this.get('data').get('container_info').has('form')) return true;
+            if (this.has('fields')) return true;
             return false;
         },
 
@@ -255,7 +274,6 @@ define(function(require, exports, module) {
             var json = _.clone(this.attributes);
             json = _.omit(json, 'selected', 'deletable', 'context');
 
-            json.data = this.get('data').serialize();
             json.layout = this.get('layout').serialize();
 
             if (json.fields) { json.fields = json.fields.serialize(); }

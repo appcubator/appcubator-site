@@ -7,7 +7,7 @@ define(function(require, exports, module) {
 
     var GeneratorEditorView = require('app/GeneratorEditorView');
     var TemplatesEditorView = require('app/TemplatesEditorView');
-    var ModelEditorView = require('app/ModelEditorView');
+    var WidgetModelEditorView = require('editor/WidgetModelEditorView');
 
     var tableTemplate = [
             '<div class="header">',
@@ -25,7 +25,8 @@ define(function(require, exports, module) {
                     '</li>',
                 '</ul>',
             '</div>',
-            '<div class="current-content"></div>',
+            '<div class="current-content">',
+            '</div>',
     ].join('\n');
 
     var TableView = Backbone.CardView.extend({
@@ -63,35 +64,9 @@ define(function(require, exports, module) {
         renderAttributes: function() {
             
             this.$el.find('.current-content').html('');
-            var modelEditorView = new ModelEditorView(this.model);
+
+            var modelEditorView = new WidgetModelEditorView(this.model);
             this.currentContentPane.append(modelEditorView.render().el);
-
-            // var strHTML = '<div class="code-view"><div class="instance sect">';
-
-            // strHTML += '<table style="margin: 15px auto;">';
-            // _.each(this.model.attributes, function(val, key) {
-            //     if(key == 'layout') return;
-            //     if(Backbone.isModel(val) || Backbone.isCollection(val)) return;
-
-            //     strHTML += '<tr><td>' + key + '</td><td><input type="text" class="attr-input" id="attr-'+key+'" value="' + val +'"></td></tr>';
-            // });
-            // strHTML += '</table>';
-
-            // strHTML += [
-            //         '<div id="add-attribute-box">',
-            //             '<form style="display:none;">',
-            //                 '<input type="text" class="property-name-input" placeholder="Template Name...">',
-            //                 '<input type="submit" class="done-btn" value="Done">',
-            //             '</form>',
-            //             '<div class="add-button box-button">+ Create a New Attribute</div>',
-            //         '</div>'
-            //     ].join('\n');
-
-            // strHTML += '</div></div>';
-
-            // this.currentContentPane.html(strHTML);
-            // this.addAttributeBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-attribute-box')).render();
-            // this.addAttributeBox.on('submit', this.createAttribute);
 
             this.$el.find('.attributes-li').addClass('active');
         },

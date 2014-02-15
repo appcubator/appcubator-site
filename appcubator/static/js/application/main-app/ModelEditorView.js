@@ -51,10 +51,8 @@ define(function(require, exports, module) {
         },
 
         createRow: function (val, key, ind) {
-            console.log(ind);
 
             ind = ind || -1;
-            console.log(ind);
             var row = this.el.insertRow(ind);
             row.id = "attr-" + key;
             row.innerHTML = ['<td>' + key + '</td>',
