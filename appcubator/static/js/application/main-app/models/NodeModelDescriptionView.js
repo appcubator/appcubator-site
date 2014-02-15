@@ -3,9 +3,9 @@ define(function(require, exports, module) {
     'use strict';
 
     var FieldModel = require('models/FieldModel');
-    var UploadExcelView = require('app/entities/UploadExcelView');
-    var ShowDataView = require('app/entities/ShowDataView');
-    var AdminPanelView = require('app/entities/AdminPanelView');
+    var UploadExcelView = require('app/models/UploadExcelView');
+    var ShowDataView = require('app/models/ShowDataView');
+    var AdminPanelView = require('app/AdminPanelView');
     var SoftErrorView = require('app/SoftErrorView');
     var DialogueView = require('mixins/DialogueView');
     require('mixins/BackboneCardView');

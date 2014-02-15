@@ -275,7 +275,13 @@ body {
   margin-top: 20px;
   margin-right: 8px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 2px solid #ddd;
+  padding-top: 30px;
+}
+
+.container.full-container .options li:hover {
+  border: 2px solid #ccc;
+
 }
 
 .section-view {
@@ -368,3 +374,8 @@ body {
 .section-editor-view {
   display: inline-block;
 }
+
+.section-option {
+
+}
+

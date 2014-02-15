@@ -33,7 +33,8 @@ define(function(require, exports, module) {
                 this.createRow(val, key);
             }, this);
 
-            this.el.insertRow(-1).innerHTML =['<tr><td colspan="3">',
+            this.el.insertRow(-1).innerHTML =[
+                    '<tr><td colspan="3">',
             			'<div id="add-attribute-box">',
                         '<form style="display:none;">',
                             '<input type="text" class="property-name-input" placeholder="Template Name...">',

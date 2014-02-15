@@ -5,13 +5,13 @@ define(function(require, exports, module) {
     var DeployManagerModel = require('./DeployManagerModel');
     var ToolBarView = require('editor/ToolBarView');
     var EditorView = require('editor/EditorView');
-    var PluginsView = require('app/entities/PluginsView');
+    var PluginsView = require('app/PluginsView');
     var SettingsView = require('app/SettingsView');
 
 
     var SoftErrorView = require("app/SoftErrorView");
     var ErrorDialogueView = require('mixins/ErrorDialogueView');
-    var EntitiesView = require('app/entities/EntitiesView');
+    var NodeModelsView = require('app/models/NodeModelsView');
 
 
     var AppView = Backbone.View.extend({
@@ -36,9 +36,9 @@ define(function(require, exports, module) {
             this.listenTo(this.model.get('tables'), 'add', this.entityAdded);
             this.autoAddLinksToNavbar();
 
-            this.entitiesView = this.createSubview(EntitiesView);
-            this.entitiesView.setToggleEl($('.menu-app-entities'));
-            this.entitiesView.setPointerPosition("180px")
+            this.nodeModelsView = this.createSubview(NodeModelsView);
+            this.nodeModelsView.setToggleEl($('.menu-app-entities'));
+            this.nodeModelsView.setPointerPosition("180px")
 
             this.pluginsView = this.createSubview(PluginsView);
             this.pluginsView.setToggleEl($('.menu-app-plugins'));
@@ -66,7 +66,7 @@ define(function(require, exports, module) {
             this.toolBar.setPage(this.pageId);
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
             
-            this.el.appendChild(this.entitiesView.render().el);
+            this.el.appendChild(this.nodeModelsView.render().el);
             this.el.appendChild(this.pluginsView.render().el);
             this.el.appendChild(this.settingsView.render().el);
 
@@ -108,7 +108,7 @@ define(function(require, exports, module) {
 
         tables: function(tutorial) {
             var self = this;
-            this.entitiesView.expand();
+            this.nodeModelsView.expand();
         },
 
         themes: function(tutorial) {
