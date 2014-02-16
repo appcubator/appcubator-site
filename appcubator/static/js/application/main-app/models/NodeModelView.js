@@ -3,13 +3,13 @@ define(function(require, exports, module) {
     'use strict';
 
     var FieldModel = require('models/FieldModel');
-    var UploadExcelView = require('app/entities/UploadExcelView');
-    var ShowDataView = require('app/entities/ShowDataView');
-    var AdminPanelView = require('app/entities/AdminPanelView');
+    var UploadExcelView = require('app/models/UploadExcelView');
+    var ShowDataView = require('app/models/ShowDataView');
+    var AdminPanelView = require('app/AdminPanelView');
 
-    var TableDescriptionView = require('app/entities/TableDescriptionView');
-    var TableDataView        = require('app/entities/TableDataView');
-    var TableCodeView        = require('app/entities/TableCodeView');
+    var TableDescriptionView = require('app/models/NodeModelDescriptionView');
+    var TableDataView        = require('app/models/NodeModelDataView');
+    var TableCodeView        = require('app/models/NodeModelCodeView');
 
 
     var SoftErrorView = require('app/SoftErrorView');

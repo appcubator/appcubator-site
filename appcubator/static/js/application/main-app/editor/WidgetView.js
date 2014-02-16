@@ -48,8 +48,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.listenTo(this.model.get('layout'), "change:alignment", this.changedAlignment, this);
             this.listenTo(this.model.get('layout'), "change", this.changedPadding, this);
 
-            this.listenTo(this.model.get('data'), "change:content", this.changedText, this);
-
             this.listenTo(this.model, "startEditing", this.switchEditModeOn, this);
             this.listenTo(this.model, "deselected", function() {
                 this.model.trigger('stopEditing');
@@ -82,7 +80,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.arrangeLayout();
 
             var expanded = this.model.expand();
-            console.log(this.model);
 
             this.el.innerHTML = this.renderElement(expanded);
             this.innerEl = this.el.firstChild;

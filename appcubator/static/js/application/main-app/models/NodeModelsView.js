@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 
     var UserTableModel = require('models/UserTableModel');
     var TableModel = require('models/TableModel');
-    var TableView = require('entities/TableView');
+    var TableView = require('app/models/NodeModelView');
 
     require('util');
     require('mixins/BackboneDropdownView');
@@ -34,7 +34,7 @@ define(function(require, exports, module) {
 
             var addTableBtn = document.createElement('div');
             addTableBtn.id = 'add-entity';
-            addTableBtn.innerHTML = '<span class="box-button">+ Create Table</span>';
+            addTableBtn.innerHTML = '<span class="box-button">+ Create Model</span>';
 
             var createTableBox = new Backbone.NameBox({}).setElement(addTableBtn).render();
             createTableBox.on('submit', this.createTable);

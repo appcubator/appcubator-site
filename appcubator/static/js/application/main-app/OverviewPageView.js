@@ -4,7 +4,7 @@ define(function(require, exports, module) {
     var AnalyticsView = require('app/AnalyticsView');
     var SimpleModalView = require('mixins/SimpleModalView');
     var ShareModalView = require('app/ShareModalView');
-    var AdminPanelView = require('app/entities/AdminPanelView');
+    var AdminPanelView = require('app/AdminPanelView');
     var DownloadModalView = require('app/DownloadModalView');
     var CollaboratorsView = require('app/CollaboratorsView');
     require('app/templates/MainTemplates');

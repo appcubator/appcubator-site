@@ -286,7 +286,7 @@ generators.push({
         fields: [],
         redirect: "/",
         id: Math.floor(Math.random()*11),
-        tableName: "DefaultTable"
+        modelName: "DefaultTable"
     },
     code: function(data, templates) {
         /* Example (subject to change)
@@ -323,7 +323,7 @@ generators.push({
             "    var formdata = {};\n" +
             "    formdata.name = $('#<%= id %> input[name=\"name\"]').val();\n" +
             "    formdata.url = $('#<%= id %> input[name=\"url\"]').val();\n" +
-            "    models.<%= tableName %>.create<%= tableName %>(formdata, function(err, data){\n" +
+            "    models.<%= modelName %>.create<%= modelName %>(formdata, function(err, data){\n" +
             "        console.log(data);\n" +
             "        if (err) {\n" +
             "            // Do whatever you want with user errors\n" +
@@ -352,7 +352,7 @@ generators.push({
     name: 'config',
     version: '0.1',
     code: function(data, templates) {
-        return templates.main({customConfig: data.customCodeChunks.join("\n")});
+        return templates.main({customConfig: _.map(data.customCodeChunks, expand).join("\n")});
     },
     templates: {
         'main': "#!/usr/bin/env node\n\
@@ -442,7 +442,11 @@ var <%= name %>Schema = <%= schemaCode %>;\n\
 \n\
 <% for(var index in functions) { %>\n\
 <% var sm = functions[index]; %>\n\
+    <% if (sm.instancemethod) { %>\
+<%= name %>Schema.methods.<%= sm.name %> = <%= sm.code %>;\n\
+    <% } else { %>\
 <%= name %>Schema.statics.<%= sm.name %> = <%= sm.code %>;\n\
+    <% } %>\
 <% } %>\n\
 \n\
 <% for(var index in schemaMods) { %>\n\
@@ -495,6 +499,8 @@ generators.push({
                 "    var whenDone = function(e, d) { res.send({error:e, data:d}); };"+"\n"+
                 "    var args = req.body;"+"\n"+
                 "    args.push(whenDone);"+"\n"+
+                "    args.push(req);"+"\n"+
+                "    args.push(res);"+"\n"+
                 "    <%= modelName %>.<%= methodName %>.apply(<%= modelName %>, args);"+"\n"+
                 "}"}
 });

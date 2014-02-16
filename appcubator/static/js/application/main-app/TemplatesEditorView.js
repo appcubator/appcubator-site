@@ -36,7 +36,7 @@ define(function(require, exports, module) {
 
         render: function() {
             var strHTML = _.template([
-                '<div id="name-editor" style="height:60px; display: block; border-bottom:1px solid #ccc;">',
+                '<div id="name-editor" class="sub-settings">',
                     '<div style="line-height: 60px; display:inline-block;">Current Generator: <%= name %></div>',
                     '<div class="btn-group right">',
                         '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">',

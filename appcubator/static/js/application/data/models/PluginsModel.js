@@ -1,10 +1,19 @@
 define([
-		'models/PluginModel'
+		'models/PluginModel',
+		'backbone'
 	],
 	function(PluginModel) {
 
 		var PluginsModel = Backbone.Model.extend({
 
+			initialize: function(bone) {
+
+				_.each(bone, function(val, key) {
+					var pluginModel = new PluginModel(val);
+					this.set(key, pluginModel);
+				}, this);
+
+			},
 
 			install: function(plugin) {
 				var pluginModel = new PluginModel(JSON.parse(plugin.data));
