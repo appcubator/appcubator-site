@@ -85,6 +85,7 @@ urlpatterns += patterns('appcubator.views.app',
 
     # special json editor route
     url(r'^app/(\d+)/debug/$', 'jsoneditor'),
+    url(r'^app/(\d+)/dev/$', 'plugineditor'),
 
     url(r'^plugins/$$', 'plugins'),
 

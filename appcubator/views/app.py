@@ -336,6 +336,29 @@ def jsoneditor(request, app_id, page_name="overview"):
     return render(request, 'app-jsoneditor.html', page_context)
 
 @require_GET
+@login_required
+def plugineditor(request, app_id):
+    app_id = long(app_id)
+    # id of 0 is reserved for sample app
+    if(app_id == 0):
+        return redirect(welcome)
+
+    app = get_object_or_404(App, id=app_id)
+    if not app.is_editable_by_user(request.user):
+        raise Http404
+
+    themes = UITheme.get_web_themes()
+    themes = [t.to_dict() for t in themes]
+    mobile_themes = UITheme.get_mobile_themes()
+    mobile_themes = [t.to_dict() for t in mobile_themes]
+
+    page_context = {'app'          : app,
+                    'user'         : app.owner,
+                    'CODEGEN_URL'  : settings.CODEGEN_ADDR + '/'}
+    add_statics_to_context(page_context, app)
+    return render(request, 'app-plugin-editor.html', page_context)
+
+@require_GET
 def app_editor_iframe(request, app_id, page_name="overview"):
     app_id = long(app_id)
     # id of 0 is reserved for sample app
