@@ -8,61 +8,41 @@ define(function(require, exports, module) {
     var AdminPanelView = require('app/AdminPanelView');
     var SoftErrorView = require('app/SoftErrorView');
     var DialogueView = require('mixins/DialogueView');
-    require('mixins/BackboneCardView');
-    require('prettyCheckable');
 
-    var descriptionTemplate = [
-    '<div class="description">',
-        '<span class="tbl-wrapper">',
-            '<span class="tbl">',
-                '<ul class="property-list">',
-                    '<div class="column header">',
-                        '<div class="hdr">Property</div>',
-                        '<div class="type-field desc">Type</div>',
-                    '</div>',
-                    '<div class="column">',
-                        '<div class="hdr">Date Created</div>',
-                        '<div class="type-field">',
-                            '<select class="attribs" id="Name" disabled>',
-                                '<option value="text" selected="">Date</option>',
-                            '</select>',
-                        '</div>',
-                    '</div>',
-                '</ul>',
-                '<div class="column add-property-column">',
-                    '<form class="add-property-form" style="display:none">',
-                            '<input type="text" class="property-name-input" placeholder="Property Name...">',
-                        '<input type="submit" class="done-btn" value="Done">',
-                    '</form>',
-                    '<span class="add-property-button box-button"><span class="plus-icon"></span>Add Property</span>',
-                '</div>',
-            '</span>',
-        '</span>',
+    var pluginAttribsTemplate = [
+    '<div class="plugins-list">',
+        '<div class="plugin-li">',
+        '<h4>Plugin 1</h4>',
+        '<div class="toggleSwitch">',
+            '<div class="onoffswitch" >',
+                '<input type="checkbox" name="onoffswitch< i >" class="onoffswitch-checkbox" id="myonoffswitch< i >" >',
+                '<label class="onoffswitch-label" for="myonoffswitch< i >">',
+                    '<div class="onoffswitch-inner"></div>',
+                    '<div class="onoffswitch-switch"></div>',
+                '</label>',
+            '</div>',
+        '</div>',
+        '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
+        '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
+        '</div>',
+        '<div class="plugin-li">',
+        '<h4>Plugin 2</h4>',
+        '<div class="toggleSwitch">',
+            '<div class="onoffswitch" >',
+                '<input type="checkbox" name="onoffswitch< i >" class="onoffswitch-checkbox" id="myonoffswitch< i >" >',
+                '<label class="onoffswitch-label" for="myonoffswitch< i >">',
+                    '<div class="onoffswitch-inner"></div>',
+                    '<div class="onoffswitch-switch"></div>',
+                '</label>',
+            '</div>',
+        '</div>',
+        '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
+        '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
+        '</div>',
     '</div>'
     ].join('\n');
 
-
-    var propertyTemplate = [
-    '<div class="column <% if(isNew) { %>newcol<% } %>" id="column-<%- cid %>">',
-      '<div class="hdr"><%- name %></div>',
-      '<div class="type-field" id="type-row-<%- cid %>">',
-        '<select class="attribs" id="type-<%- cid %>">',
-          '<option value="text" <% if(type =="text") %> selected <% %>>Text</option>',
-          '<option value="number" <% if(type =="number") %> selected <% %>>Number</option>',
-          '<option value="email" <% if(type =="email") %> selected <% %>>Email</option>',
-          '<option value="image" <% if(type =="image") %> selected <% %>>Image</option>',
-          '<option value="date" <% if(type =="date") %> selected <% %>>Date</option>',
-          '<option value="file" <% if(type =="file") %> selected <% %>>File</option>',
-          '<option value="money" <% if(type =="money") %> selected <% %>>USD($)</option>',
-        '</select>',
-      '</div>',
-      '<div class="prop-cross" id="delete-<%- cid %>">',
-        '<div class="remove hoff1">Remove</div>',
-      '</div>',
-    '</div>'
-    ].join('\n');
-
-    var TableDescriptionView = Backbone.View.extend({
+    var NodeModelPluginsView = Backbone.View.extend({
         el: null,
         tagName: 'div',
         collection: null,
@@ -87,50 +67,16 @@ define(function(require, exports, module) {
             _.bindAll(this);
             this.model = tableModel;
             this.fieldsCollection = tableModel.getFieldsColl();
-
-            this.listenTo(this.model, 'remove', this.remove);
-            this.listenTo(this.model.get('fields'), 'add', this.appendField, true);
-            this.listenTo(this.model.get('fields'), 'remove', this.removeField);
-            this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
-            
-            this.userRoles = v1State.get('users').pluck('name');
-            this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));
-            this.bindDupeWarning();
         },
 
         render: function() {
 
-            var html = _.template(descriptionTemplate, this.model.serialize());
-
+            var html = _.template(pluginAttribsTemplate, {});
             this.$el.html(html);
-
-            this.renderProperties();
-            this.renderRelations();
-
-            this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('.add-property-column').get(0)).render();
-            this.subviews.push(this.addPropertyBox);
-            this.addPropertyBox.on('submit', this.createNewProperty);
 
             return this;
         },
 
-        renderProperties: function() {
-            this.fieldsCollection.each(function(field) {
-                // only render non-relational properties
-                if (!field.isRelatedField()) {
-                    this.appendField(field);
-                }
-            }, this);
-        },
-
-        bindDupeWarning: function() {
-            this.listenTo(this.fieldsCollection, 'duplicate', function(key, val) {
-                new SoftErrorView({
-                    text: "Duplicate entry should not be duplicate. " + key + " of the field should not be the same: " + val,
-                    path: ""
-                });
-            });
-        },
 
         clickedAddProperty: function(e) {
             this.$el.find('.add-property-button').hide();
@@ -305,5 +251,6 @@ define(function(require, exports, module) {
 
     });
 
-    return TableDescriptionView;
+    return NodeModelPluginsView;
+
 });

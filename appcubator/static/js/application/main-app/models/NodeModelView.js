@@ -7,7 +7,8 @@ define(function(require, exports, module) {
     var ShowDataView = require('app/models/ShowDataView');
     var AdminPanelView = require('app/AdminPanelView');
 
-    var TableDescriptionView = require('app/models/NodeModelDescriptionView');
+    var NodeModelPluginsView     = require('app/models/NodeModelPluginsView');
+    var NodeModelDescriptionView = require('app/models/NodeModelDescriptionView');
     var TableDataView        = require('app/models/NodeModelDataView');
     var TableCodeView        = require('app/models/NodeModelCodeView');
 
@@ -70,7 +71,8 @@ define(function(require, exports, module) {
 
         renderDescription: function() {
             this.$el.find('.current-content').html('');
-            this.$el.find('.current-content').append(new TableDescriptionView(this.model).render().el);
+            this.$el.find('.current-content').append(new NodeModelDescriptionView(this.model).render().el);
+            this.$el.find('.current-content').append(new NodeModelPluginsView(this.model).render().el);
             this.$el.find('.description-li').addClass('active');
         },
 
