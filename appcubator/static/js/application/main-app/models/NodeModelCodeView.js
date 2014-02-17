@@ -68,11 +68,7 @@ define(function(require, exports, module) {
 
         setupAce: function() {
             this.model.get('functions').each(function(methodModel) {
-                if (methodModel.isGenerator()) {
-                    this.setupFakeGeneratorAce(methodModel);
-                } else {
-                    this.setupSingleAce(methodModel);
-                }
+                this.setupSingleAce(methodModel);
             }, this);
 
             // this.editor.getSession().setMode("ace/mode/css");
@@ -84,6 +80,7 @@ define(function(require, exports, module) {
             this.$el.find("#func-editor-" + methodModel.cid).text(methodModel.getCode());
         },
         setupSingleAce: function(methodModel) {
+            /* pass true as second argument to render this as a model_method from some plugin */
             /* this breaks when this.el is not rendered */
             var self = this;
 
@@ -91,9 +88,14 @@ define(function(require, exports, module) {
             editor.getSession().setMode("ace/mode/javascript");
             editor.setValue(methodModel.getCode(), -1);
 
-            editor.on("change", function() {
-                self.codeChanged(methodModel, editor.getValue());
-            });
+            if (methodModel.isGenerator()) {
+                console.log('setting read only');
+                editor.setReadOnly(true);
+            } else {
+                editor.on("change", function() {
+                    self.codeChanged(methodModel, editor.getValue());
+                });
+            }
         },
 
         '_inject_ace_html': function(methodModel, id) {
