@@ -182,6 +182,10 @@ define(function(require, exports, module) {
                 this.el.appendChild(this.renderButtonWithText('edit-custom-widget-btn', 'Edit Custom Widget'));
             }
 
+            if (type == "create-form") {
+
+            }
+
             this.el.appendChild(this.renderSettingsAndDelete('edit-custom-widget-btn', 'Edit Custom Widget'));
         },
 

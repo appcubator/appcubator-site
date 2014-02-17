@@ -1,5 +1,5 @@
 <!-- Copied from appmake but modified to reference statics from appmake -->
-
+{% load embed_json %}
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -29,15 +29,25 @@
 </style>
 
 <body>
-
-····
+  <script type="text/javascript">
+    var appId = {{ app.id }};
+    var appUrl = "{{ app.url }}";
+    var appGitRepo = "{{ app.git_url }}";
+    var appState = {{ app.state_json|fix_solidus|safe }};
+    var uieState = {{ app.uie_state_json|fix_solidus|safe }};
+    var mobileUieState = {{ app.mobile_uie_state_json|fix_solidus|safe }};
+    var statics = {{ statics|fix_solidus|safe }};
+    var staticVersion = "{{STATIC_VERSION}}";
+    var v1 = {};
+    var v1State = {};
+    var pageId = null;
+    var innerDoc;
+  </script>
 
 
         <!-- build:js scripts/main.js -->
-        <script data-main="{{ CODEGEN_URL }}client/app/scripts/main" src="{{ CODEGEN_URL }}client/app/bower_components/requirejs/require.js"></script>
+    <script data-main="{{ CODEGEN_URL }}client/app/scripts/main" src="{{ CODEGEN_URL }}client/app/bower_components/requirejs/require.js"></script>
         <!-- endbuild -->
 
-
-·····
 </body>
 </html>
