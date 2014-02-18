@@ -280,7 +280,17 @@ define(function(require, exports, module) {
 
             if (json.context) delete json.context;
             return json;
-        }
+        },
+
+        safeExpand: function() {
+            try {
+                return this.expand();
+            } catch (e) {
+                console.log("Expander error:");
+                console.log(e);
+                return {html: '<img src="http://cdn.memegenerator.net/instances/500x/43563104.jpg">', js: '', css: ''};
+            }
+        },
     });
 
     return WidgetModel;

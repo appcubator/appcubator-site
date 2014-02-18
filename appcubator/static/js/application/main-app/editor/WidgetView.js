@@ -79,7 +79,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             var spin = util.addLoadingSpin(this.el);
             this.arrangeLayout();
 
-            var expanded = this.model.expand();
+            var expanded = this.model.safeExpand();
 
             this.el.innerHTML = this.renderElement(expanded);
             this.innerEl = this.el.firstChild;
@@ -100,7 +100,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         reRender: function() {
-            var expanded = this.model.expand();
+            var expanded = this.model.safeExpand();
 
             this.el.innerHTML = this.renderElement(expanded);
             this.innerEl = this.el.firstChild;
