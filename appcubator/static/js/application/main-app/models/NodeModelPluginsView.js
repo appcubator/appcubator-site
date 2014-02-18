@@ -12,7 +12,8 @@ define(function(require, exports, module) {
     var pluginAttribsTemplate = [
     '<div class="plugins-list">',
         '<div class="plugin-li">',
-        '<h4>Plugin 1</h4>',
+        '<% _.each(plugins, function(plugin) { %>',
+        '<h4><%= plugin.name %></h4>',
         '<div class="toggleSwitch">',
             '<div class="onoffswitch" >',
                 '<input type="checkbox" name="onoffswitch< i >" class="onoffswitch-checkbox" id="myonoffswitch< i >" >',
@@ -22,23 +23,25 @@ define(function(require, exports, module) {
                 '</label>',
             '</div>',
         '</div>',
-        '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
-        '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
+        '<% }); %>',
+
+        // '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
+        // '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
         '</div>',
-        '<div class="plugin-li">',
-        '<h4>Plugin 2</h4>',
-        '<div class="toggleSwitch">',
-            '<div class="onoffswitch" >',
-                '<input type="checkbox" name="onoffswitch< i >" class="onoffswitch-checkbox" id="myonoffswitch< i >" >',
-                '<label class="onoffswitch-label" for="myonoffswitch< i >">',
-                    '<div class="onoffswitch-inner"></div>',
-                    '<div class="onoffswitch-switch"></div>',
-                '</label>',
-            '</div>',
-        '</div>',
-        '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
-        '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
-        '</div>',
+        // '<div class="plugin-li">',
+        // '<h4>Plugin 2</h4>',
+        // '<div class="toggleSwitch">',
+        //     '<div class="onoffswitch" >',
+        //         '<input type="checkbox" name="onoffswitch< i >" class="onoffswitch-checkbox" id="myonoffswitch< i >" >',
+        //         '<label class="onoffswitch-label" for="myonoffswitch< i >">',
+        //             '<div class="onoffswitch-inner"></div>',
+        //             '<div class="onoffswitch-switch"></div>',
+        //         '</label>',
+        //     '</div>',
+        // '</div>',
+        // '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
+        // '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
+        // '</div>',
     '</div>'
     ].join('\n');
 
@@ -71,7 +74,11 @@ define(function(require, exports, module) {
 
         render: function() {
 
-            var html = _.template(pluginAttribsTemplate, {});
+            var modelGenerators = v1State.get('plugins').getPluginNamesWithModule('model_methods');
+
+            console.log(modelGenerators);
+ 
+            var html = _.template(pluginAttribsTemplate, { plugins : modelGenerators });
             this.$el.html(html);
 
             return this;

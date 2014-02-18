@@ -27,6 +27,13 @@ define([
 				this.set(plugin.name, pluginModel);
 			},
 
+			getPluginNamesWithModule: function(moduleName) {
+				return _.map(this.attributes, function(pluginModel, pluginName) {
+					pluginModel.name = pluginName;
+					return pluginModel;
+				});
+			},
+
 			getGeneratorsWithModule: function(generatorModule) {
 				var generators = [];
 
