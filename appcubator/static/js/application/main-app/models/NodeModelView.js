@@ -72,7 +72,10 @@ define(function(require, exports, module) {
         renderDescription: function() {
             this.$el.find('.current-content').html('');
             this.$el.find('.current-content').append(new NodeModelDescriptionView(this.model).render().el);
-            this.$el.find('.current-content').append(new NodeModelPluginsView(this.model).render().el);
+            var nodeModelPlugins = new NodeModelPluginsView(this.model);
+
+            //.render().el
+            this.$el.find('.current-content').append(nodeModelPlugins.render().el);
             this.$el.find('.description-li').addClass('active');
         },
 

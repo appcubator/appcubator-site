@@ -18,7 +18,7 @@ define([
 			install: function(plugin) {
 				var pluginModel = new PluginModel(JSON.parse(plugin.data));
 
-				pluginModel.set('pluginInformation', {
+				pluginModel.set('metadata', {
 					description: plugin.description,
 					name: plugin.name,
 					origin: "appcubator"
@@ -50,6 +50,17 @@ define([
 				}));
 
 				return generators;
+			},
+
+			installPluginToModel: function (pluginName, nodeModelModel) {
+				var plugin = this.get(pluginName);
+				if (!plugin) return;ß
+				var gens = plugin.getGeneratorsWithModule('model_methods');
+				console.log(gens);
+			},
+
+			uninstallPluginToModel: function(pluginName, nodeModelModel) {
+
 			},
 
 			toJSON: function() {
