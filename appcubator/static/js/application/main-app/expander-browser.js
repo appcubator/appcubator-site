@@ -239,32 +239,6 @@ exports.generators = generators;
 var generators = [];
 
 generators.push({
-    name: 'form-field',
-    version: '0.1',
-    code: function(data, templates) {
-        /*  */
-
-        var template = templates[data.displayType];
-        data.style = data.style || 'display:block';
-
-        return template(data);
-    },
-    templates: {
-        "single-line-text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
-        "text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
-        "paragraph-text": '<textarea name="<%= field_name %>" placeholder="<%= placeholder %>"></textarea>',
-        "dropdown": '<select name="<%= field_name %>" class="dropdown"><% _.each(options.split(\',\'), function(option, ind){ %><option><%= option %></option><% }); %></select>',
-        "option-boxes": '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value=""> <label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
-        "password-text": '<input name="<%= field_name %>" type="password" placeholder="<%= placeholder %>">',
-        "email-text": '<div class="email"><input type="text" placeholder="<%= placeholder %>"></div>',
-        "button": '<div class="btn"><%= placeholder %></div>',
-        "image-uploader": '<div class="upload-image btn">Upload Image</div>',
-        "file-uploader": '<div class="upload-file btn">Upload File</div>',
-        "date-picker": '<input name="<%= field_name %>" type="text" placeholder="<%= placeholder %>"><img style="margin-left:5px;" src="/static/img/calendar-icon.png">'
-    }
-});
-
-generators.push({
     name: 'create',
     version: '0.1',
     defaults: {
@@ -279,11 +253,11 @@ generators.push({
         /* Example (subject to change)
         {
             generate: "crud.uielements.create",
-            data: { fields: [{ generate: 'form-field',
+            data: { fields: [{ generate: 'uielements.form-field',
                                data: {displayType:'single-line-text',
                                       field_name:'name',
                                       placeholder: 'Name'}
-                             },{generate: 'form-field',
+                             },{generate: 'uielements.form-field',
                                 data:{ displayType:'single-line-text',
                                        field_name: 'url',
                                        placeholder: 'URL'}}],
@@ -1035,6 +1009,32 @@ generators.push({
                  layout: data.layout };
     },
     templates: { }
+});
+
+generators.push({
+    name: 'form-field',
+    version: '0.1',
+    code: function(data, templates) {
+        /*  */
+
+        var template = templates[data.displayType];
+        data.style = data.style || 'display:block';
+
+        return template(data);
+    },
+    templates: {
+        "single-line-text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
+        "text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
+        "paragraph-text": '<textarea name="<%= field_name %>" placeholder="<%= placeholder %>"></textarea>',
+        "dropdown": '<select name="<%= field_name %>" class="dropdown"><% _.each(options.split(\',\'), function(option, ind){ %><option><%= option %></option><% }); %></select>',
+        "option-boxes": '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value=""> <label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
+        "password-text": '<input name="<%= field_name %>" type="password" placeholder="<%= placeholder %>">',
+        "email-text": '<div class="email"><input type="text" placeholder="<%= placeholder %>"></div>',
+        "button": '<div class="btn"><%= placeholder %></div>',
+        "image-uploader": '<div class="upload-image btn">Upload Image</div>',
+        "file-uploader": '<div class="upload-file btn">Upload File</div>',
+        "date-picker": '<input name="<%= field_name %>" type="text" placeholder="<%= placeholder %>"><img style="margin-left:5px;" src="/static/img/calendar-icon.png">'
+    }
 });
 
 exports.generators = generators;

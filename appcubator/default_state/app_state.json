@@ -152,7 +152,7 @@
               "className": "",
               "style": "",
               "fields": [{
-                "generate": "crud.uielements.form-field",
+                "generate": "root.uielements.form-field",
                 "data": {
                   "field_name": "name",
                   "type": "text",
@@ -160,7 +160,7 @@
                   "displayType": "single-line-text"
                 }
               }, {
-                "generate": "crud.uielements.form-field",
+                "generate": "root.uielements.form-field",
                 "data": {
                   "field_name": "url",
                   "type": "text",

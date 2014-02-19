@@ -15,7 +15,7 @@ define([
                 this.set('required', (bone.required || true));
 
                 if (!this.generate) {
-                    this.generate = "crud.uielements.form-field";
+                    this.generate = "root.uielements.form-field";
                 }
             },
 
