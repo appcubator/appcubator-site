@@ -2,8 +2,7 @@ define(function(require, exports, module) {
 
     'use strict';
 
-    var DataModel = require('models/DataModel'),
-        LayoutModel = require('models/LayoutModel');
+    var LayoutModel = require('models/LayoutModel');
 
     require('dicts/constant-containers');
 

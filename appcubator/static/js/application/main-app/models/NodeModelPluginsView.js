@@ -3,6 +3,8 @@ define(function(require, exports, module) {
     'use strict';
     require('backbone');
 
+    var NodeModelMethodModel = require('models/NodeModelMethodModel');
+
     var pluginAttribsTemplate = [
     '<div class="plugins-list">',
         '<% _.each(plugins, function(plugin, i) { %>',
@@ -17,23 +19,6 @@ define(function(require, exports, module) {
             '</div>',
         '</div>',
         '<% }); %>',
-
-        // '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
-        // '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
-        // '<div class="plugin-li">',
-        // '<h4>Plugin 2</h4>',
-        // '<div class="toggleSwitch">',
-        //     '<div class="onoffswitch" >',
-        //         '<input type="checkbox" name="onoffswitch< i >" class="onoffswitch-checkbox" id="myonoffswitch< i >" >',
-        //         '<label class="onoffswitch-label" for="myonoffswitch< i >">',
-        //             '<div class="onoffswitch-inner"></div>',
-        //             '<div class="onoffswitch-switch"></div>',
-        //         '</label>',
-        //     '</div>',
-        // '</div>',
-        // '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
-        // '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
-        // '</div>',
     '</div>'
     ].join('\n');
 
@@ -67,10 +52,12 @@ define(function(require, exports, module) {
             var isChecked = this.$el.find('#myonoffswitch'+pluginInd).hasClass('checked');
             console.log(isChecked);
             if (isChecked) {
-                v1State.get("plugins").installPluginToModel(this.model);
+                v1State.get("plugins").uninstallPluginToModel(this.model);
+                this.$el.find('#myonoffswitch'+pluginInd).removeClass('checked');
             }
             else {
-                v1State.get("plugins").uninstallPluginToModel(this.model);
+                v1State.get("plugins").installPluginToModel(this.model);
+                this.$el.find('#myonoffswitch'+pluginInd).addClass('checked');
             }
 
             e.preventDefault();

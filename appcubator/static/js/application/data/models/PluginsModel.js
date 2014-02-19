@@ -1,79 +1,90 @@
-define([
-		'models/PluginModel',
-		'backbone'
-	],
-	function(PluginModel) {
+define(function(require, exports, module) {
 
-		var PluginsModel = Backbone.Model.extend({
+	'use strict';
 
-			initialize: function(bone) {
+	require('backbone');
+	var PluginModel = require('models/PluginModel');
 
-				_.each(bone, function(val, key) {
-					var pluginModel = new PluginModel(val);
-					this.set(key, pluginModel);
-				}, this);
 
-			},
+	/* Contains metadata and convenience methods for Plugins */
+	var PluginsModel = Backbone.Model.extend({
 
-			install: function(plugin) {
-				var pluginModel = new PluginModel(JSON.parse(plugin.data));
+		initialize: function(bone) {
 
-				pluginModel.set('metadata', {
-					description: plugin.description,
-					name: plugin.name,
-					origin: "appcubator"
-				});
+			_.each(bone, function(val, key) {
+				var pluginModel = new PluginModel(val);
+				this.set(key, pluginModel);
+			}, this);
 
-				this.set(plugin.name, pluginModel);
-			},
+		},
 
-			getPluginNamesWithModule: function(moduleName) {
-				return _.map(this.attributes, function(pluginModel, pluginName) {
-					pluginModel.name = pluginName;
-					return pluginModel;
-				});
-			},
+		install: function(plugin) {
+			var pluginModel = new PluginModel(JSON.parse(plugin.data));
 
-			getGeneratorsWithModule: function(generatorModule) {
-				var generators = [];
+			pluginModel.set('metadata', {
+				description: plugin.description,
+				name: plugin.name,
+				origin: "appcubator"
+			});
 
-				var generators = _.flatten(_.map(this.attributes, function(pluginModel, packageName) {
-					return pluginModel.getGeneratorsWithModule(generatorModule);
+			this.set(plugin.name, pluginModel);
+		},
 
-					// _.each(packageContent[generatorModule], function(generator) {
-					// 	generators.push({
-					// 		package: packageName,
-					// 		module: generatorModule,
-					// 		name: generator.name
-					// 	});
-					// });
-				}));
+		getPluginNamesWithModule: function(moduleName) {
+			return _.map(this.attributes, function(pluginModel, pluginName) {
+				pluginModel.name = pluginName;
+				return pluginModel;
+			});
+		},
 
-				return generators;
-			},
+		getGeneratorsWithModule: function(generatorModule) {
+			var generators = [];
 
-			installPluginToModel: function (pluginName, nodeModelModel) {
-				var plugin = this.get(pluginName);
-				if (!plugin) return;ß
-				var gens = plugin.getGeneratorsWithModule('model_methods');
-				console.log(gens);
-			},
+			var generators = _.flatten(_.map(this.attributes, function(pluginModel, packageName) {
+				return pluginModel.getGeneratorsWithModule(generatorModule);
 
-			uninstallPluginToModel: function(pluginName, nodeModelModel) {
+				// _.each(packageContent[generatorModule], function(generator) {
+				// 	generators.push({
+				// 		package: packageName,
+				// 		module: generatorModule,
+				// 		name: generator.name
+				// 	});
+				// });
+			}));
 
-			},
+			return generators;
+		},
 
-			toJSON: function() {
-				var json = _.clone(this.attributes);
-				
-				_.each(json, function(val, key) {
-					json[key] = val.serialize();
-				});
+		installPluginToModel: function(pluginName, nodeModelModel) {
+			var plugin = this.get(pluginName);
+			if (!plugin) return;
+			var gens = v1State.get('generators').get(pluginName).getGeneratorsWithModule('model_methods');
 
-				return json;
-			}
+			_.each(gens, function(gen) {
+				console.log(gen);
+				var methodModel = new NodeModelMethodModel();
+				methodModel.setGenerator(gen);
+				methodModel.set('modelName', nodeModelModel.get('name'));
+			});
 
-		});
+			console.log(gens);
+		},
 
-		return PluginsModel;
+		uninstallPluginToModel: function(pluginName, nodeModelModel) {
+
+		},
+
+		toJSON: function() {
+			var json = _.clone(this.attributes);
+
+			_.each(json, function(val, key) {
+				json[key] = val.serialize();
+			});
+
+			return json;
+		}
+
 	});
+
+	return PluginsModel;
+});

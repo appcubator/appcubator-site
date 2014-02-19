@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 
     var SoftErrorView = require('app/SoftErrorView');
     var DialogueView = require('mixins/DialogueView');
-    var TableCodeModel = require('models/TableCodeModel');
+    var NodeModelMethodModel = require('models/NodeModelMethodModel');
 
     require('app/templates/TableTemplates');
     require('prettyCheckable');
@@ -109,7 +109,7 @@ define(function(require, exports, module) {
         },
 
         createStaticFunction: function(functionName) {
-            this.model.get('functions').add(new TableCodeModel({ name: functionName }));
+            this.model.get('functions').add(new NodeModelMethodModel({ name: functionName }));
         },
 
         codeChanged: function(methodModel, newValue) {

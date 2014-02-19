@@ -1,9 +1,9 @@
 define([
-        'wizard/AppGenerator',
+        'TemplateGenerator',
         'dicts/page-templates',
         'mixins/BackboneModal'
     ],
-    function(AppGenerator) {
+    function(TemplateGenerator) {
 
         var PageTemplatePicker = Backbone.View.extend({
             className: 'page-template-picker',
