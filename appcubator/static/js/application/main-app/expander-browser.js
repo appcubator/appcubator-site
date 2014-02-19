@@ -372,10 +372,6 @@ generators.push({
     code: function(data, templates) {
         // generate the initial mongoose Schema from fields.
         data.schemaCode = templates.schema({fields: data.fields});
-        data.fields = undefined; // we dont need this anymore.
-
-        if (data.schemaMods === undefined)
-            data.schemaMods = [];
 
         for (index in data.functions) {
             var sm = data.functions[index];
@@ -405,14 +401,11 @@ var <%= name %>Schema = <%= schemaCode %>;\n\
 <% var sm = functions[index]; %>\n\
     <% if (sm.instancemethod) { %>\
 <%= name %>Schema.methods.<%= sm.name %> = <%= sm.code %>;\n\
+    <% } else if (sm.schemaMod) { %>\
+(<%= sm.code %>)(<%= name %>Schema);\n\
     <% } else { %>\
 <%= name %>Schema.statics.<%= sm.name %> = <%= sm.code %>;\n\
     <% } %>\
-<% } %>\n\
-\n\
-<% for(var index in schemaMods) { %>\n\
-<% var sm = schemaMods[index]; %>\n\
-(<%= sm %>)(<%= name %>Schema);\n\
 <% } %>\n\
 \n\
 exports.<%= name %> = mongoose.model('<%= name %>', <%= name %>Schema);\n"
