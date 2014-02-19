@@ -96,16 +96,8 @@ exports.factory = function(_safe_eval_) {
                 console: console // debug
             };
             var code = '(' + generatorData.code + ')(data, templates);';
-            
-            var genObj = "ERROR";
 
-            try {
-                genObj = _safe_eval_(code, globals);
-            }
-            catch(e) {
-                console.log(e);
-                throw generatorData.name;
-            }
+            genObj = _safe_eval_(code, globals);
 
             return genObj;
         };
@@ -144,10 +136,9 @@ exports.factory = function(_safe_eval_) {
             return generatedObj;
         }
         catch(e) {
-            _.each(genID, function(val, key) {
-                console.log(val + " " + key);
-            });
-            throw JSON.stringify(genID, null, 3) + " : " + e;
+            console.log('Error in call to expandOnce for '+JSON.stringify(genID, null, 3)+':');
+            console.log(e);
+            throw e;
         }
     }
 
@@ -165,29 +156,25 @@ exports.factory = function(_safe_eval_) {
 
     expander.expandAll = function(app) {
         app.plugins = app.plugins || []; // TEMP BECAUSE THIS DOES NOT YET EXIST.
-        try {
-            _.each(app.routes, function(route, i) {
-                app.routes[i] = expand(app.plugins, app.generators, route);
-            });
 
-            _.each(app.models, function(model, index) {
-                app.models[index] = expand(app.plugins, app.generators, model);
-            });
+        _.each(app.routes, function(route, i) {
+            app.routes[i] = expand(app.plugins, app.generators, route);
+        });
 
-            _.each(app.templates, function (template, index) {
-                app.templates[index] = expand(app.plugins, app.generators, template);
-            });
+        _.each(app.models, function(model, index) {
+            app.models[index] = expand(app.plugins, app.generators, model);
+        });
 
-            app.templates.push({name: "header", code: app.header||""});
-            app.templates.push({name: "scripts", code: app.scripts||""});
+        _.each(app.templates, function (template, index) {
+            app.templates[index] = expand(app.plugins, app.generators, template);
+        });
 
-            app.config = expand(app.plugins, app.generators, app.config);
-            app.css = expand(app.plugins, app.generators, app.css);
-        }
-        catch(e) {
-            console.log("ERROR with generator: " + e);
-            throw e;
-        }
+        app.templates.push({name: "header", code: app.header||""});
+        app.templates.push({name: "scripts", code: app.scripts||""});
+
+        app.config = expand(app.plugins, app.generators, app.config);
+        app.css = expand(app.plugins, app.generators, app.css);
+
         return app;
     };
 
