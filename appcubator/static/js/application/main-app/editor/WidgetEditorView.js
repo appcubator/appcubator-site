@@ -424,12 +424,12 @@ define(function(require, exports, module) {
         },
 
         doubleClicked: function() {
-            if (this.model.getForm() && !this.model.isLoginForm()) {
-                this.openFormEditor();
-            }
-            if (this.model.getLoginRoutes()) {
-                this.openLoginEditor();
-            }
+            // if (this.model.getForm() && !this.model.isLoginForm()) {
+            //     this.openFormEditor();
+            // }
+            // if (this.model.getLoginRoutes()) {
+            //     this.openLoginEditor();
+            // }
             if (this.model.get('type') == "imageslider") {
                 this.openSlideEditor();
             }

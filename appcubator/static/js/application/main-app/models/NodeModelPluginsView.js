@@ -8,7 +8,7 @@ define(function(require, exports, module) {
         '<% _.each(plugins, function(plugin, i) { %>',
         '<div class="plugin-li">',
             '<h4><%= plugin.name %></h4>',
-            '<div class="onoffswitch nodemodel" >',
+            '<div class="onoffswitch nodemodel" id="myonoffswitch-wrapper-<%=i%>">',
                 '<input type="checkbox" name="onoffswitch<%=i%>" class="onoffswitch-checkbox >" id="myonoffswitch<%=i%>" >',
                 '<label class="onoffswitch-label" for="myonoffswitch<%=i%>">',
                     '<div class="onoffswitch-inner"></div>',
@@ -53,7 +53,8 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            var modelGenerators = v1State.get('plugins').getPluginNamesWithModule('model_methods'); 
+            var modelGenerators = v1State.get('plugins').getPluginNamesWithModule('model_methods');
+            this.plugins = modelGenerators; 
             var html = _.template(pluginAttribsTemplate, { plugins : modelGenerators });
             this.el.innerHTML = html;
 
@@ -61,12 +62,9 @@ define(function(require, exports, module) {
         },
 
         clickedPluginToggle: function(e) {
-            console.log("clicked");
-            console.log(e.currentTarget);
-            console.trace();
 
-            var pluginName = e.currentTarget.id.replace('plugin-switch-','');
-            var isChecked = this.$el.find('#myonoffswitch'+pluginName).hasClass('checked');
+            var pluginInd = e.currentTarget.id.replace('myonoffswitch-wrapper-','');
+            var isChecked = this.$el.find('#myonoffswitch'+pluginInd).hasClass('checked');
             console.log(isChecked);
             if (isChecked) {
                 v1State.get("plugins").installPluginToModel(this.model);
