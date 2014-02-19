@@ -11,7 +11,8 @@ define(['backbone'], function(Backbone) {
     				generators.push({
     					package: packageName,
     					module: generatorModule,
-    					name: generator.name
+    					name: generator.name,
+                        generatorIdentifier: packageName+"."+generatorModule+"."+generator.name
     				});
     			});
     		});

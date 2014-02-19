@@ -1,6 +1,7 @@
 define(function(require, exports, module) {
 
     'use strict';
+    require('backbone');
 
     var pluginAttribsTemplate = [
     '<div class="plugins-list">',
