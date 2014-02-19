@@ -93,8 +93,7 @@ define(function(require, exports, module) {
             this.listenTo(this.model.get('fields'), 'remove', this.removeField);
             this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
             
-            this.userRoles = v1State.get('users').pluck('name');
-            this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));
+            this.otherEntities = _(v1State.get('models').pluck('name')).without(this.model.get('name'));
             this.bindDupeWarning();
         },
 
@@ -157,7 +156,7 @@ define(function(require, exports, module) {
             page_context.cid = fieldModel.cid;
             page_context.nlType = fieldModel.getNLType();
             page_context.entityName = this.model.get('name');
-            page_context.entities = this.userRoles.concat(this.otherEntities);
+            page_context.entities = this.otherEntities;
             page_context.isNew = isNew;
 
             var template = _.template(propertyTemplate, page_context);
@@ -230,11 +229,9 @@ define(function(require, exports, module) {
         },
 
         renderRelations: function() {
-            var userRelations = v1State.get('users').getRelationsWithEntityName(this.model.get('name'));
-            var tableRelations = v1State.get('tables').getRelationsWithEntityName(this.model.get('name'));
+            var tableRelations = v1State.get('models').getRelationsWithEntityName(this.model.get('name'));
             var list = this.$el.find('.related-fields').empty();
-            var arr = _.union(tableRelations, userRelations);
-            _(arr).each(function(relation) {
+            _(tableRelations).each(function(relation) {
                 var suffix;
                 var text = 'Has ' + relation.related_name;
                 if (relation.type == "m2m" || relation.type == "fk") suffix = 'List of ' + util.pluralize(relation.entity);

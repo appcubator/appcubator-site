@@ -21,13 +21,13 @@ define(function(require, exports, module) {
 		install: function(plugin) {
 			var pluginModel = new PluginModel(JSON.parse(plugin.data));
 
-			pluginModel.set('metadata', {
+			this.set(plugin.name, {
 				description: plugin.description,
 				name: plugin.name,
 				origin: "appcubator"
 			});
 
-			this.set(plugin.name, pluginModel);
+			v1State.get('generators').set(plugin.name, pluginModel)
 		},
 
 		getPluginNamesWithModule: function(moduleName) {
@@ -55,10 +55,11 @@ define(function(require, exports, module) {
 			return generators;
 		},
 
-		installPluginToModel: function(pluginName, nodeModelModel) {
-			var plugin = this.get(pluginName);
-			if (!plugin) return;
-			var gens = v1State.get('generators').get(pluginName).getGeneratorsWithModule('model_methods');
+		installPluginToModel: function(pluginModel, nodeModelModel) {
+			if (!pluginModel) return;
+			console.log(pluginModel.name);
+			var gens = v1State.get('generators').get(pluginModel.name).getGeneratorsWithModule('model_methods');
+			console.log(gens);
 
 			_.each(gens, function(gen) {
 				console.log(gen);
@@ -67,7 +68,6 @@ define(function(require, exports, module) {
 				methodModel.set('modelName', nodeModelModel.get('name'));
 			});
 
-			console.log(gens);
 		},
 
 		uninstallPluginToModel: function(pluginName, nodeModelModel) {
@@ -76,11 +76,6 @@ define(function(require, exports, module) {
 
 		toJSON: function() {
 			var json = _.clone(this.attributes);
-
-			_.each(json, function(val, key) {
-				json[key] = val.serialize();
-			});
-
 			return json;
 		}
 

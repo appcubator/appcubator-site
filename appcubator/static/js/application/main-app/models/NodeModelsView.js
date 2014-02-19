@@ -54,7 +54,7 @@ define(function(require, exports, module) {
 
         clickedTableName: function(e) {
             var cid = String(e.currentTarget.id).replace('table-', '');
-            var tableModel = v1State.get('tables').get(cid);
+            var tableModel = v1State.get('models').get(cid);
             var tableView = new NodeModelView(tableModel);
             tableView.render();
             // this.el.appendChild(tableView.render().el);
@@ -74,14 +74,7 @@ define(function(require, exports, module) {
                 fields: []
             });
 
-            if (v1State.get('users').findWhere({
-                name: name
-            })) {
-                v1State.get('tables').trigger('duplicate', "name");
-                return;
-            }
-
-            v1State.get('tables').push(elem);
+            v1State.get('models').push(elem);
             return elem;
         },
 

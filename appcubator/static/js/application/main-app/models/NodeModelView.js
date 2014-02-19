@@ -58,7 +58,7 @@ define(function(require, exports, module) {
             this.model = tableModel;
             this.listenTo(this.model, 'remove', this.remove);
             this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
-            this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));
+            this.otherEntities = _(v1State.get('models').pluck('name')).without(this.model.get('name'));
         },
 
         render: function() {

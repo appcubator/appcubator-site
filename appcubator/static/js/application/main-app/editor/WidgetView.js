@@ -375,7 +375,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.editMode = false;
             this.$el.removeClass('textediting');
             var el = $(this.el.firstChild);
-            this.model.get('data').trigger('change:content');
+            this.model.trigger('change:content');
             el.attr('contenteditable', 'false');
             keyDispatcher.textEditing = false;
             util.unselectText();

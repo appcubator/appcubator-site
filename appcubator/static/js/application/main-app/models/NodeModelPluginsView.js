@@ -56,7 +56,7 @@ define(function(require, exports, module) {
                 this.$el.find('#myonoffswitch'+pluginInd).removeClass('checked');
             }
             else {
-                v1State.get("plugins").installPluginToModel(this.model);
+                v1State.get("plugins").installPluginToModel(this.plugins[pluginInd], this.model);
                 this.$el.find('#myonoffswitch'+pluginInd).addClass('checked');
             }
 

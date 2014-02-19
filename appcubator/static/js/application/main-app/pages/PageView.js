@@ -90,9 +90,6 @@ define(function(require, exports, module) {
             page_context = this.model.attributes;
             page_context.page_name = this.model.get('name');
             page_context.ind = this.ind;
-            page_context.user_roles = v1State.get('users').map(function(userModel) {
-                return userModel.get('name');
-            });
 
             //var page = _.template(tempMenu, page_context);
             var span = document.createElement('span');
