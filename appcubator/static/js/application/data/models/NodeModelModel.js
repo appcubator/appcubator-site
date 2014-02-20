@@ -46,6 +46,7 @@ define(function(require, exports, module) {
             var json = {};
             json = _.clone(this.attributes);
             json.fields = this.get('fields').serialize();
+            json.functions = json.functions.serialize();
             return json;
         },
 
