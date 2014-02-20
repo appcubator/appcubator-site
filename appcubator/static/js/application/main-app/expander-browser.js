@@ -13,7 +13,7 @@ exports.factory = function(_safe_eval_) {
     function findGenDataSub(generators, genID) {
         // generators is some object of generators to search through
         // genID is an obj w (package, module, name, version) keys
-        // Search order: generators, plugins, then builtinGenerators
+        // Search order: generators, then builtinGenerators
 
         var packageObj = generators[genID.package];
         if (packageObj === undefined) {
@@ -35,38 +35,26 @@ exports.factory = function(_safe_eval_) {
         }
 
         if (generator === undefined)
-            throw { name: 'GenNotFound', message: "Generator '"+genID.name+"' with version '"+genID.version+"' not found in module '"+genID.module+"'", level: 'generator' };
+            throw { name: 'GenNotFound', message: "Generator '"+genID.name+"' with version '"+genID.version+"' not found in module '"+genID.module+"'", level: 'generator'  };
 
         return generator;
     }
 
-    function findGenData(plugins, generators, genID) {
-        // plugins is app.plugins
+    function findGenData(generators, genID) {
         // generators is app.generators
         var generator;
-        var searchList = [generators, plugins, builtinGenerators];
-        while (searchList.length !== 0) {
-            var genCollection = searchList.shift();
-            var found;
 
-            try {
-                found = true;
-                generator = findGenDataSub(genCollection, genID);
-            } catch (e) {
-                if (e.name === 'GenNotFound') {
-                    found = false;
-                } else {
-                    throw e;
-                }
-            }
-
-            if (found) {
-                generator._pristine = (genCollection !== generators);
-                return generator;
+        try {
+            generator = findGenDataSub(generators, genID);
+        } catch (e) {
+            if (e.name === 'GenNotFound') {
+                generator = findGenDataSub(builtinGenerators, genID);
+            } else {
+                throw e;
             }
         }
 
-        throw {name: 'GenNotFound', message: "Generator '"+genID.name+"' with version '"+genID.version+"' not found." };
+        return generator;
     }
 
     expander.findGenData = findGenData;
@@ -74,7 +62,7 @@ exports.factory = function(_safe_eval_) {
     function constructGen(generatorData) {
         // input the generator's data from the json
         // output a function which can directly be used for generator execution.
-        var fn = function(plugins, generators, data) {
+        var fn = function(generators, data) {
             var templates = generatorData.templates;
             var compiledTemplates = {};
 
@@ -87,7 +75,7 @@ exports.factory = function(_safe_eval_) {
             }
 
             // TODO compile each EJS template so that it can have a render method.
-            var expandFn = function(data) { return expand(plugins, generators, data); };
+            var expandFn = function(data) { return expand(generators, data); };
             var globals = {
                 data: data,
                 templates: compiledTemplates,
@@ -129,10 +117,10 @@ exports.factory = function(_safe_eval_) {
 
     expander.parseGenID = parseGenID;
 
-    function expandOnce(plugins, generators, genData) {
+    function expandOnce(generators, genData) {
         try {
             var genID = parseGenID(genData.generate);
-            var generatedObj = constructGen(findGenData(plugins, generators, genID))(plugins, generators, genData.data);
+            var generatedObj = constructGen(findGenData(generators, genID))(generators, genData.data);
             return generatedObj;
         }
         catch(e) {
@@ -144,10 +132,10 @@ exports.factory = function(_safe_eval_) {
 
     expander.expandOnce = expandOnce;
 
-    function expand(plugins, generators, genData) {
+    function expand(generators, genData) {
         // TODO check for cycles
         while (typeof(genData) == typeof({}) && 'generate' in genData) {
-            genData = expandOnce(plugins, generators, genData);
+            genData = expandOnce(generators, genData);
         }
         return genData;
     }
@@ -158,22 +146,22 @@ exports.factory = function(_safe_eval_) {
         app.plugins = app.plugins || []; // TEMP BECAUSE THIS DOES NOT YET EXIST.
 
         _.each(app.routes, function(route, i) {
-            app.routes[i] = expand(app.plugins, app.generators, route);
+            app.routes[i] = expand(app.generators, route);
         });
 
         _.each(app.models, function(model, index) {
-            app.models[index] = expand(app.plugins, app.generators, model);
+            app.models[index] = expand(app.generators, model);
         });
 
         _.each(app.templates, function (template, index) {
-            app.templates[index] = expand(app.plugins, app.generators, template);
+            app.templates[index] = expand(app.generators, template);
         });
 
         app.templates.push({name: "header", code: app.header||""});
         app.templates.push({name: "scripts", code: app.scripts||""});
 
-        app.config = expand(app.plugins, app.generators, app.config);
-        app.css = expand(app.plugins, app.generators, app.css);
+        app.config = expand(app.generators, app.config);
+        app.css = expand(app.generators, app.css);
 
         return app;
     };
