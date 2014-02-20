@@ -24,8 +24,8 @@ class UserInputError(Exception):
     def __str__(self):
         return "%s\nPath: %s" % (self.message, self.path)
 
-def expandOnce(plugins, generators, genref):
-    r = requests.post(settings.CODEGEN_ADDR + '/expandOnce/', data=json.dumps([plugins, generators, genref]), headers={'Content-Type':'application/json'})
+def expandOnce(generators, genref):
+    r = requests.post(settings.CODEGEN_ADDR + '/expandOnce/', data=json.dumps([generators, genref]), headers={'Content-Type':'application/json'})
     if r.status_code == 200:
         return r.json()
     else:
@@ -33,8 +33,8 @@ def expandOnce(plugins, generators, genref):
         print r.text
         raise Exception(r.text)
 
-def expand(plugins, generators, genref):
-    r = requests.post(settings.CODEGEN_ADDR + '/expand/', data=json.dumps([plugins, generators, genref]), headers={'Content-Type':'application/json'})
+def expand(generators, genref):
+    r = requests.post(settings.CODEGEN_ADDR + '/expand/', data=json.dumps([generators, genref]), headers={'Content-Type':'application/json'})
     if r.status_code == 200:
         return r.json()
     else:

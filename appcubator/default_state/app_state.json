@@ -76,7 +76,6 @@
       ]
     }
   }],
-  "_comment2": "This stuff is new and not yet implemented",
   "packages": {
     "express": "3.4.4",
     "ejs": "0.8.5",
@@ -313,16 +312,9 @@
       "customCodeChunks": []
     }
   },
-  "_comment": "From here down is old",
   "info": {
     "logo": "/static/img/placeholder-logo.png",
     "keywords": "",
     "description": ""
-  },
-  "emails": [{
-    "content": "Dear {{User.username}},\n\nThanks for signing up!\n\nCheers!\n{{AppName}}",
-    "name": "Welcome",
-    "subject": "Thanks for Signing up!"
-  }],
-  "name": "thisisirrelevant"
+  }
 }
