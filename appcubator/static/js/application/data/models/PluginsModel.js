@@ -26,9 +26,6 @@ define(function(require, exports, module) {
 				origin: "appcubator"
 			});
 			this.set(plugin.name, pluginModel);
-
-			var generatorModel = new PluginModel(JSON.parse(plugin.data));
-			v1State.get('generators').set(plugin.name, generatorModel);
 		},
 
 		getPluginNamesWithModule: function(moduleName) {
