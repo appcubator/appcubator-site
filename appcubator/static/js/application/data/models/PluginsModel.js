@@ -20,14 +20,15 @@ define(function(require, exports, module) {
 
 		install: function(plugin) {
 			var pluginModel = new PluginModel(JSON.parse(plugin.data));
-
-			this.set(plugin.name, {
+			pluginModel.set('metadata', {
 				description: plugin.description,
 				name: plugin.name,
 				origin: "appcubator"
 			});
+			this.set(plugin.name, pluginModel);
 
-			v1State.get('generators').set(plugin.name, pluginModel)
+			var generatorModel = new PluginModel(JSON.parse(plugin.data));
+			v1State.get('generators').set(plugin.name, generatorModel);
 		},
 
 		getPluginNamesWithModule: function(moduleName) {
@@ -76,6 +77,12 @@ define(function(require, exports, module) {
 
 		toJSON: function() {
 			var json = _.clone(this.attributes);
+
+			_.each(json, function (val, key) {
+				console.log(val);
+				json[key] = val.serialize();
+			});
+
 			return json;
 		}
 

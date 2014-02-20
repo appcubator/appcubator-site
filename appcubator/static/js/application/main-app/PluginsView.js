@@ -24,10 +24,8 @@ define(function(require, exports, module) {
         render: function() {
             var plugins = v1State.get('plugins').serialize();
             plugins = _.map(plugins, function(val, key) { return val; });
-            console.log(plugins);
             this.$el.html(_.template(util.getHTML('plugins-page'), {plugins: plugins}));
 
-            console.log(this.el);
             return this;
         },
         
@@ -58,8 +56,7 @@ define(function(require, exports, module) {
                     }
                     return (p.get('metadata').name === pluginName); 
             });
-            
-            console.log(this.getActivePlugins())
+
         },
         
         getActivePlugins: function (){
