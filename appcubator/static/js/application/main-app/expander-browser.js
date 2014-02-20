@@ -41,7 +41,7 @@ exports.factory = function(_safe_eval_) {
     }
 
     function findGenData(generators, genID) {
-        // generators is app.generators
+        // generators is app.plugins
         var generator;
 
         try {
@@ -146,22 +146,22 @@ exports.factory = function(_safe_eval_) {
         app.plugins = app.plugins || []; // TEMP BECAUSE THIS DOES NOT YET EXIST.
 
         _.each(app.routes, function(route, i) {
-            app.routes[i] = expand(app.generators, route);
+            app.routes[i] = expand(app.plugins, route);
         });
 
         _.each(app.models, function(model, index) {
-            app.models[index] = expand(app.generators, model);
+            app.models[index] = expand(app.plugins, model);
         });
 
         _.each(app.templates, function (template, index) {
-            app.templates[index] = expand(app.generators, template);
+            app.templates[index] = expand(app.plugins, template);
         });
 
         app.templates.push({name: "header", code: app.header||""});
         app.templates.push({name: "scripts", code: app.scripts||""});
 
-        app.config = expand(app.generators, app.config);
-        app.css = expand(app.generators, app.css);
+        app.config = expand(app.plugins, app.config);
+        app.css = expand(app.plugins, app.css);
 
         return app;
     };
