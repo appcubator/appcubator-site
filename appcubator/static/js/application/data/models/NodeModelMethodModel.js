@@ -1,46 +1,49 @@
 define([
-  'collections/WhereCollection',
-  'app/Generator',
-  'backbone',
+    'collections/WhereCollection',
+    'app/Generator',
+    'backbone',
 ], function(WhereCollection, Generator) {
 
-  var TableCodeModel = Backbone.Model.extend({
-  	/* Note that this may have name/code or it may be a generator */
+    var NodeModelMethodModel = Backbone.Model.extend({
+        /* Note that this may have name/code or it may be a generator */
 
-    initialize: function(bone, entityModel) {
-      if ('generate' in this){
-      	// XXX note the backbone generate hack
-      	this.data = bone; // IDK how to make backbone work with generators.
-      } else {
-        this.set('code', bone.code||"");
-        this.set('name', bone.name||"default");
-      }
-      _.bindAll(this);
+        initialize: function(bone, entityModel) {
+            bone = bone || {};
 
-    },
+            if ('generate' in this) {
+                // XXX note the backbone generate hack
+                this.data = bone; // IDK how to make backbone work with generators.
+            } else {
+                this.set('code', bone.code || "");
+                this.set('name', bone.name || "default");
+            }
+            _.bindAll(this);
 
-    isGenerator: function(){
-    	return this.generate !== undefined;
-    },
+        },
 
-    getGenerated: function(){
-    	// TODO stop making objects of Generator every time
-    	if (this.isGenerator()) {
-	    	return new Generator().generate(this.generate, this.data);
-    	} else {
-    		return this.serialize();
-    	}
-    },
+        isGenerator: function() {
+            return this.generate !== undefined;
+        },
 
-    getCode: function(){
-    	if (this.isGenerator()) {
-	    	return new Generator().generate(this.generate, this.data).code;
-    	} else {
-    		return this.get('code');
-    	}
-    },
+        getGenerated: function() {
+            // TODO stop making objects of Generator every time
+            if (this.isGenerator()) {
+                return new Generator().generate(this.generate, this.data);
+            } else {
+                return this.serialize();
+            }
+        },
 
-  });
+        getCode: function() {
+            console.log(this.isGenerator());
+            if (this.isGenerator()) {
+                return new Generator().generate(this.generate, this.data).code;
+            } else {
+                return this.get('code');
+            }
+        },
 
-  return TableCodeModel;
+    });
+
+    return NodeModelMethodModel;
 });

@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 
 	require('backbone');
 	var PluginModel = require('models/PluginModel');
-
+	var NodeModelMethodModel = require('models/NodeModelMethodModel');
 
 	/* Contains metadata and convenience methods for Plugins */
 	var PluginsModel = Backbone.Model.extend({
@@ -55,15 +55,13 @@ define(function(require, exports, module) {
 
 		installPluginToModel: function(pluginModel, nodeModelModel) {
 			if (!pluginModel) return;
-			console.log(pluginModel.name);
-			var gens = v1State.get('generators').get(pluginModel.name).getGeneratorsWithModule('model_methods');
+			var gens = this.get(pluginModel.name).getGeneratorsWithModule('model_methods');
 			console.log(gens);
-
 			_.each(gens, function(gen) {
-				console.log(gen);
 				var methodModel = new NodeModelMethodModel();
 				methodModel.setGenerator(gen);
 				methodModel.set('modelName', nodeModelModel.get('name'));
+				nodeModelModel.get('functions').push(methodModel);
 			});
 
 		},

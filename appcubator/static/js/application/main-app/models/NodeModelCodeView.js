@@ -55,8 +55,11 @@ define(function(require, exports, module) {
 
             var self = this;
 
+            var list = this.$el.find('#static-methods-list')[0];
+            console.log(list);
             this.model.get('functions').each(function(methodModel){
-                self._inject_ace_html(methodModel, 'static-methods-list');
+                list.innerHTML += _.template(funcTemplate, { name: methodModel.get('name'), cid: methodModel.cid });
+                self.setupSingleAce(methodModel);
             });
 
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-static-box')).render();
@@ -79,11 +82,13 @@ define(function(require, exports, module) {
         setupFakeGeneratorAce: function(methodModel) {
             this.$el.find("#func-editor-" + methodModel.cid).text(methodModel.getCode());
         },
+
         setupSingleAce: function(methodModel) {
             /* pass true as second argument to render this as a model_method from some plugin */
             /* this breaks when this.el is not rendered */
             var self = this;
 
+            console.log($("#func-editor-" + methodModel.cid));
             var editor = ace.edit("func-editor-" + methodModel.cid);
             editor.getSession().setMode("ace/mode/javascript");
             editor.setValue(methodModel.getCode(), -1);
@@ -97,14 +102,8 @@ define(function(require, exports, module) {
                 });
             }
         },
-
-        '_inject_ace_html': function(methodModel, id) {
-            /* this will work even if the el is not yet rendered */
-            this.$el.find('#'+id).append(_.template(funcTemplate, _.extend(methodModel.getGenerated(), {cid: methodModel.cid})));
-        },
         renderStaticMethod: function(methodModel) {
             /* this breaks when this.el is not rendered */
-            this._inject_ace_html(methodModel, 'static-methods-list');
             this.setupSingleAce(methodModel);
         },
 
