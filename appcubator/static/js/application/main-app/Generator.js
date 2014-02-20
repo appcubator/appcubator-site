@@ -26,12 +26,12 @@ define(function(require, exports, module) {
 
     Generator.prototype.generate = function(generatorPath, data) {
         var aState = v1State.serialize();
-        return this.expander.expand(aState.plugins, aState.generators, {generate: generatorPath, data: data});
+        return this.expander.expand(aState.plugins, {generate: generatorPath, data: data});
     };
 
     Generator.prototype.getGenerator = function(generatorPath) {
         var aState = v1State.serialize();
-        return this.expander.findGenData(aState.plugins, aState.generators, this.expander.parseGenID(generatorPath));
+        return this.expander.findGenData(aState.plugins, this.expander.parseGenID(generatorPath));
     };
 
     return Generator;

@@ -4,7 +4,6 @@ define([
         'collections/EmailCollection',
         'collections/TemplateCollection',
         'models/PluginsModel',
-        'models/GeneratorsModel',
         'models/EntityManager'
     ],
     function(AppInfoModel,
@@ -12,7 +11,6 @@ define([
         EmailCollection,
         TemplateCollection,
         PluginsModel,
-        GeneratorsModel,
         EntityManager) {
 
         var AppModel = Backbone.Model.extend({
@@ -29,7 +27,6 @@ define([
                 this.set('emails', new EmailCollection(aState.emails));
                 this.set('templates', new TemplateCollection(aState.templates));
                 this.set('plugins', new PluginsModel(aState.plugins || {}));
-                this.set('generators', new GeneratorsModel(aState.generators|| {}));
 
             },
 
@@ -103,7 +100,6 @@ define([
                 json.templates = json.templates.serialize();
                 json.routes = json.routes.serialize();
                 json.plugins = json.plugins.serialize();
-                json.generators = json.generators.serialize();
 
                 return json;
             }

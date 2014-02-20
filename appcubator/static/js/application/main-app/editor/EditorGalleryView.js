@@ -74,7 +74,6 @@ define(function(require, exports, module) {
             // listen for changes to url to update context entity section
             // this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
             this.listenTo(v1State.get('models'), 'add remove', this.renderEntityFormsTablesLists);
-            this.listenTo(v1State.get('generators'), 'change', this.renderPluginElements);
             this.listenTo(v1State.get('plugins'), 'change', this.renderPluginElements);
 
             return this;
@@ -305,7 +304,7 @@ define(function(require, exports, module) {
         renderPluginElements: function() {
             var elements = [];
 
-            var uiGenerators = v1State.get('generators').getGeneratorsWithModule('uielements');
+            var uiGenerators = v1State.get('plugins').getGeneratorsWithModule('uielements');
 
             if(this.pluginElemsSection) this.pluginElemsSection.close();
             this.pluginElemsSection = this.addNewSection('Plugin Elements');

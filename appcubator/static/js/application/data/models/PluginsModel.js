@@ -22,8 +22,7 @@ define(function(require, exports, module) {
 			var pluginModel = new PluginModel(JSON.parse(plugin.data));
 			pluginModel.set('metadata', {
 				description: plugin.description,
-				name: plugin.name,
-				origin: "appcubator"
+				name: plugin.name
 			});
 			this.set(plugin.name, pluginModel);
 		},
@@ -69,6 +68,18 @@ define(function(require, exports, module) {
 		uninstallPluginToModel: function(pluginName, nodeModelModel) {
 
 		},
+
+    	fork: function (generator, generatorPath, newName) {
+
+    		var genObj = _.clone(generator);
+    		var newPath = util.packageModuleName(generatorPath);
+    		newPath.name = newName;
+    		genObj.name = newName;
+
+    		this.get(newPath.package)[newPath.module].push(genObj);
+
+    		return [newPath.package, newPath.module, newPath.name].join('.');
+    	},
 
 		toJSON: function() {
 			var json = _.clone(this.attributes);

@@ -143,7 +143,7 @@ exports.factory = function(_safe_eval_) {
     expander.expand = expand;
 
     expander.expandAll = function(app) {
-        app.plugins = app.plugins || []; // TEMP BECAUSE THIS DOES NOT YET EXIST.
+        app.plugins = app.plugins || {}; // TEMP BECAUSE THIS DOES NOT YET EXIST.
 
         _.each(app.routes, function(route, i) {
             app.routes[i] = expand(app.plugins, route);
