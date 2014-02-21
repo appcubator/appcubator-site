@@ -147,18 +147,17 @@ require([
             /* doge error */
             var olderrorhandler = window.onerror;
             window.onerror = function(){
-                alert('error');
-                // var dogehtml = '<div id="doge-overlay"><img src="http://cdn.memegenerator.net/instances/500x/43563104.jpg" alt=""></div>';
-                // dogehtml += '<style>#doge-overlay {background-color: blue; z-index:5000; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;} #doge-overlay img {position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; min-width: 40%; min-height: 40%; }</style>';
+                var dogehtml = '<div id="doge-overlay"><img src="http://cdn.memegenerator.net/instances/500x/43563104.jpg" alt=""></div>';
+                dogehtml += '<style>#doge-overlay {background-color: blue; z-index:5000; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;} #doge-overlay img {position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; min-width: 40%; min-height: 40%; }</style>';
 
-                // $('body').append(dogehtml);
-                // $('#doge-overlay').click(function(){
-                //     $('#doge-overlay').remove();
-                // });
+                $('body').append(dogehtml);
+                $('#doge-overlay').click(function(){
+                    $('#doge-overlay').remove();
+                });
 
-                // if (olderrorhandler) {
-                //     olderrorhandler();
-                // }
+                if (olderrorhandler) {
+                    olderrorhandler();
+                }
             }
 
             if (appState) {
