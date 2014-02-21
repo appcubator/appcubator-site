@@ -69,7 +69,7 @@ define(function(require, exports, module) {
             //force table names to be singular
             var name = util.singularize(val);
 
-            var elem = new TableModel({
+            var elem = new NodeModelModel({
                 name: name,
                 fields: []
             });
