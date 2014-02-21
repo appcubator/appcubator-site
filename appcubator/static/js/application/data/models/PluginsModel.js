@@ -60,11 +60,19 @@ define(function(require, exports, module) {
 				methodModel.set('name', gen.name);
 				nodeModelModel.get('functions').push(methodModel);
 			});
-
 		},
 
-		uninstallPluginToModel: function(pluginName, nodeModelModel) {
+		uninstallPluginToModel: function(plugin, nodeModelModel) {
+			
+			var gens = [];
 
+			nodeModelModel.get('functions').each(function(fn) {
+				if(fn.isInPackage(plugin.name)) {
+					gens.push(fn);
+				}
+			});
+
+			nodeModelModel.get('functions').remove(gens);
 		},
 
     	fork: function (generator, generatorPath, newName) {

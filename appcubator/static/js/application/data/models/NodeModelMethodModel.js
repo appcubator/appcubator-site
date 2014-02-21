@@ -42,6 +42,10 @@ define([
             }
         },
 
+        isInPackage: function (pluginName) {
+            return this.generate && util.packageModuleName(this.generate).package == pluginName;
+        }
+
     });
 
     return NodeModelMethodModel;

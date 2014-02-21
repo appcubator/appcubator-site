@@ -11,7 +11,7 @@ define(function(require, exports, module) {
 
 
     var funcTemplate = [
-        '<div class="code-chunk">',
+        '<div class="code-chunk" id="func-chunk-<%= cid %>">',
             '<span class="title"><%= name %></span>',
             '<div class="code-editor" id="func-editor-<%= cid %>"></div>',
         '</div>'
@@ -34,7 +34,7 @@ define(function(require, exports, module) {
             this.model = tableModel;
 
             this.listenTo(this.model.get('functions'), 'add', this.renderStaticMethod);
-
+            this.listenTo(this.model.get('functions'), 'remove', this.removeMethod);
         },
 
         render: function() {
@@ -105,6 +105,10 @@ define(function(require, exports, module) {
         renderStaticMethod: function(methodModel) {
             this.list.innerHTML += _.template(funcTemplate, { name: methodModel.get('name'), cid: methodModel.cid });
             this.setupSingleAce(methodModel);
+        },
+
+        removeMethod: function(methodModel) {
+            this.$el.find('#func-chunk-', methodModel.cid).remove();
         },
 
         createStaticFunction: function(functionName) {

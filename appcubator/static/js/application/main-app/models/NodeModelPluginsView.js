@@ -70,7 +70,7 @@ define(function(require, exports, module) {
             var isChecked = this.$el.find('#myonoffswitch'+pluginInd).hasClass('checked');
             console.log(isChecked);
             if (isChecked) {
-                v1State.get("plugins").uninstallPluginToModel(this.model);
+                v1State.get("plugins").uninstallPluginToModel(this.plugins[pluginInd], this.model);
                 this.$el.find('#myonoffswitch'+pluginInd).removeClass('checked');
             }
             else {
