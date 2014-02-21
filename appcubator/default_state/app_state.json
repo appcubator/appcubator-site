@@ -22,13 +22,15 @@
         "generate": "crud.models.create",
         "data": {
           "modelName": "Picture",
-          "enableAPI": true
+          "enableAPI": true,
+          "name": "create"
         }
       }, {
         "generate": "crud.models.find",
         "data": {
           "modelName": "Picture",
-          "enableAPI": true
+          "enableAPI": true,
+          "name" : "find"
         }
       }]
     }

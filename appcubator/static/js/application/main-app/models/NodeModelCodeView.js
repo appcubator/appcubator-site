@@ -56,10 +56,11 @@ define(function(require, exports, module) {
             var self = this;
 
             var list = this.$el.find('#static-methods-list')[0];
-            console.log(list);
+            this.list = list;
+
             this.model.get('functions').each(function(methodModel){
+                console.log(methodModel);
                 list.innerHTML += _.template(funcTemplate, { name: methodModel.get('name'), cid: methodModel.cid });
-                self.setupSingleAce(methodModel);
             });
 
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-static-box')).render();
@@ -67,7 +68,6 @@ define(function(require, exports, module) {
 
             return this;
         },
-
 
         setupAce: function() {
             this.model.get('functions').each(function(methodModel) {
@@ -103,7 +103,7 @@ define(function(require, exports, module) {
             }
         },
         renderStaticMethod: function(methodModel) {
-            /* this breaks when this.el is not rendered */
+            this.list.innerHTML += _.template(funcTemplate, { name: methodModel.get('name'), cid: methodModel.cid });
             this.setupSingleAce(methodModel);
         },
 
