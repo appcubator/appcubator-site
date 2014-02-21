@@ -27,10 +27,10 @@ define(function(require, exports, module) {
 			this.set(plugin.name, pluginModel);
 		},
 
-		getPluginNamesWithModule: function(moduleName) {
-			return _.map(this.attributes, function(pluginModel, pluginName) {
+		getPluginsWithModule: function(moduleName) {
+			return _.filter(this.attributes, function(pluginModel, pluginName) {
 				pluginModel.name = pluginName;
-				return pluginModel;
+				return pluginModel.has(moduleName);
 			});
 		},
 
@@ -39,34 +39,40 @@ define(function(require, exports, module) {
 
 			var generators = _.flatten(_.map(this.attributes, function(pluginModel, packageName) {
 				return pluginModel.getGeneratorsWithModule(generatorModule);
-
-				// _.each(packageContent[generatorModule], function(generator) {
-				// 	generators.push({
-				// 		package: packageName,
-				// 		module: generatorModule,
-				// 		name: generator.name
-				// 	});
-				// });
 			}));
 
 			return generators;
 		},
 
+		isPluginInstalledToModel: function(pluginModel, nodeModelModel) {
+			var gens = _.pluck(pluginModel.getGeneratorsWithModule('model_methods'), 'generatorIdentifier');
+			var functions = nodeModelModel.get('functions').map(function(fn) { return fn.generate; });
+			return _.intersection(gens, functions).length > 0 ? true : false;
+		},
+
 		installPluginToModel: function(pluginModel, nodeModelModel) {
 			if (!pluginModel) return;
 			var gens = this.get(pluginModel.name).getGeneratorsWithModule('model_methods');
-			console.log(gens);
 			_.each(gens, function(gen) {
 				var methodModel = new NodeModelMethodModel();
-				methodModel.setGenerator(gen);
+				methodModel.setGenerator(gen.generatorIdentifier);
 				methodModel.set('modelName', nodeModelModel.get('name'));
+				methodModel.set('name', gen.name);
 				nodeModelModel.get('functions').push(methodModel);
 			});
-
 		},
 
-		uninstallPluginToModel: function(pluginName, nodeModelModel) {
+		uninstallPluginToModel: function(plugin, nodeModelModel) {
+			
+			var gens = [];
 
+			nodeModelModel.get('functions').each(function(fn) {
+				if(fn.isInPackage(plugin.name)) {
+					gens.push(fn);
+				}
+			});
+
+			nodeModelModel.get('functions').remove(gens);
 		},
 
     	fork: function (generator, generatorPath, newName) {
@@ -85,7 +91,6 @@ define(function(require, exports, module) {
 			var json = _.clone(this.attributes);
 
 			_.each(json, function (val, key) {
-				console.log(val);
 				json[key] = val.serialize();
 			});
 

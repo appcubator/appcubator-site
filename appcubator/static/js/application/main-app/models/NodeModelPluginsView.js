@@ -11,7 +11,7 @@ define(function(require, exports, module) {
         '<div class="plugin-li">',
             '<h4><%= plugin.name %></h4>',
             '<div class="onoffswitch nodemodel" id="myonoffswitch-wrapper-<%=i%>">',
-                '<input type="checkbox" name="onoffswitch<%=i%>" class="onoffswitch-checkbox >" id="myonoffswitch<%=i%>" >',
+                '<input type="checkbox" name="onoffswitch<%=i%>" class="onoffswitch-checkbox <%= plugin.isChecked %>" id="myonoffswitch<%=i%>" >',
                 '<label class="onoffswitch-label" for="myonoffswitch<%=i%>">',
                     '<div class="onoffswitch-inner"></div>',
                     '<div class="onoffswitch-switch"></div>',
@@ -38,9 +38,27 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            var modelGenerators = v1State.get('plugins').getPluginNamesWithModule('model_methods');
-            this.plugins = modelGenerators; 
-            var html = _.template(pluginAttribsTemplate, { plugins : modelGenerators });
+            var plugins = v1State.get('plugins').getPluginsWithModule('model_methods');
+            
+            console.log(plugins);
+
+            var gens = _.map(plugins, function(pluginM) {
+                var gen = {};
+                gen.name = pluginM.name;
+                if(v1State.get('plugins').isPluginInstalledToModel(pluginM, this.model)) {
+                    gen.isChecked = "checked";
+                }
+                else {
+                    gen.isChecked ="";
+                }
+
+                console.log(gen);
+                return gen;
+            }, this);
+
+            console.log(gens);
+            this.plugins = plugins; 
+            var html = _.template(pluginAttribsTemplate, { plugins : gens });
             this.el.innerHTML = html;
 
             return this;
@@ -52,7 +70,7 @@ define(function(require, exports, module) {
             var isChecked = this.$el.find('#myonoffswitch'+pluginInd).hasClass('checked');
             console.log(isChecked);
             if (isChecked) {
-                v1State.get("plugins").uninstallPluginToModel(this.model);
+                v1State.get("plugins").uninstallPluginToModel(this.plugins[pluginInd], this.model);
                 this.$el.find('#myonoffswitch'+pluginInd).removeClass('checked');
             }
             else {

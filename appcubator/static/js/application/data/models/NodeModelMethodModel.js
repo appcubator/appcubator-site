@@ -35,13 +35,16 @@ define([
         },
 
         getCode: function() {
-            console.log(this.isGenerator());
             if (this.isGenerator()) {
-                return new Generator().generate(this.generate, this.data).code;
+                return String(new Generator().generate(this.generate, this.data).code); 
             } else {
                 return this.get('code');
             }
         },
+
+        isInPackage: function (pluginName) {
+            return this.generate && util.packageModuleName(this.generate).package == pluginName;
+        }
 
     });
 
