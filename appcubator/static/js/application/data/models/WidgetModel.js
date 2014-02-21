@@ -12,6 +12,7 @@ define(function(require, exports, module) {
     var WidgetModel = Backbone.Model.extend({
         selected: false,
         editMode: false,
+        idAttribute: 'cid',
 
         initialize: function(bone, isNew) {
 
