@@ -59,7 +59,7 @@ define(function(require, exports, module) {
 
         selectSectionLayout: function(e) {
             var id = String(e.currentTarget.id).replace('opt-','');
-            this.sectionsCollection.createSectoinWithType(id);
+            this.sectionsCollection.createSectionWithType(id);
 
             this.$el.find('.options').first().hide();
             this.$el.find('#addNewSectionTitle').fadeIn();
