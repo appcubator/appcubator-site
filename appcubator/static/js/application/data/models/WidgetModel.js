@@ -12,6 +12,7 @@ define(function(require, exports, module) {
     var WidgetModel = Backbone.Model.extend({
         selected: false,
         editMode: false,
+        /* idAttribute as cid allows duplicate widgets to be stored in the collection */
         idAttribute: 'cid',
 
         initialize: function(bone, isNew) {
