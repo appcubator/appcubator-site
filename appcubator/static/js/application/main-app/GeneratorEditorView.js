@@ -29,7 +29,7 @@ define(function(require, exports, module) {
 
         setupGenerator: function(generatorPath) {
             this.generatorPath = generatorPath;
-            this.generator = new Generator().getGenerator(this.generatorPath);
+            this.generator = G.getGenerator(this.generatorPath);
             this.widgetModel.setGenerator(generatorPath);
         },
 
@@ -147,7 +147,7 @@ define(function(require, exports, module) {
             
             // changes data related to this view and rerenders
             this.generatorName = genPath;
-            this.generator = new Generator().getGenerator(this.generatorName);
+            this.generator = G.getGenerator(this.generatorName);
 
             this.reRender();
         },

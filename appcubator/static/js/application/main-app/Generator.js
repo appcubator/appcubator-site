@@ -4,19 +4,25 @@ define(function(require, exports, module) {
 
     var _ = require('underscore');
 
-    var Generator = function(generatorPath) {
+    var Generator = function(pluginsGetter) {
+        /* Pass either an object of the plugins to use, or pass a function which when called returns the plugins. */
         this.expander = initExpander();
-        if(generatorPath) { return this.getGenerator(generatorPath); }
+
+        if (typeof(pluginsGetter) === 'function') {
+            this._getPlugins = pluginsGetter;
+        } else {
+            this._getPlugins = function() { return pluginsGetter; };
+        }
     };
 
     Generator.prototype.generate = function(generatorPath, data) {
-        var aState = v1State.serialize();
-        return this.expander.expand(aState.plugins, {generate: generatorPath, data: data});
+        var plugins = this._getPlugins();
+        return this.expander.expand(plugins, {generate: generatorPath, data: data});
     };
 
     Generator.prototype.getGenerator = function(generatorPath) {
-        var aState = v1State.serialize();
-        return this.expander.findGenData(aState.plugins, this.expander.parseGenID(generatorPath));
+        var plugins = this._getPlugins();
+        return this.expander.findGenData(plugins, this.expander.parseGenID(generatorPath));
     };
 
     return Generator;

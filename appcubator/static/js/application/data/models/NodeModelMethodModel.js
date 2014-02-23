@@ -28,7 +28,7 @@ define([
         getGenerated: function() {
             // TODO stop making objects of Generator every time
             if (this.isGenerator()) {
-                return new Generator().generate(this.generate, this.data);
+                return G.generate(this.generate, this.data);
             } else {
                 return this.serialize();
             }
@@ -36,7 +36,7 @@ define([
 
         getCode: function() {
             if (this.isGenerator()) {
-                return String(new Generator().generate(this.generate, this.data).code); 
+                return String(G.generate(this.generate, this.data).code); 
             } else {
                 return this.get('code');
             }

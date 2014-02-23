@@ -31,7 +31,7 @@ define(function(require, exports, module) {
             _.bindAll(this);
             this.widgetModel = options.widgetModel;
             this.generatorName = options.generate;
-            this.generator = new Generator().getGenerator(this.generatorName);
+            this.generator = G.getGenerator(this.generatorName);
         },
 
         render: function() {
@@ -189,7 +189,7 @@ define(function(require, exports, module) {
             var genPath = String(e.currentTarget.id);
             this.widgetModel.generate = genPath;
             this.generatorName = genPath;
-            this.generator = new Generator().getGenerator(this.generatorName);
+            this.generator = G.getGenerator(this.generatorName);
 
             this.reRender();
         },
