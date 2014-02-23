@@ -5,22 +5,7 @@ define(function(require, exports, module) {
     var _ = require('underscore');
 
     var Generator = function(generatorPath) {
-        var Vm = function() {
-
-            this.runCode = function(code, globals) {
-                var templates = globals.templates;
-                var data = globals.data;
-                var expand = globals.expand;
-                return eval(code);
-            };
-
-        };
-
-        var VM = new Vm();
-        this.expander = expanderfactory(function(code, globals) {
-            return VM.runCode(code, globals);
-        });
-
+        this.expander = initExpander();
         if(generatorPath) { return this.getGenerator(generatorPath); }
     };
 

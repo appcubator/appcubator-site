@@ -175,6 +175,17 @@ try {
     var x = window;
     // No error -> we're in the frontend
     window.expanderfactory = exports.factory;
+    window.initExpander = function() {
+        /* hacky way to run code in the frontend that should not be used to run untrusted code */
+        var runCode = function(code, globals) {
+            var templates = globals.templates;
+            var data = globals.data;
+            var expand = globals.expand;
+            return eval(code);
+        };
+        var expander = exports.factory(runCode);
+        return expander;
+    };
 } catch (e) {
     // e is a ReferenceError, which implies we're in the backend
     exports.init = function() {
