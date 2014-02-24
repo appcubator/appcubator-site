@@ -168,6 +168,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
                     jsTag.text = _.template(customJSTemp, { code: expanded.js });
 
+                    console.log(jsTag);
                     document.body.appendChild(jsTag);
                 } catch (err) {
                     console.log('Error adding custom js:' + err);

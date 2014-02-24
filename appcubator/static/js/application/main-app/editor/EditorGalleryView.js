@@ -227,10 +227,19 @@ define(function(require, exports, module) {
 
                 $(li).data('extraData', {
                     id: Math.floor(Math.random()*11),
-                    tableName: entityModel.get('name')
+                    modelName: entityModel.get('name')
                 });
 
                 $(li).data('type', 'create-form');
+
+                var li = this.tableSection.addFullWidthItem(null, "entity-create-form", entityModel.get('name') + ' List', 'create-form-icon', 'crudfake.uielements.list');
+
+                $(li).data('extraData', {
+                    id: Math.floor(Math.random()*11),
+                    modelName: entityModel.get('name')
+                });
+
+                $(li).data('type', 'list');
 
             }, this);
         
