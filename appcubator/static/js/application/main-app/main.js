@@ -114,6 +114,7 @@ require([
         "models/ThemeModel",
         "collections/RouteCollection",
         "app/AppRouter",
+        "app/Generator",
         "editor/CustomWidgetEditorModal",
         "app/RouteLogger",
         "editor/KeyDispatcher",
@@ -125,12 +126,13 @@ require([
         "comp",
         "xrayquire",
         "mixins/BackboneConvenience",
-        "tourist-omer"
+        "tourist-omer",
     ],
     function(AppModel,
         ThemeModel,
         RouteCollection,
         AppRouter,
+        Generator,
         CustomWidgetEditorModal,
         RouteLogger,
         KeyDispatcher,
@@ -158,6 +160,8 @@ require([
                 console.log(appState);
                 /* Initialize v1State */
                 v1State = new Backbone.Model();
+                /* Global code generator for this app. */
+                window.G = new Generator(function(){ return v1State.serialize().plugins; });
                 v1State = new AppModel(appState);
                 v1State.set('routes', new RouteCollection(appState.routes || []));
 
