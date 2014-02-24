@@ -19,10 +19,15 @@ lessc --verbose --rootpath=/static/css/ -x --yui-compress --ru --line-numbers=me
 echo "[BUILD] Compiled external-website.less to external-website.css"
 
 # fix /static/
-sed -i css 's/@import "\/static\//@import "https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/app/app.css
-sed -i css 's/@import "\/static\//@import "https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/internal.css
-sed -i css 's/@import "\/static\//@import "https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/documentation.css
-sed -i css 's/@import "\/static\//@import "https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/external-website.css
+#sed -i css 's/@import "\/static\//@import "https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/app/app.css
+#sed -i css 's/@import "\/static\//@import "https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/internal.css
+#sed -i css 's/@import "\/static\//@import "https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/documentation.css
+#sed -i css 's/@import "\/static\//@import "https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/external-website.css
+#
+#sed -i css 's/\/static\//https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/app/app.css
+#sed -i css 's/\/static\//https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/internal.css
+#sed -i css 's/\/static\//https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/documentation.css
+#sed -i css 's/\/static\//https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./static/css/external-website.css
 
 # compile javascript
 
