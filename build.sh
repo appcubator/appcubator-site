@@ -25,7 +25,7 @@ sed -i '' 's/\/static\//https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./di
 sed -i '' 's/\/static\//https:\/\/s3.amazonaws.com\/appcubator-hosting\//g' ./dist_static/css/external-website.css
 
 # compile javascript
-
+# Turned off for easier javascript debugging
 #r.js -o ./static/build/app.build.js
 #mv ./static/js/application/main-app/main.js.backup ./static/js/application/main-app/main.js
 
