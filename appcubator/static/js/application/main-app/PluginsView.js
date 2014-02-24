@@ -24,6 +24,7 @@ define(function(require, exports, module) {
         render: function() {
             var plugins = v1State.get('plugins').serialize();
             plugins = _.map(plugins, function(val, key) { return val; });
+            console.log(plugins);
             this.$el.html(_.template(util.getHTML('plugins-page'), {plugins: plugins}));
 
             return this;

@@ -183,8 +183,8 @@ define(function(require, exports, module) {
         },
 
         getRow: function() {
-            if (!this.get('data').has('container_info')) return null;
-            return this.get('data').get('container_info').get('row');
+            if (!this.has('row')) return null;
+            return this.get('row');
         },
 
         getContent: function() {
