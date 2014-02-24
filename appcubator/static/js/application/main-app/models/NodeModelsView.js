@@ -2,9 +2,8 @@ define(function(require, exports, module) {
 
     'use strict';
 
-    var UserTableModel = require('models/UserTableModel');
-    var TableModel = require('models/TableModel');
-    var TableView = require('app/models/NodeModelView');
+    var NodeModelModel = require('models/NodeModelModel');
+    var NodeModelView = require('app/models/NodeModelView');
 
     require('util');
     require('mixins/BackboneDropdownView');
@@ -19,8 +18,8 @@ define(function(require, exports, module) {
 
         initialize: function() {
             _.bindAll(this);
-            this.subviews = [this.tablesView, this.userTablesView, this.relationsView, this.createRelationView];
-            this.collection = v1State.get('tables');
+            this.subviews = [this.tablesView, this.relationsView, this.createRelationView];
+            this.collection = v1State.get('models');
             this.listenTo(this.collection, 'add', this.renderTable);
 
             this.title = "Tables";
@@ -55,8 +54,8 @@ define(function(require, exports, module) {
 
         clickedTableName: function(e) {
             var cid = String(e.currentTarget.id).replace('table-', '');
-            var tableModel = v1State.get('tables').get(cid);
-            var tableView = new TableView(tableModel);
+            var tableModel = v1State.get('models').get(cid);
+            var tableView = new NodeModelView(tableModel);
             tableView.render();
             // this.el.appendChild(tableView.render().el);
         },
@@ -66,43 +65,16 @@ define(function(require, exports, module) {
             //util.get('relations').appendChild(this.relationsView.render().el);
         },
 
-        createUserRole: function(val) {
-            //force user role names to be singular
-            var name = util.singularize(val);
-
-            var elem = new UserTableModel({
-                name: name
-            });
-
-            if (v1State.get('tables').findWhere({
-                name: name
-            })) {
-                v1State.get('users').trigger('duplicate', "name");
-                return;
-            }
-
-            v1State.get('users').push(elem);
-            return elem;
-        },
-
-
         createTable: function(val) {
             //force table names to be singular
             var name = util.singularize(val);
 
-            var elem = new TableModel({
+            var elem = new NodeModelModel({
                 name: name,
                 fields: []
             });
 
-            if (v1State.get('users').findWhere({
-                name: name
-            })) {
-                v1State.get('tables').trigger('duplicate', "name");
-                return;
-            }
-
-            v1State.get('tables').push(elem);
+            v1State.get('models').push(elem);
             return elem;
         },
 

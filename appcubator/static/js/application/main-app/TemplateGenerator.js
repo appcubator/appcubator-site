@@ -6,10 +6,7 @@ define([
   "models/WidgetContainerModel",
   "collections/WidgetCollection",
   "collections/RouteCollection",
-  "collections/UserRolesCollection",
-  "collections/TableCollection",
   "collections/EmailCollection",
-  "wizard/homepage_temp",
   "backbone"
 ],
 function(AppModel,
@@ -19,8 +16,6 @@ function(AppModel,
          WidgetContainerModel,
          WidgetCollection,
          RouteCollection,
-         UserRolesCollection,
-         TableCollection,
          EmailCollection) {
 
   var AppGenerator = Backbone.View.extend({

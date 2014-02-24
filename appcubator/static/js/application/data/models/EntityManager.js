@@ -3,7 +3,7 @@ define(function(require, exports, module) {
 
     require('backbone');
 
-
+    /* Convenience methods for coordinating delete model events */
     var EntityManager = Backbone.Model.extend({
 
         initialize: function(options) {

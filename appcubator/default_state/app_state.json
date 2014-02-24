@@ -19,20 +19,18 @@
         "enableAPI": true,
         "code": "function (newUrl, cb) {\n      this.url = newUrl;\n      this.save(function(e, d){cb(e,d);});\n    }"
       }, {
-        "name": "randomNFromFlickr",
-        "enableAPI": true,
-        "code": "function (searchQ, limit, cb) {\n      var flickr = require('flickr');\n      var fcli = new flickr.Flickr('cbe3f7f6cbf9d13ad243a1e1afec902d', '5c3f9a33e088ef60');\n      fcli.executeAPIRequest('flickr.photos.search', {text: searchQ, per_page: limit, extras: ['url_q']},\n                               false, function(e, d){cb(e, d);});\n    }"
-      }, {
         "generate": "crud.models.create",
         "data": {
           "modelName": "Picture",
-          "enableAPI": true
+          "enableAPI": true,
+          "name": "create"
         }
       }, {
         "generate": "crud.models.find",
         "data": {
           "modelName": "Picture",
-          "enableAPI": true
+          "enableAPI": true,
+          "name" : "find"
         }
       }]
     }
@@ -80,7 +78,6 @@
       ]
     }
   }],
-  "_comment2": "This stuff is new and not yet implemented",
   "packages": {
     "express": "3.4.4",
     "ejs": "0.8.5",
@@ -152,7 +149,7 @@
               "className": "",
               "style": "",
               "fields": [{
-                "generate": "crud.uielements.form-field",
+                "generate": "root.uielements.form-field",
                 "data": {
                   "field_name": "name",
                   "type": "text",
@@ -160,7 +157,7 @@
                   "displayType": "single-line-text"
                 }
               }, {
-                "generate": "crud.uielements.form-field",
+                "generate": "root.uielements.form-field",
                 "data": {
                   "field_name": "url",
                   "type": "text",
@@ -310,25 +307,16 @@
       "name": "Homepage"
     }
   }],
-  "generators": {
-
-  },
+  "plugins": {},
   "config": {
     "generate": "app.config",
     "data": {
       "customCodeChunks": []
     }
   },
-  "_comment": "From here down is old",
   "info": {
     "logo": "/static/img/placeholder-logo.png",
     "keywords": "",
     "description": ""
-  },
-  "emails": [{
-    "content": "Dear {{User.username}},\n\nThanks for signing up!\n\nCheers!\n{{AppName}}",
-    "name": "Welcome",
-    "subject": "Thanks for Signing up!"
-  }],
-  "name": "thisisirrelevant"
+  }
 }

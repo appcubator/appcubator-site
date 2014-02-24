@@ -33,7 +33,7 @@ define(function(require, exports, module) {
 
             this.toolBar = this.createSubview(ToolBarView, { pageId: -1 });
 
-            this.listenTo(this.model.get('tables'), 'add', this.entityAdded);
+            this.listenTo(this.model.get('models'), 'add', this.entityAdded);
             this.autoAddLinksToNavbar();
 
             this.nodeModelsView = this.createSubview(NodeModelsView);

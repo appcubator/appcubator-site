@@ -4,14 +4,14 @@ define(function(require, exports, module) {
 
     var SoftErrorView = require('app/SoftErrorView');
     var DialogueView = require('mixins/DialogueView');
-    var TableCodeModel = require('models/TableCodeModel');
+    var NodeModelMethodModel = require('models/NodeModelMethodModel');
 
     require('app/templates/TableTemplates');
     require('prettyCheckable');
 
 
     var funcTemplate = [
-        '<div class="code-chunk">',
+        '<div class="code-chunk" id="func-chunk-<%= cid %>">',
             '<span class="title"><%= name %></span>',
             '<div class="code-editor" id="func-editor-<%= cid %>"></div>',
         '</div>'
@@ -34,7 +34,7 @@ define(function(require, exports, module) {
             this.model = tableModel;
 
             this.listenTo(this.model.get('functions'), 'add', this.renderStaticMethod);
-
+            this.listenTo(this.model.get('functions'), 'remove', this.removeMethod);
         },
 
         render: function() {
@@ -55,8 +55,12 @@ define(function(require, exports, module) {
 
             var self = this;
 
+            var list = this.$el.find('#static-methods-list')[0];
+            this.list = list;
+
             this.model.get('functions').each(function(methodModel){
-                self._inject_ace_html(methodModel, 'static-methods-list');
+                console.log(methodModel);
+                list.innerHTML += _.template(funcTemplate, { name: methodModel.get('name'), cid: methodModel.cid });
             });
 
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-static-box')).render();
@@ -65,14 +69,9 @@ define(function(require, exports, module) {
             return this;
         },
 
-
         setupAce: function() {
             this.model.get('functions').each(function(methodModel) {
-                if (methodModel.isGenerator()) {
-                    this.setupFakeGeneratorAce(methodModel);
-                } else {
-                    this.setupSingleAce(methodModel);
-                }
+                this.setupSingleAce(methodModel);
             }, this);
 
             // this.editor.getSession().setMode("ace/mode/css");
@@ -83,31 +82,37 @@ define(function(require, exports, module) {
         setupFakeGeneratorAce: function(methodModel) {
             this.$el.find("#func-editor-" + methodModel.cid).text(methodModel.getCode());
         },
+
         setupSingleAce: function(methodModel) {
+            /* pass true as second argument to render this as a model_method from some plugin */
             /* this breaks when this.el is not rendered */
             var self = this;
 
+            console.log($("#func-editor-" + methodModel.cid));
             var editor = ace.edit("func-editor-" + methodModel.cid);
             editor.getSession().setMode("ace/mode/javascript");
             editor.setValue(methodModel.getCode(), -1);
 
-            editor.on("change", function() {
-                self.codeChanged(methodModel, editor.getValue());
-            });
-        },
-
-        '_inject_ace_html': function(methodModel, id) {
-            /* this will work even if the el is not yet rendered */
-            this.$el.find('#'+id).append(_.template(funcTemplate, _.extend(methodModel.getGenerated(), {cid: methodModel.cid})));
+            if (methodModel.isGenerator()) {
+                console.log('setting read only');
+                editor.setReadOnly(true);
+            } else {
+                editor.on("change", function() {
+                    self.codeChanged(methodModel, editor.getValue());
+                });
+            }
         },
         renderStaticMethod: function(methodModel) {
-            /* this breaks when this.el is not rendered */
-            this._inject_ace_html(methodModel, 'static-methods-list');
+            this.list.innerHTML += _.template(funcTemplate, { name: methodModel.get('name'), cid: methodModel.cid });
             this.setupSingleAce(methodModel);
         },
 
+        removeMethod: function(methodModel) {
+            this.$el.find('#func-chunk-', methodModel.cid).remove();
+        },
+
         createStaticFunction: function(functionName) {
-            this.model.get('functions').add(new TableCodeModel({ name: functionName }));
+            this.model.get('functions').add(new NodeModelMethodModel({ name: functionName }));
         },
 
         codeChanged: function(methodModel, newValue) {

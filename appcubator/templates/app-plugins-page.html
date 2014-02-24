@@ -4,25 +4,24 @@
 </h2>
 <button id='browsePlugins' class='btn pull-right browsePluginsButton'>Browse All</button>
 <hr>
-<% console.log(plugins) %>
 <div class='pluginContainer'>
 <% for (var i=0; i<plugins.length;i++) {%>
 <div class="pluginBar"> 
-    <% var pluginStatus = plugins[i].pluginInformation.enabled ? "checked" : ""; %>
+    <% var pluginStatus = plugins[i].metadata.enabled ? "checked" : ""; %>
 
     <div class="identifier"><div class="pluginImageHolder"></div></div>
     <div class="meta-data">
-        <a class="title" href='#'><%=plugins[i].pluginInformation.name%></a>
-        <div class="information"> <%=plugins[i].pluginInformation.description%></div>
+        <a class="title" href='#'><%=plugins[i].metadata.name%></a>
+        <div class="information"> <%=plugins[i].metadata.description%></div>
     </div>
     <div class="toggleSwitch">
-        <div class="onoffswitch" >
-            <input type="checkbox" name="onoffswitch<%=i%>" pluginName=<%=plugins[i].pluginInformation.name%> class="onoffswitch-checkbox <%=pluginStatus%> >" id="myonoffswitch<%=i%>" >
+<!--         <div class="onoffswitch" >
+            <input type="checkbox" name="onoffswitch<%=i%>" pluginName=<%=plugins[i].metadata.name%> class="onoffswitch-checkbox <%=pluginStatus%> >" id="myonoffswitch<%=i%>" >
             <label class="onoffswitch-label" for="myonoffswitch<%=i%>">
                 <div class="onoffswitch-inner"></div>
                 <div class="onoffswitch-switch"></div>
             </label>
-        </div>
+        </div> -->
     </div>
 </div>
 <hr>

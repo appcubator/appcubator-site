@@ -42,39 +42,6 @@ define(function(require, exports, module) {
     ].join('\n');
 
 
-    var pluginAttribsTemplate = [
-    '<div class="plugins-list">',
-        '<div class="plugin-li">',
-        '<h4>Plugin 1</h4>',
-        '<div class="toggleSwitch">',
-            '<div class="onoffswitch" >',
-                '<input type="checkbox" name="onoffswitch< i >" class="onoffswitch-checkbox" id="myonoffswitch< i >" >',
-                '<label class="onoffswitch-label" for="myonoffswitch< i >">',
-                    '<div class="onoffswitch-inner"></div>',
-                    '<div class="onoffswitch-switch"></div>',
-                '</label>',
-            '</div>',
-        '</div>',
-        '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
-        '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
-        '</div>',
-        '<div class="plugin-li">',
-        '<h4>Plugin 2</h4>',
-        '<div class="toggleSwitch">',
-            '<div class="onoffswitch" >',
-                '<input type="checkbox" name="onoffswitch< i >" class="onoffswitch-checkbox" id="myonoffswitch< i >" >',
-                '<label class="onoffswitch-label" for="myonoffswitch< i >">',
-                    '<div class="onoffswitch-inner"></div>',
-                    '<div class="onoffswitch-switch"></div>',
-                '</label>',
-            '</div>',
-        '</div>',
-        '<table><tr><td>Prop 1</td><td><input type="text"></td></tr>',
-        '<tr><td>Prop 2</td><td><input type="text"></td></tr></table>',
-        '</div>',
-    '</div>'
-    ].join('\n');
-
     var propertyTemplate = [
     '<div class="column <% if(isNew) { %>newcol<% } %>" id="column-<%- cid %>">',
       '<div class="hdr"><%- name %></div>',
@@ -126,15 +93,13 @@ define(function(require, exports, module) {
             this.listenTo(this.model.get('fields'), 'remove', this.removeField);
             this.listenTo(this.model, 'newRelation removeRelation', this.renderRelations);
             
-            this.userRoles = v1State.get('users').pluck('name');
-            this.otherEntities = _(v1State.get('tables').pluck('name')).without(this.model.get('name'));
+            this.otherEntities = _(v1State.get('models').pluck('name')).without(this.model.get('name'));
             this.bindDupeWarning();
         },
 
         render: function() {
 
             var html = _.template(descriptionTemplate, this.model.serialize());
-            html    += _.template(pluginAttribsTemplate, {});
 
             this.$el.html(html);
 
@@ -191,7 +156,7 @@ define(function(require, exports, module) {
             page_context.cid = fieldModel.cid;
             page_context.nlType = fieldModel.getNLType();
             page_context.entityName = this.model.get('name');
-            page_context.entities = this.userRoles.concat(this.otherEntities);
+            page_context.entities = this.otherEntities;
             page_context.isNew = isNew;
 
             var template = _.template(propertyTemplate, page_context);
@@ -264,11 +229,9 @@ define(function(require, exports, module) {
         },
 
         renderRelations: function() {
-            var userRelations = v1State.get('users').getRelationsWithEntityName(this.model.get('name'));
-            var tableRelations = v1State.get('tables').getRelationsWithEntityName(this.model.get('name'));
+            var tableRelations = v1State.get('models').getRelationsWithEntityName(this.model.get('name'));
             var list = this.$el.find('.related-fields').empty();
-            var arr = _.union(tableRelations, userRelations);
-            _(arr).each(function(relation) {
+            _(tableRelations).each(function(relation) {
                 var suffix;
                 var text = 'Has ' + relation.related_name;
                 if (relation.type == "m2m" || relation.type == "fk") suffix = 'List of ' + util.pluralize(relation.entity);

@@ -1,61 +1,103 @@
-define([
-		'models/PluginModel',
-		'backbone'
-	],
-	function(PluginModel) {
+define(function(require, exports, module) {
 
-		var PluginsModel = Backbone.Model.extend({
+	'use strict';
 
-			initialize: function(bone) {
+	require('backbone');
+	var PluginModel = require('models/PluginModel');
+	var NodeModelMethodModel = require('models/NodeModelMethodModel');
 
-				_.each(bone, function(val, key) {
-					var pluginModel = new PluginModel(val);
-					this.set(key, pluginModel);
-				}, this);
+	/* Contains metadata and convenience methods for Plugins */
+	var PluginsModel = Backbone.Model.extend({
 
-			},
+		initialize: function(bone) {
 
-			install: function(plugin) {
-				var pluginModel = new PluginModel(JSON.parse(plugin.data));
+			_.each(bone, function(val, key) {
+				var pluginModel = new PluginModel(val);
+				this.set(key, pluginModel);
+			}, this);
 
-				pluginModel.set('pluginInformation', {
-					description: plugin.description,
-					name: plugin.name,
-					origin: "appcubator"
-				});
+		},
 
-				this.set(plugin.name, pluginModel);
-			},
+		install: function(plugin) {
+			var pluginModel = new PluginModel(JSON.parse(plugin.data));
+			pluginModel.set('metadata', {
+				description: plugin.description,
+				name: plugin.name
+			});
+			this.set(plugin.name, pluginModel);
+		},
 
-			getGeneratorsWithModule: function(generatorModule) {
-				var generators = [];
+		getPluginsWithModule: function(moduleName) {
+			return _.filter(this.attributes, function(pluginModel, pluginName) {
+				pluginModel.name = pluginName;
+				return pluginModel.has(moduleName);
+			});
+		},
 
-				var generators = _.flatten(_.map(this.attributes, function(pluginModel, packageName) {
-					return pluginModel.getGeneratorsWithModule(generatorModule);
+		getGeneratorsWithModule: function(generatorModule) {
+			var generators = [];
 
-					// _.each(packageContent[generatorModule], function(generator) {
-					// 	generators.push({
-					// 		package: packageName,
-					// 		module: generatorModule,
-					// 		name: generator.name
-					// 	});
-					// });
-				}));
+			var generators = _.flatten(_.map(this.attributes, function(pluginModel, packageName) {
+				return pluginModel.getGeneratorsWithModule(generatorModule);
+			}));
 
-				return generators;
-			},
+			return generators;
+		},
 
-			toJSON: function() {
-				var json = _.clone(this.attributes);
-				
-				_.each(json, function(val, key) {
-					json[key] = val.serialize();
-				});
+		isPluginInstalledToModel: function(pluginModel, nodeModelModel) {
+			var gens = _.pluck(pluginModel.getGeneratorsWithModule('model_methods'), 'generatorIdentifier');
+			var functions = nodeModelModel.get('functions').map(function(fn) { return fn.generate; });
+			return _.intersection(gens, functions).length > 0 ? true : false;
+		},
 
-				return json;
-			}
+		installPluginToModel: function(pluginModel, nodeModelModel) {
+			if (!pluginModel) return;
+			var gens = this.get(pluginModel.name).getGeneratorsWithModule('model_methods');
+			_.each(gens, function(gen) {
+				var methodModel = new NodeModelMethodModel();
+				methodModel.setGenerator(gen.generatorIdentifier);
+				methodModel.set('modelName', nodeModelModel.get('name'));
+				methodModel.set('name', gen.name);
+				nodeModelModel.get('functions').push(methodModel);
+			});
+		},
 
-		});
+		uninstallPluginToModel: function(plugin, nodeModelModel) {
+			
+			var gens = [];
 
-		return PluginsModel;
+			nodeModelModel.get('functions').each(function(fn) {
+				if(fn.isInPackage(plugin.name)) {
+					gens.push(fn);
+				}
+			});
+
+			nodeModelModel.get('functions').remove(gens);
+		},
+
+    	fork: function (generator, generatorPath, newName) {
+
+    		var genObj = _.clone(generator);
+    		var newPath = util.packageModuleName(generatorPath);
+    		newPath.name = newName;
+    		genObj.name = newName;
+
+    		this.get(newPath.package)[newPath.module].push(genObj);
+
+    		return [newPath.package, newPath.module, newPath.name].join('.');
+    	},
+
+		toJSON: function() {
+			var json = _.clone(this.attributes);
+
+			_.each(json, function (val, key) {
+				json[key] = val.serialize();
+			});
+
+			return json;
+		}
+
 	});
+
+	return PluginsModel;
+});

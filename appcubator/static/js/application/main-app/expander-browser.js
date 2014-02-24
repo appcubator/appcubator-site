@@ -13,7 +13,7 @@ exports.factory = function(_safe_eval_) {
     function findGenDataSub(generators, genID) {
         // generators is some object of generators to search through
         // genID is an obj w (package, module, name, version) keys
-        // Search order: generators, plugins, then builtinGenerators
+        // Search order: generators, then builtinGenerators
 
         var packageObj = generators[genID.package];
         if (packageObj === undefined) {
@@ -35,38 +35,26 @@ exports.factory = function(_safe_eval_) {
         }
 
         if (generator === undefined)
-            throw { name: 'GenNotFound', message: "Generator '"+genID.name+"' with version '"+genID.version+"' not found in module '"+genID.module+"'", level: 'generator' };
+            throw { name: 'GenNotFound', message: "Generator '"+genID.name+"' with version '"+genID.version+"' not found in module '"+genID.module+"'", level: 'generator'  };
 
         return generator;
     }
 
-    function findGenData(plugins, generators, genID) {
-        // plugins is app.plugins
-        // generators is app.generators
+    function findGenData(generators, genID) {
+        // generators is app.plugins
         var generator;
-        var searchList = [generators, plugins, builtinGenerators];
-        while (searchList.length !== 0) {
-            var genCollection = searchList.shift();
-            var found;
 
-            try {
-                found = true;
-                generator = findGenDataSub(genCollection, genID);
-            } catch (e) {
-                if (e.name === 'GenNotFound') {
-                    found = false;
-                } else {
-                    throw e;
-                }
-            }
-
-            if (found) {
-                generator._pristine = (genCollection !== generators);
-                return generator;
+        try {
+            generator = findGenDataSub(generators, genID);
+        } catch (e) {
+            if (e.name === 'GenNotFound') {
+                generator = findGenDataSub(builtinGenerators, genID);
+            } else {
+                throw e;
             }
         }
 
-        throw {name: 'GenNotFound', message: "Generator '"+genID.name+"' with version '"+genID.version+"' not found." };
+        return generator;
     }
 
     expander.findGenData = findGenData;
@@ -74,7 +62,7 @@ exports.factory = function(_safe_eval_) {
     function constructGen(generatorData) {
         // input the generator's data from the json
         // output a function which can directly be used for generator execution.
-        var fn = function(plugins, generators, data) {
+        var fn = function(generators, data) {
             var templates = generatorData.templates;
             var compiledTemplates = {};
 
@@ -87,7 +75,7 @@ exports.factory = function(_safe_eval_) {
             }
 
             // TODO compile each EJS template so that it can have a render method.
-            var expandFn = function(data) { return expand(plugins, generators, data); };
+            var expandFn = function(data) { return expand(generators, data); };
             var globals = {
                 data: data,
                 templates: compiledTemplates,
@@ -96,16 +84,8 @@ exports.factory = function(_safe_eval_) {
                 console: console // debug
             };
             var code = '(' + generatorData.code + ')(data, templates);';
-            
-            var genObj = "ERROR";
 
-            try {
-                genObj = _safe_eval_(code, globals);
-            }
-            catch(e) {
-                console.log(e);
-                throw generatorData.name;
-            }
+            genObj = _safe_eval_(code, globals);
 
             return genObj;
         };
@@ -137,26 +117,25 @@ exports.factory = function(_safe_eval_) {
 
     expander.parseGenID = parseGenID;
 
-    function expandOnce(plugins, generators, genData) {
+    function expandOnce(generators, genData) {
         try {
             var genID = parseGenID(genData.generate);
-            var generatedObj = constructGen(findGenData(plugins, generators, genID))(plugins, generators, genData.data);
+            var generatedObj = constructGen(findGenData(generators, genID))(generators, genData.data);
             return generatedObj;
         }
         catch(e) {
-            _.each(genID, function(val, key) {
-                console.log(val + " " + key);
-            });
-            throw JSON.stringify(genID, null, 3) + " : " + e;
+            console.log('Error in call to expandOnce for '+JSON.stringify(genID, null, 3)+':');
+            console.log(e);
+            throw e;
         }
     }
 
     expander.expandOnce = expandOnce;
 
-    function expand(plugins, generators, genData) {
+    function expand(generators, genData) {
         // TODO check for cycles
         while (typeof(genData) == typeof({}) && 'generate' in genData) {
-            genData = expandOnce(plugins, generators, genData);
+            genData = expandOnce(generators, genData);
         }
         return genData;
     }
@@ -164,30 +143,26 @@ exports.factory = function(_safe_eval_) {
     expander.expand = expand;
 
     expander.expandAll = function(app) {
-        app.plugins = app.plugins || []; // TEMP BECAUSE THIS DOES NOT YET EXIST.
-        try {
-            _.each(app.routes, function(route, i) {
-                app.routes[i] = expand(app.plugins, app.generators, route);
-            });
+        app.plugins = app.plugins || {}; // TEMP BECAUSE THIS DOES NOT YET EXIST.
 
-            _.each(app.models, function(model, index) {
-                app.models[index] = expand(app.plugins, app.generators, model);
-            });
+        _.each(app.routes, function(route, i) {
+            app.routes[i] = expand(app.plugins, route);
+        });
 
-            _.each(app.templates, function (template, index) {
-                app.templates[index] = expand(app.plugins, app.generators, template);
-            });
+        _.each(app.models, function(model, index) {
+            app.models[index] = expand(app.plugins, model);
+        });
 
-            app.templates.push({name: "header", code: app.header||""});
-            app.templates.push({name: "scripts", code: app.scripts||""});
+        _.each(app.templates, function (template, index) {
+            app.templates[index] = expand(app.plugins, template);
+        });
 
-            app.config = expand(app.plugins, app.generators, app.config);
-            app.css = expand(app.plugins, app.generators, app.css);
-        }
-        catch(e) {
-            console.log("ERROR with generator: " + e);
-            throw e;
-        }
+        app.templates.push({name: "header", code: app.header||""});
+        app.templates.push({name: "scripts", code: app.scripts||""});
+
+        app.config = expand(app.plugins, app.config);
+        app.css = expand(app.plugins, app.css);
+
         return app;
     };
 
@@ -200,6 +175,17 @@ try {
     var x = window;
     // No error -> we're in the frontend
     window.expanderfactory = exports.factory;
+    window.initExpander = function() {
+        /* hacky way to run code in the frontend that should not be used to run untrusted code */
+        var runCode = function(code, globals) {
+            var templates = globals.templates;
+            var data = globals.data;
+            var expand = globals.expand;
+            return eval(code);
+        };
+        var expander = exports.factory(runCode);
+        return expander;
+    };
 } catch (e) {
     // e is a ReferenceError, which implies we're in the backend
     exports.init = function() {
@@ -252,32 +238,6 @@ exports.generators = generators;
 var generators = [];
 
 generators.push({
-    name: 'form-field',
-    version: '0.1',
-    code: function(data, templates) {
-        /*  */
-
-        var template = templates[data.displayType];
-        data.style = data.style || 'display:block';
-
-        return template(data);
-    },
-    templates: {
-        "single-line-text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
-        "text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
-        "paragraph-text": '<textarea name="<%= field_name %>" placeholder="<%= placeholder %>"></textarea>',
-        "dropdown": '<select name="<%= field_name %>" class="dropdown"><% _.each(options.split(\',\'), function(option, ind){ %><option><%= option %></option><% }); %></select>',
-        "option-boxes": '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value=""> <label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
-        "password-text": '<input name="<%= field_name %>" type="password" placeholder="<%= placeholder %>">',
-        "email-text": '<div class="email"><input type="text" placeholder="<%= placeholder %>"></div>',
-        "button": '<div class="btn"><%= placeholder %></div>',
-        "image-uploader": '<div class="upload-image btn">Upload Image</div>',
-        "file-uploader": '<div class="upload-file btn">Upload File</div>',
-        "date-picker": '<input name="<%= field_name %>" type="text" placeholder="<%= placeholder %>"><img style="margin-left:5px;" src="/static/img/calendar-icon.png">'
-    }
-});
-
-generators.push({
     name: 'create',
     version: '0.1',
     defaults: {
@@ -292,11 +252,11 @@ generators.push({
         /* Example (subject to change)
         {
             generate: "crud.uielements.create",
-            data: { fields: [{ generate: 'form-field',
+            data: { fields: [{ generate: 'uielements.form-field',
                                data: {displayType:'single-line-text',
                                       field_name:'name',
                                       placeholder: 'Name'}
-                             },{generate: 'form-field',
+                             },{generate: 'uielements.form-field',
                                 data:{ displayType:'single-line-text',
                                        field_name: 'url',
                                        placeholder: 'URL'}}],
@@ -411,10 +371,6 @@ generators.push({
     code: function(data, templates) {
         // generate the initial mongoose Schema from fields.
         data.schemaCode = templates.schema({fields: data.fields});
-        data.fields = undefined; // we dont need this anymore.
-
-        if (data.schemaMods === undefined)
-            data.schemaMods = [];
 
         for (index in data.functions) {
             var sm = data.functions[index];
@@ -444,14 +400,11 @@ var <%= name %>Schema = <%= schemaCode %>;\n\
 <% var sm = functions[index]; %>\n\
     <% if (sm.instancemethod) { %>\
 <%= name %>Schema.methods.<%= sm.name %> = <%= sm.code %>;\n\
+    <% } else if (sm.schemaMod) { %>\
+(<%= sm.code %>)(<%= name %>Schema);\n\
     <% } else { %>\
 <%= name %>Schema.statics.<%= sm.name %> = <%= sm.code %>;\n\
     <% } %>\
-<% } %>\n\
-\n\
-<% for(var index in schemaMods) { %>\n\
-<% var sm = schemaMods[index]; %>\n\
-(<%= sm %>)(<%= name %>Schema);\n\
 <% } %>\n\
 \n\
 exports.<%= name %> = mongoose.model('<%= name %>', <%= name %>Schema);\n"
@@ -1048,6 +1001,32 @@ generators.push({
                  layout: data.layout };
     },
     templates: { }
+});
+
+generators.push({
+    name: 'form-field',
+    version: '0.1',
+    code: function(data, templates) {
+        /*  */
+
+        var template = templates[data.displayType];
+        data.style = data.style || 'display:block';
+
+        return template(data);
+    },
+    templates: {
+        "single-line-text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
+        "text": '<input type="text" name="<%= field_name %>" placeholder="<%= placeholder %>">',
+        "paragraph-text": '<textarea name="<%= field_name %>" placeholder="<%= placeholder %>"></textarea>',
+        "dropdown": '<select name="<%= field_name %>" class="dropdown"><% _.each(options.split(\',\'), function(option, ind){ %><option><%= option %></option><% }); %></select>',
+        "option-boxes": '<span class="option-boxes"><% _(field.get(\'options\').split(\',\')).each(function(option, ind){ %><input id="opt-<%= ind %>" class="field-type" type="radio" name="types" value=""> <label class="opt" for="opt-<%= ind %>"><%= option %></label><br  /><% }); %></span>',
+        "password-text": '<input name="<%= field_name %>" type="password" placeholder="<%= placeholder %>">',
+        "email-text": '<div class="email"><input type="text" placeholder="<%= placeholder %>"></div>',
+        "button": '<div class="btn"><%= placeholder %></div>',
+        "image-uploader": '<div class="upload-image btn">Upload Image</div>',
+        "file-uploader": '<div class="upload-file btn">Upload File</div>',
+        "date-picker": '<input name="<%= field_name %>" type="text" placeholder="<%= placeholder %>"><img style="margin-left:5px;" src="/static/img/calendar-icon.png">'
+    }
 });
 
 exports.generators = generators;

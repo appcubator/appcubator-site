@@ -29,7 +29,7 @@ define(function(require, exports, module) {
 
         setupGenerator: function(generatorPath) {
             this.generatorPath = generatorPath;
-            this.generator = new Generator().getGenerator(this.generatorPath);
+            this.generator = G.getGenerator(this.generatorPath);
             this.widgetModel.setGenerator(generatorPath);
         },
 
@@ -93,15 +93,15 @@ define(function(require, exports, module) {
             
             var currentModule = util.packageModuleName(this.generatorPath).module;
             // e.g. if module == uielements, it can only clone uielements
-            var generators = v1State.get('generators').getGeneratorsWithModule(currentModule);
+            var plugins = v1State.get('plugins').getGeneratorsWithModule(currentModule);
             
-            generators = _.reject(generators, function(generator) {
+            plugins = _.reject(plugins, function(generator) {
 
                 var genPath = [util.packageModuleName(this.generatorPath).package, currentModule, generator.name].join('.');
                 return genPath == this.generatorPath;
             }, this);
 
-            _.each(generators, function(generator) {
+            _.each(plugins, function(generator) {
                 var genPath = [generator.package, currentModule, generator.name].join('.');
                 this.$el.find('.action-menu').append('<li class="clone-button" id="'+ genPath +'"><a href="#">Switch Generator to '+  generator.name +'X</a></li>');
             }, this);
@@ -116,7 +116,8 @@ define(function(require, exports, module) {
         },
 
         forkCurrentGen: function() {
-            
+            alert('Not yet implemented');
+            /*
             var self = this;
 
             var newName = window.prompt("What do you want to name the new generator?", util.packageModuleName(self.generatorPath) + "_edited");
@@ -126,10 +127,10 @@ define(function(require, exports, module) {
                 var newPackageModuleName = util.packageModuleName(self.generatorPath);
                 newPackageModuleName.name = newName;
                 
-                if(!v1State.get('generators').isNameUnique(newPackageModuleName)) { self.forkCurrentGen(); } 
+                if(!v1State.get('plugins').isNameUnique(newPackageModuleName)) { self.forkCurrentGen(); } 
                 
                 var genObj = _.clone(this.generator);
-                var newGenPath = v1State.get('generators').fork(this.generator, this.generatorName, newName);
+                var newGenPath = v1State.get('plugins').fork(this.generator, this.generatorName, newName);
                 self.setupGenerator(newGenPath);
                 self.reRender();
                 self.makeEditorEditable();
@@ -137,6 +138,7 @@ define(function(require, exports, module) {
             else {
                 self.forkCurrentGen();
             }
+            */
         },
 
         cloneGenerator: function(e) {
@@ -145,7 +147,7 @@ define(function(require, exports, module) {
             
             // changes data related to this view and rerenders
             this.generatorName = genPath;
-            this.generator = new Generator().getGenerator(this.generatorName);
+            this.generator = G.getGenerator(this.generatorName);
 
             this.reRender();
         },

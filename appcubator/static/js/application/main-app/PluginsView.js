@@ -12,19 +12,20 @@ define(function(require, exports, module) {
         className: 'plugins-view',
 
         events: {
-            'click .onoffswitch': 'clickedPluginToggle',
+            // 'click .onoffswitch': 'clickedPluginToggle',
             'click .browsePluginsButton': 'browsePlugins'
         },
         
         initialize: function() {
+            _.bindAll(this);
             this.listenTo(v1State.get('plugins'), 'change', this.render);
         },
         
         render: function() {
             var plugins = v1State.get('plugins').serialize();
             plugins = _.map(plugins, function(val, key) { return val; });
-            console.log(plugins);
             this.$el.html(_.template(util.getHTML('plugins-page'), {plugins: plugins}));
+
             return this;
         },
         
@@ -46,17 +47,16 @@ define(function(require, exports, module) {
             
             var plugin = v1.currentApp.model.get('plugins').find(
                 function (p) {
-                    if (p.get('pluginInformation').name === pluginName){
+                    if (p.get('metadata').name === pluginName){
                         if (pluginEnabled){
                             p.disablePlugin();
                         } else {
                             p.enablePlugin();
                         }
                     }
-                    return (p.get('pluginInformation').name === pluginName); 
+                    return (p.get('metadata').name === pluginName); 
             });
-            
-            console.log(this.getActivePlugins())
+
         },
         
         getActivePlugins: function (){

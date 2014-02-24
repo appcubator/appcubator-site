@@ -79,7 +79,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             var spin = util.addLoadingSpin(this.el);
             this.arrangeLayout();
 
-            var expanded = this.model.expand();
+            var expanded = this.model.safeExpand();
 
             this.el.innerHTML = this.renderElement(expanded);
             this.innerEl = this.el.firstChild;
@@ -100,7 +100,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         reRender: function() {
-            var expanded = this.model.expand();
+            var expanded = this.model.safeExpand();
 
             this.el.innerHTML = this.renderElement(expanded);
             this.innerEl = this.el.firstChild;
@@ -110,6 +110,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.placeJS(expanded);
 
             this.$el.find('a').on('click', function(e) { e.preventDefault(); });
+            this.$el.find('form').on('submit', function(e) { e.preventDefault(); });
 
             return this;
         },
@@ -374,7 +375,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.editMode = false;
             this.$el.removeClass('textediting');
             var el = $(this.el.firstChild);
-            this.model.get('data').trigger('change:content');
+            this.model.trigger('change:content');
             el.attr('contenteditable', 'false');
             keyDispatcher.textEditing = false;
             util.unselectText();

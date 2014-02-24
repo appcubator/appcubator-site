@@ -15,7 +15,7 @@ define(function(require, exports, module) {
             }
         },
 
-        createSectoinWithType: function(type) {
+        createSectionWithType: function(type) {
 
 
             var sampleHeader = function(col) {

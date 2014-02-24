@@ -182,6 +182,10 @@ define(function(require, exports, module) {
                 this.el.appendChild(this.renderButtonWithText('edit-custom-widget-btn', 'Edit Custom Widget'));
             }
 
+            if (type == "create-form") {
+
+            }
+
             this.el.appendChild(this.renderSettingsAndDelete('edit-custom-widget-btn', 'Edit Custom Widget'));
         },
 
@@ -420,12 +424,12 @@ define(function(require, exports, module) {
         },
 
         doubleClicked: function() {
-            if (this.model.getForm() && !this.model.isLoginForm()) {
-                this.openFormEditor();
-            }
-            if (this.model.getLoginRoutes()) {
-                this.openLoginEditor();
-            }
+            // if (this.model.getForm() && !this.model.isLoginForm()) {
+            //     this.openFormEditor();
+            // }
+            // if (this.model.getLoginRoutes()) {
+            //     this.openLoginEditor();
+            // }
             if (this.model.get('type') == "imageslider") {
                 this.openSlideEditor();
             }

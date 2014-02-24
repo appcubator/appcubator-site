@@ -1,20 +1,16 @@
 define([
         'models/AppInfoModel',
-        'collections/UserRolesCollection',
-        'collections/TableCollection',
+        'collections/NodeModelCollection',
         'collections/EmailCollection',
         'collections/TemplateCollection',
         'models/PluginsModel',
-        'models/GeneratorsModel',
         'models/EntityManager'
     ],
     function(AppInfoModel,
-        UserRolesCollection,
-        TableCollection,
+        NodeModelCollection,
         EmailCollection,
         TemplateCollection,
         PluginsModel,
-        GeneratorsModel,
         EntityManager) {
 
         var AppModel = Backbone.Model.extend({
@@ -27,12 +23,10 @@ define([
                 if (!aState) return;
 
                 this.set('info', new AppInfoModel(aState.info));
-                this.set('users', new UserRolesCollection(aState.users));
-                this.set('tables', new TableCollection(aState.models));
+                this.set('models', new NodeModelCollection(aState.models));
                 this.set('emails', new EmailCollection(aState.emails));
                 this.set('templates', new TemplateCollection(aState.templates));
                 this.set('plugins', new PluginsModel(aState.plugins || {}));
-                this.set('generators', new GeneratorsModel(aState.generators|| {}));
 
             },
 
@@ -101,14 +95,11 @@ define([
             serialize: function() {
                 var json = _.clone(this.attributes);
                 json.info = json.info.serialize();
-                json.users = json.users.serialize();
-                json.tables = json.tables.serialize();
-                //if(json.mobilePages) json.mobilePages = json.mobilePages.serialize();
+                json.models = json.models.serialize();
                 json.emails = json.emails.serialize();
                 json.templates = json.templates.serialize();
                 json.routes = json.routes.serialize();
                 json.plugins = json.plugins.serialize();
-                json.generators = json.generators.serialize();
 
                 return json;
             }

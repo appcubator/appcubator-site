@@ -1,15 +1,14 @@
-define([
-    'require',
-    'collections/FieldsCollection',
-    'models/TableCodeModel',
-    'backbone'
-], function(require) {
+define(function(require, exports, module) {
+
+    'use strict';
+
+    require('backbone');
 
     var FieldsCollection = require('collections/FieldsCollection');
-    var TableCodeModel = require('models/TableCodeModel');
-    var Backbone = require('backbone');
+    var NodeModelMethodModel = require('models/NodeModelMethodModel');
 
-    var TableModel = Backbone.Model.extend({
+    var NodeModelModel = Backbone.Model.extend({
+
         defaults: {
             fields: new FieldsCollection()
         },
@@ -35,8 +34,10 @@ define([
                 this.get('fields').add(bone.fields);
             }
 
-            var TableCodeCollection = Backbone.Collection.extend({model:TableCodeModel});
-            this.set('functions', new TableCodeCollection(bone.functions||[]));
+            var NodeModelCodeCollection = Backbone.Collection.extend({
+                model: NodeModelMethodModel
+            });
+            this.set('functions', new NodeModelCodeCollection(bone.functions || []));
 
             this.isUser = false;
         },
@@ -45,6 +46,7 @@ define([
             var json = {};
             json = _.clone(this.attributes);
             json.fields = this.get('fields').serialize();
+            json.functions = json.functions.serialize();
             return json;
         },
 
@@ -91,5 +93,5 @@ define([
         }
     });
 
-    return TableModel;
+    return NodeModelModel;
 });

@@ -2,8 +2,7 @@ define(function(require, exports, module) {
 
     'use strict';
 
-    var DataModel = require('models/DataModel'),
-        LayoutModel = require('models/LayoutModel');
+    var LayoutModel = require('models/LayoutModel');
 
     require('dicts/constant-containers');
 
@@ -13,6 +12,8 @@ define(function(require, exports, module) {
     var WidgetModel = Backbone.Model.extend({
         selected: false,
         editMode: false,
+        /* idAttribute as cid allows duplicate widgets to be stored in the collection */
+        idAttribute: 'cid',
 
         initialize: function(bone, isNew) {
 
@@ -280,7 +281,17 @@ define(function(require, exports, module) {
 
             if (json.context) delete json.context;
             return json;
-        }
+        },
+
+        safeExpand: function() {
+            try {
+                return this.expand();
+            } catch (e) {
+                console.log("Expander error:");
+                console.log(e);
+                return {html: '<img src="http://cdn.memegenerator.net/instances/500x/43563104.jpg">', js: '', css: ''};
+            }
+        },
     });
 
     return WidgetModel;

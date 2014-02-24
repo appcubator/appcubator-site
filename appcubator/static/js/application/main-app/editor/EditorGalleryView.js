@@ -5,7 +5,6 @@ define(function(require, exports, module) {
     var EditorGallerySectionView = require('editor/EditorGallerySectionView');
     var SearchGallerySectionView = require('editor/SearchGallerySectionView');
     var PickCreateFormEntityView = require('editor/PickCreateFormEntityView');
-    var WidgetContainerModel = require('models/WidgetContainerModel');
     var WidgetModel = require('models/WidgetModel');
     var Searcher = require('editor/Searcher');
     var AutoFillHelper = require('app/AutoFillHelper');
@@ -74,8 +73,7 @@ define(function(require, exports, module) {
 
             // listen for changes to url to update context entity section
             // this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
-            this.listenTo(v1State.get('tables'), 'add remove', this.renderEntityFormsTablesLists);
-            this.listenTo(v1State.get('generators'), 'change', this.renderPluginElements);
+            this.listenTo(v1State.get('models'), 'add remove', this.renderEntityFormsTablesLists);
             this.listenTo(v1State.get('plugins'), 'change', this.renderPluginElements);
 
             return this;
@@ -206,25 +204,6 @@ define(function(require, exports, module) {
 
         renderAuthenticationForms: function() {
             this.authSection = this.addNewSection('User Signin Forms', true);
-
-            this.authSection.addFullWidthItem("entity-user-Local_Login", "login", "Login Form", "local-login");
-
-            v1State.get('users').each(function(user) {
-                this.authSection.addFullWidthItem("entity-user-" + user.get('name'), "signup", user.get('name') + " Sign Up", "local-signup");
-            }, this);
-
-            if (!v1State.isSingleUser()) {
-                v1State.get('users').each(function(user) {
-                    var name = user.get('name');
-                    this.authSection.addFullWidthItem("entity-user-" + name, "facebooksignup", name + " Facebook Sign Up", "facebook");
-                    // this.addFullWidthItem("entity-user-" + name, "twittersignup", name + " Twitter Sign Up", "twitter", authSection);
-                    // this.addFullWidthItem("entity-user-" + name, "linkedinsignup", name + " LinkedIn Sign Up", "linkedin", authSection);
-                }, this);
-            }
-
-            this.authSection.addFullWidthItem("entity-user-facebook", "thirdparty", "Facebook Login Button", "facebook");
-            this.authSection.addFullWidthItem("entity-user-twitter", "thirdparty", "Twitter Login Button", "twitter");
-            this.authSection.addFullWidthItem("entity-user-linkedin", "thirdparty", "LinkedIn Login Button", "linkedin");
         },
 
         renderCurrentUserElements: function() {
@@ -242,7 +221,7 @@ define(function(require, exports, module) {
         renderCrudElements: function (argument) {
 
             this.tableSection = this.addNewSection('Data Forms');
-            v1State.get('tables').each(function(entityModel) {
+            v1State.get('models').each(function(entityModel) {
 
                 var li = this.tableSection.addFullWidthItem(null, "entity-create-form", entityModel.get('name') + ' Create Form', 'create-form-icon', 'crud.uielements.create');
 
@@ -264,18 +243,7 @@ define(function(require, exports, module) {
             //     this.tableSection.render();
             // }
 
-            v1State.get('tables').each(function(entityModel) {
-                var context = {
-                    entity_id: entityModel.cid,
-                    entity_name: entityModel.get('name')
-                };
-                var id = 'entity-' + entityModel.cid;
-                //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
-                this.tableSection.addFullWidthItem(id, "entity-list", entityModel.get('name') + ' List', 'list-icon');
-                this.tableSection.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') + ' Search Results', 'searchlist-icon');
-            }, this);
-
-            v1State.get('users').each(function(entityModel) {
+            v1State.get('models').each(function(entityModel) {
                 var context = {
                     entity_id: entityModel.cid,
                     entity_name: entityModel.get('name')
@@ -336,7 +304,7 @@ define(function(require, exports, module) {
         renderPluginElements: function() {
             var elements = [];
 
-            var uiGenerators = v1State.get('generators').getGeneratorsWithModule('uielements');
+            var uiGenerators = v1State.get('plugins').getGeneratorsWithModule('uielements');
 
             if(this.pluginElemsSection) this.pluginElemsSection.close();
             this.pluginElemsSection = this.addNewSection('Plugin Elements');
