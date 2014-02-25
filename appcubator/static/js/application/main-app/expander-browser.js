@@ -58,6 +58,7 @@ exports.factory = function(_safe_eval_) {
     }
 
     expander.findGenData = findGenData;
+    expander.builtinGenerators = builtinGenerators;
 
     function constructGen(generatorData) {
         // input the generator's data from the json
@@ -197,9 +198,10 @@ try {
 
 },{"../generators/generators":5,"underscore":12}],2:[function(require,module,exports){
 exports.uielements = require('./uielements.js').generators;
-exports.models = require('./models.js').generators;
+exports.model_methods = require('./model_methods.js').generators;
+exports.metadata = { name: 'crud' };
 
-},{"./models.js":3,"./uielements.js":4}],3:[function(require,module,exports){
+},{"./model_methods.js":3,"./uielements.js":4}],3:[function(require,module,exports){
 var generators = [];
 
 generators.push({
@@ -393,6 +395,7 @@ exports.templates = require('./templates.js').generators;
 exports.uielements = require('./uielements.js').generators;
 exports.models = require('./models.js').generators;
 exports.app = require('./app.js').generators;
+exports.metadata = { name: 'root'};
 
 },{"./app.js":6,"./models.js":8,"./routes.js":9,"./templates.js":10,"./uielements.js":11}],8:[function(require,module,exports){
 var generators = [];

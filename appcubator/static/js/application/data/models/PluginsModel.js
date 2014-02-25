@@ -11,6 +11,12 @@ define(function(require, exports, module) {
 
         initialize: function(bone) {
 
+            _.each(G.expander.builtinGenerators, function(val, key) {
+                val._builtin = true; // prevents serialization
+                var pluginModel = new PluginModel(val);
+                this.set(key, pluginModel);
+            }, this);
+
             _.each(bone, function(val, key) {
                 var pluginModel = new PluginModel(val);
                 this.set(key, pluginModel);
@@ -91,7 +97,12 @@ define(function(require, exports, module) {
             var json = _.clone(this.attributes);
 
             _.each(json, function (val, key) {
-                json[key] = val.serialize();
+                // don't store the builtin generators in the app state
+                if (val.isBuiltIn()) {
+                    delete json[key];
+                } else {
+                    json[key] = val.serialize();
+                }
             });
 
             return json;

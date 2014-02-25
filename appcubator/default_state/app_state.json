@@ -19,14 +19,14 @@
         "enableAPI": true,
         "code": "function (newUrl, cb) {\n      this.url = newUrl;\n      this.save(function(e, d){cb(e,d);});\n    }"
       }, {
-        "generate": "crud.models.create",
+        "generate": "crud.model_methods.create",
         "data": {
           "modelName": "Picture",
           "enableAPI": true,
           "name": "create"
         }
       }, {
-        "generate": "crud.models.find",
+        "generate": "crud.model_methods.find",
         "data": {
           "modelName": "Picture",
           "enableAPI": true,
