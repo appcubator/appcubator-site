@@ -93,8 +93,8 @@ define(function(require, exports, module) {
                 list.innerHTML += _.template(funcTemplate, { name: methodModel.get('name'), cid: methodModel.cid, fcvHTML: fcv.renderHTML() });
                 fcvs.push(fcv);
             });
-            _.each(fcvs, function(fcv, i){ // set element which binds the events
-                fcv.setElement($(list).find('.func-type-container')[i]);
+            _.each($(list).find('.func-type-container'), function(el, i){ // set element which binds the events
+                fcvs[i].setElement(el);
             });
 
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-static-box')).render();
