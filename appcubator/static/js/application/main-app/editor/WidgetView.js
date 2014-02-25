@@ -81,7 +81,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
             this.setElement(this.renderElement(expanded), true);
             this.$el.addClass("widget-wrapper"); 
-            this.el.id = 'widget-wrapper-' + this.model.cid;
+            // this.el.id = 'widget-wrapper-' + this.model.cid;
 
             this.innerEl = this.el.firstChild;
             this.$innerEl = $(this.innerEl);
