@@ -13,7 +13,7 @@ define(function(require, exports, module) {
         '<div class="code-chunk" id="func-chunk-<%= cid %>">',
             '<span class="title">',
                 '<%= name %>',
-                '<%= fcvHTML %>', // func type chooser goes here
+                '<span class="func-type-container"></span>', // func type chooser goes here
             '</span>',
             '<div class="code-editor" id="func-editor-<%= cid %>"></div>',
         '</div>'
@@ -25,19 +25,17 @@ define(function(require, exports, module) {
         events: {
             'click .func-type-change': 'changeTypeHandler',
         },
-        initialize: function(methodModel) {
-            _.bindAll(this);
+        initialize: function(el, methodModel) {
+            this.setElement(el);
             this.methodModel = methodModel;
+            _.bindAll(this);
         },
-        renderHTML: function() {
-            var funcTypeTemplate = [
-                    '<span class="func-type-container">',
-                        '<span class="func-type"><%= funcType %></span>'];
+        render: function() {
+            var funcTypeTemplate = '<span class="func-type"><%= funcType %></span>';
             if (!this.methodModel.isGenerator())
-                funcTypeTemplate.push('<button class="func-type-change" type="button">Change type</button>');
-            funcTypeTemplate.push('</span>');
-            funcTypeTemplate = funcTypeTemplate.join('\n');
-            return _.template(funcTypeTemplate, {funcType: this.methodModel.getType()});
+                funcTypeTemplate += '<button class="func-type-change" type="button">Change type</button>';
+            this.$el.html(_.template(funcTypeTemplate, {funcType: this.methodModel.getType()}));
+            return this;
         },
         changeTypeHandler: function() {
             var newType = this.methodModel.toggleType();
@@ -86,16 +84,14 @@ define(function(require, exports, module) {
             var list = this.$el.find('#static-methods-list')[0];
             this.list = list;
 
-            var fcvs = [];
             this.model.get('functions').each(function(methodModel, i){
-                console.log(methodModel);
-                var fcv = new FuncChooserView(methodModel);
                 var methodObj = methodModel.getGenerated();
-                list.innerHTML += _.template(funcTemplate, { name: methodObj.name, cid: methodModel.cid, fcvHTML: fcv.renderHTML() });
-                fcvs.push(fcv);
+                list.innerHTML += _.template(funcTemplate, { name: methodObj.name, cid: methodModel.cid });
             });
-            _.each($(list).find('.func-type-container'), function(el, i){ // set element which binds the events
-                fcvs[i].setElement(el);
+            _.each($(list).find('.func-type-container'), function(el, i) {
+                var methodModel = self.model.get('functions').at(i);
+                var fcv = new FuncChooserView(el, methodModel);
+                fcv.render();
             });
 
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-static-box')).render();
@@ -112,10 +108,6 @@ define(function(require, exports, module) {
             // this.editor.getSession().setMode("ace/mode/css");
             // this.editor.setValue(this.model.get('basecss'), -1);
             // this.editor.on("change", this.keyup);
-        },
-
-        setupFakeGeneratorAce: function(methodModel) {
-            this.$el.find("#func-editor-" + methodModel.cid).text(methodModel.getCode());
         },
 
         setupSingleAce: function(methodModel) {
@@ -140,7 +132,14 @@ define(function(require, exports, module) {
         renderStaticMethod: function(methodModel) {
             var methodObj = methodModel.getGenerated();
             this.list.innerHTML += _.template(funcTemplate, { name: methodObj.name, cid: methodModel.cid });
-            this.setupSingleAce(methodModel);
+            var el = $(this.list).find('.func-type-container').last();
+            var fcv = new FuncChooserView(el, methodModel);
+            fcv.render();
+            try {
+                this.setupSingleAce(methodModel);
+            } catch (e) {
+                console.log('didnt set up ace because of the cardview');
+            }
         },
 
         removeMethod: function(methodModel) {
@@ -148,7 +147,7 @@ define(function(require, exports, module) {
         },
 
         createStaticFunction: function(functionName) {
-            this.model.get('functions').add(new NodeModelMethodModel({ name: functionName }));
+            this.model.get('functions').add(new NodeModelMethodModel({ name: functionName, code: '' }));
         },
 
         codeChanged: function(methodModel, newValue) {
