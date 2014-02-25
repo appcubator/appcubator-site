@@ -9,13 +9,6 @@ define(function(require, exports, module) {
     require('app/templates/TableTemplates');
     require('prettyCheckable');
 
-
-    var funcTypeTemplate = [
-                '<span class="func-type-container">',
-                    '<span class="func-type"><%= funcType %></span>',
-                    '<button class="func-type-change" type="button">Change type</button>',
-                '</span>'].join('\n');
-
     var funcTemplate = [
         '<div class="code-chunk" id="func-chunk-<%= cid %>">',
             '<span class="title">',
@@ -37,6 +30,13 @@ define(function(require, exports, module) {
             this.methodModel = methodModel;
         },
         renderHTML: function() {
+            var funcTypeTemplate = [
+                    '<span class="func-type-container">',
+                        '<span class="func-type"><%= funcType %></span>'];
+            if (!this.methodModel.isGenerator())
+                funcTypeTemplate.push('<button class="func-type-change" type="button">Change type</button>');
+            funcTypeTemplate.push('</span>');
+            funcTypeTemplate = funcTypeTemplate.join('\n');
             return _.template(funcTypeTemplate, {funcType: this.methodModel.getType()});
         },
         changeTypeHandler: function() {
@@ -90,7 +90,8 @@ define(function(require, exports, module) {
             this.model.get('functions').each(function(methodModel, i){
                 console.log(methodModel);
                 var fcv = new FuncChooserView(methodModel);
-                list.innerHTML += _.template(funcTemplate, { name: methodModel.get('name'), cid: methodModel.cid, fcvHTML: fcv.renderHTML() });
+                var methodObj = methodModel.getGenerated();
+                list.innerHTML += _.template(funcTemplate, { name: methodObj.name, cid: methodModel.cid, fcvHTML: fcv.renderHTML() });
                 fcvs.push(fcv);
             });
             _.each($(list).find('.func-type-container'), function(el, i){ // set element which binds the events
@@ -137,7 +138,8 @@ define(function(require, exports, module) {
             }
         },
         renderStaticMethod: function(methodModel) {
-            this.list.innerHTML += _.template(funcTemplate, { name: methodModel.get('name'), cid: methodModel.cid });
+            var methodObj = methodModel.getGenerated();
+            this.list.innerHTML += _.template(funcTemplate, { name: methodObj.name, cid: methodModel.cid });
             this.setupSingleAce(methodModel);
         },
 

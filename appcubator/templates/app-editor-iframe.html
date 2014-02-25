@@ -1,3 +1,4 @@
+{% load embed_json %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +10,54 @@
 <link type="text/css" href="/static/css/jquery-ui.css" rel="stylesheet"/>
 <link type="text/css" href="/static/css/perfect-scrollbar-0.4.6.min.css" rel="stylesheet"/>
 
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
-<script src="http://cl.ly/code/2R2P0B3s3u0q/jquery.content_slider.js" type="text/javascript"></script>
- -->
+<script src="//cdn.jsdelivr.net/underscorejs/1.6.0/underscore-min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/application/main-app/expander-browser.js"></script>
+<script>
+    // autogenerate api routes and modelDefs template for the frontend library
+    var app = {{ app.state_json|fix_solidus|safe }};
+    var expander = initExpander();
+    app = expander.expandAll(app);
+    var modelDefs = {};
+    _.each(app.models, function(model) {
+        var thisModelDef = { functions: {} };
+        // Note that modelDefs will be mutated iff the below code runs in at least one iteration
+        _.each(model.functions, function(sm) {
+            sm = expander.expand(app.plugins, sm);
+            if (sm.enableAPI && (!sm.instancemethod)) { // instancemethods cant do this.
+                modelDefs[model.name] = thisModelDef; // this need only happens once but repeatedly doesn't hurt and code is easier this way.
+                modelDefs[model.name].functions[sm.name] = ''; // TODO custom url can go here.
+            }
+        });
+    });
+</script>
+<script src="{{ STATIC_URL }}js/libs/modelslib.js"></script>
+<script>
+<!-- ajax redirection -->
+window.__openxhr = XMLHttpRequest.prototype.open;
+window.__REMOTE_HOSTNAME='{{ app.custom_domain }}';
+
+XMLHttpRequest.prototype.open = function() {
+    // url is the second argument
+    var args = Array.prototype.slice.call(arguments, 0);
+    var url = args[1];
+
+    var l = document.createElement("a");
+    l.href = url;
+
+    // redirect local url
+    if (l.hostname === location.hostname) {
+        l.hostname = window.__REMOTE_HOSTNAME;
+        l.port = 80; // since we dev on 8000
+        args[1] = l.href;
+    }
+
+    return window.__openxhr.apply(this, args);
+};
+</script>
+
 {{ header|safe }}
+
 </head>
 <body>
         <!-- Navbar -->
@@ -40,24 +85,6 @@
 
 <script type="text/javascript">
     var staticVersion = "{{STATIC_VERSION}}";
-
-    var models = {};
-    models.Picture = {
-        
-        findPicture: function(bla, callback) {
-            
-            callback.call(this,{}, [
-                {
-                    name: "Picture 1",
-                    url: "http://bla1.com"
-                },
-                {
-                    name: "Picutre 2",
-                    url: "http://bla2.com"
-                }
-            ]);
-        }
-    }
 </script>
 <script data-main="{{ STATIC_URL }}js/application/main-app/editor/iframe-main" src="{{ STATIC_URL }}js/libs/require.js">
 </script>

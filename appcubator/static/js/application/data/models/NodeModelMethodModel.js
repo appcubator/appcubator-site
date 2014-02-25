@@ -44,14 +44,19 @@ define([
 
         /* mutating the type */
         getType: function() {
-            if (this.get('instancemethod'))
+            var obj = this.getGenerated();
+            if (obj.instancemethod)
                 return 'instancemethod';
-            else if (this.get('enableAPI'))
+            else if (obj.enableAPI)
                 return 'enableAPI';
             else
                 return 'staticmethod';
         },
         setType: function(type) {
+            if (this.isGenerator()) {
+                alert('cant set type of a plugin\'s function');
+                return;
+            }
             var enableAPI = type === 'enableAPI' ? true : undefined;
             var instancemethod = type === 'instancemethod' ? true : undefined;
             this.set('enableAPI', enableAPI, {silent: true}); // only need to fire one change event
