@@ -344,6 +344,16 @@ var express = require('express')\n\
 \n\
 var app = express();\n\
 \n\
+//CORS middleware\n\
+var allowCrossDomain = function(req, res, next) {\n\
+    res.header('Access-Control-Allow-Origin', '*');\n\
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');\n\
+    res.header('Access-Control-Allow-Headers', 'accept, x-requested-with, content-type');\n\
+\n\
+    next();\n\
+}\n\
+\n\
+\n\
 app.configure(function(){\n\
   app.set('port', (process.argv.length >= 3) ? parseInt(process.argv[2]) : (process.env.PORT || 3000));\n\
   app.set('views', __dirname + '/views');\n\
@@ -354,6 +364,7 @@ app.configure(function(){\n\
   app.use(express.bodyParser());\n\
   app.use(express.cookieParser('some secret'));\n\
   app.use(express.cookieSession());\n\
+  app.use(allowCrossDomain);\n\
   // app.use(express.csrf());\n\
   app.use('/static', express.static(path.join(__dirname, 'static')));\n\
 });\n\
