@@ -10,12 +10,40 @@ define(function(require, exports, module) {
     require('prettyCheckable');
 
 
+    var funcTypeTemplate = [
+                '<span class="func-type-container">',
+                    '<span class="func-type"><%= funcType %></span>',
+                    '<button class="func-type-change" type="button">Change type</button>',
+                '</span>'].join('\n');
+
     var funcTemplate = [
         '<div class="code-chunk" id="func-chunk-<%= cid %>">',
-            '<span class="title"><%= name %></span>',
+            '<span class="title">',
+                '<%= name %>',
+                '<%= fcvHTML %>', // func type chooser goes here
+            '</span>',
             '<div class="code-editor" id="func-editor-<%= cid %>"></div>',
         '</div>'
     ].join('\n');
+
+    var FuncChooserView = Backbone.View.extend({
+        tagName: 'span',
+        className: 'func-type-container',
+        events: {
+            'click .func-type-change': 'changeTypeHandler',
+        },
+        initialize: function(methodModel) {
+            _.bindAll(this);
+            this.methodModel = methodModel;
+        },
+        renderHTML: function() {
+            return _.template(funcTypeTemplate, {funcType: this.methodModel.getType()});
+        },
+        changeTypeHandler: function() {
+            var newType = this.methodModel.toggleType();
+            this.$el.find('.func-type').text(newType);
+        },
+    });
 
     var TableCodeView = Backbone.View.extend({
 
@@ -58,9 +86,15 @@ define(function(require, exports, module) {
             var list = this.$el.find('#static-methods-list')[0];
             this.list = list;
 
-            this.model.get('functions').each(function(methodModel){
+            var fcvs = [];
+            this.model.get('functions').each(function(methodModel, i){
                 console.log(methodModel);
-                list.innerHTML += _.template(funcTemplate, { name: methodModel.get('name'), cid: methodModel.cid });
+                var fcv = new FuncChooserView(methodModel);
+                list.innerHTML += _.template(funcTemplate, { name: methodModel.get('name'), cid: methodModel.cid, fcvHTML: fcv.renderHTML() });
+                fcvs.push(fcv);
+            });
+            _.each(fcvs, function(fcv, i){ // set element which binds the events
+                fcv.setElement($(list).find('.func-type-container')[i]);
             });
 
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('#add-static-box')).render();

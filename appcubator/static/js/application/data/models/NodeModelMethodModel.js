@@ -42,6 +42,38 @@ define([
             }
         },
 
+        /* mutating the type */
+        getType: function() {
+            if (this.get('instancemethod'))
+                return 'instancemethod';
+            else if (this.get('enableAPI'))
+                return 'enableAPI';
+            else
+                return 'staticmethod';
+        },
+        setType: function(type) {
+            var enableAPI = type === 'enableAPI' ? true : undefined;
+            var instancemethod = type === 'instancemethod' ? true : undefined;
+            this.set('enableAPI', enableAPI, {silent: true}); // only need to fire one change event
+            this.set('instancemethod', instancemethod);
+        },
+        toggleType: function() {
+            var currType = this.getType();
+            var newType;
+            if (currType === 'staticmethod')
+                newType = 'instancemethod';
+            else if (currType === 'instancemethod')
+                newType = 'enableAPI';
+            else if (currType === 'enableAPI')
+                newType = 'staticmethod';
+            else {
+                alert('function type not recognized: ' + currType);
+                newType = 'staticmethod';
+            }
+            this.setType(newType);
+            return newType;
+        },
+
         isInPackage: function (pluginName) {
             return this.generate && util.packageModuleName(this.generate).package == pluginName;
         }
