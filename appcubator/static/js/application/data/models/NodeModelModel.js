@@ -42,7 +42,7 @@ define(function(require, exports, module) {
             this.isUser = false;
         },
 
-        serialize: function() {
+        toJSON: function() {
             var json = {};
             json = _.clone(this.attributes);
             json.fields = this.get('fields').serialize();
