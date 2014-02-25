@@ -77,14 +77,16 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
         render: function() {
             var spin = util.addLoadingSpin(this.el);
-            this.arrangeLayout();
-
             var expanded = this.model.safeExpand();
 
-            this.el.innerHTML = this.renderElement(expanded);
+            this.setElement(this.renderElement(expanded), true);
+            this.$el.addClass("widget-wrapper"); 
+            this.el.id = 'widget-wrapper-' + this.model.cid;
+
             this.innerEl = this.el.firstChild;
             this.$innerEl = $(this.innerEl);
 
+            this.$el.on('click', function(e) { e.preventDefault(); });
             this.$el.find('a').on('click', function(e) { e.preventDefault(); });
 
             this.placeCSS(expanded);
@@ -93,16 +95,10 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             return this;
         },
 
-        arrangeLayout: function() {
-            // var width = this.model.get('layout').get('width');
-            // var height = this.model.get('layout').get('height');
-            this.el.id = 'widget-wrapper-' + this.model.cid;
-        },
-
         reRender: function() {
             var expanded = this.model.safeExpand();
 
-            this.el.innerHTML = this.renderElement(expanded);
+            this.el = this.renderElement(expanded);
             this.innerEl = this.el.firstChild;
             this.$innerEl = $(this.innerEl);
 

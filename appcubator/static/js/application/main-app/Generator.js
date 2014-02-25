@@ -13,6 +13,39 @@ define(function(require, exports, module) {
         } else {
             this._getPlugins = function() { return pluginsGetter; };
         }
+
+        var self = this;
+        this.expander.expandOnceModif = function (generators, genData) {
+
+            console.log("I JUST GENERATED MOM");
+
+            var obj = self.expander.expandOnce(generators, genData);
+
+            console.log(genData);
+
+            if(obj.html) {
+
+                var div = document.createElement('div');
+                div.innerHTML = obj.html;
+                var elements = div.childNodes;
+                var element = div;
+                if(elements.length == 1) {
+                    element = elements[0];
+                }
+                element.dataset.cid = "bla";
+
+                obj.html = element;
+            }
+
+            return obj;
+        }
+        this.expander.expand = function (generators, genData) {
+            // TODO check for cycles
+            while (typeof(genData) == typeof({}) && 'generate' in genData) {
+                genData = self.expander.expandOnceModif(generators, genData);
+            }
+            return genData;
+        }
     };
 
     Generator.prototype.generate = function(generatorPath, data) {

@@ -6,31 +6,35 @@ define(function(require, exports, module) {
     var Generator = require("app/Generator")
     require("backbone");
 
-        var WidgetCollection = Backbone.Collection.extend({
+    var WidgetCollection = Backbone.Collection.extend({
 
-            model: WidgetModel,
+        model: WidgetModel,
 
-            createElementWithGenPath: function (layout, generatorPath, type, extraData) {
-                this.createUIElement(type, layout, generatorPath, extraData);
-            },
+        createElementWithGenPath: function(layout, generatorPath, type, extraData) {
+            this.createUIElement(type, layout, generatorPath, extraData);
+        },
 
-            createUIElement: function (type, layout, generatorPath, extraData) {
-                var generator = G.getGenerator(generatorPath);
+        createUIElement: function(type, layout, generatorPath, extraData) {
+            var generator = G.getGenerator(generatorPath);
 
-                var widget = {};
-                widget.layout = layout;
-                widget.type = type;
-                
-                if(generator.defaults) { widget = _.extend(widget, generator.defaults); }
-                if(extraData) { widget = _.extend(widget, extraData); }
+            var widget = {};
+            widget.layout = layout;
+            widget.type = type;
 
-                var widgetModel = new WidgetModel(widget);
-                widgetModel.setGenerator(generatorPath);
-
-                return this.push(widgetModel);
+            if (generator.defaults) {
+                widget = _.extend(widget, generator.defaults);
+            }
+            if (extraData) {
+                widget = _.extend(widget, extraData);
             }
 
-        });
+            var widgetModel = new WidgetModel(widget);
+            widgetModel.setGenerator(generatorPath);
 
-        return WidgetCollection;
+            return this.push(widgetModel);
+        }
+
     });
+
+    return WidgetCollection;
+});

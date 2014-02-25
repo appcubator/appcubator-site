@@ -3,6 +3,7 @@ define(function(require, exports, module) {
     'use strict';
 
     var LayoutModel = require('models/LayoutModel');
+    
 
     require('dicts/constant-containers');
 
@@ -20,8 +21,12 @@ define(function(require, exports, module) {
             this.set('layout', new LayoutModel(bone.layout || {}));
             this.set('context', new Backbone.Collection(bone.context || []));
 
-            if (bone.fields) {
-                this.set('fields', new FormFieldCollection(bone.fields || []));
+            if (bone.fields) { this.set('fields', new FormFieldCollection(bone.fields || [])); }
+            if (bone.row) {
+                var WidgetCollection = require('collections/WidgetCollection');
+                var coll = new WidgetCollection();
+                coll.add(bone.row);
+                this.set('row', coll);
             }
 
             this.bind('editModeOn', function() {
@@ -47,7 +52,6 @@ define(function(require, exports, module) {
 
             _.each(this.attributes, function(val, key) {
                 if(!bone[key]) {
-                    console.log(key);
                     this.unset(key);
                 }
             }, this);
@@ -278,7 +282,7 @@ define(function(require, exports, module) {
             json.layout = this.get('layout').serialize();
 
             if (json.fields) { json.fields = json.fields.serialize(); }
-
+            if (json.row) { json.row = json.row.serialize(); }
             if (json.context) delete json.context;
             return json;
         },
