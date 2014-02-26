@@ -49,11 +49,13 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.listenTo(this.model.get('layout'), "change", this.changedPadding, this);
 
             this.listenTo(this.model, "startEditing", this.switchEditModeOn, this);
+            
             this.listenTo(this.model, "deselected", function() {
                 this.model.trigger('stopEditing');
                 this.$el.removeClass('selected');
                 this.selected = false;
             }, this);
+            
             this.listenTo(this.model, "selected", function() {
                 this.$el.addClass('selected');
             });
@@ -61,9 +63,13 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.listenTo(this.model, "stopEditing", this.switchEditModeOff);
             this.listenTo(this.model, "cancelEditing", this.cancelEditing);
 
+            this.listenTo(this.model, "highlight", this.highlight);
+            this.listenTo(this.model, "startEditingRow", this.switchRowEditorOn);
+
             keyDispatcher.bind('meta+return', function() {
                 self.model.trigger('stopEditing');
             });
+            
             keyDispatcher.bind('esc', function() {
                 self.model.trigger('cancelEditing');
             });
@@ -378,60 +384,116 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             util.unselectText();
         },
 
-        autoResize: function(hGrid, vGrid) {
-            var horizontalGrid = (hGrid || this.positionHorizontalGrid);
-            var verticalGrid = (vGrid || this.positionVerticalGrid);
+        switchRowEditorOn: function () {
 
-            var node = this.el.firstChild;
+            var dict = this.model.getArrangedModels();
+            this.colElements = this.colElements || {};
 
-            var height = $(node).outerHeight(true);
-            var width = $(node).outerWidth(true);
+            var $col = this.$el.find('.ycol'); 
 
-            if (this.model.isImage()) {
-                width = Math.max(240, width);
-                height = Math.max(150, height);
-            }
+            $col.each(function() {
 
-            var nHeight = Math.ceil(height / verticalGrid);
-            var nWidth = Math.ceil((width + 30) / horizontalGrid);
+                var $curCol = $(this);
+                console.log($curCol);
 
-            if (horizontalGrid == 1 && verticalGrid == 1) {
-                nHeight = (nHeight < 30) ? 30 : nHeight;
-                nWidth = (nWidth < 120) ? 120 : nWidth;
+                var cid = $curCol.find('[data-cid]').first().data(cid);
+                console.log("El cid:" + cid);
 
-                if (this.model.isBuyButton()) {
-                    nWidth = 260;
-                    nHeight = 40;
-                }
+                _.each(dict, function(val, key) {
+                    _.each(val, function(widgetModel) {
+                        if(cid == widgetModel.cid) {
+                            $curCol.data('col', key);
+                            return;
+                        }
+                    });
+                });
+            });
 
-            } else {
-                if (nWidth + this.model.get('layout').get('left') > 12) {
-                    nWidth = 12 - this.model.get('layout').get('left');
-                }
-            }
+            // _.each(dict, function(val, key) {
 
-            if (!nHeight) nHeight = 2;
-            if (!nWidth) nWidth = 2;
+            //     var self = this;
+            //     var $col = this.$el.find('#col'+key);
 
-            this.model.get('layout').set('width', nWidth);
-            this.model.get('layout').set('height', nHeight);
+            //     $col.sortable({
+            //         connectWith: ".ycol",
+            //         update: function() {
+            //             self.updatedRow(key, $col);
+            //         },
+            //         sort: function(e, ui) {
+            //             var amt = $(window).scrollTop();
+            //             ui.position.top += amt;
+            //         },
+            //         start: function(e, ui) {
+            //             self.highlightCols();
+            //         },
+            //         stop: function(e, ui) {
+            //             self.unhighlightCols();
+            //         }
+            //     });
+            //     //.disableSelection();
+
+            //     this.colElements[key] = $col.sortable( "toArray" );
+
+            //     val = _.sortBy(val, function(model) { return parseInt(model.get('layout').get('row'), 10); });
+                
+            //     // _.each(val, function(widgetModel) {
+            //     //     var widgetView = new WidgetView(widgetModel);
+            //     //     $col.append(widgetView.render().el);
+            //     // });
+
+            // }, this);
+
         },
 
-        autoResizeVertical: function(hGrid, vGrid) {
-            var verticalGrid = (vGrid || this.positionVerticalGrid);
+        updatedRow: function (argument) {
+           console.log("updated");
+        },
 
-            var node = this.el.firstChild;
+        highlightCols: function() {
+            this.$el.find('.ycol').addClass("fancy-borders");
+        },
 
-            var height = $(node).outerHeight(true);
+        unhighlightCols: function() {
+            this.$el.find('.ycol').removeClass("fancy-borders");
+        },
 
-            var nHeight = Math.ceil(height / verticalGrid);
+        highlight: function () {
 
-            if (verticalGrid == 1) {
-                nHeight = (nHeight < 30) ? 30 : nHeight;
-            }
-            if (!nHeight) nHeight = 2;
+            var position = this.$el.offset();
 
-            this.model.get('layout').set('height', nHeight);
+            var topDiv = document.createElement('div');
+            topDiv.style.top = 0;
+            topDiv.style.width = "100%";
+            topDiv.style.height = position.top + "px";
+            topDiv.className = "shadow-elem";
+
+            var bottomDiv = document.createElement('div');
+            bottomDiv.style.top = (this.$el.outerHeight() + position.top)  + "px";
+            bottomDiv.style.width = "100%";
+            bottomDiv.style.height = "100%";
+            bottomDiv.className = "shadow-elem";
+
+            var leftDiv = document.createElement('div');
+            leftDiv.style.top = position.top + "px";
+            leftDiv.style.left = 0;
+            leftDiv.style.width = position.left + "px";
+            leftDiv.style.height = this.$el.outerHeight()+ "px";
+            leftDiv.className = "shadow-elem";
+
+            var rightDiv = document.createElement('div');
+            rightDiv.style.top = position.top + "px";
+            rightDiv.style.left = (position.left + this.$el.outerWidth()) + "px";
+            rightDiv.style.width = "100%";
+            rightDiv.style.height = this.$el.outerHeight()+ "px";
+            rightDiv.className = "shadow-elem";
+
+            this.$el.append(topDiv);
+            this.$el.append(bottomDiv);
+            this.$el.append(leftDiv);
+            this.$el.append(rightDiv);
+
+            this.$el.removeClass('widget-wrapper');
+
         },
 
         mousedown: function(e) {

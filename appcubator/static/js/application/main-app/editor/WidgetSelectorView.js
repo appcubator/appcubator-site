@@ -16,9 +16,6 @@ define(function(require, exports, module) {
         selectedEl: null,
         isMobile: false,
 
-        positionHorizontalGrid: 80,
-        positionVerticalGrid: 15,
-
         events: {
             // 'click #hover-div': 'hoverClicked',
             // 'click #select-div': 'doubleClicked',

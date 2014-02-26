@@ -93,6 +93,8 @@ exports.factory = function(_safe_eval_) {
         return fn;
     }
 
+    expander.constructGen = constructGen;
+
     function parseGenID(generatorName) {
         var tokens = generatorName.split('.');
         var module, package, name, version;
@@ -119,6 +121,7 @@ exports.factory = function(_safe_eval_) {
     expander.parseGenID = parseGenID;
 
     function expandOnce(generators, genData) {
+
         try {
             var genID = parseGenID(genData.generate);
             var generatedObj = constructGen(findGenData(generators, genID))(generators, genData.data);
@@ -136,7 +139,7 @@ exports.factory = function(_safe_eval_) {
     function expand(generators, genData) {
         // TODO check for cycles
         while (typeof(genData) == typeof({}) && 'generate' in genData) {
-            genData = expandOnce(generators, genData);
+            genData = expander.expandOnce(generators, genData);
         }
         return genData;
     }
@@ -184,7 +187,7 @@ try {
             var expand = globals.expand;
             return eval(code);
         };
-        var expander = exports.factory(runCode);
+        var expander = new exports.factory(runCode);
         return expander;
     };
 } catch (e) {

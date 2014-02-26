@@ -39,14 +39,12 @@ define([
             },
 
             getTableModelWithName: function(nameStr) {
-                var tableM = this.get('tables').getTableWithName(nameStr);
-                if (!tableM) tableM = this.get('users').getTableWithName(nameStr);
+                var tableM = this.get('models').getTableWithName(nameStr);
                 return tableM;
             },
 
             getTableModelWithCid: function(cid) {
-                var tableM = this.get('tables').get(cid);
-                if (!tableM) tableM = this.get('users').get(cid);
+                var tableM = this.get('models').get(cid);
                 return tableM;
             },
 

@@ -133,52 +133,6 @@ define(function(require, exports, module) {
             return this;
         },
 
-        // getListOfPages: function() {
-        //     console.trace();
-        //     var pagesCollection = v1State.get('pages');
-        //     var listOfLinks = [];
-
-        //     _(pagesCollection.getContextFreePages()).each(function(page) {
-        //         listOfLinks.push({
-        //             name: page,
-        //             val: "internal://" + page
-        //         });
-        //     });
-
-        //     this.get('context').each(function(context) {
-        //         var entityName = context.get('entity');
-        //         var entityModel = v1State.getTableModelWithName(entityName);
-
-        //         var listOfPages = v1State.get('pages').getPagesWithEntityName(entityName);
-        //         _(listOfPages).each(function(pageName) {
-        //             listOfLinks.push({
-        //                 name: pageName,
-        //                 val: "internal://" + pageName + '/?' + context.get('entity') + '=' + context.get('context')
-        //             });
-        //         });
-
-        //         entityModel.getFieldsColl().each(function(field) {
-        //             if(field.get('type') == "fk") {
-        //                 var fieldEntityName = field.get('entity_name');
-        //                 var listOfIntPages = v1State.get('pages').getPagesWithEntityName(fieldEntityName);
-        //                 _(listOfIntPages).each(function(pageName) {
-        //                     listOfLinks.push({
-        //                         name: pageName + " with "+ entityName+"."+field.get('name'),
-        //                         val: "internal://" + pageName + '/?' + fieldEntityName + '=' + context.get('context') +"."+ field.get('name')
-        //                     });
-        //                 });
-        //             }
-        //         });
-        //     });
-
-        //     listOfLinks.push({
-        //         name: 'External Link',
-        //         val: "External Link"
-        //     });
-
-        //     return listOfLinks;
-        // },
-
         getAction: function() {
             if (this.get('data').has('container_info')) return this.get('data').get('container_info').get('action');
             else return this.get('data').get('action');
@@ -275,14 +229,18 @@ define(function(require, exports, module) {
             return this.get('layout').get('height') + this.get('layout').get('top');
         },
 
-        toJSON: function() {
+        toJSON: function(options) {
+            options = options || {};
+
             var json = _.clone(this.attributes);
             json = _.omit(json, 'selected', 'deletable', 'context');
 
             json.layout = this.get('layout').serialize();
 
-            if (json.fields) { json.fields = json.fields.serialize(); }
-            if (json.row) { json.row = json.row.serialize(); }
+            if(options.generate) json.cid = this.cid;
+
+            if (json.fields) { json.fields = json.fields.serialize(options); }
+            if (json.row) { json.row = json.row.serialize(options); }
             if (json.context) delete json.context;
             return json;
         },
@@ -296,6 +254,22 @@ define(function(require, exports, module) {
                 return {html: '<img src="http://cdn.memegenerator.net/instances/500x/43563104.jpg">', js: '', css: ''};
             }
         },
+
+        getArrangedModels: function() {
+
+            var els = {};
+
+            this.get('row').each(function(widgetModel) {
+
+                var key = widgetModel.get('layout').get('col');
+
+                els[key] = els[key] || [];
+                els[key].push(widgetModel);
+
+            });
+
+            return els;
+        }
     });
 
     return WidgetModel;
