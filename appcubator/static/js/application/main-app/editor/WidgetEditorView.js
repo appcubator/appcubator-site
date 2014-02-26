@@ -115,7 +115,9 @@ define(function(require, exports, module) {
 
             var iframe = document.getElementById('page');
             var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-            var element = innerDoc.getElementById('widget-wrapper-' + this.model.cid);
+            var element = $(innerDoc).find("[data-cid='" + this.model.cid + "']")[0];
+
+            // .getElementById('widget-wrapper-' + this.model.cid);
 
             if (!element) return;
 

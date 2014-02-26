@@ -17,13 +17,13 @@ define(function(require, exports, module) {
         var self = this;
         this.expander.expandOnceModif = function (generators, genData) {
 
-            console.log("I JUST GENERATED MOM");
+            console.log(genData);
 
             var obj = self.expander.expandOnce(generators, genData);
 
             console.log(genData);
 
-            if(obj.html) {
+            if(obj.html && genData.data && genData.data.cid) {
 
                 var div = document.createElement('div');
                 div.innerHTML = obj.html;
@@ -32,7 +32,7 @@ define(function(require, exports, module) {
                 if(elements.length == 1) {
                     element = elements[0];
                 }
-                element.dataset.cid = "bla";
+                element.dataset.cid = genData.data.cid;
 
                 obj.html = element;
             }

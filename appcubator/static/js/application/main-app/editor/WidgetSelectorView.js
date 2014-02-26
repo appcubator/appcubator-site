@@ -510,7 +510,7 @@ define(function(require, exports, module) {
 
             var mouseX = e.pageX;
             var mouseY = e.pageY;
-            var div = $(this.el.getElementById('widget-wrapper-' + this.selectedEl.cid));
+            var div = $(document).find("[data-cid='" + this.selectedEl.cid + "']");
             var divTop = div.offset().top;
             var divLeft = div.offset().left;
             var divRight = divLeft + div.width();

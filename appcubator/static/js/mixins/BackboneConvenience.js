@@ -206,7 +206,9 @@ define([
         Backbone.Model.prototype.expand = function() {
 
             if (this.generate) {
-                return G.generate(this.generate, this.toJSON());
+                var data = this.toJSON();
+                data.cid = this.cid;
+                return G.generate(this.generate, data);
             } else {
                 return this.toJSON();
             }
