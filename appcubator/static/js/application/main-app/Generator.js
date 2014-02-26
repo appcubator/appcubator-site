@@ -17,12 +17,8 @@ define(function(require, exports, module) {
         var self = this;
         this.expander.expandOnceModif = function (generators, genData) {
 
-            console.log(genData);
 
             var obj = self.expander.expandOnce(generators, genData);
-
-            console.log(genData);
-
             if(obj.html && genData.data && genData.data.cid) {
 
                 var div = document.createElement('div');
