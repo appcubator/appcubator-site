@@ -396,12 +396,15 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                 var $curCol = $(this);
                 console.log($curCol);
 
-                var cid = $curCol.find('[data-cid]').first().data(cid);
+                var cid = $curCol.find('[data-cid]').first().data("cid");
                 console.log("El cid:" + cid);
+
+                if (!cid) return;
 
                 _.each(dict, function(val, key) {
                     _.each(val, function(widgetModel) {
                         if(cid == widgetModel.cid) {
+                            console.log("yeeee");
                             $curCol.data('col', key);
                             return;
                         }
