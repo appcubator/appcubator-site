@@ -46,6 +46,10 @@ define(function(require, exports, module) {
                 element.setAttribute('data-cid', genData.data.cid);
                 obj.html = div.innerHTML;
             }
+            else {
+                console.log("NDOPED");
+                console.log(genData);
+            }
 
             return obj;
         }

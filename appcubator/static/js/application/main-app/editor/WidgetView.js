@@ -33,12 +33,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
             this.listenTo(this.model, "rerender", this.reRender, this);
             this.listenTo(this.model, "change", this.reRender, this);
-            this.listenTo(this.model, "change:type", this.reRender, this);
-            this.listenTo(this.model, "change:tagName", this.reRender, this);
-            this.listenTo(this.model, "change:className", this.reRender, this);
-            this.listenTo(this.model, "change:src", this.changedSource, this);
-            this.listenTo(this.model, "change:value", this.changedValue, this);
-            this.listenTo(this.model, "change:style", this.changedStyle, this);
 
             this.listenTo(this.model.get('layout'), "change:width", this.changedSize, this);
             this.listenTo(this.model.get('layout'), "change:height", this.changedSize, this);
@@ -390,67 +384,56 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
         switchRowEditorOn: function () {
 
-            var dict = this.model.getArrangedModels();
-            this.colElements = this.colElements || {};
+            this.model.get('row').get('columns').each(function(columnModel) {
 
-            var $col = this.$el.find('.ycol'); 
+                var self = this;
+                var $col = this.$el.find('[data-cid="'+columnModel.cid+'"]');
+                $col.attr('data-rowcolumn', "true");
 
-            $col.each(function() {
-
-                var $curCol = $(this);
-                var cid = $curCol.find('[data-cid]').first().data("cid");
-                console.log("El cid:" + cid);
-
-                if (!cid) return;
-
-                _.each(dict, function(val, key) {
-                    _.each(val, function(widgetModel) {
-                        if(cid == widgetModel.cid) {
-                            $curCol.data('col', key);
-                            return;
-                        }
-                    });
+                $col.sortable({
+                    connectWith: "[data-rowcolumn]",
+                    update: function() {
+                        self.updatedRowCol(columnModel, $col);
+                    },
+                    sort: function(e, ui) {
+                        var amt = $(window).scrollTop();
+                        ui.position.top += amt;
+                    },
+                    start: function(e, ui) {
+                        self.highlightCols();
+                    },
+                    stop: function(e, ui) {
+                        self.unhighlightCols();
+                    }
                 });
-            });
 
-            // _.each(dict, function(val, key) {
-
-            //     var self = this;
-            //     var $col = this.$el.find('#col'+key);
-
-            //     $col.sortable({
-            //         connectWith: ".ycol",
-            //         update: function() {
-            //             self.updatedRow(key, $col);
-            //         },
-            //         sort: function(e, ui) {
-            //             var amt = $(window).scrollTop();
-            //             ui.position.top += amt;
-            //         },
-            //         start: function(e, ui) {
-            //             self.highlightCols();
-            //         },
-            //         stop: function(e, ui) {
-            //             self.unhighlightCols();
-            //         }
-            //     });
-            //     //.disableSelection();
-
-            //     this.colElements[key] = $col.sortable( "toArray" );
-
-            //     val = _.sortBy(val, function(model) { return parseInt(model.get('layout').get('row'), 10); });
-                
-            //     // _.each(val, function(widgetModel) {
-            //     //     var widgetView = new WidgetView(widgetModel);
-            //     //     $col.append(widgetView.render().el);
-            //     // });
-
-            // }, this);
+            }, this);
 
         },
 
-        updatedRow: function (argument) {
-           console.log("updated");
+        updatedRowCol: function (columnModel, $col) {
+            var newArr = $col.sortable( "toArray", {attribute  : "data-cid"});
+            var curArr = _(columnModel.get('uielements').models).pluck('cid');
+
+            if(!_.isEqual(curArr, newArr)) {
+
+                _.each(newArr, function(elCid, ind) {
+                    
+                    var widgetModel = {};
+
+                    if (columnModel.get('uielements').get(elCid)) {
+                        widgetModel = this.widgetsCollection.get(elCid);
+                    }
+                    else {
+                        var coll = this.getAllSubWidgets();
+                        widgetModel = coll.get(elCid);
+                        widgetModel.collection.remove(widgetModel, { silent: true });
+                        columnModel.get('uielements').add(widgetModel, { silent: true });
+                    }
+
+                }, this);
+
+            }
         },
 
         highlightCols: function() {

@@ -5,11 +5,12 @@ define(function(require, exports, module) {
     require('backbone');
     require('mixins/BackboneConvenience');
 
-    var WidgetCollection = require('collections/WidgetCollection');
+    
 
     var ColumnModel = Backbone.Model.extend({
 
         initialize: function(bone) {
+            var WidgetCollection = require('collections/WidgetCollection');
             this.set("uielements", new WidgetCollection(bone.uielements||[]));
         },
 

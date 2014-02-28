@@ -1,12 +1,9 @@
 define(function(require, exports, module) {
 
     'use strict';
-
-    var LayoutModel = require('models/LayoutModel');
-    
-
     require('dicts/constant-containers');
 
+    var LayoutModel = require('models/LayoutModel');
 
     var FormFieldCollection = require('collections/FormFieldCollection');
 
@@ -22,11 +19,9 @@ define(function(require, exports, module) {
             this.set('context', new Backbone.Collection(bone.context || []));
 
             if (bone.fields) { this.set('fields', new FormFieldCollection(bone.fields || [])); }
-            if (bone.row) {
-                var WidgetCollection = require('collections/WidgetCollection');
-                var coll = new WidgetCollection();
-                coll.add(bone.row);
-                this.set('row', coll);
+            if (bone.row) {     
+                var RowModel    = require('models/RowModel');
+                this.set('row', new RowModel(bone.row || {})); 
             }
 
             this.bind('editModeOn', function() {
@@ -235,13 +230,11 @@ define(function(require, exports, module) {
             var json = _.clone(this.attributes);
             json = _.omit(json, 'selected', 'deletable', 'context');
 
-            json.layout = this.get('layout').serialize();
-
-            if(options.generate) json.cid = this.cid;
-
+            if (json.layout) { json.layout = this.get('layout').serialize(options); }
             if (json.fields) { json.fields = json.fields.serialize(options); }
             if (json.row) { json.row = json.row.serialize(options); }
             if (json.context) delete json.context;
+
             return json;
         },
 
@@ -253,23 +246,8 @@ define(function(require, exports, module) {
                 console.log(e);
                 return {html: '<img src="http://cdn.memegenerator.net/instances/500x/43563104.jpg">', js: '', css: ''};
             }
-        },
-
-        getArrangedModels: function() {
-
-            var els = {};
-
-            this.get('row').each(function(widgetModel) {
-
-                var key = widgetModel.get('layout').get('col');
-
-                els[key] = els[key] || [];
-                els[key].push(widgetModel);
-
-            });
-
-            return els;
         }
+
     });
 
     return WidgetModel;
