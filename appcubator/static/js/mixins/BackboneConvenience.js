@@ -169,6 +169,7 @@ define([
         };
 
         Backbone.Model.prototype.serialize = function(options) {
+            var options = options || {};
             var json = {};
             var data = this.toJSON(options);
 

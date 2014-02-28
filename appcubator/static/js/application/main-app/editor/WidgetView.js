@@ -83,18 +83,15 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
         render: function() {
 
-
-            if($('[data-cid="'+ this.model.cid +"]")) {
-                this.setElement($('[data-cid="'+ this.model.cid +'"]'), true);
-
-                console.log("exists");
+            var $e = $('[data-cid="'+ this.model.cid +'"]');
+            if ($e.length) {
+                this.setElement($e, true);
             }
             else {
                 var expanded = this.model.expand();
                 this.setElement($(expanded.html), true);  
-
-                                console.log("D E");
-
+                this.placeCSS(expanded);
+                this.placeJS(expanded);
             }
             
             // var spin = util.addLoadingSpin(this.el);
@@ -107,21 +104,13 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.$el.on('click', function(e) { e.preventDefault(); });
             this.$el.find('a').on('click', function(e) { e.preventDefault(); });
 
-            // this.placeCSS(expanded);
-            // this.placeJS(expanded);
-
             return this;
         },
 
         reRender: function() {
-            alert('ye');
-            console.trace();
             var expanded = this.model.safeExpand();
 
             this.el = this.renderElement(expanded);
-            this.innerEl = this.el.firstChild;
-            this.$innerEl = $(this.innerEl);
-
             this.placeCSS(expanded);
             this.placeJS(expanded);
 
@@ -138,7 +127,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             }
             return expanded.html;
         },
-
 
         placeCSS: function(expanded) {
             
@@ -196,6 +184,8 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         select: function(e) {
+
+            console.log("SELECT");
 
             if (this.selected && !this.editMode) {
                 this.model.trigger('doubleClicked');
@@ -408,8 +398,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             $col.each(function() {
 
                 var $curCol = $(this);
-                console.log($curCol);
-
                 var cid = $curCol.find('[data-cid]').first().data("cid");
                 console.log("El cid:" + cid);
 
@@ -418,7 +406,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                 _.each(dict, function(val, key) {
                     _.each(val, function(widgetModel) {
                         if(cid == widgetModel.cid) {
-                            console.log("yeeee");
                             $curCol.data('col', key);
                             return;
                         }

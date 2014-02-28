@@ -177,10 +177,9 @@ define(function(require, exports, module) {
             var className = 'uielement';
             var icon = 'icon ' + elementModel.get('className');
             var text = elementModel.get('text');
-
             var li = this.uiElemsSection.addHalfWidthItem(null, className, text, icon, 'uielements.design-' + elementModel.get('className'));
             $(li).data('extraData', AutoFillHelper.fillUIElement(elementModel));
-
+            $(li).data('type', elementModel.get('className'));
         },
 
         appendLambdaCreate: function() {
@@ -232,7 +231,7 @@ define(function(require, exports, module) {
 
                 $(li).data('type', 'create-form');
 
-                var li = this.tableSection.addFullWidthItem(null, "entity-create-form", entityModel.get('name') + ' List', 'create-form-icon', 'crudfake.uielements.list');
+                var li = this.tableSection.addFullWidthItem(null, "entity-create-form", entityModel.get('name') + ' List', 'create-form-icon', 'fakecrud.uielements.list');
 
                 $(li).data('extraData', {
                     id: Math.floor(Math.random()*11),

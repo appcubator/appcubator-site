@@ -28,6 +28,7 @@ define(function(require, exports, module) {
         initialize: function(sectionCollection) {
             _.bindAll(this);
 
+            console.log("HEY");
             this.collection = sectionCollection;
             this.listenToModels(sectionCollection, 'change', this.reRenderSectionShadow);
         },
@@ -46,14 +47,13 @@ define(function(require, exports, module) {
 
         renderSectionShadow: function(sectionModel) {
             
-            var el = this.iframeDoc.getElementById('section-wrapper-' + sectionModel.cid);
-
-            var ycols = $(el).find('.ycol');
+            var $el = $(this.iframeDoc).find('[data-cid="' + sectionModel.cid + '"]');
+            var ycols = $el.find('[data-column]');
 
             var self = this;
 
             ycols.each(function() {
-                var colId = this.id.replace('col','');
+                var colCid = this.dataset.cid;
                 var shadowEl = util.addShadow(this, document.getElementById('page-wrapper'), self.iframe, self.iframeDoc);
                 //shadowEl.innerHTML = sectionModel.cid;
                 shadowEl.className = "section-shadow";
@@ -73,12 +73,12 @@ define(function(require, exports, module) {
                         }
 
                         if($(ui.draggable).data("genpath")) {
-                            sectionModel.addElementWithPath(colId, type, $(ui.draggable).data("genpath"), extraData);
+                            sectionModel.get('columns').get(colCid).addElementWithPath(type, $(ui.draggable).data("genpath"), extraData);
                             return;
                         }
     
                         // var idshit =
-                        sectionModel.addElement(colId, type, extraData);
+                        sectionModel.get('columns').get(colCid).addElement(type, extraData);
                     },
                     over: function() {
                         shadowEl.className = "section-shadow active";

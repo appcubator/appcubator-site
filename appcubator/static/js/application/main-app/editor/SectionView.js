@@ -59,9 +59,7 @@ define(function(require, exports, module) {
 
         updated: function(columnModel, $col) {
             var newArr = $col.sortable( "toArray", {attribute  : "data-cid"});
-            console.log(newArr);
             var curArr = _(columnModel.get('uielements').models).pluck('cid');
-            console.log(curArr);
 
             if(!_.isEqual(curArr, newArr)) {
 
@@ -121,12 +119,11 @@ define(function(require, exports, module) {
         },
 
         placeUIElement: function(model, widgetsCollection, columnModel) {
-            //model.setupPageContext(v1.currentApp.getCurrentPage());
+
             var widgetView = new WidgetView(model).render();
-            console.log(widgetView.el);
             var $col = this.$el.find('[data-cid="'+columnModel.cid+'"]');
-            console.log($col);
             $col.append(widgetView.el);
+
         },
 
         highlightCols: function() {

@@ -13,6 +13,16 @@ define(function(require, exports, module) {
             this.set("uielements", new WidgetCollection(bone.uielements||[]));
         },
 
+        addElement: function(type, extraData) {
+            var layout = {  };
+            this.get('uielements').createElement(layout, className, id);
+        },
+
+        addElementWithPath: function (type, generatorPath, extraData) {
+            var layout = {  };
+            this.get('uielements').createElementWithGenPath(layout, generatorPath, type, extraData);
+        },
+
         toJSON: function(options) {
             options = options || {};
 

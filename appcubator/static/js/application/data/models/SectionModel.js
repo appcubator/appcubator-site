@@ -16,16 +16,6 @@ define(function(require, exports, module) {
             this.set("columns", columnsColl);
         },
 
-        addElement: function(colId, type, extraData) {
-            var layout = { col: colId };
-            this.get('uielements').createElement(layout, className, id);
-        },
-
-        addElementWithPath: function (colId, type, generatorPath, extraData) {
-            var layout = { col: colId };
-            this.get('uielements').createElementWithGenPath(layout, generatorPath, type, extraData);
-        },
-
         getWidgetsCollection: function () {
             if(this.widgetsCollection) return this.widgetsCollection;
 
