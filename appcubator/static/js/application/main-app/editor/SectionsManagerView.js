@@ -40,12 +40,13 @@ define(function(require, exports, module) {
             this.widgetsContainer = document.getElementById('elements-container');
             this.widgetsContainer.innerHTML = '';
 
+            this.$el.find("#elements-container").append(this.sectionsCollection.expand().html);
+
             this.sectionsCollection.each(function(sectionModel) {
-                // widget.setupPageContext(v1.currentApp.getCurrentPage());
                 var newWidgetView = this.placeSection(sectionModel, false);
             }, this);
 
-            this.widgetSelectorView.setElement(document).render();
+           this.widgetSelectorView.setElement(document).render();
         },
 
         showSectionOptions: function() {
@@ -70,7 +71,8 @@ define(function(require, exports, module) {
         placeSection: function(model, isNew, extraData) {
             //model.setupPageContext(v1.currentApp.getCurrentPage());
             var sectionView = new SectionView(model);
-            this.widgetsContainer.appendChild(sectionView.render().el);
+            sectionView.render()
+            //this.widgetsContainer.appendChild(.el);
 
             this.listenTo(model, 'hovered', function() {
                 this.changeCurrentSection(model, sectionView);

@@ -115,7 +115,9 @@ define(function(require, exports, module) {
 
             var iframe = document.getElementById('page');
             var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-            var element = innerDoc.getElementById('widget-wrapper-' + this.model.cid);
+            var element = $(innerDoc).find("[data-cid='" + this.model.cid + "']")[0];
+
+            // .getElementById('widget-wrapper-' + this.model.cid);
 
             if (!element) return;
 
@@ -180,6 +182,10 @@ define(function(require, exports, module) {
 
             if (type == "custom-widget") {
                 this.el.appendChild(this.renderButtonWithText('edit-custom-widget-btn', 'Edit Custom Widget'));
+            }
+
+            if (type == "list") {
+                this.el.appendChild(this.renderButtonWithText('edit-row-btn', 'Edit List'));
             }
 
             if (type == "create-form") {
@@ -254,17 +260,18 @@ define(function(require, exports, module) {
 
         openRowEditor: function() {
             this.hideSubviews();
-            this.el.appendChild(this.renderButtonWithWidthCustomWidth('done-editing', 'Done Editing', 190));
-            this.el.style.width = '200px';
-            var entity = this.model.get('data').get('container_info').get('entity');
-            this.listGalleryView = document.createElement('div');
-            this.listGalleryView.className = 'elements-list';
+            this.el.appendChild(this.renderButtonWithWidthCustomWidth('done-editing', 'Done Editing', 190));            
+            // var entity = this.model.get('data').get('container_info').get('entity');
+            this.model.trigger('highlight');
+            this.model.trigger('startEditingRow');
+            // this.listGalleryView = document.createElement('div');
+            // this.listGalleryView.className = 'elements-list';
 
-            var galleryView = new RowGalleryView(this.model, this.location);
-            this.subviews.push(galleryView);
+            // var galleryView = new RowGalleryView(this.model, this.location);
+            // this.subviews.push(galleryView);
 
-            this.listGalleryView.appendChild(galleryView.render().el);
-            this.el.appendChild(this.listGalleryView);
+            // this.listGalleryView.appendChild(galleryView.render().el);
+            // this.el.appendChild(this.listGalleryView);
         },
 
         openSearchEditor: function() {

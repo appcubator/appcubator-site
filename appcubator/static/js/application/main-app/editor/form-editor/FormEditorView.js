@@ -100,7 +100,7 @@ define(function(require, exports, module) {
             '<ul class="form-fields-list">',
             '</ul>',
             '<% var field = _.last(form.get(\'fields\').models); var sortable = "not-sortable"; %>',
-            FormEditorTemplates.submitField,
+            '<input type=\"submit\" value=\"Submit\">',
             '<% %>',
             '</div>',
             '<div class="add-field-panel"><div class="btn add-field-button"><span class="icon"></span>Add a New Field</div></div>',
@@ -193,12 +193,9 @@ define(function(require, exports, module) {
 
             this.model = options.model;
 
-            var entityName = this.model.get('table');
+            var entityName = this.model.get('modelName');
             var entityM = v1.currentApp.model.getTableModelWithName(entityName);
-
             this.entityModel = entityM;
-
-            console.log(this.model);
 
             this.listenTo(this.model.get('fields'), 'add', this.fieldAdded);
             this.listenTo(this.model.get('fields'), 'remove', this.fieldRemoved);
@@ -224,6 +221,7 @@ define(function(require, exports, module) {
             temp_context.pages = v1.currentApp.model.get('routes').models;
             temp_context.possibleEntities = [];
 
+            console.log(temp_context);
             // _.map(v1State.get('users').getCommonProps(), function(field) {
             //     return "CurrentUser." + field.name;
             // });

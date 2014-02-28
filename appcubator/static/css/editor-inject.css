@@ -289,7 +289,7 @@ body {
   min-height: 30px;
 }
 
-.section-view .section-editor-view {
+.section-editor-view {
   position: absolute;
   top: 64px;
   right: 40px;
@@ -377,5 +377,12 @@ body {
 
 .section-option {
 
+}
+
+.shadow-elem {
+  position: fixed;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2005;
 }
 

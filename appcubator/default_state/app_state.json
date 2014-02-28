@@ -122,180 +122,103 @@
       },
       "uielements": {
         "generate": "templates.layoutSections",
-        "data": [{
-          "layout": "12",
-          "className": "jumbotron",
-          "uielements": [{
-            "generate": "uielements.design-header",
-            "data": {
-              "type": "header",
-              "content": "Teach Me How To DJ",
-              "layout": {
-                "row": 0,
-                "col": 0
-              },
-              "className": "",
-              "style": ""
-            }
-          }, {
-            "generate": "crud.uielements.create",
-            "data": {
-              "type": "create-form",
-              "table": "Picture",
-              "layout": {
-                "row": 0,
-                "col": 0
-              },
-              "className": "",
-              "style": "",
-              "fields": [{
-                "generate": "root.uielements.form-field",
+        "data": [
+        {
+          "generate": "templates.layoutSection",
+          "data": {
+            "className": "jumbotron",
+            "columns" : [
+              {
+                "generate": "templates.layoutColumn",
                 "data": {
-                  "field_name": "name",
-                  "type": "text",
-                  "placeholder": "Name",
-                  "displayType": "single-line-text"
+                  "layout": "12",
+                  "uielements": [
+                    {
+                      "generate": "uielements.design-header",
+                      "data": {
+                        "type": "header",
+                        "content": "Teach Me How To DJ",
+                        "layout": {
+                          "row": 0,
+                          "col": 0
+                        },
+                        "className": "",
+                        "style": ""
+                      }
+                    }
+                  ]
                 }
-              }, {
-                "generate": "root.uielements.form-field",
-                "data": {
-                  "field_name": "url",
-                  "type": "text",
-                  "placeholder": "URL",
-                  "displayType": "single-line-text"
-                }
-              }],
-              "id": "testform",
-              "redirect": "/?success=true"
-            }
-          }, {
-            "generate": "uielements.design-button",
-            "data": {
-              "type": "button",
-              "content": "Vire Syllabus >",
-              "layout": {
-                "row": 1,
-                "col": 0
               },
-              "href": "http://TOOLOBAPAGE.html",
-              "className": "btn",
-              "style": ""
-            }
-          }]
+              {
+                "generate": "templates.layoutColumn",
+                "data": {
+                  "layout" : "8",
+                  "uielements": [
+                    {
+                      "generate": "crud.uielements.create",
+                      "data": {
+                        "type": "create-form",
+                        "table": "Picture",
+                        "layout": {
+                          "row": 0,
+                          "col": 0
+                        },
+                        "className": "",
+                        "style": "",
+                        "fields": [{
+                          "generate": "root.uielements.form-field",
+                          "data": {
+                            "field_name": "name",
+                            "type": "text",
+                            "placeholder": "Name",
+                            "displayType": "single-line-text"
+                          }
+                        }, {
+                          "generate": "root.uielements.form-field",
+                          "data": {
+                            "field_name": "url",
+                            "type": "text",
+                            "placeholder": "URL",
+                            "displayType": "single-line-text"
+                          }
+                        }],
+                        "id": "testform",
+                        "redirect": "/?success=true"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "generate": "templates.layoutColumn",
+                "data": {
+                  "layout" : "4",
+                  "uielements": [
+                    {
+                      "generate": "uielements.design-button",
+                      "data": {
+                        "type": "button",
+                        "content": "Refresh >",
+                        "layout": {
+                          "row": 1,
+                          "col": 0
+                        },
+                        "href": "http://TOOLOBAPAGE.html",
+                        "className": "btn",
+                        "style": ""
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+           } 
         }, {
-          "layout": "3-3-3-3",
-          "className": "",
-          "uielements": [{
-            "generate": "uielements.design-header",
-            "data": {
-              "type": "header",
-              "content": "Instructors",
-              "layout": {
-                "col": "header"
-              },
-              "className": "",
-              "style": ""
-            }
-          }, {
-            "generate": "uielements.node",
-            "data": {
-              "html": "<div id=\"piclist\"></div>",
-              "js": "models.Picture.findPicture({}, function(err, data){\n_.each(data, function(d) {$('#piclist').append('<p>'+d.name+'</p><img class=\"piclist\" src=\"'+d.url+'\">'); });\n});",
-              "css": "img.piclist {max-height: 200px; max-width: 300px;}",
-              "layout": {
-                "row": 1,
-                "col": 0
-              }
-            }
-          }, {
-            "generate": "uielements.design-text",
-            "data": {
-              "type": "text",
-              "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
-              "layout": {
-                "row": 2,
-                "col": 0
-              },
-              "style": {
-                "class_name": ""
-              }
-            }
-          }, {
-            "generate": "uielements.design-image",
-            "data": {
-              "type": "image",
-              "src": "http://stuco.conciergeent.com/dist/img/rishabh-photo.png",
-              "layout": {
-                "row": 1,
-                "col": 1
-              },
-              "className": "img-rounded",
-              "style": "width: 140px; height: 140px;"
-            }
-          }, {
-            "generate": "uielements.design-text",
-            "data": {
-              "type": "text",
-              "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
-              "layout": {
-                "row": 2,
-                "col": 1
-              },
-              "style": {
-                "class_name": ""
-              }
-            }
-          }, {
-            "generate": "uielements.design-image",
-            "data": {
-              "type": "image",
-              "src": "http://stuco.conciergeent.com/dist/img/rishabh-photo.png",
-              "layout": {
-                "row": 1,
-                "col": 2
-              },
-              "className": "img-rounded",
-              "style": "width: 140px; height: 140px;"
-            }
-          }, {
-            "generate": "uielements.design-text",
-            "data": {
-              "type": "text",
-              "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
-              "layout": {
-                "row": 2,
-                "col": 2
-              },
-              "style": {
-                "class_name": ""
-              }
-            }
-          }, {
-            "generate": "uielements.design-image",
-            "data": {
-              "type": "image",
-              "src": "http://stuco.conciergeent.com/dist/img/rishabh-photo.png",
-              "layout": {
-                "row": 1,
-                "col": 3
-              },
-              "className": "img-rounded",
-              "style": "width: 140px; height: 140px;"
-            }
-          }, {
-            "generate": "uielements.design-text",
-            "data": {
-              "type": "text",
-              "content": "I am a senior from CIT who has been DJing since my Freshman Year. Involved with both the American and Indian scene, I've opened for Lupe Fiasco, DJed at 2 Carnival Parties with Steve and have worked with Pranesh to make mixtapes and DJ Live. I made the BIB Mixtape for 2 consecutive years.",
-              "layout": {
-                "row": 2,
-                "col": 3
-              },
-              "style": {
-                "class_name": ""
-              }
-            }
-          }]
+          "generate": "templates.layoutSection",
+          "data" : {
+            "className": "",
+            "columns": []
+          }
         }]
       }
     }

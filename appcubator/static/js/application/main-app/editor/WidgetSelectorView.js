@@ -16,9 +16,6 @@ define(function(require, exports, module) {
         selectedEl: null,
         isMobile: false,
 
-        positionHorizontalGrid: 80,
-        positionVerticalGrid: 15,
-
         events: {
             // 'click #hover-div': 'hoverClicked',
             // 'click #select-div': 'doubleClicked',
@@ -181,7 +178,7 @@ define(function(require, exports, module) {
             if (!widgetModel) return;
             $(node).show();
 
-            var element = document.getElementById('widget-wrapper-'+ widgetModel.cid);
+            var element = $(document).find("[data-cid='" + widgetModel.cid + "']");
             var $element = $(element);
             if(!element) return;
 
@@ -510,7 +507,8 @@ define(function(require, exports, module) {
 
             var mouseX = e.pageX;
             var mouseY = e.pageY;
-            var div = $(this.el.getElementById('widget-wrapper-' + this.selectedEl.cid));
+
+            var div = $(document).find("[data-cid='" + this.selectedEl.cid + "']");
             var divTop = div.offset().top;
             var divLeft = div.offset().left;
             var divRight = divLeft + div.width();
