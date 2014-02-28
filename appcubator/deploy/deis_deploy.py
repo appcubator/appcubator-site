@@ -146,6 +146,7 @@ def zero_out_bulk(deps, orphans=None):
 
 def update_orphan_cache():
     from appcubator.models import Deployment, App
+    print "Deployments available: %d" % Deployment.objects.count()
     known_deps = [a.deployment_id for a in App.objects.all() if a.deployment_id is not None]
     orphans = get_orphans(known_deps)
     for orph in orphans:
@@ -175,6 +176,7 @@ def update_orphan_cache():
         d.d_id = orph
         d.has_error = not working
         d.save()
+    print "Deployments available: %d" % Deployment.objects.count()
 
 
 def make_new_app():
