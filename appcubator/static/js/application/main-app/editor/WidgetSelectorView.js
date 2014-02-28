@@ -507,8 +507,7 @@ define(function(require, exports, module) {
 
             var mouseX = e.pageX;
             var mouseY = e.pageY;
-            console.log(this.selectedEl.cid);
-            console.log(document);
+
             var div = $(document).find("[data-cid='" + this.selectedEl.cid + "']");
             var divTop = div.offset().top;
             var divLeft = div.offset().left;

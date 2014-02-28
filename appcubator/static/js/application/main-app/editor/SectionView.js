@@ -42,15 +42,17 @@ define(function(require, exports, module) {
         render: function() {
 
             if($('[data-cid="'+ this.model.cid +"]")) {
-                console.log("hey");
                 this.setElement($('[data-cid="'+ this.model.cid +'"]'), true);
             }
             else {
                 var expanded = this.model.expand();
                 this.setElement($(expanded.html), true);  
             }
-
             this.layoutElements();
+
+            this.sectionEditorView = new SectionEditorView(this.model).render();
+            this.$el.append(this.sectionEditorView.el);
+
             return this;
         },
 
@@ -106,12 +108,7 @@ define(function(require, exports, module) {
                         self.unhighlightCols();
                     }
                 });
-                //.disableSelection();
 
-                //this.colElements[key] = $col.sortable( "toArray" );
-
-                //val = _.sortBy(val, function(model) { return parseInt(model.get('layout').get('row'), 10); });
-                
                 columnModel.get('uielements').each(function(widgetModel) {
                     var widgetView = new WidgetView(widgetModel);
                     widgetView.render();

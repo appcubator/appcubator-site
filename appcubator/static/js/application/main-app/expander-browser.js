@@ -281,7 +281,7 @@ generators.push({
         "html": "<form id=\"<%= id %>\" class=\"<%= className %>\" style=\"<%= style %>\">\n" +
             "<%= formFields %>" +
             "<input type=\"submit\" value=\"Submit\"><br>\n" +
-            "</form>\n",
+            "</form>",
 
         "js": "$('#<%= id %>').submit(function(){\n" +
             "    var formdata = {};\n" +
@@ -723,6 +723,9 @@ generators.push({
 generators.push({
     name: 'layoutSection',
     version: '0.1',
+    defaults: {
+        "className": ""
+    },
     code: function(data, templates) {
 
         var cssLines = [];
@@ -757,29 +760,22 @@ generators.push({
             '</div>',
             '</div>'
         ].join('\n')
-    },
-
-    defaults: {
-        layout: "12",
-        uielements: []
     }
+
 });
 
 
 generators.push({
     name: 'layoutSections',
     version: '0.1',
-    defaults: {
-        "className": ""
-    },
     code: function(data, templates) {
 
         var cssLines = [];
         var jsLines = [];
         var htmlLines = [];
 
-        _.each(data, function(sectionData) {
-            var expanded_section = expand(sectionData, templates);
+        _.each(data.data, function(sectionData) {
+            var expanded_section = expand(sectionData);
             cssLines.push(expanded_section.css);
             jsLines.push(expanded_section.js);
             htmlLines.push(expanded_section.html);

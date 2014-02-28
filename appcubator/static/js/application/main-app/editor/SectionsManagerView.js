@@ -40,7 +40,6 @@ define(function(require, exports, module) {
             this.widgetsContainer = document.getElementById('elements-container');
             this.widgetsContainer.innerHTML = '';
 
-            console.log(this.sectionsCollection.expand());
             this.$el.find("#elements-container").append(this.sectionsCollection.expand().html);
 
             this.sectionsCollection.each(function(sectionModel) {

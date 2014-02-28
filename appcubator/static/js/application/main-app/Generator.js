@@ -9,9 +9,6 @@ define(function(require, exports, module) {
         this.expander = initExpander();
         var expander = this.expander;
 
-        console.log(this.expander);
-        console.log(this.expander.prototype);
-
         if (typeof(pluginsGetter) === 'function') {
             this._getPlugins = pluginsGetter;
         } else {
@@ -40,15 +37,14 @@ define(function(require, exports, module) {
                 div.innerHTML = obj.html;
                 var elements = div.childNodes;
                 var element = div;
+
                 if(elements.length == 1) {
                     element = elements[0];
                 }
+
                 element.dataset.cid = genData.data.cid;
                 element.setAttribute('data-cid', genData.data.cid);
                 obj.html = div.innerHTML;
-            }
-            else {
-                console.log(genData);
             }
 
             return obj;

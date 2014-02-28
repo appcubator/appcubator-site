@@ -30,12 +30,6 @@ define(function(require, exports, module) {
             var options = options || {};
             var json = _.clone(this.attributes);
             json.columns = json.columns.serialize(options);
-            
-            console.log("section");
-            console.log(options);
-            if(options.generate) {
-                json.cid = this.cid;
-            }
             return json;
         }
     });

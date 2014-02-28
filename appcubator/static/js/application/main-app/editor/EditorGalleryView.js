@@ -319,7 +319,6 @@ define(function(require, exports, module) {
             this.pluginElemsSection = this.addNewSection('Plugin Elements');
             
             _.each(uiGenerators, function(element) {
-                console.log(element.generatorIdentifier);
                 this.pluginElemsSection.addFullWidthItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier);
             }, this);
 

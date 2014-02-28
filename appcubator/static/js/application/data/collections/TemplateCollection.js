@@ -1,5 +1,6 @@
 define([
-        'models/TemplateModel'
+        'models/TemplateModel',
+        'mixins/BackboneConvenience'
     ],
     function(TemplateModel) {
 

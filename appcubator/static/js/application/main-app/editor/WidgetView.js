@@ -82,18 +82,28 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         render: function() {
+
+
+            if($('[data-cid="'+ this.model.cid +"]")) {
+                this.setElement($('[data-cid="'+ this.model.cid +'"]'), true);
+            }
+            else {
+                var expanded = this.model.expand();
+                this.setElement($(expanded.html), true);  
+            }
+            
             // var spin = util.addLoadingSpin(this.el);
             // var expanded = this.model.safeExpand();
 
             // this.setElement(this.renderElement(expanded), true);
-            // this.$el.addClass("widget-wrapper"); 
+            this.$el.addClass("widget-wrapper"); 
             // this.$el.data('cid', this.model.cid);
 
             // this.innerEl = this.el.firstChild;
             // this.$innerEl = $(this.innerEl);
 
-            // this.$el.on('click', function(e) { e.preventDefault(); });
-            // this.$el.find('a').on('click', function(e) { e.preventDefault(); });
+            this.$el.on('click', function(e) { e.preventDefault(); });
+            this.$el.find('a').on('click', function(e) { e.preventDefault(); });
 
             // this.placeCSS(expanded);
             // this.placeJS(expanded);
@@ -303,11 +313,11 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
         switchEditModeOn: function() {
 
-            if (this.model.get('content')) {
+            if (this.model.get('content') && this.el.childNodes.length < 2) {
                 this.editMode = true;
 
                 //var el = $(this.el.firstChild);
-                this.el.firstChild.style.zIndex = 2003;
+                this.el.style.zIndex = 2003;
                 this.$el.addClass('textediting');
                 //el.attr('contenteditable', 'true');
                 //el.focus();
@@ -346,12 +356,12 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                     ]);
                 }
 
-                this.$innerEl.freshereditor({
+                this.$el.freshereditor({
                     toolbar_selector: ".widget-editor",
                     excludes: excludes
                 });
-                this.$innerEl.freshereditor("edit", true);
-                util.selectText(this.$innerEl);
+                this.$el.freshereditor("edit", true);
+                util.selectText(this.$el);
 
                 keyDispatcher.textEditing = true;
             }
@@ -364,8 +374,8 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
             this.editMode = false;
             this.$el.removeClass('textediting');
-            var val = this.$innerEl.html();
-            this.$innerEl.freshereditor("edit", false);
+            var val = this.$el.html();
+            this.$el.freshereditor("edit", false);
             this.model.set('content', val);
 
             keyDispatcher.textEditing = false;

@@ -30,7 +30,7 @@ define(function(require, exports, module) {
             this.each(function(sectionModel) {
                 var collection = sectionModel.get('columns');
                 collection.each(function(columnModel) {
-                    console.log(columnModel);
+
                     var widgetColl = columnModel.get('uielements');
                     widgetCollection.add(widgetColl.models);
                     widgetColl.on('add', function(model) {

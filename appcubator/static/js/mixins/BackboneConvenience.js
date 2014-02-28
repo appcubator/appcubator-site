@@ -175,6 +175,7 @@ define([
             if (this.generate) {
                 json.generate = this.generate;
                 json.data = data;
+                if(options.generate) json.data.cid = this.cid;
             } else {
                 json = data;
             }
@@ -197,7 +198,6 @@ define([
             if (this.generate) {
                 json.generate = this.generate;
                 json.data = data;
-                if (options.generate) json.cid = this.cid;
             } else {
                 json = data;
             }
@@ -221,8 +221,7 @@ define([
         Backbone.Collection.prototype.expand = function() {
 
             if (this.generate) {
-                var data = this.toJSON({ generate: true });
-                data.cid = this.cid;
+                var data = this.serialize({ generate: true });
                 return G.generate(this.generate, data);
             } else {
                 return this.toJSON();
