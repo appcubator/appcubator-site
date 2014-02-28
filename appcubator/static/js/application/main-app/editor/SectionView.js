@@ -31,95 +31,27 @@ define(function(require, exports, module) {
             this.listenTo(this.model, 'change', this.renderContent);
 
             this.widgetsCollection = this.model.get('uielements');
-            this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
+            //this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
 
-            this.listenToModels(this.widgetsCollection, 'startEditing highlight', this.startEditing);
-            this.listenToModels(this.widgetsCollection, 'stopEditing cancelEditing', this.stopEditing);
+            //this.listenToModels(this.widgetsCollection, 'startEditing highlight', this.startEditing);
+            //this.listenToModels(this.widgetsCollection, 'stopEditing cancelEditing', this.stopEditing);
             this.colElements = {};
 
         },
 
         render: function() {
 
-            this.renderContent();
-            this.sectionEditorView = new SectionEditorView(this.model).render();
-            this.$el.append(this.sectionEditorView.el);
-            this.el.id = "section-wrapper-" + this.model.cid;
-
-            return this;
-        },
-
-        renderContent: function() {
-            
-            if(this.$innerEl) this.$innerEl.remove();
-
-            var template = "";
-            
-            switch(this.model.get('layout')) {
-                case "12":
-                    template = [
-                    '<div class="row <%= className %>">',
-                        '<div class="container">',
-                            '<div class="ycol" id="colheader"></div>',
-                            '<div class="col-md-12 ycol" id="col0"></div>',
-                        '</div>',
-                    '</div>'].join('\n');
-                    break;
-                case "3-3-3-3":
-                    template = [
-                    '<div class="row <%= className %>">',
-                        '<div class="container">',
-                            '<div class="text-center ycol" id="colheader"></div>',
-                            '<div class="col-md-3 ycol" id="col0"></div>',
-                            '<div class="col-md-3 ycol" id="col1"></div>',
-                            '<div class="col-md-3 ycol" id="col2"></div>',
-                            '<div class="col-md-3 ycol" id="col3"></div>',
-                        '</div>',
-                    '</div>'].join('\n');
-                    break;
-
-                case "4-4-4":
-                    template = [
-                    '<div class="row <%= className %>">',
-                        '<div class="container">',
-                            '<div class="text-center ycol" id="colheader"></div>',
-                            '<div class="col-md-4 ycol" id="col0"></div>',
-                            '<div class="col-md-4 ycol" id="col1"></div>',
-                            '<div class="col-md-4 ycol" id="col2"></div>',
-                        '</div>',
-                    '</div>'].join('\n');
-                    break;
-
-                case "8-4":
-                    template = [
-                    '<div class="row <%= className %>">',
-                        '<div class="container">',
-                            '<div class="text-center ycol" id="colheader"></div>',
-                            '<div class="col-md-8 ycol" id="col0"></div>',
-                            '<div class="col-md-4 ycol" id="col1"></div>',
-                        '</div>',
-                    '</div>'].join('\n');
-                    break;
-
-                case "4-8":
-                    template = [
-                    '<div class="row <%= className %>">',
-                        '<div class="container">',
-                            '<div class="text-center ycol" id="colheader"></div>',
-                            '<div class="col-md-4 ycol" id="col0"></div>',
-                            '<div class="col-md-8 ycol" id="col1"></div>',
-                        '</div>',
-                    '</div>'].join('\n');
+            if($('[data-cid="'+ this.model.cid +"]")) {
+                console.log("hey");
+                this.setElement($('[data-cid="'+ this.model.cid +'"]'), true);
+            }
+            else {
+                var expanded = this.model.expand();
+                this.setElement($(expanded.html), true);  
             }
 
-            if(!this.model.has('className')) {
-                this.model.set('className', '');
-            }
-
-            this.$innerEl = $(_.template(template, this.model.toJSON()));
-            this.$el.append(this.$innerEl);
             this.layoutElements();
-
+            return this;
         },
 
         updated: function(colKey, $col) {
@@ -150,18 +82,18 @@ define(function(require, exports, module) {
         },
 
         layoutElements: function() {
-            // colid: [els]
-            var dict = this.model.getArrangedModels();
 
-            _.each(dict, function(val, key) {
+            this.model.get('columns').each(function(columnModel) {
 
                 var self = this;
-                var $col = this.$el.find('#col'+key);
+                var $col = this.$el.find('[data-cid="'+columnModel.cid+'"]');
+                $col.data('column', "true");
+                console.log($col);
 
                 $col.sortable({
-                    connectWith: ".ycol",
+                    connectWith: "[data-column]",
                     update: function() {
-                        self.updated(key, $col);
+                        self.updated(key, columnModel);
                     },
                     sort: function(e, ui) {
                         var amt = $(window).scrollTop();
@@ -176,13 +108,14 @@ define(function(require, exports, module) {
                 });
                 //.disableSelection();
 
-                this.colElements[key] = $col.sortable( "toArray" );
+                //this.colElements[key] = $col.sortable( "toArray" );
 
-                val = _.sortBy(val, function(model) { return parseInt(model.get('layout').get('row'), 10); });
+                //val = _.sortBy(val, function(model) { return parseInt(model.get('layout').get('row'), 10); });
                 
-                _.each(val, function(widgetModel) {
+                columnModel.get('uielements').each(function(widgetModel) {
                     var widgetView = new WidgetView(widgetModel);
-                    $col.append(widgetView.render().el);
+                    widgetView.render();
+                    //$col.append(widgetView.render().el);
                 });
 
             }, this);

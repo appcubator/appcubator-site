@@ -82,21 +82,21 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         render: function() {
-            var spin = util.addLoadingSpin(this.el);
-            var expanded = this.model.safeExpand();
+            // var spin = util.addLoadingSpin(this.el);
+            // var expanded = this.model.safeExpand();
 
-            this.setElement(this.renderElement(expanded), true);
-            this.$el.addClass("widget-wrapper"); 
-            this.$el.data('cid', this.model.cid);
+            // this.setElement(this.renderElement(expanded), true);
+            // this.$el.addClass("widget-wrapper"); 
+            // this.$el.data('cid', this.model.cid);
 
-            this.innerEl = this.el.firstChild;
-            this.$innerEl = $(this.innerEl);
+            // this.innerEl = this.el.firstChild;
+            // this.$innerEl = $(this.innerEl);
 
-            this.$el.on('click', function(e) { e.preventDefault(); });
-            this.$el.find('a').on('click', function(e) { e.preventDefault(); });
+            // this.$el.on('click', function(e) { e.preventDefault(); });
+            // this.$el.find('a').on('click', function(e) { e.preventDefault(); });
 
-            this.placeCSS(expanded);
-            this.placeJS(expanded);
+            // this.placeCSS(expanded);
+            // this.placeJS(expanded);
 
             return this;
         },

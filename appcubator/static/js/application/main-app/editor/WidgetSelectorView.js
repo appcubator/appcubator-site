@@ -178,7 +178,7 @@ define(function(require, exports, module) {
             if (!widgetModel) return;
             $(node).show();
 
-            var element = document.getElementById('widget-wrapper-'+ widgetModel.cid);
+            var element = $(document).find("[data-cid='" + widgetModel.cid + "']");
             var $element = $(element);
             if(!element) return;
 
@@ -507,6 +507,8 @@ define(function(require, exports, module) {
 
             var mouseX = e.pageX;
             var mouseY = e.pageY;
+            console.log(this.selectedEl.cid);
+            console.log(document);
             var div = $(document).find("[data-cid='" + this.selectedEl.cid + "']");
             var divTop = div.offset().top;
             var divLeft = div.offset().left;

@@ -11,11 +11,12 @@ define(function(require, exports, module) {
 
             this.set('name', bone.name);
             this.set('head', bone.head || "");
-            
+            console.log(bone);
             this.set('uielements', new SectionCollection(bone.uielements || []));
             this.set('navbar', new NavbarModel(bone.navbar || {}));
             this.set('footer', new FooterModel(bone.footer || {}));
 
+            console.log(this);
         },
 
         getUIElements: function() {
@@ -26,12 +27,12 @@ define(function(require, exports, module) {
             return this.get('uielements');
         },
 
-        toJSON: function() {
+        toJSON: function(options) {
 
             var json = _.clone(this.attributes);
-            json.uielements = json.uielements.serialize();
-            json.navbar     = json.navbar.serialize();
-            json.footer     = json.footer.serialize();
+            json.uielements = json.uielements.serialize(options);
+            json.navbar     = json.navbar.serialize(options);
+            json.footer     = json.footer.serialize(options);
 
             return json;
         }

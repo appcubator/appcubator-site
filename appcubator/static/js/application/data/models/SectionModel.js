@@ -3,28 +3,17 @@ define(function(require, exports, module) {
     'use strict';
 
     require('backbone');
+    require('mixins/BackboneConvenience');
 
     var WidgetCollection = require('collections/WidgetCollection');
+    var ColumnModel = require('models/ColumnModel');
 
     var SectionModel = Backbone.Model.extend({
         initialize: function(bone) {
-            this.set("uielements", new WidgetCollection(bone.uielements || {}));
-        },
-
-        getArrangedModels: function() {
-
-            var els = {};
-
-            this.get('uielements').each(function(widgetModel) {
-
-                var key = widgetModel.get('layout').get('col');
-
-                els[key] = els[key] || [];
-                els[key].push(widgetModel);
-
-            });
-
-            return els;
+            var columnCollection = Backbone.Collection.extend({ model: ColumnModel });
+            var columnsColl = new columnCollection();
+            columnsColl.add(bone.columns || []);
+            this.set("columns", columnsColl);
         },
 
         addElement: function(colId, type, extraData) {
@@ -37,9 +26,16 @@ define(function(require, exports, module) {
             this.get('uielements').createElementWithGenPath(layout, generatorPath, type, extraData);
         },
 
-        toJSON: function() {
+        toJSON: function(options) {
+            var options = options || {};
             var json = _.clone(this.attributes);
-            json.uielements = json.uielements.serialize();
+            json.columns = json.columns.serialize(options);
+            
+            console.log("section");
+            console.log(options);
+            if(options.generate) {
+                json.cid = this.cid;
+            }
             return json;
         }
     });

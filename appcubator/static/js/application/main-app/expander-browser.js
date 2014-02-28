@@ -121,7 +121,6 @@ exports.factory = function(_safe_eval_) {
     expander.parseGenID = parseGenID;
 
     function expandOnce(generators, genData) {
-
         try {
             var genID = parseGenID(genData.generate);
             var generatedObj = constructGen(findGenData(generators, genID))(generators, genData.data);
@@ -187,7 +186,7 @@ try {
             var expand = globals.expand;
             return eval(code);
         };
-        var expander = new exports.factory(runCode);
+        var expander = exports.factory(runCode);
         return expander;
     };
 } catch (e) {
@@ -250,7 +249,7 @@ generators.push({
         style: "",
         fields: [],
         redirect: "/",
-        id: Math.floor(Math.random()*11),
+        id: Math.floor(Math.random() * 11),
         modelName: "DefaultTable"
     },
     code: function(data, templates) {
@@ -305,15 +304,16 @@ generators.push({
 });
 
 generators.push({
-    name: "list",
-    version: "0.1",
-    templates: {
+    "name": "list",
+    "templates": {
         "4-8": "<div class=\"row\">\n    <div class=\"container\">\n        <div class=\"text-center ycol\"><%= colheader %></div>\n        <div class=\"col-md-4 ycol\"><%= col0 %></div>\n        <div class=\"col-md-8 ycol\"><%= col1 %></div>\n    </div>\n</div>",
         "html": "<div id=\"<%= modelName %>-list-<%= id %>\">\n</div>",
-        "js": "models.<%= modelName %>.find<%= modelName %>({ }, function(err, data){\n    \n    var $list = $('#<%= modelName %>-list-<%= id %>');\n    var template = '<%= rowTemplate %>';\n    \n    _.each(data, function(d) {\n        $list.append(_.template(template, {obj:d}));\n    });\n\n});"
+        "js": "models.<%= modelName %>.find<%= modelName %>({ }, function(err, data){\n    \n    var $list = $('#<%= modelName %>-list-<%= id %>');\n    var template = '<%= rowTemplate %>';\n    \n    console.log(data);\n    \n    _.each(data, function(d) {\n        $list.append(_.template(template, {obj:d}));\n    });\n    \n    if(!data || data.length == 0) {\n        $list.append('No results listed');\n    }\n});"
     },
-    code: "function(data, templates) {\n    \n    if(!data.id || data.id == -1) {\n        data.id = Math.floor(Math.random()*11);\n    }\n    \n    function getArrangedModels (uielements) {\n\n        var els = {};\n\n        _.each(uielements, function (uielement) {\n\n            var key = uielement.data.layout.col;\n            els[key] = els[key] || [];\n            els[key].push(uielement);\n\n        });\n\n        _.each(els, function (val, key) {\n            els[key] = _.sortBy(val, function(uielement){\n                return parseInt(uielement.data.layout.row, 10);\n            });\n        });\n\n        return els;\n    }\n        \n    function renderRow (rowElements, rowLayout) {\n        \n        var rowLayout = \"4-8\";\n        var rowElements = [\n            {\n                generate: \"uielements.design-button\",\n                data : {\n                    className: \"btn\",\n                    content: \"<%= obj.name %>\",\n                    href: \"<%= obj.url %>\",\n                    layout: {\n                        alignment: \"left\",\n                        col: 0,\n                        row: 1\n                    },\n                    style: \"\",\n                    type: \"button\"\n                }\n            }\n        ];\n        \n        \n        var dictEls  = getArrangedModels(rowElements);\n        var template = templates[rowLayout];\n\n        var expandedEls = {};\n        _.each(dictEls, function(val, key) {\n            expandedEls[\"col\" + key] = _.map(val, function(el){\n            \n                var uie = expand(el);\n    \n                return uie.html;\n\n            }).join('\\n');\n        });\n\n        expandedEls.colheader = expandedEls.colheader || \"\";\n        expandedEls.col0      = expandedEls.col0 || \"\";\n        expandedEls.col1      = expandedEls.col1 || \"\";\n\n        return template(expandedEls);\n    }\n    \n    data.rowTemplate = renderRow(data.row, data.rowLayout).split('\\n').join('');\n\n    return {\n        'html': templates.html(data),\n        'js': templates.js(data),\n        'css': \"\"\n    }\n}",
-    defaults: {
+    "code": "function(data, templates) {\n    \n    if(!data.id || data.id == -1) {\n        data.id = Math.floor(Math.random()*11);\n    }\n    \n    function getArrangedModels (uielements) {\n\n        var els = {};\n\n        _.each(uielements, function (uielement) {\n\n            var key = uielement.data.layout.col;\n            els[key] = els[key] || [];\n            els[key].push(uielement);\n\n        });\n\n        _.each(els, function (val, key) {\n            els[key] = _.sortBy(val, function(uielement){\n                return parseInt(uielement.data.layout.row, 10);\n            });\n        });\n\n        return els;\n    }\n        \n    function renderRow (rowElements, rowLayout) {\n        \n        var rowLayout = \"4-8\";\n \n        var dictEls  = getArrangedModels(rowElements);\n        var template = templates[rowLayout];\n\n        var expandedEls = {};\n        _.each(dictEls, function(val, key) {\n            expandedEls[\"col\" + key] = _.map(val, function(el){\n            \n                var uie = expand(el);\n                uie.html = uie.html.replace(/<%/g,\"<' + '%\");\n                return uie.html;\n\n            }).join('\\n');\n        });\n\n        expandedEls.colheader = expandedEls.colheader || \"\";\n        expandedEls.col0      = expandedEls.col0 || \"\";\n        expandedEls.col1      = expandedEls.col1 || \"\";\n\n        return template(expandedEls);\n    }\n    \n    data.rowTemplate = renderRow(data.row, data.rowLayout).split('\\n').join('');\n\n    return {\n        'html': templates.html(data),\n        'js': templates.js(data),\n        'css': \"\"\n    }\n}",
+    "generatorIdentifier": "crudfake.uielements.list",
+    "version": "0.1",
+    "defaults": {
         "style": "",
         "modelName": "DefaultTable",
         "rowHeight": "auto",
@@ -326,7 +326,6 @@ generators.push({
 
 
 exports.generators = generators;
-
 },{}],5:[function(require,module,exports){
 exports.root = require('./root/generators');
 exports.crud = require('./crud/generators');
@@ -507,44 +506,56 @@ generators.push({
     code: function(data, templates) {
         // The below could be concatUIE template
         // name, head, body
-        data.uielements = expand(data.uielements);
+        var expandedUIElements = expand(data.uielements);
+        data.uielements_html = expandedUIElements.html;
+        data.uielements_js = expandedUIElements.js;
+        data.uielements_css = expandedUIElements.css;
+
         data.navbar = expand(data.navbar);
         data.footer = expand(data.footer);
-        data._inclString = '<% include modeldefs %>';// this include statement needs to be inserted into the generated code but it was causing problems inside the template and idk how to escape it in EJS.
+        data._inclString = '<% include modeldefs %>'; // this include statement needs to be inserted into the generated code but it was causing problems inside the template and idk how to escape it in EJS.
         data._header_include = '<% include header %>';
         data._scripts_include = '<% include scripts %>';
 
-        return {name: data.name, code: templates.code(data)};
+        return {
+            name: data.name,
+            code: templates.code(data)
+        };
     },
-    templates: {'code':[
-    '<html>',
-    '<head>',
-    '<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">',
-    '<meta charset=\"utf-8\">',
-    '<!-- autogenerated css-->',
-    '<link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\"></script>',
-    '<script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>',
-    '<!-- begin autogenerated api client library -->',
-    '<script type=\"text/javascript\"><%= _inclString %></script>',
-    '<script src=\"/static/models.js\"></script>',
-    '<!-- end autogenerated api client library -->',
-    '<%= _header_include %>',
-    '<%= head %>\n',
-    '</head>',
-    '<body>',
-    '<!-- BEGIN NAVBAR-->',
-    '<%= navbar %>',
-    '<!-- END NAVBAR-->',
-    '<!-- BEGIN UIELEMENTS -->',
-    '<%= uielements %>\n',
-    '<!-- END UIELEMENTS -->\n',
-    '<!-- BEGIN FOOTER-->\n',
-    '<%= footer %>',
-    '<!-- END FOOTER-->',
-    '<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>\n',
-    '<%= _scripts_include %>',
-   ' </body>\n',
-    '</html>'].join('\n') }
+    templates: {
+        'code': [
+            '<html>',
+            '<head>',
+            '<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">',
+            '<meta charset=\"utf-8\">',
+            '<!-- autogenerated css-->',
+            '<link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\"></script>',
+            '<script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js\"></script>',
+            '<!-- begin autogenerated api client library -->',
+            '<script type=\"text/javascript\"><%= _inclString %></script>',
+            '<script src=\"/static/models.js\"></script>',
+            '<!-- end autogenerated api client library -->',
+            '<%= _header_include %>',
+            '<%= head %>\n',
+            '<%= uielements_css %>',
+            '</head>',
+            '<body>',
+            '<!-- BEGIN NAVBAR-->',
+            '<%= navbar %>',
+            '<!-- END NAVBAR-->',
+            '<!-- BEGIN UIELEMENTS -->',
+            '<%= uielements_html %>\n',
+            '<!-- END UIELEMENTS -->\n',
+            '<!-- BEGIN FOOTER-->\n',
+            '<%= footer %>',
+            '<!-- END FOOTER-->',
+            '<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>\n',
+            '<%= _scripts_include %>',
+            '<%= uielements_js %>',
+            ' </body>\n',
+            '</html>'
+        ].join('\n')
+    }
 });
 
 generators.push({
@@ -553,9 +564,12 @@ generators.push({
     code: function(data, templates) {
         // The below could be concatUIE template
         // name, head, body
-        return {name: "header", code: data};
+        return {
+            name: "header",
+            code: data
+        };
     },
-    templates: { }
+    templates: {}
 });
 
 generators.push({
@@ -564,94 +578,190 @@ generators.push({
     code: function(data, templates) {
         // The below could be concatUIE template
         // name, head, body
-        return {name: "scripts", code: data};
+        return {
+            name: "scripts",
+            code: data
+        };
     },
-    templates: { }
+    templates: {}
 });
 
 
 generators.push({
     name: 'concatUIE',
     version: '0.1',
-    code: function(data, templates){
+    code: function(data, templates) {
         // CSS at the top, then HTML elements, then the corresponding Javascript at the bottom.
         // TODO add some marks/tags to make it easier to find code for debugging.
         var templateLines = [];
         var i, uie;
-        for (i = 0; i < data.length; i ++) {
+        for (i = 0; i < data.length; i++) {
             uie = data[i];
             data[i] = expand(uie);
         }
-        for (i = 0; i < data.length; i ++) {
+        for (i = 0; i < data.length; i++) {
             uie = data[i];
-            if (uie.css) templateLines.push("<style>"+uie.css+"</style>");
+            if (uie.css) templateLines.push("<style>" + uie.css + "</style>");
         }
-        for (i = 0; i < data.length; i ++) {
+        for (i = 0; i < data.length; i++) {
             uie = data[i];
             templateLines.push(uie.html);
         }
-        for (i = 0; i < data.length; i ++) {
+        for (i = 0; i < data.length; i++) {
             uie = data[i];
-            if (uie.js) templateLines.push('<script type="text/javascript">'+uie.js+'</script>');
+            if (uie.js) templateLines.push('<script type="text/javascript">' + uie.js + '</script>');
         }
 
         return templateLines.join("\n");
     },
-    templates: {'code':""}
+    templates: {
+        'code': ""
+    }
 });
 
 generators.push({
     name: 'navbar',
     version: '0.1',
-    code: function(data, templates){
-        
+    code: function(data, templates) {
+
         _.each(data.links, function(link) {
             link.url = link.url || "#";
         });
 
-        return templates.html({ data: data });
+        return templates.html({
+            data: data
+        });
     },
     templates: {
         'html': '<div class="navbar navbar-fixed-top navbar-default" id="navbar" role="navigation">' +
             '<div class="container">' +
-              '<div class="navbar-header">' +
-               '<a href="/" class="navbar-brand"><%= data.brandName %></a>' +
-                '<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">' +
-                  '<span class="icon-bar"></span>' +
-                  '<span class="icon-bar"></span>' +
-                  '<span class="icon-bar"></span>' +
-                '</button>' +
-              '</div>' +
-              '<div class="navbar-collapse collapse" id="navbar-collapse">' +
-                '<ul class="nav navbar-nav" id="links">' +
-                    '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
-                    '<li><a href="<%= item.url %>" class="menu-item"><%= item.title %></a></li>' +
-                    '<% } %>' +
-                '</ul>' +
-              '</div>' +
+            '<div class="navbar-header">' +
+            '<a href="/" class="navbar-brand"><%= data.brandName %></a>' +
+            '<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">' +
+            '<span class="icon-bar"></span>' +
+            '<span class="icon-bar"></span>' +
+            '<span class="icon-bar"></span>' +
+            '</button>' +
             '</div>' +
-        '</div>'
+            '<div class="navbar-collapse collapse" id="navbar-collapse">' +
+            '<ul class="nav navbar-nav" id="links">' +
+            '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
+            '<li><a href="<%= item.url %>" class="menu-item"><%= item.title %></a></li>' +
+            '<% } %>' +
+            '</ul>' +
+            '</div>' +
+            '</div>' +
+            '</div>'
     }
 });
 
 generators.push({
     name: 'footer',
     version: '0.1',
-    code: function(data, templates){
-        return templates.html({ data: data });
+    code: function(data, templates) {
+        return templates.html({
+            data: data
+        });
     },
     templates: {
         'html': '<footer class="footer">' +
             '<div class="container">' +
             '<p id="customText" class="footer-text muted"><%= data.customText %></p>' +
             '<ul class="footer-links" id="links">' +
-                '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
-                '<li><a href="#" class="menu-item"><%= item.title %></a></li>' +
-                '<% } %>' +
+            '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
+            '<li><a href="#" class="menu-item"><%= item.title %></a></li>' +
+            '<% } %>' +
             '</ul>' +
-          '</div>' +
-          '<div class="clearfix"></div>' +
-          '</footer>'
+            '</div>' +
+            '<div class="clearfix"></div>' +
+            '</footer>'
+    }
+});
+
+generators.push({
+    name: 'layoutColumn',
+    version: '0.1',
+    code: function(data, templates) {
+
+        var cssLines = [];
+        var jsLines = [];
+        var htmlLines = [];
+
+        _.each(data.uielements, function(el) {
+
+            var uie = expand(el);
+            cssLines.push(uie.css);
+            jsLines.push(uie.js);
+            htmlLines.push(uie.html);
+
+        });
+
+        data.elements = htmlLines.join('\n');
+        var htmlStr = templates.html(data);
+
+        return {
+            html: htmlStr,
+            js: jsLines.join('\n'),
+            css: cssLines.join('\n')
+        }
+    },
+
+    templates: {
+        "html": [
+            '<div class="col-md-<%= layout %> ycol">',
+            '<%= elements %>',
+            '</div>'
+        ].join('\n')
+    },
+
+    defaults: {
+        layout: "12",
+        uielements: []
+    }
+});
+
+generators.push({
+    name: 'layoutSection',
+    version: '0.1',
+    code: function(data, templates) {
+
+        var cssLines = [];
+        var jsLines = [];
+        var htmlLines = [];
+
+        _.each(data.columns, function(column) {
+
+            var expanded_column = expand(column);
+            cssLines.push(expanded_column.css);
+            jsLines.push(expanded_column.js);
+            htmlLines.push(expanded_column.html);
+
+        });
+
+
+        data.columns = htmlLines.join('\n');
+        var htmlStr = templates.html(data);
+
+        return {
+            html: htmlStr,
+            js: jsLines.join('\n'),
+            css: cssLines.join('\n')
+        }
+    },
+
+    templates: {
+        "html": [
+            '<div class="row <%= className %>">',
+            '<div class="container">',
+            '<%= columns %>',
+            '</div>',
+            '</div>'
+        ].join('\n')
+    },
+
+    defaults: {
+        layout: "12",
+        uielements: []
     }
 });
 
@@ -659,114 +769,35 @@ generators.push({
 generators.push({
     name: 'layoutSections',
     version: '0.1',
-    code: function(data, templates){
+    defaults: {
+        "className": ""
+    },
+    code: function(data, templates) {
 
         var cssLines = [];
         var jsLines = [];
+        var htmlLines = [];
 
-        function getArrangedModels (uielements) {
+        _.each(data, function(sectionData) {
+            var expanded_section = expand(sectionData, templates);
+            cssLines.push(expanded_section.css);
+            jsLines.push(expanded_section.js);
+            htmlLines.push(expanded_section.html);
+        });
 
-            var els = {};
-
-            _.each(uielements, function (uielement) {
-
-                var key = uielement.data.layout.col;
-                els[key] = els[key] || [];
-                els[key].push(uielement);
-
-            });
-
-            _.each(els, function (val, key) {
-                els[key] = _.sortBy(val, function(uielement){
-                    return parseInt(uielement.data.layout.row, 10);
-                });
-            });
-
-            return els;
+        return {
+            html: htmlLines.join('\n'),
+            js: jsLines.join('\n'),
+            css: cssLines.join('\n')
         }
 
-        function renderSection (sectionObj) {
-
-            var dictEls  = getArrangedModels(sectionObj.uielements);
-            var template = templates[sectionObj.layout];
-
-            var expandedEls = {};
-            _.each(dictEls, function(val, key) {
-                expandedEls["col" + key] = _.map(val, function(el){
-                    
-                    var uie = expand(el);
-
-                    cssLines.push(uie.css);
-                    jsLines.push(uie.js);
-
-                    return uie.html;
-
-                }).join('\n');
-            });
-
-            expandedEls.colheader = expandedEls.colheader || "";
-            expandedEls.col0      = expandedEls.col0 || "";
-            expandedEls.className = sectionObj.className || "";
-
-            return template(expandedEls);
-        }
-
-        var str = _.map(data, renderSection);
-        str = str.join('\n');
-
-        str = '<style>' + cssLines.join('\n') + '</style>' + str + '<script>' + jsLines.join('\n') +'</script>';
-        
-        return str;
     },
-    templates: {
-            "12":[
-                '<div class="row <%= className %>">',
-                    '<div class="container">',
-                        '<div class="ycol"><%= colheader %></div>',
-                        '<div class="col-md-12 ycol"><%= col0 %></div>',
-                    '</div>',
-                '</div>'].join('\n'),
-            "3-3-3-3" : [
-                '<div class="row <%= className %>">',
-                    '<div class="container">',
-                        '<div class="text-center ycol"><%= colheader %></div>',
-                        '<div class="col-md-3 ycol"><%= col0 %></div>',
-                        '<div class="col-md-3 ycol"><%= col1 %></div>',
-                        '<div class="col-md-3 ycol"><%= col2 %></div>',
-                        '<div class="col-md-3 ycol"><%= col3 %></div>',
-                    '</div>',
-                '</div>'].join('\n'),
-            "4-4-4": [
-                '<div class="row <%= className %>">',
-                    '<div class="container">',
-                        '<div class="text-center ycol"><%= colheader %></div>',
-                        '<div class="col-md-4 ycol"><%= col0 %></div>',
-                        '<div class="col-md-4 ycol"><%= col1 %></div>',
-                        '<div class="col-md-4 ycol"><%= col2 %></div>',
-                    '</div>',
-                '</div>'].join('\n'),
-             "8-4": [
-                '<div class="row <%= className %>">',
-                    '<div class="container">',
-                        '<div class="text-center ycol"><%= colheader %></div>',
-                        '<div class="col-md-8 ycol"><%= col0 %></div>',
-                        '<div class="col-md-4 ycol"><%= col1 %></div>',
-                    '</div>',
-                '</div>'].join('\n'),
-            "4-8": [
-                '<div class="row <%= className %>">',
-                    '<div class="container">',
-                        '<div class="text-center ycol"><%= colheader %></div>',
-                        '<div class="col-md-4 ycol"><%= col0 %></div>',
-                        '<div class="col-md-8 ycol"><%= col1 %></div>',
-                    '</div>',
-                '</div>'].join('\n')
-    }
+
+    templates: { }
 });
 
 
 exports.generators = generators;
-
 },{}],11:[function(require,module,exports){
 var generators = [];
 

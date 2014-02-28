@@ -93,6 +93,8 @@ define(function(require, exports, module) {
 
         render: function() {
 
+            this.start = new Date().getTime();
+
             var self = this;
             if (!this.el.innerHTML) {
                 this.el.innerHTML = _.template(util.getHTML('editor-page'), {
@@ -181,6 +183,10 @@ define(function(require, exports, module) {
 
             this.$el.find('.page-wrapper').addClass('show');
             this.iframeProxy.updateScrollbar();
+
+            var end = new Date().getTime();
+            var time = end - this.start;
+            console.log('Load time: ' + time);
 
             /* } */
         },

@@ -90,14 +90,14 @@ define([
                 }).getWidgetsRelatedToField(fieldM);
             },
 
-            serialize: function() {
+            serialize: function(options) {
                 var json = _.clone(this.attributes);
-                json.info = json.info.serialize();
-                json.models = json.models.serialize();
-                json.emails = json.emails.serialize();
-                json.templates = json.templates.serialize();
-                json.routes = json.routes.serialize();
-                json.plugins = json.plugins.serialize();
+                json.info = json.info.serialize(options);
+                json.models = json.models.serialize(options);
+                json.emails = json.emails.serialize(options);
+                json.templates = json.templates.serialize(options);
+                json.routes = json.routes.serialize(options);
+                json.plugins = json.plugins.serialize(options);
 
                 return json;
             }

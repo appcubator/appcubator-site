@@ -44,11 +44,11 @@ define(function(require, exports, module) {
                     element = elements[0];
                 }
                 element.dataset.cid = genData.data.cid;
-
+                element.setAttribute('data-cid', genData.data.cid);
                 obj.html = div.innerHTML;
             }
             else {
-               console.log(genData);
+                console.log(genData);
             }
 
             return obj;
