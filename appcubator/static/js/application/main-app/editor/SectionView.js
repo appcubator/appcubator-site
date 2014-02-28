@@ -30,11 +30,12 @@ define(function(require, exports, module) {
             this.listenTo(this.model, 'remove', this.close);
             this.listenTo(this.model, 'change', this.renderContent);
 
-            this.widgetsCollection = this.model.get('uielements');
-            //this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
+            this.widgetsCollection = this.model.getWidgetsCollection();
 
-            //this.listenToModels(this.widgetsCollection, 'startEditing highlight', this.startEditing);
-            //this.listenToModels(this.widgetsCollection, 'stopEditing cancelEditing', this.stopEditing);
+            //get('uielements');
+            this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
+            this.listenToModels(this.widgetsCollection, 'startEditing highlight', this.startEditing);
+            this.listenToModels(this.widgetsCollection, 'stopEditing cancelEditing', this.stopEditing);
             this.colElements = {};
 
         },
@@ -56,27 +57,27 @@ define(function(require, exports, module) {
             return this;
         },
 
-        updated: function(colKey, $col) {
-            var curArr = $col.sortable( "toArray" );
-            if(!_.isEqual(curArr, this.colElements[colKey])) {
+        updated: function(columnModel, $col) {
+            var newArr = $col.sortable( "toArray", {attribute  : "data-cid"});
+            console.log(newArr);
+            var curArr = _(columnModel.get('uielements').models).pluck('cid');
+            console.log(curArr);
 
-                _.each(curArr, function(elId, ind) {
+            if(!_.isEqual(curArr, newArr)) {
+
+                _.each(newArr, function(elCid, ind) {
                     
-                    var cid = elId.replace('widget-wrapper-','');
                     var widgetModel = {};
 
-                    if (this.widgetsCollection.get(cid)) {
-                        widgetModel = this.widgetsCollection.get(cid);
+                    if (columnModel.get('uielements').get(elCid)) {
+                        widgetModel = this.widgetsCollection.get(elCid);
                     }
                     else {
                         var coll = v1.currentApp.view.sectionsCollection.getAllWidgets();
-                        widgetModel = coll.get(cid);
-                        widgetModel.collection.remove(widgetModel);
-                        this.widgetsCollection.add(widgetModel);
+                        widgetModel = coll.get(elCid);
+                        widgetModel.collection.remove(widgetModel, { silent: true });
+                        columnModel.get('uielements').add(widgetModel, { silent: true });
                     }
-                    
-                    widgetModel.get('layout').set('col', colKey);
-                    widgetModel.get('layout').set('row', ind);
 
                 }, this);
 
@@ -89,13 +90,13 @@ define(function(require, exports, module) {
 
                 var self = this;
                 var $col = this.$el.find('[data-cid="'+columnModel.cid+'"]');
-                $col.data('column', "true");
+                $col.attr('data-column', "true");
                 console.log($col);
 
                 $col.sortable({
                     connectWith: "[data-column]",
                     update: function() {
-                        self.updated(key, columnModel);
+                        self.updated(columnModel, $col);
                     },
                     sort: function(e, ui) {
                         var amt = $(window).scrollTop();
@@ -119,18 +120,13 @@ define(function(require, exports, module) {
 
         },
 
-        placeUIElement: function(model, isNew, extraData) {
+        placeUIElement: function(model, widgetsCollection, columnModel) {
             //model.setupPageContext(v1.currentApp.getCurrentPage());
-
-            var dict = this.model.getArrangedModels();
-            var self = this;
-
-            var col = model.get('layout').get('col');
-            model.get('layout').set('row', dict[col].length);
-            var $col = self.$el.find('#col'+col);
-
-            var widgetView = new WidgetView(model);
-            $col.append(widgetView.render().el);
+            var widgetView = new WidgetView(model).render();
+            console.log(widgetView.el);
+            var $col = this.$el.find('[data-cid="'+columnModel.cid+'"]');
+            console.log($col);
+            $col.append(widgetView.el);
         },
 
         highlightCols: function() {

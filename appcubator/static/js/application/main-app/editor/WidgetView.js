@@ -86,10 +86,15 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
             if($('[data-cid="'+ this.model.cid +"]")) {
                 this.setElement($('[data-cid="'+ this.model.cid +'"]'), true);
+
+                console.log("exists");
             }
             else {
                 var expanded = this.model.expand();
                 this.setElement($(expanded.html), true);  
+
+                                console.log("D E");
+
             }
             
             // var spin = util.addLoadingSpin(this.el);
@@ -98,9 +103,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             // this.setElement(this.renderElement(expanded), true);
             this.$el.addClass("widget-wrapper"); 
             // this.$el.data('cid', this.model.cid);
-
-            // this.innerEl = this.el.firstChild;
-            // this.$innerEl = $(this.innerEl);
 
             this.$el.on('click', function(e) { e.preventDefault(); });
             this.$el.find('a').on('click', function(e) { e.preventDefault(); });
@@ -112,6 +114,8 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         reRender: function() {
+            alert('ye');
+            console.trace();
             var expanded = this.model.safeExpand();
 
             this.el = this.renderElement(expanded);

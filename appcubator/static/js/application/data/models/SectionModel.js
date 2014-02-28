@@ -26,6 +26,33 @@ define(function(require, exports, module) {
             this.get('uielements').createElementWithGenPath(layout, generatorPath, type, extraData);
         },
 
+        getWidgetsCollection: function () {
+            if(this.widgetsCollection) return this.widgetsCollection;
+
+            this.widgetsCollection = new WidgetCollection();
+            
+            this.get('columns').each(function(columnModel) {
+                this.widgetsCollection.add(columnModel.get('uielements').models);
+                this.bindColumn(columnModel);
+            }, this);
+            
+            this.get('columns').on('add', this.bindColumn);
+
+            return this.widgetsCollection;
+        },
+
+        bindColumn: function (columnModel) {
+
+            columnModel.get('uielements').on('remove', function(widgetModel) {
+                this.widgetsCollection.remove(widgetModel, columnModel);
+            }, this);
+
+            columnModel.get('uielements').on('add', function(widgetModel) {
+                this.widgetsCollection.add(widgetModel, columnModel);
+            }, this);
+
+        },
+
         toJSON: function(options) {
             var options = options || {};
             var json = _.clone(this.attributes);
