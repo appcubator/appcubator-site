@@ -35,7 +35,7 @@ define(function(require, exports, module) {
             //get('uielements');
             this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
             this.listenToModels(this.widgetsCollection, 'startEditing highlight', this.startEditing);
-            this.listenToModels(this.widgetsCollection, 'stopEditing cancelEditing', this.stopEditing);
+            this.listenToModels(this.widgetsCollection, 'stopEditing cancelEditing unhighlight', this.stopEditing);
             this.colElements = {};
 
         },
@@ -89,8 +89,6 @@ define(function(require, exports, module) {
                 var self = this;
                 var $col = this.$el.find('[data-cid="'+columnModel.cid+'"]');
                 $col.attr('data-column', "true");
-                console.log($col);
-
                 $col.sortable({
                     connectWith: "[data-column]",
                     update: function() {
@@ -143,7 +141,7 @@ define(function(require, exports, module) {
         stopEditing: function() {
             this.$el.find('.ycol').each(function() {
                 if($(this).hasClass("ui-sortable")) {
-                    //$(this).sortable("enable");
+                    $(this).sortable("enable");
                 }
             });
         },

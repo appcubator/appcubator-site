@@ -224,6 +224,34 @@ define(function(require, exports, module) {
             return this.get('layout').get('height') + this.get('layout').get('top');
         },
 
+        getWidgetsCollection: function () {
+            if(this.widgetsCollection) return this.widgetsCollection;
+            var WidgetCollection = require('collections/WidgetCollection');
+            this.widgetsCollection = new WidgetCollection();
+            
+            this.get('row').get('columns').each(function(columnModel) {
+                this.widgetsCollection.add(columnModel.get('uielements').models);
+                this.bindColumn(columnModel);
+            }, this);
+            
+            this.get('row').get('columns').on('add', this.bindColumn);
+
+            return this.widgetsCollection;
+        },
+
+
+        bindColumn: function (columnModel) {
+
+            columnModel.get('uielements').on('remove', function(widgetModel) {
+                this.widgetsCollection.remove(widgetModel, columnModel);
+            }, this);
+
+            columnModel.get('uielements').on('add', function(widgetModel) {
+                this.widgetsCollection.add(widgetModel, columnModel);
+            }, this);
+
+        },
+
         toJSON: function(options) {
             options = options || {};
 

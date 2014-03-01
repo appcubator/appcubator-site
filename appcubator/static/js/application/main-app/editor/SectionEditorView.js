@@ -2,10 +2,7 @@ define(function(require, exports, module) {
 
     'use strict';
     var WidgetView = require('editor/WidgetView');
-    var WidgetContainerView = require('editor/WidgetContainerView');
     var WidgetModel = require('models/WidgetModel');
-    var WidgetListView = require('editor/WidgetListView');
-    var WidgetFormView = require('editor/WidgetFormView');
     var WidgetCustomView = require('editor/WidgetCustomView');
     var CustomWidgetEditorModal = require('editor/CustomWidgetEditorModal');
     require('backbone');

@@ -8,15 +8,11 @@ define(function(require, exports, module) {
     var TemplateModel = Backbone.Model.extend({
 
         initialize: function(bone) {
-
             this.set('name', bone.name);
             this.set('head', bone.head || "");
-            console.log(bone);
             this.set('uielements', new SectionCollection(bone.uielements || []));
             this.set('navbar', new NavbarModel(bone.navbar || {}));
             this.set('footer', new FooterModel(bone.footer || {}));
-
-            console.log(this);
         },
 
         getUIElements: function() {

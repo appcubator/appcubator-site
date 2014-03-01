@@ -1,5 +1,4 @@
 define([
-  'react',
   'mixins/BackboneModal',
 ],
 function(React) {

@@ -7,7 +7,6 @@ require.config({
         "shortcut": "../../libs/shortcut",
         "underscore": "../../libs/underscore-amd/underscore",
         "backbone": "../../libs/backbone-amd/backbone",
-        "react": "../../libs/react",
         "heyoffline": "../../libs/heyoffline",
         "util": "../../libs/util/util",
         "util.filepicker": "../../libs/util/util.filepicker",
@@ -72,9 +71,6 @@ require.config({
         },
         "util.filepicker": {
             exports: "util"
-        },
-        "react": {
-            exports: "React"
         },
         "fontselect": {
             exports: "$",

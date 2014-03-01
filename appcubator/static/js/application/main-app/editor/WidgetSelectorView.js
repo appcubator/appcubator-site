@@ -178,8 +178,8 @@ define(function(require, exports, module) {
             if (!widgetModel) return;
             $(node).show();
 
-            var element = $(document).find("[data-cid='" + widgetModel.cid + "']");
-            var $element = $(element);
+            var $element = $(document).find("[data-cid='" + widgetModel.cid + "']");
+            var element = $element[0];
             if(!element) return;
 
             // var offsetFrame = util.getWindowRelativeOffset(window.document, window);
