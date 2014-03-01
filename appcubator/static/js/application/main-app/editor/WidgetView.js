@@ -34,12 +34,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.listenTo(this.model, "rerender", this.reRender, this);
             this.listenTo(this.model, "change", this.reRender, this);
 
-            this.listenTo(this.model.get('layout'), "change:width", this.changedSize, this);
-            this.listenTo(this.model.get('layout'), "change:height", this.changedSize, this);
-            this.listenTo(this.model.get('layout'), "change:top", this.changedTop, this);
-            this.listenTo(this.model.get('layout'), "change:left", this.changedLeft, this);
-            this.listenTo(this.model.get('layout'), "change:isFull", this.toggleFull, this);
-            this.listenTo(this.model.get('layout'), "change:alignment", this.changedAlignment, this);
             this.listenTo(this.model.get('layout'), "change", this.changedPadding, this);
 
             this.listenTo(this.model, "startEditing", this.switchEditModeOn, this);
@@ -194,64 +188,8 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             }
         },
 
-        changedWidth: function(a) {
-            this.el.style.width = '';
-            this.el.className = 'selected widget-wrapper ';
-            var width = this.model.get('layout').get('width');
-            if (this.positionHorizontalGrid == 80) this.el.className += " span" + width;
-            else this.setWidth(width * this.positionHorizontalGrid);
-        },
-
         changedAlignment: function() {
             this.el.style.textAlign = this.model.get('layout').get('alignment');
-        },
-
-        changedPadding: function() {
-            // this.el.style.paddingTop = this.model.get('layout').get('t_padding') + 'px';
-            // this.el.style.paddingBottom = this.model.get('layout').get('b_padding') + 'px';
-            // this.el.style.paddingLeft = this.model.get('layout').get('l_padding') + 'px';
-            // this.el.style.paddingRight = this.model.get('layout').get('r_padding') + 'px';
-        },
-
-        changedSize: function() {
-            this.changedHeight();
-            this.changedWidth();
-        },
-
-        changedHeight: function(a) {
-            this.setHeight(this.model.get('layout').get('height') * (this.positionVerticalGrid));
-        },
-
-        changedTop: function(a) {
-            this.setTop((this.positionVerticalGrid) * (this.model.get('layout').get('top')));
-        },
-
-        changedLeft: function(a) {
-            this.setLeft((this.positionHorizontalGrid) * (this.model.get('layout').get('left')));
-        },
-
-        changedText: function(a) {
-            this.reRender();
-        },
-
-        changedValue: function(a) {
-            this.el.firstChild.value = this.model.get('data').get('content_attribs').get('value');
-        },
-
-        changedType: function(a) {
-            this.el.firstChild.className = this.model.get('data').get('class_name');
-        },
-
-        changedTagName: function(a) {
-            this.reRender();
-        },
-
-        changedSource: function(a) {
-            this.reRender();
-        },
-
-        changedStyle: function() {
-            this.reRender();
         },
 
         staticsAdded: function(files) {

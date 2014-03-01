@@ -40,13 +40,51 @@ define(function(require, exports, module) {
             this.widgetsContainer = document.getElementById('elements-container');
             this.widgetsContainer.innerHTML = '';
 
-            this.$el.find("#elements-container").append(this.sectionsCollection.expand().html);
+            var expanded_uielements = this.sectionsCollection.expand();
+
+            this.$el.find("#elements-container").append(expanded_uielements.html);
 
             this.sectionsCollection.each(function(sectionModel) {
                 var newWidgetView = this.placeSection(sectionModel, false);
             }, this);
 
            this.widgetSelectorView.setElement(document).render();
+
+           this.placeJS(expanded_uielements);
+        },
+
+        placeJS: function(expanded) {
+
+            if(!expanded.js || expanded.js === '') return;
+
+            var self = this;
+            var jsTag = 'custom-js-widget-' + this.model.cid;
+            if (jsTag) $(jsTag).remove();
+
+            var appendJSTag = function() {
+
+                var customJSTemp = [
+                    'try {',
+                    '<%= code %>',
+                    '} catch(err) { console.log("Error executing custom js: "+ err); }',
+                ].join('\n');
+
+                try {
+                    jsTag = document.createElement('script');
+                    jsTag.id = 'custom-js-widget-' + self.model.cid;
+                    jsTag.setAttribute("type", "text/javascript");
+
+                    jsTag.text = _.template(customJSTemp, { code: expanded.js });
+
+                    console.log(jsTag);
+                    document.body.appendChild(jsTag);
+                } catch (err) {
+                    console.log('Error adding custom js:' + err);
+                }
+            };
+
+            setTimeout(function() { $(document).ready(appendJSTag); }, 3000);
+            // this.listenTo(v1, 'editor-loaded', appendJSTag, this);
         },
 
         showSectionOptions: function() {
