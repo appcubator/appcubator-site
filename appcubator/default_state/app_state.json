@@ -213,12 +213,6 @@
               }
             ]
            } 
-        }, {
-          "generate": "templates.layoutSection",
-          "data" : {
-            "className": "",
-            "columns": []
-          }
         }]
       }
     }
