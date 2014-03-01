@@ -17,11 +17,11 @@ define(function(require, exports, module) {
                 '</div>',
                 '<ul class="tabs">',
                     '<li class="attributes-li right-icon">',
-                    '<span>Attributes</span>',
-                    '</li><li class="templates-li right-icon">',
-                    '<span>Templates</span>',
+                    '<span>Settings</span>',
                     '</li><li class="code-li right-icon">',
-                    '<span>Code</span>',
+                    '<span>Generated Code</span>',
+                    '</li><li class="right-icon info-li">',
+                    '<span>More Info</span>',
                     '</li>',
                 '</ul>',
             '</div>',
@@ -79,19 +79,17 @@ define(function(require, exports, module) {
             this.$el.find('.code-li').addClass('active');
         },
 
-        renderTemplates: function() {
-            var templatesView = new TemplatesEditorView({ generate: this.model.generate, widgetModel: this.model });
+        renderInfo: function() {
             this.$el.find('.current-content').html('');
-            this.$el.find('.current-content').append(templatesView.render().el);
-            templatesView.setupAce();
-            this.$el.find('.templates-li').addClass('active');
+            this.$el.find('.current-content').append('<p>Documentation about this widget would go here</p>');
+            this.$el.find('.info-li').addClass('active');
         },
 
         tabClicked: function(e) {
             this.$el.find('.active').removeClass('active');
 
-            if($(e.currentTarget).hasClass('templates-li')) {
-                this.renderTemplates();
+            if($(e.currentTarget).hasClass('info-li')) {
+                this.renderInfo();
             }
             else if($(e.currentTarget).hasClass('attributes-li')) {
                 this.renderAttributes();

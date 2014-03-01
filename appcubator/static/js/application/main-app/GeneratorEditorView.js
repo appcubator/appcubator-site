@@ -48,7 +48,9 @@ define(function(require, exports, module) {
                         '</ul>',
                     '</div>',
                 '</div>',
-                '<div id="current-code-editor" style="width:100%; height: 100%;"></div>'
+                '<div id="current-code-view-html" style="width:100%; height: 33%; position: relative"></div>',
+                '<div id="current-code-view-css" style="width:100%; height: 33%; position: relative"></div>',
+                '<div id="current-code-view-js" style="width:100%; height: 33%; position: relative"></div>'
             ].join('\n'), { name: this.generatorPath });
 
 
@@ -70,12 +72,23 @@ define(function(require, exports, module) {
             this.setupAce();
         },
 
-        setupAce: function() {
-            this.editor = ace.edit("current-code-editor");
-            this.editor.getSession().setMode("ace/mode/css");
-            this.editor.setValue(String(this.generator.code), -1);
-            this.editor.on("change", this.keyup);
+        _setupAce: function(type) {
+            // input html, css, or js
+            this.editor = ace.edit("current-code-view-" + type);
+            this.editor.getSession().setMode("ace/mode/" + (type === 'js' ? 'javascript' : type));
+            this.editor.setValue(String(this['generated' + type]), -1);
+            this.editor.renderer.setShowGutter(false);
             this.makeEditorUneditable();
+        },
+
+        setupAce: function() {
+            var expanded = this.widgetModel.expand();
+            this.generatedhtml = expanded.html;
+            this.generatedcss = expanded.css;
+            this.generatedjs = expanded.js;
+            this._setupAce('html');
+            this._setupAce('css');
+            this._setupAce('js');
         },
 
         makeEditorEditable: function() {
@@ -151,11 +164,6 @@ define(function(require, exports, module) {
 
             this.reRender();
         },
-
-        keyup: function() {
-            var newCode = this.editor.getValue(String(this.generator.code), -1);
-            this.generator.code = newCode;
-        }
 
     });
 
