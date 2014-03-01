@@ -47,19 +47,12 @@ define(function(require, exports, module) {
                 obj.html = div.innerHTML;
             }
             else {
-                console.log("NDOPED");
                 console.log(genData);
             }
 
             return obj;
         }
-        // this.expander.expand = function (generators, genData) {
-        //     // TODO check for cycles
-        //     while (typeof(genData) == typeof({}) && 'generate' in genData) {
-        //         genData = self.expander.expandOnceModif(generators, genData);
-        //     }
-        //     return genData;
-        // }
+
     };
 
     Generator.prototype.generate = function(generatorPath, data) {
@@ -69,8 +62,6 @@ define(function(require, exports, module) {
 
     Generator.prototype.getGenerator = function(generatorPath) {
         var plugins = this._getPlugins();
-        console.log(plugins);
-        console.log(generatorPath);
         return this.expander.findGenData(plugins, this.expander.parseGenID(generatorPath));
     };
 

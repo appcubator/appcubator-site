@@ -223,6 +223,7 @@ define([
 
             if (this.generate) {
                 var data = this.serialize({ generate: true });
+                data = data.data;
                 return G.generate(this.generate, data);
             } else {
                 return this.toJSON();

@@ -723,9 +723,6 @@ generators.push({
 generators.push({
     name: 'layoutSection',
     version: '0.1',
-    defaults: {
-        "className": ""
-    },
     code: function(data, templates) {
 
         var cssLines = [];
@@ -768,13 +765,14 @@ generators.push({
 generators.push({
     name: 'layoutSections',
     version: '0.1',
+
     code: function(data, templates) {
 
         var cssLines = [];
         var jsLines = [];
         var htmlLines = [];
 
-        _.each(data.data, function(sectionData) {
+        _.each(data, function(sectionData) {
             var expanded_section = expand(sectionData);
             cssLines.push(expanded_section.css);
             jsLines.push(expanded_section.js);
