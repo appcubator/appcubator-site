@@ -41,7 +41,7 @@ define(function(require, exports, module) {
 
             this.shadows = [];
             this.collection.each(this.renderSectionShadow);
-            $(this.shadowFrame).show();
+            $(this.shadowFrame).hide();
 
             return this;
         },
