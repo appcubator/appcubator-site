@@ -40,6 +40,8 @@ define(function(require, exports, module) {
             this.iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
 
             this.shadows = [];
+            this.collection.each(this.renderSectionShadow);
+            $(this.shadowFrame).show();
 
             return this;
         },
@@ -51,6 +53,13 @@ define(function(require, exports, module) {
 
             var self = this;
 
+            /* Overall DOM el */
+            // var overallShadowEl = util.addShadow($el[0], document.getElementById('page-wrapper'), self.iframe, self.iframeDoc);
+            // self.shadowFrame.appendChild(overallShadowEl);
+            // overallShadowEl.style.backgroundColor = "red";
+            // overallShadowEl.className = "section-shodow-wrapper";
+
+            /* DOM el for each column */
             ycols.each(function() {
                 var colCid = this.dataset.cid;
                 var shadowEl = util.addShadow(this, document.getElementById('page-wrapper'), self.iframe, self.iframeDoc);
@@ -86,22 +95,27 @@ define(function(require, exports, module) {
                         shadowEl.className = "section-shadow";
                     }
                 });
+
+
             });
 
+
+            var sectionEditorView = new SectionEditorView(sectionModel).render();
+            self.shadowFrame.appendChild(sectionEditorView.el);
         },
 
         displayColumnShadows: function() {
-            this.collection.each(this.renderSectionShadow);
             $(this.shadowFrame).show();
+            _.each(this.shadows, function(shadowEl) {
+                $(shadowEl).show();
+            });
         },
 
         hideColumnShadows: function() {
             $(this.shadowFrame).hide();
             _.each(this.shadows, function(shadowEl) {
-                $(shadowEl).remove();
+                $(shadowEl).hide();
             });
-
-            this.shadows = [];
         }
 
     });

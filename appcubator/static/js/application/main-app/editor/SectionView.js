@@ -4,7 +4,6 @@ define(function(require, exports, module) {
 
     var WidgetView = require('editor/WidgetView');
     var WidgetModel = require('models/WidgetModel');
-    var SectionEditorView = require('editor/SectionEditorView');
 
     require('backbone');
     require('util');
@@ -50,9 +49,6 @@ define(function(require, exports, module) {
                 this.setElement($(expanded.html), true);
             }
             this.layoutElements();
-
-            this.sectionEditorView = new SectionEditorView(this.model).render();
-            this.$el.append(this.sectionEditorView.el);
 
             return this;
         },

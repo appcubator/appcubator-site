@@ -92,6 +92,7 @@ define(function(require, exports, module) {
                 stop: function(e) {
                     self.dragActive = false;
                     v1.currentApp.view.sectionShadowView.hideColumnShadows();
+                    self.hideAllSections();
                 },
                 iframeFix: true
             });
@@ -134,7 +135,7 @@ define(function(require, exports, module) {
         },
 
         searchInputChage: function(e) {
-            
+
             var val = e.currentTarget.value;
 
             if (val === "") {
@@ -148,7 +149,7 @@ define(function(require, exports, module) {
 
             this.searchSection.clear();
             var results = this.searcher.search(val);
-            
+
             if(results.length > 0) {
                 this.searchSection.expand();
             }
@@ -241,7 +242,7 @@ define(function(require, exports, module) {
                 $(li).data('type', 'list');
 
             }, this);
-        
+
         },
 
         renderEntityLists: function() {
@@ -316,7 +317,7 @@ define(function(require, exports, module) {
 
             if(this.pluginElemsSection) this.pluginElemsSection.close();
             this.pluginElemsSection = this.addNewSection('Plugin Elements');
-            
+
             _.each(uiGenerators, function(element) {
                 this.pluginElemsSection.addFullWidthItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier);
             }, this);
