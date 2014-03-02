@@ -25,8 +25,7 @@ define(function(require, exports, module) {
 
 
         render: function (argument) {
-        	
-            this.renderAttributes();
+            this.renderJSONAttributes();
 
             return this;
         },
@@ -68,7 +67,7 @@ define(function(require, exports, module) {
                 ].join('\n');
 
             this.$el.html(template);
-            this.setupAce();
+            setTimeout(this.setupAce, 300);
         },
 
         setupAce: function() {
