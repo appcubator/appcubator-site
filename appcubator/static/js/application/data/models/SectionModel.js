@@ -9,6 +9,7 @@ define(function(require, exports, module) {
     var ColumnModel = require('models/ColumnModel');
 
     var SectionModel = Backbone.Model.extend({
+
         initialize: function(bone) {
             var columnCollection = Backbone.Collection.extend({ model: ColumnModel });
             var columnsColl = new columnCollection();

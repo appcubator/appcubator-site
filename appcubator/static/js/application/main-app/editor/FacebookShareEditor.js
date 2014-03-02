@@ -1,8 +1,7 @@
 define([
-  'react',
   'mixins/BackboneModal',
 ],
-function(React) {
+function() {
 
     var FacebookShareEditor = Backbone.ModalView.extend({
         className : 'modal image-slider-editor',

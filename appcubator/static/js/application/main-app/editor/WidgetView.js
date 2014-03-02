@@ -52,7 +52,9 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.listenTo(this.model, "cancelEditing", this.cancelEditing);
 
             this.listenTo(this.model, "highlight", this.highlight);
+            this.listenTo(this.model, "unhighlight", this.unhighlight);
             this.listenTo(this.model, "startEditingRow", this.switchRowEditorOn);
+            this.listenTo(this.model, "stopEditingRow", this.switchRowEditorOff);
 
             keyDispatcher.bind('meta+return', function() {
                 self.model.trigger('stopEditing');
@@ -96,9 +98,11 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         reRender: function() {
-            var expanded = this.model.safeExpand();
+            var expanded = this.model.expand();
+            var $el = $(expanded.html);
 
-            this.el = this.renderElement(expanded);
+            this.$el.replaceWith($el);
+            this.setElement($el, true);  
             this.placeCSS(expanded);
             this.placeJS(expanded);
 
@@ -172,8 +176,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         select: function(e) {
-
-            console.log("SELECT");
 
             if (this.selected && !this.editMode) {
                 this.model.trigger('doubleClicked');
@@ -327,7 +329,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                 var self = this;
                 var $col = this.$el.find('[data-cid="'+columnModel.cid+'"]');
                 $col.attr('data-rowcolumn', "true");
-
                 $col.sortable({
                     connectWith: "[data-rowcolumn]",
                     update: function() {
@@ -349,6 +350,19 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
         },
 
+        switchRowEditorOff: function () {
+
+            this.reRender();
+            this.model.get('row').get('columns').each(function(columnModel) {
+                var $col = this.$el.find('[data-cid="'+columnModel.cid+'"]');
+                $col.attr('data-rowcolumn', "true");
+                if ($col.hasClass('ui-sortable')) {
+                    $col.sortable("destroy");
+                }
+            }, this);
+
+        },
+
         updatedRowCol: function (columnModel, $col) {
             var newArr = $col.sortable( "toArray", {attribute  : "data-cid"});
             var curArr = _(columnModel.get('uielements').models).pluck('cid');
@@ -360,10 +374,10 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                     var widgetModel = {};
 
                     if (columnModel.get('uielements').get(elCid)) {
-                        widgetModel = this.widgetsCollection.get(elCid);
+                        widgetModel = columnModel.get('uielements').get(elCid);
                     }
                     else {
-                        var coll = this.getAllSubWidgets();
+                        var coll = this.model.getWidgetsCollection();
                         widgetModel = coll.get(elCid);
                         widgetModel.collection.remove(widgetModel, { silent: true });
                         columnModel.get('uielements').add(widgetModel, { silent: true });
@@ -384,7 +398,10 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
         highlight: function () {
 
-            var position = this.$el.offset();
+            var $el = this.$el;
+            if (this.$el.find('.row').length) { $el = this.$el.find('.row').first(); }
+
+            var position = $el.offset();
 
             var topDiv = document.createElement('div');
             topDiv.style.top = 0;
@@ -393,7 +410,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             topDiv.className = "shadow-elem";
 
             var bottomDiv = document.createElement('div');
-            bottomDiv.style.top = (this.$el.outerHeight() + position.top)  + "px";
+            bottomDiv.style.top = ($el.outerHeight() + position.top)  + "px";
             bottomDiv.style.width = "100%";
             bottomDiv.style.height = "100%";
             bottomDiv.className = "shadow-elem";
@@ -402,23 +419,32 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             leftDiv.style.top = position.top + "px";
             leftDiv.style.left = 0;
             leftDiv.style.width = position.left + "px";
-            leftDiv.style.height = this.$el.outerHeight()+ "px";
+            leftDiv.style.height = $el.outerHeight()+ "px";
             leftDiv.className = "shadow-elem";
 
             var rightDiv = document.createElement('div');
             rightDiv.style.top = position.top + "px";
-            rightDiv.style.left = (position.left + this.$el.outerWidth()) + "px";
+            rightDiv.style.left = (position.left + $el.outerWidth()) + "px";
             rightDiv.style.width = "100%";
-            rightDiv.style.height = this.$el.outerHeight()+ "px";
+            rightDiv.style.height = $el.outerHeight()+ "px";
             rightDiv.className = "shadow-elem";
 
-            this.$el.append(topDiv);
-            this.$el.append(bottomDiv);
-            this.$el.append(leftDiv);
-            this.$el.append(rightDiv);
+            this.highlightDivs = [topDiv, bottomDiv, leftDiv, rightDiv];
+
+            $el.append(topDiv);
+            $el.append(bottomDiv);
+            $el.append(leftDiv);
+            $el.append(rightDiv);
 
             this.$el.removeClass('widget-wrapper');
 
+        },
+
+        unhighlight: function () {
+            _.each(this.highlightDivs, function(el) {
+                $(el).remove();
+            });
+            this.$el.addClass("widget-wrapper");
         },
 
         mousedown: function(e) {

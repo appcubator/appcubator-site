@@ -292,6 +292,8 @@ define(function(require, exports, module) {
             $(this.listGalleryView).remove();
             this.showSubviews();
             this.model.trigger('editModeOff');
+            this.model.trigger('stopEditingRow');
+            this.model.trigger('unhighlight');
         },
 
         clickedDoneTextEditing: function() {
