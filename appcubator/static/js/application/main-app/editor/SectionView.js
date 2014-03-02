@@ -26,7 +26,7 @@ define(function(require, exports, module) {
             _.bindAll(this);
 
             this.model = sectionModel;
-            
+
             this.listenTo(this.model, 'remove', this.close);
             this.listenTo(this.model, 'change', this.renderContent);
 
@@ -42,12 +42,12 @@ define(function(require, exports, module) {
 
         render: function() {
 
-            if($('[data-cid="'+ this.model.cid +"]")) {
+            if($("[data-cid='"+ this.model.cid +"']").length) {
                 this.setElement($('[data-cid="'+ this.model.cid +'"]'), true);
             }
             else {
                 var expanded = this.model.expand();
-                this.setElement($(expanded.html), true);  
+                this.setElement($(expanded.html), true);
             }
             this.layoutElements();
 
@@ -64,7 +64,7 @@ define(function(require, exports, module) {
             if(!_.isEqual(curArr, newArr)) {
 
                 _.each(newArr, function(elCid, ind) {
-                    
+
                     var widgetModel = {};
 
                     if (columnModel.get('uielements').get(elCid)) {

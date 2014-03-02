@@ -3,20 +3,30 @@ define(function(require, exports, module) {
     'use strict';
     var SectionModel = require('models/SectionModel');
     var WidgetCollection = require('collections/WidgetCollection');
+    var ColumnModel = require('models/ColumnModel');
 
     var SectionCollection = Backbone.Collection.extend({
 
         model: SectionModel,
 
         initialize: function() {
-            
+
             if(!this.generate) {
                 this.setGenerator('templates.layoutSections');
             }
         },
 
         createSectionWithType: function(type) {
+            var sectionsLayouts = type.split('-');
+            var sectionModel = new SectionModel();
 
+            _.each(sectionsLayouts, function(columnLayout) {
+                var columnM = new ColumnModel();
+                columnM.set('layout', columnLayout);
+                sectionModel.get('columns').push(columnM);
+            }, this);
+
+            this.add(sectionModel);
         },
 
         getAllWidgets: function(argument) {
@@ -43,7 +53,7 @@ define(function(require, exports, module) {
             this.on('add', function(sectionModel) {
                 var collection = sectionModel.get('columns');
                 collection.each(function(columnModel) {
-                    
+
                     var widgetColl = columnModel.get('uielements');
                     widgetCollection.add(widgetColl.models);
                     widgetColl.on('add', function(model) {

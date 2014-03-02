@@ -11,22 +11,27 @@ define(function(require, exports, module) {
     var SectionModel = Backbone.Model.extend({
 
         initialize: function(bone) {
-            var columnCollection = Backbone.Collection.extend({ model: ColumnModel });
-            var columnsColl = new columnCollection();
+
+            var bone = bone || {};
+            var ColumnCollection = Backbone.Collection.extend({ model: ColumnModel });
+            var columnsColl = new ColumnCollection();
             columnsColl.add(bone.columns || []);
             this.set("columns", columnsColl);
+            if(!this.generate) {
+                this.generate = "templates.layoutSection";
+            }
         },
 
         getWidgetsCollection: function () {
             if(this.widgetsCollection) return this.widgetsCollection;
 
             this.widgetsCollection = new WidgetCollection();
-            
+
             this.get('columns').each(function(columnModel) {
                 this.widgetsCollection.add(columnModel.get('uielements').models);
                 this.bindColumn(columnModel);
             }, this);
-            
+
             this.get('columns').on('add', this.bindColumn);
 
             return this.widgetsCollection;

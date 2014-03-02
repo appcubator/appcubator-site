@@ -105,18 +105,27 @@ define(function(require, exports, module) {
             this.optionsHidden = true;
         },
 
-        // this function decides if widget or container
-        placeSection: function(model, isNew, extraData) {
+        matchSection: function(model, isNew, extraData) {
             //model.setupPageContext(v1.currentApp.getCurrentPage());
             var sectionView = new SectionView(model);
-            sectionView.render()
-            //this.widgetsContainer.appendChild(.el);
+            sectionView.render();
 
             this.listenTo(model, 'hovered', function() {
                 this.changeCurrentSection(model, sectionView);
             }, this);
 
-            this.subviews.push(sectionView);
+            return sectionView;
+        },
+
+        placeSection: function(model, isNew, extraData) {
+
+            var sectionView = new SectionView(model);
+            this.widgetsContainer.appendChild(sectionView.render().el);
+
+            this.listenTo(model, 'hovered', function() {
+                this.changeCurrentSection(model, sectionView);
+            }, this);
+
             return sectionView;
         },
 

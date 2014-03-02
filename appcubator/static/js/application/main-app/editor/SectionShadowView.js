@@ -28,13 +28,12 @@ define(function(require, exports, module) {
         initialize: function(sectionCollection) {
             _.bindAll(this);
 
-            console.log("HEY");
             this.collection = sectionCollection;
             this.listenToModels(sectionCollection, 'change', this.reRenderSectionShadow);
         },
 
         render: function() {
-            
+
             this.shadowFrame = document.getElementById('shadow-frame');
             var iframe = v1.currentApp.view.iframe;
             this.iframe = iframe;
@@ -46,7 +45,7 @@ define(function(require, exports, module) {
         },
 
         renderSectionShadow: function(sectionModel) {
-            
+
             var $el = $(this.iframeDoc).find('[data-cid="' + sectionModel.cid + '"]');
             var ycols = $el.find('[data-column]');
 
@@ -63,7 +62,7 @@ define(function(require, exports, module) {
                 $(shadowEl).droppable({
                     accept: ".ui-draggable",
                     drop: function( event, ui ) {
-                        
+
                         var extraData = {};
 
                         var type = $(ui.draggable).data("type");
@@ -76,7 +75,7 @@ define(function(require, exports, module) {
                             sectionModel.get('columns').get(colCid).addElementWithPath(type, $(ui.draggable).data("genpath"), extraData);
                             return;
                         }
-    
+
                         // var idshit =
                         sectionModel.get('columns').get(colCid).addElement(type, extraData);
                     },

@@ -5,13 +5,18 @@ define(function(require, exports, module) {
     require('backbone');
     require('mixins/BackboneConvenience');
 
-    
+
 
     var ColumnModel = Backbone.Model.extend({
 
         initialize: function(bone) {
+            var bone = bone || {};
             var WidgetCollection = require('collections/WidgetCollection');
             this.set("uielements", new WidgetCollection(bone.uielements||[]));
+
+            if (!this.generate) {
+                this.generate = "templates.layoutColumn";
+            }
         },
 
         addElement: function(type, extraData) {
