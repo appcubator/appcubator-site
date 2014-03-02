@@ -193,3 +193,14 @@ a.fancy:hover .edit-btn {
   border: 1px solid #bbb;
   background-position: right;
 }
+
+
+.dropdown-view.settings-pane {
+    top: 75px;
+    right: 30px;
+}
+
+.dropdown-view.settings-pane:after,
+.dropdown-view.settings-pane:before {
+    left: 89%;
+}

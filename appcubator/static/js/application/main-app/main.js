@@ -233,8 +233,9 @@ require([
             // handle all click events for routing
             $(document).on('click', 'a[rel!="external"]', function(e) {
                 var href = e.currentTarget.getAttribute('href') || "";
+                var appId = appId || {};
                 // if internal link, navigate with router
-                if (href.indexOf('/app/' + appId + '/') == 0) {
+                if (appId && href.indexOf('/app/' + appId + '/') == 0) {
                     v1.navigate(href, {
                         trigger: true
                     });

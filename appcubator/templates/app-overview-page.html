@@ -3,7 +3,7 @@
         <h2 class="pheader">{{ app.name }} Overview</h2><br>
         <a target="_blank" {% if is_deployed == 1 %} href="{{ app.url }}" {% endif %} class="fancy link">{{ app.url }}{% if is_deployed == 0 %} (Not Deployed yet.) {% endif %}  <div href="#" class="edit-btn btn">Edit</div></a><br>
         <div class="hoff1 span38 notice">
-         
+
           <span class="what-to-do"> <strong>Next step</strong>
           </span>
 <!--           <p class="tip hoff1"><strong>Appcubator tip of the day:</strong> You can upload data to your app easily with Excel File through the <a class="browse" href="#">admin interface<a/>.</p>
@@ -15,16 +15,6 @@
           <div class="hi3 span14 deploy data pane browse"><span class="icon"></span><h4>Browse Data</h4></div>
           <div href="/app/{{app.pk}}/zip/" class="hi3 span14 deploy download pane" id="download"><span class="icon"></span><h4>Download Code</h4></div>
         </div>
-      </div>
-    </div>
-    <div class="span58 hoff0">
-      <div class="row hoff1 analytics" style="position: relative">
-        <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75); padding-top: 10%">
-          <h2>Publish your app to see your site analytics!</h2>
-        </div>
-        <h2>Analytics</h2>
-        <hr class="span58 pheader">
-        <!-- <img class="span58 analytics-demo hoff1" src="{{ STATIC_URL }}img/analytics.png"> -->
       </div>
     </div>
     <div class="span52 offset11 hoff4 hi4"></div>

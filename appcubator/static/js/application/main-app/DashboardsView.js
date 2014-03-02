@@ -31,6 +31,7 @@ function(OverviewPageView) {
             $('.selected').removeClass('selected');
             $('#menu-item-' + appId).addClass('selected');
             $('#dashboard-' + appId).addClass('current');
+            console.log($('#dashboard-' + appId));
 
             if(this.dashboardView) this.dashboardView.undelegateEvents();
             appUrl = app_urls[appId];

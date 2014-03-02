@@ -83,7 +83,7 @@ define(function(require, exports, module) {
                 }
             };
 
-            setTimeout(function() { $(document).ready(appendJSTag); }, 5000);
+            setTimeout(function() { $(document).ready(appendJSTag); }, 3000);
             // this.listenTo(v1, 'editor-loaded', appendJSTag, this);
         },
 

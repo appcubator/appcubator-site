@@ -38,7 +38,7 @@ define(function(require, exports, module) {
 
             this.nodeModelsView = this.createSubview(NodeModelsView);
             this.nodeModelsView.setToggleEl($('.menu-app-entities'));
-            this.nodeModelsView.setPointerPosition("180px")
+            this.nodeModelsView.setPointerPosition("180px");
 
             this.pluginsView = this.createSubview(PluginsView);
             this.pluginsView.setToggleEl($('.menu-app-plugins'));
@@ -65,12 +65,12 @@ define(function(require, exports, module) {
 
             this.toolBar.setPage(this.pageId);
             this.toolBar.setElement(document.getElementById('tool-bar')).render();
-            
+
             this.el.appendChild(this.nodeModelsView.render().el);
             this.el.appendChild(this.pluginsView.render().el);
             this.el.appendChild(this.settingsView.render().el);
 
-            
+
             this.changePage(EditorView, { pageId: this.pageId, appModel: this.model }, "", function() {});
 
             this.$leftMenu = this.$el.find('.left-menu-panel-l1 ');
@@ -79,7 +79,7 @@ define(function(require, exports, module) {
             $("html, body").animate({
                 scrollTop: 0
             });
-    
+
         },
 
         getCurrentPage: function() {
@@ -139,7 +139,7 @@ define(function(require, exports, module) {
         page: function(pageId) {
             if(pageId == this.pageId) return;
             if (!pageId) pageId = 0;
-            
+
             var self = this;
 
             this.pageId = pageId;
@@ -189,7 +189,7 @@ define(function(require, exports, module) {
             });
             $('#page').fadeIn();
             post_render.call();
-            
+
             if (tutorial && tutorial === 'tutorial/') {
                 this.showTutorial();
             } else if (tutorial) {
@@ -475,7 +475,7 @@ define(function(require, exports, module) {
 
         setupMenuHeight: function() {
             var height = $(document).height();
-            
+
             this.$leftMenu.each(function() {
                 $(this).height(height);
             });

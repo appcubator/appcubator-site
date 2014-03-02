@@ -1092,7 +1092,7 @@ legend + .control-group {
 }
 
 .left-nav {
-  background-color: #2b3545;
+  background-color: #0f2d40;
   color: #eee;
   padding: 0px;
   border-radius: 4px;
@@ -1418,7 +1418,7 @@ legend + .control-group {
 }
 
 .account-dropdown-menu {
-  
+
   position: fixed;
   top: 50px;
   right: 30px;
@@ -1597,4 +1597,95 @@ legend + .control-group {
 .generic-spinner {
   display: block;
   text-align: center;
+}
+
+.dropdown-view {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    min-width: 200px;
+    background-color: #fff;
+    border-radius: 6px;
+    border: 3px solid #ccc;
+
+    padding: 30px;
+    padding-top: 15px;
+    z-index: 2004;
+
+    tranform:scale(0);
+    -webkit-transform: scale(0);
+    -webkit-transition: all .1s ease-in;
+    -moz-transition: all .1s ease-in;
+    -o-transition:all .1s ease-in;
+    transition: all .1s ease-in;
+
+    transform-origin: 71% -30px;
+    -ms-transform-origin: 71% -30px;
+    -webkit-transform-origin: 71% -30px;
+
+      #add-entity {
+          float: right;
+            display: inline-block;
+            position: absolute;
+            right: 30px;
+            top: 22px;
+            text-align: right;
+            cursor: pointer;
+      }
+
+    &:after,
+    &:before {
+        bottom: 100%;
+        left: 71%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+    &:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: #fff;
+        border-width: 12px;
+        margin-left: -12px;
+    }
+    &:before {
+        border-color: rgba(204, 204, 204, 0);
+        border-bottom-color: #ccc;
+        border-width: 16px;
+        margin-left: -16px;
+    }
+
+    .pheader {
+        font-size: 24px;
+    }
+
+    li {
+        display: inline-block;
+        font-size: 18px;
+        line-height: 45px;
+        height: 45px;
+        border-bottom: 1px solid #eee;
+        margin-right: 15px;
+        cursor: pointer;
+        width: 100%;
+
+        &:hover {
+            border-bottom: 1px solid #0f2d40;
+        }
+    }
+}
+
+.dropdown-view.expanded {
+  -webkit-transition: all .2s ease-out;
+  -moz-transition: all .2s ease-out;
+  -o-transition:all .2s ease-out;
+  transition: all .2s ease-out;
+
+  display: inline-block;
+
+
+  tranform:scale(1);
+  -webkit-transform: scale(1);
 }
