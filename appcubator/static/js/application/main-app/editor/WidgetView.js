@@ -19,9 +19,9 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             'click': 'select',
             'click .delete': 'remove',
             'mouseover': 'hovered',
-            'mouseout': 'unhovered',
+            'mouseout' : 'unhovered',
             'mousedown': 'mousedown',
-            'mouseup': 'mouseup'
+            'mouseup'  : 'mouseup'
         },
 
         initialize: function(widgetModel) {
@@ -37,13 +37,13 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.listenTo(this.model.get('layout'), "change", this.changedPadding, this);
 
             this.listenTo(this.model, "startEditing", this.switchEditModeOn, this);
-            
+
             this.listenTo(this.model, "deselected", function() {
                 this.model.trigger('stopEditing');
                 this.$el.removeClass('selected');
                 this.selected = false;
             }, this);
-            
+
             this.listenTo(this.model, "selected", function() {
                 this.$el.addClass('selected');
             });
@@ -59,7 +59,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             keyDispatcher.bind('meta+return', function() {
                 self.model.trigger('stopEditing');
             });
-            
+
             keyDispatcher.bind('esc', function() {
                 self.model.trigger('cancelEditing');
             });
@@ -79,16 +79,16 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             }
             else {
                 var expanded = this.model.expand();
-                this.setElement($(expanded.html), true);  
+                this.setElement($(expanded.html), true);
                 this.placeCSS(expanded);
                 this.placeJS(expanded);
             }
-            
+
             // var spin = util.addLoadingSpin(this.el);
             // var expanded = this.model.safeExpand();
 
             // this.setElement(this.renderElement(expanded), true);
-            this.$el.addClass("widget-wrapper"); 
+            this.$el.addClass("widget-wrapper");
             // this.$el.data('cid', this.model.cid);
 
             this.$el.on('click', function(e) { e.preventDefault(); });
@@ -102,7 +102,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             var $el = $(expanded.html);
 
             this.$el.replaceWith($el);
-            this.setElement($el, true);  
+            this.setElement($el, true);
             this.placeCSS(expanded);
             this.placeJS(expanded);
 
@@ -121,14 +121,14 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         placeCSS: function(expanded) {
-            
+
             var styleTag = document.getElementById('custom-css-widget-' + this.model.cid);
             if (styleTag) $(styleTag).remove();
 
             var style = document.createElement('style');
             style.id = 'custom-css-widget-' + this.model.cid;
             style.type = 'text/css';
-            
+
             var css = expanded.css;
             if (style.styleSheet) {
                 style.styleSheet.cssText = css;
@@ -370,7 +370,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             if(!_.isEqual(curArr, newArr)) {
 
                 _.each(newArr, function(elCid, ind) {
-                    
+
                     var widgetModel = {};
 
                     if (columnModel.get('uielements').get(elCid)) {

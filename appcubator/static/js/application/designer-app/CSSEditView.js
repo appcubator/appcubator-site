@@ -22,7 +22,7 @@ function(UIElementView, UIElementModel) {
       this.editor = ace.edit("base-css");
       this.editor.getSession().setMode("ace/mode/css");
       this.editor.setValue(this.model.get('basecss'), -1);
-  
+
       this.el.appendChild(createBtn);
       return this;
     },
@@ -30,9 +30,7 @@ function(UIElementView, UIElementModel) {
 
     showForm: function(e) {
       var root = {};
-      console.log(this.type);
       if(baseTags[this.type]) { root = baseTags[this.type][0]; }
-      console.log(root);
       var newModel = new UIElementModel(root);
       this.collection.push(newModel);
     },

@@ -103,7 +103,16 @@ define(function(require, exports, module) {
             }, this);
 
             // TODO: get this back
-            // var elementsCollection = v1State.getCurrentPage().get('uielements');
+            var self = this;
+            var currentPageInd = v1.currentApp
+            v1State.get('templates').each(function(templateModel) {
+                var elementsCollection = templateModel.getUIElements();
+                // elementsCollection.each(this.bindWidget, this);
+                this.listenToModels(elementsCollection, 'selected', function (widgetModel) {
+                    self.elementSelected(widgetModel);
+                });
+            }, this);
+            // var elementsCollection = v1State.get().get('uielements');
             // elementsCollection.each(this.bindWidget, this);
 
             // this.listenTo(elementsCollection, 'add', this.bindWidget);
@@ -111,7 +120,7 @@ define(function(require, exports, module) {
 
         bindWidget: function(widgetModel) {
             this.listenTo(widgetModel, 'selected', function() {
-                //this.elementSelected(widgetModel);
+
             });
         },
 
@@ -131,11 +140,11 @@ define(function(require, exports, module) {
                 var id = element.id;
                 var liEl = document.createElement('li');
                 liEl.id = id;
-                
+
                 var aEl = document.createElement('a');
                 aEl.innerHTML = element.text;
                 liEl.appendChild(aEl);
-                
+
                 this.elementsList.appendChild(liEl);
 
                 $(liEl).bind('click', function() {
@@ -155,7 +164,7 @@ define(function(require, exports, module) {
 
             switch (type) {
                 case "basecss":
-                    
+
                     var editorView = new BaseCSSEditorView(this.model);
                     $(this.elementsList).hide();
                     this.setTitle("Base CSS");
@@ -167,7 +176,7 @@ define(function(require, exports, module) {
                     this.$el.find('.navback').show();
 
                     break;
-                
+
                 case "fonts":
 
                     var fontEditorView = new FontEditorView(this.model);
@@ -197,7 +206,7 @@ define(function(require, exports, module) {
                     this.el.appendChild(listView.render().el);
                     this.currentView = listView;
                     this.$el.find('.navback').show();
-                    
+
                     break;
             }
         },
@@ -219,11 +228,11 @@ define(function(require, exports, module) {
 
             if(!this.expanded) return;
 
-            var type = widgetModel.get('data').get('nodeType');
+            var type = widgetModel.get('type');
             if(widgetModel.isList()) {
                 type = "lists";
             }
-            var className = widgetModel.get('data').get('class_name');
+            var className = widgetModel.get('className');
             var styleModel = this.model.getStyleWithClassAndType(className, type);
             this.$el.find('.navback').show();
             //this.styleSelected(styleModel);
@@ -240,7 +249,7 @@ define(function(require, exports, module) {
         },
 
         navBack: function() {
-            this.currentView.close();
+            if (this.currentView) this.currentView.close();
             this.expand();
             this.disableResizable();
             $(this.elementsList).show();
@@ -276,15 +285,15 @@ define(function(require, exports, module) {
         },
 
         expandExtra: function (argument) {
-            
+
             if(!this.$el.hasClass('expanded')){
                 this.el.className += ' expanded';
             }
-            
+
             if(!this.$el.hasClass('extra')) {
                 this.el.className += ' extra';
             }
-            
+
             this.expanded = true;
         },
 
@@ -296,7 +305,7 @@ define(function(require, exports, module) {
             if(this.$el.hasClass('extra')) {
                 this.$el.removeClass('extra');
             }
-           
+
             this.expanded = true;
         },
 
@@ -311,7 +320,7 @@ define(function(require, exports, module) {
             var json = this.model.serialize();
             var save_url = '/app/' + appId + '/uiestate/';
             // var currentTime = new Date().getTime();
-            
+
             // if(this.lastSave === null || currentTime - this.lastSave < 3000) {
             //     if(this.timer) clearTimeout(this.timer);
             //     if(this.lastSave === null) {

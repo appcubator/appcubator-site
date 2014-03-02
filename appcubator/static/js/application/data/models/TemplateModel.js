@@ -15,12 +15,26 @@ define(function(require, exports, module) {
             this.set('footer', new FooterModel(bone.footer || {}));
         },
 
-        getUIElements: function() {
+        getSections: function() {
             return this.get('uielements');
         },
 
-        getSections: function() {
-            return this.get('uielements');
+        getUIElements: function() {
+            if(this.widgetsCollection) return this.widgetsCollection;
+
+            var WidgetCollection = require('collections/WidgetCollection');
+            var sections = this.getSections();
+            this.widgetsCollection = new WidgetCollection();
+
+            sections.each(function(sectionModel) {
+                this.widgetsCollection.add(sectionModel.getWidgetsCollection().models);
+                // this.bindColumn(columnModel);
+            }, this);
+
+            //this.get('columns').on('add', this.bindColumn);
+
+            return this.widgetsCollection;
+
         },
 
         toJSON: function(options) {

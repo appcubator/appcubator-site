@@ -68,7 +68,9 @@ define([
         Backbone.View.prototype.listenToModels = function(coll, event, handler) {
 
             coll.each(function(model) {
-                this.listenTo(model, event, handler);
+                this.listenTo(model, event, function() {
+                    handler(model);
+                });
             }, this);
 
             var self = this;
@@ -83,9 +85,9 @@ define([
             view.superview = this;
             this.subviews = this.subviews || [];
             this.subviews.push(this);
-            
+
             if(this.topview) { view.topview = this.topview; }
-            
+
             return view;
         };
 
@@ -187,7 +189,7 @@ define([
         Backbone.Collection.prototype.setGenerator = function(generatorStr) {
             this.generate = generatorStr;
         };
-        
+
         Backbone.Collection.prototype.serialize = function(options) {
             options = options || {};
             var json = {};

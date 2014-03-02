@@ -37,7 +37,12 @@ define(function(require, exports, module) {
 
         getStyleWithClassAndType: function(className, type) {
             var model = null;
-            if(type == "form") type = "forms";
+
+            if (!this.has(type))
+            {
+                type = this.rectifier(type);
+                if (!this.has(type)) return null;
+            }
 
             this.get(type).each(function(styleModel) {
                 if (styleModel.get('class_name') == className) {
@@ -85,29 +90,36 @@ define(function(require, exports, module) {
         },
 
         getBaseStyleOf: function(type) {
-            
+
             if(this.has(type)) {
-                console.log(this.get(type));
                 return this.get(type).first();
             }
 
-            switch(type) {
+            if(this.has(this.rectifier(type))) {
+                return this.get(this.rectifier(type)).first();
+            }
+
+            return null;
+        },
+
+        rectifier: function (falseType) {
+            switch(falseType) {
                 case "button":
-                    return this.getBaseStyleOf("buttons");
+                    return "buttons";
                 case "header":
-                    return this.getBaseStyleOf("headerTexts");
+                    return "headerTexts";
                 case "image":
-                    return this.getBaseStyleOf("images");
+                    return "images";
                 case "text":
-                    return this.getBaseStyleOf("texts");
+                    return "texts";
                 case "link":
-                    return this.getBaseStyleOf("links");
+                    return "links";
                 case "line":
-                    return this.getBaseStyleOf("lines");
+                    return "lines";
                 case "box":
-                    return this.getBaseStyleOf("boxes");
+                    return "boxes";
                 case "form":
-                    return this.getBaseStyleOf("forms");
+                    return "forms";
             }
 
             return null;
