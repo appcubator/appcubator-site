@@ -28,7 +28,6 @@ urlpatterns += patterns('appcubator.views.admin',
 urlpatterns += patterns('appcubator.views.app',
     url(r'^app/$', 'welcome'),
 
-    url(r'^app/0/$', 'noob_page'),
     url(r'^app/new/$', 'new'),
     url(r'^app/new/template/(\w+)/$', 'new_template'),
     url(r'^app/new/walkthrough/simple/$', 'new_walkthrough', {"walkthrough": 'simpleWalkthrough'}),
