@@ -303,26 +303,69 @@ generators.push({
     }
 });
 
-generators.push({
-    "name": "list",
-    "templates": {
-        "4-8": "<div class=\"row\">\n    <div class=\"container\">\n        <div class=\"text-center ycol\"><%= colheader %></div>\n        <div class=\"col-md-4 ycol\"><%= col0 %></div>\n        <div class=\"col-md-8 ycol\"><%= col1 %></div>\n    </div>\n</div>",
-        "html": "<div id=\"<%= modelName %>-list-<%= id %>\">\n</div>",
-        "js": "models.<%= modelName %>.find<%= modelName %>({ }, function(err, data){\n    \n    var $list = $('#<%= modelName %>-list-<%= id %>');\n    var template = '<%= rowTemplate %>';\n    \n    console.log(data);\n    \n    _.each(data, function(d) {\n        $list.append(_.template(template, {obj:d}));\n    });\n    \n    if(!data || data.length == 0) {\n        $list.append('No results listed');\n    }\n});"
-    },
-    "code": "function(data, templates) {\n    \n    if(!data.id || data.id == -1) {\n        data.id = Math.floor(Math.random()*11);\n    }\n    \n    function getArrangedModels (uielements) {\n\n        var els = {};\n\n        _.each(uielements, function (uielement) {\n\n            var key = uielement.data.layout.col;\n            els[key] = els[key] || [];\n            els[key].push(uielement);\n\n        });\n\n        _.each(els, function (val, key) {\n            els[key] = _.sortBy(val, function(uielement){\n                return parseInt(uielement.data.layout.row, 10);\n            });\n        });\n\n        return els;\n    }\n        \n    function renderRow (rowElements, rowLayout) {\n        \n        var rowLayout = \"4-8\";\n \n        var dictEls  = getArrangedModels(rowElements);\n        var template = templates[rowLayout];\n\n        var expandedEls = {};\n        _.each(dictEls, function(val, key) {\n            expandedEls[\"col\" + key] = _.map(val, function(el){\n            \n                var uie = expand(el);\n                uie.html = uie.html.replace(/<%/g,\"<' + '%\");\n                return uie.html;\n\n            }).join('\\n');\n        });\n\n        expandedEls.colheader = expandedEls.colheader || \"\";\n        expandedEls.col0      = expandedEls.col0 || \"\";\n        expandedEls.col1      = expandedEls.col1 || \"\";\n\n        return template(expandedEls);\n    }\n    \n    data.rowTemplate = renderRow(data.row, data.rowLayout).split('\\n').join('');\n\n    return {\n        'html': templates.html(data),\n        'js': templates.js(data),\n        'css': \"\"\n    }\n}",
-    "generatorIdentifier": "crudfake.uielements.list",
-    "version": "0.1",
-    "defaults": {
-        "style": "",
-        "modelName": "DefaultTable",
-        "rowHeight": "auto",
-        "className": "",
-        "rowLayout": "12",
-        "id": -1,
-        "row": []
+generators.push(
+    {
+        "templates": {
+            "4-8": "<div class=\"row\">\n    <div class=\"container\">\n        <div class=\"text-center ycol\"><%= colheader %></div>\n        <div class=\"col-md-4 ycol\"><%= col0 %></div>\n        <div class=\"col-md-8 ycol\"><%= col1 %></div>\n    </div>\n</div>",
+            "html": "<div id=\"<%= modelName %>-list-<%= id %>\">\n</div>",
+            "row_html": "<div class=\"row\">\n    <div class=\"container\">\n        <%= row_content_str %>\n    </div>\n</div>",
+            "js": "models.<%= modelName %>.find<%= modelName %>({ }, function(err, data){\n    \n    var $list = $('#<%= modelName %>-list-<%= id %>');\n    var template = '<%= rowTemplate %>';\n    \n    console.log(data);\n    \n    _.each(data, function(d) {\n        $list.append(_.template(template, {obj:d}));\n    });\n    \n    if(!data || data.length == 0) {\n        $list.append('No results listed');\n    }\n});"
+        },
+        "code": "function(data, templates) {\n    \n    if(!data.id || data.id == -1) {\n        data.id = Math.floor(Math.random()*11);\n    }\n        \n    function renderRow (rowData) {\n        \n        var expandedEls = {};\n        var rowStr = _.map(rowData.columns, function(column) {\n            console.log(column);\n            return expand(column).html;\n        }).join('\\n');\n\n        return rowStr;\n    }\n\n    data.row_content_str = renderRow(data.row).split('\\n').join('');\n    data.rowTemplate = templates.row_html(data).split('\\n').join('');\n\n    return {\n        'html': templates.html(data),\n        'js': templates.js(data),\n        'css': \"\"\n    }\n}",
+        "name": "list",
+        "version": "0.1",
+        "defaults": {
+            "className": "",
+            "style": "",
+            "modelName": "DefaultTable",
+            "id": -1,
+            "row": {
+                "rowHeight": "auto",
+                "columns": [{
+                    "data": {
+                        "uielements": [{
+                            "data": {
+                                "className": "btn",
+                                "style": "",
+                                "layout": {
+                                    "alignment": "left",
+                                    "row": 1
+                                },
+                                "content": "Left Col >",
+                                "href": "http://TOOLOBAPAGE.html",
+                                "type": "button"
+                            },
+                            "generate": "uielements.design-button"
+                        }],
+                        "layout": "4",
+                        "elements": "<a href=\"http://TOOLOBAPAGE.html\" class=\"btn btn\" style=\"\">Left Col ></a>"
+                    },
+                    "generate": "templates.layoutColumn"
+                }, {
+                    "data": {
+                        "uielements": [{
+                            "data": {
+                                "className": "btn",
+                                "style": "",
+                                "layout": {
+                                    "alignment": "left",
+                                    "row": 1
+                                },
+                                "content": "Right Col >",
+                                "href": "http://TOOLOBAPAGE.html",
+                                "type": "button"
+                            },
+                            "generate": "uielements.design-button"
+                        }],
+                        "layout": "8",
+                        "elements": "<a href=\"http://TOOLOBAPAGE.html\" class=\"btn btn\" style=\"\">Right Col ></a>"
+                    },
+                    "generate": "templates.layoutColumn"
+                }]
+            }
+        }
     }
-});
+);
 
 
 exports.generators = generators;
@@ -423,7 +466,7 @@ generators.push({
     templates: {
         schema: "new Schema({\n\
 <% for (var i = 0; i < fields.length; i ++) { %>\n\
-    <%= fields[i].name %>: <%= fields[i].type %>,\n\
+    <%= fields[i].name %>: <%= fields[i].type %>,\
 <% } %>\n\
 })",
         main: "var mongoose = require('mongoose');\n\
@@ -551,7 +594,9 @@ generators.push({
             '<!-- END FOOTER-->',
             '<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>\n',
             '<%= _scripts_include %>',
+            '<script>',
             '<%= uielements_js %>',
+            '</script>',
             ' </body>\n',
             '</html>'
         ].join('\n')

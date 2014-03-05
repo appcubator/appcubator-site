@@ -57,17 +57,14 @@ for templname in APP_TEMPLATES:
 @require_GET
 @login_required
 def welcome(request):
-    if request.user.extradata.noob:
 
-        # case for turning noob mode off
+    # case for turning noob mode off
+    if request.user.extradata.noob:
         if request.user.apps.count() > 0 or request.user.collaborations.count() > 0:
             e = request.user.extradata
             e.noob = 0
             e.save()
             return redirect(user_page, request.user.username)
-        # else redirect to noob page
-        else:
-            return redirect(noob_page)
 
     if request.user.apps.count() == 0:
         return redirect(new)
@@ -80,17 +77,13 @@ def user_page(request, username):
     if request.user.username != username:
         return redirect("/")
 
+    # case for turning noob mode off
     if request.user.extradata.noob:
 
-        # case for turning noob mode off
         if request.user.apps.count() > 0 and is_stripe_customer(request.user):
             e = request.user.extradata
             e.noob = 0
             e.save()
-            # moves on w rest of procedure
-        # else redirect to noob page
-        # else:
-        #    return redirect(noob_page)
 
     if request.user.apps.count() == 0:
         if request.user.collaborations.count() == 0:
@@ -125,33 +118,6 @@ def dashboard(request, app_id):
     page_context['app_id'] = app_id
 
     return render(request, 'app-dashboard.html', page_context)
-
-
-@require_GET
-@login_required
-def noob_page(request):
-    #log url route
-    user_id = request.user.id
-    app_id = 0
-    log = LogAnything(user_id=user_id, app_id=app_id, name="visited page", data={"page_name": "welcome"})
-    log.save()
-
-    themes = UITheme.get_web_themes()
-    themes = [t.to_dict() for t in themes]
-    mobile_themes = UITheme.get_mobile_themes()
-    mobile_themes = [t.to_dict() for t in mobile_themes]
-    default_data = {
-        'app' : { 'id': 0},
-        'default_state': get_default_app_state(),
-        'title': 'My First App',
-        'default_mobile_uie_state': get_default_mobile_uie_state(),
-        'default_uie_state': get_default_app_state(),
-        'themes': simplejson.dumps(list(themes)),
-        'mobile_themes': simplejson.dumps(list(mobile_themes)),
-        'apps': request.user.apps.all(),
-        'statics': simplejson.dumps([]),
-    }
-    return render(request, 'app-welcome-page.html', default_data)
 
 
 def new_template(request, template_name):
