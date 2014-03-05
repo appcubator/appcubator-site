@@ -43,14 +43,22 @@ define(function(require, exports, module) {
         initialize: function(options) {
             _.bindAll(this);
 
+            this.appModel = options.appModel;
+
             if (options && (options.pageId == "0" || options.pageId  >= 0)) {
                 this.pageId = options.pageId;
                 pageId = options.pageId;
+                this.model = this.appModel.get('templates').models[pageId];
+            }
+            else if (options.templateModel) {
+                this.model = options.templateModel;
+            }
+            else {
+                throw "No Template Model Provided.";
             }
 
-            this.appModel = options.appModel;
-
-            this.model = this.appModel.get('routes').models[pageId];
+            console.trace();
+            console.log(this.model);
             this.pageName = this.model.get('name');
 
             v1State.currentPage = this.model;
@@ -66,7 +74,7 @@ define(function(require, exports, module) {
             this.sectionsManager = {};
             //this.guides = new GuideView(this.sectionsCollection);
             this.cssEditorView = new CSSEditorView();
-            this.pageView = new PageView(this.model, this.templateModel, pageId);
+            this.pageView = new PageView(this.routeModel, this.templateModel, pageId);
 
             // TODO: setup redo controller again
             // this.redoController = new RedoController();
@@ -86,7 +94,10 @@ define(function(require, exports, module) {
 
             this.title = "Editor";
 
-            this.listenTo(this.model.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
+            if(this.routeModel) {
+                this.listenTo(this.routeModel.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
+            }
+
             this.listenTo(this.model, 'scroll', this.scrollTo);
 
         },
@@ -196,7 +207,9 @@ define(function(require, exports, module) {
         },
 
         renderUrlBar: function() {
-            this.$el.find('.url-field').html(this.urlModel.getUrlString());
+            if(this.routeModel) {
+                this.$el.find('.url-field').html(this.urlModel.getUrlString());
+            }
         },
 
         help: function(e) {

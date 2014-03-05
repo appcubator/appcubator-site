@@ -92,6 +92,10 @@ define(function(require, exports, module) {
             return this.view.getCurrentTemplate();
         },
 
+        showTemplateWithName: function(templateName) {
+
+        },
+
         doKeyBindings: function() {
             keyDispatcher.bindComb('meta+s', this.save);
             keyDispatcher.bindComb('ctrl+s', this.save);
@@ -142,29 +146,29 @@ define(function(require, exports, module) {
             });
         },
 
-        page: function(pageId) {
-            if(pageId == this.pageId) return;
-            if (!pageId) pageId = 0;
+        pageWithName: function(pageName) {
+            var templateModel = this.model.get('templates').getTemplateWithName(pageName);
+            this.page(templateModel);
+        },
 
-            var self = this;
+        pageWithIndex: function(pageId) {
+            var templateModel = this.model.get('templates').models[pageId];
+            this.page(templateModel);
+        },
 
-            this.pageId = pageId;
-            self.tutorialPage = "Editor";
-            self.tutorialPage = "Introduction";
-            self.changePage(EditorView, { pageId: pageId, appModel: this.model }, "", function() {});
+        page: function(templateModel) {
+
+            if(templateModel == this.view.templateModel) return;
+            if (!templateModel) templateModel = this.model.get('templates').models[0];
+
+            this.tutorialPage = "Editor";
+            this.tutorialPage = "Introduction";
+            this.changePage(EditorView, { templateModel: templateModel, appModel: this.model }, "", function() {});
             this.toolBar.setPage(this.pageId);
             this.$leftMenu = this.$el.find('.left-menu-panel-l1 ');
             this.setupMenuHeight();
-            self.trigger('editor-loaded');
+            this.trigger('editor-loaded');
             olark('api.box.hide');
-        },
-
-        emails: function(tutorial) {
-            // var self = this;
-            // self.tutorialPage = "Emails";
-            // this.changePage(EmailsView, {}, tutorial, function() {
-            //     $('.menu-app-emails').addClass('active');
-            // });
         },
 
         plugins: function(tutorial) {

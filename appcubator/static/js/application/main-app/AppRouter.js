@@ -85,7 +85,7 @@ define(function(require, exports, module) {
         appmain: function(appId, pageId) {
             v1.configApp();
             if (!pageId) pageId = 0;
-            v1.currentApp.page(pageId);
+            v1.currentApp.pageWithIndex(pageId);
         },
 
         emails: function(appId, tutorial) {

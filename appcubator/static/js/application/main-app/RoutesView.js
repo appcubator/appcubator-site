@@ -20,7 +20,7 @@ define(function(require, exports, module) {
         title: 'Tables',
         className: 'dropdown-view routes-view',
         events: {
-
+            'click .route-name' : 'clickedRoute'
         },
 
         initialize: function() {
@@ -54,20 +54,31 @@ define(function(require, exports, module) {
         },
 
         renderRoute: function(routeModel) {
-            this.$el.find('#list-routes').append('<li class="table-name" id="route-' + routeModel.cid + '">' + routeModel.get('name') + '</li>');
+            var name = routeModel.get('name');
+            var url = routeModel.getUrlString();
+
+            var template = "(Custom Code)";
+
+            if (routeModel.generate == "routes.staticpage") {
+                template  = routeModel.get('name') + " template";
+            }
+
+            this.$el.find('#list-routes').append([
+            '<li class="route-name" id="route-' + routeModel.cid + '">',
+                '<small>' + url + '</small>',
+                '<span class="pull-right">' + template + '</span>',
+            '</li>'].join('\n'));
         },
 
-        clickedTableName: function(e) {
-            var cid = String(e.currentTarget.id).replace('table-', '');
-            var tableModel = v1State.get('models').get(cid);
-            var tableView = new NodeModelView(tableModel);
-            tableView.render();
+        clickedRoute: function(e) {
+            var cid = String(e.currentTarget.id).replace('route-', '');
+            var routeModel = this.collection.get(cid);
+            console.log(routeModel);
+            if (routeModel.generate == "routes.staticpage") {
+                var template = routeModel.get('name');
+                v1.currentApp.pageWithName(template);
+            }
             // this.el.appendChild(tableView.render().el);
-        },
-
-        renderRelations: function() {
-            //util.get('relations').appendChild(this.createRelationView.render().el);
-            //util.get('relations').appendChild(this.relationsView.render().el);
         },
 
         createRoute: function(val) {
@@ -81,23 +92,8 @@ define(function(require, exports, module) {
 
             v1State.get('models').push(elem);
             return elem;
-        },
-
-        showCreateRelationForm: function() {
-            var self = this;
-            this.createRelationView.$el.fadeIn('fast');
-            util.scrollToElement(self.$('#new-relation'));
-        },
-
-        scrollToRelation: function(e) {
-            e.preventDefault();
-            var hash = e.currentTarget.hash;
-            if (hash === '#relation-new') {
-                this.showCreateRelationForm();
-                return;
-            }
-            util.scrollToElement($(hash));
         }
+
     });
 
 return RoutesView;
