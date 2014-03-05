@@ -1,63 +1,60 @@
 define(function(require, exports, module) {
 
     'use strict';
-
-    var NodeModelModel = require('models/NodeModelModel');
-    var NodeModelView = require('app/models/NodeModelView');
+    //
+    // var NodeModelModel = require('models/NodeModelModel');
+    // var NodeModelView = require('app/models/NodeModelView');
 
     require('util');
     require('mixins/BackboneDropdownView');
 
     var template = [ '<div class="arrow_box"></div>',
     '<div class="" id="entities-page">',
-        '<h2 class="pheader">Models</h2>',
-        '<ul id="list-tables">',
+        '<h2 class="pheader">Routes</h2>',
+        '<ul id="list-routes">',
         '</ul>',
     '</div>'].join('\n');
 
-    var NodeModelsView = Backbone.DropdownView.extend({
+    var RoutesView = Backbone.DropdownView.extend({
 
         title: 'Tables',
-        className: 'entities-view',
+        className: 'dropdown-view routes-view',
         events: {
-            'click .table-name': 'clickedTableName'
+
         },
-        subviews: [],
 
         initialize: function() {
             _.bindAll(this);
-            this.subviews = [this.tablesView, this.relationsView, this.createRelationView];
-            this.collection = v1State.get('models');
-            this.listenTo(this.collection, 'add', this.renderTable);
 
-            this.title = "Tables";
+            this.collection = v1State.get('routes');
+            this.listenTo(this.collection, 'add', this.renderRoute);
+
+            this.title = "Routes";
         },
 
         render: function() {
 
             this.$el.html(_.template(template, {}));
-            this.renderTables();
+            this.renderRoutes();
             // this.renderRelations();
 
             var addTableBtn = document.createElement('div');
             addTableBtn.id = 'add-entity';
-            addTableBtn.innerHTML = '<span class="box-button">+ Create Model</span>';
+            addTableBtn.innerHTML = '<span class="box-button">+ Create Route</span>';
 
-            var createTableBox = new Backbone.NameBox({}).setElement(addTableBtn).render();
-            createTableBox.on('submit', this.createTable);
-            this.subviews.push(createTableBox);
+            var createRouteBox = new Backbone.NameBox({}).setElement(addTableBtn).render();
+            createRouteBox.on('submit', this.createRoute);
 
             this.$el.append(addTableBtn);
             return this;
         },
 
-        renderTables: function() {
-            this.collection.each(this.renderTable);
-            //this.$('#users').append(this.userTablesView.render().el);
+        renderRoutes: function() {
+            this.collection.each(this.renderRoute);
         },
 
-        renderTable: function(tableModel) {
-            this.$el.find('#list-tables').append('<li class="table-name" id="table-' + tableModel.cid + '">' + tableModel.get('name') + '</li>');
+        renderRoute: function(routeModel) {
+            this.$el.find('#list-routes').append('<li class="table-name" id="route-' + routeModel.cid + '">' + routeModel.get('name') + '</li>');
         },
 
         clickedTableName: function(e) {
@@ -73,7 +70,7 @@ define(function(require, exports, module) {
             //util.get('relations').appendChild(this.relationsView.render().el);
         },
 
-        createTable: function(val) {
+        createRoute: function(val) {
             //force table names to be singular
             var name = util.singularize(val);
 
@@ -103,6 +100,6 @@ define(function(require, exports, module) {
         }
     });
 
-    return NodeModelsView;
+return RoutesView;
 
 });

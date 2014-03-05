@@ -7,6 +7,7 @@ define(function(require, exports, module) {
     var EditorView = require('editor/EditorView');
     var PluginsView = require('app/PluginsView');
     var SettingsView = require('app/SettingsView');
+    var RoutesView = require('app/RoutesView');
 
 
     var SoftErrorView = require("app/SoftErrorView");
@@ -35,6 +36,10 @@ define(function(require, exports, module) {
 
             this.listenTo(this.model.get('models'), 'add', this.entityAdded);
             this.autoAddLinksToNavbar();
+
+            this.routesView = this.createSubview(RoutesView);
+            this.routesView.setToggleEl($('.menu-app-routes'));
+            this.routesView.setPointerPosition("130px");
 
             this.nodeModelsView = this.createSubview(NodeModelsView);
             this.nodeModelsView.setToggleEl($('.menu-app-entities'));
@@ -69,6 +74,7 @@ define(function(require, exports, module) {
             this.el.appendChild(this.nodeModelsView.render().el);
             this.el.appendChild(this.pluginsView.render().el);
             this.el.appendChild(this.settingsView.render().el);
+            this.el.appendChild(this.routesView.render().el);
 
 
             this.changePage(EditorView, { pageId: this.pageId, appModel: this.model }, "", function() {});

@@ -1,0 +1,36 @@
+.dropdown-view.routes-view {
+    top: 60px;
+    right: 40px;
+    width: 630px;
+    height: 400px;
+
+    transform-origin: 50% -30px;
+    -ms-transform-origin: 50% -30px;
+    -webkit-transform-origin: 50% -30px;
+}
+
+.dropdown-view.routes-view:before {
+    border-color: rgba(204, 204, 204, 0);
+    border-bottom-color: #ccc;
+    border-width: 16px;
+    margin-left: -16px;
+}
+
+.dropdown-view.routes-view:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: #fff;
+    border-width: 12px;
+    margin-left: -12px;
+}
+
+
+.dropdown-view.routes-view:after,
+.dropdown-view.routes-view:before {
+    bottom: 100%;
+    left: 50%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
