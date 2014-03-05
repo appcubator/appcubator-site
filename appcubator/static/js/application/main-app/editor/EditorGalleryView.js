@@ -246,12 +246,8 @@ define(function(require, exports, module) {
         },
 
         renderEntityLists: function() {
-            // if (!this.tableSection) {
-                this.tableSection = this.addNewSection('Data Views', true);
-            // } else {
-            //     this.tableSection.render();
-            // }
 
+            this.tableSection = this.addNewSection('Data Views', true);
             v1State.get('models').each(function(entityModel) {
                 var context = {
                     entity_id: entityModel.cid,
@@ -267,45 +263,23 @@ define(function(require, exports, module) {
         },
 
         renderContextEntityElements: function() {
-            // var pageContext = v1State.getCurrentPage().getContextEntities();
-
-            // // if there are no context entities, remove this section if it exists
-            // if (!pageContext.length) {
-            //     if (this.contextEntitySection) {
-            //         this.removeSection(this.contextEntitySection);
-            //     }
-            //     return;
-            // }
-
-            // if (!this.contextEntitySection) {
-            //     this.contextEntitySection = this.addNewSection('Page Context Data');
-            // } else {
-            //     this.allList.appendChild(this.contextEntitySection.render().el);
-            // }
 
 
+            this.contextEntitySection = this.addNewSection('Page Context Data');
 
-            // _(pageContext).each(function(tableName) {
-            //     var tableM = v1State.getTableModelWithName(tableName);
-            //     if (!tableM) throw "Error with page context";
-            //     var tableId = tableM.cid;
-            //     var id = '';
-            //     if (tableM.isUser) {
-            //         id = 'entity-user-' + tableM.cid;
-            //     } else {
-            //         id = 'entity-table-' + tableM.cid;
-            //     }
-            //     this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') + ' Edit Form', 'create-form-icon');
+            v1State.get('models').each(function(nodeModelModel) {
 
-            //     if (tableM.hasMoneyField()) {
-            //         this.contextEntitySection.addFullWidthItem(id, "entity-buy-button", 'Buy ' + tableM.get('name') + ' Button', 'money-button-icon');
-            //     }
+                var tableId = nodeModelModel.cid;
+                var id = 'entity-model-' + nodeModelModel.cid;
 
-            //     tableM.getFieldsColl().each(function(field) {
-            //         if (field.isRelatedField()) return this.renderRelatedField(field, tableM);
-            //         this.contextEntitySection.addFullWidthItem('context-field-' + tableId + '-' + field.cid, 'context-entity', tableName + ' ' + field.get('name'), 'plus-icon');
-            //     }, this);
-            // }, this);
+                //this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') + ' Edit Form', 'create-form-icon');
+
+                nodeModelModel.getFieldsColl().each(function(field) {
+                    if (field.isRelatedField()) return this.renderRelatedField(field, tableM);
+                    // this.contextEntitySection.addFullWidthItem('context-field-' + tableId + '-' + field.cid, 'context-entity', tableName + ' ' + field.get('name'), 'plus-icon');
+                }, this);
+
+            }, this);
 
             this.bindDraggable();
         },
