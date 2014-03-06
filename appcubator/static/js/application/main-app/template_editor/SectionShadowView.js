@@ -27,7 +27,8 @@ define(function(require, exports, module) {
             _.bindAll(this);
 
             this.collection = sectionCollection;
-            this.listenToModels(sectionCollection, 'change', this.reRenderSectionShadow);
+            // this.listenToModels(sectionCollection, 'change', this.reRenderSectionShadow);
+            this.listenTo(this.collection, 'add', this.renderSectionShadow);
         },
 
         render: function() {
@@ -45,8 +46,9 @@ define(function(require, exports, module) {
         },
 
         renderSectionShadow: function(sectionModel) {
-
             var $el = $(this.iframeDoc).find('[data-cid="' + sectionModel.cid + '"]');
+            console.log($el);
+
             var ycols = $el.find('[data-column]');
 
             var self = this;
