@@ -24,7 +24,7 @@ define(function(require, exports, module) {
     require('mixins/BackboneConvenience');
     require('editor/editor-templates');
 
-
+    /* An EditorView belongs to a TemplateModel */
     var EditorView = Backbone.View.extend({
         className: 'editor-page',
         css: "bootstrap-editor",
@@ -57,8 +57,8 @@ define(function(require, exports, module) {
                 throw "No Template Model Provided.";
             }
 
-            console.trace();
             console.log(this.model);
+            this.routeModel = v1State.get('routes').getRouteWithTemplate(this.model);
             this.pageName = this.model.get('name');
 
             v1State.currentPage = this.model;
@@ -67,14 +67,13 @@ define(function(require, exports, module) {
             this.appModel.isMobile = false;
 
 
-            this.templateModel = this.appModel.get('templates').getTemplateWithName(this.pageName);
-            this.sectionsCollection = this.templateModel.getSections();
+            this.sectionsCollection = this.model.getSections();
 
             this.galleryEditor = new EditorGalleryView(this.sectionsCollection);
             this.sectionsManager = {};
             //this.guides = new GuideView(this.sectionsCollection);
             this.cssEditorView = new CSSEditorView();
-            this.pageView = new PageView(this.routeModel, this.templateModel, pageId);
+            this.pageView = new PageView(this.routeModel, this.model, pageId);
 
             // TODO: setup redo controller again
             // this.redoController = new RedoController();
@@ -88,9 +87,9 @@ define(function(require, exports, module) {
 
             //g_guides = this.guides;
 
-            this.navbar = new NavbarView(this.templateModel.get('navbar'));
-            this.footer = new FooterView(this.templateModel.get('footer'));
-            this.urlModel = this.model.get('url');
+            this.navbar = new NavbarView(this.model.get('navbar'));
+            this.footer = new FooterView(this.model.get('footer'));
+            this.urlModel = this.routeModel.get('url');
 
             this.title = "Editor";
 
@@ -104,6 +103,7 @@ define(function(require, exports, module) {
 
         render: function() {
 
+            console.log("RENDER");
             this.start = new Date().getTime();
 
             var self = this;

@@ -253,6 +253,7 @@ require([
         };
 
         if (top.v1.currentApp) {
+            console.log("RENDER IFRAME");
             top.v1.currentApp.renderIFrameContent(proxy);
         }
     });

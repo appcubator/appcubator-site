@@ -76,8 +76,7 @@ define(function(require, exports, module) {
             this.el.appendChild(this.settingsView.render().el);
             this.el.appendChild(this.routesView.render().el);
 
-
-            this.changePage(EditorView, { pageId: this.pageId, appModel: this.model }, "", function() {});
+//            this.changePage(EditorView, { pageId: this.pageId, appModel: this.model }, "", function() {});
 
             this.$leftMenu = this.$el.find('.left-menu-panel-l1 ');
             this.setupMenuHeight();
@@ -158,9 +157,9 @@ define(function(require, exports, module) {
 
         page: function(templateModel) {
 
-            if(templateModel == this.view.templateModel) return;
+            if (this.view && templateModel == this.view.templateModel) return;
             if (!templateModel) templateModel = this.model.get('templates').models[0];
-
+            console.log("PAGE");
             this.tutorialPage = "Editor";
             this.tutorialPage = "Introduction";
             this.changePage(EditorView, { templateModel: templateModel, appModel: this.model }, "", function() {});

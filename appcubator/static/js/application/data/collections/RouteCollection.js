@@ -5,50 +5,21 @@ define(function(require, exports, module) {
     var RouteModel = require('models/RouteModel');
 
     var RouteCollection = Backbone.Collection.extend({
-        
+
         model: RouteModel,
         uniqueKeys: ["name"],
 
-        getContextFreePages: function() {
-            var pagesList = _(this.getContextFreePageModels()).map(function(pageM) {
-                return pageM.get('name');
-            });
-            return pagesList;
-        },
+        getRouteWithTemplate: function(templateModel) {
 
-        getContextFreePageModels: function() {
-            var pagesList = [];
-            this.each(function(page) {
-                if (!page.get('url').get('urlparts').some(function(part) {
-                    return (/\{\{([^\}]+)\}\}/g).test(part.get('value'));
-                })) {
-                    pagesList.push(page);
+            var templateName = templateModel.get('name');
+            var routeM = null;
+            this.each(function(routeModel) {
+                if(routeModel.get('name') == templateName) {
+                    routeM = routeModel;
                 }
             });
 
-            return pagesList;
-        },
-
-        getPagesWithEntityName: function(entityName) {
-            var pagesList = [];
-            this.each(function(page) {
-                if (page.doesContainEntityName(entityName)) {
-                    pagesList.push(page.get('name'));
-                }
-            });
-
-            return pagesList;
-        },
-
-        getPageModelsWithEntityName: function(entityName) {
-            var pagesList = [];
-            this.each(function(page) {
-                if (page.doesContainEntityName(entityName)) {
-                    pagesList.push(page);
-                }
-            });
-
-            return pagesList;
+            return routeM;
         },
 
         removePagesWithContext: function(tableM) {
