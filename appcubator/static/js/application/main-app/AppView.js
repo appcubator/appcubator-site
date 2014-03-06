@@ -2,17 +2,18 @@ define(function(require, exports, module) {
 
     'use strict';
     require('backbone');
+
     var DeployManagerModel = require('./DeployManagerModel');
     var ToolBarView = require('editor/ToolBarView');
     var EditorView = require('editor/EditorView');
-    var PluginsView = require('app/PluginsView');
+    var PluginsView = require('app/plugins_view/PluginsView');
     var SettingsView = require('app/SettingsView');
     var RoutesView = require('app/RoutesView');
 
 
     var SoftErrorView = require("app/SoftErrorView");
     var ErrorDialogueView = require('mixins/ErrorDialogueView');
-    var NodeModelsView = require('app/models/NodeModelsView');
+    var NodeModelsView = require('app/models_view/NodeModelsView');
 
 
     var AppView = Backbone.View.extend({
@@ -120,18 +121,6 @@ define(function(require, exports, module) {
             this.nodeModelsView.expand();
         },
 
-        themes: function(tutorial) {
-            var self = this;
-            self.tutorialPage = "Themes";
-            require(['app/ThemesGalleryView'], function(ThemesGalleryView) {
-                self.changePage(ThemesGalleryView, {}, tutorial, function() {
-                    self.trigger('themes-loaded');
-                    $('.menu-app-themes').addClass('active');
-                });
-                olark('api.box.show');
-            });
-        },
-
         pages: function(appId, tutorial) {
             var self = this;
             self.tutorialPage = "Pages";
@@ -159,7 +148,6 @@ define(function(require, exports, module) {
 
             if (this.view && templateModel == this.view.templateModel) return;
             if (!templateModel) templateModel = this.model.get('templates').models[0];
-            console.log("PAGE");
             this.tutorialPage = "Editor";
             this.tutorialPage = "Introduction";
             this.changePage(EditorView, { templateModel: templateModel, appModel: this.model }, "", function() {});

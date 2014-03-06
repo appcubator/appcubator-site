@@ -1,10 +1,8 @@
 define(function(require, exports, module) {
 
     'use strict';
-    require('dicts/constant-containers');
 
     var LayoutModel = require('models/LayoutModel');
-
     var FormFieldCollection = require('collections/FormFieldCollection');
 
     var WidgetModel = Backbone.Model.extend({
@@ -19,9 +17,9 @@ define(function(require, exports, module) {
             this.set('context', new Backbone.Collection(bone.context || []));
 
             if (bone.fields) { this.set('fields', new FormFieldCollection(bone.fields || [])); }
-            if (bone.row) {     
+            if (bone.row) {
                 var RowModel    = require('models/RowModel');
-                this.set('row', new RowModel(bone.row || {})); 
+                this.set('row', new RowModel(bone.row || {}));
             }
 
             this.bind('editModeOn', function() {
@@ -228,12 +226,12 @@ define(function(require, exports, module) {
             if(this.widgetsCollection) return this.widgetsCollection;
             var WidgetCollection = require('collections/WidgetCollection');
             this.widgetsCollection = new WidgetCollection();
-            
+
             this.get('row').get('columns').each(function(columnModel) {
                 this.widgetsCollection.add(columnModel.get('uielements').models);
                 this.bindColumn(columnModel);
             }, this);
-            
+
             this.get('row').get('columns').on('add', this.bindColumn);
 
             return this.widgetsCollection;

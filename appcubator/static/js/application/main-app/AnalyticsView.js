@@ -1,8 +1,38 @@
 define(function(require, exports, module) {
     'use strict';
 
-    require('app/templates/AnalyticsTemplates');
+    // require('app/templates/AnalyticsTemplates');
     require('backbone');
+
+    var AnalyticsTemplates = {};
+    AnalyticsTemplates.main_stats = [
+        '<div class="span40">',
+            '<div class="row hoff1">',
+                '<div class="span18 pane hi10">',
+                    '<strong class="total-active-users">-</strong>',
+                    '<span class="analyitcs-title">Active Users</span>',
+                '</div>',
+                '<div class="span18 offset2 pane hi10">',
+                    '<strong class="total-page-views">-</strong>',
+                    '<span class="analyitcs-title">Total Page Views</span>',
+                '</div>',
+            '</div>',
+            '<div class="row hoff1">',
+                '<div class="span18 pane hi10">',
+                    '<strong class="total-users">-</strong>',
+                    '<span class="analyitcs-title">Total Users</span>',
+                '</div>',
+                '<div class="span18 offset2 pane hi10">',
+                    '<strong class="total-visitors">-</strong>',
+                    '<span class="analyitcs-title">Total Visitors</span>',
+                '</div>',
+            '</div>',
+        '</div>',
+        '<div class="span16 pane hi21 hoff1 total-page-visits">',
+            '<span class="analyitcs-title">Page Visits</span>',
+        '</div>'
+    ].join('\n');
+
 
     var AnalyticsView = Backbone.View.extend({
 

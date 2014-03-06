@@ -13,7 +13,7 @@ require.config({
         "comp": "../../libs/util/comp",
         "bootstrap": "../../libs/bootstrap/bootstrap",
         "app": "../main-app",
-        "editor": "../main-app/editor",
+        "editor": "../main-app/template_editor",
         "m-editor": "../main-app/mobile-editor",
         "dicts": "../main-app/dicts",
         "mixins": "../../mixins",

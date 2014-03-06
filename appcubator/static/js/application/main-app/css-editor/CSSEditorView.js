@@ -1,17 +1,16 @@
 define(function(require, exports, module) {
     'use strict';
 
+    require('backbone');
+
     var UIElementListView = require('./UIElementListView');
     var StaticsEditorView = require('./StaticsEditorView');
     var BaseCSSEditorView = require('./BaseCSSEditorView');
-
     var FontEditorView    = require('./FontEditorView');
 
     var UIElementEditingView = require('./UIElementEditingView');
-    var ThemesGalleryView    = require('app/ThemesGalleryView');
+    var ThemesGalleryView    = require('./ThemesGalleryView');
 
-    require('app/templates/AnalyticsTemplates');
-    require('backbone');
 
     var CSSEditorView = Backbone.View.extend({
 

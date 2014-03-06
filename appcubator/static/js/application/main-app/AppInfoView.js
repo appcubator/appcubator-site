@@ -2,9 +2,34 @@ define(function(require, exports, module) {
 
     'use strict';
 
-    require('app/templates/MainTemplates');
     var Striper = require('app/Striper');
     var ErrorDialogueView = require('mixins/ErrorDialogueView');
+    var app_info_view_temp = [
+            '<div class="span40 domains w-pane pb2 hoff4" id="domain-settings">',
+              '<h3 class="span36 offset2 hoff1">Domain Settings</h3>',
+              '<hr class="span40">',
+              '<div class="span36 offset2 hi5 hoff1">',
+                '<h4>Current subdomain:</h4>',
+                '<div><a href="{{ app.url }}" target="_blank">{{ app.hostname }}</a></div>',
+              '</div>',
+              '<hr class="span40">',
+              '<div class="span36 offset2 hi5 hoff1">',
+                '<h4>Change subdomain</h4>',
+                '<form class="register-subdomain-form hi7">',
+                    '<p class="span18"><input type="text" class="span10 register-subdomain-input" placeholder="Your subdomain"/>',
+                    '<span style="line-height:50px">.appcubator.com</span></p>',
+                  '<a class="register-subdomain-button btn span13" style="display:none;">Claim subdomain</a>',
+                '</form>',
+              '</div>',
+            '</div>',
+
+            '<div class="w-pane span40 hoff4 pb2" id="danger-zone">',
+              '<h3 class="span36 offset2 hoff1">Danger Zone</h3>',
+              '<hr class="span40">',
+              '<a class="btn btn-danger hoff1 span8 offset2" id="delete">Delete App</a>',
+            '</div>'
+    ].join('\n');
+
 
     var AppInfoView = Backbone.View.extend({
 
@@ -39,7 +64,7 @@ define(function(require, exports, module) {
             page_context.keywords = this.model.get('keywords');
             page_context.description = this.model.get('description');
 
-            this.el.innerHTML = _.template(util.getHTML('app-info-page'), page_context);
+            this.el.innerHTML = _.template(app_info_view_temp, page_context);
 
             this.$nav = $('.navigator .left-nav');
 

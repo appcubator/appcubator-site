@@ -8,9 +8,11 @@ define(function(require, exports, module) {
     var CollaboratorsView = require('app/CollaboratorsView');
 
     require('mixins/BackboneDropdownView');
-    require('app/templates/MainTemplates');
     require('util');
     require('util.filepicker');
+
+    var template = [
+    ].join('\n');
 
     var OverviewPageView = Backbone.View.extend({
 

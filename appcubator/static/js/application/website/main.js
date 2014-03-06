@@ -16,9 +16,8 @@ require.config({
     "comp": "../../libs/util/comp",
     "bootstrap" : "../../libs/bootstrap/bootstrap",
     "app" : "../main-app",
-    "editor" : "../main-app/editor",
-    "m-editor" : "../main-app/mobile-editor",
-    "dicts" : "../main-app/dicts",
+    "editor" : "../main-app/template_editor",
+    // "dicts" : "../main-app/dicts",
     "mixins" : "../../mixins",
     "key" : "../../libs/keymaster/keymaster",
     "mousetrap" : "../../libs/mousetrap.min",
@@ -185,13 +184,13 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
       $('.sub').on('click', function(e) {
         var addr = e.currentTarget.id.replace('slide-','');
         addr = addr.split('-');
-        var slideInd = parseInt(addr[0]); 
+        var slideInd = parseInt(addr[0]);
         slideViews[slideInd].gotoSlide(parseInt(addr[1]));
       });
     },
 
     bindLoginForm: function() {
-      
+
       $('.login-button').on('click', function(e) {
         e.preventDefault();
         $('.menu').hide();
@@ -275,7 +274,7 @@ function(HomepageView, DeveloperpageView, SignupModalView, SlideView) {
                 pageId = 0;
                 v1State = new Backbone.Model();
                 v1State = new AppModel(appState);
-            
+
                 g_guides = {};
                 keyDispatcher  = new KeyDispatcher();
                 mouseDispatcher  = new MouseDispatcher();
