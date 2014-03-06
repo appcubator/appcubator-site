@@ -29,6 +29,8 @@ define(function(require, exports, module) {
             this.collection = sectionCollection;
             // this.listenToModels(sectionCollection, 'change', this.reRenderSectionShadow);
             this.listenTo(this.collection, 'add', this.renderSectionShadow);
+            this.listenTo(this.collection, 'remove', this.removeSectionShadow);
+
         },
 
         render: function() {
@@ -47,8 +49,6 @@ define(function(require, exports, module) {
 
         renderSectionShadow: function(sectionModel) {
             var $el = $(this.iframeDoc).find('[data-cid="' + sectionModel.cid + '"]');
-            console.log($el);
-
             var ycols = $el.find('[data-column]');
 
             var self = this;
@@ -63,7 +63,6 @@ define(function(require, exports, module) {
             ycols.each(function() {
                 var colCid = this.dataset.cid;
                 var shadowEl = util.addShadow(this, document.getElementById('page-wrapper'), self.iframe, self.iframeDoc);
-                //shadowEl.innerHTML = sectionModel.cid;
                 shadowEl.className = "section-shadow";
                 self.shadows.push(shadowEl);
                 self.shadowFrame.appendChild(shadowEl);
@@ -102,6 +101,10 @@ define(function(require, exports, module) {
 
             var sectionEditorView = new SectionEditorView(sectionModel).render();
             self.shadowFrame.appendChild(sectionEditorView.el);
+        },
+
+        removeSectionShadow: function(sectionModel) {
+            // TODO: Fix this
         },
 
         displayColumnShadows: function() {

@@ -7,6 +7,7 @@ require.config({
         "shortcut": "../../libs/shortcut",
         "underscore": "../../libs/underscore-amd/underscore",
         "backbone": "../../libs/backbone-amd/backbone",
+        "backbone-regrettable": "../../libs/backbone-amd/BackboneRegrettable",
         "heyoffline": "../../libs/heyoffline",
         "util": "../../libs/util/util",
         "util.filepicker": "../../libs/util/util.filepicker",
@@ -54,6 +55,10 @@ require.config({
         "backbone": {
             exports: "Backbone",
             deps: ["underscore", "jquery"]
+        },
+        "backbone-regrettable": {
+            exports: "Backbone",
+            deps: ["backbone"]
         },
         "bootstrap": {
             deps: ["jquery"]
@@ -117,6 +122,7 @@ require([
         "editor/MouseDispatcher",
         "heyoffline",
         "backbone",
+        "backbone-regrettable",
         "bootstrap",
         "util",
         "comp",

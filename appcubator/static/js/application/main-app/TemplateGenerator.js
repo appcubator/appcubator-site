@@ -6,7 +6,6 @@ define([
   "models/WidgetContainerModel",
   "collections/WidgetCollection",
   "collections/RouteCollection",
-  "collections/EmailCollection",
   "backbone"
 ],
 function(AppModel,
@@ -15,8 +14,7 @@ function(AppModel,
          WidgetModel,
          WidgetContainerModel,
          WidgetCollection,
-         RouteCollection,
-         EmailCollection) {
+         RouteCollection) {
 
   var AppGenerator = Backbone.View.extend({
     answersDict : {},

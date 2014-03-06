@@ -27,10 +27,15 @@
     .background-size(20px auto);
     background-position: 11px center;
     padding-right: 10px;
+    padding-left: 10px;
     cursor: pointer;
     // background-color: #2b3545;
 
     float: left;
+}
+
+.menu-button span {
+    vertical-align: top;
 }
 
 .menu-button:hover {
@@ -79,10 +84,10 @@
 }
 
 .menu-button.save {
-    padding-left: 42px;
     border-radius: 6px;
     margin-left: 8px;
     margin-top: 2px;
+    vertical-align: top;
 }
 
 .menu-button.run:hover .play-btn-icon {
@@ -272,7 +277,6 @@
 }
 
 .save {
-    background-image: url('/static/img/save.png');
     text-align: left;
 
     -webkit-transition: width 2s;
@@ -282,6 +286,32 @@
     transition: width 2s; /* Firefox 4 */
     /* Safari and Chrome */
     /* Opera */
+}
+
+.save .icon {
+    width: 30px;
+    height: 40px;
+    background-image: url('/static/img/app_navbar.png');
+    background-position: left center;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+
+.undo .icon {
+    width: 30px;
+    height: 40px;
+    background-image: url('/static/img/app_navbar.png');
+    background-position: -30px center;
+    background-repeat: no-repeat;
+}
+
+.redo .icon {
+    width: 30px;
+    height: 40px;
+    background-image: url('/static/img/app_navbar.png');
+    background-position: -60px center;
+    background-repeat: no-repeat;
 }
 
 .run .deploy-text {
@@ -314,6 +344,7 @@
     background-repeat: no-repeat;
     background-size: auto 10px;
     text-align: left;
+    padding-left: 10px;
 }
 
 .menu-button.pages div.page-item#create-page {

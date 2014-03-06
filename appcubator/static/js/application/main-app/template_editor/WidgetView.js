@@ -75,7 +75,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
             var $e = $('[data-cid="'+ this.model.cid +'"]');
             if ($e.length) {
-                console.log("BIND");
                 this.setElement($e, true);
             }
             else {

@@ -1,13 +1,10 @@
 define([
-        'models/UrlModel',
-        'models/NavbarModel',
-        'models/FooterModel',
-        'collections/WidgetCollection'
-    ],
-    function(UrlModel, NavbarModel, FooterModel, WidgetCollection) {
+        'models/UrlModel'
+        ],
+    function(UrlModel) {
 
         var RouteModel = Backbone.Model.extend({
-            
+
             defaults: {
                 "name": "default-page"
             },
@@ -22,7 +19,7 @@ define([
                         bone.url = [this.get('name') || "Page Name"];
                     }
                 }
-                
+
                 this.set('url', new UrlModel(bone.url || {}));
             },
 

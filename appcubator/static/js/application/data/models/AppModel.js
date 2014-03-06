@@ -1,107 +1,84 @@
-define([
-        'models/AppInfoModel',
-        'collections/NodeModelCollection',
-        'collections/EmailCollection',
-        'collections/TemplateCollection',
-        'models/PluginsModel',
-        'models/EntityManager'
-    ],
-    function(AppInfoModel,
-        NodeModelCollection,
-        EmailCollection,
-        TemplateCollection,
-        PluginsModel,
-        EntityManager) {
+define(function(require, exports, module) {
 
-        var AppModel = Backbone.Model.extend({
+    'use strict';
 
-            currentPage: null,
-            isMobile: false,
-            lazy: {},
+    require('backbone');
 
-            initialize: function(aState) {
-                if (!aState) return;
+    var AppInfoModel = require('models/AppInfoModel'),
+        NodeModelCollection = require('collections/NodeModelCollection'),
+        TemplateCollection = require('collections/TemplateCollection'),
+        PluginsModel = require('models/PluginsModel'),
+        RouteCollection = require('collections/RouteCollection');
 
-                this.set('info', new AppInfoModel(aState.info));
-                this.set('models', new NodeModelCollection(aState.models));
-                this.set('emails', new EmailCollection(aState.emails));
-                this.set('templates', new TemplateCollection(aState.templates));
-                this.set('plugins', new PluginsModel(aState.plugins || {}));
 
-            },
+    var AppModel = Backbone.Model.extend({
 
-            getPages: function() {
-                if (!this.isMobile) {
-                    return this.get('pages');
-                } else {
-                    return this.get('mobilePages');
-                }
-            },
+        currentPage: null,
+        isMobile: false,
+        lazy: {},
 
-            getTableModelWithName: function(nameStr) {
-                var tableM = this.get('models').getTableWithName(nameStr);
-                return tableM;
-            },
+        initialize: function(aState) {
+            if (!aState) return;
 
-            getTableModelWithCid: function(cid) {
-                var tableM = this.get('models').get(cid);
-                return tableM;
-            },
+            this.set('info', new AppInfoModel(aState.info));
+            this.set('models', new NodeModelCollection(aState.models));
+            this.set('templates', new TemplateCollection(aState.templates));
+            this.set('plugins', new PluginsModel(aState.plugins || {}));
+            this.set('routes', new RouteCollection(aState.routes || []));
 
-            isSingleUser: function() {
-                return this.get('users').length == 1;
-            },
+            Backbone.Regrettable.bind(this.get('templates'));
+            Backbone.Regrettable.bind(this.get('models'));
+            Backbone.Regrettable.bind(this.get('routes'));
 
-            lazySet: function(key, coll) {
-                this.lazy[key] = coll;
-                this.set(key, new Backbone.Collection([]));
-            },
+        },
 
-            get: function(key) {
-                if (this.lazy[key]) {
-                    this.set(key, this.lazy[key]);
-                    delete this.lazy[key];
-                }
-
-                return AppModel.__super__.get.call(this, key);
-            },
-
-            getWidgetsRelatedToTable: function(tableM) {
-                return new EntityManager({
-                    pages: this.get('pages')
-                }).getWidgetsRelatedToTable(tableM);
-            },
-
-            getWidgetsRelatedToPage: function(pageM) {
-                return new EntityManager({
-                    pages: this.get('pages')
-                }).getWidgetsRelatedToPage(pageM);
-            },
-
-            getNavLinkRelatedToPage: function(pageM) {
-                return new EntityManager({
-                    pages: this.get('pages')
-                }).getLinksRelatedToPage(pageM);
-            },
-
-            getWidgetsRelatedToField: function(fieldM) {
-                return new EntityManager({
-                    pages: this.get('pages')
-                }).getWidgetsRelatedToField(fieldM);
-            },
-
-            serialize: function(options) {
-                var json = _.clone(this.attributes);
-                json.info = json.info.serialize(options);
-                json.models = json.models.serialize(options);
-                json.emails = json.emails.serialize(options);
-                json.templates = json.templates.serialize(options);
-                json.routes = json.routes.serialize(options);
-                json.plugins = json.plugins.serialize(options);
-
-                return json;
+        getPages: function() {
+            if (!this.isMobile) {
+                return this.get('pages');
+            } else {
+                return this.get('mobilePages');
             }
-        });
+        },
 
-        return AppModel;
+        getTableModelWithName: function(nameStr) {
+            var tableM = this.get('models').getTableWithName(nameStr);
+            return tableM;
+        },
+
+        getTableModelWithCid: function(cid) {
+            var tableM = this.get('models').get(cid);
+            return tableM;
+        },
+
+        isSingleUser: function() {
+            return this.get('users').length == 1;
+        },
+
+        lazySet: function(key, coll) {
+            this.lazy[key] = coll;
+            this.set(key, new Backbone.Collection([]));
+        },
+
+        get: function(key) {
+            if (this.lazy[key]) {
+                this.set(key, this.lazy[key]);
+                delete this.lazy[key];
+            }
+
+            return AppModel.__super__.get.call(this, key);
+        },
+
+        serialize: function(options) {
+            var json = _.clone(this.attributes);
+            json.info = json.info.serialize(options);
+            json.models = json.models.serialize(options);
+            json.templates = json.templates.serialize(options);
+            json.routes = json.routes.serialize(options);
+            json.plugins = json.plugins.serialize(options);
+
+            return json;
+        }
     });
+
+    return AppModel;
+});

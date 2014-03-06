@@ -25,6 +25,7 @@ define(function(require, exports, module) {
 
             this.collection = v1State.get('routes');
             this.listenTo(this.collection, 'add', this.renderRoute);
+            this.listenTo(this.collection, 'remove', this.removeRoute);
 
             this.title = "Routes";
         },
@@ -67,10 +68,14 @@ define(function(require, exports, module) {
             '</li>'].join('\n'));
         },
 
+        removeRoute: function(routeModel) {
+            this.$el.find('#route-' + routeModel.cid).remove();
+        },
+
         clickedRoute: function(e) {
             var cid = String(e.currentTarget.id).replace('route-', '');
             var routeModel = this.collection.get(cid);
-            console.log(routeModel);
+
             if (routeModel.generate == "routes.staticpage") {
                 var template = routeModel.get('name');
                 v1.currentApp.pageWithName(template);

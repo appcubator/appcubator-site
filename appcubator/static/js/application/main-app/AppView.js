@@ -21,7 +21,9 @@ define(function(require, exports, module) {
         events: {
             'click #save': 'save',
             'click #left-menu-toggle': 'toggleTopMenu',
-            'click #deploy': 'deployApp'
+            'click #deploy': 'deployApp',
+            'click .undo': 'undo',
+            'click .redo': 'redo'
         },
 
         el: document.getElementById('app-content'),
@@ -36,7 +38,6 @@ define(function(require, exports, module) {
             this.toolBar = this.createSubview(ToolBarView, { pageId: -1 });
 
             this.listenTo(this.model.get('models'), 'add', this.entityAdded);
-            this.autoAddLinksToNavbar();
 
             this.routesView = this.createSubview(RoutesView);
             this.routesView.setToggleEl($('.menu-app-routes'));
@@ -77,7 +78,6 @@ define(function(require, exports, module) {
             this.el.appendChild(this.settingsView.render().el);
             this.el.appendChild(this.routesView.render().el);
 
-//            this.changePage(EditorView, { pageId: this.pageId, appModel: this.model }, "", function() {});
 
             this.$leftMenu = this.$el.find('.left-menu-panel-l1 ');
             this.setupMenuHeight();
@@ -86,6 +86,7 @@ define(function(require, exports, module) {
                 scrollTop: 0
             });
 
+            this.doKeyBindings();
         },
 
         getCurrentPage: function() {
@@ -99,10 +100,14 @@ define(function(require, exports, module) {
         doKeyBindings: function() {
             keyDispatcher.bindComb('meta+s', this.save);
             keyDispatcher.bindComb('ctrl+s', this.save);
-            keyDispatcher.bindComb('meta+c', this.copy);
-            keyDispatcher.bindComb('ctrl+c', this.copy);
-            keyDispatcher.bindComb('meta+v', this.paste);
-            keyDispatcher.bindComb('ctrl+v', this.paste);
+            // keyDispatcher.bindComb('meta+c', this.copy);
+            // keyDispatcher.bindComb('ctrl+c', this.copy);
+            // keyDispatcher.bindComb('meta+v', this.paste);
+            // keyDispatcher.bindComb('ctrl+v', this.paste);
+            keyDispatcher.bindComb('meta+z', this.undo);
+            keyDispatcher.bindComb('ctrl+z', this.undo);
+            keyDispatcher.bindComb('meta+y', this.redo);
+            keyDispatcher.bindComb('ctrl+y', this.redo);
         },
 
         info: function(appId, tutorial) {
@@ -212,17 +217,12 @@ define(function(require, exports, module) {
             this.model.get('routes').push(newPage);
         },
 
-        autoAddLinksToNavbar: function() {
-            // TODO: fix this
-            // this.listenTo(this.model.get('routes'), 'add', function(pageM) {
-            //     if (!pageM.isContextFree()) return;
-            //     var homePageNav = this.model.get('routes').first().get('navbar');
-            //     homePageNav.get('links').push({
-            //         url: 'internal://' + pageM.get('name'),
-            //         title: pageM.get('name')
-            //     });
+        undo: function() {
+            Backbone.Regrettable.undo();
+        },
 
-            // }, this);
+        redo: function() {
+            Backbone.Regrettable.redo();
         },
 
         deployApp: function() {
@@ -248,7 +248,7 @@ define(function(require, exports, module) {
 
             $('#save-icon').attr('src', '/static/img/ajax-loader-white.gif');
             var $el = $('.menu-button.save');
-            $el.fadeOut().html("<span>Saving...</span>").fadeIn();
+            $el.fadeOut().html("<span class='icon'></span><span>Saving...</span>").fadeIn();
 
             var self = this;
             appState = v1State.serialize();
@@ -265,14 +265,14 @@ define(function(require, exports, module) {
                     $('#save-icon').attr('src', '/static/img/save.png').hide().fadeIn();
                     clearTimeout(timer);
                 }, 1000);
-                $('.menu-button.save').html("<span>Saved</span>").fadeIn();
+                $('.menu-button.save').html("<span class='icon'></span><span>Saved</span>").fadeIn();
 
                 if ((typeof(callback) !== 'undefined') && (typeof(callback) == 'function')) {
                     callback();
                 }
 
                 var timer2 = setTimeout(function() {
-                    $el.html("<span>Save</span>").fadeIn();
+                    $el.html("<span class='icon'></span><span>Save</span>").fadeIn();
                     clearTimeout(timer2);
                 }, 3000);
             };

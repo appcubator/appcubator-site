@@ -31,7 +31,6 @@ define(function(require, exports, module) {
 
             this.widgetsCollection = this.model.getWidgetsCollection();
 
-            //get('uielements');
             this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
             this.listenToModels(this.widgetsCollection, 'startEditing highlight', this.startEditing);
             this.listenToModels(this.widgetsCollection, 'stopEditing cancelEditing unhighlight', this.stopEditing);

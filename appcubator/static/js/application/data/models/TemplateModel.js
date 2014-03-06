@@ -1,9 +1,8 @@
 define(function(require, exports, module) {
 
     'use strict';
-    var NavbarModel      = require('models/NavbarModel'),
-        FooterModel      = require('models/FooterModel'),
-        SectionCollection= require('collections/SectionCollection');
+    require('backbone');
+    var SectionCollection= require('collections/SectionCollection');
 
     var TemplateModel = Backbone.Model.extend({
 
