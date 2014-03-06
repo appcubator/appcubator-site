@@ -75,6 +75,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
 
             var $e = $('[data-cid="'+ this.model.cid +'"]');
             if ($e.length) {
+                console.log("BIND");
                 this.setElement($e, true);
             }
             else {
@@ -176,7 +177,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         select: function(e) {
-
+            console.log("SELECTED");
             if (this.selected && !this.editMode) {
                 this.model.trigger('doubleClicked');
                 return;

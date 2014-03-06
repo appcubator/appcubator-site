@@ -40,12 +40,14 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-
+            console.log($("[data-cid='"+ this.model.cid +"']"));
             if($("[data-cid='"+ this.model.cid +"']").length) {
                 this.setElement($('[data-cid="'+ this.model.cid +'"]'), true);
             }
             else {
+                console.log(this.model);
                 var expanded = this.model.expand();
+                console.log(expanded);
                 this.setElement($(expanded.html), true);
             }
             this.layoutElements();
@@ -79,7 +81,7 @@ define(function(require, exports, module) {
         },
 
         layoutElements: function() {
-
+            if (!this.model.has('columns')) return;
             this.model.get('columns').each(function(columnModel) {
 
                 var self = this;

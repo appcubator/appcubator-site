@@ -32,25 +32,47 @@ define(function(require, exports, module) {
             this.widgetSelectorView = new WidgetSelectorView(sectionsCollection.getAllWidgets());
 
             this.sectionsCollection = sectionsCollection;
-            this.listenTo(this.sectionsCollection, 'add', this.placeSection, true);
+            this.listenTo(this.sectionsCollection, 'add', this.placeNewSection, true);
         },
 
         render: function() {
 
-            this.widgetsContainer = document.getElementById('elements-container');
-            this.widgetsContainer.innerHTML = '';
+            this.widgetsContainer = document.body;
 
             var expanded_uielements = this.sectionsCollection.expand();
-
-            this.$el.find("#elements-container").append(expanded_uielements.html);
+            console.log(this.$el.find(document.body));
+            console.log(expanded_uielements);
+            this.$el.append($(expanded_uielements.html));
+            this.placeNewSectionPanel();
 
             this.sectionsCollection.each(function(sectionModel) {
                 var newWidgetView = this.placeSection(sectionModel, false);
             }, this);
 
            this.widgetSelectorView.setElement(document).render();
-
            this.placeJS(expanded_uielements);
+        },
+
+        placeNewSectionPanel: function() {
+
+            if (this.$el.find('#addNewSection')) {
+                this.$el.find('#addNewSection').remove();
+            }
+
+            var temp = [
+                '<div class="container editing full-container" id="addNewSection">',
+                    '<span id="addNewSectionTitle" style="display:block;">Add A New Section</span>',
+                    '<ul class="options" style="display:none;">',
+                        '<li class="section-option" id="opt-12">12</li>',
+                        '<li class="section-option" id="opt-3-3-3-3">3-3-3-3</li>',
+                        '<li class="section-option" id="opt-4-4-4">4-4-4</li>',
+                        '<li class="section-option" id="opt-4-8">4-8</li>',
+                        '<li class="section-option" id="opt-8-4">8-4</li>',
+                    '</ul>',
+                '</div>'
+            ].join('\n');
+
+            $(document.body).append(temp);
         },
 
         placeJS: function(expanded) {
@@ -117,10 +139,23 @@ define(function(require, exports, module) {
             return sectionView;
         },
 
+        placeNewSection: function(model) {
+
+            var sectionView = new SectionView(model);
+            this.$el.append(sectionView.render().el);
+
+            this.listenTo(model, 'hovered', function() {
+                this.changeCurrentSection(model, sectionView);
+            }, this);
+
+            this.placeNewSectionPanel();
+            return sectionView;
+        },
+
         placeSection: function(model, isNew, extraData) {
 
             var sectionView = new SectionView(model);
-            this.widgetsContainer.appendChild(sectionView.render().el);
+            sectionView.render();
 
             this.listenTo(model, 'hovered', function() {
                 this.changeCurrentSection(model, sectionView);

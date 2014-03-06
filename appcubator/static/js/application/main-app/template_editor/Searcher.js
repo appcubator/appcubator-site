@@ -1,8 +1,6 @@
 define(function(require, exports, module) {
 
     'use strict';
-
-    var FooterEditorView = require('editor/FooterEditorView');
     require('backbone');
 
     function Searcher() {

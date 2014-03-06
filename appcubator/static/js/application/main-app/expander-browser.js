@@ -673,15 +673,20 @@ generators.push({
             link.url = link.url || "#";
         });
 
-        return templates.html({
-            data: data
-        });
+        var html = templates.html(data);
+
+        return {
+            html: html,
+            js: "",
+            css: ""
+        }
+
     },
     templates: {
         'html': '<div class="navbar navbar-fixed-top navbar-default" id="navbar" role="navigation">' +
             '<div class="container">' +
             '<div class="navbar-header">' +
-            '<a href="/" class="navbar-brand"><%= data.brandName %></a>' +
+            '<a href="/" class="navbar-brand"><%= brandName %></a>' +
             '<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">' +
             '<span class="icon-bar"></span>' +
             '<span class="icon-bar"></span>' +
@@ -690,7 +695,7 @@ generators.push({
             '</div>' +
             '<div class="navbar-collapse collapse" id="navbar-collapse">' +
             '<ul class="nav navbar-nav" id="links">' +
-            '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
+            '<% for (var ii = 0; ii < links.length; ii++) { var item = links[ii]; %>' +
             '<li><a href="<%= item.url %>" class="menu-item"><%= item.title %></a></li>' +
             '<% } %>' +
             '</ul>' +
@@ -704,16 +709,21 @@ generators.push({
     name: 'footer',
     version: '0.1',
     code: function(data, templates) {
-        return templates.html({
-            data: data
-        });
+
+        var html = templates.html(data);
+
+        return {
+            html: html,
+            js: "",
+            css: ""
+        }
     },
     templates: {
         'html': '<footer class="footer">' +
             '<div class="container">' +
-            '<p id="customText" class="footer-text muted"><%= data.customText %></p>' +
+            '<p id="customText" class="footer-text muted"><%= customText %></p>' +
             '<ul class="footer-links" id="links">' +
-            '<% for (var ii = 0; ii < data.links.length; ii++) { var item = data.links[ii]; %>' +
+            '<% for (var ii = 0; ii < links.length; ii++) { var item = links[ii]; %>' +
             '<li><a href="#" class="menu-item"><%= item.title %></a></li>' +
             '<% } %>' +
             '</ul>' +
@@ -822,6 +832,8 @@ generators.push({
         var htmlLines = [];
 
         _.each(data, function(sectionData) {
+            console.log(sectionData);
+
             var expanded_section = expand(sectionData);
             cssLines.push(expanded_section.css);
             jsLines.push(expanded_section.js);
