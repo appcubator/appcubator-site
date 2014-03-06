@@ -1,9 +1,6 @@
 define(function(require, exports, module) {
 
     'use strict';
-    //
-    // var NodeModelModel = require('models/NodeModelModel');
-    // var NodeModelView = require('app/models/NodeModelView');
 
     require('util');
     require('mixins/BackboneDropdownView');
@@ -78,24 +75,23 @@ define(function(require, exports, module) {
                 var template = routeModel.get('name');
                 v1.currentApp.pageWithName(template);
             }
-            // this.el.appendChild(tableView.render().el);
+
+            this.hide();
         },
 
         createRoute: function(val) {
-            //force table names to be singular
-            var name = util.singularize(val);
 
-            var elem = new NodeModelModel({
-                name: name,
-                fields: []
+            var route = new RouteModel({
+                url: val.split('/'),
+                name: null
             });
 
-            v1State.get('models').push(elem);
+            this.collection.push(route);
             return elem;
         }
 
     });
 
-return RoutesView;
+    return RoutesView;
 
 });

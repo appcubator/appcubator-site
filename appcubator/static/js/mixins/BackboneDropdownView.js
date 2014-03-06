@@ -41,6 +41,7 @@ define([
                 this.$toggleEl.addClass('expanded');
                 this.isExpanded = true;
                 $(window).on('mouseup', this.clickedOnElement);
+                $( $('#inviteFrame').contents().get(0) ).on('mouseup', this.clickedOnElement);
                 $(window).on('keydown', this.closeHandler);
 
             },
@@ -51,6 +52,7 @@ define([
 
                 this.isExpanded = false;
                 $(window).off('mouseup', this.clickedOnElement);
+                $( $('#inviteFrame').contents().get(0) ).off('mouseup', this.clickedOnElement);
                 $(window).off('keydown', this.closeHandler);
             },
 
