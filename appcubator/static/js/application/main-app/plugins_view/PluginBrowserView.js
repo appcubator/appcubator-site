@@ -30,7 +30,7 @@ define(function(require, exports, module) {
 
             $.ajax({
                 type: "GET",
-                url: "/plugins/",
+                url: "//plugins.appcubator.com/plugins/list",
                 dataType: "json",
                 success: function(data) {
                     $(loadingSpin).remove();

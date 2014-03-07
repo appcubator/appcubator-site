@@ -13,12 +13,12 @@
 	<div class='pluginTitleBar'>
 		<div class='pluginLogo'> </div>
 		<h6>
-			<a href="#"> <%= plugin.name %></a>
+			<a href="#"> <%= plugin.metadata.name %></a>
 			<div class="rating">
 			<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
 			</div>
 		</h6>
-		<div class="description"><%= plugin.description %></div>
+		<div class="description"><%= plugin.metadata.description %></div>
 		<button class="addPluginButton btn" id="add-<%= ind %>">Install Plugin</button>
 	</div> 
 	<% }); %>
