@@ -5,8 +5,6 @@ define(function(require, exports, module) {
     require('backbone');
     require('mixins/BackboneConvenience');
 
-
-
     var ColumnModel = Backbone.Model.extend({
 
         initialize: function(bone) {
@@ -17,6 +15,8 @@ define(function(require, exports, module) {
             if (!this.generate) {
                 this.generate = "templates.layoutColumn";
             }
+
+            Backbone.Regrettable.bind(this);
         },
 
         addElement: function(type, extraData) {
@@ -34,9 +34,6 @@ define(function(require, exports, module) {
 
             var json = _.clone(this.attributes);
             json.uielements = json.uielements.serialize(options);
-            if(!options) {
-                console.trace();
-            }
             if(options.generate) {
                 json.cid = this.cid;
             }

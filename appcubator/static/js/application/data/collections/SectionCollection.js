@@ -10,6 +10,7 @@ define(function(require, exports, module) {
         model: SectionModel,
 
         initialize: function() {
+            Backbone.Regrettable.bind(this);
 
             if(!this.generate) {
                 this.setGenerator('templates.layoutSections');

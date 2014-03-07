@@ -28,7 +28,6 @@ define(function(require, exports, module) {
             if (widgetModel.hasForm()) { type = "forms"; }
             if (widgetModel.isList()) { type = "lists"; }
 
-            console.log(type);
             var els = top.v1UIEState.getUIEVals(type).toJSON();
 
             this.list = _.map(els, function(obj, key) {
@@ -43,7 +42,7 @@ define(function(require, exports, module) {
 
             this.uieVals = els;
             //top.v1UIEState.getUIEVals(type);
-            
+
             this.isNameVal = true;
             this.currentVal = {
                 name: currentClass,

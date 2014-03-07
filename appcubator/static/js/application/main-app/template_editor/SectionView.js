@@ -31,8 +31,6 @@ define(function(require, exports, module) {
 
             this.widgetsCollection = this.model.getWidgetsCollection();
 
-            //get('uielements');
-            this.listenTo(this.widgetsCollection, 'add', this.placeUIElement, true);
             this.listenToModels(this.widgetsCollection, 'startEditing highlight', this.startEditing);
             this.listenToModels(this.widgetsCollection, 'stopEditing cancelEditing unhighlight', this.stopEditing);
             this.colElements = {};
@@ -79,8 +77,12 @@ define(function(require, exports, module) {
         },
 
         layoutElements: function() {
-
+            if (!this.model.has('columns')) return;
             this.model.get('columns').each(function(columnModel) {
+
+                this.listenTo(columnModel.get('uielements'), 'add', function(widgetModel) {
+                    this.placeUIElement(widgetModel, columnModel)
+                });
 
                 var self = this;
                 var $col = this.$el.find('[data-cid="'+columnModel.cid+'"]');
@@ -112,11 +114,15 @@ define(function(require, exports, module) {
 
         },
 
-        placeUIElement: function(model, widgetsCollection, columnModel) {
-
+        placeUIElement: function(model) {
             var widgetView = new WidgetView(model).render();
-            var $col = this.$el.find('[data-cid="'+columnModel.cid+'"]');
-            $col.append(widgetView.el);
+            var self = this;
+            this.model.get('columns').each(function(columnModel) {
+                if (columnModel.get('uielements').get(model.cid)) {
+                    var $col = self.$el.find('[data-cid="'+columnModel.cid+'"]');
+                    $col.append(widgetView.el);
+                }
+            });
 
         },
 

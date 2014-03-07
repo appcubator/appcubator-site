@@ -1,9 +1,8 @@
 define(function(require, exports, module) {
 
     'use strict';
-    var NavbarModel      = require('models/NavbarModel'),
-        FooterModel      = require('models/FooterModel'),
-        SectionCollection= require('collections/SectionCollection');
+    require('backbone');
+    var SectionCollection= require('collections/SectionCollection');
 
     var TemplateModel = Backbone.Model.extend({
 
@@ -11,8 +10,6 @@ define(function(require, exports, module) {
             this.set('name', bone.name);
             this.set('head', bone.head || "");
             this.set('uielements', new SectionCollection(bone.uielements || []));
-            this.set('navbar', new NavbarModel(bone.navbar || {}));
-            this.set('footer', new FooterModel(bone.footer || {}));
         },
 
         getSections: function() {
@@ -41,9 +38,6 @@ define(function(require, exports, module) {
 
             var json = _.clone(this.attributes);
             json.uielements = json.uielements.serialize(options);
-            json.navbar     = json.navbar.serialize(options);
-            json.footer     = json.footer.serialize(options);
-
             return json;
         }
     });

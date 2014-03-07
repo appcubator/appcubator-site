@@ -96,33 +96,33 @@
     "data": {
       "name": "Homepage",
       "head": "<script src=\"//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js\"></script>",
-      "navbar": {
-        "generate": "templates.navbar",
-        "data": {
-          "isFixed": true,
-          "brandName": null,
-          "isHidden": false,
-          "links": [{
-            "url": "internal://Homepage",
-            "title": "Homepage"
-          }]
-        }
-      },
-      "footer": {
-        "generate": "templates.footer",
-        "data": {
-          "isFixed": true,
-          "customText": "<a href='http://appcubator.com'>Powered by Appcubator</a>",
-          "isHidden": false,
-          "links": [{
-            "url": "internal://Homepage",
-            "title": "Homepage"
-          }]
-        }
-      },
       "uielements": {
         "generate": "templates.layoutSections",
         "data": [
+        {
+          "generate": "templates.navbar",
+          "data": {
+            "isFixed": true,
+            "brandName": null,
+            "isHidden": false,
+            "links": [{
+              "url": "internal://Homepage",
+              "title": "Homepage"
+            }]
+          }
+        },
+        {
+          "generate": "templates.footer",
+          "data": {
+            "isFixed": true,
+            "customText": "<a href='http://appcubator.com'>Powered by Appcubator</a>",
+            "isHidden": false,
+            "links": [{
+              "url": "internal://Homepage",
+              "title": "Homepage"
+            }]
+          }
+        },
         {
           "generate": "templates.layoutSection",
           "data": {
@@ -212,7 +212,7 @@
                 }
               }
             ]
-           } 
+           }
         }]
       }
     }

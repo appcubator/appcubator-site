@@ -11,8 +11,8 @@ define(function(require, exports, module) {
     var PageView = require('app/pages/PageView');
 
     var PageTemplatePicker = require('editor/PageTemplatePicker');
-    var NavbarView = require('editor/NavbarView');
-    var FooterView = require('editor/FooterView');
+    // var NavbarView = require('editor/NavbarView');
+    // var FooterView = require('editor/FooterView');
     var GuideView = require('editor/GuideView');
     var TutorialView = require('tutorial/TutorialView');
     var DeployView = require('app/DeployView');
@@ -85,9 +85,6 @@ define(function(require, exports, module) {
             // keyDispatcher.bindComb('ctrl+shift+z', this.redoController.redo);
 
             //g_guides = this.guides;
-
-            this.navbar = new NavbarView(this.model.get('navbar'));
-            this.footer = new FooterView(this.model.get('footer'));
             this.urlModel = this.routeModel.get('url');
 
             this.title = "Editor";
@@ -169,9 +166,6 @@ define(function(require, exports, module) {
             //self.marqueeView.render();
             self.sectionsManager.render();
             self.sectionShadowView.render();
-
-            self.navbar.setElement(innerDoc.getElementById('navbar')).render();
-            self.footer.setElement(innerDoc.getElementById('footer')).render();
 
             //self.guides.setElement(innerDoc.getElementById('elements-container')).render();
             //$(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);

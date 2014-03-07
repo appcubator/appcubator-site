@@ -29,6 +29,7 @@ define(function(require, exports, module) {
             this.subviews = [this.tablesView, this.relationsView, this.createRelationView];
             this.collection = v1State.get('models');
             this.listenTo(this.collection, 'add', this.renderTable);
+            this.listenTo(this.collection, 'remove', this.removeTable);
 
             this.title = "Tables";
         },
@@ -58,6 +59,10 @@ define(function(require, exports, module) {
 
         renderTable: function(tableModel) {
             this.$el.find('#list-tables').append('<li class="table-name" id="table-' + tableModel.cid + '">' + tableModel.get('name') + '</li>');
+        },
+
+        removeTable: function(tableModel) {
+            this.$el.find('#table-' + tableModel.cid).remove();
         },
 
         clickedTableName: function(e) {
