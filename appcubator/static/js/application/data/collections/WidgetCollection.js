@@ -10,6 +10,10 @@ define(function(require, exports, module) {
 
         model: WidgetModel,
 
+        initialize: function() {
+            Backbone.Regrettable.bind(this);
+        },
+
         createElementWithGenPath: function(layout, generatorPath, type, extraData) {
             this.createUIElement(type, layout, generatorPath, extraData);
         },

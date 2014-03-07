@@ -25,10 +25,13 @@ define(function(require, exports, module) {
         getWidgetsCollection: function () {
             if(this.widgetsCollection) return this.widgetsCollection;
 
-            this.widgetsCollection = new WidgetCollection();
+            this.widgetsCollection = new Backbone.Collection();
 
             this.get('columns').each(function(columnModel) {
                 this.widgetsCollection.add(columnModel.get('uielements').models);
+                columnModel.get('uielements').each(function(widgetModel) {
+                    widgetModel.collection = columnModel.get('uielements');
+                });
                 this.bindColumn(columnModel);
             }, this);
 

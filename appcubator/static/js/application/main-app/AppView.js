@@ -59,6 +59,7 @@ define(function(require, exports, module) {
 
             //var autoSave = setInterval(this.save, 30000);
             this.render();
+
         },
 
         render: function() {
@@ -87,6 +88,9 @@ define(function(require, exports, module) {
             });
 
             this.doKeyBindings();
+            Backbone.Regrettable.reset();
+            console.log("hey");
+            console.log(Backbone.Regrettable);
         },
 
         getCurrentPage: function() {
@@ -222,6 +226,7 @@ define(function(require, exports, module) {
         },
 
         redo: function() {
+            console.log("REDO");
             Backbone.Regrettable.redo();
         },
 
