@@ -389,6 +389,13 @@ def state(request, app_id, validate=True):
         return JsonResponse(state)
     elif request.method == 'POST':
         status, data = save_state(request, app, require_valid=validate)
+        try:
+            app.parse_and_link_app_state()
+            deploy_data = {'deployment_id': app.deploy() }
+            data = dict(data.items() + deploy_data.items())
+        except codegen.UserInputError, e:
+            d = e.to_dict()
+            return JsonResponse(d, status=400)
         return JsonResponse(data, status=status)
     else:
         return HttpResponse("GET or POST only", status=405)
@@ -406,7 +413,7 @@ def save_state(request, app, require_valid=True):
     # if the incoming appState's version_id does not match the
     # db's version_id, the incoming appState is an outdated version
     if require_valid is True and not app.isCurrentVersion(simplejson.loads(request.body)):
-        return (409, "")
+        return (409, { "error": "Plz get version %d" % app.state.get('version_id', 0) })
 
     app._state_json = request.body
     app.state['name'] = app.name
@@ -423,7 +430,7 @@ def save_state(request, app, require_valid=True):
             d['version_id'] = app.state.get('version_id', 0)
             return (400, d)
         except Exception, e:
-            return (500, str(e))
+            return (500, {'error': str(e)})
 
     app.save()
 
