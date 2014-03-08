@@ -22,15 +22,7 @@ define(function(require, exports, module) {
 
         events: {
             'click .settings': 'openSettingsView',
-            'click .edit-slides-button': 'openSlideEditor',
-            'click .query-editor-btn': 'openQueryEditor',
-            'click .edit-row-btn': 'openRowEditor',
-            'click .form-editor-btn': 'openFormEditor',
             'click .pick-style': 'openStylePicker',
-            'click .search-editor-btn': 'openSearchEditor',
-            'click .edit-login-form-btn': 'openLoginEditor',
-            'click .link-to-page-button': 'openFBShareEditor',
-            'click .video-link-button': 'openVideoEmbedEditor',
             'click .done-editing': 'closeEditingMode',
             'click .delete-button': 'clickedDelete',
             'click .done-text-editing': 'clickedDoneTextEditing',
@@ -91,7 +83,7 @@ define(function(require, exports, module) {
 
         display: function() {
             if (!this.model) return;
-
+            this.clearContent();
             this.fillContent();
             this.show();
         },
@@ -174,15 +166,20 @@ define(function(require, exports, module) {
                 this.el.appendChild(this.renderButtonWithText('edit-custom-widget-btn', 'Edit Custom Widget'));
             }
 
-            if (type == "list") {
-                this.el.appendChild(this.renderButtonWithText('edit-row-btn', 'Edit List'));
-            }
-
-            if (type == "create-form") {
-                this.el.appendChild(this.renderButtonWithText('form-editor-btn', 'Edit Form'));
-            }
-
             this.el.appendChild(this.renderSettingsAndDelete('edit-custom-widget-btn', 'Edit Custom Widget'));
+        },
+
+        clearContent: function() {
+            if (this.contentEditor) this.contentEditor.clear();
+            if (this.layoutEditor) this.layoutEditor.clear();
+            if (this.infoEditor) this.infoEditor.clear();
+            $('.btn-toolbar').remove();
+
+            _(this.subviews).each(function(subview) {
+                subview.close();
+            });
+            this.el.innerHTML = '';
+            this.el.style.width = '';
         },
 
         renderButtonWithText: function(className, buttonText) {
@@ -216,58 +213,6 @@ define(function(require, exports, module) {
             this.widgetClassPickerView.expand();
         },
 
-        openFormEditor: function() {
-            new FormEditorView({
-                model: this.model
-            });
-        },
-
-        openLoginEditor: function() {
-            var loginRoutes = this.model.getLoginRoutes();
-            new LoginFormEditorView(loginRoutes);
-        },
-
-        openSlideEditor: function() {
-            new ImageSliderEditorView(this.model);
-        },
-
-        openFBShareEditor: function() {
-            new FacebookShareEditor(this.model);
-        },
-
-        openVideoEmbedEditor: function() {
-            new VideoEmbedEditor(this.model);
-        },
-
-        openQueryEditor: function() {
-            var type = 'table';
-            if (this.model.get('data').get('container_info').has('row')) {
-                type = 'list';
-            }
-
-            new QueryEditorView(this.model, type);
-        },
-
-        openRowEditor: function() {
-            this.hideSubviews();
-            this.el.appendChild(this.renderButtonWithWidthCustomWidth('done-editing', 'Done Editing', 190));
-            // var entity = this.model.get('data').get('container_info').get('entity');
-            this.model.trigger('highlight');
-            this.model.trigger('startEditingRow');
-            // this.listGalleryView = document.createElement('div');
-            // this.listGalleryView.className = 'elements-list';
-
-            // var galleryView = new RowGalleryView(this.model, this.location);
-            // this.subviews.push(galleryView);
-
-            // this.listGalleryView.appendChild(galleryView.render().el);
-            // this.el.appendChild(this.listGalleryView);
-        },
-
-        openSearchEditor: function() {
-            new SearchEditorView(this.model.get('data').get('searchQuery'));
-        },
-
         openCustomWidgetEditor: function() {
             new CustomWidgetEditorModal(this.model);
         },
@@ -296,7 +241,6 @@ define(function(require, exports, module) {
         },
 
         startedEditing: function() {
-            console.trace();
             this.hideSubviews();
             this.el.appendChild(this.renderButtonWithText('done-text-editing', 'Done Editing'));
         },
@@ -308,17 +252,7 @@ define(function(require, exports, module) {
         },
 
         clear: function() {
-            if (this.contentEditor) this.contentEditor.clear();
-            if (this.layoutEditor) this.layoutEditor.clear();
-            if (this.infoEditor) this.infoEditor.clear();
-            $('.btn-toolbar').remove();
-
-            _(this.subviews).each(function(subview) {
-                subview.close();
-            });
-            this.el.innerHTML = '';
-            this.el.style.width = '';
-
+            this.clearContent();
             this.unbindModel(this.model);
 
             this.model = null;

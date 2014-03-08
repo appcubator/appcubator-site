@@ -79,7 +79,9 @@ define(function(require, exports, module) {
             this.widgetEditorView = new WidgetEditorView();
             v1.widgetEditorView = this.WidgetEditorView;
 
-            // keyDispatcher.bindComb('meta+z', this.redoController.undo);
+            keyDispatcher.bindComb('meta+e', this.refreshPage);
+            keyDispatcher.bindComb('ctrl+e', this.refreshPage);
+
             // keyDispatcher.bindComb('ctrl+z', this.redoController.undo);
             // keyDispatcher.bindComb('meta+shift+z', this.redoController.redo);
             // keyDispatcher.bindComb('ctrl+shift+z', this.redoController.redo);
@@ -122,7 +124,6 @@ define(function(require, exports, module) {
             this.iframe = iframe;
 
             this.setupPageWrapper();
-            this.setupPageHeightBindings();
 
             window.addEventListener('resize', this.setupPageWrapper);
 
@@ -171,7 +172,6 @@ define(function(require, exports, module) {
             //$(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);
 
             self.startUIStateUpdater(proxy);
-            self.setupPageHeight();
 
             /* TODO re-implement page templates
             if (!this.model.get('uielements').length) {
@@ -266,30 +266,6 @@ define(function(require, exports, module) {
             var height = window.innerHeight - 90;
             util.get('page-wrapper').style.height = height + 'px';
             this.$el.find('.page.full').css('height', height - 46);
-        },
-
-        setupPageHeightBindings: function() {
-            // this.listenTo(this.widgetsCollection, 'add', function(uielem) {
-            //     this.setupPageHeight();
-            //     this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
-            // }, this);
-
-            // this.widgetsCollection.each(function(uielem) {
-            //     this.listenTo(uielem.get('layout'), 'change', this.setupPageHeight);
-            // }, this);
-        },
-
-        setupPageHeight: function() {
-            // var $container = $(this.iframedoc.getElementById('elements-container'));
-            // var oldHeight = this.currentHeight;
-
-            // this.currentHeight = (this.templateModel.getHeight() + 12) * 15;
-            // if (this.currentHeight < 800) this.currentHeight = 800;
-            // $container.css('height', this.currentHeight);
-
-            // if (this.currentHeight > oldHeight) {
-            //     util.scrollToBottom($('#page'));
-            // }
         },
 
         scrollTo: function(widget) {

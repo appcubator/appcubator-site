@@ -14,7 +14,6 @@ define(function(require, exports, module) {
     var AppModel = Backbone.Model.extend({
 
         currentPage: null,
-        isMobile: false,
         lazy: {},
 
         initialize: function(aState) {
@@ -32,14 +31,6 @@ define(function(require, exports, module) {
 
         },
 
-        getPages: function() {
-            if (!this.isMobile) {
-                return this.get('pages');
-            } else {
-                return this.get('mobilePages');
-            }
-        },
-
         getTableModelWithName: function(nameStr) {
             var tableM = this.get('models').getTableWithName(nameStr);
             return tableM;
@@ -48,10 +39,6 @@ define(function(require, exports, module) {
         getTableModelWithCid: function(cid) {
             var tableM = this.get('models').get(cid);
             return tableM;
-        },
-
-        isSingleUser: function() {
-            return this.get('users').length == 1;
         },
 
         lazySet: function(key, coll) {

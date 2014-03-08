@@ -160,33 +160,40 @@ require([
                     newstyle.setAttribute("href", '/app/'+ appId +'/uiestate.css');
                     newstyle.id = "css-uiestate";
                 }
-                var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-                if (is_firefox) {
-                    newStyle = document.createElement('style');
-                    newStyle.type = 'text/css';
-                    newStyle.setAttribute('href', "");
-                    newStyle.id = "css-uiestate";
-                    newStyle.setAttribute('rel', 'stylesheet');
-                    // $.ajax({
-                    //     type: "GET",
-                    //     url: '/app/' + appId + '/uiestate.css',
-                    //     statusCode: {
-                    //         200: function(data) {
-                    //             $(style).attr('href', '');
-                    //             $(style).text(data.responseText);
-                    //         }
-                    //     },
-                    //     dataType: "JSON"
-                    // });
+                try {
+                    var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-                } else {
-                    head.appendChild(newstyle);
-                    newstyle.onload = function() {
-                        //newstyle.setAttribute('href', "/app/"+appId+"/uiestate.css");
-                        $('.tempStyle').remove();
-                        if(style && style.parentNode) style.parentNode.removeChild(style);
-                    };
+                    if (is_firefox) {
+                        newStyle = document.createElement('style');
+                        newStyle.type = 'text/css';
+                        newStyle.setAttribute('href', "");
+                        newStyle.id = "css-uiestate";
+                        newStyle.setAttribute('rel', 'stylesheet');
+                        // $.ajax({
+                        //     type: "GET",
+                        //     url: '/app/' + appId + '/uiestate.css',
+                        //     statusCode: {
+                        //         200: function(data) {
+                        //             $(style).attr('href', '');
+                        //             $(style).text(data.responseText);
+                        //         }
+                        //     },
+                        //     dataType: "JSON"
+                        // });
+
+                    } else {
+                        head.appendChild(newstyle);
+                        newstyle.onload = function() {
+                            //newstyle.setAttribute('href', "/app/"+appId+"/uiestate.css");
+                            $('.tempStyle').remove();
+                            if(style && style.parentNode) style.parentNode.removeChild(style);
+                        };
+                    }
+
+                }
+                catch(e) {
+
                 }
             },
 

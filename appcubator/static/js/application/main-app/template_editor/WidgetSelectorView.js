@@ -362,7 +362,7 @@ define(function(require, exports, module) {
         },
 
         moved: function(e, ui) {
-            
+
             var self = this;
             //g_guides.hideAll();
 

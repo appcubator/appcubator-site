@@ -40,8 +40,7 @@ define(function(require, exports, module) {
             this.widgetsContainer = document.body;
 
             var expanded_uielements = this.sectionsCollection.expand();
-            console.log(this.$el.find(document.body));
-            console.log(expanded_uielements);
+
             this.$el.append($(expanded_uielements.html));
             this.placeNewSectionPanel();
 

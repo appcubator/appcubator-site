@@ -90,8 +90,7 @@ define(function(require, exports, module) {
 
             this.doKeyBindings();
             Backbone.Regrettable.reset();
-            console.log("hey");
-            console.log(Backbone.Regrettable);
+
         },
 
         getCurrentPage: function() {
@@ -113,6 +112,7 @@ define(function(require, exports, module) {
             keyDispatcher.bindComb('ctrl+z', this.undo);
             keyDispatcher.bindComb('meta+y', this.redo);
             keyDispatcher.bindComb('ctrl+y', this.redo);
+
         },
 
         info: function(appId, tutorial) {
@@ -464,42 +464,6 @@ define(function(require, exports, module) {
                 },
                 dataType: "JSON"
             });
-        },
-
-        copy: function(e) {
-            if (keyDispatcher.textEditing === true) return;
-            if (this.view.marqueeView.multiSelectorView.contents.length) {
-                this.contents = [];
-                _(this.view.marqueeView.multiSelectorView.contents).each(function(model) {
-                    this.contents.push(_.clone(model.serialize()));
-                }, this);
-            } else if (this.view.widgetsManager.widgetSelectorView.selectedEl) {
-                this.contents = [];
-                this.contents.push(_.clone(this.view.widgetsManager.widgetSelectorView.selectedEl.serialize()));
-            }
-        },
-
-        paste: function(e) {
-            if (keyDispatcher.textEditing === true) return;
-            if (!this.contents) return;
-
-            _(this.contents).each(function(cont) {
-                cont.layout.left++;
-                cont.layout.top++;
-                cont.layout.top++;
-            });
-
-            if (this.view.widgetsCollection) {
-                var coll = this.view.widgetsCollection.add(_.clone(this.contents));
-                if (this.contents.length == 1) {
-                    coll.last(function(widgetModel) {
-                        widgetModel.trigger('selected');
-                    });
-                } else if (this.contents.length > 1) {
-                    var newContents = coll.last(this.contents.length);
-                    this.view.marqueeView.multiSelectorView.setContents(newContents);
-                }
-            }
         },
 
         setupMenuHeight: function() {
