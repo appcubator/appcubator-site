@@ -10,6 +10,7 @@ define(function(require, exports, module) {
     var SettingsView = require('app/SettingsView');
     var RoutesView = require('app/RoutesView');
 
+    var PluginsModel = require('models/PluginsModel');
 
     var SoftErrorView = require("app/SoftErrorView");
     var ErrorDialogueView = require('mixins/ErrorDialogueView');
@@ -226,7 +227,6 @@ define(function(require, exports, module) {
         },
 
         redo: function() {
-            console.log("REDO");
             Backbone.Regrettable.redo();
         },
 
@@ -363,6 +363,33 @@ define(function(require, exports, module) {
                 $('#main-container').removeClass('open');
                 this.menuExpanded = false;
                 $('#main-container').off('click', this.hideTopMenu);
+        },
+
+        fetchPlugins: function(callback) {
+            var self = this;
+            $.ajax({
+                type: "GET",
+                url: '/app/' + appId + '/state/',
+                statusCode: {
+                    200: function(data) {
+
+                        self.refreshPlugins(data.plugins);
+                        callback.call(this);
+                    }
+                },
+                dataType: "JSON"
+            });
+
+        },
+
+        refreshPlugins: function(freshPlugins) {
+
+            var plugins = v1State.get('plugins').toJSON();
+
+            if(!_.isEqual(plugins, freshPlugins)) {
+                console.log("REFRESHED PLUGINS");
+                v1State.set('plugins', new PluginsModel(freshPlugins));
+            }
         },
 
         download: function(callback) {
