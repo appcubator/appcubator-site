@@ -25,12 +25,10 @@ define(function(require, exports, module) {
         },
 
         install: function(plugin) {
-            var pluginModel = new PluginModel(JSON.parse(plugin.data));
-            pluginModel.set('metadata', {
-                description: plugin.description,
-                name: plugin.name
-            });
-            this.set(plugin.name, pluginModel);
+            if (!plugin.metadata || !plugin.metadata.name)
+                alert('not installing because this plugin doesn\'t have metadata.');
+            var pluginModel = new PluginModel(plugin);
+            this.set(plugin.metadata.name, pluginModel);
         },
 
         getPluginsWithModule: function(moduleName) {
