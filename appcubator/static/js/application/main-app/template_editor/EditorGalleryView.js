@@ -115,13 +115,13 @@ define(function(require, exports, module) {
             this.allList.innerHTML = '';
             this.renderSearchPart();
             this.renderUIElementList(); // Basic UI Elements
-            // TODO implement these in one fn call via plugins.
-            // for now they're dummies
+            /*
             this.renderAuthenticationForms(); // Authentication Forms
             this.renderCurrentUserElements(); // CurrentUser Elements
             this.renderCrudElements();
             this.renderEntityLists(); // All Create Forms, Tables, Lists
             this.renderContextEntityElements(); // Context Entity Elements and Update Forms
+            */
             this.renderPluginElements();
 
             // hide all sections except first
@@ -129,9 +129,8 @@ define(function(require, exports, module) {
             this.bindDraggable();
 
 
-            // listen for changes to url to update context entity section
-            // this.listenTo(v1State.getCurrentPage().get('url').get('urlparts'), 'add remove', this.renderContextEntityElements);
-            this.listenTo(v1State.get('models'), 'add remove', this.renderEntityFormsTablesLists);
+            // TODO figure out what to do about this.
+            // this.listenTo(v1State.get('models'), 'add remove', this.renderEntityFormsTablesLists);
             this.listenTo(v1State.get('plugins'), 'change', this.renderPluginElements);
 
             return this;
@@ -259,7 +258,7 @@ define(function(require, exports, module) {
             var li = this.uiElemsSection.addWidgetItem(null, className, text, icon, 'uielements.design-custom');
             $(li).data('type', 'custom-widget');
         },
-
+/*
         renderAuthenticationForms: function() {
             this.authSection = this.addNewSection('User Signin Forms', true);
         },
@@ -341,21 +340,6 @@ define(function(require, exports, module) {
             this.bindDraggable();
         },
 
-        renderPluginElements: function() {
-            var elements = [];
-
-            var uiGenerators = v1State.get('plugins').getGeneratorsWithModule('uielements');
-
-            if(this.pluginElemsSection) this.pluginElemsSection.close();
-            this.pluginElemsSection = this.addNewSection('Plugin Elements');
-
-            _.each(uiGenerators, function(element) {
-                this.pluginElemsSection.addWidgetItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier, true);
-            }, this);
-
-            this.bindDraggable();
-        },
-
         renderRelatedField: function(fieldModel, tableModel, section) {
 
             var tableName = tableModel.get('name');
@@ -367,6 +351,22 @@ define(function(require, exports, module) {
                     'context-nested-entity',
                     tableName + ' ' + fieldModel.get('name') + '.' + fieldM.get('name'),
                     'plus-icon', section, true);
+            }, this);
+
+            this.bindDraggable();
+        },
+        */
+
+        renderPluginElements: function() {
+            var elements = [];
+
+            var uiGenerators = v1State.get('plugins').getGeneratorsWithModule('uielements');
+
+            if(this.pluginElemsSection) this.pluginElemsSection.close();
+            this.pluginElemsSection = this.addNewSection('Plugin Elements');
+
+            _.each(uiGenerators, function(element) {
+                this.pluginElemsSection.addWidgetItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier, true);
             }, this);
 
             this.bindDraggable();
