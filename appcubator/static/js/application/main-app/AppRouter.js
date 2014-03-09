@@ -60,18 +60,22 @@ define(function(require, exports, module) {
             v1.view = this.currentApp;
         },
 
-        info: function(appId, tutorial) {
+        shrinkDropdowns: function () {
+            $(window).trigger("mouseup");
+        },
+
+        info: function (appId, tutorial) {
             v1.configApp();
             var self = this;
             v1.currentApp.info(tutorial);
         },
 
-        tables: function(appId, tutorial) {
+        tables: function (appId, tutorial) {
             v1.configApp();
             v1.currentApp.tables(tutorial);
         },
 
-        themes: function(appId, tutorial) {
+        themes: function (appId, tutorial) {
             v1.configApp();
             v1.currentApp.themes(tutorial);
         },

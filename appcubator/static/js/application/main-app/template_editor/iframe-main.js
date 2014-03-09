@@ -259,6 +259,10 @@ require([
             }
         };
 
+        $(window).on('mouseup', function() {
+            top.v1.shrinkDropdowns();
+        })
+
         if (top.v1.currentApp) {
             top.v1.currentApp.renderIFrameContent(proxy);
         }
