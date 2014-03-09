@@ -233,9 +233,6 @@ define(function(require, exports, module) {
 
             this.deselect();
             this.selectedEl = widgetModel;
-            this.listenTo(widgetModel.get('layout'), 'change', function() {
-                self.setLayout(self.selectDiv, widgetModel);
-            });
             this.hideNode(this.hoverDiv);
             // this.setLayout(this.selectDiv, widgetModel);
             this.widgetEditorView.setModel(widgetModel).display();

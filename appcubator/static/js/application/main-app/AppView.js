@@ -161,7 +161,9 @@ define(function(require, exports, module) {
             this.tutorialPage = "Editor";
             this.tutorialPage = "Introduction";
             this.changePage(EditorView, { templateModel: templateModel, appModel: this.model }, "", function() {});
-            this.toolBar.setPage(this.pageId);
+
+            this.toolBar.setTemplate(templateModel);
+
             this.$leftMenu = this.$el.find('.left-menu-panel-l1 ');
             this.setupMenuHeight();
             this.trigger('editor-loaded');

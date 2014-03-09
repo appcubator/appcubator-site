@@ -186,7 +186,7 @@ define(function(require, exports, module) {
 
             this.$el.find('.page-wrapper').addClass('show');
             this.iframeProxy.updateScrollbar();
-
+            this.$el.find('.loader').remove();
             var end = new Date().getTime();
             var time = end - this.start;
             console.log('Load time: ' + time);
