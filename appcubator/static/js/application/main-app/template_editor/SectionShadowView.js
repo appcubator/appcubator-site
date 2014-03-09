@@ -75,17 +75,25 @@ define(function(require, exports, module) {
 
                         var type = $(ui.draggable).data("type");
 
-                        if($(ui.draggable).data("extraData")) {
-                            extraData = $(ui.draggable).data("extraData");
-                        }
+                        try {
+                            if($(ui.draggable).data("extraData")) {
+                                extraData = $(ui.draggable).data("extraData");
+                            }
 
-                        if($(ui.draggable).data("genpath")) {
-                            sectionModel.get('columns').get(colCid).addElementWithPath(type, $(ui.draggable).data("genpath"), extraData);
-                            return;
-                        }
+                            if($(ui.draggable).data("genpath")) {
+                                sectionModel.get('columns').get(colCid).addElementWithPath(type, $(ui.draggable).data("genpath"), extraData);
+                                return;
+                            }
 
-                        // var idshit =
-                        sectionModel.get('columns').get(colCid).addElement(type, extraData);
+                            sectionModel.get('columns').get(colCid).addElement(type, extraData);
+
+                        }
+                        catch(e) {
+                            console.log(e);
+                            console.log("Error with new element: "+ JSON.stringify(e));
+                            self.hideColumnShadows();
+
+                        }
                     },
                     over: function() {
                         shadowEl.className = "section-shadow active";
