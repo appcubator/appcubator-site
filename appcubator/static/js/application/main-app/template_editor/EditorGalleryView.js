@@ -216,7 +216,7 @@ define(function(require, exports, module) {
             }
 
             _.each(results, function(result) {
-                this.searchSection.addHalfWidthItem(result.id, result.className, result.text, result.icon);
+                this.searchSection.addWidgetItem(result.id, result.className, result.text, result.icon);
             }, this);
 
         },
@@ -236,7 +236,7 @@ define(function(require, exports, module) {
             var className = 'uielement';
             var icon = 'icon ' + elementModel.get('className');
             var text = elementModel.get('text');
-            var li = this.uiElemsSection.addHalfWidthItem(null, className, text, icon, 'uielements.design-' + elementModel.get('className'));
+            var li = this.uiElemsSection.addWidgetItem(null, className, text, icon, 'uielements.design-' + elementModel.get('className'));
             $(li).data('extraData', AutoFillHelper.fillUIElement(elementModel));
             $(li).data('type', elementModel.get('className'));
         },
@@ -247,7 +247,7 @@ define(function(require, exports, module) {
             var icon = 'create-form-icon';
             var text = 'Create Form';
 
-            var li = this.uiElemsSection.addHalfWidthItem(id, className, text, icon);
+            var li = this.uiElemsSection.addWidgetItem(id, className, text, icon);
             var self = this;
         },
 
@@ -256,7 +256,7 @@ define(function(require, exports, module) {
             var icon = 'custom-widget';
             var text = 'Custom Widget';
 
-            var li = this.uiElemsSection.addHalfWidthItem(null, className, text, icon, 'uielements.design-custom');
+            var li = this.uiElemsSection.addWidgetItem(null, className, text, icon, 'uielements.design-custom');
             $(li).data('type', 'custom-widget');
         },
 
@@ -268,11 +268,11 @@ define(function(require, exports, module) {
             this.currUserSection = this.addNewSection('Current User Views', true);
             // _(v1.currentApp.getCurrentPage().getFields()).each(function(field) {
             //     if (field.isRelatedField()) return;
-            //     this.currUserSection.addFullWidthItem('current-user-' + field.cid, 'current-user', 'Current User ' + field.get('name'), 'current-user-icon');
+            //     this.currUserSection.addWidgetItem('current-user-' + field.cid, 'current-user', 'Current User ' + field.get('name'), 'current-user-icon', true);
             // }, this);
 
             // v1State.get('users').each(function(user) {
-            //     this.currUserSection.addFullWidthItem('entity-user-' + user.cid, "entity-edit-form", 'Current ' + user.get('name') + ' Edit Form', 'create-form-icon');
+            //     this.currUserSection.addWidgetItem('entity-user-' + user.cid, "entity-edit-form", 'Current ' + user.get('name') + ' Edit Form', 'create-form-icon', true);
             // }, this);
         },
 
@@ -281,7 +281,7 @@ define(function(require, exports, module) {
             this.tableSection = this.addNewSection('Data Forms');
             v1State.get('models').each(function(entityModel) {
 
-                var li = this.tableSection.addFullWidthItem(null, "entity-create-form", entityModel.get('name') + ' Create Form', 'create-form-icon', 'crud.uielements.create');
+                var li = this.tableSection.addWidgetItem(null, "entity-create-form", entityModel.get('name') + ' Create Form', 'create-form-icon', 'crud.uielements.create', true);
 
                 $(li).data('extraData', {
                     id: Math.floor(Math.random()*11),
@@ -290,7 +290,7 @@ define(function(require, exports, module) {
 
                 $(li).data('type', 'create-form');
 
-                var li = this.tableSection.addFullWidthItem(null, "entity-create-form", entityModel.get('name') + ' List', 'create-form-icon', 'fakecrud.uielements.list');
+                var li = this.tableSection.addWidgetItem(null, "entity-create-form", entityModel.get('name') + ' List', 'create-form-icon', 'fakecrud.uielements.list', true);
 
                 $(li).data('extraData', {
                     id: Math.floor(Math.random()*11),
@@ -312,9 +312,8 @@ define(function(require, exports, module) {
                     entity_name: entityModel.get('name')
                 };
                 var id = 'entity-' + entityModel.cid;
-                //this.addFullWidthItem(id, "entity-table", entityModel.get('name') +' Table', 'table-icon', tableSection);
-                this.tableSection.addFullWidthItem(id, "entity-list", entityModel.get('name') + ' List', 'list-icon');
-                this.tableSection.addFullWidthItem(id, "entity-searchlist", entityModel.get('name') + ' Search Results', 'searchlist-icon');
+                this.tableSection.addWidgetItem(id, "entity-list", entityModel.get('name') + ' List', 'list-icon', true);
+                this.tableSection.addWidgetItem(id, "entity-searchlist", entityModel.get('name') + ' Search Results', 'searchlist-icon', true);
             }, this);
 
             this.bindDraggable();
@@ -330,11 +329,11 @@ define(function(require, exports, module) {
                 var tableId = nodeModelModel.cid;
                 var id = 'entity-model-' + nodeModelModel.cid;
 
-                //this.contextEntitySection.addFullWidthItem(id, "entity-edit-form", tableM.get('name') + ' Edit Form', 'create-form-icon');
+                //this.contextEntitySection.addWidgetItem(id, "entity-edit-form", tableM.get('name') + ' Edit Form', 'create-form-icon',true);
 
                 nodeModelModel.getFieldsColl().each(function(field) {
                     if (field.isRelatedField()) return this.renderRelatedField(field, tableM);
-                    // this.contextEntitySection.addFullWidthItem('context-field-' + tableId + '-' + field.cid, 'context-entity', tableName + ' ' + field.get('name'), 'plus-icon');
+                    // this.contextEntitySection.addWidgetItem('context-field-' + tableId + '-' + field.cid, 'context-entity', tableName + ' ' + field.get('name'), 'plus-icon', true);
                 }, this);
 
             }, this);
@@ -351,7 +350,7 @@ define(function(require, exports, module) {
             this.pluginElemsSection = this.addNewSection('Plugin Elements');
 
             _.each(uiGenerators, function(element) {
-                this.pluginElemsSection.addFullWidthItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier);
+                this.pluginElemsSection.addWidgetItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier, true);
             }, this);
 
             this.bindDraggable();
@@ -364,10 +363,10 @@ define(function(require, exports, module) {
             var nestedTableModel = v1State.getTableModelWithName(fieldModel.get('entity_name'));
 
             _(nestedTableModel.getNormalFields()).each(function(fieldM) {
-                this.contextEntitySection.addFullWidthItem('context-field-' + entityId + '-' + nestedTableModel.cid + '-' + fieldModel.cid + '-' + fieldM.cid,
+                this.contextEntitySection.addWidgetItem('context-field-' + entityId + '-' + nestedTableModel.cid + '-' + fieldModel.cid + '-' + fieldM.cid,
                     'context-nested-entity',
                     tableName + ' ' + fieldModel.get('name') + '.' + fieldM.get('name'),
-                    'plus-icon', section);
+                    'plus-icon', section, true);
             }, this);
 
             this.bindDraggable();
