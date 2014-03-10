@@ -361,26 +361,44 @@ define(function(require, exports, module) {
 
         renderPluginElements: function() {
             var elements = [];
+            var createdSections = [];
 
-            var uiGenerators = v1State.get('plugins').getGeneratorsWithModule('uielements');
+            _.each(v1State.get('plugins').pairs(), function(pair) {
+                var pluginName = pair[0],
+                    plugin = pair[1];
+                if (plugin.has('uielements')) {
+                    var displayName = pluginName; // TODO check displayProps first.
+                    var sect = this.addNewSection(displayName);
+                    createdSections.push(sect);
+
+                    _.each(plugin.get('uielements'), function(element) {
+                        sect.addWidgetItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier, true);
+                    }, this);
+                }
+
+            }, this);
+
+            _.each(this.pluginSections, function(sect) {
+                sect.close();
+            });
+
+            this.pluginSections = createdSections;
+            /*
 
             if(this.pluginElemsSection) this.pluginElemsSection.close();
             this.pluginElemsSection = this.addNewSection('Plugin Elements');
 
-            _.each(uiGenerators, function(element) {
-                this.pluginElemsSection.addWidgetItem('id', 'class', element.name, 'plugin-icon', element.generatorIdentifier, true);
-            }, this);
+            */
 
             this.bindDraggable();
         },
 
-        addNewSection: function(name, notYetImplementedFlag) {
+        addNewSection: function(name) {
 
             var self = this;
             var sectionView = new EditorGallerySectionView({
                 parentView: self,
-                index: this.nmrSections,
-                notYetImplementedFlag: notYetImplementedFlag,
+                index: this.nmrSections
             });
 
             this.nmrSections++;
