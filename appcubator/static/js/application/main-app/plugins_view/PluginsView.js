@@ -9,7 +9,7 @@ define(function(require, exports, module) {
 
         title: 'Plugins',
 
-        className: 'plugins-view',
+        className: 'dropdown-view plugins-view',
 
         events: {
             // 'click .onoffswitch': 'clickedPluginToggle',

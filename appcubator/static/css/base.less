@@ -1617,16 +1617,17 @@ legend + .control-group {
 
     tranform:scale(0);
     -webkit-transform: scale(0);
-    -webkit-transition: all .1s ease-in;
-    -moz-transition: all .1s ease-in;
-    -o-transition:all .1s ease-in;
-    transition: all .1s ease-in;
 
     transform-origin: 71% -30px;
     -ms-transform-origin: 71% -30px;
     -webkit-transform-origin: 71% -30px;
 
-      #add-entity {
+    -webkit-transition: all 0.18s cubic-bezier(.44,.4,.98,.6);
+    -moz-transition: all 0.18s cubic-bezier(.44,.4,.98,.6);
+    -o-transition:all 0.18s cubic-bezier(.44,.4,.98,.6);
+    transition: all 0.18s cubic-bezier(.44,.4,.98,.6);
+
+    #add-entity {
           float: right;
             display: inline-block;
             position: absolute;
@@ -1634,7 +1635,7 @@ legend + .control-group {
             top: 22px;
             text-align: right;
             cursor: pointer;
-      }
+    }
 
     &:after,
     &:before {
@@ -1681,17 +1682,46 @@ legend + .control-group {
 }
 
 .dropdown-view.expanded {
-  -webkit-transition: all .2s ease-out;
-  -moz-transition: all .2s ease-out;
-  -o-transition:all .2s ease-out;
-  transition: all .2s ease-out;
 
-  display: inline-block;
-
+  animation: bouncyblurp 0.30s cubic-bezier(.95,.88,.82,.99);
+  -webkit-animation: bouncyblurp 0.30s cubic-bezier(.95,.88,.82,.99);
 
   tranform:scale(1);
   -webkit-transform: scale(1);
 }
+
+
+@keyframes bouncyblurp {
+  0% {
+    -webkit-transform: scale(0);
+  }
+
+  70% {
+    -webkit-transform: scale(1.06);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+
+@-webkit-keyframes bouncyblurp {
+  0% {
+    -webkit-transform: scale(0);
+  }
+
+  70% {
+    -webkit-transform: scale(1.05);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+
+
+/* Loader animations */
 
 .loader {
     text-align: center;    

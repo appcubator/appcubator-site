@@ -67,7 +67,7 @@ define(function(require, exports, module) {
             }, this);
 
             this.createBox = new Backbone.NameBox({
-                txt: 'New Page'
+                txt: 'New Template'
             }).render();
             this.createBox.on('submit', this.createPage);
 

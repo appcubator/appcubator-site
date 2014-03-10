@@ -18,7 +18,7 @@ define(function(require, exports, module) {
     var NodeModelsView = Backbone.DropdownView.extend({
 
         title: 'Tables',
-        className: 'entities-view',
+        className: 'dropdown-view entities-view',
         events: {
             'click .table-name': 'clickedTableName'
         },

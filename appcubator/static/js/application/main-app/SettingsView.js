@@ -7,7 +7,7 @@ define(function(require, exports, module) {
 
     var SettingsView = Backbone.DropdownView.extend({
         title: 'Plugins',
-        className: 'settings-view',
+        className: 'dropdown-view settings-view',
         subviews: [],
 
         events: {
