@@ -4,7 +4,8 @@ define(function(require, exports, module) {
 
     require('backbone');
     require('util');
-    var CustomWidgetEditorModal = require('template_editor/CustomWidgetEditorModal');
+
+    var WidgetSettingsView = require('editor/WidgetSettingsView');
 
     var SectionEditorView = Backbone.View.extend({
 
@@ -12,7 +13,8 @@ define(function(require, exports, module) {
 
         events: {
             'keyup .class_name'     : 'classNameChaged',
-            'click .remove-section' : 'removeSection'
+            'click .remove-section' : 'removeSection',
+            'click .settings'       : 'openSettingsView'
         },
 
         className: "section-editor-view",
@@ -34,7 +36,8 @@ define(function(require, exports, module) {
                         '<ul class="dropdown-menu pull-right action-menu" role="menu">',
                             '<li><a><input type="text" class="class_name" value="<%= className %>" placeholder="Class Name"></a></li>',
                             '<li class="divider"></li>',
-                            '<li class="remove-section"><a>Remove Section</a></li>',
+                            '<li><span class="option-button delete-button tt remove-section"></span><div class="option-button settings"></div></li>',
+                            // '<li class="remove-section"><a>Remove Section</a></li>',
                         '</ul>',
                     '</div>'].join('\n');
 
@@ -70,6 +73,10 @@ define(function(require, exports, module) {
         classNameChaged: function(e) {
             var value = e.currentTarget.value;
             this.model.set('className', value);
+        },
+
+        openSettingsView: function() {
+            new WidgetSettingsView(this.model).render();
         },
 
         removeSection: function() {
