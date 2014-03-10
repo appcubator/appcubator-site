@@ -54,33 +54,10 @@ define(function(require, exports, module) {
             return this;
         },
 
-        // TODO : reduce this
-        addFullWidthItem: function(id, className, text, icon, generatorIdentifier) {
+        addWidgetItem: function(id, className, text, icon, generatorIdentifier, fullWidth) {
+            // if fullWidth is truthy, creates a full width item. Otherwise creates half width.
             var li = document.createElement('li');
-            li.className = className + ' full-width';
-            li.id = id;
-            var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
-            li.innerHTML = _.template(tempLi, {
-                text: text,
-                icon: icon
-            });
-
-            if(generatorIdentifier) {
-                $(li).data('genpath', generatorIdentifier);
-            }
-
-            this.list.appendChild(li);
-
-            if (this.searcher) {
-                this.searcher.register(id, className, text, icon);
-            }
-
-            return li;
-        },
-
-        addHalfWidthItem: function(id, className, text, icon, generatorIdentifier) {
-            var li = document.createElement('li');
-            li.className = className + ' half-width';
+            li.className = fullWidth ? className + ' full-width' : className + ' half-width';
             li.id = id;
             var tempLi = '<span class="icon <%= icon %>"></span><span class="name"><%= text %></span>';
             li.innerHTML = _.template(tempLi, {
