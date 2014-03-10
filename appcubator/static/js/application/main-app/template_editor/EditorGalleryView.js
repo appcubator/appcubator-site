@@ -122,6 +122,8 @@ define(function(require, exports, module) {
             this.renderEntityLists(); // All Create Forms, Tables, Lists
             this.renderContextEntityElements(); // Context Entity Elements and Update Forms
             */
+            console.log('ksikka');
+            v1State.get('plugins');
             this.renderPluginElements();
 
             // hide all sections except first
