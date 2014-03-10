@@ -33,6 +33,7 @@ define(function(require, exports, module) {
 
             this.sectionsCollection = sectionsCollection;
             this.listenTo(this.sectionsCollection, 'add', this.placeNewSection, true);
+            this.listenTo(this.sectionsCollection, 'rearranged', this.render);
         },
 
         render: function() {
@@ -41,7 +42,7 @@ define(function(require, exports, module) {
 
             var expanded_uielements = this.sectionsCollection.expand();
 
-            this.$el.append($(expanded_uielements.html));
+            this.$el.html(expanded_uielements.html);
             this.placeNewSectionPanel();
 
             this.sectionsCollection.each(function(sectionModel) {

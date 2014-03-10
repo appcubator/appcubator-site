@@ -35,6 +35,11 @@ define(function(require, exports, module) {
             return this.allWidgets;
         },
 
+        arrangeSections: function(fromInd, toInd) {
+            this.models.splice(toInd, 0, this.models.splice(fromInd, 1)[0]);
+            this.trigger('rearranged');
+        },
+
         constructWidgetCollection: function() {
             var widgetCollection = new WidgetCollection();
 

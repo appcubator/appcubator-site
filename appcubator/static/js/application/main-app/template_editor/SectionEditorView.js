@@ -14,7 +14,9 @@ define(function(require, exports, module) {
         events: {
             'keyup .class_name'     : 'classNameChaged',
             'click .remove-section' : 'removeSection',
-            'click .settings'       : 'openSettingsView'
+            'click .settings'       : 'openSettingsView',
+            'click .section-up'     : 'moveSectionUp',
+            'click .section-down'   : 'moveSectionDown'
         },
 
         className: "section-editor-view",
@@ -34,6 +36,8 @@ define(function(require, exports, module) {
                         '<img width="24" class="icon" src="/static/img/edit.png"><span class="caret"></span>',
                         '</div>',
                         '<ul class="dropdown-menu pull-right action-menu" role="menu">',
+                            '<li class="section-up"><a>Move Section Up</a></li>',
+                            '<li class="section-down"><a>Move Section Down</a></li>',
                             '<li><a><input type="text" class="class_name" value="<%= className %>" placeholder="Class Name"></a></li>',
                             '<li class="divider"></li>',
                             '<li><span class="option-button delete-button tt remove-section"></span><div class="option-button settings"></div></li>',
@@ -77,6 +81,20 @@ define(function(require, exports, module) {
 
         openSettingsView: function() {
             new WidgetSettingsView(this.model).render();
+        },
+
+        moveSectionUp: function() {
+            var fromInd = _.indexOf(this.model.collection.models, this.model);
+            var toInd = fromInd - 1;
+            if(fromInd == 0) return;
+            this.model.collection.arrangeSections(fromInd, toInd);
+        },
+
+        moveSectionDown: function () {
+            var fromInd = _.indexOf(this.model.collection.models, this.model);
+            var toInd = fromInd + 1;
+            if(this.model.collection.models.length == toInd) return;
+            this.model.collection.arrangeSections(fromInd, toInd);
         },
 
         removeSection: function() {
