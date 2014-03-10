@@ -19,6 +19,7 @@ define(function(require, exports, module) {
     var RedoController = require('app/RedoController');
     var CSSEditorView = require('app/css-editor/CSSEditorView');
     var SectionShadowView = require('editor/SectionShadowView');
+    var SectionEditorsView = require('editor/SectionEditorsView');
 
     require('jquery-ui');
     require('mixins/BackboneConvenience');
@@ -162,11 +163,13 @@ define(function(require, exports, module) {
 
             this.sectionsManager = proxy.setupSectionsManager(this.sectionsCollection);
             this.sectionShadowView = new SectionShadowView(this.sectionsCollection);
+            this.sectionEditorsView = new SectionEditorsView(this.sectionsCollection);
 
             self.iframedoc = innerDoc;
             //self.marqueeView.render();
             self.sectionsManager.render();
             self.sectionShadowView.render();
+            self.sectionEditorsView.render();
 
             //self.guides.setElement(innerDoc.getElementById('elements-container')).render();
             //$(innerDoc.getElementById('elements-container')).append(self.marqueeView.el);

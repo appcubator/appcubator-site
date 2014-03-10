@@ -14,7 +14,8 @@ define(function(require, exports, module) {
         widgetsContainer: null,
 
         events: {
-
+            'mouseover': 'hovered',
+            'mouseout' : 'unhovered'
         },
 
         className: "section-view",
@@ -150,6 +151,16 @@ define(function(require, exports, module) {
 
         removeSection: function() {
             this.model.collection.remove(this.model);
+        },
+
+        hovered: function() {
+            if (mouseDispatcher.isMousedownActive) return;
+            this.model.trigger('hovered');
+        },
+
+        unhovered: function(e) {
+            // if (this.isMouseOn(e)) return;
+            this.model.trigger('unhovered');
         }
 
     });

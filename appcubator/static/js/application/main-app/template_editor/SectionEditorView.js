@@ -20,6 +20,9 @@ define(function(require, exports, module) {
         initialize: function(sectionModel) {
             _.bindAll(this);
             this.model = sectionModel;
+            this.listenTo(this.model, 'hovered', this.hovered);
+            this.listenTo(this.model, 'unhovered', this.unhovered);
+            this.listenTo(this.model, 'remove', this.close);
         },
 
         render: function() {
@@ -55,6 +58,14 @@ define(function(require, exports, module) {
 
         removeSection: function() {
             this.model.collection.remove(this.model);
+        },
+
+        hovered: function() {
+            this.$el.show();
+        },
+
+        unhovered: function() {
+            this.$el.hide();
         }
 
     });

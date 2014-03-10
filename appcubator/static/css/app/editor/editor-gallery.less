@@ -864,9 +864,7 @@ ul.list .elements-panel.open {
 
 
 .section-editor-view {
-  position: absolute;
-  top: 64px;
-  right: 40px;
+  position: fixed;
   font-size: 32px;
   font-weight: bold;
   display: none;
@@ -889,16 +887,31 @@ ul.list .elements-panel.open {
   border-radius: 6px;
   border: 1px solid transparent;
   cursor: pointer;
+  text-align: center;
+}
+
+.section-editor-view .button img {
+  width:  20px;
+  vertical-align: top;
+  margin-top: 10px;
 }
 
 .section-editor-view .button .caret {
   border-top-color: #fff;
-  margin-right: 6px;
-
+  margin-top: 18px;
+  margin-left: 6px;
 }
 
 .section-editor-view .button:hover {
   border: 1px solid #fff;
+}
+
+.section-editor-view .dropdown-menu {
+  margin-left: -140px;
+}
+
+.section-editor-view .dropdown-menu .remove-section {
+  font-size: 12px;
 }
 
 .section-editor-view .dropdown-menu a {

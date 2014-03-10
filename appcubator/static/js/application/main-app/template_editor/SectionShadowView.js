@@ -30,8 +30,6 @@ define(function(require, exports, module) {
             // this.listenToModels(sectionCollection, 'change', this.reRenderSectionShadow);
             this.listenTo(this.collection, 'add', this.renderSectionShadow);
             this.listenTo(this.collection, 'remove', this.removeSectionShadow);
-
-            $()
         },
 
         render: function() {
@@ -107,9 +105,6 @@ define(function(require, exports, module) {
 
             });
 
-
-            // var sectionEditorView = new SectionEditorView(sectionModel).render();
-            // self.shadowFrame.appendChild(sectionEditorView.el);
         },
 
         reRenderSectionShadow: function() {
@@ -117,7 +112,7 @@ define(function(require, exports, module) {
                 $(el).remove();
             });
             this.shadows = [];
-            this.collection.each(this.renderSectionShadow);
+            this.renderSectionShadow();
         },
 
         removeSectionShadow: function(sectionModel) {

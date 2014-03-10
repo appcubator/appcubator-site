@@ -417,6 +417,30 @@ define(['backbone'], function() {
             return overlayEl;
         },
 
+        getRightTop: function(el, pageWrapper, frame, doc) {
+            
+            var $el = $(el);
+            frame = frame || window;
+
+            var overlayEl = document.createElement('div');
+            overlayEl.className = 'global-overlay';
+            var position = $el.offset();
+            if(doc) {
+                position.top -= $(doc).scrollTop();
+            }
+
+            if(frame != window) {
+                var n = $(frame).offset().top - $(pageWrapper).offset().top;
+                position.top += n;
+            }
+
+            var newPosition = {};
+            newPosition.top = position.top;
+            newPosition.right = position.left + $el.outerWidth();
+
+            return newPosition;
+        },
+
         guideText: function(e, text) {
             var div = document.createElement('div');
             div.innerHTML = text;
