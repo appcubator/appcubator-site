@@ -103,11 +103,11 @@ define([
                 }
 
                 var span = document.createElement('span');
-                span.className = 'modal-cross';
+                span.className = 'modal-down';
                 span.style.position = 'absolute';
-                span.style.right = '15px';
-                span.style.top = '15px';
-                span.innerText = '×';
+                span.style.right = '18px';
+                span.style.top = '20px';
+                span.innerText = '✔';
                 span.style.zIndex = '1000';
                 div.appendChild(span);
 
