@@ -43,17 +43,7 @@ define(function(require, exports, module) {
         },
 
         placeNewSectionEditor: function(sectionModel) {
-            var self = this;
-            var $el = $(this.iframeDoc).find('[data-cid="' + sectionModel.cid + '"]');
-            var el = $el[0];
-
-            var positionRightTop = util.getRightTop(el, document.getElementById('page-wrapper'), self.iframe, self.iframeDoc);
-
             var sectionEditorView = new SectionEditorView(sectionModel).render();
-            sectionEditorView.el.style.left = (positionRightTop.right - 90) + 'px';
-            sectionEditorView.el.style.top = positionRightTop.top + 'px';
-            // sectionEditorView.el.style.display = "inline-block";
-
             this.pageWrapper.appendChild(sectionEditorView.el);
 
             this.editorViews.push(sectionEditorView);

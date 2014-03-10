@@ -48,7 +48,23 @@ define(function(require, exports, module) {
             });
             this.$el.find('.dropdown-toggle').dropdown();
 
+            this.pageWrapper = document.getElementById('page-wrapper');
+            var iframe = v1.currentApp.view.iframe;
+            this.iframe = iframe;
+            this.iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+            this.setPosition();
+
             return this;
+        },
+
+        setPosition: function() {
+            var $el = $(this.iframeDoc).find('[data-cid="' + this.model.cid + '"]');
+            var el = $el[0];
+
+            var positionRightTop = util.getRightTop(el, document.getElementById('page-wrapper'), self.iframe, self.iframeDoc);
+            this.el.style.left = (positionRightTop.right - 90) + 'px';
+            this.el.style.top = (positionRightTop.top + 60) + 'px';
         },
 
         classNameChaged: function(e) {
@@ -61,6 +77,7 @@ define(function(require, exports, module) {
         },
 
         hovered: function() {
+            this.setPosition();
             this.$el.show();
         },
 
