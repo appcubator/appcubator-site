@@ -305,6 +305,8 @@ body {
   border: 1px solid transparent;
   min-height: 30px !important;
   height: 100%;
+
+  background-color: rgba(50, 0, 0, 0.6);
 }
 
 .ycol.fancy-borders {

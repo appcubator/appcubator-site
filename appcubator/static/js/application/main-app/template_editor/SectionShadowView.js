@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 
     'use strict';
 
-    var SectionEditorView = require('editor/SectionEditorView');
+    // var SectionEditorView = require('editor/SectionEditorView');
 
     require('backbone');
     require('util');
@@ -31,6 +31,7 @@ define(function(require, exports, module) {
             this.listenTo(this.collection, 'add', this.renderSectionShadow);
             this.listenTo(this.collection, 'remove', this.removeSectionShadow);
 
+            $()
         },
 
         render: function() {
@@ -107,8 +108,16 @@ define(function(require, exports, module) {
             });
 
 
-            var sectionEditorView = new SectionEditorView(sectionModel).render();
-            self.shadowFrame.appendChild(sectionEditorView.el);
+            // var sectionEditorView = new SectionEditorView(sectionModel).render();
+            // self.shadowFrame.appendChild(sectionEditorView.el);
+        },
+
+        reRenderSectionShadow: function() {
+            _.each(this.shadows, function(el) {
+                $(el).remove();
+            });
+            this.shadows = [];
+            this.collection.each(this.renderSectionShadow);
         },
 
         removeSectionShadow: function(sectionModel) {
@@ -116,6 +125,7 @@ define(function(require, exports, module) {
         },
 
         displayColumnShadows: function() {
+            this.reRenderSectionShadow();
             $(this.shadowFrame).show();
             _.each(this.shadows, function(shadowEl) {
                 $(shadowEl).show();
