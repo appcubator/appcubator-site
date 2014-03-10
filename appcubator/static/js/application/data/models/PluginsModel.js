@@ -78,6 +78,7 @@ define(function(require, exports, module) {
             var gens = this.get(pluginModel.name).getGeneratorsWithModule('model_methods');
             _.each(gens, function(gen) {
                 var methodModel = new NodeModelMethodModel();
+                /* gen.generatorIdentfier is a key set only when you use getGeneratorsWithModule. */
                 methodModel.setGenerator(gen.generatorIdentifier);
                 methodModel.set('modelName', nodeModelModel.get('name'));
                 methodModel.set('name', gen.name);
