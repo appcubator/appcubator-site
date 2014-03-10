@@ -42,15 +42,6 @@ define(function(require, exports, module) {
             this.list.style = '';
             this.el.appendChild(this.listWrapper);
 
-
-            // MONKEY PATCH TO SAY "COMING SOON"
-            if (this.options.notYetImplementedFlag) {
-                var li = document.createElement('li');
-                li.innerHTML = '<p>Coming soon...</p>';
-                li.className = 'full-width';
-                this.list.appendChild(li);
-                this.list.appendChild = function(){};
-            }
             return this;
         },
 
