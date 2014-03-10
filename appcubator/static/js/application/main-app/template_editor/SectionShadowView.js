@@ -47,6 +47,9 @@ define(function(require, exports, module) {
         },
 
         renderSectionShadow: function(sectionModel) {
+
+            console.log(sectionModel);
+
             var $el = $(this.iframeDoc).find('[data-cid="' + sectionModel.cid + '"]');
             var ycols = $el.find('[data-column]');
 
@@ -112,7 +115,7 @@ define(function(require, exports, module) {
                 $(el).remove();
             });
             this.shadows = [];
-            this.renderSectionShadow();
+            this.render();
         },
 
         removeSectionShadow: function(sectionModel) {

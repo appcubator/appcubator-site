@@ -16,7 +16,10 @@ define(function(require, exports, module) {
             'click .remove-section' : 'removeSection',
             'click .settings'       : 'openSettingsView',
             'click .section-up'     : 'moveSectionUp',
-            'click .section-down'   : 'moveSectionDown'
+            'click .section-down'   : 'moveSectionDown',
+            'click .dropdown-toggle': 'toggleDropdown',
+            'mouseover'             : 'menuHovered',
+            'mouseout'              : 'menuUnhovered'
         },
 
         className: "section-editor-view",
@@ -32,37 +35,67 @@ define(function(require, exports, module) {
         render: function() {
             var template = [
                     '<div class="btn-group">',
-                        '<div class="button dropdown-toggle" data-toggle="dropdown">',
-                        '<img width="24" class="icon" src="/static/img/edit.png"><span class="caret"></span>',
+                        '<div class="section-editor-button">',
+                            '<div class="dropdown-toggle"><img width="24" class="icon" src="/static/img/edit.png"></div>',
+                            '<div class="section-up move">▲</div>',
+                            '<div class="section-down move">▼</div>',
                         '</div>',
-                        '<ul class="dropdown-menu pull-right action-menu" role="menu">',
-                            '<li class="section-up"><a>Move Section Up</a></li>',
-                            '<li class="section-down"><a>Move Section Down</a></li>',
+                        '<ul class="section-editor-menu animated">',
+                            '<div class="top-arrow arw"></div>',
+     
                             '<li><a><input type="text" class="class_name" value="<%= className %>" placeholder="Class Name"></a></li>',
-                            '<li class="divider"></li>',
                             '<li><span class="option-button delete-button tt remove-section"></span><div class="option-button settings"></div></li>',
                             // '<li class="remove-section"><a>Remove Section</a></li>',
                         '</ul>',
-                    '</div>'].join('\n');
+                    '</div>'].join('');
 
             var data = this.model.toJSON();
             data.className = data.className || "";
 
             this.el.innerHTML = _.template(template, data);
-
-            this.$el.find('.dropdown-menu input').click(function(event){
-                event.stopPropagation();
-            });
-            this.$el.find('.dropdown-toggle').dropdown();
+            this.$menu = this.$el.find('.section-editor-menu');
+            // this.$el.find('.dropdown-menu input').click(function(event){
+            //     event.stopPropagation();
+            // });
 
             this.pageWrapper = document.getElementById('page-wrapper');
             var iframe = v1.currentApp.view.iframe;
             this.iframe = iframe;
             this.iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            this.$sectionEl = $(this.iframeDoc).find('[data-cid="' + this.model.cid + '"]');
 
             this.setPosition();
 
+            this.renderShadow();
+            this.positionShadow();
+
             return this;
+        },
+
+        renderShadow: function() {
+
+            this.shadowEl = util.addShadow(this.$sectionEl[0], document.getElementById('page-wrapper'), this.iframe, this.iframeDoc);
+            this.shadowEl.className = "section-shadow";
+            this.pageWrapper.appendChild(this.shadowEl);
+            this.$shadowView = $(this.shadowEl);
+
+        },
+
+        positionShadow: function() {
+            var positionRightTop = util.getRightTop(this.$sectionEl[0], document.getElementById('page-wrapper'), self.iframe, self.iframeDoc);
+            this.shadowEl.style.top = (positionRightTop.top + 50) + "px";
+        },
+
+        toggleDropdown: function() {
+            if (this.expanded) {
+                this.$menu.hide();
+                this.expanded = false;
+            }
+            else {
+                this.$menu.addClass('fadeInUp');
+                this.$menu.show();
+                this.expanded = true;
+            }
         },
 
         setPosition: function() {
@@ -70,7 +103,7 @@ define(function(require, exports, module) {
             var el = $el[0];
 
             var positionRightTop = util.getRightTop(el, document.getElementById('page-wrapper'), self.iframe, self.iframeDoc);
-            this.el.style.left = (positionRightTop.right - 90) + 'px';
+            this.el.style.left = (positionRightTop.right - 120) + 'px';
             this.el.style.top = (positionRightTop.top + 60) + 'px';
         },
 
@@ -88,6 +121,8 @@ define(function(require, exports, module) {
             var toInd = fromInd - 1;
             if(fromInd == 0) return;
             this.model.collection.arrangeSections(fromInd, toInd);
+            this.setPosition();
+            this.positionShadow();
         },
 
         moveSectionDown: function () {
@@ -95,10 +130,21 @@ define(function(require, exports, module) {
             var toInd = fromInd + 1;
             if(this.model.collection.models.length == toInd) return;
             this.model.collection.arrangeSections(fromInd, toInd);
+            this.setPosition();
+            this.positionShadow();
         },
 
         removeSection: function() {
             this.model.collection.remove(this.model);
+        },
+
+        menuHovered: function() {
+            this.positionShadow();
+            this.$shadowView.show();
+        },
+
+        menuUnhovered: function() {
+            this.$shadowView.hide();
         },
 
         hovered: function() {
@@ -108,6 +154,13 @@ define(function(require, exports, module) {
 
         unhovered: function() {
             this.$el.hide();
+            this.$menu.hide();
+            this.expanded = false;
+        },
+
+        close: function() {
+            this.$shadowView.remove();
+            SectionEditorView.__super__.close.call(this);
         }
 
     });

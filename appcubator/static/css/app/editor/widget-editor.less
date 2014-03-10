@@ -621,19 +621,35 @@ h3.edit-url {
   text-align: right;
 }
 
-.section-editor-view .button {
+.section-editor-view .section-editor-button {
   background-color: #0f2d40;
   color: #fff;
-  width: 54px;
+  width: 102px;
   height: 40px;
   line-height: 40px;
   border-radius: 6px;
   border: 1px solid transparent;
   cursor: pointer;
   text-align: center;
+  overflow: hidden;
 }
 
-.section-editor-view .button img {
+.section-editor-view .section-editor-button .dropdown-toggle {
+  display: inline-block;
+  width: 40px;
+}
+
+.section-editor-view .section-editor-button .move {
+  display: inline-block;
+  width: 30px;
+}
+
+.section-editor-view .section-editor-button .move:hover,
+.section-editor-view .section-editor-button .dropdown-toggle:hover {
+  background-color: #001d30;
+}
+
+.section-editor-view .section-editor-button img {
   width:  20px;
   vertical-align: top;
   margin-top: 10px;
@@ -649,29 +665,51 @@ h3.edit-url {
   border: 1px solid #fff;
 }
 
-.section-editor-view .dropdown-menu {
+.section-editor-view .section-editor-menu {
   background-color: rgba(10, 10, 10, 0.96);
   border-width: 0;
   color: #fff;
   margin-left: -140px;
+  display: none;
+  border-radius: 4px;
+  margin-top: 10px;
+
+  .top-arrow {
+    height: 12px;
+    width: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: -12px;
+    background-image: url(/static/img/top-blue-arrow.png);
+    background-repeat: no-repeat;
+    background-position: top left;
+    margin-right: 24px;
+  }
 }
 
 .section-editor-view {
   font-size: 12px;
   font-weight: normal;
+  z-index: 3;
 }
 
-.section-editor-view .dropdown-menu a {
+.section-editor-view .section-editor-menu a {
   text-align: left;
   padding: 4px 12px;
 }
 
-.section-editor-view .dropdown-menu li {
+.section-editor-view .section-editor-menu li {
   text-align: left;
+  height: 48px;
 }
 
-.section-editor-view .dropdown-menu li:hover {
+.section-editor-view .section-editor-menu li:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.section-editor-view .class_name {
+  margin-top: 6px;
 }
 
 .section-editor-view input {
