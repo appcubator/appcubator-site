@@ -31,6 +31,25 @@ define(function(require, exports, module) {
             this.set(plugin.metadata.name, pluginModel);
         },
 
+        uninstall: function(pluginName) {
+            this.unset(pluginName);
+            // TODO do something about generator references to this plugin?
+            // var plugin = this.findByName(pluginName);
+        },
+
+        findByName: function(name) {
+            var searchCandidates = _.filter(this.attributes, function(pluginModel, pluginName) {
+                return pluginName === name;
+            });
+            if (searchCandidates.length == 0)
+                return undefined;
+            else if (searchCandidates.length == 1)
+                return searchCandidates[0];
+            else {
+                alert('impossible: two plugins found with the same name');
+            }
+        },
+
         getPluginsWithModule: function(moduleName) {
             return _.filter(this.attributes, function(pluginModel, pluginName) {
                 pluginModel.name = pluginName;

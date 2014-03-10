@@ -12,7 +12,7 @@ define(function(require, exports, module) {
         className: 'dropdown-view plugins-view',
 
         events: {
-            // 'click .onoffswitch': 'clickedPluginToggle',
+            'click .delete-plugin': 'deletePlugin',
             'click .browsePluginsButton': 'browsePlugins'
         },
 
@@ -33,29 +33,15 @@ define(function(require, exports, module) {
             var browserView = new PluginBrowserView({});
         },
 
-        clickedPluginToggle: function(e){
+        deletePlugin: function(e){
 
-            var input = $(e.target).closest("[type='checkbox']");
-            var pluginName = $(input).attr('pluginName');
-            var pluginEnabled = $(input).hasClass('checked');
+            var delButton = $(e.target);
+            var elToRemove = delButton.parents('.pluginBar');
+            var pluginName = delButton.attr('id').replace('delete-plugin-', '');
 
-            if (pluginEnabled){
-                $(input).removeClass('checked');
-            } else {
-                $(input).addClass('checked');
-            }
-
-            var plugin = v1.currentApp.model.get('plugins').find(
-                function (p) {
-                    if (p.get('metadata').name === pluginName){
-                        if (pluginEnabled){
-                            p.disablePlugin();
-                        } else {
-                            p.enablePlugin();
-                        }
-                    }
-                    return (p.get('metadata').name === pluginName);
-            });
+            v1.currentApp.model.get('plugins').uninstall(pluginName);
+            
+            elToRemove.remove();
 
         },
 

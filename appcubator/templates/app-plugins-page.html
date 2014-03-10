@@ -12,8 +12,7 @@
         <a class="title" href='#'><%=plugins[i].metadata.name%></a>
         <div class="information"> <%=plugins[i].metadata.description%></div>
     </div>
-    <div class="toggleSwitch">
-    </div>
+    <div id="delete-plugin-<%= plugins[i].metadata.name %>" class="delete-plugin">X</div>
 </div>
 <hr>
 <% } %>
