@@ -77,7 +77,7 @@ define(function(require, exports, module) {
 
                         var type = $(ui.draggable).data("type");
 
-                        try {
+                        // try {
                             if($(ui.draggable).data("extraData")) {
                                 extraData = $(ui.draggable).data("extraData");
                             }
@@ -89,13 +89,13 @@ define(function(require, exports, module) {
 
                             sectionModel.get('columns').get(colCid).addElement(type, extraData);
 
-                        }
-                        catch(e) {
-                            console.log(e);
-                            console.log("Error with new element: "+ JSON.stringify(e));
-                            self.hideColumnShadows();
+                        // }
+                        // catch(e) {
+                        //     console.log(e);
+                        //     console.log("Error with new element: "+ JSON.stringify(e));
+                        //     self.hideColumnShadows();
 
-                        }
+                        // }
                     },
                     over: function() {
                         shadowEl.className = "section-shadow active";
