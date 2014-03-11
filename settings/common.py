@@ -316,3 +316,4 @@ if DEIS_USERNAME in ['admin', 'dev', '']:
 
 # codegen service
 CODEGEN_ADDR = os.environ["CODEGEN_ADDR"] # ie, http://127.0.0.1:3000
+CODEGEN_STATICS_URL = os.environ.get("CODEGEN_STATICS_URL", CODEGEN_ADDR + "/client/app/") # ie, http://127.0.0.1:3000/ or https://s3.amazonaws.com/appmake-hosting/ in production

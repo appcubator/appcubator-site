@@ -378,6 +378,20 @@ exports.root = require('./root/generators');
 exports.crud = require('./crud/generators');
 exports.userauth = require('./userauth/generators');
 
+// turn code from function to string
+var stringalize = function(plugin) {
+    for (var m in plugin) {
+        if (m === 'metadata') continue;
+        for (var i = 0; i < plugin[m].length; i++) {
+            plugin[m][i].code = plugin[m][i].code.toString();
+        }
+    }
+};
+
+stringalize(exports.root);
+stringalize(exports.crud);
+stringalize(exports.userauth);
+
 },{"./crud/generators":2,"./root/generators":7,"./userauth/generators":12}],6:[function(require,module,exports){
 var generators = [];
 
@@ -676,19 +690,6 @@ generators.push({
 generators.push({
     name: 'navbar',
     version: '0.1',
-    defaults: {
-        brandName : "Default Name",
-        links: [
-            {
-                url: "",
-                title: "Page 1"
-            },
-            {
-                url: "",
-                title: "Page 2"
-            }
-        ]
-    },
     code: function(data, templates) {
 
         _.each(data.links, function(link) {
@@ -730,19 +731,6 @@ generators.push({
 generators.push({
     name: 'footer',
     version: '0.1',
-    defaults: {
-        customText : "Default Footer - Copyright",
-        links: [
-            {
-                url: "",
-                title: "Page 1"
-            },
-            {
-                url: "",
-                title: "Page 2"
-            }
-        ]
-    },
     code: function(data, templates) {
 
         var html = templates.html(data);

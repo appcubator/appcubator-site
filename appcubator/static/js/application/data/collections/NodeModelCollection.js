@@ -44,14 +44,6 @@ define(function(require, exports, module) {
             }, []);
         },
 
-        isNameUnique: function(name) {
-            isUnique = true;
-            this.each(function(table) {
-                if (table.get('name') === name) isUnique = false;
-            });
-            return isUnique;
-        }
-
     });
 
     return TableCollection;

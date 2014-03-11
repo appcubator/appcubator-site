@@ -56,11 +56,6 @@ define(function(require, exports, module) {
 
             this.$el.find('.dropdown-toggle').dropdown();
 
-            if(this.generator._pristine) { 
-                // disable that option.
-                // this.$le.find('.edit-current').
-            }
-
             this.renderCloneButtons();
 
             return this;
@@ -103,11 +98,11 @@ define(function(require, exports, module) {
         },
 
         renderCloneButtons: function() {
-            
+
             var currentModule = util.packageModuleName(this.generatorPath).module;
             // e.g. if module == uielements, it can only clone uielements
             var plugins = v1State.get('plugins').getGeneratorsWithModule(currentModule);
-            
+
             plugins = _.reject(plugins, function(generator) {
 
                 var genPath = [util.packageModuleName(this.generatorPath).package, currentModule, generator.name].join('.');
@@ -121,26 +116,23 @@ define(function(require, exports, module) {
         },
 
         editCurrentGen: function() {
-            // if is not pristine, shoudl give a warning. waiting for that functionality.
-            if(this.generator._pristine) { return; }
-            else {
-                this.makeEditorEditable();
-            }
+            alert('todo link to the plugin editor');
         },
 
         forkCurrentGen: function() {
             // alert('Not yet implemented');
-            
+
             var self = this;
             var newName = window.prompt("What do you want to name the new generator?", util.packageModuleName(self.generatorPath).name + "_edited");
-            
+
             if (newName!=null) {
-                
+
                 var newPackageModuleName = util.packageModuleName(self.generatorPath);
                 newPackageModuleName.name = newName;
-                
-                if(!v1State.get('plugins').isNameUnique(newPackageModuleName)) { self.forkCurrentGen(); } 
-                
+
+                // isNameUnique needs work, plz see function
+                if(!v1State.get('plugins').isNameUnique(newPackageModuleName)) { self.forkCurrentGen(); }
+
                 var genObj = _.clone(this.generator);
                 var newGenPath = v1State.get('plugins').fork(this.generatorPath, newName);
 
@@ -151,13 +143,13 @@ define(function(require, exports, module) {
             else {
                 self.forkCurrentGen();
             }
-            
+
         },
 
         cloneGenerator: function(e) {
             var genPath = String(e.currentTarget.id);
             this.widgetModel.setGenerator(genPath);
-            
+
             // changes data related to this view and rerenders
             this.generatorName = genPath;
             this.generator = G.getGenerator(this.generatorName);
