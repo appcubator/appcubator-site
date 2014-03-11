@@ -5,7 +5,7 @@
 <button id='browsePlugins' class='btn pull-right browsePluginsButton'>Browse All</button>
 <hr>
 <div class='pluginContainer'>
-<% for (var i=0; i<plugins.length;i++) {%>
+<% for (var i=0; i<plugins.length;i++) { if (!plugins[i].metadata) {  continue; } %>
 <div class="pluginBar">
     <div class="identifier"><div class="pluginImageHolder"></div></div>
     <div class="meta-data">
@@ -16,8 +16,5 @@
 </div>
 <hr>
 <% } %>
-
-
-
 </div>
 </div>

@@ -27,11 +27,6 @@ define(function(require, exports, module) {
         dragActive: false,
         slideDownActive: false,
 
-
-        positionHorizontalGrid: 80,
-        positionVerticalGrid: 15,
-        nmrSections: 0,
-
         sections: [],
         subviews: [],
 
@@ -166,7 +161,9 @@ define(function(require, exports, module) {
             var elements = [];
             var createdSections = [];
 
-            _.each(v1State.get('plugins').pairs(), function(pair) {
+            console.log(v1State.get('plugins').getAllPlugins());
+
+            _.each(_.pairs(v1State.get('plugins').getAllPlugins()), function(pair) {
                 var pluginName = pair[0],
                     plugin = pair[1];
                 if (plugin.has('uielements')) {
