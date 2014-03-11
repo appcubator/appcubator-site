@@ -68,6 +68,8 @@ define(function(require, exports, module) {
                         '<li class="section-option" id="opt-4-4-4">4-4-4</li>',
                         '<li class="section-option" id="opt-4-8">4-8</li>',
                         '<li class="section-option" id="opt-8-4">8-4</li>',
+                        '<li class="section-option" id="opt-navbar">Navbar</li>',
+                        '<li class="section-option" id="opt-footer">Footer</li>',
                     '</ul>',
                 '</div>'
             ].join('\n');

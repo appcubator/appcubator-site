@@ -430,6 +430,8 @@ define(['backbone'], function() {
             }
 
             if(frame != window) {
+                console.log($(frame).offset().top);
+                console.log($(pageWrapper).offset().top);
                 var n = $(frame).offset().top - $(pageWrapper).offset().top;
                 position.top += n;
             }

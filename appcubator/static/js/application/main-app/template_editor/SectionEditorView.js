@@ -82,8 +82,8 @@ define(function(require, exports, module) {
         },
 
         positionShadow: function() {
-            var positionRightTop = util.getRightTop(this.$sectionEl[0], document.getElementById('page-wrapper'), self.iframe, self.iframeDoc);
-            this.shadowEl.style.top = (positionRightTop.top + 50) + "px";
+            var positionRightTop = util.getRightTop(this.$sectionEl[0], document.getElementById('page-wrapper'), this.iframe, this.iframeDoc);
+            this.shadowEl.style.top = (positionRightTop.top) + "px";
         },
 
         toggleDropdown: function() {
@@ -102,9 +102,9 @@ define(function(require, exports, module) {
             var $el = $(this.iframeDoc).find('[data-cid="' + this.model.cid + '"]');
             var el = $el[0];
 
-            var positionRightTop = util.getRightTop(el, document.getElementById('page-wrapper'), self.iframe, self.iframeDoc);
+            var positionRightTop = util.getRightTop(el, document.getElementById('page-wrapper'), this.iframe, this.iframeDoc);
             this.el.style.left = (positionRightTop.right - 120) + 'px';
-            this.el.style.top = (positionRightTop.top + 60) + 'px';
+            this.el.style.top = (positionRightTop.top + 15) + 'px';
         },
 
         classNameChaged: function(e) {

@@ -18,16 +18,36 @@ define(function(require, exports, module) {
         },
 
         createSectionWithType: function(type) {
-            var sectionsLayouts = type.split('-');
-            var sectionModel = new SectionModel();
 
-            _.each(sectionsLayouts, function(columnLayout) {
-                var columnM = new ColumnModel();
-                columnM.set('layout', columnLayout);
-                sectionModel.get('columns').push(columnM);
-            }, this);
+            switch(type) {
 
-            this.add(sectionModel);
+                case "navbar":
+                    var sectionModel = new SectionModel();
+                    sectionModel.setGenerator('templates.navbar');
+                    this.add(sectionModel);
+                    break;
+
+                case "footer":
+                    var sectionModel = new SectionModel();
+                    sectionModel.setGenerator('templates.footer');
+                    this.add(sectionModel);
+                    break;
+
+                default:
+                    var sectionsLayouts = type.split('-');
+                    var sectionModel = new SectionModel();
+
+                    _.each(sectionsLayouts, function(columnLayout) {
+                        var columnM = new ColumnModel();
+                        columnM.set('layout', columnLayout);
+                        sectionModel.get('columns').push(columnM);
+                    }, this);
+
+                    this.add(sectionModel);
+                    return;
+                    break;
+            }
+
         },
 
         getAllWidgets: function(argument) {
