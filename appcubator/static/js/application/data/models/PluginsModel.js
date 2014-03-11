@@ -18,37 +18,32 @@ define(function(require, exports, module) {
 
         },
 
+        /* builtin plugins are not in the model by default,
+         * so this fn includes them in its return value */
         getAllPlugins: function() {
-            var json = _.clone(this.attributes);
 
-            _.each(G.expander.builtinGenerators, function(val, key) {
-                //val._builtin = true; // prevents serialization
+            var plugins = _.clone(this.attributes); // pluginName : pluginModel object
 
-                var pluginModel = new PluginModel(val);
-                
-                if (json[key]) {
-                    console.log(key);
-                    console.log(val);
+            /* Start with local plugins and merge builtin plugins in, not overwriting local plugins. */
 
-                    _.each(val, function(gens, module) {
-                        console.log(module);
-                        console.log(gens);
-                        if(!json[key].has(module)) {
-                            json[key].set(module, gens);
-                        }
-                        else {
-                            json[key].set(module, _.union(json[key].get(module), gens));
+            _.each(G.expander.builtinGenerators, function(builtInPlugin, pluginName) {
+                var pluginModel = new PluginModel(builtInPlugin);
+
+                if (plugins[pluginName] === undefined) {
+                    plugins[pluginName] = pluginModel;
+                } else {
+                    /* User might have forked a generator from a builtin plugin */
+                    var localCopy = plugins[pluginName]; // app-state copy of the package
+                    _.each(builtInPlugin, function(gens, moduleName) {
+                        if(!localCopy.has(moduleName)) {
+                            localCopy.set(moduleName, gens);
+                        } else {
+                            localCopy.set(moduleName, _.union(localCopy.get(moduleName), gens));
                         }
                     });
-                    // json[key] = _.extend(json[key], )
-                }
-                else {
-                    json[key] = pluginModel;
                 }
             });
-
-            console.log(json);
-            return json;
+            return plugins;
         },
 
         install: function(plugin) {
@@ -61,20 +56,6 @@ define(function(require, exports, module) {
         uninstall: function(pluginName) {
             this.unset(pluginName);
             // TODO do something about generator references to this plugin?
-            // var plugin = this.findByName(pluginName);
-        },
-
-        findByName: function(name) {
-            var searchCandidates = _.filter(this.attributes, function(pluginModel, pluginName) {
-                return pluginName === name;
-            });
-            if (searchCandidates.length == 0)
-                return undefined;
-            else if (searchCandidates.length == 1)
-                return searchCandidates[0];
-            else {
-                alert('impossible: two plugins found with the same name');
-            }
         },
 
         getPluginsWithModule: function(moduleName) {
@@ -88,25 +69,26 @@ define(function(require, exports, module) {
             var generators = [];
 
             var generators = _.flatten(_.map(this.attributes, function(pluginModel, packageName) {
-                return pluginModel.getGeneratorsWithModule(generatorModule);
+                return pluginModel.getGensByModule(generatorModule);
             }));
 
             return generators;
         },
 
         isPluginInstalledToModel: function(pluginModel, nodeModelModel) {
-            var gens = _.pluck(pluginModel.getGeneratorsWithModule('model_methods'), 'generatorIdentifier');
+            var gens = pluginModel.getGensByModule('model_methods');
+            var genNames = _.map(gens, function(g) { return pluginModel.getName() + '.model_methods.' + g.name; });
             var functions = nodeModelModel.get('functions').map(function(fn) { return fn.generate; });
-            return _.intersection(gens, functions).length > 0 ? true : false;
+            return _.intersection(genNames, functions).length > 0 ? true : false;
         },
 
         installPluginToModel: function(pluginModel, nodeModelModel) {
             if (!pluginModel) return;
-            var gens = this.get(pluginModel.name).getGeneratorsWithModule('model_methods');
+            var gens = this.get(pluginModel.getName()).getGensByModule('model_methods');
             _.each(gens, function(gen) {
                 var methodModel = new NodeModelMethodModel();
-                /* gen.generatorIdentfier is a key set only when you use getGeneratorsWithModule. */
-                methodModel.setGenerator(gen.generatorIdentifier);
+                var genIDStr = pluginModel.getName + '.model_methods.' + gen.name;
+                methodModel.setGenerator(genIDStr);
                 methodModel.set('modelName', nodeModelModel.get('name'));
                 methodModel.set('name', gen.name);
                 nodeModelModel.get('functions').push(methodModel);
@@ -114,11 +96,10 @@ define(function(require, exports, module) {
         },
 
         uninstallPluginToModel: function(plugin, nodeModelModel) {
-            
             var gens = [];
 
             nodeModelModel.get('functions').each(function(fn) {
-                if(fn.isInPackage(plugin.name)) {
+                if(fn.isInPackage(plugin.getName())) {
                     gens.push(fn);
                 }
             });
@@ -135,10 +116,12 @@ define(function(require, exports, module) {
             genObj.name = newName;
 
             if (!this.has(newPath.package)) {
-                this.set(newPath.package, new PluginModel());
+                // NOTE this only happens when builtin generator is forked
+                this.set(newPath.package, new PluginModel({metadata: {name: newPath.package}}));
             }
 
             if (!this.get(newPath.package).has(newPath.module)) {
+                // NOTE this only happens when builtin generator is forked
                 this.get(newPath.package).set(newPath.module, []);
             }
 
@@ -148,6 +131,9 @@ define(function(require, exports, module) {
         },
 
         isNameUnique: function(newPackageModuleName) {
+            // TODO FIXME
+            // 1. this doesn't include builtins
+            // 2. shouldn't you do a has check before doing get?
 
             var plugin = this.get(newPackageModuleName.package);
             if (!plugin) return true;
@@ -166,12 +152,7 @@ define(function(require, exports, module) {
             var json = _.clone(this.attributes);
 
             _.each(json, function (val, key) {
-                // don't store the builtin generators in the app state
-                if (val.isBuiltIn()) {
-                    delete json[key];
-                } else {
-                    json[key] = val.serialize();
-                }
+                json[key] = val.serialize();
             });
 
             return json;

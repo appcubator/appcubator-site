@@ -27,7 +27,7 @@ define(['backbone'], function() {
         },
 
         setCursor: function(node, pos) {
-            var node = (typeof node == "string" || node instanceof String) ? document.getElementById(node) : node;
+            node = (typeof node == "string" || node instanceof String) ? document.getElementById(node) : node;
             if (!node) {
                 return false;
             } else if (node.createTextRange) {
@@ -492,7 +492,7 @@ define(['backbone'], function() {
         },
 
         packageModuleName: function(generatorName) {
-            return expanderfactory(function(code, globals) { }).parseGenID(generatorName);
+            return expander.parseGenID(generatorName);
         }
 
     };
