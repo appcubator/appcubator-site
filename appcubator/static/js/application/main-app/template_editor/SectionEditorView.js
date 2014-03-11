@@ -82,6 +82,7 @@ define(function(require, exports, module) {
         },
 
         positionShadow: function() {
+            this.$sectionEl = $(this.iframeDoc).find('[data-cid="' + this.model.cid + '"]');
             var positionRightTop = util.getRightTop(this.$sectionEl[0], document.getElementById('page-wrapper'), this.iframe, this.iframeDoc);
             this.shadowEl.style.top = (positionRightTop.top) + "px";
         },
