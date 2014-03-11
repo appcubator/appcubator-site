@@ -68,7 +68,6 @@ define(function(require, exports, module) {
             var curArr = _(columnModel.get('uielements').models).pluck('cid');
 
             if(!_.isEqual(curArr, newArr)) {
-            	console.log("DIFF");
             	var new_models = [];
                 _.each(newArr, function(elCid, ind) {
 
