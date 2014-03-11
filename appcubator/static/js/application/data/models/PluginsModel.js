@@ -23,15 +23,21 @@ define(function(require, exports, module) {
 
             _.each(G.expander.builtinGenerators, function(val, key) {
                 //val._builtin = true; // prevents serialization
+
                 var pluginModel = new PluginModel(val);
                 
                 if (json[key]) {
+                    console.log(key);
+                    console.log(val);
+
                     _.each(val, function(gens, module) {
-                        if(!json[key][module]) {
-                            json[key][module] = gens;
+                        console.log(module);
+                        console.log(gens);
+                        if(!json[key].has(module)) {
+                            json[key].set(module, gens);
                         }
                         else {
-                            json[key][module] = _.union(json[key][module], gens);   
+                            json[key].set(module, _.union(json[key].get(module), gens));
                         }
                     });
                     // json[key] = _.extend(json[key], )
@@ -41,6 +47,7 @@ define(function(require, exports, module) {
                 }
             });
 
+            console.log(json);
             return json;
         },
 

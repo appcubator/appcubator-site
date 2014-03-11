@@ -161,6 +161,8 @@ define(function(require, exports, module) {
             var elements = [];
             var createdSections = [];
 
+            console.log(v1State.get('plugins').getAllPlugins());
+
             _.each(_.pairs(v1State.get('plugins').getAllPlugins()), function(pair) {
                 var pluginName = pair[0],
                     plugin = pair[1];
