@@ -11,17 +11,37 @@ define(function(require, exports, module) {
 
         initialize: function(bone) {
 
-            _.each(G.expander.builtinGenerators, function(val, key) {
-                val._builtin = true; // prevents serialization
-                var pluginModel = new PluginModel(val);
-                this.set(key, pluginModel);
-            }, this);
-
             _.each(bone, function(val, key) {
                 var pluginModel = new PluginModel(val);
                 this.set(key, pluginModel);
             }, this);
 
+        },
+
+        getAllPlugins: function() {
+            var json = _.clone(this.attributes);
+
+            _.each(G.expander.builtinGenerators, function(val, key) {
+                //val._builtin = true; // prevents serialization
+                var pluginModel = new PluginModel(val);
+                
+                if (json[key]) {
+                    _.each(val, function(gens, module) {
+                        if(!json[key][module]) {
+                            json[key][module] = gens;
+                        }
+                        else {
+                            json[key][module] = _.union(json[key][module], gens);   
+                        }
+                    });
+                    // json[key] = _.extend(json[key], )
+                }
+                else {
+                    json[key] = pluginModel;
+                }
+            });
+
+            return json;
         },
 
         install: function(plugin) {
@@ -99,16 +119,40 @@ define(function(require, exports, module) {
             nodeModelModel.get('functions').remove(gens);
         },
 
-        fork: function (generator, generatorPath, newName) {
-
+        fork: function (generatorPath, newName) {
+            var generator = G.getGenerator(generatorPath);
             var genObj = _.clone(generator);
+
             var newPath = util.packageModuleName(generatorPath);
             newPath.name = newName;
             genObj.name = newName;
 
-            this.get(newPath.package)[newPath.module].push(genObj);
+            if (!this.has(newPath.package)) {
+                this.set(newPath.package, new PluginModel());
+            }
+
+            if (!this.get(newPath.package).has(newPath.module)) {
+                this.get(newPath.package).set(newPath.module, []);
+            }
+
+            this.get(newPath.package).get(newPath.module).push(genObj);
 
             return [newPath.package, newPath.module, newPath.name].join('.');
+        },
+
+        isNameUnique: function(newPackageModuleName) {
+
+            var plugin = this.get(newPackageModuleName.package);
+            if (!plugin) return true;
+
+            var module = plugin.get(newPackageModuleName.module);
+            if (!module) return true;
+
+            if (module[newPackageModuleName.name]) {
+                return false;
+            }
+
+            return true;
         },
 
         toJSON: function() {

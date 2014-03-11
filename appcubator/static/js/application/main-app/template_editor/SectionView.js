@@ -28,7 +28,7 @@ define(function(require, exports, module) {
             this.model = sectionModel;
 
             this.listenTo(this.model, 'remove', this.close);
-            this.listenTo(this.model, 'change', this.renderContent);
+            this.listenTo(this.model, 'change', this.reRender);
 
             this.widgetsCollection = this.model.getWidgetsCollection();
 
@@ -50,6 +50,16 @@ define(function(require, exports, module) {
             this.layoutElements();
 
             return this;
+        },
+
+        reRender: function() {
+            var expanded = this.model.expand();
+            var $el = $(expanded.html);
+
+            this.$el.replaceWith($el);
+            this.setElement($el, true);
+
+            this.layoutElements();
         },
 
         updated: function(columnModel, $col) {

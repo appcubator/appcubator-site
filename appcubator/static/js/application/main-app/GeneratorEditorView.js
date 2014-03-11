@@ -43,7 +43,7 @@ define(function(require, exports, module) {
                         '</button>',
                         '<ul class="dropdown-menu abs action-menu" role="menu">',
                             '<li><a href="#" class="edit-current">Edit Current Generator</a></li>',
-                            '<li><a href="#" class="fork-current">Fork Current Generator</a></li>',
+                            '<li class="fork-current"><a href="#">Fork Current Generator</a></li>',
                             '<li class="divider"></li>',
                         '</ul>',
                     '</div>',
@@ -129,11 +129,10 @@ define(function(require, exports, module) {
         },
 
         forkCurrentGen: function() {
-            alert('Not yet implemented');
-            /*
+            // alert('Not yet implemented');
+            
             var self = this;
-
-            var newName = window.prompt("What do you want to name the new generator?", util.packageModuleName(self.generatorPath) + "_edited");
+            var newName = window.prompt("What do you want to name the new generator?", util.packageModuleName(self.generatorPath).name + "_edited");
             
             if (newName!=null) {
                 
@@ -143,7 +142,8 @@ define(function(require, exports, module) {
                 if(!v1State.get('plugins').isNameUnique(newPackageModuleName)) { self.forkCurrentGen(); } 
                 
                 var genObj = _.clone(this.generator);
-                var newGenPath = v1State.get('plugins').fork(this.generator, this.generatorName, newName);
+                var newGenPath = v1State.get('plugins').fork(this.generatorPath, newName);
+
                 self.setupGenerator(newGenPath);
                 self.reRender();
                 self.makeEditorEditable();
@@ -151,7 +151,7 @@ define(function(require, exports, module) {
             else {
                 self.forkCurrentGen();
             }
-            */
+            
         },
 
         cloneGenerator: function(e) {
