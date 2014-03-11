@@ -63,11 +63,14 @@ define(function(require, exports, module) {
         },
 
         updated: function(columnModel, $col) {
+        	console.log($col);
+        	console.log("UPDATED");
             var newArr = $col.sortable( "toArray", {attribute  : "data-cid"});
             var curArr = _(columnModel.get('uielements').models).pluck('cid');
 
             if(!_.isEqual(curArr, newArr)) {
-
+            	console.log("DIFF");
+            	
                 _.each(newArr, function(elCid, ind) {
 
                     var widgetModel = {};

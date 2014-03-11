@@ -184,7 +184,7 @@ define(function(require, exports, module) {
                         if (element.displayProps && element.displayProps.halfWidth) {
                             fullWidth = false;
                         }
-                        var genIDStr = plugin.get('metadata').name + ".uielements." + element.name;
+                        var genIDStr = pluginName + ".uielements." + element.name;
                         sect.addWidgetItem('', 'uielement', displayName, className, genIDStr, fullWidth);
                     }, this);
                 }

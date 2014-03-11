@@ -82,7 +82,7 @@ define(function(require, exports, module) {
         },
 
         setupAce: function() {
-            var expanded = this.widgetModel.expand();
+            var expanded = this.widgetModel.expand({ generate: false });
             this.generatedhtml = expanded.html;
             this.generatedcss = expanded.css;
             this.generatedjs = expanded.js;

@@ -27,27 +27,23 @@ define(function(require, exports, module) {
                 var pluginModel = new PluginModel(val);
                 
                 if (json[key]) {
-                    console.log(key);
-                    console.log(val);
 
                     _.each(val, function(gens, module) {
-                        console.log(module);
-                        console.log(gens);
-                        if(!json[key].has(module)) {
+
+                        if (!json[key].has(module)) {
                             json[key].set(module, gens);
                         }
                         else {
                             json[key].set(module, _.union(json[key].get(module), gens));
                         }
                     });
-                    // json[key] = _.extend(json[key], )
+
                 }
                 else {
                     json[key] = pluginModel;
                 }
             });
 
-            console.log(json);
             return json;
         },
 
