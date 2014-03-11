@@ -492,7 +492,7 @@ define(['backbone'], function() {
         },
 
         packageModuleName: function(generatorName) {
-            return expander.parseGenID(generatorName);
+            return G.expander.parseGenID(generatorName);
         }
 
     };

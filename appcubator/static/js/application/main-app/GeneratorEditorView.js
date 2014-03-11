@@ -130,7 +130,7 @@ define(function(require, exports, module) {
                 var newPackageModuleName = util.packageModuleName(self.generatorPath);
                 newPackageModuleName.name = newName;
 
-                // isNameUnique is not correct
+                // isNameUnique needs work, plz see function
                 if(!v1State.get('plugins').isNameUnique(newPackageModuleName)) { self.forkCurrentGen(); }
 
                 var genObj = _.clone(this.generator);

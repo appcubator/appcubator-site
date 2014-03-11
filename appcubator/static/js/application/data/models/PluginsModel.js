@@ -35,6 +35,8 @@ define(function(require, exports, module) {
                     /* User might have forked a generator from a builtin plugin */
                     var localCopy = plugins[pluginName]; // app-state copy of the package
                     _.each(builtInPlugin, function(gens, moduleName) {
+                        if (moduleName === 'metadata')
+                            return;
                         if(!localCopy.has(moduleName)) {
                             localCopy.set(moduleName, gens);
                         } else {
