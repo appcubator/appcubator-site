@@ -17,7 +17,8 @@ define(function(require, exports, module) {
         events: {
             'click .edit-current' : 'editCurrentGen',
             'click .fork-current' : 'forkCurrentGen',
-            'click .clone-button' : 'cloneGenerator'
+            'click .clone-button' : 'cloneGenerator',
+            'click .edit-code'    : 'editCode'
         },
 
 
@@ -38,11 +39,13 @@ define(function(require, exports, module) {
                 '<div id="name-editor" class="sub-settings">',
                     '<div style="line-height: 60px; display:inline-block;">Current Generator: <%= name %></div>',
                     '<div class="btn-group right">',
+                        '<button type="button" class="btn btn-default edit-code">',
+                        'Edit Code',
+                        '</button>',
                         '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">',
-                        'Edit Code <span class="caret"></span>',
+                        'Change Generator <span class="caret"></span>',
                         '</button>',
                         '<ul class="dropdown-menu abs action-menu" role="menu">',
-                            '<li><a href="#" class="edit-current">Edit Current Generator</a></li>',
                             '<li class="fork-current"><a href="#">Fork Current Generator</a></li>',
                             '<li class="divider"></li>',
                         '</ul>',
@@ -54,9 +57,14 @@ define(function(require, exports, module) {
             ].join('\n'), { name: this.generatorPath });
 
 
+            if(!v1State.get('plugins').isGeneratorEditable(this.generatorPath)) {
+                this.$el.find('.edit-code').addClass('disabled');
+                this.$el.find('.edit-code').attr('title', 'Native generators cannot be edited. They need to be forked.');
+            }
             this.$el.find('.dropdown-toggle').dropdown();
-
             this.renderCloneButtons();
+
+            this.$el.tooltip();
 
             return this;
         },
@@ -144,6 +152,11 @@ define(function(require, exports, module) {
                 self.forkCurrentGen();
             }
 
+        },
+
+        editCode: function() {
+            var url = "/app/" + appId + "/dev/#" + this.generatorPath;
+            window.open(url, "Generator Editor");
         },
 
         cloneGenerator: function(e) {

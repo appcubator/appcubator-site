@@ -133,6 +133,19 @@ define(function(require, exports, module) {
             return [newPath.package, newPath.module, newPath.name].join('.');
         },
 
+        isGeneratorEditable: function(generatorPath) {
+            var newPath = util.packageModuleName(generatorPath);
+            if (!this.has(newPath.package)) { return false; }
+            if (!this.get(newPath.package).has(newPath.module)) { return false; }
+
+            var isEditable = true;
+            _.each(this.get(newPath.package).has(newPath.module), function(gen) {
+                if(gen.name == newPath.name) { isEditable = false; }
+            });
+
+            return isEditable;
+        },
+
         isNameUnique: function(newPackageModuleName) {
             // TODO FIXME
             // 1. this doesn't include builtins

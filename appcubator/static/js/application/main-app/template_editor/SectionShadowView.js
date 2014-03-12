@@ -48,8 +48,6 @@ define(function(require, exports, module) {
 
         renderSectionShadow: function(sectionModel) {
 
-            console.log(sectionModel);
-
             var $el = $(this.iframeDoc).find('[data-cid="' + sectionModel.cid + '"]');
             var ycols = $el.find('[data-column]');
 
