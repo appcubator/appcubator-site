@@ -45,7 +45,6 @@ define(function(require, exports, module) {
 
             this.listenTo(this.model, 'startEditing', this.startedEditing);
             this.listenTo(this.model, 'stopEditing cancelEditing', this.stoppedEditing);
-            this.listenTo(this.model, 'doubleClicked', this.doubleClicked);
             this.listenTo(this.model, 'reselected', this.show);
             this.listenTo(this.model, 'deselected', this.clear);
 
@@ -55,7 +54,6 @@ define(function(require, exports, module) {
         unbindModel: function(model) {
             this.stopListening(model, 'startEditing', this.startedEditing);
             this.stopListening(model, 'stopEditing cancelEditing', this.stoppedEditing);
-            this.stopListening(model, 'doubleClicked', this.doubleClicked);
             this.stopListening(model, 'reselected', this.show);
             this.stopListening(model, 'deselected', this.clear);
         },
@@ -241,14 +239,17 @@ define(function(require, exports, module) {
         },
 
         startedEditing: function() {
+            if (this.editingMode) return;
             this.hideSubviews();
             this.el.appendChild(this.renderButtonWithText('done-text-editing', 'Done Editing'));
+            this.editingMode = true;
         },
 
         stoppedEditing: function() {
             $('.btn-toolbar').remove();
             $('.section-done-text-editing').remove();
             this.showSubviews();
+            this.editingMode = false;
         },
 
         clear: function() {
@@ -333,18 +334,6 @@ define(function(require, exports, module) {
 
             if ((12 - rightCoor) < 2) return "left";
             return "right";
-        },
-
-        doubleClicked: function() {
-            // if (this.model.getForm() && !this.model.isLoginForm()) {
-            //     this.openFormEditor();
-            // }
-            // if (this.model.getLoginRoutes()) {
-            //     this.openLoginEditor();
-            // }
-            if (this.model.get('type') == "imageslider") {
-                this.openSlideEditor();
-            }
         },
 
         clickedDelete: function() {

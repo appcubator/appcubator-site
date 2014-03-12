@@ -185,7 +185,7 @@ define(function(require, exports, module) {
                             fullWidth = false;
                         }
 
-                        var genIDStr = plugin.getName() + ".uielements." + element.name;
+                        var genIDStr = pluginName + ".uielements." + element.name;
                         sect.addWidgetItem('', 'uielement', displayName, className, genIDStr, fullWidth);
                     }, this);
                 }
