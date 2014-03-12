@@ -321,6 +321,7 @@ def plugineditor(request, app_id):
     page_context = {'app'          : app,
                     'user'         : app.owner,
                     'CODEGEN_URL'  : settings.CODEGEN_ADDR + '/',
+                    'DEBUG'        : settings.DEBUG,
                     'CODEGEN_STATICS_URL': settings.CODEGEN_STATICS_URL}
     add_statics_to_context(page_context, app)
     return render(request, 'app-plugin-editor.html', page_context)
