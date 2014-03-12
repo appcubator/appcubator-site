@@ -300,7 +300,7 @@ def jsoneditor(request, app_id, page_name="overview"):
                     'display_garage' : False}
     add_statics_to_context(page_context, app)
     return render(request, 'app-jsoneditor.html', page_context)
-
+ 
 @require_GET
 @login_required
 def plugineditor(request, app_id):
