@@ -167,7 +167,7 @@ define(function(require, exports, module) {
                 var pluginName = pair[0],
                     plugin = pair[1];
                 if (plugin.has('uielements')) {
-                    var displayName = plugin.get('metadata').displayName || pluginName;
+                    var displayName =  pluginName || plugin.get('metadata').displayName;
                     var sect = this.addNewSection(displayName);
                     createdSections.push(sect);
 
