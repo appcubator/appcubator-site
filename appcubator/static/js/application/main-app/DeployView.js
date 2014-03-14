@@ -34,7 +34,7 @@ function() {
         var hideWheel = function() {
             $(".download-pane .loading-wheel").css('visibility','hidden');
         }
-        v1.download(hideWheel);
+        v1.currentApp.download(hideWheel);
     },
 
     close: function() {

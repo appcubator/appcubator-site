@@ -38,7 +38,7 @@ define(function(require, exports, module) {
       '<div class="type-field" id="type-row-<%- cid %>">',
         '<select class="attribs" id="type-<%- cid %>">',
             '<% _.each(fieldTypes, function(fieldType) { %>',
-                '<option value="text" <% if(type == fieldType) %> selected <% %>><%= fieldType %></option>',
+                '<option value="<%= fieldType %>" <% if(type == fieldType) %> selected <% %>><%= fieldType %></option>',
             '<% }); %>',
         '</select>',
       '</div>',
@@ -164,11 +164,9 @@ define(function(require, exports, module) {
         },
 
         changedAttribs: function(e) {
-            var props = String(e.target.id).split('-');
-            var cid = props[1];
-            var attrib = props[0];
-            var value = e.target.options[e.target.selectedIndex].value || e.target.value;
-            this.fieldsCollection.get(cid).set(attrib, value);
+            var cid = String(e.currentTarget.id).replace('type-','');
+            var value = e.currentTarget.value;
+            this.fieldsCollection.get(cid).set("type", value);
         },
 
         addedEntity: function(item) {
