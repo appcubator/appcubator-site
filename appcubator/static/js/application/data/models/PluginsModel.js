@@ -19,7 +19,9 @@ define(function(require, exports, module) {
         },
 
         /* builtin plugins are not in the model by default,
-         * so this fn includes them in its return value */
+         * so this fn includes them in its return value 
+         * 
+         * returns { pluginName1: plugingModel1, ... } */
         getAllPlugins: function() {
 
             var plugins = _.clone(this.attributes); // pluginName : pluginModel object
@@ -68,6 +70,14 @@ define(function(require, exports, module) {
             });
         },
 
+        getAllPluginsWithModule: function(moduleName) {
+            var plugins = this.getAllPlugins();
+            return _.filter(plugins, function(pluginModel) {
+                // pluginModel.name = pluginName;
+                return pluginModel.has(moduleName);
+            });
+        },
+
         getGeneratorsWithModule: function(generatorModule) {
             var generators = [];
 
@@ -87,10 +97,21 @@ define(function(require, exports, module) {
 
         installPluginToModel: function(pluginModel, nodeModelModel) {
             if (!pluginModel) return;
-            var gens = this.get(pluginModel.getName()).getGensByModule('model_methods');
+            var pluginName = pluginModel.getName();
+            
+            if(this.has(pluginName)) {
+                var gens = this.get(pluginName).getGensByModule('model_methods');
+            }
+            else if (this.getAllPlugins()[pluginName]) {
+                var gens = this.getAllPlugins()[pluginName].getGensByModule('model_methods');
+            }
+            else {
+                throw "Plugin to install could not be found.";
+            }
+
             _.each(gens, function(gen) {
                 var methodModel = new NodeModelMethodModel();
-                var genIDStr = pluginModel.getName + '.model_methods.' + gen.name;
+                var genIDStr = pluginModel.getName() + '.model_methods.' + gen.name;
                 methodModel.setGenerator(genIDStr);
                 methodModel.set('modelName', nodeModelModel.get('name'));
                 methodModel.set('name', gen.name);
