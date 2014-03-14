@@ -37,13 +37,9 @@ define(function(require, exports, module) {
       '<div class="hdr"><%- name %></div>',
       '<div class="type-field" id="type-row-<%- cid %>">',
         '<select class="attribs" id="type-<%- cid %>">',
-          '<option value="text" <% if(type =="text") %> selected <% %>>Text</option>',
-          '<option value="number" <% if(type =="number") %> selected <% %>>Number</option>',
-          '<option value="email" <% if(type =="email") %> selected <% %>>Email</option>',
-          '<option value="image" <% if(type =="image") %> selected <% %>>Image</option>',
-          '<option value="date" <% if(type =="date") %> selected <% %>>Date</option>',
-          '<option value="file" <% if(type =="file") %> selected <% %>>File</option>',
-          '<option value="money" <% if(type =="money") %> selected <% %>>USD($)</option>',
+            '<% _.each(fieldTypes, function(fieldType) { %>',
+                '<option value="text" <% if(type == fieldType) %> selected <% %>><%= fieldType %></option>',
+            '<% }); %>',
         '</select>',
       '</div>',
       '<div class="prop-cross" id="delete-<%- cid %>">',
@@ -51,6 +47,15 @@ define(function(require, exports, module) {
       '</div>',
     '</div>'
     ].join('\n');
+
+    var mongooseTypes = [
+        'String',
+        'Number',
+        'Date',
+        'Boolean',
+        'Buffer',
+        'ObjectID'
+    ];
 
     var TableDescriptionView = Backbone.View.extend({
         el: null,
@@ -94,7 +99,6 @@ define(function(require, exports, module) {
             this.$el.html(html);
 
             this.renderProperties();
-            this.renderRelations();
 
             this.addPropertyBox = new Backbone.NameBox({}).setElement(this.$el.find('.add-property-column').get(0)).render();
             this.subviews.push(this.addPropertyBox);
@@ -148,6 +152,7 @@ define(function(require, exports, module) {
             page_context.entityName = this.model.get('name');
             page_context.entities = this.otherEntities;
             page_context.isNew = isNew;
+            page_context.fieldTypes = mongooseTypes;
 
             var template = _.template(propertyTemplate, page_context);
 
@@ -155,7 +160,7 @@ define(function(require, exports, module) {
         },
 
         removeField: function(fieldModel) {
-            this.$('#column-' + fieldModel.cid).remove();
+            this.$el.find('#column-' + fieldModel.cid).remove();
         },
 
         changedAttribs: function(e) {
@@ -202,16 +207,7 @@ define(function(require, exports, module) {
 
         clickedPropDelete: function(e) {
             var cid = String(e.target.id || e.target.parentNode.id).replace('delete-', '');
-
-            var model = this.fieldsCollection.get(cid);
-            var widgets = v1State.getWidgetsRelatedToField(model);
-
-            _.each(widgets, function(widget) {
-                widget.widget.getForm().removeFieldsConnectedToField(model);
-            });
-
             this.fieldsCollection.remove(cid);
-            $('#column-' + cid).remove();
         },
 
         clickedUploadExcel: function(e) {

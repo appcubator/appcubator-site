@@ -24,7 +24,7 @@ define(function(require, exports, module) {
 
     var NodeModelPluginsView = Backbone.View.extend({
 
-        className: 'description-view',
+        className: 'description-view description-plugins',
         subviews: [],
 
         events: {
