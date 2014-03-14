@@ -39,6 +39,8 @@ define(function(require, exports, module) {
             });
             this.set('functions', new NodeModelCodeCollection(bone.functions || []));
 
+            if(!this.generate) { this.setGenerator("models.model"); }
+
             this.isUser = false;
         },
 

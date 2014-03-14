@@ -258,7 +258,7 @@ define(function(require, exports, module) {
 
             if (json.layout) { json.layout = this.get('layout').serialize(options); }
             if (json.fields) { json.fields = json.fields.serialize(options); }
-            if (json.row) { json.row = json.row.serialize(options); }
+            // if (json.row) { json.row = json.row.serialize(options); }
             if (json.context) delete json.context;
 
             return json;

@@ -293,10 +293,25 @@ generators.push({
             "<input type=\"submit\" value=\"Submit\"><br>\n" +
             "</form>",
 
-        "js": "$('#<%= id %>').submit(function(){\n" +
+            "js": "$.fn.serializeObject = function()\n" +
+                "{ var o = {}; \n" +
+                   "var a = this.serializeArray(); \n" +
+                   "$.each(a, function() { \n" +
+                      " if (o[this.name]) { \n" +
+                           "if (!o[this.name].push) { \n" +
+                               "o[this.name] = [o[this.name]]; \n" +
+                           "} \n" +
+                           "o[this.name].push(this.value || ''); \n" +
+                       "} else { \n" +
+                           "o[this.name] = this.value || ''; \n" +
+                       "} \n" +
+                   "}) \n;" +
+                   "return o; \n" +
+                "}; \n" +
+            " $('#<%= id %>').submit(function(e){\n" +
+            "    e.preventDefault(); \n" +
             "    var formdata = {};\n" +
-            "    formdata.name = $('#<%= id %> input[name=\"name\"]').val();\n" +
-            "    formdata.url = $('#<%= id %> input[name=\"url\"]').val();\n" +
+            "    formdata = $( this ).serializeObject(); console.log(formdata);" +
             "    models.<%= modelName %>.create<%= modelName %>(formdata, function(err, data){\n" +
             "        console.log(data);\n" +
             "        if (err) {\n" +
