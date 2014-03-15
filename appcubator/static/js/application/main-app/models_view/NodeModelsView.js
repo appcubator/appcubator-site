@@ -20,7 +20,8 @@ define(function(require, exports, module) {
         title: 'Tables',
         className: 'dropdown-view entities-view',
         events: {
-            'click .table-name': 'clickedTableName'
+            'click .table-name': 'clickedTableName',
+            'click .remove-model': 'clickedRemoveTable'
         },
         subviews: [],
 
@@ -58,7 +59,7 @@ define(function(require, exports, module) {
         },
 
         renderTable: function(tableModel) {
-            this.$el.find('#list-tables').append('<li class="table-name" id="table-' + tableModel.cid + '">' + tableModel.get('name') + '</li>');
+            this.$el.find('#list-tables').append('<li class="table-name" id="table-' + tableModel.cid + '">' + tableModel.get('name') + '<span class="remove-model pull-right" id="remove-table-' + tableModel.cid + '">×<span></li>');
         },
 
         removeTable: function(tableModel) {
@@ -71,6 +72,21 @@ define(function(require, exports, module) {
             var tableView = new NodeModelView(tableModel);
             tableView.render();
             // this.el.appendChild(tableView.render().el);
+        },
+
+        clickedRemoveTable: function(e) {
+            e.preventDefault();
+
+            var cid = String(e.currentTarget.id).replace('remove-table-', '');
+            var tableModel = v1State.get('models').get(cid);
+            var modelName = tableModel.get('name');
+
+            var r = confirm("Are you sure you want to delete "+ modelName+" model?");
+            if (r == true) {
+                v1State.get('models').remove(tableModel);
+            }
+
+            return false;
         },
 
         renderRelations: function() {

@@ -246,6 +246,24 @@ generators.push({
                        "}"}
 });
 
+generators.push({
+    name: 'update',
+    version: '0.1',
+    defaults: {
+      enableAPI: true
+    },
+    code: function(data, templates){
+        var method = { name: 'update'+data.modelName,
+                       code: templates.code() };
+        if (data.enableAPI) method.enableAPI = true;
+        return method;
+    },
+    templates: {'code':"function (conditions, update, callback) {\n"+
+                       "    // Calls the mongoose find method of this model. Add validation logic here.\n"+
+                       "    return this.findOneAndUpdate(conditions, update, callback);\n" +
+                       "}"}
+});
+
 exports.generators = generators;
 
 },{}],4:[function(require,module,exports){
@@ -278,7 +296,6 @@ generators.push({
                     redirect: '/?success=true' }
           */
         data.formFields = _.map(data.fields, expand).join('\n');
-
         var uie = {
             html: templates.html(data),
             js: templates.js(data),
@@ -334,9 +351,38 @@ generators.push(
             "4-8": "<div class=\"row\">\n    <div class=\"container\">\n        <div class=\"text-center ycol\"><%= colheader %></div>\n        <div class=\"col-md-4 ycol\"><%= col0 %></div>\n        <div class=\"col-md-8 ycol\"><%= col1 %></div>\n    </div>\n</div>",
             "html": "<div id=\"<%= modelName %>-list-<%= id %>\">\n</div>",
             "row_html": "<div class=\"row\">\n    <div class=\"container\">\n        <%= row_content_str %>\n    </div>\n</div>",
-            "js": "models.<%= modelName %>.find<%= modelName %>({ }, function(err, data){\n    \n    var $list = $('#<%= modelName %>-list-<%= id %>');\n    var template = '<%= rowTemplate %>';\n    \n    console.log(data);\n    \n    _.each(data, function(d) {\n        $list.append(_.template(template, {obj:d}));\n    });\n    \n    if(!data || data.length == 0) {\n        $list.append('No results listed');\n    }\n});"
+            "js": "models.<%= modelName %>.find<%= modelName %>({ }, function(err, data){\n    \n    var $list = $('#<%= modelName %>-list-<%= id %>');\n    var template = '<%= rowTemplate %>';\n    \n    console.log(data);\n    \n    _.each(data, function(d) {\n        $list.append(_.template(template, {obj:d}));\n  <%= afterRenderJS %> \n  });\n    \n    if(!data || data.length == 0) {\n        $list.append('No results listed');\n    }\n});"
         },
-        "code": "function(data, templates) {\n    \n    if(!data.id || data.id == -1) {\n        data.id = Math.floor(Math.random()*11);\n    }\n        \n    function renderRow (rowData) {\n        \n        var expandedEls = {};\n        var rowStr = _.map(rowData.columns, function(column) {\n            console.log(column);\n            return expand(column).html;\n        }).join('\\n');\n\n        return rowStr;\n    }\n\n    data.row_content_str = renderRow(data.row).split('\\n').join('');\n    data.rowTemplate = templates.row_html(data).split('\\n').join('');\n\n    return {\n        'html': templates.html(data),\n        'js': templates.js(data),\n        'css': \"\"\n    }\n}",
+        "code": function(data, templates) {
+            if(!data.id || data.id == -1) {
+                data.id = Math.floor(Math.random()*11);
+            }
+
+            var rowEls = _.map(data.row.columns, function(column) {
+                return expand(column);
+            });
+
+            function renderRowStr () {
+                var rowStr = rowEls.map(function(rowEl){ return rowEl.html; }).join('\n');
+                return rowStr;
+            }
+
+            function renderRowJs () {
+                var rowStr = rowEls.map(function(rowEl){ return rowEl.js; }).join('\n');
+                return rowStr;
+            }
+
+            data.row_content_str = renderRowStr().split('\n').join('');
+            data.row_content_str = data.row_content_str.replace(/<%/g, "<' + '%");
+            data.rowTemplate = templates.row_html(data).split('\n').join('');
+            data.afterRenderJS = renderRowJs();
+
+            return {
+                'html': templates.html(data),
+                'js': templates.js(data),
+                'css': ''    
+            }
+        },
         "name": "list",
         "version": "0.1",
         "defaults": {
@@ -1242,6 +1288,10 @@ generators.push({
 generators.push({
     name: 'form-field',
     version: '0.1',
+    defaults: {
+      field_name: "",
+      displayType: "single-line-text"
+    },
     code: function(data, templates) {
         /*  */
 
