@@ -24,7 +24,7 @@ define(function(require, exports, module) {
 
     var NodeModelPluginsView = Backbone.View.extend({
 
-        className: 'description-view',
+        className: 'description-view description-plugins',
         subviews: [],
 
         events: {
@@ -38,13 +38,19 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            var plugins = v1State.get('plugins').getPluginsWithModule('model_methods');
+            var plugins = v1State.get('plugins').getAllPluginsWithModule('model_methods');
             
-            console.log(plugins);
 
             var gens = _.map(plugins, function(pluginM) {
                 var gen = {};
-                gen.name = pluginM.name;
+                try {
+                    gen.name = pluginM.name || pluginM.get('metadata').name
+                }
+                catch(e) {
+                    gen.name = "Unnamed";
+                    console.log("There is an unnamed plugin.");
+                } 
+
                 if(v1State.get('plugins').isPluginInstalledToModel(pluginM, this.model)) {
                     gen.isChecked = "checked";
                 }
@@ -52,11 +58,9 @@ define(function(require, exports, module) {
                     gen.isChecked ="";
                 }
 
-                console.log(gen);
                 return gen;
             }, this);
 
-            console.log(gens);
             this.plugins = plugins; 
             var html = _.template(pluginAttribsTemplate, { plugins : gens });
             this.el.innerHTML = html;
@@ -68,7 +72,7 @@ define(function(require, exports, module) {
 
             var pluginInd = e.currentTarget.id.replace('myonoffswitch-wrapper-','');
             var isChecked = this.$el.find('#myonoffswitch'+pluginInd).hasClass('checked');
-            console.log(isChecked);
+
             if (isChecked) {
                 v1State.get("plugins").uninstallPluginToModel(this.plugins[pluginInd], this.model);
                 this.$el.find('#myonoffswitch'+pluginInd).removeClass('checked');

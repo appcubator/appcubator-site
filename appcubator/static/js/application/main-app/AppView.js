@@ -38,8 +38,6 @@ define(function(require, exports, module) {
 
             this.toolBar = this.createSubview(ToolBarView, { pageId: -1 });
 
-            this.listenTo(this.model.get('models'), 'add', this.entityAdded);
-
             this.routesView = this.createSubview(RoutesView);
             this.routesView.setToggleEl($('.menu-app-routes'));
             this.routesView.setPointerPosition("130px");
@@ -211,17 +209,6 @@ define(function(require, exports, module) {
                     this.tutorial.closeModal();
                 }
             }
-        },
-
-        entityAdded: function(entityModel) {
-            var pageName = entityModel.get('name') + ' Page';
-            var newPage = {
-                name: pageName,
-                url: {
-                    urlparts: [pageName.replace(/ /g, '_'), '{{' + entityModel.get('name') + '}}']
-                }
-            };
-            this.model.get('routes').push(newPage);
         },
 
         undo: function() {

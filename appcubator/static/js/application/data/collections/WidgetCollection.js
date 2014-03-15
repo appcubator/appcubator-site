@@ -19,6 +19,7 @@ define(function(require, exports, module) {
         },
 
         createUIElement: function(type, layout, generatorPath, extraData) {
+        	console.log(generatorPath);
             var generator = G.getGenerator(generatorPath);
 
             var widget = {};

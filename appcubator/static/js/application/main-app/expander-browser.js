@@ -213,6 +213,9 @@ var generators = [];
 generators.push({
     name: 'create',
     version: '0.1',
+    defaults: {
+      enableAPI: true
+    },
     code: function(data, templates){
         var method = { name: 'create'+data.modelName,
                        code: templates.code() };
@@ -228,6 +231,9 @@ generators.push({
 generators.push({
     name: 'find',
     version: '0.1',
+    defaults: {
+      enableAPI: true
+    },
     code: function(data, templates){
         var method = { name: 'find'+data.modelName,
                        code: templates.code() };
@@ -287,10 +293,25 @@ generators.push({
             "<input type=\"submit\" value=\"Submit\"><br>\n" +
             "</form>",
 
-        "js": "$('#<%= id %>').submit(function(){\n" +
+            "js": "$.fn.serializeObject = function()\n" +
+                "{ var o = {}; \n" +
+                   "var a = this.serializeArray(); \n" +
+                   "$.each(a, function() { \n" +
+                      " if (o[this.name]) { \n" +
+                           "if (!o[this.name].push) { \n" +
+                               "o[this.name] = [o[this.name]]; \n" +
+                           "} \n" +
+                           "o[this.name].push(this.value || ''); \n" +
+                       "} else { \n" +
+                           "o[this.name] = this.value || ''; \n" +
+                       "} \n" +
+                   "}) \n;" +
+                   "return o; \n" +
+                "}; \n" +
+            " $('#<%= id %>').submit(function(e){\n" +
+            "    e.preventDefault(); \n" +
             "    var formdata = {};\n" +
-            "    formdata.name = $('#<%= id %> input[name=\"name\"]').val();\n" +
-            "    formdata.url = $('#<%= id %> input[name=\"url\"]').val();\n" +
+            "    formdata = $( this ).serializeObject(); console.log(formdata);" +
             "    models.<%= modelName %>.create<%= modelName %>(formdata, function(err, data){\n" +
             "        console.log(data);\n" +
             "        if (err) {\n" +
@@ -690,6 +711,19 @@ generators.push({
 generators.push({
     name: 'navbar',
     version: '0.1',
+    defaults: {
+        brandName : "Default Name",
+        links: [
+            {
+                url: "",
+                title: "Page 1"
+            },
+            {
+                url: "",
+                title: "Page 2"
+            }
+        ]
+    },
     code: function(data, templates) {
 
         _.each(data.links, function(link) {
@@ -731,6 +765,19 @@ generators.push({
 generators.push({
     name: 'footer',
     version: '0.1',
+    defaults: {
+        customText : "Default Footer - Copyright",
+        links: [
+            {
+                url: "",
+                title: "Page 1"
+            },
+            {
+                url: "",
+                title: "Page 2"
+            }
+        ]
+    },
     code: function(data, templates) {
 
         var html = templates.html(data);
@@ -920,7 +967,7 @@ generators.push({
                  layout: data.layout };
     },
     templates: {
-        html: '<p class="<%= className %>" style="<%= style %>"><%= content %></p>'
+        html: '<div class="<%= className %>" style="<%= style %>"><%= content %></div>'
     },
     displayProps: {
         name: 'Text',

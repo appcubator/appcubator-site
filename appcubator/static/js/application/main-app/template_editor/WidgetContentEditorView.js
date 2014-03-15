@@ -30,14 +30,6 @@ define(function(require, exports, module) {
         },
 
         render: function() {
-            var self = this;
-            // if (this.model.get('data').has('content') && this.model.get('data').get('content') !== null && !this.model.get('data').get('content_attribs').has('src') &&
-            //     this.model.get('type') != "images" &&
-            //     this.model.get('type') != "buttons") {
-
-            //     //this.el.appendChild(this.renderFontPicker());
-            // }
-
             if (this.model.has('src')) {
                 this.el.appendChild(this.renderSrcInfo());
             }
@@ -76,61 +68,27 @@ define(function(require, exports, module) {
             return li;
         },
 
-
-        // renderFontPicker: function() {
-        //     var li = document.createElement('li');
-        //     var curStyle = (this.model.get('data').get('content_attribs').get('style') || 'font-size:default;');
-
-        //     var currentFont;
-        //     if (/font-size:([^]+);/g.exec(curStyle)) {
-        //         currentFont = /font-size:([^]+);/g.exec(curStyle)[1];
-        //     } else {
-        //         currentFont = "font-size:default;";
-        //     }
-
-        //     var sizeDiv = document.createElement('div');
-        //     sizeDiv.className = 'size-picker';
-        //     var hash = 'content_attribs' + '-' + 'style';
-        //     var sizeSelect = new comp().select('').id(hash).classN('font-picker');
-
-        //     _(['default', '10px', '14px', '16px', '18px', '20px', '32px', '36px', '48px', '72px']).each(function(val) {
-        //         sizeSelect.el.innerHTML += '<option value="font-size:' + val + ';">' + val + '</option>';
-        //     });
-
-        //     sizeDiv.innerHTML = '<span class="key">Font Size</span>';
-        //     sizeDiv.appendChild(sizeSelect.el);
-        //     var optionsDiv = document.createElement('div');
-        //     optionsDiv.className = 'font-options';
-        //     optionsDiv.innerHTML = '<span id="toggle-bold" class="option-button"><strong>B</strong></span>';
-
-        //     // li.appendChild(sizeDiv);
-        //     // li.appendChild(optionsDiv);
-
-        //     $(sizeDiv).find('option[value="font-size:' + currentFont + ';"]').prop('selected', true);
-        //     return li;
-        // },
-
         inputChanged: function(e) {
             e.stopPropagation();
             var hash = e.target.id.replace('prop-', '');
             var info = hash.split('-');
 
             if (info.length == 2) {
-                this.model.get('data').get(info[0]).set(info[1], e.target.value);
+                this.mode.get(info[0]).set(info[1], e.target.value);
             } else if (info.length == 1) {
-                this.model.get('data').set(info[0], e.target.value);
+                this.model.set(info[0], e.target.value);
             }
         },
 
         changedContent: function(e) {
-            this.model.get('data').set("content", e.target.value);
+            this.model.set("content", e.target.value);
         },
 
         changeFont: function(e) {
-            if (!this.model.get('data').get('content_attribs').has('style')) {
-                this.model.get('data').get('content_attribs').set('style', 'font-size:12px;');
+            if (!this.model.get('content_attribs').has('style')) {
+                this.model.get('content_attribs').set('style', 'font-size:12px;');
             }
-            var curStyle = this.model.get('data').get('content_attribs').get('style');
+            var curStyle = this.model.get('content_attribs').get('style');
 
             if (/font-size:([^]+);/g.exec(curStyle)) {
                 curStyle = curStyle.replace(/(font-size:)(.*?)(;)/gi, e.target.value);
@@ -138,20 +96,20 @@ define(function(require, exports, module) {
                 curStyle = curStyle + ' ' + e.target.value;
             }
 
-            this.model.get('data').get('content_attribs').set('style', curStyle);
+            this.model.get('content_attribs').set('style', curStyle);
             mouseDispatcher.isMousedownActive = false;
         },
 
         toggleBold: function(e) {
-            var curStyle = (this.model.get('data').get('content_attribs').get('style') || '');
+            var curStyle = (this.model.get('content_attribs').get('style') || '');
             if (curStyle.indexOf('font-weight:bold;') < 0) {
                 $('#toggle-bold').addClass('selected');
                 curStyle += 'font-weight:bold;';
-                this.model.get('data').get('content_attribs').set('style', curStyle);
+                this.model.get('content_attribs').set('style', curStyle);
             } else {
                 $('#toggle-bold').removeClass('selected');
                 curStyle = curStyle.replace('font-weight:bold;', '');
-                this.model.get('data').get('content_attribs').set('style', curStyle);
+                this.model.get('content_attribs').set('style', curStyle);
             }
         },
 
@@ -181,11 +139,11 @@ define(function(require, exports, module) {
 
             var curValName = this.model.get('src');
             if (this.model.has('src_content')) {
-                curValName = this.model.get('data').get('content_attribs').get('src_content');
+                curValName = this.model.get('content_attribs').get('src_content');
             }
             var curVal = {
                 name: curValName,
-                val: this.model.get('data').get('content_attribs').get('src')
+                val: this.model.get('src')
             };
 
             var selectView = new SelectView(statics_list, curVal, true, {
@@ -247,8 +205,6 @@ define(function(require, exports, module) {
         },
 
         changeHref: function(inp) {
-            console.log(inp);
-
             var self = this;
             var target = inp;
             if (target == "External Link") {

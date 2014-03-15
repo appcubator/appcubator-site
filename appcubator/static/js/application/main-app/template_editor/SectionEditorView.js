@@ -96,6 +96,7 @@ define(function(require, exports, module) {
             else {
                 this.$menu.addClass('fadeInUp');
                 this.$menu.show();
+                this.$el.find('.class_name').focus();
                 this.expanded = true;
             }
         },

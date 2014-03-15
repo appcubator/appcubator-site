@@ -63,11 +63,12 @@ define(function(require, exports, module) {
         },
 
         updated: function(columnModel, $col) {
+
             var newArr = $col.sortable( "toArray", {attribute  : "data-cid"});
             var curArr = _(columnModel.get('uielements').models).pluck('cid');
 
             if(!_.isEqual(curArr, newArr)) {
-
+            	var new_models = [];
                 _.each(newArr, function(elCid, ind) {
 
                     var widgetModel = {};
@@ -82,8 +83,11 @@ define(function(require, exports, module) {
                         columnModel.get('uielements').add(widgetModel, { silent: true });
                     }
 
+                    new_models.push(widgetModel);
+
                 }, this);
 
+                columnModel.get("uielements").models = new_models;
             }
         },
 

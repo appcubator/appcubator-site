@@ -176,7 +176,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         },
 
         select: function(e) {
-            console.log("SELECTED");
             if (this.selected && !this.editMode) {
                 this.model.trigger('doubleClicked');
                 return;
@@ -185,7 +184,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             if (!this.editMode) {
                 this.model.trigger('selected');
                 this.el.style.zIndex = 2003;
-                if (this.model.isBgElement()) this.el.style.zIndex = 1000;
                 this.selected = true;
             }
         },
@@ -269,20 +267,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                     'justifyfull'
                 ];
 
-                if (this.model.isBuyButton()) {
-                    excludes = _.union(excludes, [
-                        'FontSize',
-                        'justifyleft',
-                        'justifyright',
-                        'justifycenter',
-                        'createlink',
-                        'bold',
-                        'italic',
-                        'underline',
-                        'insertunorderedlist',
-                        'insertorderedlist'
-                    ]);
-                }
 
                 this.$el.freshereditor({
                     toolbar_selector: ".widget-editor",
