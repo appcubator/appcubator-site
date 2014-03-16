@@ -17,7 +17,7 @@ from django.forms import ModelForm
 import re
 import requests
 import nltk
-import simplejson
+import json
 
 import os, os.path
 join = os.path.join
@@ -37,7 +37,7 @@ from appcubator import codegen
 from django.conf import settings
 
 def add_statics_to_context(context, app):
-    context['statics'] = simplejson.dumps(list(
+    context['statics'] = json.dumps(list(
         StaticFile.objects.filter(app=app).values()))
     return context
 
@@ -49,7 +49,7 @@ APP_TEMPLATES = { "socialnetwork": "",
 
 for templname in APP_TEMPLATES:
     with open(join(DEFAULT_STATE_DIR, 'apps', "%s.json" % templname)) as f:
-        r = simplejson.load(f)
+        r = json.load(f)
     APP_TEMPLATES[templname] = r
 
 
@@ -104,8 +104,8 @@ def dashboard(request, app_id):
     mobile_themes = [t.to_dict() for t in mobile_themes]
 
     page_context = {'title'        : 'Dashboard',
-                    'themes'       : simplejson.dumps(list(themes)),
-                    'mobile_themes': simplejson.dumps(list(mobile_themes)),
+                    'themes'       : json.dumps(list(themes)),
+                    'mobile_themes': json.dumps(list(mobile_themes)),
                     'apps'         : request.user.apps.all(),
                     'collab_apps'  : [c.app for c in request.user.collaborations.all()]
                     }
@@ -261,8 +261,8 @@ def page(request, app_id, page_name="overview"):
 
     page_context = {'app'          : app,
                     'title'        : 'The Garage',
-                    'themes'       : simplejson.dumps(list(themes)),
-                    'mobile_themes': simplejson.dumps(list(mobile_themes)),
+                    'themes'       : json.dumps(list(themes)),
+                    'mobile_themes': json.dumps(list(mobile_themes)),
                     'apps'         : app.owner.apps.all(),
                     'user'         : app.owner,
                     'page_name'    : page_name,
@@ -291,8 +291,8 @@ def jsoneditor(request, app_id, page_name="overview"):
 
     page_context = {'app'          : app,
                     'title'        : 'The Garage',
-                    'themes'       : simplejson.dumps(list(themes)),
-                    'mobile_themes': simplejson.dumps(list(mobile_themes)),
+                    'themes'       : json.dumps(list(themes)),
+                    'mobile_themes': json.dumps(list(mobile_themes)),
                     'apps'         : app.owner.apps.all(),
                     'user'         : app.owner,
                     'page_name'    : page_name,
@@ -342,7 +342,7 @@ def app_editor_iframe(request, app_id, page_name="overview"):
 
     page_context = {'app'          : app,
                     'title'        : 'The Garage',
-                    'themes'       : simplejson.dumps(list(themes)),
+                    'themes'       : json.dumps(list(themes)),
                     'apps'         : app.owner.apps.all(),
                     'user'         : app.owner,
                     'page_name'    : page_name,
@@ -382,7 +382,7 @@ def delete(request, app_id):
 
 
 @login_required
-def state(request, app_id, validate=True):
+def state(request, app_id, path=None, validate=True): # note that in the subtree case, path is passed as a positional argument. I couldn't get the named regex kwarg thing to work.
     app = get_object_or_404(App, id=app_id)
     if not app.is_editable_by_user(request.user):
         raise Http404
@@ -390,7 +390,14 @@ def state(request, app_id, validate=True):
         state = get_state(request, app)
         return JsonResponse(state)
     elif request.method == 'POST':
-        status, data = save_state(request, app, require_valid=validate)
+        intified_path = []
+        if path:
+            raw_tree_path = path.split("/")
+            for p in raw_tree_path:
+                if p.isdigit():
+                    p = int(p)
+                intified_path.append(p)
+        status, data = save_state(request, app, require_valid=validate, tree_path=intified_path)
         try:
             app.parse_and_link_app_state()
             deploy_data = {'deployment_id': app.deploy() }
@@ -409,15 +416,40 @@ def get_state(request, app):
     return app.state
 
 
+def mod_sub_tree(tree, sub_t, path):
+    t = tree
+    path = [p for p in path] # deepcopy
+
+    # can't mod the entire thing without a ref to its parent
+    if len(path) == 0:
+        assert False
+
+    # traverse to the right point in the tree
+    # end result is that path is a list w one element
+    while len(path) > 1:
+        t = t[path.pop(0)]
+
+    # now tree is the direct parent this modifies tree.
+    t[path[0]] = sub_t
+
 @require_POST
 @login_required
-def save_state(request, app, require_valid=True):
+def save_state(request, app, require_valid=True, tree_path=()):
     # if the incoming appState's version_id does not match the
     # db's version_id, the incoming appState is an outdated version
-    if require_valid is True and not app.isCurrentVersion(simplejson.loads(request.body)):
-        return (409, { "error": "Plz get version %d" % app.state.get('version_id', 0) })
+    if len(tree_path) == 0:
+        if require_valid is True and not app.isCurrentVersion(json.loads(request.body)):
+            return (409, { "error": "Plz get version %d" % app.state.get('version_id', 0) })
 
-    app._state_json = request.body
+        app._state_json = request.body
+    else:
+        print "yoooo"
+        tree = app.state
+        new_sub_tree = json.loads(request.body)
+        mod_sub_tree(tree, new_sub_tree, tree_path)
+
+        app._state_json = json.dumps(tree)
+
     app.state['name'] = app.name
     app.full_clean()
 
@@ -626,7 +658,7 @@ def mobile_less_sheet(request, app_id):
 @csrf_exempt
 def default_less_sheet(request):
     t = loader.get_template('app-editor-css-gen.html')
-    uie_state = simplejson.loads(get_default_uie_state())
+    uie_state = json.loads(get_default_uie_state())
     context = Context({'uie_state': uie_state,
                        'isMobile': False,
                        'deploy': False})
@@ -915,9 +947,9 @@ def sub_register_domain(request, app_id, subdomain):
     if form.is_valid():
         # the below line calls the model's save method, which will update deployment server automatically.
         app = form.save()
-        return HttpResponse(simplejson.dumps({}), status=200, mimetype="application/json")
+        return HttpResponse(json.dumps({}), status=200, mimetype="application/json")
 
-    return HttpResponse(simplejson.dumps(form.errors), status=400, mimetype="application/json")
+    return HttpResponse(json.dumps(form.errors), status=400, mimetype="application/json")
 
 @require_POST
 @login_required
@@ -1069,4 +1101,4 @@ def plugins(request):
 
     plugins = [p.to_dict() for p in plugins]
     
-    return HttpResponse(simplejson.dumps(list(plugins)), status=200, mimetype="application/json")
+    return HttpResponse(json.dumps(list(plugins)), status=200, mimetype="application/json")
