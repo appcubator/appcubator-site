@@ -38,7 +38,8 @@ define(function(require, exports, module) {
             'click #page-info'           : 'pageInfo',
             'click #close-page-info'     : 'closePageInfo',
             'click #design-mode-button'  : 'switchToDesignMode',
-            'click #close-css-editor'    : 'switchOffDesignMode'
+            'click #close-css-editor'    : 'switchOffDesignMode',
+            'click .mobile-preview'      : 'switchToMobileMode'
         },
 
         initialize: function(options) {
@@ -308,6 +309,21 @@ define(function(require, exports, module) {
             $('.left-buttons').removeClass('invisible');
             this.$pageContainer.removeClass('packed');
             this.galleryEditor.show();
+        },
+
+        switchToMobileMode: function() {
+            
+            if (!this.mobilePreview) {
+                util.get('page-wrapper').style.width = 270 + 'px';
+                this.mobilePreview = true;
+                $('.mobile-preview').addClass('active');
+            }
+            else {
+                util.get('page-wrapper').style.width = "";
+                this.mobilePreview = false;
+                $('.mobile-preview').removeClass('active');
+            }
+            
         },
 
         close: function() {

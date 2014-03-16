@@ -36,6 +36,7 @@ define(function(require, exports, module) {
                 default:
                     var sectionsLayouts = type.split('-');
                     var sectionModel = new SectionModel();
+                    sectionModel.setupColumns();
 
                     _.each(sectionsLayouts, function(columnLayout) {
                         var columnM = new ColumnModel();
@@ -64,6 +65,7 @@ define(function(require, exports, module) {
             var widgetCollection = new WidgetCollection();
 
             this.each(function(sectionModel) {
+                if (!sectionModel.has('columns')) return;
                 var collection = sectionModel.get('columns');
                 collection.each(function(columnModel) {
 
@@ -77,6 +79,8 @@ define(function(require, exports, module) {
             }, this);
 
             this.on('add', function(sectionModel) {
+                if(!sectionModel.has('columns')) return;
+
                 var collection = sectionModel.get('columns');
                 collection.each(function(columnModel) {
 

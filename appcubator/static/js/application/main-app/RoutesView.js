@@ -86,13 +86,11 @@ define(function(require, exports, module) {
 
         createRoute: function(val) {
 
-            var route = new RouteModel({
+            this.collection.push({
                 url: val.split('/'),
                 name: null
             });
 
-            this.collection.push(route);
-            return elem;
         }
 
     });
