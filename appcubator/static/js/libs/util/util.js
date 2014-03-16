@@ -493,6 +493,10 @@ define(['backbone'], function() {
 
         packageModuleName: function(generatorName) {
             return G.expander.parseGenID(generatorName);
+        },
+
+        deepCopy: function(oldObject) {
+            return jQuery.extend(true, {}, oldObject);
         }
 
     };

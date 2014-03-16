@@ -86,10 +86,21 @@ define(function(require, exports, module) {
 
         createRoute: function(val) {
 
-            this.collection.push({
+            var templateName = prompt("Would you like to create a template as well?", val);
+
+            if (templateName != null) {
+                v1State.get('templates').push({
+                    name: templateName
+                });
+            }
+
+            var name = templateName || null;
+            var routeModel = this.collection.push({
                 url: val.split('/'),
-                name: null
+                name: name
             });
+
+            routeModel.setGenerator("routes.staticpage");
 
         }
 

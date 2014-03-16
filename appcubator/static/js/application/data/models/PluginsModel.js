@@ -24,7 +24,7 @@ define(function(require, exports, module) {
          * returns { pluginName1: plugingModel1, ... } */
         getAllPlugins: function() {
 
-            var plugins = _.clone(this.attributes); // pluginName : pluginModel object
+            var plugins = util.deepCopy(this.attributes); // pluginName : pluginModel object
 
             /* Start with local plugins and merge builtin plugins in, not overwriting local plugins. */
 

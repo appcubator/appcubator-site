@@ -10,6 +10,10 @@ define(function(require, exports, module) {
             this.set('name', bone.name);
             this.set('head', bone.head || "");
             this.set('uielements', new SectionCollection(bone.uielements || []));
+
+            if(!this.generate) {
+                this.setGenerator('templates.page');
+            }
         },
 
         getSections: function() {
