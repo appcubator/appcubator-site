@@ -46,6 +46,7 @@ urlpatterns += patterns('appcubator.views.app',
     # getting/setting state
     url(r'^app/(\d+)/state/$', 'state'),
     url(r'^app/(\d+)/state/force/$', 'state', {"validate": False}),
+    url(r'^app/(\d+)/state/(.*)/$', 'state'),
     url(r'^app/(\d+)/clone/$', 'clone'),
 
     # getting/setting uie state
