@@ -161,17 +161,16 @@ define(function(require, exports, module) {
             var elements = [];
             var createdSections = [];
 
-            console.log(v1State.get('plugins').getAllPlugins());
 
-            _.each(_.pairs(v1State.get('plugins').getAllPlugins()), function(pair) {
+            _.each(_.pairs(v1State.get('plugins').getAllPluginsSerialized()), function(pair) {
                 var pluginName = pair[0],
                     plugin = pair[1];
-                if (plugin.has('uielements')) {
-                    var displayName =  pluginName || plugin.get('metadata').displayName;
+                if (plugin.uielements) {
+                    var displayName =  pluginName || plugin.metadata.displayName;
                     var sect = this.addNewSection(displayName);
                     createdSections.push(sect);
 
-                    _.each(plugin.get('uielements'), function(element) {
+                    _.each(plugin.uielements, function(element) {
                         var className = null || 'plugin-icon';
                         if (element.displayProps && _.contains(validIconClasses, element.displayProps.iconType)) {
                             className = element.displayProps.iconType;

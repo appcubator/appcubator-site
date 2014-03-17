@@ -24,18 +24,26 @@ define(function(require, exports, module) {
          * returns { pluginName1: plugingModel1, ... } */
         getAllPlugins: function() {
 
-            var plugins = util.deepCopy(this.attributes); // pluginName : pluginModel object
+            var plugins = {};
+            plugins = _.extend(plugins, _.clone(this.attributes)); // pluginName : pluginModel object
 
             /* Start with local plugins and merge builtin plugins in, not overwriting local plugins. */
 
             _.each(G.expander.builtinGenerators, function(builtInPlugin, pluginName) {
                 var pluginModel = new PluginModel(builtInPlugin);
 
-                if (plugins[pluginName] === undefined) {
+                if (!plugins[pluginName]) {
                     plugins[pluginName] = pluginModel;
                 } else {
                     /* User might have forked a generator from a builtin plugin */
-                    var localCopy = plugins[pluginName]; // app-state copy of the package
+                    var localCopy = new PluginModel();
+
+                    // app-state copy of the package 
+                    _.each(plugins[pluginName].attributes, function(val, key) {
+                        localCopy.set(key, _.clone(val));
+                    }); 
+
+                    // iterating over the builtin ones and mergins the gens
                     _.each(builtInPlugin, function(gens, moduleName) {
                         if (moduleName === 'metadata')
                             return;
@@ -49,6 +57,17 @@ define(function(require, exports, module) {
             });
 
             return plugins;
+        },
+
+        getAllPluginsSerialized: function() {
+            var plugins = this.getAllPlugins();
+            var serializedPlugins = {};
+
+            _.each(plugins, function(val, key) {
+                serializedPlugins[key] = val.serialize();
+            });
+
+            return util.deepCopy(serializedPlugins);
         },
 
         install: function(plugin) {
