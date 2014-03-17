@@ -13,7 +13,10 @@ define(function(require, exports, module) {
 
         initialize: function(bone, isNew) {
 
-            this.set('layout', new LayoutModel(bone.layout || {}));
+            if (bone.layout) {
+                this.set('layout', new LayoutModel(bone.layout || {}));
+            }
+
             this.set('context', new Backbone.Collection(bone.context || []));
 
             if (bone.fields) { this.set('fields', new FormFieldCollection(bone.fields || [])); }

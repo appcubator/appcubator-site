@@ -53,6 +53,8 @@ define(function(require, exports, module) {
                             localCopy.set(moduleName, _.union(localCopy.get(moduleName), gens));
                         }
                     });
+
+                    plugins[pluginName] = localCopy;
                 }
             });
 
@@ -102,6 +104,21 @@ define(function(require, exports, module) {
 
             var generators = _.flatten(_.map(this.attributes, function(pluginModel, packageName) {
                 return pluginModel.getGensByModule(generatorModule);
+            }));
+
+            return generators;
+        },
+
+        getAllGeneratorsWithModule: function(moduleName) {
+            var plugins = this.getAllPluginsWithModule(moduleName);
+            var plugins = _.filter(plugins, function(pluginModel, key) {
+                return pluginModel.has(moduleName);
+            });
+
+            var generators = _.flatten(_.map(plugins, function(pluginModel) {
+                var gens = pluginModel.get(moduleName);
+                _.each(gens, function(gen) { gen.package = pluginModel.getName(); });
+                return gens;
             }));
 
             return generators;
