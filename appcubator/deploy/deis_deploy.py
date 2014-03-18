@@ -81,16 +81,13 @@ def update_code(appdir, deploy_id, url):
     """
     1. path to directory where app is stored
     2. deployment id (or none if it's not yet deployed)
-    3. dictionary of deploy data
-            "hostname": app.hostname(),
-            "url": 'http://' + app.hostname() + '/', (reachable url)
-            "deploy_secret": "v1factory rocks!",
+    3. URL to which a tarfile will be posted
     """
     tar_path = _write_tar_from_app_dir(appdir)
     print 'posting file: '+str(os.path.getsize(tar_path))
     try:
         with open(tar_path, "rb") as f:
-            r = requests.post(url+'/__update_code__', files={'code':f})
+            r = requests.post(url, files={'code':f})
     finally:
         os.remove(tar_path)
 

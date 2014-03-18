@@ -143,6 +143,7 @@ class App(models.Model):
     # cached deployment info
     subdomain = models.CharField(max_length=50, blank=True, unique=True)
     custom_domain = models.CharField(max_length=50, blank=True, null=True, unique=True, default=None) # if this is None, then the person is not using custom domain.
+    update_code_url = models.CharField(max_length=255, blank=True, null=True, default=None) # if this is None, then the person is not using custom domain.
 
     # set on save and deploy calls.
     error_type = models.IntegerField(default=0)
@@ -399,6 +400,9 @@ class App(models.Model):
     def url(self):
         return "http://%s/" % self.hostname()
 
+    def deploy_url(self):
+        return "http://devmon.%s/__update_code__" % self.hostname()
+
     def zip_bytes(self):
         tmpdir = self.write_to_tmpdir()
 
@@ -489,7 +493,7 @@ class App(models.Model):
             tmpdir = self.write_to_tmpdir()
             logger.info("Written to %s for code updating" % tmpdir)
 
-            deploy.update_code(tmpdir, self.deployment_id, self.url())
+            deploy.update_code(tmpdir, self.deployment_id, self.deploy_url())
 
         except deploy.NotDeployedError:
             if retry_on_404:

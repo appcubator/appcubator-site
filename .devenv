@@ -5,9 +5,7 @@ export STRIPE_PUBLIC_KEY="pk_test_qbJZ9hMePgdpdZUrkKTskzgz"
 export STRIPE_SECRET_KEY="sk_test_GhzvfBePNCkvC6j23UtZkmTi"
 
 # deployment service
-export DEIS_CONTROLLER='deis.appcbtr.com'
 export DEPLOYMENT_DOMAIN='appcbtr.com'
-export DEIS_FORMATION='homer'
 
 # (this is now custom per developer)
 #export DEIS_USERNAME='dev'
