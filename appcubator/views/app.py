@@ -443,7 +443,6 @@ def save_state(request, app, require_valid=True, tree_path=()):
 
         app._state_json = request.body
     else:
-        print "yoooo"
         tree = app.state
         new_sub_tree = json.loads(request.body)
         mod_sub_tree(tree, new_sub_tree, tree_path)
@@ -461,50 +460,13 @@ def save_state(request, app, require_valid=True, tree_path=()):
         except codegen.UserInputError, e:
             app.save()
             d = e.to_dict()
-            d['version_id'] = app.state.get('version_id', 0)
             return (400, d)
         except Exception, e:
             return (500, {'error': str(e)})
 
-    app.save()
-
-    return (200, {'version_id': app.state.get('version_id', 0)})
-
-
-@login_required
-@require_POST
-def deployment(request, app_id, operation):
-    app = get_object_or_404(App, id=app_id)
-    if not app.is_editable_by_user(request.user):
-        raise Http404
-
-    result = {}
-    if operation == 'update_code':
-        try:
-            app.parse_and_link_app_state()
-            data = app.deploy()
-        except codegen.UserInputError, e:
-            d = e.to_dict()
-            return JsonResponse(d, status=400)
-
-    elif operation == 'rebuild':
-        try:
-            app._rebuild()
-        except Exception:
-            return JsonResponse({'todo': 'catchme'}, status=500)
-
-    elif operation == 'rerelease':
-        try:
-            app._rerelease()
-        except Exception:
-            return JsonResponse({'todo': 'catchme'}, status=500)
     else:
-        return JsonResponse("Operation must be one of ['update_code', 'rebuild', 'rerelease']. You gave " + operation, status=400)
-
-    result['site_url'] = app.url()
-    result['zip_url'] = reverse('appcubator.views.app.app_zip', args=(app_id,))
-
-    return JsonResponse(result, status=200)
+        app.save()
+        return (200, {'version_id': app.state.get('version_id', 0)})
 
 
 @login_required

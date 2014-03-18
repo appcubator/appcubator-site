@@ -212,7 +212,9 @@ class App(models.Model):
         new_version = simplejson.loads(last_snap._state_json) != self.state
         return new_version
 
-    def save(self, increment_version_if_changed=True, update_deploy_server=True, log_state_if_changed=True, *args, **kwargs):
+    def save(self, increment_version_if_changed=True,
+            update_deploy_server=True,
+            log_state_if_changed=True, *args, **kwargs):
         """
         If the deployment info (subdomain) were changed since init,
         this will POST to the deployment server to update it.
@@ -470,26 +472,6 @@ class App(models.Model):
             "deploy_secret": "v1factory rocks!"
         }
         return post_data
-
-    def _rebuild(self, tmpdir=None):
-        if tmpdir is None:
-            tmpdir = self.write_to_tmpdir()
-        out = deploy.rebuild(tmpdir, self.deployment_id)
-        print "rc: " + str(out['rc'])
-        print "Out: " + out['out']
-        print "Err: " + out['err']
-        return out
-
-    def _rerelease(self):
-        deploy.rerelease(self.deployment_id, {'MONGO_ADDR': os.environ['TEMP_MONGO']})
-
-    def _update_code(self, port, retry=True):
-        # this is just for testing.
-        tmpdir = self.write_to_tmpdir()
-        deploy.update_code(tmpdir, self.deployment_id, 'http://localhost:%d' % port)
-
-        shutil.rmtree(tmpdir)
-
 
     def deploy(self, retry_on_404=True):
         try:
