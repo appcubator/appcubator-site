@@ -498,14 +498,18 @@ class App(models.Model):
         except deploy.NotDeployedError:
             if retry_on_404:
                 logger.warn("App was not actually deployed, probably from a prior error. Trying again.")
+                """ TODO XXX
                 self.deployment_id = None
                 self.custom_domain = None
+                """
                 return self.deploy(retry_on_404=False)
             else:
                 raise
         except Exception:
+            """ TODO XXX
             self.deployment_id = None
             self.custom_domain = None
+            """
             self.record_deploy_error(traceback.format_exc())
             raise
         else:
