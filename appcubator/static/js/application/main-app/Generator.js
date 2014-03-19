@@ -58,6 +58,7 @@ define(function(require, exports, module) {
     };
 
     Generator.prototype.getGenerator = function(generatorPath) {
+        console.log(generatorPath);
         var plugins = this._getPlugins();
         return this.expander.findGenData(plugins, this.expander.parseGenID(generatorPath));
     };

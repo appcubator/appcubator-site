@@ -53,8 +53,7 @@ define(function(require, exports, module) {
         'Number',
         'Date',
         'Boolean',
-        'Buffer',
-        'ObjectID'
+        'Buffer'
     ];
 
     var TableDescriptionView = Backbone.View.extend({
@@ -152,7 +151,13 @@ define(function(require, exports, module) {
             page_context.entityName = this.model.get('name');
             page_context.entities = this.otherEntities;
             page_context.isNew = isNew;
-            page_context.fieldTypes = mongooseTypes;
+            var types = v1State.get('models').map(function(nodeModelModel) {
+                // { type: Schema.Types.ObjectId, ref: "Studio" }
+                return "{ type: Schema.Types.ObjectId, ref: '" + nodeModelModel.get('name') + "'}";
+            });
+            types = _.union(types, mongooseTypes);
+
+            page_context.fieldTypes = types;
 
             var template = _.template(propertyTemplate, page_context);
 

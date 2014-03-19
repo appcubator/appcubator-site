@@ -109,17 +109,11 @@ define(function(require, exports, module) {
 
             var currentModule = util.packageModuleName(this.generatorPath).module;
             // e.g. if module == uielements, it can only clone uielements
-            var plugins = v1State.get('plugins').getGeneratorsWithModule(currentModule);
+            var generators = v1State.get('plugins').getAllGeneratorsWithModule(currentModule);
 
-            plugins = _.reject(plugins, function(generator) {
-
-                var genPath = [util.packageModuleName(this.generatorPath).package, currentModule, generator.name].join('.');
-                return genPath == this.generatorPath;
-            }, this);
-
-            _.each(plugins, function(generator) {
+            _.each(generators, function(generator) {
                 var genPath = [generator.package, currentModule, generator.name].join('.');
-                this.$el.find('.action-menu').append('<li class="clone-button" id="'+ genPath +'"><a href="#">Switch Generator to '+  generator.name +'X</a></li>');
+                this.$el.find('.action-menu').append('<li class="clone-button" id="'+ genPath +'"><a href="#">Switch Generator to '+  generator.name +'</a></li>');
             }, this);
         },
 
@@ -161,11 +155,12 @@ define(function(require, exports, module) {
 
         cloneGenerator: function(e) {
             var genPath = String(e.currentTarget.id);
+            console.log(genPath);
             this.widgetModel.setGenerator(genPath);
 
             // changes data related to this view and rerenders
-            this.generatorName = genPath;
-            this.generator = G.getGenerator(this.generatorName);
+            this.generatorPath = genPath;
+            this.generator = G.getGenerator(genPath);
 
             this.reRender();
         },
