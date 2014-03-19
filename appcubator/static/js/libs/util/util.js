@@ -496,7 +496,8 @@ define(['backbone'], function() {
         },
 
         deepCopy: function(oldObject) {
-            return jQuery.extend(true, {}, oldObject);
+            var newJSON = JSON.stringify(oldObject);
+            return $.parseJSON(newJSON);
         }
 
     };
