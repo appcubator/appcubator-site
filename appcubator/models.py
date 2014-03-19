@@ -143,7 +143,6 @@ class App(models.Model):
     # cached deployment info
     subdomain = models.CharField(max_length=50, blank=True, unique=True)
     custom_domain = models.CharField(max_length=50, blank=True, null=True, unique=True, default=None) # if this is None, then the person is not using custom domain.
-    update_code_url = models.CharField(max_length=255, blank=True, null=True, default=None) # if this is None, then the person is not using custom domain.
 
     # set on save and deploy calls.
     error_type = models.IntegerField(default=0)
