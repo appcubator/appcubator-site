@@ -434,9 +434,10 @@ def mod_sub_tree(tree, sub_t, path):
 
 @require_POST
 @login_required
-def save_state(request, app, require_valid=True, tree_path=()):
+def save_state(request, app, require_valid=True, tree_path=None):
     # if the incoming appState's version_id does not match the
     # db's version_id, the incoming appState is an outdated version
+    if tree_path is None: tree_path = []
     if len(tree_path) == 0:
         if require_valid is True and not app.isCurrentVersion(json.loads(request.body)):
             return (409, { "error": "Plz get version %d" % app.state.get('version_id', 0) })
@@ -464,9 +465,8 @@ def save_state(request, app, require_valid=True, tree_path=()):
         except Exception, e:
             return (500, {'error': str(e)})
 
-    else:
-        app.save()
-        return (200, {'version_id': app.state.get('version_id', 0)})
+    app.save()
+    return (200, {'version_id': app.state.get('version_id', 0)})
 
 
 @login_required

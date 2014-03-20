@@ -400,7 +400,10 @@ class App(models.Model):
         return "http://%s/" % self.hostname()
 
     def deploy_url(self):
-        return "http://devmon.%s/__update_code__" % self.hostname()
+        if self.subdomain == 'zenrez':
+            return "http://devmon.%s/__update_code__" % self.hostname()
+        else:
+            return "http://%s/__update_code__" % self.hostname()
 
     def zip_bytes(self):
         tmpdir = self.write_to_tmpdir()
@@ -492,6 +495,7 @@ class App(models.Model):
             tmpdir = self.write_to_tmpdir()
             logger.info("Written to %s for code updating" % tmpdir)
 
+            print self.deploy_url()
             deploy.update_code(tmpdir, self.deployment_id, self.deploy_url())
 
         except deploy.NotDeployedError:
