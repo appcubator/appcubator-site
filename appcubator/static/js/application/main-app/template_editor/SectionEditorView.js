@@ -36,7 +36,7 @@ define(function(require, exports, module) {
             var template = [
                     '<div class="btn-group">',
                         '<div class="section-editor-button">',
-                            '<div class="dropdown-toggle"><img width="24" class="icon" src="/static/img/edit.png"></div>',
+                            '<div class="dropdown-toggle"><img width="24" class="icon" src="' + STATIC_URL + 'img/edit.png"></div>',
                             '<div class="section-up move">▲</div>',
                             '<div class="section-down move">▼</div>',
                         '</div>',

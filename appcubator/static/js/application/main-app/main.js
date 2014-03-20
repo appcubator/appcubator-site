@@ -148,6 +148,8 @@ require([
 
         $(document).ready(function() {
 
+            STATIC_URL = STATIC_URL || '/static/';
+
             /* doge error */
             var olderrorhandler = window.onerror;
             window.onerror = function(){
