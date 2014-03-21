@@ -136,6 +136,7 @@ define(function(require, exports, module) {
                 if (columnModel.get('uielements').get(model.cid)) {
                     var $col = self.$el.find('[data-cid="'+columnModel.cid+'"]');
                     $col.append(widgetView.el);
+                    model.trigger('rendered');
                 }
             });
 

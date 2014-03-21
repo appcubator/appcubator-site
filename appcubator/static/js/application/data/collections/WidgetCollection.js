@@ -19,7 +19,6 @@ define(function(require, exports, module) {
         },
 
         createUIElement: function(type, layout, generatorPath, extraData) {
-        	console.log(generatorPath);
             var generator = G.getGenerator(generatorPath);
 
             var widget = {};
@@ -36,7 +35,9 @@ define(function(require, exports, module) {
             var widgetModel = new WidgetModel(widget);
             widgetModel.setGenerator(generatorPath);
 
-            return this.push(widgetModel);
+            this.push(widgetModel);
+
+            return widgetModel;
         }
 
     });

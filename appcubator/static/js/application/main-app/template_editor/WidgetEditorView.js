@@ -81,6 +81,7 @@ define(function(require, exports, module) {
 
         display: function() {
             if (!this.model) return;
+
             this.clearContent();
             this.fillContent();
             this.show();
@@ -88,6 +89,7 @@ define(function(require, exports, module) {
 
         show: function() {
             if (!this.model) return;
+            this.stopListening(this.model, 'rendered', this.show);
 
             var location = this.getLocation();
             this.location = location;
@@ -97,9 +99,10 @@ define(function(require, exports, module) {
             var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
             var element = $(innerDoc).find("[data-cid='" + this.model.cid + "']")[0];
 
-            // .getElementById('widget-wrapper-' + this.model.cid);
-
-            if (!element) return;
+            if (!element) {
+                this.listenTo(this.model, 'rendered', this.show);
+                return;
+            }
 
             var offsetFrame = util.getWindowRelativeOffset(window.document, iframe);
             var offset = util.getWindowRelativeOffset(window.document, element);

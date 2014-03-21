@@ -122,7 +122,6 @@ define(function(require, exports, module) {
             });
 
             this.listenTo(widget, 'selected', function() {
-                if (self.selectedEl && widget && self.selectedEl.cid == widget.cid) return;
                 self.widgetUnhover(widget);
                 self.newSelected(widget);
             });
@@ -221,14 +220,11 @@ define(function(require, exports, module) {
 
         newSelected: function(widgetModel) {
             var self = this;
+            
             if (this.selectedEl && this.selectedEl.cid == widgetModel.cid) {
                 this.setLayout(this.selectDiv, widgetModel);
                 this.selectedEl.trigger('reselected');
                 return;
-            }
-
-            if (this.selectedEl) {
-                this.stopListening(widgetModel.get('layout'), 'change', self.setLayout);
             }
 
             this.deselect();
@@ -243,34 +239,6 @@ define(function(require, exports, module) {
             var model = this.selectedEl;
 
             var elem = this.el.getElementById('widget-wrapper-' + cid);
-
-            //g_guides.hideAll();
-
-            // var valLeft = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid, cid);
-            // var valRight = g_guides.showVertical((ui.position.left + ui.size.width) / this.positionHorizontalGrid, cid);
-
-            // if (valLeft) {
-            //     var deltaLeft = ui.position.left - (valLeft * this.positionHorizontalGrid) + ALIGNMENT;
-            //     ui.size.width = ui.size.width + deltaLeft;
-            //     ui.element.width(ui.size.width + PADDING);
-            //     ui.position.left = (valLeft * this.positionHorizontalGrid) - ALIGNMENT;
-            //     ui.element.css('left', ui.position.left);
-            // }
-            // if (valRight) {
-            //     var deltaRight = valRight * this.positionHorizontalGrid - (ui.position.left + ui.size.width);
-            //     ui.size.width = ui.size.width + deltaRight - ALIGNMENT;
-            //     ui.element.width(ui.size.width);
-            // }
-
-            // var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
-            // var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
-
-            // if (valTop) {
-            //     var deltaTop = (valTop * this.positionVerticalGrid) - ui.position.top;
-            // }
-            // if (valBottom) {
-            //     var deltaBottom = ui.position.top = (valTop * this.positionVerticalGrid);
-            // }
 
             elem.style.width = (ui.size.width + PADDING) + 'px';
             elem.style.height = (ui.size.height + PADDING) + 'px';
@@ -324,34 +292,6 @@ define(function(require, exports, module) {
             this.widgetEditorView.hide();
 
             var cid = model.cid;
-            // g_guides.hideAll();
-
-
-            // var valLeft = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid, cid);
-            // var valRight = g_guides.showVertical(ui.position.left / this.positionHorizontalGrid + model.get('layout').get('width'), cid);
-
-            // if (valLeft) {
-            //     ui.position.left = valLeft * this.positionHorizontalGrid;
-            // }
-            // if (valRight) {
-            //     ui.position.left = (valRight - model.get('layout').get('width')) * this.positionHorizontalGrid - ALIGNMENT;
-            // }
-
-            /* Adjust for the scroll amount of the iframe - hacky */
-            // console.log(document);
-            // console.log($(document).scrollTop());
-            // var scrollTop = $(document).scrollTop();
-            // ui.position.top += scrollTop;
-
-            // var valTop = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid, cid);
-            // var valBottom = g_guides.showHorizontal(ui.position.top / this.positionVerticalGrid + model.get('layout').get('height'), cid);
-
-            // if (valTop) {
-            //     ui.position.top = valTop * this.positionVerticalGrid;
-            // }
-            // if (valBottom) {
-            //     ui.position.top = (valBottom - model.get('layout').get('height')) * this.positionVerticalGrid - 2;
-            // }
 
             var elem = this.el.getElementById('widget-wrapper-' + model.cid);
             elem.style.top = ui.position.top + ALIGNMENT + 'px';

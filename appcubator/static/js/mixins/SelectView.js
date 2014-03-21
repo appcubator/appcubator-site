@@ -16,11 +16,7 @@ function(Backbone) {
     },
 
     initialize: function(list, currentVal, isNameVal, options) {
-      _.bindAll(this, 'render',
-                      'expand',
-                      'shrink',
-                      'toggle',
-                      'select');
+      _.bindAll(this);
 
       this.list = list;
       this.currentVal = currentVal;
@@ -36,8 +32,8 @@ function(Backbone) {
 
       if(this.currentVal) {
         var currentLi = document.createElement('li');
-        currentLi.innerText = this.currentVal;
-        if(self.isNameVal) { currentLi.innerText = this.currentVal.name; }
+        currentLi.innerHTML = this.currentVal;
+        if(self.isNameVal) { currentLi.innerHTML = this.currentVal.name; }
         currentLi.className = 'selected';
         list.appendChild(currentLi);
       }

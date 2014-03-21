@@ -25,9 +25,6 @@ define(function(require, exports, module) {
             var currentClass = this.model.get('className');
             var currentVal = -1;
 
-            if (widgetModel.hasForm()) { type = "forms"; }
-            if (widgetModel.isList()) { type = "lists"; }
-
             var els = top.v1UIEState.getUIEVals(type).toJSON();
 
             this.list = _.map(els, function(obj, key) {
@@ -41,13 +38,16 @@ define(function(require, exports, module) {
             });
 
             this.uieVals = els;
-            //top.v1UIEState.getUIEVals(type);
-
             this.isNameVal = true;
+
+            if (currentClass == "") {
+                currentClass = '<i>No Class Selected</i>';
+            };
             this.currentVal = {
                 name: currentClass,
                 val: currentVal
             };
+
             this.render();
         },
 
@@ -63,6 +63,9 @@ define(function(require, exports, module) {
                 this.model.set('className', this.uieVals[this.currentVal.val].class_name);
                 return;
             }
+
+            if(!this.list[ind]) return;
+
             var ind = String(e.currentTarget.id).replace('li-' + this.cid + '-', '');
             this.model.set('tagName', this.uieVals[this.list[ind].val].tagName);
             this.model.set('className', this.uieVals[this.list[ind].val].class_name);
