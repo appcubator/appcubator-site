@@ -34,7 +34,9 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.listenTo(this.model, "rerender", this.reRender, this);
             this.listenTo(this.model, "change", this.reRender, this);
 
-            this.listenTo(this.model.get('layout'), "change", this.changedPadding, this);
+            if(this.model.has('layout')) {
+                this.listenTo(this.model.get('layout'), "change", this.changedPadding, this);
+            }
 
             this.listenTo(this.model, "startEditing", this.switchEditModeOn, this);
 
