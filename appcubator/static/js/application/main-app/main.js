@@ -98,7 +98,7 @@ require.onError = function(err) {
         el.style.top = '120px';
         el.style.textAlign = 'center';
         el.style.cursor = 'pointer';
-        el.innerHTML = '<img src="/static/img/mascot-timeout.png">';
+        el.innerHTML = '<img src="'+STATIC_URL+'img/mascot-timeout.png">';
         el.addEventListener('click', function() {
             location.reload();
         });

@@ -76,7 +76,7 @@ define(function(require, exports, module) {
             // + '<span class="qmark">?</span>';
             var icon = document.createElement('img');
             icon.className = "icon";
-            icon.src = "/static/img/right-arrow.png";
+            icon.src = STATIC_URL + "/img/right-arrow.png";
             // li.appendChild(icon);
             this.el.appendChild(li);
             return li;

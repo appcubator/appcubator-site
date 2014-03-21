@@ -95,8 +95,10 @@ define(function(require, exports, module) {
         },
 
         setLogoImage: function() {
+            if (!app.info) app.info = {};
+            app.info.logo = app.info.logo || "https://www.filepicker.io/api/file/ZJDTP6ZWTkORSHrvjGZZ"
             if (app.info.logo) {
-                this.$el.find('.logo').css('backgroundImage', 'url(' + app.info.logo + ')');
+                this.$el.find('.logo').css('backgroundImage', 'url(' + app.info.logo|| + ')');
             }
         },
 
