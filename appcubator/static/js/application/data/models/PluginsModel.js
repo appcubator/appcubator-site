@@ -12,6 +12,12 @@ define(function(require, exports, module) {
         initialize: function(bone) {
 
             _.each(bone, function(val, key) {
+
+                /* Help initialize plugins that don't have proper metadata. */
+                /* TODO put this in the initialize method of the PluginModel instead. */
+                val.metadata = val.metadata || {};
+                val.metadata.name = val.metadata.name || key;
+
                 var pluginModel = new PluginModel(val);
                 this.set(key, pluginModel);
             }, this);
@@ -100,8 +106,6 @@ define(function(require, exports, module) {
         },
 
         getGeneratorsWithModule: function(generatorModule) {
-            var generators = [];
-
             var generators = _.flatten(_.map(this.attributes, function(pluginModel, packageName) {
                 return pluginModel.getGensByModule(generatorModule);
             }));
@@ -111,7 +115,7 @@ define(function(require, exports, module) {
 
         getAllGeneratorsWithModule: function(moduleName) {
             var plugins = this.getAllPluginsWithModule(moduleName);
-            var plugins = _.filter(plugins, function(pluginModel, key) {
+            plugins = _.filter(plugins, function(pluginModel, key) {
                 return pluginModel.has(moduleName);
             });
 
@@ -134,12 +138,12 @@ define(function(require, exports, module) {
         installPluginToModel: function(pluginModel, nodeModelModel) {
             if (!pluginModel) return;
             var pluginName = pluginModel.getName();
-            
+            var gens;
             if(this.has(pluginName)) {
-                var gens = this.get(pluginName).getGensByModule('model_methods');
+                gens = this.get(pluginName).getGensByModule('model_methods');
             }
             else if (this.getAllPlugins()[pluginName]) {
-                var gens = this.getAllPlugins()[pluginName].getGensByModule('model_methods');
+                gens = this.getAllPlugins()[pluginName].getGensByModule('model_methods');
             }
             else {
                 throw "Plugin to install could not be found.";
