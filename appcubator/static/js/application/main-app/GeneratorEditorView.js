@@ -51,8 +51,11 @@ define(function(require, exports, module) {
                         '</ul>',
                     '</div>',
                 '</div>',
+                '<h1>HTML</h1>',
                 '<div id="current-code-view-html" style="width:100%; height: 33%; position: relative"></div>',
+                '<h1>CSS</h1>',
                 '<div id="current-code-view-css" style="width:100%; height: 33%; position: relative"></div>',
+                '<h1>JS</h1>',
                 '<div id="current-code-view-js" style="width:100%; height: 33%; position: relative"></div>'
             ].join('\n'), { name: this.generatorPath });
 
@@ -85,7 +88,7 @@ define(function(require, exports, module) {
         },
 
         setupAce: function() {
-            var expanded = this.widgetModel.expand({ generate: false });
+            var expanded = this.widgetModel.expand();
             this.generatedhtml = expanded.html;
             this.generatedcss = expanded.css;
             this.generatedjs = expanded.js;
