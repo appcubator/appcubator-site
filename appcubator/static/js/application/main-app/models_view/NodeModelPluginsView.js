@@ -48,7 +48,7 @@ define(function(require, exports, module) {
                 }
                 catch(e) {
                     gen.name = "Unnamed";
-                    console.log("There is an unnamed plugin.");
+                    alert("There is an unnamed plugin.");
                 } 
 
                 if(v1State.get('plugins').isPluginInstalledToModel(pluginM, this.model)) {

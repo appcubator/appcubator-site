@@ -91,7 +91,7 @@ define(function(require, exports, module) {
         },
 
         getPluginsWithModule: function(moduleName) {
-            return _.filter(this.attributes, function(pluginModel, pluginName) {
+            return _.filter(this.getAllPlugins(), function(pluginModel, pluginName) {
                 pluginModel.name = pluginName;
                 return pluginModel.has(moduleName);
             });
@@ -106,7 +106,7 @@ define(function(require, exports, module) {
         },
 
         getGeneratorsWithModule: function(generatorModule) {
-            var generators = _.flatten(_.map(this.attributes, function(pluginModel, packageName) {
+            var generators = _.flatten(_.map(this.getAllPlugins(), function(pluginModel, packageName) {
                 return pluginModel.getGensByModule(generatorModule);
             }));
 
@@ -136,18 +136,11 @@ define(function(require, exports, module) {
         },
 
         installPluginToModel: function(pluginModel, nodeModelModel) {
-            if (!pluginModel) return;
-            var pluginName = pluginModel.getName();
-            var gens;
-            if(this.has(pluginName)) {
-                gens = this.get(pluginName).getGensByModule('model_methods');
+            if (!pluginModel) {
+                alert('yo, what are you doing.');
+                return;
             }
-            else if (this.getAllPlugins()[pluginName]) {
-                gens = this.getAllPlugins()[pluginName].getGensByModule('model_methods');
-            }
-            else {
-                throw "Plugin to install could not be found.";
-            }
+            var gens = pluginModel.getGensByModule('model_methods');
 
             _.each(gens, function(gen) {
                 var methodModel = new NodeModelMethodModel();
