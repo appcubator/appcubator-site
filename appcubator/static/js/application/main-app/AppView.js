@@ -59,6 +59,8 @@ define(function(require, exports, module) {
             //var autoSave = setInterval(this.save, 30000);
             this.render();
 
+            util.askBeforeLeave();
+
         },
 
         render: function() {
