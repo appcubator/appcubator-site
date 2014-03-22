@@ -52,37 +52,45 @@ define(function(require, exports, module) {
         initialize: function(routeModel, templateModel, ind, isMobile) {
             _.bindAll(this);
 
-            this.model = routeModel;
-            this.ind = ind;
-            this.isMobile = isMobile;
-            this.urlModel = routeModel.get('url');
-            this.listenTo(this.model, 'remove', this.close, this);
+            if (routeModel !== null) {
+                this.model = routeModel;
+                this.ind = ind;
+                this.isMobile = isMobile;
+                this.urlModel = routeModel.get('url');
+                this.listenTo(this.model, 'remove', this.close, this);
 
-            this.templateModel = templateModel;
+                this.templateModel = templateModel;
+            }
         },
 
         render: function() {
-            var page_context = {};
-            page_context.page_name = this.model.get('name');
-            page_context.ind = this.ind;
-            page_context.context_text = this.model.getContextSentence();
-            // if this is the homepage view,
-            // mark 'edit url' link as disabled
-            page_context.disable_edit = (this.model.get('name') === 'Homepage') ? true : false;
+            if (!this.model) {
+                this.el.innerHTML += 'This template has no route. Please add one if you wish to use this template as a page.';
+            } else {
+                var page_context = {};
+                page_context.page_name = this.model.get('name');
+                page_context.ind = this.ind;
+                page_context.context_text = this.model.getContextSentence();
+                // if this is the homepage view,
+                // mark 'edit url' link as disabled
+                page_context.disable_edit = (this.model.get('name') === 'Homepage') ? true : false;
 
-            var page = _.template(tempPage, page_context);
-            this.el.innerHTML += page;
+                var page = _.template(tempPage, page_context);
+                this.el.innerHTML += page;
 
-            this.renderMenu();
-            return this;
+                this.renderMenu();
+                return this;
+            }
         },
 
         renderUrl: function() {
-            // homepage url can't be edited
-            if (this.model.get('name') === 'Homepage') {
-                return false;
+            if (!this.model) {
+                // homepage url can't be edited
+                if (this.model.get('name') === 'Homepage') {
+                    return false;
+                }
+                var newView = new UrlView(this.urlModel, this.model);
             }
-            var newView = new UrlView(this.urlModel, this.model);
         },
 
         renderMenu: function() {
