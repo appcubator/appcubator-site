@@ -1280,6 +1280,9 @@ generators.push({
                  layout: data.layout };
     },
     templates: { },
+    defaults: {
+        htmlC: "<div>Custom Widget</div>",
+    },
     displayProps: {
         name: 'Custom Widget',
         iconType: 'custom-widget',

@@ -76,6 +76,12 @@
       {% endif %}
     {% endfor %}
 
+    {% for a in collab_apps %}
+      apps[{{a.pk}}] = {{ a.state_json|fix_solidus|safe }};
+      app_urls[{{a.pk}}] = "{{ a.url }}";
+      app_gitRepos[{{a.pk}}] = "{{ a.git_url }}"
+    {% endfor %}
+
   </script>
 <script type="text/javascript">
     var staticVersion = "{{STATIC_VERSION}}";
