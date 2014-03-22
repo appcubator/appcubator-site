@@ -5,6 +5,7 @@ define(function(require, exports, module) {
     var SoftErrorView = require('app/SoftErrorView');
     var DialogueView = require('mixins/DialogueView');
     var NodeModelMethodModel = require('models/NodeModelMethodModel');
+    var WidgetSettingsView = require('editor/WidgetSettingsView');
 
     require('prettyCheckable');
 
@@ -12,7 +13,8 @@ define(function(require, exports, module) {
         '<div class="code-chunk" id="func-chunk-<%= cid %>">',
             '<span class="title">',
                 '<%= name %>',
-                '<span class="func-type-container"></span>', // func type chooser goes here
+                '<div class="option-button settings blue pull-right" id="func-settings-<%= cid %>"></div>',
+                '<span class="func-type-container"></span>',
             '</span>',
             '<div class="code-editor" id="func-editor-<%= cid %>"></div>',
         '</div>'
@@ -50,7 +52,7 @@ define(function(require, exports, module) {
         subviews: [],
 
         events: {
-
+            'click .settings': 'clickedSettings'
         },
 
 
@@ -128,6 +130,7 @@ define(function(require, exports, module) {
                 });
             }
         },
+
         renderStaticMethod: function(methodModel) {
             var methodObj = methodModel.getGenerated();
             this.list.innerHTML += _.template(funcTemplate, { name: methodObj.name, cid: methodModel.cid });
@@ -139,6 +142,12 @@ define(function(require, exports, module) {
             } catch (e) {
                 console.log('didnt set up ace because of the cardview');
             }
+        },
+
+        clickedSettings: function(e) {
+            var cid = e.currentTarget.id.replace('func-settings-','');
+            var methodModel = this.model.get('functions').get(cid);
+            new WidgetSettingsView(methodModel).render();
         },
 
         removeMethod: function(methodModel) {
