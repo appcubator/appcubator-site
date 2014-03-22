@@ -26,6 +26,7 @@ define(function(require, exports, module) {
         subviews: [],
 
         initialize: function(sectionsCollection) {
+
             _.bindAll(this);
 
             var self = this;

@@ -5,12 +5,17 @@ define(function(require, exports, module) {
     require('util');
     require('mixins/BackboneDropdownView');
 
-    var template = [ '<div class="arrow_box"></div>',
-    '<div class="" id="entities-page">',
-        '<h2 class="pheader">Routes</h2>',
-        '<ul id="list-routes">',
-        '</ul>',
-    '</div>'].join('\n');
+    var WidgetSettingsView = require('editor/WidgetSettingsView');
+
+    var template = [ 
+        '<small class="url-name"><%= url %></small>',
+        '<span class="pull-right">',
+            '<%= options %>',
+            '<div class="option-button settings blue"></div>',
+            '<span class="cross">×<span>',
+        '</span>'
+    ].join('\n');
+
 
     var RouteView = Backbone.DropdownView.extend({
 
@@ -18,8 +23,9 @@ define(function(require, exports, module) {
         className: 'route-name',
 
         events: {
-            'click' : 'clickedRoute',
-            'click .cross': 'removeRoute'
+            'click .url-name' : 'clickedRoute',
+            'click .cross': 'removeRoute',
+            'click .settings': 'clickedSettings'
         },
 
         initialize: function(model) {
@@ -33,25 +39,22 @@ define(function(require, exports, module) {
             var name = this.model.get('name');
             var url = this.model.getUrlString();
 
-            var template = "(Custom Code)";
+            var options = "(Custom Code)";
 
             if (this.model.generate == "routes.staticpage") {
-                var template = '<select>'
-                template += '<option>'+ this.model.get('name') +' template</option>';
+                var options = '<select>'
+                options += '<option>'+ this.model.get('name') +' template</option>';
 
                 v1State.get('templates').each(function(templateModel) {
                     if(templateModel.get('name') == name) return;
 
-                    template += '<option>'+ templateModel.get('name') +' template</option>';
+                    options += '<option>'+ templateModel.get('name') +' template</option>';
                 });
 
-                template += '</select>';
+                options += '</select>';
             }
 
-            this.$el.html([
-                '<small>' + url + '</small>',
-                '<span class="pull-right">' + template + '<span class="cross">×<span></span>'
-            ].join('\n'));
+            this.$el.html(_.template(template, {options: options, url: url }));
 
             return this;
         },
@@ -63,6 +66,10 @@ define(function(require, exports, module) {
                 v1.currentApp.pageWithName(template);
             }
 
+        },
+
+        clickedSettings: function() {
+            new WidgetSettingsView(this.model).render();
         },
 
         removeRoute: function(e) {
