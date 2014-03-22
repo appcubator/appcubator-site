@@ -261,6 +261,10 @@ require([
 
         $(window).on('mouseup', function() {
             top.v1.shrinkDropdowns();
+        });
+
+        $(document).ready(function() {
+            util.askBeforeLeave();
         })
 
         if (top.v1.currentApp) {

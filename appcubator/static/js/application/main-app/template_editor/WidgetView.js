@@ -93,8 +93,8 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.$el.addClass("widget-wrapper");
             // this.$el.data('cid', this.model.cid);
 
-            this.$el.on('click', function(e) { e.preventDefault(); });
-            this.$el.find('a').on('click', function(e) { e.preventDefault(); });
+            // this.$el.on('click', function(e) { e.preventDefault(); });
+            // this.$el.find('a').on('click', function(e) { e.preventDefault(); });
             
             return this;
         },

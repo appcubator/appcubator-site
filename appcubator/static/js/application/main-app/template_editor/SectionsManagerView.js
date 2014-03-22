@@ -1,11 +1,13 @@
 define(function(require, exports, module) {
 
     'use strict';
-    var SectionView = require('editor/SectionView');
-    var WidgetSelectorView = require('editor/WidgetSelectorView');
 
     require('backbone');
     require('util');
+
+    var SectionView = require('editor/SectionView');
+    var WidgetSelectorView = require('editor/WidgetSelectorView');
+
 
 
     var SectionManagerView = Backbone.View.extend({
