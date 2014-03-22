@@ -60,6 +60,7 @@ define(function(require, exports, module) {
             }
 
             this.routeModel = v1State.get('routes').getRouteWithTemplate(this.model);
+            // note that if the template does not have a route, routeModel will be null.
             this.pageName = this.model.get('name');
 
             v1State.currentPage = this.model;
@@ -74,6 +75,7 @@ define(function(require, exports, module) {
             this.sectionsManager = {};
             //this.guides = new GuideView(this.sectionsCollection);
             this.cssEditorView = new CSSEditorView();
+            // PageView currently knows how to handle null routeModel
             this.pageView = new PageView(this.routeModel, this.model, pageId);
 
             // TODO: setup redo controller again
@@ -89,11 +91,11 @@ define(function(require, exports, module) {
             // keyDispatcher.bindComb('ctrl+shift+z', this.redoController.redo);
 
             //g_guides = this.guides;
-            this.urlModel = this.routeModel.get('url');
 
             this.title = "Editor";
 
             if(this.routeModel) {
+                this.urlModel = this.routeModel.get('url');
                 this.listenTo(this.routeModel.get('url').get('urlparts'), 'add remove', this.renderUrlBar);
             }
 
