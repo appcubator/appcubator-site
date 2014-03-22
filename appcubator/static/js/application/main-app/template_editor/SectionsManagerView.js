@@ -34,6 +34,8 @@ define(function(require, exports, module) {
             this.sectionsCollection = sectionsCollection;
             this.listenTo(this.sectionsCollection, 'add', this.placeNewSection, true);
             this.listenTo(this.sectionsCollection, 'rearranged', this.render);
+            this.listenToModels(this.sectionsCollection, 'startedSortingElements', this.highlightSections);
+            this.listenToModels(this.sectionsCollection, 'stoppedSortingElements', this.unhighlightSections);
         },
 
         render: function() {

@@ -112,10 +112,16 @@ define(function(require, exports, module) {
                         ui.position.top += amt;
                     },
                     start: function(e, ui) {
-                        self.highlightCols();
+                        self.model.trigger('startedSortingElements');
                     },
                     stop: function(e, ui) {
-                        self.unhighlightCols();
+                        self.model.trigger('stoppedSortingElements');
+                    },
+                    over: function() {
+                        $col.addClass('active');
+                    },
+                    out: function() {
+                        $col.removeClass('active');
                     }
                 });
 
