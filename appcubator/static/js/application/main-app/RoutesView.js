@@ -5,6 +5,8 @@ define(function(require, exports, module) {
     require('util');
     require('mixins/BackboneDropdownView');
 
+    var RouteView = require('RouteView');
+
     var template = [ '<div class="arrow_box"></div>',
     '<div class="" id="entities-page">',
         '<h2 class="pheader">Routes</h2>',
@@ -52,36 +54,12 @@ define(function(require, exports, module) {
         },
 
         renderRoute: function(routeModel) {
-            var name = routeModel.get('name');
-            var url = routeModel.getUrlString();
-
-            var template = "(Custom Code)";
-
-            if (routeModel.generate == "routes.staticpage") {
-                template  = routeModel.get('name') + " template";
-            }
-
-            this.$el.find('#list-routes').append([
-            '<li class="route-name" id="route-' + routeModel.cid + '">',
-                '<small>' + url + '</small>',
-                '<span class="pull-right">' + template + '</span>',
-            '</li>'].join('\n'));
+            var routeView = new RouteView(routeModel);
+            this.$el.find('#list-routes').append(routeView.render().el);
         },
 
         removeRoute: function(routeModel) {
             this.$el.find('#route-' + routeModel.cid).remove();
-        },
-
-        clickedRoute: function(e) {
-            var cid = String(e.currentTarget.id).replace('route-', '');
-            var routeModel = this.collection.get(cid);
-
-            if (routeModel.generate == "routes.staticpage") {
-                var template = routeModel.get('name');
-                v1.currentApp.pageWithName(template);
-            }
-
-            this.hide();
         },
 
         createRoute: function(val) {
