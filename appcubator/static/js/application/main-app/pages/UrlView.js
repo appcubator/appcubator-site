@@ -15,7 +15,6 @@ define(function(require, exports, module) {
     '<form class="form-horizontal">',
     '<ul class="row hoff1 url-parts"></ul>',
     '<div class="row hoff2 hi3 offset2">',
-    '<div class="btn btn-info btn-small offset3 new-context">+ Add Context Value</div>',
     '<div class="btn btn-info btn-small offset1 new-suffix">+ Add Custom Text</div>',
     '</div>',
     '</form>'
@@ -48,7 +47,6 @@ define(function(require, exports, module) {
             'keyup .suffix-part': 'suffixPartChanged',
             'keyup .page-name': 'pageNameChanged',
             'click .remove': 'clickedRemove',
-            'click .new-context': 'askToAddContext',
             'click .new-suffix': 'addNewSuffixPart',
             'submit form': 'cancelFormSubmit'
         },
@@ -143,25 +141,6 @@ define(function(require, exports, module) {
         pageNameChanged: function(e) {
             this.model.set('name', e.currentTarget.value);
             this.renderFullUrl();
-        },
-
-        addNewContextPart: function(e) {
-
-            if (v1State.get('tables').length > 0) {
-                var firstTableName = "{{" + v1State.get('tables').at(0).get('name') + "}}";
-                this.model.get('urlparts').push({
-                    value: firstTableName
-                });
-            } else if (v1State.get('users').length > 0) {
-                var firstUserName = "{{" + v1State.get('users').at(0).get('name') + "}}";
-                this.model.get('urlparts').push({
-                    value: firstUserName
-                });
-            } else {
-                alert("Create a Table or User before adding a context value");
-            }
-            this.$('.context-part').last().focus();
-
         },
 
         askToAddContext: function() {
