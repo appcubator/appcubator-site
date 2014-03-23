@@ -37,21 +37,22 @@ define(function(require, exports, module) {
         updateJSON: function(bone) {
 
             var cleanBone = _.omit(bone, ['layout', 'data', 'context', 'fields']);
-            this.set(cleanBone);
+            this.set(cleanBone, {silent: true});
 
-            if (this.has('layout)')) this.get('layout').set(bone.layout || {});
-            if (this.has('context')) this.get('context').set(bone.context || []);
+            if (this.has('layout)')) this.get('layout').set(bone.layout || {}, {silent: true});
+            if (this.has('context')) this.get('context').set(bone.context || [], {silent: true});
 
             if (bone.fields) {
-                if (this.has('fields')) this.get('fields').set(bone.fields || []);
+                if (this.has('fields')) this.get('fields').set(bone.fields || [], {silent: true});
             }
 
             _.each(this.attributes, function(val, key) {
                 if(!bone[key]) {
-                    this.unset(key);
+                    this.unset(key, {silent: true});
                 }
             }, this);
 
+            this.trigger('change');
         },
 
         remove: function() {

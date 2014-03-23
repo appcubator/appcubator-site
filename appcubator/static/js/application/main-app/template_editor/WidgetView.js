@@ -107,6 +107,7 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
             this.setElement($el, true);
             this.placeCSS(expanded);
             this.placeJS(expanded);
+            this.$el.addClass(this.className);
 
             this.$el.find('a').on('click', function(e) { e.preventDefault(); });
             this.$el.find('form').on('submit', function(e) { e.preventDefault(); });
