@@ -73,9 +73,9 @@ define([
             },
 
             renderLayoutInfo: function() {
-                var aLeft = this.model.get('layout').get('alignment') == "left" ? " selected" : "";
-                var aCenter = this.model.get('layout').get('alignment') == "center" ? " selected" : "";
-                var aRight = this.model.get('layout').get('alignment') == "right" ? " selected" : "";
+                var aLeft = this.model.has('layout') && this.model.get('layout').get('alignment') == "left" ? " selected" : "";
+                var aCenter = this.model.has('layout') && this.model.get('layout').get('alignment') == "center" ? " selected" : "";
+                var aRight = this.model.has('layout') && this.model.get('layout').get('alignment') == "right" ? " selected" : "";
 
                 var div = document.createElement('div');
                 div.className = "alignment-picker";
@@ -84,8 +84,8 @@ define([
             },
 
             renderPaddingInfo: function() {
-                var paddingLR = this.model.get('layout').get('r_padding') > 0 ? "selected" : "";
-                var paddingTB = this.model.get('layout').get('b_padding') > 0 ? "selected" : "";
+                var paddingLR = this.model.has('layout') && this.model.get('layout').get('r_padding') > 0 ? "selected" : "";
+                var paddingTB = this.model.has('layout') && this.model.get('layout').get('b_padding') > 0 ? "selected" : "";
 
                 var div = document.createElement('div');
                 div.className = "padding-picker right";

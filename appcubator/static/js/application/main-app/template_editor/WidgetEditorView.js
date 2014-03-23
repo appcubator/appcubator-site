@@ -320,23 +320,24 @@ define(function(require, exports, module) {
         getLocation: function() {
             if (this.defaultLocation) return this.defaultLocation;
 
-            var layout = this.model.get('layout');
-            var rightCoor = layout.get('left') + layout.get('width');
+            return "bottom";
+            // var layout = this.model.get('layout');
+            // var rightCoor = layout.get('left') + layout.get('width');
 
-            var pageHeight = $('#page-wrapper').height();
-            var widgetBottom = layout.get('top') + layout.get('height');
+            // var pageHeight = $('#page-wrapper').height();
+            // var widgetBottom = layout.get('top') + layout.get('height');
 
-            if (widgetBottom + 8 > pageHeight) {
-                if ((12 - rightCoor) < 2) return "left";
-                return "right";
-            }
+            // if (widgetBottom + 8 > pageHeight) {
+            //     if ((12 - rightCoor) < 2) return "left";
+            //     return "right";
+            // }
 
-            if (layout.get('height') < 22) {
-                return "bottom";
-            }
+            // if (layout.get('height') < 22) {
+            //     return "bottom";
+            // }
 
-            if ((12 - rightCoor) < 2) return "left";
-            return "right";
+            // if ((12 - rightCoor) < 2) return "left";
+            // return "right";
         },
 
         clickedDelete: function() {

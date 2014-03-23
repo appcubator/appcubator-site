@@ -24,14 +24,14 @@ define(function(require, exports, module) {
 
         initialize: function(options) {
             _.bindAll(this);
-            this.widgetModel = options.widgetModel;
+            this.model = options.widgetModel;
             this.setupGenerator(options.generate);
         },
 
         setupGenerator: function(generatorPath) {
             this.generatorPath = generatorPath;
             this.generator = G.getGenerator(this.generatorPath);
-            this.widgetModel.setGenerator(generatorPath);
+            this.model.setGenerator(generatorPath);
         },
 
         render: function() {
@@ -51,13 +51,8 @@ define(function(require, exports, module) {
                         '</ul>',
                     '</div>',
                 '</div>',
-                '<h1>HTML</h1>',
-                '<div id="current-code-view-html" style="width:100%; height: 33%; position: relative"></div>',
-                '<h1>CSS</h1>',
-                '<div id="current-code-view-css" style="width:100%; height: 33%; position: relative"></div>',
-                '<h1>JS</h1>',
-                '<div id="current-code-view-js" style="width:100%; height: 33%; position: relative"></div>'
-            ].join('\n'), { name: this.generatorPath });
+                '<div class="generated-code"><%= generatedCode %></div>'
+            ].join('\n'), { name: this.generatorPath, generatedCode: this.getGeneratedCode() });
 
 
             if(!v1State.get('plugins').isGeneratorEditable(this.generatorPath)) {
@@ -88,13 +83,13 @@ define(function(require, exports, module) {
         },
 
         setupAce: function() {
-            var expanded = this.widgetModel.expand();
+            var expanded = this.model.expand();
             this.generatedhtml = expanded.html;
             this.generatedcss = expanded.css;
             this.generatedjs = expanded.js;
-            this._setupAce('html');
-            this._setupAce('css');
-            this._setupAce('js');
+            // this._setupAce('html');
+            // this._setupAce('css');
+            // this._setupAce('js');
         },
 
         makeEditorEditable: function() {
@@ -151,6 +146,37 @@ define(function(require, exports, module) {
 
         },
 
+        getGeneratedCode: function() {
+            var string  = "";
+            try {
+                    // This will force it to use defaults in the generator
+                    // console.log('Trying to generate code')
+                    var gPath = this.generatorPath;
+                    var generated = this.model.expand();
+                    console.log(generated);
+
+                    if(typeof generated === 'object') {
+                        var str = '<div>';
+
+                        _.each(generated, function(val, key) {
+                            str += '<h4>' + key + '</h4>';
+                            str += '<pre>' + String(val).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</pre>';
+                        });
+                        
+                        string = str;
+                    }
+                    else if (typeof generated === 'string') {
+                        string = '<pre>' + generated.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</pre>';
+                    }
+
+                }
+                catch (e) {
+                    string = 'Could not be generated: '+ e;
+                }
+
+            return string;
+        },
+
         editCode: function() {
             var url = "/app/" + appId + "/dev/#" + this.generatorPath;
             window.open(url, "Generator Editor");
@@ -159,7 +185,7 @@ define(function(require, exports, module) {
         cloneGenerator: function(e) {
             var genPath = String(e.currentTarget.id);
             console.log(genPath);
-            this.widgetModel.setGenerator(genPath);
+            this.model.setGenerator(genPath);
 
             // changes data related to this view and rerenders
             this.generatorPath = genPath;
