@@ -147,13 +147,17 @@ define(function(require, exports, module) {
             var page_context = {};
             page_context = _.clone(fieldModel.attributes);
             page_context.cid = fieldModel.cid;
-            page_context.nlType = fieldModel.getNLType();
             page_context.entityName = this.model.get('name');
             page_context.entities = this.otherEntities;
             page_context.isNew = isNew;
+            
             var types = v1State.get('models').map(function(nodeModelModel) {
                 // { type: Schema.Types.ObjectId, ref: "Studio" }
-                return "{ type: Schema.Types.ObjectId, ref: '" + nodeModelModel.get('name') + "'}";
+                if(page_context.type ==  "{ type: Schema.Types.ObjectId, ref: '" + nodeModelModel.get('name') +"'}") {
+                   page_context.type = "{ ref: '" + nodeModelModel.get('name') + "',  type: Schema.Types.ObjectId}";
+                }
+
+                return "{ ref: '" + nodeModelModel.get('name') + "',  type: Schema.Types.ObjectId}";
             });
             types = _.union(types, mongooseTypes);
 
