@@ -161,11 +161,26 @@ define(function(require, exports, module) {
             var elements = [];
             var createdSections = [];
 
-            _.each(_.pairs(v1State.get('plugins').getAllPluginsSerialized()), function(pair) {
+            var plugins = v1State.get('plugins').getAllPluginsSerialized();
+            var pluginPairs = _.pairs(_.omit(plugins, ['root', 'crud']));
+
+            if(plugins["crud"]) {
+                pluginPairs.unshift(["crud", plugins["crud"]]);
+            }
+
+            if(plugins["root"]) {
+                pluginPairs.unshift(["root", plugins["root"]]);
+            }
+
+            _.each(pluginPairs, function(pair) {
                 var pluginName = pair[0],
                     plugin = pair[1];
                 if (plugin.uielements) {
                     var displayName =  pluginName || plugin.metadata.displayName;
+
+                    if (displayName == "root") { displayName = "Simple Elements"; }
+                    if (displayName == "crud") { displayName = "Forms and Views"; }
+
                     var sect = this.addNewSection(displayName);
                     createdSections.push(sect);
 
@@ -196,6 +211,7 @@ define(function(require, exports, module) {
 
             this.pluginSections = createdSections;
 
+            this.addPlusSign();
             this.bindDraggable();
         },
 
@@ -216,6 +232,29 @@ define(function(require, exports, module) {
             this.sections.push(sectionView);
             this.allList.appendChild(sectionView.render().el);
             return sectionView;
+        },
+
+        addPlusSign: function() {
+            var text = "You can add more functionality by installing new Plugins from the menu on the top right.";
+            var div = document.createElement('div');
+            div.className = "gallery-section plus-sign";
+            div.innerHTML = '<div class="gallery-header" title="'+text+'"><span>+</span></div>'
+            this.allList.appendChild(div);
+
+            $(div).tooltip({
+                position: {
+                    my: "left+10 center",
+                    at: "right center",
+                    // using: function(position, feedback) {
+                    //     $(this).css(position);
+                    //     $("<div>")
+                    //         .addClass("arrow")
+                    //         .addClass(feedback.vertical)
+                    //         .addClass(feedback.horizontal)
+                    //         .appendTo(this);
+                    // }
+                }
+            });
         },
 
         removeSection: function(sectionView) {
