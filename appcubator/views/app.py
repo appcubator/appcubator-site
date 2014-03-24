@@ -398,13 +398,6 @@ def state(request, app_id, path=None, validate=True): # note that in the subtree
                     p = int(p)
                 intified_path.append(p)
         status, data = save_state(request, app, require_valid=validate, tree_path=intified_path)
-        try:
-            app.parse_and_link_app_state()
-            deploy_data = {'deployment_id': app.deploy() }
-            data = dict(data.items() + deploy_data.items())
-        except codegen.UserInputError, e:
-            d = e.to_dict()
-            return JsonResponse(d, status=400)
         return JsonResponse(data, status=status)
     else:
         return HttpResponse("GET or POST only", status=405)
