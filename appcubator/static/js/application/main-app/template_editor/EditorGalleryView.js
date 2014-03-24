@@ -164,6 +164,7 @@ define(function(require, exports, module) {
             var plugins = v1State.get('plugins').getAllPluginsSerialized();
             var pluginPairs = _.pairs(_.omit(plugins, ['root', 'crud']));
 
+            // order should be root, crud, then rest.
             if(plugins["crud"]) {
                 pluginPairs.unshift(["crud", plugins["crud"]]);
             }
@@ -176,10 +177,7 @@ define(function(require, exports, module) {
                 var pluginName = pair[0],
                     plugin = pair[1];
                 if (plugin.uielements) {
-                    var displayName =  pluginName || plugin.metadata.displayName;
-
-                    if (displayName == "root") { displayName = "Simple Elements"; }
-                    if (displayName == "crud") { displayName = "Forms and Views"; }
+                    var displayName =  plugin.metadata.displayName || pluginName;
 
                     var sect = this.addNewSection(displayName);
                     createdSections.push(sect);
@@ -211,6 +209,8 @@ define(function(require, exports, module) {
 
             this.pluginSections = createdSections;
 
+            if (this.plusSign)
+                this.allList.removeChild(this.plusSign);
             this.addPlusSign();
             this.bindDraggable();
         },
@@ -238,7 +238,8 @@ define(function(require, exports, module) {
             var text = "You can add more functionality by installing new Plugins from the menu on the top right.";
             var div = document.createElement('div');
             div.className = "gallery-section plus-sign";
-            div.innerHTML = '<div class="gallery-header" title="'+text+'"><span>+</span></div>'
+            div.innerHTML = '<div class="gallery-header" title="'+text+'"><span>+</span></div>';
+            this.plusSign = div;
             this.allList.appendChild(div);
 
             $(div).tooltip({

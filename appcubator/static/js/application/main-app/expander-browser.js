@@ -111,7 +111,7 @@ exports.factory = function(_safe_eval_) {
             module = tokens[1];
             name = tokens[2];
         } else {
-            throw "Invalid generator reference syntax. Must provide '[package.]module.name' .  Original: " + generatorName;
+            throw { name: 'GenPathSyntax', message: "Invalid generator reference syntax. Must provide '[package.]module.name' .  Original: " + generatorName };
         }
 
 
@@ -203,7 +203,7 @@ exports.uielements = require('./uielements.js').generators;
 exports.model_methods = require('./model_methods.js').generators;
 exports.metadata = {
     name: 'crud',
-    displayName: 'Basic Database Stuff',
+    displayName: 'Forms and Views',
     description: 'Basic database stuff'
 };
 
@@ -529,7 +529,7 @@ exports.app = require('./app.js').generators;
 exports.metadata = {
     name: 'root',
     description: 'stuff thats just chilling',
-    displayName: 'Root'
+    displayName: 'Simple Elements'
 };
 
 },{"./app.js":6,"./models.js":8,"./routes.js":9,"./templates.js":10,"./uielements.js":11}],8:[function(require,module,exports){
@@ -1280,9 +1280,6 @@ generators.push({
                  layout: data.layout };
     },
     templates: { },
-    defaults: {
-        htmlC: "<div>Custom Widget</div>",
-    },
     displayProps: {
         name: 'Custom Widget',
         iconType: 'custom-widget',
