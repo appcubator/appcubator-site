@@ -164,6 +164,8 @@ define(function(require, exports, module) {
             this.iframeProxy = proxy;
             //this.marqueeView = proxy.setupMarqueeView(this.sectionsCollection.getAllWidgets());
 
+            this.iframeProxy.injectHeader(this.model.get('head'));
+
             this.sectionsManager = proxy.setupSectionsManager(this.sectionsCollection);
             this.sectionShadowView = new SectionShadowView(this.sectionsCollection);
             this.sectionEditorsView = new SectionEditorsView(this.sectionsCollection);

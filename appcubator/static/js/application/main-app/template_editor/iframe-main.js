@@ -256,6 +256,10 @@ require([
 
             reloadPage: function() {
                 location.reload();
+            },
+
+            injectHeader: function(headerContent) {
+                $('head').append(headerContent);
             }
         };
 
