@@ -55,6 +55,7 @@ define(function(require, exports, module) {
             this.settingsView.setPointerPosition("30px");
 
             this.deployManager = new DeployManagerModel(this.appId);
+            this.listenTo(v1State.get('plugins'), 'fork', this.save);
 
             //var autoSave = setInterval(this.save, 30000);
             this.render();

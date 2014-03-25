@@ -138,7 +138,6 @@ define(function(require, exports, module) {
 
                 self.setupGenerator(newGenPath);
                 self.reRender();
-                self.makeEditorEditable();
             }
             else {
                 self.forkCurrentGen();

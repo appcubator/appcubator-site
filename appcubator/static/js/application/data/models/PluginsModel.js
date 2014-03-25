@@ -184,6 +184,8 @@ define(function(require, exports, module) {
 
             this.get(newPath.package).get(newPath.module).push(genObj);
 
+            this.trigger('fork');
+
             return [newPath.package, newPath.module, newPath.name].join('.');
         },
 
