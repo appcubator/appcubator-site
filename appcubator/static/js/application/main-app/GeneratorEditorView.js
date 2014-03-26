@@ -67,42 +67,6 @@ define(function(require, exports, module) {
             return this;
         },
 
-        reRender :function() {
-            this.el.innerHTML = '';
-            this.render();
-            this.setupAce();
-        },
-
-        _setupAce: function(type) {
-            // input html, css, or js
-            this.editor = ace.edit("current-code-view-" + type);
-            this.editor.getSession().setMode("ace/mode/" + (type === 'js' ? 'javascript' : type));
-            this.editor.setValue(String(this['generated' + type]), -1);
-            this.editor.renderer.setShowGutter(false);
-            this.makeEditorUneditable();
-        },
-
-        setupAce: function() {
-            var expanded = this.model.expand();
-            this.generatedhtml = expanded.html;
-            this.generatedcss = expanded.css;
-            this.generatedjs = expanded.js;
-            // this._setupAce('html');
-            // this._setupAce('css');
-            // this._setupAce('js');
-        },
-
-        makeEditorEditable: function() {
-            this.editor.setReadOnly(false);  // false to make it editable
-        },
-
-        makeEditorUneditable: function() {
-            this.editor.setReadOnly(true);  // false to make it editable
-            this.editor.setHighlightActiveLine(false);
-            this.editor.setHighlightGutterLine(false);
-            this.editor.renderer.$cursorLayer.element.style.opacity=0;
-        },
-
         renderCloneButtons: function() {
 
             var currentModule = util.packageModuleName(this.generatorPath).module;
@@ -137,7 +101,7 @@ define(function(require, exports, module) {
                 var newGenPath = v1State.get('plugins').fork(this.generatorPath, newName);
 
                 self.setupGenerator(newGenPath);
-                self.reRender();
+                self.render();
             }
             else {
                 self.forkCurrentGen();
@@ -177,8 +141,10 @@ define(function(require, exports, module) {
         },
 
         editCode: function() {
-            var url = "/app/" + appId + "/dev/#" + this.generatorPath;
-            window.open(url, "Generator Editor");
+            if(v1State.get('plugins').isGeneratorEditable(this.generatorPath)) {
+                var url = "/app/" + appId + "/dev/#" + this.generatorPath;
+                window.open(url, "Generator Editor");
+            }
         },
 
         cloneGenerator: function(e) {
@@ -190,7 +156,7 @@ define(function(require, exports, module) {
             this.generatorPath = genPath;
             this.generator = G.getGenerator(genPath);
 
-            this.reRender();
+            this.render();
         },
 
     });

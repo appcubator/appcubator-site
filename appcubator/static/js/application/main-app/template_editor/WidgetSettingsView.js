@@ -75,7 +75,6 @@ define(function(require, exports, module) {
             var tableCodeView = new GeneratorEditorView({ generate: this.model.generate, widgetModel: this.model });
             this.$el.find('.current-content').html('');
             this.$el.find('.current-content').append(tableCodeView.render().el);
-            tableCodeView.setupAce();
             this.$el.find('.code-li').addClass('active');
         },
 
