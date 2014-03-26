@@ -194,9 +194,9 @@ define(function(require, exports, module) {
             if (!this.has(newPath.package)) { return false; }
             if (!this.get(newPath.package).has(newPath.module)) { return false; }
 
-            var isEditable = true;
+            var isEditable = false;
             _.each(this.get(newPath.package).get(newPath.module), function(gen) {
-                if(gen.name == newPath.name) { isEditable = false; }
+                if(gen.name === newPath.name) { isEditable = true; }
             });
 
             return isEditable;
