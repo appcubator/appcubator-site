@@ -54,9 +54,9 @@ define(['backbone'], function() {
             return (document.getElementById(id).innerHTML) || null;
         },
 
-        askBeforeLeave: function(message) {
-            window.onbeforeunload = function() {
-                return ('You have some unsaved changes.');
+        askBeforeLeave: function() {
+            window.onbeforeunload = function(e) {
+                return '';
             };
         },
 
