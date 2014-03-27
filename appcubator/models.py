@@ -400,7 +400,7 @@ class App(models.Model):
         return "http://%s/" % self.hostname()
 
     def deploy_url(self):
-        if self.subdomain == 'zenrez':
+        if self.subdomain in ['zenrez', 'adshare']:
             return "http://devmon.%s/__update_code__" % self.hostname()
         else:
             return "http://%s/__update_code__" % self.hostname()
