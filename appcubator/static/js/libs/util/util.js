@@ -491,8 +491,14 @@ define(['backbone'], function() {
             return spinner;
         },
 
-        packageModuleName: function(generatorName) {
-            return G.expander.parseGenID(generatorName);
+        packageModuleName: function(generatorPath) {
+            return G.expander.parseGenID(generatorPath);
+        },
+
+        findGenerator: function(localPlugins, generatorPath) {
+            var genID = G.expander.parseGenID(generatorPath);
+            var gen = G.expander.findGenData(localPlugins, genID);
+            return gen;
         },
 
         deepCopy: function(oldObject) {

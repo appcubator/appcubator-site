@@ -100,7 +100,6 @@ define(function(require, exports, module) {
         getAllPluginsWithModule: function(moduleName) {
             var plugins = this.getAllPlugins();
             return _.filter(plugins, function(pluginModel) {
-                // pluginModel.name = pluginName;
                 return pluginModel.has(moduleName);
             });
         },
@@ -168,38 +167,52 @@ define(function(require, exports, module) {
             var generator = G.getGenerator(generatorPath);
             var genObj = _.clone(generator);
 
-            var newPath = util.packageModuleName(generatorPath);
-            newPath.name = newName;
+            var genID = util.packageModuleName(generatorPath);
+            genID.name = newName;
             genObj.name = newName;
 
-            if (!this.has(newPath.package)) {
+            if (!this.has(genID.package)) {
                 // NOTE this only happens when builtin generator is forked
-                this.set(newPath.package, new PluginModel({metadata: {name: newPath.package}}));
+                this.set(genID.package, new PluginModel({metadata: {name: genID.package}}));
             }
 
-            if (!this.get(newPath.package).has(newPath.module)) {
+            if (!this.get(genID.package).has(genID.module)) {
                 // NOTE this only happens when builtin generator is forked
-                this.get(newPath.package).set(newPath.module, []);
+                this.get(genID.package).set(genID.module, []);
             }
 
-            this.get(newPath.package).get(newPath.module).push(genObj);
+            this.get(genID.package).get(genID.module).push(genObj);
 
             this.trigger('fork');
 
-            return [newPath.package, newPath.module, newPath.name].join('.');
+            return [genID.package, genID.module, genID.name].join('.');
+        },
+
+        assertWeHaveGenerator: function(generatorPath) {
+            // ensures the plugin is either builin or in the app state
+                // throws an error if for some reason the generatorPath refers to a nonexistant generator
+            util.findGenerator(this.serialize(), generatorPath);
+        },
+
+        isGeneratorBuiltin: function(generatorPath) {
+            this.assertWeHaveGenerator(generatorPath);
+
+            var genID = util.packageModuleName(generatorPath);
+
+            // no generator of this package has not been forked yet, it must be built in
+            if (!this.has(genID.package)) {
+                return false;
+            }
+
+            // let's try to find the generator in the app state.
+            var localGen = _.find(this.get(genID.package).getGensByModule(genID.module), function(gen) { return gen.name === genID.name; });
+
+            // expect it to not be found if it's builtin.
+            return localGen === undefined;
         },
 
         isGeneratorEditable: function(generatorPath) {
-            var newPath = util.packageModuleName(generatorPath);
-            if (!this.has(newPath.package)) { return false; }
-            if (!this.get(newPath.package).has(newPath.module)) { return false; }
-
-            var isEditable = false;
-            _.each(this.get(newPath.package).get(newPath.module), function(gen) {
-                if(gen.name === newPath.name) { isEditable = true; }
-            });
-
-            return isEditable;
+            return !this.isGeneratorBuiltin(generatorPath);
         },
 
         isNameUnique: function(newPackageModuleName) {
