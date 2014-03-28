@@ -36,14 +36,16 @@ define(function(require, exports, module) {
 
         updateJSON: function(bone) {
 
-            var cleanBone = _.omit(bone, ['layout', 'data', 'context', 'fields']);
+            var cleanBone = _.omit(bone, ['data', 'layout', 'fields']);
             this.set(cleanBone, {silent: true});
+            
+            if (this.has('layout') && bone.layout) {
+                console.log(bone.layout);
+                this.get('layout').set(bone.layout, {silent: true});
+            }
 
-            if (this.has('layout)')) this.get('layout').set(bone.layout || {}, {silent: true});
-            if (this.has('context')) this.get('context').set(bone.context || [], {silent: true});
-
-            if (bone.fields) {
-                if (this.has('fields')) this.get('fields').set(bone.fields || [], {silent: true});
+            if (this.has('fields') && bone.fields) {
+                this.get('fields').set(bone.fields, {silent: true});
             }
 
             _.each(this.attributes, function(val, key) {

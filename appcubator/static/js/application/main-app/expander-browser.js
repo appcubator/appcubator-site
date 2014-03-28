@@ -1264,7 +1264,7 @@ generators.push({
                  layout: data.layout };
     },
     templates: {
-        html: '<iframe class="video-embed" src="<%= url %>" width="<%= layout.width * 80 %>" height="<%= layout.height * 15 %>" frameborder="0"></iframe>'
+        html: '<iframe class="video-embed" src="<%= url %>" width="<%= layout.width %>" height="<%= layout.height %>" frameborder="0"></iframe>'
     },
     displayProps: {
         name: 'Embed Video',
