@@ -4,7 +4,6 @@ define([
     ],
     function() {
 
-
         util.filepicker = {
             openFilePick: function(callback, success, appId) {
 
