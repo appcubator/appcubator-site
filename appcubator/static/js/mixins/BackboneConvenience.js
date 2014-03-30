@@ -221,6 +221,19 @@ define([
             return null;
         };
 
+        Backbone.Model.prototype.updateJSON = function(bone) {
+
+            this.set(bone, {silent: true});
+
+            _.each(this.attributes, function(val, key) {
+                if(!bone[key]) {
+                    this.unset(key, {silent: true});
+                }
+            }, this);
+
+            this.trigger('change');
+        };
+
         Backbone.Collection.prototype.expand = function() {
 
             if (this.generate) {

@@ -25,7 +25,7 @@ define(function(require, exports, module) {
         initialize: function(options) {
             _.bindAll(this);
             this.model = options.widgetModel;
-            this.setupGenerator(options.generate);
+            this.setupGenerator(options.generate || this.model.generate);
         },
 
         setupGenerator: function(generatorPath) {
