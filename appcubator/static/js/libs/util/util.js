@@ -264,11 +264,6 @@ define(['backbone'], function() {
             return null;
         },
 
-        isInternalData: function(str) {
-            if (str.indexOf("{{") === 0) return true;
-            return false;
-        },
-
         capitaliseFirstLetter: function(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         },

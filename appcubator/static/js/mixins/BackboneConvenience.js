@@ -1,3 +1,4 @@
+/* Backbone objects need to call _.bindAll(this); on initialization */ 
 define([
         'backbone',
         'app/Generator',

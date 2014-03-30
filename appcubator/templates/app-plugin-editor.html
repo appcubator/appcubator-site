@@ -30,6 +30,9 @@
 
 <body>
   <script type="text/javascript">
+    STATIC_URL = '{{STATIC_URL}}';
+  </script>
+  <script type="text/javascript">
     var appId = {{ app.id }};
     var appUrl = "{{ app.url }}";
     var appGitRepo = "{{ app.git_url }}";
