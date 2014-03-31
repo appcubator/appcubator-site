@@ -126,10 +126,10 @@ define(function(require, exports, module) {
                 });
 
                 columnModel.get('uielements').each(function(widgetModel) {
-                    var widgetView = new WidgetView(widgetModel);
+                    var widgetView = this.createSubview(WidgetView, widgetModel);
                     widgetView.render();
                     //$col.append(widgetView.render().el);
-                });
+                }, this);
 
             }, this);
 

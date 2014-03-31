@@ -3,6 +3,7 @@ define(function(require, exports, module) {
     'use strict';
 
     require('backbone');
+    require('mixins/BackboneConvenience');
     require('util');
 
     var SectionView = require('editor/SectionView');
@@ -32,7 +33,7 @@ define(function(require, exports, module) {
             var self = this;
             this.subviews = [];
 
-            this.widgetSelectorView = new WidgetSelectorView(sectionsCollection.getAllWidgets());
+            this.widgetSelectorView = this.createSubview(WidgetSelectorView, sectionsCollection.getAllWidgets());
 
             this.sectionsCollection = sectionsCollection;
             this.listenTo(this.sectionsCollection, 'add', this.placeNewSection, true);
@@ -136,7 +137,7 @@ define(function(require, exports, module) {
 
         matchSection: function(model, isNew, extraData) {
             //model.setupPageContext(v1.currentApp.getCurrentPage());
-            var sectionView = new SectionView(model);
+            var sectionView = this.createSubview(SectionView, model);
             sectionView.render();
 
             this.listenTo(model, 'hovered', function() {
@@ -148,7 +149,7 @@ define(function(require, exports, module) {
 
         placeNewSection: function(model) {
 
-            var sectionView = new SectionView(model);
+            var sectionView = this.createSubview(SectionView, model);
             this.$el.append(sectionView.render().el);
 
             this.listenTo(model, 'hovered', function() {
@@ -161,7 +162,7 @@ define(function(require, exports, module) {
 
         placeSection: function(model, isNew, extraData) {
 
-            var sectionView = new SectionView(model);
+            var sectionView = this.createSubview(SectionView, model);
             sectionView.render();
 
             this.listenTo(model, 'hovered', function() {
@@ -182,12 +183,8 @@ define(function(require, exports, module) {
 
         unhighlightSections: function () {
             this.$el.find('.ycol').removeClass("fancy-borders");
-        },
-
-        close: function() {
-            //this.widgetSelectorView.close();
-            WidgetManagerView.__super__.close.call(this);
         }
+
     });
 
     return SectionManagerView;
