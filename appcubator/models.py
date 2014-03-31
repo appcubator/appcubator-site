@@ -480,6 +480,7 @@ class App(models.Model):
         return post_data
 
     def deploy(self, retry_on_404=True):
+        tmpdir = '' # fixes the case where it's not defined in the finally clause later on
         try:
             # TODO detect change in build dependencies and build a new container
             if self.deployment_id is None:
@@ -519,7 +520,7 @@ class App(models.Model):
             self.clear_error_record(src='deploy')
         finally:
             # because hard disk space doesn't grow on trees.
-            if not settings.DEBUG:
+            if not settings.DEBUG and tmpdir != '':
                 shutil.rmtree(tmpdir)
         return self.deployment_id
 
