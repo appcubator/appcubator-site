@@ -27,7 +27,6 @@ define(function(require, exports, module) {
 
         initialize: function(widgetsCollection) {
             _.bindAll(this);
-
             var self = this;
             this.widgetsCollection = widgetsCollection;
             this.listenTo(this.widgetsCollection, 'add', this.bindWidget, true);

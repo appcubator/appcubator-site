@@ -171,9 +171,18 @@ define(function(require, exports, module) {
         },
 
         clearContent: function() {
-            if (this.contentEditor) this.contentEditor.clear();
-            if (this.layoutEditor) this.layoutEditor.clear();
-            if (this.infoEditor) this.infoEditor.clear();
+        	this.$el.find('.btn-toolbar').remove();
+
+            if (this.contentEditor) {
+				this.contentEditor.clear();
+			}
+            if (this.layoutEditor) {
+            	this.layoutEditor.clear();
+            }
+            if (this.infoEditor) {
+            	this.infoEditor.clear();
+            }
+
             $('.btn-toolbar').remove();
 
             _(this.subviews).each(function(subview) {

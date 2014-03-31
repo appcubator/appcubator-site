@@ -85,7 +85,7 @@ define([
             var view = new cls(data);
             view.superview = this;
             this.subviews = this.subviews || [];
-            this.subviews.push(this);
+            this.subviews.push(view);
 
             if(this.topview) { view.topview = this.topview; }
 

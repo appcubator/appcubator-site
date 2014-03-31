@@ -270,7 +270,6 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
                     'justifyfull'
                 ];
 
-
                 this.$el.freshereditor({
                     toolbar_selector: ".widget-editor",
                     excludes: excludes
@@ -437,8 +436,14 @@ define(['backbone', 'jquery.freshereditor', 'mixins/BackboneUI', 'editor/editor-
         mousedown: function(e) {
             mouseDispatcher.isMousedownActive = true;
         },
+
         mouseup: function() {
             mouseDispatcher.isMousedownActive = false;
+        },
+
+        close: function() {
+        	this.stopListening();
+        	WidgetView.__super__.close.call(this);
         }
 
     });

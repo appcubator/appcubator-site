@@ -263,11 +263,13 @@ define(function(require, exports, module) {
         },
 
         refreshPage: function() {
+            this.widgetEditorView.clear();
+            this.sectionsManager.close();
+            this.sectionsManager = null;
             var self = this;
             v1.currentApp.fetchPlugins(function() {
                 self.iframeProxy.reloadPage();
             });
-            this.widgetEditorView.clear();
         },
 
         setupPageWrapper: function() {
