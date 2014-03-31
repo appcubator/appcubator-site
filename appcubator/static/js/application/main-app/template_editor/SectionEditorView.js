@@ -9,8 +9,6 @@ define(function(require, exports, module) {
 
     var SectionEditorView = Backbone.View.extend({
 
-        widgetsContainer: null,
-
         events: {
             'keyup .class_name'     : 'classNameChaged',
             'click .remove-section' : 'removeSection',
@@ -23,6 +21,7 @@ define(function(require, exports, module) {
         },
 
         className: "section-editor-view",
+        isActive: true,
 
         initialize: function(sectionModel) {
             _.bindAll(this);
@@ -117,6 +116,7 @@ define(function(require, exports, module) {
 
         openSettingsView: function() {
             new WidgetSettingsView(this.model).render();
+            this.isActive = true;
         },
 
         moveSectionUp: function() {
@@ -144,10 +144,20 @@ define(function(require, exports, module) {
         menuHovered: function() {
             this.positionShadow();
             this.$shadowView.show();
+            this.isActive = true;
         },
 
         menuUnhovered: function() {
-            this.$shadowView.hide();
+            this.isActive = false;
+            var self = this;
+            var timer = setTimeout(function() {
+            	console.log(self.isActive);
+            	if (!self.isActive) {
+            		self.$shadowView.hide();
+            	}
+
+            	clearTimeout(timer);
+            }, 600);
         },
 
         hovered: function() {

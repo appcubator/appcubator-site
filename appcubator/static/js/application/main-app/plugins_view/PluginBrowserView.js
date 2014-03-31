@@ -33,6 +33,7 @@ define(function(require, exports, module) {
                 url: "//plugins.appcubator.com/plugins/list",
                 dataType: "json",
                 success: function(data) {
+                	console.log(data);
                     $(loadingSpin).remove();
                     self.layoutPlugins(data);
                 }
