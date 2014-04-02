@@ -9,13 +9,45 @@
         The Fastest Way to Build Web Apps
       </div>
       <div class="sub-text">
-        Build your interaface, integrate with database tables, install plugins and completely customize your app.
+        Now with plugins so you can start fast and customize everything.
       </div>
-      <!--<a class="white-btn" href="/resources/editor/" rel="external" target="_blank">Take a Quick Tour</a>-->
+        <!-- BEGIN TEMP MIGRATION WARNING -->
+        <style>
+        .twinfo, .twsuccess, .twwarning, .twerror, .twvalidation {
+        border: 1px solid;
+        margin-top:70px;
+        padding:15px 10px 15px 50px;
+        background-repeat: no-repeat;
+        background-position: 10px center;
+        }
+        .twinfo a, .twsuccess a, .twwarning a, .twerror a, .twvalidation a {
+        text-decoration:underline;
+        }
+        .twinfo {
+        color: #00529B;
+        background-color: #BDE5F8;
+        background-image: url('info.png');
+        }
+        .twsuccess {
+        color: #4F8A10;
+        background-color: #DFF2BF;
+        background-image:url('success.png');
+        }
+        .twwarning {
+        color: #9F6000;
+        background-color: #FEEFB3;
+        background-image: url('warning.png');
+        }
+        .twerror {
+        color: #D8000C;
+        background-color: #FFBABA;
+        background-image: url('error.png');
+        }
+        </style>
+        <div style="width: 500px; margin:90px auto;" class="twwarning">We're currently upgrading to a new version!<br>If you have an account, it will automatically be migrated by April 3rd.<br>For the time being, Appcubator is available at <a href="https://old.appcubator.com/">old.appcubator.com</a>.</div>
+        <!-- END TEMP MIGRATION WARNING -->
+      <!-- COMMENTED OUT FOR MIGRATION
       <div class="video lil-box" id="video-box">
-<!--         <video height="210" id="videotc" controls>
-          <sourc type='video/mp4; codecs="H.264, AAC"'>
-      </video> -->
        <iframe width="332" height="218" src="//www.youtube.com/embed/MhOGH-cS2Js?rel=0" frameborder="0" allowfullscreen></iframe>
     </div>
       <div class="quick-tour lil-box">
@@ -24,6 +56,7 @@
       </div>
       <a class="white-btn hidden signup-button" href="/signup/" rel="external" style="display:none;">Signup Now</a>
       <div class="lil-box" style="width:50px;"></div>
+    -->
     </div>
     <div class="three-div">
       <div class="left view">
@@ -113,6 +146,7 @@
       </div>
     </div>
   </div>
+  <!-- COMMENTED OUT FOR MIGRATION
   <div class="slide slide-gallery">
     <div class="row">
       <div class="centered-container">
@@ -202,6 +236,7 @@
     </div>
 
   </div>
+    -->
   {% include "website-footer.html" %}
 </div>
 {% endblock %}
