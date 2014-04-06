@@ -1,3 +1,7 @@
+#habla_beta_container_do_not_rely_on_div_classes_or_names {
+	display: none;
+}
+
 html, body {
 	height: 100%;
 	padding: 0;

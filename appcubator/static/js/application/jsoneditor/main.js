@@ -44,9 +44,11 @@ require.config({
     }
 });
 
-require(['cs!jsonbrowser/csmain'], function() {
+require(['jsonbrowser/csmain'], function() {
     
-    json = appState;
+    console.log("Define");
+    window.json = appState;
+
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));

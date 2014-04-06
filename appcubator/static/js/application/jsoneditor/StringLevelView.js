@@ -30,10 +30,11 @@
         document.body.appendChild(this.domEl);
         this.editor = ace.edit("textEditor");
         this.editor.setValue(this.parentObj[this.title]);
+        var self = this;
         return this.editor.getSession().on('change', function(e) {
           var val;
-          val = this.editor.getValue();
-          return this.parentObj[this.title] = val;
+          val = self.editor.getValue();
+          return self.parentObj[self.title] = val;
         });
       };
 

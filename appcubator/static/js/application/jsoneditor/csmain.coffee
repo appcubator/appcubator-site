@@ -7,7 +7,6 @@ define [
   'jsonbrowser/ObjectLevelView',
   'jsonbrowser/ArrayLevelView',
   'util'
-  'jsonbrowser/test-json'
 ],
 (_, $, ace, LevelView, StringLevelView, ObjectLevelView, ArrayLevelView, util) ->
 

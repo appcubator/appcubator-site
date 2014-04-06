@@ -33,7 +33,8 @@ define (require, exports, module) ->
 		   	#//editor.getSession().setMode("ace/mode/javascript");
 			@editor.setValue(@parentObj[@title])
 
+			console.log "imma rendered"
 			# bind value changes
-			@editor.getSession().on 'change', (e) ->
+			@editor.getSession().on 'change', (e) =>
 				val = @editor.getValue();
 				@parentObj[@title] = val;
