@@ -2,9 +2,16 @@
 {% load embed_json %}
 {% block css %}
 <link type="text/css" href="{{ STATIC_URL }}css/jsoneditor.css" rel="stylesheet"/>
+<link rel="stylesheet" href="{{ STATIC_URL }}js/application/jsoneditor/style.css">
 
 {% endblock %}
 
+    {% block topbar %}
+      <div class="save btn" id="save">Save</div>
+    {% endblock %}
+
+    {% block page %}
+    {% endblock %}
 
 {% block js %}
   <script type="text/javascript">
@@ -25,5 +32,5 @@
     var innerDoc;
   </script>
   <script data-main="{{ STATIC_URL }}js/application/jsoneditor/main" src="{{ STATIC_URL }}js/libs/require.js">
-  </script>-
+  </script>
 {% endblock %}
