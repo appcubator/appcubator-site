@@ -289,30 +289,6 @@ STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
 
 # domain from which apps are available
 DEPLOYMENT_DOMAIN = os.environ["DEPLOYMENT_DOMAIN"]
-DEIS_CONTROLLER = os.environ["DEIS_CONTROLLER"]
-DEIS_FORMATION = os.environ["DEIS_FORMATION"]
-DEIS_USERNAME = os.environ.get("DEIS_USERNAME", '')
-DEIS_PASSWORD = os.environ["DEIS_PASSWORD"]
-if DEIS_USERNAME in ['admin', 'dev', '']:
-    print "\n\n\n\n\n\n\n\n\n\n\n\n"+"""
-
-
-========================== Error ============================ 
-
-
-
-
-
-  PLZ MAKE A PROPER DEIS ACCT:
-
-    pip uninstall -y deis && pip install -r requirements.txt
-    deis register deis.appcbtr.com` #(use your own username and password)
-    export DEIS_USERNAME=<your username>
-    export DEIS_PASSWORD=<your password>
-
-""" + "\n\n\n\n\n\n\n"
-    import sys
-    sys.exit(1)
 
 # codegen service
 CODEGEN_ADDR = os.environ["CODEGEN_ADDR"] # ie, http://127.0.0.1:3000
