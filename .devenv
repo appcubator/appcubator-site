@@ -7,10 +7,6 @@ export STRIPE_SECRET_KEY="sk_test_GhzvfBePNCkvC6j23UtZkmTi"
 # deployment service
 export DEPLOYMENT_DOMAIN='appcbtr.com'
 
-# (this is now custom per developer)
-#export DEIS_USERNAME='dev'
-#export DEIS_PASSWORD='123123123'
-
 # global email settings
 export EMAIL_HOST='smtp.sendgrid.net'
 export EMAIL_PORT=587
@@ -19,5 +15,3 @@ export EMAIL_HOST_PASSWORD="obscurepassword321"
 
 # codegen
 export CODEGEN_ADDR=http://127.0.0.1:3000
-
-export TEMP_MONGO=mongodb://ksikka:ilikepieON3@paulo.mongohq.com:10051/testing
