@@ -428,8 +428,8 @@ class App(models.Model):
 
         return zbytes
 
-    def css(self, deploy=True, mobile=False):
-        """Use uiestate, less, and django templates to generate a string of the CSS"""
+    def css(self, mobile=False):
+        """Use uiestate, django templates, and less codegen server to generate a string of the CSS"""
         from django.template import Context, loader
         t = loader.get_template('app-editor-css-gen.html')
 
@@ -441,6 +441,7 @@ class App(models.Model):
                            'isMobile': mobile,
                            'deploy': deploy})
         less_string = t.render(context)
+        import pdb; pdb.set_trace()
         css_string = codegen.less(less_string)
         return css_string
 
