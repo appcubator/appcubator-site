@@ -22,13 +22,7 @@ from appcubator.default_data import DEFAULT_STATE_DIR, get_default_app_state, ge
 
 from django.conf import settings
 
-"""
-if settings.DEBUG:
-    import deploy.local_deploy as deploy
-else:
-    import deploy.deis_deploy as deploy
-"""
-import deploy.deis_deploy as deploy
+import deploy
 
 from appcubator import codegen
 
@@ -400,10 +394,7 @@ class App(models.Model):
         return "http://%s/" % self.hostname()
 
     def deploy_url(self):
-        if self.subdomain in ['zenrez', 'adshare']:
-            return "http://devmon.%s/__update_code__" % self.hostname()
-        else:
-            return "http://%s/__update_code__" % self.hostname()
+        return "http://devmon.%s/__update_code__" % self.hostname()
 
     def zip_bytes(self):
         tmpdir = self.write_to_tmpdir()
