@@ -11,7 +11,48 @@
             </div>
             <a class="setting-btn" title="App Settings"></a>
           </div>
-          <hr class="span46 pheader">
+          <hr class="span43 pheader">
+          <div class="span43 hoff2 editors">
+            <a class="span21"  target="_blank"  href="/app/{{ a.pk }}/">
+              <span class="span6">
+                <img src="{{ STATIC_URL }}img/builder_logo.png">
+              </span>
+              <span class="span14">
+                <b>Builder</b><br>
+                <span>Control and editor your application.</span>
+              </span>
+            </a>
+            <a class="span21"  target="_blank"  href="http://shell.{{ a.subdomain }}.appcbtr.com">
+              <span class="span6">
+                <img src="{{ STATIC_URL }}img/terminal_logo.png">
+              </span>
+              <span class="span14">
+                <b>Terminal</b><br>
+                <span>Get shell access to your application.</span>
+              </span>
+            </a>
+          </div>
+          <div class="span43 hoff2 editors">
+            <a class="span21"  target="_blank" href="http://inspect.{{ a.subdomain }}.appcbtr.com/debug?port=5858">
+              <span class="span6">
+                <img src="{{ STATIC_URL }}img/inspector_logo.png">
+              </span>
+              <span class="span14">
+                <b>Inspector</b><br>
+                <span>See the generated NodeJS code here and debug.</span>            
+              </span>
+            </a>
+            <a class="span21" target="_blank" href="/app/{{ a.pk }}/dev/">
+              <span class="span6">
+                <img src="{{ STATIC_URL }}img/plugin_editor_logo.png">
+              </span>
+              <span class="span14">
+                <b>Plugin Editor</b><br>
+                <span>See and customize the plugins installed to your app.</span>
+              </span>
+            </a>
+          </div>
+          <hr class="span43 pheader hoff1" style="margin-top:29px;">
             <div class="hi4 span46">
               <form style="display:inline" method="POST" action="/app/{{ a.pk }}/clone/">
                   {% csrf_token %}
@@ -22,10 +63,7 @@
               <a class="btn big span9 offset1" id="share" href="#">Share</a>
               <a class="btn btn-info big edit span12 offset1" href="/app/{{ a.pk }}/">Start Editing »</a>
             </div>
-          <hr class="span46 pheader hoff1"> <!-- <img class="span58 analytics-demo hoff1" src="{{ STATIC_URL }}img/analytics.png"> -->
-          <div class="row hoff1 span46">
-            <div class="row hoff1 analytics" style="position: relative"> <div class="coming-soon-overlay" style="display: none; top: 35px; background-color: rgba(227, 227, 227, 0.75); padding-top: 10%"> <h2>Publish your app to see your site analytics!</h2> </div></div>
-          </div>
+          <hr class="span43 pheader hoff1">
           <!-- <img class="span58 analytics-demo hoff1" src="{{ STATIC_URL }}img/analytics.png"> -->
           <div class="row hoff1 collaborators-section">
             <h2 class="span46 hoff1">Collaborators</h2>

@@ -36,18 +36,18 @@ require.config({
         "bootstrap": "../../libs/bootstrap/bootstrap",
         // "ace": "../../libs/ace/ace",
         "ace": "https://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace",
-        "jsoneditor": "../../libs/jsoneditor/jsoneditor",
+        "jsonbrowser": "../../libs/jsoneditor/",
         'coffee-script': './libs/coffee-script',
         "util": "./util",
         "cs": './libs/cs',
-        "jsonbrowser": './'
     }
 });
 
-require(['jsonbrowser/csmain'], function() {
+require(['jsonbrowser/jsonbrowser'], function() {
     
-    console.log("Define");
-    window.json = appState;
+    var jsonbrowser = new JSONBrowser();
+    jsonbrowser.setupEditor(appState);
+
 
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection

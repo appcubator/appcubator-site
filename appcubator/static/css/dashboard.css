@@ -21,6 +21,15 @@
 }
 
 
+.editors {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.editors b {
+  font-size: 14px;
+}
+
 .board .logo {
   position: relative;
   vertical-align: middle;

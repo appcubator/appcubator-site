@@ -1,0 +1,189 @@
+html, body {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	font-weight: 300;
+}
+
+.level {
+	height: 100%;
+	background-color: #cad3e2;
+	border-right: 1px solid #aab3c2;
+	width: 220px;
+	margin: 0;
+	padding-left: 0;
+	list-style: none;
+	overflow-y: scroll;
+	display: inline-block;
+
+	cursor: default;
+}
+
+.level li.title {
+	font-weight: bold;
+	margin-top: 12px;
+	height: 36px;
+	line-height: 36px;
+}
+
+.level div.title {
+	font-weight: bold;
+	margin-top: 12px;
+	height: 36px;
+	line-height: 36px;
+	height: 36px;
+	line-height: 36px;
+	padding-left: 24px;
+}
+
+.level li {
+	height: 36px;
+	line-height: 36px;
+	padding-left: 24px;
+	position: relative;
+	width: 200px;
+}
+
+.level li:hover {
+	background-color: #bac3d2;
+}
+
+.level li.add-new {
+	opacity: 0.3;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.level li.add-new:hover {
+	opacity: 1;
+}
+
+.level li.selected {
+	background-color: #bac3d2;
+}
+
+.ui-sortable-placeholder {
+	background-color: #bac3d2;
+	opacity: 0.5;
+}
+
+.level li.title:hover {
+	background-color: transparent;
+}
+
+.level li span {
+	vertical-align: top;
+}
+
+.level li .remove {
+	font-size: 12px;
+	float: right;
+	font-weight: bold;
+	display: none;
+	cursor: pointer;
+	width: 30px;
+	text-align: center;
+}
+
+.level li:hover .remove {
+	display: inline-block;
+}
+
+.level li .remove:hover {
+	font-size: 16px;
+}
+
+.level.two {
+	height: 100%;
+	border-right: 1px solid #cad3e2;
+
+	width: 220px;
+	margin: 0;
+	padding-left: 0;
+	list-style: none;
+	overflow-y: scroll;
+	display: inline-block;
+}
+
+
+
+.level.three {
+	display: none;
+	height: 100%;
+	border-right: 1px solid #cad3e2;
+
+	width: 220px;
+	margin: 0;
+	padding-left: 0;
+	list-style: none;
+	overflow-y: scroll;
+	display: none;
+}
+
+
+.level.editor {
+	width: 320px;
+	margin: 0;
+	padding-left: 0;
+	list-style: none;
+	overflow-y: scroll;
+	display: inline-block;
+}
+
+.text-editor {
+	display: inline-block;
+	width: 320px;
+	height: 100%;
+}
+
+.icon {
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	background-image: url('../img/icons.png');
+}
+
+.icon.array {
+	background-position: -36px 0;
+}
+
+.icon.number {
+	background-position: -72px 0;
+}
+
+.icon.string {
+	background-position: -108px 0;
+}
+
+li.add-more {
+	font-size: 12px;
+	font-weight: bold;
+	color: #999;
+	height: auto;
+	min-height: 36px;
+	padding-left: 0;
+}
+
+li.add-more div {
+	padding-left: 24px;
+}
+
+li.add-more .add-new:hover {
+	background-color: #aab3c2;
+}
+
+li.ui-draggable-dragging {
+	opacity: 0.4;
+}
+
+.add-more:hover {
+	font-size: 12px;
+	font-weight: bold;
+	color: #666;
+}
+
+.droppable {
+	background-color: #aab3d2;
+}
+
