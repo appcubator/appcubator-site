@@ -441,7 +441,7 @@ class App(models.Model):
                            'isMobile': mobile,
                            'deploy': deploy})
         less_string = t.render(context)
-        import pdb; pdb.set_trace()
+
         css_string = codegen.less(less_string)
         return css_string
 
