@@ -39,7 +39,7 @@ require.config({
         "jsonbrowser": "../../libs/jsoneditor/",
         'coffee-script': './libs/coffee-script',
         "util": "./util",
-        "cs": './libs/cs',
+        "cs": './libs/cs'
     }
 });
 

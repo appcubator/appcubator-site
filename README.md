@@ -22,11 +22,6 @@ virtualenv --distribute venv
 pip install -r requirements.txt
 ```
 
-3. Install Appcubator-codegen
-```
-pip install git+ssh://git@github.com/appcubator/appcubator-codegen.git
-```
-
 4. Make manage.py executable
 ```
 chmod +x manage.py
@@ -42,11 +37,4 @@ chmod +x manage.py
 ```
 ./manage.py runserver
 ```
-
-6. Tests
-```
-ln -s ../../pre-commit.sh .git/hooks/pre-commit
-```
-
-New tests should be added to ./run-tests.sh on the home directory.
 
