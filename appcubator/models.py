@@ -491,9 +491,9 @@ class App(models.Model):
 
         # activates iff self.deployment_id is none
         self.get_deployment_if_not_exists()
+        tmpdir = self.write_to_tmpdir()
 
         try:
-            tmpdir = self.write_to_tmpdir()
             logger.info("Written to %s for code updating" % tmpdir)
 
             print self.deploy_url()
@@ -502,13 +502,13 @@ class App(models.Model):
         except deploy.NotDeployedError:
             if retry_on_404:
                 logger.warn("App was not actually deployed, probably from a prior error. Trying again.")
-                """ TODO XXX
+                self.record_deploy_error(traceback.format_exc())
                 self.deployment_id = None
                 self.custom_domain = None
-                """
                 return self.deploy(retry_on_404=False)
             else:
                 raise
+
         except Exception:
             """ TODO XXX
             self.deployment_id = None
