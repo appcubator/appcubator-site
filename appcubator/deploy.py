@@ -8,15 +8,6 @@ import random
 logger = logging.getLogger(__name__)
 
 
-from deis import DeisClient
-
-def login_if_required(dc):
-    if not dc._settings.get('controller'):
-        dc.auth_login({'<controller>':settings.DEIS_CONTROLLER,
-                       '--username':settings.DEIS_USERNAME,
-                       '--password':settings.DEIS_PASSWORD})
-
-
 class DeploymentError(Exception):
     """Should be raised whenever the deployment server does not return 200"""
     pass
@@ -42,41 +33,6 @@ def _write_tar_from_app_dir(appdir):
     p = subprocess.call(['gzip', 'payload.tar'], cwd=appdir)
     return os.path.join(appdir, 'payload.tar.gz')
 
-def provision():
-    """
-    Builds a development sandbox on a Deis server.
-    Returns deployment_id
-    """
-    dc = DeisClient()
-    login_if_required(dc)
-    deployment_id = dc.apps_create_without_git({'--formation': settings.DEIS_FORMATION })
-                  # TODO set initial config.
-                  #'<var>=<value>': [ key+u'='+unicode(value) for key, value in config_values.iteritems() ],
-    return deployment_id
-
-def rebuild(appdir, deployment_id, config_values=None):
-    """
-    Creates a new Build and Release
-    """
-    dc = DeisClient()
-    login_if_required(dc)
-    result = dc.apps_push({'<codepath>': appdir,
-                  '--buildpack_url': 'https://github.com/appcubator/heroku-buildpack-nodejs',
-                  '--app': deployment_id})
-    return result
-
-def rerelease(deployment_id, config_values):
-    """
-    Updates current config with new ones.
-    Key : None means unset Key
-    """
-    dc = DeisClient()
-    login_if_required(dc)
-    result = dc.config_set({'--app': deployment_id,
-                            '<var>=<value>': [ key+u'='+unicode(value) for key, value in config_values.iteritems() ] })
-    return result
-
-
 def update_code(appdir, deploy_id, url):
     """
     1. path to directory where app is stored
@@ -98,11 +54,6 @@ def update_code(appdir, deploy_id, url):
         raise DeploymentError(str(r.status_code) + r.text)
 
 
-def destroy(deploy_id):
-    dc = DeisClient()
-    login_if_required(dc)
-    dc.apps_destroy({'--app': deploy_id, '--confirm': deploy_id})
-
 ## BEGIN RANDOM SCRIPTS
 
 PATH_TO_FAKE_APP = os.path.join(os.path.dirname(__file__), 'lolapp')
@@ -114,11 +65,10 @@ def zero_out(deploy_id, url):
     """
     return update_code(PATH_TO_FAKE_APP, deploy_id, url)
 
-def get_orphans(known_deployments):
-    dc = DeisClient()
-    login_if_required(dc)
-    all_apps = dc.apps_list({})
-    return list(set(all_apps) - set(known_deployments))
+def get_all_apps():
+    r = requests.get(settings.DEPLOYER_URL + 'deployment/list?username='+settings.DEPLOYER_KEY)
+    all_apps = r.json()
+    return all_apps
 
 def zero_out_bulk(deps, orphans=None):
     """
@@ -142,10 +92,36 @@ def zero_out_bulk(deps, orphans=None):
     return error_apps
 
 def update_orphan_cache():
+    """
+    This gets all the deployments that you have rights to,
+        then it goes over your deployment cache and removes deployments you no longer have rights to.
+        then it goes over your apps and checks if your deployment_id is ok.
+        If not, reset the deployment_id to None. On redeploy, it'll get fixed by taking an orphan.
+
+    Then {all deployments} - {used deployments} = orphans and they are stored in the Deployment table.
+    """
+
     from appcubator.models import Deployment, App
     print "Deployments available: %d" % Deployment.objects.count()
-    known_deps = [a.deployment_id for a in App.objects.all() if a.deployment_id is not None]
-    orphans = get_orphans(known_deps)
+    all_apps = get_all_apps()
+    known_deps = []
+    for d in Deployment.objects.all():
+        if d.d_id not in all_apps:
+            logger.info('Removing %s from deployment cache' % d.d_id)
+            d.delete()
+    for a in App.objects.all():
+        if a.deployment_id is None:
+            continue
+        if a.deployment_id not in all_apps:
+            if a.custom_domain.startswith(a.deployment_id):
+                a.custom_domain = None
+            a.deployment_id = None
+            a.save()
+        else:
+            known_deps.append(a.deployment_id)
+
+    orphans = list(set(all_apps) - set(known_deps))
+
     for orph in orphans:
         """ Commented out in order to be more OCD about correctness of orphan status.
         # is this already in the table? if so, skip it.
@@ -176,20 +152,6 @@ def update_orphan_cache():
     print "Deployments available: %d" % Deployment.objects.count()
 
 
-def make_new_app():
-    d_id = provision()
-    domain = d_id + '.' + settings.DEPLOYMENT_DOMAIN
-    rerelease(d_id, {'MONGO_ADDR': os.environ['TEMP_MONGO']})
-    url = 'http://' + domain + '/'
-    result = rebuild(PATH_TO_FAKE_APP, url, d_id)
-    print "rc: " + str(result['rc'])
-    print "Out: " + result['out']
-    if result['err']:
-        print "Err: " + result['err']
-        raise DeploymentError(result)
-    return (d_id, url)
-
-
 import unittest
 from appcubator import codegen
 from appcubator.default_data import get_default_app_state
@@ -200,28 +162,6 @@ APPSTATE = json.loads(get_default_app_state())
 
 ## Testing requires an example app. We use the default state + codegen
 ## Note: CODEGEN SERVER MUST BE LIVE TO TEST.
-class TestProvision(unittest.TestCase):
-
-    def setUp(self):
-        self.appdir = codegen.write_to_tmpdir(codegen.compileApp(APPSTATE))
-
-    def test_provision(self):
-        self.id = random.randint(100, 999)
-        url = 'http://testing%d.appcubator.com/' % self.id
-        d_id = provision()
-        out = rebuild(self.appdir, url, d_id)
-        print out
-        #import time; time.sleep(2)
-        #r = requests.get(url)
-        #self.assertEqual(r.status_code, 200)
-
-    def tearDown(self):
-        shutil.rmtree(self.appdir)
-
-
-class TestNewApp(unittest.TestCase):
-    def test_new_app_task_doesnt_error(self):
-        print make_new_app()
 
 class TestZeroOutApp(unittest.TestCase):
     def setUp(self):
@@ -238,24 +178,6 @@ class TestZeroOutApp(unittest.TestCase):
         r = requests.get(self.url)
         self.assertEqual(r.status_code, 200)
         self.assertEqual(r.text.find('BEGIN UIELEMENTS'), -1)
-
-class TestGetOrphans(unittest.TestCase):
-    def setUp(self):
-        dc = DeisClient()
-        login_if_required(dc)
-        all_apps = dc.apps_list({})
-        known_apps = all_apps[:1]
-
-        self.dc = dc
-        self.known_apps = known_apps
-        self.all_apps = all_apps
-
-    def test_get_orphans(self):
-        orphans = get_orphans(self.known_apps)
-        print orphans
-        self.assertEqual(set(orphans), set(self.all_apps) - set(self.known_apps))
-
-#def zero_out_orphans(orphans=None):
 
 if __name__ == "__main__":
     unittest.main()

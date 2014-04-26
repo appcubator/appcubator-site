@@ -287,6 +287,11 @@ else:
 STRIPE_PUBLIC_KEY = os.environ["STRIPE_PUBLIC_KEY"]
 STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
 
+DEPLOYER_URL = os.environ["DEPLOYER_URL"]
+DEPLOYER_KEY = os.environ["DEPLOYER_KEY"]
+if DEPLOYER_KEY == "<your username>":
+    print "Plz export DEPLOYER_KEY as an env variable. Ask ksikka if you dont know what this means."
+
 # domain from which apps are available
 DEPLOYMENT_DOMAIN = os.environ["DEPLOYMENT_DOMAIN"]
 
