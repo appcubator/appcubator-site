@@ -40,6 +40,9 @@ def update_code(appdir, deploy_id, url):
     3. URL to which a tarfile will be posted
     """
     tar_path = _write_tar_from_app_dir(appdir)
+    print 'doing a get request to make sure its awake before I POST'
+    r = requests.get(url)
+    print 'GET returned ', r.status_code
     print 'posting file: '+str(os.path.getsize(tar_path))
     try:
         with open(tar_path, "rb") as f:

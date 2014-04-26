@@ -170,7 +170,7 @@ def new(request, is_racoon = False, app_template=None):
             # refetch from the db. this is a weird hack that makes deploy magically work.
             app = App.objects.get(pk=app.id)
             try:
-                app.deploy()
+                app.get_deployment_if_not_exists()
             except Exception, e:
                 app.delete()
                 import traceback

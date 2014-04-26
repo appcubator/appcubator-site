@@ -471,20 +471,28 @@ class App(models.Model):
         }
         return post_data
 
+    def get_deployment_if_not_exists(self):
+        """ Returns true if this had to do anything. """
+        if self.deployment_id is None:
+            # TODO make sure deployments are always available
+            orphan = Deployment.objects.filter(has_error=False)[0]
+            self.deployment_id = orphan.d_id
+            # HACK
+            self.custom_domain = self.deployment_id + '.' + settings.DEPLOYMENT_DOMAIN
+
+            self.save()
+            orphan.delete()
+            return True
+
+        return False
+
     def deploy(self, retry_on_404=True):
         tmpdir = '' # fixes the case where it's not defined in the finally clause later on
+
+        # activates iff self.deployment_id is none
+        self.get_deployment_if_not_exists()
+
         try:
-            # TODO detect change in build dependencies and build a new container
-            if self.deployment_id is None:
-                # TODO make sure deployments are always available
-                orphan = Deployment.objects.filter(has_error=False)[0]
-                self.deployment_id = orphan.d_id
-                # HACK
-                self.custom_domain = self.deployment_id + '.' + settings.DEPLOYMENT_DOMAIN
-
-                self.save()
-                orphan.delete()
-
             tmpdir = self.write_to_tmpdir()
             logger.info("Written to %s for code updating" % tmpdir)
 
