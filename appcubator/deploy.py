@@ -8,8 +8,6 @@ import random
 logger = logging.getLogger(__name__)
 
 
-from deis import DeisClient
-
 class DeploymentError(Exception):
     """Should be raised whenever the deployment server does not return 200"""
     pass
@@ -67,10 +65,10 @@ def zero_out(deploy_id, url):
     """
     return update_code(PATH_TO_FAKE_APP, deploy_id, url)
 
-def get_orphans(known_deployments):
-    r = request.get(settings.DEPLOYER_URL + 'deployment/list?username='+settings.DEPLOYER_KEY)
+def get_all_apps():
+    r = requests.get(settings.DEPLOYER_URL + 'deployment/list?username='+settings.DEPLOYER_KEY)
     all_apps = r.json()
-    return list(set(all_apps) - set(known_deployments))
+    return all_apps
 
 def zero_out_bulk(deps, orphans=None):
     """
@@ -94,10 +92,36 @@ def zero_out_bulk(deps, orphans=None):
     return error_apps
 
 def update_orphan_cache():
+    """
+    This gets all the deployments that you have rights to,
+        then it goes over your deployment cache and removes deployments you no longer have rights to.
+        then it goes over your apps and checks if your deployment_id is ok.
+        If not, reset the deployment_id to None. On redeploy, it'll get fixed by taking an orphan.
+
+    Then {all deployments} - {used deployments} = orphans and they are stored in the Deployment table.
+    """
+
     from appcubator.models import Deployment, App
     print "Deployments available: %d" % Deployment.objects.count()
-    known_deps = [a.deployment_id for a in App.objects.all() if a.deployment_id is not None]
-    orphans = get_orphans(known_deps)
+    all_apps = get_all_apps()
+    known_deps = []
+    for d in Deployment.objects.all():
+        if d.d_id not in all_apps:
+            logger.info('Removing %s from deployment cache' % d.d_id)
+            d.delete()
+    for a in App.objects.all():
+        if a.deployment_id is None:
+            continue
+        if a.deployment_id not in all_apps:
+            if a.custom_domain.startswith(a.deployment_id):
+                a.custom_domain = None
+            a.deployment_id = None
+            a.save()
+        else:
+            known_deps.append(a.deployment_id)
+
+    orphans = list(set(all_apps) - set(known_deps))
+
     for orph in orphans:
         """ Commented out in order to be more OCD about correctness of orphan status.
         # is this already in the table? if so, skip it.
@@ -154,24 +178,6 @@ class TestZeroOutApp(unittest.TestCase):
         r = requests.get(self.url)
         self.assertEqual(r.status_code, 200)
         self.assertEqual(r.text.find('BEGIN UIELEMENTS'), -1)
-
-class TestGetOrphans(unittest.TestCase):
-    def setUp(self):
-        dc = DeisClient()
-        login_if_required(dc)
-        all_apps = dc.apps_list({})
-        known_apps = all_apps[:1]
-
-        self.dc = dc
-        self.known_apps = known_apps
-        self.all_apps = all_apps
-
-    def test_get_orphans(self):
-        orphans = get_orphans(self.known_apps)
-        print orphans
-        self.assertEqual(set(orphans), set(self.all_apps) - set(self.known_apps))
-
-#def zero_out_orphans(orphans=None):
 
 if __name__ == "__main__":
     unittest.main()

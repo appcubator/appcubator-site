@@ -5,7 +5,7 @@ export STRIPE_PUBLIC_KEY="pk_test_qbJZ9hMePgdpdZUrkKTskzgz"
 export STRIPE_SECRET_KEY="sk_test_GhzvfBePNCkvC6j23UtZkmTi"
 
 # deployment service
-export DEPLOYER_URL='http://deployer.appcubator.com/'
+export DEPLOYER_URL='http://54.205.160.214:9000/'
 export DEPLOYMENT_DOMAIN='appcbtr.com'
 
 # plz put this in your .bash_profile or something.
