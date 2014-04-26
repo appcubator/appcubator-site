@@ -107,6 +107,7 @@ def update_orphan_cache():
     from appcubator.models import Deployment, App
     print "Deployments available: %d" % Deployment.objects.count()
     all_apps = get_all_apps()
+    print all_apps
     known_deps = []
     for d in Deployment.objects.all():
         if d.d_id not in all_apps:
@@ -135,6 +136,9 @@ def update_orphan_cache():
         # is this orphan working?
         domain = orph + '.' + settings.DEPLOYMENT_DOMAIN
         url = 'http://' + domain
+        # The following was commented out to speed up this script since deployment is no longer completely unstable. 
+        working = True # tmp
+        """
         try:
             logger.info('curling app '+ orph)
             r = requests.get(url)
@@ -142,6 +146,7 @@ def update_orphan_cache():
         except requests.exceptions.ConnectionError:
             logger.warn('not working')
             working = False
+        """
 
         dq = Deployment.objects.filter(d_id=orph)
         if not dq.exists():
