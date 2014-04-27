@@ -21,19 +21,20 @@
         <br>
         {% for k, values in errors.items %}
             {% for val in values %}
-            {{ val }}<br>
+            {{ val|safe }}<br>
             {% endfor %}
         {% endfor %}
         </div>
         {% endif %}
-        {% if other_errors %}
+        <!-- IDK what this does
+         {% if other_errors %}
         <div class="error-content">
         <br>
         {% for val in other_errors %}
             {{ val|safe }}<br>
         {% endfor %}
         </div>
-        {% endif %}
+        {% endif %} -->
         <hr>
 
     <span id="current-temp-text"></span><input type="submit" value="Start Building My App »" id="skip-racoon" class="span15 btn btn-blue hi3 offset12 pull-right" >
