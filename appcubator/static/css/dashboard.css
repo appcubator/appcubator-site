@@ -30,6 +30,10 @@
   font-size: 14px;
 }
 
+.editors .span6 img {
+  width: 71px;
+}
+
 .board .logo {
   position: relative;
   vertical-align: middle;
@@ -207,6 +211,7 @@ a.fancy:hover .edit-btn {
 .dropdown-view.settings-pane {
     top: 75px;
     right: 30px;
+    padding-bottom: 15px;
 }
 
 .dropdown-view.settings-pane:after,
