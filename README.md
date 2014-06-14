@@ -1,6 +1,19 @@
 v1Factory
 =========
 
+Update (6/14/2014)
+------------------
+
+This site is in an intermediate state of transition
+from old appcubator to new appcubator, and is no longer maintained.
+It used to host the editor statics, store users and app states in a DB.
+It connects to `appmake` and `deployment` to provide codegen and hosting functionality.
+
+Post-mortem plan:
+The conceptual ideas and learnings of Appcubator will be published
+and released in a series of blog posts, and `appcubator.com` will 302 to `blog.appcubator.com`.
+
+
 Goal
 ----
 
