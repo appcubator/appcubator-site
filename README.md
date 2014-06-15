@@ -13,6 +13,12 @@ Post-mortem plan:
 The conceptual ideas and learnings of Appcubator will be published
 and released in a series of blog posts, and `appcubator.com` will 302 to `blog.appcubator.com`.
 
+Target blog posts:
+
+    1. The old product screenshots and architecture
+    2. The new product screenshots and architecture
+    3. The story of why we did what we did (ie timeline with explanation for transitions)
+
 
 Goal
 ----
