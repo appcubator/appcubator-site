@@ -23,7 +23,9 @@
       <li><a href="/app/">GARAGE</a></li>
       {% else %}
       <li><a class="login-button" href="/login/">LOGIN</a></li>
+      <!-- COMMENTED OUT FOR DISCONTINUING APPCUBATOR
       <li><a class="signup-button" href="/signup/">SIGNUP</a></li>
+      -->
       {% endif %}      
     </ul>
     <form class="login-form" method="post" action="{% url django.contrib.auth.views.login %}" style="display:none;">

@@ -28,7 +28,9 @@
       <input class="btn span10 hi3" type="submit" value="Login"/>
       <input type="hidden" name="next" value="{{ next|default:"/app" }}" /><br>
       <a class="qmark" href="{% url auth_password_reset %}">Forgot your password?</a><br><br>
-      <stron><a class="qmark" href="/signup">Signup here if you don't have an account yet.</a></strong>
+      <!-- COMMENTED OUT FOR MIGRATION
+      <strong><a class="qmark" href="/signup">Signup here if you don't have an account yet.</a></strong>
+      -->
     </form>
 
   </div>
